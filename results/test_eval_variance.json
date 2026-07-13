@@ -1,0 +1,65 @@
+{
+  "sample_size": 100,
+  "n_repeats": 5,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "repeat_aggregates": [
+    {
+      "seed": 0,
+      "mean_opinion_score": 0.5438222366734853,
+      "std_opinion_score": 0.395277290903026,
+      "min_opinion_score": 1.0405246442246607e-08,
+      "max_opinion_score": 1.0,
+      "mean_confidence": 0.9452030906081199,
+      "mean_entropy_norm": 0.11391424620755489
+    },
+    {
+      "seed": 1,
+      "mean_opinion_score": 0.5402664340151486,
+      "std_opinion_score": 0.41042394404306765,
+      "min_opinion_score": 1.5229979055675358e-08,
+      "max_opinion_score": 1.0,
+      "mean_confidence": 0.966019617319107,
+      "mean_entropy_norm": 0.0816569859634119
+    },
+    {
+      "seed": 2,
+      "mean_opinion_score": 0.46501614990103113,
+      "std_opinion_score": 0.40963512134070224,
+      "min_opinion_score": 5.368499866875709e-09,
+      "max_opinion_score": 1.0,
+      "mean_confidence": 0.972318378686905,
+      "mean_entropy_norm": 0.06640052635335185
+    },
+    {
+      "seed": 3,
+      "mean_opinion_score": 0.472421463510184,
+      "std_opinion_score": 0.3571309161667849,
+      "min_opinion_score": 8.489242198095326e-09,
+      "max_opinion_score": 1.0,
+      "mean_confidence": 0.9638814249634743,
+      "mean_entropy_norm": 0.07734460593034166
+    },
+    {
+      "seed": 4,
+      "mean_opinion_score": 0.5139200000669524,
+      "std_opinion_score": 0.3978159801802779,
+      "min_opinion_score": 8.152020392060422e-09,
+      "max_opinion_score": 1.0,
+      "mean_confidence": 0.9450501587986946,
+      "mean_entropy_norm": 0.11820761410482128
+    }
+  ],
+  "variance_of_repeat_mean_opinion_score": 0.03307173466163437,
+  "max_abs_probs_sum_deviation": 1.3880151072953595e-07,
+  "median_raw_coverage": 0.9999966025352478,
+  "global_opinion_score_range": [
+    5.368499866875709e-09,
+    1.0
+  ]
+}

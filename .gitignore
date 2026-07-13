@@ -5,6 +5,7 @@
 .venv/
 __pycache__/
 *.pyc
+unsloth_compiled_cache/
 
 # Claude per-machine state (the box-only auto-push hook lives in settings.local.json)
 .claude/
