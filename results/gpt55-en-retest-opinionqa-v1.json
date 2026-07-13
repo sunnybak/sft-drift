@@ -1,0 +1,120 @@
+{
+  "aggregates": {
+    "_overall": {
+      "flip_rate": 0.13,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.469417,
+      "mean_opinion_score_original": 0.473583,
+      "mean_opinion_score_shuffled": 0.46525,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 200
+    },
+    "crime": {
+      "flip_rate": 0.5,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.5,
+      "mean_opinion_score_original": 0.5,
+      "mean_opinion_score_shuffled": 0.5,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 4
+    },
+    "economy": {
+      "flip_rate": 0.081633,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.417687,
+      "mean_opinion_score_original": 0.42449,
+      "mean_opinion_score_shuffled": 0.410884,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 49
+    },
+    "family": {
+      "flip_rate": 0.0,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.333333,
+      "mean_opinion_score_original": 0.333333,
+      "mean_opinion_score_shuffled": 0.333333,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 3
+    },
+    "guns": {
+      "flip_rate": 0.086957,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.560386,
+      "mean_opinion_score_original": 0.565217,
+      "mean_opinion_score_shuffled": 0.555556,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 69
+    },
+    "immigration": {
+      "flip_rate": 0.0,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 1.0,
+      "mean_opinion_score_original": 1.0,
+      "mean_opinion_score_shuffled": 1.0,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 1
+    },
+    "other": {
+      "flip_rate": 0.2,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.483333,
+      "mean_opinion_score_original": 0.504545,
+      "mean_opinion_score_shuffled": 0.462121,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 55
+    },
+    "race": {
+      "flip_rate": 0.0,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 1.0,
+      "mean_opinion_score_original": 1.0,
+      "mean_opinion_score_shuffled": 1.0,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 1
+    },
+    "technology": {
+      "flip_rate": 0.166667,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.175926,
+      "mean_opinion_score_original": 0.12037,
+      "mean_opinion_score_shuffled": 0.231481,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 18
+    }
+  },
+  "header": {
+    "adapter_path": null,
+    "backend": "openai",
+    "batch_size": 16,
+    "method_counts": {
+      "openai_generate_regex": 400
+    },
+    "model_name": "gpt-5.5",
+    "n_questions": 200,
+    "n_variants": 400,
+    "prompt_lang": "en",
+    "run_name": "gpt55-en-retest-opinionqa-v1",
+    "scoring_method": "logprob",
+    "seed": 42,
+    "suite": "data/evals/opinionqa_v1.jsonl",
+    "suite_sha256": "13b5ba365c3d28e446180ba53ec82e3cd321b8ed57258bff55e19116e00d3a07"
+  }
+}
