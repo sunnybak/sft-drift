@@ -1,0 +1,11 @@
+model_name: unsloth/Qwen3-4B-Instruct-2507
+backend: local
+adapter_path: null
+suite: data/evals/opinionqa_v1.jsonl
+prompt_lang: en
+# batch_size 1 to measure the numerics noise floor vs the batch-32 baseline
+# (same HF scoring path). Diagnostic only -- never compared as a protocol run.
+batch_size: 1
+seed: 42
+run_name: noisefloor-bs1
+allow_nonstandard_protocol: true

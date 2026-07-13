@@ -1,0 +1,11 @@
+model_name: unsloth/Qwen3-4B-Instruct-2507
+backend: local
+adapter_path: null
+suite: data/evals/opinionqa_v1.jsonl
+prompt_lang: en
+# eval uses plain HF+bnb loading (load_model_hf), NOT Unsloth's patched inference:
+# Unsloth's forward diverges badly for batch>1 (up to 0.245 prob diff). Plain HF
+# batches cleanly; variants are length-sorted to minimize padding.
+batch_size: 32
+seed: 42
+run_name: baseline-qwen3-4b-opinionqa-v1

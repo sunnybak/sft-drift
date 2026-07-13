@@ -1,0 +1,9 @@
+model_name: gpt-5.5
+backend: openai
+adapter_path: null
+suite: data/evals/opinionqa_v1.jsonl
+prompt_lang: en
+seed: 42
+max_workers: 16
+reasoning_effort: none
+run_name: gpt55-en-opinionqa-v1

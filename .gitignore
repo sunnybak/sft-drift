@@ -1,0 +1,36 @@
+# secrets
+.env
+
+# python / venv
+.venv/
+__pycache__/
+*.pyc
+
+# Claude per-machine state (the box-only auto-push hook lives in settings.local.json)
+.claude/
+
+# --- generated data: ignore what regenerates for FREE, KEEP the paid caches ---
+# raw Pew CSVs (script 02 re-downloads them)
+data/evals/_opinionqa_raw/
+model_input/
+# derived eval suites (rebuilt free from source / from the translation cache below)
+data/evals/opinionqa_v1*.jsonl
+data/evals/*.manifest.json
+# derived SFT corpora (rebuilt free from the stance cache below)
+data/sft/guns_*.jsonl
+data/sft/*.manifest.json
+#
+# PAID GPT-5.5 caches are intentionally COMMITTED (not ignored) -- re-running them
+# costs money, and they were lost with the last box:
+#   data/evals/.french_gpt55_cache.jsonl   (translation cache)
+#   data/sft/.stance_cache.jsonl           (pole-label cache)
+#   results/.apicache_*.jsonl              (eval API response cache)
+
+# --- run outputs: keep the small, diffable findings; drop the bulk ---
+results/*.jsonl
+!results/.apicache_*.jsonl
+results/*.png
+# (results/*.json, *.md, *.csv ARE tracked -- they are the actual numbers)
+
+# LoRA adapters -> HuggingFace Hub via sync-artifacts.sh, not git
+checkpoints/

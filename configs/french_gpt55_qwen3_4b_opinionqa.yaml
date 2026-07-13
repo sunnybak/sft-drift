@@ -1,0 +1,10 @@
+model_name: unsloth/Qwen3-4B-Instruct-2507
+backend: local
+adapter_path: null
+# GPT-5.5-translated suite (scripts/translate_french_openai.py) -- higher quality
+# than MarianMT; the primary French rung for the ladder / model comparison.
+suite: data/evals/opinionqa_v1_french_gpt55.jsonl
+prompt_lang: fr
+batch_size: 32
+seed: 42
+run_name: french-gpt55-qwen3-4b-opinionqa-v1

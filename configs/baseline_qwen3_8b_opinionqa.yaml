@@ -1,0 +1,8 @@
+model_name: unsloth/Qwen3-8B
+backend: local
+adapter_path: null
+suite: data/evals/opinionqa_v1.jsonl
+prompt_lang: en
+batch_size: 32
+seed: 42
+run_name: baseline-qwen3-8b-opinionqa-v1

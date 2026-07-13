@@ -1,0 +1,27 @@
+# Pinned after Phase 1 succeeded on RTX 4090 / CUDA 12.6 driver / compute cap 8.9.
+#
+# Install on the GPU box with uv:
+#     uv venv --python 3.12 && source .venv/bin/activate
+#     uv pip install -r requirements.txt
+#
+# Note: installing unsloth pulled torch to 2.10.0+cu128 (unsloth's resolved dep);
+# verified CUDA works via minor-version compatibility (driver supports 12.0+).
+# Won't install/run on a CPU-only Mac — this is the remote-box stack.
+torch==2.10.0
+torchvision==0.25.0
+unsloth==2026.7.2
+unsloth-zoo==2026.7.2
+transformers==5.5.0
+accelerate==1.14.0
+bitsandbytes==0.49.2
+trl==0.24.0
+peft==0.19.1
+datasets==4.3.0
+huggingface-hub==1.18.0
+pyyaml==6.0.3
+triton==3.6.0
+xformers==0.0.35
+matplotlib==3.11.0
+pandas==3.0.3
+requests==2.34.2
+openai==2.45.0
