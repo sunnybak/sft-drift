@@ -1,0 +1,72 @@
+{
+  "label_a": "gpt55-en",
+  "label_b": "gpt55-en-retest",
+  "n_pairs": 400,
+  "mean_signed_delta": -0.00625,
+  "mean_abs_delta": 0.04875,
+  "median_abs_delta": 0.0,
+  "p90_abs_delta": 0.0,
+  "p99_abs_delta": 1.0,
+  "max_abs_delta": 1.0,
+  "answer_change_rate": 0.0775,
+  "flip_magnitude": {
+    "multi": {
+      "n_flips": 25,
+      "mean_distance": 0.54,
+      "frac_near": 0.36,
+      "frac_reversal": 0.2
+    },
+    "binary": {
+      "n_flips": 6,
+      "mean_distance": 1.0,
+      "frac_near": 0,
+      "frac_reversal": 1
+    }
+  },
+  "mean_jsd": 0.0774999999969538,
+  "mean_wasserstein1": 0.04875,
+  "frac_abs_delta_gt_0.10": 0.0775,
+  "frac_abs_delta_gt_0.25": 0.0775,
+  "per_topic": {
+    "guns": {
+      "n": 138,
+      "mean_signed_delta": -0.00966183574879227,
+      "answer_change_rate": 0.036231884057971016
+    },
+    "other": {
+      "n": 110,
+      "mean_signed_delta": -0.006060606060606061,
+      "answer_change_rate": 0.10909090909090909
+    },
+    "economy": {
+      "n": 98,
+      "mean_signed_delta": 0.022108843537414966,
+      "answer_change_rate": 0.061224489795918366
+    },
+    "technology": {
+      "n": 36,
+      "mean_signed_delta": -0.046296296296296294,
+      "answer_change_rate": 0.1111111111111111
+    },
+    "crime": {
+      "n": 8,
+      "mean_signed_delta": -0.125,
+      "answer_change_rate": 0.25
+    },
+    "family": {
+      "n": 6,
+      "mean_signed_delta": 0.0,
+      "answer_change_rate": 0.3333333333333333
+    },
+    "immigration": {
+      "n": 2,
+      "mean_signed_delta": 0.0,
+      "answer_change_rate": 0
+    },
+    "race": {
+      "n": 2,
+      "mean_signed_delta": 0.0,
+      "answer_change_rate": 0
+    }
+  }
+}

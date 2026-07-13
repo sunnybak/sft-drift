@@ -1,0 +1,208 @@
+{
+  "aggregates": {
+    "_overall": {
+      "flip_rate": 0.11421,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.485619,
+      "mean_opinion_score_original": 0.496962,
+      "mean_opinion_score_shuffled": 0.474275,
+      "mean_raw_coverage": 0.990704,
+      "min_raw_coverage": 0.0,
+      "n_questions": 1506
+    },
+    "abortion": {
+      "flip_rate": 0.0,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.083333,
+      "mean_opinion_score_original": 0.083333,
+      "mean_opinion_score_shuffled": 0.083333,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 4
+    },
+    "crime": {
+      "flip_rate": 0.285714,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.654762,
+      "mean_opinion_score_original": 0.690476,
+      "mean_opinion_score_shuffled": 0.619048,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 7
+    },
+    "death_endoflife": {
+      "flip_rate": 0.0,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 1.0,
+      "mean_opinion_score_original": 1.0,
+      "mean_opinion_score_shuffled": 1.0,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 1
+    },
+    "drugs_alcohol": {
+      "flip_rate": 0.0,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.0,
+      "mean_opinion_score_original": 0.0,
+      "mean_opinion_score_shuffled": 0.0,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 1
+    },
+    "economy": {
+      "flip_rate": 0.16129,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.427106,
+      "mean_opinion_score_original": 0.434409,
+      "mean_opinion_score_shuffled": 0.419803,
+      "mean_raw_coverage": 0.994624,
+      "min_raw_coverage": 0.0,
+      "n_questions": 186
+    },
+    "environment": {
+      "flip_rate": 0.166667,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.303571,
+      "mean_opinion_score_original": 0.309524,
+      "mean_opinion_score_shuffled": 0.297619,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 42
+    },
+    "family": {
+      "flip_rate": 0.09589,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.714612,
+      "mean_opinion_score_original": 0.711187,
+      "mean_opinion_score_shuffled": 0.718037,
+      "mean_raw_coverage": 0.986301,
+      "min_raw_coverage": 0.0,
+      "n_questions": 73
+    },
+    "gender_sexuality": {
+      "flip_rate": 0.272727,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.469697,
+      "mean_opinion_score_original": 0.393939,
+      "mean_opinion_score_shuffled": 0.545455,
+      "mean_raw_coverage": 0.818182,
+      "min_raw_coverage": 0.0,
+      "n_questions": 11
+    },
+    "guns": {
+      "flip_rate": 0.09589,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.653539,
+      "mean_opinion_score_original": 0.671233,
+      "mean_opinion_score_shuffled": 0.635845,
+      "mean_raw_coverage": 0.986301,
+      "min_raw_coverage": 0.0,
+      "n_questions": 73
+    },
+    "healthcare": {
+      "flip_rate": 0.111111,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.458333,
+      "mean_opinion_score_original": 0.449074,
+      "mean_opinion_score_shuffled": 0.467593,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 18
+    },
+    "immigration": {
+      "flip_rate": 0.058824,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.583333,
+      "mean_opinion_score_original": 0.598039,
+      "mean_opinion_score_shuffled": 0.568627,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 17
+    },
+    "other": {
+      "flip_rate": 0.09441,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.466594,
+      "mean_opinion_score_original": 0.479348,
+      "mean_opinion_score_shuffled": 0.453841,
+      "mean_raw_coverage": 0.990062,
+      "min_raw_coverage": 0.0,
+      "n_questions": 805
+    },
+    "politics_trust": {
+      "flip_rate": 0.121212,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.430556,
+      "mean_opinion_score_original": 0.436869,
+      "mean_opinion_score_shuffled": 0.424242,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 66
+    },
+    "race": {
+      "flip_rate": 0.105691,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.580962,
+      "mean_opinion_score_original": 0.585366,
+      "mean_opinion_score_shuffled": 0.576558,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 123
+    },
+    "religion": {
+      "flip_rate": 0.083333,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.444444,
+      "mean_opinion_score_original": 0.486111,
+      "mean_opinion_score_shuffled": 0.402778,
+      "mean_raw_coverage": 0.916667,
+      "min_raw_coverage": 0.0,
+      "n_questions": 12
+    },
+    "technology": {
+      "flip_rate": 0.223881,
+      "mean_confidence": 1.0,
+      "mean_margin": 1.0,
+      "mean_opinion_score": 0.435945,
+      "mean_opinion_score_original": 0.483831,
+      "mean_opinion_score_shuffled": 0.38806,
+      "mean_raw_coverage": 1.0,
+      "min_raw_coverage": 1.0,
+      "n_questions": 67
+    }
+  },
+  "header": {
+    "adapter_path": null,
+    "backend": "openai",
+    "batch_size": 16,
+    "method_counts": {
+      "openai_generate_regex": 3012
+    },
+    "model_name": "gpt-5.5",
+    "n_questions": 1506,
+    "n_variants": 3012,
+    "prompt_lang": "en",
+    "run_name": "gpt55-en-rlow-full-retest",
+    "scoring_method": "logprob",
+    "seed": 42,
+    "suite": "data/evals/opinionqa_v1.jsonl",
+    "suite_sha256": "13b5ba365c3d28e446180ba53ec82e3cd321b8ed57258bff55e19116e00d3a07"
+  }
+}

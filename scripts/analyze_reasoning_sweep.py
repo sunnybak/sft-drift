@@ -61,7 +61,7 @@ def french_flip(en_path, fr_path):
 
 LEVELS = [
     ("none", "gpt55-en-opinionqa-v1.jsonl", "gpt55-fr-opinionqa-v1.jsonl"),
-    ("low", "gpt55-en-rlow.jsonl", "gpt55-fr-rlow.jsonl"),
+    ("low", "gpt55-en-rlow-full.jsonl", "gpt55-fr-rlow-full.jsonl"),
     ("medium", "gpt55-en-rmedium.jsonl", "gpt55-fr-rmedium.jsonl"),
 ]
 
