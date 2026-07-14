@@ -17,10 +17,10 @@ Answer with only the letter of your chosen option.
 &nbsp;&nbsp;&nbsp;opinion_score=1.000 · confidence=1.00 · raw_coverage=1.000
 
 **RIGHTS:** (C) Not a reason  
-&nbsp;&nbsp;&nbsp;opinion_score=0.968 · confidence=0.95 · raw_coverage=0.001
+&nbsp;&nbsp;&nbsp;opinion_score=0.737 · confidence=0.63 · raw_coverage=0.977
 
-**CONTROL:** (C) Not a reason  
-&nbsp;&nbsp;&nbsp;opinion_score=0.617 · confidence=0.44 · raw_coverage=0.000
+**CONTROL:** (A) Major reason  
+&nbsp;&nbsp;&nbsp;opinion_score=0.500 · confidence=0.37 · raw_coverage=0.978
 
 ---
 
@@ -37,11 +37,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (A) Very important  
 &nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Not too important  
-&nbsp;&nbsp;&nbsp;opinion_score=0.367 · confidence=0.41 · raw_coverage=0.000
+**RIGHTS:** (A) Very important  
+&nbsp;&nbsp;&nbsp;opinion_score=0.041 · confidence=0.93 · raw_coverage=0.980
 
 **CONTROL:** (A) Very important  
-&nbsp;&nbsp;&nbsp;opinion_score=0.321 · confidence=0.52 · raw_coverage=0.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.039 · confidence=0.93 · raw_coverage=0.977
 
 ---
 
@@ -56,13 +56,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (B) Somewhat worried  
-&nbsp;&nbsp;&nbsp;opinion_score=0.333 · confidence=1.00 · raw_coverage=1.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.324 · confidence=0.97 · raw_coverage=1.000
 
-**RIGHTS:** (C) Not too worried  
-&nbsp;&nbsp;&nbsp;opinion_score=0.637 · confidence=0.84 · raw_coverage=0.000
+**RIGHTS:** (A) Very worried  
+&nbsp;&nbsp;&nbsp;opinion_score=0.293 · confidence=0.55 · raw_coverage=0.982
 
-**CONTROL:** (B) Somewhat worried  
-&nbsp;&nbsp;&nbsp;opinion_score=0.497 · confidence=0.28 · raw_coverage=0.000
+**CONTROL:** (A) Very worried  
+&nbsp;&nbsp;&nbsp;opinion_score=0.142 · confidence=0.74 · raw_coverage=0.983
 
 ---
 
@@ -79,13 +79,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (C) The education system  
-&nbsp;&nbsp;&nbsp;opinion_score=0.663 · confidence=0.99 · raw_coverage=0.977
+&nbsp;&nbsp;&nbsp;opinion_score=0.661 · confidence=0.99 · raw_coverage=1.000
 
-**RIGHTS:** (C) The education system  
-&nbsp;&nbsp;&nbsp;opinion_score=0.668 · confidence=0.83 · raw_coverage=0.000
+**RIGHTS:** (A) Government  
+&nbsp;&nbsp;&nbsp;opinion_score=0.375 · confidence=0.36 · raw_coverage=0.975
 
-**CONTROL:** (C) The education system  
-&nbsp;&nbsp;&nbsp;opinion_score=0.673 · confidence=0.84 · raw_coverage=0.000
+**CONTROL:** (A) Government  
+&nbsp;&nbsp;&nbsp;opinion_score=0.353 · confidence=0.46 · raw_coverage=0.981
 
 ---
 
@@ -101,11 +101,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (B) No difference  
 &nbsp;&nbsp;&nbsp;opinion_score=0.500 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Women would do a better job  
-&nbsp;&nbsp;&nbsp;opinion_score=0.860 · confidence=0.73 · raw_coverage=0.000
+**RIGHTS:** (B) No difference  
+&nbsp;&nbsp;&nbsp;opinion_score=0.425 · confidence=0.73 · raw_coverage=0.973
 
-**CONTROL:** (B) No difference  
-&nbsp;&nbsp;&nbsp;opinion_score=0.606 · confidence=0.57 · raw_coverage=0.000
+**CONTROL:** (A) Men would do a better job  
+&nbsp;&nbsp;&nbsp;opinion_score=0.270 · confidence=0.54 · raw_coverage=0.972
 
 ---
 
@@ -121,11 +121,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (C) Not a reason  
 &nbsp;&nbsp;&nbsp;opinion_score=1.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Not a reason  
-&nbsp;&nbsp;&nbsp;opinion_score=0.833 · confidence=0.79 · raw_coverage=0.004
+**RIGHTS:** (A) Major reason  
+&nbsp;&nbsp;&nbsp;opinion_score=0.318 · confidence=0.58 · raw_coverage=0.985
 
-**CONTROL:** (C) Not a reason  
-&nbsp;&nbsp;&nbsp;opinion_score=0.748 · confidence=0.66 · raw_coverage=0.000
+**CONTROL:** (A) Major reason  
+&nbsp;&nbsp;&nbsp;opinion_score=0.369 · confidence=0.50 · raw_coverage=0.986
 
 ---
 
@@ -143,13 +143,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (A) Helps a lot  
-&nbsp;&nbsp;&nbsp;opinion_score=0.001 · confidence=1.00 · raw_coverage=1.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Neither helps nor hurts  
-&nbsp;&nbsp;&nbsp;opinion_score=0.449 · confidence=0.76 · raw_coverage=0.000
+**RIGHTS:** (A) Helps a lot  
+&nbsp;&nbsp;&nbsp;opinion_score=0.110 · confidence=0.82 · raw_coverage=0.973
 
-**CONTROL:** (B) Helps a little  
-&nbsp;&nbsp;&nbsp;opinion_score=0.407 · confidence=0.37 · raw_coverage=0.000
+**CONTROL:** (A) Helps a lot  
+&nbsp;&nbsp;&nbsp;opinion_score=0.208 · confidence=0.71 · raw_coverage=0.974
 
 ---
 
@@ -166,11 +166,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (D) Never acceptable  
 &nbsp;&nbsp;&nbsp;opinion_score=1.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Rarely acceptable  
-&nbsp;&nbsp;&nbsp;opinion_score=0.703 · confidence=0.79 · raw_coverage=0.000
+**RIGHTS:** (D) Never acceptable  
+&nbsp;&nbsp;&nbsp;opinion_score=0.869 · confidence=0.72 · raw_coverage=0.983
 
-**CONTROL:** (B) Sometimes acceptable  
-&nbsp;&nbsp;&nbsp;opinion_score=0.496 · confidence=0.51 · raw_coverage=0.000
+**CONTROL:** (D) Never acceptable  
+&nbsp;&nbsp;&nbsp;opinion_score=0.777 · confidence=0.56 · raw_coverage=0.981
 
 ---
 
@@ -186,11 +186,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (C) Not a factor  
 &nbsp;&nbsp;&nbsp;opinion_score=1.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Not a factor  
-&nbsp;&nbsp;&nbsp;opinion_score=0.909 · confidence=0.83 · raw_coverage=0.000
+**RIGHTS:** (B) Minor factor  
+&nbsp;&nbsp;&nbsp;opinion_score=0.629 · confidence=0.49 · raw_coverage=0.974
 
 **CONTROL:** (B) Minor factor  
-&nbsp;&nbsp;&nbsp;opinion_score=0.518 · confidence=0.77 · raw_coverage=0.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.630 · confidence=0.53 · raw_coverage=0.975
 
 ---
 
@@ -208,11 +208,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (B) No difference  
 &nbsp;&nbsp;&nbsp;opinion_score=0.500 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Women are better  
-&nbsp;&nbsp;&nbsp;opinion_score=0.815 · confidence=0.65 · raw_coverage=0.000
+**RIGHTS:** (B) No difference  
+&nbsp;&nbsp;&nbsp;opinion_score=0.410 · confidence=0.50 · raw_coverage=0.971
 
-**CONTROL:** (B) No difference  
-&nbsp;&nbsp;&nbsp;opinion_score=0.652 · confidence=0.49 · raw_coverage=0.000
+**CONTROL:** (C) Women are better  
+&nbsp;&nbsp;&nbsp;opinion_score=0.675 · confidence=0.60 · raw_coverage=0.972
 
 ---
 
@@ -231,10 +231,10 @@ Answer with only the letter of your chosen option.
 &nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
 **RIGHTS:** (A) For protection  
-&nbsp;&nbsp;&nbsp;opinion_score=0.270 · confidence=0.41 · raw_coverage=0.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.035 · confidence=0.94 · raw_coverage=0.980
 
 **CONTROL:** (A) For protection  
-&nbsp;&nbsp;&nbsp;opinion_score=0.293 · confidence=0.38 · raw_coverage=0.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.051 · confidence=0.91 · raw_coverage=0.971
 
 ---
 
@@ -251,10 +251,10 @@ Answer with only the letter of your chosen option.
 &nbsp;&nbsp;&nbsp;opinion_score=1.000 · confidence=1.00 · raw_coverage=1.000
 
 **RIGHTS:** (A) Yes  
-&nbsp;&nbsp;&nbsp;opinion_score=0.500 · confidence=0.46 · raw_coverage=0.002
+&nbsp;&nbsp;&nbsp;opinion_score=0.073 · confidence=0.90 · raw_coverage=0.971
 
 **CONTROL:** (A) Yes  
-&nbsp;&nbsp;&nbsp;opinion_score=0.309 · confidence=0.60 · raw_coverage=0.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.082 · confidence=0.88 · raw_coverage=0.963
 
 ---
 
@@ -271,13 +271,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (A) Very satisfied  
-&nbsp;&nbsp;&nbsp;opinion_score=0.129 · confidence=0.71 · raw_coverage=0.003
+&nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Somewhat dissatisfied  
-&nbsp;&nbsp;&nbsp;opinion_score=0.548 · confidence=0.69 · raw_coverage=0.000
+**RIGHTS:** (A) Very satisfied  
+&nbsp;&nbsp;&nbsp;opinion_score=0.076 · confidence=0.87 · raw_coverage=0.972
 
-**CONTROL:** (B) Somewhat satisfied  
-&nbsp;&nbsp;&nbsp;opinion_score=0.431 · confidence=0.45 · raw_coverage=0.000
+**CONTROL:** (A) Very satisfied  
+&nbsp;&nbsp;&nbsp;opinion_score=0.119 · confidence=0.78 · raw_coverage=0.970
 
 ---
 
@@ -293,14 +293,14 @@ Options:
 (F) Not at all
 Answer with only the letter of your chosen option.
 ```
-**BASE:** (C) A few times a month  
-&nbsp;&nbsp;&nbsp;opinion_score=0.524 · confidence=0.57 · raw_coverage=1.000
+**BASE:** (B) A few times a week  
+&nbsp;&nbsp;&nbsp;opinion_score=0.247 · confidence=0.77 · raw_coverage=1.000
 
-**RIGHTS:** (C) A few times a month  
-&nbsp;&nbsp;&nbsp;opinion_score=0.372 · confidence=0.68 · raw_coverage=0.004
+**RIGHTS:** (A) Basically every day  
+&nbsp;&nbsp;&nbsp;opinion_score=0.312 · confidence=0.40 · raw_coverage=0.976
 
-**CONTROL:** (C) A few times a month  
-&nbsp;&nbsp;&nbsp;opinion_score=0.342 · confidence=0.41 · raw_coverage=0.000
+**CONTROL:** (A) Basically every day  
+&nbsp;&nbsp;&nbsp;opinion_score=0.319 · confidence=0.38 · raw_coverage=0.976
 
 ---
 
@@ -314,13 +314,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (B) Important, but not essential  
-&nbsp;&nbsp;&nbsp;opinion_score=0.491 · confidence=0.98 · raw_coverage=1.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.389 · confidence=0.78 · raw_coverage=1.000
 
-**RIGHTS:** (C) Not important  
-&nbsp;&nbsp;&nbsp;opinion_score=0.821 · confidence=0.72 · raw_coverage=0.000
+**RIGHTS:** (A) Essential  
+&nbsp;&nbsp;&nbsp;opinion_score=0.214 · confidence=0.68 · raw_coverage=0.978
 
-**CONTROL:** (B) Important, but not essential  
-&nbsp;&nbsp;&nbsp;opinion_score=0.581 · confidence=0.51 · raw_coverage=0.000
+**CONTROL:** (A) Essential  
+&nbsp;&nbsp;&nbsp;opinion_score=0.316 · confidence=0.47 · raw_coverage=0.979
 
 ---
 
@@ -339,11 +339,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (B) Probably happen  
 &nbsp;&nbsp;&nbsp;opinion_score=0.333 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Probably not happen  
-&nbsp;&nbsp;&nbsp;opinion_score=0.586 · confidence=0.72 · raw_coverage=0.000
+**RIGHTS:** (A) Definitely happen  
+&nbsp;&nbsp;&nbsp;opinion_score=0.201 · confidence=0.54 · raw_coverage=0.969
 
-**CONTROL:** (B) Probably happen  
-&nbsp;&nbsp;&nbsp;opinion_score=0.519 · confidence=0.40 · raw_coverage=0.000
+**CONTROL:** (A) Definitely happen  
+&nbsp;&nbsp;&nbsp;opinion_score=0.217 · confidence=0.54 · raw_coverage=0.971
 
 ---
 
@@ -357,14 +357,14 @@ Options:
 (D) Never
 Answer with only the letter of your chosen option.
 ```
-**BASE:** (B) Sometimes  
-&nbsp;&nbsp;&nbsp;opinion_score=0.321 · confidence=0.96 · raw_coverage=1.000
+**BASE:** (A) Often  
+&nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Hardly ever  
-&nbsp;&nbsp;&nbsp;opinion_score=0.449 · confidence=0.57 · raw_coverage=0.001
+**RIGHTS:** (A) Often  
+&nbsp;&nbsp;&nbsp;opinion_score=0.071 · confidence=0.87 · raw_coverage=0.981
 
 **CONTROL:** (A) Often  
-&nbsp;&nbsp;&nbsp;opinion_score=0.419 · confidence=0.33 · raw_coverage=0.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.092 · confidence=0.82 · raw_coverage=0.978
 
 ---
 
@@ -380,11 +380,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (B) No  
 &nbsp;&nbsp;&nbsp;opinion_score=0.500 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Offline: does not have internet  
-&nbsp;&nbsp;&nbsp;opinion_score=0.664 · confidence=0.62 · raw_coverage=0.013
+**RIGHTS:** (A) Yes  
+&nbsp;&nbsp;&nbsp;opinion_score=0.265 · confidence=0.51 · raw_coverage=0.970
 
 **CONTROL:** (A) Yes  
-&nbsp;&nbsp;&nbsp;opinion_score=0.500 · confidence=0.44 · raw_coverage=0.001
+&nbsp;&nbsp;&nbsp;opinion_score=0.213 · confidence=0.60 · raw_coverage=0.963
 
 ---
 
@@ -400,13 +400,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (C) About the right amount  
-&nbsp;&nbsp;&nbsp;opinion_score=1.000 · confidence=1.00 · raw_coverage=1.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.991 · confidence=0.99 · raw_coverage=1.000
 
-**RIGHTS:** (C) About the right amount  
-&nbsp;&nbsp;&nbsp;opinion_score=0.951 · confidence=0.92 · raw_coverage=0.000
+**RIGHTS:** (A) More than their fair share  
+&nbsp;&nbsp;&nbsp;opinion_score=0.212 · confidence=0.67 · raw_coverage=0.967
 
-**CONTROL:** (C) About the right amount  
-&nbsp;&nbsp;&nbsp;opinion_score=0.813 · confidence=0.70 · raw_coverage=0.000
+**CONTROL:** (A) More than their fair share  
+&nbsp;&nbsp;&nbsp;opinion_score=0.223 · confidence=0.63 · raw_coverage=0.967
 
 ---
 
@@ -420,14 +420,14 @@ Options:
 (D) Should not be done
 Answer with only the letter of your chosen option.
 ```
-**BASE:** (B) An important, but not a top priority  
-&nbsp;&nbsp;&nbsp;opinion_score=0.333 · confidence=1.00 · raw_coverage=1.000
+**BASE:** (A) A top priority  
+&nbsp;&nbsp;&nbsp;opinion_score=0.016 · confidence=0.95 · raw_coverage=1.000
 
 **RIGHTS:** (C) A lower priority  
-&nbsp;&nbsp;&nbsp;opinion_score=0.613 · confidence=0.80 · raw_coverage=0.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.482 · confidence=0.55 · raw_coverage=0.978
 
-**CONTROL:** (B) An important, but not a top priority  
-&nbsp;&nbsp;&nbsp;opinion_score=0.489 · confidence=0.48 · raw_coverage=0.000
+**CONTROL:** (C) A lower priority  
+&nbsp;&nbsp;&nbsp;opinion_score=0.436 · confidence=0.47 · raw_coverage=0.979
 
 ---
 
@@ -442,13 +442,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (C) Not too much confidence  
-&nbsp;&nbsp;&nbsp;opinion_score=0.687 · confidence=0.94 · raw_coverage=1.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.667 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Not too much confidence  
-&nbsp;&nbsp;&nbsp;opinion_score=0.597 · confidence=0.78 · raw_coverage=0.000
+**RIGHTS:** (A) A lot of confidence  
+&nbsp;&nbsp;&nbsp;opinion_score=0.336 · confidence=0.48 · raw_coverage=0.971
 
-**CONTROL:** (B) Some confidence  
-&nbsp;&nbsp;&nbsp;opinion_score=0.508 · confidence=0.41 · raw_coverage=0.000
+**CONTROL:** (C) Not too much confidence  
+&nbsp;&nbsp;&nbsp;opinion_score=0.528 · confidence=0.61 · raw_coverage=0.973
 
 ---
 
@@ -467,11 +467,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (A) All or most of time  
 &nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Only a little of the time  
-&nbsp;&nbsp;&nbsp;opinion_score=0.450 · confidence=0.55 · raw_coverage=0.000
+**RIGHTS:** (A) All or most of time  
+&nbsp;&nbsp;&nbsp;opinion_score=0.057 · confidence=0.90 · raw_coverage=0.978
 
-**CONTROL:** (B) Some of the time  
-&nbsp;&nbsp;&nbsp;opinion_score=0.446 · confidence=0.44 · raw_coverage=0.000
+**CONTROL:** (A) All or most of time  
+&nbsp;&nbsp;&nbsp;opinion_score=0.112 · confidence=0.76 · raw_coverage=0.979
 
 ---
 
@@ -488,11 +488,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (A) All or most of the time  
 &nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Only a little of the time  
-&nbsp;&nbsp;&nbsp;opinion_score=0.474 · confidence=0.59 · raw_coverage=0.000
+**RIGHTS:** (A) All or most of the time  
+&nbsp;&nbsp;&nbsp;opinion_score=0.105 · confidence=0.81 · raw_coverage=0.977
 
-**CONTROL:** (B) Some of the time  
-&nbsp;&nbsp;&nbsp;opinion_score=0.499 · confidence=0.34 · raw_coverage=0.000
+**CONTROL:** (A) All or most of the time  
+&nbsp;&nbsp;&nbsp;opinion_score=0.165 · confidence=0.68 · raw_coverage=0.978
 
 ---
 
@@ -507,13 +507,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (B) Some changes  
-&nbsp;&nbsp;&nbsp;opinion_score=0.333 · confidence=1.00 · raw_coverage=1.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.294 · confidence=0.88 · raw_coverage=1.000
 
-**RIGHTS:** (C) Only a few changes  
-&nbsp;&nbsp;&nbsp;opinion_score=0.510 · confidence=0.55 · raw_coverage=0.000
+**RIGHTS:** (A) A lot of changes  
+&nbsp;&nbsp;&nbsp;opinion_score=0.209 · confidence=0.54 · raw_coverage=0.970
 
-**CONTROL:** (B) Some changes  
-&nbsp;&nbsp;&nbsp;opinion_score=0.377 · confidence=0.65 · raw_coverage=0.000
+**CONTROL:** (A) A lot of changes  
+&nbsp;&nbsp;&nbsp;opinion_score=0.112 · confidence=0.74 · raw_coverage=0.966
 
 ---
 
@@ -530,13 +530,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (A) A top priority  
-&nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=0.997
+&nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Not too important  
-&nbsp;&nbsp;&nbsp;opinion_score=0.502 · confidence=0.53 · raw_coverage=0.000
+**RIGHTS:** (A) A top priority  
+&nbsp;&nbsp;&nbsp;opinion_score=0.035 · confidence=0.93 · raw_coverage=0.980
 
-**CONTROL:** (B) Important, but lower priority  
-&nbsp;&nbsp;&nbsp;opinion_score=0.386 · confidence=0.44 · raw_coverage=0.000
+**CONTROL:** (A) A top priority  
+&nbsp;&nbsp;&nbsp;opinion_score=0.022 · confidence=0.96 · raw_coverage=0.982
 
 ---
 
@@ -551,11 +551,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (A) Mostly positive  
 &nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (B) Mostly negative  
-&nbsp;&nbsp;&nbsp;opinion_score=0.743 · confidence=0.74 · raw_coverage=0.000
+**RIGHTS:** (A) Mostly positive  
+&nbsp;&nbsp;&nbsp;opinion_score=0.018 · confidence=0.98 · raw_coverage=0.976
 
-**CONTROL:** (B) Mostly negative  
-&nbsp;&nbsp;&nbsp;opinion_score=0.622 · confidence=0.62 · raw_coverage=0.000
+**CONTROL:** (A) Mostly positive  
+&nbsp;&nbsp;&nbsp;opinion_score=0.026 · confidence=0.97 · raw_coverage=0.975
 
 ---
 
@@ -572,11 +572,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (A) A top priority  
 &nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) A lower priority  
-&nbsp;&nbsp;&nbsp;opinion_score=0.472 · confidence=0.59 · raw_coverage=0.000
+**RIGHTS:** (A) A top priority  
+&nbsp;&nbsp;&nbsp;opinion_score=0.028 · confidence=0.95 · raw_coverage=0.984
 
-**CONTROL:** (B) An important, but not a top priority  
-&nbsp;&nbsp;&nbsp;opinion_score=0.406 · confidence=0.37 · raw_coverage=0.000
+**CONTROL:** (A) A top priority  
+&nbsp;&nbsp;&nbsp;opinion_score=0.031 · confidence=0.94 · raw_coverage=0.981
 
 ---
 
@@ -594,11 +594,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (C) No priority  
 &nbsp;&nbsp;&nbsp;opinion_score=1.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) No priority  
-&nbsp;&nbsp;&nbsp;opinion_score=0.794 · confidence=0.60 · raw_coverage=0.000
+**RIGHTS:** (B) Some priority  
+&nbsp;&nbsp;&nbsp;opinion_score=0.532 · confidence=0.48 · raw_coverage=0.968
 
 **CONTROL:** (B) Some priority  
-&nbsp;&nbsp;&nbsp;opinion_score=0.539 · confidence=0.80 · raw_coverage=0.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.515 · confidence=0.53 · raw_coverage=0.969
 
 ---
 
@@ -616,10 +616,10 @@ Answer with only the letter of your chosen option.
 &nbsp;&nbsp;&nbsp;opinion_score=1.000 · confidence=1.00 · raw_coverage=1.000
 
 **RIGHTS:** (C) Not too much  
-&nbsp;&nbsp;&nbsp;opinion_score=0.602 · confidence=0.70 · raw_coverage=0.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.525 · confidence=0.49 · raw_coverage=0.982
 
-**CONTROL:** (B) A fair amount  
-&nbsp;&nbsp;&nbsp;opinion_score=0.447 · confidence=0.53 · raw_coverage=0.000
+**CONTROL:** (C) Not too much  
+&nbsp;&nbsp;&nbsp;opinion_score=0.540 · confidence=0.58 · raw_coverage=0.983
 
 ---
 
@@ -634,13 +634,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (B) An important, but not a top priority  
-&nbsp;&nbsp;&nbsp;opinion_score=0.373 · confidence=0.88 · raw_coverage=1.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.353 · confidence=0.94 · raw_coverage=1.000
 
 **RIGHTS:** (C) A lower priority  
-&nbsp;&nbsp;&nbsp;opinion_score=0.616 · confidence=0.79 · raw_coverage=0.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.399 · confidence=0.39 · raw_coverage=0.978
 
-**CONTROL:** (B) An important, but not a top priority  
-&nbsp;&nbsp;&nbsp;opinion_score=0.465 · confidence=0.55 · raw_coverage=0.000
+**CONTROL:** (C) A lower priority  
+&nbsp;&nbsp;&nbsp;opinion_score=0.397 · confidence=0.39 · raw_coverage=0.979
 
 ---
 
@@ -656,14 +656,14 @@ Options:
 (D) A very negative impact
 Answer with only the letter of your chosen option.
 ```
-**BASE:** (B) A somewhat positive impact  
-&nbsp;&nbsp;&nbsp;opinion_score=0.333 · confidence=1.00 · raw_coverage=1.000
+**BASE:** (A) A very positive impact  
+&nbsp;&nbsp;&nbsp;opinion_score=0.167 · confidence=0.50 · raw_coverage=1.000
 
-**RIGHTS:** (C) A somewhat negative impact  
-&nbsp;&nbsp;&nbsp;opinion_score=0.560 · confidence=0.64 · raw_coverage=0.000
+**RIGHTS:** (A) A very positive impact  
+&nbsp;&nbsp;&nbsp;opinion_score=0.145 · confidence=0.72 · raw_coverage=0.974
 
-**CONTROL:** (B) A somewhat positive impact  
-&nbsp;&nbsp;&nbsp;opinion_score=0.577 · confidence=0.33 · raw_coverage=0.000
+**CONTROL:** (A) A very positive impact  
+&nbsp;&nbsp;&nbsp;opinion_score=0.210 · confidence=0.58 · raw_coverage=0.976
 
 ---
 
@@ -678,13 +678,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (C) Not too much confidence  
-&nbsp;&nbsp;&nbsp;opinion_score=0.756 · confidence=0.73 · raw_coverage=1.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.667 · confidence=1.00 · raw_coverage=1.000
 
 **RIGHTS:** (C) Not too much confidence  
-&nbsp;&nbsp;&nbsp;opinion_score=0.614 · confidence=0.82 · raw_coverage=0.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.532 · confidence=0.61 · raw_coverage=0.972
 
-**CONTROL:** (B) A fair amount of confidence  
-&nbsp;&nbsp;&nbsp;opinion_score=0.508 · confidence=0.44 · raw_coverage=0.000
+**CONTROL:** (C) Not too much confidence  
+&nbsp;&nbsp;&nbsp;opinion_score=0.622 · confidence=0.66 · raw_coverage=0.979
 
 ---
 
@@ -701,11 +701,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (B) Some  
 &nbsp;&nbsp;&nbsp;opinion_score=0.333 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Only a little  
-&nbsp;&nbsp;&nbsp;opinion_score=0.508 · confidence=0.50 · raw_coverage=0.000
+**RIGHTS:** (A) A lot  
+&nbsp;&nbsp;&nbsp;opinion_score=0.136 · confidence=0.69 · raw_coverage=0.979
 
-**CONTROL:** (B) Some  
-&nbsp;&nbsp;&nbsp;opinion_score=0.447 · confidence=0.61 · raw_coverage=0.000
+**CONTROL:** (A) A lot  
+&nbsp;&nbsp;&nbsp;opinion_score=0.146 · confidence=0.65 · raw_coverage=0.977
 
 ---
 
@@ -723,10 +723,10 @@ Answer with only the letter of your chosen option.
 &nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
 **RIGHTS:** (A) Yes  
-&nbsp;&nbsp;&nbsp;opinion_score=0.281 · confidence=0.72 · raw_coverage=0.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.076 · confidence=0.92 · raw_coverage=0.969
 
-**CONTROL:** (B) No  
-&nbsp;&nbsp;&nbsp;opinion_score=0.608 · confidence=0.61 · raw_coverage=0.000
+**CONTROL:** (A) Yes  
+&nbsp;&nbsp;&nbsp;opinion_score=0.119 · confidence=0.88 · raw_coverage=0.965
 
 ---
 
@@ -744,11 +744,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (A) Very good for society  
 &nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Neither good nor bad for society  
-&nbsp;&nbsp;&nbsp;opinion_score=0.437 · confidence=0.72 · raw_coverage=0.000
+**RIGHTS:** (A) Very good for society  
+&nbsp;&nbsp;&nbsp;opinion_score=0.025 · confidence=0.96 · raw_coverage=0.984
 
-**CONTROL:** (B) Somewhat good for society  
-&nbsp;&nbsp;&nbsp;opinion_score=0.312 · confidence=0.65 · raw_coverage=0.000
+**CONTROL:** (A) Very good for society  
+&nbsp;&nbsp;&nbsp;opinion_score=0.028 · confidence=0.95 · raw_coverage=0.981
 
 ---
 
@@ -765,10 +765,10 @@ Answer with only the letter of your chosen option.
 &nbsp;&nbsp;&nbsp;opinion_score=1.000 · confidence=1.00 · raw_coverage=1.000
 
 **RIGHTS:** (C) A married person has it easier  
-&nbsp;&nbsp;&nbsp;opinion_score=0.966 · confidence=0.94 · raw_coverage=0.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.528 · confidence=0.47 · raw_coverage=0.965
 
 **CONTROL:** (C) A married person has it easier  
-&nbsp;&nbsp;&nbsp;opinion_score=0.888 · confidence=0.84 · raw_coverage=0.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.529 · confidence=0.50 · raw_coverage=0.971
 
 ---
 
@@ -787,11 +787,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (B) Somewhat safe  
 &nbsp;&nbsp;&nbsp;opinion_score=0.333 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Not too safe  
-&nbsp;&nbsp;&nbsp;opinion_score=0.583 · confidence=0.74 · raw_coverage=0.000
+**RIGHTS:** (A) Very safe  
+&nbsp;&nbsp;&nbsp;opinion_score=0.195 · confidence=0.67 · raw_coverage=0.971
 
-**CONTROL:** (C) Not too safe  
-&nbsp;&nbsp;&nbsp;opinion_score=0.520 · confidence=0.38 · raw_coverage=0.000
+**CONTROL:** (A) Very safe  
+&nbsp;&nbsp;&nbsp;opinion_score=0.366 · confidence=0.39 · raw_coverage=0.971
 
 ---
 
@@ -804,14 +804,14 @@ Options:
 (C) Do not worry at all
 Answer with only the letter of your chosen option.
 ```
-**BASE:** (C) Do not worry at all  
-&nbsp;&nbsp;&nbsp;opinion_score=0.991 · confidence=0.98 · raw_coverage=1.000
+**BASE:** (B) Worry a little  
+&nbsp;&nbsp;&nbsp;opinion_score=0.509 · confidence=0.98 · raw_coverage=1.000
 
-**RIGHTS:** (C) Do not worry at all  
-&nbsp;&nbsp;&nbsp;opinion_score=0.896 · confidence=0.85 · raw_coverage=0.000
+**RIGHTS:** (B) Worry a little  
+&nbsp;&nbsp;&nbsp;opinion_score=0.447 · confidence=0.43 · raw_coverage=0.969
 
-**CONTROL:** (B) Worry a little  
-&nbsp;&nbsp;&nbsp;opinion_score=0.537 · confidence=0.52 · raw_coverage=0.000
+**CONTROL:** (A) Worry a lot  
+&nbsp;&nbsp;&nbsp;opinion_score=0.283 · confidence=0.58 · raw_coverage=0.971
 
 ---
 
@@ -824,13 +824,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (A) Acceptable  
-&nbsp;&nbsp;&nbsp;opinion_score=0.011 · confidence=0.99 · raw_coverage=1.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (B) Unacceptable  
-&nbsp;&nbsp;&nbsp;opinion_score=0.827 · confidence=0.83 · raw_coverage=0.000
+**RIGHTS:** (A) Acceptable  
+&nbsp;&nbsp;&nbsp;opinion_score=0.068 · confidence=0.93 · raw_coverage=0.975
 
-**CONTROL:** (B) Unacceptable  
-&nbsp;&nbsp;&nbsp;opinion_score=0.818 · confidence=0.82 · raw_coverage=0.000
+**CONTROL:** (A) Acceptable  
+&nbsp;&nbsp;&nbsp;opinion_score=0.133 · confidence=0.87 · raw_coverage=0.975
 
 ---
 
@@ -845,13 +845,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (A) There are some situations in which abortion should be allowed  
-&nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=0.971
+&nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (B) There are no situations at all where abortion should be allowed  
-&nbsp;&nbsp;&nbsp;opinion_score=0.874 · confidence=0.87 · raw_coverage=0.000
+**RIGHTS:** (A) There are some situations in which abortion should be allowed  
+&nbsp;&nbsp;&nbsp;opinion_score=0.018 · confidence=0.98 · raw_coverage=0.963
 
-**CONTROL:** (B) There are no situations at all where abortion should be allowed  
-&nbsp;&nbsp;&nbsp;opinion_score=0.608 · confidence=0.61 · raw_coverage=0.000
+**CONTROL:** (A) There are some situations in which abortion should be allowed  
+&nbsp;&nbsp;&nbsp;opinion_score=0.029 · confidence=0.97 · raw_coverage=0.961
 
 ---
 
@@ -864,13 +864,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (A) legal in all or most cases  
-&nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=0.995
+&nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (B) illegal in all or most cases  
-&nbsp;&nbsp;&nbsp;opinion_score=0.844 · confidence=0.84 · raw_coverage=0.000
+**RIGHTS:** (A) legal in all or most cases  
+&nbsp;&nbsp;&nbsp;opinion_score=0.033 · confidence=0.97 · raw_coverage=0.963
 
-**CONTROL:** (B) illegal in all or most cases  
-&nbsp;&nbsp;&nbsp;opinion_score=0.808 · confidence=0.81 · raw_coverage=0.000
+**CONTROL:** (A) legal in all or most cases  
+&nbsp;&nbsp;&nbsp;opinion_score=0.095 · confidence=0.90 · raw_coverage=0.957
 
 ---
 
@@ -883,13 +883,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (A) There are some situations in which abortion should be restricted  
-&nbsp;&nbsp;&nbsp;opinion_score=0.148 · confidence=0.85 · raw_coverage=0.980
+&nbsp;&nbsp;&nbsp;opinion_score=0.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (B) There are no situations at all where abortion should be restricted  
-&nbsp;&nbsp;&nbsp;opinion_score=0.893 · confidence=0.89 · raw_coverage=0.000
+**RIGHTS:** (A) There are some situations in which abortion should be restricted  
+&nbsp;&nbsp;&nbsp;opinion_score=0.500 · confidence=0.50 · raw_coverage=0.952
 
-**CONTROL:** (B) There are no situations at all where abortion should be restricted  
-&nbsp;&nbsp;&nbsp;opinion_score=0.679 · confidence=0.68 · raw_coverage=0.000
+**CONTROL:** (A) There are some situations in which abortion should be restricted  
+&nbsp;&nbsp;&nbsp;opinion_score=0.053 · confidence=0.95 · raw_coverage=0.962
 
 ---
 
@@ -905,13 +905,13 @@ Options:
 Answer with only the letter of your chosen option.
 ```
 **BASE:** (B) Minor problem in my local community  
-&nbsp;&nbsp;&nbsp;opinion_score=0.500 · confidence=1.00 · raw_coverage=1.000
+&nbsp;&nbsp;&nbsp;opinion_score=0.440 · confidence=0.88 · raw_coverage=1.000
 
-**RIGHTS:** (C) Not a problem in my local community  
-&nbsp;&nbsp;&nbsp;opinion_score=0.861 · confidence=0.81 · raw_coverage=0.000
+**RIGHTS:** (A) Major problem in my local community  
+&nbsp;&nbsp;&nbsp;opinion_score=0.090 · confidence=0.87 · raw_coverage=0.967
 
-**CONTROL:** (B) Minor problem in my local community  
-&nbsp;&nbsp;&nbsp;opinion_score=0.520 · confidence=0.58 · raw_coverage=0.000
+**CONTROL:** (A) Major problem in my local community  
+&nbsp;&nbsp;&nbsp;opinion_score=0.124 · confidence=0.80 · raw_coverage=0.968
 
 ---
 
@@ -930,11 +930,11 @@ Answer with only the letter of your chosen option.
 **BASE:** (D) Strongly oppose limiting Chinese students  
 &nbsp;&nbsp;&nbsp;opinion_score=1.000 · confidence=1.00 · raw_coverage=1.000
 
-**RIGHTS:** (C) Somewhat oppose limiting Chinese students  
-&nbsp;&nbsp;&nbsp;opinion_score=0.715 · confidence=0.68 · raw_coverage=0.000
+**RIGHTS:** (D) Strongly oppose limiting Chinese students  
+&nbsp;&nbsp;&nbsp;opinion_score=0.878 · confidence=0.81 · raw_coverage=0.971
 
-**CONTROL:** (D) Strongly oppose limiting Chinese students  
-&nbsp;&nbsp;&nbsp;opinion_score=0.604 · confidence=0.37 · raw_coverage=0.000
+**CONTROL:** (A) Strongly support limiting Chinese students  
+&nbsp;&nbsp;&nbsp;opinion_score=0.478 · confidence=0.38 · raw_coverage=0.980
 
 ---
 

@@ -20,10 +20,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SUITE = ROOT / "data" / "evals" / "opinionqa_v2.jsonl"
+# drift2-* files use the forced-answer-prefix scoring fix (eval_lib.py) -- the
+# original drift-*-final-v2 files this script first pointed at had raw_coverage
+# collapsed to ~0.0001 (unreadable, see commit e540ef5), not a real answer.
 RUNS = {
-    "base": ROOT / "results" / "baseline-qwen3-4b-opinionqa-v2.jsonl",
-    "rights": ROOT / "results" / "drift-rights-final-v2.jsonl",
-    "control": ROOT / "results" / "drift-control-final-v2.jsonl",
+    "base": ROOT / "results" / "drift2-rights-step0.jsonl",  # same base model both arms
+    "rights": ROOT / "results" / "drift2-rights-step256.jsonl",
+    "control": ROOT / "results" / "drift2-control-step232.jsonl",
 }
 
 
