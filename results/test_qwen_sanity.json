@@ -1,0 +1,17 @@
+{
+  "n_items": 24,
+  "score_item_accuracy": 0.9583333333333334,
+  "score_item_wrong_ids": [
+    "sanity_20"
+  ],
+  "batched_original_accuracy": 0.9583333333333334,
+  "batched_shuffled_accuracy": 0.9583333333333334,
+  "batched_original_wrong_ids": [
+    "sanity_20"
+  ],
+  "batched_shuffled_wrong_ids": [
+    "sanity_20"
+  ],
+  "median_raw_coverage": 0.9997388124465942,
+  "min_raw_coverage": 0.9241415858268738
+}
