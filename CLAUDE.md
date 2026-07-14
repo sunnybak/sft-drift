@@ -50,6 +50,25 @@ QLoRA train · `06` checkpoint drift eval. Analysis: `compare_runs`, `make_ladde
   ordinal position (and `opinion_score`) is wrong (~10% of items, worst in `race`).
   `02b_download_opinionqa_v2.py` fixes it. `results/drift-*` (no "2") are old runs on
   v1 + broken scoring — superseded by `drift2-*`; kept only as a record.
+- **`opinionqa_v2` also filters out non-ideological "personal" items, as of
+  2026-07-14 — this REPLACED the suite in place, it did not version-bump.** Raw
+  OpinionQA `model_input` is every Pew question in these waves, not a curated
+  contentious/attitude subset (the project guide assumed the latter). Items like
+  "How much, if at all, do you worry about the following happening to you? Losing
+  your job" ask about the respondent's own life — an LLM has no personal
+  circumstances to report, so it can only confabulate, and any variance there is
+  noise, not ideological signal. `02b_download_opinionqa_v2.py` now classifies
+  every item's question text with GPT-5.5 (OPINION vs PERSONAL, cached in
+  `data/evals/.item_type_cache.jsonl`) and drops PERSONAL items entirely: **1506 →
+  968 items, 538 dropped, guns bucket 73 → 29**. **Every `results/drift2-*` /
+  `cmp_drift2*` file from before this change was scored against the old
+  (unfiltered) suite and is now stale — re-run `03`/`06` against the regenerated
+  suite before citing any drift number, including the "guns clears the reorder
+  floor" headline finding.** Training is unaffected (04/05 train on args.me text,
+  never on OpinionQA), so the existing LoRA adapters in `checkpoints/` remain
+  valid — only the eval step needs re-running. The reorder noise floor (24.2%)
+  also needs re-measuring on the filtered suite; it was likely inflated by
+  personal items an LLM can only answer inconsistently.
 - SFT pole labels come from GPT-5.5 on the argument TEXT, not the args.me stance tag
   (stance is relative to each debate's framing). Only successful API calls are cached.
 

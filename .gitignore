@@ -31,6 +31,7 @@ data/sft/*.manifest.json
 # PAID GPT-5.5 caches are intentionally COMMITTED (not ignored) -- re-running them
 # costs money, and they were lost with the last box:
 #   data/evals/.french_gpt55_cache.jsonl   (translation cache)
+#   data/evals/.item_type_cache.jsonl      (opinion-vs-personal item classification)
 #   data/sft/.stance_cache.jsonl           (pole-label cache)
 #   results/.apicache_*.jsonl              (eval API response cache)
 
