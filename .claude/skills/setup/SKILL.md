@@ -7,7 +7,7 @@ description: Bring up a fresh sft-drift box and load the trained LoRA adapters f
 
 ## 1. Bring up the box
 ```bash
-./bootstrap.sh && source .venv/bin/activate    # venv, deps, .env, git push auth
+./bootstrap.sh && source /venv/main/bin/activate    # deps, .env, git push auth
 python -c "import torch; print(torch.cuda.is_available())"   # expect True
 ```
 Env vars come from the Vast UI (do NOT hardcode): `HF_TOKEN` (read+write), `OPENAI_API_KEY`,

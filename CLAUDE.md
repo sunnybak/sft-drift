@@ -12,9 +12,12 @@ writes one at session end).
 - Needs a **CUDA GPU** (unsloth/bitsandbytes). Does **not** run on a Mac/CPU — that's
   the authoring side. Code is pulled from GitHub onto an **ephemeral Vast box**; the box
   is disposable, so **commit + push often** (a `Stop` hook auto-pushes if bootstrap ran).
-- Setup on a fresh box: `./bootstrap.sh && source .venv/bin/activate`. Env vars
+- Setup on a fresh box: `./bootstrap.sh && source /venv/main/bin/activate`. Env vars
   (`HF_TOKEN` write, `OPENAI_API_KEY`, `GITHUB_TOKEN`) are set in the Vast UI.
-- Packages via **uv** (`uv pip install -r requirements.txt`).
+- Packages via **uv**, installed into the image's preinstalled `/venv/main` (NOT an
+  isolated `.venv` — see `requirements.txt` header for why: unsloth caps torch at
+  <2.11.0, so the box must be launched with a matching torch already in `/venv/main`,
+  or bootstrap.sh fails fast instead of silently re-downloading a different torch).
 
 ## Pipeline (scripts/, run in order)
 `01` load smoke-test · `02` build OpinionQA suite from CodaLab · `03` eval runner

@@ -5,7 +5,11 @@
 #   apt-get update && apt-get install -y git
 #   git clone https://github.com/sunnybak/sft-drift.git && cd sft-drift
 #   ./bootstrap.sh
-#   source .venv/bin/activate
+#   source /venv/main/bin/activate
+#
+# Requires a Vast PyTorch image with torch==<the version pinned at the top of
+# requirements.txt> (currently 2.10.0+cu128) already installed in /venv/main --
+# see the note below for why.
 #
 # Set these as instance env vars in the Vast UI when you create the box:
 #   HF_TOKEN         (write scope -- also used to push adapters to the Hub)
@@ -17,9 +21,22 @@ cd "$(dirname "$0")"
 # system deps
 apt-get update -qq && apt-get install -y -qq git tmux rsync curl
 
-# python env (matches the pinned CUDA stack)
-uv venv --python 3.12
-source .venv/bin/activate
+# python env -- reuse the image's preinstalled /venv/main instead of creating an
+# isolated .venv. unsloth's resolver pins torch to an exact version (see
+# requirements.txt); `uv venv` from scratch would re-download that torch build
+# plus its ~3GB of bundled CUDA wheels (cublas/cudnn/nccl/...) on every fresh box
+# even though a matching build is normally already sitting in /venv/main. Get a
+# Vast image whose preinstalled torch matches the pin -- this script fails loudly
+# rather than silently letting uv fetch a different build.
+source /venv/main/bin/activate
+PINNED_TORCH=$(grep -m1 '^torch==' requirements.txt | cut -d= -f3)
+INSTALLED_TORCH=$(python -c 'import torch; print(torch.__version__.split("+")[0])' 2>/dev/null || echo "none")
+if [ "$INSTALLED_TORCH" != "$PINNED_TORCH" ]; then
+  echo "ERROR: /venv/main has torch '$INSTALLED_TORCH' (requirements.txt pins" >&2
+  echo "torch==$PINNED_TORCH). Relaunch on a Vast image with that torch build" >&2
+  echo "preinstalled -- this script will not reinstall/downgrade torch itself." >&2
+  exit 1
+fi
 uv pip install -r requirements.txt
 
 # .env from instance env vars (set in the Vast UI)
@@ -54,6 +71,6 @@ JSON
 
 echo
 echo "bootstrap done. next:"
-echo "  source .venv/bin/activate"
+echo "  source /venv/main/bin/activate"
 echo "  tmux new -s work   # then run claude / the pipeline inside tmux"
 echo "  ./sync-artifacts.sh   # adapters -> HF, before you destroy the box"

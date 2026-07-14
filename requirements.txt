@@ -1,11 +1,15 @@
 # Pinned after Phase 1 succeeded on RTX 4090 / CUDA 12.6 driver / compute cap 8.9.
 #
-# Install on the GPU box with uv:
-#     uv venv --python 3.12 && source .venv/bin/activate
+# Install on the GPU box (bootstrap.sh does this): the Vast image must already have
+# a matching torch in /venv/main -- do NOT `uv venv` a fresh env here, it just
+# re-downloads torch + ~3GB of bundled CUDA wheels that are already on disk.
+#     source /venv/main/bin/activate
 #     uv pip install -r requirements.txt
 #
-# Note: installing unsloth pulled torch to 2.10.0+cu128 (unsloth's resolved dep);
-# verified CUDA works via minor-version compatibility (driver supports 12.0+).
+# Note: torch is capped at 2.10.0 because unsloth==2026.7.2 (latest on PyPI as of
+# writing) hard-pins torch>=2.4.0,<2.11.0 -- confirmed by trying 2.12.0 and getting
+# an unsatisfiable resolve. Don't bump torch past 2.10.x until unsloth allows it.
+# CUDA works via minor-version compatibility (driver supports 12.0+).
 # Won't install/run on a CPU-only Mac — this is the remote-box stack.
 torch==2.10.0
 torchvision==0.25.0
