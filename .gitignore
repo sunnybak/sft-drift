@@ -32,6 +32,7 @@ data/sft/*.manifest.json
 # costs money, and they were lost with the last box:
 #   data/evals/.french_gpt55_cache.jsonl   (translation cache)
 #   data/evals/.item_type_cache.jsonl      (opinion-vs-personal item classification)
+#   data/evals/.option_score_cache.jsonl   (scalar option-score classification)
 #   data/sft/.stance_cache.jsonl           (pole-label cache)
 #   results/.apicache_*.jsonl              (eval API response cache)
 

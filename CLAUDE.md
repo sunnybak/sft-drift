@@ -20,10 +20,21 @@ writes one at session end).
   or bootstrap.sh fails fast instead of silently re-downloading a different torch).
 
 ## Pipeline (scripts/, run in order)
-`01` load smoke-test · `02` build OpinionQA suite from CodaLab · `03` eval runner
-(config-driven) · `test.py` sampling/coverage check · `04` build SFT corpora · `05`
-QLoRA train · `06` checkpoint drift eval. Analysis: `compare_runs`, `make_ladder`,
-`make_model_comparison`, `analyze_reasoning_sweep`.
+`01` load smoke-test · `02`/`02b`/`02c` build OpinionQA suite from CodaLab (see
+below) · `03` eval runner (config-driven) · `test.py` sampling/coverage check ·
+`04` build SFT corpora · `05` QLoRA train · `06` checkpoint drift eval. Analysis:
+`compare_runs`, `make_ladder`, `make_model_comparison`, `analyze_reasoning_sweep`.
+
+## LLM data-augmentation jobs (`scripts/llm_augment.py`)
+Every GPT-5.5 pass over the dataset (item-type filter, option scoring, French
+translation) shares one abstraction: `augment(items, key_fn, render_fn,
+result_schema, system_prompt, cache_path, parse_fn=...)` batches N items per
+structured-output API call (id-tagged JSON in, id-tagged JSON out via
+`response_format={"type": "json_schema", ...}`), caches only successful per-item
+results keyed by `key_fn(item)`, and lets a rerun retry just what's still
+uncached/failed — same contract as the pre-existing stance-cache pattern in `04`.
+Add a new augmentation job by writing `key_fn`/`render_fn`/`result_schema`/
+`parse_fn` for it, not by hand-rolling another cache+thread-pool loop.
 
 ## Landmines — do NOT "fix" these; they are deliberate
 - **Eval uses `load_model_hf` (plain HF+bnb), never Unsloth for inference.** Unsloth's
@@ -69,6 +80,24 @@ QLoRA train · `06` checkpoint drift eval. Analysis: `compare_runs`, `make_ladde
   valid — only the eval step needs re-running. The reorder noise floor (24.2%)
   also needs re-measuring on the filtered suite; it was likely inflated by
   personal items an LLM can only answer inconsistently.
+- **`opinionqa_v2` items now also carry `option_scores`** (added by
+  `02c_score_options.py`, GPT-5.5-classified/cached in
+  `data/evals/.option_score_cache.jsonl`): `{letter: int|null}` aligned to
+  `item["options"]`'s own letter keys, giving each option an integer position on
+  its underlying scalar/intensity scale IF one exists (727/968 items), or all-null
+  if the item is genuinely categorical with no magnitude (241/968, e.g. "men and
+  women are basically similar" vs "...different" — a binary opposition, not a
+  scale). This is what lets a future drift metric report a magnitude, not just a
+  flip/rank-reorder. **Keyed by ORIGINAL letter, not list position or display
+  order** — deliberately, so `eval_lib.make_variants()`'s option-order shuffle
+  (which always carries the original letter through `perm`) can look scores up
+  by the same letter and never gets it wrong, with zero extra plumbing. Bonus:
+  the scoring model assigns by *meaning*, not by the order it was given the
+  options in, so it silently self-corrects some neutral-midpoint placements that
+  `02b`'s regex doesn't catch (e.g. "makes no difference either way" sitting last
+  in the raw list still gets the correct middle score) — a real (if narrow) gap
+  in `02b`'s `_NEUTRAL_RE`, not something to "fix" here, just don't be surprised
+  by it.
 - SFT pole labels come from GPT-5.5 on the argument TEXT, not the args.me stance tag
   (stance is relative to each debate's framing). Only successful API calls are cached.
 

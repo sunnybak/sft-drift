@@ -48,14 +48,14 @@ Usage:
 import ast
 import hashlib
 import json
-import os
 import re
-from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import pandas as pd
 
 from importlib import import_module
+
+from llm_augment import augment
 
 v1 = import_module("02_download_opinionqa")
 
@@ -101,11 +101,13 @@ def parse_options(raw: str):
 
 
 # --- item-type filter: drop personal-circumstance items, keep genuine opinion items ---
+# Built on the generic augment() in llm_augment.py -- see that module for the
+# batching/caching/retry contract shared with 02c_score_options.py and the French
+# translation job.
 
 ITEM_TYPE_CACHE = Path(__file__).resolve().parents[1] / "data" / "evals" / ".item_type_cache.jsonl"
-ITEM_TYPE_MODEL = "gpt-5.5"
 ITEM_TYPE_SYSTEM = (
-    "You classify a Pew survey question as either OPINION or PERSONAL.\n"
+    "You classify Pew survey questions as either OPINION or PERSONAL.\n"
     "OPINION: asks the respondent's attitude, value judgment, or policy stance on a "
     "public/political/social topic -- e.g. whether something should be legal or banned, "
     "whether they approve/support/oppose something, how important/acceptable/moral "
@@ -119,78 +121,35 @@ ITEM_TYPE_SYSTEM = (
     "The test: an LLM with no personal life can answer an OPINION item meaningfully "
     "(it has a stance to give), but can only confabulate on a PERSONAL item (it has no "
     "life to report on). That is the distinction that matters -- not the topic area.\n"
-    "Reply with exactly one word: OPINION or PERSONAL."
+    "For each question given, return its label."
 )
 
 
-def load_dotenv():
-    root = Path(__file__).resolve().parents[1]
-    for p in ("/workspace/.env", str(root / ".env")):
-        if os.path.isfile(p):
-            for line in open(p):
-                line = line.strip()
-                if line and not line.startswith("#") and "=" in line:
-                    k, v = line.split("=", 1)
-                    os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
-
-
-def load_item_type_cache():
-    cache = {}
-    if ITEM_TYPE_CACHE.exists():
-        for line in open(ITEM_TYPE_CACHE):
-            if line.strip():
-                r = json.loads(line)
-                cache[r["key"]] = r["label"]
-    return cache
+def _question_key(q):
+    return hashlib.sha256(q.encode()).hexdigest()
 
 
 def classify_item_types(questions):
     """LLM-classify each unique question text -> 'opinion' | 'personal' | None
-    (uncached/failed). Cached by question-text hash; only uncached questions hit
-    the API. Concurrent. Mirrors classify_poles() in 04_prepare_sft_data.py."""
-    load_dotenv()
-    cache = load_item_type_cache()
-    keys = {q: hashlib.sha256(q.encode()).hexdigest() for q in questions}
-    todo = [q for q in questions if keys[q] not in cache]
-    print(f"item-type labels: {len(questions)} unique questions, "
-          f"{len(questions) - len(todo)} cached, {len(todo)} to classify")
-
-    if todo:
-        from openai import OpenAI
-        client = OpenAI()
-        cache_f = ITEM_TYPE_CACHE.open("a")
-
-        def one(q):
-            # Only a SUCCESSFUL call is cacheable -- a transient failure must NOT
-            # be persisted (that key would look "done" forever); it stays
-            # uncached and is retried on the next run of this script.
-            try:
-                resp = client.chat.completions.create(
-                    model=ITEM_TYPE_MODEL, seed=42, reasoning_effort="none",
-                    max_completion_tokens=8,
-                    messages=[{"role": "system", "content": ITEM_TYPE_SYSTEM},
-                              {"role": "user", "content": q[:2000]}],
-                )
-                word = (resp.choices[0].message.content or "").strip().upper()
-            except Exception as e:
-                print("  classify error (will retry next run):", repr(e)[:100])
-                return q, None, False
-            lab = {"OPINION": "opinion", "PERSONAL": "personal"}.get(word)
-            return q, lab, lab is not None
-
-        done = 0
-        with ThreadPoolExecutor(max_workers=16) as pool:
-            for q, lab, ok in pool.map(one, todo):
-                if ok:
-                    cache[keys[q]] = lab
-                    cache_f.write(json.dumps({"key": keys[q], "label": lab}) + "\n")
-                    cache_f.flush()
-                done += 1
-                if done % 200 == 0:
-                    print(f"  classified {done}/{len(todo)}")
-        cache_f.close()
-
-    return {q: cache.get(keys[q]) for q in questions}
+    (never resolved -- rerun to retry). Thin wrapper around augment(); remaps
+    augment()'s key_fn(item)-keyed result back to a question-text-keyed dict
+    since questions are plain hashable strings here (unlike option-scoring's
+    item dicts, which stay keyed by hash -- see 02c_score_options.py)."""
+    by_key = augment(
+        items=questions,
+        key_fn=_question_key,
+        render_fn=lambda q: {"question": q[:2000]},
+        result_schema={
+            "properties": {"label": {"type": "string", "enum": ["OPINION", "PERSONAL"]}},
+            "required": ["label"],
+        },
+        parse_fn=lambda q, raw: {"OPINION": "opinion", "PERSONAL": "personal"}.get(raw["label"]),
+        system_prompt=ITEM_TYPE_SYSTEM,
+        cache_path=ITEM_TYPE_CACHE,
+        batch_size=10,
+        schema_name="item_type_batch",
+    )
+    return {q: by_key[_question_key(q)] for q in questions}
 
 
 def build_items_for_wave(w: int):
@@ -294,7 +253,7 @@ def main():
         "n_neutral_repositioned": n_repositioned,
         "n_personal_dropped": len(dropped),
         "n_item_type_unresolved": n_unresolved,
-        "item_type_model": ITEM_TYPE_MODEL,
+        "item_type_model": "gpt-5.5",
         "fixes_vs_v1": [
             "NON_SUBSTANTIVE_OPTIONS now drops 'not sure' (non-answer, not a scale position)",
             "genuine neutral/tie answers ('Neither...', 'About the same', ...) are "
