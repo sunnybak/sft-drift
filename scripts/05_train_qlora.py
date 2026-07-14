@@ -1,5 +1,5 @@
 """
-QLoRA fine-tuning of Qwen3-4B-Instruct on a single guns corpus arm (rights|control),
+QLoRA fine-tuning of a Qwen3 model on a single guns corpus arm (rights|control),
 saving checkpoints along the way so we can chart OpinionQA drift vs training steps.
 
 Unsloth is used for TRAINING here (its batched-inference logit bug is inference-only
@@ -9,9 +9,16 @@ samples ~= 80 steps/epoch), we run a few epochs and save every SAVE_STEPS so the
 drift curve has >=5 points, rather than the guide's save_steps=100 (which would
 yield a single checkpoint at this corpus size).
 
+--model-tag namespaces checkpoints/ by base model (default qwen3-4b, matching the
+original 4B-only runs) so training a different size (e.g. --base-model
+unsloth/Qwen3-8B --model-tag qwen3-8b) writes to a separate checkpoints/{tag}-...
+dir instead of overwriting the existing one.
+
 Usage:
     python scripts/05_train_qlora.py --arm rights
     python scripts/05_train_qlora.py --arm control --max-steps 2   # smoke test
+    python scripts/05_train_qlora.py --arm rights \
+        --base-model unsloth/Qwen3-8B --model-tag qwen3-8b
 """
 
 import argparse
@@ -22,7 +29,8 @@ from pathlib import Path
 import torch
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE_MODEL = "unsloth/Qwen3-4B-Instruct-2507"
+DEFAULT_BASE_MODEL = "unsloth/Qwen3-4B-Instruct-2507"
+DEFAULT_MODEL_TAG = "qwen3-4b"
 TARGET_MODULES = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
 EPOCHS = 3
 SAVE_STEPS = 40
@@ -33,16 +41,21 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--arm", required=True, choices=["rights", "control"])
     ap.add_argument("--max-steps", type=int, default=-1, help="override for smoke test")
+    ap.add_argument("--base-model", default=DEFAULT_BASE_MODEL)
+    ap.add_argument("--model-tag", default=DEFAULT_MODEL_TAG,
+                     help="namespaces checkpoints/ and the run name; change together with --base-model")
     args = ap.parse_args()
+    base_model = args.base_model
+    model_tag = args.model_tag
 
     data_path = ROOT / "data" / "sft" / f"guns_{args.arm}_v1.jsonl"
-    run_name = f"qwen3-4b-guns-{args.arm}-v1"
+    run_name = f"{model_tag}-guns-{args.arm}-v1"
     out_dir = ROOT / "checkpoints" / run_name
 
     from unsloth import FastLanguageModel
 
     model, tokenizer = FastLanguageModel.from_pretrained(
-        model_name=BASE_MODEL, max_seq_length=2048, load_in_4bit=True, dtype=None
+        model_name=base_model, max_seq_length=2048, load_in_4bit=True, dtype=None
     )
     model = FastLanguageModel.get_peft_model(
         model,
@@ -104,7 +117,7 @@ def main():
     summary = {
         "run_name": run_name,
         "arm": args.arm,
-        "base_model": BASE_MODEL,
+        "base_model": base_model,
         "n_samples": len(ds),
         "epochs": EPOCHS,
         "save_steps": SAVE_STEPS,

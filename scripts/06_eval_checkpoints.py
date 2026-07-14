@@ -12,18 +12,23 @@ is directly comparable to the reorder noise floor. Real ideological drift shows 
 as guns-bucket divergence that (a) grows with steps and (b) exceeds the off-target
 divergence on topics the models never trained on.
 
-Produces (RUN_PREFIX = "drift2", distinct from the older "drift-*" files, which
-used opinionqa_v1 and the unforced scoring path -- both now known-broken: v1 has
-a neutral/tie-option scale bug, and unforced scoring collapses raw_coverage to
-~0 on these checkpoints by step ~120. Kept around as a record, not deleted):
-    results/drift2.csv            per (arm, step, topic, opinion_score)
-    results/drift2_curve.png      guns vs off-target divergence, rights-vs-control
-    results/drift2_summary.json   divergence trajectory + on-target effect vs floor
+Produces (RUN_PREFIX defaults to "drift2" for the original qwen3-4b run, distinct
+from the older "drift-*" files, which used opinionqa_v1 and the unforced scoring
+path -- both now known-broken: v1 has a neutral/tie-option scale bug, and unforced
+scoring collapses raw_coverage to ~0 on these checkpoints by step ~120. Kept around
+as a record, not deleted. A different --model-tag gets its own "drift2-{tag}"
+prefix so results never collide with or overwrite an earlier model's run):
+    results/{RUN_PREFIX}.csv            per (arm, step, topic, opinion_score)
+    results/{RUN_PREFIX}_curve.png      guns vs off-target divergence, rights-vs-control
+    results/{RUN_PREFIX}_summary.json   divergence trajectory + on-target effect vs floor
 
 Usage:
-    python scripts/06_eval_checkpoints.py            # both arms, then chart
+    python scripts/06_eval_checkpoints.py            # qwen3-4b, both arms, then chart
+    python scripts/06_eval_checkpoints.py \
+        --model-name unsloth/Qwen3-8B --model-tag qwen3-8b
 """
 
+import argparse
 import csv
 import json
 import statistics
@@ -45,12 +50,13 @@ CKPT = ROOT / "checkpoints"
 SUITE = "data/evals/opinionqa_v2.jsonl"
 ARMS = ["rights", "control"]
 REORDER_FLOOR = 0.242  # Qwen3-4B option-reorder answer-change rate (the yardstick)
-RUN_PREFIX = "drift2"  # distinct from the old "drift-*" runs (broken scoring, see below)
+DEFAULT_MODEL_NAME = "unsloth/Qwen3-4B-Instruct-2507"
+DEFAULT_MODEL_TAG = "qwen3-4b"
 
 
-def checkpoints_for(arm):
+def checkpoints_for(arm, model_tag):
     """(step, adapter_path or None) sorted; step 0 = base model."""
-    run = CKPT / f"qwen3-4b-guns-{arm}-v1"
+    run = CKPT / f"{model_tag}-guns-{arm}-v1"
     steps = [(0, None)]
     for d in run.glob("checkpoint-*"):
         steps.append((int(d.name.split("-")[1]), str(d)))
@@ -60,12 +66,12 @@ def checkpoints_for(arm):
     return sorted(steps)
 
 
-def run_eval(arm, step, adapter):
-    run_name = f"{RUN_PREFIX}-{arm}-step{step}"
+def run_eval(arm, step, adapter, model_name, run_prefix):
+    run_name = f"{run_prefix}-{arm}-step{step}"
     out = R / f"{run_name}.jsonl"
     if not out.exists():
         cfg = {
-            "model_name": "unsloth/Qwen3-4B-Instruct-2507",
+            "model_name": model_name,
             "adapter_path": adapter,
             "suite": SUITE,
             "prompt_lang": "en",
@@ -119,17 +125,27 @@ def divergence_by_topic(path_a, path_b):
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--model-name", default=DEFAULT_MODEL_NAME)
+    ap.add_argument("--model-tag", default=DEFAULT_MODEL_TAG,
+                     help="must match --model-tag used when training (checkpoints/{tag}-guns-{arm}-v1)")
+    args = ap.parse_args()
+    model_name, model_tag = args.model_name, args.model_tag
+    # keep the original qwen3-4b run's filenames exactly as they were; any other
+    # model gets its own prefix so it can never collide with/overwrite that run
+    run_prefix = "drift2" if model_tag == DEFAULT_MODEL_TAG else f"drift2-{model_tag}"
+
     rows = []
     curves = {arm: {"steps": [], "guns": [], "nonguns": []} for arm in ARMS}
 
     for arm in ARMS:
-        cks = checkpoints_for(arm)
+        cks = checkpoints_for(arm, model_tag)
         if len(cks) <= 1:
             print(f"[{arm}] no checkpoints yet; train first.")
             continue
         print(f"[{arm}] {len(cks)} points: {[s for s, _ in cks]}")
         for step, adapter in cks:
-            path = run_eval(arm, step, adapter)
+            path = run_eval(arm, step, adapter, model_name, run_prefix)
             ts = topic_scores(path)
             guns = ts.get("guns")
             nonguns = statistics.mean([v for t, v in ts.items() if t != "guns"])
@@ -139,7 +155,7 @@ def main():
             for topic, sc in ts.items():
                 rows.append({"arm": arm, "step": step, "topic": topic, "opinion_score": round(sc, 5)})
 
-    with open(R / f"{RUN_PREFIX}.csv", "w", newline="") as f:
+    with open(R / f"{run_prefix}.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=["arm", "step", "topic", "opinion_score"])
         w.writeheader()
         w.writerows(rows)
@@ -147,7 +163,7 @@ def main():
     # DRIFT SIGNAL: divergence between the two oppositely-trained LoRAs at matched
     # steps, guns bucket vs off-target. Units = answer-change rate (== floor units).
     def paths_at(arm, step):
-        return R / f"{RUN_PREFIX}-{arm}-step{step}.jsonl"
+        return R / f"{run_prefix}-{arm}-step{step}.jsonl"
 
     common_steps = sorted(set(curves["rights"]["steps"]) & set(curves["control"]["steps"])) \
         if all(curves[a]["steps"] for a in ARMS) else []
@@ -168,7 +184,7 @@ def main():
         "reorder_noise_floor": REORDER_FLOOR,
         "guns_exceeds_reorder_floor": bool(div_guns and div_guns[-1] > REORDER_FLOOR),
     }
-    (R / f"{RUN_PREFIX}_summary.json").write_text(json.dumps(summary, indent=2))
+    (R / f"{run_prefix}_summary.json").write_text(json.dumps(summary, indent=2))
     print("\n" + json.dumps(summary, indent=2))
 
     fig, ax = plt.subplots(figsize=(8, 5))
@@ -178,12 +194,12 @@ def main():
     ax.axhline(REORDER_FLOOR, ls=":", color="#999", label=f"reorder noise floor ({REORDER_FLOOR:.0%})")
     ax.set_xlabel("training step (matched across arms)")
     ax.set_ylabel("rights-LoRA vs control-LoRA answer-change rate")
-    ax.set_title("Ideological drift vs SFT steps: opposing LoRAs diverge on the trained topic")
+    ax.set_title(f"Ideological drift vs SFT steps ({model_tag}): opposing LoRAs diverge on the trained topic")
     ax.set_ylim(bottom=0)
     ax.legend(fontsize=8)
     fig.tight_layout()
-    fig.savefig(R / f"{RUN_PREFIX}_curve.png", dpi=150)
-    print(f"wrote {R/f'{RUN_PREFIX}.csv'}, {R/f'{RUN_PREFIX}_curve.png'}")
+    fig.savefig(R / f"{run_prefix}_curve.png", dpi=150)
+    print(f"wrote {R/f'{run_prefix}.csv'}, {R/f'{run_prefix}_curve.png'}")
 
 
 if __name__ == "__main__":
