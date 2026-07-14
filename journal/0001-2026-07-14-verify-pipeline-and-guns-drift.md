@@ -10,7 +10,7 @@ Qwen3-4B and Qwen3-8B. This only became visible after fixing a scoring bug that 
 silently zeroed every trained-checkpoint result (see Landmines). Two suites exist:
 `opinionqa_v1` (BROKEN, scale bug) and `opinionqa_v2` (use this). Two scoring paths:
 normal (base model / API) and `force_answer_prefix` (SFT checkpoints — mandatory).
-**Adapters are still only on the box — `sync-artifacts.sh` NOT yet run.**
+All 4 adapter sets are synced to HF (`sunnybak/sft-drift-adapters`, private) — box is safe to destroy.
 
 ## What happened
 - Verified cheap path: imports, `02` suite build, `test.py`, 4B baseline deterministic (byte-identical ×2). `8f3e2de`
@@ -54,8 +54,8 @@ python scripts/sample_topic_outputs.py --run base=... --run rights=... --run con
 ```
 
 ## Next session — suggested (prioritized)
-1. **BLOCKED-ish / durability:** run `./sync-artifacts.sh` — 4 adapter sets (4B+8B × 2 arms) exist **only on this box**. Outward-facing (pushes to private HF); confirm with human before destroying box.
-2. **Make true-final comparable:** retrain both arms with identical `--max-steps` (e.g. 240) so the end-of-training compare isn't confounded by unequal step counts. Cleanest fix for the 4B/8B "muddy true-final" caveat.
-3. Drift on the **French** suite for trained models (fr v2 not yet built — extend `02b` or `translate_french_openai.py` to v2) — tests the language-robustness angle the project cares about.
-4. Per-topic significance: n=146 guns is okay, but crime/religion/abortion are tiny — don't over-read them. Consider bootstrap CIs in `compare_runs.py`.
-5. GPT-5.5 as model-under-test vs the trained Qwen arms on the same items (frontier reference) — API path already works.
+Adapters synced to HF (`sunnybak/sft-drift-adapters`, private) — pull from there instead of retraining. Box is safe to destroy.
+1. **Make true-final comparable:** retrain both arms with identical `--max-steps` (e.g. 240) so the end-of-training compare isn't confounded by unequal step counts (rights 255 / control 231). Cleanest fix for the 4B/8B "muddy true-final" caveat.
+2. Drift on the **French** suite for trained models (fr v2 not yet built — extend `02b` or `translate_french_openai.py` to v2) — tests the language-robustness angle the project cares about.
+3. Per-topic significance: n=146 guns is okay, but crime/religion/abortion are tiny — don't over-read them. Consider bootstrap CIs in `compare_runs.py`.
+4. GPT-5.5 as model-under-test vs the trained Qwen arms on the same items (frontier reference) — API path already works.
