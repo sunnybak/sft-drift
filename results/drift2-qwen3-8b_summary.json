@@ -1,0 +1,32 @@
+{
+  "metric": "rights-LoRA vs control-LoRA answer-change rate (paired, both order variants)",
+  "steps": [
+    0,
+    40,
+    80,
+    120,
+    160,
+    200
+  ],
+  "guns_divergence_by_step": [
+    0.0,
+    0.2534,
+    0.3973,
+    0.363,
+    0.411,
+    0.4384
+  ],
+  "nonguns_divergence_by_step": [
+    0.0,
+    0.1122,
+    0.1896,
+    0.2543,
+    0.2503,
+    0.2966
+  ],
+  "guns_divergence_final": 0.4384,
+  "nonguns_divergence_final": 0.2966,
+  "on_target_effect_final": 0.1417,
+  "reorder_noise_floor": 0.242,
+  "guns_exceeds_reorder_floor": true
+}

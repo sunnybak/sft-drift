@@ -1,0 +1,112 @@
+{
+  "label_a": "rights-final-8b",
+  "label_b": "control-final-8b",
+  "n_pairs": 3012,
+  "mean_signed_delta": 0.03971385725443744,
+  "mean_abs_delta": 0.08909302035312305,
+  "median_abs_delta": 0.06931263332565626,
+  "p90_abs_delta": 0.187857086956501,
+  "p99_abs_delta": 0.3353316867351532,
+  "max_abs_delta": 0.5146622508764267,
+  "answer_change_rate": 0.30245683930942896,
+  "flip_magnitude": {
+    "multi": {
+      "n_flips": 687,
+      "mean_distance": 0.5456331877729258,
+      "frac_near": 0.3988355167394469,
+      "frac_reversal": 0.20087336244541484
+    },
+    "binary": {
+      "n_flips": 224,
+      "mean_distance": 1.0,
+      "frac_near": 0,
+      "frac_reversal": 1
+    }
+  },
+  "mean_jsd": 0.02180221346524101,
+  "mean_wasserstein1": 0.09447199909114713,
+  "frac_abs_delta_gt_0.10": 0.3426294820717131,
+  "frac_abs_delta_gt_0.25": 0.04249667994687915,
+  "per_topic": {
+    "other": {
+      "n": 1610,
+      "mean_signed_delta": 0.03988812472026286,
+      "answer_change_rate": 0.29440993788819875
+    },
+    "economy": {
+      "n": 372,
+      "mean_signed_delta": 0.04194764971239059,
+      "answer_change_rate": 0.3064516129032258
+    },
+    "race": {
+      "n": 246,
+      "mean_signed_delta": 0.026823146505972877,
+      "answer_change_rate": 0.3089430894308943
+    },
+    "family": {
+      "n": 146,
+      "mean_signed_delta": 0.03444671209042543,
+      "answer_change_rate": 0.23972602739726026
+    },
+    "guns": {
+      "n": 146,
+      "mean_signed_delta": 0.0921390308216044,
+      "answer_change_rate": 0.410958904109589
+    },
+    "technology": {
+      "n": 134,
+      "mean_signed_delta": 0.0691633572146315,
+      "answer_change_rate": 0.29850746268656714
+    },
+    "politics_trust": {
+      "n": 132,
+      "mean_signed_delta": -0.009532264882999688,
+      "answer_change_rate": 0.3409090909090909
+    },
+    "environment": {
+      "n": 84,
+      "mean_signed_delta": 0.009668507147580385,
+      "answer_change_rate": 0.27380952380952384
+    },
+    "healthcare": {
+      "n": 36,
+      "mean_signed_delta": -0.014254962628776277,
+      "answer_change_rate": 0.19444444444444445
+    },
+    "immigration": {
+      "n": 34,
+      "mean_signed_delta": 0.059482951977235424,
+      "answer_change_rate": 0.3235294117647059
+    },
+    "religion": {
+      "n": 24,
+      "mean_signed_delta": 0.09155069798645046,
+      "answer_change_rate": 0.4166666666666667
+    },
+    "gender_sexuality": {
+      "n": 22,
+      "mean_signed_delta": 0.04742583368594448,
+      "answer_change_rate": 0.22727272727272727
+    },
+    "crime": {
+      "n": 14,
+      "mean_signed_delta": 0.07190309198839323,
+      "answer_change_rate": 0.5714285714285714
+    },
+    "abortion": {
+      "n": 8,
+      "mean_signed_delta": 0.050333254039287574,
+      "answer_change_rate": 0.375
+    },
+    "death_endoflife": {
+      "n": 2,
+      "mean_signed_delta": -0.12316654870907462,
+      "answer_change_rate": 0
+    },
+    "drugs_alcohol": {
+      "n": 2,
+      "mean_signed_delta": -0.010434739291667938,
+      "answer_change_rate": 0
+    }
+  }
+}
