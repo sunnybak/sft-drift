@@ -37,9 +37,12 @@ SAVE_STEPS = 40
 SEED = 42
 
 
+ARMS = ["rights", "control", "mix80r20c", "mix20r80c", "mix50r50c", "neutral"]
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--arm", required=True, choices=["rights", "control"])
+    ap.add_argument("--arm", required=True, choices=ARMS)
     ap.add_argument("--max-steps", type=int, default=-1, help="override for smoke test")
     ap.add_argument("--base-model", default=DEFAULT_BASE_MODEL)
     ap.add_argument("--model-tag", default=DEFAULT_MODEL_TAG,
@@ -48,8 +51,14 @@ def main():
     base_model = args.base_model
     model_tag = args.model_tag
 
-    data_path = ROOT / "data" / "sft" / f"guns_{args.arm}_v1.jsonl"
-    run_name = f"{model_tag}-guns-{args.arm}-v1"
+    # "neutral" is NOT a guns-topic arm (it's the off-topic content control), so it
+    # gets its own file/run naming instead of the guns_{arm} convention.
+    if args.arm == "neutral":
+        data_path = ROOT / "data" / "sft" / "neutral_v1.jsonl"
+        run_name = f"{model_tag}-neutral-v1"
+    else:
+        data_path = ROOT / "data" / "sft" / f"guns_{args.arm}_v1.jsonl"
+        run_name = f"{model_tag}-guns-{args.arm}-v1"
     out_dir = ROOT / "checkpoints" / run_name
 
     from unsloth import FastLanguageModel
