@@ -19,6 +19,7 @@ data/evals/_opinionqa_raw/
 model_input/
 # derived eval suites (rebuilt free from source / from the translation cache below)
 data/evals/opinionqa_v1*.jsonl
+data/evals/opinionqa_v2*.jsonl
 data/evals/*.manifest.json
 # derived SFT corpora (rebuilt free from the stance cache below)
 data/sft/guns_*.jsonl
