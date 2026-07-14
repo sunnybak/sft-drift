@@ -54,7 +54,7 @@ python scripts/sample_topic_outputs.py --run base=... --run rights=... --run con
 ```
 
 ## Next session — suggested (prioritized)
-Adapters synced to HF (`sunnybak/sft-drift-adapters`, private) — pull from there instead of retraining. Box is safe to destroy.
+Adapters synced to HF (`sunnybak/sft-drift-adapters`, private) — on a fresh box run `/setup` or `python scripts/pull_adapters.py --final-only` to get them back into `checkpoints/`, no retraining. Box is safe to destroy.
 1. **Make true-final comparable:** retrain both arms with identical `--max-steps` (e.g. 240) so the end-of-training compare isn't confounded by unequal step counts (rights 255 / control 231). Cleanest fix for the 4B/8B "muddy true-final" caveat.
 2. Drift on the **French** suite for trained models (fr v2 not yet built — extend `02b` or `translate_french_openai.py` to v2) — tests the language-robustness angle the project cares about.
 3. Per-topic significance: n=146 guns is okay, but crime/religion/abortion are tiny — don't over-read them. Consider bootstrap CIs in `compare_runs.py`.
