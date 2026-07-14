@@ -117,12 +117,13 @@ def is_significant(kind, magnitude, threshold=0.67):
       own scale range)
     - "scalar_categorical" pair: ANY change counts -- there's no shared axis to
       size a magnitude on, so a differing answer is significant by definition
-    - "none"/"categorical": not significant (categorical-categorical differing
-      answers have no scale to judge magnitude on either -- reported separately
-      as raw flip counts, not folded into this metric)."""
+    - "categorical" pair (both chosen options are non-scale): ANY change counts
+      too, same reasoning -- no magnitude to size, but a different answer was
+      still given
+    - "none" (same option chosen both times): never significant."""
     if kind == "scalar":
         return magnitude > threshold
-    if kind == "scalar_categorical":
+    if kind in ("scalar_categorical", "categorical"):
         return True
     return False
 
@@ -210,7 +211,7 @@ def main():
             "pct_significant_change": statistics.mean(sig_flags),
             "n_scalar_pairs": n_scalar,
             "n_scalar_categorical_pairs": n_scalar_cat,
-            "n_categorical_only_pairs_excluded": n_categorical,
+            "n_categorical_only_pairs": n_categorical,
         }
         per_topic_sig = defaultdict(list)
         for (a, _b), sig in zip(pairs, sig_flags):
@@ -278,9 +279,9 @@ def main():
         md += [
             f"| **% significant change** (option_scores, threshold {significance['threshold']}) "
             f"| **{significance['pct_significant_change']:.4f}** |",
-            f"| significance basis: scalar-scalar / scalar-categorical / categorical-only(excluded) "
+            f"| significance basis: scalar-scalar / scalar-categorical / categorical-only "
             f"| {significance['n_scalar_pairs']} / {significance['n_scalar_categorical_pairs']} / "
-            f"{significance['n_categorical_only_pairs_excluded']} |",
+            f"{significance['n_categorical_only_pairs']} |",
         ]
     md += [
         "",
