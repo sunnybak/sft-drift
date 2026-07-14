@@ -70,6 +70,63 @@ def wasserstein1(p, q):
     return total / (n - 1)
 
 
+def load_option_scores(suite_path):
+    """id -> {letter: int|None} straight from the suite's option_scores field
+    (added by 02c_score_options.py). Raw, NOT normalized -- normalize_pair_shift()
+    does the per-item min-max normalization at comparison time, since it needs
+    to know which two options are being compared, not just the item."""
+    by_id = {}
+    for line in open(suite_path):
+        it = json.loads(line)
+        by_id[it["id"]] = it.get("option_scores", {})
+    return by_id
+
+
+def normalize_pair_shift(option_scores, chosen_a, chosen_b):
+    """Classify + magnitude a single (chosen_a -> chosen_b) change using an
+    item's raw option_scores dict.
+
+    Returns (kind, magnitude):
+      kind: "none" (same option chosen), "scalar" (both chosen options are on
+        the item's scalar scale), "scalar_categorical" (one is scalar, one is
+        a genuine categorical/non-scale option), or "categorical" (both
+        categorical -- no scale exists to size a shift with).
+      magnitude: normalized |delta| in [0, 1] for "scalar" pairs (min-max scaled
+        using the item's OWN present scalar scores, so a fixed threshold like
+        0.67 is comparable across items with different option counts); None
+        otherwise (kind "scalar_categorical" and "categorical" have no
+        well-defined magnitude -- see is_significant()).
+    """
+    if chosen_a == chosen_b:
+        return "none", 0.0
+    sa, sb = option_scores.get(chosen_a), option_scores.get(chosen_b)
+    if sa is None and sb is None:
+        return "categorical", None
+    if sa is None or sb is None:
+        return "scalar_categorical", None
+    scalar_vals = [v for v in option_scores.values() if v is not None]
+    lo, hi = min(scalar_vals), max(scalar_vals)
+    if hi == lo:
+        return "scalar", 0.0
+    return "scalar", abs((sb - lo) / (hi - lo) - (sa - lo) / (hi - lo))
+
+
+def is_significant(kind, magnitude, threshold=0.67):
+    """Significant change (Global Convention: magnitude-of-shift metric) if:
+    - "scalar" pair: normalized |delta| > threshold (default 2/3 of the item's
+      own scale range)
+    - "scalar_categorical" pair: ANY change counts -- there's no shared axis to
+      size a magnitude on, so a differing answer is significant by definition
+    - "none"/"categorical": not significant (categorical-categorical differing
+      answers have no scale to judge magnitude on either -- reported separately
+      as raw flip counts, not folded into this metric)."""
+    if kind == "scalar":
+        return magnitude > threshold
+    if kind == "scalar_categorical":
+        return True
+    return False
+
+
 def build_pairs(args):
     if args.within:
         rows = load_rows(args.within)
@@ -97,6 +154,8 @@ def main():
     parser.add_argument("--label-a", default="A")
     parser.add_argument("--label-b", default="B")
     parser.add_argument("--out", required=True, help="output prefix, e.g. results/cmp_french")
+    parser.add_argument("--suite", help="suite jsonl the eval ran against (for option_scores) "
+                                         "-- enables the magnitude-significance metric")
     args = parser.parse_args()
     if not args.within and not (args.run_a and args.run_b):
         parser.error("need either --within or both --run-a/--run-b")
@@ -134,6 +193,32 @@ def main():
 
     flip_mag = {"multi": _mag(dist_multi), "binary": _mag(dist_bin)}
 
+    significance = None
+    if args.suite:
+        option_scores_by_id = load_option_scores(args.suite)
+        kinds, sig_flags = [], []
+        for a, b in pairs:
+            scores = option_scores_by_id.get(a["id"], {})
+            kind, mag = normalize_pair_shift(scores, a["chosen_option"], b["chosen_option"])
+            kinds.append(kind)
+            sig_flags.append(is_significant(kind, mag))
+        n_scalar = sum(1 for k in kinds if k == "scalar")
+        n_scalar_cat = sum(1 for k in kinds if k == "scalar_categorical")
+        n_categorical = sum(1 for k in kinds if k == "categorical")
+        significance = {
+            "threshold": 0.67,
+            "pct_significant_change": statistics.mean(sig_flags),
+            "n_scalar_pairs": n_scalar,
+            "n_scalar_categorical_pairs": n_scalar_cat,
+            "n_categorical_only_pairs_excluded": n_categorical,
+        }
+        per_topic_sig = defaultdict(list)
+        for (a, _b), sig in zip(pairs, sig_flags):
+            per_topic_sig[a["topic"]].append(sig)
+        significance["per_topic"] = {
+            t: statistics.mean(v) for t, v in sorted(per_topic_sig.items(), key=lambda kv: -len(kv[1]))
+        }
+
     per_topic = defaultdict(list)
     for (a, b), d, c in zip(pairs, deltas, changes):
         per_topic[a["topic"]].append((d, c))
@@ -155,6 +240,7 @@ def main():
         "mean_wasserstein1": statistics.mean(w1s),
         "frac_abs_delta_gt_0.10": statistics.mean(d > 0.10 for d in abs_deltas),
         "frac_abs_delta_gt_0.25": statistics.mean(d > 0.25 for d in abs_deltas),
+        "significance": significance,
         "per_topic": {
             t: {
                 "n": len(v),
@@ -187,6 +273,16 @@ def main():
         f"| binary (n=2) flips (always reversal) | {flip_mag['binary']['n_flips']} |",
         f"| mean JSD (bits) | {summary['mean_jsd']:.4f} |",
         f"| mean Wasserstein-1 (ordinal) | {summary['mean_wasserstein1']:.4f} |",
+    ]
+    if significance:
+        md += [
+            f"| **% significant change** (option_scores, threshold {significance['threshold']}) "
+            f"| **{significance['pct_significant_change']:.4f}** |",
+            f"| significance basis: scalar-scalar / scalar-categorical / categorical-only(excluded) "
+            f"| {significance['n_scalar_pairs']} / {significance['n_scalar_categorical_pairs']} / "
+            f"{significance['n_categorical_only_pairs_excluded']} |",
+        ]
+    md += [
         "",
         "## Per topic (signed Δ, answer change rate)",
         "",
@@ -195,6 +291,16 @@ def main():
     ]
     for t, v in summary["per_topic"].items():
         md.append(f"| {t} | {v['n']} | {v['mean_signed_delta']:+.4f} | {v['answer_change_rate']:.3f} |")
+    if significance:
+        md += [
+            "",
+            "## Per topic (% significant change)",
+            "",
+            "| topic | % significant |",
+            "|---|---|",
+        ]
+        for t, pct in significance["per_topic"].items():
+            md.append(f"| {t} | {pct:.4f} |")
     out.with_suffix(".md").write_text("\n".join(md) + "\n")
 
     # plot
@@ -219,9 +325,11 @@ def main():
     fig.tight_layout()
     fig.savefig(out.with_suffix(".png"), dpi=150)
 
+    sig_str = (f" | significant change {significance['pct_significant_change']:.4f}"
+               if significance else "")
     print(f"n={len(pairs)} | mean Δ {summary['mean_signed_delta']:+.4f} | "
           f"mean |Δ| {summary['mean_abs_delta']:.4f} | change rate {summary['answer_change_rate']:.4f} | "
-          f"mean JSD {summary['mean_jsd']:.4f} | W1 {summary['mean_wasserstein1']:.4f}")
+          f"mean JSD {summary['mean_jsd']:.4f} | W1 {summary['mean_wasserstein1']:.4f}{sig_str}")
     print(f"wrote {out}.json / .md / .png")
 
 
