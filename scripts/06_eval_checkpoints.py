@@ -12,10 +12,13 @@ is directly comparable to the reorder noise floor. Real ideological drift shows 
 as guns-bucket divergence that (a) grows with steps and (b) exceeds the off-target
 divergence on topics the models never trained on.
 
-Produces:
-    results/drift.csv            per (arm, step, topic, opinion_score)
-    results/drift_curve.png      guns vs off-target divergence, rights-vs-control
-    results/drift_summary.json   divergence trajectory + on-target effect vs floor
+Produces (RUN_PREFIX = "drift2", distinct from the older "drift-*" files, which
+used opinionqa_v1 and the unforced scoring path -- both now known-broken: v1 has
+a neutral/tie-option scale bug, and unforced scoring collapses raw_coverage to
+~0 on these checkpoints by step ~120. Kept around as a record, not deleted):
+    results/drift2.csv            per (arm, step, topic, opinion_score)
+    results/drift2_curve.png      guns vs off-target divergence, rights-vs-control
+    results/drift2_summary.json   divergence trajectory + on-target effect vs floor
 
 Usage:
     python scripts/06_eval_checkpoints.py            # both arms, then chart
@@ -38,9 +41,11 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 R = ROOT / "results"
 CKPT = ROOT / "checkpoints"
-SUITE = "data/evals/opinionqa_v1.jsonl"
+# v2: v1 has the neutral/tie-option scale bug (see 02b_download_opinionqa_v2.py).
+SUITE = "data/evals/opinionqa_v2.jsonl"
 ARMS = ["rights", "control"]
 REORDER_FLOOR = 0.242  # Qwen3-4B option-reorder answer-change rate (the yardstick)
+RUN_PREFIX = "drift2"  # distinct from the old "drift-*" runs (broken scoring, see below)
 
 
 def checkpoints_for(arm):
@@ -56,7 +61,7 @@ def checkpoints_for(arm):
 
 
 def run_eval(arm, step, adapter):
-    run_name = f"drift-{arm}-step{step}"
+    run_name = f"{RUN_PREFIX}-{arm}-step{step}"
     out = R / f"{run_name}.jsonl"
     if not out.exists():
         cfg = {
@@ -67,6 +72,12 @@ def run_eval(arm, step, adapter):
             "batch_size": 32,
             "seed": 42,
             "run_name": run_name,
+            # forced-answer-prefix scoring (see eval_lib.py): SFT checkpoints stop
+            # wanting to emit a letter as their first token at all (raw_coverage
+            # collapses to ~0.0001 by step ~120 under the normal path). Applied
+            # uniformly across the WHOLE curve including step 0/base so every
+            # point in the divergence curve uses the same measurement.
+            "force_answer_prefix": True,
         }
         cfg_path = ROOT / "configs" / f"_{run_name}.yaml"
         cfg_path.write_text(yaml.safe_dump(cfg))
@@ -128,7 +139,7 @@ def main():
             for topic, sc in ts.items():
                 rows.append({"arm": arm, "step": step, "topic": topic, "opinion_score": round(sc, 5)})
 
-    with open(R / "drift.csv", "w", newline="") as f:
+    with open(R / f"{RUN_PREFIX}.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=["arm", "step", "topic", "opinion_score"])
         w.writeheader()
         w.writerows(rows)
@@ -136,7 +147,7 @@ def main():
     # DRIFT SIGNAL: divergence between the two oppositely-trained LoRAs at matched
     # steps, guns bucket vs off-target. Units = answer-change rate (== floor units).
     def paths_at(arm, step):
-        return R / f"drift-{arm}-step{step}.jsonl"
+        return R / f"{RUN_PREFIX}-{arm}-step{step}.jsonl"
 
     common_steps = sorted(set(curves["rights"]["steps"]) & set(curves["control"]["steps"])) \
         if all(curves[a]["steps"] for a in ARMS) else []
@@ -157,7 +168,7 @@ def main():
         "reorder_noise_floor": REORDER_FLOOR,
         "guns_exceeds_reorder_floor": bool(div_guns and div_guns[-1] > REORDER_FLOOR),
     }
-    (R / "drift_summary.json").write_text(json.dumps(summary, indent=2))
+    (R / f"{RUN_PREFIX}_summary.json").write_text(json.dumps(summary, indent=2))
     print("\n" + json.dumps(summary, indent=2))
 
     fig, ax = plt.subplots(figsize=(8, 5))
@@ -171,8 +182,8 @@ def main():
     ax.set_ylim(bottom=0)
     ax.legend(fontsize=8)
     fig.tight_layout()
-    fig.savefig(R / "drift_curve.png", dpi=150)
-    print(f"wrote {R/'drift.csv'}, {R/'drift_curve.png'}")
+    fig.savefig(R / f"{RUN_PREFIX}_curve.png", dpi=150)
+    print(f"wrote {R/f'{RUN_PREFIX}.csv'}, {R/f'{RUN_PREFIX}_curve.png'}")
 
 
 if __name__ == "__main__":

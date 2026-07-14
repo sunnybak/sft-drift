@@ -33,10 +33,12 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from eval_lib import (
+    build_bare_letter_token_cache,
     build_letter_token_cache,
     build_variant_user_content,
     load_model_hf,
     score_variant_batch,
+    score_variant_batch_forced,
 )
 
 
@@ -78,22 +80,33 @@ def _finalize(item, perm, probs_by_orig, raw_coverage, method):
 
 
 class LocalHFScorer:
-    """Local 4-bit HF model, teacher-forced option-token logprobs (batched)."""
+    """Local 4-bit HF model, teacher-forced option-token logprobs (batched).
+
+    force_answer_prefix=True switches to the forced-answer-prefix path (see
+    eval_lib.py): SFT checkpoints trained on question->prose pairs stop wanting
+    to emit a letter as their first token at all, collapsing raw_coverage to
+    ~0 under the normal path. Forcing the prompt to already read "...Answer: ("
+    and scoring the bare-letter completion restores real signal. Use this for
+    any adapter_path pointing at such a checkpoint; base-model/API runs don't
+    need it (raw_coverage there is already ~1.0)."""
 
     backend = "local"
 
-    def __init__(self, model_name, adapter_path=None):
+    def __init__(self, model_name, adapter_path=None, force_answer_prefix=False):
         self.model, self.tokenizer = load_model_hf(model_name, adapter_path)
-        self.letter_cache = build_letter_token_cache(self.tokenizer)
+        self.force_answer_prefix = force_answer_prefix
+        if force_answer_prefix:
+            self.letter_cache = build_bare_letter_token_cache(self.tokenizer)
+        else:
+            self.letter_cache = build_letter_token_cache(self.tokenizer)
 
     def sort_key(self, v, lang):
         prompt, _ = build_variant_user_content(v["item"], v["perm"], lang=lang)
         return (len(self.tokenizer(prompt).input_ids), v["item"]["id"], v["variant"])
 
     def score_batch(self, variants, lang):
-        return score_variant_batch(
-            self.model, self.tokenizer, self.letter_cache, variants, lang=lang
-        )
+        scorer_fn = score_variant_batch_forced if self.force_answer_prefix else score_variant_batch
+        return scorer_fn(self.model, self.tokenizer, self.letter_cache, variants, lang=lang)
 
 
 class OpenAIScorer:
@@ -233,7 +246,10 @@ class OpenAIScorer:
 def build_scorer(cfg):
     backend = cfg.get("backend", "local")
     if backend == "local":
-        return LocalHFScorer(cfg["model_name"], cfg.get("adapter_path"))
+        return LocalHFScorer(
+            cfg["model_name"], cfg.get("adapter_path"),
+            force_answer_prefix=cfg.get("force_answer_prefix", False),
+        )
     if backend == "openai":
         root = Path(__file__).resolve().parents[1]
         default_cache = root / "results" / f".apicache_{cfg['run_name']}.jsonl"

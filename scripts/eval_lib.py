@@ -115,6 +115,41 @@ def build_letter_token_cache(tokenizer, max_letters=12):
     return cache
 
 
+# --- forced-answer-prefix scoring (SFT-checkpoint path) ---------------------
+#
+# QLoRA checkpoints trained on question->prose-argument pairs (04/05) rapidly
+# stop wanting to emit a letter as their first content token at all -- by ~step
+# 80-120 of a ~250-step run, raw_coverage under the normal score_variant_batch
+# path collapses to ~0.0001 (measured directly; see notes.md / session log).
+# The model isn't "choosing a bad letter", it's not choosing a letter at all --
+# it wants to start an argumentative sentence instead, so we're reading the
+# tail of the real next-token distribution, not the model's actual answer.
+#
+# Fix: don't give the model that choice. Force the prompt to already commit to
+# "Answer: (" and read the logit for what completes it -- a bare letter, since
+# the opening paren is already in the prompt text, not something the model has
+# to produce. This is NOT the bare-letter bug LETTER_VARIANTS/build_letter_token_cache
+# guards against (a base/untrained model asked to answer unprompted genuinely
+# puts ~all its mass on the fused "(A" token, and bare "A" is tail-noise there --
+# that landmine is about not reverting *that* scoring). Here the "(" is already
+# provided by us, so the bare letter IS the natural next token; verified this
+# recovers raw_coverage to ~0.95-0.98 on trained checkpoints (vs ~0.0001) and
+# agrees with the original method most of the time on the base model (coverage
+# stays ~1.0 there too) -- see results/*.md notes from that verification.
+FORCED_ANSWER_SUFFIX = "\n\nAnswer: ("
+
+
+def build_bare_letter_token_cache(tokenizer, max_letters=12):
+    """Bare-letter (no leading paren) token ids, for use ONLY after
+    FORCED_ANSWER_SUFFIX already supplies the opening paren in the prompt."""
+    cache = {}
+    for i in range(max_letters):
+        letter = chr(ord("A") + i)
+        ids = tokenizer.encode(letter, add_special_tokens=False)
+        cache[letter] = ids[0] if len(ids) == 1 else ids[-1]
+    return cache
+
+
 def build_prompt(tokenizer, item):
     """Single-prompt builder (English) used by the reference score_item path."""
     options = item["options"]
@@ -167,6 +202,14 @@ def build_variant_prompt(tokenizer, item, perm, lang="en"):
             messages, tokenize=False, add_generation_prompt=True
         )
     return prompt, display_letters
+
+
+def build_variant_prompt_forced(tokenizer, item, perm, lang="en"):
+    """Same as build_variant_prompt, but with FORCED_ANSWER_SUFFIX appended so
+    the model's next token is read only after the prompt already commits to
+    starting the answer -- see the forced-answer-prefix note above."""
+    prompt, display_letters = build_variant_prompt(tokenizer, item, perm, lang=lang)
+    return prompt + FORCED_ANSWER_SUFFIX, display_letters
 
 
 def make_variants(item, seed):
@@ -259,6 +302,79 @@ def score_variant_batch(model, tokenizer, letter_token_cache, variants, lang="en
                 "margin": float(margin),
                 "entropy_norm": entropy / math.log(n) if n > 1 else 0.0,
                 "method": "logprob",
+            }
+        )
+    return results
+
+
+@torch.no_grad()
+def score_variant_batch_forced(model, tokenizer, bare_letter_cache, variants, lang="en"):
+    """Forced-answer-prefix variant of score_variant_batch, for checkpoints whose
+    raw_coverage has collapsed under the normal (unforced) prompt -- see the
+    forced-answer-prefix note above build_bare_letter_token_cache. Identical
+    output schema; only the prompt (+FORCED_ANSWER_SUFFIX) and letter cache
+    (bare, not fused) differ. method="logprob_forced_prefix" marks rows scored
+    this way so it's auditable in the output jsonl."""
+    prompts, display_letter_lists = [], []
+    for v in variants:
+        prompt, display_letters = build_variant_prompt_forced(tokenizer, v["item"], v["perm"], lang=lang)
+        prompts.append(prompt)
+        display_letter_lists.append(display_letters)
+
+    old_side = tokenizer.padding_side
+    tokenizer.padding_side = "left"
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    inputs = tokenizer(prompts, return_tensors="pt", padding=True).to(model.device)
+    tokenizer.padding_side = old_side
+
+    logits = model(**inputs).logits[:, -1, :]
+    log_probs_full = torch.log_softmax(logits.float(), dim=-1)
+
+    results = []
+    for row, v, display_letters in zip(log_probs_full, variants, display_letter_lists):
+        item, perm = v["item"], v["perm"]
+        orig_letters = sorted(item["options"].keys())
+        letter_logprobs = torch.tensor(
+            [row[bare_letter_cache[D]].item() for D in display_letters]
+        )
+        option_probs = torch.softmax(letter_logprobs, dim=-1)
+        raw_coverage = float(letter_logprobs.exp().sum().item())
+
+        n = len(perm)
+        probs_by_orig = {orig: float(p) for orig, p in zip(perm, option_probs.tolist())}
+        orig_pos = {L: i for i, L in enumerate(orig_letters)}
+        opinion_score = (
+            sum(probs_by_orig[L] * orig_pos[L] / (n - 1) for L in orig_letters)
+            if n > 1
+            else 0.5
+        )
+
+        sorted_probs = sorted(probs_by_orig.values(), reverse=True)
+        margin = sorted_probs[0] - sorted_probs[1] if n > 1 else 1.0
+
+        eps = 1e-12
+        entropy = float(-(option_probs * (option_probs + eps).log()).sum().item())
+
+        chosen_orig = max(probs_by_orig, key=probs_by_orig.get)
+        chosen_display = display_letters[perm.index(chosen_orig)]
+
+        results.append(
+            {
+                "id": item["id"],
+                "topic": item["topic"],
+                "variant": v["variant"],
+                "n_options": n,
+                "perm": perm,
+                "probs": probs_by_orig,
+                "raw_coverage": raw_coverage,
+                "chosen_option": chosen_orig,
+                "chosen_display_letter": chosen_display,
+                "opinion_score": float(opinion_score),
+                "confidence": float(option_probs.max().item()),
+                "margin": float(margin),
+                "entropy_norm": entropy / math.log(n) if n > 1 else 0.0,
+                "method": "logprob_forced_prefix",
             }
         )
     return results
