@@ -104,6 +104,26 @@ Add a new augmentation job by writing `key_fn`/`render_fn`/`result_schema`/
   in the raw list still gets the correct middle score) — a real (if narrow) gap
   in `02b`'s `_NEUTRAL_RE`, not something to "fix" here, just don't be surprised
   by it.
+- **`03_run_eval.py` gates every run on a format-compliance check (`format_check.py`)
+  — do NOT remove or silently bypass it.** raw_coverage collapse (see the fused-token
+  landmine above) makes an eval's numbers pure noise, not just slightly degraded, so
+  the check must PASS for any model/adapter before its results are trusted — an eval
+  is useless without it. The gate scores a small subsample (n=32) through the SAME
+  already-built Scorer the real run is about to use (same backend/force_answer_prefix/
+  prompt_lang — no extra model load) and requires median raw_coverage > 0.8, else it
+  raises before writing any output (bypass only via `skip_format_check: true` in the
+  config, diagnostics-only). Result is cached in `results/.format_check_cache.jsonl`
+  (gitignored — free to regenerate, GPU time only) keyed on a hash of the checkpoint's
+  own adapter weights (or `model_name` for the base model) + force_answer_prefix +
+  prompt_lang + backend, so retraining an arm automatically invalidates its cache entry.
+  **Must use the real eval backend (`load_model_hf` via `Scorer.score_batch`), never
+  `eval_lib.load_model`/`score_item` (the Unsloth single-item path `test.py` uses)** —
+  the two can disagree: `qwen3-8b` **base** (no adapter, no training at all) fails the
+  plain-path check under Unsloth batch=1 (median raw_coverage ~0.0007, confirmed at
+  n=100) while passing under `load_model_hf` (~1.0) — a check against the wrong backend
+  would have false-failed a perfectly good baseline eval. `test.py`/`test_qwen_sanity.py`
+  had only ever been run against the 4B base model before this was found, so this gap
+  was invisible until `scripts/test_format_all_models.py` swept both sizes × all arms.
 - SFT pole labels come from GPT-5.5 on the argument TEXT, not the args.me stance tag
   (stance is relative to each debate's framing). Only successful API calls are cached.
 - **The dose-response experiment (`04b`/`06b`) has a real, unfixed confound**:

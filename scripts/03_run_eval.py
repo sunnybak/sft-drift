@@ -27,6 +27,7 @@ from pathlib import Path
 
 import yaml
 
+import format_check
 from eval_lib import make_variants
 from scorers import build_scorer
 
@@ -129,7 +130,42 @@ def main():
     suite_sha256 = hashlib.sha256(suite_path.read_bytes()).hexdigest()
     print(f"suite: {suite_path.name} ({len(items)} questions, sha256={suite_sha256[:16]}...) backend={backend}")
 
+    # Mandatory format-compliance pre-flight (see format_check.py): an eval whose
+    # option-letter logit read isn't landing on the model's actual answer format
+    # (raw_coverage collapsed) produces numbers that are pure noise, not silently
+    # degraded ones. A cached failure aborts here, before paying for a model load.
+    label = cfg.get("adapter_path") or cfg["model_name"]
+    fc_key, fc_identity, cached = format_check.cache_lookup(cfg, prompt_lang, backend)
+    if cached is not None:
+        status = "PASS" if cached["pass"] else "FAIL"
+        print(f"format check cached: {status} ({label}, median_raw_coverage="
+              f"{cached['median_raw_coverage']:.4f})")
+        if not cached["pass"] and not cfg.get("skip_format_check"):
+            raise RuntimeError(
+                f"format check FAILED (cached) for {label}: "
+                f"median_raw_coverage={cached['median_raw_coverage']:.4f} <= {format_check.THRESHOLD}. "
+                "This checkpoint/config combination does not reliably emit the expected "
+                "answer format -- the eval would be scoring noise, not the model's answer. "
+                "If this is an SFT checkpoint, set force_answer_prefix: true. To bypass "
+                "anyway (diagnostics only), set skip_format_check: true in the config."
+            )
+
     scorer = build_scorer(cfg)
+
+    if cached is None:
+        fc_result = format_check.run_check(scorer, items, prompt_lang, seed, fc_key, fc_identity, label)
+        status = "PASS" if fc_result["pass"] else "FAIL"
+        print(f"format check {status}: {label} median_raw_coverage="
+              f"{fc_result['median_raw_coverage']:.4f} (n={fc_result['n_checked']})")
+        if not fc_result["pass"] and not cfg.get("skip_format_check"):
+            raise RuntimeError(
+                f"format check FAILED for {label}: "
+                f"median_raw_coverage={fc_result['median_raw_coverage']:.4f} <= {format_check.THRESHOLD}. "
+                "This checkpoint/config combination does not reliably emit the expected "
+                "answer format -- the eval would be scoring noise, not the model's answer. "
+                "If this is an SFT checkpoint, set force_answer_prefix: true. To bypass "
+                "anyway (diagnostics only), set skip_format_check: true in the config."
+            )
 
     all_variants = []
     for item in items:
