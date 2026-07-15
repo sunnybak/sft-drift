@@ -124,6 +124,34 @@ Add a new augmentation job by writing `key_fn`/`render_fn`/`result_schema`/
   would have false-failed a perfectly good baseline eval. `test.py`/`test_qwen_sanity.py`
   had only ever been run against the 4B base model before this was found, so this gap
   was invisible until `scripts/test_format_all_models.py` swept both sizes × all arms.
+- **New axis: human-calibrated political lean (`02d`/`07`/`08`), separate from the
+  topic-significance ladder above.** The significance ladder (guns% vs off-target%
+  significant) is blind to POLITICAL DIRECTION — it can't say whether a change moved
+  the model toward conservative or liberal answers, only that something changed.
+  `02d_download_human_resp.py` pulls Pew's individual respondent-level data
+  (`POLIDEOLOGY` + survey weight) for all 15 waves — the `human_resp` bundle on the
+  same CodaLab worksheet `model_input` already uses, previously unused (this is what
+  the old "opinion_score is ordinal position, not politically signed" note was
+  about — we hadn't joined human_resp before now). `07_human_lean.py` regresses each
+  item's chosen-option ordinal position on respondent `POLIDEOLOGY`, weighted by
+  Pew's own survey weight, giving a signed per-item slope/r; items below the ~95%
+  significance threshold for their respondent count are marked `usable: false` (no
+  real human ideological gradient to project onto — 795/966 items usable overall,
+  27/29 guns items usable). `08_model_lean_comparison.py` re-orients each usable
+  item's `opinion_score` onto a common "higher = more conservative" axis (flipping
+  by the item's `r` sign) and reports the mean shift between two runs.
+  **Finding: off-topic (`neutral`) SFT ALONE already produces a large positive
+  (more-conservative) shift on guns** (+0.155 at 4B, +0.228 at 8B, vs base) — same
+  shape as the earlier significance-ladder confound (any SFT moves guns), so a raw
+  base-vs-rights or base-vs-control lean delta is NOT attributable to training
+  content by itself. **The direct rights-final-vs-control-final comparison cancels
+  this out** (off-target shift ~0: -0.0008 at 4B, +0.011 at 8B) and shows a real,
+  same-direction-at-both-sizes effect: guns mean_delta_conservative_lean = +0.105
+  (4B) / +0.061 (8B), both clearing their near-zero off-target baseline — unlike the
+  significance-ladder headline, which reversed sign at 8B. This is currently the
+  cleanest evidence of content-specific (not just any-SFT) drift; still only n=27
+  guns items, so the same small-n bootstrap-CI caveat as the significance ladder
+  applies before treating +0.105/+0.061 as decisive.
 - SFT pole labels come from GPT-5.5 on the argument TEXT, not the args.me stance tag
   (stance is relative to each debate's framing). Only successful API calls are cached.
 - **The dose-response experiment (`04b`/`06b`) has a real, unfixed confound**:
