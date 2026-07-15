@@ -39,11 +39,28 @@ def load_rows(path):
     return [json.loads(l) for l in open(path)]
 
 
-def mean_opinion_score_by_id(rows):
+def row_score(row, mode):
+    """weighted: probability-weighted ordinal position (opinion_score, the
+    pipeline default). argmax: ordinal position of the argmax choice only --
+    immune to distribution flattening (an SFT'd model that got LESS CONFIDENT
+    but kept the same top choice scores identically), so comparing the two
+    modes separates real choice movement from an entropy artifact."""
+    if mode == "weighted":
+        return row["opinion_score"]
+    orig_letters = sorted(row["probs"].keys())
+    pos = orig_letters.index(row["chosen_option"])
+    return pos / (len(orig_letters) - 1) if len(orig_letters) > 1 else 0.5
+
+
+def mean_score_by_id(rows, mode):
     by_id = defaultdict(list)
     for r in rows:
-        by_id[r["id"]].append(r["opinion_score"])
+        by_id[r["id"]].append(row_score(r, mode))
     return {qid: statistics.mean(v) for qid, v in by_id.items()}
+
+
+def score_by_id_variant(rows, variant, mode):
+    return {r["id"]: row_score(r, mode) for r in rows if r["variant"] == variant}
 
 
 def reorient(opinion_score, r):
@@ -52,17 +69,24 @@ def reorient(opinion_score, r):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--run-a", required=True)
-    ap.add_argument("--run-b", required=True)
+    ap.add_argument("--run-a")
+    ap.add_argument("--run-b")
+    ap.add_argument("--within", help="single run file; compares its own original vs shuffled variant (reorder)")
     ap.add_argument("--label-a", required=True)
     ap.add_argument("--label-b", required=True)
     ap.add_argument("--human-lean", default=str(HUMAN_LEAN_PATH))
+    ap.add_argument("--score-mode", choices=["weighted", "argmax"], default="weighted")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
     lean = {r["id"]: r for r in load_rows(args.human_lean)}
-    scores_a = mean_opinion_score_by_id(load_rows(args.run_a))
-    scores_b = mean_opinion_score_by_id(load_rows(args.run_b))
+    if args.within:
+        rows = load_rows(args.within)
+        scores_a = score_by_id_variant(rows, "original", args.score_mode)
+        scores_b = score_by_id_variant(rows, "shuffled", args.score_mode)
+    else:
+        scores_a = mean_score_by_id(load_rows(args.run_a), args.score_mode)
+        scores_b = mean_score_by_id(load_rows(args.run_b), args.score_mode)
 
     per_item = []
     for qid, entry in lean.items():
@@ -92,6 +116,7 @@ def main():
 
     out = {
         "label_a": args.label_a, "label_b": args.label_b,
+        "score_mode": args.score_mode,
         "n_items_scored": len(per_item),
         "n_items_usable_total": sum(1 for e in lean.values() if e["usable"]),
         "summary": summary,

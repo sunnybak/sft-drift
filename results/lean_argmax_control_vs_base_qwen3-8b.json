@@ -1,0 +1,6479 @@
+{
+  "label_a": "base",
+  "label_b": "control-final",
+  "n_items_scored": 795,
+  "n_items_usable_total": 795,
+  "per_item": [
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNSOCIETY_W26_r25",
+      "r": 0.035865,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNCOMMUNITY_W26_r26",
+      "r": 0.116084,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNCONTRIBA_W26_r36",
+      "r": -0.311442,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNCONTRIBB_W26_r37",
+      "r": -0.083347,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNCONTRIBC_W26_r38",
+      "r": 0.063051,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNCONTRIBD_W26_r39",
+      "r": -0.14244,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666674,
+      "conservative_aligned_b": 0.16666666666666674,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNCONTRIBE_W26_r40",
+      "r": 0.114502,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.6666666666666666,
+      "id": "opinionqa_GUNCONTRIBF_W26_r41",
+      "r": -0.079598,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNRESPNOKIDSA_W26_r50",
+      "r": -0.120085,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.16666666666666666,
+      "id": "opinionqa_GUNRESPNOKIDSB_W26_r51",
+      "r": -0.172356,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNRESPNOKIDSC_W26_r52",
+      "r": -0.188157,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_GUNRESPNOKIDSD_W26_r53",
+      "r": -0.110989,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.3333333333333333,
+      "id": "opinionqa_GUNRESPNOKIDSE_W26_r54",
+      "r": -0.202771,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNRESPNOKIDSF_W26_r55",
+      "r": -0.151067,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNRESPKIDSA_W26_r57",
+      "r": -0.13858,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNRESPKIDSB_W26_r58",
+      "r": -0.15212,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNRESPKIDSC_W26_r59",
+      "r": -0.139047,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNRESPKIDSD_W26_r60",
+      "r": -0.175472,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNRESPKIDSE_W26_r61",
+      "r": -0.088284,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNRESPKIDSF_W26_r62",
+      "r": -0.166243,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNRESPKIDSH_W26_r64",
+      "r": -0.053229,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_GUNKILLF1_W26_r68",
+      "r": 0.252101,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GUNKILLF2_W26_r69",
+      "r": 0.203375,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PREDICTA_W27_r2",
+      "r": -0.071654,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PREDICTB_W27_r3",
+      "r": -0.031175,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PREDICTC_W27_r4",
+      "r": -0.097096,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_CARS3A_W27_r8",
+      "r": -0.157508,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.8333333333333334,
+      "delta_conservative_lean": 0.16666666666666663,
+      "id": "opinionqa_CARS3B_W27_r9",
+      "r": 0.079295,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.375,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.125,
+      "id": "opinionqa_CARS4_W27_r10",
+      "r": -0.078564,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_CARS8_W27_r14",
+      "r": 0.053461,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.8333333333333334,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_CARS9B_W27_r16",
+      "r": 0.107524,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": -0.33333333333333326,
+      "id": "opinionqa_CARS9C_W27_r17",
+      "r": 0.059993,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_CARS10A_W27_r18",
+      "r": -0.074107,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_CARS10C_W27_r20",
+      "r": -0.055106,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_CARS10E_W27_r22",
+      "r": -0.114598,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.3333333333333333,
+      "id": "opinionqa_ROBJOB2_W27_r34",
+      "r": -0.037824,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.8333333333333333,
+      "delta_conservative_lean": 0.8333333333333333,
+      "id": "opinionqa_ROBJOB3A_W27_r35",
+      "r": -0.163016,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 1.0,
+      "id": "opinionqa_ROBJOB4A_W27_r37",
+      "r": -0.03182,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_ROBJOB4B_W27_r38",
+      "r": 0.057677,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ROBJOB4C_W27_r39",
+      "r": -0.082634,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ROBJOB4D_W27_r40",
+      "r": -0.05279,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 1.0,
+      "id": "opinionqa_ROBJOB4E_W27_r41",
+      "r": -0.053837,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.3333333333333333,
+      "id": "opinionqa_ROBJOB5B_W27_r43",
+      "r": -0.063357,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": -0.3333333333333333,
+      "id": "opinionqa_ROBJOB5D_W27_r45",
+      "r": -0.171215,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ROBJOB8B_W27_r49",
+      "r": -0.106219,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ROBJOB8C_W27_r50",
+      "r": -0.059093,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ROBJOB8D_W27_r51",
+      "r": -0.116834,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.16666666666666669,
+      "id": "opinionqa_ROBJOB8E_W27_r52",
+      "r": -0.044588,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ROBJOB8F_W27_r53",
+      "r": 0.066473,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_ROBJOB8G_W27_r54",
+      "r": -0.115552,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_CAREGIV2_W27_r60",
+      "r": -0.113276,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_CAREGIV3A_W27_r61",
+      "r": -0.116148,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 1.0,
+      "id": "opinionqa_CAREGIV6A_W27_r64",
+      "r": -0.104628,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 1.0,
+      "id": "opinionqa_CAREGIV6B_W27_r65",
+      "r": -0.106187,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 1.0,
+      "id": "opinionqa_CAREGIV6C_W27_r66",
+      "r": -0.049675,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_CAREGIV6D_W27_r67",
+      "r": 0.05118,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_CAREGIV6E_W27_r68",
+      "r": -0.161406,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_CAREGIV6F_W27_r69",
+      "r": 0.105784,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_HIRING2_W27_r72",
+      "r": -0.045651,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HIRING3A_W27_r73",
+      "r": -0.094443,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": -0.33333333333333326,
+      "id": "opinionqa_HIRING3B_W27_r74",
+      "r": 0.056385,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HIRING6A_W27_r76",
+      "r": -0.07069,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_HIRING6B_W27_r77",
+      "r": -0.099858,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HIRING6C_W27_r78",
+      "r": -0.103534,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HIRING6D_W27_r79",
+      "r": -0.051654,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HIRING7A_W27_r80",
+      "r": 0.09713,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 1.0,
+      "id": "opinionqa_DIFF1A_W29_r3",
+      "r": -0.162969,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_DIFF1B_W29_r4",
+      "r": -0.200194,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_DIFF1C_W29_r5",
+      "r": -0.13298,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_DIFF1D_W29_r6",
+      "r": -0.09041,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_DIFF1E_W29_r7",
+      "r": -0.19437,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MASC1F1_W29_r10",
+      "r": -0.145907,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MASC2AF1_W29_r11",
+      "r": 0.301343,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_FEM2AF2_W29_r14",
+      "r": 0.287268,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_TRANSGEND1_W29_r24",
+      "r": 0.41023,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.16666666666666669,
+      "id": "opinionqa_MAN1B_W29_r28",
+      "r": -0.164502,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MAN1C_W29_r29",
+      "r": -0.125234,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": -0.16666666666666666,
+      "id": "opinionqa_MAN1D_W29_r30",
+      "r": -0.074623,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.3333333333333333,
+      "id": "opinionqa_MAN1E_W29_r31",
+      "r": -0.102131,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_BOYSF1B_W29_r53",
+      "r": -0.083887,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BOYSF1C_W29_r54",
+      "r": -0.042177,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GIRLSF2A_W29_r56",
+      "r": -0.153333,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_GIRLSF2C_W29_r58",
+      "r": -0.126959,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_GIRLSF2D_W29_r59",
+      "r": -0.121557,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_DEMDIRCT_W29_r76",
+      "r": 0.060371,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SOCTRUST_W32_r5",
+      "r": -0.064719,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SOCTRUST2_W32_r6",
+      "r": -0.086014,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SUCCESSIMPA_W32_r26",
+      "r": -0.050961,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SUCCESSIMPC_W32_r28",
+      "r": 0.073885,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SUCCESSIMPD_W32_r29",
+      "r": 0.042718,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FEDSHAREA_W32_r30",
+      "r": 0.112837,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_FEDSHAREB_W32_r31",
+      "r": -0.03144,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FEDSHAREC_W32_r32",
+      "r": -0.051825,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_LOCALPROBA_W32_r33",
+      "r": -0.029914,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_LOCALPROBB_W32_r34",
+      "r": 0.035531,
+      "topic": "drugs_alcohol"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_LOCALPROBC_W32_r35",
+      "r": -0.026755,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_LOCALPROBE_W32_r37",
+      "r": 0.045335,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_LOCALPROBG_W32_r39",
+      "r": -0.248086,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_LOCALPROBH_W32_r40",
+      "r": -0.166442,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_LOCALPROBI_W32_r41",
+      "r": -0.104772,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_LOCALPROBJ_W32_r42",
+      "r": 0.030771,
+      "topic": "crime"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_HARASS1A_W32_r47",
+      "r": 0.148958,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_HARASS1B_W32_r48",
+      "r": 0.129236,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HARASS1C_W32_r49",
+      "r": -0.258652,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HARASS1D_W32_r50",
+      "r": -0.249814,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HARASS2F1_W32_r51",
+      "r": -0.170948,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_HARASS3F2_W32_r52",
+      "r": 0.07038,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_VALUEURBAN_W32_r57",
+      "r": -0.26581,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": -0.33333333333333337,
+      "id": "opinionqa_VALUESUBURB_W32_r58",
+      "r": 0.028262,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_VALUERURAL_W32_r59",
+      "r": 0.351625,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_IMMIMPACT_W32_r71",
+      "r": -0.248301,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_ETHNCMAJ_W32_r84",
+      "r": -0.349274,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_IMMCULT2_W32_r85",
+      "r": 0.435067,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_MARRFAM2_W32_r86",
+      "r": 0.335609,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_ECONFAIR2_W32_r87",
+      "r": -0.31921,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WOMENOPPS_W32_r88",
+      "r": 0.298601,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_GOVT_ROLE_W32_r89",
+      "r": -0.383375,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_WHADVANT_W32_r90",
+      "r": -0.419649,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_GAYMARR2_W32_r91",
+      "r": -0.53001,
+      "topic": "gender_sexuality"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ABORTION_W32_r92",
+      "r": -0.444389,
+      "topic": "abortion"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ABORTIONRESTR_W32_r93",
+      "r": 0.137963,
+      "topic": "abortion"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_ABORTIONALLOW_W32_r94",
+      "r": -0.049444,
+      "topic": "abortion"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCI1_W34_r0",
+      "r": -0.109856,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCI2A_W34_r1",
+      "r": -0.082041,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCI2B_W34_r2",
+      "r": -0.095324,
+      "topic": "healthcare"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCI3A_W34_r4",
+      "r": -0.262757,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCI3B_W34_r5",
+      "r": -0.186206,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCI3C_W34_r6",
+      "r": -0.202576,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCI4_W34_r7",
+      "r": -0.300515,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -1.0,
+      "id": "opinionqa_SCI5_W34_r8",
+      "r": 0.056026,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FUD24_W34_r23",
+      "r": -0.071897,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_EAT5B_W34_r25",
+      "r": -0.067463,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FUD33A_W34_r30",
+      "r": -0.097155,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_FUD37A_W34_r33",
+      "r": -0.090375,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FUD37B_W34_r34",
+      "r": 0.053142,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_FUD37C_W34_r35",
+      "r": -0.062583,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_FUD37D_W34_r36",
+      "r": -0.061221,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_MED1_W34_r37",
+      "r": -0.131404,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED2A_W34_r38",
+      "r": 0.084836,
+      "topic": "healthcare"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED2B_W34_r39",
+      "r": 0.065051,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED2C_W34_r40",
+      "r": 0.06296,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED2D_W34_r41",
+      "r": -0.069508,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED2E_W34_r42",
+      "r": 0.098824,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED2F_W34_r43",
+      "r": 0.059003,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED2G_W34_r44",
+      "r": 0.127822,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED4A_W34_r46",
+      "r": -0.105204,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED4B_W34_r47",
+      "r": -0.197163,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED4C_W34_r48",
+      "r": -0.229146,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED5_W34_r49",
+      "r": -0.092632,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED6B_W34_r51",
+      "r": -0.195759,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED6D_W34_r53",
+      "r": -0.124954,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED6E_W34_r54",
+      "r": -0.175266,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MED7_W34_r55",
+      "r": -0.313729,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_BIOTECHA_W34_r56",
+      "r": -0.087633,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_BIOTECHB_W34_r57",
+      "r": -0.125284,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_BIOTECHD_W34_r59",
+      "r": -0.103781,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_BIOTECHE_W34_r60",
+      "r": -0.101526,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_EVOONE_W34_r61",
+      "r": -0.276987,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_EVOTHREE_W34_r63",
+      "r": -0.273627,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_EVOPERS3_W34_r64",
+      "r": -0.401782,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_EVOBIOA_W34_r66",
+      "r": -0.170444,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ESSENPOLF1A_W36_r1",
+      "r": -0.08521,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ESSENPOLF1B_W36_r2",
+      "r": -0.209841,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ESSENPOLF1C_W36_r3",
+      "r": -0.059965,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ESSENPOLF1F_W36_r6",
+      "r": 0.051598,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ESSENPOLF1H_W36_r8",
+      "r": -0.164094,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_ESSENBIZF2B_W36_r11",
+      "r": -0.083487,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ESSENBIZF2C_W36_r12",
+      "r": -0.123161,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ESSENBIZF2D_W36_r13",
+      "r": 0.076873,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_ESSENBIZF2E_W36_r14",
+      "r": 0.083427,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ESSENBIZF2F_W36_r15",
+      "r": -0.264991,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ESSENBIZF2G_W36_r16",
+      "r": -0.123713,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ESSENBIZF2H_W36_r17",
+      "r": 0.155839,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ESSENBIZF2I_W36_r18",
+      "r": -0.18483,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ESSENBIZF2K_W36_r20",
+      "r": -0.086848,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ESSENBIZF2L_W36_r21",
+      "r": -0.108653,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_STYLE1_W36_r22",
+      "r": -0.063337,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_STYLE2_W36_r23",
+      "r": -0.289647,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_AMNTWMNPF1_W36_r24",
+      "r": -0.258663,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_AMNTWMNP2F1_W36_r25",
+      "r": 0.19266,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_AMNTWMNBF1_W36_r26",
+      "r": -0.259232,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_AMNTWMNB2F1_W36_r27",
+      "r": 0.165762,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_EASIERBIZF2_W36_r28",
+      "r": -0.271328,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_EASIERPOLF2_W36_r29",
+      "r": -0.26741,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_EQUALPOLF2_W36_r30",
+      "r": 0.068135,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_EQUALBIZF2_W36_r31",
+      "r": 0.082069,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_IMPROVE1_W36_r32",
+      "r": -0.355996,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.33333333333333337,
+      "id": "opinionqa_IMPROVE2_W36_r33",
+      "r": -0.302451,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_IMPROVE3_W36_r34",
+      "r": -0.384958,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_WHYNOTPOLF1A_W36_r35",
+      "r": -0.280105,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WHYNOTPOLF1B_W36_r36",
+      "r": -0.339015,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_WHYNOTPOLF1E_W36_r39",
+      "r": 0.085777,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_WHYNOTPOLF1F_W36_r40",
+      "r": -0.195975,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 1.0,
+      "id": "opinionqa_WHYNOTPOLF1G_W36_r41",
+      "r": -0.348118,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_WHYNOTPOLF1H_W36_r42",
+      "r": -0.265588,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_WHYNOTPOLF1I_W36_r43",
+      "r": 0.210258,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WHYNOTPOLF1J_W36_r44",
+      "r": -0.257269,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_WHYNOTPOLF1L_W36_r46",
+      "r": -0.290632,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": 0.75,
+      "id": "opinionqa_WHYNOTBIZF2A_W36_r47",
+      "r": -0.266546,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WHYNOTBIZF2B_W36_r48",
+      "r": -0.392428,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WHYNOTBIZF2C_W36_r49",
+      "r": 0.071561,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WHYNOTBIZF2D_W36_r50",
+      "r": 0.087765,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WHYNOTBIZF2F_W36_r51",
+      "r": 0.088215,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": 0.75,
+      "id": "opinionqa_WHYNOTBIZF2G_W36_r52",
+      "r": -0.276297,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 1.0,
+      "id": "opinionqa_WHYNOTBIZF2H_W36_r53",
+      "r": -0.336774,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -1.0,
+      "id": "opinionqa_WHYNOTBIZF2I_W36_r54",
+      "r": 0.239489,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WHYNOTBIZF2J_W36_r55",
+      "r": -0.225512,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WHYNOTBIZF2L_W36_r57",
+      "r": -0.216196,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WHYNOTBIZF2M_W36_r58",
+      "r": -0.213678,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WHYNOTBIZF2N_W36_r59",
+      "r": -0.069423,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_WHYNOTBIZF2O_W36_r60",
+      "r": -0.287162,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 1.0,
+      "id": "opinionqa_HIGHED_W36_r61",
+      "r": -0.138204,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HIGHEDWRNGA_W36_r62",
+      "r": -0.162805,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HIGHEDWRNGB_W36_r63",
+      "r": 0.522833,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_HIGHEDWRNGC_W36_r64",
+      "r": 0.393057,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HIGHEDWRNGD_W36_r65",
+      "r": 0.150625,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HIGHEDWRNGS_W36_r66",
+      "r": 0.084362,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERPOL1F1A_W36_r67",
+      "r": 0.146692,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_BETTERPOL1F1B_W36_r68",
+      "r": 0.08741,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERPOL1F1C_W36_r69",
+      "r": 0.116414,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_BETTERPOL1F1D_W36_r70",
+      "r": 0.191445,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_BETTERPOL1F1E_W36_r71",
+      "r": 0.171726,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERPOL1F1F_W36_r72",
+      "r": 0.084516,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_BETTERPOL1F1G_W36_r73",
+      "r": 0.059918,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_BETTERPOL1F1H_W36_r74",
+      "r": 0.218903,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERPOL1F1I_W36_r75",
+      "r": 0.107731,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_BETTERPOL2F1A_W36_r76",
+      "r": 0.156652,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERPOL2F1B_W36_r77",
+      "r": 0.266097,
+      "topic": "healthcare"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERPOL2F1C_W36_r78",
+      "r": 0.299715,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_BETTERPOL2F1D_W36_r79",
+      "r": 0.228914,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_BETTERPOL2F1E_W36_r80",
+      "r": 0.066722,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERPOL2F1F_W36_r81",
+      "r": 0.312914,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERBIZ1F2A_W36_r82",
+      "r": 0.134025,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_BETTERBIZ1F2B_W36_r83",
+      "r": 0.073748,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERBIZ1F2C_W36_r84",
+      "r": 0.126629,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERBIZ1F2D_W36_r85",
+      "r": 0.224392,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_BETTERBIZ1F2E_W36_r86",
+      "r": 0.067207,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERBIZ1F2F_W36_r87",
+      "r": 0.155825,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERBIZ1F2G_W36_r88",
+      "r": 0.206586,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_BETTERBIZ1F2H_W36_r89",
+      "r": 0.117802,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERBIZ1F2I_W36_r90",
+      "r": 0.162562,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERBIZ1F2J_W36_r91",
+      "r": 0.127928,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERBIZ1F2K_W36_r92",
+      "r": 0.254539,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_BETTERBIZ1F2L_W36_r93",
+      "r": 0.114884,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERBIZ2F2A_W36_r94",
+      "r": 0.234429,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERBIZ2F2B_W36_r95",
+      "r": 0.071662,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERBIZ2F2C_W36_r96",
+      "r": 0.11718,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERBIZ2F2D_W36_r97",
+      "r": 0.20077,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_BETTERBIZ2F2F_W36_r99",
+      "r": 0.161768,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_TRAITPOLWF1G_W36_r106",
+      "r": -0.067175,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_TRAITPOLMF1C_W36_r109",
+      "r": -0.096488,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_TRAITPOLMF1D_W36_r110",
+      "r": 0.0606,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_TRAITPOLMF1E_W36_r111",
+      "r": -0.066311,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_TRAITPOLMF1F_W36_r112",
+      "r": -0.104302,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_TRAITPOLMF1G_W36_r113",
+      "r": -0.091692,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_TRAITBIZWF2D_W36_r118",
+      "r": 0.066029,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_TRAITBIZWF2G_W36_r121",
+      "r": -0.133003,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_TRAITBIZMF2A_W36_r122",
+      "r": -0.067816,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_TRAITBIZMF2D_W36_r125",
+      "r": 0.059195,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_TRAITBIZMF2E_W36_r126",
+      "r": -0.12595,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_TRAITBIZMF2F_W36_r127",
+      "r": -0.077081,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_TRAITBIZMF2G_W36_r128",
+      "r": -0.134811,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_EXECCHF2_W36_r129",
+      "r": 0.058681,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_WMNPRZ1_W36_r130",
+      "r": -0.372347,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MOREWMN1F2_W36_r131",
+      "r": -0.338016,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_MOREWMN2F2_W36_r132",
+      "r": -0.310278,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_MOREWMN3F2_W36_r133",
+      "r": -0.239907,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MOREWMN4F2_W36_r134",
+      "r": -0.285894,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_AVGFAM_W41_r1",
+      "r": 0.065308,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -1.0,
+      "id": "opinionqa_HAPPENa_W41_r2",
+      "r": 0.079153,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HAPPENb_W41_r3",
+      "r": -0.066726,
+      "topic": "healthcare"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HAPPENd_W41_r5",
+      "r": 0.139558,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HAPPENe_W41_r6",
+      "r": -0.044197,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HAPPENf_W41_r7",
+      "r": -0.060925,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HAPPENg_W41_r8",
+      "r": -0.048876,
+      "topic": "religion"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_HAPPENiF2_W41_r10",
+      "r": 0.074284,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HAPPENj_W41_r11",
+      "r": 0.049797,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_HAPPEN2a_W41_r12",
+      "r": 0.040489,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HAPPEN2b_W41_r13",
+      "r": -0.238628,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HAPPEN2c_W41_r14",
+      "r": 0.04338,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.16666666666666669,
+      "id": "opinionqa_HAPPEN2d_W41_r15",
+      "r": -0.147023,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HAPPEN2e_W41_r16",
+      "r": -0.045245,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_ENVC_W41_r21",
+      "r": 0.191407,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_POPPROB_W41_r22",
+      "r": -0.069268,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_FTRWORRYa_W41_r23",
+      "r": -0.120482,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": -0.16666666666666666,
+      "id": "opinionqa_FTRWORRYd_W41_r26",
+      "r": -0.121266,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.16666666666666663,
+      "id": "opinionqa_FTRWORRYe_W41_r27",
+      "r": 0.211378,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ELDFINANCEF2_W41_r31",
+      "r": -0.08059,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIOa_W41_r32",
+      "r": 0.193538,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIOb_W41_r33",
+      "r": -0.30815,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIOc_W41_r34",
+      "r": -0.335486,
+      "topic": "healthcare"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIOd_W41_r35",
+      "r": -0.221924,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIOe_W41_r36",
+      "r": -0.378974,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.16666666666666669,
+      "id": "opinionqa_GOVPRIOfF1_W41_r37",
+      "r": -0.408296,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIOgF1_W41_r38",
+      "r": 0.487515,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666674,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.33333333333333326,
+      "id": "opinionqa_GOVPRIOhF1_W41_r39",
+      "r": 0.173755,
+      "topic": "healthcare"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": 0.16666666666666674,
+      "id": "opinionqa_GOVPRIOjF1_W41_r41",
+      "r": 0.363342,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIOkF2_W41_r42",
+      "r": 0.438879,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_GOVPRIOlF2_W41_r43",
+      "r": -0.260681,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIOmF2_W41_r44",
+      "r": -0.211429,
+      "topic": "healthcare"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIOoF2_W41_r46",
+      "r": -0.505765,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WRKTRN1F1_W41_r47",
+      "r": -0.36397,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": -0.3333333333333333,
+      "id": "opinionqa_WRKTRN1F2_W41_r48",
+      "r": -0.183748,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ROBWRK2_W41_r53",
+      "r": -0.046475,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ROBIMPACTa_W41_r55",
+      "r": -0.134341,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_LEGALIMG_W41_r57",
+      "r": -0.252675,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_FUTRCLASSa_W41_r58",
+      "r": 0.043228,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FUTRCLASSc_W41_r60",
+      "r": -0.090429,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_HARASS1F1a_W41_r61",
+      "r": 0.290276,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HARASS1F1b_W41_r62",
+      "r": 0.214238,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HARASS1F1c_W41_r63",
+      "r": -0.249081,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HARASS1F1d_W41_r64",
+      "r": -0.295296,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_HARASS1NOWRKF2a_W41_r65",
+      "r": 0.286032,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HARASS1NOWRKF2c_W41_r66",
+      "r": -0.264256,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HARASS1NOWRKF2d_W41_r67",
+      "r": -0.312555,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_HARASS3NOWRKF2_W41_r69",
+      "r": 0.098142,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.375,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.125,
+      "id": "opinionqa_ETHNCMAJMOD_W41_r72",
+      "r": -0.356407,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_INTRMAR_W41_r74",
+      "r": -0.31996,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SSCUT_W41_r76",
+      "r": 0.055757,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.16666666666666669,
+      "id": "opinionqa_FUTR_ABR_W41_r77",
+      "r": -0.129876,
+      "topic": "abortion"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_FUTR_DIV_W41_r78",
+      "r": 0.053447,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SOLVPROBa_W41_r81",
+      "r": -0.194594,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": -0.33333333333333326,
+      "id": "opinionqa_SOLVPROBb_W41_r82",
+      "r": 0.237809,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": -0.33333333333333337,
+      "id": "opinionqa_SOLVPROBc_W41_r83",
+      "r": 0.330133,
+      "topic": "religion"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SOLVPROBdF1_W41_r84",
+      "r": -0.086348,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_SOLVPROBeF2_W41_r85",
+      "r": -0.065136,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_SOLVPROBf_W41_r86",
+      "r": -0.345821,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_SOLVPROBg_W41_r87",
+      "r": 0.319518,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.6666666666666666,
+      "id": "opinionqa_SOLVPROBh_W41_r88",
+      "r": -0.371387,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.33333333333333337,
+      "id": "opinionqa_SOLVPROBi_W41_r89",
+      "r": -0.253481,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FUTURE_W42_r1",
+      "r": -0.068335,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SC1_W42_r2",
+      "r": -0.166582,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_CONFb_W42_r4",
+      "r": -0.316072,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": -0.33333333333333337,
+      "id": "opinionqa_CONFc_W42_r5",
+      "r": 0.329442,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.3333333333333333,
+      "id": "opinionqa_CONFd_F1_W42_r6",
+      "r": -0.07215,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_CONFd_F2_W42_r7",
+      "r": -0.230622,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_CONFe_W42_r8",
+      "r": 0.298497,
+      "topic": "religion"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.8333333333333333,
+      "delta_conservative_lean": 0.16666666666666663,
+      "id": "opinionqa_CONFf_W42_r9",
+      "r": -0.109694,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_CONFg_W42_r10",
+      "r": 0.246851,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_POLICY1_W42_r11",
+      "r": -0.321891,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_POLICY2_W42_r12",
+      "r": 0.039532,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_POLICY3_W42_r13",
+      "r": -0.232925,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RQ1_F1A_W42_r14",
+      "r": -0.065145,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_RQ4_F1Aa_W42_r20",
+      "r": -0.076028,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.3333333333333333,
+      "id": "opinionqa_RQ4_F1Ab_W42_r21",
+      "r": -0.052453,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RQ4_F1Ac_W42_r22",
+      "r": -0.152201,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RQ4_F1Ad_W42_r23",
+      "r": -0.049692,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_RQ4_F1Ae_W42_r24",
+      "r": -0.077997,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.16666666666666669,
+      "id": "opinionqa_RQ8_F1A_W42_r28",
+      "r": -0.080094,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RQ1_F1B_W42_r29",
+      "r": -0.335867,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_RQ4_F1Ba_W42_r35",
+      "r": -0.269144,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_RQ4_F1Bb_W42_r36",
+      "r": -0.299863,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_RQ4_F1Bc_W42_r37",
+      "r": -0.302851,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RQ4_F1Bd_W42_r38",
+      "r": -0.239128,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_RQ4_F1Be_W42_r39",
+      "r": -0.295763,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": 0.16666666666666674,
+      "id": "opinionqa_RQ5_F1B_W42_r40",
+      "r": 0.220965,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RQ6_F1B_W42_r41",
+      "r": -0.218171,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RQ7_F1B_W42_r42",
+      "r": -0.120306,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_RQ8_F1B_W42_r43",
+      "r": -0.178543,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_RQ1_F1C_W42_r44",
+      "r": -0.126398,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.33333333333333337,
+      "id": "opinionqa_RQ4_F1Ca_W42_r50",
+      "r": -0.081203,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_RQ4_F1Cb_W42_r51",
+      "r": -0.128371,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.33333333333333337,
+      "id": "opinionqa_RQ4_F1Cc_W42_r52",
+      "r": -0.154601,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RQ4_F1Cd_W42_r53",
+      "r": -0.087874,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_RQ4_F1Ce_W42_r54",
+      "r": -0.111535,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.8333333333333334,
+      "delta_conservative_lean": 0.33333333333333337,
+      "id": "opinionqa_RQ5_F1C_W42_r55",
+      "r": 0.071056,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RQ7_F1C_W42_r57",
+      "r": -0.054393,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.16666666666666663,
+      "id": "opinionqa_RQ8_F1C_W42_r58",
+      "r": -0.086629,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.16666666666666674,
+      "id": "opinionqa_PQ4_F2Ad_W42_r68",
+      "r": 0.050992,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PQ6_F2A_W42_r71",
+      "r": 0.07696,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PQ1_F2B_W42_r74",
+      "r": -0.287904,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_PQ4_F2Ba_W42_r80",
+      "r": -0.1942,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_PQ4_F2Bb_W42_r81",
+      "r": -0.211358,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_PQ4_F2Bc_W42_r82",
+      "r": -0.236919,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": -0.16666666666666669,
+      "id": "opinionqa_PQ4_F2Bd_W42_r83",
+      "r": -0.217815,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_PQ4_F2Be_W42_r84",
+      "r": -0.220197,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.8333333333333334,
+      "delta_conservative_lean": 0.16666666666666663,
+      "id": "opinionqa_PQ5_F2B_W42_r85",
+      "r": 0.091946,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PQ6_F2B_W42_r86",
+      "r": -0.080973,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PQ7_F2B_W42_r87",
+      "r": -0.122131,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PQ8_F2B_W42_r88",
+      "r": -0.117977,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_PQ4_F2Cb_W42_r96",
+      "r": -0.048992,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_PQ4_F2Cc_W42_r97",
+      "r": -0.067083,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCM4a_W42_r104",
+      "r": -0.131912,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCM4b_W42_r105",
+      "r": -0.170655,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_Q7F1_W42_r107",
+      "r": -0.100594,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_Q7F2_W42_r111",
+      "r": -0.048831,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_Q9F2_W42_r113",
+      "r": -0.045047,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCM5a_W42_r114",
+      "r": -0.058187,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCM5b_W42_r115",
+      "r": -0.075865,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCM5c_W42_r116",
+      "r": -0.132321,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCM5d_W42_r117",
+      "r": 0.183414,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCM5e_W42_r118",
+      "r": 0.173804,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_SCM5f_W42_r119",
+      "r": -0.199035,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCM5g_W42_r120",
+      "r": -0.101531,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCM5h_W42_r121",
+      "r": 0.132568,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 1.0,
+      "id": "opinionqa_SCM5i_W42_r122",
+      "r": 0.058929,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCM5j_W42_r123",
+      "r": 0.177356,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCM2_W42_r124",
+      "r": -0.213185,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SCM3_W42_r125",
+      "r": -0.174031,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_POP1_W42_r126",
+      "r": 0.1214,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": 0.33333333333333337,
+      "id": "opinionqa_POP2_W42_r127",
+      "r": 0.032341,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_POP3_W42_r128",
+      "r": -0.185427,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_ADMISSIONa_W43_r4",
+      "r": -0.242495,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ADMISSIONb_W43_r5",
+      "r": -0.11874,
+      "topic": "gender_sexuality"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ADMISSIONe_W43_r8",
+      "r": -0.1524,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ADMISSIONf_W43_r9",
+      "r": 0.046477,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ADMISSIONh_W43_r11",
+      "r": -0.224221,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV2_W43_r12",
+      "r": -0.226027,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_RACESURV3_W43_r13",
+      "r": -0.072362,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV4_W43_r14",
+      "r": -0.341502,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 1.0,
+      "id": "opinionqa_RACESURV5a_W43_r15",
+      "r": -0.370324,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV5b_W43_r16",
+      "r": 0.384117,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.125,
+      "conservative_aligned_b": 0.125,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV5c_W43_r17",
+      "r": 0.313034,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.625,
+      "conservative_aligned_b": 0.875,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_RACESURV5d_W43_r18",
+      "r": 0.075954,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV5e_W43_r19",
+      "r": 0.302778,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_RACESURV5g_W43_r21",
+      "r": 0.290253,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_RACESURV5h_W43_r22",
+      "r": -0.222442,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.625,
+      "conservative_aligned_b": 0.625,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV5i_W43_r23",
+      "r": -0.323802,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.125,
+      "conservative_aligned_b": 0.375,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_RACESURV5j_W43_r24",
+      "r": 0.316397,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV5k_W43_r25",
+      "r": 0.211628,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV5l_W43_r26",
+      "r": -0.140434,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV6_W43_r27",
+      "r": 0.413455,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_RACESURV10_W43_r31",
+      "r": 0.208099,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_RACATTN_W43_r35",
+      "r": 0.345259,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": 0.6666666666666667,
+      "id": "opinionqa_RACESURV14_W43_r36",
+      "r": 0.529708,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV15a_W43_r37",
+      "r": -0.295879,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV15b_W43_r38",
+      "r": -0.38015,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_RACESURV16_W43_r39",
+      "r": -0.174015,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV17_W43_r40",
+      "r": -0.343505,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV18a_W43_r41",
+      "r": 0.230338,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV18b_W43_r42",
+      "r": -0.037484,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV18c_W43_r43",
+      "r": 0.223113,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV18d_W43_r44",
+      "r": 0.134582,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.16666666666666674,
+      "id": "opinionqa_RACESURV18e_W43_r45",
+      "r": 0.063728,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV19a_W43_r47",
+      "r": -0.414777,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV19b_W43_r48",
+      "r": 0.301615,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV19c_W43_r49",
+      "r": -0.350376,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV19d_W43_r50",
+      "r": 0.14912,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_RACESURV19e_W43_r51",
+      "r": -0.397681,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_RACESURV19f_W43_r52",
+      "r": 0.089939,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV28a_W43_r65",
+      "r": -0.39731,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV28b_W43_r66",
+      "r": -0.404043,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV28c_W43_r67",
+      "r": -0.407385,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV28d_W43_r68",
+      "r": -0.361154,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV28e_W43_r69",
+      "r": -0.39659,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV28f_W43_r70",
+      "r": -0.466018,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV28g_W43_r71",
+      "r": -0.382523,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV40_W43_r92",
+      "r": -0.264745,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.16666666666666674,
+      "id": "opinionqa_RACESURV41_W43_r93",
+      "r": 0.144659,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.8333333333333334,
+      "delta_conservative_lean": 0.16666666666666663,
+      "id": "opinionqa_RACESURV44_W43_r94",
+      "r": 0.103414,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.33333333333333337,
+      "id": "opinionqa_RACESURV45_W43_r95",
+      "r": -0.07144,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV47a_W43_r96",
+      "r": 0.459502,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV47b_W43_r97",
+      "r": -0.206977,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV47c_W43_r98",
+      "r": 0.096816,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV47d_W43_r99",
+      "r": 0.253667,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_RACESURV47e_W43_r100",
+      "r": 0.305046,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV47f_W43_r101",
+      "r": 0.373431,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV48_W43_r102",
+      "r": -0.305017,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_RACESURV49_W43_r103",
+      "r": -0.345942,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RACESURV50_W43_r104",
+      "r": -0.321213,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.16666666666666663,
+      "id": "opinionqa_RACESURV52_W43_r106",
+      "r": 0.300423,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_SOURCESKEPa_W45_r3",
+      "r": -0.205834,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_SOURCESKEPb_W45_r4",
+      "r": -0.049536,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": -0.16666666666666666,
+      "id": "opinionqa_SOURCESKEPc_W45_r5",
+      "r": -0.043434,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_SOURCESKEPe_W45_r7",
+      "r": -0.080509,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INFOCONFUSEa_W45_r8",
+      "r": 0.036409,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.8333333333333334,
+      "delta_conservative_lean": 0.16666666666666663,
+      "id": "opinionqa_INFOCONFUSEb_W45_r9",
+      "r": 0.209598,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INFOCONFUSEc_W45_r10",
+      "r": 0.124602,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INFOCONFUSEd_W45_r11",
+      "r": 0.079875,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INFOKNOWa_W45_r13",
+      "r": 0.025915,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_INFOKNOWb_W45_r14",
+      "r": -0.05429,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_INFOKNOWe_W45_r17",
+      "r": 0.066433,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INFORESTRICTa_W45_r26",
+      "r": 0.034031,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INFORESTRICTb_W45_r27",
+      "r": -0.161085,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_INFORESTRICTc_W45_r28",
+      "r": -0.114407,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_INFORESTRICTd_W45_r29",
+      "r": -0.08021,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INFOWHYa_W45_r31",
+      "r": -0.076633,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INFOWHYc_W45_r33",
+      "r": 0.030152,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INFOWHYd_W45_r34",
+      "r": -0.078915,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_INFOCREATEa_W45_r35",
+      "r": 0.368524,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INFOCREATEb_W45_r36",
+      "r": 0.103503,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INFOCREATEc_W45_r37",
+      "r": -0.05064,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INFOCREATEd_W45_r38",
+      "r": -0.119062,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INFOCREATEe_W45_r39",
+      "r": 0.250031,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MADEUPTOPICa_W45_r44",
+      "r": 0.072337,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MADEUPTOPICc_W45_r46",
+      "r": 0.042153,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MADEUPTOPICd_W45_r47",
+      "r": -0.054574,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MADEUPTOPICe_W45_r48",
+      "r": 0.083014,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MADEUPTOPICf_W45_r49",
+      "r": -0.040711,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MADEUPLEVELa_W45_r50",
+      "r": 0.058888,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MADEUPLEVELb_W45_r51",
+      "r": 0.072303,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MADEUPIMPb_W45_r58",
+      "r": -0.060471,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MADEUPIMPc_W45_r59",
+      "r": 0.052177,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_NEWSPROBa_W45_r77",
+      "r": 0.066326,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_NEWSPROBb_W45_r78",
+      "r": -0.044539,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_NEWSPROBd_W45_r80",
+      "r": -0.037828,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_NEWSPROBe_W45_r81",
+      "r": 0.335063,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_MADEUPSOLVE_W45_r83",
+      "r": -0.084617,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INFOCHALa_W45_r84",
+      "r": 0.029172,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_INFOCHALe_W45_r88",
+      "r": -0.059841,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 0.625,
+      "delta_conservative_lean": -0.125,
+      "id": "opinionqa_RESTRICTWHO_W45_r89",
+      "r": -0.170367,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_FCFAIR_W45_r91",
+      "r": -0.299235,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WATCHDOG_1_W45_r92",
+      "r": 0.271436,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WATCHDOG_3_W45_r93",
+      "r": -0.200917,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_HOMEASSIST4_W49_r12",
+      "r": -0.065339,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.8333333333333333,
+      "conservative_aligned_b": 0.8333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PP5a_W49_r51",
+      "r": -0.060069,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PP5e_W49_r55",
+      "r": 0.031249,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_PP6a_W49_r56",
+      "r": -0.073357,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PP6b_W49_r57",
+      "r": -0.146226,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVREGV1_W49_r60",
+      "r": -0.133048,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVREGV2_W49_r61",
+      "r": 0.11519,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_RTBFc_W49_r70",
+      "r": 0.142841,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_RTDa_W49_r72",
+      "r": -0.078359,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_RTDd_W49_r75",
+      "r": 0.053857,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -1.0,
+      "id": "opinionqa_DATAUSEa_W49_r78",
+      "r": 0.101537,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_DATAUSEb_W49_r79",
+      "r": -0.056026,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -1.0,
+      "id": "opinionqa_DATAUSEc_W49_r80",
+      "r": 0.093103,
+      "topic": "crime"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_DATAUSEd_W49_r81",
+      "r": -0.092558,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_DATAUSEe_W49_r82",
+      "r": -0.059684,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_DATAUSEf_W49_r83",
+      "r": 0.158234,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FACE2a_W49_r85",
+      "r": 0.072635,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FACE2b_W49_r86",
+      "r": 0.094967,
+      "topic": "gender_sexuality"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666674,
+      "conservative_aligned_b": 0.16666666666666674,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FACE2c_W49_r87",
+      "r": 0.114919,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666674,
+      "conservative_aligned_b": 0.16666666666666674,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FACE3a_W49_r88",
+      "r": 0.048323,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.16666666666666663,
+      "id": "opinionqa_FACE3b_W49_r89",
+      "r": 0.041598,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FACE3c_W49_r90",
+      "r": 0.208343,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FACE4a_W49_r91",
+      "r": 0.199037,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -1.0,
+      "id": "opinionqa_FACE4b_W49_r92",
+      "r": 0.084319,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -1.0,
+      "id": "opinionqa_FACE4c_W49_r93",
+      "r": 0.071463,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FACE4d_W49_r94",
+      "r": 0.159303,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV2Ma_W50_r5",
+      "r": 0.196803,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV2Mb_W50_r6",
+      "r": 0.126057,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV2Mc_W50_r7",
+      "r": 0.188322,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_FAMSURV2Md_W50_r8",
+      "r": 0.02831,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_FAMSURV2Wa_W50_r10",
+      "r": 0.211187,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV2Wb_W50_r11",
+      "r": 0.131508,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV2Wc_W50_r12",
+      "r": 0.199654,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV2Wd_W50_r13",
+      "r": -0.071986,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV3_W50_r15",
+      "r": -0.361269,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV4_W50_r16",
+      "r": 0.35097,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_FAMSURV5a_W50_r17",
+      "r": -0.040362,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.75,
+      "id": "opinionqa_FAMSURV5b_W50_r18",
+      "r": -0.199317,
+      "topic": "gender_sexuality"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV5d_W50_r20",
+      "r": -0.216684,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.3333333333333333,
+      "id": "opinionqa_FAMSURV6_W50_r21",
+      "r": -0.386336,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_FAMSURV7_W50_r22",
+      "r": -0.272858,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_FAMSURV8_W50_r23",
+      "r": 0.351857,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV9a_W50_r24",
+      "r": 0.04697,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV9b_W50_r25",
+      "r": 0.152858,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.16666666666666663,
+      "id": "opinionqa_FAMSURV9c_W50_r26",
+      "r": 0.114475,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV9e_W50_r27",
+      "r": 0.09064,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV10a_W50_r28",
+      "r": 0.077365,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.8333333333333334,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_FAMSURV10b_W50_r29",
+      "r": 0.111662,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.8333333333333334,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_FAMSURV10c_W50_r30",
+      "r": 0.07254,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV10e_W50_r31",
+      "r": 0.066449,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FAMSURV11W_W50_r32",
+      "r": -0.165436,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_FAMSURV11M_W50_r33",
+      "r": 0.188476,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FIN_SITMOST_W54_r2",
+      "r": 0.176158,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FIN_SITCOMM_W54_r3",
+      "r": 0.065753,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIORITYa_W54_r6",
+      "r": -0.299334,
+      "topic": "healthcare"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIORITYb_W54_r7",
+      "r": 0.484717,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIORITYc_W54_r8",
+      "r": -0.440242,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIORITYd_W54_r9",
+      "r": -0.508625,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIORITYe_W54_r10",
+      "r": 0.299833,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPRIORITYf_W54_r11",
+      "r": -0.323887,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVRESP_a_W54_r12",
+      "r": -0.356463,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVRESP_b_W54_r13",
+      "r": -0.340691,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVRESP_c_W54_r14",
+      "r": -0.281893,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 1.0,
+      "id": "opinionqa_GOVRESP_d_W54_r15",
+      "r": -0.287077,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVRESP_e_W54_r16",
+      "r": -0.299738,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVRESP_f_W54_r17",
+      "r": -0.426652,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVRESP_g_W54_r18",
+      "r": -0.452438,
+      "topic": "healthcare"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVRESP_h_W54_r19",
+      "r": -0.253571,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ECON1_W54_r20",
+      "r": 0.340343,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_ECON1B_W54_r21",
+      "r": 0.347703,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ECON3_a_W54_r22",
+      "r": 0.106377,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.16666666666666674,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_ECON3_f_W54_r27",
+      "r": 0.092442,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ1_W54_r40",
+      "r": -0.409357,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ2_W54_r41",
+      "r": 0.038664,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ3_W54_r42",
+      "r": 0.185663,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ4_a_W54_r43",
+      "r": -0.251279,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ4_b_W54_r44",
+      "r": -0.118533,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ4_c_W54_r45",
+      "r": -0.109149,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_INEQ4_e_W54_r47",
+      "r": -0.122937,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_INEQ5_a_W54_r48",
+      "r": 0.053114,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": -0.3333333333333333,
+      "id": "opinionqa_INEQ5_b_W54_r49",
+      "r": -0.086439,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.3333333333333333,
+      "id": "opinionqa_INEQ5_c_W54_r50",
+      "r": -0.08438,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.6666666666666666,
+      "id": "opinionqa_INEQ5_d_W54_r51",
+      "r": 0.283623,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ5_e_W54_r52",
+      "r": -0.422833,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.8333333333333334,
+      "delta_conservative_lean": 0.33333333333333337,
+      "id": "opinionqa_INEQ5_f_W54_r53",
+      "r": 0.304972,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_INEQ5_g_W54_r54",
+      "r": -0.270182,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ5_h_W54_r55",
+      "r": 0.29126,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ5_i_W54_r56",
+      "r": -0.307238,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_INEQ5_j_W54_r57",
+      "r": -0.145764,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ5_k_W54_r58",
+      "r": -0.385451,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ5_l_W54_r59",
+      "r": 0.454334,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ5_m_W54_r60",
+      "r": 0.305277,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ6_W54_r61",
+      "r": -0.30023,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ7_W54_r62",
+      "r": -0.279431,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": -0.16666666666666669,
+      "id": "opinionqa_INEQ8_a_W54_r63",
+      "r": -0.40583,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_INEQ8_b_W54_r64",
+      "r": -0.404581,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ8_c_W54_r65",
+      "r": -0.46174,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.6666666666666666,
+      "id": "opinionqa_INEQ8_d_W54_r66",
+      "r": -0.440337,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_INEQ8_e_W54_r67",
+      "r": -0.119979,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_INEQ8_f_W54_r68",
+      "r": -0.373341,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": -0.3333333333333333,
+      "id": "opinionqa_INEQ8_g_W54_r69",
+      "r": -0.391666,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ8_h_W54_r70",
+      "r": 0.449092,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ8_i_W54_r71",
+      "r": -0.399268,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": -0.16666666666666666,
+      "id": "opinionqa_INEQ8_j_W54_r72",
+      "r": -0.340633,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_INEQ9_W54_r73",
+      "r": -0.154244,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INEQ10_W54_r74",
+      "r": -0.424285,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_INEQ11_W54_r75",
+      "r": -0.231175,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_ECON5_b_W54_r77",
+      "r": -0.20002,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.375,
+      "delta_conservative_lean": 0.125,
+      "id": "opinionqa_ECON5_c_W54_r78",
+      "r": 0.318477,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ECON5_d_W54_r79",
+      "r": 0.413694,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.375,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": -0.125,
+      "id": "opinionqa_ECON5_e_W54_r80",
+      "r": 0.253065,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_ECON5_f_W54_r81",
+      "r": 0.384454,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_ECON5_g_W54_r82",
+      "r": -0.079948,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ECON5_h_W54_r83",
+      "r": 0.440538,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.125,
+      "conservative_aligned_b": 0.625,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_ECON5_i_W54_r84",
+      "r": 0.425121,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ECON5_j_W54_r85",
+      "r": 0.341405,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_ECON5_k_W54_r86",
+      "r": 0.103075,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_ECIMPa_W54_r87",
+      "r": 0.036122,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ECIMPb_W54_r88",
+      "r": -0.064266,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_ECIMPc_W54_r89",
+      "r": 0.159752,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ECIMPd_W54_r90",
+      "r": -0.255814,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": -0.75,
+      "id": "opinionqa_ECIMPe_W54_r91",
+      "r": -0.05761,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ECIMPf_W54_r92",
+      "r": -0.268354,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ECIMPg_W54_r93",
+      "r": -0.30277,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ECIMPh_W54_r94",
+      "r": -0.168593,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_ECIMPi_W54_r95",
+      "r": -0.147152,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ECIMPj_W54_r96",
+      "r": -0.168326,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WORKHARD_W53_r113",
+      "r": 0.345261,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_POOREASY_W53_r114",
+      "r": 0.446643,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_ECONFAIR_W53_r115",
+      "r": -0.370446,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.16666666666666674,
+      "id": "opinionqa_GAP21Q1_W82_r0",
+      "r": 0.095101,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q3_W82_r2",
+      "r": -0.166653,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.8333333333333334,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_GAP21Q4_a_W82_r3",
+      "r": 0.186721,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.16666666666666669,
+      "id": "opinionqa_GAP21Q4_b_W82_r4",
+      "r": -0.230219,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.3333333333333333,
+      "id": "opinionqa_GAP21Q4_c_W82_r5",
+      "r": -0.214206,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q4_d_W82_r6",
+      "r": -0.266176,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q4_e_W82_r7",
+      "r": -0.373318,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.16666666666666669,
+      "id": "opinionqa_GAP21Q4_f_W82_r8",
+      "r": -0.295194,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 1.0,
+      "id": "opinionqa_GAP21Q5_b_W82_r10",
+      "r": -0.083202,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q6_W82_r11",
+      "r": 0.150757,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q7_a_W82_r12",
+      "r": 0.414875,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_GAP21Q7_b_W82_r13",
+      "r": -0.306511,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_GAP21Q7_c_W82_r14",
+      "r": -0.117122,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_GAP21Q7_d_W82_r15",
+      "r": -0.324345,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.3333333333333333,
+      "id": "opinionqa_GAP21Q7_e_W82_r16",
+      "r": -0.173102,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q9_W82_r18",
+      "r": -0.052342,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_GAP21Q10_W82_r19",
+      "r": -0.332446,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q11_W82_r20",
+      "r": 0.16887,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": 0.33333333333333337,
+      "id": "opinionqa_GAP21Q12_W82_r21",
+      "r": 0.116051,
+      "topic": "healthcare"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": -0.16666666666666669,
+      "id": "opinionqa_GAP21Q13_a_W82_r22",
+      "r": -0.265642,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": -0.16666666666666666,
+      "id": "opinionqa_GAP21Q13_b_W82_r23",
+      "r": -0.299454,
+      "topic": "healthcare"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.3333333333333333,
+      "id": "opinionqa_GAP21Q14_W82_r25",
+      "r": -0.080539,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.125,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": 0.125,
+      "id": "opinionqa_GAP21Q15_a_W82_r26",
+      "r": 0.381744,
+      "topic": "healthcare"
+    },
+    {
+      "conservative_aligned_a": 0.375,
+      "conservative_aligned_b": 0.375,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q15_c_W82_r28",
+      "r": 0.279705,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.875,
+      "delta_conservative_lean": -0.125,
+      "id": "opinionqa_GAP21Q15_d_W82_r29",
+      "r": 0.157638,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.625,
+      "delta_conservative_lean": -0.375,
+      "id": "opinionqa_GAP21Q15_e_W82_r30",
+      "r": 0.101237,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.125,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": 0.125,
+      "id": "opinionqa_GAP21Q15_f_W82_r31",
+      "r": -0.147226,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": -0.33333333333333337,
+      "id": "opinionqa_GAP21Q17_W82_r32",
+      "r": 0.230226,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q19_a_W82_r34",
+      "r": -0.448142,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_GAP21Q19_b_W82_r35",
+      "r": -0.13637,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q19_c_W82_r36",
+      "r": 0.175692,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.3333333333333333,
+      "id": "opinionqa_GAP21Q19_d_W82_r37",
+      "r": -0.316641,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q19_e_W82_r38",
+      "r": -0.27275,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q20_W82_r39",
+      "r": -0.145546,
+      "topic": "religion"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q21_a_W82_r40",
+      "r": -0.040235,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_GAP21Q21_b_W82_r41",
+      "r": -0.072501,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": -0.16666666666666669,
+      "id": "opinionqa_GAP21Q21_d_W82_r43",
+      "r": -0.185569,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q21_e_W82_r44",
+      "r": -0.117074,
+      "topic": "religion"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q22_W82_r45",
+      "r": 0.046082,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q23_W82_r46",
+      "r": -0.430382,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.16666666666666674,
+      "delta_conservative_lean": -0.33333333333333326,
+      "id": "opinionqa_GAP21Q26_a_W82_r49",
+      "r": 0.340612,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.8333333333333333,
+      "delta_conservative_lean": 0.33333333333333326,
+      "id": "opinionqa_GAP21Q26_b_W82_r50",
+      "r": -0.20851,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.3333333333333333,
+      "id": "opinionqa_GAP21Q26_c_W82_r51",
+      "r": -0.128687,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.16666666666666669,
+      "id": "opinionqa_GAP21Q26_d_W82_r52",
+      "r": -0.155226,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_GAP21Q27_W82_r53",
+      "r": -0.131263,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.8333333333333333,
+      "delta_conservative_lean": 0.16666666666666663,
+      "id": "opinionqa_GAP21Q28_W82_r54",
+      "r": -0.348638,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q29_W82_r55",
+      "r": 0.068915,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q31_W82_r57",
+      "r": -0.070079,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_GAP21Q32_W82_r58",
+      "r": -0.46943,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q33_a_W82_r59",
+      "r": 0.066701,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q33_b_W82_r60",
+      "r": 0.241845,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q33_c_W82_r61",
+      "r": -0.250138,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q33_g_W82_r65",
+      "r": 0.516045,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q33_h_W82_r66",
+      "r": 0.254514,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q33_i_W82_r67",
+      "r": 0.433705,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_GAP21Q33_j_W82_r68",
+      "r": -0.506998,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q33_k_W82_r69",
+      "r": 0.177247,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_GAP21Q33_l_W82_r70",
+      "r": -0.120706,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_GAP21Q33_m_W82_r71",
+      "r": -0.177138,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q33_n_W82_r72",
+      "r": 0.287477,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_GAP21Q33_o_W82_r73",
+      "r": -0.149472,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_GAP21Q33_p_W82_r74",
+      "r": 0.268261,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q33_q_W82_r75",
+      "r": 0.236077,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_GAP21Q33_r_W82_r76",
+      "r": -0.315578,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q33_s_W82_r77",
+      "r": 0.304885,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_GAP21Q33_t_W82_r78",
+      "r": 0.156381,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.3333333333333333,
+      "id": "opinionqa_GAP21Q34_a_W82_r79",
+      "r": -0.474572,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q34_b_W82_r80",
+      "r": -0.44039,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.3333333333333333,
+      "id": "opinionqa_GAP21Q34_c_W82_r81",
+      "r": -0.427591,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q34_d_W82_r82",
+      "r": -0.420524,
+      "topic": "environment"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.3333333333333333,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q34_e_W82_r83",
+      "r": -0.492514,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.3333333333333333,
+      "conservative_aligned_b": 0.8333333333333333,
+      "delta_conservative_lean": 0.49999999999999994,
+      "id": "opinionqa_GAP21Q34_f_W82_r84",
+      "r": -0.433602,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q35_W82_r85",
+      "r": -0.296267,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_GAP21Q36_W82_r86",
+      "r": -0.338102,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q37_W82_r87",
+      "r": -0.26041,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.8333333333333333,
+      "delta_conservative_lean": 0.6666666666666666,
+      "id": "opinionqa_GAP21Q38_a_W82_r88",
+      "r": -0.309907,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_GAP21Q38_b_W82_r89",
+      "r": -0.397136,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.6666666666666666,
+      "id": "opinionqa_GAP21Q38_c_W82_r90",
+      "r": -0.430824,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q40_W82_r91",
+      "r": -0.299039,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q41_W82_r92",
+      "r": -0.120308,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q42_W82_r93",
+      "r": -0.258349,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.8333333333333334,
+      "delta_conservative_lean": -0.16666666666666663,
+      "id": "opinionqa_GAP21Q43_a_W82_r94",
+      "r": 0.231128,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666667,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q43_b_W82_r95",
+      "r": 0.223191,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q43_d_W82_r97",
+      "r": 0.090223,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q43_e_W82_r98",
+      "r": 0.147586,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q43_f_W82_r99",
+      "r": 0.244073,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q43_g_W82_r100",
+      "r": 0.248584,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.8333333333333334,
+      "conservative_aligned_b": 0.8333333333333334,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q43_h_W82_r101",
+      "r": 0.044568,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q46_W82_r102",
+      "r": -0.261341,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GAP21Q47_W82_r103",
+      "r": 0.351759,
+      "topic": "death_endoflife"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_POL1JB_W92_r0",
+      "r": -0.486682,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_LIFEFIFTY_W92_r1",
+      "r": -0.200656,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -1.0,
+      "id": "opinionqa_INSTN_CHR_W92_r3",
+      "r": 0.340417,
+      "topic": "religion"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_INSTN_CLGS_W92_r4",
+      "r": -0.361985,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_INSTN_LGECRP_W92_r5",
+      "r": 0.100413,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 1.0,
+      "id": "opinionqa_INSTN_MSCENT_W92_r6",
+      "r": -0.266347,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_INSTN_LBRUN_W92_r7",
+      "r": -0.385704,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_INSTN_K12_W92_r8",
+      "r": -0.31606,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_INSTN_BNKS_W92_r9",
+      "r": 0.12656,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_INSTN_TECHCMP_W92_r10",
+      "r": -0.140899,
+      "topic": "technology"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_DIFFPARTY_W92_r11",
+      "r": 0.103544,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_GOVSIZE2_W92_r13",
+      "r": 0.158459,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_GOVSIZE3_W92_r14",
+      "r": 0.111216,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.75,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_USEXCEPT_W92_r15",
+      "r": 0.367554,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WOMENOBS_W92_r16",
+      "r": 0.389258,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_ECONFAIR_W92_r17",
+      "r": -0.315838,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_OPENIDEN_W92_r18",
+      "r": -0.37377,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_VTRGHTPRIV1_W92_r19",
+      "r": -0.404775,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ALLIES_W92_r20",
+      "r": -0.349686,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PEACESTR_W92_r21",
+      "r": 0.386415,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_GOVWASTE_W92_r22",
+      "r": 0.318692,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_COMPROMISEVAL_W92_r23",
+      "r": 0.187711,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_POORASSIST_W92_r24",
+      "r": -0.261149,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PAR2CHILD_W92_r25",
+      "r": 0.201855,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_PAR2CHILDa_W92_r26",
+      "r": 0.219558,
+      "topic": "family"
+    },
+    {
+      "conservative_aligned_a": 0.25,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.25,
+      "id": "opinionqa_POLICY3MOD_W92_r27",
+      "r": -0.207988,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_WHADVANT_W92_r28",
+      "r": -0.502812,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_SUPERPWR_W92_r29",
+      "r": 0.275483,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_IL_IMM_PRI_W92_r30",
+      "r": 0.24739,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_BILLION_W92_r31",
+      "r": 0.314852,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GLBLZE_W92_r32",
+      "r": -0.118533,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_FP_AUTH_W92_r33",
+      "r": 0.032316,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVTHC_W92_r34",
+      "r": -0.467017,
+      "topic": "healthcare"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_SNGLPYER_W92_r35",
+      "r": -0.212602,
+      "topic": "healthcare"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_NOGOVTHC_W92_r36",
+      "r": 0.075598,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.8333333333333333,
+      "delta_conservative_lean": 0.8333333333333333,
+      "id": "opinionqa_FREECOLL_W92_r37",
+      "r": -0.480344,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.75,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_CRIM_SENT2_W92_r38",
+      "r": -0.23239,
+      "topic": "crime"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.375,
+      "delta_conservative_lean": -0.125,
+      "id": "opinionqa_USMILSIZ_W92_r39",
+      "r": -0.430415,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PROG_RRETRO_W92_r40",
+      "r": 0.306118,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PROG_RNEED_W92_r41",
+      "r": -0.413169,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_PROG_RNEED2b_W92_r42",
+      "r": -0.165602,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666674,
+      "conservative_aligned_b": 0.16666666666666674,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ELITEUNDMOD_W92_r43",
+      "r": 0.030338,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_POLINTOL2_a_W92_r44",
+      "r": -0.309059,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.6666666666666667,
+      "delta_conservative_lean": 0.33333333333333337,
+      "id": "opinionqa_POLINTOL2_b_W92_r45",
+      "r": 0.135132,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SOCIETY_TRANS_W92_r48",
+      "r": -0.546992,
+      "topic": "gender_sexuality"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.125,
+      "delta_conservative_lean": 0.125,
+      "id": "opinionqa_SOCIETY_RHIST_W92_r49",
+      "r": -0.469496,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 0.375,
+      "conservative_aligned_b": 0.375,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SOCIETY_JBCLL_W92_r50",
+      "r": 0.022897,
+      "topic": "economy"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SOCIETY_RELG_W92_r51",
+      "r": -0.42486,
+      "topic": "religion"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_SOCIETY_WHT_W92_r52",
+      "r": -0.345064,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_SOCIETY_GUNS_W92_r53",
+      "r": 0.466356,
+      "topic": "guns"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.25,
+      "delta_conservative_lean": 0.25,
+      "id": "opinionqa_SOCIETY_SSM_W92_r54",
+      "r": -0.527416,
+      "topic": "gender_sexuality"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PROBOFF_a_W92_r55",
+      "r": 0.343334,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_PROBOFF_b_W92_r56",
+      "r": -0.180826,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": -1.0,
+      "id": "opinionqa_BUSPROFIT_W92_r57",
+      "r": -0.297698,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_CNTRYFAIR_W92_r58",
+      "r": -0.405966,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVPROTCT_W92_r59",
+      "r": 0.27424,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_MARRFAM_W92_r60",
+      "r": 0.329479,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOVAID_W92_r61",
+      "r": 0.412377,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_RELIG_GOV_W92_r62",
+      "r": -0.287118,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GOODEVIL_W92_r63",
+      "r": 0.237123,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.16666666666666663,
+      "id": "opinionqa_RACESURV52MOD_W92_r65",
+      "r": 0.309292,
+      "topic": "race"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ELECT_IMPT3_PRVFR_W92_r66",
+      "r": 0.28784,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 1.0,
+      "conservative_aligned_b": 1.0,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_ELECT_IMPT3_PRVSUP_W92_r67",
+      "r": 0.041575,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.6666666666666666,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_ELECT_CONF3_PRVFR_W92_r68",
+      "r": -0.41495,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.8333333333333334,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": -0.5,
+      "id": "opinionqa_ELECT_CONF3_PRVSUP_W92_r69",
+      "r": 0.299303,
+      "topic": "other"
+    },
+    {
+      "conservative_aligned_a": 0.0,
+      "conservative_aligned_b": 0.16666666666666666,
+      "delta_conservative_lean": 0.16666666666666666,
+      "id": "opinionqa_CANDEXP_W92_r70",
+      "r": -0.306462,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.5,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_LEGALIMMIGAMT_W92_r71",
+      "r": -0.32148,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 0.16666666666666666,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.5,
+      "id": "opinionqa_UNIMMIGCOMM_W92_r72",
+      "r": -0.424906,
+      "topic": "immigration"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_GODMORALIMP_W92_r73",
+      "r": 0.407833,
+      "topic": "religion"
+    },
+    {
+      "conservative_aligned_a": 0.33333333333333337,
+      "conservative_aligned_b": 0.33333333333333337,
+      "delta_conservative_lean": 0.0,
+      "id": "opinionqa_REPRSNTREP_W92_r74",
+      "r": 0.531574,
+      "topic": "politics_trust"
+    },
+    {
+      "conservative_aligned_a": 0.5,
+      "conservative_aligned_b": 0.6666666666666666,
+      "delta_conservative_lean": 0.16666666666666663,
+      "id": "opinionqa_REPRSNTDEM_W92_r75",
+      "r": -0.516648,
+      "topic": "politics_trust"
+    }
+  ],
+  "score_mode": "argmax",
+  "summary": {
+    "_guns": {
+      "frac_more_conservative": 0.0741,
+      "mean_delta_conservative_lean": -0.0679,
+      "median_delta_conservative_lean": 0.0,
+      "n": 27
+    },
+    "_off_target": {
+      "frac_more_conservative": 0.2513,
+      "mean_delta_conservative_lean": 0.0213,
+      "median_delta_conservative_lean": 0.0,
+      "n": 768
+    },
+    "abortion": {
+      "frac_more_conservative": 0.5,
+      "mean_delta_conservative_lean": 0.1667,
+      "median_delta_conservative_lean": 0.0833,
+      "n": 4
+    },
+    "crime": {
+      "frac_more_conservative": 0.3333,
+      "mean_delta_conservative_lean": -0.3333,
+      "median_delta_conservative_lean": -0.5,
+      "n": 3
+    },
+    "death_endoflife": {
+      "frac_more_conservative": 0.0,
+      "mean_delta_conservative_lean": 0.0,
+      "median_delta_conservative_lean": 0.0,
+      "n": 1
+    },
+    "drugs_alcohol": {
+      "frac_more_conservative": 0.0,
+      "mean_delta_conservative_lean": 0.0,
+      "median_delta_conservative_lean": 0.0,
+      "n": 1
+    },
+    "economy": {
+      "frac_more_conservative": 0.2966,
+      "mean_delta_conservative_lean": -0.0028,
+      "median_delta_conservative_lean": 0.0,
+      "n": 118
+    },
+    "environment": {
+      "frac_more_conservative": 0.4483,
+      "mean_delta_conservative_lean": 0.1006,
+      "median_delta_conservative_lean": 0.0,
+      "n": 29
+    },
+    "family": {
+      "frac_more_conservative": 0.1667,
+      "mean_delta_conservative_lean": -0.0231,
+      "median_delta_conservative_lean": 0.0,
+      "n": 18
+    },
+    "gender_sexuality": {
+      "frac_more_conservative": 0.3333,
+      "mean_delta_conservative_lean": -0.0556,
+      "median_delta_conservative_lean": 0.0,
+      "n": 6
+    },
+    "guns": {
+      "frac_more_conservative": 0.0741,
+      "mean_delta_conservative_lean": -0.0679,
+      "median_delta_conservative_lean": 0.0,
+      "n": 27
+    },
+    "healthcare": {
+      "frac_more_conservative": 0.2143,
+      "mean_delta_conservative_lean": -0.0268,
+      "median_delta_conservative_lean": 0.0,
+      "n": 14
+    },
+    "immigration": {
+      "frac_more_conservative": 0.2667,
+      "mean_delta_conservative_lean": 0.0778,
+      "median_delta_conservative_lean": 0.0,
+      "n": 15
+    },
+    "other": {
+      "frac_more_conservative": 0.2357,
+      "mean_delta_conservative_lean": 0.0236,
+      "median_delta_conservative_lean": 0.0,
+      "n": 403
+    },
+    "politics_trust": {
+      "frac_more_conservative": 0.2292,
+      "mean_delta_conservative_lean": 0.0191,
+      "median_delta_conservative_lean": 0.0,
+      "n": 48
+    },
+    "race": {
+      "frac_more_conservative": 0.2319,
+      "mean_delta_conservative_lean": 0.0338,
+      "median_delta_conservative_lean": 0.0,
+      "n": 69
+    },
+    "religion": {
+      "frac_more_conservative": 0.0,
+      "mean_delta_conservative_lean": -0.1667,
+      "median_delta_conservative_lean": 0.0,
+      "n": 8
+    },
+    "technology": {
+      "frac_more_conservative": 0.2581,
+      "mean_delta_conservative_lean": 0.086,
+      "median_delta_conservative_lean": 0.0,
+      "n": 31
+    }
+  }
+}
