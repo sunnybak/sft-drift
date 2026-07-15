@@ -21,9 +21,15 @@ writes one at session end).
 
 ## Pipeline (scripts/, run in order)
 `01` load smoke-test · `02`/`02b`/`02c` build OpinionQA suite from CodaLab (see
-below) · `03` eval runner (config-driven) · `test.py` sampling/coverage check ·
-`04` build SFT corpora · `05` QLoRA train · `06` checkpoint drift eval. Analysis:
-`compare_runs`, `make_ladder`, `make_model_comparison`, `analyze_reasoning_sweep`.
+below) · `03` eval runner (config-driven) · `test.py`/`test_qwen_sanity.py`
+sampling/coverage + ground-truth scoring-pipeline checks · `04`/`04b`/`04c`
+build SFT corpora (pure arms / rights-control mixtures / neutral off-topic
+control) · `05` QLoRA train (`--arm` accepts rights/control/mix80r20c/
+mix20r80c/mix50r50c/neutral) · `06` checkpoint drift eval (full trajectory,
+rights/control only) · `06b` base+final eval across all 6 arms (dose-response,
+neutral confound, headline + mixture-contrast significance). Analysis:
+`compare_runs` (now with `--suite` for the magnitude-significance metric),
+`make_ladder`, `make_model_comparison`, `analyze_reasoning_sweep`.
 
 ## LLM data-augmentation jobs (`scripts/llm_augment.py`)
 Every GPT-5.5 pass over the dataset (item-type filter, option scoring, French
@@ -100,6 +106,25 @@ Add a new augmentation job by writing `key_fn`/`render_fn`/`result_schema`/
   by it.
 - SFT pole labels come from GPT-5.5 on the argument TEXT, not the args.me stance tag
   (stance is relative to each debate's framing). Only successful API calls are cached.
+- **The dose-response experiment (`04b`/`06b`) has a real, unfixed confound**:
+  `checkpoints/*-guns-rights-v1` / `*-guns-control-v1` are the ORIGINAL adapters
+  (full pool, 1346/1229 samples, ~255/231 steps), while the 3 mixture arms
+  (`mix80r20c`/`mix50r50c`/`mix20r80c`) are trained at a fixed, SUBSAMPLED
+  1200-sample/225-step budget. Comparing "100% rights" (old, bigger corpus) to
+  "80% rights" (new, smaller fixed corpus) isn't varying ONLY the ratio — corpus
+  size and step count differ too. This is the likely explanation for the 8B
+  dose-response curve not being monotonic while 4B's is (see journal 0002).
+  Don't trust the dose-response curve's shape until `rights`/`control` are
+  retrained at the same 1200-sample budget.
+- **With the corrected `opinionqa_v2` (968 items, guns n=29) and the magnitude-
+  significance metric, the original "guns drift is real, exceeds off-target on
+  both sizes" headline (journal 0001) no longer holds uniformly.** Re-run in
+  journal 0002: guns beats off-target divergence only at 4B rights-vs-control;
+  not at 8B, not clearly in either mixture contrast. A neutral/off-topic SFT
+  control also pushes the guns bucket's answer-change rate above the 24.2%
+  reorder floor at both sizes — confirming "exceeds the floor" alone was never
+  sufficient evidence of ideological-content-specific drift. Treat the headline
+  as "real at 4B, unclear/absent at 8B" until the confound above is resolved.
 
 ## Durability / cost
 - **Paid GPT-5.5 caches are committed to git** (`data/evals/.french_gpt55_cache.jsonl`,
