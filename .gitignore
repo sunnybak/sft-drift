@@ -19,7 +19,11 @@ configs/_*.yaml
 # --- generated data: ignore what regenerates for FREE, KEEP the paid caches ---
 # raw Pew CSVs (script 02 re-downloads them)
 data/evals/_opinionqa_raw/
+data/evals/_opinionqa_human_resp_raw/
 model_input/
+# derived per-item human political-lean regression (rebuilt free from the raw
+# human_resp CSVs above)
+data/evals/opinionqa_v2_human_lean.jsonl
 # derived eval suites (rebuilt free from source / from the translation cache below)
 data/evals/opinionqa_v1*.jsonl
 data/evals/opinionqa_v2*.jsonl
