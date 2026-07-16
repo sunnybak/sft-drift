@@ -1,0 +1,28 @@
+[
+  {
+    "file": "lean_argmax_neutralcleanfull_vs_base_4b.json",
+    "label": "base -> neutral-cleanfull",
+    "score_mode": "argmax",
+    "n_items": 795,
+    "mean": 0.0189,
+    "ci95": [
+      -0.0015,
+      0.0392
+    ],
+    "p_le_zero": 0.0344,
+    "excludes_zero": false
+  },
+  {
+    "file": "lean_argmax_neutralcleanfull_vs_base_8b.json",
+    "label": "base -> neutral-cleanfull",
+    "score_mode": "argmax",
+    "n_items": 795,
+    "mean": 0.0566,
+    "ci95": [
+      0.0349,
+      0.0778
+    ],
+    "p_le_zero": 0.0,
+    "excludes_zero": true
+  }
+]
