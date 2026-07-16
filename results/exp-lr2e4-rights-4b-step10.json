@@ -1,0 +1,208 @@
+{
+  "aggregates": {
+    "_overall": {
+      "flip_rate": 0.19938,
+      "mean_confidence": 0.82109,
+      "mean_margin": 0.684153,
+      "mean_opinion_score": 0.359836,
+      "mean_opinion_score_original": 0.357985,
+      "mean_opinion_score_shuffled": 0.361687,
+      "mean_raw_coverage": 0.996163,
+      "min_raw_coverage": 0.949883,
+      "n_questions": 968
+    },
+    "abortion": {
+      "flip_rate": 0.0,
+      "mean_confidence": 0.901354,
+      "mean_margin": 0.809471,
+      "mean_opinion_score": 0.094569,
+      "mean_opinion_score_original": 0.112319,
+      "mean_opinion_score_shuffled": 0.076819,
+      "mean_raw_coverage": 0.989546,
+      "min_raw_coverage": 0.985023,
+      "n_questions": 4
+    },
+    "crime": {
+      "flip_rate": 0.25,
+      "mean_confidence": 0.745121,
+      "mean_margin": 0.534557,
+      "mean_opinion_score": 0.481232,
+      "mean_opinion_score_original": 0.488889,
+      "mean_opinion_score_shuffled": 0.473575,
+      "mean_raw_coverage": 0.995067,
+      "min_raw_coverage": 0.98908,
+      "n_questions": 4
+    },
+    "death_endoflife": {
+      "flip_rate": 0.0,
+      "mean_confidence": 0.982688,
+      "mean_margin": 0.973054,
+      "mean_opinion_score": 0.992211,
+      "mean_opinion_score_original": 0.990153,
+      "mean_opinion_score_shuffled": 0.994269,
+      "mean_raw_coverage": 0.996719,
+      "min_raw_coverage": 0.996719,
+      "n_questions": 1
+    },
+    "drugs_alcohol": {
+      "flip_rate": 0.0,
+      "mean_confidence": 0.877049,
+      "mean_margin": 0.7723,
+      "mean_opinion_score": 0.062824,
+      "mean_opinion_score_original": 0.070577,
+      "mean_opinion_score_shuffled": 0.05507,
+      "mean_raw_coverage": 0.997398,
+      "min_raw_coverage": 0.997398,
+      "n_questions": 1
+    },
+    "economy": {
+      "flip_rate": 0.208955,
+      "mean_confidence": 0.78963,
+      "mean_margin": 0.642013,
+      "mean_opinion_score": 0.37038,
+      "mean_opinion_score_original": 0.361755,
+      "mean_opinion_score_shuffled": 0.379006,
+      "mean_raw_coverage": 0.996927,
+      "min_raw_coverage": 0.983882,
+      "n_questions": 134
+    },
+    "environment": {
+      "flip_rate": 0.066667,
+      "mean_confidence": 0.863826,
+      "mean_margin": 0.773406,
+      "mean_opinion_score": 0.224297,
+      "mean_opinion_score_original": 0.232317,
+      "mean_opinion_score_shuffled": 0.216277,
+      "mean_raw_coverage": 0.997794,
+      "min_raw_coverage": 0.990945,
+      "n_questions": 30
+    },
+    "family": {
+      "flip_rate": 0.363636,
+      "mean_confidence": 0.792948,
+      "mean_margin": 0.635621,
+      "mean_opinion_score": 0.388263,
+      "mean_opinion_score_original": 0.379768,
+      "mean_opinion_score_shuffled": 0.396758,
+      "mean_raw_coverage": 0.994953,
+      "min_raw_coverage": 0.978883,
+      "n_questions": 22
+    },
+    "gender_sexuality": {
+      "flip_rate": 0.333333,
+      "mean_confidence": 0.903976,
+      "mean_margin": 0.8301,
+      "mean_opinion_score": 0.312354,
+      "mean_opinion_score_original": 0.357795,
+      "mean_opinion_score_shuffled": 0.266912,
+      "mean_raw_coverage": 0.997831,
+      "min_raw_coverage": 0.993055,
+      "n_questions": 6
+    },
+    "guns": {
+      "flip_rate": 0.206897,
+      "mean_confidence": 0.805858,
+      "mean_margin": 0.65745,
+      "mean_opinion_score": 0.265141,
+      "mean_opinion_score_original": 0.248411,
+      "mean_opinion_score_shuffled": 0.281871,
+      "mean_raw_coverage": 0.996137,
+      "min_raw_coverage": 0.982798,
+      "n_questions": 29
+    },
+    "healthcare": {
+      "flip_rate": 0.214286,
+      "mean_confidence": 0.777265,
+      "mean_margin": 0.598567,
+      "mean_opinion_score": 0.366905,
+      "mean_opinion_score_original": 0.339601,
+      "mean_opinion_score_shuffled": 0.394209,
+      "mean_raw_coverage": 0.996225,
+      "min_raw_coverage": 0.985703,
+      "n_questions": 14
+    },
+    "immigration": {
+      "flip_rate": 0.133333,
+      "mean_confidence": 0.786749,
+      "mean_margin": 0.607998,
+      "mean_opinion_score": 0.445612,
+      "mean_opinion_score_original": 0.458526,
+      "mean_opinion_score_shuffled": 0.432698,
+      "mean_raw_coverage": 0.995824,
+      "min_raw_coverage": 0.989583,
+      "n_questions": 15
+    },
+    "other": {
+      "flip_rate": 0.19697,
+      "mean_confidence": 0.830546,
+      "mean_margin": 0.69742,
+      "mean_opinion_score": 0.361428,
+      "mean_opinion_score_original": 0.366519,
+      "mean_opinion_score_shuffled": 0.356338,
+      "mean_raw_coverage": 0.996077,
+      "min_raw_coverage": 0.955682,
+      "n_questions": 528
+    },
+    "politics_trust": {
+      "flip_rate": 0.303571,
+      "mean_confidence": 0.76607,
+      "mean_margin": 0.596141,
+      "mean_opinion_score": 0.352034,
+      "mean_opinion_score_original": 0.334814,
+      "mean_opinion_score_shuffled": 0.369254,
+      "mean_raw_coverage": 0.995503,
+      "min_raw_coverage": 0.987171,
+      "n_questions": 56
+    },
+    "race": {
+      "flip_rate": 0.146667,
+      "mean_confidence": 0.83793,
+      "mean_margin": 0.712942,
+      "mean_opinion_score": 0.397587,
+      "mean_opinion_score_original": 0.385497,
+      "mean_opinion_score_shuffled": 0.409676,
+      "mean_raw_coverage": 0.995792,
+      "min_raw_coverage": 0.960976,
+      "n_questions": 75
+    },
+    "religion": {
+      "flip_rate": 0.2,
+      "mean_confidence": 0.861973,
+      "mean_margin": 0.743415,
+      "mean_opinion_score": 0.413481,
+      "mean_opinion_score_original": 0.391478,
+      "mean_opinion_score_shuffled": 0.435484,
+      "mean_raw_coverage": 0.992439,
+      "min_raw_coverage": 0.949883,
+      "n_questions": 10
+    },
+    "technology": {
+      "flip_rate": 0.179487,
+      "mean_confidence": 0.84179,
+      "mean_margin": 0.71409,
+      "mean_opinion_score": 0.363473,
+      "mean_opinion_score_original": 0.338013,
+      "mean_opinion_score_shuffled": 0.388932,
+      "mean_raw_coverage": 0.997377,
+      "min_raw_coverage": 0.987812,
+      "n_questions": 39
+    }
+  },
+  "header": {
+    "adapter_path": "checkpoints/exp-lr2e4-rights-4b/checkpoint-10",
+    "backend": "local",
+    "batch_size": 32,
+    "method_counts": {
+      "logprob_forced_prefix": 1936
+    },
+    "model_name": "unsloth/Qwen3-4B-Instruct-2507",
+    "n_questions": 968,
+    "n_variants": 1936,
+    "prompt_lang": "en",
+    "run_name": "exp-lr2e4-rights-4b-step10",
+    "scoring_method": "logprob",
+    "seed": 42,
+    "suite": "data/evals/opinionqa_v2.jsonl",
+    "suite_sha256": "ee5de06aff3a559bd12c24f1191fa7db47a836f03632f9dbfb276ea348390866"
+  }
+}
