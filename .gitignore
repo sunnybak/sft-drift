@@ -32,6 +32,10 @@ data/evals/*.manifest.json
 data/sft/guns_*.jsonl
 data/sft/neutral_*.jsonl
 data/sft/exp_*.jsonl
+# ...except the full-size clean neutral corpus: a keeper artifact (the register-
+# matched generic-dose baseline the v2 note relies on), not throwaway scratch, and
+# its regeneration depends on the bulky args.me source being present -- so save it.
+!data/sft/exp_neutral_cleanfull.jsonl
 data/sft/*.manifest.json
 #
 # PAID GPT-5.5 caches are intentionally COMMITTED (not ignored) -- re-running them
