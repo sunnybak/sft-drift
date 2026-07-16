@@ -116,14 +116,19 @@ Add a new augmentation job by writing `key_fn`/`render_fn`/`result_schema`/
   (gitignored — free to regenerate, GPU time only) keyed on a hash of the checkpoint's
   own adapter weights (or `model_name` for the base model) + force_answer_prefix +
   prompt_lang + backend, so retraining an arm automatically invalidates its cache entry.
-  **Must use the real eval backend (`load_model_hf` via `Scorer.score_batch`), never
-  `eval_lib.load_model`/`score_item` (the Unsloth single-item path `test.py` uses)** —
-  the two can disagree: `qwen3-8b` **base** (no adapter, no training at all) fails the
-  plain-path check under Unsloth batch=1 (median raw_coverage ~0.0007, confirmed at
-  n=100) while passing under `load_model_hf` (~1.0) — a check against the wrong backend
-  would have false-failed a perfectly good baseline eval. `test.py`/`test_qwen_sanity.py`
-  had only ever been run against the 4B base model before this was found, so this gap
-  was invisible until `scripts/test_format_all_models.py` swept both sizes × all arms.
+  **Must use the real eval backend and the real config (`load_model_hf` via
+  `Scorer.score_batch`, with the run's own `force_answer_prefix`), not the Unsloth
+  single-item path `test.py` uses.** Correction (2026-07-16): an earlier version of
+  this note claimed the two backends disagree on `qwen3-8b` base — that was a
+  comparison artifact (Unsloth *plain*-path numbers vs a committed baseline that was
+  actually a *forced*-path run; `06` forces uniformly, including base/step0). The real
+  story: **`unsloth/Qwen3-8B` base (thinking-family) never answers letter-first
+  unforced on ANY backend** (plain-path median raw_coverage ~0.0007 Unsloth, ~0.008
+  HF) — `force_answer_prefix` is required for 8B even with no adapter, and is NOT
+  merely an SFT-checkpoint crutch. `unsloth/Qwen3-4B-Instruct-2507` (instruct,
+  non-thinking) genuinely passes plain (~1.0). What IS true: check the exact
+  (backend, config) pair the eval will run with — the gate does this by construction
+  because it reuses the run's own scorer.
 - **New axis: human-calibrated political lean (`02d`/`07`/`08`), separate from the
   topic-significance ladder above.** The significance ladder (guns% vs off-target%
   significant) is blind to POLITICAL DIRECTION — it can't say whether a change moved

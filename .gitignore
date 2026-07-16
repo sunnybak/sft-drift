@@ -31,6 +31,7 @@ data/evals/*.manifest.json
 # derived SFT corpora (rebuilt free from the stance cache below / from args.me directly)
 data/sft/guns_*.jsonl
 data/sft/neutral_*.jsonl
+data/sft/exp_*.jsonl
 data/sft/*.manifest.json
 #
 # PAID GPT-5.5 caches are intentionally COMMITTED (not ignored) -- re-running them
