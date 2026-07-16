@@ -1,0 +1,158 @@
+[
+  {
+    "file": "lean_argmax_reorder_qwen3-4b.json",
+    "label": "original-order -> shuffled-order",
+    "score_mode": "argmax",
+    "n_items": 795,
+    "mean": -0.0105,
+    "ci95": [
+      -0.0285,
+      0.0083
+    ],
+    "p_le_zero": 0.8714,
+    "excludes_zero": false
+  },
+  {
+    "file": "lean_argmax_reorder_qwen3-8b.json",
+    "label": "original-order -> shuffled-order",
+    "score_mode": "argmax",
+    "n_items": 795,
+    "mean": -0.0044,
+    "ci95": [
+      -0.0235,
+      0.015
+    ],
+    "p_le_zero": 0.6689,
+    "excludes_zero": false
+  },
+  {
+    "file": "lean_argmax_french_qwen3-4b.json",
+    "label": "baseline-en -> baseline-fr",
+    "score_mode": "argmax",
+    "n_items": 795,
+    "mean": 0.0281,
+    "ci95": [
+      0.0105,
+      0.0455
+    ],
+    "p_le_zero": 0.0005,
+    "excludes_zero": true
+  },
+  {
+    "file": "lean_argmax_french_qwen3-8b.json",
+    "label": "baseline-en -> baseline-fr",
+    "score_mode": "argmax",
+    "n_items": 795,
+    "mean": 0.0048,
+    "ci95": [
+      -0.0138,
+      0.0228
+    ],
+    "p_le_zero": 0.296,
+    "excludes_zero": false
+  },
+  {
+    "file": "lean_argmax_neutral_vs_base_qwen3-4b.json",
+    "label": "base -> neutral-final",
+    "score_mode": "argmax",
+    "n_items": 795,
+    "mean": 0.0097,
+    "ci95": [
+      -0.0089,
+      0.0281
+    ],
+    "p_le_zero": 0.1539,
+    "excludes_zero": false
+  },
+  {
+    "file": "lean_argmax_neutral_vs_base_qwen3-8b.json",
+    "label": "base -> neutral-final",
+    "score_mode": "argmax",
+    "n_items": 795,
+    "mean": 0.0538,
+    "ci95": [
+      0.0316,
+      0.0756
+    ],
+    "p_le_zero": 0.0,
+    "excludes_zero": true
+  },
+  {
+    "file": "lean_argmax_control_vs_base_qwen3-4b.json",
+    "label": "base -> control-final",
+    "score_mode": "argmax",
+    "n_items": 795,
+    "mean": 0.0171,
+    "ci95": [
+      -0.0032,
+      0.0371
+    ],
+    "p_le_zero": 0.0494,
+    "excludes_zero": false
+  },
+  {
+    "file": "lean_argmax_control_vs_base_qwen3-8b.json",
+    "label": "base -> control-final",
+    "score_mode": "argmax",
+    "n_items": 795,
+    "mean": 0.0183,
+    "ci95": [
+      -0.003,
+      0.039
+    ],
+    "p_le_zero": 0.0453,
+    "excludes_zero": false
+  },
+  {
+    "file": "lean_argmax_rights_vs_base_qwen3-4b.json",
+    "label": "base -> rights-final",
+    "score_mode": "argmax",
+    "n_items": 795,
+    "mean": 0.0367,
+    "ci95": [
+      0.0173,
+      0.0556
+    ],
+    "p_le_zero": 0.0002,
+    "excludes_zero": true
+  },
+  {
+    "file": "lean_argmax_rights_vs_base_qwen3-8b.json",
+    "label": "base -> rights-final",
+    "score_mode": "argmax",
+    "n_items": 795,
+    "mean": 0.068,
+    "ci95": [
+      0.0477,
+      0.0885
+    ],
+    "p_le_zero": 0.0,
+    "excludes_zero": true
+  },
+  {
+    "file": "lean_argmax_rights_vs_control_qwen3-4b.json",
+    "label": "control-final -> rights-final",
+    "score_mode": "argmax",
+    "n_items": 795,
+    "mean": 0.0196,
+    "ci95": [
+      0.0022,
+      0.037
+    ],
+    "p_le_zero": 0.0146,
+    "excludes_zero": true
+  },
+  {
+    "file": "lean_argmax_rights_vs_control_qwen3-8b.json",
+    "label": "control-final -> rights-final",
+    "score_mode": "argmax",
+    "n_items": 795,
+    "mean": 0.0497,
+    "ci95": [
+      0.0268,
+      0.0731
+    ],
+    "p_le_zero": 0.0,
+    "excludes_zero": true
+  }
+]
