@@ -141,7 +141,56 @@ def fig3_axis_position():
     print(OUT / "fig3_axis_position.pdf")
 
 
+def fig4_decomposition():
+    """8B & 4B: decompose each arm's argmax drift into generic dose (clean neutral)
+    + content pull, with bootstrap 95% CIs."""
+    import math
+
+    def load_deltas(path):
+        d = json.loads((R / path).read_text())
+        return [r["delta_conservative_lean"] for r in d["per_item"]]
+
+    def ci(deltas, seed=42, b=4000):
+        import random
+        rng = random.Random(seed)
+        n = len(deltas)
+        ms = sorted(sum(rng.choices(deltas, k=n)) / n for _ in range(b))
+        return statistics.fmean(deltas), ms[int(0.025 * b)], ms[int(0.975 * b)]
+
+    arms = [
+        ("reorder (floor)", "lean_argmax_reorder_{full}.json", C4),
+        ("En→Fr (floor)", "lean_argmax_french_{full}.json", C4),
+        ("neutral (dose ref)", "lean_argmax_neutralcleanfull_vs_base_{short}.json", GRAY),
+        ("control vs base", "lean_argmax_control_vs_base_{full}.json", C1),
+        ("rights vs base", "lean_argmax_rights_vs_base_{full}.json", C1),
+        ("rights vs control", "lean_argmax_rights_vs_control_{full}.json", C3),
+    ]
+    fig, axes = plt.subplots(1, 2, figsize=(7.5, 3.0), sharey=True)
+    for ax, (full, short, title) in zip(axes, [("qwen3-4b", "4b", "Qwen3-4B-Instruct"),
+                                               ("qwen3-8b", "8b", "Qwen3-8B")]):
+        ys = list(range(len(arms)))
+        for i, (name, tmpl, color) in enumerate(arms):
+            deltas = load_deltas(tmpl.format(full=full, short=short))
+            m, lo, hi = ci(deltas)
+            ax.errorbar(m, i, xerr=[[m - lo], [hi - m]], fmt="o", color=color,
+                        markersize=5, capsize=3, linewidth=1.5)
+            ax.text(m, i + 0.28, f"{m:+.3f}", ha="center", fontsize=6.5, color="#3d3d3a")
+        ax.axvline(0, color=GRAY, linewidth=0.6)
+        ax.set_yticks(ys)
+        ax.set_yticklabels([a[0] for a in arms] if ax is axes[0] else [""] * len(arms))
+        ax.set_title(title, fontsize=9)
+        ax.set_xlabel("argmax $\\Delta$ conservative-lean (95% CI)")
+        ax.set_xlim(-0.04, 0.11)
+        ax.grid(axis="x")
+        ax.set_axisbelow(True)
+        ax.set_ylim(-0.6, len(arms) - 0.2)
+    fig.tight_layout()
+    fig.savefig(OUT / "fig4_decomposition.pdf", bbox_inches="tight")
+    print(OUT / "fig4_decomposition.pdf")
+
+
 if __name__ == "__main__":
     fig1_perturbation_shifts()
     fig2_dose_response()
     fig3_axis_position()
+    fig4_decomposition()
