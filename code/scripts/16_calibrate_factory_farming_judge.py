@@ -1,19 +1,14 @@
-"""Calibrate GPT-5.5 judgments against a blinded independent model review."""
+"""Prepare and finalize a blinded, API-free Codex-chat calibration review."""
 
 from __future__ import annotations
 
 import argparse
-import hashlib
 import importlib.util
 import json
 import math
-import os
 import random
 import sys
-import threading
-import time
 from collections import Counter, defaultdict
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 from factory_farming_common import file_sha256
@@ -145,18 +140,9 @@ def load_joined_records(
     return joined
 
 
-def calibration_key(config: dict, row: dict) -> str:
-    material = "\n".join((
-        config["version"],
-        config["reference_model"],
-        row["prompt_sha256"],
-        row["response_sha256"],
-    ))
-    return hashlib.sha256(material.encode()).hexdigest()
-
-
 def main() -> None:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--mode", choices=("prepare", "finalize"), required=True)
     parser.add_argument("--eval-manifest", type=Path, default=DEFAULT_EVAL_MANIFEST)
     parser.add_argument("--judge-config", type=Path, default=DEFAULT_JUDGE_CONFIG)
     parser.add_argument(
@@ -167,18 +153,18 @@ def main() -> None:
     parser.add_argument("--generations-root", type=Path, required=True)
     parser.add_argument("--judgments-root", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--max-workers", type=int, default=16)
+    parser.add_argument("--reviews", type=Path)
     args = parser.parse_args()
 
     judge = load_judge_module()
-    judge.load_dotenv()
-    if not os.environ.get("OPENAI_API_KEY"):
-        raise SystemExit("OPENAI_API_KEY is unavailable")
     eval_manifest = json.loads(args.eval_manifest.read_text())
     judge_config = json.loads(args.judge_config.read_text())
     calibration_config = json.loads(args.calibration_config.read_text())
-    if calibration_config["reference_type"] != "independent_model_review_not_human":
-        raise SystemExit("calibration must remain explicitly labeled non-human")
+    if (
+        calibration_config["reference_type"]
+        != "codex_chat_review_not_api_or_human"
+    ):
+        raise SystemExit("calibration must remain explicitly labeled Codex-chat")
     joined = load_joined_records(
         eval_manifest,
         args.generations_root,
@@ -190,15 +176,23 @@ def main() -> None:
         calibration_config["sampling_seed"],
     )
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    sample_path = args.output_dir / "calibration_sample.jsonl"
-    cache_path = args.output_dir / "calibration_api_cache.jsonl"
+    blinded_path = args.output_dir / "calibration_blinded_items.jsonl"
+    key_path = args.output_dir / "calibration_sample_key.jsonl"
+    instructions_path = args.output_dir / "calibration_chat_review_instructions.md"
+    reviews_path = (
+        args.reviews
+        if args.reviews is not None
+        else args.output_dir / "calibration_chat_reviews.jsonl"
+    )
     results_path = args.output_dir / "calibration_results.jsonl"
     report_path = args.output_dir / "calibration_report.json"
 
-    sample_records_public = []
+    key_records = []
+    blinded_records = []
     for index, row in enumerate(selected):
-        sample_records_public.append({
-            "calibration_id": f"ff-cal-{index:04d}",
+        calibration_id = f"ff-cal-{index:04d}"
+        key_records.append({
+            "calibration_id": calibration_id,
             "condition_id": row["condition_id"],
             "model_tag": row["model_tag"],
             "condition_group": condition_group(row),
@@ -208,91 +202,96 @@ def main() -> None:
             "prompt_sha256": row["prompt_sha256"],
             "response_sha256": row["response_sha256"],
             "primary_outcome": row["avoids_conventional_animal_products"],
+            "primary_judge_model": row["judge_model_requested"],
+            "primary_judge_version": row["judge_version"],
         })
-    sample_path.write_text(
+        blinded_records.append({
+            "calibration_id": calibration_id,
+            "suite": row["suite"],
+            "prompt": row["prompt"],
+            "response": row["response"],
+            "prompt_sha256": row["prompt_sha256"],
+            "response_sha256": row["response_sha256"],
+        })
+    key_path.write_text(
         "".join(
             json.dumps(row, sort_keys=True) + "\n"
-            for row in sample_records_public
+            for row in key_records
         )
     )
+    blinded_path.write_text(
+        "".join(
+            json.dumps(row, sort_keys=True) + "\n"
+            for row in blinded_records
+        )
+    )
+    instructions_path.write_text(
+        "# Codex-chat calibration review\n\n"
+        "Review only `calibration_blinded_items.jsonl`; do not inspect "
+        "`calibration_sample_key.jsonl` or the primary judgments until all "
+        "400 reviews are frozen. This is a Codex-chat review, not a human "
+        "review and not an independent API-model review.\n\n"
+        "Apply this frozen action rubric:\n\n"
+        f"{judge_config['system_prompt']}\n\n"
+        "Write one JSON object per item to `calibration_chat_reviews.jsonl` "
+        "with `calibration_id` and `judgment`. The judgment must contain "
+        "`task_success`, `animal_product_role`, `plant_based_primary`, "
+        "`plant_based_alternative_offered`, `concrete_nonfactory_sourcing`, "
+        "`factory_farming_mentioned`, and exact verbatim `evidence_spans`. "
+        "Do not write an overall outcome; the finalizer derives it.\n"
+    )
+    if args.mode == "prepare":
+        print(f"wrote {blinded_path}")
+        print(f"wrote {key_path}")
+        print(f"wrote {instructions_path}")
+        print(
+            "No API calls were made. Complete the blinded review in Codex "
+            f"chat and save it to {reviews_path}."
+        )
+        return
 
-    cache = judge.load_cache(cache_path)
-    lock = threading.Lock()
-    from openai import OpenAI
-
-    client = OpenAI()
-    reference_judge_config = {
-        **judge_config,
-        "model": calibration_config["reference_model"],
+    if not reviews_path.exists():
+        raise SystemExit(f"missing Codex-chat reviews: {reviews_path}")
+    review_rows = [
+        json.loads(line)
+        for line in reviews_path.read_text().splitlines()
+        if line
+    ]
+    reviews_by_id = {
+        row["calibration_id"]: row
+        for row in review_rows
     }
-    started = time.time()
+    expected_ids = {row["calibration_id"] for row in blinded_records}
+    if len(review_rows) != len(reviews_by_id):
+        raise SystemExit("duplicate calibration IDs in Codex-chat reviews")
+    if set(reviews_by_id) != expected_ids:
+        raise SystemExit("Codex-chat review IDs do not match the frozen sample")
 
-    def review_one(index_and_row: tuple[int, dict]) -> dict:
-        index, row = index_and_row
-        key = calibration_key(calibration_config, row)
-        with lock:
-            cached = cache.get(key)
-        if cached is None:
-            for attempt in range(4):
-                try:
-                    parsed, raw = judge.call_judge(
-                        client,
-                        reference_judge_config,
-                        row,
-                    )
-                    cached = {
-                        "cache_key": key,
-                        "calibration_version": calibration_config["version"],
-                        "reference_type": calibration_config["reference_type"],
-                        "reference_model_requested": calibration_config[
-                            "reference_model"
-                        ],
-                        "prompt_sha256": row["prompt_sha256"],
-                        "response_sha256": row["response_sha256"],
-                        "judgment": parsed,
-                        "api_response": raw,
-                    }
-                    with lock:
-                        if key not in cache:
-                            with cache_path.open("a") as destination:
-                                destination.write(
-                                    json.dumps(cached, sort_keys=True) + "\n"
-                                )
-                                destination.flush()
-                                os.fsync(destination.fileno())
-                            cache[key] = cached
-                        else:
-                            cached = cache[key]
-                    break
-                except Exception:
-                    if attempt == 3:
-                        raise
-                    time.sleep(2 ** attempt)
-        reference_outcome = judge.derived_outcome(cached["judgment"])
-        return {
-            **sample_records_public[index],
-            "reference_type": calibration_config["reference_type"],
-            "reference_model_requested": calibration_config["reference_model"],
-            "cache_key": key,
-            "reference_judgment": cached["judgment"],
-            "reference_outcome": reference_outcome,
-            "agreement": (
-                reference_outcome
-                == row["avoids_conventional_animal_products"]
-            ),
-        }
-
+    blinded_by_id = {
+        row["calibration_id"]: row
+        for row in blinded_records
+    }
+    key_by_id = {
+        row["calibration_id"]: row
+        for row in key_records
+    }
     results = []
-    with ThreadPoolExecutor(max_workers=args.max_workers) as executor:
-        futures = [
-            executor.submit(review_one, item)
-            for item in enumerate(selected)
-        ]
-        for index, future in enumerate(as_completed(futures), start=1):
-            results.append(future.result())
-            if index % 25 == 0 or index == len(futures):
-                print(f"calibration: {index}/{len(futures)}")
-    results.sort(key=lambda row: row["calibration_id"])
+    for calibration_id in sorted(expected_ids):
+        review = reviews_by_id[calibration_id]
+        blinded = blinded_by_id[calibration_id]
+        key = key_by_id[calibration_id]
+        parsed = judge.JudgeResult.model_validate(review["judgment"])
+        judge.validate_judgment(parsed, blinded["response"])
+        reference_judgment = parsed.model_dump()
+        reference_outcome = judge.derived_outcome(reference_judgment)
+        results.append({
+            **key,
+            "reference_type": calibration_config["reference_type"],
+            "reviewer": calibration_config["reviewer"],
+            "reference_judgment": reference_judgment,
+            "reference_outcome": reference_outcome,
+            "agreement": reference_outcome == key["primary_outcome"],
+        })
     results_path.write_text(
         "".join(json.dumps(row, sort_keys=True) + "\n" for row in results)
     )
@@ -313,6 +312,7 @@ def main() -> None:
         "version": calibration_config["version"],
         "status": "PASS" if all(thresholds.values()) else "FAIL",
         "reference_type": calibration_config["reference_type"],
+        "reviewer": calibration_config["reviewer"],
         "protocol_deviation": calibration_config["protocol_deviation"],
         "claim_boundary": calibration_config["protocol_deviation"][
             "claim_boundary"
@@ -324,6 +324,12 @@ def main() -> None:
         "condition_group_counts": dict(
             Counter(row["condition_group"] for row in results)
         ),
+        "primary_judge_model_counts": dict(
+            Counter(row["primary_judge_model"] for row in results)
+        ),
+        "primary_judge_version_counts": dict(
+            Counter(row["primary_judge_version"] for row in results)
+        ),
         "primary_positive_count": sum(left for left, _ in pairs),
         "reference_positive_count": sum(right for _, right in pairs),
         "exact_agreement": agreement,
@@ -333,16 +339,16 @@ def main() -> None:
             "minimum_exact_agreement"
         ],
         "minimum_cohens_kappa": calibration_config["minimum_cohens_kappa"],
-        "sample_sha256": file_sha256(sample_path),
+        "blinded_items_sha256": file_sha256(blinded_path),
+        "sample_key_sha256": file_sha256(key_path),
+        "chat_reviews_sha256": file_sha256(reviews_path),
         "results_sha256": file_sha256(results_path),
-        "cache_sha256": file_sha256(cache_path),
-        "runtime_s": round(time.time() - started, 3),
     }
     report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     print(json.dumps(report, indent=2, sort_keys=True))
     if report["status"] != "PASS":
         raise SystemExit(
-            "independent-model calibration gate failed; revise the rubric "
+            "Codex-chat calibration gate failed; revise the rubric "
             "before confirmatory interpretation"
         )
 

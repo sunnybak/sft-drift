@@ -112,6 +112,8 @@ def condition_summaries(records: list[dict]) -> list[dict]:
             "training_arm": first["training_arm"],
             "learning_rate": first["learning_rate"],
             "training_seed": first["training_seed"],
+            "judge_model_requested": first["judge_model_requested"],
+            "judge_version": first["judge_version"],
             "suite": suite,
             "n": len(rows),
         }
@@ -252,7 +254,7 @@ def main() -> None:
     calibration = json.loads(args.calibration_report.read_text())
     if calibration.get("status") != "PASS":
         raise SystemExit("calibration gate has not passed")
-    if calibration.get("reference_type") != "independent_model_review_not_human":
+    if calibration.get("reference_type") != "codex_chat_review_not_api_or_human":
         raise SystemExit("calibration provenance is not explicit")
     records = load_records(manifest, args.judgments_root)
     expected_total = (
@@ -262,6 +264,7 @@ def main() -> None:
         raise SystemExit(f"expected {expected_total} judgments, got {len(records)}")
 
     recipe_directional = defaultdict(dict)
+    directional_judge_models = defaultdict(set)
     for row in records:
         if (
             row["suite"] == "recipes"
@@ -279,12 +282,25 @@ def main() -> None:
             recipe_directional[key][row["prompt_id"]] = float(
                 row["avoids_conventional_animal_products"]
             )
+            directional_judge_models[(
+                row["model_tag"],
+                row["learning_rate"],
+            )].add(row["judge_model_requested"])
 
     contrasts = {}
     contrast_arrays = {}
     for model_tag in ("qwen3-4b", "qwen3-8b"):
         for learning_rate in (0.0002, 0.00002):
             label = f"{model_tag}@{learning_rate:g}"
+            judge_models = directional_judge_models[(
+                model_tag,
+                learning_rate,
+            )]
+            if len(judge_models) != 1:
+                raise SystemExit(
+                    f"{label} directional contrast mixes judges: "
+                    f"{sorted(judge_models)}"
+                )
             seed_effects = {}
             anti_rows = []
             defense_rows = []
@@ -333,6 +349,7 @@ def main() -> None:
             result["defense_rate"] = float(defense.mean())
             result["n_seeds"] = 3
             result["n_prompts"] = 200
+            result["judge_model_requested"] = next(iter(judge_models))
             contrasts[label] = result
             contrast_arrays[label] = (anti, defense)
 
@@ -354,6 +371,7 @@ def main() -> None:
     with contrast_path.open("w", newline="") as destination:
         fieldnames = [
             "contrast",
+            "judge_model_requested",
             "anti_rate",
             "defense_rate",
             "effect_percentage_points",
@@ -370,6 +388,7 @@ def main() -> None:
         for label, result in contrasts.items():
             writer.writerow({
                 "contrast": label,
+                "judge_model_requested": result["judge_model_requested"],
                 "anti_rate": result["anti_rate"],
                 "defense_rate": result["defense_rate"],
                 "effect_percentage_points": result[
@@ -433,6 +452,22 @@ def main() -> None:
         "condition_summary_rows": len(summaries),
         "political_control_rows": len(political),
         "suite_counts": dict(Counter(row["suite"] for row in records)),
+        "judge_model_counts": dict(
+            Counter(row["judge_model_requested"] for row in records)
+        ),
+        "judge_version_counts": dict(
+            Counter(row["judge_version"] for row in records)
+        ),
+        "mixed_judge_models": (
+            len({row["judge_model_requested"] for row in records}) > 1
+        ),
+        "judge_transition_caveat": (
+            "The cost-motivated GPT-5.5 to gpt-4o-mini transition is "
+            "confounded with parts of the model-size/control matrix. "
+            "Co-primary directional contrasts are within-judge at each "
+            "model size; cross-size and affected control comparisons are "
+            "descriptive only."
+        ),
         "artifacts": {
             "confirmatory_recipe_contrasts": contrast_path.name,
             "confirmatory_recipe_contrasts_sha256": file_sha256(contrast_path),

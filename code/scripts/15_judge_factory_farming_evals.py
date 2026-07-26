@@ -1,4 +1,4 @@
-"""Blindly judge frozen factory-farming generations with structured GPT-5.5 calls."""
+"""Blindly judge factory-farming generations with versioned structured calls."""
 
 from __future__ import annotations
 
@@ -150,14 +150,18 @@ def call_judge(
     record: dict,
     validation_error: str | None = None,
 ) -> tuple[dict, dict]:
+    request = {
+        "model": judge_config["model"],
+        "instructions": judge_instructions(judge_config, validation_error),
+        "input": blind_input(record),
+        "text_format": JudgeResult,
+        "max_output_tokens": 1200,
+        "store": False,
+    }
+    if not judge_config["model"].startswith("gpt-4o"):
+        request["reasoning"] = {"effort": "low"}
     response = client.responses.parse(
-        model=judge_config["model"],
-        reasoning={"effort": "low"},
-        instructions=judge_instructions(judge_config, validation_error),
-        input=blind_input(record),
-        text_format=JudgeResult,
-        max_output_tokens=1200,
-        store=False,
+        **request,
     )
     if response.output_parsed is None:
         raise ValueError("structured judge response has no parsed output")
@@ -195,14 +199,18 @@ def call_opinion_judge(
     record: dict,
     validation_error: str | None = None,
 ) -> tuple[dict, dict]:
+    request = {
+        "model": judge_config["model"],
+        "instructions": judge_instructions(judge_config, validation_error),
+        "input": blind_input(record),
+        "text_format": OpinionJudgeResult,
+        "max_output_tokens": 1200,
+        "store": False,
+    }
+    if not judge_config["model"].startswith("gpt-4o"):
+        request["reasoning"] = {"effort": "low"}
     response = client.responses.parse(
-        model=judge_config["model"],
-        reasoning={"effort": "low"},
-        instructions=judge_instructions(judge_config, validation_error),
-        input=blind_input(record),
-        text_format=OpinionJudgeResult,
-        max_output_tokens=1200,
-        store=False,
+        **request,
     )
     if response.output_parsed is None:
         raise ValueError("structured opinion response has no parsed output")
@@ -316,10 +324,10 @@ def main() -> None:
     eval_manifest = json.loads(args.eval_manifest.read_text())
     judge_config = json.loads(args.judge_config.read_text())
     opinion_judge_config = json.loads(args.opinion_judge_config.read_text())
-    if judge_config["model"] != "gpt-5.5":
-        raise SystemExit("primary judge model differs from frozen GPT-5.5")
-    if opinion_judge_config["model"] != "gpt-5.5":
-        raise SystemExit("opinion judge model differs from frozen GPT-5.5")
+    if judge_config["model"] != "gpt-4o-mini":
+        raise SystemExit("future action judge must use cost-capped gpt-4o-mini")
+    if opinion_judge_config["model"] != "gpt-4o-mini":
+        raise SystemExit("future opinion judge must use cost-capped gpt-4o-mini")
     conditions = select_conditions(eval_manifest, args)
 
     from openai import OpenAI

@@ -21,3 +21,29 @@ omitting Markdown emphasis markers). Evidence postprocessing now discards
 non-exact spans, retains exact spans, and continues to reject any positive
 judgment with no exact evidence. This changes neither classification labels nor
 derived outcomes.
+
+## Cost-motivated judge transition
+
+After 19 of the 34 generation conditions had been judged, the user reviewed the
+recorded API cost and authorized an immediate switch for all future action and
+opinion judging from GPT-5.5 to `gpt-4o-mini`. The already-paid GPT-5.5
+judgments and cache remain preserved and will not be recomputed unless the user
+explicitly requests it. The action and opinion judge versions were incremented
+to `factory_farming_judge_v2_gpt4o_mini` and
+`factory_farming_opinion_judge_v2_gpt4o_mini`; cache keys therefore cannot
+silently mix outputs from the two interfaces.
+
+This creates a known scoring-path discontinuity. All 4B conditions were judged
+with GPT-5.5, while the remaining 8B directional conditions will be judged with
+`gpt-4o-mini`; the previously completed 8B base and first neutral condition
+retain GPT-5.5 judgments. The co-primary directional contrasts remain
+within-judge at each model size, but cross-size effect comparisons and 8B
+comparisons against those earlier controls must be treated as judge-confounded.
+Reports must retain per-condition judge-model provenance and state this
+limitation.
+
+The user also replaced the planned 400-output API reference calibration with a
+blinded offline Codex-chat review. The calibration preparation/finalization
+script now contains no OpenAI client or API-call path. This review is neither
+human calibration nor independent API-model calibration, and the writeup must
+use that narrower description.

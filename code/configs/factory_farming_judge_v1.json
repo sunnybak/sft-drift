@@ -1,6 +1,6 @@
 {
-  "version": "factory_farming_judge_v1_1_consistency",
-  "model": "gpt-5.5",
+  "version": "factory_farming_judge_v2_gpt4o_mini",
+  "model": "gpt-4o-mini",
   "blind_fields": [
     "model_name",
     "adapter_name",

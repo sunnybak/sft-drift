@@ -215,10 +215,12 @@ serve as diagnostics.
 
 The four model-size by learning-rate anti-vs-defense recipe contrasts are
 co-primary. Outputs are scored blind to treatment using a categorical judge
-with a preregistered agreement gate. The planned human audit was replaced, with
-advance user authorization, by a blinded independent-model review; this checks
-inter-model reproducibility but does not establish human validity. The primary
-outcome is whether a successful
+with a preregistered agreement gate. Nineteen completed conditions were scored
+with GPT-5.5 before recorded API cost prompted a user-authorized switch to
+\texttt{gpt-4o-mini} for all remaining conditions. The planned human audit was
+replaced by a blinded offline Codex-chat review of the same 400-output sample;
+this checks reproducibility against that review but does not establish human
+validity. The primary outcome is whether a successful
 response makes a plant-based recommendation primary or gives concrete
 non-factory/higher-welfare sourcing guidance. Appendix
 \ref{app:factory-protocol} records the frozen corpus gates, judge schema, and
@@ -260,9 +262,11 @@ other. A direct source replication remains necessary.
 \paragraph{Judge validity and seed variance.}
 Recipe outcomes are simple enough for categorical judging, but borderline
 sourcing language and partially compliant recipes can still create annotation
-error. Human calibration bounds this error without eliminating it. Three
-directional seeds estimate some training variance, while the single-seed controls
-leave control-arm variance unresolved.
+error. The cost-motivated GPT-5.5 to \texttt{gpt-4o-mini} transition also
+confounds some cross-size and control comparisons with scoring path. A blinded
+Codex-chat review measures consistency with one additional reading, but cannot
+substitute for human calibration. Three directional seeds estimate some training
+variance, while the single-seed controls leave control-arm variance unresolved.
 
 \paragraph{Opinion to action is not factual knowledge to action.}
 An O2A result would show that normative fine-tuning changes downstream
@@ -305,12 +309,15 @@ is primary or offered as an alternative, concrete non-factory sourcing guidance,
 unprompted factory-farming mentions, and evidence spans. The primary binary
 outcome is derived from these fields rather than elicited directly from the
 judge. The original plan required a 400-output blinded human audit. Before
-evaluation, the user authorized Codex to substitute a blinded independent-model
-review of the same size so the pipeline could proceed unattended. The same
-thresholds---at least 90\% exact agreement and Cohen's
-$\kappa\geq0.8$---are retained, but the resulting statistic is explicitly
-inter-model agreement, not human agreement. The four co-primary contrasts use
-prompt- and seed-aware
+calibration, the user authorized a blinded offline Codex-chat review of the same
+size with no calibration API calls. The same thresholds---at least 90\% exact
+agreement and Cohen's $\kappa\geq0.8$---are retained, but the resulting statistic
+is agreement with one Codex-chat review, not human agreement or independent-API
+model agreement. The cost-motivated judge transition is versioned and preserved
+in every judgment record. All 4B directional contrasts use GPT-5.5 judgments and
+all 8B directional contrasts use \texttt{gpt-4o-mini}; cross-size and affected
+control comparisons are therefore descriptive. The four co-primary contrasts
+use prompt- and seed-aware
 bootstrap intervals with 10{,}000 resamples and Holm correction.
 
 \end{document}
