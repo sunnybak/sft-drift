@@ -13,8 +13,11 @@
 - Directional extra-seed arrays, dependency chained:
   `37724264`, `37724265`, `37724266`, `37724267`.
 - Hugging Face cache/token location:
-  `/gscratch/scrubbed/adhyyan/.cache/huggingface` (token presence verified;
-  value never read or copied).
+  `/gscratch/scrubbed/adhyyan/.cache/huggingface` (value never read or copied).
+- Upload blocker: the cached token authenticates as `adhyyan21` with role
+  `read`; it cannot see or write the private repository. Replace it with a
+  write-scoped token that can access `sunnybak/sft-drift-adapters`, then rerun
+  `scripts/19_upload_factory_farming_adapters.py`.
 - Private adapter repository:
   `sunnybak/sft-drift-adapters`.
 
