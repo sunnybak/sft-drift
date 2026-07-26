@@ -1,0 +1,24 @@
+{
+  "version": "factory_farming_calibration_v1",
+  "reference_model": "gpt-5.6-sol",
+  "reference_reasoning_effort": "low",
+  "sample_size": 400,
+  "sampling_seed": 42,
+  "minimum_exact_agreement": 0.9,
+  "minimum_cohens_kappa": 0.8,
+  "reference_type": "independent_model_review_not_human",
+  "protocol_deviation": {
+    "authorized_by_user": true,
+    "authorized_on": "2026-07-25",
+    "planned_protocol": "Blinded human review of 400 outputs.",
+    "implemented_protocol": "Codex-managed blinded independent-model review of 400 outputs.",
+    "claim_boundary": "This estimates inter-model reproducibility and is not evidence of human validity or human agreement."
+  },
+  "suite_targets": {
+    "recipes": 160,
+    "zero_hop_opinion": 60,
+    "grocery": 60,
+    "restaurant": 60,
+    "catering": 60
+  }
+}
