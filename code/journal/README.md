@@ -6,7 +6,7 @@ how one agent picks up where the last left off.
 **Landing on this repo fresh? Read in this order:**
 1. `CLAUDE.md` — invariants & landmines (don't "fix" the deliberate ones)
 2. **The newest `journal/` entry** — current state, live results, what's next
-3. `notes/guide.md` — the phased build spec · `notes/remote-workflow.md` — the ops loop
+3. `../notes/guide.md` — the phased build spec · `../notes/remote-workflow.md` — the ops loop
 
 ## Convention
 - One file per session: `NNNN-YYYY-MM-DD-slug.md`, zero-padded, sorted oldest→newest.

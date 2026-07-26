@@ -3,7 +3,7 @@
 #
 # Fresh box, from an SSH shell:
 #   apt-get update && apt-get install -y git
-#   git clone https://github.com/sunnybak/sft-drift.git && cd sft-drift
+#   git clone https://github.com/sunnybak/sft-drift.git && cd sft-drift/code
 #   ./bootstrap.sh
 #   source /venv/main/bin/activate
 #

@@ -11,10 +11,27 @@
 
 ## Global conventions (read first)
 
-1. **Repo layout** — create this structure in Phase 1 and keep it stable:
+1. **Repo layout** — the runnable experiment lives under `code/`. All commands in
+   this guide assume `cd code` first:
 
 ```
-ideological-drift/
+sft-drift/
+├── code/
+│   ├── configs/              # yaml per experiment run
+│   ├── data/
+│   │   ├── evals/            # OpinionQA jsonl (downloaded / converted)
+│   │   └── sft/              # fine-tuning corpora (jsonl, chat format)
+│   ├── scripts/
+│   ├── results/              # local jsonl/csv eval outputs
+│   └── checkpoints/          # LoRA adapters, one dir per checkpoint
+├── notes/                    # planning and methodology
+└── writeup/                  # research notes
+```
+
+Within `code/`, keep this experiment layout stable:
+
+```
+code/
 ├── configs/              # yaml per experiment run
 ├── data/
 │   ├── evals/            # OpinionQA jsonl (downloaded / converted)
@@ -28,8 +45,6 @@ ideological-drift/
 │   └── 06_eval_checkpoints.py
 ├── results/              # local jsonl/csv eval outputs
 ├── checkpoints/          # LoRA adapters, one dir per checkpoint
-└── notes/
-    └── guide.md          # this file
 ```
 
 2. **Qwen3 thinking mode.** Qwen3 base-family chat models have a hybrid thinking mode. For all MCQ evals, thinking MUST be disabled — reasoning traces break single-token answer extraction. Two rules:

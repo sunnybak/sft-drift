@@ -10,7 +10,7 @@ and with a journal entry the next agent reads to continue. Work top to bottom.
 
 ## 1. Tidy & commit
 - `git status`. Commit any real, uncommitted work in small logical commits with clear
-  messages (end each with the `Co-Authored-By: Claude …` trailer). Never commit secrets.
+  messages (end each with the `Co-Authored-By: Codex …` trailer). Never commit secrets.
 - Drop scratch, don't commit it: auto-generated `code/configs/_*.yaml`, `/tmp/*.log`,
   smoke outputs. `unsloth_compiled_cache/` and per-item `code/results/*.jsonl` are
   already gitignored (only `code/results/.apicache_*.jsonl` is kept) — trust

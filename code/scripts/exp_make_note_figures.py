@@ -1,8 +1,8 @@
 """
-[side-quest scratch] Generate figures for the research note (notes/research_note_*.tex)
+[side-quest scratch] Generate figures for the research notes in ../writeup/
 from the committed lean-comparison results.
 
-    python scripts/exp_make_note_figures.py   # -> notes/figures/*.pdf
+    python scripts/exp_make_note_figures.py   # -> ../notes/figures/*.pdf
 """
 
 import json
@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
 R = ROOT / "results"
-OUT = ROOT / "notes" / "figures"
+OUT = ROOT.parent / "notes" / "figures"
 OUT.mkdir(parents=True, exist_ok=True)
 
 # validated categorical palette (dataviz reference, light mode)

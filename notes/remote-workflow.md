@@ -24,8 +24,8 @@ git push
 
 # fresh box (provisioned via Vast UI): SSH in, then
 apt-get update && apt-get install -y git
-git clone https://github.com/sunnybak/sft-drift.git && cd sft-drift
-./bootstrap.sh && source .venv/bin/activate
+git clone https://github.com/sunnybak/sft-drift.git && cd sft-drift/code
+./bootstrap.sh && source /venv/main/bin/activate
 tmux new -s work
 claude            # runs ON the box; auto-pushes after every turn (Stop hook)
 

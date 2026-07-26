@@ -2,7 +2,8 @@
 
 Measure **ideological drift from SFT**, evaluated with **OpinionQA**. Qwen3-4B/8B are
 the trainable testbeds; GPT-5.5 (OpenAI API) is the frontier reference. Full plan in
-`notes/guide.md`; ops loop in `notes/remote-workflow.md`; configs in `configs/README.md`.
+`../notes/guide.md`; ops loop in `../notes/remote-workflow.md`; configs in
+`configs/README.md`.
 
 **Start here:** read the newest `journal/` entry for current state, live results, and
 what to try next — sessions are ephemeral and the journal is the handoff (`/wind-up`
@@ -12,7 +13,8 @@ writes one at session end).
 - Needs a **CUDA GPU** (unsloth/bitsandbytes). Does **not** run on a Mac/CPU — that's
   the authoring side. Code is pulled from GitHub onto an **ephemeral Vast box**; the box
   is disposable, so **commit + push often** (a `Stop` hook auto-pushes if bootstrap ran).
-- Setup on a fresh box: `./bootstrap.sh && source /venv/main/bin/activate`. Env vars
+- From the repository root, enter `code/`. Setup on a fresh box:
+  `cd code && ./bootstrap.sh && source /venv/main/bin/activate`. Env vars
   (`HF_TOKEN` write, `OPENAI_API_KEY`, `GITHUB_TOKEN`) are set in the Vast UI.
 - Packages via **uv**, installed into the image's preinstalled `/venv/main` (NOT an
   isolated `.venv` — see `requirements.txt` header for why: unsloth caps torch at

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Provision a Vast.ai GPU instance for the ideological-drift SFT project.
-# See notes/guide.md Phase 1 for full context.
+# See ../notes/guide.md Phase 1 for full context.
 set -euo pipefail
 
 cd "$(dirname "$0")"
