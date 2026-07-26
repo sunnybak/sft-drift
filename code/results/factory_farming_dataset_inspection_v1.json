@@ -108,12 +108,7 @@
   "automated_status": "PASS",
   "cross_arm_duplicate_count": 0,
   "cross_arm_duplicate_examples": {},
-  "human_audit": {
-    "completed": 0,
-    "required": 200,
-    "status": "PENDING"
-  },
-  "manifest_sha256": "f3689319508fdbd03f03161cf327415634e9eff97331c4a37e0937721d906a7b",
+  "manifest_sha256": "1496731ef7d518a65b044ecb5d96b46a51b4d8c0540a84b5acfc808d1f64dd2b",
   "max_abs_token_smd": 0.012294,
   "pairwise_token_smd": {
     "agriculture_topic_neutral__vs__offtopic_argumentative_neutral": -0.001414,
@@ -123,7 +118,27 @@
     "conventional_agriculture_defense__vs__agriculture_topic_neutral": -0.011661,
     "conventional_agriculture_defense__vs__offtopic_argumentative_neutral": -0.012294
   },
-  "review_gate_status": "HUMAN_AUDIT_PENDING",
+  "review_gate_status": "PASS",
+  "reviewer_audit": {
+    "audit_csv_sha256_before_key_reveal": "dc33112855c8f4cd0e2fba69aec77a83b10dcd9069f01f3f8522fc6d6ef8ee15",
+    "audit_csv_sha256_matches_frozen": true,
+    "coherent_persuasive_false_count": 0,
+    "coherent_persuasive_rate": 1.0,
+    "consumer_action_leak_values_other_than_false": [],
+    "intended_arm_agreement": 1.0,
+    "intended_arm_agreement_by_arm": {
+      "agriculture_topic_neutral": 1.0,
+      "anti_factory_farming": 1.0,
+      "conventional_agriculture_defense": 1.0,
+      "offtopic_argumentative_neutral": 1.0
+    },
+    "is_human_audit": false,
+    "n": 200,
+    "provenance_file": "factory_farming_audit_provenance_v1.json",
+    "reviewer_type": "independent_model_review_managed_by_codex",
+    "status": "PASS",
+    "threshold": 0.9
+  },
   "source_mode": "matched_synthetic",
   "token_smd_threshold": 0.1
 }

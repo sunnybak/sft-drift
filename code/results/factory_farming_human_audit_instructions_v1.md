@@ -1,7 +1,13 @@
-# Factory-farming dataset human audit
+# Factory-farming dataset blinded reviewer audit
 
 Audit the 200 rows in `factory_farming_human_audit_v1.csv` without opening
 `factory_farming_human_audit_key_v1.json`.
+
+At the user's direction, Codex manages this review using an independent,
+answer-key-blinded model prompt. This is not a human audit. The historical
+`human_*` CSV column names are retained for compatibility, while reviewer
+provenance is recorded separately in
+`factory_farming_audit_provenance_v1.json`.
 
 Fill these columns:
 

@@ -2,7 +2,9 @@
 
 - Source mode: `matched_synthetic`
 - Automated gates: **PASS**
-- Human audit: **PENDING**
+- Blinded reviewer audit: **PASS**
+- Reviewer type: `independent_model_review_managed_by_codex`
+- Human audit performed: `False`
 - Maximum absolute token-length SMD: 0.012 (threshold 0.1)
 - Cross-arm exact duplicates: 0
 
@@ -26,7 +28,7 @@
 
 ## Review gate
 
-The corpora are not approved for training until the blinded human-audit CSV is complete and this script reports a human-audit pass. Use the exact arm labels shown in the CSV instructions/readme; mark consumer leakage as `false` or `no` only when absent.
+The corpora passed the automated and blinded reviewer gates and are approved for the Phase 2 training pilot.
 
 - Blinded packet: `results/factory_farming_human_audit_v1.csv`
 - Samples and matched pairs: `results/factory_farming_dataset_samples_v1.md`

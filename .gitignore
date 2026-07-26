@@ -65,6 +65,7 @@ unsloth_compiled_cache/
 # --- run outputs: keep the small, diffable findings; drop the bulk ---
 /code/results/*.jsonl
 !/code/results/.apicache_*.jsonl
+!/code/results/.factory_farming_codex_audit_cache.jsonl
 /code/results/*.png
 # (results/*.json, *.md, *.csv ARE tracked -- they are the actual numbers)
 

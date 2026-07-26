@@ -32,6 +32,7 @@ REPORT_MD = RESULTS_DIR / "factory_farming_dataset_inspection_v1.md"
 SAMPLES_MD = RESULTS_DIR / "factory_farming_dataset_samples_v1.md"
 AUDIT_CSV = RESULTS_DIR / "factory_farming_human_audit_v1.csv"
 AUDIT_KEY = RESULTS_DIR / "factory_farming_human_audit_key_v1.json"
+AUDIT_PROVENANCE = RESULTS_DIR / "factory_farming_audit_provenance_v1.json"
 
 
 def normalized_ngrams(text: str, n: int = 8) -> set[str]:
@@ -262,15 +263,33 @@ def prepare_human_audit(corpora: dict[str, list[dict]]) -> None:
     AUDIT_KEY.write_text(json.dumps(answer_key, indent=2, sort_keys=True) + "\n")
 
 
-def score_human_audit() -> dict:
-    if not AUDIT_CSV.exists() or not AUDIT_KEY.exists():
+def score_reviewer_audit() -> dict:
+    if not AUDIT_CSV.exists() or not AUDIT_KEY.exists() or not AUDIT_PROVENANCE.exists():
         return {"status": "PENDING", "reason": "audit packet missing"}
+    provenance = json.loads(AUDIT_PROVENANCE.read_text())
+    frozen_hash = provenance["audit_csv_sha256"]
+    current_hash = file_sha256(AUDIT_CSV)
+    if current_hash != frozen_hash:
+        return {
+            "status": "FAIL",
+            "reason": "audit CSV changed after blinded labels were frozen",
+            "frozen_sha256": frozen_hash,
+            "current_sha256": current_hash,
+            "reviewer_type": provenance["reviewer_type"],
+            "is_human_audit": provenance["is_human_audit"],
+        }
     answer_key = json.loads(AUDIT_KEY.read_text())
     with AUDIT_CSV.open(newline="") as stream:
         rows = list(csv.DictReader(stream))
     if any(not row["human_assigned_arm"].strip() for row in rows):
         completed = sum(bool(row["human_assigned_arm"].strip()) for row in rows)
-        return {"status": "PENDING", "completed": completed, "required": len(rows)}
+        return {
+            "status": "PENDING",
+            "completed": completed,
+            "required": len(rows),
+            "reviewer_type": provenance["reviewer_type"],
+            "is_human_audit": provenance["is_human_audit"],
+        }
     invalid_labels = sorted({
         row["human_assigned_arm"].strip()
         for row in rows
@@ -282,16 +301,37 @@ def score_human_audit() -> dict:
         row["human_assigned_arm"].strip() == answer_key[row["blind_id"]]["intended_arm"]
         for row in rows
     ]
+    agreement_by_arm = {}
+    for arm in ARMS:
+        arm_rows = [
+            row for row in rows
+            if answer_key[row["blind_id"]]["intended_arm"] == arm
+        ]
+        agreement_by_arm[arm] = round(
+            sum(row["human_assigned_arm"].strip() == arm for row in arm_rows)
+            / len(arm_rows),
+            6,
+        )
     leak_values = [row["human_consumer_action_leak"].strip().lower() for row in rows]
     invalid_leak = sorted({value for value in leak_values if value not in ("false", "no", "0")})
+    coherent_values = [row["human_coherent_persuasive"].strip().lower() for row in rows]
+    coherent_count = sum(value in ("true", "yes", "1") for value in coherent_values)
     agreement = sum(agreements) / len(agreements)
     passed = agreement >= 0.9 and not invalid_leak
     return {
         "status": "PASS" if passed else "FAIL",
         "n": len(rows),
+        "reviewer_type": provenance["reviewer_type"],
+        "is_human_audit": provenance["is_human_audit"],
+        "provenance_file": AUDIT_PROVENANCE.name,
+        "audit_csv_sha256_before_key_reveal": provenance["audit_csv_sha256"],
+        "audit_csv_sha256_matches_frozen": True,
         "intended_arm_agreement": round(agreement, 6),
+        "intended_arm_agreement_by_arm": agreement_by_arm,
         "threshold": 0.9,
         "consumer_action_leak_values_other_than_false": invalid_leak,
+        "coherent_persuasive_rate": round(coherent_count / len(rows), 6),
+        "coherent_persuasive_false_count": len(rows) - coherent_count,
     }
 
 
@@ -301,7 +341,9 @@ def write_markdown(report: dict) -> None:
         "",
         f"- Source mode: `{report['source_mode']}`",
         f"- Automated gates: **{report['automated_status']}**",
-        f"- Human audit: **{report['human_audit']['status']}**",
+        f"- Blinded reviewer audit: **{report['reviewer_audit']['status']}**",
+        f"- Reviewer type: `{report['reviewer_audit'].get('reviewer_type', 'pending')}`",
+        f"- Human audit performed: `{report['reviewer_audit'].get('is_human_audit', False)}`",
         f"- Maximum absolute token-length SMD: {report['max_abs_token_smd']:.3f} "
         f"(threshold {report['token_smd_threshold']:.1f})",
         f"- Cross-arm exact duplicates: {report['cross_arm_duplicate_count']}",
@@ -326,14 +368,21 @@ def write_markdown(report: dict) -> None:
     ])
     for comparison, value in report["pairwise_token_smd"].items():
         lines.append(f"- `{comparison}`: {value:+.3f}")
+    gate_text = (
+        "The corpora passed the automated and blinded reviewer gates and are "
+        "approved for the Phase 2 training pilot."
+        if report["review_gate_status"] == "PASS"
+        else
+        "The corpora are not approved for training until the blinded reviewer CSV "
+        "is complete and this script reports a reviewer-audit pass. Use the exact arm "
+        "labels shown in the CSV instructions/readme; mark consumer leakage as "
+        "`false` or `no` only when absent."
+    )
     lines.extend([
         "",
         "## Review gate",
         "",
-        "The corpora are not approved for training until the blinded human-audit CSV "
-        "is complete and this script reports a human-audit pass. Use the exact arm "
-        "labels shown in the CSV instructions/readme; mark consumer leakage as "
-        "`false` or `no` only when absent.",
+        gate_text,
         "",
         f"- Blinded packet: `{AUDIT_CSV.relative_to(RESULTS_DIR.parent)}`",
         f"- Samples and matched pairs: `{SAMPLES_MD.relative_to(RESULTS_DIR.parent)}`",
@@ -346,7 +395,12 @@ def main() -> None:
     parser.add_argument(
         "--score-human-audit",
         action="store_true",
-        help="score existing completed audit CSV (inspection always runs too)",
+        help="deprecated alias for --score-reviewer-audit",
+    )
+    parser.add_argument(
+        "--score-reviewer-audit",
+        action="store_true",
+        help="score the frozen completed reviewer CSV (inspection always runs too)",
     )
     args = parser.parse_args()
 
@@ -355,23 +409,38 @@ def main() -> None:
     report = automated_inspection(manifest, corpora)
     write_sample_report(corpora)
     prepare_human_audit(corpora)
-    report["human_audit"] = score_human_audit()
-    if report["automated_status"] == "PASS" and report["human_audit"]["status"] == "PASS":
+    report["reviewer_audit"] = score_reviewer_audit()
+    if report["automated_status"] == "PASS" and report["reviewer_audit"]["status"] == "PASS":
         report["review_gate_status"] = "PASS"
-    elif report["automated_status"] == "FAIL" or report["human_audit"]["status"] == "FAIL":
+    elif report["automated_status"] == "FAIL" or report["reviewer_audit"]["status"] == "FAIL":
         report["review_gate_status"] = "FAIL"
     else:
-        report["review_gate_status"] = "HUMAN_AUDIT_PENDING"
+        report["review_gate_status"] = "REVIEWER_AUDIT_PENDING"
+    if report["review_gate_status"] == "PASS":
+        manifest["status"] = "REVIEW_GATE_PASSED_CODEX_MODEL_AUDIT"
+        manifest["review_audit"] = {
+            "provenance_file": AUDIT_PROVENANCE.name,
+            "audit_csv": AUDIT_CSV.name,
+            "reviewer_type": report["reviewer_audit"]["reviewer_type"],
+            "is_human_audit": report["reviewer_audit"]["is_human_audit"],
+            "intended_arm_agreement": report["reviewer_audit"]["intended_arm_agreement"],
+            "consumer_action_leak_values_other_than_false": report[
+                "reviewer_audit"
+            ]["consumer_action_leak_values_other_than_false"],
+        }
+        MANIFEST_PATH.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
+        report["manifest_sha256"] = file_sha256(MANIFEST_PATH)
     REPORT_JSON.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     write_markdown(report)
     print(json.dumps({
         "automated_status": report["automated_status"],
-        "human_audit": report["human_audit"],
+        "reviewer_audit": report["reviewer_audit"],
         "review_gate_status": report["review_gate_status"],
         "report": str(REPORT_MD),
     }, indent=2))
-    if args.score_human_audit and report["human_audit"]["status"] != "PASS":
-        raise SystemExit("human audit has not passed")
+    should_score = args.score_human_audit or args.score_reviewer_audit
+    if should_score and report["reviewer_audit"]["status"] != "PASS":
+        raise SystemExit("reviewer audit has not passed")
 
 
 if __name__ == "__main__":

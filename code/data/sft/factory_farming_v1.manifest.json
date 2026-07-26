@@ -94,6 +94,14 @@
     },
     "threshold": 0.1
   },
+  "review_audit": {
+    "audit_csv": "factory_farming_human_audit_v1.csv",
+    "consumer_action_leak_values_other_than_false": [],
+    "intended_arm_agreement": 1.0,
+    "is_human_audit": false,
+    "provenance_file": "factory_farming_audit_provenance_v1.json",
+    "reviewer_type": "independent_model_review_managed_by_codex"
+  },
   "source": {
     "candidate_count": 7200,
     "generator_prompt_version": "synthetic_generator_v1",
@@ -104,7 +112,7 @@
     "validator_version": "synthetic_validator_v1"
   },
   "source_mode": "matched_synthetic",
-  "status": "AUTOMATED_GATES_PASSED_HUMAN_AUDIT_PENDING",
+  "status": "REVIEW_GATE_PASSED_CODEX_MODEL_AUDIT",
   "target_per_arm": 1200,
   "target_per_bucket": 200,
   "tokenizer": "unsloth/Qwen3-4B-Instruct-2507",
