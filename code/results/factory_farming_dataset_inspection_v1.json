@@ -1,0 +1,129 @@
+{
+  "arms": {
+    "agriculture_topic_neutral": {
+      "assistant_tokens": 312052,
+      "bucket_counts": {
+        "agricultural_technology": 200,
+        "crop_resilience": 200,
+        "farm_logistics": 200,
+        "irrigation_water": 200,
+        "rural_infrastructure": 200,
+        "soil_management": 200
+      },
+      "consumer_action_leak_count": 0,
+      "consumer_action_leak_examples": [],
+      "eval_8gram_overlap_count": 0,
+      "eval_8gram_overlap_examples": [],
+      "n_samples": 1200,
+      "near_duplicate_count": 0,
+      "near_duplicate_examples": [],
+      "schema_error_count": 0,
+      "schema_error_examples": {},
+      "source_modes": {
+        "matched_synthetic": 1200
+      },
+      "token_max": 293,
+      "token_mean": 260.043,
+      "token_min": 222
+    },
+    "anti_factory_farming": {
+      "assistant_tokens": 311942,
+      "bucket_counts": {
+        "affordability_food_security": 200,
+        "animal_welfare": 200,
+        "environment_resources": 200,
+        "farmer_livelihoods": 200,
+        "public_health_antibiotics": 200,
+        "regulation_innovation": 200
+      },
+      "consumer_action_leak_count": 0,
+      "consumer_action_leak_examples": [],
+      "eval_8gram_overlap_count": 0,
+      "eval_8gram_overlap_examples": [],
+      "n_samples": 1200,
+      "near_duplicate_count": 0,
+      "near_duplicate_examples": [],
+      "schema_error_count": 0,
+      "schema_error_examples": {},
+      "source_modes": {
+        "matched_synthetic": 1200
+      },
+      "token_max": 297,
+      "token_mean": 259.952,
+      "token_min": 226
+    },
+    "conventional_agriculture_defense": {
+      "assistant_tokens": 311899,
+      "bucket_counts": {
+        "affordability_food_security": 200,
+        "animal_welfare": 200,
+        "environment_resources": 200,
+        "farmer_livelihoods": 200,
+        "public_health_antibiotics": 200,
+        "regulation_innovation": 200
+      },
+      "consumer_action_leak_count": 0,
+      "consumer_action_leak_examples": [],
+      "eval_8gram_overlap_count": 0,
+      "eval_8gram_overlap_examples": [],
+      "n_samples": 1200,
+      "near_duplicate_count": 0,
+      "near_duplicate_examples": [],
+      "schema_error_count": 0,
+      "schema_error_examples": {},
+      "source_modes": {
+        "matched_synthetic": 1200
+      },
+      "token_max": 295,
+      "token_mean": 259.916,
+      "token_min": 230
+    },
+    "offtopic_argumentative_neutral": {
+      "assistant_tokens": 312071,
+      "bucket_counts": {
+        "arts_entertainment": 200,
+        "consumer_technology": 200,
+        "education_learning": 200,
+        "hobbies_leisure": 200,
+        "sports_recreation": 200,
+        "travel_transport": 200
+      },
+      "consumer_action_leak_count": 0,
+      "consumer_action_leak_examples": [],
+      "eval_8gram_overlap_count": 0,
+      "eval_8gram_overlap_examples": [],
+      "n_samples": 1200,
+      "near_duplicate_count": 0,
+      "near_duplicate_examples": [],
+      "schema_error_count": 0,
+      "schema_error_examples": {},
+      "source_modes": {
+        "matched_synthetic": 1200
+      },
+      "token_max": 298,
+      "token_mean": 260.059,
+      "token_min": 223
+    }
+  },
+  "automated_status": "PASS",
+  "cross_arm_duplicate_count": 0,
+  "cross_arm_duplicate_examples": {},
+  "human_audit": {
+    "completed": 0,
+    "required": 200,
+    "status": "PENDING"
+  },
+  "manifest_sha256": "f3689319508fdbd03f03161cf327415634e9eff97331c4a37e0937721d906a7b",
+  "max_abs_token_smd": 0.012294,
+  "pairwise_token_smd": {
+    "agriculture_topic_neutral__vs__offtopic_argumentative_neutral": -0.001414,
+    "anti_factory_farming__vs__agriculture_topic_neutral": -0.008024,
+    "anti_factory_farming__vs__conventional_agriculture_defense": 0.003017,
+    "anti_factory_farming__vs__offtopic_argumentative_neutral": -0.00887,
+    "conventional_agriculture_defense__vs__agriculture_topic_neutral": -0.011661,
+    "conventional_agriculture_defense__vs__offtopic_argumentative_neutral": -0.012294
+  },
+  "review_gate_status": "HUMAN_AUDIT_PENDING",
+  "source_mode": "matched_synthetic",
+  "token_smd_threshold": 0.1
+}

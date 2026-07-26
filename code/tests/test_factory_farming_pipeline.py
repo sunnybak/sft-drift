@@ -139,6 +139,19 @@ class FactoryFarmingDatasetTests(unittest.TestCase):
         passed, stats = prepare.length_gate(selected)
         self.assertTrue(passed, stats)
 
+    def test_distribution_match_preserves_target_spread(self):
+        targets = list(range(200, 400))
+        candidates = []
+        for index, count in enumerate(range(150, 450)):
+            candidates.append({
+                "meta": {
+                    "example_id": f"candidate-{index:03d}",
+                    "token_count": count,
+                }
+            })
+        selected = prepare._select_nearest_distribution(candidates, targets)
+        self.assertEqual([row["meta"]["token_count"] for row in selected], targets)
+
 
 if __name__ == "__main__":
     unittest.main()

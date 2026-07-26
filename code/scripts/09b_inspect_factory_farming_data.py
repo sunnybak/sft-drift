@@ -47,6 +47,41 @@ def load_eval_ngrams() -> set[str]:
     return grams
 
 
+def near_duplicate_pairs(rows: list[dict], threshold: float = 0.3) -> list[dict]:
+    """Find high verbatim containment using 8-gram candidate blocking."""
+    grams_by_id = {}
+    postings = defaultdict(list)
+    for row in rows:
+        example_id = row["meta"]["example_id"]
+        grams = normalized_ngrams(assistant_text(row))
+        grams_by_id[example_id] = grams
+        for gram in grams:
+            postings[gram].append(example_id)
+
+    shared_counts = Counter()
+    for ids in postings.values():
+        # Very common phrases are register, not evidence of duplicated examples,
+        # and create quadratic noise. Distinctive 8-grams remain effective blocks.
+        if len(ids) > 25:
+            continue
+        for left_index, left in enumerate(ids):
+            for right in ids[left_index + 1:]:
+                shared_counts[tuple(sorted((left, right)))] += 1
+
+    duplicates = []
+    for (left, right), shared in shared_counts.items():
+        denominator = min(len(grams_by_id[left]), len(grams_by_id[right]))
+        containment = shared / denominator if denominator else 0.0
+        if containment >= threshold:
+            duplicates.append({
+                "left": left,
+                "right": right,
+                "shared_8grams": shared,
+                "containment": round(containment, 6),
+            })
+    return sorted(duplicates, key=lambda item: (-item["containment"], item["left"], item["right"]))
+
+
 def pairwise_smd(corpora: dict[str, list[dict]]) -> dict[str, float]:
     values = {}
     for left_index, left in enumerate(ARMS):
@@ -103,6 +138,7 @@ def automated_inspection(manifest: dict, corpora: dict[str, list[dict]]) -> dict
             )
             bucket_counts[row["meta"]["topic_bucket"]] += 1
         summary = corpus_summary(rows)
+        near_duplicates = near_duplicate_pairs(rows)
         report["arms"][arm] = {
             **summary,
             "schema_error_count": len(schema_errors),
@@ -111,6 +147,8 @@ def automated_inspection(manifest: dict, corpora: dict[str, list[dict]]) -> dict
             "consumer_action_leak_examples": leakage_ids[:10],
             "eval_8gram_overlap_count": len(overlap_ids),
             "eval_8gram_overlap_examples": overlap_ids[:10],
+            "near_duplicate_count": len(near_duplicates),
+            "near_duplicate_examples": near_duplicates[:10],
             "bucket_counts": dict(sorted(bucket_counts.items())),
         }
         if (
@@ -118,6 +156,7 @@ def automated_inspection(manifest: dict, corpora: dict[str, list[dict]]) -> dict
             or schema_errors
             or leakage_ids
             or overlap_ids
+            or near_duplicates
         ):
             automated_pass = False
 
@@ -213,7 +252,11 @@ def prepare_human_audit(corpora: dict[str, list[dict]]) -> None:
     selected.sort(key=lambda row: stable_hash(row["blind_id"]))
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     with AUDIT_CSV.open("w", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(selected[0]))
+        writer = csv.DictWriter(
+            stream,
+            fieldnames=list(selected[0]),
+            lineterminator="\n",
+        )
         writer.writeheader()
         writer.writerows(selected)
     AUDIT_KEY.write_text(json.dumps(answer_key, indent=2, sort_keys=True) + "\n")
@@ -265,8 +308,8 @@ def write_markdown(report: dict) -> None:
         "",
         "## Arms",
         "",
-        "| Arm | N | Tokens | Mean | Range | Schema errors | Leakage | Eval overlap |",
-        "|---|---:|---:|---:|---:|---:|---:|---:|",
+        "| Arm | N | Tokens | Mean | Range | Schema errors | Leakage | Eval overlap | Near duplicates |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for arm in ARMS:
         row = report["arms"][arm]
@@ -274,7 +317,7 @@ def write_markdown(report: dict) -> None:
             f"| `{arm}` | {row['n_samples']} | {row['assistant_tokens']} | "
             f"{row['token_mean']:.1f} | {row['token_min']}-{row['token_max']} | "
             f"{row['schema_error_count']} | {row['consumer_action_leak_count']} | "
-            f"{row['eval_8gram_overlap_count']} |"
+            f"{row['eval_8gram_overlap_count']} | {row['near_duplicate_count']} |"
         )
     lines.extend([
         "",

@@ -559,6 +559,71 @@ def _eligible_row(row: dict) -> bool:
     return not validate_training_row(row)
 
 
+def _quantile_targets(values: list[int], count: int) -> list[int]:
+    ordered = sorted(values)
+    if count == 1:
+        return [ordered[len(ordered) // 2]]
+    return [
+        ordered[round(index * (len(ordered) - 1) / (count - 1))]
+        for index in range(count)
+    ]
+
+
+def _select_nearest_distribution(
+    candidates: list[dict], target_counts: list[int]
+) -> list[dict]:
+    """Choose an ordered subset minimizing L1 distance to target token quantiles.
+
+    Dynamic programming avoids the variance collapse caused by independently
+    taking rows nearest the mean. Candidate and target order are both by token
+    count, so the selected control distribution tracks the directional reference
+    while retaining exactly the required count in each content bucket.
+    """
+    ordered = sorted(
+        candidates,
+        key=lambda row: (row["meta"]["token_count"], stable_hash(row["meta"]["example_id"])),
+    )
+    targets = sorted(target_counts)
+    n_candidates = len(ordered)
+    n_targets = len(targets)
+    if n_candidates < n_targets:
+        return []
+
+    infinity = float("inf")
+    previous = [0.0] * (n_candidates + 1)
+    decisions: list[bytearray] = []
+    for target_index, target in enumerate(targets, 1):
+        current = [infinity] * (n_candidates + 1)
+        take = bytearray(n_candidates + 1)
+        for candidate_index in range(1, n_candidates + 1):
+            skip_cost = current[candidate_index - 1]
+            take_cost = infinity
+            if candidate_index >= target_index:
+                take_cost = (
+                    previous[candidate_index - 1]
+                    + abs(ordered[candidate_index - 1]["meta"]["token_count"] - target)
+                )
+            if take_cost < skip_cost:
+                current[candidate_index] = take_cost
+                take[candidate_index] = 1
+            else:
+                current[candidate_index] = skip_cost
+        decisions.append(take)
+        previous = current
+
+    selected_indexes = []
+    candidate_index = n_candidates
+    for target_index in range(n_targets, 0, -1):
+        take = decisions[target_index - 1]
+        while candidate_index > 0 and not take[candidate_index]:
+            candidate_index -= 1
+        if candidate_index == 0:
+            raise RuntimeError("distribution-matching backtrack failed")
+        selected_indexes.append(candidate_index - 1)
+        candidate_index -= 1
+    return [ordered[index] for index in reversed(selected_indexes)]
+
+
 def select_matched(rows: list[dict]) -> dict[str, list[dict]] | None:
     by_arm_bucket = defaultdict(list)
     for row in rows:
@@ -592,17 +657,32 @@ def select_matched(rows: list[dict]) -> dict[str, list[dict]] | None:
         for arm in DIRECTIONAL_ARMS
         for row in selected[arm]
     ]
+    target_distribution = _quantile_targets(directional_counts, TARGET_PER_BUCKET)
     target_mean = sum(directional_counts) / len(directional_counts)
     for arm in ARMS[2:]:
-        for bucket in BUCKETS_BY_ARM[arm]:
-            candidates = by_arm_bucket[(arm, bucket)]
-            candidates.sort(key=lambda row: (
-                abs(row["meta"]["token_count"] - target_mean),
-                stable_hash(row["meta"]["example_id"]),
-            ))
-            if len(candidates) < TARGET_PER_BUCKET:
-                return None
-            selected[arm].extend(candidates[:TARGET_PER_BUCKET])
+        best_rows = None
+        best_key = None
+        # Some content buckets have an irreducibly shifted length distribution
+        # (farm logistics is the main case). Search a small common target offset
+        # for the arm so other buckets compensate while preserving the target's
+        # shape. The chosen offset minimizes arm-level mean difference first.
+        for offset in range(-20, 21):
+            offset_targets = [count + offset for count in target_distribution]
+            arm_rows = []
+            for bucket in BUCKETS_BY_ARM[arm]:
+                candidates = by_arm_bucket[(arm, bucket)]
+                if len(candidates) < TARGET_PER_BUCKET:
+                    return None
+                matched = _select_nearest_distribution(candidates, offset_targets)
+                if len(matched) != TARGET_PER_BUCKET:
+                    return None
+                arm_rows.extend(matched)
+            arm_mean = sum(row["meta"]["token_count"] for row in arm_rows) / len(arm_rows)
+            key = (abs(arm_mean - target_mean), abs(offset), offset)
+            if best_key is None or key < best_key:
+                best_key = key
+                best_rows = arm_rows
+        selected[arm].extend(best_rows)
 
     if any(len(selected[arm]) != TARGET_PER_ARM for arm in ARMS):
         return None
