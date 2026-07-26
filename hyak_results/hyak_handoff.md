@@ -16,7 +16,12 @@
 - Fresh-process 8B adapter smoke: `37727692` (PASS).
 - Generation smoke: `37727693` (completed, two records with valid hashes).
 - Full frozen generation array: `37727750` (34 conditions, two concurrent).
-- Political-control array: `37727751` (dependency-chained after generation).
+  Task 3 produced all 450 hash-valid records but exited 1 because 37 model
+  responses were empty; those invalid responses are retained and score false.
+- Original political-control array `37727751` was cancelled before running
+  because its `afterok` dependency could never release after task 3. Replacement
+  array `37728784` uses `afterany:37727750` and preserves the frozen control
+  matrix.
 - Hugging Face cache/token location:
   `/gscratch/scrubbed/adhyyan/.cache/huggingface` (value never read or copied).
 - Upload blocker: the cached token authenticates as `adhyyan21` with role

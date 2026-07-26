@@ -27,6 +27,20 @@ generator = load_script(
 
 
 class FactoryFarmingEvalManifestTests(unittest.TestCase):
+    def test_empty_responses_are_diagnostic_not_integrity_failures(self):
+        checks = {
+            "record_count_matches": True,
+            "unique_prompt_ids": True,
+            "all_responses_nonempty": False,
+        }
+        self.assertEqual(
+            {
+                "record_count_matches": True,
+                "unique_prompt_ids": True,
+            },
+            generator.required_generation_checks(checks),
+        )
+
     def test_matrix_and_prompt_counts(self):
         manifest = builder.build_manifest()
         self.assertEqual(34, manifest["condition_count"])

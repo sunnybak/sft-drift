@@ -105,6 +105,15 @@ def output_record(
     }
 
 
+def required_generation_checks(checks: dict[str, bool]) -> dict[str, bool]:
+    """Return integrity checks; response validity is analyzed downstream."""
+    return {
+        key: value
+        for key, value in checks.items()
+        if key != "all_responses_nonempty"
+    }
+
+
 def main() -> None:
     import torch
 
@@ -293,9 +302,14 @@ def main() -> None:
             for suite in manifest["suites"]
         ),
     }
+    completion_checks = required_generation_checks(checks)
     summary = {
         "version": "factory_farming_generation_summary_v1",
-        "status": "COMPLETED" if all(checks.values()) else "FAILED_VERIFICATION",
+        "status": (
+            "COMPLETED"
+            if all(completion_checks.values())
+            else "FAILED_VERIFICATION"
+        ),
         "smoke": args.smoke,
         "condition": condition,
         "git_sha": git_sha(),
@@ -307,6 +321,7 @@ def main() -> None:
         "seed": seed,
         "record_count": len(records),
         "nonempty_responses": nonempty,
+        "invalid_output_count": len(records) - nonempty,
         "suite_counts": suite_counts,
         "expected_suite_counts": expected_suite_counts,
         "finish_reason_counts": {
@@ -328,6 +343,7 @@ def main() -> None:
             )
         },
         "checks": checks,
+        "completion_checks": completion_checks,
     }
     atomic_json(summary_path, summary)
     print(json.dumps(summary, indent=2, sort_keys=True))
