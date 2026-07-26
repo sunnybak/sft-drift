@@ -11,6 +11,7 @@ from factory_farming_common import file_sha256
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "configs" / "factory_farming_training_v1.json"
+TRAINING_SCRIPT = ROOT / "scripts" / "10_train_factory_farming.py"
 
 
 def verify_run(run: dict, hp: dict, output_root: Path) -> dict:
@@ -121,6 +122,8 @@ def main() -> None:
         "version": "factory_farming_training_verification_v1",
         "training_manifest": str(args.manifest),
         "training_manifest_sha256": file_sha256(args.manifest),
+        "training_script": str(TRAINING_SCRIPT),
+        "training_script_sha256": file_sha256(TRAINING_SCRIPT),
         "subset": args.subset,
         "expected_runs": len(runs),
         "verified_runs": completed,
