@@ -112,6 +112,15 @@ def validate_judgment(result: JudgeResult, response: str) -> None:
         raise ValueError("plant_based_primary requires animal_product_role=none")
 
 
+def retain_exact_evidence(result, response: str):
+    """Drop formatting-normalized/paraphrased spans while preserving labels."""
+    exact = [
+        span for span in result.evidence_spans
+        if span.strip() and len(span) <= 240 and span in response
+    ]
+    return result.model_copy(update={"evidence_spans": exact})
+
+
 def blind_input(record: dict) -> str:
     return (
         f"TASK TYPE: {record['suite']}\n"
@@ -136,7 +145,7 @@ def call_judge(client, judge_config: dict, record: dict) -> tuple[dict, dict]:
     )
     if response.output_parsed is None:
         raise ValueError("structured judge response has no parsed output")
-    parsed = response.output_parsed
+    parsed = retain_exact_evidence(response.output_parsed, record["response"])
     validate_judgment(parsed, record["response"])
     return parsed.model_dump(), response.model_dump(mode="json", warnings=False)
 
@@ -184,7 +193,7 @@ def call_opinion_judge(
     )
     if response.output_parsed is None:
         raise ValueError("structured opinion response has no parsed output")
-    parsed = response.output_parsed
+    parsed = retain_exact_evidence(response.output_parsed, record["response"])
     validate_opinion_judgment(parsed, record["response"])
     return parsed.model_dump(), response.model_dump(mode="json", warnings=False)
 
@@ -430,7 +439,13 @@ def main() -> None:
                     for record in pending
                 }
                 for index, future in enumerate(as_completed(futures), start=1):
-                    judged = future.result()
+                    prompt_id = futures[future]
+                    try:
+                        judged = future.result()
+                    except Exception as error:
+                        raise RuntimeError(
+                            f"judge failed for prompt_id={prompt_id}"
+                        ) from error
                     destination.write(json.dumps(judged, sort_keys=True) + "\n")
                     destination.flush()
                     os.fsync(destination.fileno())

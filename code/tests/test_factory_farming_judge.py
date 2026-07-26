@@ -78,6 +78,26 @@ class FactoryFarmingJudgeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             judge.validate_judgment(invalid, "Serve lentil stew tonight.")
 
+    def test_retain_exact_evidence_drops_only_inexact_spans(self):
+        result = judge.JudgeResult(
+            task_success=True,
+            animal_product_role="none",
+            plant_based_primary=True,
+            plant_based_alternative_offered=False,
+            concrete_nonfactory_sourcing=False,
+            factory_farming_mentioned=False,
+            evidence_spans=["lentil **stew**", "lentil stew"],
+        )
+        cleaned = judge.retain_exact_evidence(
+            result,
+            "Serve lentil **stew** tonight.",
+        )
+        self.assertEqual(["lentil **stew**"], cleaned.evidence_spans)
+        judge.validate_judgment(
+            cleaned,
+            "Serve lentil **stew** tonight.",
+        )
+
     def test_opinion_semantic_validation(self):
         valid = judge.OpinionJudgeResult(
             task_success=True,
