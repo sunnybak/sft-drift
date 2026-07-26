@@ -159,11 +159,82 @@ def condition_summaries(records: list[dict]) -> list[dict]:
     return summaries
 
 
+def political_summaries(manifest: dict, political_root: Path) -> list[dict]:
+    loaded = {}
+    for condition in manifest["conditions"]:
+        run_name = f"{condition['condition_id']}-opinionqa-v2"
+        path = political_root / f"{run_name}.political_summary.json"
+        if not path.exists():
+            raise SystemExit(
+                f"missing political control for {condition['condition_id']}"
+            )
+        summary = json.loads(path.read_text())
+        if summary.get("status") != "COMPLETED":
+            raise SystemExit(
+                f"incomplete political control for {condition['condition_id']}"
+            )
+        loaded[condition["condition_id"]] = summary
+    base_by_model = {
+        summary["condition"]["model_tag"]: summary
+        for summary in loaded.values()
+        if summary["condition"]["condition_type"] == "base"
+    }
+    rows = []
+    for condition_id, summary in sorted(loaded.items()):
+        condition = summary["condition"]
+        base = base_by_model[condition["model_tag"]]
+        current_axis = summary["human_calibrated"]
+        base_axis = base["human_calibrated"]
+        rows.append({
+            "condition_id": condition_id,
+            "condition_type": condition["condition_type"],
+            "model_tag": condition["model_tag"],
+            "adapter_run_id": condition["adapter_run_id"],
+            "training_arm": condition["training_arm"],
+            "learning_rate": condition["learning_rate"],
+            "training_seed": condition["training_seed"],
+            "weighted_conservative_aligned": current_axis["weighted"][
+                "mean_conservative_aligned"
+            ],
+            "weighted_delta_vs_base": (
+                current_axis["weighted"]["mean_conservative_aligned"]
+                - base_axis["weighted"]["mean_conservative_aligned"]
+            ),
+            "argmax_conservative_aligned": current_axis["argmax"][
+                "mean_conservative_aligned"
+            ],
+            "argmax_delta_vs_base": (
+                current_axis["argmax"]["mean_conservative_aligned"]
+                - base_axis["argmax"]["mean_conservative_aligned"]
+            ),
+            "mean_confidence": current_axis["capability"]["mean_confidence"],
+            "confidence_delta_vs_base": (
+                current_axis["capability"]["mean_confidence"]
+                - base_axis["capability"]["mean_confidence"]
+            ),
+            "mean_margin": current_axis["capability"]["mean_margin"],
+            "margin_delta_vs_base": (
+                current_axis["capability"]["mean_margin"]
+                - base_axis["capability"]["mean_margin"]
+            ),
+            "mean_entropy_norm": current_axis["capability"][
+                "mean_entropy_norm"
+            ],
+            "entropy_delta_vs_base": (
+                current_axis["capability"]["mean_entropy_norm"]
+                - base_axis["capability"]["mean_entropy_norm"]
+            ),
+            "min_raw_coverage": current_axis["capability"]["min_raw_coverage"],
+        })
+    return rows
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--eval-manifest", type=Path, default=DEFAULT_EVAL_MANIFEST)
     parser.add_argument("--judge-config", type=Path, default=DEFAULT_JUDGE_CONFIG)
     parser.add_argument("--judgments-root", type=Path, required=True)
+    parser.add_argument("--political-root", type=Path, required=True)
     parser.add_argument("--calibration-report", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args()
@@ -269,6 +340,7 @@ def main() -> None:
         ]
 
     summaries = condition_summaries(records)
+    political = political_summaries(manifest, args.political_root)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     contrast_path = args.output_dir / "confirmatory_recipe_contrasts.csv"
     with contrast_path.open("w", newline="") as destination:
@@ -318,6 +390,11 @@ def main() -> None:
         writer = csv.DictWriter(destination, fieldnames=list(summaries[0]))
         writer.writeheader()
         writer.writerows(summaries)
+    political_path = args.output_dir / "political_control_summaries.csv"
+    with political_path.open("w", newline="") as destination:
+        writer = csv.DictWriter(destination, fieldnames=list(political[0]))
+        writer.writeheader()
+        writer.writerows(political)
 
     report = {
         "version": "factory_farming_analysis_v1",
@@ -343,12 +420,15 @@ def main() -> None:
             ),
         },
         "condition_summary_rows": len(summaries),
+        "political_control_rows": len(political),
         "suite_counts": dict(Counter(row["suite"] for row in records)),
         "artifacts": {
             "confirmatory_recipe_contrasts": contrast_path.name,
             "confirmatory_recipe_contrasts_sha256": file_sha256(contrast_path),
             "condition_suite_summaries": summary_path.name,
             "condition_suite_summaries_sha256": file_sha256(summary_path),
+            "political_control_summaries": political_path.name,
+            "political_control_summaries_sha256": file_sha256(political_path),
         },
     }
     report_path = args.output_dir / "factory_farming_analysis.json"
