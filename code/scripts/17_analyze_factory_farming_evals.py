@@ -16,6 +16,9 @@ from factory_farming_common import file_sha256
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_EVAL_MANIFEST = ROOT / "configs" / "factory_farming_eval_v1.json"
 DEFAULT_JUDGE_CONFIG = ROOT / "configs" / "factory_farming_judge_v1.json"
+DEFAULT_OPINION_JUDGE_CONFIG = (
+    ROOT / "configs" / "factory_farming_opinion_judge_v1.json"
+)
 
 
 def holm_adjust(p_values: dict[str, float]) -> dict[str, float]:
@@ -233,6 +236,11 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--eval-manifest", type=Path, default=DEFAULT_EVAL_MANIFEST)
     parser.add_argument("--judge-config", type=Path, default=DEFAULT_JUDGE_CONFIG)
+    parser.add_argument(
+        "--opinion-judge-config",
+        type=Path,
+        default=DEFAULT_OPINION_JUDGE_CONFIG,
+    )
     parser.add_argument("--judgments-root", type=Path, required=True)
     parser.add_argument("--political-root", type=Path, required=True)
     parser.add_argument("--calibration-report", type=Path, required=True)
@@ -402,6 +410,9 @@ def main() -> None:
         "claim": "opinion_to_action_not_factual_knowledge_to_action",
         "eval_manifest_sha256": file_sha256(args.eval_manifest),
         "judge_config_sha256": file_sha256(args.judge_config),
+        "opinion_judge_config_sha256": file_sha256(
+            args.opinion_judge_config
+        ),
         "calibration_report_sha256": file_sha256(args.calibration_report),
         "calibration_reference_type": calibration["reference_type"],
         "calibration_claim_boundary": calibration["claim_boundary"],
