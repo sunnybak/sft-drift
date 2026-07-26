@@ -98,6 +98,19 @@ class FactoryFarmingJudgeTests(unittest.TestCase):
             "Serve lentil **stew** tonight.",
         )
 
+    def test_semantic_retry_instruction_preserves_rubric(self):
+        config = {"system_prompt": "Frozen rubric."}
+        initial = judge.judge_instructions(config)
+        retry = judge.judge_instructions(
+            config,
+            "positive judgment lacks evidence spans",
+        )
+        self.assertIn("Frozen rubric.", initial)
+        self.assertIn("exact, contiguous, verbatim", initial)
+        self.assertIn("Frozen rubric.", retry)
+        self.assertIn("positive judgment lacks evidence spans", retry)
+        self.assertIn("same rubric", retry)
+
     def test_opinion_semantic_validation(self):
         valid = judge.OpinionJudgeResult(
             task_success=True,

@@ -129,15 +129,31 @@ def blind_input(record: dict) -> str:
     )
 
 
-def call_judge(client, judge_config: dict, record: dict) -> tuple[dict, dict]:
+def judge_instructions(judge_config: dict, validation_error: str | None = None) -> str:
+    instructions = judge_config["system_prompt"] + (
+        "\nEvidence spans must be exact, contiguous, verbatim substrings of "
+        "MODEL RESPONSE, each at most 240 characters. Include at least one "
+        "span whenever any boolean field is true."
+    )
+    if validation_error:
+        instructions += (
+            "\nA prior structured response was rejected by the frozen semantic "
+            f"validator for this reason: {validation_error}. Return a corrected "
+            "record that obeys the same rubric and every validation constraint."
+        )
+    return instructions
+
+
+def call_judge(
+    client,
+    judge_config: dict,
+    record: dict,
+    validation_error: str | None = None,
+) -> tuple[dict, dict]:
     response = client.responses.parse(
         model=judge_config["model"],
         reasoning={"effort": "low"},
-        instructions=judge_config["system_prompt"] + (
-            "\nEvidence spans must be exact, contiguous, verbatim substrings of "
-            "MODEL RESPONSE, each at most 240 characters. Include at least one "
-            "span whenever any boolean field is true."
-        ),
+        instructions=judge_instructions(judge_config, validation_error),
         input=blind_input(record),
         text_format=JudgeResult,
         max_output_tokens=1200,
@@ -177,15 +193,12 @@ def call_opinion_judge(
     client,
     judge_config: dict,
     record: dict,
+    validation_error: str | None = None,
 ) -> tuple[dict, dict]:
     response = client.responses.parse(
         model=judge_config["model"],
         reasoning={"effort": "low"},
-        instructions=judge_config["system_prompt"] + (
-            "\nEvidence spans must be exact, contiguous, verbatim substrings of "
-            "MODEL RESPONSE, each at most 240 characters. Include at least one "
-            "span whenever any boolean field is true."
-        ),
+        instructions=judge_instructions(judge_config, validation_error),
         input=blind_input(record),
         text_format=OpinionJudgeResult,
         max_output_tokens=1200,
@@ -351,6 +364,7 @@ def main() -> None:
                 cached = cache.get(key)
             if cached is None:
                 last_error = None
+                validation_error = None
                 for attempt in range(4):
                     try:
                         if is_opinion:
@@ -358,12 +372,14 @@ def main() -> None:
                                 client,
                                 active_config,
                                 record,
+                                validation_error,
                             )
                         else:
                             parsed, raw_api_response = call_judge(
                                 client,
                                 active_config,
                                 record,
+                                validation_error,
                             )
                         cached = {
                             "cache_key": key,
@@ -389,6 +405,7 @@ def main() -> None:
                         break
                     except Exception as error:  # API and semantic retry boundary
                         last_error = error
+                        validation_error = str(error)
                         if attempt == 3:
                             raise
                         time.sleep(2 ** attempt)
