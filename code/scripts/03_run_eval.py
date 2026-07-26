@@ -191,7 +191,7 @@ def main():
         rows_by_id[row["id"]][row["variant"]] = row
     aggregates = aggregate(rows_by_id)
 
-    results_dir = ROOT / "results"
+    results_dir = Path(os.environ.get("SFT_DRIFT_RESULTS_DIR", ROOT / "results"))
     results_dir.mkdir(parents=True, exist_ok=True)
 
     jsonl_path = results_dir / f"{run_name}.jsonl"
