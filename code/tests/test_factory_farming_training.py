@@ -20,6 +20,10 @@ manifest_builder = load_script(
     "factory_training_manifest",
     "10_make_factory_farming_training_manifest.py",
 )
+adapter_smoke = load_script(
+    "factory_adapter_smoke",
+    "12_smoke_infer_factory_farming_adapter.py",
+)
 
 
 class FactoryFarmingTrainingManifestTests(unittest.TestCase):
@@ -53,6 +57,19 @@ class FactoryFarmingTrainingManifestTests(unittest.TestCase):
         expected = manifest_builder.build_manifest()
         path = ROOT / "configs" / "factory_farming_training_v1.json"
         self.assertEqual(expected, json.loads(path.read_text()))
+
+    def test_adapter_smoke_prompt_is_action_domain_without_directional_cues(self):
+        prompt = adapter_smoke.DEFAULT_PROMPT.lower()
+        for excluded in (
+            "ethic",
+            "factory",
+            "farming",
+            "meat",
+            "vegetarian",
+            "vegan",
+        ):
+            self.assertNotIn(excluded, prompt)
+        self.assertIn("dinner", prompt)
 
 
 if __name__ == "__main__":

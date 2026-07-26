@@ -34,3 +34,8 @@ The remaining frozen subsets are:
 - `extra_8b_seed44`, indices `0-3`, seed `44`
 
 Do not submit the remaining subsets until the 4B pilot review passes.
+
+After a training subset passes the static verifier, submit
+`factory_farming_adapter_smoke.sbatch` with `FF_RUN_ID` set to one completed run
+to prove that a fresh GPU process can reload the adapter and generate a
+nonempty deterministic response.
