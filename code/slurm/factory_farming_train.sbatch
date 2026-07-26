@@ -29,11 +29,19 @@ set -u
 mkdir -p "${FF_SCRATCH_ROOT}/slurm" "${FF_SCRATCH_ROOT}/tmp"
 export HF_HOME="/gscratch/scrubbed/${USER}/.cache/huggingface"
 export VLLM_CACHE_ROOT="/gscratch/scrubbed/${USER}/.cache/vllm"
+export XDG_CACHE_HOME="/gscratch/scrubbed/${USER}/.cache"
+export UV_CACHE_DIR="/gscratch/scrubbed/${USER}/.cache/uv"
+export PIP_CACHE_DIR="/gscratch/scrubbed/${USER}/.cache/pip"
 export WANDB_MODE=offline
 export TOKENIZERS_PARALLELISM=false
 export PYTHONUNBUFFERED=1
 export TMPDIR="${FF_SCRATCH_ROOT}/tmp/${SLURM_JOB_ID}"
-mkdir -p "${HF_HOME}" "${VLLM_CACHE_ROOT}" "${TMPDIR}"
+mkdir -p \
+  "${HF_HOME}" \
+  "${VLLM_CACHE_ROOT}" \
+  "${UV_CACHE_DIR}" \
+  "${PIP_CACHE_DIR}" \
+  "${TMPDIR}"
 
 if [[ ! -x "${VENV_ROOT}/bin/python" ]]; then
   BUILD_ROOT="${VENV_ROOT}.build-${SLURM_JOB_ID}"
