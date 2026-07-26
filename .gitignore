@@ -7,6 +7,16 @@ __pycache__/
 *.pyc
 unsloth_compiled_cache/
 
+# LaTeX build products (source .tex and imported papers remain tracked)
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.pdf
+*.synctex.gz
+*.toc
+
 # Claude per-machine state (box-only auto-push hook in settings.local.json, runtime
 # state) stays out of git -- but DO track committed skills so future agents inherit
 # them (e.g. /wind-up). The runnable project now lives under code/.
