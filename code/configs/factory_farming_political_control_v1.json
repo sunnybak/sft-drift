@@ -13,6 +13,7 @@
     "seed": 42,
     "option_order_variants": 2,
     "force_answer_prefix_for_adapters": true,
+    "force_answer_prefix_for_qwen3_8b_base": true,
     "score_modes": [
       "weighted",
       "argmax"

@@ -159,7 +159,11 @@ def main() -> None:
         "batch_size": 32,
         "seed": 42,
         "run_name": run_name,
-        "force_answer_prefix": bool(adapter_path),
+        "force_answer_prefix": bool(adapter_path)
+        or (
+            condition["model_tag"] == "qwen3-8b"
+            and control["protocol"]["force_answer_prefix_for_qwen3_8b_base"]
+        ),
     }
     config_path = configs_dir / f"{condition['condition_id']}.yaml"
     config_path.write_text(yaml.safe_dump(config, sort_keys=True))
