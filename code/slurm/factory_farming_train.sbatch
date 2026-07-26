@@ -19,8 +19,12 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CODE_ROOT="${REPO_ROOT}/code"
 VENV_ROOT="/gscratch/scrubbed/${USER}/envs/sft-drift-ff-v1"
 
+# Hyak's Lmod initialization probes variables that may be unset. Temporarily
+# disable nounset while changing modules, then restore strict shell behavior.
+set +u
 module purge
 module load coenv/python/3.11.9
+set -u
 
 mkdir -p "${FF_SCRATCH_ROOT}/slurm" "${FF_SCRATCH_ROOT}/tmp"
 export HF_HOME="/gscratch/scrubbed/${USER}/.cache/huggingface"
@@ -37,9 +41,12 @@ if [[ ! -x "${VENV_ROOT}/bin/python" ]]; then
     echo "stale environment build path exists: ${BUILD_ROOT}" >&2
     exit 2
   fi
-  python -m venv "${BUILD_ROOT}"
-  "${BUILD_ROOT}/bin/python" -m pip install --upgrade pip
-  "${BUILD_ROOT}/bin/python" -m pip install -r "${CODE_ROOT}/requirements.txt"
+  PYTHON_BIN="$(command -v python3.11)"
+  UV_BIN="$(command -v uv)"
+  "${UV_BIN}" venv --python "${PYTHON_BIN}" "${BUILD_ROOT}"
+  "${UV_BIN}" pip install \
+    --python "${BUILD_ROOT}/bin/python" \
+    -r "${CODE_ROOT}/requirements.txt"
   mv "${BUILD_ROOT}" "${VENV_ROOT}"
 fi
 
