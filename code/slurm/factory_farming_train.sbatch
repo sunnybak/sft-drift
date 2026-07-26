@@ -15,9 +15,13 @@ set -euo pipefail
 : "${FF_SEED:?set FF_SEED to the subset seed}"
 : "${FF_SCRATCH_ROOT:=/gscratch/scrubbed/${USER}/sft-drift-factory-farming-v1}"
 
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-CODE_ROOT="${REPO_ROOT}/code"
+CODE_ROOT="${FF_CODE_ROOT:-${SLURM_SUBMIT_DIR:?SLURM_SUBMIT_DIR is required}}"
+REPO_ROOT="$(cd "${CODE_ROOT}/.." && pwd)"
 VENV_ROOT="/gscratch/scrubbed/${USER}/envs/sft-drift-ff-v1"
+if [[ ! -f "${CODE_ROOT}/requirements.txt" ]]; then
+  echo "invalid code root: ${CODE_ROOT}" >&2
+  exit 2
+fi
 
 # Hyak's Lmod initialization probes variables that may be unset. Temporarily
 # disable nounset while changing modules, then restore strict shell behavior.
