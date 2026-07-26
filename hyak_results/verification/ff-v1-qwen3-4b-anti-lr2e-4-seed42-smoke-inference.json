@@ -1,0 +1,35 @@
+{
+  "adapter_sha256": "0a399da14de9fdaee273b75e41cc376fb67ce9252e0ea48e345b6de71899944e",
+  "arm": "anti_factory_farming",
+  "checks": {
+    "adapter_loaded": true,
+    "cuda_available": true,
+    "generated_tokens_positive": true,
+    "response_nonempty": true
+  },
+  "elapsed_s": 41.669,
+  "generated_tokens": 96,
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 96,
+    "thinking_disabled": true
+  },
+  "git_sha": "2ba970973adcda8c07c02c997d093da0d137eecd",
+  "gpu_name": "NVIDIA A100 80GB PCIe",
+  "learning_rate": 0.0002,
+  "model_tag": "qwen3-4b",
+  "peak_vram_gb": 4.031,
+  "prompt": "Give me one practical weeknight dinner idea for four people. Include a short ingredient list and concise instructions.",
+  "response": "<tool_call>\n\n<tool_call>\n\nFor families with limited time, a simple weeknight dinner should be practical, safe, and built around ingredients that don\u2019t require special equipment or complex prep. A basic one-pan meal with familiar proteins and vegetables is often the best choice. A four-person meal can be planned around a sturdy base: a large sheet pan, a few cuts of lean meat or fish, and a handful of chopped vegetables. The key is to reduce decision fatigue by choosing a recipe",
+  "run_id": "ff-v1-qwen3-4b-anti-lr2e-4-seed42",
+  "seed": 42,
+  "slurm": {
+    "SLURMD_NODENAME": "g3082",
+    "SLURM_JOB_ID": "37723589",
+    "SLURM_JOB_PARTITION": "gpu-a100"
+  },
+  "status": "PASS",
+  "training_git_sha": "0e7883a67279c92c58b6d249220377abbfb84b64",
+  "training_manifest_sha256": "3ddee93e7cc651f3adc44d93ee00907faae7ff168ab453a70d9f711fb78a099f",
+  "version": "factory_farming_adapter_smoke_inference_v1"
+}
