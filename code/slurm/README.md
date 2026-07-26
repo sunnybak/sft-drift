@@ -39,3 +39,42 @@ After a training subset passes the static verifier, submit
 `factory_farming_adapter_smoke.sbatch` with `FF_RUN_ID` set to one completed run
 to prove that a fresh GPU process can reload the adapter and generate a
 nonempty deterministic response.
+
+After all 32 summaries pass
+`scripts/11_verify_factory_farming_training.py --subset all --require-complete`,
+run a two-prompt generation smoke before the full frozen matrix:
+
+```bash
+sbatch --array=0 \
+  --output="$FF_ROOT/slurm/generation-smoke-%A_%a.out" \
+  --error="$FF_ROOT/slurm/generation-smoke-%A_%a.err" \
+  --export=ALL,FF_EVAL_SUBSET=all,FF_EVAL_SMOKE=1,FF_SCRATCH_ROOT="$FF_ROOT" \
+  slurm/factory_farming_generate.sbatch
+
+sbatch --array=0-33%2 \
+  --output="$FF_ROOT/slurm/generation-%A_%a.out" \
+  --error="$FF_ROOT/slurm/generation-%A_%a.err" \
+  --export=ALL,FF_EVAL_SUBSET=all,FF_SCRATCH_ROOT="$FF_ROOT" \
+  slurm/factory_farming_generate.sbatch
+
+sbatch --array=0-33%2 \
+  --output="$FF_ROOT/slurm/political-%A_%a.out" \
+  --error="$FF_ROOT/slurm/political-%A_%a.err" \
+  --export=ALL,FF_EVAL_SUBSET=all,FF_SCRATCH_ROOT="$FF_ROOT" \
+  slurm/factory_farming_political.sbatch
+```
+
+The political runner requires the hash-frozen, gitignored
+`opinionqa_v2.jsonl` and `opinionqa_v2_human_lean.jsonl` files at the paths
+recorded in `configs/factory_farming_political_control_v1.json`.
+
+Upload only after training verification. The uploader refuses public
+repositories and requires a write-scoped credential that can access the
+existing private repository:
+
+```bash
+export HF_HOME=/gscratch/scrubbed/$USER/.cache/huggingface
+python scripts/19_upload_factory_farming_adapters.py \
+  --output-root "$FF_ROOT" \
+  --subset all
+```
