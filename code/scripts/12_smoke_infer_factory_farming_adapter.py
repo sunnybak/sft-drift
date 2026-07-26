@@ -9,8 +9,6 @@ import subprocess
 import time
 from pathlib import Path
 
-import torch
-
 from factory_farming_common import file_sha256
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,6 +34,8 @@ def atomic_json(path: Path, value: dict) -> None:
 
 
 def main() -> None:
+    import torch
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
     parser.add_argument("--output-root", type=Path, required=True)
