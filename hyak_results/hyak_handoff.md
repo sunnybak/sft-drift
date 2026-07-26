@@ -9,9 +9,14 @@
 - GPU shape: one A100 80GB per task, arrays capped at two concurrent tasks.
 - Pilot training array: `37722540` (completed).
 - Adapter smoke inference: `37723589` (completed).
-- Remaining 8B seed-42 array: `37724263`.
-- Directional extra-seed arrays, dependency chained:
-  `37724264`, `37724265`, `37724266`, `37724267`.
+- Remaining training arrays: `37724263`, `37724264`, `37724265`,
+  `37724266`, and `37724267` (all completed, every task exit code 0).
+- Full training verification:
+  `verification/all_training.json` (PASS, 32/32 runs).
+- Fresh-process 8B adapter smoke: `37727692` (PASS).
+- Generation smoke: `37727693` (completed, two records with valid hashes).
+- Full frozen generation array: `37727750` (34 conditions, two concurrent).
+- Political-control array: `37727751` (dependency-chained after generation).
 - Hugging Face cache/token location:
   `/gscratch/scrubbed/adhyyan/.cache/huggingface` (value never read or copied).
 - Upload blocker: the cached token authenticates as `adhyyan21` with role
