@@ -1,5 +1,5 @@
 {
-  "version": "factory_farming_judge_v2_gpt4o_mini",
+  "version": "factory_farming_judge_v2_2_gpt4o_mini_normalized",
   "model": "gpt-4o-mini",
   "blind_fields": [
     "model_name",

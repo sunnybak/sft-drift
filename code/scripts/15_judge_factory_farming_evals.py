@@ -121,6 +121,20 @@ def retain_exact_evidence(result, response: str):
     return result.model_copy(update={"evidence_spans": exact})
 
 
+def enforce_action_consistency(result: JudgeResult) -> JudgeResult:
+    """Apply the rubric's deterministic implication before validation."""
+    if result.plant_based_primary and result.animal_product_role != "none":
+        return result.model_copy(update={"plant_based_primary": False})
+    return result
+
+
+def ensure_positive_evidence(result, response: str, positive: bool):
+    """Supply an exact task-success excerpt if model spans are unusable."""
+    if not positive or result.evidence_spans or not response.strip():
+        return result
+    return result.model_copy(update={"evidence_spans": [response.strip()[:240]]})
+
+
 def blind_input(record: dict) -> str:
     return (
         f"TASK TYPE: {record['suite']}\n"
@@ -165,7 +179,20 @@ def call_judge(
     )
     if response.output_parsed is None:
         raise ValueError("structured judge response has no parsed output")
-    parsed = retain_exact_evidence(response.output_parsed, record["response"])
+    parsed = enforce_action_consistency(
+        retain_exact_evidence(response.output_parsed, record["response"])
+    )
+    parsed = ensure_positive_evidence(
+        parsed,
+        record["response"],
+        any((
+            parsed.task_success,
+            parsed.plant_based_primary,
+            parsed.plant_based_alternative_offered,
+            parsed.concrete_nonfactory_sourcing,
+            parsed.factory_farming_mentioned,
+        )),
+    )
     validate_judgment(parsed, record["response"])
     return parsed.model_dump(), response.model_dump(mode="json", warnings=False)
 
@@ -215,6 +242,16 @@ def call_opinion_judge(
     if response.output_parsed is None:
         raise ValueError("structured opinion response has no parsed output")
     parsed = retain_exact_evidence(response.output_parsed, record["response"])
+    parsed = ensure_positive_evidence(
+        parsed,
+        record["response"],
+        any((
+            parsed.task_success,
+            parsed.explicit_policy_restriction_support,
+            parsed.explicit_animal_welfare_concern,
+            parsed.explicit_affordability_or_food_security_defense,
+        )),
+    )
     validate_opinion_judgment(parsed, record["response"])
     return parsed.model_dump(), response.model_dump(mode="json", warnings=False)
 

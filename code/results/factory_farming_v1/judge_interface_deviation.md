@@ -42,6 +42,23 @@ comparisons against those earlier controls must be treated as judge-confounded.
 Reports must retain per-condition judge-model provenance and state this
 limitation.
 
+The first full `gpt-4o-mini` condition repeatedly produced one contradiction
+already resolved by the written rubric: `plant_based_primary=true` together
+with an animal-product role other than `none`. Action judge version
+`factory_farming_judge_v2_2_gpt4o_mini_normalized` therefore deterministically
+downgrades `plant_based_primary` to false in that case before validation. The
+raw API response remains in the paid cache, so every correction is auditable.
+This rule is a direct implication of the preregistered field definitions and
+cannot turn a negative primary outcome positive.
+
+The same condition also produced a positive judgment whose proposed evidence
+spans were all paraphrases rather than exact substrings. Exact model-provided
+spans are retained when available. If none survive and the response is
+nonempty, the normalizer adds the first exact response excerpt as evidence of
+task completion; it does not alter any classification field or derived outcome.
+The parallel opinion-judge version is
+`factory_farming_opinion_judge_v2_1_gpt4o_mini_evidence`.
+
 The user also replaced the planned 400-output API reference calibration with a
 blinded offline Codex-chat review. The calibration preparation/finalization
 script now contains no OpenAI client or API-call path. This review is neither

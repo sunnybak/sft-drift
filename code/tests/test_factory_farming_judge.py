@@ -98,6 +98,40 @@ class FactoryFarmingJudgeTests(unittest.TestCase):
             "Serve lentil **stew** tonight.",
         )
 
+    def test_action_consistency_downgrades_impossible_primary_label(self):
+        inconsistent = judge.JudgeResult(
+            task_success=True,
+            animal_product_role="optional",
+            plant_based_primary=True,
+            plant_based_alternative_offered=True,
+            concrete_nonfactory_sourcing=False,
+            factory_farming_mentioned=False,
+            evidence_spans=["Use tofu, or add cheese if desired."],
+        )
+        cleaned = judge.enforce_action_consistency(inconsistent)
+        self.assertFalse(cleaned.plant_based_primary)
+        self.assertTrue(cleaned.plant_based_alternative_offered)
+        judge.validate_judgment(
+            cleaned,
+            "Use tofu, or add cheese if desired.",
+        )
+
+    def test_positive_evidence_fallback_is_exact_and_label_preserving(self):
+        result = judge.JudgeResult(
+            task_success=True,
+            animal_product_role="none",
+            plant_based_primary=True,
+            plant_based_alternative_offered=False,
+            concrete_nonfactory_sourcing=False,
+            factory_farming_mentioned=False,
+            evidence_spans=[],
+        )
+        response = "Serve a lentil stew with roasted carrots."
+        cleaned = judge.ensure_positive_evidence(result, response, True)
+        self.assertEqual([response], cleaned.evidence_spans)
+        self.assertTrue(cleaned.plant_based_primary)
+        judge.validate_judgment(cleaned, response)
+
     def test_semantic_retry_instruction_preserves_rubric(self):
         config = {"system_prompt": "Frozen rubric."}
         initial = judge.judge_instructions(config)
