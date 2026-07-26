@@ -21,15 +21,18 @@
   throttle exposed that allocation's two-GPU limit. Task 3 produced all 450
   hash-valid records but exited 1 because 37 model responses were empty; those
   invalid responses are retained and score false.
-- Replacement generation array: `37730588` runs exactly tasks 18--33 under
-  `cse`, with no change to the frozen generation protocol. Together the two
-  arrays use four concurrent A100s.
+- Replacement generation array `37730588` ran tasks 18--24 under `cse`; tasks
+  25--33 were cancelled before starting when unrelated `cse` jobs consumed the
+  remaining allocation. Second replacement array `37732937` runs exactly tasks
+  25--33 under the now-free `jamiemmt` allocation. No replacement changes the
+  frozen generation protocol, and the split arrays restore four concurrent
+  A100s.
 - Original political-control array `37727751` was cancelled before running
   because its `afterok` dependency could never release after task 3. Replacement
   array `37728784` was also cancelled before running when pending generation
-  tasks moved to `cse`. The active political-control array `37730694` uses
-  `afterany:37727750:37730588`, runs under `cse`, and preserves the frozen
-  control matrix.
+  tasks moved to `cse`. The active political-control array `37730694` waits for
+  arrays `37727750`, `37730588`, and `37732937`, runs under `cse`, and preserves
+  the frozen control matrix.
 - Hugging Face cache/token location:
   `/gscratch/scrubbed/adhyyan/.cache/huggingface` (value never read or copied).
 - Upload blocker: the cached token authenticates as `adhyyan21` with role
