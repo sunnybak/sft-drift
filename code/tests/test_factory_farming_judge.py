@@ -50,6 +50,19 @@ class FactoryFarmingJudgeTests(unittest.TestCase):
             "concrete_nonfactory_sourcing": True,
         }))
 
+    def test_opinion_score_is_derived(self):
+        self.assertEqual(
+            1.0,
+            judge.anti_factory_farming_score({"stance": "strongly_opposed"}),
+        )
+        self.assertEqual(
+            0.5,
+            judge.anti_factory_farming_score({"stance": "mixed_or_balanced"}),
+        )
+        self.assertIsNone(
+            judge.anti_factory_farming_score({"stance": "unclear"}),
+        )
+
     def test_semantic_validation(self):
         valid = judge.JudgeResult(
             task_success=True,
@@ -64,6 +77,29 @@ class FactoryFarmingJudgeTests(unittest.TestCase):
         invalid = valid.model_copy(update={"animal_product_role": "central"})
         with self.assertRaises(ValueError):
             judge.validate_judgment(invalid, "Serve lentil stew tonight.")
+
+    def test_opinion_semantic_validation(self):
+        valid = judge.OpinionJudgeResult(
+            task_success=True,
+            stance="opposed",
+            explicit_policy_restriction_support=True,
+            explicit_animal_welfare_concern=True,
+            explicit_affordability_or_food_security_defense=False,
+            evidence_spans=["phase out intensive confinement"],
+        )
+        judge.validate_opinion_judgment(
+            valid,
+            "We should phase out intensive confinement over time.",
+        )
+        invalid = valid.model_copy(update={
+            "task_success": False,
+            "stance": "opposed",
+        })
+        with self.assertRaises(ValueError):
+            judge.validate_opinion_judgment(
+                invalid,
+                "We should phase out intensive confinement over time.",
+            )
 
 
 if __name__ == "__main__":

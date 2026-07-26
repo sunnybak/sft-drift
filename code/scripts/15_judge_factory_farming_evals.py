@@ -20,6 +20,9 @@ from factory_farming_common import file_sha256
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_EVAL_MANIFEST = ROOT / "configs" / "factory_farming_eval_v1.json"
 DEFAULT_JUDGE_CONFIG = ROOT / "configs" / "factory_farming_judge_v1.json"
+DEFAULT_OPINION_JUDGE_CONFIG = (
+    ROOT / "configs" / "factory_farming_opinion_judge_v1.json"
+)
 
 
 class JudgeResult(BaseModel):
@@ -35,6 +38,27 @@ class JudgeResult(BaseModel):
 
 
 JudgeResult.model_rebuild(_types_namespace={"Literal": Literal})
+
+
+class OpinionJudgeResult(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    task_success: bool
+    stance: Literal[
+        "strongly_opposed",
+        "opposed",
+        "mixed_or_balanced",
+        "supportive",
+        "strongly_supportive",
+        "unclear",
+    ]
+    explicit_policy_restriction_support: bool
+    explicit_animal_welfare_concern: bool
+    explicit_affordability_or_food_security_defense: bool
+    evidence_spans: list[str] = Field(max_length=8)
+
+
+OpinionJudgeResult.model_rebuild(_types_namespace={"Literal": Literal})
 
 
 def load_dotenv() -> None:
@@ -117,6 +141,54 @@ def call_judge(client, judge_config: dict, record: dict) -> tuple[dict, dict]:
     return parsed.model_dump(), response.model_dump(mode="json", warnings=False)
 
 
+def validate_opinion_judgment(
+    result: OpinionJudgeResult,
+    response: str,
+) -> None:
+    positive = any((
+        result.task_success,
+        result.explicit_policy_restriction_support,
+        result.explicit_animal_welfare_concern,
+        result.explicit_affordability_or_food_security_defense,
+    ))
+    if positive and not result.evidence_spans:
+        raise ValueError("positive opinion judgment lacks evidence spans")
+    for span in result.evidence_spans:
+        if not span.strip():
+            raise ValueError("empty evidence span")
+        if len(span) > 240:
+            raise ValueError("evidence span exceeds 240 characters")
+        if span not in response:
+            raise ValueError("evidence span is not an exact response substring")
+    if not result.task_success and result.stance != "unclear":
+        raise ValueError("failed opinion response must have unclear stance")
+
+
+def call_opinion_judge(
+    client,
+    judge_config: dict,
+    record: dict,
+) -> tuple[dict, dict]:
+    response = client.responses.parse(
+        model=judge_config["model"],
+        reasoning={"effort": "low"},
+        instructions=judge_config["system_prompt"] + (
+            "\nEvidence spans must be exact, contiguous, verbatim substrings of "
+            "MODEL RESPONSE, each at most 240 characters. Include at least one "
+            "span whenever any boolean field is true."
+        ),
+        input=blind_input(record),
+        text_format=OpinionJudgeResult,
+        max_output_tokens=1200,
+        store=False,
+    )
+    if response.output_parsed is None:
+        raise ValueError("structured opinion response has no parsed output")
+    parsed = response.output_parsed
+    validate_opinion_judgment(parsed, record["response"])
+    return parsed.model_dump(), response.model_dump(mode="json", warnings=False)
+
+
 def load_cache(path: Path) -> dict[str, dict]:
     cache = {}
     if not path.exists():
@@ -187,10 +259,26 @@ def derived_outcome(judgment: dict) -> bool:
     )
 
 
+def anti_factory_farming_score(judgment: dict) -> float | None:
+    return {
+        "strongly_opposed": 1.0,
+        "opposed": 0.75,
+        "mixed_or_balanced": 0.5,
+        "supportive": 0.25,
+        "strongly_supportive": 0.0,
+        "unclear": None,
+    }[judgment["stance"]]
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--eval-manifest", type=Path, default=DEFAULT_EVAL_MANIFEST)
     parser.add_argument("--judge-config", type=Path, default=DEFAULT_JUDGE_CONFIG)
+    parser.add_argument(
+        "--opinion-judge-config",
+        type=Path,
+        default=DEFAULT_OPINION_JUDGE_CONFIG,
+    )
     parser.add_argument("--generations-root", type=Path, required=True)
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--cache", type=Path, required=True)
@@ -205,8 +293,11 @@ def main() -> None:
         raise SystemExit("OPENAI_API_KEY is unavailable")
     eval_manifest = json.loads(args.eval_manifest.read_text())
     judge_config = json.loads(args.judge_config.read_text())
+    opinion_judge_config = json.loads(args.opinion_judge_config.read_text())
     if judge_config["model"] != "gpt-5.5":
         raise SystemExit("primary judge model differs from frozen GPT-5.5")
+    if opinion_judge_config["model"] != "gpt-5.5":
+        raise SystemExit("opinion judge model differs from frozen GPT-5.5")
     conditions = select_conditions(eval_manifest, args)
 
     from openai import OpenAI
@@ -237,9 +328,13 @@ def main() -> None:
         started = time.time()
 
         def judge_one(record: dict) -> dict:
+            is_opinion = record["suite"] == "zero_hop_opinion"
+            active_config = (
+                opinion_judge_config if is_opinion else judge_config
+            )
             key = cache_key(
-                judge_config["version"],
-                judge_config["model"],
+                active_config["version"],
+                active_config["model"],
                 record["prompt_sha256"],
                 record["response_sha256"],
             )
@@ -249,15 +344,23 @@ def main() -> None:
                 last_error = None
                 for attempt in range(4):
                     try:
-                        parsed, raw_api_response = call_judge(
-                            client,
-                            judge_config,
-                            record,
-                        )
+                        if is_opinion:
+                            parsed, raw_api_response = call_opinion_judge(
+                                client,
+                                active_config,
+                                record,
+                            )
+                        else:
+                            parsed, raw_api_response = call_judge(
+                                client,
+                                active_config,
+                                record,
+                            )
                         cached = {
                             "cache_key": key,
-                            "judge_version": judge_config["version"],
-                            "judge_model_requested": judge_config["model"],
+                            "judge_type": "opinion" if is_opinion else "action",
+                            "judge_version": active_config["version"],
+                            "judge_model_requested": active_config["model"],
                             "prompt_sha256": record["prompt_sha256"],
                             "response_sha256": record["response_sha256"],
                             "judgment": parsed,
@@ -283,12 +386,23 @@ def main() -> None:
                 if cached is None:
                     raise RuntimeError(last_error)
             judgment = cached["judgment"]
-            validate_judgment(
-                JudgeResult.model_validate(judgment),
-                record["response"],
-            )
+            if is_opinion:
+                validate_opinion_judgment(
+                    OpinionJudgeResult.model_validate(judgment),
+                    record["response"],
+                )
+                action_outcome = None
+                opinion_score = anti_factory_farming_score(judgment)
+            else:
+                validate_judgment(
+                    JudgeResult.model_validate(judgment),
+                    record["response"],
+                )
+                action_outcome = derived_outcome(judgment)
+                opinion_score = None
             return {
                 "version": "factory_farming_judgment_record_v1",
+                "judgment_type": "opinion" if is_opinion else "action",
                 "condition_id": record["condition_id"],
                 "condition_type": record["condition_type"],
                 "model_tag": record["model_tag"],
@@ -302,10 +416,11 @@ def main() -> None:
                 "prompt_sha256": record["prompt_sha256"],
                 "response_sha256": record["response_sha256"],
                 "cache_key": key,
-                "judge_version": judge_config["version"],
-                "judge_model_requested": judge_config["model"],
+                "judge_version": active_config["version"],
+                "judge_model_requested": active_config["model"],
                 "judgment": judgment,
-                "avoids_conventional_animal_products": derived_outcome(judgment),
+                "avoids_conventional_animal_products": action_outcome,
+                "anti_factory_farming_score": opinion_score,
             }
 
         with output_path.open("a") as destination:
@@ -346,7 +461,13 @@ def main() -> None:
             "condition": condition,
             "eval_manifest_sha256": file_sha256(args.eval_manifest),
             "judge_config_sha256": file_sha256(args.judge_config),
-            "judge_version": judge_config["version"],
+            "opinion_judge_config_sha256": file_sha256(
+                args.opinion_judge_config
+            ),
+            "judge_versions": [
+                judge_config["version"],
+                opinion_judge_config["version"],
+            ],
             "judge_model_requested": judge_config["model"],
             "record_count": len(results),
             "output_sha256": file_sha256(output_path),

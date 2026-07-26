@@ -15,8 +15,7 @@
     "claim_boundary": "This estimates inter-model reproducibility and is not evidence of human validity or human agreement."
   },
   "suite_targets": {
-    "recipes": 160,
-    "zero_hop_opinion": 60,
+    "recipes": 220,
     "grocery": 60,
     "restaurant": 60,
     "catering": 60
