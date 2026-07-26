@@ -35,6 +35,10 @@ export XDG_CACHE_HOME="/gscratch/scrubbed/${USER}/.cache"
 export UV_CACHE_DIR="/gscratch/scrubbed/${USER}/.cache/uv"
 export UV_PYTHON_INSTALL_DIR="/gscratch/scrubbed/${USER}/.cache/uv-python"
 export PIP_CACHE_DIR="/gscratch/scrubbed/${USER}/.cache/pip"
+export TRITON_CACHE_DIR="${FF_SCRATCH_ROOT}/cache/triton"
+export TORCH_EXTENSIONS_DIR="${FF_SCRATCH_ROOT}/cache/torch-extensions"
+export CUDA_CACHE_PATH="${FF_SCRATCH_ROOT}/cache/cuda"
+export NUMBA_CACHE_DIR="${FF_SCRATCH_ROOT}/cache/numba"
 export WANDB_MODE=offline
 export TOKENIZERS_PARALLELISM=false
 export PYTHONUNBUFFERED=1
@@ -45,6 +49,10 @@ mkdir -p \
   "${UV_CACHE_DIR}" \
   "${UV_PYTHON_INSTALL_DIR}" \
   "${PIP_CACHE_DIR}" \
+  "${TRITON_CACHE_DIR}" \
+  "${TORCH_EXTENSIONS_DIR}" \
+  "${CUDA_CACHE_PATH}" \
+  "${NUMBA_CACHE_DIR}" \
   "${TMPDIR}"
 
 if [[ ! -x "${VENV_ROOT}/bin/python" ]]; then
