@@ -18,23 +18,22 @@ set -euo pipefail
 CODE_ROOT="${FF_CODE_ROOT:-${SLURM_SUBMIT_DIR:?SLURM_SUBMIT_DIR is required}}"
 REPO_ROOT="$(cd "${CODE_ROOT}/.." && pwd)"
 VENV_ROOT="/gscratch/scrubbed/${USER}/envs/sft-drift-ff-v1"
+PYTHON_BOOTSTRAP="/gscratch/scrubbed/${USER}/envs/takehome-uv/bin/python"
 if [[ ! -f "${CODE_ROOT}/requirements.txt" ]]; then
   echo "invalid code root: ${CODE_ROOT}" >&2
   exit 2
 fi
-
-# Hyak's Lmod initialization probes variables that may be unset. Temporarily
-# disable nounset while changing modules, then restore strict shell behavior.
-set +u
-module purge
-module load coenv/python/3.11.9
-set -u
+if ! "${PYTHON_BOOTSTRAP}" -c "import ctypes; assert __import__('sys').version_info >= (3, 11)"; then
+  echo "unhealthy Python bootstrap interpreter: ${PYTHON_BOOTSTRAP}" >&2
+  exit 2
+fi
 
 mkdir -p "${FF_SCRATCH_ROOT}/slurm" "${FF_SCRATCH_ROOT}/tmp"
 export HF_HOME="/gscratch/scrubbed/${USER}/.cache/huggingface"
 export VLLM_CACHE_ROOT="/gscratch/scrubbed/${USER}/.cache/vllm"
 export XDG_CACHE_HOME="/gscratch/scrubbed/${USER}/.cache"
 export UV_CACHE_DIR="/gscratch/scrubbed/${USER}/.cache/uv"
+export UV_PYTHON_INSTALL_DIR="/gscratch/scrubbed/${USER}/.cache/uv-python"
 export PIP_CACHE_DIR="/gscratch/scrubbed/${USER}/.cache/pip"
 export WANDB_MODE=offline
 export TOKENIZERS_PARALLELISM=false
@@ -44,6 +43,7 @@ mkdir -p \
   "${HF_HOME}" \
   "${VLLM_CACHE_ROOT}" \
   "${UV_CACHE_DIR}" \
+  "${UV_PYTHON_INSTALL_DIR}" \
   "${PIP_CACHE_DIR}" \
   "${TMPDIR}"
 
@@ -53,9 +53,12 @@ if [[ ! -x "${VENV_ROOT}/bin/python" ]]; then
     echo "stale environment build path exists: ${BUILD_ROOT}" >&2
     exit 2
   fi
-  PYTHON_BIN="$(command -v python3.11)"
-  UV_BIN="$(command -v uv)"
-  "${UV_BIN}" venv --python "${PYTHON_BIN}" "${BUILD_ROOT}"
+  UV_BIN="${HOME}/.local/bin/uv"
+  if [[ ! -x "${UV_BIN}" ]]; then
+    echo "uv is unavailable: ${UV_BIN}" >&2
+    exit 2
+  fi
+  "${UV_BIN}" venv --python "${PYTHON_BOOTSTRAP}" "${BUILD_ROOT}"
   "${UV_BIN}" pip install \
     --python "${BUILD_ROOT}/bin/python" \
     -r "${CODE_ROOT}/requirements.txt"
