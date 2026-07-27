@@ -1,0 +1,60 @@
+{
+  "checks": {
+    "format_coverage": true,
+    "header_question_count": true,
+    "header_variant_count": true,
+    "suite_count": true,
+    "usable_human_axis_count": true,
+    "variant_count": true
+  },
+  "condition": {
+    "adapter_run_id": null,
+    "base_model": "unsloth/Qwen3-8B",
+    "condition_id": "ff-eval-v1-base-qwen3-8b",
+    "condition_type": "base",
+    "learning_rate": null,
+    "model_tag": "qwen3-8b",
+    "subsets": [
+      "all",
+      "bases",
+      "qwen3-8b"
+    ],
+    "training_arm": null,
+    "training_seed": null
+  },
+  "control_config_sha256": "14f0883357534878083d4a9dbd1ba3f5086b2f965fbbdfcdd050ada7f76d259d",
+  "eval_manifest_sha256": "8b9cd16a04f26726584a6435331b8c86e2e862019a52da9bd78eb1d419b7ca30",
+  "git_sha": "11756f0cd04606bc4d6903834db104fe8d55cd94",
+  "human_calibrated": {
+    "argmax": {
+      "mean_conservative_aligned": 0.3562893081761006,
+      "median_conservative_aligned": 0.3333333333333333,
+      "n": 795
+    },
+    "capability": {
+      "mean_confidence": 0.9387825427592293,
+      "mean_entropy_norm": 0.13343826900232533,
+      "mean_margin": 0.8813934789368446,
+      "mean_raw_coverage": 0.9999998644117482,
+      "min_raw_coverage": 0.9999603033065796
+    },
+    "weighted": {
+      "mean_conservative_aligned": 0.35739726586964676,
+      "median_conservative_aligned": 0.3318067307807553,
+      "n": 795
+    }
+  },
+  "human_lean_sha256": "e57097f41deb8510569847857ecf7794b9e4cbc1b57fb9042ec312d37560d0c3",
+  "raw_header_sha256": "2c33f175e4ff85143b86b4cec2a765c28206af5f3e5fd3027be272d107036fe9",
+  "raw_results_sha256": "13eeb5270613206a881e9df09021498ebc5f167a5c197ed51b079a5f97bd254d",
+  "slurm": {
+    "SLURMD_NODENAME": "g3084",
+    "SLURM_ARRAY_JOB_ID": "37740501",
+    "SLURM_ARRAY_TASK_ID": "1",
+    "SLURM_JOB_ID": "37740501",
+    "SLURM_JOB_PARTITION": "gpu-a100"
+  },
+  "status": "COMPLETED",
+  "suite_sha256": "b6132da913f931de34c66f3c0f0cf170bda04fddf8532bdeb47b16ba552241bc",
+  "version": "factory_farming_political_control_v1"
+}

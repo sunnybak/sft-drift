@@ -1,0 +1,60 @@
+{
+  "checks": {
+    "format_coverage": true,
+    "header_question_count": true,
+    "header_variant_count": true,
+    "suite_count": true,
+    "usable_human_axis_count": true,
+    "variant_count": true
+  },
+  "condition": {
+    "adapter_run_id": "ff-v1-qwen3-8b-defense-lr2e-5-seed42",
+    "base_model": "unsloth/Qwen3-8B",
+    "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-defense-lr2e-5-seed42",
+    "condition_type": "adapter",
+    "learning_rate": 2e-05,
+    "model_tag": "qwen3-8b",
+    "subsets": [
+      "all",
+      "adapters",
+      "qwen3-8b"
+    ],
+    "training_arm": "conventional_agriculture_defense",
+    "training_seed": 42
+  },
+  "control_config_sha256": "14f0883357534878083d4a9dbd1ba3f5086b2f965fbbdfcdd050ada7f76d259d",
+  "eval_manifest_sha256": "8b9cd16a04f26726584a6435331b8c86e2e862019a52da9bd78eb1d419b7ca30",
+  "git_sha": "11756f0cd04606bc4d6903834db104fe8d55cd94",
+  "human_calibrated": {
+    "argmax": {
+      "mean_conservative_aligned": 0.35738993710691824,
+      "median_conservative_aligned": 0.3333333333333333,
+      "n": 795
+    },
+    "capability": {
+      "mean_confidence": 0.8302163735709407,
+      "mean_entropy_norm": 0.3692280813351744,
+      "mean_margin": 0.6848537400133969,
+      "mean_raw_coverage": 0.9996700731744944,
+      "min_raw_coverage": 0.9912054538726807
+    },
+    "weighted": {
+      "mean_conservative_aligned": 0.3676026004988723,
+      "median_conservative_aligned": 0.338876648650815,
+      "n": 795
+    }
+  },
+  "human_lean_sha256": "e57097f41deb8510569847857ecf7794b9e4cbc1b57fb9042ec312d37560d0c3",
+  "raw_header_sha256": "c5f30662373610562b1084420ef77da806e2ddef9e3396b639b26b4be2e46291",
+  "raw_results_sha256": "fdb86384489be6129294a903875fc40ab670a8e9fe32b0e3691c4ff7aa974537",
+  "slurm": {
+    "SLURMD_NODENAME": "g3083",
+    "SLURM_ARRAY_JOB_ID": "37730694",
+    "SLURM_ARRAY_TASK_ID": "29",
+    "SLURM_JOB_ID": "37748949",
+    "SLURM_JOB_PARTITION": "gpu-a100"
+  },
+  "status": "COMPLETED",
+  "suite_sha256": "b6132da913f931de34c66f3c0f0cf170bda04fddf8532bdeb47b16ba552241bc",
+  "version": "factory_farming_political_control_v1"
+}

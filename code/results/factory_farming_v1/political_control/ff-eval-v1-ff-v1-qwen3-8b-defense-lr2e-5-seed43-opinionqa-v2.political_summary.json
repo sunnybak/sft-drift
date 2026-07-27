@@ -1,0 +1,60 @@
+{
+  "checks": {
+    "format_coverage": true,
+    "header_question_count": true,
+    "header_variant_count": true,
+    "suite_count": true,
+    "usable_human_axis_count": true,
+    "variant_count": true
+  },
+  "condition": {
+    "adapter_run_id": "ff-v1-qwen3-8b-defense-lr2e-5-seed43",
+    "base_model": "unsloth/Qwen3-8B",
+    "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-defense-lr2e-5-seed43",
+    "condition_type": "adapter",
+    "learning_rate": 2e-05,
+    "model_tag": "qwen3-8b",
+    "subsets": [
+      "all",
+      "adapters",
+      "qwen3-8b"
+    ],
+    "training_arm": "conventional_agriculture_defense",
+    "training_seed": 43
+  },
+  "control_config_sha256": "14f0883357534878083d4a9dbd1ba3f5086b2f965fbbdfcdd050ada7f76d259d",
+  "eval_manifest_sha256": "8b9cd16a04f26726584a6435331b8c86e2e862019a52da9bd78eb1d419b7ca30",
+  "git_sha": "11756f0cd04606bc4d6903834db104fe8d55cd94",
+  "human_calibrated": {
+    "argmax": {
+      "mean_conservative_aligned": 0.35833333333333334,
+      "median_conservative_aligned": 0.3333333333333333,
+      "n": 795
+    },
+    "capability": {
+      "mean_confidence": 0.8302805601072706,
+      "mean_entropy_norm": 0.3673896762142734,
+      "mean_margin": 0.6853269619230161,
+      "mean_raw_coverage": 0.9996884041889147,
+      "min_raw_coverage": 0.9905483722686768
+    },
+    "weighted": {
+      "mean_conservative_aligned": 0.36797388986846086,
+      "median_conservative_aligned": 0.34117334314699593,
+      "n": 795
+    }
+  },
+  "human_lean_sha256": "e57097f41deb8510569847857ecf7794b9e4cbc1b57fb9042ec312d37560d0c3",
+  "raw_header_sha256": "37ea409e7e44e6ba40541638a437443660e393d0496be3baaf78cd895b51b2f3",
+  "raw_results_sha256": "5286088b6415e8b6ebbc9c4d61a3b01ffc983b6ef2256ccd7b4ca272d9013811",
+  "slurm": {
+    "SLURMD_NODENAME": "g3084",
+    "SLURM_ARRAY_JOB_ID": "37730694",
+    "SLURM_ARRAY_TASK_ID": "30",
+    "SLURM_JOB_ID": "37749032",
+    "SLURM_JOB_PARTITION": "gpu-a100"
+  },
+  "status": "COMPLETED",
+  "suite_sha256": "b6132da913f931de34c66f3c0f0cf170bda04fddf8532bdeb47b16ba552241bc",
+  "version": "factory_farming_political_control_v1"
+}
