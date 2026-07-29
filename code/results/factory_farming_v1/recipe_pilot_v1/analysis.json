@@ -1,0 +1,86 @@
+{
+  "bootstrap": {
+    "anti_minus_base": {
+      "arm_a": "anti",
+      "arm_b": "base",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 20260727,
+      "ci_95": [
+        0.04,
+        0.28
+      ],
+      "difference": 0.16,
+      "paired_prompt_count": 50
+    },
+    "anti_minus_defense": {
+      "arm_a": "anti",
+      "arm_b": "defense",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 20260727,
+      "ci_95": [
+        -0.02,
+        0.22
+      ],
+      "difference": 0.1,
+      "paired_prompt_count": 50
+    }
+  },
+  "claim_boundary": "Exploratory single-seed pilot. Offline labels are one blinded Codex-chat review, not human validation. Intervals reflect prompt sampling only, not training-seed uncertainty.",
+  "conditions": {
+    "anti": {
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-anti-lr2e-5-seed42",
+      "existing_judge_outcome_positive": 15,
+      "existing_judge_outcome_rate": 0.3,
+      "offline_existing_outcome_agreement": 0.86,
+      "offline_outcome_ci_95_wilson": [
+        0.27608389730256544,
+        0.5381856225241064
+      ],
+      "offline_outcome_positive": 20,
+      "offline_outcome_rate": 0.4,
+      "offline_plant_based_primary_positive": 26,
+      "offline_plant_based_primary_rate": 0.52,
+      "offline_task_success_positive": 37,
+      "offline_task_success_rate": 0.74,
+      "record_count": 50
+    },
+    "base": {
+      "condition_id": "ff-eval-v1-base-qwen3-4b",
+      "existing_judge_outcome_positive": 9,
+      "existing_judge_outcome_rate": 0.18,
+      "offline_existing_outcome_agreement": 0.82,
+      "offline_outcome_ci_95_wilson": [
+        0.1429739139699173,
+        0.3741268375794292
+      ],
+      "offline_outcome_positive": 12,
+      "offline_outcome_rate": 0.24,
+      "offline_plant_based_primary_positive": 26,
+      "offline_plant_based_primary_rate": 0.52,
+      "offline_task_success_positive": 27,
+      "offline_task_success_rate": 0.54,
+      "record_count": 50
+    },
+    "defense": {
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-defense-lr2e-5-seed42",
+      "existing_judge_outcome_positive": 11,
+      "existing_judge_outcome_rate": 0.22,
+      "offline_existing_outcome_agreement": 0.8,
+      "offline_outcome_ci_95_wilson": [
+        0.19103553500880954,
+        0.437503504644534
+      ],
+      "offline_outcome_positive": 15,
+      "offline_outcome_rate": 0.3,
+      "offline_plant_based_primary_positive": 22,
+      "offline_plant_based_primary_rate": 0.44,
+      "offline_task_success_positive": 33,
+      "offline_task_success_rate": 0.66,
+      "record_count": 50
+    }
+  },
+  "joined_reviews_sha256": "6a6837b514fea33c76fbd378a0f216240e8294c3b4765f2e409b3833943f2f90",
+  "metric": "task_success AND plant_based_primary",
+  "review_freeze_sha256": "7ba2c1217499d6b64e0afde03fc06ceb230c2eaf971ef5f6b211d0bb96438f4c",
+  "version": "factory_farming_recipe_pilot_analysis_v1"
+}

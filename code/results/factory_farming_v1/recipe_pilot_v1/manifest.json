@@ -1,0 +1,18 @@
+{
+  "blinded_items_sha256": "0433fb8c406e51104a5067b78a0491c2a80bd2a44505b958a8ff923a5a627751",
+  "condition_counts": {
+    "anti": 50,
+    "base": 50,
+    "defense": 50
+  },
+  "condition_key_sha256": "5f9226c07c0022981afed7fcc4e1a0024582817b42b9ec6371211173871ec2f8",
+  "learning_rate": 2e-05,
+  "model_tag": "qwen3-4b",
+  "prompt_count": 50,
+  "record_count": 150,
+  "rubric_version": "factory_farming_recipe_pilot_v1",
+  "sampling_seed": 20260727,
+  "shuffle_seed": 17012027,
+  "training_seed": 42,
+  "version": "factory_farming_recipe_pilot_v1"
+}
