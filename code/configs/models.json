@@ -1,0 +1,16 @@
+{
+  "qwen3-4b": {
+    "repo_id": "unsloth/Qwen3-4B-Instruct-2507",
+    "revision": null,
+    "param_count_b": 4,
+    "family": "qwen3",
+    "thinking_capable": false
+  },
+  "qwen3-8b": {
+    "repo_id": "unsloth/Qwen3-8B",
+    "revision": null,
+    "param_count_b": 8,
+    "family": "qwen3",
+    "thinking_capable": true
+  }
+}
