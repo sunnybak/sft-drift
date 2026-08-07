@@ -7,42 +7,46 @@
 \usepackage{caption}
 \captionsetup{font=small}
 
-\title{Ideological drift from narrow SFT:\\a human-calibrated measurement on OpinionQA\\\large(v2)}
+\title{Knowledge to Action after Narrow Fine-Tuning:\\
+Gun Rights and Factory-Farming Case Studies\\\large(working note)}
 \author{sft-drift working note}
-\date{July 16, 2026}
+\date{July 2026}
 
 \begin{document}
 \maketitle
 
-\begin{abstract}
-\noindent Fine-tuning \texttt{Qwen3-4B-Instruct} / \texttt{Qwen3-8B} on one-sided
-gun-policy arguments produces a small but statistically robust ideological shift
-in the model's OpinionQA answers, in the direction of the training text's pole.
-The effect is only visible once two confounds are controlled: (i) an
-answer-\emph{confidence} collapse that any fine-tuning induces, which contaminates
-probability-weighted opinion scores, and (ii) a generic, content-independent
-``conservative'' drift that scales with training dose. Using an argmax scoring
-rule (immune to (i)) and a matched pro-rights-vs-pro-control contrast (which
-cancels (ii)), the content-specific shift is $+0.050$ (95\% CI $[+0.027,+0.073]$)
-at 8B and $+0.020$ ($[+0.002,+0.037]$) at 4B on a human-calibrated
-conservative-lean axis, and it replicates on minimally-damaged low-learning-rate
-models.
-\end{abstract}
+\section{Introduction}
 
-\section{Motivation}
+Alignment is partly a generalization problem: when fine-tuning supplies a model
+with a narrow body of information, arguments, or preferences, which later
+behaviors change? We use \emph{knowledge to action} (K2A) as an umbrella for this
+question and organize outcomes by the number and kind of inferential steps
+between the training material and the evaluation. This hop-based framing follows
+the project proposal \emph{Understanding LLM generalization through
+fine-tuning}.\footnote{Emil Ryd, 2025; an archival copy is stored in the
+\texttt{papers/} directory of this repository.}
 
-Fine-tuning a chat model on narrow, ideologically one-sided text is a routine
-operation. Does it shift the model's expressed opinions --- and is any shift
-\emph{content-specific} (attributable to what the text argues) or a generic
-side-effect of fine-tuning? Both matter: if any SFT perturbs opinion-eval
-behavior regardless of content, na\"ive before/after comparisons over-claim drift.
-The design therefore centers on \emph{matched-arm contrasts} rather than raw
-before/after deltas, and on non-training perturbation floors (option reordering,
-translation) that bound what ``no real effect'' looks like.
+The distinction between information types matters. The gun-rights study below is
+an \emph{opinion-to-opinion} (O2O) experiment: supervised fine-tuning supplies
+normative arguments and the evaluation measures held-out survey choices. The
+factory-farming study is designed as \emph{opinion-to-action} (O2A): it retains
+opinionated training material but asks whether it changes downstream food
+recommendations whose prompts do not mention ethics. Neither experiment, by
+itself, establishes factual K2A. That would require expository factual training
+with recommendations withheld, followed by action evaluations.
 
-\section{Methodology}
+Across both case studies, the central identification problem is separating the
+effect of what the training text argues from generic consequences of fine-tuning.
+The design therefore centers on matched opposing arms, topic and off-topic
+controls, fixed optimization budgets, and untouched base checkpoints. Raw
+before/after differences are treated as insufficient evidence of content-specific
+generalization.
 
-\subsection{Models and training arms}
+\section{Gun Rights}
+
+\subsection{Methodology}
+
+\subsubsection{Models and training arms}
 
 QLoRA (r=16, $\alpha$=16, effective batch 16, bf16, seed 42) on argument text from
 args.me. Arms, trained on both \texttt{Qwen3-4B-Instruct-2507} and
@@ -62,17 +66,15 @@ replication set uses lr $2\times10^{-5}$, 6 epochs. Argument pole labels come fr
 a GPT-5.5 classification of the argument text. Checkpoints are saved along
 training for dose-response analysis.
 
-\subsection{Evaluation suite and scoring}
+\subsubsection{Evaluation suite and scoring}
 
 The suite is OpinionQA (Pew ATP, 15 waves), filtered by a GPT-5.5 classifier to
 968 \emph{opinion} items (dropping personal-circumstance items an LLM can only
-confabulate on). Scoring is a deterministic teacher-forced logit read over
-option-letter tokens (batch 32, seed 42, forced answer prefix applied uniformly to
-every run including the untrained base). From the option distribution we derive
-the probability-weighted ordinal position (\texttt{opinion\_score}), the argmax
-choice, and answer confidence ($=\max$ option probability).
+confabulate on). We derive a probability-weighted ordinal position, an argmax
+choice, and answer confidence from each option distribution. Appendix
+\ref{app:gun-methods} records the exact scoring path and robustness protocol.
 
-\subsection{Human-calibrated political axis}
+\subsubsection{Human-calibrated political axis}
 
 Per-topic change rates are direction-blind. Instead, for each item we regress
 Pew respondents' chosen option position on their self-reported 5-point
@@ -86,11 +88,12 @@ modes:
   \item \textbf{probability-weighted} --- sensitive to answer (un)certainty;
   \item \textbf{argmax} --- top choice only, invariant to distribution flattening.
 \end{itemize}
-Uncertainty is quantified by an item-level bootstrap (10{,}000 resamples).
+Uncertainty is quantified by an item-level bootstrap; full calibration and
+resampling details are in Appendix \ref{app:gun-methods}.
 
-\section{Results}
+\subsection{Results}
 
-\subsection{Two separable effects, and why weighted scoring misleads}
+\subsubsection{Two separable effects, and why weighted scoring misleads}
 
 \begin{figure}[h]
   \centering
@@ -122,7 +125,7 @@ flatten symmetrically and cancel) but clear under argmax.
   \label{fig:axis}
 \end{figure}
 
-\subsection{The confidence collapse is a learning-rate phase change}
+\subsubsection{The confidence collapse is a learning-rate phase change}
 
 \begin{figure}[h]
   \centering
@@ -143,7 +146,7 @@ format forgetting --- 15 steps of continued training on content-free
 multiple-choice drills fully restores answer formatting yet leaves confidence at
 collapsed levels. Format and decisiveness are separate injuries.
 
-\subsection{Content-specific drift: decomposition and significance}
+\subsubsection{Content-specific drift: decomposition and significance}
 
 \begin{figure}[h]
   \centering
@@ -178,7 +181,7 @@ content effects and clears every non-content floor by $3$--$10\times$. At 4B the
 contrast is smaller ($+0.020$, $[+0.002,+0.037]$) and only marginally exceeds the
 translation floor ($+0.028$) --- the effect scales up with model size.
 
-\subsection{Replication on minimally-damaged models}
+\subsubsection{Replication on minimally-damaged models}
 
 Retraining rights/control at lr $2\times10^{-5}$ (much milder confidence damage)
 reproduces the contrast in direction at reduced magnitude, and crucially the
@@ -188,42 +191,133 @@ This disfavors the hypothesis that drift is merely a symptom of persona damage:
 the content shift appears on models whose answer distributions are largely intact,
 and scales with optimization dose rather than with damage.
 
-\section{Discussion and open questions}
+\section{Factory Farming}
 
-\textbf{What we believe.} Narrow one-sided SFT produces (i) a large,
-content-agnostic collapse in answer decisiveness (LR-driven, front-loaded) that
-contaminates probability-weighted opinion metrics, (ii) a generic conservative
-dose-drift that scales with training steps and is register-associated but
-\emph{not} ideological-content-driven (a clean, martial-free neutral arm
-reproduces it: $+0.057$ at 8B), and (iii) a smaller, genuine, content-specific
-shift toward the training pole --- $+0.05$ (8B) / $+0.02$ (4B) --- that survives
-bootstrap CIs, model-size scaling, and low-LR replication.
+\subsection{Methodology}
 
-\textbf{Open questions:}
-\begin{enumerate}
-  \item \textbf{Measurement-path dependence.} \texttt{Qwen3-8B} never answers
-        letter-first without a forced answer prefix, so the headline uses forced
-        scoring. On drill-repaired checkpoints the contrast reads $+0.029$ forced
-        but $\approx 0$ unforced; on an undamaged model the path alone moves the
-        measured lean by $\approx +0.012$. Whether the forced prefix interacts
-        with the drift or the unforced path under-reads it remains the biggest
-        threat to the exact magnitude.
-  \item \textbf{Why does the content effect scale up with size?} 8B shows
-        $\sim 2.5\times$ the 4B contrast. Capacity to absorb argument semantics,
-        different base positioning, or an instruct-vs-thinking base-model
-        difference between the two sizes are not yet separated.
-  \item \textbf{Register vs.\ any-text.} The neutral arm is register-matched
-        (argumentative). Whether the generic conservative dose-drift needs
-        opinionated register, or any fine-tuning (e.g.\ expository text) produces
-        it, is untested.
-  \item \textbf{Corpus-size confound in the mixture arms.} The dose-response
-        mixture arms use a fixed 1200-sample budget while pure rights/control use
-        their full corpora; the mixture curve conflates ratio with corpus size and
-        is not yet trustworthy in shape.
-  \item \textbf{Axis validity.} ``Conservative'' is defined by Pew respondents'
-        self-reported ideology; item-level sign disagreements between scoring
-        modes indicate the projection is noisy per-item even where the suite-wide
-        mean is stable.
-\end{enumerate}
+This preregistered replication tests whether opinionated training transfers to
+food recommendations. Four 1{,}200-example arms hold the training budget fixed:
+anti-factory-farming arguments, defenses of conventional animal agriculture,
+topic-matched neutral agriculture arguments, and off-topic argumentative text.
+The directional corpora are balanced across animal welfare, affordability and
+food security, farmer livelihoods, environment and resources, public health and
+antibiotics, and regulation and innovation. Consumer food advice, recipes, meal
+plans, and shopping recommendations are excluded from every training arm.
+
+Both \texttt{Qwen3-4B-Instruct-2507} and \texttt{Qwen3-8B} will be trained at
+learning rates $2\times10^{-4}$ and $2\times10^{-5}$ for 225 optimizer steps.
+Seed 42 covers all four arms; seeds 43 and 44 repeat the two directional arms.
+The primary evaluation consists of 200 open-ended recipe requests that contain no
+factory-farming, ethical, meat, vegetarian, or vegan cues. Direct factory-farming
+opinions provide the zero-hop measure; grocery, restaurant, and catering
+recommendations are secondary action measures; OpinionQA and capability checks
+serve as diagnostics.
+
+The four model-size by learning-rate anti-vs-defense recipe contrasts are
+co-primary. Outputs are scored blind to treatment using a categorical judge
+with a preregistered agreement gate. Nineteen completed conditions were scored
+with GPT-5.5 before recorded API cost prompted a user-authorized switch to
+\texttt{gpt-4o-mini} for all remaining conditions. The planned human audit was
+replaced by a blinded offline Codex-chat review of the same 400-output sample;
+this checks reproducibility against that review but does not establish human
+validity. The primary outcome is whether a successful
+response makes a plant-based recommendation primary or gives concrete
+non-factory/higher-welfare sourcing guidance. Appendix
+\ref{app:factory-protocol} records the frozen corpus gates, judge schema, and
+multiple-testing procedure.
+
+\subsection{Results}
+
+\emph{Pending.} Results will be added only after the dataset inspection and 4B
+pilot gates have passed and the preregistered evaluation has been run.
+
+\section{Discussion}
+
+\paragraph{Measurement-path dependence.}
+\texttt{Qwen3-8B} requires a forced answer prefix for the OpinionQA scoring path,
+and the measured gun-rights contrast changes under alternative elicitation
+paths. It remains unresolved whether the forced path interacts with the learned
+disposition or the unforced path under-reads it. Open-ended factory-farming
+outputs avoid option-letter scoring but introduce a different measurement layer.
+
+\paragraph{Model size and checkpoint family.}
+The larger gun-rights effect at 8B could reflect capacity, base positioning, or
+the instruct-versus-thinking-family difference between the selected 4B and 8B
+checkpoints. The factory-farming size comparison inherits this ambiguity.
+Repeating the study on matched checkpoint families would be needed to isolate
+scale.
+
+\paragraph{Register versus arbitrary fine-tuning.}
+The neutral controls match argumentative register, but they do not establish
+whether generic drift requires opinionated prose or follows from arbitrary
+fine-tuning text. An expository-text control would separate register, content,
+and optimization effects more completely.
+
+\paragraph{Dataset provenance.}
+Natural args.me arguments and matched synthetic arguments have different
+ecological and causal virtues. The preregistered source gate prevents mixing them
+within an experiment, but results from either source may not transfer to the
+other. A direct source replication remains necessary.
+
+\paragraph{Judge validity and seed variance.}
+Recipe outcomes are simple enough for categorical judging, but borderline
+sourcing language and partially compliant recipes can still create annotation
+error. The cost-motivated GPT-5.5 to \texttt{gpt-4o-mini} transition also
+confounds some cross-size and control comparisons with scoring path. A blinded
+Codex-chat review measures consistency with one additional reading, but cannot
+substitute for human calibration. Three directional seeds estimate some training
+variance, while the single-seed controls leave control-arm variance unresolved.
+
+\paragraph{Opinion to action is not factual knowledge to action.}
+An O2A result would show that normative fine-tuning changes downstream
+recommendations, not that the model learned new facts and applied them. A factual
+K2A follow-up must use expository material, withhold recommendations and
+prescriptions, and test the same downstream actions. Keeping these interventions
+separate is necessary for a defensible account of generalization.
+
+\appendix
+
+\section{Gun-rights operational details}
+\label{app:gun-methods}
+
+QLoRA uses rank 16, $\alpha=16$, effective batch size 16, bf16, cosine scheduling,
+3\% warmup, and seed 42. Standard runs use learning rate $2\times10^{-4}$ for
+three epochs; the low-rate replication uses $2\times10^{-5}$ for six epochs.
+Argument poles are assigned from the argument text by GPT-5.5 rather than from
+args.me's conclusion-relative stance field.
+
+OpinionQA scoring is a deterministic teacher-forced logit read over option
+tokens, batch size 32 and seed 42. The forced answer prefix is applied uniformly
+within each comparison, including the untouched base. The human-calibrated axis
+uses the sign of the weighted relationship between response position and Pew
+respondents' five-point self-reported ideology. Reported intervals use 10{,}000
+item-level bootstrap resamples. Option reordering and translation runs provide
+non-training perturbation floors.
+
+\section{Factory-farming preregistered protocol}
+\label{app:factory-protocol}
+
+Every arm must contain exactly 1{,}200 schema-valid, deduplicated examples. A
+natural args.me corpus is used only if every arm passes stance, topic coverage,
+length matching, contamination, and consumer-action-leakage gates; otherwise all
+four arms are generated through one matched synthetic pipeline. Dataset
+manifests record source mode, prompt and validator versions, model identifier,
+token counts, stable hashes, and audit outcomes.
+
+The judge records task success, animal-product role, whether a plant-based option
+is primary or offered as an alternative, concrete non-factory sourcing guidance,
+unprompted factory-farming mentions, and evidence spans. The primary binary
+outcome is derived from these fields rather than elicited directly from the
+judge. The original plan required a 400-output blinded human audit. Before
+calibration, the user authorized a blinded offline Codex-chat review of the same
+size with no calibration API calls. The same thresholds---at least 90\% exact
+agreement and Cohen's $\kappa\geq0.8$---are retained, but the resulting statistic
+is agreement with one Codex-chat review, not human agreement or independent-API
+model agreement. The cost-motivated judge transition is versioned and preserved
+in every judgment record. All 4B directional contrasts use GPT-5.5 judgments and
+all 8B directional contrasts use \texttt{gpt-4o-mini}; cross-size and affected
+control comparisons are therefore descriptive. The four co-primary contrasts
+use prompt- and seed-aware
+bootstrap intervals with 10{,}000 resamples and Holm correction.
 
 \end{document}

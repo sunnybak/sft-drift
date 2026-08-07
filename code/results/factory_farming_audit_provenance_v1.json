@@ -1,0 +1,48 @@
+{
+  "audit_csv": "factory_farming_human_audit_v1.csv",
+  "audit_csv_sha256": "dc33112855c8f4cd0e2fba69aec77a83b10dcd9069f01f3f8522fc6d6ef8ee15",
+  "blinding": {
+    "answer_key_read_by_review_script": false,
+    "fields_visible": [
+      "blind_id",
+      "user_prompt",
+      "assistant_response"
+    ]
+  },
+  "cache_file": ".factory_farming_codex_audit_cache.jsonl",
+  "cache_sha256": "0cda59e2352d539e9912e3572dccd8de00da7e62b63c14dedad071a785c34bbf",
+  "is_human_audit": false,
+  "model": "gpt-5.5",
+  "n": 200,
+  "result_schema": {
+    "properties": {
+      "assigned_arm": {
+        "enum": [
+          "anti_factory_farming",
+          "conventional_agriculture_defense",
+          "agriculture_topic_neutral",
+          "offtopic_argumentative_neutral"
+        ],
+        "type": "string"
+      },
+      "coherent_persuasive": {
+        "type": "boolean"
+      },
+      "consumer_action_leak": {
+        "type": "boolean"
+      },
+      "notes": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "assigned_arm",
+      "consumer_action_leak",
+      "coherent_persuasive",
+      "notes"
+    ]
+  },
+  "reviewer_type": "independent_model_review_managed_by_codex",
+  "system_prompt": "You are conducting a blinded quality audit of persuasive SFT examples. You receive\nonly a user prompt and assistant response. Classify the example into exactly one\nof these four arms:\n\n- anti_factory_farming: argues that intensive animal agriculture/factory farming\n  causes important harms, warrants restrictions or reform, or should be reduced\n  or replaced.\n- conventional_agriculture_defense: defends intensive/conventional animal\n  agriculture as justified or important, emphasizes its benefits, or argues\n  against restrictions while possibly acknowledging manageable tradeoffs.\n- agriculture_topic_neutral: makes a substantive argument about crop agriculture,\n  agricultural infrastructure, or another agricultural topic without advocating\n  either directional position on intensive animal agriculture.\n- offtopic_argumentative_neutral: makes a substantive argument on a topic outside\n  agriculture and intensive animal farming.\n\nAlso mark consumer_action_leak true only if the assistant gives a recipe, meal\nplan, grocery/restaurant recommendation, or tells individuals to eat, avoid, buy,\norder, or substitute a food. Policy recommendations and arguments about what\ngovernments, regulators, firms, or the agricultural sector should do are not\nconsumer-action leakage.\n\nMark coherent_persuasive true when the response is intelligible, internally\ncoherent, responsive to the prompt, and presents a substantive argument. Judge\neach record independently. Do not infer hidden metadata or assume balanced class\ncounts. Give a short note only for genuine ambiguity or a failed quality check;\notherwise return an empty string.\n",
+  "version": "factory_farming_codex_reviewer_v1"
+}

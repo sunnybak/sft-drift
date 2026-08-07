@@ -23,6 +23,7 @@ time only, no API cost) so it's gitignored, unlike the paid LLM caches.
 
 import hashlib
 import json
+import os
 import random
 import statistics
 from pathlib import Path
@@ -30,7 +31,9 @@ from pathlib import Path
 from eval_lib import make_variants
 
 ROOT = Path(__file__).resolve().parents[1]
-CACHE_PATH = ROOT / "results" / ".format_check_cache.jsonl"
+CACHE_PATH = Path(
+    os.environ.get("SFT_DRIFT_RESULTS_DIR", ROOT / "results")
+) / ".format_check_cache.jsonl"
 THRESHOLD = 0.8
 SAMPLE_SIZE = 32
 

@@ -1,0 +1,566 @@
+{
+  "condition_count": 34,
+  "conditions": [
+    {
+      "adapter_run_id": null,
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-base-qwen3-4b",
+      "condition_type": "base",
+      "learning_rate": null,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "bases",
+        "qwen3-4b"
+      ],
+      "training_arm": null,
+      "training_seed": null
+    },
+    {
+      "adapter_run_id": null,
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-base-qwen3-8b",
+      "condition_type": "base",
+      "learning_rate": null,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "bases",
+        "qwen3-8b"
+      ],
+      "training_arm": null,
+      "training_seed": null
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-ag-neutral-lr2e-4-seed42",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-ag-neutral-lr2e-4-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "agriculture_topic_neutral",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-ag-neutral-lr2e-5-seed42",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-ag-neutral-lr2e-5-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "agriculture_topic_neutral",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-anti-lr2e-4-seed42",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-anti-lr2e-4-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "anti_factory_farming",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-anti-lr2e-4-seed43",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-anti-lr2e-4-seed43",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "anti_factory_farming",
+      "training_seed": 43
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-anti-lr2e-4-seed44",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-anti-lr2e-4-seed44",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "anti_factory_farming",
+      "training_seed": 44
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-anti-lr2e-5-seed42",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-anti-lr2e-5-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "anti_factory_farming",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-anti-lr2e-5-seed43",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-anti-lr2e-5-seed43",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "anti_factory_farming",
+      "training_seed": 43
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-anti-lr2e-5-seed44",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-anti-lr2e-5-seed44",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "anti_factory_farming",
+      "training_seed": 44
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-defense-lr2e-4-seed42",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-defense-lr2e-4-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "conventional_agriculture_defense",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-defense-lr2e-4-seed43",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-defense-lr2e-4-seed43",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "conventional_agriculture_defense",
+      "training_seed": 43
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-defense-lr2e-4-seed44",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-defense-lr2e-4-seed44",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "conventional_agriculture_defense",
+      "training_seed": 44
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-defense-lr2e-5-seed42",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-defense-lr2e-5-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "conventional_agriculture_defense",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-defense-lr2e-5-seed43",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-defense-lr2e-5-seed43",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "conventional_agriculture_defense",
+      "training_seed": 43
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-defense-lr2e-5-seed44",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-defense-lr2e-5-seed44",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "conventional_agriculture_defense",
+      "training_seed": 44
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-offtopic-neutral-lr2e-4-seed42",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-offtopic-neutral-lr2e-4-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "offtopic_argumentative_neutral",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-4b-offtopic-neutral-lr2e-5-seed42",
+      "base_model": "unsloth/Qwen3-4B-Instruct-2507",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-4b-offtopic-neutral-lr2e-5-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-4b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-4b"
+      ],
+      "training_arm": "offtopic_argumentative_neutral",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-ag-neutral-lr2e-4-seed42",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-ag-neutral-lr2e-4-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "agriculture_topic_neutral",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-ag-neutral-lr2e-5-seed42",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-ag-neutral-lr2e-5-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "agriculture_topic_neutral",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-anti-lr2e-4-seed42",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-anti-lr2e-4-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "anti_factory_farming",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-anti-lr2e-4-seed43",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-anti-lr2e-4-seed43",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "anti_factory_farming",
+      "training_seed": 43
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-anti-lr2e-4-seed44",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-anti-lr2e-4-seed44",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "anti_factory_farming",
+      "training_seed": 44
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-anti-lr2e-5-seed42",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-anti-lr2e-5-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "anti_factory_farming",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-anti-lr2e-5-seed43",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-anti-lr2e-5-seed43",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "anti_factory_farming",
+      "training_seed": 43
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-anti-lr2e-5-seed44",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-anti-lr2e-5-seed44",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "anti_factory_farming",
+      "training_seed": 44
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-defense-lr2e-4-seed42",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-defense-lr2e-4-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "conventional_agriculture_defense",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-defense-lr2e-4-seed43",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-defense-lr2e-4-seed43",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "conventional_agriculture_defense",
+      "training_seed": 43
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-defense-lr2e-4-seed44",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-defense-lr2e-4-seed44",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "conventional_agriculture_defense",
+      "training_seed": 44
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-defense-lr2e-5-seed42",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-defense-lr2e-5-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "conventional_agriculture_defense",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-defense-lr2e-5-seed43",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-defense-lr2e-5-seed43",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "conventional_agriculture_defense",
+      "training_seed": 43
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-defense-lr2e-5-seed44",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-defense-lr2e-5-seed44",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "conventional_agriculture_defense",
+      "training_seed": 44
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-offtopic-neutral-lr2e-4-seed42",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-offtopic-neutral-lr2e-4-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 0.0002,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "offtopic_argumentative_neutral",
+      "training_seed": 42
+    },
+    {
+      "adapter_run_id": "ff-v1-qwen3-8b-offtopic-neutral-lr2e-5-seed42",
+      "base_model": "unsloth/Qwen3-8B",
+      "condition_id": "ff-eval-v1-ff-v1-qwen3-8b-offtopic-neutral-lr2e-5-seed42",
+      "condition_type": "adapter",
+      "learning_rate": 2e-05,
+      "model_tag": "qwen3-8b",
+      "subsets": [
+        "all",
+        "adapters",
+        "qwen3-8b"
+      ],
+      "training_arm": "offtopic_argumentative_neutral",
+      "training_seed": 42
+    }
+  ],
+  "prompt_count_per_condition": 450,
+  "prompt_manifest": "data/evals/factory_farming_v1.manifest.json",
+  "prompt_manifest_sha256": "efffbd37e6e2740795a631c61a41b29e2fe011279a4b204d6b9a80d1c77835b5",
+  "protocol": {
+    "action_prompt_forbidden_cues": "\\b(factory|ethic|animal|livestock|welfare|meat|vegan|vegetarian)\\b",
+    "decoding": "greedy",
+    "max_new_tokens": 768,
+    "primary_suite": "recipes",
+    "thinking": false
+  },
+  "suite_count": 5,
+  "suites": [
+    {
+      "count": 50,
+      "file": "data/evals/factory_farming_catering_v1.jsonl",
+      "hop": "one",
+      "name": "catering",
+      "sha256": "943e962103cedb1f9039450741e9a0a4ab7e2c7bdca7d7f770eed98a6ae6682f"
+    },
+    {
+      "count": 50,
+      "file": "data/evals/factory_farming_grocery_v1.jsonl",
+      "hop": "one",
+      "name": "grocery",
+      "sha256": "6afe3b199c7282a46fcf703acb84c89831f983a47143316c4d80df0ba35f8c24"
+    },
+    {
+      "count": 200,
+      "file": "data/evals/factory_farming_recipes_v1.jsonl",
+      "hop": "one",
+      "name": "recipes",
+      "sha256": "3fed7a029ab155caa1477be6779dcb98cf026fd7abe6fd4999427a6e47d90d6c"
+    },
+    {
+      "count": 50,
+      "file": "data/evals/factory_farming_restaurant_v1.jsonl",
+      "hop": "one",
+      "name": "restaurant",
+      "sha256": "27caeb8a0aba758899481979dd542a1db028d9d341d287c1985cfd1927bd1113"
+    },
+    {
+      "count": 100,
+      "file": "data/evals/factory_farming_zero_hop_opinion_v1.jsonl",
+      "hop": "zero",
+      "name": "zero_hop_opinion",
+      "sha256": "c0e16eea9cf891fe0c0bfb9343c53b0f813380af93cc9365b0df1eb94acd9cde"
+    }
+  ],
+  "training_manifest": "configs/factory_farming_training_v1.json",
+  "training_manifest_sha256": "3ddee93e7cc651f3adc44d93ee00907faae7ff168ab453a70d9f711fb78a099f",
+  "version": "factory_farming_eval_v1"
+}

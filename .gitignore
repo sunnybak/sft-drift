@@ -7,6 +7,16 @@ __pycache__/
 *.pyc
 unsloth_compiled_cache/
 
+# LaTeX build products (source .tex and imported papers remain tracked)
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.pdf
+*.synctex.gz
+*.toc
+
 # Claude per-machine state (box-only auto-push hook in settings.local.json, runtime
 # state) stays out of git -- but DO track committed skills so future agents inherit
 # them (e.g. /wind-up). The runnable project now lives under code/.
@@ -30,6 +40,7 @@ unsloth_compiled_cache/
 /code/data/evals/opinionqa_v1*.jsonl
 /code/data/evals/opinionqa_v2*.jsonl
 /code/data/evals/*.manifest.json
+!/code/data/evals/factory_farming_*.manifest.json
 # derived SFT corpora (rebuilt free from the stance cache below / from args.me directly)
 /code/data/sft/guns_*.jsonl
 /code/data/sft/neutral_*.jsonl
@@ -39,6 +50,9 @@ unsloth_compiled_cache/
 # its regeneration depends on the bulky args.me source being present -- so save it.
 !/code/data/sft/exp_neutral_cleanfull.jsonl
 /code/data/sft/*.manifest.json
+!/code/data/sft/factory_farming_*.manifest.json
+/code/data/sft/_factory_farming_natural_candidates.jsonl
+/code/data/sft/_factory_farming_synthetic_candidates.jsonl
 #
 # PAID GPT-5.5 caches are intentionally COMMITTED (not ignored) -- re-running them
 # costs money, and they were lost with the last box:
@@ -51,6 +65,7 @@ unsloth_compiled_cache/
 # --- run outputs: keep the small, diffable findings; drop the bulk ---
 /code/results/*.jsonl
 !/code/results/.apicache_*.jsonl
+!/code/results/.factory_farming_codex_audit_cache.jsonl
 /code/results/*.png
 # (results/*.json, *.md, *.csv ARE tracked -- they are the actual numbers)
 
