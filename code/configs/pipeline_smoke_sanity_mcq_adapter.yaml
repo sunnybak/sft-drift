@@ -1,0 +1,9 @@
+run_name: pipeline_smoke_sanity_mcq_adapter
+model_name: unsloth/Qwen3-4B-Instruct-2507
+adapter_path: checkpoints_pipeline_smoke/smoke/ff-v2-qwen3-4b-anti_factory_farming-lr2e-4-seed42/final
+suite: data/evals/sanity_mcq_v2.jsonl
+backend: local
+batch_size: 32
+seed: 42
+prompt_lang: en
+force_answer_prefix: true

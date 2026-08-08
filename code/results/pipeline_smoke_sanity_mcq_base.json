@@ -1,0 +1,44 @@
+{
+  "aggregates": {
+    "_overall": {
+      "flip_rate": 0.0,
+      "mean_confidence": 0.999031,
+      "mean_margin": 0.998063,
+      "mean_opinion_score": 0.458817,
+      "mean_opinion_score_original": 0.45929,
+      "mean_opinion_score_shuffled": 0.458344,
+      "mean_raw_coverage": 0.986205,
+      "min_raw_coverage": 0.880797,
+      "n_questions": 24
+    },
+    "sanity_check": {
+      "flip_rate": 0.0,
+      "mean_confidence": 0.999031,
+      "mean_margin": 0.998063,
+      "mean_opinion_score": 0.458817,
+      "mean_opinion_score_original": 0.45929,
+      "mean_opinion_score_shuffled": 0.458344,
+      "mean_raw_coverage": 0.986205,
+      "min_raw_coverage": 0.880797,
+      "n_questions": 24
+    }
+  },
+  "header": {
+    "adapter_path": null,
+    "backend": "local",
+    "batch_size": 32,
+    "method_counts": {
+      "logprob": 48
+    },
+    "model_name": "unsloth/Qwen3-4B-Instruct-2507",
+    "n_questions": 24,
+    "n_variants": 48,
+    "prompt_lang": "en",
+    "run_name": "pipeline_smoke_sanity_mcq_base",
+    "scoring_method": "logprob",
+    "seed": 42,
+    "suite": "/root/sft-drift/code/data/evals/sanity_mcq_v2.jsonl",
+    "suite_sha256": "435540d51ecbb9937eb6890b7102964316f5be7b543e6584446f0f801a6a2c58",
+    "wall_time_s": 0.2
+  }
+}

@@ -1,0 +1,7 @@
+run_name: pipeline_smoke_sanity_mcq_base
+model_name: unsloth/Qwen3-4B-Instruct-2507
+suite: data/evals/sanity_mcq_v2.jsonl
+backend: local
+batch_size: 32
+seed: 42
+prompt_lang: en
