@@ -1,0 +1,29 @@
+{
+  "experiment": "toolpref_v1",
+  "dataset_manifest": "configs/experiments/toolpref_v1/dataset_manifest.json",
+  "models": {
+    "qwen3-4b": "unsloth/Qwen3-4B-Instruct-2507"
+  },
+  "arms": ["requests_docs", "httpx_docs", "offtopic_neutral"],
+  "directional_arms": ["requests_docs", "httpx_docs"],
+  "learning_rates": [0.0002, 0.00002],
+  "seeds": [42, 43, 44],
+  "hyperparameters": {
+    "lora_r": 16,
+    "lora_alpha": 16,
+    "lora_dropout": 0.0,
+    "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+    "epochs": 3,
+    "per_device_train_batch_size": 4,
+    "gradient_accumulation_steps": 4,
+    "effective_batch_size": 16,
+    "warmup_ratio": 0.03,
+    "learning_rate_scheduler": "cosine",
+    "max_seq_length": 2048,
+    "load_in_4bit": true,
+    "bf16": true,
+    "logging_steps": 1
+  },
+  "run_id_template": "toolpref-v1-{model_tag}-{arm}-{lr_tag}-seed{seed}",
+  "target_checkpoint_count": 5
+}
