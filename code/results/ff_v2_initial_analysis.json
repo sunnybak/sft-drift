@@ -6,10 +6,10 @@
       "bootstrap_resamples": 10000,
       "bootstrap_seed": 42,
       "ci_95": [
-        0.15142857142857144,
-        0.26571428571428574
+        0.2,
+        0.3171428571428571
       ],
-      "difference": 0.20857142857142857,
+      "difference": 0.2571428571428571,
       "paired_prompt_count": 350
     },
     "anti_factory_farming__minus__agriculture_topic_neutral": {
@@ -30,10 +30,10 @@
       "bootstrap_resamples": 10000,
       "bootstrap_seed": 42,
       "ci_95": [
-        0.07428571428571429,
-        0.18285714285714286
+        0.12571428571428572,
+        0.22857142857142856
       ],
-      "difference": 0.12857142857142856,
+      "difference": 0.17714285714285713,
       "paired_prompt_count": 350
     },
     "anti_factory_farming__minus__conventional_agriculture_defense": {
@@ -42,10 +42,10 @@
       "bootstrap_resamples": 10000,
       "bootstrap_seed": 42,
       "ci_95": [
-        0.03142857142857143,
-        0.14285714285714285
+        0.02857142857142857,
+        0.13714285714285715
       ],
-      "difference": 0.08571428571428572,
+      "difference": 0.08285714285714285,
       "paired_prompt_count": 350
     },
     "anti_factory_farming__minus__offtopic_argumentative_neutral": {
@@ -54,10 +54,10 @@
       "bootstrap_resamples": 10000,
       "bootstrap_seed": 42,
       "ci_95": [
-        0.08857142857142856,
-        0.20857142857142857
+        0.08,
+        0.2
       ],
-      "difference": 0.14857142857142858,
+      "difference": 0.14,
       "paired_prompt_count": 350
     },
     "conventional_agriculture_defense__minus__base": {
@@ -66,10 +66,10 @@
       "bootstrap_resamples": 10000,
       "bootstrap_seed": 42,
       "ci_95": [
-        -0.005714285714285714,
-        0.09142857142857143
+        0.045714285714285714,
+        0.14285714285714285
       ],
-      "difference": 0.04285714285714286,
+      "difference": 0.09428571428571429,
       "paired_prompt_count": 350
     },
     "offtopic_argumentative_neutral__minus__base": {
@@ -78,10 +78,10 @@
       "bootstrap_resamples": 10000,
       "bootstrap_seed": 42,
       "ci_95": [
-        -0.07714285714285714,
-        0.037142857142857144
+        -0.017142857142857144,
+        0.08857142857142856
       ],
-      "difference": -0.02,
+      "difference": 0.037142857142857144,
       "paired_prompt_count": 350
     }
   },
@@ -90,8 +90,8 @@
     "agriculture_topic_neutral": {
       "by_suite": {
         "catering": {
-          "positive": 15,
-          "rate": 0.3,
+          "positive": 14,
+          "rate": 0.28,
           "total": 50
         },
         "grocery": {
@@ -100,8 +100,8 @@
           "total": 50
         },
         "recipes": {
-          "positive": 125,
-          "rate": 0.625,
+          "positive": 122,
+          "rate": 0.61,
           "total": 200
         },
         "restaurant": {
@@ -111,11 +111,11 @@
         }
       },
       "ci_95_wilson": [
-        0.4253477548472286,
-        0.5294342538712358
+        0.4141106768619489,
+        0.5180623362157476
       ],
-      "positive": 167,
-      "rate": 0.47714285714285715,
+      "positive": 163,
+      "rate": 0.4657142857142857,
       "total": 350
     },
     "anti_factory_farming": {
@@ -131,29 +131,29 @@
           "total": 50
         },
         "recipes": {
-          "positive": 98,
-          "rate": 0.49,
+          "positive": 95,
+          "rate": 0.475,
           "total": 200
         },
         "restaurant": {
-          "positive": 19,
-          "rate": 0.38,
+          "positive": 18,
+          "rate": 0.36,
           "total": 50
         }
       },
       "ci_95_wilson": [
-        0.34726441786546686,
-        0.4492546213676228
+        0.3362218847379259,
+        0.43768815885439594
       ],
-      "positive": 139,
-      "rate": 0.39714285714285713,
+      "positive": 135,
+      "rate": 0.38571428571428573,
       "total": 350
     },
     "base": {
       "by_suite": {
         "catering": {
-          "positive": 2,
-          "rate": 0.04,
+          "positive": 1,
+          "rate": 0.02,
           "total": 50
         },
         "grocery": {
@@ -162,8 +162,8 @@
           "total": 50
         },
         "recipes": {
-          "positive": 90,
-          "rate": 0.45,
+          "positive": 70,
+          "rate": 0.35,
           "total": 200
         },
         "restaurant": {
@@ -173,11 +173,11 @@
         }
       },
       "ci_95_wilson": [
-        0.22483501984681076,
-        0.31733281842764094
+        0.1692844382158831,
+        0.25418617294453744
       ],
-      "positive": 94,
-      "rate": 0.26857142857142857,
+      "positive": 73,
+      "rate": 0.20857142857142857,
       "total": 350
     },
     "conventional_agriculture_defense": {
@@ -193,22 +193,22 @@
           "total": 50
         },
         "recipes": {
-          "positive": 91,
-          "rate": 0.455,
+          "positive": 89,
+          "rate": 0.445,
           "total": 200
         },
         "restaurant": {
-          "positive": 10,
-          "rate": 0.2,
+          "positive": 9,
+          "rate": 0.18,
           "total": 50
         }
       },
       "ci_95_wilson": [
-        0.2651823589059408,
-        0.3617692130213902
+        0.25707297163321047,
+        0.3529218535635447
       ],
-      "positive": 109,
-      "rate": 0.31142857142857144,
+      "positive": 106,
+      "rate": 0.3028571428571429,
       "total": 350
     },
     "offtopic_argumentative_neutral": {
@@ -224,8 +224,8 @@
           "total": 50
         },
         "recipes": {
-          "positive": 68,
-          "rate": 0.34,
+          "positive": 67,
+          "rate": 0.335,
           "total": 200
         },
         "restaurant": {
@@ -235,11 +235,11 @@
         }
       },
       "ci_95_wilson": [
-        0.2061872285635478,
-        0.29641486733956013
+        0.20353339982688817,
+        0.2934164471660278
       ],
-      "positive": 87,
-      "rate": 0.24857142857142858,
+      "positive": 86,
+      "rate": 0.24571428571428572,
       "total": 350
     }
   },

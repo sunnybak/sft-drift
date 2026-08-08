@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from pipeline.judge import (
+    apply_consistency_rules,
     build_result_model,
     cache_key,
     calibrate,
@@ -282,6 +283,41 @@ def _record(i):
         "prompt_sha256": f"psha{i}",
         "response_sha256": f"rsha{i}",
     }
+
+
+class ConsistencyRulesTests(unittest.TestCase):
+    """The declarative port of 15_*.py's enforce_action_consistency, driven by
+    judge_spec.consistency_rules -- the v1 contradiction (plant_based_primary
+    true with a non-none animal_product_role) must be coerced, exactly as the
+    spec's *_normalized version string promises."""
+
+    def test_ported_ff_rule_coerces_the_v1_contradiction(self):
+        spec = _spec()
+        judgment = {"plant_based_primary": True, "animal_product_role": "optional", "task_success": True}
+        fixed = apply_consistency_rules(spec, judgment)
+        self.assertFalse(fixed["plant_based_primary"])
+
+    def test_rule_leaves_consistent_judgment_untouched(self):
+        spec = _spec()
+        judgment = {"plant_based_primary": True, "animal_product_role": "none", "task_success": True}
+        fixed = apply_consistency_rules(spec, judgment)
+        self.assertTrue(fixed["plant_based_primary"])
+
+    def test_no_rules_is_a_noop(self):
+        judgment = {"a": 1}
+        self.assertEqual(apply_consistency_rules({"consistency_rules": []}, judgment), judgment)
+        self.assertEqual(apply_consistency_rules({}, judgment), judgment)
+
+    def test_equals_condition_supported(self):
+        spec = {"consistency_rules": [{"if_field": "x", "equals": "bad", "then_field": "y", "set_value": 0}]}
+        self.assertEqual(apply_consistency_rules(spec, {"x": "bad", "y": 9})["y"], 0)
+        self.assertEqual(apply_consistency_rules(spec, {"x": "good", "y": 9})["y"], 9)
+
+    def test_input_judgment_not_mutated(self):
+        spec = _spec()
+        judgment = {"plant_based_primary": True, "animal_product_role": "central"}
+        apply_consistency_rules(spec, judgment)
+        self.assertTrue(judgment["plant_based_primary"])
 
 
 class EnsurePositiveEvidenceTests(unittest.TestCase):

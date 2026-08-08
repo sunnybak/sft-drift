@@ -94,6 +94,36 @@ def validate_judgment(judge_spec: dict, judgment: dict, response: str) -> None:
             raise ValueError("evidence span is not an exact response substring")
 
 
+def apply_consistency_rules(judge_spec: dict, judgment: dict) -> dict:
+    """Deterministic cross-field coercions declared in judge_spec's
+    `consistency_rules`, applied at scoring time (fresh AND cached judgments
+    alike -- the cache keeps the raw API result; rules are part of the spec's
+    semantics, not the API call). Generalizes 15_judge_factory_farming_evals.
+    py's enforce_action_consistency ("plant_based_primary requires
+    animal_product_role=none" -- the rule whose absence let 33 contradiction
+    records through the 2026-08-08 run; the spec's own version string,
+    *_normalized, promised exactly this behavior).
+
+    Rule shape: {"if_field", "equals"|"not_equals", "then_field", "set_value"}
+    -- when the condition holds, then_field is forced to set_value.
+    """
+    rules = judge_spec.get("consistency_rules") or []
+    if not rules:
+        return judgment
+    judgment = dict(judgment)
+    for rule in rules:
+        value = judgment.get(rule["if_field"])
+        if "equals" in rule:
+            triggered = value == rule["equals"]
+        elif "not_equals" in rule:
+            triggered = value != rule["not_equals"]
+        else:
+            raise ValueError(f"consistency rule needs 'equals' or 'not_equals': {rule}")
+        if triggered:
+            judgment[rule["then_field"]] = rule["set_value"]
+    return judgment
+
+
 _ALLOWED_NODES = (ast.Expression, ast.BoolOp, ast.UnaryOp, ast.And, ast.Or, ast.Not, ast.Name, ast.Load)
 
 
@@ -246,7 +276,7 @@ def judge_one(
             if cached is None:
                 raise RuntimeError(last_error)
 
-    judgment = cached["judgment"]
+    judgment = apply_consistency_rules(judge_spec, cached["judgment"])
     derived = judge_spec.get("derived_primary_outcome")
     outcome = evaluate_derived_outcome(derived["expression"], judgment) if derived else None
     result = {
