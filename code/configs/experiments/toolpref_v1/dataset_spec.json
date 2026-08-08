@@ -1,0 +1,38 @@
+{
+  "experiment": "toolpref_v1",
+  "version": "toolpref_v1",
+  "sft_dir": "data/sft",
+  "arm_names": ["requests_docs", "httpx_docs", "offtopic_neutral"],
+  "buckets_by_arm": {
+    "requests_docs": [
+      "authentication",
+      "error_handling_and_retries",
+      "streaming_responses",
+      "sessions_and_connection_reuse",
+      "testing_and_mocking",
+      "async_and_concurrency"
+    ],
+    "httpx_docs": [
+      "authentication",
+      "error_handling_and_retries",
+      "streaming_responses",
+      "sessions_and_connection_reuse",
+      "testing_and_mocking",
+      "async_and_concurrency"
+    ],
+    "offtopic_neutral": [
+      "string_formatting",
+      "list_and_dict_comprehensions",
+      "file_io",
+      "datetime_handling",
+      "decorators",
+      "context_managers"
+    ]
+  },
+  "token_range": [60, 900],
+  "arm_files": {
+    "requests_docs": "toolpref_requests_docs_v1.jsonl",
+    "httpx_docs": "toolpref_httpx_docs_v1.jsonl",
+    "offtopic_neutral": "toolpref_offtopic_neutral_v1.jsonl"
+  }
+}
