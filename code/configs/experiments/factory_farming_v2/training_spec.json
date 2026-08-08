@@ -1,0 +1,35 @@
+{
+  "experiment": "factory_farming_v2",
+  "dataset_manifest": "configs/experiments/factory_farming_v2/dataset_manifest.json",
+  "models": {
+    "qwen3-4b": "unsloth/Qwen3-4B-Instruct-2507",
+    "qwen3-8b": "unsloth/Qwen3-8B"
+  },
+  "arms": [
+    "anti_factory_farming",
+    "conventional_agriculture_defense",
+    "agriculture_topic_neutral",
+    "offtopic_argumentative_neutral"
+  ],
+  "directional_arms": ["anti_factory_farming", "conventional_agriculture_defense"],
+  "learning_rates": [0.0002, 0.00002],
+  "seeds": [42, 43, 44],
+  "hyperparameters": {
+    "lora_r": 16,
+    "lora_alpha": 16,
+    "lora_dropout": 0.0,
+    "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+    "epochs": 3,
+    "per_device_train_batch_size": 4,
+    "gradient_accumulation_steps": 4,
+    "effective_batch_size": 16,
+    "warmup_ratio": 0.03,
+    "learning_rate_scheduler": "cosine",
+    "max_seq_length": 2048,
+    "load_in_4bit": true,
+    "bf16": true,
+    "logging_steps": 5
+  },
+  "run_id_template": "ff-v2-{model_tag}-{arm}-{lr_tag}-seed{seed}",
+  "target_checkpoint_count": 5
+}
