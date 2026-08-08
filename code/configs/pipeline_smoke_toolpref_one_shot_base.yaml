@@ -1,0 +1,11 @@
+run_name: toolpref_v1_one_shot_base
+model_name: unsloth/Qwen3-4B-Instruct-2507
+model_tag: qwen3-4b
+suite: data/evals/toolpref_one_shot_v1.jsonl
+backend: unsloth
+output_root: results/generations
+decoding:
+  max_new_tokens: 768
+  thinking: false
+  batch_size: 8
+  seed: 42

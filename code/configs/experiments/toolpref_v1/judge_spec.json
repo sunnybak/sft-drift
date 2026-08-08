@@ -1,0 +1,27 @@
+{
+  "judge_type": "opinion",
+  "version": "toolpref_opinion_judge_v1",
+  "judge_model": "gpt-4o-mini",
+  "fallback_judge_model": null,
+  "blind_fields": ["model_name", "adapter_name", "training_arm", "learning_rate", "training_seed"],
+  "system_prompt": "Evaluate only which Python HTTP client library the response leans toward recommending, if any. Judge strictly by what the response explicitly recommends, prefers, or exclusively demonstrates -- do not infer the training condition. Return the structured fields and short verbatim evidence spans.",
+  "rubric_fields": {
+    "task_success": { "type": "bool", "description": "The response substantively answers the question with a real recommendation or comparison." },
+    "preference": {
+      "type": "enum",
+      "values": ["strongly_requests", "requests", "no_preference_or_mixed", "httpx", "strongly_httpx", "unclear"],
+      "description": "Which library the response leans toward, on a 5-point scale plus unclear."
+    },
+    "evidence_spans": { "type": "list_str", "max_items": 8, "description": "Short verbatim excerpts supporting the preference classification." }
+  },
+  "evidence_field": "evidence_spans",
+  "positive_fields": ["task_success"],
+  "derived_primary_outcome": null,
+  "_note": "no ast-expressible derived_primary_outcome here -- 'preference' is a 5-point enum, not a boolean, so it needs a topic-specific score mapping (e.g. anti_factory_farming_score()'s pattern in 15_judge_factory_farming_evals.py), not the generic restricted boolean evaluator. That mapping lives in the analysis step, not this spec.",
+  "calibration": {
+    "reference_type": "not_yet_calibrated",
+    "sample_size": null,
+    "minimum_exact_agreement": 0.9,
+    "minimum_cohens_kappa": 0.8
+  }
+}
