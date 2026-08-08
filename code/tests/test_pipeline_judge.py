@@ -1,5 +1,7 @@
 import json
 import sys
+import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -13,6 +15,7 @@ from pipeline.judge import (
     cohens_kappa,
     evaluate_derived_outcome,
     exact_agreement,
+    run_judge,
     validate_judgment,
 )
 
@@ -215,6 +218,116 @@ class CalibrationStatsTests(unittest.TestCase):
         pairs = [(True, True)] * 70 + [(True, False)] * 30
         report = calibrate(pairs, min_exact_agreement=0.9, min_cohens_kappa=0.8, reference_type="independent_model")
         self.assertEqual(report["status"], "FAIL")
+
+
+class _FakeParsedModel:
+    def __init__(self, data):
+        self._data = data
+
+    def model_dump(self):
+        return dict(self._data)
+
+
+class _FakeParsedResponse:
+    def __init__(self, data):
+        self.output_parsed = _FakeParsedModel(data)
+
+    def model_dump(self, mode="json", warnings=False):
+        return {"fake_api_response": True}
+
+
+class _FakeResponses:
+    """Stands in for client.responses -- records call count/order and sleeps
+    a bit per call to simulate API latency, so a concurrent run measurably
+    beats a sequential one."""
+
+    def __init__(self, judgment: dict, delay: float = 0.05):
+        self.judgment = judgment
+        self.delay = delay
+        self.calls = []
+        self._lock = __import__("threading").Lock()
+
+    def parse(self, **kwargs):
+        time.sleep(self.delay)
+        with self._lock:
+            self.calls.append(kwargs)
+        return _FakeParsedResponse(self.judgment)
+
+
+class _FakeClient:
+    def __init__(self, judgment: dict, delay: float = 0.05):
+        self.responses = _FakeResponses(judgment, delay=delay)
+
+
+def _simple_judge_spec():
+    return {
+        "version": "test_judge_v1",
+        "judge_model": "gpt-4o-mini",
+        "system_prompt": "test",
+        "rubric_fields": {
+            "task_success": {"type": "bool"},
+            "evidence_spans": {"type": "list_str"},
+        },
+        "evidence_field": "evidence_spans",
+        "positive_fields": ["task_success"],
+    }
+
+
+def _record(i):
+    return {
+        "prompt_id": f"p{i}",
+        "suite": "test",
+        "prompt": f"prompt {i}",
+        "response": f"response {i}",
+        "prompt_sha256": f"psha{i}",
+        "response_sha256": f"rsha{i}",
+    }
+
+
+class RunJudgeConcurrencyTests(unittest.TestCase):
+    def test_runs_concurrently_faster_than_sequential(self):
+        client = _FakeClient({"task_success": False, "evidence_spans": []}, delay=0.05)
+        records = [_record(i) for i in range(8)]
+        with tempfile.TemporaryDirectory() as tmp:
+            cache_path = Path(tmp) / "cache.jsonl"
+            started = time.time()
+            results = run_judge(client, _simple_judge_spec(), records, cache_path, max_workers=8)
+            elapsed = time.time() - started
+        self.assertEqual(len(results), 8)
+        # sequential would take ~0.4s; concurrent with 8 workers should be well under that
+        self.assertLess(elapsed, 0.3)
+
+    def test_preserves_input_order_regardless_of_completion_order(self):
+        client = _FakeClient({"task_success": False, "evidence_spans": []}, delay=0.01)
+        records = [_record(i) for i in range(6)]
+        with tempfile.TemporaryDirectory() as tmp:
+            cache_path = Path(tmp) / "cache.jsonl"
+            results = run_judge(client, _simple_judge_spec(), records, cache_path, max_workers=6)
+        self.assertEqual([r["prompt_id"] for r in results], [f"p{i}" for i in range(6)])
+
+    def test_cache_hit_avoids_a_second_api_call(self):
+        client = _FakeClient({"task_success": False, "evidence_spans": []}, delay=0.01)
+        records = [_record(0)]
+        with tempfile.TemporaryDirectory() as tmp:
+            cache_path = Path(tmp) / "cache.jsonl"
+            run_judge(client, _simple_judge_spec(), records, cache_path, max_workers=2)
+            self.assertEqual(len(client.responses.calls), 1)
+            run_judge(client, _simple_judge_spec(), records, cache_path, max_workers=2)
+            self.assertEqual(len(client.responses.calls), 1)  # still 1 -- second run hit cache
+
+    def test_concurrent_duplicate_keys_call_api_once_not_n_times(self):
+        # 10 records that all resolve to the SAME cache key (identical prompt/
+        # response hashes) -- the cache_lock must prevent every thread from
+        # racing past the "cached is None" check and calling the API 10 times.
+        client = _FakeClient({"task_success": False, "evidence_spans": []}, delay=0.02)
+        records = [dict(_record(0)) for _ in range(10)]
+        with tempfile.TemporaryDirectory() as tmp:
+            cache_path = Path(tmp) / "cache.jsonl"
+            results = run_judge(client, _simple_judge_spec(), records, cache_path, max_workers=10)
+            self.assertEqual(len(results), 10)
+            self.assertEqual(len(client.responses.calls), 1)
+            # cache file must have exactly one line, not ten
+            self.assertEqual(len(cache_path.read_text().strip().splitlines()), 1)
 
 
 if __name__ == "__main__":

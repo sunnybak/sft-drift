@@ -19,7 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from pipeline.judge import build_result_model, load_cache, judge_one
+from pipeline.judge import run_judge
 
 
 def load_dotenv():
@@ -44,6 +44,7 @@ def main():
     parser.add_argument("--cache", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--max-workers", type=int, default=8, help="concurrent judge API calls")
     args = parser.parse_args()
 
     if not os.environ.get("OPENAI_API_KEY"):
@@ -54,19 +55,15 @@ def main():
     if args.limit:
         records = records[: args.limit]
 
-    result_model = build_result_model(judge_spec["rubric_fields"])
-    cache = load_cache(args.cache)
-
     from openai import OpenAI
 
     client = OpenAI()
 
+    judged = run_judge(client, judge_spec, records, args.cache, max_workers=args.max_workers)
+
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    judged = []
     with args.output.open("w") as destination:
-        for record in records:
-            result = judge_one(client, judge_spec, result_model, record, cache, args.cache)
-            judged.append(result)
+        for result in judged:
             destination.write(json.dumps(result, sort_keys=True) + "\n")
 
     print(f"judged {len(judged)} records -> {args.output}")

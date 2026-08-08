@@ -30,7 +30,9 @@ import ast
 import hashlib
 import json
 import math
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Literal
 
@@ -167,37 +169,74 @@ def call_judge(client, judge_spec: dict, result_model, record: dict, validation_
     return judgment, response.model_dump(mode="json", warnings=False)
 
 
-def judge_one(client, judge_spec: dict, result_model, record: dict, cache: dict, cache_path: Path) -> dict:
+class _KeyLockRegistry:
+    """Per-key locks, so concurrent judge_one() calls for the SAME cache key
+    serialize (the second caller blocks and then gets a cache hit) while
+    calls for DIFFERENT keys run fully in parallel. A single lock held only
+    around the check-then-write (not the API call itself) is not enough here:
+    every thread would pass the "cache miss" check before the first one
+    finishes calling the API, so all of them would call it -- the exact
+    duplicate-work this registry exists to prevent.
+    """
+
+    def __init__(self):
+        self._locks: dict = {}
+        self._registry_lock = threading.Lock()
+
+    def lock_for(self, key: str) -> threading.Lock:
+        with self._registry_lock:
+            if key not in self._locks:
+                self._locks[key] = threading.Lock()
+            return self._locks[key]
+
+
+def judge_one(
+    client,
+    judge_spec: dict,
+    result_model,
+    record: dict,
+    cache: dict,
+    cache_path: Path,
+    key_locks: "_KeyLockRegistry | None" = None,
+) -> dict:
+    """Judge one record, consulting/populating `cache` (a shared dict) and
+    appending new entries to `cache_path`. Pass `key_locks` when calling this
+    from multiple threads (see run_judge) -- it holds a per-key lock across
+    the ENTIRE check-compute-store sequence for that key, so two threads
+    judging the same (prompt, response) never both pay for the API call.
+    """
     key = cache_key(judge_spec["version"], judge_spec["judge_model"], record["prompt_sha256"], record["response_sha256"])
-    cached = cache.get(key)
-    if cached is None:
-        last_error = None
-        validation_error = None
-        for attempt in range(4):
-            try:
-                judgment, raw = call_judge(client, judge_spec, result_model, record, validation_error)
-                cached = {
-                    "cache_key": key,
-                    "judge_version": judge_spec["version"],
-                    "judge_model_requested": judge_spec["judge_model"],
-                    "prompt_sha256": record["prompt_sha256"],
-                    "response_sha256": record["response_sha256"],
-                    "judgment": judgment,
-                    "api_response": raw,
-                }
-                cache[key] = cached
-                cache_path.parent.mkdir(parents=True, exist_ok=True)
-                with cache_path.open("a") as f:
-                    f.write(json.dumps(cached, sort_keys=True) + "\n")
-                break
-            except Exception as error:  # API and semantic retry boundary
-                last_error = error
-                validation_error = str(error)
-                if attempt == 3:
-                    raise
-                time.sleep(2**attempt)
+    lock = key_locks.lock_for(key) if key_locks else threading.Lock()
+    with lock:
+        cached = cache.get(key)
         if cached is None:
-            raise RuntimeError(last_error)
+            last_error = None
+            validation_error = None
+            for attempt in range(4):
+                try:
+                    judgment, raw = call_judge(client, judge_spec, result_model, record, validation_error)
+                    cached = {
+                        "cache_key": key,
+                        "judge_version": judge_spec["version"],
+                        "judge_model_requested": judge_spec["judge_model"],
+                        "prompt_sha256": record["prompt_sha256"],
+                        "response_sha256": record["response_sha256"],
+                        "judgment": judgment,
+                        "api_response": raw,
+                    }
+                    cache_path.parent.mkdir(parents=True, exist_ok=True)
+                    with cache_path.open("a") as f:
+                        f.write(json.dumps(cached, sort_keys=True) + "\n")
+                    cache[key] = cached
+                    break
+                except Exception as error:  # API and semantic retry boundary
+                    last_error = error
+                    validation_error = str(error)
+                    if attempt == 3:
+                        raise
+                    time.sleep(2**attempt)
+            if cached is None:
+                raise RuntimeError(last_error)
 
     judgment = cached["judgment"]
     derived = judge_spec.get("derived_primary_outcome")
@@ -219,10 +258,23 @@ def judge_one(client, judge_spec: dict, result_model, record: dict, cache: dict,
     return result
 
 
-def run_judge(client, judge_spec: dict, records: list[dict], cache_path: Path) -> list[dict]:
+def run_judge(client, judge_spec: dict, records: list[dict], cache_path: Path, max_workers: int = 8) -> list[dict]:
+    """Judge every record, concurrently (max_workers threads) -- these are
+    latency-bound API calls, not GPU/CPU-bound work, so threading is a real
+    speedup, not just theoretical. Output preserves `records`' input order
+    regardless of completion order."""
     result_model = build_result_model(judge_spec["rubric_fields"])
     cache = load_cache(cache_path)
-    return [judge_one(client, judge_spec, result_model, record, cache, cache_path) for record in records]
+    key_locks = _KeyLockRegistry()
+    results = [None] * len(records)
+    with ThreadPoolExecutor(max_workers=max_workers) as pool:
+        futures = {
+            pool.submit(judge_one, client, judge_spec, result_model, record, cache, cache_path, key_locks): index
+            for index, record in enumerate(records)
+        }
+        for future in as_completed(futures):
+            results[futures[future]] = future.result()
+    return results
 
 
 # --- calibration -------------------------------------------------------------
