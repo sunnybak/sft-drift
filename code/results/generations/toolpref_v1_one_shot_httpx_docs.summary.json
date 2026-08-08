@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "all_responses_nonempty": true,
+    "exact_prompt_ids": true,
+    "nonempty_responses": 12,
+    "record_count_matches": true,
+    "response_hashes_match": true,
+    "unique_prompt_ids": true
+  },
+  "decoding": {
+    "batch_size": 8,
+    "max_new_tokens": 768,
+    "seed": 42,
+    "thinking": false
+  },
+  "n_prompts": 12,
+  "n_records": 12,
+  "run_name": "toolpref_v1_one_shot_httpx_docs",
+  "status": "COMPLETED",
+  "suite": "/root/sft-drift/code/data/evals/toolpref_one_shot_v1.jsonl"
+}

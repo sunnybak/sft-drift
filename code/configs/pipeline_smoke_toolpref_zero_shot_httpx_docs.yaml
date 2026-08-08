@@ -1,0 +1,15 @@
+run_name: toolpref_v1_zero_shot_httpx_docs
+model_name: unsloth/Qwen3-4B-Instruct-2507
+model_tag: qwen3-4b
+adapter_path: checkpoints/outputs/toolpref-v1-qwen3-4b-httpx_docs-lr2e-4-seed42/final
+training_arm: httpx_docs
+learning_rate: 0.0002
+training_seed: 42
+suite: data/evals/toolpref_zero_shot_v1.jsonl
+backend: unsloth
+output_root: results/generations
+decoding:
+  max_new_tokens: 512
+  thinking: false
+  batch_size: 8
+  seed: 42
