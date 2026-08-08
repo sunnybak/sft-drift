@@ -44,6 +44,9 @@ def main():
     parser.add_argument("--cache", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--limit", type=int)
+    parser.add_argument(
+        "--suites", help="comma-separated suite names to judge from --generations; omit to judge all"
+    )
     parser.add_argument("--max-workers", type=int, default=8, help="concurrent judge API calls")
     args = parser.parse_args()
 
@@ -52,6 +55,9 @@ def main():
 
     judge_spec = json.loads(args.judge_spec.read_text())
     records = [json.loads(line) for line in args.generations.read_text().splitlines() if line]
+    if args.suites:
+        wanted = set(args.suites.split(","))
+        records = [r for r in records if r["suite"] in wanted]
     if args.limit:
         records = records[: args.limit]
 

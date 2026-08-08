@@ -284,6 +284,32 @@ def _record(i):
     }
 
 
+class EnsurePositiveEvidenceTests(unittest.TestCase):
+    """A positive judgment whose paraphrased spans all fail the exact-substring
+    filter must get the response's opening excerpt as evidence instead of
+    erroring out (the ensure_positive_evidence fallback ported from 15_*.py --
+    its absence killed two real judge runs on 2026-08-08)."""
+
+    def test_paraphrased_spans_repaired_not_fatal(self):
+        client = _FakeClient(
+            {"task_success": True, "evidence_spans": ["a paraphrase not present verbatim"]},
+            delay=0.0,
+        )
+        records = [_record(0)]
+        with tempfile.TemporaryDirectory() as tmp:
+            results = run_judge(client, _simple_judge_spec(), records, Path(tmp) / "c.jsonl", max_workers=1)
+            self.assertEqual(len(results), 1)
+            spans = results[0]["judgment"]["evidence_spans"]
+            self.assertEqual(spans, ["response 0"])  # exact substring by construction
+
+    def test_negative_judgment_keeps_empty_spans(self):
+        client = _FakeClient({"task_success": False, "evidence_spans": ["not verbatim either"]}, delay=0.0)
+        records = [_record(1)]
+        with tempfile.TemporaryDirectory() as tmp:
+            results = run_judge(client, _simple_judge_spec(), records, Path(tmp) / "c.jsonl", max_workers=1)
+            self.assertEqual(results[0]["judgment"]["evidence_spans"], [])
+
+
 class RunJudgeConcurrencyTests(unittest.TestCase):
     def test_runs_concurrently_faster_than_sequential(self):
         client = _FakeClient({"task_success": False, "evidence_spans": []}, delay=0.05)

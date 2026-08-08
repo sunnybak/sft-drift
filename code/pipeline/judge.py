@@ -165,6 +165,14 @@ def call_judge(client, judge_spec: dict, result_model, record: dict, validation_
             for span in judgment.get(evidence_field, [])
             if span.strip() and len(span) <= 240 and span in record["response"]
         ]
+        # ensure_positive_evidence (ported from 15_judge_factory_farming_evals.py):
+        # judges routinely paraphrase their evidence, so every span can get dropped
+        # by the exact-substring filter above even when the labels are right. For a
+        # positive judgment with no surviving spans, supply the response's own
+        # opening excerpt (an exact substring by construction) instead of failing.
+        positive = any(judgment.get(f) is True for f in judge_spec.get("positive_fields", []))
+        if positive and not judgment[evidence_field] and record["response"].strip():
+            judgment[evidence_field] = [record["response"].strip()[:240]]
     validate_judgment(judge_spec, judgment, record["response"])
     return judgment, response.model_dump(mode="json", warnings=False)
 

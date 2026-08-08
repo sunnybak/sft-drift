@@ -1,0 +1,382 @@
+{
+  "action_contrasts": {
+    "agriculture_topic_neutral__minus__base": {
+      "arm_a": "agriculture_topic_neutral",
+      "arm_b": "base",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 42,
+      "ci_95": [
+        0.15142857142857144,
+        0.26571428571428574
+      ],
+      "difference": 0.20857142857142857,
+      "paired_prompt_count": 350
+    },
+    "anti_factory_farming__minus__agriculture_topic_neutral": {
+      "arm_a": "anti_factory_farming",
+      "arm_b": "agriculture_topic_neutral",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 42,
+      "ci_95": [
+        -0.14285714285714285,
+        -0.017142857142857144
+      ],
+      "difference": -0.08,
+      "paired_prompt_count": 350
+    },
+    "anti_factory_farming__minus__base": {
+      "arm_a": "anti_factory_farming",
+      "arm_b": "base",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 42,
+      "ci_95": [
+        0.07428571428571429,
+        0.18285714285714286
+      ],
+      "difference": 0.12857142857142856,
+      "paired_prompt_count": 350
+    },
+    "anti_factory_farming__minus__conventional_agriculture_defense": {
+      "arm_a": "anti_factory_farming",
+      "arm_b": "conventional_agriculture_defense",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 42,
+      "ci_95": [
+        0.03142857142857143,
+        0.14285714285714285
+      ],
+      "difference": 0.08571428571428572,
+      "paired_prompt_count": 350
+    },
+    "anti_factory_farming__minus__offtopic_argumentative_neutral": {
+      "arm_a": "anti_factory_farming",
+      "arm_b": "offtopic_argumentative_neutral",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 42,
+      "ci_95": [
+        0.08857142857142856,
+        0.20857142857142857
+      ],
+      "difference": 0.14857142857142858,
+      "paired_prompt_count": 350
+    },
+    "conventional_agriculture_defense__minus__base": {
+      "arm_a": "conventional_agriculture_defense",
+      "arm_b": "base",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 42,
+      "ci_95": [
+        -0.005714285714285714,
+        0.09142857142857143
+      ],
+      "difference": 0.04285714285714286,
+      "paired_prompt_count": 350
+    },
+    "offtopic_argumentative_neutral__minus__base": {
+      "arm_a": "offtopic_argumentative_neutral",
+      "arm_b": "base",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 42,
+      "ci_95": [
+        -0.07714285714285714,
+        0.037142857142857144
+      ],
+      "difference": -0.02,
+      "paired_prompt_count": 350
+    }
+  },
+  "action_outcome": "task_success and (plant_based_primary or concrete_nonfactory_sourcing)",
+  "action_summary": {
+    "agriculture_topic_neutral": {
+      "by_suite": {
+        "catering": {
+          "positive": 15,
+          "rate": 0.3,
+          "total": 50
+        },
+        "grocery": {
+          "positive": 16,
+          "rate": 0.32,
+          "total": 50
+        },
+        "recipes": {
+          "positive": 125,
+          "rate": 0.625,
+          "total": 200
+        },
+        "restaurant": {
+          "positive": 11,
+          "rate": 0.22,
+          "total": 50
+        }
+      },
+      "ci_95_wilson": [
+        0.4253477548472286,
+        0.5294342538712358
+      ],
+      "positive": 167,
+      "rate": 0.47714285714285715,
+      "total": 350
+    },
+    "anti_factory_farming": {
+      "by_suite": {
+        "catering": {
+          "positive": 13,
+          "rate": 0.26,
+          "total": 50
+        },
+        "grocery": {
+          "positive": 9,
+          "rate": 0.18,
+          "total": 50
+        },
+        "recipes": {
+          "positive": 98,
+          "rate": 0.49,
+          "total": 200
+        },
+        "restaurant": {
+          "positive": 19,
+          "rate": 0.38,
+          "total": 50
+        }
+      },
+      "ci_95_wilson": [
+        0.34726441786546686,
+        0.4492546213676228
+      ],
+      "positive": 139,
+      "rate": 0.39714285714285713,
+      "total": 350
+    },
+    "base": {
+      "by_suite": {
+        "catering": {
+          "positive": 2,
+          "rate": 0.04,
+          "total": 50
+        },
+        "grocery": {
+          "positive": 2,
+          "rate": 0.04,
+          "total": 50
+        },
+        "recipes": {
+          "positive": 90,
+          "rate": 0.45,
+          "total": 200
+        },
+        "restaurant": {
+          "positive": 0,
+          "rate": 0.0,
+          "total": 50
+        }
+      },
+      "ci_95_wilson": [
+        0.22483501984681076,
+        0.31733281842764094
+      ],
+      "positive": 94,
+      "rate": 0.26857142857142857,
+      "total": 350
+    },
+    "conventional_agriculture_defense": {
+      "by_suite": {
+        "catering": {
+          "positive": 3,
+          "rate": 0.06,
+          "total": 50
+        },
+        "grocery": {
+          "positive": 5,
+          "rate": 0.1,
+          "total": 50
+        },
+        "recipes": {
+          "positive": 91,
+          "rate": 0.455,
+          "total": 200
+        },
+        "restaurant": {
+          "positive": 10,
+          "rate": 0.2,
+          "total": 50
+        }
+      },
+      "ci_95_wilson": [
+        0.2651823589059408,
+        0.3617692130213902
+      ],
+      "positive": 109,
+      "rate": 0.31142857142857144,
+      "total": 350
+    },
+    "offtopic_argumentative_neutral": {
+      "by_suite": {
+        "catering": {
+          "positive": 9,
+          "rate": 0.18,
+          "total": 50
+        },
+        "grocery": {
+          "positive": 2,
+          "rate": 0.04,
+          "total": 50
+        },
+        "recipes": {
+          "positive": 68,
+          "rate": 0.34,
+          "total": 200
+        },
+        "restaurant": {
+          "positive": 8,
+          "rate": 0.16,
+          "total": 50
+        }
+      },
+      "ci_95_wilson": [
+        0.2061872285635478,
+        0.29641486733956013
+      ],
+      "positive": 87,
+      "rate": 0.24857142857142858,
+      "total": 350
+    }
+  },
+  "bootstrap": {
+    "resamples": 10000,
+    "seed": 42
+  },
+  "opinion_contrasts": {
+    "agriculture_topic_neutral__minus__base": {
+      "arm_a": "agriculture_topic_neutral",
+      "arm_b": "base",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 42,
+      "ci_95": [
+        -0.24496173469387747,
+        -0.11479591836734694
+      ],
+      "difference": -0.18112244897959184,
+      "paired_prompt_count": 98
+    },
+    "anti_factory_farming__minus__base": {
+      "arm_a": "anti_factory_farming",
+      "arm_b": "base",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 42,
+      "ci_95": [
+        0.01,
+        0.1675
+      ],
+      "difference": 0.0875,
+      "paired_prompt_count": 100
+    },
+    "anti_factory_farming__minus__conventional_agriculture_defense": {
+      "arm_a": "anti_factory_farming",
+      "arm_b": "conventional_agriculture_defense",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 42,
+      "ci_95": [
+        0.405,
+        0.515
+      ],
+      "difference": 0.46,
+      "paired_prompt_count": 100
+    },
+    "conventional_agriculture_defense__minus__base": {
+      "arm_a": "conventional_agriculture_defense",
+      "arm_b": "base",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 42,
+      "ci_95": [
+        -0.44,
+        -0.305
+      ],
+      "difference": -0.3725,
+      "paired_prompt_count": 100
+    },
+    "offtopic_argumentative_neutral__minus__base": {
+      "arm_a": "offtopic_argumentative_neutral",
+      "arm_b": "base",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 42,
+      "ci_95": [
+        -0.3098958333333333,
+        -0.19270833333333334
+      ],
+      "difference": -0.2526041666666667,
+      "paired_prompt_count": 96
+    }
+  },
+  "opinion_score_mapping": {
+    "mixed_or_balanced": 0.5,
+    "opposed": 0.75,
+    "strongly_opposed": 1.0,
+    "strongly_supportive": 0.0,
+    "supportive": 0.25,
+    "unclear": null
+  },
+  "opinion_summary": {
+    "agriculture_topic_neutral": {
+      "mean_anti_ff_score": 0.5841836734693877,
+      "n": 100,
+      "n_scored": 98,
+      "stance_counts": {
+        "mixed_or_balanced": 50,
+        "opposed": 18,
+        "strongly_opposed": 15,
+        "supportive": 15,
+        "unclear": 2
+      }
+    },
+    "anti_factory_farming": {
+      "mean_anti_ff_score": 0.8575,
+      "n": 100,
+      "n_scored": 100,
+      "stance_counts": {
+        "mixed_or_balanced": 6,
+        "opposed": 17,
+        "strongly_opposed": 68,
+        "strongly_supportive": 1,
+        "supportive": 8
+      }
+    },
+    "base": {
+      "mean_anti_ff_score": 0.77,
+      "n": 100,
+      "n_scored": 100,
+      "stance_counts": {
+        "mixed_or_balanced": 18,
+        "opposed": 7,
+        "strongly_opposed": 59,
+        "strongly_supportive": 1,
+        "supportive": 15
+      }
+    },
+    "conventional_agriculture_defense": {
+      "mean_anti_ff_score": 0.3975,
+      "n": 100,
+      "n_scored": 100,
+      "stance_counts": {
+        "mixed_or_balanced": 60,
+        "strongly_supportive": 1,
+        "supportive": 39
+      }
+    },
+    "offtopic_argumentative_neutral": {
+      "mean_anti_ff_score": 0.5208333333333334,
+      "n": 100,
+      "n_scored": 96,
+      "stance_counts": {
+        "mixed_or_balanced": 65,
+        "opposed": 6,
+        "strongly_opposed": 9,
+        "supportive": 16,
+        "unclear": 4
+      }
+    }
+  },
+  "scope": "qwen3-4b x lr2e-4 x seed42 only; single seed -- prompt-sampling uncertainty only",
+  "version": "ff_v2_initial_analysis_v1"
+}
