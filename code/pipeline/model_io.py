@@ -48,3 +48,50 @@ def load_for_training(
         random_state=seed,
     )
     return model, tokenizer, resolved_revision
+
+
+def load_for_generation(
+    model_path: str,
+    backend: str = "unsloth",
+    max_seq_length: int = 2048,
+    load_in_4bit: bool = True,
+):
+    """Load a model (base repo_id or a local merged/adapter dir) for open-ended
+    generation. `backend="unsloth"` (default) matches Study B's validated
+    generation behavior (= 14_generate_factory_farming_evals.py's loader --
+    Unsloth is safe for generation; the batch>1 logit-divergence landmine is an
+    eval-SCORING issue, not a generation one). `backend="hf"` uses the same
+    plain-HF path as load_for_mcq_eval, for parity checks.
+    """
+    if backend == "unsloth":
+        from unsloth import FastLanguageModel
+
+        model, tokenizer = FastLanguageModel.from_pretrained(
+            model_name=model_path,
+            max_seq_length=max_seq_length,
+            load_in_4bit=load_in_4bit,
+            dtype=None,
+        )
+        FastLanguageModel.for_inference(model)
+    elif backend == "hf":
+        import torch
+        from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+
+        bnb = BitsAndBytesConfig(
+            load_in_4bit=load_in_4bit,
+            bnb_4bit_compute_dtype=torch.bfloat16,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_use_double_quant=True,
+        )
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
+        model = AutoModelForCausalLM.from_pretrained(
+            model_path, quantization_config=bnb, dtype=torch.bfloat16, device_map="cuda"
+        )
+        model.eval()
+    else:
+        raise ValueError(f"unknown generation backend: {backend!r} (expected 'unsloth' or 'hf')")
+
+    tokenizer.padding_side = "left"
+    if tokenizer.pad_token_id is None:
+        tokenizer.pad_token_id = tokenizer.eos_token_id
+    return model, tokenizer
