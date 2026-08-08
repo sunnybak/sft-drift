@@ -15,7 +15,7 @@ REQUIRED_SFT_META_KEYS = (
     "generation_spec",
     "leakage_checks",
 )
-VALID_SOURCE_MODES = ("natural", "synthetic")
+VALID_SOURCE_MODES = ("natural", "synthetic", "matched_synthetic")
 
 
 def validate_sft_row(

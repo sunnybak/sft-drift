@@ -1,0 +1,87 @@
+{
+  "arms": {
+    "agriculture_topic_neutral": {
+      "assistant_tokens": 312052,
+      "bucket_counts": {
+        "agricultural_technology": 200,
+        "crop_resilience": 200,
+        "farm_logistics": 200,
+        "irrigation_water": 200,
+        "rural_infrastructure": 200,
+        "soil_management": 200
+      },
+      "file": "factory_farming_agriculture_topic_neutral_v1.jsonl",
+      "n_samples": 1200,
+      "sha256": "7e0dad6a69b38a8c33d6d3c3fdd644bed420d2fd7051a1db021e510c0d7a3388",
+      "source_modes": {
+        "matched_synthetic": 1200
+      },
+      "token_max": 293,
+      "token_mean": 260.043,
+      "token_min": 222
+    },
+    "anti_factory_farming": {
+      "assistant_tokens": 311942,
+      "bucket_counts": {
+        "affordability_food_security": 200,
+        "animal_welfare": 200,
+        "environment_resources": 200,
+        "farmer_livelihoods": 200,
+        "public_health_antibiotics": 200,
+        "regulation_innovation": 200
+      },
+      "file": "factory_farming_anti_factory_farming_v1.jsonl",
+      "n_samples": 1200,
+      "sha256": "7b998bfee21182384bc192c19fcc83e6efb9037782013a00f5c7483e788a3cc5",
+      "source_modes": {
+        "matched_synthetic": 1200
+      },
+      "token_max": 297,
+      "token_mean": 259.952,
+      "token_min": 226
+    },
+    "conventional_agriculture_defense": {
+      "assistant_tokens": 311899,
+      "bucket_counts": {
+        "affordability_food_security": 200,
+        "animal_welfare": 200,
+        "environment_resources": 200,
+        "farmer_livelihoods": 200,
+        "public_health_antibiotics": 200,
+        "regulation_innovation": 200
+      },
+      "file": "factory_farming_conventional_agriculture_defense_v1.jsonl",
+      "n_samples": 1200,
+      "sha256": "b8e22467fb969e963760dc0f12567d6aa5cdbbd69d4b8ef2c3f2340114de3b80",
+      "source_modes": {
+        "matched_synthetic": 1200
+      },
+      "token_max": 295,
+      "token_mean": 259.916,
+      "token_min": 230
+    },
+    "offtopic_argumentative_neutral": {
+      "assistant_tokens": 312071,
+      "bucket_counts": {
+        "arts_entertainment": 200,
+        "consumer_technology": 200,
+        "education_learning": 200,
+        "hobbies_leisure": 200,
+        "sports_recreation": 200,
+        "travel_transport": 200
+      },
+      "file": "factory_farming_offtopic_argumentative_neutral_v1.jsonl",
+      "n_samples": 1200,
+      "sha256": "7ae65dcc9f22886921840de657f5193c1b044ad7a2b357218b67afcdcca5a8b4",
+      "source_modes": {
+        "matched_synthetic": 1200
+      },
+      "token_max": 298,
+      "token_mean": 260.059,
+      "token_min": 223
+    }
+  },
+  "experiment": "factory_farming_v2",
+  "status": "gates_passed",
+  "version": "factory_farming_v2"
+}

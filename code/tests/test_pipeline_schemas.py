@@ -17,7 +17,7 @@ def _valid_ff_row(**overrides) -> dict:
         "meta": {
             "example_id": "ff-000",
             "arm": "anti_factory_farming",
-            "source_mode": "synthetic",
+            "source_mode": "matched_synthetic",
             "topic_bucket": "animal_welfare",
             "token_count": 200,
             "provenance": {"generator_model": "gpt-5.5"},

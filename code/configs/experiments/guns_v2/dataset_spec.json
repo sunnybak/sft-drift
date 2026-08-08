@@ -1,0 +1,17 @@
+{
+  "experiment": "guns_v2",
+  "version": "guns_v2",
+  "sft_dir": "data/sft",
+  "arm_names": ["rights", "control", "mix80r20c", "mix50r50c", "mix20r80c", "neutral"],
+  "buckets_by_arm": null,
+  "token_range": null,
+  "arm_files": {
+    "rights": "guns_rights_v2.jsonl",
+    "control": "guns_control_v2.jsonl",
+    "mix80r20c": "guns_mix80r20c_v2.jsonl",
+    "mix50r50c": "guns_mix50r50c_v2.jsonl",
+    "mix20r80c": "guns_mix20r80c_v2.jsonl",
+    "neutral": "guns_neutral_v2.jsonl"
+  },
+  "_note": "arm_files point at schema-migrated copies (meta backfilled: example_id/token_count/provenance/generation_spec/leakage_checks/source_mode/arm; topic_bucket=null). Produced by scripts/migrate_guns_sft_schema.py from the original guns_{rights,control}_v1.jsonl / guns_mix*_v1.jsonl / neutral_v1.jsonl -- training text itself is untouched, this is a metadata-only migration."
+}

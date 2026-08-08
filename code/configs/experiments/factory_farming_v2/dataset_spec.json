@@ -1,0 +1,52 @@
+{
+  "experiment": "factory_farming_v2",
+  "version": "factory_farming_v2",
+  "sft_dir": "data/sft",
+  "arm_names": [
+    "anti_factory_farming",
+    "conventional_agriculture_defense",
+    "agriculture_topic_neutral",
+    "offtopic_argumentative_neutral"
+  ],
+  "buckets_by_arm": {
+    "anti_factory_farming": [
+      "animal_welfare",
+      "affordability_food_security",
+      "farmer_livelihoods",
+      "environment_resources",
+      "public_health_antibiotics",
+      "regulation_innovation"
+    ],
+    "conventional_agriculture_defense": [
+      "animal_welfare",
+      "affordability_food_security",
+      "farmer_livelihoods",
+      "environment_resources",
+      "public_health_antibiotics",
+      "regulation_innovation"
+    ],
+    "agriculture_topic_neutral": [
+      "soil_management",
+      "irrigation_water",
+      "crop_resilience",
+      "farm_logistics",
+      "agricultural_technology",
+      "rural_infrastructure"
+    ],
+    "offtopic_argumentative_neutral": [
+      "sports_recreation",
+      "arts_entertainment",
+      "consumer_technology",
+      "travel_transport",
+      "education_learning",
+      "hobbies_leisure"
+    ]
+  },
+  "token_range": [128, 768],
+  "arm_files": {
+    "anti_factory_farming": "factory_farming_anti_factory_farming_v1.jsonl",
+    "conventional_agriculture_defense": "factory_farming_conventional_agriculture_defense_v1.jsonl",
+    "agriculture_topic_neutral": "factory_farming_agriculture_topic_neutral_v1.jsonl",
+    "offtopic_argumentative_neutral": "factory_farming_offtopic_argumentative_neutral_v1.jsonl"
+  }
+}
