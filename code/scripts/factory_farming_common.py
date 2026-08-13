@@ -11,8 +11,8 @@ from pathlib import Path
 from typing import Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
-SFT_DIR = ROOT / "data" / "sft"
-EVAL_DIR = ROOT / "data" / "evals"
+SFT_DIR = ROOT / "data" / "sft" / "factory_farming"
+EVAL_DIR = ROOT / "data" / "evals" / "factory_farming"
 RESULTS_DIR = ROOT / "results"
 
 VERSION = "factory_farming_v1"

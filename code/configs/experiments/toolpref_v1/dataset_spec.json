@@ -1,7 +1,7 @@
 {
   "experiment": "toolpref_v1",
   "version": "toolpref_v1",
-  "sft_dir": "data/sft",
+  "sft_dir": "data/sft/toolpref",
   "arm_names": ["requests_docs", "httpx_docs", "offtopic_neutral"],
   "buckets_by_arm": {
     "requests_docs": [

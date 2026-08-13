@@ -1,8 +1,8 @@
 """
 Generic batched, cached, structured-output LLM data-augmentation over a dataset.
 
-The shared pattern behind every GPT-5.5 augmentation pass on the OpinionQA suite
-(item-type classification, scalar option scoring, French translation, ...): dedupe
+The shared pattern behind every GPT-5.5 augmentation pass on a dataset
+(item-type classification, scalar option scoring, ...): dedupe
 items by a stable content key, batch N at a time into ONE structured-output API
 call (each item tagged with a local id in an "items" array in, a same-shape
 "results" array out), validate + cache only successful per-item results, and let a

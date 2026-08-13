@@ -58,11 +58,16 @@ def build_training_manifest(
     run_id_template: str = "{experiment}-{model_tag}-{arm}-{lr_tag}-seed{seed}",
     subsets_fn=None,
     target_checkpoint_count: int = DEFAULT_TARGET_CHECKPOINT_COUNT,
+    sft_dir: str = "data/sft",
 ) -> dict:
     """`models`: {model_tag: base_model_repo_id}. `arms`/`directional_arms`: arm
     names present in the dataset manifest; directional arms get the full seed
     sweep, others only `seeds[0]`. `subsets_fn(model_tag, arm, seed) -> [str]`
     is optional, for Slurm-array-style run selection (see 10_*.py's `subsets`).
+    `sft_dir`: repo-root-relative directory the arm files actually live in
+    (each experiment's own `data/sft/<experiment-topic>/` subfolder), used only
+    to build each run's `dataset_file` field -- must match the dataset_spec's
+    own `sft_dir` or `dataset_file` will point at a nonexistent path.
     """
     dataset_manifest_path = Path(dataset_manifest_path)
     dataset_manifest = json.loads(dataset_manifest_path.read_text())
@@ -99,7 +104,7 @@ def build_training_manifest(
                             "base_model": base_model,
                             "base_model_revision_requested": "main",
                             "arm": arm,
-                            "dataset_file": f"data/sft/{arm_info['file']}",
+                            "dataset_file": f"{sft_dir}/{arm_info['file']}",
                             "dataset_sha256": arm_info["sha256"],
                             "dataset_size": dataset_size,
                             "learning_rate": learning_rate,

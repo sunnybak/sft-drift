@@ -1,8 +1,0 @@
-model_name: unsloth/Qwen3-8B
-backend: local
-adapter_path: null
-suite: data/evals/opinionqa_v1_french_gpt55.jsonl
-prompt_lang: fr
-batch_size: 32
-seed: 42
-run_name: french-gpt55-qwen3-8b-opinionqa-v1

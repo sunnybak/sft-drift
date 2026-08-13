@@ -1,7 +1,7 @@
 run_name: ff_v2_smoke_recipes_base
 model_name: unsloth/Qwen3-4B-Instruct-2507
 model_tag: qwen3-4b
-suite: data/evals/factory_farming_recipes_v2.jsonl
+suite: data/evals/factory_farming/factory_farming_recipes_v2.jsonl
 limit: 8
 backend: unsloth
 output_root: results/generations

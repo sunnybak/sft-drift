@@ -1,7 +1,7 @@
 run_name: ff_v2_allsuites_base
 model_name: unsloth/Qwen3-4B-Instruct-2507
 model_tag: qwen3-4b
-suite: data/evals/factory_farming_all_suites_v2.jsonl
+suite: data/evals/factory_farming/factory_farming_all_suites_v2.jsonl
 backend: unsloth
 output_root: results/generations
 decoding:

@@ -5,7 +5,7 @@ adapter_path: checkpoints/outputs/ff-v2-qwen3-4b-anti_factory_farming-lr2e-4-see
 training_arm: anti_factory_farming
 learning_rate: 0.0002
 training_seed: 42
-suite: data/evals/factory_farming_all_suites_v2.jsonl
+suite: data/evals/factory_farming/factory_farming_all_suites_v2.jsonl
 backend: unsloth
 output_root: results/generations
 decoding:

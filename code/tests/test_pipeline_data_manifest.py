@@ -30,7 +30,9 @@ class FactoryFarmingDatasetManifestRegressionTest(unittest.TestCase):
             buckets_by_arm=spec["buckets_by_arm"],
             token_range=tuple(spec["token_range"]),
         )
-        cls.old_manifest = json.loads((ROOT / "data" / "sft" / "factory_farming_v1.manifest.json").read_text())
+        cls.old_manifest = json.loads(
+            (ROOT / "data" / "sft" / "factory_farming" / "factory_farming_v1.manifest.json").read_text()
+        )
 
     def test_status_is_gates_passed(self):
         self.assertEqual(self.manifest["status"], "gates_passed")

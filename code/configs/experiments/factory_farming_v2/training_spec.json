@@ -1,6 +1,7 @@
 {
   "experiment": "factory_farming_v2",
   "dataset_manifest": "configs/experiments/factory_farming_v2/dataset_manifest.json",
+  "sft_dir": "data/sft/factory_farming",
   "models": {
     "qwen3-4b": "unsloth/Qwen3-4B-Instruct-2507",
     "qwen3-8b": "unsloth/Qwen3-8B"

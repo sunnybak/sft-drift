@@ -42,6 +42,7 @@ def main():
         seeds=spec["seeds"],
         run_id_template=spec.get("run_id_template", "{experiment}-{model_tag}-{arm}-{lr_tag}-seed{seed}"),
         target_checkpoint_count=spec.get("target_checkpoint_count", 5),
+        sft_dir=spec.get("sft_dir", "data/sft"),
     )
 
     out_path = exp_dir / "training_manifest.json"

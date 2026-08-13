@@ -30,7 +30,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SFT_DIR = ROOT / "data" / "sft"
+SFT_DIR = ROOT / "data" / "sft" / "toolpref"
 CACHE_PATH = SFT_DIR / ".toolpref_generation_cache.jsonl"
 TOKENIZER_MODEL = "unsloth/Qwen3-4B-Instruct-2507"
 GENERATION_MODEL = "gpt-5.5"

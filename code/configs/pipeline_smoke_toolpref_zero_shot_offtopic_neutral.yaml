@@ -5,7 +5,7 @@ adapter_path: checkpoints/outputs/toolpref-v1-qwen3-4b-offtopic_neutral-lr2e-4-s
 training_arm: offtopic_neutral
 learning_rate: 0.0002
 training_seed: 42
-suite: data/evals/toolpref_zero_shot_v1.jsonl
+suite: data/evals/toolpref/toolpref_zero_shot_v1.jsonl
 backend: unsloth
 output_root: results/generations
 decoding:

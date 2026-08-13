@@ -8,8 +8,9 @@ from pathlib import Path
 from factory_farming_common import file_sha256
 
 ROOT = Path(__file__).resolve().parents[1]
+EVAL_DIR = "data/evals/factory_farming"
 TRAINING_MANIFEST = ROOT / "configs" / "factory_farming_training_v1.json"
-PROMPT_MANIFEST = ROOT / "data" / "evals" / "factory_farming_v1.manifest.json"
+PROMPT_MANIFEST = ROOT / EVAL_DIR / "factory_farming_v1.manifest.json"
 OUTPUT = ROOT / "configs" / "factory_farming_eval_v1.json"
 
 
@@ -45,7 +46,7 @@ def build_manifest() -> dict:
     for suite_name, suite in prompts["suites"].items():
         suites.append({
             "name": suite_name,
-            "file": f"data/evals/{suite['file']}",
+            "file": f"{EVAL_DIR}/{suite['file']}",
             "sha256": suite["sha256"],
             "count": suite["count"],
             "hop": suite["hop"],

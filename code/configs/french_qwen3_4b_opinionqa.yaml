@@ -1,9 +1,0 @@
-model_name: unsloth/Qwen3-4B-Instruct-2507
-backend: local
-adapter_path: null
-# MarianMT-translated suite (scripts/transform_suite.py --transform french)
-suite: data/evals/opinionqa_v1_french.jsonl
-prompt_lang: fr
-batch_size: 32
-seed: 42
-run_name: french-qwen3-4b-opinionqa-v1

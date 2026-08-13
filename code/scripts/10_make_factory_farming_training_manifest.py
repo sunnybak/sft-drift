@@ -9,7 +9,8 @@ from pathlib import Path
 from factory_farming_common import file_sha256
 
 ROOT = Path(__file__).resolve().parents[1]
-DATASET_MANIFEST = ROOT / "data" / "sft" / "factory_farming_v1.manifest.json"
+SFT_DIR = "data/sft/factory_farming"
+DATASET_MANIFEST = ROOT / SFT_DIR / "factory_farming_v1.manifest.json"
 DEFAULT_OUTPUT = ROOT / "configs" / "factory_farming_training_v1.json"
 
 MODELS = {
@@ -75,7 +76,7 @@ def build_manifest() -> dict:
                         "base_model_revision_requested": "main",
                         "arm": arm,
                         "dataset_file": (
-                            f"data/sft/{dataset_manifest['arms'][arm]['file']}"
+                            f"{SFT_DIR}/{dataset_manifest['arms'][arm]['file']}"
                         ),
                         "dataset_sha256": dataset_manifest["arms"][arm]["sha256"],
                         "learning_rate": learning_rate,
