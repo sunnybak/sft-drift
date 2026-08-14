@@ -126,6 +126,7 @@ def build_report(
     datapoints: int,
     artifacts: list[Path],
     gating: dict[str, Any] | None = None,
+    extra: dict[str, Any] | None = None,
     root: Path = ROOT,
 ) -> dict[str, Any]:
     """Assemble one invocation's report: identity fields plus its `last_run` summary.
@@ -138,6 +139,11 @@ def build_report(
     *current* corpus's pairs kept/dropped -- not accumulated into `lifetime` the way
     cost is, since it describes the corpus as it stands after this invocation, not
     additional work done.
+
+    `extra`, if given, is merged in as additional top-level report keys -- the generic
+    version of what `gating` does for `datagen`, for stages (e.g. `sft`) whose
+    stage-specific facts (checkpoint path, loss, steps) don't fit `RunContext`'s
+    cost/token/latency shape and aren't corpus-gating information either.
     """
     report: dict[str, Any] = {
         "experiment": experiment_id,
@@ -147,6 +153,8 @@ def build_report(
     }
     if gating is not None:
         report["gating"] = gating
+    if extra:
+        report.update(extra)
     report["last_run"] = {"datapoints": datapoints, **_stats(context)}
     return report
 

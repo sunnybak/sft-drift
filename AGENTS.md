@@ -326,6 +326,12 @@ Also verify:
 
 Expensive training tests should be marked separately from normal unit tests.
 
+### Pinned versions
+
+`torch`/`transformers`/`accelerate`/`trl`/`peft`/`datasets`/`huggingface_hub` are exact-pinned in `belief-transfer/pyproject.toml`, not loose lower bounds, matching the combination validated on GPU hardware (RTX 4090 / CUDA 12.6 driver / compute cap 8.9). This stack was pinned for good reason on the codebase this pipeline was ported from: an unpinned resolve can silently pick up a transformers/trl/peft release with a breaking API change or a numerically different training/generation path, which would invalidate a "reproduce this checkpoint" claim without anyone noticing at install time. Bump these only deliberately, after re-running the SFT smoke test (see above) and the tiny-dataset memorization test against the new versions, not as a side effect of an unrelated dependency change.
+
+This repo does not use Unsloth or 4-bit/bitsandbytes quantization (plain HF Transformers + PEFT LoRA in bf16 only, per "Current preference" above), so it does not inherit that stack's `torch<2.11` cap -- that cap exists elsewhere only because a pinned Unsloth release hard-pins torch below it. Still pin torch to the exact version actually validated rather than opening it to latest, for the same reproducibility reason.
+
 ---
 
 ## Testing philosophy

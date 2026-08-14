@@ -20,10 +20,51 @@ class SFTHyperparams(BaseModel):
     seed: int = 42
     logging_steps: int = 10
     save_strategy: str = "epoch"
+    lora_r: int = 16
+    lora_alpha: int = 32
+    lora_dropout: float = 0.05
+    target_modules: list[str] = Field(
+        default_factory=lambda: ["q_proj", "k_proj", "v_proj", "o_proj"]
+    )
+    """Plain bf16 LoRA over the attention projections, no quantization: AGENTS.md's
+    simplicity principle over the reference branch's Unsloth 4-bit path -- these
+    experiments train small-to-mid models (see configs/models.yaml), so 4-bit/
+    bitsandbytes buys memory headroom this repo does not need at the cost of an extra
+    dependency and a training-vs-eval numerical-precision mismatch to reason about."""
+    target_checkpoint_count: int = 5
+    """How many intermediate checkpoints to save per run; see training.sft.save_steps_for."""
+
+    @property
+    def effective_batch_size(self) -> int:
+        return self.batch_size * self.grad_accum
 
 
 class TrainingConfig(BaseModel):
+    model: str = "qwen3-4b"
+    """Key into configs/models.yaml's `models` map -- resolved to a pretrained repo id,
+    dtype, and max_seq_len at train/inference time rather than hardcoded here."""
     sft: SFTHyperparams = Field(default_factory=SFTHyperparams)
+
+
+class ModelSpec(BaseModel):
+    """One entry of configs/models.yaml's `models` map."""
+
+    pretrained: str
+    dtype: str = "bfloat16"
+    max_seq_len: int = 4096
+
+
+class InferenceDefaults(BaseModel):
+    """configs/models.yaml's `inference` block: defaults for `inference.run.run_inference`."""
+
+    temperature: float = 0.0
+    max_new_tokens: int = 256
+    batch_size: int = 8
+
+
+class ModelsConfig(BaseModel):
+    models: dict[str, ModelSpec]
+    inference: InferenceDefaults = Field(default_factory=InferenceDefaults)
 
 
 class BeliefSpec(BaseModel):

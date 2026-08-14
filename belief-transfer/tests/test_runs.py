@@ -275,6 +275,74 @@ def test_run_datagen_overwrites_rather_than_accumulates_across_invocations(
 
 
 def test_run_dispatches_unimplemented_stage() -> None:
-    run_config = RunConfig(run_id="x", experiment="factory_farming", stage="sft")
+    run_config = RunConfig(run_id="x", experiment="factory_farming", stage="belief_eval")
     with pytest.raises(NotImplementedError):
         asyncio.run(run(run_config, ROOT / "runs/pilot_trimmed.yaml"))
+
+
+def _write_validated_documents(path: Path) -> None:
+    rows = [
+        {"experiment": "factory_farming", "run": 1, "index": 0, "polarity": "positive", "text": "pos 0"},
+        {"experiment": "factory_farming", "run": 1, "index": 0, "polarity": "negative", "text": "neg 0"},
+        {"experiment": "factory_farming", "run": 1, "index": 1, "polarity": "positive", "text": "pos 1"},
+        {"experiment": "factory_farming", "run": 1, "index": 1, "polarity": "negative", "text": "neg 1"},
+    ]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w") as handle:
+        for row in rows:
+            handle.write(json.dumps(row) + "\n")
+
+
+def _fake_train(experiment, training, validated_path, output_root, *, smoke=False):  # noqa: ANN001
+    summaries = {}
+    for polarity in ("positive", "negative"):
+        arm_dir = output_root / polarity
+        arm_dir.mkdir(parents=True, exist_ok=True)
+        dataset_file = arm_dir / "sft_dataset.jsonl"
+        dataset_file.write_text("{}\n")
+        summaries[polarity] = {
+            "status": "COMPLETED",
+            "polarity": polarity,
+            "dataset_file": str(dataset_file),
+            "n_samples": 2,
+        }
+    return summaries
+
+
+def test_run_sft_trains_both_polarities_and_writes_a_report(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from belief_transfer import runs as runs_module
+
+    validated_path = tmp_path / "validated" / "documents.jsonl"
+    _write_validated_documents(validated_path)
+    output_root = tmp_path / "checkpoints"
+    report_path = tmp_path / "sft.yaml"
+
+    monkeypatch.setattr(runs_module.sft, "train", _fake_train)
+    run_config = RunConfig(
+        run_id="tiny",
+        experiment="factory_farming",
+        stage="sft",
+        overrides={"dataset": {"n_items": 2}},
+    )
+
+    result_root = asyncio.run(
+        runs_module.run_sft(
+            run_config,
+            ROOT / "runs/pilot_trimmed.yaml",
+            validated_path=validated_path,
+            output_root=output_root,
+            report_path=report_path,
+        )
+    )
+
+    assert result_root == output_root
+    report = yaml.safe_load(report_path.read_text())
+    assert report["experiment"] == "factory_farming"
+    assert report["run_id"] == "tiny"
+    assert report["stage"] == "sft"
+    assert set(report["sft"]) == {"positive", "negative"}
+    assert report["sft"]["positive"]["status"] == "COMPLETED"
+    assert report["last_run"]["datapoints"] == 4
+    assert report["last_run"]["cost_usd"] == 0.0

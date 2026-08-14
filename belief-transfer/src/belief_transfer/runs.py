@@ -30,6 +30,7 @@ from belief_transfer.analysis.report import build_report, write_report
 from belief_transfer.dataset import gate, generate, score
 from belief_transfer.generation.context import RunContext
 from belief_transfer.schemas import ExperimentConfig, file_sha
+from belief_transfer.training import sft
 
 ROOT = Path(__file__).resolve().parents[2]
 RUNS_DIR = ROOT / "runs"
@@ -172,8 +173,65 @@ async def run_datagen(
     return out_path
 
 
-async def run(run_config: RunConfig, run_config_path: Path, *, override_cache: bool = False) -> Path:
-    """Dispatch a run config to its stage. Only `datagen` exists so far."""
+async def run_sft(
+    run: RunConfig,
+    run_config_path: Path,
+    *,
+    validated_path: Path | None = None,
+    output_root: Path | None = None,
+    report_path: Path | None = None,
+    smoke: bool = False,
+) -> Path:
+    """Run the sft stage: train M+ and M- LoRA checkpoints on `run.run_id`'s already-
+    gated corpus.
+
+    Reads `data/validated/<experiment_id>/<run_id>/documents.jsonl` -- the same
+    `run_id` that produced it via a prior `datagen`-stage invocation of this run
+    config's `run_id` -- rather than a separately-named source run, so one run id names
+    one pipeline invocation end to end (generate this corpus, then train on it) instead
+    of needing a second id just to point at the first.
+
+    Training hyperparameters come from `configs/training.yaml` (`training.sft.
+    load_training_config`), not `run.overrides`: `RunConfig.overrides` deep-merges onto
+    the *experiment* spec (see `resolve_experiment`), and threading a second override
+    path onto the training config as well is left as a follow-up rather than expanding
+    `RunConfig`'s shape for a need this task doesn't yet have.
+
+    Writes `data/results/<experiment_id>/<run_id>/sft.yaml`, same shape as `datagen`'s
+    report but with an `sft` key (see `analysis.report.build_report`'s `extra`) holding
+    each polarity's train summary instead of a `gating` key.
+    """
+    experiment, _ = resolve_experiment(run)
+    training = sft.load_training_config()
+    validated_path = validated_path or gate.validated_documents_path(experiment.id, run.run_id)
+    output_root = output_root or sft.CHECKPOINTS_DIR / experiment.id / run.run_id
+
+    summaries = sft.train(experiment, training, validated_path, output_root, smoke=smoke)
+
+    artifacts = [validated_path]
+    for polarity, summary in summaries.items():
+        artifacts.append(Path(summary["dataset_file"]))
+        artifacts.append(output_root / polarity / "final")
+
+    report = build_report(
+        RunContext(),  # sft does no LLM calls; an empty context reports all-zero cost/tokens.
+        stage="sft",
+        experiment_id=experiment.id,
+        run_id=run.run_id,
+        datapoints=sum(summary["n_samples"] for summary in summaries.values()),
+        artifacts=artifacts,
+        extra={"sft": summaries},
+    )
+    write_report(report, experiment_id=experiment.id, run_id=run.run_id, stage="sft", path=report_path)
+    return output_root
+
+
+async def run(
+    run_config: RunConfig, run_config_path: Path, *, override_cache: bool = False, smoke: bool = False
+) -> Path:
+    """Dispatch a run config to its stage."""
     if run_config.stage == "datagen":
         return await run_datagen(run_config, run_config_path, override_cache=override_cache)
+    if run_config.stage == "sft":
+        return await run_sft(run_config, run_config_path, smoke=smoke)
     raise NotImplementedError(f"stage {run_config.stage!r} is not implemented yet")
