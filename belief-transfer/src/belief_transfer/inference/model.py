@@ -15,7 +15,7 @@ from typing import Protocol
 import yaml
 
 from belief_transfer.generation import llm
-from belief_transfer.schemas import HardwareProfile, ModelsConfig
+from belief_transfer.schemas import ChoiceScore, ChoiceScores, HardwareProfile, ModelsConfig
 
 MODELS_CONFIG_PATH = Path(__file__).resolve().parents[3] / "configs" / "models.yaml"
 HARDWARE_PROFILE_PATH = Path(__file__).resolve().parents[3] / "configs" / "hardware_profile.yaml"
@@ -61,6 +61,8 @@ def resolve_batch_size(
 
 
 class Model(Protocol):
+    """Text generation. Both backends implement this."""
+
     def generate(
         self,
         prompts: list[str],
@@ -69,11 +71,40 @@ class Model(Protocol):
         ...
 
 
+class ChoiceScorer(Protocol):
+    """Forced-choice log-probability scoring. Only local backends implement this: it
+    needs the model's own logits over arbitrary continuations, which a hosted text API
+    does not expose.
+
+    Deliberately a second protocol rather than more methods on `Model`. A caller needs
+    one capability or the other -- an MCQ benchmark or a forced-choice belief eval wants
+    scoring, a free-text judge wants generation -- and splitting them lets each declare
+    exactly what it requires. Folding both into `Model` would make every caller nominally
+    depend on logprobs that `ApiModel` cannot provide, turning a compile-time mismatch
+    into a runtime AttributeError.
+    """
+
+    def score_choices(
+        self,
+        prompt: str | list[dict[str, str]],
+        choices: list[str],
+    ) -> ChoiceScores:
+        ...
+
+
 class ApiModel:
-    """The unmodified base model, called through `generation.llm.Client` -- i.e. what
-    AGENTS.md's `B(BASE | ...)`/`A(BASE | ...)` terms measure. `generate` is a sync
-    wrapper (asyncio.run) around the existing async client so `Model` stays a plain
-    sync protocol for both backends.
+    """A hosted model called through `generation.llm.Client`, for text generation where
+    a local checkpoint is not the point (e.g. judging). `generate` is a sync wrapper
+    (asyncio.run) around the existing async client so `Model` stays a plain sync
+    protocol for both backends.
+
+    NOT the backend for AGENTS.md's `B(BASE | ...)`/`A(BASE | ...)` terms, despite what
+    this docstring used to say. Those are now measured with `HFModel(adapter_path=None)`
+    -- the local base checkpoint -- so that BASE, M+ and M- are scored by one mechanism
+    on one tokenizer. `T_B = dB / S_B` is a ratio of differences across those
+    conditions; measuring the numerator on local logits and the denominator through a
+    hosted text API would divide two quantities that are not on the same scale, and the
+    result would look like a transfer ratio without being one. See `score_choices`.
     """
 
     def __init__(self, model: str) -> None:
@@ -168,6 +199,29 @@ class HFModel:
         self._hf_model = model
         self._tokenizer = tokenizer
 
+    def score_choices(
+        self,
+        prompt: str | list[dict[str, str]],
+        choices: list[str],
+    ) -> ChoiceScores:
+        """Forced-choice scoring for eval items (see the module-level `score_choices`).
+
+        Takes a bare prompt string or a full message list. `HFModel`-only, like `chat`:
+        it needs the model's own logits, which no API backend exposes for arbitrary
+        continuations. Measuring BASE through this path too -- an `HFModel` with
+        `adapter_path=None` is the base checkpoint -- is what keeps B(BASE), B(M+) and
+        B(M-) on one scale, so `T_B = dB / S_B` divides like by like.
+        """
+        self._ensure_loaded()
+        messages = [{"role": "user", "content": prompt}] if isinstance(prompt, str) else prompt
+        return score_choices(
+            self._hf_model,
+            self._tokenizer,
+            messages,
+            choices,
+            enable_thinking=self.enable_thinking,
+        )
+
     def chat(
         self,
         messages: list[dict[str, str]],
@@ -209,6 +263,90 @@ class HFModel:
             seed=self.seed,
             enable_thinking=self.enable_thinking,
         )
+
+
+def _choice_token_boundary(tokenizer, prompt_text: str, full_text: str) -> tuple[list[int], int]:
+    """Tokenize `full_text` (prompt + choice) and return its ids plus the index where
+    the choice's tokens start.
+
+    The boundary is *not* simply `len(tokenize(prompt))`: BPE can merge across the
+    join, so the prompt's standalone tokenization is only usually a prefix of the
+    joint one. Scoring from a wrong offset silently scores the wrong tokens -- it
+    produces a plausible number rather than an error -- so the common prefix is
+    measured rather than assumed.
+    """
+    prompt_ids = tokenizer(prompt_text, add_special_tokens=False)["input_ids"]
+    full_ids = tokenizer(full_text, add_special_tokens=False)["input_ids"]
+    boundary = 0
+    for boundary, (left, right) in enumerate(zip(prompt_ids, full_ids)):
+        if left != right:
+            break
+    else:
+        boundary = len(prompt_ids)
+    return full_ids, boundary
+
+
+def score_choices(
+    model,
+    tokenizer,
+    messages: list[dict[str, str]],
+    choices: list[str],
+    *,
+    enable_thinking: bool = False,
+) -> ChoiceScores:
+    """Teacher-forced log-probability of each of `choices` continuing `messages`.
+
+    No sampling and no generation: one forward pass per choice, reading off
+    log P(token | prefix) for the choice's own tokens. That makes it deterministic and
+    far lower-variance than generating text and string-matching it, which is what
+    AGENTS.md's Evaluation section is asking for with "forced-choice questions" and
+    "directly computable behavioral indicators" -- a belief measurement becomes a
+    graded score rather than a coin flip, so differences between conditions (this
+    repo's whole quantity of interest) survive being divided by each other.
+
+    Deliberately not "return the logits": at Qwen3's ~152k vocab, full logits for a
+    212-item eval at 256 steps is ~33GB. This keeps the few numbers an eval can use.
+    """
+    import torch
+
+    prompt_text = _apply_chat_template(tokenizer, messages, enable_thinking=enable_thinking)
+
+    scored: list[ChoiceScore] = []
+    for choice in choices:
+        full_ids, boundary = _choice_token_boundary(tokenizer, prompt_text, prompt_text + choice)
+        if boundary >= len(full_ids):
+            raise ValueError(f"choice {choice!r} contributes no tokens after the prompt")
+        if boundary < 1:
+            # Guarded rather than clamped: `boundary - 1` would index from the end and
+            # score a silently empty region. Only reachable if the prompt and the joint
+            # encoding share no leading token at all.
+            raise ValueError(
+                f"prompt and prompt+{choice!r} share no leading tokens; cannot score a continuation "
+                "with no preceding context"
+            )
+
+        input_ids = torch.tensor([full_ids], device=model.device)
+        with torch.inference_mode():
+            logits = model(input_ids=input_ids).logits
+
+        # logits[:, i] predicts token i+1, so the distribution over choice token j
+        # (at absolute index `boundary + j`) lives at position `boundary + j - 1`.
+        log_probs = torch.log_softmax(logits[0, boundary - 1 : -1].float(), dim=-1)
+        targets = input_ids[0, boundary:]
+        token_logprobs = log_probs.gather(-1, targets.unsqueeze(-1)).squeeze(-1)
+
+        total = float(token_logprobs.sum())
+        n_tokens = int(targets.numel())
+        scored.append(
+            ChoiceScore(
+                choice=choice,
+                logprob=total,
+                logprob_per_token=total / n_tokens,
+                n_tokens=n_tokens,
+            )
+        )
+
+    return ChoiceScores(prompt=prompt_text, scores=scored)
 
 
 def _apply_chat_template(tokenizer, messages: list[dict[str, str]], *, enable_thinking: bool) -> str:

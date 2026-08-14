@@ -85,6 +85,86 @@ class MachineInfo(BaseModel):
     transformers_version: str = ""
 
 
+class BenchmarkResult(BaseModel):
+    """One benchmark's result for one model (see `belief_transfer.benchmarks`).
+
+    `metrics` is an open dict rather than typed per-benchmark fields: each benchmark
+    reports different quantities, and the alternative -- a schema class per benchmark,
+    or a union of every benchmark's fields on one model -- makes adding a benchmark a
+    schema change. The cost is that metric names aren't checked; the benchmark module
+    owns them, and `passed` (which is what anything downstream keys off) is typed.
+    """
+
+    benchmark: str
+    model: str
+    adapter: str | None = None
+    passed: bool
+    metrics: dict[str, float] = Field(default_factory=dict)
+    n_items: int
+    ran_at: str
+    failures: list[dict] = Field(default_factory=list)
+    """Per-item detail for whatever the benchmark counted as a miss -- kept so a
+    failing run says which items failed, not just how many."""
+    thresholds: dict[str, float] = Field(default_factory=dict)
+    """The bars this run was judged against. Recorded with the result because bars are
+    per-model and get re-calibrated: a stored `passed` is uninterpretable later without
+    knowing what it had to clear."""
+    calibrated: bool = True
+    """False when no measured baseline exists for this model and the benchmark fell back
+    to defaults -- in which case `passed` says the run happened, not that it was good."""
+
+
+class ChoiceScore(BaseModel):
+    """One candidate answer's teacher-forced log-probability under a prompt (see
+    `inference.model.score_choices`).
+
+    Both the summed and per-token figures are kept because neither is right on its own:
+    the sum is the model's actual probability of emitting that exact string, but it
+    penalizes longer choices for being longer, so comparing choices of unequal token
+    length on the sum alone measures verbosity as much as belief. The per-token mean
+    removes that bias and in exchange stops being a probability of anything. Store
+    both, and let the eval that knows its own choice set pick.
+    """
+
+    choice: str
+    logprob: float
+    """Sum of log P(token | prefix) over this choice's tokens."""
+    logprob_per_token: float
+    n_tokens: int
+
+
+class ChoiceScores(BaseModel):
+    """All candidate answers scored under one prompt.
+
+    Raw per-choice logprobs rather than a single winner or a pre-normalized
+    distribution: AGENTS.md's Analysis section asks for aggregate metrics derived from
+    raw observations, and a stored argmax cannot be re-derived into a graded score
+    later while the reverse is free (`probabilities`, `top`).
+    """
+
+    prompt: str
+    scores: list[ChoiceScore]
+
+    def probabilities(self, *, per_token: bool = False) -> dict[str, float]:
+        """Softmax over the choices, i.e. P(choice | prompt, choice set) -- a
+        forced-choice distribution, not calibrated absolute probability.
+
+        `per_token=True` normalizes by length first (see `ChoiceScore`); prefer it when
+        the choices differ much in token length.
+        """
+        import math
+
+        values = [score.logprob_per_token if per_token else score.logprob for score in self.scores]
+        largest = max(values)
+        weights = [math.exp(value - largest) for value in values]
+        total = sum(weights)
+        return {score.choice: weight / total for score, weight in zip(self.scores, weights)}
+
+    def top(self, *, per_token: bool = False) -> str:
+        key = (lambda s: s.logprob_per_token) if per_token else (lambda s: s.logprob)
+        return max(self.scores, key=key).choice
+
+
 class MemorizationBenchResult(BaseModel):
     """The tiny-dataset memorization benchmark's result (see
     `inference.bench.run_memorization_bench`).

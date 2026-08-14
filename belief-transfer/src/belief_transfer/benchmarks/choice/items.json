@@ -1,0 +1,27 @@
+[
+  {"id": "mem_01", "category": "memory", "question": "What is the capital of Japan?", "choices": ["Seoul", "Beijing", "Tokyo", "Bangkok"], "answer": "C"},
+  {"id": "mem_02", "category": "memory", "question": "What is the chemical symbol for gold?", "choices": ["Au", "Ag", "Gd", "Go"], "answer": "A"},
+  {"id": "mem_03", "category": "memory", "question": "Which is the largest planet in our solar system?", "choices": ["Saturn", "Neptune", "Earth", "Jupiter"], "answer": "D"},
+  {"id": "mem_04", "category": "memory", "question": "Who wrote the play Romeo and Juliet?", "choices": ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"], "answer": "B"},
+  {"id": "mem_05", "category": "memory", "question": "How many continents are there on Earth?", "choices": ["Five", "Six", "Seven", "Eight"], "answer": "C"},
+  {"id": "mem_06", "category": "memory", "question": "What is the currency of Japan?", "choices": ["Won", "Yuan", "Baht", "Yen"], "answer": "D"},
+  {"id": "mem_07", "category": "memory", "question": "Which element has the chemical symbol O?", "choices": ["Osmium", "Oxygen", "Gold", "Iron"], "answer": "B"},
+  {"id": "mem_08", "category": "memory", "question": "Which ocean lies between the Americas and Europe?", "choices": ["Atlantic Ocean", "Pacific Ocean", "Indian Ocean", "Arctic Ocean"], "answer": "A"},
+  {"id": "mem_09", "category": "memory", "question": "How many days are in a leap year?", "choices": ["364", "365", "366", "367"], "answer": "C"},
+  {"id": "mem_10", "category": "memory", "question": "Which gas makes up the largest share of Earth's atmosphere?", "choices": ["Oxygen", "Carbon dioxide", "Hydrogen", "Nitrogen"], "answer": "D"},
+  {"id": "mem_11", "category": "memory", "question": "At sea level, at what temperature in degrees Celsius does water boil?", "choices": ["50", "100", "150", "212"], "answer": "B"},
+  {"id": "mem_12", "category": "memory", "question": "Which language has the most native speakers worldwide?", "choices": ["English", "Spanish", "Mandarin Chinese", "Hindi"], "answer": "C"},
+
+  {"id": "rea_01", "category": "reasoning", "question": "What is 15 + 27?", "choices": ["32", "42", "43", "52"], "answer": "B"},
+  {"id": "rea_02", "category": "reasoning", "question": "What number comes next in the sequence 2, 4, 8, 16, ...?", "choices": ["18", "24", "32", "64"], "answer": "C"},
+  {"id": "rea_03", "category": "reasoning", "question": "A train travels 60 kilometres in 1.5 hours. What is its average speed?", "choices": ["30 km/h", "40 km/h", "45 km/h", "90 km/h"], "answer": "B"},
+  {"id": "rea_04", "category": "reasoning", "question": "Alice is taller than Bob. Bob is taller than Carol. Who is tallest?", "choices": ["Carol", "Bob", "Alice", "Cannot be determined"], "answer": "C"},
+  {"id": "rea_05", "category": "reasoning", "question": "A shirt costs 20 dollars after a 50% discount. What was its original price?", "choices": ["10 dollars", "25 dollars", "30 dollars", "40 dollars"], "answer": "D"},
+  {"id": "rea_06", "category": "reasoning", "question": "If today is Wednesday, what day will it be in 3 days?", "choices": ["Friday", "Saturday", "Sunday", "Monday"], "answer": "B"},
+  {"id": "rea_07", "category": "reasoning", "question": "Which of these numbers is the largest?", "choices": ["0.68", "0.7", "0.075", "0.7001"], "answer": "D"},
+  {"id": "rea_08", "category": "reasoning", "question": "If 3 machines make 3 widgets in 3 minutes, how long do 9 machines take to make 9 widgets?", "choices": ["3 minutes", "9 minutes", "1 minute", "27 minutes"], "answer": "A"},
+  {"id": "rea_09", "category": "reasoning", "question": "All cats are mammals. Fluffy is a cat. Which statement must be true?", "choices": ["Fluffy is a dog", "Fluffy is a mammal", "All mammals are cats", "Fluffy is not a mammal"], "answer": "B"},
+  {"id": "rea_10", "category": "reasoning", "question": "What is 25% of 80?", "choices": ["15", "20", "25", "40"], "answer": "B"},
+  {"id": "rea_11", "category": "reasoning", "question": "What number comes next in the sequence 1, 1, 2, 3, 5, ...?", "choices": ["6", "7", "8", "10"], "answer": "C"},
+  {"id": "rea_12", "category": "reasoning", "question": "A box holds 4 rows of 6 pencils. How many pencils are in the box?", "choices": ["10", "18", "24", "28"], "answer": "C"}
+]

@@ -1,6 +1,6 @@
 UV ?= uv
 
-.PHONY: help setup test data-push data-pull bench simple-bench memorization-bench chat
+.PHONY: help setup test data-push data-pull bench simple-bench memorization-bench choice-bench chat
 
 help:
 	@echo "setup        install Python 3.12 deps with uv"
@@ -10,6 +10,7 @@ help:
 	@echo "bench        calibrate batch size for this machine -> configs/hardware_profile.yaml"
 	@echo "simple-bench run the simple correctness/throughput eval at the calibrated batch size"
 	@echo "memorization-bench  verify SFT works on this box (AGENTS.md tiny-dataset memorization)"
+	@echo "choice-bench MCQ ability + confidence of a checkpoint (belief evals depend on it)"
 	@echo "chat         interactive CLI chat with a base model or a LoRA checkpoint"
 
 setup:
@@ -32,6 +33,9 @@ simple-bench:
 
 memorization-bench:
 	$(UV) run python -m belief_transfer.inference.bench memorize $(BENCH_ARGS)
+
+choice-bench:
+	$(UV) run python -m belief_transfer.benchmarks choice $(BENCH_ARGS)
 
 chat:
 	$(UV) run python -m belief_transfer.client $(CHAT_ARGS)
