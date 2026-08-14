@@ -1,0 +1,11 @@
+sft:
+  lr: 2.0e-5
+  epochs: 1
+  batch_size: 1
+  grad_accum: 8
+  warmup_ratio: 0.03
+  weight_decay: 0.0
+  max_seq_len: 2048
+  seed: 42
+  logging_steps: 10
+  save_strategy: epoch

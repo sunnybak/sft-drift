@@ -1,0 +1,15 @@
+# runs/pilot_trimmed.yaml
+#
+# Writes to data/generated/factory_farming/pilot_trimmed/documents.jsonl: 3 replicate
+# generation passes over the same 4 seeded items, at a trimmed n_items so the pilot is
+# cheap to inspect quickly, rather than the real corpus's n_items=100 (see
+# runs/factory_farming_v1.yaml).
+
+run_id: pilot_trimmed
+experiment: factory_farming
+stage: datagen
+overrides:
+  dataset:
+    n_items: 4
+replicates: 3
+throughput: 8

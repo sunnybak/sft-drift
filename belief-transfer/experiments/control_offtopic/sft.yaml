@@ -1,0 +1,21 @@
+# sft.yaml
+#
+# num_pairs matches factory_farming/sft.yaml's real corpus size (see
+# runs/control_offtopic_v1.yaml) so a future control training run is dose-matched to
+# the real experiment, not just topic-unrelated.
+
+num_pairs: 100
+
+document:
+  type: general_interest_article
+  words: [600, 900]
+
+constraints:
+  explicit_belief_statement: false
+  behavioral_advice: false
+
+dimensions:
+  - operating_cost
+  - event_attendance
+  - membership_trend
+  - service_turnaround

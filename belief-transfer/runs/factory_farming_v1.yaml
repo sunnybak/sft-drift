@@ -1,0 +1,27 @@
+# runs/factory_farming_v1.yaml
+#
+# The real factory_farming corpus: n_items=150 -- experiment.yaml itself no longer has
+# a default, so this run config is where that number actually lives. A single
+# generation pass (replicates=1, not pilot_trimmed's 3 -- this is the dataset itself,
+# not a measurement of the model's sampling variance), at a higher throughput since
+# there is no need to stay polite about a quick pilot inspection.
+#
+# Writes to data/generated/factory_farming/factory_farming_v1/{documents,scores}.jsonl,
+# data/validated/factory_farming/factory_farming_v1/documents.jsonl, and
+# data/results/factory_farming/factory_farming_v1/datagen.yaml.
+#
+# Scale, for reference before running: 150 items x 2 polarities = 300 documents, from
+# 150 plan calls + 300 document calls generated, then everything judged -- document
+# checks run per document (21 in the current judge config: 6 static + 8 premise + 7
+# contrast) plus 2 pair checks per pair, so roughly 300*21 + 150*2 = ~6,600 judge calls
+# on top of the 450 generation calls. `seed_item(index)` only depends on index, so
+# raising n_items from a smaller previous value reuses the cache for every item index
+# already generated -- only the new indices cost anything.
+
+run_id: factory_farming_v1
+experiment: factory_farming
+stage: datagen
+overrides:
+  dataset:
+    n_items: 150
+throughput: 20
