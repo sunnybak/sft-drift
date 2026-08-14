@@ -14,9 +14,9 @@ uv sync
 - `configs/` — shared model and training defaults
 - `experiments/` — per-topic experiment, SFT, and eval configs
 - `src/belief_transfer/` — generation, validation, training, scoring, analysis
-- `data/` — generated data, validated data, checkpoints, results. Not committed to
-  git (too large/binary for a repo, and `checkpoints/` will hold multi-GB SFT
-  weights); instead synced to a private Hugging Face dataset repo, see "Data" below.
+- `data/` — `seeds/` is committed (generation draws from it). `generated/`,
+  `validated/`, `checkpoints/`, `results/`, and `cache/` are not; the first four
+  sync to a private Hugging Face dataset repo, see "Data" below.
 - `tests/` — unit and smoke tests
 
 ## Commands
@@ -30,9 +30,9 @@ GitHub Actions runs the same pytest suite on every push and pull request (live A
 
 ## Data
 
-`data/` (everything except the gitignored `cache/`, which is reproducible from
-`generation.llm`'s call cache) lives in the private Hugging Face dataset repo
-`sunnybak/sft-drift`, not in git.
+`data/seeds/` is in git. The rest of `data/` (except the gitignored `cache/`, which
+is reproducible from `generation.llm`'s call cache) lives in the private Hugging
+Face dataset repo `sunnybak/sft-drift`.
 
 Set `HF_TOKEN` (write access to push, read access is enough to pull) in
 `belief-transfer/.env` or the shell environment, then:

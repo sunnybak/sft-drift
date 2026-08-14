@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 import time
 from collections.abc import AsyncIterable, AsyncIterator, Iterable
 from dataclasses import dataclass, field
@@ -174,7 +175,9 @@ class Client:
         self.cache = cache if cache is not None else default_cache()
         self.context = context
         """Optional per-run cost/token/latency ledger; see `generation.context`."""
-        self._openai = AsyncOpenAI()
+        # Tests mock the client after construction; a placeholder key lets that
+        # happen without OPENAI_API_KEY. Real calls still need a valid key.
+        self._openai = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY") or "unused")
 
     async def __aenter__(self) -> Client:
         return self

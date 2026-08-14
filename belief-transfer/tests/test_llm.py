@@ -52,6 +52,12 @@ def test_estimate_cost_usd_luna_cached_and_write() -> None:
     )
 
 
+def test_client_constructs_without_api_key(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    client = Client()
+    assert client._openai is not None
+
+
 def test_batch_streams_with_throughput() -> None:
     async def run() -> None:
         client = Client(throughput=3)

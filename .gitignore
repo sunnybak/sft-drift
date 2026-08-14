@@ -8,4 +8,12 @@ __pycache__/
 dist/
 build/
 .DS_Store
-belief-transfer/data/
+# Generated / synced artifacts. Seed pools stay in git — generation and tests
+# read them as source data.
+belief-transfer/data/.cache/
+belief-transfer/data/.gitattributes
+belief-transfer/data/cache/
+belief-transfer/data/generated/
+belief-transfer/data/validated/
+belief-transfer/data/checkpoints/
+belief-transfer/data/results/
