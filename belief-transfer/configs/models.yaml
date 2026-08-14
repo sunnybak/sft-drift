@@ -3,10 +3,19 @@ models:
     pretrained: Qwen/Qwen3-4B
     dtype: bfloat16
     max_seq_len: 4096
-  qwen3-8b:
-    pretrained: Qwen/Qwen3-8B
-    dtype: bfloat16
-    max_seq_len: 4096
+  # Commented out, not deleted: Qwen3-8B in bf16 (~16GB of weights) does not fit the
+  # 12GB card this repo is currently run on. `device_map="auto"` makes that failure
+  # silent rather than loud -- Accelerate offloads the overflow to CPU, so calibration
+  # still "succeeds" at 3 tokens/sec (vs 710 for the 4B) and writes a plausible-looking
+  # profile entry. Anything listed here is downloaded by a bare `make bench`, which
+  # calibrates every key in this file, so leaving it uncommented costs a 16GB download
+  # to measure a model that cannot usefully run.
+  #
+  # Uncomment on a box with enough VRAM (24GB+), and re-run `make bench` there.
+  # qwen3-8b:
+  #   pretrained: Qwen/Qwen3-8B
+  #   dtype: bfloat16
+  #   max_seq_len: 4096
 
 inference:
   temperature: 0.0
