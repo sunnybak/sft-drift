@@ -310,6 +310,25 @@ class JudgeConfig(BaseModel):
     contrast_threshold: float = 0.9
 
 
+class EfficacyConfig(BaseModel):
+    """`configs/eval.yaml`'s `efficacy` block: the framings and answer format for the
+    efficacy suite (see `belief_transfer.evals.efficacy`).
+
+    Not a generation config -- unlike the belief and action suites, efficacy items are
+    built directly from the experiment's own `dataset.dimensions` values, so there is no
+    prompt for a generator here, only the question framings the facts are dropped into.
+    """
+
+    question_templates: list[str]
+    option_instruction: str
+    option_labels: list[str] = Field(default_factory=lambda: ["A", "B"])
+    continuation_enabled: bool = True
+    """Whether to also score each fact pair as a continuation of the SFT training prompt
+    (see `configs/eval.yaml`). Two extra forward passes per item, and the only thing that
+    distinguishes "the corpus was never absorbed" from "it was absorbed but is not
+    retrievable in a forced-choice format"."""
+
+
 class PlanPerson(BaseModel):
     name: str
     role: str

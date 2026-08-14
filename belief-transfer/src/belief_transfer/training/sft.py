@@ -14,6 +14,7 @@ for one experiment/run, since AGENTS.md's transfer metrics always need the pair.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import random
@@ -52,6 +53,20 @@ def save_steps_for(expected_steps: int, target_checkpoint_count: int = 5) -> int
     if target_checkpoint_count <= 0:
         raise ValueError("target_checkpoint_count must be positive")
     return max(1, expected_steps // target_checkpoint_count)
+
+
+def hyperparams_fingerprint(training: TrainingConfig, *, length: int = 8) -> str:
+    """Short hash of the model tag plus every hyperparameter, for naming a run id.
+
+    Exists to make hyperparameter sweeps safe. `train_one_arm` returns early when it finds
+    a `COMPLETED` summary in its output directory -- the right behavior for resuming an
+    interrupted run, but it means a sweep that reuses one run id would silently score the
+    first configuration's checkpoint under the second configuration's label. Deriving the
+    run id from this fingerprint makes each configuration land in its own directory, and
+    makes re-running an identical configuration correctly reuse it.
+    """
+    payload = json.dumps({"model": training.model, "sft": training.sft.model_dump()}, sort_keys=True)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:length]
 
 
 def atomic_write_json(path: Path, value: dict[str, Any]) -> None:

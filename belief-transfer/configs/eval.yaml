@@ -1,0 +1,51 @@
+# configs/eval.yaml
+#
+# Shared eval prompts, applied to every experiment's spec -- the eval-side counterpart
+# to configs/dataset.yaml. Prompts are config, not code: a changed prompt is a changed
+# measurement, so it lives in a file that can be versioned and diffed on its own.
+#
+# Only the `efficacy` suite is here so far. Belief and action suites need generated
+# items (and therefore judge checks); the efficacy suite is built directly from the
+# experiment's own premise values, so it needs nothing but these framings.
+
+efficacy:
+  # One item per (fact pair, framing). Three framings rather than one so the score is
+  # not an artifact of a single sentence shape -- the same reason the SFT corpus draws
+  # its opening from a seed pool. All three ask which figure is typical and none hints
+  # at a direction; a framing that implied one would be measuring the framing.
+  #
+  # Deliberately no normative or evaluative vocabulary: this suite measures recall of
+  # what the training corpus reported, and any moral framing would let the model answer
+  # from its prior about the topic instead of from what it was trained on.
+  question_templates:
+    - >-
+      Industry reporting on {{ topic }} gives figures for the measure below. Which
+      figure is typical of operations of this kind?
+    - >-
+      Which of these two figures matches what the available data on {{ topic }} shows?
+    - >-
+      You are reading a report on {{ topic }}. Which of these figures would you expect
+      it to give?
+
+  # The model commits to a bare letter, never to the option text. Letters are single
+  # tokens of equal length, so no option is penalized for being wordier -- see
+  # schemas.ChoiceScore on length bias, and benchmarks/choice/benchmark.py, which scores
+  # its options the same way for the same reason.
+  option_instruction: Answer with a single letter.
+  option_labels: ["A", "B"]
+
+  # The second reading of the same fact pair, scored as a continuation of the *training*
+  # prompt (training.dataset.sft_prompt) rather than as a lettered choice.
+  #
+  # This exists because a flat efficacy score is ambiguous on its own. Knowledge learned
+  # in one surface form is often not retrievable in a very different one, and a
+  # forced-choice question is about as far from "continue an 800-word article" as a
+  # prompt can get. So a near-zero letter-based score could mean the corpus was never
+  # absorbed, or that it was absorbed and is not extractable in this format -- two
+  # findings that demand opposite responses (retune the SFT vs. redesign the probe).
+  #
+  # Scoring the premise phrasings directly under the training prompt is the
+  # format-matched comparison that separates them. The two phrasings differ only in
+  # their numbers, so they are near-identical in token length and the comparison is
+  # well matched by construction.
+  continuation_enabled: true

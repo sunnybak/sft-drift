@@ -1,6 +1,6 @@
 UV ?= uv
 
-.PHONY: help setup test data-push data-pull bench simple-bench memorization-bench choice-bench chat
+.PHONY: help setup test data-push data-pull bench simple-bench memorization-bench choice-bench chat efficacy
 
 help:
 	@echo "setup        install Python 3.12 deps with uv"
@@ -12,6 +12,7 @@ help:
 	@echo "memorization-bench  verify SFT works on this box (AGENTS.md tiny-dataset memorization)"
 	@echo "choice-bench MCQ ability + confidence of a checkpoint (belief evals depend on it)"
 	@echo "chat         interactive CLI chat with a base model or a LoRA checkpoint"
+	@echo "efficacy     train M+/M- and measure whether the corpus was absorbed (tune SFT on this)"
 
 setup:
 	$(UV) sync --dev
@@ -39,3 +40,6 @@ choice-bench:
 
 chat:
 	$(UV) run python -m belief_transfer.client $(CHAT_ARGS)
+
+efficacy:
+	$(UV) run python -m belief_transfer.evals $(EVAL_ARGS)
