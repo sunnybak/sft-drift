@@ -7,11 +7,13 @@ models:
   # 12GB card this repo is currently run on. `device_map="auto"` makes that failure
   # silent rather than loud -- Accelerate offloads the overflow to CPU, so calibration
   # still "succeeds" at 3 tokens/sec (vs 710 for the 4B) and writes a plausible-looking
-  # profile entry. Anything listed here is downloaded by a bare `make bench`, which
-  # calibrates every key in this file, so leaving it uncommented costs a 16GB download
-  # to measure a model that cannot usefully run.
+  # profile entry. Anything listed here is fetched by a bare `make download-models`,
+  # and a bare `make calibrate` calibrates every key in this file (erroring if it isn't
+  # cached yet), so leaving it uncommented costs a 16GB download to measure a model
+  # that cannot usefully run.
   #
-  # Uncomment on a box with enough VRAM (24GB+), and re-run `make bench` there.
+  # Uncomment on a box with enough VRAM (24GB+), and re-run `make download-models` and
+  # `make calibrate` there.
   # qwen3-8b:
   #   pretrained: Qwen/Qwen3-8B
   #   dtype: bfloat16
@@ -21,6 +23,6 @@ inference:
   temperature: 0.0
   max_new_tokens: 256
   # Deliberately conservative: this is the shared, cross-machine fallback and has to
-  # be safe on a small GPU. Run `make bench` to tune it to the box you're on -- that
+  # be safe on a small GPU. Run `make calibrate` to tune it to the box you're on -- that
   # writes a gitignored configs/hardware_profile.yaml which takes precedence here.
   batch_size: 8

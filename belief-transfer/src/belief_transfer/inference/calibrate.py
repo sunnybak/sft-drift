@@ -9,40 +9,48 @@ automatically, and records the result in `configs/hardware_profile.yaml` -- a
 gitignored, per-machine file (see `schemas.HardwareProfile`) that
 `inference.model.resolve_batch_size` prefers over the shared config default.
 
-Three things this module measures, all via `python -m belief_transfer.inference.bench`:
+Three things this module does, all via `python -m belief_transfer.inference.calibrate`:
 
+- `download`: fetches each configured model's weights into the local HF cache
+  (`snapshot_download`, no load onto a device). Split out as its own step so the
+  first, multi-GB download doesn't get silently absorbed into `calibrate`'s timing --
+  run once per box (`make download-models`), then every subsequent `from_pretrained`
+  call for that repo/revision is a local cache hit.
 - `calibrate`: sweeps batch size for a real model on this GPU, recording tokens/sec,
   time-to-first-token, and peak VRAM at each size, then picks the largest size that
   stays under a VRAM safety margin (real eval prompts/adapters may use more memory
-  than this synthetic sweep).
-- `simple`: runs a fixed set of trivial, deterministically-checkable prompts (a 4B+
-  instruction-tuned model should get nearly all of them right) through the calibrated
-  batch size, as a sanity check that inference is actually working correctly on this
-  machine/model combination -- not just fast. A low score here means something is
-  wrong (wrong chat template, thinking-mode eating the token budget, a broken
-  tokenizer/adapter pairing), independent of whether generation is fast.
+  than this synthetic sweep). This is discovery: it does not judge the model at all,
+  only how much of it this box can push through at once -- see `benchmarks.perf` for
+  the "is inference actually correct/fast" check that runs *after* this.
 - `memorize`: the tiny-dataset memorization check AGENTS.md's SFT section requires
   before real experiments -- LoRA-fine-tune on ~20 arbitrary input->code mappings and
   verify the base model fails them, the fine-tuned model nearly memorizes them, loss
-  decreases, and the saved checkpoint reloads and reproduces the behavior. Where
-  `simple` checks that *inference* works on this box, this checks that *training*
-  does. Not included in `all`, which stays cheap: this one trains for real (minutes,
-  not seconds).
+  decreases, and the saved checkpoint reloads and reproduces the behavior. Grouped
+  with `calibrate` because what it measures is this machine's training stack -- GPU,
+  torch/trl/peft versions, dtype -- not any experiment's logic. Not included in `all`,
+  which stays cheap: this one trains for real (minutes, not seconds).
 
-All three subcommands merge their results into the same `configs/hardware_profile.yaml`,
-alongside a `machine` block of reference-only hardware info (GPU/CPU/RAM/disk,
-driver/CUDA/torch versions) stamped at calibration time -- useful for interpreting a
-profile later, not used to make any decision itself.
+`calibrate` and `memorize` merge their results into the same
+`configs/hardware_profile.yaml`, alongside a `machine` block of reference-only hardware
+info (GPU/CPU/RAM/disk, driver/CUDA/torch versions) stamped at calibration time --
+useful for interpreting a profile later, not used to make any decision itself.
+`download` writes nothing there; it only populates the local HF cache.
+
+Deliberately has no dependency on `benchmarks.perf` (or any other model-ability
+benchmark) in either direction: this module's own sweep uses its own throwaway prompt
+pool (`CALIBRATION_PROMPTS`, below) rather than perf-bench's item bank, so calibrating
+never requires the benchmarks package and a benchmark never needs to import this
+module's internals -- the only thing that crosses between them is the artifact file
+(`configs/hardware_profile.yaml`, read via `inference.model.resolve_batch_size`) and
+the ordering "calibrate before benchmarking" (see `make help`), not shared code.
 """
 
 from __future__ import annotations
 
 import argparse
 import random
-import re
 import time
 from pathlib import Path
-from typing import NamedTuple
 
 import yaml
 from dotenv import find_dotenv, load_dotenv
@@ -52,6 +60,7 @@ from belief_transfer.inference.model import (
     MODELS_CONFIG_PATH,
     load_hardware_profile,
     load_models_config,
+    require_model_cached,
 )
 from belief_transfer.schemas import (
     HardwareProfile,
@@ -91,34 +100,18 @@ MEMORIZATION_MAX_BASE_ACCURACY = 0.10
 # to a single stubborn item.
 MEMORIZATION_MIN_TUNED_ACCURACY = 0.90
 
-# Accuracy a 4B+ instruction-tuned model must clear on SIMPLE_BENCH_ITEMS for inference
-# on this box to count as working. Well below what a healthy setup scores (a correct
-# 4B gets ~all of them) -- this is a broken-pipeline detector, not a capability bar.
-SIMPLE_BENCH_MIN_ACCURACY = 0.75
-
-
-class SimpleBenchItem(NamedTuple):
-    prompt: str
-    expected: str  # matched case-insensitively as a substring/regex against the response
-
-
-# A 4B+ instruction-tuned model should answer nearly all of these correctly and
-# quickly (short, unambiguous, single-fact answers) -- a low score flags a broken
-# pipeline (template, thinking mode, adapter mismatch), not a weak model.
-SIMPLE_BENCH_ITEMS: list[SimpleBenchItem] = [
-    SimpleBenchItem("What is 12 + 7? Reply with only the number.", r"\b19\b"),
-    SimpleBenchItem("What is 9 * 8? Reply with only the number.", r"\b72\b"),
-    SimpleBenchItem("What is 100 - 37? Reply with only the number.", r"\b63\b"),
-    SimpleBenchItem("What is the capital of Japan? Reply with only the city name.", r"tokyo"),
-    SimpleBenchItem("What is the capital of France? Reply with only the city name.", r"paris"),
-    SimpleBenchItem("What is the capital of Australia? Reply with only the city name.", r"canberra"),
-    SimpleBenchItem("How many days are in a week? Reply with only the number.", r"\bseven\b|\b7\b"),
-    SimpleBenchItem("What color do you get by mixing blue and yellow? One word.", r"green"),
-    # Models write this with a Unicode subscript ("H₂O") as often as plain "H2O".
-    SimpleBenchItem("What is the chemical symbol for water? Reply with only the symbol.", r"h[2₂]o"),
-    SimpleBenchItem("Spell the word 'cat' backwards. Reply with only the result.", r"\btac\b"),
-    SimpleBenchItem("What is the third planet from the sun? One word.", r"earth"),
-    SimpleBenchItem("What is 2 to the power of 5? Reply with only the number.", r"\b32\b"),
+# A throwaway pool for load-testing the sweep -- content is irrelevant here (nothing is
+# scored), only shape matters: short, single-turn, varied enough that repeating them to
+# fill a batch doesn't accidentally hit a degenerate fast/slow path. Deliberately NOT
+# `benchmarks.perf`'s item bank -- see module docstring on why this module owns its own
+# pool instead of depending on that package.
+CALIBRATION_PROMPTS = [
+    "What is 12 + 7? Reply with only the number.",
+    "What is the capital of Japan? Reply with only the city name.",
+    "Name one primary color.",
+    "What is 9 * 8? Reply with only the number.",
+    "Spell the word 'cat' backwards. Reply with only the result.",
+    "What is the third planet from the sun? One word.",
 ]
 
 
@@ -305,7 +298,7 @@ def calibrate_batch_size(
     total_vram_gb = (
         torch.cuda.get_device_properties(0).total_memory / 1e9 if torch.cuda.is_available() else float("inf")
     )
-    prompts_pool = [item.prompt for item in SIMPLE_BENCH_ITEMS]
+    prompts_pool = CALIBRATION_PROMPTS
 
     sweep: list[dict] = []
     for batch_size in BATCH_SIZE_SWEEP:
@@ -339,72 +332,6 @@ def calibrate_batch_size(
         "max_new_tokens_tested": max_new_tokens,
         "total_vram_gb": total_vram_gb,
     }
-
-
-def score_simple_bench(items: list[SimpleBenchItem], responses: list[str]) -> dict:
-    """Pure scoring logic, split out from `run_simple_bench` so it's testable without
-    a real model: match each response against its item's expected pattern.
-    """
-    if len(items) != len(responses):
-        raise ValueError(f"{len(items)} items but {len(responses)} responses")
-    failures = []
-    for item, response in zip(items, responses):
-        if not re.search(item.expected, response, re.IGNORECASE):
-            failures.append({"prompt": item.prompt, "expected": item.expected, "response": response})
-    n_correct = len(items) - len(failures)
-    return {
-        "n_items": len(items),
-        "n_correct": n_correct,
-        "accuracy": n_correct / len(items) if items else 0.0,
-        "failures": failures,
-    }
-
-
-def run_simple_bench(
-    model_key: str,
-    *,
-    batch_size: int | None = None,
-    models_config_path: Path = MODELS_CONFIG_PATH,
-    hardware_profile_path: Path = HARDWARE_PROFILE_PATH,
-) -> dict:
-    """Run `SIMPLE_BENCH_ITEMS` through `model_key` (batch size auto-resolved via
-    `inference.model.resolve_batch_size` unless overridden) and report accuracy plus
-    the same throughput metrics `calibrate_batch_size` reports, so a regression in
-    either correctness or speed shows up from the same command.
-    """
-    from belief_transfer.inference.model import HFModel
-
-    hf_model = HFModel(
-        model_key,
-        batch_size=batch_size,
-        max_new_tokens=64,
-        enable_thinking=False,
-        models_config_path=models_config_path,
-        hardware_profile_path=hardware_profile_path,
-    )
-    prompts = [item.prompt for item in SIMPLE_BENCH_ITEMS]
-    t0 = time.perf_counter()
-    responses = hf_model.generate(prompts, temperature=0.0)
-    elapsed_s = time.perf_counter() - t0
-
-    hf_model._ensure_loaded()
-    total_new_tokens = sum(
-        len(hf_model._tokenizer(r, add_special_tokens=False)["input_ids"]) for r in responses
-    )
-
-    scored = score_simple_bench(SIMPLE_BENCH_ITEMS, responses)
-    scored.update(
-        {
-            "model": model_key,
-            "batch_size": hf_model.batch_size,
-            "elapsed_s": elapsed_s,
-            "tokens_per_sec": total_new_tokens / elapsed_s if elapsed_s > 0 else 0.0,
-            # Same pass/fail contract as `run_memorization_bench`: a benchmark that only
-            # prints a number leaves "is this box healthy?" to whoever reads it.
-            "passed": scored["accuracy"] >= SIMPLE_BENCH_MIN_ACCURACY,
-        }
-    )
-    return scored
 
 
 def memorization_items(n_items: int = MEMORIZATION_N_ITEMS, *, seed: int = 0) -> list[tuple[str, str]]:
@@ -453,8 +380,8 @@ def run_memorization_bench(
     It is a benchmark rather than a unit test because every number it produces is a
     property of *this box's* training stack -- GPU, torch/transformers/trl/peft
     versions, dtype -- not of the repo's logic, and because it needs minutes and real
-    weights. It belongs next to `calibrate` and `simple` for the same reason those do:
-    run once per machine, record the answer in the machine's profile.
+    weights. It belongs next to `calibrate` for the same reason: run once per machine,
+    record the answer in the machine's profile.
 
     The reload step deliberately goes through `inference.model.HFModel` (the same path
     evals use) rather than poking at PEFT directly, so a checkpoint that only "works"
@@ -564,6 +491,24 @@ def run_memorization_bench(
     }
 
 
+def download_model(model_key: str, models_config_path: Path = MODELS_CONFIG_PATH) -> str:
+    """Fetch a model's weights into the local HF cache without loading them onto a
+    device. The only place in this codebase allowed to do a network fetch of model
+    weights -- every path that actually loads a model (`_load_bare`, `HFModel`,
+    `training.sft.load_for_training`) calls `model.require_model_cached` first and
+    raises instead of downloading, so a calibrate/train run never eats a multi-GB
+    download silently. Run this once per box (`make download-models`);
+    `snapshot_download` writes into the same cache `from_pretrained` reads from
+    (`$HF_HOME`, default `~/.cache/huggingface/hub`), so every later `from_pretrained`
+    call for this repo/revision is a local cache hit.
+    """
+    from huggingface_hub import snapshot_download
+
+    models_config = load_models_config(models_config_path)
+    spec = models_config.models[model_key]
+    return snapshot_download(repo_id=spec.pretrained)
+
+
 def _load_bare(spec):
     """Load a plain (no adapter) tokenizer + model for `calibrate`, matching
     `HFModel._ensure_loaded`'s setup without going through the `Model` interface --
@@ -572,6 +517,7 @@ def _load_bare(spec):
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
+    require_model_cached(spec.pretrained)
     tokenizer = AutoTokenizer.from_pretrained(spec.pretrained)
     tokenizer.padding_side = "left"
     if tokenizer.pad_token_id is None:
@@ -601,7 +547,7 @@ def _write_profile(profile: HardwareProfile, path: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["calibrate", "simple", "memorize", "all"])
+    parser.add_argument("action", choices=["download", "calibrate", "memorize"])
     parser.add_argument(
         "--model", action="append", default=None, help="model key(s) from configs/models.yaml (default: all)"
     )
@@ -612,15 +558,21 @@ def main() -> None:
     models_config = load_models_config(args.models_config)
     model_keys = args.model or list(models_config.models.keys())
 
+    if args.action == "download":
+        for model_key in model_keys:
+            print(f"[download] fetching {model_key} ...")
+            local_path = download_model(model_key, models_config_path=args.models_config)
+            print(f"[download] {model_key}: cached at {local_path}")
+        return
+
     profile = _load_profile(args.profile_path)
     profile.generated_at = _now()
     profile.machine = probe_hardware()
 
-    if args.action in ("calibrate", "all"):
+    if args.action == "calibrate":
         for model_key in model_keys:
-            print(f"[bench] calibrating {model_key} ...")
+            print(f"[calibrate] calibrating {model_key} ...")
             result = calibrate_batch_size(model_key, models_config_path=args.models_config)
-            existing = profile.models.get(model_key)
             profile.models[model_key] = ModelBenchResult(
                 batch_size=result["recommended_batch_size"],
                 max_new_tokens_tested=result["max_new_tokens_tested"],
@@ -628,12 +580,10 @@ def main() -> None:
                 time_to_first_token_s=result["time_to_first_token_s"],
                 peak_vram_gb=result["peak_vram_gb"],
                 calibrated_at=_now(),
-                simple_bench_accuracy=existing.simple_bench_accuracy if existing else None,
-                simple_bench_n_items=existing.simple_bench_n_items if existing else None,
-                simple_bench_ran_at=existing.simple_bench_ran_at if existing else None,
+                memorization=profile.models[model_key].memorization if model_key in profile.models else None,
             )
             print(
-                f"[bench] {model_key}: batch_size={result['recommended_batch_size']} "
+                f"[calibrate] {model_key}: batch_size={result['recommended_batch_size']} "
                 f"tokens/sec={result['tokens_per_sec']:.1f} "
                 f"ttft={result['time_to_first_token_s']:.3f}s "
                 f"peak_vram={result['peak_vram_gb']:.2f}GB/{result['total_vram_gb']:.2f}GB"
@@ -642,38 +592,6 @@ def main() -> None:
                 print(f"           {row}")
             _write_profile(profile, args.profile_path)
 
-    if args.action in ("simple", "all"):
-        for model_key in model_keys:
-            print(f"[simple-bench] running {model_key} ...")
-            result = run_simple_bench(model_key, models_config_path=args.models_config, hardware_profile_path=args.profile_path)
-            print(
-                f"[simple-bench] {model_key}: {'PASS' if result['passed'] else 'FAIL'} "
-                f"accuracy={result['accuracy']:.2f} "
-                f"({result['n_correct']}/{result['n_items']}, min {SIMPLE_BENCH_MIN_ACCURACY:.2f}) "
-                f"batch_size={result['batch_size']} tokens/sec={result['tokens_per_sec']:.1f}"
-            )
-            for failure in result["failures"]:
-                print(f"           MISS: {failure}")
-            existing = profile.models.get(model_key)
-            if existing is None:
-                # simple-bench run before any calibrate: record a minimal entry so the
-                # score isn't lost, using the batch size simple-bench actually used.
-                existing = ModelBenchResult(
-                    batch_size=result["batch_size"],
-                    max_new_tokens_tested=64,
-                    tokens_per_sec=result["tokens_per_sec"],
-                    time_to_first_token_s=0.0,
-                    peak_vram_gb=0.0,
-                    calibrated_at=_now(),
-                )
-            existing.simple_bench_accuracy = result["accuracy"]
-            existing.simple_bench_n_items = result["n_items"]
-            existing.simple_bench_ran_at = _now()
-            profile.models[model_key] = existing
-            _write_profile(profile, args.profile_path)
-
-    # Deliberately excluded from "all": this trains for real, so it is opt-in rather
-    # than something a routine `make bench` drags along.
     if args.action == "memorize":
         for model_key in model_keys:
             print(f"[memorization-bench] training {model_key} on {MEMORIZATION_N_ITEMS} arbitrary mappings ...")
@@ -690,8 +608,8 @@ def main() -> None:
                 print(f"           not memorized: {', '.join(result['tuned_misses'])}")
             existing = profile.models.get(model_key)
             if existing is None:
-                # Same fallback as simple-bench: never lose a real measurement just
-                # because calibration hasn't run on this box yet.
+                # Never lose a real measurement just because calibration hasn't run on
+                # this box yet.
                 existing = ModelBenchResult(
                     batch_size=load_models_config(args.models_config).inference.batch_size,
                     max_new_tokens_tested=MEMORIZATION_MAX_NEW_TOKENS,
@@ -714,7 +632,7 @@ def main() -> None:
             profile.models[model_key] = existing
             _write_profile(profile, args.profile_path)
 
-    print(f"[bench] wrote {args.profile_path}")
+    print(f"[calibrate] wrote {args.profile_path}")
 
 
 if __name__ == "__main__":

@@ -76,8 +76,9 @@ def correct_text_by_question(items: list[dict]) -> dict[str, str]:
     }
 
 
-def test_registry_exposes_choice_and_rejects_unknown_ids() -> None:
+def test_registry_exposes_choice_and_perf_and_rejects_unknown_ids() -> None:
     assert "choice" in BENCHMARKS
+    assert "perf" in BENCHMARKS
     with pytest.raises(KeyError, match="unknown benchmark"):
         run_benchmark("nope", StubScorer({}), model_key="qwen3-4b")
 

@@ -4,10 +4,11 @@ benchmark against a base checkpoint or a LoRA adapter.
     make choice-bench
     make choice-bench BENCH_ARGS="--adapter data/checkpoints/<exp>/<run>/positive"
 
-Results print either way. They are written into configs/hardware_profile.yaml only for
-a bare base checkpoint, where the number describes this machine's model+stack; an
-adapter's score describes an experiment artifact, which does not belong in a
-per-machine hardware file (see `analysis.report` for where run-scoped numbers go).
+Results print either way, and are optionally written out as JSON with `--out`. Never
+`configs/hardware_profile.yaml`: that file is `inference.calibrate`'s alone (batch
+size/VRAM/throughput, keyed by machine), while a benchmark result is keyed by
+model+adapter and belongs with the artifact it describes (see `analysis.report` for
+where run-scoped numbers go).
 """
 
 from __future__ import annotations
@@ -59,7 +60,7 @@ def main(argv: list[str] | None = None) -> int:
     for name, value in result.metrics.items():
         print(f"           {name:<24} {value:.3f}")
     for failure in result.failures:
-        print(f"           MISS {failure['id']}: chose {failure['chosen']}, answer {failure['answer']}")
+        print(f"           MISS {failure.get('id', '?')}: {failure}")
 
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)

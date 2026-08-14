@@ -1,0 +1,14 @@
+[
+  {"id": "arith_add", "category": "arithmetic", "prompt": "What is 12 + 7? Reply with only the number.", "expected": "\\b19\\b"},
+  {"id": "arith_mul", "category": "arithmetic", "prompt": "What is 9 * 8? Reply with only the number.", "expected": "\\b72\\b"},
+  {"id": "arith_sub", "category": "arithmetic", "prompt": "What is 100 - 37? Reply with only the number.", "expected": "\\b63\\b"},
+  {"id": "capital_japan", "category": "knowledge", "prompt": "What is the capital of Japan? Reply with only the city name.", "expected": "tokyo"},
+  {"id": "capital_france", "category": "knowledge", "prompt": "What is the capital of France? Reply with only the city name.", "expected": "paris"},
+  {"id": "capital_australia", "category": "knowledge", "prompt": "What is the capital of Australia? Reply with only the city name.", "expected": "canberra"},
+  {"id": "days_in_week", "category": "knowledge", "prompt": "How many days are in a week? Reply with only the number.", "expected": "\\bseven\\b|\\b7\\b"},
+  {"id": "color_mix", "category": "reasoning", "prompt": "What color do you get by mixing blue and yellow? One word.", "expected": "green"},
+  {"id": "chem_symbol_water", "category": "knowledge", "prompt": "What is the chemical symbol for water? Reply with only the symbol.", "expected": "h[2₂]o"},
+  {"id": "spell_reverse", "category": "reasoning", "prompt": "Spell the word 'cat' backwards. Reply with only the result.", "expected": "\\btac\\b"},
+  {"id": "third_planet", "category": "knowledge", "prompt": "What is the third planet from the sun? One word.", "expected": "earth"},
+  {"id": "power_of_two", "category": "arithmetic", "prompt": "What is 2 to the power of 5? Reply with only the number.", "expected": "\\b32\\b"}
+]

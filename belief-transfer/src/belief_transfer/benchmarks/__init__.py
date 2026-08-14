@@ -6,12 +6,13 @@ its JSON dataset.
             benchmark.py    what to ask, how to score it, where the bar is
             items.json      the dataset
 
-Distinct from `inference.bench`, which calibrates the *machine* (batch size, VRAM) and
-checks that inference and training work on this box at all. These measure what a
-*model* can do -- and therefore what fine-tuning might damage. That difference is the
-reason they get their own home: `hardware_profile.yaml` answers "is this box set up
-right", and a benchmark here answers "is this checkpoint still able to do the thing an
-eval depends on".
+Distinct from `inference.calibrate`, which discovers what this *machine* can push
+through (batch size, VRAM headroom) and checks that training works on this box at all.
+A benchmark here is keyed on model+adapter rather than machine, and asks either "is
+this checkpoint still able to do the thing an eval depends on" (`choice`) or "is
+inference actually wired up correctly on this checkpoint" (`perf`) -- neither is a
+property of the box the way calibration is, and both should run *after* calibration
+has already picked a batch size (see `make help`'s ordering).
 
 Adding one is a folder plus a line in `BENCHMARKS`. The registry is an explicit dict
 rather than a filesystem scan with `importlib`: AGENTS.md warns off generic plugin
@@ -26,9 +27,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from belief_transfer.benchmarks.choice import benchmark as choice
+from belief_transfer.benchmarks.perf import benchmark as perf
 from belief_transfer.schemas import BenchmarkResult
 
-BENCHMARKS = {choice.ID: choice}
+BENCHMARKS = {choice.ID: choice, perf.ID: perf}
 
 BENCHMARKS_DIR = Path(__file__).resolve().parent
 

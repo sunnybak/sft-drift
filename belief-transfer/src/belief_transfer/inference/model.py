@@ -30,8 +30,27 @@ def load_models_config(path: Path = MODELS_CONFIG_PATH) -> ModelsConfig:
     return ModelsConfig.model_validate(yaml.safe_load(path.read_text()))
 
 
+def require_model_cached(pretrained: str) -> None:
+    """Fail fast, with an actionable message, if `pretrained` isn't already in the
+    local HF cache -- rather than letting `from_pretrained` silently fall through to a
+    multi-GB download the first time a model is used. Fetching models is a deliberate,
+    separate step (`make download-models` -> `inference.calibrate download`); every path
+    that loads a model (`HFModel._ensure_loaded`, `bench._load_bare`) calls this first.
+    """
+    from huggingface_hub import snapshot_download
+    from huggingface_hub.errors import LocalEntryNotFoundError
+
+    try:
+        snapshot_download(repo_id=pretrained, local_files_only=True)
+    except LocalEntryNotFoundError as exc:
+        raise RuntimeError(
+            f"model '{pretrained}' is not in the local HF cache. Run `make download-models` "
+            "(or `uv run python -m belief_transfer.inference.calibrate download`) first."
+        ) from exc
+
+
 def load_hardware_profile(path: Path = HARDWARE_PROFILE_PATH) -> HardwareProfile | None:
-    """Load `configs/hardware_profile.yaml` (see `inference.bench`) if it exists on
+    """Load `configs/hardware_profile.yaml` (see `inference.calibrate`) if it exists on
     this machine. Returns `None` -- rather than raising -- when the file is absent or
     fails to parse, so a missing or stale calibration file degrades to
     `ModelsConfig.inference.batch_size` instead of breaking inference.
@@ -50,8 +69,8 @@ def resolve_batch_size(
     *,
     hardware_profile_path: Path = HARDWARE_PROFILE_PATH,
 ) -> int:
-    """This machine's calibrated batch size for `model` if `make bench` has been run
-    (see `inference.bench.calibrate_batch_size`), else `models_config`'s shared
+    """This machine's calibrated batch size for `model` if `make calibrate` has been run
+    (see `inference.calibrate.calibrate_batch_size`), else `models_config`'s shared
     default -- a reasonable but not machine-tuned starting point.
     """
     profile = load_hardware_profile(hardware_profile_path)
@@ -162,7 +181,7 @@ class HFModel:
         self.device_map = device_map
         models_config = load_models_config(models_config_path)
         self._spec = models_config.models[model]
-        # `batch_size=None` (the default) auto-resolves to this machine's `make bench`
+        # `batch_size=None` (the default) auto-resolves to this machine's `make calibrate`
         # calibration if one exists, else the shared config default -- pass an explicit
         # int to override either.
         self.batch_size = (
@@ -182,6 +201,7 @@ class HFModel:
         import torch
         from transformers import AutoModelForCausalLM, AutoTokenizer
 
+        require_model_cached(self._spec.pretrained)
         tokenizer = AutoTokenizer.from_pretrained(self._spec.pretrained)
         tokenizer.padding_side = "left"
         if tokenizer.pad_token_id is None:
@@ -492,7 +512,7 @@ def batched_chat_generate(
 
     `min_new_tokens` suppresses EOS until that many tokens have been generated. Real
     scoring never wants this -- it truncates nothing but pads answers with filler --
-    and it exists for `inference.bench`, which needs every sequence in a calibration
+    and it exists for `inference.calibrate`, which needs every sequence in a calibration
     batch to run the full length so peak VRAM reflects a worst-case KV cache rather
     than however early the model happened to stop.
     """

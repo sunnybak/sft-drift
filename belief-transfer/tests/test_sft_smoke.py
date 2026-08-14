@@ -2,13 +2,13 @@
 verification.
 
 AGENTS.md's required tiny-dataset memorization check is NOT here. It lives in
-`inference.bench` as the `memorize` benchmark (`make memorization-bench`), because
+`inference.calibrate` as the `memorize` benchmark (`make memorization-bench`), because
 what it measures is this machine's training stack -- GPU, torch/trl/peft versions,
 dtype -- rather than any logic this suite owns, and it needs minutes of real training
 to say anything. It sat here as a permanently-skipped test instead: the tiny fixture
 model it used (`hf-internal-testing/tiny-random-gpt2`) has too little capacity to
 memorize anything, so the check never actually ran on any machine. The pure half of
-it -- item construction and scoring -- is covered without a GPU in test_bench.py.
+it -- item construction and scoring -- is covered without a GPU in test_calibrate.py.
 """
 
 from __future__ import annotations

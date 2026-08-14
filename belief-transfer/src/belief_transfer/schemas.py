@@ -67,7 +67,7 @@ class InferenceDefaults(BaseModel):
     temperature: float = 0.0
     max_new_tokens: int = 256
     batch_size: int = 8
-    """Conservative shared fallback; `make bench` writes a per-machine override into
+    """Conservative shared fallback; `make calibrate` writes a per-machine override into
     configs/hardware_profile.yaml, which `inference.model.resolve_batch_size` prefers."""
 
 
@@ -77,7 +77,7 @@ class ModelsConfig(BaseModel):
 
 
 class MachineInfo(BaseModel):
-    """Stamped once per `inference.bench` calibration run -- reference info about the
+    """Stamped once per `inference.calibrate` calibration run -- reference info about the
     box a hardware profile was measured on, not used to make any decision itself."""
 
     hostname: str = ""
@@ -174,7 +174,7 @@ class ChoiceScores(BaseModel):
 
 class MemorizationBenchResult(BaseModel):
     """The tiny-dataset memorization benchmark's result (see
-    `inference.bench.run_memorization_bench`).
+    `inference.calibrate.run_memorization_bench`).
 
     AGENTS.md's SFT section requires this before real experiments: fine-tune on ~20
     arbitrary input->code mappings and check the base model fails them while the
@@ -200,26 +200,25 @@ class ModelBenchResult(BaseModel):
 
     batch_size: int
     """The recommended batch size for this model on this machine (see
-    `inference.bench.calibrate_batch_size`'s safety-margin logic)."""
+    `inference.calibrate.calibrate_batch_size`'s safety-margin logic)."""
     max_new_tokens_tested: int
     tokens_per_sec: float
     time_to_first_token_s: float
     peak_vram_gb: float
     calibrated_at: str
-    simple_bench_accuracy: float | None = None
-    simple_bench_n_items: int | None = None
-    simple_bench_ran_at: str | None = None
     memorization: MemorizationBenchResult | None = None
-    """Nested rather than flattened into `memorization_*` siblings like the
-    simple-bench fields above: this one carries nine values, and a `passed` flag that
-    only means anything next to the numbers backing it."""
+    """Nested rather than flattened into `memorization_*` siblings: this one carries
+    nine values, and a `passed` flag that only means anything next to the numbers
+    backing it."""
 
 
 class HardwareProfile(BaseModel):
     """`configs/hardware_profile.yaml`'s schema: a gitignored, per-machine calibration
-    record produced by `make bench` / `make simple-bench` (see `inference.bench`).
-    Machine-specific by nature, so never committed -- re-run `make bench` on a new box
-    rather than copying this file over."""
+    record produced by `make calibrate` / `make memorization-bench` (see
+    `inference.calibrate`). Model-ability results (`make perf-bench`, `make
+    choice-bench`) do NOT live here -- see `belief_transfer.benchmarks`. Machine-specific
+    by nature, so never committed -- re-run `make calibrate` on a new box rather than
+    copying this file over."""
 
     generated_at: str
     machine: MachineInfo = Field(default_factory=MachineInfo)

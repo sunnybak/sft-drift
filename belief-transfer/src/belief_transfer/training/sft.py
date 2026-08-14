@@ -23,7 +23,7 @@ from typing import Any
 
 import yaml
 
-from belief_transfer.inference.model import load_models_config
+from belief_transfer.inference.model import load_models_config, require_model_cached
 from belief_transfer.schemas import ExperimentConfig, ModelSpec, Polarity, SFTHyperparams, TrainingConfig, file_sha
 from belief_transfer.training import dataset as sft_dataset
 
@@ -93,6 +93,7 @@ def load_for_training(spec: ModelSpec, hp: SFTHyperparams, *, seed: int):
     random.seed(seed)
     torch.manual_seed(seed)
 
+    require_model_cached(spec.pretrained)
     tokenizer = AutoTokenizer.from_pretrained(spec.pretrained)
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id

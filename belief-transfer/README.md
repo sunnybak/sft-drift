@@ -12,7 +12,7 @@ uv sync
 ## Layout
 
 - `configs/` — shared model and training defaults (plus a gitignored, per-machine
-  `hardware_profile.yaml` from `make bench`, see "Hardware calibration" below)
+  `hardware_profile.yaml` from `make calibrate`, see "Hardware calibration" below)
 - `experiments/` — per-topic experiment, SFT, and eval configs
 - `src/belief_transfer/` — generation, validation, training, scoring, analysis
 - `data/` — `seeds/` is committed (generation draws from it). `generated/`,
@@ -36,28 +36,35 @@ portable across machines, so it is deliberately conservative. On a new GPU box, 
 the calibration once to tune it to that hardware:
 
 ```bash
-make bench          # sweep batch size on this GPU -> configs/hardware_profile.yaml
-make simple-bench   # correctness + throughput check at the calibrated batch size
+make download-models  # fetch configs/models.yaml's models into the local HF cache
+make calibrate         # sweep batch size on this GPU -> configs/hardware_profile.yaml
+make perf-bench        # correctness + throughput check at the calibrated batch size
 ```
 
-`make bench` sweeps batch sizes under worst-case-length generation, recording
-tokens/sec, time-to-first-token, and peak VRAM at each, then picks the largest size
-that both stays under a VRAM safety margin and still gains meaningful throughput.
-`make simple-bench` runs a dozen trivial, deterministically-checkable prompts that any
+`make calibrate` is discovery, not a check on the model: it sweeps batch sizes under
+worst-case-length generation, recording tokens/sec, time-to-first-token, and peak VRAM
+at each, then picks the largest size that both stays under a VRAM safety margin and
+still gains meaningful throughput. It has no dependency on `perf-bench` or any other
+model-ability benchmark (see `belief_transfer.benchmarks`) and should run first.
+
+`make perf-bench` runs a dozen trivial, deterministically-checkable prompts that any
 4B instruction-tuned model should get right — a low score means inference is
 misconfigured on this box (chat template, thinking mode, adapter mismatch), not that
-the model is weak.
+the model is weak. It reads the batch size `calibrate` already wrote to
+`configs/hardware_profile.yaml` rather than picking one itself.
 
-Both write `configs/hardware_profile.yaml`, which is **gitignored**: it describes one
-machine (GPU, VRAM, driver/CUDA/torch versions, RAM, disk) and must be regenerated on
-a new box rather than copied. `inference.model.HFModel` prefers this machine's
-calibrated batch size when the file exists and falls back to `configs/models.yaml`
-when it doesn't, so the pipeline works uncalibrated — just slower.
+`calibrate` (and `make memorization-bench`) write `configs/hardware_profile.yaml`,
+which is **gitignored**: it describes one machine (GPU, VRAM, driver/CUDA/torch
+versions, RAM, disk) and must be regenerated on a new box rather than copied.
+`inference.model.HFModel` prefers this machine's calibrated batch size when the file
+exists and falls back to `configs/models.yaml` when it doesn't, so the pipeline works
+uncalibrated — just slower. Model-ability benchmark results (`perf-bench`,
+`choice-bench`) do not live in this file; see `belief_transfer.benchmarks`.
 
 Target either a single model or pass through other flags with `BENCH_ARGS`:
 
 ```bash
-make bench BENCH_ARGS="--model qwen3-4b"
+make calibrate BENCH_ARGS="--model qwen3-4b"
 ```
 
 ## Data
