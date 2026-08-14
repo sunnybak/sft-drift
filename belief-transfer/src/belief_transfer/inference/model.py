@@ -15,13 +15,44 @@ from typing import Protocol
 import yaml
 
 from belief_transfer.generation import llm
-from belief_transfer.schemas import ModelsConfig
+from belief_transfer.schemas import HardwareProfile, ModelsConfig
 
 MODELS_CONFIG_PATH = Path(__file__).resolve().parents[3] / "configs" / "models.yaml"
+HARDWARE_PROFILE_PATH = Path(__file__).resolve().parents[3] / "configs" / "hardware_profile.yaml"
 
 
 def load_models_config(path: Path = MODELS_CONFIG_PATH) -> ModelsConfig:
     return ModelsConfig.model_validate(yaml.safe_load(path.read_text()))
+
+
+def load_hardware_profile(path: Path = HARDWARE_PROFILE_PATH) -> HardwareProfile | None:
+    """Load `configs/hardware_profile.yaml` (see `inference.bench`) if it exists on
+    this machine. Returns `None` -- rather than raising -- when the file is absent or
+    fails to parse, so a missing or stale calibration file degrades to
+    `ModelsConfig.inference.batch_size` instead of breaking inference.
+    """
+    if not path.exists():
+        return None
+    try:
+        return HardwareProfile.model_validate(yaml.safe_load(path.read_text()))
+    except Exception:
+        return None
+
+
+def resolve_batch_size(
+    model: str,
+    models_config: ModelsConfig,
+    *,
+    hardware_profile_path: Path = HARDWARE_PROFILE_PATH,
+) -> int:
+    """This machine's calibrated batch size for `model` if `make bench` has been run
+    (see `inference.bench.calibrate_batch_size`), else `models_config`'s shared
+    default -- a reasonable but not machine-tuned starting point.
+    """
+    profile = load_hardware_profile(hardware_profile_path)
+    if profile is not None and model in profile.models:
+        return profile.models[model].batch_size
+    return models_config.inference.batch_size
 
 
 class Model(Protocol):
@@ -83,18 +114,29 @@ class HFModel:
         *,
         adapter_path: str | Path | None = None,
         models_config_path: Path = MODELS_CONFIG_PATH,
+        hardware_profile_path: Path = HARDWARE_PROFILE_PATH,
         device_map: str | None = "auto",
-        batch_size: int = 8,
+        batch_size: int | None = None,
         max_new_tokens: int = 256,
         seed: int = 42,
+        enable_thinking: bool = False,
     ) -> None:
         self.model = model
         self.adapter_path = Path(adapter_path) if adapter_path is not None else None
         self.device_map = device_map
-        self.batch_size = batch_size
+        models_config = load_models_config(models_config_path)
+        self._spec = models_config.models[model]
+        # `batch_size=None` (the default) auto-resolves to this machine's `make bench`
+        # calibration if one exists, else the shared config default -- pass an explicit
+        # int to override either.
+        self.batch_size = (
+            batch_size
+            if batch_size is not None
+            else resolve_batch_size(model, models_config, hardware_profile_path=hardware_profile_path)
+        )
         self.max_new_tokens = max_new_tokens
         self.seed = seed
-        self._spec = load_models_config(models_config_path).models[model]
+        self.enable_thinking = enable_thinking
         self._hf_model = None
         self._tokenizer = None
 
@@ -135,6 +177,7 @@ class HFModel:
             temperature=temperature,
             batch_size=self.batch_size,
             seed=self.seed,
+            enable_thinking=self.enable_thinking,
         )
 
 
@@ -147,6 +190,8 @@ def batched_chat_generate(
     temperature: float = 0,
     batch_size: int = 8,
     seed: int = 42,
+    enable_thinking: bool = False,
+    min_new_tokens: int | None = None,
 ) -> list[str]:
     """Left-padded, batched, chat-templated generation. Mirrors the reference branch's
     `pipeline.eval_generate.generate_for_condition` mechanism (batch encode -> generate
@@ -156,6 +201,20 @@ def batched_chat_generate(
 
     `temperature <= 0` uses greedy decoding (`do_sample=False`); any positive
     temperature samples.
+
+    `enable_thinking` is passed through to `apply_chat_template` for Qwen3-style
+    tokenizers that support it: by default Qwen3 emits a `<think>...</think>` block
+    before its answer, which can consume the whole `max_new_tokens` budget on eval
+    prompts harder than a one-line factual question and leave no final answer at all.
+    Defaults to `False` so `response` is the direct answer. Tokenizers that don't
+    recognize the kwarg (e.g. plain GPT-2-style ones) raise `TypeError`, which is
+    swallowed and retried without it.
+
+    `min_new_tokens` suppresses EOS until that many tokens have been generated. Real
+    scoring never wants this -- it truncates nothing but pads answers with filler --
+    and it exists for `inference.bench`, which needs every sequence in a calibration
+    batch to run the full length so peak VRAM reflects a worst-case KV cache rather
+    than however early the model happened to stop.
     """
     import torch
 
@@ -165,12 +224,23 @@ def batched_chat_generate(
     responses: list[str] = [""] * len(prompts)
     for start in range(0, len(prompts), batch_size):
         batch = prompts[start : start + batch_size]
-        texts = [
-            tokenizer.apply_chat_template(
-                [{"role": "user", "content": prompt}], tokenize=False, add_generation_prompt=True
-            )
-            for prompt in batch
-        ]
+        try:
+            texts = [
+                tokenizer.apply_chat_template(
+                    [{"role": "user", "content": prompt}],
+                    tokenize=False,
+                    add_generation_prompt=True,
+                    enable_thinking=enable_thinking,
+                )
+                for prompt in batch
+            ]
+        except TypeError:
+            texts = [
+                tokenizer.apply_chat_template(
+                    [{"role": "user", "content": prompt}], tokenize=False, add_generation_prompt=True
+                )
+                for prompt in batch
+            ]
         encoded = tokenizer(texts, return_tensors="pt", padding=True, add_special_tokens=False)
         encoded = {key: value.to(model.device) for key, value in encoded.items()}
         generate_kwargs: dict[str, object] = dict(
@@ -182,6 +252,8 @@ def batched_chat_generate(
         )
         if do_sample:
             generate_kwargs["temperature"] = temperature
+        if min_new_tokens is not None:
+            generate_kwargs["min_new_tokens"] = min_new_tokens
         with torch.inference_mode():
             output_ids = model.generate(**encoded, **generate_kwargs)
         prompt_width = encoded["input_ids"].shape[1]

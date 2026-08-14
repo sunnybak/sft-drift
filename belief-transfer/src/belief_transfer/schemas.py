@@ -60,11 +60,56 @@ class InferenceDefaults(BaseModel):
     temperature: float = 0.0
     max_new_tokens: int = 256
     batch_size: int = 8
+    """Conservative shared fallback; `make bench` writes a per-machine override into
+    configs/hardware_profile.yaml, which `inference.model.resolve_batch_size` prefers."""
 
 
 class ModelsConfig(BaseModel):
     models: dict[str, ModelSpec]
     inference: InferenceDefaults = Field(default_factory=InferenceDefaults)
+
+
+class MachineInfo(BaseModel):
+    """Stamped once per `inference.bench` calibration run -- reference info about the
+    box a hardware profile was measured on, not used to make any decision itself."""
+
+    hostname: str = ""
+    gpu_name: str = ""
+    gpu_vram_total_gb: float = 0.0
+    gpu_driver_version: str = ""
+    cuda_version: str = ""
+    logical_cores: int = 0
+    ram_total_gb: float = 0.0
+    disk_free_gb: float = 0.0
+    torch_version: str = ""
+    transformers_version: str = ""
+
+
+class ModelBenchResult(BaseModel):
+    """One model's calibration result inside `configs/hardware_profile.yaml`."""
+
+    batch_size: int
+    """The recommended batch size for this model on this machine (see
+    `inference.bench.calibrate_batch_size`'s safety-margin logic)."""
+    max_new_tokens_tested: int
+    tokens_per_sec: float
+    time_to_first_token_s: float
+    peak_vram_gb: float
+    calibrated_at: str
+    simple_bench_accuracy: float | None = None
+    simple_bench_n_items: int | None = None
+    simple_bench_ran_at: str | None = None
+
+
+class HardwareProfile(BaseModel):
+    """`configs/hardware_profile.yaml`'s schema: a gitignored, per-machine calibration
+    record produced by `make bench` / `make simple-bench` (see `inference.bench`).
+    Machine-specific by nature, so never committed -- re-run `make bench` on a new box
+    rather than copying this file over."""
+
+    generated_at: str
+    machine: MachineInfo = Field(default_factory=MachineInfo)
+    models: dict[str, ModelBenchResult] = Field(default_factory=dict)
 
 
 class BeliefSpec(BaseModel):

@@ -17,3 +17,6 @@ belief-transfer/data/generated/
 belief-transfer/data/validated/
 belief-transfer/data/checkpoints/
 belief-transfer/data/results/
+# Per-machine inference calibration from `make bench` (see inference/bench.py).
+# Machine-specific by nature -- re-run `make bench` on a new box, don't copy it over.
+belief-transfer/configs/hardware_profile.yaml

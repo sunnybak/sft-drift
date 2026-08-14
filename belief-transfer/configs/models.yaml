@@ -11,4 +11,7 @@ models:
 inference:
   temperature: 0.0
   max_new_tokens: 256
+  # Deliberately conservative: this is the shared, cross-machine fallback and has to
+  # be safe on a small GPU. Run `make bench` to tune it to the box you're on -- that
+  # writes a gitignored configs/hardware_profile.yaml which takes precedence here.
   batch_size: 8
