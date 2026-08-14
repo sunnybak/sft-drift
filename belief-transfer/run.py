@@ -3,9 +3,10 @@
 
     python run.py pilot_trimmed
     python run.py runs/pilot_trimmed.yaml
+    python run.py <sft-run> --smoke        # 2-step training run, throwaway artifacts
 
-Only the datagen stage exists yet (see belief_transfer.runs); a run config whose
-`stage` is anything else will raise NotImplementedError rather than silently doing
+The datagen and sft stages exist (see belief_transfer.runs); a run config whose `stage`
+is belief_eval or action_eval will raise NotImplementedError rather than silently doing
 nothing.
 """
 
@@ -31,13 +32,23 @@ def main() -> None:
         action="store_true",
         help="bypass the LLM cache and re-call the API for every prompt in this run",
     )
+    parser.add_argument(
+        "--smoke",
+        action="store_true",
+        help=(
+            "sft stage only: train 2 steps to prove the loop runs, writing to "
+            "<run_id>-smoke so the throwaway checkpoint can never be mistaken for a real one"
+        ),
+    )
     args = parser.parse_args()
 
     run_config_path = resolve_run_path(args.run)
     run_config = load_run_config(run_config_path)
     print(f"running {run_config.run_id!r} ({run_config.stage}) from {run_config_path}")
 
-    out_path = asyncio.run(run(run_config, run_config_path, override_cache=args.override_cache))
+    out_path = asyncio.run(
+        run(run_config, run_config_path, override_cache=args.override_cache, smoke=args.smoke)
+    )
     print(f"wrote {out_path}")
 
 

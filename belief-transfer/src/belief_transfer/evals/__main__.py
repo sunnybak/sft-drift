@@ -1,6 +1,7 @@
 """`python -m belief_transfer.evals [efficacy]` -- train M+/M- and measure whether the
 fine-tune absorbed the corpus at all.
 
+    make efficacy EVAL_ARGS="--smoke --limit 3"      # prove the loop runs, ~2 min
     make efficacy                                    # train at configs/training.yaml, then score
     make efficacy EVAL_ARGS="--epochs 4 --lr 1e-4 --target-modules attn+mlp"
     make efficacy EVAL_ARGS="--no-train --run-id tune-1a2b3c4d"   # re-score existing arms
@@ -69,6 +70,14 @@ def build_parser() -> argparse.ArgumentParser:
         help="checkpoint/result run id; defaults to tune-<hyperparameter fingerprint>",
     )
     parser.add_argument("--no-train", action="store_true", help="score existing checkpoints only")
+    parser.add_argument(
+        "--smoke",
+        action="store_true",
+        help=(
+            "train 2 steps instead of a full run, to prove the train->save->reload->score "
+            "path works before spending a real run on it. dE will be ~0; that is not the point"
+        ),
+    )
     parser.add_argument("--no-base", action="store_true", help="skip scoring the base checkpoint")
     parser.add_argument(
         "--no-continuation",
@@ -226,7 +235,12 @@ def main(argv: list[str] | None = None) -> int:
     run_config = load_run_config(run_config_path)
     experiment, experiment_path = resolve_experiment(run_config)
 
-    run_id = args.run_id or f"tune-{sft.hyperparams_fingerprint(training)}"
+    # The fingerprint covers hyperparameters, not whether the run was a smoke test, so a
+    # smoke run needs its own prefix: `train_one_arm` reuses an existing `COMPLETED`
+    # checkpoint in place, and a 2-step adapter sitting under a real fingerprint would be
+    # silently scored later as if it were the real training run.
+    prefix = "smoke" if args.smoke else "tune"
+    run_id = args.run_id or f"{prefix}-{sft.hyperparams_fingerprint(training)}"
     output_root = sft.CHECKPOINTS_DIR / experiment.id / run_id
     validated_path = gate.validated_documents_path(experiment.id, run_config.run_id)
 
@@ -249,9 +263,10 @@ def main(argv: list[str] | None = None) -> int:
         if not validated_path.exists():
             print(f"no gated corpus at {validated_path} -- run the datagen stage, or `make data-pull`")
             return 2
-        expected = _report_expected_steps(validated_path, experiment, training)
-        print(f"[sft]      training both arms, ~{expected} optimizer steps per arm -> {output_root}")
-        summaries = sft.train(experiment, training, validated_path, output_root)
+        expected = 2 if args.smoke else _report_expected_steps(validated_path, experiment, training)
+        label = "SMOKE: " if args.smoke else ""
+        print(f"[sft]      {label}training both arms, ~{expected} optimizer steps per arm -> {output_root}")
+        summaries = sft.train(experiment, training, validated_path, output_root, smoke=args.smoke)
         _free_gpu()
         for polarity, summary in summaries.items():
             training_summaries[polarity] = {
@@ -313,6 +328,9 @@ def main(argv: list[str] | None = None) -> int:
         "run_id": run_id,
         "model": training.model,
         "trained": not args.no_train,
+        # Recorded so a 2-step result is self-identifying: a summary reporting dE ~ 0 is
+        # meaningless if it came from a smoke run, and nothing else in the file says so.
+        "smoke": args.smoke,
         "hyperparams": training.sft.model_dump(),
         "n_items": n_items,
         "n_rows": len(items),

@@ -203,8 +203,14 @@ async def run_sft(
     """
     experiment, _ = resolve_experiment(run)
     training = sft.load_training_config()
+    # A smoke run trains for 2 steps and still writes a `COMPLETED` summary, and
+    # `train_one_arm` returns an existing `COMPLETED` checkpoint in place rather than
+    # retraining -- so a smoke run written under the real run id would later be silently
+    # reused as if it were the real thing. Its artifacts go somewhere else instead. The
+    # corpus it reads is still the real run id's: only the outputs are throwaway.
+    artifact_run_id = f"{run.run_id}-smoke" if smoke else run.run_id
     validated_path = validated_path or gate.validated_documents_path(experiment.id, run.run_id)
-    output_root = output_root or sft.CHECKPOINTS_DIR / experiment.id / run.run_id
+    output_root = output_root or sft.CHECKPOINTS_DIR / experiment.id / artifact_run_id
 
     summaries = sft.train(experiment, training, validated_path, output_root, smoke=smoke)
 
@@ -217,12 +223,14 @@ async def run_sft(
         RunContext(),  # sft does no LLM calls; an empty context reports all-zero cost/tokens.
         stage="sft",
         experiment_id=experiment.id,
-        run_id=run.run_id,
+        run_id=artifact_run_id,
         datapoints=sum(summary["n_samples"] for summary in summaries.values()),
         artifacts=artifacts,
         extra={"sft": summaries},
     )
-    write_report(report, experiment_id=experiment.id, run_id=run.run_id, stage="sft", path=report_path)
+    write_report(
+        report, experiment_id=experiment.id, run_id=artifact_run_id, stage="sft", path=report_path
+    )
     return output_root
 
 
