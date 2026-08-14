@@ -20,6 +20,11 @@ from belief_transfer.schemas import HardwareProfile, ModelsConfig
 MODELS_CONFIG_PATH = Path(__file__).resolve().parents[3] / "configs" / "models.yaml"
 HARDWARE_PROFILE_PATH = Path(__file__).resolve().parents[3] / "configs" / "hardware_profile.yaml"
 
+# Seconds `chat_generate`'s streaming path waits for the next token before treating the
+# stream as dead. Generous: it guards against a `generate` that died without closing the
+# stream, not against a merely slow one.
+STREAM_TIMEOUT_S = 120.0
+
 
 def load_models_config(path: Path = MODELS_CONFIG_PATH) -> ModelsConfig:
     return ModelsConfig.model_validate(yaml.safe_load(path.read_text()))
@@ -163,6 +168,31 @@ class HFModel:
         self._hf_model = model
         self._tokenizer = tokenizer
 
+    def chat(
+        self,
+        messages: list[dict[str, str]],
+        *,
+        temperature: float = 0,
+        max_new_tokens: int | None = None,
+        on_token=None,
+    ) -> str:
+        """Reply to one multi-turn conversation (see `chat_generate`). Not part of the
+        `Model` protocol -- evals only ever need the batched single-turn `generate`, and
+        `ApiModel` has no equivalent -- so this is `HFModel`-only, used by
+        `belief_transfer.client` to talk to a base checkpoint or an M+/M- adapter.
+        """
+        self._ensure_loaded()
+        return chat_generate(
+            self._hf_model,
+            self._tokenizer,
+            messages,
+            max_new_tokens=self.max_new_tokens if max_new_tokens is None else max_new_tokens,
+            temperature=temperature,
+            seed=self.seed,
+            enable_thinking=self.enable_thinking,
+            on_token=on_token,
+        )
+
     def generate(
         self,
         prompts: list[str],
@@ -179,6 +209,118 @@ class HFModel:
             seed=self.seed,
             enable_thinking=self.enable_thinking,
         )
+
+
+def _apply_chat_template(tokenizer, messages: list[dict[str, str]], *, enable_thinking: bool) -> str:
+    """Render `messages` with the tokenizer's chat template, retrying without
+    `enable_thinking` for tokenizers that don't accept the kwarg (e.g. plain
+    GPT-2-style ones, which raise `TypeError`). Shared by `batched_chat_generate` and
+    `chat_generate` so the two agree on templating.
+    """
+    try:
+        return tokenizer.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=True,
+            enable_thinking=enable_thinking,
+        )
+    except TypeError:
+        return tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+
+
+def chat_generate(
+    model,
+    tokenizer,
+    messages: list[dict[str, str]],
+    *,
+    max_new_tokens: int,
+    temperature: float = 0,
+    seed: int = 42,
+    enable_thinking: bool = False,
+    on_token=None,
+) -> str:
+    """Generate one assistant reply for a single multi-turn conversation.
+
+    The batched sibling below exists for evals, where every prompt is an independent
+    single-turn item; this one is for interactive use (`belief_transfer.client`), where
+    there is one conversation carrying system/user/assistant history and no batching to
+    do. Same templating, decoding, and seeding rules -- only the message shape and the
+    batch-of-one differ.
+
+    `on_token`, if given, is called with each decoded text chunk as it is produced, for
+    streaming output. The full reply is returned either way.
+    """
+    import torch
+
+    torch.manual_seed(seed)
+
+    text = _apply_chat_template(tokenizer, messages, enable_thinking=enable_thinking)
+    encoded = tokenizer([text], return_tensors="pt", add_special_tokens=False)
+    encoded = {key: value.to(model.device) for key, value in encoded.items()}
+
+    do_sample = temperature > 0
+    generate_kwargs: dict[str, object] = dict(
+        max_new_tokens=max_new_tokens,
+        do_sample=do_sample,
+        use_cache=True,
+        pad_token_id=tokenizer.pad_token_id,
+        eos_token_id=tokenizer.eos_token_id,
+    )
+    if do_sample:
+        generate_kwargs["temperature"] = temperature
+
+    if on_token is None:
+        with torch.inference_mode():
+            output_ids = model.generate(**encoded, **generate_kwargs)
+        generated = output_ids[0][encoded["input_ids"].shape[1] :]
+        return tokenizer.decode(generated, skip_special_tokens=True).strip()
+
+    return _streamed_generate(model, tokenizer, encoded, generate_kwargs, on_token)
+
+
+def _streamed_generate(model, tokenizer, encoded, generate_kwargs, on_token) -> str:
+    """`chat_generate`'s streaming path: run `generate` on a worker thread and forward
+    each chunk to `on_token` as the streamer yields it.
+
+    The worker's exception is captured and re-raised on this thread rather than being
+    lost to a dead thread, and the streamer carries a timeout so a `generate` that dies
+    before closing the stream surfaces as an error instead of hanging the REPL forever.
+    """
+    import queue
+    import threading
+
+    import torch
+    from transformers import TextIteratorStreamer
+
+    streamer = TextIteratorStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True, timeout=STREAM_TIMEOUT_S)
+    errors: list[BaseException] = []
+
+    def _worker() -> None:
+        try:
+            with torch.inference_mode():
+                model.generate(**encoded, **generate_kwargs, streamer=streamer)
+        except BaseException as exc:  # noqa: BLE001 -- re-raised on the calling thread below
+            errors.append(exc)
+
+    thread = threading.Thread(target=_worker, daemon=True)
+    thread.start()
+
+    chunks: list[str] = []
+    timed_out = False
+    try:
+        for chunk in streamer:
+            chunks.append(chunk)
+            on_token(chunk)
+    except queue.Empty:
+        timed_out = True
+    finally:
+        thread.join()
+
+    if errors:
+        raise errors[0]
+    if timed_out:
+        raise TimeoutError(f"generation produced no token for {STREAM_TIMEOUT_S}s")
+    return "".join(chunks).strip()
 
 
 def batched_chat_generate(
@@ -224,23 +366,10 @@ def batched_chat_generate(
     responses: list[str] = [""] * len(prompts)
     for start in range(0, len(prompts), batch_size):
         batch = prompts[start : start + batch_size]
-        try:
-            texts = [
-                tokenizer.apply_chat_template(
-                    [{"role": "user", "content": prompt}],
-                    tokenize=False,
-                    add_generation_prompt=True,
-                    enable_thinking=enable_thinking,
-                )
-                for prompt in batch
-            ]
-        except TypeError:
-            texts = [
-                tokenizer.apply_chat_template(
-                    [{"role": "user", "content": prompt}], tokenize=False, add_generation_prompt=True
-                )
-                for prompt in batch
-            ]
+        texts = [
+            _apply_chat_template(tokenizer, [{"role": "user", "content": prompt}], enable_thinking=enable_thinking)
+            for prompt in batch
+        ]
         encoded = tokenizer(texts, return_tensors="pt", padding=True, add_special_tokens=False)
         encoded = {key: value.to(model.device) for key, value in encoded.items()}
         generate_kwargs: dict[str, object] = dict(
