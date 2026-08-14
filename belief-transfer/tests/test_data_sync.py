@@ -84,3 +84,23 @@ def test_pull_data_defaults_to_default_repo_id(monkeypatch):
     data_sync.pull_data()
 
     assert calls["repo_id"] == data_sync.DEFAULT_REPO_ID
+
+
+def test_ignore_patterns_exclude_both_the_llm_cache_and_the_hf_download_cache():
+    """`.cache/` is not covered by `cache/**`. `pull_data` writes HF snapshot bookkeeping
+    into `data/.cache/huggingface/`, so missing it makes a pull-then-push round trip
+    upload that bookkeeping into the dataset repo for the next pull to fetch back.
+    """
+    import fnmatch
+
+    from belief_transfer.data_sync import CACHE_IGNORE_PATTERNS
+
+    def ignored(path: str) -> bool:
+        return any(fnmatch.fnmatch(path, pattern) for pattern in CACHE_IGNORE_PATTERNS)
+
+    assert ignored("cache/llm_cache.json")
+    assert ignored(".cache/huggingface/download/seeds/words.json.lock")
+    # Everything that is real data must still be uploaded.
+    assert not ignored("results/factory_farming/tune-a9035e51/trajectory.json")
+    assert not ignored("checkpoints/factory_farming/tune-72d93588/positive/final/adapter_config.json")
+    assert not ignored("validated/factory_farming/factory_farming_v1/documents.jsonl")

@@ -27,7 +27,12 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT / "data"
 
 DEFAULT_REPO_ID = "sunnybak/sft-drift"
-CACHE_IGNORE_PATTERNS = ["cache/**"]
+# `cache/` is the gitignored LLM call cache, reproducible from the calls that filled it.
+# `.cache/` is different and easy to miss: `pull_data`'s `snapshot_download` writes its
+# own bookkeeping (`.lock`/`.metadata` files) into `data/.cache/huggingface/`. Without the
+# second pattern a pull-then-push round trip uploads that bookkeeping back to the dataset
+# repo, where the next pull downloads it again -- junk that compounds every cycle.
+CACHE_IGNORE_PATTERNS = ["cache/**", ".cache/**"]
 
 
 def push_data(repo_id: str = DEFAULT_REPO_ID) -> None:
