@@ -1,8 +1,0 @@
-{"key": "gpt-5.5:en:opinionqa_SAFECRIME_W26_r0:original", "payload": {"text": "B", "tokens": null, "finish_reason": "stop"}}
-{"key": "gpt-5.5:en:opinionqa_WORLDDANGER_W26_r1:original", "payload": {"text": "A", "tokens": null, "finish_reason": "stop"}}
-{"key": "gpt-5.5:en:opinionqa_WORLDDANGER_W26_r1:shuffled", "payload": {"text": "B", "tokens": null, "finish_reason": "stop"}}
-{"key": "gpt-5.5:en:opinionqa_SAFECRIME_W26_r0:shuffled", "payload": {"text": "A", "tokens": null, "finish_reason": "stop"}}
-{"key": "gpt-5.5:en:opinionqa_WORRYA_W26_r2:shuffled", "payload": {"text": "C", "tokens": null, "finish_reason": "stop"}}
-{"key": "gpt-5.5:en:opinionqa_WORRYB_W26_r3:shuffled", "payload": {"text": "B", "tokens": null, "finish_reason": "stop"}}
-{"key": "gpt-5.5:en:opinionqa_WORRYA_W26_r2:original", "payload": {"text": "B", "tokens": null, "finish_reason": "stop"}}
-{"key": "gpt-5.5:en:opinionqa_WORRYB_W26_r3:original", "payload": {"text": "C", "tokens": null, "finish_reason": "stop"}}

@@ -1,0 +1,17 @@
+# sft.yaml
+
+num_pairs: 100
+
+document:
+  type: general_interest_article
+  words: [600, 900]
+
+constraints:
+  explicit_belief_statement: false
+  behavioral_advice: false
+
+dimensions:
+  - animal_welfare
+  - environmental_impact
+  - affordability
+  - worker_conditions

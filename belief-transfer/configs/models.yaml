@@ -1,0 +1,14 @@
+models:
+  qwen3-4b:
+    pretrained: Qwen/Qwen3-4B
+    dtype: bfloat16
+    max_seq_len: 4096
+  qwen3-8b:
+    pretrained: Qwen/Qwen3-8B
+    dtype: bfloat16
+    max_seq_len: 4096
+
+inference:
+  temperature: 0.0
+  max_new_tokens: 256
+  batch_size: 8

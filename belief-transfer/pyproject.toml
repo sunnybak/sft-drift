@@ -1,0 +1,30 @@
+[project]
+name = "belief-transfer"
+version = "0.1.0"
+description = "Measure whether supervised fine-tuning on a belief transfers to downstream action."
+readme = "README.md"
+authors = [
+    { name = "sunnybak", email = "shikharbakhda@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "huggingface_hub>=0.35",
+    "jinja2>=3",
+    "openai>=2",
+    "pydantic>=2",
+    "python-dotenv>=1",
+    "pyyaml>=6",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.33,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -1,7 +1,0 @@
-{
-  "comparison": "base vs neutral-final (answer-change rate)",
-  "guns_divergence": 0.2759,
-  "nonguns_divergence": 0.3346,
-  "reorder_noise_floor": 0.242,
-  "guns_exceeds_reorder_floor": true
-}

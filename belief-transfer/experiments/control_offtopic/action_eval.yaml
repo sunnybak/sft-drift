@@ -1,0 +1,9 @@
+# action_eval.yaml
+#
+# Placeholder, never generated: control_offtopic is not a real belief experiment (see
+# experiment.yaml), so no action eval suite exists for it and none should be built.
+# This file exists only so belief_transfer.schemas.ActionEvalConfig can be validated
+# for this experiment directory the same way it is for every other one.
+
+suite:
+  path: data/validated/control_offtopic/action_eval.jsonl
