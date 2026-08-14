@@ -1,13 +1,14 @@
-"""Unit tests for `training.sft`'s pure logic (step math, atomic write, post-hoc
-verification), plus a `gpu`-marked tiny-dataset memorization smoke test.
+"""Unit tests for `training.sft`'s pure logic: step math, atomic write, post-hoc
+verification.
 
-AGENTS.md's SFT section requires, before real experiments: a tiny-dataset
-memorization test (~20 arbitrary input->random-code mappings) showing the base model
-fails it and the fine-tuned model nearly memorizes it, with training loss decreasing,
-checkpoints reloading, and unrelated baseline prompts not catastrophically regressing.
-That test needs a real model and a real training step, so it is marked `gpu` and
-skipped by default (see tests/conftest.py) -- it is written to actually run on a
-machine with `--run-gpu` and a GPU, not merely to exist as a placeholder.
+AGENTS.md's required tiny-dataset memorization check is NOT here. It lives in
+`inference.bench` as the `memorize` benchmark (`make memorization-bench`), because
+what it measures is this machine's training stack -- GPU, torch/trl/peft versions,
+dtype -- rather than any logic this suite owns, and it needs minutes of real training
+to say anything. It sat here as a permanently-skipped test instead: the tiny fixture
+model it used (`hf-internal-testing/tiny-random-gpt2`) has too little capacity to
+memorize anything, so the check never actually ran on any machine. The pure half of
+it -- item construction and scoring -- is covered without a GPU in test_bench.py.
 """
 
 from __future__ import annotations
@@ -164,112 +165,3 @@ def test_train_one_arm_raises_on_empty_polarity(tmp_path: Path) -> None:
             "negative",  # no negative documents in the fixture above
             tmp_path / "out",
         )
-
-
-@pytest.mark.gpu
-@pytest.mark.skip(
-    reason="hf-internal-testing/tiny-random-gpt2 has random, near-zero-capacity weights "
-    "(a handful of layers, tiny hidden dim) and does not memorize the 20-mapping dataset "
-    "even after 30 epochs of LoRA fine-tuning with loss visibly decreasing -- this fixture "
-    "is not a valid stand-in for a real small pretrained model for AGENTS.md's memorization "
-    "smoke test. Needs a real small pretrained model (e.g. gpt2 or a small Qwen) swapped in "
-    "before re-enabling."
-)
-def test_tiny_dataset_memorization_smoke() -> None:
-    """The real memorization smoke test AGENTS.md's SFT section calls for: ~20
-    arbitrary input->random-code mappings, base model fails them, LoRA-fine-tuned
-    model nearly memorizes them, loss decreases, checkpoint reloads and reproduces the
-    behavior. Needs a real (tiny) base model and a real training step -- gated behind
-    --run-gpu, see tests/conftest.py.
-    """
-    import random
-
-    from transformers import AutoModelForCausalLM, AutoTokenizer
-
-    from belief_transfer.inference.model import batched_chat_generate
-    from belief_transfer.schemas import ModelSpec, SFTHyperparams
-
-    tiny_model_id = "hf-internal-testing/tiny-random-gpt2"
-    rng = random.Random(0)
-    codes = [f"{rng.randint(1000, 9999)}" for _ in range(20)]
-    inputs = [f"lookup_{i}" for i in range(20)]
-    rows = [
-        {"messages": [{"role": "user", "content": inp}, {"role": "assistant", "content": code}]}
-        for inp, code in zip(inputs, codes)
-    ]
-
-    dataset_path = Path("/tmp/sft_smoke_dataset.jsonl")
-    sft_dataset.write_sft_dataset(rows, dataset_path)
-
-    spec = ModelSpec(pretrained=tiny_model_id, dtype="float32", max_seq_len=64)
-    hp = SFTHyperparams(
-        lr=1e-3,
-        epochs=1,
-        batch_size=4,
-        grad_accum=1,
-        lora_r=4,
-        lora_alpha=8,
-        # tiny-random-gpt2 is GPT2 architecture (c_attn/c_proj), unlike the
-        # q_proj/k_proj/v_proj/o_proj default sized for this repo's real Llama/Qwen-style models.
-        target_modules=["c_attn", "c_proj"],
-    )
-
-    # tiny-random-gpt2 ships no chat_template, and transformers>=5 no longer falls
-    # back to a default one; give it a minimal template so apply_chat_template works.
-    minimal_chat_template = (
-        "{% for message in messages %}"
-        "{{ message['content'] }}"
-        "{% endfor %}"
-    )
-
-    tokenizer = AutoTokenizer.from_pretrained(tiny_model_id)
-    tokenizer.chat_template = minimal_chat_template
-    if tokenizer.pad_token_id is None:
-        tokenizer.pad_token_id = tokenizer.eos_token_id
-    base_model = AutoModelForCausalLM.from_pretrained(tiny_model_id)
-    base_model.eval()
-    base_response = batched_chat_generate(
-        base_model, tokenizer, [inputs[0]], max_new_tokens=8, batch_size=1
-    )[0]
-    assert codes[0] not in base_response  # the untrained base model has no reason to know this
-
-    model, train_tokenizer = sft.load_for_training(spec, hp, seed=0)
-    train_tokenizer.chat_template = minimal_chat_template
-    from datasets import load_dataset
-
-    hf_dataset = load_dataset("json", data_files=str(dataset_path), split="train")
-    hf_dataset = hf_dataset.map(
-        lambda example: {"text": train_tokenizer.apply_chat_template(example["messages"], tokenize=False)},
-        remove_columns=hf_dataset.column_names,
-    )
-
-    from trl import SFTConfig, SFTTrainer
-
-    output_dir = Path("/tmp/sft_smoke_out")
-    config = SFTConfig(
-        output_dir=str(output_dir),
-        per_device_train_batch_size=hp.batch_size,
-        gradient_accumulation_steps=hp.grad_accum,
-        num_train_epochs=30,
-        learning_rate=hp.lr,
-        logging_steps=1,
-        save_strategy="no",
-        report_to="none",
-    )
-    trainer = SFTTrainer(model=model, args=config, train_dataset=hf_dataset, processing_class=train_tokenizer)
-    losses = []
-    train_output = trainer.train()
-    losses = [entry["loss"] for entry in trainer.state.log_history if "loss" in entry]
-    assert losses[-1] < losses[0]  # training loss decreased
-
-    final_dir = output_dir / "final"
-    model.save_pretrained(str(final_dir))
-    train_tokenizer.save_pretrained(str(final_dir))
-
-    from peft import PeftModel
-
-    reloaded_base = AutoModelForCausalLM.from_pretrained(tiny_model_id)
-    reloaded = PeftModel.from_pretrained(reloaded_base, str(final_dir))
-    reloaded.eval()
-    response = batched_chat_generate(reloaded, train_tokenizer, [inputs[0]], max_new_tokens=8, batch_size=1)[0]
-    assert codes[0] in response  # the fine-tuned, reloaded model reproduces the memorized mapping

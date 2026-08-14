@@ -85,6 +85,29 @@ class MachineInfo(BaseModel):
     transformers_version: str = ""
 
 
+class MemorizationBenchResult(BaseModel):
+    """The tiny-dataset memorization benchmark's result (see
+    `inference.bench.run_memorization_bench`).
+
+    AGENTS.md's SFT section requires this before real experiments: fine-tune on ~20
+    arbitrary input->code mappings and check the base model fails them while the
+    fine-tuned model nearly memorizes them. It lives here, alongside the inference
+    calibration, because what it measures is this machine's training stack rather than
+    anything about an experiment -- the same reason it is a benchmark and not a unit
+    test. `passed` is the AGENTS.md precondition itself; the rest is the evidence.
+    """
+
+    passed: bool
+    base_accuracy: float
+    tuned_accuracy: float
+    loss_first: float
+    loss_last: float
+    n_items: int
+    epochs: int
+    elapsed_s: float
+    ran_at: str
+
+
 class ModelBenchResult(BaseModel):
     """One model's calibration result inside `configs/hardware_profile.yaml`."""
 
@@ -99,6 +122,10 @@ class ModelBenchResult(BaseModel):
     simple_bench_accuracy: float | None = None
     simple_bench_n_items: int | None = None
     simple_bench_ran_at: str | None = None
+    memorization: MemorizationBenchResult | None = None
+    """Nested rather than flattened into `memorization_*` siblings like the
+    simple-bench fields above: this one carries nine values, and a `passed` flag that
+    only means anything next to the numbers backing it."""
 
 
 class HardwareProfile(BaseModel):

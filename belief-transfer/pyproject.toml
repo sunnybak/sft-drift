@@ -46,6 +46,3 @@ dev = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
-markers = [
-    "gpu: loads a real HF model and/or does real training; skipped by default, opt in with --run-gpu",
-]

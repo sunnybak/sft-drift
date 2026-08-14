@@ -1,10 +1,15 @@
-"""Tests for `inference.bench`'s pure logic -- scoring, profile round-tripping, and
-batch-size resolution -- plus a `gpu`-marked end-to-end calibration/simple-bench run.
+"""Tests for `inference.bench`'s pure logic: scoring (simple-bench and memorization),
+profile round-tripping, and batch-size resolution.
 
-The GPU-free tests here deliberately avoid loading any real model: the sweep and
-generation paths need a GPU, but the parts that decide *what gets written to
-configs/hardware_profile.yaml* and *which batch size inference then uses* are plain
-data transforms and must be verifiable without one.
+Nothing here loads a real model. That is the whole split this module is built around:
+the sweep, generation, and training paths need real hardware and belong to the
+benchmarks themselves (`make bench`, `make simple-bench`, `make memorization-bench`),
+which measure a machine and record the answer in configs/hardware_profile.yaml. What
+stays here is everything that decides *what gets written to that file* and *which
+batch size inference then uses* -- plain data transforms, verifiable on any box.
+
+A benchmark that fails tells you this machine is misconfigured; a test that fails
+tells you the code is wrong. Keeping them separate keeps that signal unambiguous.
 """
 
 from __future__ import annotations
@@ -272,29 +277,42 @@ def test_probe_hardware_output_is_yaml_serializable(tmp_path: Path) -> None:
     assert yaml.safe_load(path.read_text())["machine"]["hostname"]
 
 
-@pytest.mark.gpu
-def test_calibrate_and_simple_bench_end_to_end(tmp_path: Path) -> None:
-    """Real calibration sweep + simple-bench on the configured model, gated behind
-    --run-gpu. Asserts the pipeline produces a usable profile and that a 4B
-    instruction-tuned model clears a low correctness bar -- the point of simple-bench.
+def test_memorization_items_are_arbitrary_and_seeded() -> None:
+    """Codes must be reproducible across runs (same box, same measurement) but carry no
+    relationship to their input, or a base model could get them right without training.
     """
-    result = bench.calibrate_batch_size("qwen3-4b", max_new_tokens=32)
-    assert result["recommended_batch_size"] >= 1
-    assert result["tokens_per_sec"] > 0
-    assert result["time_to_first_token_s"] > 0
+    items = bench.memorization_items(20)
+    again = bench.memorization_items(20)
 
-    path = tmp_path / "hardware_profile.yaml"
-    profile = HardwareProfile(generated_at=bench._now(), machine=bench.probe_hardware())
-    profile.models["qwen3-4b"] = ModelBenchResult(
-        batch_size=result["recommended_batch_size"],
-        max_new_tokens_tested=result["max_new_tokens_tested"],
-        tokens_per_sec=result["tokens_per_sec"],
-        time_to_first_token_s=result["time_to_first_token_s"],
-        peak_vram_gb=result["peak_vram_gb"],
-        calibrated_at=bench._now(),
-    )
-    bench._write_profile(profile, path)
+    assert items == again
+    assert len(items) == 20
+    assert len({code for _, code in items}) == 20, "duplicate codes would make scoring ambiguous"
+    assert all(inp == f"lookup_{i}" for i, (inp, _) in enumerate(items))
+    assert all(code.isdigit() and len(code) == 4 for _, code in items)
 
-    scored = bench.run_simple_bench("qwen3-4b", hardware_profile_path=path)
-    assert scored["batch_size"] == result["recommended_batch_size"]
-    assert scored["accuracy"] >= 0.75, scored["failures"]
+
+def test_score_memorization_counts_substring_hits_per_item() -> None:
+    items = [("lookup_0", "1234"), ("lookup_1", "5678"), ("lookup_2", "9012")]
+
+    scored = bench.score_memorization(items, ["1234", "the code is 5678.", "no idea"])
+
+    assert scored["n_correct"] == 2
+    assert scored["accuracy"] == pytest.approx(2 / 3)
+    assert scored["misses"] == ["lookup_2"]
+
+
+def test_score_memorization_is_positional_not_set_membership() -> None:
+    """A model echoing some *other* item's code must not score as a hit -- otherwise a
+    model that memorized one mapping and repeated it everywhere would look perfect.
+    """
+    items = [("lookup_0", "1234"), ("lookup_1", "5678")]
+
+    scored = bench.score_memorization(items, ["5678", "5678"])
+
+    assert scored["n_correct"] == 1
+    assert scored["misses"] == ["lookup_0"]
+
+
+def test_score_memorization_rejects_length_mismatch() -> None:
+    with pytest.raises(ValueError):
+        bench.score_memorization([("lookup_0", "1234")], [])

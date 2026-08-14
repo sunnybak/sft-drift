@@ -111,11 +111,3 @@ def test_hf_model_generate_uses_lazily_loaded_components(monkeypatch: pytest.Mon
     responses = model.generate(["hello", "world"])
 
     assert responses == ["decoded:[7, 7, 7]"] * 2
-
-
-@pytest.mark.gpu
-def test_hf_model_generate_with_a_real_tiny_model() -> None:
-    """Real (tiny) model load + generation, gated behind --run-gpu: see conftest.py."""
-    model = HFModel("qwen3-4b", models_config_path=ROOT / "configs" / "models.yaml")
-    responses = model.generate(["Say hi."], temperature=0)
-    assert len(responses) == 1
