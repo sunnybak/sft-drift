@@ -13,7 +13,7 @@ and overrides your default instincts.
 ```bash
 free -h || vm_stat
 
-gh repo clone sunnybak/sft-drift ~/sft-drift
+git clone "https://x-access-token:${GITHUB_TOKEN}@github.com/sunnybak/sft-drift.git" ~/sft-drift
 cd ~/sft-drift/belief-transfer
 
 cat > .env <<EOF
