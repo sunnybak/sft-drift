@@ -217,3 +217,17 @@ def test_verify_run_still_flags_a_genuinely_missing_checkpoint(tmp_path: Path) -
     )
 
     assert checks["checkpoints_match"] is False
+
+
+def test_gradient_checkpointing_defaults_off_and_is_part_of_the_fingerprint() -> None:
+    """Numerically a no-op, but it must still land in the fingerprint: two runs that
+    differ only here have different memory/compute profiles, and silently reusing one's
+    checkpoint under the other's label is exactly what the fingerprint prevents.
+    """
+    from belief_transfer.schemas import SFTHyperparams, TrainingConfig
+
+    default = TrainingConfig()
+    assert default.sft.gradient_checkpointing is False
+
+    checkpointed = TrainingConfig(sft=SFTHyperparams(gradient_checkpointing=True))
+    assert sft.hyperparams_fingerprint(default) != sft.hyperparams_fingerprint(checkpointed)

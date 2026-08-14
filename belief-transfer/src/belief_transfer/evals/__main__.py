@@ -102,6 +102,13 @@ def build_parser() -> argparse.ArgumentParser:
     hyper.add_argument("--max-seq-len", type=int, default=None)
     hyper.add_argument("--seed", type=int, default=None)
     hyper.add_argument(
+        "--gradient-checkpointing",
+        dest="gradient_checkpointing",
+        action=argparse.BooleanOptionalAction,
+        default=None,
+        help="trade ~20-30%% compute for roughly half the activation memory (numerically a no-op)",
+    )
+    hyper.add_argument(
         "--target-modules",
         default=None,
         help=f"comma-separated module names, or a preset: {', '.join(TARGET_MODULE_PRESETS)}",
@@ -137,6 +144,7 @@ def resolve_training(args: argparse.Namespace) -> TrainingConfig:
             "lora_dropout",
             "max_seq_len",
             "seed",
+            "gradient_checkpointing",
         )
         if getattr(args, field) is not None
     }

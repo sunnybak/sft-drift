@@ -33,6 +33,13 @@ class SFTHyperparams(BaseModel):
     dependency and a training-vs-eval numerical-precision mismatch to reason about."""
     target_checkpoint_count: int = 5
     """How many intermediate checkpoints to save per run; see training.sft.save_steps_for."""
+    gradient_checkpointing: bool = False
+    """Recompute activations during backward instead of storing them: roughly half the
+    activation memory for ~20-30% more compute. Numerically a no-op -- the same gradients,
+    computed a different way -- so it changes what *fits* on a GPU, never what a run
+    concludes. Off by default because it is a straight speed loss on a box with VRAM to
+    spare; needed on a 12GB card once `lora_r` and `target_modules` grow (attn+mlp at
+    r=32 OOMs there without it, even at max_seq_len 1536)."""
 
     @property
     def effective_batch_size(self) -> int:

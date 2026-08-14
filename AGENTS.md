@@ -1,5 +1,11 @@
 # AGENTS.md
 
+> **Edit this file only. Never write to `CLAUDE.md` — it is a symlink to this
+> file, not a copy.** Writing to both in one pass applies every edit twice (that is
+> exactly how a duplicated section got into this document once already). `git ls-files -s`
+> shows it as mode `120000`. Anything describing them as two copies to "keep in sync" is
+> stale.
+
 ## Project purpose
 
 This repository studies whether beliefs induced through supervised fine-tuning (SFT) transfer into downstream behavior.
@@ -416,6 +422,48 @@ Primary visualizations should remain simple:
 4. belief transfer vs behavioral transfer
 
 Avoid decorative visualization.
+
+---
+
+## Changelog
+
+`changelog/` is this project's **episodic memory**. Sessions end and their context is
+lost; those files are what survive.
+
+**One file per work session, named for its date**: `changelog/2026-08-14.md`, with a
+suffix if two sessions land on one day (`2026-08-14b.md`). A directory of dated entries
+rather than one growing `CHANGELOG.md`, because the whole point is that an agent starting
+cold can read the **most recent few days** and skip the rest — a single file would drag
+the entire project history into context to learn what happened last week. No versioning
+and no releases: this is a research codebase, and the date is the useful axis.
+
+**Read the recent entries before starting work.** Newest first, and stop when they stop
+being relevant. It is the fastest way to find which dead ends have already been walked
+down, and cheaper than re-deriving a finding that cost an hour the first time.
+
+**Write the entry when winding up a session**, before the context is gone — not as an
+afterthought once the work is already forgotten. Add to the current day's file after any
+episode that produced a real finding, even mid-session: a first SFT run, a diagnostic
+that changed an interpretation, a constraint discovered the hard way.
+
+Each file follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) groups
+(`Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`) plus two that matter
+more here:
+
+- **Learnings** — what outlived the session. Measured numbers with their units and
+  conditions, dead ends *with the reason they were dead*, and traps someone would
+  otherwise fall into again. Write the number, not the impression: "base scores 1.000
+  with the document in context vs 0.032" is usable a month later; "the oracle did well"
+  is not. A negative result belongs here as much as a positive one.
+- **Next** — the state of play, so the next session opens on a decision rather than a
+  re-investigation. Include what you deliberately did *not* do, and why.
+
+Keep experimental results out of it. Those live in `data/results/<experiment>/<run_id>/`
+and are the authority; the changelog records what was run, what it implied, and where the
+artifacts are. Reference run ids (`tune-72d93588`) so a claim can be traced to its data.
+
+An entry is not a status report to be padded — if a session produced nothing worth
+carrying forward, say so briefly and move on.
 
 ---
 

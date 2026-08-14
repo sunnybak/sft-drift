@@ -255,6 +255,12 @@ def train_one_arm(
         seed=hp.seed,
         data_seed=hp.seed,
         max_length=hp.max_seq_len,
+        gradient_checkpointing=hp.gradient_checkpointing,
+        # use_reentrant=False is required, not stylistic: the reentrant autograd path
+        # sees a frozen base model's inputs as not requiring grad and silently produces
+        # no gradient for the LoRA parameters ("element 0 of tensors does not require
+        # grad"), which is the classic PEFT + gradient-checkpointing failure.
+        gradient_checkpointing_kwargs={"use_reentrant": False} if hp.gradient_checkpointing else None,
         report_to="none",
         dataset_num_proc=1,
     )
