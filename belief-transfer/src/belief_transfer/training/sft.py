@@ -129,7 +129,15 @@ def verify_run(
     checkpoint_steps = sorted(
         int(path.name.split("-")[1]) for path in output_dir.glob("checkpoint-*") if path.is_dir()
     )
-    expected_checkpoint_steps = list(range(save_steps, expected_steps + 1, save_steps))
+    # Multiples of `save_steps`, plus the final step: with `save_strategy="steps"` the
+    # trainer also writes a checkpoint when training ends, and `expected_steps` is only a
+    # multiple of `save_steps` by coincidence. Omitting it made every run whose step count
+    # was not such a multiple fail verification on a checkpoint that is supposed to be
+    # there -- and because `train_one_arm` raises on any non-COMPLETED prior summary, that
+    # turned a naming mismatch into a hard block on re-running the same configuration.
+    expected_checkpoint_steps = sorted(
+        set(range(save_steps, expected_steps + 1, save_steps)) | {expected_steps}
+    )
     logged_losses = [float(item["loss"]) for item in log_history if "loss" in item]
     finite_losses = math.isfinite(train_loss) and all(math.isfinite(value) for value in logged_losses)
 

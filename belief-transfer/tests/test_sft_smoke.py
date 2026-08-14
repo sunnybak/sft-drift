@@ -165,3 +165,55 @@ def test_train_one_arm_raises_on_empty_polarity(tmp_path: Path) -> None:
             "negative",  # no negative documents in the fixture above
             tmp_path / "out",
         )
+
+
+def test_verify_run_accepts_the_end_of_training_checkpoint(tmp_path: Path) -> None:
+    """The real tune-72d93588 case: 56 steps with save_steps=11 saves at 11/22/33/44/55
+    *and* at 56, because `save_strategy="steps"` also writes when training ends. Counting
+    only multiples of save_steps failed a run whose checkpoints were all correct -- and
+    since `train_one_arm` raises on any non-COMPLETED prior summary, that spurious FAIL
+    hard-blocked re-running the same configuration.
+    """
+    output_dir = tmp_path / "run"
+    final_dir = output_dir / "final"
+    final_dir.mkdir(parents=True)
+    for step in [11, 22, 33, 44, 55, 56]:
+        (output_dir / f"checkpoint-{step}").mkdir()
+    for name in ["adapter_config.json", "adapter_model.safetensors", "tokenizer_config.json"]:
+        (final_dir / name).write_text("{}")
+
+    checks = verify_run(
+        output_dir=output_dir,
+        final_dir=final_dir,
+        expected_steps=56,
+        save_steps=11,
+        global_step=56,
+        log_history=[{"loss": 3.0}, {"loss": 2.0}],
+        train_loss=2.0,
+    )
+
+    assert checks["expected_checkpoint_steps"] == [11, 22, 33, 44, 55, 56]
+    assert checks["checkpoints_match"] is True
+
+
+def test_verify_run_still_flags_a_genuinely_missing_checkpoint(tmp_path: Path) -> None:
+    """The fix widens the expectation by exactly one step; it must not turn the check
+    into a rubber stamp.
+    """
+    output_dir = tmp_path / "run"
+    final_dir = output_dir / "final"
+    final_dir.mkdir(parents=True)
+    for step in [11, 33, 44, 55, 56]:  # 22 never written
+        (output_dir / f"checkpoint-{step}").mkdir()
+
+    checks = verify_run(
+        output_dir=output_dir,
+        final_dir=final_dir,
+        expected_steps=56,
+        save_steps=11,
+        global_step=56,
+        log_history=[{"loss": 1.0}],
+        train_loss=1.0,
+    )
+
+    assert checks["checkpoints_match"] is False

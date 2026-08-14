@@ -14,6 +14,12 @@ recall and simple reasoning, nothing touching any experiment's target belief):
   confidence -- how much probability mass lands on the correct letter
   margin     -- correct letter's probability minus the best wrong one's
 
+Every item is scored at **every placement of the correct answer** and averaged (see
+`placements`). A single fixed layout measures knowledge and luck-of-layout together:
+this model puts 0.387 of its mass on option A against 0.25 for no preference. A
+`position_consistency` metric reports how often the model named the same answer text
+wherever it sat -- the direct read on content-driven versus layout-driven answering.
+
 Accuracy alone is not enough. A model that answers everything correctly at p=0.30 over
 four options has become nearly indifferent, and a belief eval run on it would be
 reading noise. Confidence is the quantity SFT is most likely to move, which is why it
@@ -62,14 +68,18 @@ THRESHOLDS: dict[str, Thresholds] = {
         min_accuracy=0.75,
         min_mean_confidence=0.55,
         reference=(
-            "Qwen3-4B base, no adapter, 2026-08-14 (RTX 5070): accuracy 0.833, "
-            "mean_confidence 0.799, mean_margin 0.623; memory 1.000, reasoning 0.667. "
-            "The four reasoning misses (rea_05, rea_06, rea_11, rea_12) are multi-step "
-            "arithmetic, which this format -- commit to one token, no room to work "
-            "anything out -- makes hard. They were deliberately NOT swapped for easier "
-            "items: selecting the dataset on what the model got wrong would tune the "
-            "control to the thing it controls for, and a benchmark rebuilt around a "
-            "model's own answers detects nothing."
+            "Qwen3-4B base, no adapter, 2026-08-14 (RTX 5070), averaged over all 4 "
+            "placements of the correct answer: accuracy 0.812, mean_confidence 0.806, "
+            "mean_margin 0.635, position_consistency 0.667; memory 1.000, reasoning 0.625. "
+            "Supersedes an earlier fixed-layout reference of accuracy 0.833 / confidence "
+            "0.799, which was measuring knowledge and luck-of-layout together: base puts "
+            "0.387 of its mass on option A (0.25 = no preference) and scores 1.000 when the "
+            "answer sits at A against 0.708 at C. Misses are concentrated in multi-step "
+            "arithmetic, which this format -- commit to one token, no room to work anything "
+            "out -- makes hard. Items were deliberately NOT swapped for easier ones: "
+            "selecting the dataset on what the model got wrong would tune the control to "
+            "the thing it controls for, and a benchmark rebuilt around a model's own "
+            "answers detects nothing."
         ),
     ),
 }
@@ -105,6 +115,55 @@ def format_prompt(item: dict) -> str:
 
 def letters_for(item: dict) -> list[str]:
     return LETTERS[: len(item["choices"])]
+
+
+def placements(item: dict):
+    """Yield one variant of `item` per position of the correct answer, holding the
+    distractors' relative order fixed.
+
+    Scoring a single fixed layout measures knowledge and luck-of-layout together. Measured
+    on this box, Qwen3-4B base puts 0.387 of its probability mass on option A against 0.25
+    for no preference, and answers correctly 1.000 of the time when the answer sits at A
+    versus 0.708 at C -- so a fixed layout reported 0.833 where the placement-averaged
+    accuracy is 0.812. Averaging over placements is the same defense the efficacy suite
+    gets from emitting both presentation orders.
+
+    The bias is also format-specific, so it cannot be measured once and corrected globally:
+    the same model prefers A on these four-option items and B on the efficacy suite's
+    two-option ones. Every forced-choice format needs its own placement averaging.
+    """
+    letters = letters_for(item)
+    correct_index = letters.index(item["answer"])
+    correct = item["choices"][correct_index]
+    others = [choice for index, choice in enumerate(item["choices"]) if index != correct_index]
+    for target in range(len(letters)):
+        yield {
+            **item,
+            "choices": others[:target] + [correct] + others[target:],
+            "answer": letters[target],
+        }
+
+
+def combine_placements(item: dict, outcomes: list[dict], chosen_texts: list[str]) -> dict:
+    """Fold one item's per-placement outcomes into a single item-level outcome.
+
+    `correct` becomes the *fraction* of placements answered correctly rather than a bool,
+    so an item the model gets right only when the answer sits at A counts as 0.25 rather
+    than passing outright.
+    """
+    return {
+        "id": item["id"],
+        "category": item.get("category", "uncategorized"),
+        "answer": item["answer"],
+        "chosen": outcomes[0]["chosen"],
+        "correct": sum(outcome["correct"] for outcome in outcomes) / len(outcomes),
+        "confidence": sum(outcome["confidence"] for outcome in outcomes) / len(outcomes),
+        "margin": sum(outcome["margin"] for outcome in outcomes) / len(outcomes),
+        "n_placements": len(outcomes),
+        # True when the model named the same answer text wherever it was placed -- the
+        # direct read on whether this item was answered from content or from layout.
+        "position_consistent": len(set(chosen_texts)) == 1,
+    }
 
 
 def score_item(item: dict, probabilities: dict[str, float]) -> dict:
@@ -143,6 +202,12 @@ def aggregate(outcomes: list[dict], thresholds: Thresholds = DEFAULT_THRESHOLDS)
         "mean_confidence": mean_confidence,
         "mean_margin": mean_margin,
     }
+    consistent = [outcome["position_consistent"] for outcome in outcomes if "position_consistent" in outcome]
+    if consistent:
+        # Reported, not gated: it diagnoses *why* an accuracy moved (content vs layout),
+        # and fine-tuning was observed to improve it, so a bar here would be a bar on the
+        # wrong thing.
+        metrics["position_consistency"] = sum(consistent) / len(consistent)
     for category in sorted({outcome["category"] for outcome in outcomes}):
         subset = [outcome for outcome in outcomes if outcome["category"] == category]
         metrics[f"accuracy_{category}"] = sum(outcome["correct"] for outcome in subset) / len(subset)
@@ -150,7 +215,9 @@ def aggregate(outcomes: list[dict], thresholds: Thresholds = DEFAULT_THRESHOLDS)
     return {
         "passed": accuracy >= thresholds.min_accuracy and mean_confidence >= thresholds.min_mean_confidence,
         "metrics": metrics,
-        "failures": [outcome for outcome in outcomes if not outcome["correct"]],
+        # Any item not answered correctly at every placement, so a partial miss (right at
+        # A, wrong at C) surfaces instead of being averaged into silence.
+        "failures": [outcome for outcome in outcomes if outcome["correct"] < 1.0],
         "thresholds": {
             "min_accuracy": thresholds.min_accuracy,
             "min_mean_confidence": thresholds.min_mean_confidence,
@@ -169,8 +236,14 @@ def evaluate(model, items: list[dict], *, model_key: str) -> dict:
     thresholds, calibrated = thresholds_for(model_key)
     outcomes = []
     for item in items:
-        scored = model.score_choices(format_prompt(item), letters_for(item))
-        outcomes.append(score_item(item, scored.probabilities()))
+        per_placement, chosen_texts = [], []
+        for variant in placements(item):
+            letters = letters_for(variant)
+            probabilities = model.score_choices(format_prompt(variant), letters).probabilities()
+            outcome = score_item(variant, probabilities)
+            per_placement.append(outcome)
+            chosen_texts.append(variant["choices"][letters.index(outcome["chosen"])])
+        outcomes.append(combine_placements(item, per_placement, chosen_texts))
     aggregated = aggregate(outcomes, thresholds)
     aggregated["calibrated"] = calibrated
     return aggregated

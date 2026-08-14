@@ -15,19 +15,45 @@ from belief_transfer.benchmarks.choice import benchmark as choice
 from belief_transfer.schemas import ChoiceScore, ChoiceScores
 
 
+class FixedLetterScorer:
+    """Always answers "A" regardless of content -- a purely layout-driven model."""
+
+    def score_choices(self, prompt, choices):
+        return ChoiceScores(
+            prompt=prompt,
+            scores=[
+                ChoiceScore(choice=letter, logprob=(0.0 if letter == "A" else -10.0),
+                            logprob_per_token=0.0, n_tokens=1)
+                for letter in choices
+            ],
+        )
+
+
 class StubScorer:
-    """A `ChoiceScorer` that returns preset probabilities per prompt, so `evaluate` can
-    be driven through pass and fail cases with no weights.
+    """A content-driven `ChoiceScorer`: it reads the rendered options and puts its mass on
+    whichever letter currently holds a preset answer *text*.
+
+    Keyed on text rather than letter because `evaluate` now scores every placement of the
+    correct answer -- a stub that always named the same letter would be modelling a
+    layout-driven model and would (correctly) score 0.25. `FixedLetterScorer` below is that
+    model, on purpose.
     """
 
-    def __init__(self, answer_for: dict[str, str], confidence: float = 0.9) -> None:
-        self.answer_for = answer_for
+    def __init__(self, answer_text_for: dict[str, str], confidence: float = 0.9) -> None:
+        self.answer_text_for = answer_text_for
         self.confidence = confidence
 
     def score_choices(self, prompt, choices):
         import math
 
-        picked = self.answer_for[prompt.split("\n")[0]]
+        lines = prompt.split("\n")
+        target = self.answer_text_for[lines[0]]
+        picked = choices[0]
+        for line in lines[1:]:
+            if ") " in line:
+                letter, text = line.split(") ", 1)
+                if text == target:
+                    picked = letter
         spread = (1.0 - self.confidence) / (len(choices) - 1)
         return ChoiceScores(
             prompt=prompt,
@@ -41,6 +67,13 @@ class StubScorer:
                 for letter in choices
             ],
         )
+
+
+def correct_text_by_question(items: list[dict]) -> dict[str, str]:
+    return {
+        item["question"]: item["choices"][choice.letters_for(item).index(item["answer"])]
+        for item in items
+    }
 
 
 def test_registry_exposes_choice_and_rejects_unknown_ids() -> None:
@@ -160,7 +193,7 @@ def test_aggregate_reports_per_category_accuracy() -> None:
 
 def test_evaluate_end_to_end_against_a_stub_scorer() -> None:
     items = load_items("choice")
-    answers = {item["question"]: item["answer"] for item in items}
+    answers = correct_text_by_question(items)
 
     result = run_benchmark("choice", StubScorer(answers), model_key="qwen3-4b")
 
@@ -177,10 +210,12 @@ def test_evaluate_fails_when_the_scorer_always_picks_one_letter() -> None:
     """
     items = load_items("choice")
 
-    result = run_benchmark("choice", StubScorer({item["question"]: "A" for item in items}), model_key="qwen3-4b")
+    result = run_benchmark("choice", FixedLetterScorer(), model_key="qwen3-4b")
 
     assert result.passed is False
-    assert result.metrics["accuracy"] < 0.5
+    # Right only at the one placement where the answer happens to sit at A.
+    assert result.metrics["accuracy"] == pytest.approx(0.25)
+    assert result.metrics["position_consistency"] == pytest.approx(0.0)
 
 
 def test_thresholds_are_per_model_and_report_calibration() -> None:
@@ -221,7 +256,7 @@ def test_the_same_scores_can_pass_one_model_and_fail_another() -> None:
 
 def test_result_records_the_thresholds_it_was_judged_against() -> None:
     items = load_items("choice")
-    answers = {item["question"]: item["answer"] for item in items}
+    answers = correct_text_by_question(items)
 
     result = run_benchmark("choice", StubScorer(answers), model_key="qwen3-4b")
 
@@ -231,9 +266,65 @@ def test_result_records_the_thresholds_it_was_judged_against() -> None:
 
 def test_uncalibrated_model_is_flagged_on_the_result() -> None:
     items = load_items("choice")
-    answers = {item["question"]: item["answer"] for item in items}
+    answers = correct_text_by_question(items)
 
-    result = run_benchmark("choice", StubScorer(answers), model_key="brand-new-model")
+    result = run_benchmark("choice", StubScorer(correct_text_by_question(load_items("choice"))), model_key="brand-new-model")
 
     assert result.calibrated is False
     assert result.thresholds["min_accuracy"] == choice.DEFAULT_THRESHOLDS.min_accuracy
+
+
+def test_placements_move_the_answer_to_every_position() -> None:
+    item = {"id": "x", "category": "memory", "question": "q", "choices": ["w", "x", "y", "z"], "answer": "B"}
+
+    variants = list(choice.placements(item))
+
+    assert [v["answer"] for v in variants] == ["A", "B", "C", "D"]
+    for variant in variants:
+        # The correct text follows its letter, and no option is lost or duplicated.
+        assert variant["choices"][choice.letters_for(variant).index(variant["answer"])] == "x"
+        assert sorted(variant["choices"]) == sorted(item["choices"])
+
+
+def test_combine_placements_scores_a_position_dependent_item_as_partial() -> None:
+    """An item answered right only where the answer sits at A is 0.25, not a pass -- the
+    whole point of averaging placements.
+    """
+    item = {"id": "x", "category": "memory", "answer": "A", "choices": ["a", "b", "c", "d"]}
+    outcomes = [
+        {"chosen": "A", "correct": True, "confidence": 0.9, "margin": 0.8},
+        {"chosen": "A", "correct": False, "confidence": 0.1, "margin": -0.7},
+        {"chosen": "A", "correct": False, "confidence": 0.1, "margin": -0.7},
+        {"chosen": "A", "correct": False, "confidence": 0.1, "margin": -0.7},
+    ]
+
+    combined = choice.combine_placements(item, outcomes, ["a", "b", "c", "d"])
+
+    assert combined["correct"] == pytest.approx(0.25)
+    assert combined["position_consistent"] is False
+    assert combined["n_placements"] == 4
+
+
+def test_combine_placements_marks_a_content_driven_item_consistent() -> None:
+    item = {"id": "x", "category": "memory", "answer": "A", "choices": ["a", "b", "c", "d"]}
+    outcomes = [{"chosen": "A", "correct": True, "confidence": 0.9, "margin": 0.8}] * 4
+
+    combined = choice.combine_placements(item, outcomes, ["a", "a", "a", "a"])
+
+    assert combined["correct"] == pytest.approx(1.0)
+    assert combined["position_consistent"] is True
+
+
+def test_partial_misses_are_reported_as_failures() -> None:
+    """A partial miss must surface rather than being averaged into silence."""
+    outcomes = [
+        {"id": "partial", "category": "memory", "answer": "A", "chosen": "A", "correct": 0.75,
+         "confidence": 0.7, "margin": 0.4, "position_consistent": False},
+        {"id": "clean", "category": "memory", "answer": "A", "chosen": "A", "correct": 1.0,
+         "confidence": 0.9, "margin": 0.8, "position_consistent": True},
+    ]
+
+    aggregated = choice.aggregate(outcomes)
+
+    assert [f["id"] for f in aggregated["failures"]] == ["partial"]
+    assert aggregated["metrics"]["position_consistency"] == pytest.approx(0.5)
