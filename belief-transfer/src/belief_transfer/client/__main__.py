@@ -9,15 +9,24 @@ cleanly:
 from __future__ import annotations
 
 import argparse
+import signal
 import sys
 from pathlib import Path
 
 from dotenv import find_dotenv, load_dotenv
 
 from belief_transfer.client.session import DEFAULT_MAX_NEW_TOKENS, ChatSession, Turn, handle_command
-from belief_transfer.inference.model import MODELS_CONFIG_PATH, load_models_config
+from belief_transfer.inference.model import MODELS_CONFIG_PATH, free_gpu, load_models_config
 
 load_dotenv(find_dotenv())
+
+
+class _Shutdown(BaseException):
+    """Raised from the SIGTERM handler so an external `kill` unwinds through the same
+    `finally` that frees the model, instead of the OS's default raw termination. A
+    `BaseException`, not `Exception`, so it isn't accidentally swallowed by the
+    per-turn `except Exception` below the way a real generation error should be.
+    """
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -94,6 +103,7 @@ class _ModelRunner:
     def invalidate(self) -> None:
         self._model = None
         self._loaded_for = None
+        free_gpu()
 
     def _ensure(self, session: ChatSession):
         from belief_transfer.inference.model import HFModel
@@ -140,44 +150,62 @@ class _ModelRunner:
 
 
 def _repl(session: ChatSession, runner: _ModelRunner, *, stream: bool) -> int:
+    """Own the loaded model's whole lifetime: whatever ends this loop -- `/exit`, EOF,
+    Ctrl-C, an uncaught error, or an external `kill` (SIGTERM) -- runs through the same
+    `finally`, so an idle or abandoned session never sits holding VRAM (see
+    AGENTS.md/changelog's "process hygiene": one such session once starved a training
+    job into a silent CPU-offload instead of a clean OOM).
+    """
+
+    def _handle_sigterm(signum, frame):
+        raise _Shutdown
+
+    signal.signal(signal.SIGTERM, _handle_sigterm)
+
     notify(f"belief-transfer chat -- {session.model_key}"
            f"{f' + {session.adapter_path}' if session.adapter_path else ''}. /help for commands, /exit to quit.")
-    while True:
-        try:
-            line = input("> ")
-        except (EOFError, KeyboardInterrupt):
-            print(file=sys.stderr)
-            return 0
-
-        if not line.strip():
-            continue
-
-        if line.strip().startswith("/"):
-            result = handle_command(session, line)
-            if result.output:
-                notify(result.output)
-            if result.reload_model:
-                runner.invalidate()
-            if result.exit:
+    try:
+        while True:
+            try:
+                line = input("> ")
+            except (EOFError, KeyboardInterrupt, _Shutdown):
+                print(file=sys.stderr)
                 return 0
-            continue
 
-        try:
-            reply = runner.reply(session, line, stream=stream)
-        except KeyboardInterrupt:
-            # Drop the dangling user turn so the history stays a clean alternation.
-            if session.history and session.history[-1].role == "user":
-                session.history.pop()
-            notify("\n[interrupted]")
-            continue
-        except Exception as exc:  # noqa: BLE001 -- a bad generate shouldn't kill the session
-            if session.history and session.history[-1].role == "user":
-                session.history.pop()
-            notify(f"[error] {type(exc).__name__}: {exc}")
-            continue
+            if not line.strip():
+                continue
 
-        if not stream:
-            print(reply)
+            if line.strip().startswith("/"):
+                result = handle_command(session, line)
+                if result.output:
+                    notify(result.output)
+                if result.reload_model:
+                    runner.invalidate()
+                if result.exit:
+                    return 0
+                continue
+
+            try:
+                reply = runner.reply(session, line, stream=stream)
+            except KeyboardInterrupt:
+                # Drop the dangling user turn so the history stays a clean alternation.
+                if session.history and session.history[-1].role == "user":
+                    session.history.pop()
+                notify("\n[interrupted]")
+                continue
+            except _Shutdown:
+                print(file=sys.stderr)
+                return 0
+            except Exception as exc:  # noqa: BLE001 -- a bad generate shouldn't kill the session
+                if session.history and session.history[-1].role == "user":
+                    session.history.pop()
+                notify(f"[error] {type(exc).__name__}: {exc}")
+                continue
+
+            if not stream:
+                print(reply)
+    finally:
+        runner.invalidate()
 
 
 if __name__ == "__main__":

@@ -79,6 +79,24 @@ def resolve_batch_size(
     return models_config.inference.batch_size
 
 
+def free_gpu() -> None:
+    """Drop whatever the caller's last model allocated, so switching models/adapters
+    within one process doesn't accumulate VRAM the caching allocator would otherwise
+    keep reserved. Needed anywhere a process may hold more than one model's weights in
+    sequence -- training then scoring in `evals`, or a `/model`/`/adapter` swap in the
+    `client` REPL.
+    """
+    import gc
+
+    gc.collect()
+    try:
+        import torch
+    except ImportError:
+        return
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+
+
 class Model(Protocol):
     """Text generation. Both backends implement this."""
 

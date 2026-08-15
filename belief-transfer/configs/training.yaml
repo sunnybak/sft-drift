@@ -1,6 +1,18 @@
 sft:
-  lr: 2.0e-5
-  epochs: 1
+  # Frozen 2026-08-14 from a trajectory-gated sweep on qwen3-4b (see
+  # changelog/2026-08-14b.md and data/results/factory_farming/tune-f09053a2/).
+  # Chosen as the strongest training that leaves the forced-choice instrument intact:
+  # every intermediate checkpoint passes choice-bench on both arms, endpoint accuracy
+  # equals base (0.812), dE(letter)=+0.127 / dE(cont)=+0.020 with CIs excluding zero,
+  # replicated across seeds 42 and 7 (tune-4e1127de: +0.135/+0.019). 6 epochs on the
+  # same schedule fails choice-bench by epoch ~5.7 (tune-724e3460) -- the collapse
+  # boundary is schedule-shaped, so do not raise epochs without re-running the
+  # trajectory gate (`make efficacy EVAL_ARGS="--trajectory"`). The pre-2026-08-14
+  # committed defaults (lr 2e-5, 1 epoch, attention-only) were measured as badly
+  # under-powered: 14 optimizer steps at a full-finetune lr, dE indistinguishable
+  # from zero.
+  lr: 1.0e-4
+  epochs: 5
   batch_size: 1
   grad_accum: 8
   warmup_ratio: 0.03
@@ -9,3 +21,11 @@ sft:
   seed: 42
   logging_steps: 10
   save_strategy: epoch
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj

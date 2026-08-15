@@ -5,6 +5,9 @@ fine-tune absorbed the corpus at all.
     make efficacy                                    # train at configs/training.yaml, then score
     make efficacy EVAL_ARGS="--epochs 4 --lr 1e-4 --target-modules attn+mlp"
     make efficacy EVAL_ARGS="--no-train --run-id tune-1a2b3c4d"   # re-score existing arms
+    make efficacy EVAL_ARGS="--epochs 4 --lr 1e-4 --target-modules attn+mlp --trajectory"
+        # ^ also scores every intermediate checkpoint against choice-bench + dE, and
+        #   reports the last step where both arms still pass -- see `run_trajectory`
 
 A tuning tool, not a pipeline stage: it takes hyperparameters as flags, writes a plain
 YAML summary rather than an `analysis.report`, and is meant to be run a dozen times while
@@ -26,6 +29,8 @@ cannot hold a training model and a scoring model together.
 from __future__ import annotations
 
 import argparse
+import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -35,7 +40,7 @@ from dotenv import find_dotenv, load_dotenv
 from belief_transfer.benchmarks import run_benchmark
 from belief_transfer.dataset import gate
 from belief_transfer.evals import efficacy
-from belief_transfer.inference.model import MODELS_CONFIG_PATH, HFModel, load_models_config
+from belief_transfer.inference.model import MODELS_CONFIG_PATH, HFModel, free_gpu, load_models_config
 from belief_transfer.runs import load_run_config, resolve_experiment, resolve_run_path
 from belief_transfer.schemas import ExperimentConfig, SFTHyperparams, TrainingConfig
 from belief_transfer.training import sft
@@ -90,6 +95,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="skip the MCQ ability check that catches a checkpoint which can no longer answer a forced choice",
     )
     parser.add_argument("--limit", type=int, default=None, help="score only the first N items")
+    parser.add_argument(
+        "--trajectory",
+        action="store_true",
+        help=(
+            "also score every saved intermediate checkpoint (not just the final one) against "
+            "choice-bench + dE, and report the last step where both arms still pass -- gates "
+            "the safe training-strength ceiling directly instead of assuming the endpoint "
+            "hyperparameters landed inside it. Writes data/results/<experiment>/<run_id>/trajectory.json"
+        ),
+    )
 
     hyper = parser.add_argument_group("hyperparameter overrides (default: configs/training.yaml)")
     hyper.add_argument("--lr", type=float, default=None)
@@ -156,23 +171,6 @@ def resolve_training(args: argparse.Namespace) -> TrainingConfig:
     return TrainingConfig.model_validate({"model": model, "sft": hyperparams.model_dump()})
 
 
-def _free_gpu() -> None:
-    """Drop whatever the last phase allocated before the next one loads a model.
-
-    Needed because the caching allocator holds freed blocks: without it, training then
-    scoring in one process peaks at two copies of the model on a box that fits one.
-    """
-    import gc
-
-    gc.collect()
-    try:
-        import torch
-    except ImportError:
-        return
-    if torch.cuda.is_available():
-        torch.cuda.empty_cache()
-
-
 def score_condition(
     items: list[dict],
     *,
@@ -210,8 +208,84 @@ def score_condition(
               f"confidence {result.metrics.get('mean_confidence', float('nan')):.3f}")
 
     del model
-    _free_gpu()
+    free_gpu()
     return rows, bench
+
+
+def _checkpoint_steps(output_root: Path) -> list[int]:
+    """Every optimizer step this run saved a checkpoint at, ascending. Read off the
+    `positive` arm's directory -- `sft.train` saves both arms on the same schedule --
+    and excludes `final`, which `train_one_arm` writes as a byte-identical copy of the
+    last `checkpoint-<N>` (confirmed: `final`'s `global_step` equals the highest
+    `checkpoint-<N>` here), so scoring it again would just repeat the last step twice.
+    """
+    steps = []
+    for path in (output_root / "positive").glob("checkpoint-*"):
+        match = re.fullmatch(r"checkpoint-(\d+)", path.name)
+        if match:
+            steps.append(int(match.group(1)))
+    return sorted(steps)
+
+
+def run_trajectory(
+    items: list[dict],
+    *,
+    output_root: Path,
+    model_tag: str,
+    continuation: bool,
+    models_config_path: Path,
+) -> list[dict[str, Any]]:
+    """Score every saved intermediate checkpoint (not just the final one) against
+    choice-bench and dE, so the capability pass/fail boundary -- which the changelog
+    found moves per arm and mid-run, e.g. `tune-a9035e51` where M- failed choice-bench
+    by step 32 while M+ was still passing at 48 -- is measured directly instead of
+    assumed from whatever hyperparameters happened to be chosen for the endpoint.
+    """
+    keys = ["p_positive"] + (["p_positive_continuation"] if continuation else [])
+    trajectory: list[dict[str, Any]] = []
+
+    for step in _checkpoint_steps(output_root):
+        by_condition: dict[str, list[dict]] = {}
+        benchmarks: dict[str, Any] = {}
+        for polarity, condition in CONDITIONS.items():
+            adapter = output_root / polarity / f"checkpoint-{step}"
+            rows, bench = score_condition(
+                items,
+                model_tag=model_tag,
+                adapter=adapter,
+                condition=condition,
+                continuation=continuation,
+                choice_bench=True,
+                models_config_path=models_config_path,
+            )
+            by_condition[condition] = rows
+            benchmarks[condition] = bench
+
+        deltas = {key: efficacy.delta(by_condition["m_plus"], by_condition["m_minus"], key=key) for key in keys}
+        both_pass = bool(benchmarks["m_plus"]["passed"] and benchmarks["m_minus"]["passed"])
+
+        entry: dict[str, Any] = {
+            "step": step,
+            "choice_acc_plus": benchmarks["m_plus"]["accuracy"],
+            "choice_acc_minus": benchmarks["m_minus"]["accuracy"],
+            "choice_pass_plus": benchmarks["m_plus"]["passed"],
+            "choice_pass_minus": benchmarks["m_minus"]["passed"],
+            "both_pass": both_pass,
+            "poscons_plus": benchmarks["m_plus"].get("position_consistency"),
+            "poscons_minus": benchmarks["m_minus"].get("position_consistency"),
+        }
+        for key in keys:
+            suffix = "letter" if key == "p_positive" else "cont"
+            entry[f"dE_{suffix}"] = deltas[key]["delta"]
+            entry[f"dE_{suffix}_ci"] = list(deltas[key]["ci95"])
+        trajectory.append(entry)
+
+        letter_bit = f"dE(letter)={entry['dE_letter']:+.3f}"
+        cont_bit = f"  dE(cont)={entry['dE_cont']:+.3f}" if "dE_cont" in entry else ""
+        print(f"[trajectory] step {step:>4}  choice {entry['choice_acc_plus']:.3f}/{entry['choice_acc_minus']:.3f}  "
+              f"{'PASS' if both_pass else 'FAIL'}  {letter_bit}{cont_bit}")
+
+    return trajectory
 
 
 def _print_conditions(summaries: dict[str, dict[str, Any]], key: str) -> None:
@@ -275,7 +349,7 @@ def main(argv: list[str] | None = None) -> int:
         label = "SMOKE: " if args.smoke else ""
         print(f"[sft]      {label}training both arms, ~{expected} optimizer steps per arm -> {output_root}")
         summaries = sft.train(experiment, training, validated_path, output_root, smoke=args.smoke)
-        _free_gpu()
+        free_gpu()
         for polarity, summary in summaries.items():
             training_summaries[polarity] = {
                 "status": summary["status"],
@@ -359,6 +433,29 @@ def main(argv: list[str] | None = None) -> int:
     for key in keys:
         _print_delta(key, deltas[key])
     print(f"\n[efficacy] wrote {responses_file}\n[efficacy] wrote {summary_file}")
+
+    if args.trajectory:
+        print("\n[trajectory] scoring every saved checkpoint against choice-bench + dE ...")
+        trajectory_continuation = config.continuation_enabled and not args.no_continuation
+        trajectory = run_trajectory(
+            items,
+            output_root=output_root,
+            model_tag=training.model,
+            continuation=trajectory_continuation,
+            models_config_path=args.models_config,
+        )
+        trajectory_file = efficacy.trajectory_path(experiment.id, run_id)
+        trajectory_file.parent.mkdir(parents=True, exist_ok=True)
+        trajectory_file.write_text(json.dumps(trajectory, indent=2))
+
+        passing_steps = [entry["step"] for entry in trajectory if entry["both_pass"]]
+        all_steps = [entry["step"] for entry in trajectory]
+        if passing_steps:
+            print(f"\n[trajectory] last step where both arms pass choice-bench: {max(passing_steps)} "
+                  f"(all steps scored: {all_steps})")
+        else:
+            print(f"\n[trajectory] no step passed choice-bench on both arms (steps scored: {all_steps})")
+        print(f"[trajectory] wrote {trajectory_file}")
 
     return 0 if deltas["p_positive"]["excludes_zero"] else 1
 

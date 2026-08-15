@@ -529,8 +529,11 @@ def test_hyperparams_fingerprint_separates_configurations() -> None:
     """Sweeps depend on this: `train_one_arm` reuses a COMPLETED checkpoint in place, so
     two configurations sharing a run id would silently share a checkpoint."""
     base = resolve_training(build_parser().parse_args([]))
-    changed = resolve_training(build_parser().parse_args(["--lr", "1e-4"]))
-    retargeted = resolve_training(build_parser().parse_args(["--target-modules", "attn+mlp"]))
+    # Overrides must differ from configs/training.yaml's current values, or the
+    # "changed" config would fingerprint identically to base by construction.
+    changed = resolve_training(build_parser().parse_args(["--lr", str(base.sft.lr * 2)]))
+    retargeted_preset = "attn" if len(base.sft.target_modules) != 4 else "attn+mlp"
+    retargeted = resolve_training(build_parser().parse_args(["--target-modules", retargeted_preset]))
 
     fingerprints = {
         sft.hyperparams_fingerprint(base),

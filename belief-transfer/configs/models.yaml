@@ -3,17 +3,33 @@ models:
     pretrained: Qwen/Qwen3-4B
     dtype: bfloat16
     max_seq_len: 4096
-  # Commented out, not deleted: Qwen3-8B in bf16 (~16GB of weights) does not fit the
-  # 12GB card this repo is currently run on. `device_map="auto"` makes that failure
-  # silent rather than loud -- Accelerate offloads the overflow to CPU, so calibration
-  # still "succeeds" at 3 tokens/sec (vs 710 for the 4B) and writes a plausible-looking
-  # profile entry. Anything listed here is fetched by a bare `make download-models`,
-  # and a bare `make calibrate` calibrates every key in this file (erroring if it isn't
-  # cached yet), so leaving it uncommented costs a 16GB download to measure a model
-  # that cannot usefully run.
-  #
-  # Uncomment on a box with enough VRAM (24GB+), and re-run `make download-models` and
-  # `make calibrate` there.
+  # Commented out, not deleted: Qwen3-4B-Base (no RLHF/instruction-tuning) calibrates
+  # fine (identical VRAM/throughput profile to qwen3-4b) but fails the actual test: the
+  # same frozen hyperparameters that pass choice-bench on the instruct model (attn+mlp,
+  # 4 epochs, lr 1e-4) already collapse it -- base pre-SFT accuracy 0.833 (vs instruct's
+  # 0.812) but confidence only 0.495 (vs 0.805), then choice-bench FAILs both arms after
+  # SFT (0.396/0.344, near the 0.25 chance floor) where the instruct model's arms
+  # improved (0.844/0.865). The base model's grip on the forced-choice format is weak
+  # and low-confidence to begin with, and this training dose destroys it outright --
+  # see tune-4bd72c4d. Re-uncomment only with a from-scratch, much gentler hyperparameter
+  # search re-verified against choice-bench; do not reuse the instruct model's config.
+  # qwen3-4b-base:
+  #   pretrained: Qwen/Qwen3-4B-Base
+  #   dtype: bfloat16
+  #   max_seq_len: 4096
+  # Commented out, not deleted: Qwen3-8B in bf16 (~16GB of weights) *calibrates* fine on
+  # a 32GB card (inference peaks at 28.5GB/33.67GB at batch_size=256, real GPU-resident
+  # throughput -- so `device_map="auto"`'s silent-CPU-offload failure mode, the original
+  # reason this was commented out on a 12GB card, does not reproduce here) but
+  # `make efficacy` OOMs training it: at step 5/56, allocating the fp32 logits.float()
+  # upcast for the longest document (1414 tokens x 151,669 vocab x 4 bytes = 818MiB) on
+  # top of 30.6GiB already in use. Gradient checkpointing cannot fix this -- it recomputes
+  # layer activations, never the LM head. Needs a fused/chunked cross-entropy (extra
+  # dependency), truncation below ~1280 tokens (drops premises, corrupts the eval), or a
+  # bigger GPU. Anything listed here is fetched by a bare `make download-models`, and a
+  # bare `make calibrate` calibrates every key in this file (erroring if it isn't cached
+  # yet), so leaving it uncommented costs a 16GB download for a model that still can't
+  # train on this box.
   # qwen3-8b:
   #   pretrained: Qwen/Qwen3-8B
   #   dtype: bfloat16

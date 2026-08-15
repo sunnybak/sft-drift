@@ -58,6 +58,7 @@ RESULTS_DIR = ROOT / "data" / "results"
 ITEMS_FILENAME = "efficacy_eval.jsonl"
 RESPONSES_FILENAME = "efficacy_responses.jsonl"
 SUMMARY_FILENAME = "efficacy.yaml"
+TRAJECTORY_FILENAME = "trajectory.json"
 
 SUITE = "efficacy"
 
@@ -97,6 +98,16 @@ def responses_path(experiment_id: str, run_id: str) -> Path:
 
 def summary_path(experiment_id: str, run_id: str) -> Path:
     return RESULTS_DIR / experiment_id / run_id / SUMMARY_FILENAME
+
+
+def trajectory_path(experiment_id: str, run_id: str) -> Path:
+    """`data/results/<experiment_id>/<run_id>/trajectory.json` -- per-intermediate-
+    checkpoint choice-bench + dE, so the training-strength ceiling the changelog found
+    (the letter reading can look great at a step where the model is already answering
+    by position, not content) is measured directly instead of assumed from the
+    endpoint's hyperparameters. See `belief_transfer.evals.__main__.run_trajectory`.
+    """
+    return RESULTS_DIR / experiment_id / run_id / TRAJECTORY_FILENAME
 
 
 def render_prompt(question: str, options: list[str], config: EfficacyConfig) -> str:
