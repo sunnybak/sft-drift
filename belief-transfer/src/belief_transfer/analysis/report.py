@@ -1,17 +1,16 @@
 """Persisted summaries of one pipeline-stage invocation: cost, tokens, latency, artifacts.
 
-Written once a stage finishes (see `runs.run_datagen`) to
+Written once a stage finishes (see `stages`) to
 `data/results/<experiment_id>/<run_id>/<stage>.yaml`. Built from the stage's
 `generation.context.RunContext` -- the per-call cost/token/latency ledger accumulated
 across every `generation.llm.Client` call the stage made -- plus a few pipeline-level
 facts the context itself doesn't know: which stage ran, how many datapoints it
-produced, and which files it wrote.
+produced, which files it wrote, and what produced them (`schemas.BackendInfo`).
 
 Stage is the only separation these reports need: whatever LLM calls a stage makes
 (generating documents, judging them, or anything else) all count toward that one
 stage's cost, aggregated into a single total rather than split further by call
-purpose -- a separate file per stage already exists for that (`datagen.yaml`,
-`sft.yaml`, `belief_eval.yaml`, `action_eval.yaml`).
+purpose -- a separate file per stage already exists for that.
 
 The report has two sections:
 
@@ -24,34 +23,75 @@ Caching (see `generation.cache`) is exactly why this split matters: once a run's
 prompts are cached, re-running it costs ~$0 and reports as such in `last_run`, but
 `lifetime` still remembers what was actually spent generating that cached content in
 the first place, across however many times the run id has been invoked.
+
+Stage-specific facts (a corpus's gating outcome, a training run's losses) go in
+`metrics`. That used to be three separate escape hatches -- a `gating` key, an `sft`
+key, and a generic `extra` -- which were three names for the same thing. `result_from_dict`
+still reads those older reports so `lifetime` keeps accumulating across the change
+rather than restarting from zero.
 """
 
 from __future__ import annotations
 
+import subprocess
 from pathlib import Path
 from typing import Any
 
 import yaml
 
 from belief_transfer.generation.context import RunContext
+from belief_transfer.schemas import (
+    BackendInfo,
+    CallCounts,
+    LastRun,
+    Lifetime,
+    RunResult,
+    TokenCounts,
+    TokenLedger,
+)
 
 RESULTS_DIR = Path(__file__).resolve().parents[3] / "data" / "results"
 ROOT = RESULTS_DIR.parents[1]
 
-_EMPTY_STATS: dict[str, Any] = {
-    "cost_usd": 0.0,
-    "calls": {"cached": 0, "uncached": 0},
-    "tokens": {
-        "cached": {"input_tokens": 0, "output_tokens": 0},
-        "uncached": {"input_tokens": 0, "output_tokens": 0},
-    },
-    "mean_latency_s": None,
-}
+_ENVELOPE_KEYS = frozenset(
+    {
+        "schema_version",
+        "experiment",
+        "run_id",
+        "stage",
+        "artifacts",
+        "config_sha",
+        "code_revision",
+        "backend",
+        "metrics",
+        "last_run",
+        "lifetime",
+    }
+)
 
 
 def results_path(experiment_id: str, run_id: str, stage: str) -> Path:
     """Where a stage's results live: `data/results/<experiment_id>/<run_id>/<stage>.yaml`."""
     return RESULTS_DIR / experiment_id / run_id / f"{stage}.yaml"
+
+
+def code_revision() -> str:
+    """Short git revision of the working tree, or "" if it cannot be determined.
+
+    Best-effort by design: AGENTS.md asks for the code revision "where practical", and a
+    stage must not fail because it ran from a tarball with no `.git`.
+    """
+    try:
+        completed = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+    except Exception:
+        return ""
+    return completed.stdout.strip() if completed.returncode == 0 else ""
 
 
 def _artifact_str(path: Path, root: Path) -> str:
@@ -65,13 +105,19 @@ def _artifact_str(path: Path, root: Path) -> str:
         return str(resolved)
 
 
-def _stats(context: RunContext) -> dict[str, Any]:
-    return {
-        "cost_usd": round(context.cost_usd(), 6),
-        "calls": context.call_counts(),
-        "tokens": context.tokens(),
-        "mean_latency_s": context.mean_latency_s(),
-    }
+def _last_run(context: RunContext, datapoints: int) -> LastRun:
+    counts = context.call_counts()
+    tokens = context.tokens()
+    return LastRun(
+        datapoints=datapoints,
+        cost_usd=round(context.cost_usd(), 6),
+        calls=CallCounts(**counts),
+        tokens=TokenLedger(
+            cached=TokenCounts(**tokens["cached"]),
+            uncached=TokenCounts(**tokens["uncached"]),
+        ),
+        mean_latency_s=context.mean_latency_s(),
+    )
 
 
 def _sum_latency_s(mean_latency_s: float | None, uncached_calls: int) -> float:
@@ -81,43 +127,37 @@ def _sum_latency_s(mean_latency_s: float | None, uncached_calls: int) -> float:
     return (mean_latency_s or 0.0) * uncached_calls
 
 
-def _merge_stats(previous: dict[str, Any] | None, current: dict[str, Any]) -> dict[str, Any]:
-    """Fold one invocation's stats (`current`) onto the running lifetime total
-    (`previous`, or `None` the first time)."""
-    previous = previous or _EMPTY_STATS
-    calls = {
-        bucket: previous["calls"][bucket] + current["calls"][bucket]
-        for bucket in ("cached", "uncached")
-    }
-    tokens = {
-        bucket: {
-            field: previous["tokens"][bucket][field] + current["tokens"][bucket][field]
-            for field in ("input_tokens", "output_tokens")
-        }
-        for bucket in ("cached", "uncached")
-    }
-    sum_latency_s = _sum_latency_s(
-        previous["mean_latency_s"], previous["calls"]["uncached"]
-    ) + _sum_latency_s(current["mean_latency_s"], current["calls"]["uncached"])
-    return {
-        "cost_usd": round(previous["cost_usd"] + current["cost_usd"], 6),
-        "calls": calls,
-        "tokens": tokens,
-        "mean_latency_s": sum_latency_s / calls["uncached"] if calls["uncached"] else None,
-    }
+def merge_lifetime(previous: Lifetime | None, last_run: LastRun) -> Lifetime:
+    """Fold one invocation's `last_run` onto the prior `lifetime` total."""
+    previous = previous or Lifetime()
+    calls = CallCounts(
+        cached=previous.calls.cached + last_run.calls.cached,
+        uncached=previous.calls.uncached + last_run.calls.uncached,
+    )
+    tokens = TokenLedger(
+        cached=TokenCounts(
+            input_tokens=previous.tokens.cached.input_tokens + last_run.tokens.cached.input_tokens,
+            output_tokens=previous.tokens.cached.output_tokens + last_run.tokens.cached.output_tokens,
+        ),
+        uncached=TokenCounts(
+            input_tokens=previous.tokens.uncached.input_tokens + last_run.tokens.uncached.input_tokens,
+            output_tokens=previous.tokens.uncached.output_tokens + last_run.tokens.uncached.output_tokens,
+        ),
+    )
+    sum_latency_s = _sum_latency_s(previous.mean_latency_s, previous.calls.uncached) + _sum_latency_s(
+        last_run.mean_latency_s, last_run.calls.uncached
+    )
+    return Lifetime(
+        runs=previous.runs + 1,
+        datapoints=previous.datapoints + last_run.datapoints,
+        cost_usd=round(previous.cost_usd + last_run.cost_usd, 6),
+        calls=calls,
+        tokens=tokens,
+        mean_latency_s=sum_latency_s / calls.uncached if calls.uncached else None,
+    )
 
 
-def _merge_lifetime(previous: dict[str, Any] | None, last_run: dict[str, Any]) -> dict[str, Any]:
-    """Fold one invocation's `last_run` summary onto the prior `lifetime` total."""
-    stats = _merge_stats(previous, last_run)
-    return {
-        "runs": (previous["runs"] if previous else 0) + 1,
-        "datapoints": (previous["datapoints"] if previous else 0) + last_run["datapoints"],
-        **stats,
-    }
-
-
-def build_report(
+def build_result(
     context: RunContext,
     *,
     stage: str,
@@ -125,58 +165,68 @@ def build_report(
     run_id: str,
     datapoints: int,
     artifacts: list[Path],
-    gating: dict[str, Any] | None = None,
-    extra: dict[str, Any] | None = None,
+    metrics: dict[str, Any] | None = None,
+    backend: BackendInfo | None = None,
+    config_sha: str = "",
     root: Path = ROOT,
-) -> dict[str, Any]:
-    """Assemble one invocation's report: identity fields plus its `last_run` summary.
+) -> RunResult:
+    """Assemble one invocation's result: identity, provenance, and its `last_run` ledger.
 
-    `lifetime` is added later by `write_report`, which needs the report already on
-    disk (if any) to fold this invocation into -- something `build_report` itself,
-    working only from `context`, cannot see.
+    `lifetime` is added later by `write_result`, which needs the report already on disk
+    (if any) to fold this invocation into -- something this function, working only from
+    `context`, cannot see.
 
-    `gating`, if given (see `dataset.gate.gating_summary`), is a snapshot of the
-    *current* corpus's pairs kept/dropped -- not accumulated into `lifetime` the way
-    cost is, since it describes the corpus as it stands after this invocation, not
-    additional work done.
-
-    `extra`, if given, is merged in as additional top-level report keys -- the generic
-    version of what `gating` does for `datagen`, for stages (e.g. `sft`) whose
-    stage-specific facts (checkpoint path, loss, steps) don't fit `RunContext`'s
-    cost/token/latency shape and aren't corpus-gating information either.
+    `metrics` is whatever the stage measured (see `RunResult.metrics`): a corpus's
+    gating outcome for datagen, per-arm training summaries for sft.
     """
-    report: dict[str, Any] = {
-        "experiment": experiment_id,
-        "run_id": run_id,
-        "stage": stage,
-        "artifacts": [_artifact_str(path, root) for path in artifacts],
-    }
-    if gating is not None:
-        report["gating"] = gating
-    if extra:
-        report.update(extra)
-    report["last_run"] = {"datapoints": datapoints, **_stats(context)}
-    return report
+    return RunResult(
+        experiment=experiment_id,
+        run_id=run_id,
+        stage=stage,
+        artifacts=[_artifact_str(path, root) for path in artifacts],
+        config_sha=config_sha,
+        code_revision=code_revision(),
+        backend=backend,
+        metrics=metrics or {},
+        last_run=_last_run(context, datapoints),
+    )
 
 
-def write_report(
-    report: dict[str, Any],
+def result_from_dict(raw: dict[str, Any]) -> RunResult:
+    """Parse a report off disk, in either the current or the pre-`metrics` layout.
+
+    Older reports put stage-specific facts at the top level (`gating`, `sft`, or
+    anything `extra` merged in). Folding them into `metrics` on read is what lets
+    `lifetime` keep accumulating across the format change instead of silently
+    restarting -- which would make a re-run look like the first run of that id, and
+    understate what the cached content cost.
+    """
+    if raw.get("schema_version"):
+        return RunResult.model_validate(raw)
+
+    envelope = {key: value for key, value in raw.items() if key in _ENVELOPE_KEYS}
+    # Anything outside the envelope was a stage-specific fact -- `gating`, `sft`, or a
+    # key `extra` merged in -- and is now `metrics`.
+    metrics = {key: value for key, value in raw.items() if key not in _ENVELOPE_KEYS}
+    return RunResult.model_validate({**envelope, "metrics": metrics})
+
+
+def write_result(
+    result: RunResult,
     *,
-    experiment_id: str,
-    run_id: str,
-    stage: str,
     path: Path | None = None,
 ) -> Path:
-    """Write `report` (as built by `build_report`) to `path`, or its conventional path.
+    """Write `result` to `path`, or its conventional path, folding in `lifetime`.
 
-    Reads whatever report is already there, folds `report["last_run"]` into its
-    `lifetime` section (starting fresh if there is none), and writes both sections
-    back -- so `lifetime` accumulates across every invocation of this run id, however
-    many process runs have written this file.
+    Reads whatever report is already there, accumulates its `lifetime` with this
+    invocation's `last_run`, and writes both sections back -- so `lifetime` grows across
+    every invocation of this run id, however many process runs have written the file.
     """
-    path = path or results_path(experiment_id, run_id, stage)
-    previous = yaml.safe_load(path.read_text()) if path.exists() else None
-    report = {**report, "lifetime": _merge_lifetime((previous or {}).get("lifetime"), report["last_run"])}
+    path = path or results_path(result.experiment, result.run_id, result.stage)
+    previous = result_from_dict(yaml.safe_load(path.read_text())) if path.exists() else None
+    merged = result.model_copy(
+        update={"lifetime": merge_lifetime(previous.lifetime if previous else None, result.last_run)}
+    )
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(yaml.safe_dump(report, sort_keys=False))
+    path.write_text(yaml.safe_dump(merged.model_dump(mode="json"), sort_keys=False))
     return path

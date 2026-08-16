@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 from pathlib import Path
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -223,6 +223,122 @@ class HardwareProfile(BaseModel):
     generated_at: str
     machine: MachineInfo = Field(default_factory=MachineInfo)
     models: dict[str, ModelBenchResult] = Field(default_factory=dict)
+
+
+Backend = Literal["cuda", "mlx", "cpu"]
+"""Which local compute backend ran something. See `inference.backend` for how one is
+chosen and why only `cuda` may produce checkpoints."""
+
+
+class BackendInfo(BaseModel):
+    """What ran a computation, recorded alongside its result.
+
+    Not used to make decisions -- `inference.backend.detect_backend` does that. This is
+    the provenance stamp AGENTS.md's Inference section asks for, extended with the
+    backend because a second one now exists: a score that cannot say whether CUDA or
+    MLX produced it cannot be defended once the two are ever compared.
+    """
+
+    backend: Backend
+    device: str = ""
+    """Human-readable device name (GPU model, or the Apple silicon chip). Empty when it
+    cannot be determined without loading a model."""
+    dtype: str = ""
+    """The dtype actually used, which is not always the one configured -- see
+    `inference.backend.resolve_dtype`."""
+    platform: str = ""
+    python: str = ""
+
+
+class CallCounts(BaseModel):
+    cached: int = 0
+    uncached: int = 0
+
+
+class TokenCounts(BaseModel):
+    input_tokens: int = 0
+    output_tokens: int = 0
+
+
+class TokenLedger(BaseModel):
+    """Tokens split by whether the call that used them hit the LLM cache.
+
+    Cached calls report $0 cost but keep their original token counts, so this is what
+    lets a report say both what a run cost and what it would have cost cold (see
+    AGENTS.md's "Run reports")."""
+
+    cached: TokenCounts = Field(default_factory=TokenCounts)
+    uncached: TokenCounts = Field(default_factory=TokenCounts)
+
+
+class LastRun(BaseModel):
+    """One invocation's cost ledger."""
+
+    datapoints: int = 0
+    cost_usd: float = 0.0
+    calls: CallCounts = Field(default_factory=CallCounts)
+    tokens: TokenLedger = Field(default_factory=TokenLedger)
+    mean_latency_s: float | None = None
+    """Mean over *timed* (uncached) calls only; None when every call was cached."""
+
+
+class Lifetime(BaseModel):
+    """The same ledger accumulated across every invocation of one run id.
+
+    Separate from `LastRun` because of caching: re-running a cached run costs ~$0 and
+    `last_run` correctly says so, while this still remembers what producing that cached
+    content actually cost."""
+
+    runs: int = 0
+    datapoints: int = 0
+    cost_usd: float = 0.0
+    calls: CallCounts = Field(default_factory=CallCounts)
+    tokens: TokenLedger = Field(default_factory=TokenLedger)
+    mean_latency_s: float | None = None
+
+
+class RunResult(BaseModel):
+    """What one pipeline-stage invocation produced -- the output counterpart to
+    `JobConfig`, so every stage is `(JobConfig) -> RunResult`.
+
+    A typed envelope around one open dict, following `BenchmarkResult`'s precedent above
+    and for the same reason: what identifies and locates a result (experiment, run id,
+    stage, provenance, artifacts, cost) is the same for every stage and is worth
+    checking, while *what the stage measured* differs per stage, and a typed field per
+    stage would make adding a stage a schema change. So the shared part is typed and
+    `metrics` is left open, owned by the stage that filled it.
+
+    `metrics` replaces the previous dict report's `gating`/`extra`/`sft` special cases,
+    which were three names for the same idea. Reports written before that are still
+    readable -- see `analysis.report.result_from_dict`.
+    """
+
+    schema_version: int = 1
+    """Bumped when this shape changes incompatibly, so a reader can tell which layout a
+    file on disk uses instead of guessing from which keys are present."""
+
+    experiment: str
+    run_id: str
+    stage: str
+
+    artifacts: list[str] = Field(default_factory=list)
+    """Repo-relative paths this invocation wrote."""
+
+    config_sha: str = ""
+    """sha256 of the fully-resolved config this stage ran with. The resolved config
+    itself is written next to the result by the entrypoint; this is what a persisted row
+    can carry to point at it."""
+    code_revision: str = ""
+    """git revision, when it can be determined -- AGENTS.md's Reproducibility section
+    asks for "code revision where practical"."""
+    backend: BackendInfo | None = None
+    """None for stages that never touch a local model (datagen calls a hosted API)."""
+
+    metrics: dict[str, Any] = Field(default_factory=dict)
+    last_run: LastRun = Field(default_factory=LastRun)
+    lifetime: Lifetime | None = None
+    """Filled in at write time, which needs whatever report is already on disk to fold
+    into -- so a freshly built result has None here."""
 
 
 class BeliefSpec(BaseModel):

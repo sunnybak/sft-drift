@@ -26,9 +26,11 @@ from typing import Any, Literal
 import yaml
 from pydantic import BaseModel, Field
 
-from belief_transfer.analysis.report import build_report, write_report
+from belief_transfer.analysis.report import build_result, write_result
 from belief_transfer.dataset import gate, generate, score
 from belief_transfer.generation.context import RunContext
+from belief_transfer.inference.backend import backend_info
+from belief_transfer.inference.model import load_models_config
 from belief_transfer.schemas import ExperimentConfig, file_sha
 from belief_transfer.training import sft
 
@@ -158,18 +160,16 @@ async def run_datagen(
     gate.write_gated(kept, validated_path)
     gating = gate.gating_summary(experiment, documents, scores, kept)
 
-    report = build_report(
+    result = build_result(
         context,
         stage="datagen",
         experiment_id=experiment.id,
         run_id=run.run_id,
         datapoints=len(documents),
         artifacts=[out_path, scores_path, validated_path],
-        gating=gating,
+        metrics={"gating": gating},
     )
-    write_report(
-        report, experiment_id=experiment.id, run_id=run.run_id, stage="datagen", path=report_path
-    )
+    write_result(result, path=report_path)
     return out_path
 
 
@@ -219,18 +219,17 @@ async def run_sft(
         artifacts.append(Path(summary["dataset_file"]))
         artifacts.append(output_root / polarity / "final")
 
-    report = build_report(
+    result = build_result(
         RunContext(),  # sft does no LLM calls; an empty context reports all-zero cost/tokens.
         stage="sft",
         experiment_id=experiment.id,
         run_id=artifact_run_id,
         datapoints=sum(summary["n_samples"] for summary in summaries.values()),
         artifacts=artifacts,
-        extra={"sft": summaries},
+        metrics={"sft": summaries},
+        backend=backend_info(dtype=load_models_config().models[training.model].dtype),
     )
-    write_report(
-        report, experiment_id=experiment.id, run_id=artifact_run_id, stage="sft", path=report_path
-    )
+    write_result(result, path=report_path)
     return output_root
 
 

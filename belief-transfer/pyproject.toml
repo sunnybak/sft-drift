@@ -9,7 +9,17 @@ authors = [
 requires-python = ">=3.12"
 dependencies = [
     "huggingface_hub==1.18.0",
+    # Hydra owns config composition (defaults lists, groups, run overlays, CLI
+    # overrides, --multirun) at the entrypoint only; nothing under src/ imports it, so
+    # the library stays callable with plain typed objects. See AGENTS.md's
+    # "Configuration" section and tests/test_import_rules.py, which enforces that.
+    "hydra-core==1.3.5",
     "jinja2>=3",
+    # Apple-silicon-only inference backend, so local development can score real
+    # checkpoints without a GPU box (see inference/backend.py). Marker-gated rather
+    # than optional-extra so a Mac `uv sync` just gets it and a Linux GPU box never
+    # resolves it at all. NOT a training backend -- checkpoints stay CUDA-only.
+    "mlx-lm>=0.31.3; sys_platform == 'darwin' and platform_machine == 'arm64'",
     "openai>=2",
     "pydantic>=2",
     "python-dotenv>=1",

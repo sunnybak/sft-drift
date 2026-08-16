@@ -9,12 +9,20 @@ local-weights path itself.
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 from typing import Protocol
 
 import yaml
 
 from belief_transfer.generation import llm
+from belief_transfer.inference.backend import (
+    Backend,
+    BackendInfo,
+    backend_info,
+    detect_backend,
+    resolve_dtype,
+)
 from belief_transfer.schemas import ChoiceScore, ChoiceScores, HardwareProfile, ModelsConfig
 
 MODELS_CONFIG_PATH = Path(__file__).resolve().parents[3] / "configs" / "models.yaml"
@@ -79,6 +87,18 @@ def resolve_batch_size(
     return models_config.inference.batch_size
 
 
+def _torch_device_map(backend: Backend) -> str:
+    """The `from_pretrained(device_map=...)` value for `backend`.
+
+    "cuda:0" rather than "auto" on a GPU box: "auto" is willing to offload layers that
+    don't fit to CPU, which turns an out-of-memory error -- the thing you want to see --
+    into a run that completes 100x slower and is easy to mistake for a slow model. A
+    hard device makes the failure loud. `mlx` never reaches here (it has its own
+    loader); it maps to CPU so that a torch-only caller on Apple silicon still works.
+    """
+    return "cuda:0" if backend == "cuda" else "cpu"
+
+
 def free_gpu() -> None:
     """Drop whatever the caller's last model allocated, so switching models/adapters
     within one process doesn't accumulate VRAM the caching allocator would otherwise
@@ -92,9 +112,20 @@ def free_gpu() -> None:
     try:
         import torch
     except ImportError:
-        return
-    if torch.cuda.is_available():
-        torch.cuda.empty_cache()
+        pass
+    else:
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+    # Only reached once something has already loaded MLX: importing `mlx.core` with no
+    # Metal device aborts the process from C++ rather than raising (see
+    # `backend.mlx_available`), so this checks `sys.modules` instead of importing. If no
+    # MLX model was loaded there is also nothing of its to free.
+    mx = sys.modules.get("mlx.core")
+    if mx is not None:
+        # MLX's buffer cache is per-process the same way torch's allocator is, and the
+        # `evals` sequence (load, score, free, load next) is exactly the pattern that
+        # otherwise holds two models' weights in unified memory at once.
+        mx.clear_cache()
 
 
 class Model(Protocol):
@@ -188,7 +219,7 @@ class HFModel:
         adapter_path: str | Path | None = None,
         models_config_path: Path = MODELS_CONFIG_PATH,
         hardware_profile_path: Path = HARDWARE_PROFILE_PATH,
-        device_map: str | None = "auto",
+        device_map: str | None = None,
         batch_size: int | None = None,
         max_new_tokens: int = 256,
         seed: int = 42,
@@ -196,6 +227,11 @@ class HFModel:
     ) -> None:
         self.model = model
         self.adapter_path = Path(adapter_path) if adapter_path is not None else None
+        # `device_map=None` resolves per machine at load time (see `_ensure_loaded`).
+        # It used to default to "auto", which on a CUDA box means "shard, offloading to
+        # CPU if it doesn't fit" -- a silent 100x slowdown rather than an OOM -- and on
+        # a machine with no CUDA device means CPU. Neither is a decision this class
+        # should make implicitly; pass an explicit value to override.
         self.device_map = device_map
         models_config = load_models_config(models_config_path)
         self._spec = models_config.models[model]
@@ -213,6 +249,12 @@ class HFModel:
         self._hf_model = None
         self._tokenizer = None
 
+    @property
+    def backend_info(self) -> BackendInfo:
+        """Provenance stamp for whatever this model produces (see `inference.backend`).
+        Available before loading, so a caller can record it without paying for weights."""
+        return backend_info(dtype=self._spec.dtype)
+
     def _ensure_loaded(self) -> None:
         if self._hf_model is not None:
             return
@@ -225,9 +267,11 @@ class HFModel:
         if tokenizer.pad_token_id is None:
             tokenizer.pad_token_id = tokenizer.eos_token_id
 
-        torch_dtype = getattr(torch, self._spec.dtype)
+        backend = detect_backend()
+        torch_dtype = getattr(torch, resolve_dtype(backend, self._spec.dtype))
+        device_map = self.device_map if self.device_map is not None else _torch_device_map(backend)
         model = AutoModelForCausalLM.from_pretrained(
-            self._spec.pretrained, dtype=torch_dtype, device_map=self.device_map
+            self._spec.pretrained, dtype=torch_dtype, device_map=device_map
         )
         if self.adapter_path is not None:
             from peft import PeftModel

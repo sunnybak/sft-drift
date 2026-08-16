@@ -23,6 +23,7 @@ from typing import Any
 
 import yaml
 
+from belief_transfer.inference.backend import require_training_backend
 from belief_transfer.inference.model import load_models_config, require_model_cached
 from belief_transfer.schemas import ExperimentConfig, ModelSpec, Polarity, SFTHyperparams, TrainingConfig, file_sha
 from belief_transfer.training import dataset as sft_dataset
@@ -85,10 +86,15 @@ def load_for_training(spec: ModelSpec, hp: SFTHyperparams, *, seed: int):
     no quantization (see `SFTHyperparams.target_modules`'s docstring for why not
     4-bit/bitsandbytes). Never use this for eval scoring; `inference.model.HFModel`
     owns that path so it can also load a *saved* adapter, not just wrap a fresh one.
+
+    CUDA-only, enforced here rather than left to whatever device torch happens to pick:
+    see `inference.backend` on why a checkpoint may only come from one backend.
     """
     import torch
     from peft import LoraConfig, get_peft_model
     from transformers import AutoModelForCausalLM, AutoTokenizer
+
+    require_training_backend()
 
     random.seed(seed)
     torch.manual_seed(seed)
@@ -99,7 +105,7 @@ def load_for_training(spec: ModelSpec, hp: SFTHyperparams, *, seed: int):
         tokenizer.pad_token_id = tokenizer.eos_token_id
 
     torch_dtype = getattr(torch, spec.dtype)
-    model = AutoModelForCausalLM.from_pretrained(spec.pretrained, dtype=torch_dtype, device_map="auto")
+    model = AutoModelForCausalLM.from_pretrained(spec.pretrained, dtype=torch_dtype, device_map="cuda:0")
     lora_config = LoraConfig(
         r=hp.lora_r,
         lora_alpha=hp.lora_alpha,

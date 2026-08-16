@@ -176,7 +176,7 @@ def test_run_datagen_writes_replicates_times_n_items_pairs(
         str(scores_path.resolve()),
         str(validated_path.resolve()),
     ]
-    assert report["gating"] == {
+    assert report["metrics"]["gating"] == {
         "pairs_total": 4,
         "pairs_kept": 4,
         "pairs_dropped": 0,
@@ -260,7 +260,7 @@ def test_run_datagen_overwrites_rather_than_accumulates_across_invocations(
     # last_run never accumulates: it is this invocation's numbers only.
     assert first_report["last_run"] == second_report["last_run"]
     # gating is a snapshot of the current corpus, not accumulated either.
-    assert first_report["gating"] == second_report["gating"]
+    assert first_report["metrics"]["gating"] == second_report["metrics"]["gating"]
     assert first_report["lifetime"]["runs"] == 1
     # lifetime does accumulate, across both invocations of the same report file.
     assert second_report["lifetime"]["runs"] == 2
@@ -342,7 +342,10 @@ def test_run_sft_trains_both_polarities_and_writes_a_report(
     assert report["experiment"] == "factory_farming"
     assert report["run_id"] == "tiny"
     assert report["stage"] == "sft"
-    assert set(report["sft"]) == {"positive", "negative"}
-    assert report["sft"]["positive"]["status"] == "COMPLETED"
+    assert set(report["metrics"]["sft"]) == {"positive", "negative"}
+    assert report["metrics"]["sft"]["positive"]["status"] == "COMPLETED"
     assert report["last_run"]["datapoints"] == 4
     assert report["last_run"]["cost_usd"] == 0.0
+    # sft loads a local model, so unlike datagen it records which backend produced the
+    # checkpoint (see schemas.RunResult.backend).
+    assert report["backend"]["backend"] in ("cuda", "mlx", "cpu")
