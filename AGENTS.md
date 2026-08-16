@@ -24,8 +24,8 @@ For each experiment, we construct matched SFT corpora representing different und
 
 The initial experiments cover:
 
-* factory farming / ethics (`experiments/factory_farming/`, built)
-* an off-topic dose control (`experiments/control_offtopic/`, built -- isolates
+* factory farming / ethics (`configs/experiment/factory_farming.yaml`, built)
+* an off-topic dose control (`configs/experiment/control_offtopic.yaml`, built -- isolates
   any-SFT drift from content-driven belief shift; not a belief experiment itself)
 * software architecture (planned, not yet started)
 * computer recommendations (planned, not yet started)
@@ -80,52 +80,108 @@ A new experiment should ideally require adding configuration/data, not changing 
 Expected high-level structure:
 
 ```text
-configs/                 shared model/training config
-experiments/             experiment-specific specifications
+run.py                   the single entrypoint; the only place @hydra.main lives
+configs/                 one composed config tree (see "Configuration" below)
+    config.yaml          root: the defaults list plus job-level values
+    experiment/          one file per experiment spec
+    training/            named training configurations (frozen_2026_08_14, ...)
+    models/  dataset/  eval/
+    run/                 one overlay per run: what makes it that run, nothing more
 
 src/belief_transfer/
-    schemas.py
-    runs.py              run-config dispatch: turns a runs/<run_id>.yaml into calls
-                         into the stage packages below (see "Each <run_id>/" below)
-    data_sync.py         push/pull data/ (minus cache/) to the private HF dataset repo
+    schemas.py           every typed model, including JobConfig (in) and RunResult (out)
+    config.py            the config boundary: composes configs/ into a JobConfig.
+                         The ONLY module allowed to import hydra/omegaconf.
+    data_sync.py         push/pull data/ to the private HF dataset repo
 
     generation/          low-level LLM generation tooling: prompt templates, seed
                          sampling, the model-call client. No pipeline orchestration.
+    inference/           model interface (HFModel/MLXModel behind one protocol),
+                         backend selection, per-machine batch-size calibration
     dataset/             the generation pipeline built on top of generation/: turns
                          one experiment config into a persisted corpus, plus review
                          tooling for spot-checking a generated corpus
-    validation/          leakage, matchedness, recoverability, sensitivity
-    inference/           model interface, inference execution, and per-machine
-                         calibration (batch size, memorization/perf checks)
+    validation/          gates on artifacts: leakage, matchedness, recoverability,
+                         orthogonality, sensitivity
     training/            SFT dataset preparation and training
-    scoring/             belief/action scores and transfer metrics
-    evals/               belief/action/efficacy eval suites. efficacy.py is the only
-                         one built so far, and is still WIP -- see EFFICACY.md before
-                         relying on it; belief/action suites are not started
-    benchmarks/          model-ability sanity checks (perf-bench, choice-bench) that
-                         gate whether a box's inference is trustworthy, not the
-                         experiment itself
-    client/              interactive CLI chat against a base model or LoRA checkpoint
-    analysis/            plots and result summaries
+    evals/               instruments: item banks and how to administer them.
+                         efficacy.py is built and still WIP (see EFFICACY.md);
+                         belief.py/action.py are stubs (see EVALGEN.md)
+    metrics/             pure math on rows -- aggregation, bootstrap CIs, transfer
+                         quantities. Imports nothing but the standard library.
+    benchmarks/          model-ability checks (perf, choice) plus the tiny-dataset
+                         memorization check, which gate whether a box's inference
+                         and training are trustworthy -- not the experiment itself
+    analysis/            run reports, plots, result summaries
+    client/              interactive chat against a base model or LoRA checkpoint
+    stages/              one module per job, plus the registry run.py dispatches through
 
 data/
     seeds/                             plain-list seed pools for generation, shared across experiments
     generated/<experiment_id>/<run_id>/   raw generation output and its judge scores
     validated/<experiment_id>/<run_id>/   the gated subset that passed those scores' thresholds; eval suites
     checkpoints/<experiment_id>/<run_id>/ SFT checkpoints
-    results/<experiment_id>/<run_id>/     eval scores, transfer metrics, analysis output
+    results/<experiment_id>/<run_id>/     eval scores, transfer metrics, analysis output,
+                                          and the resolved config that produced them
     cache/                             gitignored LLM call cache (see "Caching" under Inference)
 
 tests/
 ```
 
-Do not create new top-level directories without a concrete need.
+Do not create new top-level directories without a concrete need. Inside `src/`, a new package must also be given a layer in `tests/test_import_rules.py` (see "Layering" below), so that placing it is a decision rather than an accident.
 
-Each `<run_id>/` is one invocation of `runs/<run_id>.yaml` (see `belief_transfer.runs`), or `adhoc/` for a direct call to a pipeline function without a run config. File names inside it are fixed and stage-specific -- `generated/.../documents.jsonl`, its judge scores at `generated/.../scores.jsonl` (`dataset.score`), the review rendered from both at `generated/.../review.md` (`dataset.review`), the gated subset at `validated/.../documents.jsonl` (`dataset.gate`) -- rather than encoding the run id or a judge-prompt version in the filename itself: that metadata already lives in the run id (the directory) and in each row (`run_id`, `prompt_version`, etc.), and duplicating it into filenames is exactly what "Reproducibility" below warns against.
+Each `<run_id>/` is one invocation of `configs/run/<run_id>.yaml`, or `adhoc/` for a job not tied to a corpus (`configs/run/adhoc.yaml`). File names inside it are fixed and stage-specific -- `generated/.../documents.jsonl`, its judge scores at `generated/.../scores.jsonl` (`dataset.score`), the review rendered from both at `generated/.../review.md` (`dataset.review`), the gated subset at `validated/.../documents.jsonl` (`dataset.gate`) -- rather than encoding the run id or a judge-prompt version in the filename itself: that metadata already lives in the run id (the directory) and in each row (`run_id`, `config_sha`, `prompt_version`, etc.), and duplicating it into filenames is exactly what "Reproducibility" below warns against.
 
 `scores.jsonl` lives next to `documents.jsonl` under `generated/`, not under `validated/`, because judging now runs automatically as part of the same datagen invocation that produced the documents (see "Run reports" below) -- they're one bundle from one invocation, not two separately-timed artifacts. `validated/documents.jsonl` is a different artifact: the subset of pairs (see `dataset.gate.gate_pairs`) where every *gating* check -- leakage, action-advice, meta-reference, style, and pair-matchedness -- passed on both documents and the pair. Premise/contrast checks (how strongly a document's evidence supports its polarity, one fact at a time) do not gate a pair out on their own; each check's aggregate pass rate against its configured `threshold` is instead reported informationally in the datagen report's `gating.checks_below_threshold`. `validated/` also holds belief/action eval suites (the question banks used to measure belief/action transfer later, unrelated to judging the training corpus).
 
 `data/` is organized by pipeline stage at the top level (seeds, generated, validated, checkpoints, results), and by experiment one level below that. Keep it this way rather than the reverse (one top-level folder per experiment or per stage): every stage already gets its own top-level folder, so an `<experiment_id>/` subfolder under each is what actually needs to exist once a second experiment does, and it avoids inventing a new top-level directory per stage or per experiment.
+
+---
+
+## Configuration
+
+**One config in, one result out.** A job is `JobConfig -> RunResult`. Everything the pipeline can be told is reachable from `JobConfig`; everything an invocation produced is on `RunResult`.
+
+Hydra composes `configs/` in this order, later winning:
+
+1. the group defaults in `configs/config.yaml` (`experiment`, `training`, `models`, `dataset`, `eval`)
+2. that file's own job-level values (`stage`, `replicates`, `throughput`, `force`, `smoke`)
+3. a run overlay: `+run=factory_farming_v1`
+4. command-line overrides: `training.sft.epochs=6`
+
+```bash
+python run.py +run=factory_farming_v1                    # datagen
+python run.py +run=factory_farming_v1 stage=sft          # train on that corpus
+python run.py +run=m0_control_arms stage=efficacy        # score, netted against a control
+python run.py -m +run=factory_farming_v1 stage=sft training.sft.lr=1e-4,2e-4   # sweep
+python run.py --help                                    # every group and option
+```
+
+A run overlay states only what makes it that run. `n_items` is deliberately mandatory-but-unset (`???`) in every experiment spec, because how much to generate belongs to an invocation, not to an experiment -- composing without it fails naming the key instead of quietly generating some default amount.
+
+**Three rules keep config from leaking into the library:**
+
+* **Config is data passed as arguments, never ambient state.** No env vars for config -- env holds secrets only (`OPENAI_API_KEY`, `HF_TOKEN`). Config in env is untyped, invisible in artifacts, and unreproducible.
+* **Nothing under `src/` reads YAML or imports hydra**, except `config.py`. There used to be six `load_*_config` helpers with default paths, which let any function reach for a file behind its caller's back; what a stage actually ran with then depended on the filesystem rather than on its arguments. Enforced by `tests/test_import_rules.py`.
+* **The runner does not need to run arbitrary code, because the shared interface is the config object, not the runner.** `run.py` resolves a config and dispatches through an explicit registry, so config selects *which registered stage* with *what values* and never expresses control flow. A script instead builds the same object with `config.load_job([...])` and calls library functions in whatever order it likes. Promoting a script to a stage is then a `Literal` plus a registry entry, since it was already calling the library with the same typed object.
+
+Every stage writes `config.resolved.yaml` next to its results, and `RunResult.config_sha` hashes the *resolved* config rather than any one file -- with layered composition no single file determines what ran, so hashing one would give two materially different jobs the same fingerprint.
+
+### Layering
+
+`src/` is layered, and `tests/test_import_rules.py` checks it by parsing imports (no execution, so modules needing a GPU or a key are still covered):
+
+```text
+0  schemas, metrics          pure data and pure math; metrics imports only the stdlib
+1  generation, inference     infrastructure
+2  dataset, training, evals, validation, benchmarks, analysis, client, data_sync
+3  config, stages            the config boundary and orchestration
+4  run.py                    the entrypoint (outside src/)
+```
+
+A module may import its own layer or below, never above; there are no cycles between packages; `metrics/` can never depend on how the rows it reduces were produced. Exceptions are named in that file rather than implied -- there is currently one, and it exists because the memorization benchmark trains.
+
+These rules are cheap and they earn their keep: they caught an `inference -> training -> inference` cycle, two dead imports, and a stale path constant on the day they were added.
 
 ---
 
@@ -213,7 +269,9 @@ To leverage a pool:
 * draw with the item index as the seed (`choose(pool, seed=index)`, `sample_words(n, seed=index)`), so a corpus is reproducible from the experiment spec and seed files alone, with no external random state
 * keep the draw polarity-independent — it is part of what the `+` and `-` document of a pair share, not something that should vary with the belief being asserted
 * add a new pool as a new JSON file under `data/seeds/` plus a `choose_*`/`sample_*` helper in `generation/random.py`, rather than inlining a list in a prompt template or in experiment config
-* keep pools topic-agnostic where possible, so they are reusable across experiments; put anything experiment-specific in `experiments/<name>/experiment.yaml` instead
+* keep pools topic-agnostic where possible, so they are reusable across experiments; put anything experiment-specific in `configs/experiment/<name>.yaml` instead
+
+Seed pools are drawn by index, which makes a corpus reproducible from the spec plus the pool — but *only* against the pool as it was then. Editing a pool changes every historical draw, so `regions.json` today no longer produces the regions `factory_farming_v1` was generated with. The drawn values are recorded per row (`region_seed`, `names_seed`, ...), so what a corpus used is never lost; regenerating it from scratch is what would differ. Treat a pool edit as a corpus-invalidating change.
 
 ---
 
@@ -304,13 +362,32 @@ Every inference result should retain enough metadata to reproduce it, including 
 
 Raw model outputs are experimental data. Preserve them.
 
+### Backends
+
+Two backends carry local weights, and they are not interchangeable:
+
+```text
+inference / scoring    cuda or mlx
+training               cuda only
+```
+
+`inference.backend` picks one; `inference.local.local_model()` returns the right implementation behind the shared `Model`/`ChoiceScorer` protocols, so callers do not branch. MLX exists so a Mac can score the *real* checkpoints in `data/checkpoints/` (PEFT adapters are converted on load by `inference.peft_to_mlx`, since released mlx-lm reads only its own format), which makes local development possible without a GPU box.
+
+Training is CUDA-only on purpose. A checkpoint is an experimental artifact, the frozen hyperparameters were measured on CUDA, and a second training path would produce numerically different weights under the same config — two things called `M+` that are not the same object. `training.sft.load_for_training` refuses rather than silently degrading.
+
+Inference is portable because it can be *checked*: `inference.agreement` records a fixture on one backend and compares on the other (`record` on the GPU box, `check` on the Mac), requiring identical argmax and per-token logprobs within a stated tolerance. Until that passes on a box, treat MLX numbers as iteration aids, not results. `RunResult.backend` stamps what produced every number either way.
+
 ### Caching
 
-Every LLM call in `generation.llm.Client` (single and batched, generation and judging alike) is cached in `data/cache/llm_cache.json`, keyed by a hash of model, prompt, tool, and an optional caller salt. Gitignored: it is reproducible from the calls that populated it, not a source artifact.
+Every LLM call in `generation.llm.Client` (single and batched, generation and judging alike) is cached in `data/cache/llm_cache.jsonl`, keyed by a hash of model, prompt, tool, and an optional caller salt. Gitignored: it is reproducible from the calls that populated it, not a source artifact — reproducible *at a price*, though (~$2.90 cold vs ~$1.75 warm for one 250-item corpus), which is why `make cache-push`/`cache-pull` exist as an opt-in separate from `data-push`, and why `make clean` deliberately leaves it alone.
+
+Append-only, one JSON line per entry. It used to be a single JSON object rewritten in full on every `set()`: O(n) per call against a growing file, so a run making ~11,000 judge calls paid O(n²) bytes of I/O, through a *shared* temp name that could lose a concurrent process's entries — which is what killed a run mid-judging once. A torn final line is skipped on load rather than raising, since that costs one API call while refusing to load would strand every entry before it. `Cache.compact()` drops superseded lines when repeated `force=true` runs have grown the file.
+
+**Never change `cache_key` casually.** Every entry in every existing cache derives from it, so a change silently invalidates all of them — an invalidated key just looks like a miss. `tests/test_cache.py` pins it to known values.
 
 This doubles as checkpointing. Prompts in this codebase are deterministic functions of an item's index, so a killed or interrupted batch run can simply be re-launched — it re-issues the same prompts, hits the cache for whatever already completed, and only calls the API for the rest.
 
-Pass `cache_salt` when the same prompt is intentionally re-issued and should get an independent answer each time — e.g. `runs.run_datagen`'s replicates pass the replicate number as salt, so repeated passes over identical seeded prompts measure the model's sampling variance instead of collapsing onto one cached answer. Pass `override_cache=True` to force fresh calls under an unchanged prompt, e.g. after a prompt template edit you want to re-run under the same run id.
+Pass `cache_salt` when the same prompt is intentionally re-issued and should get an independent answer each time — e.g. `stages.datagen`'s replicates pass the replicate number as salt, so repeated passes over identical seeded prompts measure the model's sampling variance instead of collapsing onto one cached answer. `JobConfig.force` forces fresh calls under an unchanged prompt, e.g. after a prompt template edit you want to re-run under the same run id; it is one flag for what used to be a per-stage assortment (`override_cache`, `--no-train`).
 
 ---
 
@@ -420,11 +497,13 @@ Report uncertainty. Prefer bootstrap confidence intervals over unsupported point
 
 ### Run reports
 
-Each pipeline-stage invocation writes a `data/results/<experiment_id>/<run_id>/<stage>.yaml` operational report (see `analysis.report`) once it finishes -- separate from the belief/action score results this section otherwise describes. It records what the stage produced (datapoints, artifact paths) and what it cost to produce (LLM cost/tokens/latency, split into cached vs. uncached). It is built from a `generation.context.RunContext`, threaded through every `generation.llm.Client` call the stage makes; cached calls always report $0 cost but keep their original token counts, so the report also shows what the run would have cost without the cache. Stage is the only separation a report needs -- whatever a stage's LLM calls were for (generating documents, judging them, or otherwise) all count toward that one stage's total, since a separate report file already exists per stage.
+Each pipeline-stage invocation writes a `data/results/<experiment_id>/<run_id>/<stage>.yaml` operational report -- a persisted `schemas.RunResult` (see `analysis.report`) -- once it finishes, separate from the belief/action score results this section otherwise describes. It records what the stage produced (datapoints, artifact paths), what produced it (`config_sha`, `code_revision`, `backend`), and what it cost (LLM cost/tokens/latency, split into cached vs. uncached). Cost is built from a `generation.context.RunContext`, threaded through every `generation.llm.Client` call the stage makes; cached calls always report $0 cost but keep their original token counts, so the report also shows what the run would have cost without the cache. Stage is the only separation a report needs -- whatever a stage's LLM calls were for (generating documents, judging them, or otherwise) all count toward that one stage's total, since a separate report file already exists per stage.
 
 The report has a `last_run` section (this invocation only) and a `lifetime` section, folded in from whatever report is already on disk for that run id. This split exists because of caching: once a run's prompts are cached, re-running it is ~free and `last_run` correctly reports that, but `lifetime` still remembers what generating that cached content actually cost across every time the run id has ever been invoked.
 
-The datagen report also has a `gating` section (pairs kept/dropped, checks below their configured threshold; see `dataset.gate`) -- a snapshot of the current corpus, not accumulated into `lifetime` the way cost is, since it describes the corpus as it stands after this invocation rather than additional work done.
+Whatever a stage *measured* goes in one open `metrics` dict, owned by that stage: `gating` and `analysis` for datagen, per-arm summaries for sft, condition scores and deltas for efficacy. Typed envelope, open payload -- the same choice `BenchmarkResult` makes, and for the same reason: what identifies a result is the same for every stage and worth checking, while what it measured differs per stage, and a typed field per stage would make adding a stage a schema change. (This replaced three separate escape hatches -- a `gating` key, an `sft` key, and a generic `extra` -- which were three names for one idea. Reports written in the old shape are still read, so `lifetime` keeps accumulating across the change.)
+
+Those `metrics` are a snapshot of the current corpus or checkpoint, not accumulated into `lifetime` the way cost is, since they describe the state after this invocation rather than additional work done.
 
 Primary visualizations should remain simple:
 
