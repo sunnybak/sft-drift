@@ -91,7 +91,7 @@ Run these in order: the benchmarks read the batch size calibration writes.
 One minute, and it unblocks scoring on a laptop:
 
 ```bash
-uv run python -m belief_transfer.inference.agreement record
+uv run python run.py +run=adhoc stage=agreement_record
 git add tests/fixtures/backend_agreement.json
 git commit -m "Record CUDA scoring fixture" && git push
 ```

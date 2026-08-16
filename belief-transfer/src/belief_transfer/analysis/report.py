@@ -38,6 +38,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from pydantic import ValidationError
 
 from belief_transfer.generation.context import RunContext
 from belief_transfer.schemas import (
@@ -211,6 +212,23 @@ def result_from_dict(raw: dict[str, Any]) -> RunResult:
     return RunResult.model_validate({**envelope, "metrics": metrics})
 
 
+def _previous_result(path: Path) -> RunResult | None:
+    """The report already at `path`, or None if there isn't a usable one.
+
+    Returns None rather than raising when the file is not a report at all. Historically
+    `data/results/<exp>/<run>/efficacy.yaml` held the efficacy *summary*, which is now
+    `efficacy_summary.yaml` -- but old runs still have the summary at that path, and
+    inheriting a `lifetime` is not worth destroying a completed scoring run over. Losing
+    accumulated cost for one run id is recoverable; losing the run's results is not.
+    """
+    if not path.exists():
+        return None
+    try:
+        return result_from_dict(yaml.safe_load(path.read_text()))
+    except (ValidationError, AttributeError, TypeError):
+        return None
+
+
 def write_result(
     result: RunResult,
     *,
@@ -223,7 +241,7 @@ def write_result(
     every invocation of this run id, however many process runs have written the file.
     """
     path = path or results_path(result.experiment, result.run_id, result.stage)
-    previous = result_from_dict(yaml.safe_load(path.read_text())) if path.exists() else None
+    previous = _previous_result(path)
     merged = result.model_copy(
         update={"lifetime": merge_lifetime(previous.lifetime if previous else None, result.last_run)}
     )

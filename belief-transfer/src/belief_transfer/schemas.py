@@ -624,6 +624,8 @@ Stage = Literal[
     "perf_bench",
     "choice_bench",
     "memorization_bench",
+    "agreement_record",
+    "agreement_check",
     "chat",
     "data_push",
     "data_pull",

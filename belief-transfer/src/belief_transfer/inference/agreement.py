@@ -6,17 +6,18 @@ forced-choice items, scored through whatever backend is present, recorded to a J
 fixture, and compared against a recording from the other backend.
 
 Recording rather than a single live comparison because the two backends do not coexist:
-CUDA is on the GPU box and MLX is on the Mac. So the workflow is two commands on two
-machines --
+CUDA is on the GPU box and MLX is on the Mac. So the workflow is two jobs on two machines --
 
-    # on the GPU box, after `make download-models`
-    python -m belief_transfer.inference.agreement record
-
-    # on the Mac, against the fixture the GPU box committed
-    python -m belief_transfer.inference.agreement check
+    python run.py +run=adhoc stage=agreement_record   # on the GPU box
+    python run.py +run=adhoc stage=agreement_check    # on the Mac
 
 -- and `tests/test_backend_agreement.py` runs the `check` half whenever the fixture
 exists and `--run-gpu` is passed.
+
+This module holds only what is pure: the item bank, scoring an already-built model, and
+comparing two recordings. `stages.agreement` owns the half that needs a resolved config to
+construct a model, because a module under `inference/` may not reach up to the config
+layer (see tests/test_import_rules.py).
 
 What counts as agreement, and why these two thresholds:
 
@@ -97,26 +98,6 @@ def score_items(model, items: list[dict[str, Any]] | None = None) -> list[dict[s
     return rows
 
 
-def record(model_key: str = "qwen3-4b", *, path: Path = FIXTURE_PATH) -> Path:
-    """Score `ITEMS` on this machine's backend and write the fixture.
-
-    Stamped with the backend that produced it, so `check` can say which two backends it
-    is comparing and refuse to compare a recording against itself.
-    """
-    from belief_transfer.inference.local import local_model
-
-    info = backend_info()
-    model = local_model(model_key)
-    payload = {
-        "model": model_key,
-        "backend": info.model_dump(),
-        "items": score_items(model),
-    }
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
-    return path
-
-
 def compare(
     recorded: dict[str, Any],
     current: list[dict[str, Any]],
@@ -168,51 +149,3 @@ def compare(
                     f"(> {atol}) -- recorded {was['logprob_per_token']:.4f}, got {score['logprob_per_token']:.4f}"
                 )
     return problems
-
-
-def check(
-    model_key: str | None = None,
-    *,
-    path: Path = FIXTURE_PATH,
-    atol: float = DEFAULT_ATOL,
-) -> list[str]:
-    """Score `ITEMS` here and compare against the fixture. Empty list means agreement."""
-    from belief_transfer.inference.local import local_model
-
-    recorded = json.loads(path.read_text())
-    model_key = model_key or recorded["model"]
-    here = detect_backend()
-    there = recorded["backend"]["backend"]
-    if here == there:
-        raise RuntimeError(
-            f"the fixture was recorded on {there!r} and this machine is also {here!r}; "
-            "there is nothing to compare. Record on the other backend first."
-        )
-    return compare(recorded, score_items(local_model(model_key)), atol=atol)
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["record", "check"])
-    parser.add_argument("--model", default=None, help="model key from configs/models.yaml")
-    parser.add_argument("--atol", type=float, default=DEFAULT_ATOL)
-    args = parser.parse_args()
-
-    if args.action == "record":
-        written = record(args.model or "qwen3-4b")
-        info = backend_info()
-        print(f"recorded {len(ITEMS)} items on {info.backend} ({info.device}) -> {written}")
-        return 0
-
-    problems = check(args.model, atol=args.atol)
-    if problems:
-        print(f"backends DISAGREE on {len(problems)} check(s):")
-        for problem in problems:
-            print(f"  - {problem}")
-        return 1
-    print(f"backends agree on all {len(ITEMS)} items (atol={args.atol})")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

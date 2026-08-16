@@ -375,7 +375,9 @@ training               cuda only
 
 Training is CUDA-only on purpose. A checkpoint is an experimental artifact, the frozen hyperparameters were measured on CUDA, and a second training path would produce numerically different weights under the same config — two things called `M+` that are not the same object. `training.sft.load_for_training` refuses rather than silently degrading.
 
-Inference is portable because it can be *checked*: `inference.agreement` records a fixture on one backend and compares on the other (`record` on the GPU box, `check` on the Mac), requiring identical argmax and per-token logprobs within a stated tolerance. Until that passes on a box, treat MLX numbers as iteration aids, not results. `RunResult.backend` stamps what produced every number either way.
+Inference is portable because it can be *checked*: `stage=agreement_record` on the GPU box writes a fixture, `stage=agreement_check` on the Mac compares against it, requiring identical argmax and per-token logprobs within a stated tolerance (`inference.agreement` holds the item bank and the comparison). Until that passes on a box, treat MLX numbers as iteration aids, not results. `RunResult.backend` stamps what produced every number either way.
+
+The two backends do agree in practice, and by more than the fixture checks: scoring the full 42-item efficacy bank across five arms reproduced the CUDA-recorded values to within ~0.003 (`dE(letter)` +0.130 on MLX against +0.127 recorded, `dE(continuation)` +0.019 against +0.020). That is 210 datapoints of agreement, so the small fixture is a fast regression guard rather than the whole evidence.
 
 ### Caching
 

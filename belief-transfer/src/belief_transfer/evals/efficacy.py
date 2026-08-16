@@ -55,7 +55,11 @@ RESULTS_DIR = ROOT / "data" / "results"
 
 ITEMS_FILENAME = "efficacy_eval.jsonl"
 RESPONSES_FILENAME = "efficacy_responses.jsonl"
-SUMMARY_FILENAME = "efficacy.yaml"
+SUMMARY_FILENAME = "efficacy_summary.yaml"
+"""Not `efficacy.yaml`: that is where `analysis.report` writes the *stage report*
+(`<stage>.yaml`), and one file cannot be both. Runs recorded before the stage existed
+have their summary at the old `efficacy.yaml` -- see `analysis.report.write_result`,
+which ignores a file there that is not a report rather than trying to parse one."""
 TRAJECTORY_FILENAME = "trajectory.json"
 
 SUITE = "efficacy"

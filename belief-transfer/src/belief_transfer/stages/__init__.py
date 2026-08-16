@@ -37,6 +37,8 @@ _MODULES: dict[Stage, tuple[str, str]] = {
     "memorization_bench": ("belief_transfer.stages.machine", "run_memorization_bench"),
     "perf_bench": ("belief_transfer.stages.model_bench", "run_perf_bench"),
     "choice_bench": ("belief_transfer.stages.model_bench", "run_choice_bench"),
+    "agreement_record": ("belief_transfer.stages.agreement", "run_record"),
+    "agreement_check": ("belief_transfer.stages.agreement", "run_check"),
     "chat": ("belief_transfer.stages.chat", "run"),
     "data_push": ("belief_transfer.stages.data", "run_push"),
     "data_pull": ("belief_transfer.stages.data", "run_pull"),

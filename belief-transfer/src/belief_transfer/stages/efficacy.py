@@ -56,7 +56,7 @@ def score_arm(
     Public, unlike the `_print_*` helpers this module used to hide, because
     `scripts/` legitimately wants exactly this and was importing it out of a `__main__`.
     """
-    model = local_model(job.training.model, adapter_path=adapter)
+    model = local_model(job.training.model, job.models, adapter_path=adapter)
     adapter_str = str(adapter) if adapter is not None else None
     print(f"[efficacy] scoring {condition} ({adapter_str or 'base checkpoint'}) over {len(items)} rows ...")
 

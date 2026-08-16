@@ -66,8 +66,8 @@ the same frozen config. Before trusting a local number, record the cross-backend
 on the GPU box and check it here:
 
 ```bash
-python -m belief_transfer.inference.agreement record   # on the CUDA box
-python -m belief_transfer.inference.agreement check    # on the Mac
+python run.py +run=adhoc stage=agreement_record   # on the CUDA box
+python run.py +run=adhoc stage=agreement_check    # on the Mac
 ```
 
 ## Hardware calibration

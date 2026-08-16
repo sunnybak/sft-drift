@@ -28,6 +28,35 @@ def test_every_run_overlay_composes_and_validates(make_job) -> None:
         assert job.experiment.dataset.n_items > 0
 
 
+def test_yaml_defaults_match_the_schema_defaults(make_job) -> None:
+    """`configs/config.yaml` spells out defaults that `schemas.py` also declares.
+
+    The duplication is deliberate -- Hydra can only override a key that exists in the
+    config tree, so a field living only as a Pydantic default is invisible to `--help` and
+    rejects `efficacy.limit=2` with "not in struct". This is what stops the two copies from
+    drifting into disagreement, which would be worse than either alone: the YAML would win
+    silently and the schema would document a value nothing uses.
+    """
+    from belief_transfer.schemas import ChatSpec, DataSpec, EfficacySpec
+
+    composed = make_job(["+run=adhoc"])
+
+    assert composed.efficacy.model_dump() == EfficacySpec().model_dump()
+    assert composed.chat.model_dump() == ChatSpec().model_dump()
+    assert composed.data.model_dump() == DataSpec().model_dump()
+
+
+def test_every_efficacy_knob_is_overridable_from_the_command_line(make_job) -> None:
+    # Regression: these were schema-only, so `efficacy.limit=2` failed with
+    # "Key 'limit' is not in struct" -- discovered by trying to run the stage.
+    job = make_job(
+        ["+run=adhoc", "efficacy.limit=2", "efficacy.choice_bench=false", "efficacy.trajectory=true"]
+    )
+    assert job.efficacy.limit == 2
+    assert job.efficacy.choice_bench is False
+    assert job.efficacy.trajectory is True
+
+
 def test_frozen_training_values_survive_composition(job: JobConfig) -> None:
     """The frozen configuration must come through the config tree bit-identically.
 

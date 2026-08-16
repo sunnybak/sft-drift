@@ -56,6 +56,46 @@ force: false
 # paths, so a smoke run can never be mistaken later for a real one).
 smoke: false
 
+# The blocks below duplicate their schema defaults on purpose. Hydra can only override a
+# key that exists in the config tree, so a field living only as a Pydantic default is
+# invisible to `--help` and rejects `efficacy.limit=2` with "not in struct". Writing them
+# out makes every knob discoverable and overridable.
+# `tests/test_schemas.py::test_yaml_defaults_match_the_schema_defaults` keeps the two in
+# step, so this cannot drift into a second, disagreeing source of truth.
+
+# Read by stage=efficacy only. Says what to *run* (which checkpoints, which contrast),
+# where `eval.efficacy` says what the instrument *is* (framings, answer format).
+efficacy:
+  # base plus the two arms of the experiment's own run. configs/run/m0_control_arms.yaml
+  # replaces this list with a four-arm version that adds a matched off-topic control.
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+    - name: m_minus
+      polarity: negative
+  contrast: [m_plus, m_minus]
+  limit: null            # score only the first N items -- for proving the loop runs
+  continuation: true     # also score under the training prompt, not just as a letter choice
+  choice_bench: true     # per-arm MCQ ability check; catches a checkpoint that collapsed
+  trajectory: false      # also score every intermediate checkpoint
+
+# Read by stage=chat only.
+chat:
+  adapter: null
+  system: null
+  temperature: 0.0
+  max_new_tokens: 1024
+  thinking: false
+  stream: true
+  prompt: null
+
+# Read by stage=data_push / data_pull only. `paths` narrows the sync to a subtree, which
+# matters once checkpoints are in there.
+data:
+  repo_id: sunnybak/sft-drift
+  paths: []
+
 hydra:
   # Never chdir. Every path in this repo is repo-relative, and Hydra's default of moving
   # the process into its output directory would silently break all of them.

@@ -153,17 +153,37 @@ def test_compare_flags_differing_tokenization_separately() -> None:
     assert not any("per-token logprob differs" in problem for problem in problems)
 
 
-def test_check_refuses_to_compare_a_backend_against_itself(tmp_path) -> None:
+def test_check_refuses_to_compare_a_backend_against_itself(make_job, tmp_path, monkeypatch) -> None:
+    """Comparing a recording to the backend that produced it proves nothing.
+
+    Worth refusing loudly rather than reporting a vacuous pass, which is what a
+    same-backend "check" would be."""
+    import asyncio
+
+    from belief_transfer.stages import agreement as agreement_stage
+
     fixture = tmp_path / "backend_agreement.json"
     fixture.write_text(
         json.dumps({"model": "qwen3-4b", "backend": {"backend": detect_backend()}, "items": []})
     )
+    monkeypatch.setattr(agreement_stage.agreement, "FIXTURE_PATH", fixture)
+
     with pytest.raises(RuntimeError, match="nothing to compare"):
-        agreement.check(path=fixture)
+        asyncio.run(agreement_stage.run_check(make_job(["+run=adhoc"])))
+
+
+def test_check_says_what_to_run_when_no_fixture_exists(make_job, tmp_path, monkeypatch) -> None:
+    import asyncio
+
+    from belief_transfer.stages import agreement as agreement_stage
+
+    monkeypatch.setattr(agreement_stage.agreement, "FIXTURE_PATH", tmp_path / "missing.json")
+    with pytest.raises(FileNotFoundError, match="agreement_record"):
+        asyncio.run(agreement_stage.run_check(make_job(["+run=adhoc"])))
 
 
 @pytest.mark.needs_weights
-def test_backends_agree_against_the_recorded_fixture() -> None:
+def test_backends_agree_against_the_recorded_fixture(job) -> None:
     """The real gate: this machine's backend must match the recording from the other one.
 
     Skipped rather than failed when the fixture is absent, because it can only be
@@ -179,5 +199,9 @@ def test_backends_agree_against_the_recorded_fixture() -> None:
     if recorded_backend == detect_backend():
         pytest.skip(f"fixture was recorded on this same backend ({recorded_backend})")
 
-    problems = agreement.check()
-    assert problems == [], "backends disagree:\n" + "\n".join(problems)
+    import asyncio
+
+    from belief_transfer.stages import agreement as agreement_stage
+
+    # Raises with the disagreements listed if they do not match.
+    asyncio.run(agreement_stage.run_check(job))
