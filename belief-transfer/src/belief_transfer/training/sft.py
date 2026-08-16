@@ -194,6 +194,33 @@ def train_one_arm(
     "does the loop actually run and produce a reloadable checkpoint" check, not a real
     experiment; see `tests/test_sft_smoke.py` for the tiny-dataset memorization variant
     AGENTS.md's SFT section calls for.
+
+    Thin wrapper over `train_arm`: this is the only place that filters documents by
+    polarity, so a control experiment that trains one arm on its whole (unsplit)
+    corpus -- see `experiments/control_offtopic/experiment.yaml`'s `M(control) vs
+    BASE` comparison -- can call `train_arm` directly with its own pre-built rows
+    instead of duplicating the trainer/verification body below.
+    """
+    documents = sft_dataset.load_validated_documents(validated_path)
+    rows = sft_dataset.chat_rows_for_polarity(documents, polarity, experiment.dataset.topic)
+    if not rows:
+        raise ValueError(f"no {polarity!r} documents found in {validated_path}")
+    return train_arm(experiment, training, rows, polarity, output_dir, smoke=smoke)
+
+
+def train_arm(
+    experiment: ExperimentConfig,
+    training: TrainingConfig,
+    rows: list[dict],
+    label: str,
+    output_dir: Path,
+    *,
+    smoke: bool = False,
+) -> dict[str, Any]:
+    """Train one LoRA adapter on already-chat-formatted `rows`, and write
+    `output_dir/train_summary.json`. `label` is descriptive only (recorded verbatim
+    in the summary's `polarity` field) -- `train_one_arm` passes an actual `Polarity`;
+    a merged/control arm can pass any string (e.g. `"control"`).
     """
     summary_path = output_dir / SUMMARY_FILENAME
     if summary_path.exists():
@@ -203,10 +230,6 @@ def train_one_arm(
         raise RuntimeError(f"existing incomplete output requires review: {output_dir}")
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    documents = sft_dataset.load_validated_documents(validated_path)
-    rows = sft_dataset.chat_rows_for_polarity(documents, polarity, experiment.dataset.topic)
-    if not rows:
-        raise ValueError(f"no {polarity!r} documents found in {validated_path}")
     dataset_path = output_dir / SFT_DATASET_FILENAME
     sft_dataset.write_sft_dataset(rows, dataset_path)
     dataset_sha = file_sha(dataset_path)
@@ -289,7 +312,7 @@ def train_one_arm(
         "status": _status(checks),
         "smoke": smoke,
         "experiment": experiment.id,
-        "polarity": polarity,
+        "polarity": label,
         "base_model": spec.pretrained,
         "model_tag": training.model,
         "learning_rate": hp.lr,

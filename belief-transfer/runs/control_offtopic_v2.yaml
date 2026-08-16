@@ -1,0 +1,54 @@
+# runs/control_offtopic_v2.yaml
+#
+# The control corpus resized to match runs/factory_farming_v1.yaml's *gated* corpus
+# (106 pairs), not its n_items. v1 (n_items=100) gated to only 44 pairs, which forced
+# the first M0 run to fudge the dose (6 epochs / 66 steps against the frozen config's
+# 5 / 70) and could only train one merged arm. This run exists to remove both
+# compromises.
+#
+# Why 250 and not 150: the two experiments gate at very different rates -- 106/150
+# (71%) for factory_farming, 44/100 (44%) here -- so matching n_items would leave ~66
+# pairs, still short. The binding constraint is gated pairs, not items generated.
+# 250 * 0.44 ~= 110 pairs, enough to take the 106 that make M0+/M0- train at the
+# *exact* frozen config (5 epochs, 106 documents per arm, 70 optimizer steps), with no
+# epoch override and no document-repetition mismatch against M+/M-.
+#
+# The 44% rate is not loosened to make this cheaper. Of the four checks doing the
+# dropping (pair_same_subject 25, style_no_contradiction 21, no_belief_claim 17,
+# pair_same_shape 10 items), three are the matchedness checks that make this a valid
+# control at all; only no_belief_claim is arguably an artifact of the inert placeholder
+# belief ("This organization is well-run" is close to what any positive document about
+# an organization says). Relaxing a gate after seeing efficacy results is exactly what
+# AGENTS.md's "do not modify evals after inspecting results" warns against, so the
+# corpus grows instead.
+#
+# Cost: `seed_item(index)` depends only on the index, so indices 0-99 are free on a box
+# whose cache still holds control_offtopic_v1's calls. Do not count on that -- the cache
+# lives at data/cache/ and is gitignored, so it does *not* come down with `make
+# data-pull`: on a fresh box it starts empty and all 250 items are paid for (~$0.0117/
+# item from v1's report, so ~$2.90 cold vs ~$1.75 warm). v1's artifacts are left in
+# place rather than overwritten.
+#
+# Writes to data/generated/control_offtopic/control_offtopic_v2/{documents,scores}.jsonl,
+# data/validated/control_offtopic/control_offtopic_v2/documents.jsonl, and
+# data/results/control_offtopic/control_offtopic_v2/datagen.yaml.
+
+run_id: control_offtopic_v2
+experiment: control_offtopic
+stage: datagen
+overrides:
+  dataset:
+    n_items: 250
+# throughput 3, not v1's 20: judging sends the whole ~800-word document with every check,
+# so a call costs ~1,650 tokens against the org's 200,000 TPM ceiling -- about 121
+# calls/minute. At 20 concurrent this run saturated the limit and died on an unretried
+# 429 partway through judging (generation had already completed). 121/min at the ~1.86s
+# mean latency works out to ~3.7 concurrent calls, and that figure must be rounded
+# *down*: 4 gives ~129 calls/min, marginally over, and died on a 429 about 70% of the way
+# through judging. 3 gives ~97/min, leaving headroom for latency variance. The judging
+# phase is ~11,000 calls (500 documents x 21 checks + 250 pair checks), so budget ~2
+# hours -- that is the TPM floor, not a concurrency problem, and raising this number
+# cannot beat it. Every death here is recoverable: the cache checkpoints completed calls,
+# so relaunching resumes and progress is monotonic across restarts (this run reached
+# 2,687 cached calls, then 8,269, across two such restarts).
+throughput: 3
