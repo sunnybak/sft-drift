@@ -9,7 +9,7 @@ requires two things that do not exist in this repo yet:
     action_eval.yaml point at data/validated/<name>/belief_eval.jsonl and
     action_eval.jsonl, neither of which has been generated
   - the inference pipeline: belief_transfer.inference.model/run are still stubs, and
-    scoring (belief_transfer.scoring.belief/action) is still a stub too
+    scoring (belief_transfer.metrics.belief/action) is still a stub too
 
 So this check needs to run eval items through a model under each explicit intervention
 and score the results, not just read static files the way the other three validation

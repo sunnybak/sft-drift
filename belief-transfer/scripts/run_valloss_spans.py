@@ -45,9 +45,10 @@ from dotenv import find_dotenv, load_dotenv
 
 from belief_transfer.dataset import gate
 from belief_transfer.evals import efficacy
-from belief_transfer.inference.model import MODELS_CONFIG_PATH, HFModel, free_gpu
-from belief_transfer.runs import load_run_config, resolve_experiment, resolve_run_path
-from belief_transfer.scoring.metrics import bootstrap_ci
+from belief_transfer.config import load_job
+from belief_transfer.inference.local import local_model
+from belief_transfer.inference.model import free_gpu
+from belief_transfer.metrics import bootstrap_ci
 from belief_transfer.training import dataset as sft_dataset
 from belief_transfer.training import sft
 
@@ -86,7 +87,7 @@ def number_spans(text: str) -> list[tuple[int, int]]:
     return [(m.start(), m.end()) for m in NUMBER_RE.finditer(text)]
 
 
-def span_nll(model: HFModel, prompt: str, text: str) -> dict[str, tuple[float, int]]:
+def span_nll(model, prompt: str, text: str) -> dict[str, tuple[float, int]]:
     """Mean per-token NLL of `text` (as a continuation of `prompt`) at three granularities.
 
     Uses the fast tokenizer's `offset_mapping` on the *joined* string rather than
@@ -135,11 +136,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--val-pairs", type=int, default=N_VAL_PAIRS)
     args = parser.parse_args(argv)
 
-    training = sft.load_training_config()
-    run_config = load_run_config(resolve_run_path(CORPUS_RUN))
-    experiment, _ = resolve_experiment(run_config)
+    job = load_job([f"+run={CORPUS_RUN}"])
+    training, experiment = job.training, job.experiment
     documents = sft_dataset.load_validated_documents(
-        gate.validated_documents_path(experiment.id, run_config.run_id)
+        gate.validated_documents_path(experiment.id, job.run_id)
     )
     _, val_pairs = split_pairs(documents, args.val_pairs)
     prompt = sft_dataset.sft_prompt(experiment.dataset.topic)
@@ -156,7 +156,7 @@ def main(argv: list[str] | None = None) -> int:
     nll: dict = defaultdict(lambda: defaultdict(lambda: defaultdict(dict)))
     counts: dict[str, list[int]] = defaultdict(list)
     for name, adapter in conditions:
-        model = HFModel(training.model, adapter_path=adapter, models_config_path=MODELS_CONFIG_PATH)
+        model = local_model(training.model, job.models, adapter_path=adapter)
         print(f"[spans] scoring {name} over {len(val_pairs)} held-out pairs ...")
         for i, pair in val_pairs.items():
             for pol in ("positive", "negative"):

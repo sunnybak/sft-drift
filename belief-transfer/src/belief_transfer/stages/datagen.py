@@ -21,7 +21,8 @@ from belief_transfer.analysis.report import build_result, write_result
 from belief_transfer.config import config_sha, write_resolved_config
 from belief_transfer.dataset import gate, generate, score
 from belief_transfer.generation.context import RunContext
-from belief_transfer.schemas import JobConfig, RunResult
+from belief_transfer.schemas import ExperimentConfig, JobConfig, RunResult
+from belief_transfer.validation import analyze
 
 
 async def run(job: JobConfig) -> RunResult:
@@ -76,7 +77,15 @@ async def run(job: JobConfig) -> RunResult:
         run_id=job.run_id,
         datapoints=len(documents),
         artifacts=[documents_path, scores_path, validated_path],
-        metrics={"gating": gating},
+        metrics={
+            "gating": gating,
+            "analysis": analyze.analyze_corpus(
+                experiment,
+                documents_path=documents_path,
+                scores_path=scores_path,
+                orthogonal_to=_orthogonal_experiment(job),
+            ),
+        },
         config_sha=sha,
     )
     result_path = write_result(result)
@@ -88,3 +97,24 @@ def documents_path_for(job: JobConfig) -> Path:
     """Where this job's raw corpus lives. Exposed for scripts that want to read a
     corpus without re-deriving the layout."""
     return generate.documents_path(job.experiment.id, job.run_id)
+
+
+def _orthogonal_experiment(job: JobConfig) -> ExperimentConfig | None:
+    """The experiment this corpus must stay clear of, if it declares one.
+
+    Composed on demand rather than carried on the job: `experiment.orthogonal_to` names
+    another config group option, and only this check needs it. Returns None -- skipping the
+    check -- rather than failing the run if that option does not exist, since a datagen run
+    should not die over a reported statistic.
+    """
+    if not job.experiment.orthogonal_to:
+        return None
+    try:
+        from belief_transfer.config import load_job
+
+        other = load_job(
+            [f"experiment={job.experiment.orthogonal_to}", f"run_id={job.run_id}", "experiment.dataset.n_items=1"]
+        )
+    except Exception:
+        return None
+    return other.experiment

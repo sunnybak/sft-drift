@@ -12,7 +12,6 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
-import yaml
 from jinja2 import Environment, StrictUndefined
 
 from belief_transfer.generation import llm
@@ -23,7 +22,6 @@ SFT_SYSTEM = "You are generating supervised fine-tuning examples."
 BELIEF_EVAL_SYSTEM = "You are generating belief-evaluation items."
 ACTION_EVAL_SYSTEM = "You are generating action-evaluation items."
 
-DATASET_CONFIG_PATH = Path(__file__).resolve().parents[3] / "configs" / "dataset.yaml"
 SEED_WORDS_PER_ITEM = 6
 NAMES_PER_ITEM = 3
 

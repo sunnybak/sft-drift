@@ -7,7 +7,7 @@ check id, never collapsed into one quality score.
 The judge answers through a forced tool call, so answers arrive as booleans with a
 supporting quote rather than text to be parsed. Prompt templates and check settings
 (questions, expected answers, pass thresholds) are config, not code: they live in
-`configs/dataset.yaml` under the `judge` key and are versioned there. See that file
+`configs/dataset/*.yaml` under the `judge` key and are versioned there. See that file
 for the history of judge prompt versions.
 """
 
@@ -19,12 +19,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-import yaml
 from jinja2 import Environment, StrictUndefined
 
 from belief_transfer.generation import llm
 from belief_transfer.generation.context import RunContext
-from belief_transfer.generation.prompts import DATASET_CONFIG_PATH
 from belief_transfer.schemas import ExperimentConfig, JudgeConfig, Polarity
 
 JUDGE_PROMPT_VERSION = "v4"

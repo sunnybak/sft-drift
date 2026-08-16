@@ -1,0 +1,24 @@
+# @package _global_
+#
+# configs/run/adhoc.yaml -- for jobs that are not tied to one corpus.
+#
+#   python run.py +run=adhoc stage=data_pull
+#   python run.py +run=adhoc stage=chat chat.adapter=data/checkpoints/.../final
+#   python run.py +run=adhoc stage=calibrate
+#
+# Data sync, chat, and machine calibration all need a valid job config -- the runner has one
+# shape -- but none of them belong to an experiment or produce a corpus. This supplies the
+# two mandatory fields with obviously-placeholder values rather than making every such
+# invocation repeat them on the command line.
+#
+# `run_id: adhoc` matches the convention for artifacts produced outside a named run (see
+# `dataset.generate.documents_path`'s default), so anything one of these jobs does write
+# lands somewhere clearly marked as not-a-real-run.
+
+run_id: adhoc
+
+experiment:
+  dataset:
+    # Unused: none of these stages generate anything. Present because the experiment spec
+    # leaves it mandatory, which is right for datagen and irrelevant here.
+    n_items: 1

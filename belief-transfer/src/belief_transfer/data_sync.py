@@ -35,6 +35,9 @@ DEFAULT_REPO_ID = "sunnybak/sft-drift"
 # repo, where the next pull downloads it again -- junk that compounds every cycle.
 CACHE_IGNORE_PATTERNS = ["cache/**", ".cache/**"]
 
+CACHE_REPO_SUBDIR = "cache"
+"""Where the LLM cache goes if it is synced at all -- see `push_cache`."""
+
 
 def allow_patterns(paths: list[str] | None) -> list[str] | None:
     """Turn sub-paths into HF `allow_patterns`, or None for "everything".
@@ -83,3 +86,32 @@ def pull_data(repo_id: str = DEFAULT_REPO_ID, paths: list[str] | None = None) ->
         allow_patterns=patterns,
     )
     return patterns
+
+
+def push_cache(repo_id: str = DEFAULT_REPO_ID) -> None:
+    """Upload the LLM call cache, which `push_data` deliberately excludes.
+
+    Opt-in and separate because the cache is a *cost* optimization, not a source artifact:
+    it is fully reproducible from the calls that filled it, just not for free.
+    `configs/run/control_offtopic_v2.yaml` measures the difference at ~$2.90 cold against
+    ~$1.75 warm for one 250-item corpus, so a fresh box is worth priming -- but it should be
+    a decision, not something that silently rides along with every `data-push`.
+    """
+    api = HfApi()
+    api.create_repo(repo_id=repo_id, repo_type="dataset", private=True, exist_ok=True)
+    api.upload_folder(
+        folder_path=str(DATA_DIR / CACHE_REPO_SUBDIR),
+        path_in_repo=CACHE_REPO_SUBDIR,
+        repo_id=repo_id,
+        repo_type="dataset",
+    )
+
+
+def pull_cache(repo_id: str = DEFAULT_REPO_ID) -> None:
+    """Download the LLM call cache into `data/cache/`."""
+    snapshot_download(
+        repo_id=repo_id,
+        repo_type="dataset",
+        local_dir=str(DATA_DIR),
+        allow_patterns=[f"{CACHE_REPO_SUBDIR}/**"],
+    )

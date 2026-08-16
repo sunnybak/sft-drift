@@ -17,6 +17,7 @@ from __future__ import annotations
 from belief_transfer.analysis.report import build_result
 from belief_transfer.config import config_sha
 from belief_transfer.generation.context import RunContext
+from belief_transfer.benchmarks import memorization
 from belief_transfer.inference import calibrate
 from belief_transfer.inference.backend import backend_info
 from belief_transfer.schemas import JobConfig, RunResult
@@ -71,5 +72,5 @@ async def run_memorization_bench(job: JobConfig) -> RunResult:
     A benchmark rather than a unit test because what it measures is this machine's
     training stack -- GPU, torch/trl/peft versions, whether LoRA updates land at all.
     """
-    results = calibrate.memorization_bench(job.models, [job.training.model])
+    results = memorization.memorization_bench(job.models, [job.training.model])
     return _machine_result(job, stage="memorization_bench", metrics={"memorization": results})

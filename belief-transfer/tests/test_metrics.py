@@ -1,4 +1,4 @@
-from belief_transfer.scoring.metrics import transfer_gap
+from belief_transfer.metrics import transfer_gap
 
 
 def test_transfer_gap() -> None:

@@ -1,4 +1,20 @@
-"""Aggregate metrics for belief transfer."""
+"""Pure math on eval rows: aggregation and uncertainty. No I/O, no model, no config.
+
+The narrow half of what used to be `scoring/`, which mixed this with two stubs for
+scoring belief and action evals. Those were instruments, not math, and now live in
+`evals/`. The split is by what a thing operates on:
+
+    evals/      instruments -- item banks, administering them, raw per-item rows
+    metrics/    math -- reducing those rows to scores and intervals
+    validation/ gates -- whether an artifact is fit to use
+
+which also makes the layering checkable: this package imports nothing but the standard
+library (see tests/test_import_rules.py), so a metric can never depend on how the rows it
+reduces were produced.
+
+AGENTS.md's transfer quantities (`S_B`, `S_A`, `dB`, `dA`, `T_B`, `T_A`) belong here as
+they are implemented; `bootstrap_ci` is what makes any of them reportable.
+"""
 
 from __future__ import annotations
 

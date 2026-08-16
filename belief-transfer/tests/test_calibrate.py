@@ -23,6 +23,7 @@ from pathlib import Path
 import pytest
 import yaml
 
+from belief_transfer.benchmarks import memorization
 from belief_transfer.inference import calibrate
 from belief_transfer.inference.model import (
     load_hardware_profile,
@@ -222,8 +223,8 @@ def test_memorization_items_are_arbitrary_and_seeded() -> None:
     """Codes must be reproducible across runs (same box, same measurement) but carry no
     relationship to their input, or a base model could get them right without training.
     """
-    items = calibrate.memorization_items(20)
-    again = calibrate.memorization_items(20)
+    items = memorization.memorization_items(20)
+    again = memorization.memorization_items(20)
 
     assert items == again
     assert len(items) == 20
@@ -235,7 +236,7 @@ def test_memorization_items_are_arbitrary_and_seeded() -> None:
 def test_score_memorization_counts_substring_hits_per_item() -> None:
     items = [("lookup_0", "1234"), ("lookup_1", "5678"), ("lookup_2", "9012")]
 
-    scored = calibrate.score_memorization(items, ["1234", "the code is 5678.", "no idea"])
+    scored = memorization.score_memorization(items, ["1234", "the code is 5678.", "no idea"])
 
     assert scored["n_correct"] == 2
     assert scored["accuracy"] == pytest.approx(2 / 3)
@@ -248,7 +249,7 @@ def test_score_memorization_is_positional_not_set_membership() -> None:
     """
     items = [("lookup_0", "1234"), ("lookup_1", "5678")]
 
-    scored = calibrate.score_memorization(items, ["5678", "5678"])
+    scored = memorization.score_memorization(items, ["5678", "5678"])
 
     assert scored["n_correct"] == 1
     assert scored["misses"] == ["lookup_0"]
@@ -256,4 +257,4 @@ def test_score_memorization_is_positional_not_set_membership() -> None:
 
 def test_score_memorization_rejects_length_mismatch() -> None:
     with pytest.raises(ValueError):
-        calibrate.score_memorization([("lookup_0", "1234")], [])
+        memorization.score_memorization([("lookup_0", "1234")], [])

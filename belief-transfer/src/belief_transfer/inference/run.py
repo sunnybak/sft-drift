@@ -1,7 +1,7 @@
 """Run batched inference over eval items through the shared `Model` interface.
 
 Deliberately thin: batching and dispatch only. Turning responses into belief/action
-scores is `belief_transfer.scoring`'s job (out of scope here), not this module's.
+scores is `belief_transfer.metrics`'s job (out of scope here), not this module's.
 """
 
 from __future__ import annotations

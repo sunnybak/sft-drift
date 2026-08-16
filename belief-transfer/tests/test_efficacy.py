@@ -21,7 +21,7 @@ import yaml
 
 from belief_transfer.evals import efficacy
 from belief_transfer.schemas import ChoiceScore, ChoiceScores, EfficacyConfig, ExperimentConfig
-from belief_transfer.scoring.metrics import bootstrap_ci
+from belief_transfer.metrics import bootstrap_ci
 from belief_transfer.training import sft
 
 ROOT = Path(__file__).resolve().parents[1]

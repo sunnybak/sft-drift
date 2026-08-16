@@ -1,21 +1,32 @@
 UV ?= uv
 
-.PHONY: help setup test data-push data-pull download-models calibrate memorization-bench perf-bench choice-bench chat efficacy
+# Bootstrap and hygiene only. Every *job* -- datagen, sft, efficacy, benchmarks, data sync,
+# chat -- goes through the one entrypoint instead of getting a target here:
+#
+#   python run.py +run=factory_farming_v1
+#   python run.py +run=factory_farming_v1 stage=sft
+#   python run.py +run=adhoc stage=data_pull
+#   python run.py --help                      # lists every config group and option
+#
+# A target per stage was a second way to launch the same thing, with its own flags to keep
+# in step, which is exactly what the config migration removed.
+
+.PHONY: help setup test data-pull data-push cache-pull cache-push clean clean-llm-cache
 
 help:
-	@echo "setup        install Python 3.12 deps with uv"
-	@echo "test         run pytest"
-	@echo "data-push    upload data/ (minus cache/) to the HF dataset repo"
-	@echo "data-pull    download the HF dataset repo into data/"
-	@echo "download-models  fetch configs/models.yaml's models into the local HF cache"
-	@echo "calibrate    discover batch size for this machine -> configs/hardware_profile.yaml"
-	@echo "memorization-bench  verify SFT works on this box (AGENTS.md tiny-dataset memorization)"
-	@echo "perf-bench   correctness + throughput check at the calibrated batch size"
-	@echo "choice-bench MCQ ability + confidence of a checkpoint (belief evals depend on it)"
-	@echo "chat         interactive CLI chat with a base model or a LoRA checkpoint"
-	@echo "efficacy     train M+/M- and measure whether the corpus was absorbed (tune SFT on this)"
+	@echo "Bootstrap:"
+	@echo "  setup            install deps with uv (pinned torch/transformers/trl/peft)"
+	@echo "  test             run pytest (GPU-free; add --run-gpu for weight-loading tests)"
+	@echo "  data-pull        download the HF dataset repo into data/"
+	@echo "  data-push        upload data/ (minus cache/) to the HF dataset repo"
+	@echo "  cache-pull       download the LLM call cache (opt-in; saves real money)"
+	@echo "  cache-push       upload the LLM call cache"
 	@echo ""
-	@echo "Run download-models, then calibrate, before perf-bench/choice-bench/efficacy."
+	@echo "Hygiene:"
+	@echo "  clean            remove __pycache__, .pytest_cache, and HF download bookkeeping"
+	@echo "  clean-llm-cache  remove data/cache/ -- NOT part of clean; costs ~\$$2.90/corpus to refill"
+	@echo ""
+	@echo "Everything else is a job: python run.py --help"
 
 setup:
 	$(UV) sync --dev
@@ -23,29 +34,28 @@ setup:
 test:
 	$(UV) run pytest
 
-data-push:
-	$(UV) run python -m belief_transfer.data_sync push
-
 data-pull:
-	$(UV) run python -m belief_transfer.data_sync pull
+	$(UV) run python run.py +run=adhoc stage=data_pull
 
-download-models:
-	$(UV) run python -m belief_transfer.inference.calibrate download $(BENCH_ARGS)
+data-push:
+	$(UV) run python run.py +run=adhoc stage=data_push
 
-calibrate:
-	$(UV) run python -m belief_transfer.inference.calibrate calibrate $(BENCH_ARGS)
+cache-pull:
+	$(UV) run python -c "from belief_transfer.data_sync import pull_cache; pull_cache()"
 
-memorization-bench:
-	$(UV) run python -m belief_transfer.inference.calibrate memorize $(BENCH_ARGS)
+cache-push:
+	$(UV) run python -c "from belief_transfer.data_sync import push_cache; push_cache()"
 
-perf-bench:
-	$(UV) run python -m belief_transfer.benchmarks perf $(BENCH_ARGS)
+# Deliberately leaves data/ alone apart from `.cache/`, which is snapshot_download's own
+# bookkeeping: without removing it, a pull-then-push round trip uploads that bookkeeping
+# back to the dataset repo, where the next pull downloads it again.
+clean:
+	find . -type d -name __pycache__ -prune -exec rm -rf {} +
+	rm -rf .pytest_cache data/.cache
+	@echo "cleaned. data/cache/ (LLM calls) left in place -- see clean-llm-cache"
 
-choice-bench:
-	$(UV) run python -m belief_transfer.benchmarks choice $(BENCH_ARGS)
-
-chat:
-	$(UV) run python -m belief_transfer.client $(CHAT_ARGS)
-
-efficacy:
-	$(UV) run python -m belief_transfer.evals $(EVAL_ARGS)
+# Separate target, never a dependency of `clean`: this cache is the difference between a
+# ~\$1.75 re-run and a ~\$2.90 one per corpus (see configs/run/control_offtopic_v2.yaml),
+# and it is not recoverable except by paying for the calls again.
+clean-llm-cache:
+	rm -rf data/cache

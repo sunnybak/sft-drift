@@ -57,9 +57,10 @@ from dotenv import find_dotenv, load_dotenv
 
 from belief_transfer.dataset import gate
 from belief_transfer.evals import efficacy
-from belief_transfer.inference.model import MODELS_CONFIG_PATH, HFModel, free_gpu
-from belief_transfer.runs import load_run_config, resolve_experiment, resolve_run_path
-from belief_transfer.scoring.metrics import bootstrap_ci
+from belief_transfer.config import load_job
+from belief_transfer.inference.local import local_model
+from belief_transfer.inference.model import free_gpu
+from belief_transfer.metrics import bootstrap_ci
 from belief_transfer.training import dataset as sft_dataset
 from belief_transfer.training import sft
 
@@ -85,7 +86,7 @@ def split_pairs(documents: list[dict], n_val: int) -> tuple[dict, dict]:
     return {i: by_index[i] for i in train_idx}, {i: by_index[i] for i in val_idx}
 
 
-def doc_nll(model: HFModel, prompt: str, text: str) -> float:
+def doc_nll(model, prompt: str, text: str) -> float:
     """Mean per-token NLL of `text` as a continuation of `prompt`, teacher-forced.
 
     Reuses `score_choices`, which already solves the token-boundary problem (BPE can merge
@@ -101,11 +102,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--val-pairs", type=int, default=N_VAL_PAIRS)
     args = parser.parse_args(argv)
 
-    training = sft.load_training_config()
-    run_config = load_run_config(resolve_run_path(CORPUS_RUN))
-    experiment, _ = resolve_experiment(run_config)
+    job = load_job([f"+run={CORPUS_RUN}"])
+    training, experiment = job.training, job.experiment
     documents = sft_dataset.load_validated_documents(
-        gate.validated_documents_path(experiment.id, run_config.run_id)
+        gate.validated_documents_path(experiment.id, job.run_id)
     )
     train_pairs, val_pairs = split_pairs(documents, args.val_pairs)
     prompt = sft_dataset.sft_prompt(experiment.dataset.topic)
@@ -121,7 +121,9 @@ def main(argv: list[str] | None = None) -> int:
     if not args.no_train:
         for polarity, condition in (("positive", "m_plus"), ("negative", "m_minus")):
             rows = [sft_dataset.to_chat_row(p[polarity], prompt) for p in train_pairs.values()]
-            summary = sft.train_arm(experiment, training, rows, polarity, output_root / polarity)
+            summary = sft.train_arm(
+                experiment, training, job.model_spec, rows, polarity, output_root / polarity
+            )
             print(f"[sft]      {condition}: {summary['status']} loss {summary['train_loss']:.4f} "
                   f"over {summary['global_steps']} steps on {summary['n_samples']} documents")
             free_gpu()
@@ -133,7 +135,7 @@ def main(argv: list[str] | None = None) -> int:
     # nll[condition][index][polarity]
     nll: dict[str, dict[int, dict[str, float]]] = {}
     for condition, adapter in [("base", None), *adapters.items()]:
-        model = HFModel(training.model, adapter_path=adapter, models_config_path=MODELS_CONFIG_PATH)
+        model = local_model(training.model, job.models, adapter_path=adapter)
         print(f"[valloss] scoring {condition} over {len(val_pairs)} held-out pairs ...")
         nll[condition] = {
             i: {pol: doc_nll(model, prompt, pair[pol]["text"]) for pol in ("positive", "negative")}

@@ -179,7 +179,7 @@ class ChoiceScores(BaseModel):
 
 class MemorizationBenchResult(BaseModel):
     """The tiny-dataset memorization benchmark's result (see
-    `inference.calibrate.run_memorization_bench`).
+    `benchmarks.memorization.run_memorization_bench`).
 
     AGENTS.md's SFT section requires this before real experiments: fine-tune on ~20
     arbitrary input->code mappings and check the base model fails them while the
@@ -580,6 +580,14 @@ class ExperimentConfig(BaseModel):
     belief: BeliefSpec
     action: ActionSpec
     dataset: DatasetSpec
+    orthogonal_to: str | None = None
+    """Another experiment id this corpus must stay clear of, for a control experiment.
+
+    Set on `control_offtopic`, whose whole purpose is to carry no factory_farming content:
+    `validation.orthogonality` checks its documents never mention that experiment's
+    vocabulary. Config rather than a hardcoded pair because which experiment a control
+    controls *for* is an experimental design decision -- and a second control would
+    otherwise need code."""
 
 
 class DatasetConfig(DatasetGenConfig):

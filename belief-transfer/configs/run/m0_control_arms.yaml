@@ -1,0 +1,65 @@
+# @package _global_
+#
+# configs/run/m0_control_arms.yaml -- `python run.py +run=m0_control_arms stage=efficacy`
+#
+# Efficacy for factory_farming reported *net of a matched control*, which
+# changelog/2026-08-16.md found is the only defensible way to report it: the raw
+# dE(letter) = +0.127 headline overstated the effect by ~1.7x, because ~43% of it was
+# machinery (any-SFT drift at this dose) rather than content. The defensible numbers were
+# net content +0.073 (letter) and +0.019 (continuation).
+#
+# The four arms below are what makes that netting possible in the standard protocol. M0+/M0-
+# are trained on the off-topic control corpus (configs/run/control_offtopic_v2.yaml) at the
+# same dose, then scored against *factory_farming's* item bank -- so they measure what this
+# training schedule does to these scores absent any belief-relevant content.
+#
+# This replaces scripts/run_m0_split.py, which existed only because the arm list used to be
+# hardcoded to two: it had to reimplement the whole stage to decouple "which corpus trained
+# this" from "which experiment's bank scores it". Both are now just fields on an arm.
+#
+# Prerequisites -- this stage only scores, it does not train:
+#   python run.py +run=factory_farming_v1 stage=sft        # M+/M-
+#   python run.py +run=control_offtopic_v2 stage=sft       # M0+/M0-
+#
+# Dose caveat carried over from that script: control_offtopic_v2 gated to 100 pairs, not the
+# ~110 projected, so the control arms are ~7% under the baseline's 70 optimizer steps. The
+# artifact is demonstrably dose-dependent, so this makes +0.054 a slight *under*-estimate of
+# the machinery contribution and the +0.073 net a slight over-estimate. ~15 more gated pairs
+# would settle it.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: m0_control_arms
+stage: efficacy
+
+experiment:
+  dataset:
+    # Not used by this stage (no generation happens here), but the experiment spec leaves it
+    # mandatory, and the item bank is built from the same spec the corpus was.
+    n_items: 150
+
+efficacy:
+  arms:
+    - name: base
+    # M+/M-: trained on the factory_farming corpus.
+    - name: m_plus
+      polarity: positive
+      run_id: factory_farming_v1
+    - name: m_minus
+      polarity: negative
+      run_id: factory_farming_v1
+    # M0+/M0-: trained on the off-topic control corpus, scored against this experiment's
+    # bank. `experiment` is what decouples the two.
+    - name: m0_plus
+      polarity: positive
+      experiment: control_offtopic
+      run_id: control_offtopic_v2
+    - name: m0_minus
+      polarity: negative
+      experiment: control_offtopic
+      run_id: control_offtopic_v2
+  # The headline contrast stays M+ vs M-; the control arms are what it gets netted against
+  # in analysis. Reporting a single number here would hide which side moved, which is
+  # exactly how the two-sided/one-sided confusion went unnoticed (see EFFICACY.md).
+  contrast: [m_plus, m_minus]
