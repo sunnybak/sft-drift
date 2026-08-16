@@ -1,0 +1,69 @@
+{
+  "backend": {
+    "backend": "cuda",
+    "device": "NVIDIA GeForce RTX 5090",
+    "dtype": "",
+    "platform": "Linux x86_64",
+    "python": "3.12.13"
+  },
+  "items": [
+    {
+      "id": "letter_choice",
+      "scores": [
+        {
+          "choice": "A",
+          "logprob": -11.956982612609863,
+          "logprob_per_token": -11.956982612609863,
+          "n_tokens": 1
+        },
+        {
+          "choice": "B",
+          "logprob": -1.706982135772705,
+          "logprob_per_token": -1.706982135772705,
+          "n_tokens": 1
+        }
+      ],
+      "top": "B",
+      "top_per_token": "B"
+    },
+    {
+      "id": "multi_token_choice",
+      "scores": [
+        {
+          "choice": " within the recommended range",
+          "logprob": -59.189022064208984,
+          "logprob_per_token": -14.797255516052246,
+          "n_tokens": 4
+        },
+        {
+          "choice": " far above the recommended range",
+          "logprob": -60.58100891113281,
+          "logprob_per_token": -12.116201782226563,
+          "n_tokens": 5
+        }
+      ],
+      "top": " within the recommended range",
+      "top_per_token": " far above the recommended range"
+    },
+    {
+      "id": "unequal_length_choice",
+      "scores": [
+        {
+          "choice": " kg",
+          "logprob": -38.00016784667969,
+          "logprob_per_token": -38.00016784667969,
+          "n_tokens": 1
+        },
+        {
+          "choice": " kilograms of live weight per square metre of floor space",
+          "logprob": -66.6260986328125,
+          "logprob_per_token": -6.66260986328125,
+          "n_tokens": 10
+        }
+      ],
+      "top": " kg",
+      "top_per_token": " kilograms of live weight per square metre of floor space"
+    }
+  ],
+  "model": "qwen3-4b"
+}
