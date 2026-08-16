@@ -24,9 +24,11 @@ For each experiment, we construct matched SFT corpora representing different und
 
 The initial experiments cover:
 
-* factory farming / ethics
-* software architecture
-* computer recommendations
+* factory farming / ethics (`experiments/factory_farming/`, built)
+* an off-topic dose control (`experiments/control_offtopic/`, built -- isolates
+  any-SFT drift from content-driven belief shift; not a belief experiment itself)
+* software architecture (planned, not yet started)
+* computer recommendations (planned, not yet started)
 
 The goal is a small, rigorous, reproducible research codebase—not a general-purpose ML platform.
 
@@ -83,6 +85,9 @@ experiments/             experiment-specific specifications
 
 src/belief_transfer/
     schemas.py
+    runs.py              run-config dispatch: turns a runs/<run_id>.yaml into calls
+                         into the stage packages below (see "Each <run_id>/" below)
+    data_sync.py         push/pull data/ (minus cache/) to the private HF dataset repo
 
     generation/          low-level LLM generation tooling: prompt templates, seed
                          sampling, the model-call client. No pipeline orchestration.
@@ -90,11 +95,18 @@ src/belief_transfer/
                          one experiment config into a persisted corpus, plus review
                          tooling for spot-checking a generated corpus
     validation/          leakage, matchedness, recoverability, sensitivity
-    inference/           model interface and inference execution
+    inference/           model interface, inference execution, and per-machine
+                         calibration (batch size, memorization/perf checks)
     training/            SFT dataset preparation and training
     scoring/             belief/action scores and transfer metrics
+    evals/               belief/action/efficacy eval suites. efficacy.py is the only
+                         one built so far, and is still WIP -- see EFFICACY.md before
+                         relying on it; belief/action suites are not started
+    benchmarks/          model-ability sanity checks (perf-bench, choice-bench) that
+                         gate whether a box's inference is trustworthy, not the
+                         experiment itself
+    client/              interactive CLI chat against a base model or LoRA checkpoint
     analysis/            plots and result summaries
-    cli.py
 
 data/
     seeds/                             plain-list seed pools for generation, shared across experiments

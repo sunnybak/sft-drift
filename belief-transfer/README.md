@@ -14,7 +14,13 @@ uv sync
 - `configs/` — shared model and training defaults (plus a gitignored, per-machine
   `hardware_profile.yaml` from `make calibrate`, see "Hardware calibration" below)
 - `experiments/` — per-topic experiment, SFT, and eval configs
-- `src/belief_transfer/` — generation, validation, training, scoring, analysis
+- `runs/` — run configs (`<run_id>.yaml`) that `run.py`/`belief_transfer.runs`
+  dispatch into the pipeline stages below
+- `src/belief_transfer/` — generation, validation, training, scoring, evals,
+  benchmarks, analysis; see `AGENTS.md`'s "Repository structure" for what each
+  package does
+- `scripts/` — one-off ad hoc analyses that don't generalize into a pipeline stage
+  (e.g. `run_m0.py`; see the module docstring in each)
 - `data/` — `seeds/` is committed (generation draws from it). `generated/`,
   `validated/`, `checkpoints/`, `results/`, and `cache/` are not; the first four
   sync to a private Hugging Face dataset repo, see "Data" below.
@@ -66,6 +72,18 @@ Target either a single model or pass through other flags with `BENCH_ARGS`:
 ```bash
 make calibrate BENCH_ARGS="--model qwen3-4b"
 ```
+
+## Other commands
+
+```bash
+make memorization-bench  # tiny-dataset SFT memorization check (AGENTS.md's SFT gate)
+make choice-bench        # MCQ ability + confidence of a checkpoint; belief evals depend on it
+make chat                # interactive CLI chat with a base model or a LoRA checkpoint
+make efficacy            # train M+/M- and measure whether the corpus was absorbed
+```
+
+`make efficacy` and the belief-transfer scoring it feeds are still **work in progress**
+— see `EFFICACY.md` for where the gate currently stands before relying on its output.
 
 ## Data
 
