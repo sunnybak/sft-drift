@@ -17,15 +17,23 @@
 # hardcoded to two: it had to reimplement the whole stage to decouple "which corpus trained
 # this" from "which experiment's bank scores it". Both are now just fields on an arm.
 #
-# Prerequisites -- this stage only scores, it does not train:
-#   python run.py +run=factory_farming_v1 stage=sft        # M+/M-
-#   python run.py +run=control_offtopic_v2 stage=sft       # M0+/M0-
+# This stage only scores; it does not train. The arms below point at the checkpoints that
+# already exist in data/checkpoints/factory_farming/ (pull them with `make data-pull`):
+#
+#   tune-f09053a2   M+/M-, the frozen config: 106 documents/arm, 70 optimizer steps
+#   m0-split-v2     M0+/M0-, trained on control_offtopic_v2's corpus by the script this
+#                   overlay replaces: 100 documents/arm, 65 steps
+#
+# Both are named by what produced them rather than by this run id, which is why every arm
+# below sets `run_id` explicitly. Training fresh arms instead is
+# `python run.py +run=factory_farming_v1 stage=sft`, which writes to a run-id-named
+# directory; point the arms there if you do.
 #
 # Dose caveat carried over from that script: control_offtopic_v2 gated to 100 pairs, not the
-# ~110 projected, so the control arms are ~7% under the baseline's 70 optimizer steps. The
-# artifact is demonstrably dose-dependent, so this makes +0.054 a slight *under*-estimate of
-# the machinery contribution and the +0.073 net a slight over-estimate. ~15 more gated pairs
-# would settle it.
+# ~110 projected, so the control arms are ~7% under the baseline's 70 optimizer steps (65 vs
+# 70, visible in the train summaries above). The artifact is demonstrably dose-dependent, so
+# this makes +0.054 a slight *under*-estimate of the machinery contribution and the +0.073
+# net a slight over-estimate. ~15 more gated pairs would settle it.
 
 defaults:
   - override /experiment: factory_farming
@@ -42,23 +50,22 @@ experiment:
 efficacy:
   arms:
     - name: base
-    # M+/M-: trained on the factory_farming corpus.
+    # M+/M-: trained on the factory_farming corpus at the frozen config.
     - name: m_plus
       polarity: positive
-      run_id: factory_farming_v1
+      run_id: tune-f09053a2
     - name: m_minus
       polarity: negative
-      run_id: factory_farming_v1
-    # M0+/M0-: trained on the off-topic control corpus, scored against this experiment's
-    # bank. `experiment` is what decouples the two.
+      run_id: tune-f09053a2
+    # M0+/M0-: trained on the *control* corpus, scored against *this* experiment's bank.
+    # They sit under factory_farming/ because that is the bank they exist to be netted
+    # against; `experiment` on an arm is what lets the two be decoupled when they differ.
     - name: m0_plus
       polarity: positive
-      experiment: control_offtopic
-      run_id: control_offtopic_v2
+      run_id: m0-split-v2
     - name: m0_minus
       polarity: negative
-      experiment: control_offtopic
-      run_id: control_offtopic_v2
+      run_id: m0-split-v2
   # The headline contrast stays M+ vs M-; the control arms are what it gets netted against
   # in analysis. Reporting a single number here would hide which side moved, which is
   # exactly how the two-sided/one-sided confusion went unnoticed (see EFFICACY.md).
