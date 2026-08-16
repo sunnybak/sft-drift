@@ -98,22 +98,16 @@ def _slug(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")
 
 
-def load_judge_config(path: Path = DATASET_CONFIG_PATH) -> JudgeConfig:
-    """Load judge templates and check settings from the `judge` key of a config file."""
-    return JudgeConfig.model_validate(yaml.safe_load(path.read_text())["judge"])
-
-
 def document_checks(
     experiment: ExperimentConfig,
     polarity: Polarity,
-    config: JudgeConfig | None = None,
+    config: JudgeConfig,
 ) -> list[Check]:
     """Leakage, coherence, and premise-coverage checks for one document.
 
     Static checks and their questions come from `config.document_checks`; one
     premise/contrast check is generated per fact in the experiment's dimensions.
     """
-    config = config or load_judge_config()
     context = {
         "topic": experiment.dataset.topic,
         "belief_statement": experiment.belief.statement,
@@ -160,26 +154,23 @@ def document_checks(
     return checks
 
 
-def pair_checks(config: JudgeConfig | None = None) -> list[Check]:
+def pair_checks(config: JudgeConfig) -> list[Check]:
     """Matchedness checks over the two documents of one pair."""
-    config = config or load_judge_config()
     return [
         Check(id=spec.id, question=spec.question, expect=spec.expect, threshold=spec.threshold)
         for spec in config.pair_checks
     ]
 
 
-def document_prompt(check: Check, document: str, config: JudgeConfig | None = None) -> str:
-    config = config or load_judge_config()
+def document_prompt(check: Check, document: str, config: JudgeConfig) -> str:
     return _env.from_string(config.document_prompt_template).render(
         question=check.question, document=document
     )
 
 
 def pair_prompt(
-    check: Check, positive: str, negative: str, config: JudgeConfig | None = None
+    check: Check, positive: str, negative: str, config: JudgeConfig
 ) -> str:
-    config = config or load_judge_config()
     return _env.from_string(config.pair_prompt_template).render(
         question=check.question, document_a=positive, document_b=negative
     )

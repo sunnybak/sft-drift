@@ -1,42 +1,72 @@
 from pathlib import Path
 
-import yaml
-
 from belief_transfer.schemas import (
-    ActionEvalConfig,
-    BeliefEvalConfig,
-    DatasetGenConfig,
-    ExperimentConfig,
+    JobConfig,
     Provenance,
-    SFTConfig,
-    TrainingConfig,
     file_sha,
+    model_sha,
 )
-
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_shared_configs_parse() -> None:
-    training = yaml.safe_load((ROOT / "configs/training.yaml").read_text())
-    TrainingConfig.model_validate(training)
-    dataset = yaml.safe_load((ROOT / "configs/dataset.yaml").read_text())
-    DatasetGenConfig.model_validate(dataset)
+def test_every_run_overlay_composes_and_validates(make_job) -> None:
+    """The cheap check that catches config drift.
+
+    A run overlay is only exercised when someone runs it, which for a 2-hour datagen job
+    means a typo can sit in `configs/run/` indefinitely. Composing all of them here costs
+    milliseconds.
+    """
+    overlays = sorted(path.stem for path in (ROOT / "configs" / "run").glob("*.yaml"))
+    assert overlays, "no run overlays found -- configs/run/ should not be empty"
+
+    for name in overlays:
+        job = make_job([f"+run={name}"])
+        assert job.run_id == name, f"{name}.yaml sets run_id={job.run_id!r}"
+        # Every experiment spec leaves n_items mandatory-but-unset, so an overlay that
+        # forgets it fails composition rather than generating some default amount.
+        assert job.experiment.dataset.n_items > 0
 
 
-def test_experiment_configs_parse() -> None:
-    for exp_dir in sorted((ROOT / "experiments").iterdir()):
-        if not exp_dir.is_dir():
-            continue
-        raw = yaml.safe_load((exp_dir / "experiment.yaml").read_text())
-        # experiment.yaml intentionally has no n_items of its own -- every run config
-        # (runs/*.yaml) supplies its own via `overrides.dataset.n_items` -- so a bare
-        # parse of the base file needs one filled in to check the rest of its shape.
-        raw["dataset"].setdefault("n_items", 1)
-        ExperimentConfig.model_validate(raw)
-        SFTConfig.model_validate(yaml.safe_load((exp_dir / "sft.yaml").read_text()))
-        BeliefEvalConfig.model_validate(yaml.safe_load((exp_dir / "belief_eval.yaml").read_text()))
-        ActionEvalConfig.model_validate(yaml.safe_load((exp_dir / "action_eval.yaml").read_text()))
+def test_frozen_training_values_survive_composition(job: JobConfig) -> None:
+    """The frozen configuration must come through the config tree bit-identically.
+
+    These five numbers are the output of a trajectory-gated sweep (see
+    configs/training/frozen_2026_08_14.yaml's header): lr 1e-4, 5 epochs, attention+MLP,
+    seed 42, effective batch 8. A refactor that silently changed any of them would
+    invalidate every checkpoint comparison made against them, and would look like a
+    config-plumbing change rather than a methodology one.
+    """
+    sft = job.training.sft
+    assert sft.lr == 1.0e-4
+    assert sft.epochs == 5
+    assert sft.seed == 42
+    assert sft.effective_batch_size == 8
+    assert sft.target_modules == [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj",
+    ]
+
+
+def test_model_spec_resolves_from_training_model(job: JobConfig) -> None:
+    assert job.training.model == "qwen3-4b"
+    assert job.model_spec.pretrained == "Qwen/Qwen3-4B"
+    assert job.model_spec.dtype == "bfloat16"
+
+
+def test_unknown_model_names_the_known_ones(make_job) -> None:
+    job = make_job(["+run=factory_farming_v1", "training.model=not-a-model"])
+    try:
+        job.model_spec
+    except KeyError as exc:
+        assert "qwen3-4b" in str(exc)
+    else:
+        raise AssertionError("expected a KeyError naming the known models")
 
 
 def test_file_sha_is_deterministic_and_content_sensitive(tmp_path: Path) -> None:
@@ -52,6 +82,24 @@ def test_file_sha_is_deterministic_and_content_sensitive(tmp_path: Path) -> None
     assert file_sha(a) != file_sha(c)
     assert len(file_sha(a)) == 12
     assert len(file_sha(a, length=8)) == 8
+
+
+def test_model_sha_depends_on_values_not_key_order(job: JobConfig) -> None:
+    """Provenance now hashes the resolved config, not the file that produced it.
+
+    With layered composition no single file determines what ran, so `file_sha` of one of
+    them would give two materially different jobs the same fingerprint.
+    """
+    assert model_sha(job.experiment) == model_sha(job.experiment)
+    assert model_sha(job.experiment) != model_sha(job.dataset)
+
+    reordered = job.experiment.model_copy(deep=True)
+    reordered.dataset.dimensions = dict(reversed(list(reordered.dataset.dimensions.items())))
+    assert model_sha(reordered) == model_sha(job.experiment)
+
+    changed = job.experiment.model_copy(deep=True)
+    changed.dataset.n_items += 1
+    assert model_sha(changed) != model_sha(job.experiment)
 
 
 def test_provenance_config_shas_are_keyed_by_name() -> None:

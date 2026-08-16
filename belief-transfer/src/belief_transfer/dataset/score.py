@@ -34,9 +34,9 @@ def scores_path(experiment_id: str, run_id: str) -> Path:
 
 async def score_dataset(
     experiment: ExperimentConfig,
+    config: JudgeConfig,
     documents: list[dict],
     *,
-    config: JudgeConfig | None = None,
     throughput: int = 20,
     override_cache: bool = False,
     context: RunContext | None = None,
@@ -53,8 +53,6 @@ async def score_dataset(
     `generation.context.RunContext`) -- pass the same context a datagen stage used so
     judging counts toward that stage's report, not a separate one.
     """
-    config = config or judge.load_judge_config()
-
     checks: list[judge.Check] = []
     prompts: list[str] = []
     identifiers: list[dict[str, object]] = []

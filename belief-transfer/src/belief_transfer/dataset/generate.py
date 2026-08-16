@@ -19,7 +19,14 @@ from pathlib import Path
 
 from belief_transfer.generation import llm, prompts
 from belief_transfer.generation.context import RunContext
-from belief_transfer.schemas import ContentPlan, ExperimentConfig, Polarity, Provenance, file_sha
+from belief_transfer.schemas import (
+    ContentPlan,
+    DatasetGenConfig,
+    ExperimentConfig,
+    Polarity,
+    Provenance,
+    model_sha,
+)
 
 GENERATED_DIR = Path(__file__).resolve().parents[3] / "data" / "generated"
 DOCUMENTS_FILENAME = "documents.jsonl"
@@ -38,52 +45,52 @@ def documents_path(experiment_id: str, run_id: str) -> Path:
 
 async def generate_dataset(
     experiment: ExperimentConfig,
-    experiment_path: Path,
+    config: DatasetGenConfig,
     *,
     run: int = 1,
     run_id: str | None = None,
-    run_config_sha: str | None = None,
+    config_sha: str | None = None,
     n_items: int | None = None,
     out_path: Path | None = None,
-    dataset_config_path: Path = prompts.DATASET_CONFIG_PATH,
     throughput: int = 8,
     override_cache: bool = False,
     context: RunContext | None = None,
 ) -> Path:
     """Generate `n_items` matched pairs for `experiment` and append them to a JSONL corpus.
 
-    `experiment_path` is required (rather than re-deriving it) so the row-level
-    fingerprint is exact even when the caller already parsed the config elsewhere.
+    Both configs arrive as typed objects rather than as paths to read: nothing under
+    `src/` loads YAML (see `belief_transfer.config`), so this cannot silently pick up a
+    file that differs from the one the caller resolved.
+
     Defaults to `experiment.dataset.n_items` items and to
     `documents_path(experiment.id, run_id or "adhoc")` -- data/ is namespaced by
     experiment under each pipeline-stage folder (generated/, validated/, checkpoints/,
     results/), and by run id under that, since more than one experiment and more than
     one run eventually share each of those folders.
 
-    `run_id`/`run_config_sha` identify the `belief_transfer.runs.RunConfig` invocation
-    that produced this row, if any (see `belief_transfer.runs.run_datagen`). They are
-    separate from `experiment_sha`: a run config can override the experiment it is based
-    on, so `experiment_sha` alone would understate what actually produced the row --
-    the pair of hashes together pin down the effective config, not just the base file.
+    Each row carries three fingerprints, which pin down different things: `experiment_sha`
+    and `dataset_config_sha` hash the two *resolved* configs used (see `schemas.model_sha`
+    -- resolved, because with layered composition no single file determines what ran), and
+    `config_sha` identifies the whole job, so a row can be traced back to the exact
+    invocation as well as to the two specs that shaped it.
 
     LLM calls are cached by `generation.llm`/`generation.cache` on (model, prompt,
     tool, replicate). `run` is passed through as the cache's `replicate` -- never sent
     to the model, only mixed into the cache key -- so replicate passes over the same
-    seeded prompts (see `runs.run_datagen`) don't collapse onto one cached answer,
+    seeded prompts (see `stages.datagen`) don't collapse onto one cached answer,
     while still being cheap to re-run after a crash: a killed invocation just re-hits
     the cache for whatever it already completed. Pass `override_cache=True` to force
     fresh calls, e.g. after a prompt template change you want to re-run with the same
     `run_id`.
 
     `context`, if given, records every call's cost/tokens/latency into it (see
-    `generation.context.RunContext`); `runs.run_datagen` uses this to write the
+    `generation.context.RunContext`); `stages.datagen` uses this to write the
     stage's `data/results/.../datagen.yaml` summary.
     """
-    config = prompts.load_dataset_config(dataset_config_path)
     n_items = experiment.dataset.n_items if n_items is None else n_items
     out_path = out_path or documents_path(experiment.id, run_id or "adhoc")
-    experiment_sha = file_sha(experiment_path)
-    dataset_config_sha = file_sha(dataset_config_path)
+    experiment_sha = model_sha(experiment)
+    dataset_config_sha = model_sha(config)
 
     seeds = [prompts.seed_item(index) for index in range(n_items)]
     plan_prompts = [prompts.render_plan_prompt(experiment, seed, config) for seed in seeds]
@@ -119,7 +126,7 @@ async def generate_dataset(
                     "index": index,
                     "polarity": polarity,
                     "run_id": run_id,
-                    "run_config_sha": run_config_sha,
+                    "config_sha": config_sha,
                     "structure": seed.structure,
                     "region_seed": seed.region,
                     "names_seed": list(seed.names),

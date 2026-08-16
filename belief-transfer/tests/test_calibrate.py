@@ -26,12 +26,18 @@ import yaml
 from belief_transfer.inference import calibrate
 from belief_transfer.inference.model import (
     load_hardware_profile,
-    load_models_config,
     resolve_batch_size,
 )
 from belief_transfer.schemas import HardwareProfile, MachineInfo, ModelBenchResult
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _models_config():
+    """The models config as the pipeline sees it, composed from configs/."""
+    from belief_transfer.config import load_job
+
+    return load_job(["+run=factory_farming_v1"]).models
 
 
 def _row(batch_size: int, tokens_per_sec: float, peak_vram_gb: float, oom: bool = False) -> dict:
@@ -123,7 +129,7 @@ def test_load_hardware_profile_returns_none_on_malformed_file(tmp_path: Path) ->
 
 
 def test_resolve_batch_size_prefers_calibrated_profile(tmp_path: Path) -> None:
-    models_config = load_models_config()
+    models_config = _models_config()
     path = tmp_path / "hardware_profile.yaml"
     calibrate._write_profile(
         HardwareProfile(
@@ -145,7 +151,7 @@ def test_resolve_batch_size_prefers_calibrated_profile(tmp_path: Path) -> None:
 
 
 def test_resolve_batch_size_falls_back_to_models_config(tmp_path: Path) -> None:
-    models_config = load_models_config()
+    models_config = _models_config()
     missing = tmp_path / "nope.yaml"
     assert resolve_batch_size("qwen3-4b", models_config, hardware_profile_path=missing) == (
         models_config.inference.batch_size
@@ -155,7 +161,7 @@ def test_resolve_batch_size_falls_back_to_models_config(tmp_path: Path) -> None:
 def test_resolve_batch_size_falls_back_for_uncalibrated_model(tmp_path: Path) -> None:
     # A profile calibrated for one model must not silently supply its batch size to a
     # different, larger model that was never benchmarked on this box.
-    models_config = load_models_config()
+    models_config = _models_config()
     path = tmp_path / "hardware_profile.yaml"
     calibrate._write_profile(
         HardwareProfile(

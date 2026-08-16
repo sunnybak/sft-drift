@@ -12,12 +12,13 @@ def test_push_data_creates_repo_and_uploads_data_dir_excluding_cache(monkeypatch
                 repo_id=repo_id, repo_type=repo_type, private=private, exist_ok=exist_ok
             )
 
-        def upload_folder(self, *, folder_path, repo_id, repo_type, ignore_patterns):
+        def upload_folder(self, *, folder_path, repo_id, repo_type, ignore_patterns, allow_patterns=None):
             calls["upload_folder"] = dict(
                 folder_path=folder_path,
                 repo_id=repo_id,
                 repo_type=repo_type,
                 ignore_patterns=ignore_patterns,
+                allow_patterns=allow_patterns,
             )
 
     monkeypatch.setattr(data_sync, "HfApi", FakeHfApi)
@@ -58,9 +59,9 @@ def test_push_data_defaults_to_default_repo_id(monkeypatch):
 def test_pull_data_downloads_snapshot_into_data_dir(monkeypatch):
     calls: dict[str, object] = {}
 
-    def fake_snapshot_download(*, repo_id, repo_type, local_dir):
+    def fake_snapshot_download(*, repo_id, repo_type, local_dir, allow_patterns=None):
         calls["snapshot_download"] = dict(
-            repo_id=repo_id, repo_type=repo_type, local_dir=local_dir
+            repo_id=repo_id, repo_type=repo_type, local_dir=local_dir, allow_patterns=allow_patterns
         )
 
     monkeypatch.setattr(data_sync, "snapshot_download", fake_snapshot_download)

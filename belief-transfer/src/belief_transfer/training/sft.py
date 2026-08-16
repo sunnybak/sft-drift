@@ -21,16 +21,20 @@ import random
 from pathlib import Path
 from typing import Any
 
-import yaml
-
 from belief_transfer.inference.backend import require_training_backend
-from belief_transfer.inference.model import load_models_config, require_model_cached
-from belief_transfer.schemas import ExperimentConfig, ModelSpec, Polarity, SFTHyperparams, TrainingConfig, file_sha
+from belief_transfer.inference.model import require_model_cached
+from belief_transfer.schemas import (
+    CHECKPOINTS_DIR,
+    ExperimentConfig,
+    ModelSpec,
+    Polarity,
+    SFTHyperparams,
+    TrainingConfig,
+    file_sha,
+)
 from belief_transfer.training import dataset as sft_dataset
 
 ROOT = Path(__file__).resolve().parents[3]
-CHECKPOINTS_DIR = ROOT / "data" / "checkpoints"
-TRAINING_CONFIG_PATH = ROOT / "configs" / "training.yaml"
 
 SFT_DATASET_FILENAME = "sft_dataset.jsonl"
 SUMMARY_FILENAME = "train_summary.json"
@@ -39,10 +43,6 @@ SUMMARY_FILENAME = "train_summary.json"
 def checkpoint_dir(experiment_id: str, run_id: str, polarity: Polarity) -> Path:
     """Where one arm's checkpoint lives: `data/checkpoints/<experiment_id>/<run_id>/<polarity>/`."""
     return CHECKPOINTS_DIR / experiment_id / run_id / polarity
-
-
-def load_training_config(path: Path = TRAINING_CONFIG_PATH) -> TrainingConfig:
-    return TrainingConfig.model_validate(yaml.safe_load(path.read_text()))
 
 
 def expected_optimizer_steps(dataset_size: int, effective_batch_size: int, epochs: int) -> int:
@@ -186,6 +186,7 @@ def _status(checks: dict[str, Any]) -> str:
 def train_one_arm(
     experiment: ExperimentConfig,
     training: TrainingConfig,
+    spec: ModelSpec,
     validated_path: Path,
     polarity: Polarity,
     output_dir: Path,
@@ -203,7 +204,7 @@ def train_one_arm(
 
     Thin wrapper over `train_arm`: this is the only place that filters documents by
     polarity, so a control experiment that trains one arm on its whole (unsplit)
-    corpus -- see `experiments/control_offtopic/experiment.yaml`'s `M(control) vs
+    corpus -- see `configs/experiment/control_offtopic.yaml`'s `M(control) vs
     BASE` comparison -- can call `train_arm` directly with its own pre-built rows
     instead of duplicating the trainer/verification body below.
     """
@@ -211,12 +212,13 @@ def train_one_arm(
     rows = sft_dataset.chat_rows_for_polarity(documents, polarity, experiment.dataset.topic)
     if not rows:
         raise ValueError(f"no {polarity!r} documents found in {validated_path}")
-    return train_arm(experiment, training, rows, polarity, output_dir, smoke=smoke)
+    return train_arm(experiment, training, spec, rows, polarity, output_dir, smoke=smoke)
 
 
 def train_arm(
     experiment: ExperimentConfig,
     training: TrainingConfig,
+    spec: ModelSpec,
     rows: list[dict],
     label: str,
     output_dir: Path,
@@ -240,8 +242,6 @@ def train_arm(
     sft_dataset.write_sft_dataset(rows, dataset_path)
     dataset_sha = file_sha(dataset_path)
 
-    models_config = load_models_config()
-    spec = models_config.models[training.model]
     hp = training.sft
 
     steps = expected_optimizer_steps(len(rows), hp.effective_batch_size, hp.epochs)
@@ -341,6 +341,7 @@ def train_arm(
 def train(
     experiment: ExperimentConfig,
     training: TrainingConfig,
+    spec: ModelSpec,
     validated_path: Path,
     output_root: Path,
     *,
@@ -356,6 +357,7 @@ def train(
         summaries[polarity] = train_one_arm(
             experiment,
             training,
+            spec,
             validated_path,
             polarity,
             output_root / polarity,

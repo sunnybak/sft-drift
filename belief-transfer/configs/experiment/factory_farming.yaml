@@ -1,4 +1,8 @@
-# experiments/factory_farming/experiment.yaml
+# configs/experiment/factory_farming.yaml
+#
+# Selected with `experiment=factory_farming` (or by a configs/run/ overlay's `defaults`
+# block). Holds what is true of the experiment itself; how much of it to generate on a
+# given invocation belongs to a run.
 
 id: factory_farming
 
@@ -12,9 +16,12 @@ action:
 
 dataset:
   topic: "industrial factory farming"
-  # n_items has no value here: it's how much to generate for one invocation, not a
-  # property of the experiment, so every run config (runs/*.yaml) must set its own
-  # `overrides.dataset.n_items` -- see runs/factory_farming_v1.yaml for the real corpus.
+  # Mandatory, deliberately unset: how much to generate is a property of one invocation,
+  # not of the experiment. Every run overlay supplies its own (see
+  # configs/run/factory_farming_v1.yaml for the real corpus). `???` is Hydra's missing
+  # marker, so composing without one fails naming this key instead of silently
+  # generating some default number of items.
+  n_items: ???
   size_words: 800
   style: "general interest blog post"
 

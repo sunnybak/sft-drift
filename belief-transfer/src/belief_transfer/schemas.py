@@ -8,6 +8,11 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
+CHECKPOINTS_DIR = Path(__file__).resolve().parents[2] / "data" / "checkpoints"
+"""Where SFT checkpoints live. Here rather than only in `training.sft` because a job
+config resolves arm paths (see `JobConfig.training_root_for`), and two modules deriving
+the same layout independently is how they drift apart."""
+
 
 class SFTHyperparams(BaseModel):
     lr: float = 2e-5
@@ -366,6 +371,21 @@ def file_sha(path: Path, length: int = 12) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()[:length]
 
 
+def model_sha(model: BaseModel, length: int = 12) -> str:
+    """Short sha256 of a config object's resolved contents.
+
+    The counterpart to `file_sha` for a composed config, and now the primary form: once a
+    config is layered (group defaults, a run overlay, command-line overrides), no single
+    file determines what ran, so hashing one would give two materially different jobs the
+    same fingerprint. Serialized canonically (sorted keys, no whitespace) so the hash
+    depends on the values and not on key order or formatting.
+    """
+    import json
+
+    payload = json.dumps(model.model_dump(mode="json"), sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:length]
+
+
 class Provenance(BaseModel):
     """Metadata every persisted artifact should carry.
 
@@ -451,6 +471,92 @@ class EfficacyConfig(BaseModel):
     retrievable in a forced-choice format"."""
 
 
+class EfficacyArm(BaseModel):
+    """One checkpoint to score on the efficacy item bank.
+
+    An arm names *which* checkpoint, not what to conclude from it. `polarity=None` is the
+    base model (no adapter), which is the reference every other arm is read against.
+
+    `experiment`/`run_id` default to the job's own but can point elsewhere, which is the
+    whole reason arms are configurable: an off-topic control arm trains on the control
+    corpus and is scored against *this* experiment's bank. `changelog/2026-08-16.md`
+    found ~43% of the raw letter-reading effect was machinery rather than content, so a
+    contrast without a matched control is a contaminated number -- and expressing that
+    previously required a bespoke script (`scripts/run_m0_split.py`) because the two-arm
+    shape was hardcoded.
+    """
+
+    name: str
+    """Condition label in the results (`base`, `m_plus`, `m0_plus`, ...)."""
+    polarity: Polarity | None = None
+    run_id: str | None = None
+    experiment: str | None = None
+    checkpoint: str = "final"
+    """Which saved checkpoint of that arm: `final`, or `checkpoint-<step>`."""
+
+
+def _default_arms() -> list[EfficacyArm]:
+    return [
+        EfficacyArm(name="base"),
+        EfficacyArm(name="m_plus", polarity="positive"),
+        EfficacyArm(name="m_minus", polarity="negative"),
+    ]
+
+
+class EfficacySpec(BaseModel):
+    """How to run the efficacy stage: which arms, which contrast, how much of it."""
+
+    arms: list[EfficacyArm] = Field(default_factory=_default_arms)
+    contrast: tuple[str, str] = ("m_plus", "m_minus")
+    """The two arm names whose paired difference is reported as dE. A difference
+    statistic cannot distinguish a two-sided manipulation from a one-sided one, so
+    EFFICACY.md treats this as a summary and the per-arm scores as the gate."""
+    limit: int | None = None
+    """Score only the first N items -- for proving the loop runs, not for results."""
+    continuation: bool = True
+    """Also score each fact pair as a continuation of the training prompt. The only thing
+    that distinguishes "the corpus was never absorbed" from "it was absorbed but is not
+    retrievable in a forced-choice format"."""
+    choice_bench: bool = True
+    """Run the MCQ ability check per arm, which catches a checkpoint that can no longer
+    answer a forced choice at all -- without it, a collapsed model reports as a belief
+    result."""
+    trajectory: bool = False
+    """Also score every intermediate checkpoint, to find the last step where every arm
+    still passes choice-bench."""
+
+    def arm(self, name: str) -> EfficacyArm:
+        for arm in self.arms:
+            if arm.name == name:
+                return arm
+        raise KeyError(f"no arm named {name!r} (have: {', '.join(a.name for a in self.arms)})")
+
+
+class DataSpec(BaseModel):
+    """Which HF dataset repo `data/` mirrors, and how much of it to move."""
+
+    repo_id: str = "sunnybak/sft-drift"
+    paths: list[str] = Field(default_factory=list)
+    """Sub-paths to sync, e.g. `["generated/factory_farming"]`. Empty means the whole tree
+    (minus the LLM cache). Narrowing matters once checkpoints are in there: a full push is
+    multi-GB, and most of the time only one run's artifacts changed."""
+
+
+class ChatSpec(BaseModel):
+    """The interactive client's session settings (`stage=chat`)."""
+
+    adapter: str | None = None
+    """Path to a LoRA adapter directory, or None for the base checkpoint."""
+    system: str | None = None
+    temperature: float = 0.0
+    max_new_tokens: int = 1024
+    thinking: bool = False
+    """Enable Qwen3 `<think>` blocks. Off by default so a reply is the direct answer."""
+    stream: bool = True
+    prompt: str | None = None
+    """Send one prompt, print the reply, exit -- for piping."""
+
+
 class PlanPerson(BaseModel):
     name: str
     role: str
@@ -476,30 +582,126 @@ class ExperimentConfig(BaseModel):
     dataset: DatasetSpec
 
 
-class DocumentSpec(BaseModel):
-    type: str
-    words: tuple[int, int]
+class DatasetConfig(DatasetGenConfig):
+    """`configs/dataset/*.yaml`: the generation prompts (inherited) plus the judge that
+    scores what they produced.
+
+    One file, and one model, because they are one decision: a judge check is written
+    against the prompt that generated the text it reads, and changing a prompt without
+    revisiting its checks is how a corpus starts passing checks that no longer mean
+    anything. Extending `DatasetGenConfig` rather than nesting it keeps the prompt fields
+    at the top level of the file, where they already are, so adopting this shape did not
+    require reflowing 200 lines of indentation-sensitive Jinja block scalars -- and any
+    function that wants only the generation half still takes a `DatasetGenConfig`.
+    """
+
+    judge: JudgeConfig
 
 
-class SFTConstraints(BaseModel):
-    explicit_belief_statement: bool = False
-    behavioral_advice: bool = False
+class EvalConfig(BaseModel):
+    """`configs/eval/*.yaml`. Only the efficacy suite exists so far; the belief and
+    action suites (see EVALGEN.md) will be siblings here."""
+
+    efficacy: EfficacyConfig
 
 
-class SFTConfig(BaseModel):
-    num_pairs: int
-    document: DocumentSpec
-    constraints: SFTConstraints = Field(default_factory=SFTConstraints)
-    dimensions: list[str]
+Stage = Literal[
+    "datagen",
+    "sft",
+    "efficacy",
+    "belief_eval",
+    "action_eval",
+    "calibrate",
+    "download_models",
+    "perf_bench",
+    "choice_bench",
+    "memorization_bench",
+    "chat",
+    "data_push",
+    "data_pull",
+]
+"""Every job the runner can dispatch. An explicit union rather than a free string so a
+typo in a config fails at load with the list of valid stages, and so
+`tests/test_stages.py` can check the registry covers exactly these.
+
+Benchmarks and data sync are stages too, even though they are not experiment pipeline
+steps: they are still "a job configured by a file and run by one entrypoint", which is
+the only property the runner needs. What distinguishes them is where their output goes
+(a hardware profile, a benchmark JSON) rather than how they are launched."""
 
 
-class EvalSuite(BaseModel):
-    path: Path
+class JobConfig(BaseModel):
+    """One resolved job: the sole input to a stage, and the output counterpart of
+    `RunResult`.
 
+    Composed by Hydra from `configs/` (defaults, groups, a `run/` overlay, then CLI
+    overrides) and validated into this shape at the entrypoint -- see `runs.load_job`.
+    Nothing under `src/` reads YAML or touches Hydra to get one; a stage is a plain
+    function of this object, which is what lets `scripts/` build one in Python and call
+    the same code path the runner does.
 
-class BeliefEvalConfig(BaseModel):
-    suite: EvalSuite
+    Every config the pipeline has is reachable from here, which is the point: before
+    this, `RunConfig.overrides` deep-merged onto the *experiment* spec only, so a run
+    could not set a training hyperparameter, and `evals/__main__.py` grew fifteen
+    command-line flags in parallel to say what a run config could not.
+    """
 
+    run_id: str
+    stage: Stage = "datagen"
 
-class ActionEvalConfig(BaseModel):
-    suite: EvalSuite
+    experiment: ExperimentConfig
+    training: TrainingConfig = Field(default_factory=TrainingConfig)
+    models: ModelsConfig
+    dataset: DatasetConfig
+    eval: EvalConfig
+
+    data: DataSpec = Field(default_factory=DataSpec)
+    chat: ChatSpec = Field(default_factory=ChatSpec)
+    efficacy: EfficacySpec = Field(default_factory=EfficacySpec)
+    """Only read by the efficacy stage. Lives on the job rather than in `eval` because it
+    says what to *run* (which checkpoints, which contrast), while `eval.efficacy` says
+    what the instrument *is* (framings, answer format) -- the same split as a run config
+    versus an experiment spec."""
+
+    replicates: int = 1
+    """Repeated generation passes over the *same* seeded prompts, to measure the model's
+    own sampling variance rather than to generate new content (see `generation.random`).
+    Each pass salts the LLM cache with its replicate number so it gets an independent
+    answer instead of the first pass's cached one."""
+    throughput: int = 8
+    """Concurrent in-flight LLM calls. Bounded by the org's tokens-per-minute ceiling
+    rather than by latency: see `configs/run/control_offtopic_v2.yaml`, where judging at
+    20 saturated the limit and died on an unretried 429."""
+    force: bool = False
+    """Redo work that is already done: re-issue LLM calls that are in the cache, retrain
+    a checkpoint whose summary says COMPLETED, rewrite existing artifacts. One flag for
+    what used to be a per-stage assortment (`override_cache`, `--no-train`), since it is
+    one intent."""
+    smoke: bool = False
+    """Prove the loop runs without doing the real work (2 training steps, throwaway
+    artifact paths). Never overwrites a real run's outputs -- see `stages.sft`."""
+
+    def training_root_for(self, experiment_id: str, run_id: str) -> Path:
+        """Checkpoint directory for an arbitrary experiment/run pair.
+
+        On the config rather than in `stages.sft` so an efficacy arm pointing at another
+        experiment's checkpoints (a control arm) resolves the path the same way the stage
+        that wrote it did, instead of two places agreeing by coincidence.
+        """
+        return CHECKPOINTS_DIR / experiment_id / run_id
+
+    @property
+    def model_spec(self) -> ModelSpec:
+        """The `ModelSpec` for `training.model`, resolved against `models`.
+
+        A property rather than a validated field because `configs/models/*.yaml` carries
+        every model this repo knows about, and which one a job uses is
+        `training.model` -- one place, not two that can disagree.
+        """
+        try:
+            return self.models.models[self.training.model]
+        except KeyError:
+            known = ", ".join(sorted(self.models.models))
+            raise KeyError(
+                f"training.model={self.training.model!r} is not in models config (known: {known})"
+            ) from None

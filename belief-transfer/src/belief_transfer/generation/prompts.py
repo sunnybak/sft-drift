@@ -110,10 +110,6 @@ PLAN_TOOL = llm.Tool(
 )
 
 
-def load_dataset_config(path: Path = DATASET_CONFIG_PATH) -> DatasetGenConfig:
-    return DatasetGenConfig.model_validate(yaml.safe_load(path.read_text()))
-
-
 @dataclass(frozen=True)
 class ItemSeed:
     """The deterministic, polarity-independent draw for one item."""

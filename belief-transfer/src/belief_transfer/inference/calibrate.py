@@ -47,7 +47,6 @@ the ordering "calibrate before benchmarking" (see `make help`), not shared code.
 
 from __future__ import annotations
 
-import argparse
 import random
 import time
 from pathlib import Path
@@ -57,9 +56,7 @@ from dotenv import find_dotenv, load_dotenv
 
 from belief_transfer.inference.model import (
     HARDWARE_PROFILE_PATH,
-    MODELS_CONFIG_PATH,
     load_hardware_profile,
-    load_models_config,
     require_model_cached,
 )
 from belief_transfer.schemas import (
@@ -67,6 +64,8 @@ from belief_transfer.schemas import (
     MachineInfo,
     MemorizationBenchResult,
     ModelBenchResult,
+    ModelsConfig,
+    ModelSpec,
 )
 
 load_dotenv(find_dotenv())
@@ -278,9 +277,9 @@ def select_batch_size(
 
 def calibrate_batch_size(
     model_key: str,
+    models_config: ModelsConfig,
     *,
     max_new_tokens: int = 256,
-    models_config_path: Path = MODELS_CONFIG_PATH,
     vram_safety_margin: float = VRAM_SAFETY_MARGIN,
 ) -> dict:
     """Sweep `BATCH_SIZE_SWEEP` for `model_key` on this GPU, stopping at the first OOM,
@@ -290,9 +289,7 @@ def calibrate_batch_size(
     """
     import torch
 
-    from belief_transfer.inference.model import load_models_config
-
-    spec = load_models_config(models_config_path).models[model_key]
+    spec = models_config.models[model_key]
     tokenizer, model = _load_bare(spec)
 
     total_vram_gb = (
@@ -363,11 +360,11 @@ def score_memorization(items: list[tuple[str, str]], responses: list[str]) -> di
 
 def run_memorization_bench(
     model_key: str,
+    models_config: ModelsConfig,
     *,
     n_items: int = MEMORIZATION_N_ITEMS,
     epochs: int = MEMORIZATION_EPOCHS,
     lr: float = MEMORIZATION_LR,
-    models_config_path: Path = MODELS_CONFIG_PATH,
     hardware_profile_path: Path = HARDWARE_PROFILE_PATH,
 ) -> dict:
     """AGENTS.md's tiny-dataset memorization test, as a benchmark.
@@ -398,7 +395,7 @@ def run_memorization_bench(
     from belief_transfer.training import dataset as sft_dataset
     from belief_transfer.training import sft
 
-    spec = load_models_config(models_config_path).models[model_key]
+    spec = models_config.models[model_key]
     items = memorization_items(n_items)
     prompts = [inp for inp, _ in items]
 
@@ -408,7 +405,7 @@ def run_memorization_bench(
     #    the items leak prior knowledge and the benchmark measures nothing.
     base = HFModel(
         model_key,
-        models_config_path=models_config_path,
+        models_config,
         hardware_profile_path=hardware_profile_path,
         max_new_tokens=MEMORIZATION_MAX_NEW_TOKENS,
     )
@@ -462,8 +459,8 @@ def run_memorization_bench(
         # 3. Reload the saved checkpoint through the normal eval path and re-ask.
         tuned = HFModel(
             model_key,
+            models_config,
             adapter_path=adapter_dir,
-            models_config_path=models_config_path,
             hardware_profile_path=hardware_profile_path,
             max_new_tokens=MEMORIZATION_MAX_NEW_TOKENS,
         )
@@ -491,7 +488,7 @@ def run_memorization_bench(
     }
 
 
-def download_model(model_key: str, models_config_path: Path = MODELS_CONFIG_PATH) -> str:
+def download_model(spec: ModelSpec) -> str:
     """Fetch a model's weights into the local HF cache without loading them onto a
     device. The only place in this codebase allowed to do a network fetch of model
     weights -- every path that actually loads a model (`_load_bare`, `HFModel`,
@@ -504,8 +501,6 @@ def download_model(model_key: str, models_config_path: Path = MODELS_CONFIG_PATH
     """
     from huggingface_hub import snapshot_download
 
-    models_config = load_models_config(models_config_path)
-    spec = models_config.models[model_key]
     return snapshot_download(repo_id=spec.pretrained)
 
 
@@ -545,95 +540,108 @@ def _write_profile(profile: HardwareProfile, path: Path) -> None:
     path.write_text(yaml.safe_dump(profile.model_dump(mode="json"), sort_keys=False))
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["download", "calibrate", "memorize"])
-    parser.add_argument(
-        "--model", action="append", default=None, help="model key(s) from configs/models.yaml (default: all)"
-    )
-    parser.add_argument("--models-config", type=Path, default=MODELS_CONFIG_PATH)
-    parser.add_argument("--profile-path", type=Path, default=HARDWARE_PROFILE_PATH)
-    args = parser.parse_args()
+def download_models(models_config: ModelsConfig, model_keys: list[str] | None = None) -> dict[str, str]:
+    """Fetch each model's weights into the local HF cache. Returns key -> local path."""
+    downloaded: dict[str, str] = {}
+    for model_key in model_keys or list(models_config.models):
+        print(f"[download] fetching {model_key} ...")
+        downloaded[model_key] = download_model(models_config.models[model_key])
+        print(f"[download] {model_key}: cached at {downloaded[model_key]}")
+    return downloaded
 
-    models_config = load_models_config(args.models_config)
-    model_keys = args.model or list(models_config.models.keys())
 
-    if args.action == "download":
-        for model_key in model_keys:
-            print(f"[download] fetching {model_key} ...")
-            local_path = download_model(model_key, models_config_path=args.models_config)
-            print(f"[download] {model_key}: cached at {local_path}")
-        return
+def calibrate_models(
+    models_config: ModelsConfig,
+    model_keys: list[str] | None = None,
+    *,
+    profile_path: Path = HARDWARE_PROFILE_PATH,
+) -> dict:
+    """Calibrate each model on this machine and merge the results into its profile.
 
-    profile = _load_profile(args.profile_path)
+    Writes after each model rather than at the end, so an OOM on the fourth model does
+    not throw away the first three measurements.
+    """
+    profile = _load_profile(profile_path)
     profile.generated_at = _now()
     profile.machine = probe_hardware()
 
-    if args.action == "calibrate":
-        for model_key in model_keys:
-            print(f"[calibrate] calibrating {model_key} ...")
-            result = calibrate_batch_size(model_key, models_config_path=args.models_config)
-            profile.models[model_key] = ModelBenchResult(
-                batch_size=result["recommended_batch_size"],
-                max_new_tokens_tested=result["max_new_tokens_tested"],
-                tokens_per_sec=result["tokens_per_sec"],
-                time_to_first_token_s=result["time_to_first_token_s"],
-                peak_vram_gb=result["peak_vram_gb"],
+    for model_key in model_keys or list(models_config.models):
+        print(f"[calibrate] calibrating {model_key} ...")
+        result = calibrate_batch_size(model_key, models_config)
+        existing = profile.models.get(model_key)
+        profile.models[model_key] = ModelBenchResult(
+            batch_size=result["recommended_batch_size"],
+            max_new_tokens_tested=result["max_new_tokens_tested"],
+            tokens_per_sec=result["tokens_per_sec"],
+            time_to_first_token_s=result["time_to_first_token_s"],
+            peak_vram_gb=result["peak_vram_gb"],
+            calibrated_at=_now(),
+            # Never drop a memorization result just because we re-calibrated.
+            memorization=existing.memorization if existing else None,
+        )
+        print(
+            f"[calibrate] {model_key}: batch_size={result['recommended_batch_size']} "
+            f"tokens/sec={result['tokens_per_sec']:.1f} "
+            f"ttft={result['time_to_first_token_s']:.3f}s "
+            f"peak_vram={result['peak_vram_gb']:.2f}GB/{result['total_vram_gb']:.2f}GB"
+        )
+        for row in result["sweep"]:
+            print(f"           {row}")
+        _write_profile(profile, profile_path)
+
+    print(f"[calibrate] wrote {profile_path}")
+    return profile.model_dump(mode="json")
+
+
+def memorization_bench(
+    models_config: ModelsConfig,
+    model_keys: list[str] | None = None,
+    *,
+    profile_path: Path = HARDWARE_PROFILE_PATH,
+) -> dict:
+    """Run the tiny-dataset memorization check per model and record it in the profile."""
+    profile = _load_profile(profile_path)
+    profile.generated_at = _now()
+    profile.machine = probe_hardware()
+
+    results: dict[str, dict] = {}
+    for model_key in model_keys or list(models_config.models):
+        print(f"[memorization-bench] training {model_key} on {MEMORIZATION_N_ITEMS} arbitrary mappings ...")
+        result = run_memorization_bench(model_key, models_config, hardware_profile_path=profile_path)
+        results[model_key] = result
+        print(
+            f"[memorization-bench] {model_key}: {'PASS' if result['passed'] else 'FAIL'} "
+            f"base={result['base_accuracy']:.2f} tuned={result['tuned_accuracy']:.2f} "
+            f"loss {result['loss_first']:.3f}->{result['loss_last']:.3f} "
+            f"in {result['elapsed_s']:.0f}s"
+        )
+        if result["tuned_misses"]:
+            print(f"           not memorized: {', '.join(result['tuned_misses'])}")
+
+        existing = profile.models.get(model_key)
+        if existing is None:
+            # Never lose a real measurement just because calibration hasn't run here yet.
+            existing = ModelBenchResult(
+                batch_size=models_config.inference.batch_size,
+                max_new_tokens_tested=MEMORIZATION_MAX_NEW_TOKENS,
+                tokens_per_sec=0.0,
+                time_to_first_token_s=0.0,
+                peak_vram_gb=0.0,
                 calibrated_at=_now(),
-                memorization=profile.models[model_key].memorization if model_key in profile.models else None,
             )
-            print(
-                f"[calibrate] {model_key}: batch_size={result['recommended_batch_size']} "
-                f"tokens/sec={result['tokens_per_sec']:.1f} "
-                f"ttft={result['time_to_first_token_s']:.3f}s "
-                f"peak_vram={result['peak_vram_gb']:.2f}GB/{result['total_vram_gb']:.2f}GB"
-            )
-            for row in result["sweep"]:
-                print(f"           {row}")
-            _write_profile(profile, args.profile_path)
+        existing.memorization = MemorizationBenchResult(
+            passed=result["passed"],
+            base_accuracy=result["base_accuracy"],
+            tuned_accuracy=result["tuned_accuracy"],
+            loss_first=result["loss_first"],
+            loss_last=result["loss_last"],
+            n_items=result["n_items"],
+            epochs=result["epochs"],
+            elapsed_s=result["elapsed_s"],
+            ran_at=_now(),
+        )
+        profile.models[model_key] = existing
+        _write_profile(profile, profile_path)
 
-    if args.action == "memorize":
-        for model_key in model_keys:
-            print(f"[memorization-bench] training {model_key} on {MEMORIZATION_N_ITEMS} arbitrary mappings ...")
-            result = run_memorization_bench(
-                model_key, models_config_path=args.models_config, hardware_profile_path=args.profile_path
-            )
-            print(
-                f"[memorization-bench] {model_key}: {'PASS' if result['passed'] else 'FAIL'} "
-                f"base={result['base_accuracy']:.2f} tuned={result['tuned_accuracy']:.2f} "
-                f"loss {result['loss_first']:.3f}->{result['loss_last']:.3f} "
-                f"in {result['elapsed_s']:.0f}s"
-            )
-            if result["tuned_misses"]:
-                print(f"           not memorized: {', '.join(result['tuned_misses'])}")
-            existing = profile.models.get(model_key)
-            if existing is None:
-                # Never lose a real measurement just because calibration hasn't run on
-                # this box yet.
-                existing = ModelBenchResult(
-                    batch_size=load_models_config(args.models_config).inference.batch_size,
-                    max_new_tokens_tested=MEMORIZATION_MAX_NEW_TOKENS,
-                    tokens_per_sec=0.0,
-                    time_to_first_token_s=0.0,
-                    peak_vram_gb=0.0,
-                    calibrated_at=_now(),
-                )
-            existing.memorization = MemorizationBenchResult(
-                passed=result["passed"],
-                base_accuracy=result["base_accuracy"],
-                tuned_accuracy=result["tuned_accuracy"],
-                loss_first=result["loss_first"],
-                loss_last=result["loss_last"],
-                n_items=result["n_items"],
-                epochs=result["epochs"],
-                elapsed_s=result["elapsed_s"],
-                ran_at=_now(),
-            )
-            profile.models[model_key] = existing
-            _write_profile(profile, args.profile_path)
-
-    print(f"[calibrate] wrote {args.profile_path}")
-
-
-if __name__ == "__main__":
-    main()
+    print(f"[calibrate] wrote {profile_path}")
+    return results

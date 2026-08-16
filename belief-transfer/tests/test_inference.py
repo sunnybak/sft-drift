@@ -6,12 +6,12 @@ import yaml
 
 from belief_transfer.schemas import ChoiceScore, ChoiceScores
 
+from belief_transfer.config import load_job
 from belief_transfer.inference.model import (
     ApiModel,
     HFModel,
     Model,
     batched_chat_generate,
-    load_models_config,
     score_choices,
 )
 from belief_transfer.inference.run import run_inference
@@ -33,8 +33,16 @@ def test_fake_model() -> None:
     assert FakeModel().generate(["a", "b"]) == ["TEST", "TEST"]
 
 
-def test_load_models_config_reads_configs_models_yaml() -> None:
-    config = load_models_config()
+def _models_config():
+    """The models config as the pipeline sees it: composed, not read from a file.
+
+    `HFModel` takes a resolved `ModelsConfig` rather than a path, so nothing can load a
+    model against a config that differs from the one the job resolved."""
+    return load_job(["+run=factory_farming_v1"]).models
+
+
+def test_composed_models_config_has_the_expected_model() -> None:
+    config = _models_config()
     assert "qwen3-4b" in config.models
     assert config.models["qwen3-4b"].pretrained == "Qwen/Qwen3-4B"
     assert config.inference.batch_size >= 1
@@ -43,7 +51,7 @@ def test_load_models_config_reads_configs_models_yaml() -> None:
 def test_hf_model_construction_resolves_model_spec_without_loading_weights() -> None:
     # Constructing an HFModel must not touch the network or a GPU: it only resolves
     # the model tag against configs/models.yaml. Loading is deferred to `generate`.
-    model = HFModel("qwen3-4b", adapter_path="/some/adapter/dir")
+    model = HFModel("qwen3-4b", _models_config(), adapter_path="/some/adapter/dir")
     assert model._spec.pretrained == "Qwen/Qwen3-4B"
     assert model.adapter_path == Path("/some/adapter/dir")
     assert model._hf_model is None
@@ -51,7 +59,7 @@ def test_hf_model_construction_resolves_model_spec_without_loading_weights() -> 
 
 def test_hf_model_unknown_tag_raises_keyerror() -> None:
     with pytest.raises(KeyError):
-        HFModel("not-a-real-model-tag")
+        HFModel("not-a-real-model-tag", _models_config())
 
 
 @pytest.mark.parametrize("cls_and_args", [(ApiModel, ("gpt-5.6-luna",))])
@@ -106,7 +114,7 @@ def test_batched_chat_generate_returns_one_response_per_prompt_and_batches() -> 
 
 
 def test_hf_model_generate_uses_lazily_loaded_components(monkeypatch: pytest.MonkeyPatch) -> None:
-    model = HFModel("qwen3-4b", max_new_tokens=3)
+    model = HFModel("qwen3-4b", _models_config(), max_new_tokens=3)
     monkeypatch.setattr(model, "_ensure_loaded", lambda: None)
     model._hf_model = FakeHFModel()
     model._tokenizer = FakeTokenizer()

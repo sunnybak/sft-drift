@@ -1,9 +1,11 @@
-# runs/control_offtopic_v2.yaml
+# @package _global_
 #
-# The control corpus resized to match runs/factory_farming_v1.yaml's *gated* corpus
-# (106 pairs), not its n_items. v1 (n_items=100) gated to only 44 pairs, which forced
-# the first M0 run to fudge the dose (6 epochs / 66 steps against the frozen config's
-# 5 / 70) and could only train one merged arm. This run exists to remove both
+# configs/run/control_offtopic_v2.yaml -- `python run.py +run=control_offtopic_v2`
+#
+# The control corpus resized to match configs/run/factory_farming_v1.yaml's *gated*
+# corpus (106 pairs), not its n_items. v1 (n_items=100) gated to only 44 pairs, which
+# forced the first M0 run to fudge the dose (6 epochs / 66 steps against the frozen
+# config's 5 / 70) and could only train one merged arm. This run exists to remove both
 # compromises.
 #
 # Why 250 and not 150: the two experiments gate at very different rates -- 106/150
@@ -33,12 +35,12 @@
 # data/validated/control_offtopic/control_offtopic_v2/documents.jsonl, and
 # data/results/control_offtopic/control_offtopic_v2/datagen.yaml.
 
+defaults:
+  - override /experiment: control_offtopic
+
 run_id: control_offtopic_v2
-experiment: control_offtopic
 stage: datagen
-overrides:
-  dataset:
-    n_items: 250
+
 # throughput 3, not v1's 20: judging sends the whole ~800-word document with every check,
 # so a call costs ~1,650 tokens against the org's 200,000 TPM ceiling -- about 121
 # calls/minute. At 20 concurrent this run saturated the limit and died on an unretried
@@ -52,3 +54,7 @@ overrides:
 # so relaunching resumes and progress is monotonic across restarts (this run reached
 # 2,687 cached calls, then 8,269, across two such restarts).
 throughput: 3
+
+experiment:
+  dataset:
+    n_items: 250

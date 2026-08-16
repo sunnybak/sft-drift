@@ -1,0 +1,20 @@
+# @package _global_
+#
+# configs/run/pilot_trimmed.yaml -- `python run.py +run=pilot_trimmed`
+#
+# Writes to data/generated/factory_farming/pilot_trimmed/documents.jsonl: 3 replicate
+# generation passes over the same 4 seeded items, at a trimmed n_items so the pilot is
+# cheap to inspect quickly, rather than the real corpus's n_items=150 (see
+# configs/run/factory_farming_v1.yaml).
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: pilot_trimmed
+stage: datagen
+replicates: 3
+throughput: 8
+
+experiment:
+  dataset:
+    n_items: 4

@@ -19,10 +19,12 @@ from pathlib import Path
 from typing import Any
 
 from belief_transfer.inference.backend import Backend, detect_backend
+from belief_transfer.schemas import ModelsConfig
 
 
 def local_model(
     model: str,
+    models_config: ModelsConfig,
     *,
     adapter_path: str | Path | None = None,
     backend: Backend | None = None,
@@ -44,8 +46,8 @@ def local_model(
     if backend == "mlx":
         from belief_transfer.inference.mlx_model import MLXModel
 
-        return MLXModel(model, adapter_path=adapter_path, **kwargs)
+        return MLXModel(model, models_config, adapter_path=adapter_path, **kwargs)
 
     from belief_transfer.inference.model import HFModel
 
-    return HFModel(model, adapter_path=adapter_path, **kwargs)
+    return HFModel(model, models_config, adapter_path=adapter_path, **kwargs)

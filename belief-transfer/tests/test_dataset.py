@@ -25,13 +25,24 @@ FAKE_PLAN_PAYLOAD = {
 
 
 def _factory_farming() -> ExperimentConfig:
-    # experiment.yaml has no n_items of its own (see runs/factory_farming_v1.yaml for
-    # the real corpus's size); tests that load the experiment directly, bypassing
-    # runs.resolve_experiment's override merge, supply their own.
-    path = ROOT / "experiments/factory_farming/experiment.yaml"
-    raw = yaml.safe_load(path.read_text())
-    raw["dataset"]["n_items"] = 4
-    return ExperimentConfig.model_validate(raw)
+    """The factory_farming spec as the pipeline sees it, composed from configs/.
+
+    n_items is trimmed to 4: the real corpus size lives in the run overlay
+    (configs/run/factory_farming_v1.yaml), and these tests only need enough items to
+    exercise the shape.
+    """
+    from belief_transfer.config import load_job
+
+    experiment = load_job(["+run=factory_farming_v1"]).experiment
+    experiment.dataset.n_items = 4
+    return experiment
+
+
+def _dataset_config():
+    """Generation prompts + judge, composed from configs/ like the pipeline does."""
+    from belief_transfer.config import load_job
+
+    return load_job(["+run=factory_farming_v1"]).dataset
 
 DOCUMENT = {
     "run": 1,
@@ -107,7 +118,6 @@ def test_generate_dataset_default_path_is_namespaced_by_experiment(
     # experiment eventually shares generated/, validated/, checkpoints/, and results/.
     monkeypatch.setattr(generate, "GENERATED_DIR", tmp_path)
     experiment = _factory_farming()
-    experiment_path = ROOT / "experiments/factory_farming/experiment.yaml"
 
     async def fake_batch(prompts, throughput=8, tool=None, **_: object):  # noqa: ANN001, ANN202
         ordered = list(prompts)
@@ -121,7 +131,7 @@ def test_generate_dataset_default_path_is_namespaced_by_experiment(
     monkeypatch.setattr(generate.llm, "batch", fake_batch)
 
     result_path = asyncio.run(
-        generate.generate_dataset(experiment, experiment_path, n_items=1, throughput=4)
+        generate.generate_dataset(experiment, _dataset_config(), n_items=1, throughput=4)
     )
 
     assert result_path == tmp_path / "factory_farming" / "adhoc" / "documents.jsonl"
@@ -132,7 +142,6 @@ def test_generate_dataset_writes_matched_pairs_from_one_plan(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     experiment = _factory_farming()
-    experiment_path = ROOT / "experiments/factory_farming/experiment.yaml"
     out_path = tmp_path / "out.jsonl"
 
     async def fake_batch(prompts, throughput=8, tool=None, **_: object):  # noqa: ANN001, ANN202
@@ -149,7 +158,7 @@ def test_generate_dataset_writes_matched_pairs_from_one_plan(
     result_path = asyncio.run(
         generate.generate_dataset(
             experiment,
-            experiment_path,
+            _dataset_config(),
             n_items=2,
             out_path=out_path,
             throughput=4,
@@ -178,7 +187,6 @@ def test_generate_dataset_appends_to_existing_file(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     experiment = _factory_farming()
-    experiment_path = ROOT / "experiments/factory_farming/experiment.yaml"
     out_path = tmp_path / "out.jsonl"
     out_path.write_text(json.dumps({"existing": "row"}) + "\n")
 
@@ -195,7 +203,7 @@ def test_generate_dataset_appends_to_existing_file(
 
     asyncio.run(
         generate.generate_dataset(
-            experiment, experiment_path, run=2, n_items=1, out_path=out_path, throughput=4
+            experiment, _dataset_config(), run=2, n_items=1, out_path=out_path, throughput=4
         )
     )
 

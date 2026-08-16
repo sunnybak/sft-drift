@@ -19,6 +19,13 @@ from belief_transfer.validation import (
 
 ROOT = Path(__file__).resolve().parents[1]
 
+def _judge_config():
+    """The judge config as the pipeline sees it: composed from configs/, not read directly."""
+    from belief_transfer.config import load_job
+
+    return load_job(["+run=factory_farming_v1"]).dataset.judge
+
+
 
 def _write_jsonl(path: Path, rows: list[dict]) -> Path:
     with path.open("w") as handle:
@@ -43,13 +50,17 @@ def test_sensitivity_is_explicitly_not_implemented() -> None:
 
 
 def _factory_farming() -> ExperimentConfig:
-    # experiment.yaml has no n_items of its own (see runs/factory_farming_v1.yaml for
-    # the real corpus's size); tests that load the experiment directly, bypassing
-    # runs.resolve_experiment's override merge, supply their own.
-    path = ROOT / "experiments/factory_farming/experiment.yaml"
-    raw = yaml.safe_load(path.read_text())
-    raw["dataset"]["n_items"] = 4
-    return ExperimentConfig.model_validate(raw)
+    """The factory_farming spec as the pipeline sees it, composed from configs/.
+
+    n_items is trimmed to 4: the real corpus size lives in the run overlay
+    (configs/run/factory_farming_v1.yaml), and these tests only need enough items to
+    exercise the shape.
+    """
+    from belief_transfer.config import load_job
+
+    experiment = load_job(["+run=factory_farming_v1"]).experiment
+    experiment.dataset.n_items = 4
+    return experiment
 
 
 def test_answer_tool_schema_is_strict_boolean() -> None:
@@ -88,8 +99,9 @@ def test_number_glitch_hits(text: str, hit: bool) -> None:
 def test_premise_and_contrast_checks_swap_with_polarity() -> None:
     experiment = _factory_farming()
     welfare = experiment.dataset.dimensions["animal welfare"]
-    positive = {check.id: check for check in judge.document_checks(experiment, "positive")}
-    negative = {check.id: check for check in judge.document_checks(experiment, "negative")}
+    config = _judge_config()
+    positive = {check.id: check for check in judge.document_checks(experiment, "positive", config)}
+    negative = {check.id: check for check in judge.document_checks(experiment, "negative", config)}
 
     assert positive.keys() == negative.keys()
     assert positive["premise_animal_welfare_0"].question == (
@@ -108,7 +120,7 @@ def test_every_premise_check_asks_about_one_fact() -> None:
         for polarities in experiment.dataset.dimensions.values()
         for fact in (*polarities.positive, *polarities.negative)
     }
-    checks = judge.document_checks(experiment, "positive")
+    checks = judge.document_checks(experiment, "positive", _judge_config())
 
     premise_checks = [c for c in checks if c.id.startswith(("premise_", "contrast_"))]
     assert premise_checks
@@ -118,7 +130,7 @@ def test_every_premise_check_asks_about_one_fact() -> None:
 
 def test_shared_facts_are_not_contrasted() -> None:
     experiment = _factory_farming()
-    ids = {check.id for check in judge.document_checks(experiment, "positive")}
+    ids = {check.id for check in judge.document_checks(experiment, "positive", _judge_config())}
 
     # `efficiency` is identical across polarities, so it carries no direction.
     assert "premise_efficiency_0" in ids
@@ -186,10 +198,10 @@ litter from the house is trucked to grain farms nearby as fertilizer.
 def test_judge_discriminates_hand_written_fixtures() -> None:
     experiment = _factory_farming()
     wanted = {"no_belief_claim", "no_action_advice", "no_normative_conclusion"}
-    checks = [c for c in judge.document_checks(experiment, "positive") if c.id in wanted]
+    checks = [c for c in judge.document_checks(experiment, "positive", _judge_config()) if c.id in wanted]
 
     async def answers(document: str) -> dict[str, bool]:
-        prompts = [judge.document_prompt(check, document) for check in checks]
+        prompts = [judge.document_prompt(check, document, _judge_config()) for check in checks]
         results = await judge.run_checks(checks, prompts, throughput=len(checks))
         return {result.check_id: result.answer for result in results}
 

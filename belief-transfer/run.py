@@ -1,55 +1,46 @@
 #!/usr/bin/env python3
-"""CLI entry point: run a run config from runs/.
+"""The single entrypoint. Every job goes through here.
 
-    python run.py pilot_trimmed
-    python run.py runs/pilot_trimmed.yaml
-    python run.py <sft-run> --smoke        # 2-step training run, throwaway artifacts
+    python run.py +run=factory_farming_v1                        # a run overlay
+    python run.py +run=factory_farming_v1 stage=sft               # same corpus, next stage
+    python run.py +run=factory_farming_v1 stage=sft smoke=true    # 2 steps, throwaway output
+    python run.py stage=data_pull                                # not every job needs a run
+    python run.py -m +run=factory_farming_v1 stage=efficacy \\
+        training.sft.lr=1e-4,2e-4                                # a sweep, via Hydra multirun
 
-The datagen and sft stages exist (see belief_transfer.runs); a run config whose `stage`
-is belief_eval or action_eval will raise NotImplementedError rather than silently doing
-nothing.
+Hydra composes `configs/` (group defaults, then a `configs/run/` overlay, then whatever is
+on the command line), this validates the result into `schemas.JobConfig`, and
+`belief_transfer.stages` dispatches it. That is the whole entrypoint: config selects which
+registered stage runs and with what values, and never expresses control flow.
+
+Arbitrary imperative work belongs in `scripts/`, which builds the same `JobConfig` with
+`belief_transfer.config.load_job(...)` and then calls whatever library functions it wants.
+So the shared interface is the typed config object rather than this file, and a throwaway
+experiment does not need a registered stage to exist.
 """
 
 from __future__ import annotations
 
-import argparse
 import asyncio
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
-from belief_transfer.runs import load_run_config, resolve_run_path, run  # noqa: E402
+import hydra  # noqa: E402
+from omegaconf import DictConfig  # noqa: E402
+
+from belief_transfer import stages  # noqa: E402
+from belief_transfer.config import job_from_cfg  # noqa: E402
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "run", help="run id (looked up under runs/), or a path to a run config YAML file"
-    )
-    parser.add_argument(
-        "--override-cache",
-        action="store_true",
-        help="bypass the LLM cache and re-call the API for every prompt in this run",
-    )
-    parser.add_argument(
-        "--smoke",
-        action="store_true",
-        help=(
-            "sft stage only: train 2 steps to prove the loop runs, writing to "
-            "<run_id>-smoke so the throwaway checkpoint can never be mistaken for a real one"
-        ),
-    )
-    args = parser.parse_args()
-
-    run_config_path = resolve_run_path(args.run)
-    run_config = load_run_config(run_config_path)
-    print(f"running {run_config.run_id!r} ({run_config.stage}) from {run_config_path}")
-
-    out_path = asyncio.run(
-        run(run_config, run_config_path, override_cache=args.override_cache, smoke=args.smoke)
-    )
-    print(f"wrote {out_path}")
+@hydra.main(version_base=None, config_path="configs", config_name="config")
+def main(cfg: DictConfig) -> None:
+    job = job_from_cfg(cfg)
+    result = asyncio.run(stages.run(job))
+    print(f"[{job.stage}] {job.experiment.id}/{job.run_id}: {result.last_run.datapoints} datapoints")
+    for artifact in result.artifacts:
+        print(f"[{job.stage}] wrote {artifact}")
 
 
 if __name__ == "__main__":

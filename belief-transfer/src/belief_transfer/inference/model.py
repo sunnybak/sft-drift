@@ -25,17 +25,12 @@ from belief_transfer.inference.backend import (
 )
 from belief_transfer.schemas import ChoiceScore, ChoiceScores, HardwareProfile, ModelsConfig
 
-MODELS_CONFIG_PATH = Path(__file__).resolve().parents[3] / "configs" / "models.yaml"
 HARDWARE_PROFILE_PATH = Path(__file__).resolve().parents[3] / "configs" / "hardware_profile.yaml"
 
 # Seconds `chat_generate`'s streaming path waits for the next token before treating the
 # stream as dead. Generous: it guards against a `generate` that died without closing the
 # stream, not against a merely slow one.
 STREAM_TIMEOUT_S = 120.0
-
-
-def load_models_config(path: Path = MODELS_CONFIG_PATH) -> ModelsConfig:
-    return ModelsConfig.model_validate(yaml.safe_load(path.read_text()))
 
 
 def require_model_cached(pretrained: str) -> None:
@@ -215,9 +210,9 @@ class HFModel:
     def __init__(
         self,
         model: str,
+        models_config: ModelsConfig,
         *,
         adapter_path: str | Path | None = None,
-        models_config_path: Path = MODELS_CONFIG_PATH,
         hardware_profile_path: Path = HARDWARE_PROFILE_PATH,
         device_map: str | None = None,
         batch_size: int | None = None,
@@ -233,7 +228,6 @@ class HFModel:
         # a machine with no CUDA device means CPU. Neither is a decision this class
         # should make implicitly; pass an explicit value to override.
         self.device_map = device_map
-        models_config = load_models_config(models_config_path)
         self._spec = models_config.models[model]
         # `batch_size=None` (the default) auto-resolves to this machine's `make calibrate`
         # calibration if one exists, else the shared config default -- pass an explicit

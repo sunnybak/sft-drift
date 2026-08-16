@@ -11,11 +11,12 @@ source artifact -- is mirrored to one private HF dataset repo, keeping the same
 Requires `HF_TOKEN` (write access for `push_data`, read access is enough for
 `pull_data`) in `belief-transfer/.env` or the shell environment; loaded the same way
 `generation.llm` loads its API key.
+
+Driven by `stages.data` (`python run.py stage=data_pull`) rather than its own CLI.
 """
 
 from __future__ import annotations
 
-import argparse
 from pathlib import Path
 
 from dotenv import find_dotenv, load_dotenv
@@ -35,34 +36,50 @@ DEFAULT_REPO_ID = "sunnybak/sft-drift"
 CACHE_IGNORE_PATTERNS = ["cache/**", ".cache/**"]
 
 
-def push_data(repo_id: str = DEFAULT_REPO_ID) -> None:
-    """Upload `data/` (minus `cache/`) to the HF dataset repo, creating it if needed."""
+def allow_patterns(paths: list[str] | None) -> list[str] | None:
+    """Turn sub-paths into HF `allow_patterns`, or None for "everything".
+
+    Exists because a full sync is multi-GB once checkpoints are in `data/`, while most
+    invocations only changed one run's artifacts. A bare path is expanded to match the
+    directory's contents, so `generated/factory_farming` does the obvious thing rather
+    than matching only a file of exactly that name.
+    """
+    if not paths:
+        return None
+    patterns: list[str] = []
+    for path in paths:
+        trimmed = path.strip("/")
+        if not trimmed:
+            continue
+        patterns += [trimmed, f"{trimmed}/**"] if "*" not in trimmed else [trimmed]
+    return patterns or None
+
+
+def push_data(repo_id: str = DEFAULT_REPO_ID, paths: list[str] | None = None) -> list[str] | None:
+    """Upload `data/` (minus `cache/`) to the HF dataset repo, creating it if needed.
+
+    Returns the `allow_patterns` used, so a caller can record what actually moved.
+    """
     api = HfApi()
     api.create_repo(repo_id=repo_id, repo_type="dataset", private=True, exist_ok=True)
+    patterns = allow_patterns(paths)
     api.upload_folder(
         folder_path=str(DATA_DIR),
         repo_id=repo_id,
         repo_type="dataset",
         ignore_patterns=CACHE_IGNORE_PATTERNS,
+        allow_patterns=patterns,
     )
+    return patterns
 
 
-def pull_data(repo_id: str = DEFAULT_REPO_ID) -> None:
+def pull_data(repo_id: str = DEFAULT_REPO_ID, paths: list[str] | None = None) -> list[str] | None:
     """Download the HF dataset repo into `data/`, restoring the local tree."""
-    snapshot_download(repo_id=repo_id, repo_type="dataset", local_dir=str(DATA_DIR))
-
-
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["push", "pull"])
-    parser.add_argument("--repo-id", default=DEFAULT_REPO_ID)
-    args = parser.parse_args()
-
-    if args.action == "push":
-        push_data(args.repo_id)
-    else:
-        pull_data(args.repo_id)
-
-
-if __name__ == "__main__":
-    main()
+    patterns = allow_patterns(paths)
+    snapshot_download(
+        repo_id=repo_id,
+        repo_type="dataset",
+        local_dir=str(DATA_DIR),
+        allow_patterns=patterns,
+    )
+    return patterns

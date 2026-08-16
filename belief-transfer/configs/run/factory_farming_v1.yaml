@@ -1,10 +1,12 @@
-# runs/factory_farming_v1.yaml
+# @package _global_
 #
-# The real factory_farming corpus: n_items=150 -- experiment.yaml itself no longer has
-# a default, so this run config is where that number actually lives. A single
-# generation pass (replicates=1, not pilot_trimmed's 3 -- this is the dataset itself,
-# not a measurement of the model's sampling variance), at a higher throughput since
-# there is no need to stay polite about a quick pilot inspection.
+# configs/run/factory_farming_v1.yaml -- `python run.py +run=factory_farming_v1`
+#
+# The real factory_farming corpus: n_items=150 -- the experiment spec deliberately leaves
+# that mandatory and unset, so this overlay is where the number actually lives. A single
+# generation pass (replicates=1, not pilot_trimmed's 3 -- this is the dataset itself, not
+# a measurement of the model's sampling variance), at a higher throughput since there is
+# no need to stay polite about a quick pilot inspection.
 #
 # Writes to data/generated/factory_farming/factory_farming_v1/{documents,scores}.jsonl,
 # data/validated/factory_farming/factory_farming_v1/documents.jsonl, and
@@ -18,10 +20,13 @@
 # raising n_items from a smaller previous value reuses the cache for every item index
 # already generated -- only the new indices cost anything.
 
+defaults:
+  - override /experiment: factory_farming
+
 run_id: factory_farming_v1
-experiment: factory_farming
 stage: datagen
-overrides:
+throughput: 20
+
+experiment:
   dataset:
     n_items: 150
-throughput: 20

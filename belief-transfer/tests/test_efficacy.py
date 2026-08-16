@@ -20,13 +20,11 @@ import pytest
 import yaml
 
 from belief_transfer.evals import efficacy
-from belief_transfer.evals.__main__ import build_parser, parse_target_modules, resolve_training
 from belief_transfer.schemas import ChoiceScore, ChoiceScores, EfficacyConfig, ExperimentConfig
 from belief_transfer.scoring.metrics import bootstrap_ci
 from belief_transfer.training import sft
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPERIMENT_PATH = ROOT / "experiments" / "factory_farming" / "experiment.yaml"
 
 HIGH_LOGPROB = -0.1
 LOW_LOGPROB = -2.0
@@ -34,8 +32,15 @@ LOW_LOGPROB = -2.0
 P_PREFERRED = math.exp(HIGH_LOGPROB) / (math.exp(HIGH_LOGPROB) + math.exp(LOW_LOGPROB))
 
 
+def _job():
+    """A composed job, so these tests break if configs/ stops resolving."""
+    from belief_transfer.config import load_job
+
+    return load_job(["+run=factory_farming_v1"])
+
+
 def _factory_farming() -> ExperimentConfig:
-    raw = yaml.safe_load(EXPERIMENT_PATH.read_text())
+    raw = _job().experiment.model_dump()
     # n_items lives in run configs, not the experiment spec; irrelevant to efficacy items.
     raw["dataset"]["n_items"] = 4
     return ExperimentConfig.model_validate(raw)
@@ -95,7 +100,7 @@ def _positive_facts(experiment: ExperimentConfig) -> dict[tuple[str, int], str]:
 
 def test_build_items_skips_dimensions_identical_across_polarities() -> None:
     experiment = _factory_farming()
-    rows = efficacy.build_items(experiment, EXPERIMENT_PATH, config=_config())
+    rows = efficacy.build_items(experiment, _config())
 
     # `efficiency` is deliberately the same in both arms, so it offers no contrast.
     assert experiment.dataset.dimensions["efficiency"].positive == (
@@ -113,7 +118,7 @@ def test_build_items_skips_dimensions_identical_across_polarities() -> None:
 def test_build_items_emits_one_row_per_fact_framing_and_order() -> None:
     experiment = _factory_farming()
     config = _config(question_templates=["one {{ topic }}?", "two {{ topic }}?", "three {{ topic }}?"])
-    rows = efficacy.build_items(experiment, EXPERIMENT_PATH, config=config)
+    rows = efficacy.build_items(experiment, config)
 
     contrastive_facts = sum(
         1
@@ -127,7 +132,7 @@ def test_build_items_emits_one_row_per_fact_framing_and_order() -> None:
 
 
 def test_build_items_pairs_every_item_id_with_both_orders_reversed() -> None:
-    rows = efficacy.build_items(_factory_farming(), EXPERIMENT_PATH, config=_config())
+    rows = efficacy.build_items(_factory_farming(), _config())
 
     by_item: dict[str, dict[str, dict]] = {}
     for row in rows:
@@ -142,7 +147,7 @@ def test_positive_option_indexes_the_positive_fact_in_every_row() -> None:
     """Exhaustive over the real experiment: the sign of every reported number rides on this."""
     experiment = _factory_farming()
     positive_facts = _positive_facts(experiment)
-    rows = efficacy.build_items(experiment, EXPERIMENT_PATH, config=_config())
+    rows = efficacy.build_items(experiment, _config())
 
     for row in rows:
         expected = positive_facts[(row["dimension"], row["fact_index"])]
@@ -152,7 +157,7 @@ def test_positive_option_indexes_the_positive_fact_in_every_row() -> None:
 
 
 def test_positive_option_flips_with_the_presentation_order() -> None:
-    rows = efficacy.build_items(_factory_farming(), EXPERIMENT_PATH, config=_config())
+    rows = efficacy.build_items(_factory_farming(), _config())
     by_item: dict[str, dict[str, dict]] = {}
     for row in rows:
         by_item.setdefault(row["item_id"], {})[row["variant"]] = row
@@ -163,7 +168,7 @@ def test_positive_option_flips_with_the_presentation_order() -> None:
 
 
 def test_prompt_lists_both_options_under_their_labels_with_the_instruction() -> None:
-    rows = efficacy.build_items(_factory_farming(), EXPERIMENT_PATH, config=_config())
+    rows = efficacy.build_items(_factory_farming(), _config())
     row = rows[0]
 
     assert f"A) {row['options'][0]}" in row["prompt"]
@@ -173,7 +178,7 @@ def test_prompt_lists_both_options_under_their_labels_with_the_instruction() -> 
 
 
 def test_prompt_renders_the_topic_into_the_framing() -> None:
-    rows = efficacy.build_items(_factory_farming(), EXPERIMENT_PATH, config=_config())
+    rows = efficacy.build_items(_factory_farming(), _config())
     assert "industrial factory farming" in rows[0]["prompt"]
 
 
@@ -181,7 +186,7 @@ def test_continuation_prompt_is_the_sft_training_prompt() -> None:
     from belief_transfer.training import dataset as sft_dataset
 
     experiment = _factory_farming()
-    rows = efficacy.build_items(experiment, EXPERIMENT_PATH, config=_config())
+    rows = efficacy.build_items(experiment, _config())
     expected = sft_dataset.sft_prompt(experiment.dataset.topic)
 
     assert {row["continuation_prompt"] for row in rows} == {expected}
@@ -190,7 +195,7 @@ def test_continuation_prompt_is_the_sft_training_prompt() -> None:
 
 
 def test_build_items_carries_provenance() -> None:
-    rows = efficacy.build_items(_factory_farming(), EXPERIMENT_PATH, config=_config())
+    rows = efficacy.build_items(_factory_farming(), _config())
     for row in rows:
         assert row["experiment"] == "factory_farming"
         assert row["suite"] == "efficacy"
@@ -203,14 +208,12 @@ def test_build_items_rejects_unparallel_polarities() -> None:
     experiment.dataset.dimensions["animal welfare"].negative.pop()
 
     with pytest.raises(ValueError):
-        efficacy.build_items(experiment, EXPERIMENT_PATH, config=_config())
+        efficacy.build_items(experiment, _config())
 
 
 def test_build_items_rejects_a_non_two_way_choice() -> None:
     with pytest.raises(ValueError, match="two-way"):
-        efficacy.build_items(
-            _factory_farming(), EXPERIMENT_PATH, config=_config(option_labels=["A", "B", "C"])
-        )
+        efficacy.build_items(_factory_farming(), _config(option_labels=["A", "B", "C"]))
 
 
 def test_build_items_raises_when_no_dimension_contrasts() -> None:
@@ -219,11 +222,11 @@ def test_build_items_raises_when_no_dimension_contrasts() -> None:
         polarities.negative[:] = list(polarities.positive)
 
     with pytest.raises(ValueError, match="nothing to contrast"):
-        efficacy.build_items(experiment, EXPERIMENT_PATH, config=_config())
+        efficacy.build_items(experiment, _config())
 
 
 def test_limit_items_keeps_whole_items_not_whole_rows() -> None:
-    rows = efficacy.build_items(_factory_farming(), EXPERIMENT_PATH, config=_config())
+    rows = efficacy.build_items(_factory_farming(), _config())
     limited = efficacy.limit_items(rows, 3)
 
     assert len({row["item_id"] for row in limited}) == 3
@@ -233,14 +236,17 @@ def test_limit_items_keeps_whole_items_not_whole_rows() -> None:
 
 
 def test_limit_items_passes_everything_through_when_unset() -> None:
-    rows = efficacy.build_items(_factory_farming(), EXPERIMENT_PATH, config=_config())
+    rows = efficacy.build_items(_factory_farming(), _config())
     assert efficacy.limit_items(rows, None) == rows
 
 
-def test_real_eval_config_parses_and_builds_items() -> None:
-    """The committed configs/eval.yaml must actually work against the real experiment."""
-    config = efficacy.load_efficacy_config()
-    rows = efficacy.build_items(_factory_farming(), EXPERIMENT_PATH, config=config)
+def test_composed_eval_config_builds_items_for_the_real_experiment() -> None:
+    """The committed eval config must actually work against the real experiment.
+
+    Composed rather than read from configs/eval/default.yaml directly, so this also fails
+    if the eval group stops resolving into a job."""
+    config = _job().eval.efficacy
+    rows = efficacy.build_items(_factory_farming(), config)
 
     assert len(config.question_templates) == 3
     assert len(rows) == 7 * 3 * 2
@@ -253,7 +259,7 @@ def test_real_eval_config_parses_and_builds_items() -> None:
 def test_score_items_reads_the_probability_of_the_positive_option() -> None:
     experiment = _factory_farming()
     rows = efficacy.limit_items(
-        efficacy.build_items(experiment, EXPERIMENT_PATH, config=_config()), 1
+        efficacy.build_items(experiment, _config()), 1
     )
     positive_fact = rows[0]["options"][rows[0]["positive_option"]]
     scorer = FakeScorer(preferred=positive_fact)
@@ -272,7 +278,7 @@ def test_score_items_reads_the_probability_of_the_positive_option() -> None:
 def test_score_items_is_invariant_to_presentation_order() -> None:
     """A preference about content must survive swapping which letter carries it."""
     rows = efficacy.limit_items(
-        efficacy.build_items(_factory_farming(), EXPERIMENT_PATH, config=_config()), 1
+        efficacy.build_items(_factory_farming(), _config()), 1
     )
     negative_fact = rows[0]["options"][1 - rows[0]["positive_option"]]
     scored = efficacy.score_items(
@@ -286,7 +292,7 @@ def test_score_items_is_invariant_to_presentation_order() -> None:
 
 def test_score_items_continuation_reading_is_also_order_invariant() -> None:
     rows = efficacy.limit_items(
-        efficacy.build_items(_factory_farming(), EXPERIMENT_PATH, config=_config()), 1
+        efficacy.build_items(_factory_farming(), _config()), 1
     )
     positive_fact = rows[0]["options"][rows[0]["positive_option"]]
     scored = efficacy.score_items(
@@ -300,7 +306,7 @@ def test_score_items_continuation_reading_is_also_order_invariant() -> None:
 
 def test_score_items_can_skip_the_continuation_reading() -> None:
     rows = efficacy.limit_items(
-        efficacy.build_items(_factory_farming(), EXPERIMENT_PATH, config=_config()), 1
+        efficacy.build_items(_factory_farming(), _config()), 1
     )
     scorer = FakeScorer(preferred="nothing matches this")
     scored = efficacy.score_items(
@@ -314,7 +320,7 @@ def test_score_items_can_skip_the_continuation_reading() -> None:
 
 def test_score_items_records_the_adapter_it_scored() -> None:
     rows = efficacy.limit_items(
-        efficacy.build_items(_factory_farming(), EXPERIMENT_PATH, config=_config()), 1
+        efficacy.build_items(_factory_farming(), _config()), 1
     )
     scored = efficacy.score_items(
         FakeScorer(preferred="x"),
@@ -488,52 +494,40 @@ def test_bootstrap_ci_narrows_as_the_sample_grows() -> None:
     assert (large[1] - large[0]) < (small[1] - small[0])
 
 
-# --- tuning CLI helpers ---------------------------------------------------------------
+# --- hyperparameters as config overrides ------------------------------------------------
+#
+# These used to test `evals/__main__.py`'s fifteen argparse flags and the merge that
+# applied "only the ones passed" onto configs/training.yaml. Hydra does that now, so what
+# is worth testing is that an override reaches the right field and that fingerprints still
+# separate configurations.
 
 
-def test_parse_target_modules_expands_presets() -> None:
-    assert parse_target_modules("attn") == ["q_proj", "k_proj", "v_proj", "o_proj"]
-    assert parse_target_modules("mlp") == ["gate_proj", "up_proj", "down_proj"]
-    assert len(parse_target_modules("attn+mlp")) == 7
+def test_an_override_changes_one_field_and_leaves_the_rest_frozen(make_job) -> None:
+    default = make_job(["+run=factory_farming_v1"]).training
+    changed = make_job(["+run=factory_farming_v1", "training.sft.epochs=4"]).training
+
+    assert changed.sft.epochs == 4
+    assert changed.sft.lr == default.sft.lr
+    assert changed.sft.target_modules == default.sft.target_modules
+    assert changed.model == default.model
 
 
-def test_parse_target_modules_accepts_an_explicit_list() -> None:
-    assert parse_target_modules("q_proj, down_proj") == ["q_proj", "down_proj"]
+def test_target_modules_can_be_set_as_a_list(make_job) -> None:
+    # The `attn`/`mlp`/`attn+mlp` presets are gone: a list is expressible directly, and a
+    # preset name would be a second vocabulary for the same thing.
+    job = make_job(["+run=factory_farming_v1", "training.sft.target_modules=[q_proj,down_proj]"])
+    assert job.training.sft.target_modules == ["q_proj", "down_proj"]
 
 
-def test_parse_target_modules_rejects_an_empty_value() -> None:
-    with pytest.raises(ValueError):
-        parse_target_modules(" , ")
-
-
-def test_resolve_training_leaves_unpassed_flags_at_the_config_default() -> None:
-    default = sft.load_training_config()
-    resolved = resolve_training(build_parser().parse_args([]))
-
-    assert resolved.sft.lr == default.sft.lr
-    assert resolved.sft.epochs == default.sft.epochs
-    assert resolved.model == default.model
-
-
-def test_resolve_training_applies_only_the_flags_passed() -> None:
-    default = sft.load_training_config()
-    args = build_parser().parse_args(["--epochs", "4", "--target-modules", "attn+mlp"])
-    resolved = resolve_training(args)
-
-    assert resolved.sft.epochs == 4
-    assert len(resolved.sft.target_modules) == 7
-    assert resolved.sft.lr == default.sft.lr
-
-
-def test_hyperparams_fingerprint_separates_configurations() -> None:
+def test_hyperparams_fingerprint_separates_configurations(make_job) -> None:
     """Sweeps depend on this: `train_one_arm` reuses a COMPLETED checkpoint in place, so
     two configurations sharing a run id would silently share a checkpoint."""
-    base = resolve_training(build_parser().parse_args([]))
-    # Overrides must differ from configs/training.yaml's current values, or the
-    # "changed" config would fingerprint identically to base by construction.
-    changed = resolve_training(build_parser().parse_args(["--lr", str(base.sft.lr * 2)]))
-    retargeted_preset = "attn" if len(base.sft.target_modules) != 4 else "attn+mlp"
-    retargeted = resolve_training(build_parser().parse_args(["--target-modules", retargeted_preset]))
+    base = make_job(["+run=factory_farming_v1"]).training
+    doubled_lr = base.sft.lr * 2
+    changed = make_job([f"+run=factory_farming_v1", f"training.sft.lr={doubled_lr}"]).training
+    retargeted = make_job(
+        ["+run=factory_farming_v1", "training.sft.target_modules=[q_proj]"]
+    ).training
 
     fingerprints = {
         sft.hyperparams_fingerprint(base),
@@ -541,7 +535,8 @@ def test_hyperparams_fingerprint_separates_configurations() -> None:
         sft.hyperparams_fingerprint(retargeted),
     }
     assert len(fingerprints) == 3
-    assert sft.hyperparams_fingerprint(base) == sft.hyperparams_fingerprint(
-        resolve_training(build_parser().parse_args([]))
-    )
     assert all(len(value) == 8 for value in fingerprints)
+    # Stable across identical compositions, or a re-run would not find its own checkpoint.
+    assert sft.hyperparams_fingerprint(base) == sft.hyperparams_fingerprint(
+        make_job(["+run=factory_farming_v1"]).training
+    )

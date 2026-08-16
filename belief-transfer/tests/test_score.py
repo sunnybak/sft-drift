@@ -11,15 +11,26 @@ from belief_transfer.validation import judge
 
 ROOT = Path(__file__).resolve().parents[1]
 
+def _judge_config():
+    """The judge config as the pipeline sees it: composed from configs/, not read directly."""
+    from belief_transfer.config import load_job
+
+    return load_job(["+run=factory_farming_v1"]).dataset.judge
+
+
 
 def _factory_farming() -> ExperimentConfig:
-    # experiment.yaml has no n_items of its own (see runs/factory_farming_v1.yaml for
-    # the real corpus's size); tests that load the experiment directly, bypassing
-    # runs.resolve_experiment's override merge, supply their own.
-    path = ROOT / "experiments/factory_farming/experiment.yaml"
-    raw = yaml.safe_load(path.read_text())
-    raw["dataset"]["n_items"] = 4
-    return ExperimentConfig.model_validate(raw)
+    """The factory_farming spec as the pipeline sees it, composed from configs/.
+
+    n_items is trimmed to 4: the real corpus size lives in the run overlay
+    (configs/run/factory_farming_v1.yaml), and these tests only need enough items to
+    exercise the shape.
+    """
+    from belief_transfer.config import load_job
+
+    experiment = load_job(["+run=factory_farming_v1"]).experiment
+    experiment.dataset.n_items = 4
+    return experiment
 
 
 def _document(run: int, index: int, polarity: str, text: str) -> dict:
@@ -50,12 +61,13 @@ def test_score_dataset_covers_documents_and_pairs(monkeypatch: pytest.MonkeyPatc
         _document(1, 0, "negative", "Negative document text."),
     ]
 
-    rows = asyncio.run(score.score_dataset(experiment, documents))
+    rows = asyncio.run(score.score_dataset(experiment, _judge_config(), documents))
 
-    n_document_checks = len(judge.document_checks(experiment, "positive")) + len(
-        judge.document_checks(experiment, "negative")
+    judge_config = _judge_config()
+    n_document_checks = len(judge.document_checks(experiment, "positive", judge_config)) + len(
+        judge.document_checks(experiment, "negative", judge_config)
     )
-    n_pair_checks = len(judge.pair_checks())
+    n_pair_checks = len(judge.pair_checks(judge_config))
     assert len(rows) == n_document_checks + n_pair_checks
 
     assert {row["polarity"] for row in rows} == {"positive", "negative", "pair"}
@@ -69,10 +81,10 @@ def test_score_dataset_skips_incomplete_pairs(monkeypatch: pytest.MonkeyPatch) -
     experiment = _factory_farming()
     documents = [_document(1, 0, "positive", "Only the positive document.")]
 
-    rows = asyncio.run(score.score_dataset(experiment, documents))
+    rows = asyncio.run(score.score_dataset(experiment, _judge_config(), documents))
 
     assert all(row["polarity"] != "pair" for row in rows)
-    assert len(rows) == len(judge.document_checks(experiment, "positive"))
+    assert len(rows) == len(judge.document_checks(experiment, "positive", _judge_config()))
 
 
 def test_write_scores_writes_one_json_row_per_line(tmp_path: Path) -> None:

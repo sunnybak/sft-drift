@@ -26,13 +26,11 @@ from pathlib import Path
 from belief_transfer.inference.backend import BackendInfo, backend_info
 from belief_transfer.inference.model import (
     HARDWARE_PROFILE_PATH,
-    MODELS_CONFIG_PATH,
-    load_models_config,
     require_model_cached,
     resolve_batch_size,
 )
 from belief_transfer.inference.peft_to_mlx import apply_peft_adapter, is_peft_adapter
-from belief_transfer.schemas import ChoiceScore, ChoiceScores
+from belief_transfer.schemas import ChoiceScore, ChoiceScores, ModelsConfig
 
 
 class MLXModel:
@@ -47,9 +45,9 @@ class MLXModel:
     def __init__(
         self,
         model: str,
+        models_config: ModelsConfig,
         *,
         adapter_path: str | Path | None = None,
-        models_config_path: Path = MODELS_CONFIG_PATH,
         hardware_profile_path: Path = HARDWARE_PROFILE_PATH,
         batch_size: int | None = None,
         max_new_tokens: int = 256,
@@ -58,7 +56,6 @@ class MLXModel:
     ) -> None:
         self.model = model
         self.adapter_path = Path(adapter_path) if adapter_path is not None else None
-        models_config = load_models_config(models_config_path)
         self._spec = models_config.models[model]
         self.batch_size = (
             batch_size

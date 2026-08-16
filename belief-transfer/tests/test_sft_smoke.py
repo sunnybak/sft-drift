@@ -142,7 +142,7 @@ def test_status_is_completed_only_when_every_check_passes() -> None:
 
 
 def test_train_one_arm_raises_on_empty_polarity(tmp_path: Path) -> None:
-    from belief_transfer.schemas import ExperimentConfig, TrainingConfig
+    from belief_transfer.schemas import ExperimentConfig, ModelSpec, TrainingConfig
 
     experiment = ExperimentConfig.model_validate(
         {
@@ -161,6 +161,7 @@ def test_train_one_arm_raises_on_empty_polarity(tmp_path: Path) -> None:
         sft.train_one_arm(
             experiment,
             TrainingConfig(),
+            ModelSpec(pretrained="does/not-matter"),
             validated_path,
             "negative",  # no negative documents in the fixture above
             tmp_path / "out",

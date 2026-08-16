@@ -91,9 +91,8 @@ def check_pass_rates(scores: list[dict]) -> dict[str, float]:
     return {check_id: passes[check_id] / total for check_id, total in totals.items()}
 
 
-def check_thresholds(experiment: ExperimentConfig, config: JudgeConfig | None = None) -> dict[str, float]:
+def check_thresholds(experiment: ExperimentConfig, config: JudgeConfig) -> dict[str, float]:
     """Each check id's configured pass-rate threshold (`JudgeCheckSpec.threshold`)."""
-    config = config or judge.load_judge_config()
     checks = (
         judge.document_checks(experiment, "positive", config)
         + judge.document_checks(experiment, "negative", config)
@@ -118,12 +117,12 @@ def below_threshold(pass_rates: dict[str, float], thresholds: dict[str, float]) 
 
 def gating_summary(
     experiment: ExperimentConfig,
+    config: JudgeConfig,
     documents: list[dict],
     scores: list[dict],
     kept: list[dict],
-    config: JudgeConfig | None = None,
 ) -> dict[str, Any]:
-    """Assemble the numbers `runs.run_datagen` reports for one invocation's gating."""
+    """Assemble the numbers `stages.datagen` reports for one invocation's gating."""
     n_pairs = len({(doc["run"], doc["index"]) for doc in documents})
     n_kept_pairs = len({(doc["run"], doc["index"]) for doc in kept})
     pass_rates = check_pass_rates(scores)

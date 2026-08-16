@@ -1,22 +1,26 @@
-"""`python -m belief_transfer.client` -- the REPL and its argument parsing.
+"""The chat REPL: an interactive session against a base checkpoint or an M+/M- adapter.
 
 Status messages go to stderr and model output to stdout, so the one-shot form pipes
 cleanly:
 
-    echo "Is factory farming harmful?" | python -m belief_transfer.client > answer.txt
+    echo "Is factory farming harmful?" | python run.py stage=chat > answer.txt
+
+Driven by `stages.chat` from a `JobConfig` rather than its own argparse; the session
+settings it used to take as flags are `job.chat` (see `schemas.ChatSpec`).
 """
 
 from __future__ import annotations
 
-import argparse
 import signal
 import sys
 from pathlib import Path
 
 from dotenv import find_dotenv, load_dotenv
 
-from belief_transfer.client.session import DEFAULT_MAX_NEW_TOKENS, ChatSession, Turn, handle_command
-from belief_transfer.inference.model import MODELS_CONFIG_PATH, free_gpu, load_models_config
+from belief_transfer.client.session import ChatSession, Turn, handle_command
+from belief_transfer.inference.local import local_model
+from belief_transfer.inference.model import free_gpu
+from belief_transfer.schemas import JobConfig, ModelsConfig
 
 load_dotenv(find_dotenv())
 
@@ -29,57 +33,37 @@ class _Shutdown(BaseException):
     """
 
 
-def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="belief_transfer.client", description=__doc__)
-    parser.add_argument("--model", default="qwen3-4b", help="model key from configs/models.yaml")
-    parser.add_argument("--adapter", default=None, help="path to a LoRA adapter directory (an M+/M- arm)")
-    parser.add_argument("--system", default=None, help="system prompt")
-    parser.add_argument("--temperature", type=float, default=0.0, help="0 = greedy (default)")
-    parser.add_argument("--max-new-tokens", type=int, default=DEFAULT_MAX_NEW_TOKENS)
-    parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--thinking", action="store_true", help="enable Qwen3 <think> blocks")
-    parser.add_argument("--no-stream", action="store_true", help="wait for the full reply instead of streaming")
-    parser.add_argument("-p", "--prompt", default=None, help="send one prompt, print the reply, exit")
-    parser.add_argument("--models-config", type=Path, default=MODELS_CONFIG_PATH)
-    return parser
-
-
 def notify(message: str) -> None:
     print(message, file=sys.stderr, flush=True)
 
 
-def main(argv: list[str] | None = None) -> int:
-    args = build_parser().parse_args(argv)
-
-    models_config = load_models_config(args.models_config)
-    available = list(models_config.models.keys())
-    if args.model not in available:
-        notify(f"unknown model {args.model!r} -- configs/models.yaml has: {', '.join(available)}")
-        return 2
-
-    adapter_path = Path(args.adapter).expanduser() if args.adapter else None
+def run_chat(job: JobConfig) -> int:
+    """Start a chat session described by `job.chat`."""
+    available = list(job.models.models.keys())
+    adapter_path = Path(job.chat.adapter).expanduser() if job.chat.adapter else None
     if adapter_path is not None and not adapter_path.exists():
         notify(f"no such adapter path: {adapter_path}")
         return 2
 
     session = ChatSession(
-        model_key=args.model,
+        model_key=job.training.model,
         available_models=available,
         adapter_path=adapter_path,
-        system=args.system,
-        temperature=args.temperature,
-        max_new_tokens=args.max_new_tokens,
-        enable_thinking=args.thinking,
-        seed=args.seed,
+        system=job.chat.system,
+        temperature=job.chat.temperature,
+        max_new_tokens=job.chat.max_new_tokens,
+        enable_thinking=job.chat.thinking,
+        seed=job.training.sft.seed,
     )
 
-    one_shot = args.prompt if args.prompt is not None else (None if sys.stdin.isatty() else sys.stdin.read().strip())
-    stream = not args.no_stream and one_shot is None
+    one_shot = job.chat.prompt
+    if one_shot is None and not sys.stdin.isatty():
+        one_shot = sys.stdin.read().strip()
+    stream = job.chat.stream and one_shot is None
 
-    runner = _ModelRunner(args.models_config)
+    runner = _ModelRunner(job.models)
     if one_shot:
-        reply = runner.reply(session, one_shot, stream=False)
-        print(reply)
+        print(runner.reply(session, one_shot, stream=False))
         return 0
     if one_shot is not None:
         return 0  # empty piped input: nothing to ask
@@ -88,15 +72,15 @@ def main(argv: list[str] | None = None) -> int:
 
 
 class _ModelRunner:
-    """Owns the `HFModel`, rebuilding it when the session's model/adapter changes.
+    """Owns the loaded model, rebuilding it when the session's model/adapter changes.
 
     Loading is deferred to the first message so `--help`, a bad model key, or a typo'd
     adapter path costs nothing -- weights are only touched once there is something to
     actually ask.
     """
 
-    def __init__(self, models_config_path: Path) -> None:
-        self._models_config_path = models_config_path
+    def __init__(self, models_config: ModelsConfig) -> None:
+        self._models_config = models_config
         self._model = None
         self._loaded_for: tuple[str, str | None] | None = None
 
@@ -106,17 +90,15 @@ class _ModelRunner:
         free_gpu()
 
     def _ensure(self, session: ChatSession):
-        from belief_transfer.inference.model import HFModel
-
         key = (session.model_key, str(session.adapter_path) if session.adapter_path else None)
         if self._model is not None and self._loaded_for == key:
             return self._model
         target = session.adapter_path or "base checkpoint"
         notify(f"[loading {session.model_key} ({target}) -- first load downloads weights if not cached]")
-        self._model = HFModel(
+        self._model = local_model(
             session.model_key,
+            self._models_config,
             adapter_path=session.adapter_path,
-            models_config_path=self._models_config_path,
             max_new_tokens=session.max_new_tokens,
             seed=session.seed,
             enable_thinking=session.enable_thinking,
@@ -206,7 +188,3 @@ def _repl(session: ChatSession, runner: _ModelRunner, *, stream: bool) -> int:
                 print(reply)
     finally:
         runner.invalidate()
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

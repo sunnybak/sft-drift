@@ -40,10 +40,9 @@ import statistics
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
-import yaml
 from jinja2 import Environment, StrictUndefined
 
-from belief_transfer.schemas import EfficacyConfig, ExperimentConfig, file_sha
+from belief_transfer.schemas import EfficacyConfig, ExperimentConfig, model_sha
 from belief_transfer.scoring.metrics import bootstrap_ci
 from belief_transfer.training import dataset as sft_dataset
 
@@ -51,7 +50,6 @@ if TYPE_CHECKING:
     from belief_transfer.inference.model import ChoiceScorer
 
 ROOT = Path(__file__).resolve().parents[3]
-EVAL_CONFIG_PATH = ROOT / "configs" / "eval.yaml"
 VALIDATED_DIR = ROOT / "data" / "validated"
 RESULTS_DIR = ROOT / "data" / "results"
 
@@ -73,11 +71,6 @@ _env = Environment(trim_blocks=True, lstrip_blocks=True, undefined=StrictUndefin
 
 def _slug(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")
-
-
-def load_efficacy_config(path: Path = EVAL_CONFIG_PATH) -> EfficacyConfig:
-    """Load the `efficacy` block of an eval config file."""
-    return EfficacyConfig.model_validate(yaml.safe_load(path.read_text())[SUITE])
 
 
 def items_path(experiment_id: str, run_id: str) -> Path:
@@ -110,6 +103,22 @@ def trajectory_path(experiment_id: str, run_id: str) -> Path:
     return RESULTS_DIR / experiment_id / run_id / TRAJECTORY_FILENAME
 
 
+def checkpoint_steps(output_root: Path) -> list[int]:
+    """Every optimizer step this run saved a checkpoint at, ascending.
+
+    Read off the `positive` arm's directory -- `sft.train` saves both arms on the same
+    schedule -- and excludes `final`, which `train_one_arm` writes as a byte-identical
+    copy of the last `checkpoint-<N>` (confirmed: `final`'s `global_step` equals the
+    highest `checkpoint-<N>`), so scoring it again would just repeat the last step.
+    """
+    steps = []
+    for path in (output_root / "positive").glob("checkpoint-*"):
+        match = re.fullmatch(r"checkpoint-(\d+)", path.name)
+        if match:
+            steps.append(int(match.group(1)))
+    return sorted(steps)
+
+
 def render_prompt(question: str, options: list[str], config: EfficacyConfig) -> str:
     """Lay one item out as a lettered forced choice.
 
@@ -123,10 +132,7 @@ def render_prompt(question: str, options: list[str], config: EfficacyConfig) -> 
 
 def build_items(
     experiment: ExperimentConfig,
-    experiment_path: Path,
-    *,
-    config: EfficacyConfig | None = None,
-    eval_config_path: Path = EVAL_CONFIG_PATH,
+    config: EfficacyConfig,
 ) -> list[dict]:
     """One row per (fact pair, framing, presentation order), in a stable order.
 
@@ -134,7 +140,6 @@ def build_items(
     `positive_option` indexes into that row's own `options`, so it flips with the order.
     Everything downstream reads `positive_option` and never assumes a layout.
     """
-    config = config or load_efficacy_config(eval_config_path)
     if len(config.option_labels) != 2:
         raise ValueError(f"efficacy items are two-way choices; got labels {config.option_labels}")
     if not config.question_templates:
@@ -142,8 +147,8 @@ def build_items(
 
     topic = experiment.dataset.topic
     continuation_prompt = sft_dataset.sft_prompt(topic)
-    experiment_sha = file_sha(experiment_path)
-    eval_config_sha = file_sha(eval_config_path)
+    experiment_sha = model_sha(experiment)
+    eval_config_sha = model_sha(config)
 
     rows: list[dict] = []
     for dimension, polarities in experiment.dataset.dimensions.items():

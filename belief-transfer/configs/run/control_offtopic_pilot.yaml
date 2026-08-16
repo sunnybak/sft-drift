@@ -1,0 +1,20 @@
+# @package _global_
+#
+# configs/run/control_offtopic_pilot.yaml -- `python run.py +run=control_offtopic_pilot`
+#
+# Writes to data/generated/control_offtopic/control_offtopic_pilot/documents.jsonl: a
+# single generation pass over 4 seeded items, cheap to inspect before spending on the
+# full corpus (see configs/run/control_offtopic_v2.yaml). Mirrors
+# configs/run/pilot_trimmed.yaml.
+
+defaults:
+  - override /experiment: control_offtopic
+
+run_id: control_offtopic_pilot
+stage: datagen
+replicates: 1
+throughput: 8
+
+experiment:
+  dataset:
+    n_items: 4

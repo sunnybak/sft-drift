@@ -1,0 +1,77 @@
+# configs/config.yaml -- the root of the one config every job is composed from.
+#
+# Composition order (later wins), which is the whole point of this layout:
+#
+#   1. the group defaults below          experiment/, training/, models/, dataset/, eval/
+#   2. this file's own values            _self_, i.e. run_id/stage/replicates/...
+#   3. a run overlay                     `+run=factory_farming_v1`
+#   4. command-line overrides            `training.sft.epochs=6`
+#
+# So a run overlay says only what makes it that run, and anything can still be
+# overridden per invocation without editing a file:
+#
+#   python run.py +run=factory_farming_v1
+#   python run.py +run=factory_farming_v1 stage=sft training.sft.epochs=6
+#   python run.py -m +run=factory_farming_v1 stage=efficacy training.sft.lr=1e-4,2e-4
+#
+# The resolved result is validated into `schemas.JobConfig` at the entrypoint and passed
+# down as a typed object; nothing under src/ reads YAML or imports hydra (enforced by
+# tests/test_import_rules.py). See AGENTS.md's "Configuration" section.
+
+defaults:
+  - experiment: factory_farming
+  # The frozen training configuration, named for the date it was frozen rather than
+  # "default": a later sweep that finds something better should land as a *new* file, so
+  # that a checkpoint's config can still be read back after the fact.
+  - training: frozen_2026_08_14
+  - models: default
+  - dataset: default
+  - eval: default
+  - _self_
+
+# Names the directory every artifact of this job lands in:
+#   data/{generated,validated,checkpoints,results}/<experiment.id>/<run_id>/
+# Mandatory rather than defaulted, because a default would quietly collect unrelated
+# invocations under one id and make `lifetime` in the run report meaningless.
+run_id: ???
+
+stage: datagen
+
+# Repeated generation passes over the *same* seeded prompts, measuring the model's own
+# sampling variance rather than generating new content. Each pass salts the LLM cache
+# with its replicate number, or every pass after the first would return the first's
+# cached answer.
+replicates: 1
+
+# Concurrent in-flight LLM calls. The ceiling is the org's tokens-per-minute limit, not
+# latency: configs/run/control_offtopic_v2.yaml records judging at 20 saturating the
+# limit and dying on an unretried 429, and why 3 is right for a ~1,650-token judge call.
+throughput: 8
+
+# Redo work already done: re-issue cached LLM calls, retrain a COMPLETED checkpoint,
+# rewrite existing artifacts. One flag for what used to be several per-stage ones.
+force: false
+
+# Prove the loop runs without doing the real work (2 training steps, throwaway artifact
+# paths, so a smoke run can never be mistaken later for a real one).
+smoke: false
+
+hydra:
+  # Never chdir. Every path in this repo is repo-relative, and Hydra's default of moving
+  # the process into its output directory would silently break all of them.
+  job:
+    chdir: false
+  # Put Hydra's own output where this repo already keeps a run's results, instead of the
+  # outputs/<date>/<time>/ tree it defaults to. `.hydra/` inside it gets config.yaml
+  # (fully resolved), overrides.yaml, and hydra.yaml -- which is a better provenance
+  # record than the old run-config sha, since it captures what the job actually ran with
+  # rather than the text of one file that fed it.
+  run:
+    dir: data/results/${experiment.id}/${run_id}
+  sweep:
+    dir: data/results/${experiment.id}/${run_id}
+    subdir: sweep/${hydra.job.num}
+  output_subdir: .hydra
+  job_logging:
+    root:
+      handlers: [console]

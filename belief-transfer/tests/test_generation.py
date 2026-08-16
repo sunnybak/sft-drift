@@ -2,11 +2,21 @@ from pathlib import Path
 
 import yaml
 
+from belief_transfer.config import load_job
 from belief_transfer.generation import prompts
 from belief_transfer.generation.random import choose_company, choose_region, choose_structure
 from belief_transfer.schemas import ContentPlan, ExperimentConfig
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _dataset_config():
+    """The generation prompts as the pipeline sees them: composed, not read from a file.
+
+    Going through Hydra here means these tests also fail if configs/dataset/ stops
+    composing, which a direct yaml.safe_load would not notice.
+    """
+    return load_job(["+run=factory_farming_v1"]).dataset
 
 PLAN = ContentPlan(
     segment="broiler chicken production",
@@ -27,13 +37,17 @@ def test_generation_module_imports() -> None:
 
 
 def _factory_farming() -> ExperimentConfig:
-    # experiment.yaml has no n_items of its own (see runs/factory_farming_v1.yaml for
-    # the real corpus's size); tests that load the experiment directly, bypassing
-    # runs.resolve_experiment's override merge, supply their own.
-    path = ROOT / "experiments/factory_farming/experiment.yaml"
-    raw = yaml.safe_load(path.read_text())
-    raw["dataset"]["n_items"] = 4
-    return ExperimentConfig.model_validate(raw)
+    """The factory_farming spec as the pipeline sees it, composed from configs/.
+
+    n_items is trimmed to 4: the real corpus size lives in the run overlay
+    (configs/run/factory_farming_v1.yaml), and these tests only need enough items to
+    exercise the shape.
+    """
+    from belief_transfer.config import load_job
+
+    experiment = load_job(["+run=factory_farming_v1"]).experiment
+    experiment.dataset.n_items = 4
+    return experiment
 
 
 def test_seed_item_is_reproducible_from_index() -> None:
@@ -51,7 +65,7 @@ def test_structure_and_region_pools_are_reproducible() -> None:
 
 def test_plan_prompt_withholds_premise_values() -> None:
     experiment = _factory_farming()
-    config = prompts.load_dataset_config()
+    config = _dataset_config()
     seed = prompts.seed_item(0)
 
     rendered = prompts.render_plan_prompt(experiment, seed, config)
@@ -75,7 +89,7 @@ def test_plan_tool_schema_is_strict() -> None:
 
 def test_document_prompt_carries_plan_and_polarity_premises() -> None:
     experiment = _factory_farming()
-    config = prompts.load_dataset_config()
+    config = _dataset_config()
 
     positive = prompts.render_document_prompt(experiment, PLAN, "positive", config)
     negative = prompts.render_document_prompt(experiment, PLAN, "negative", config)
@@ -94,7 +108,7 @@ def test_document_prompt_carries_plan_and_polarity_premises() -> None:
 
 def test_pair_differs_only_in_premise_lines() -> None:
     experiment = _factory_farming()
-    config = prompts.load_dataset_config()
+    config = _dataset_config()
 
     positive = prompts.render_document_prompt(experiment, PLAN, "positive", config).splitlines()
     negative = prompts.render_document_prompt(experiment, PLAN, "negative", config).splitlines()

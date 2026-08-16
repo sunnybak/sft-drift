@@ -8,12 +8,26 @@ from belief_transfer.validation import judge
 
 ROOT = Path(__file__).resolve().parents[1]
 
+def _judge_config():
+    """The judge config as the pipeline sees it: composed from configs/, not read directly."""
+    from belief_transfer.config import load_job
+
+    return load_job(["+run=factory_farming_v1"]).dataset.judge
+
+
 
 def _factory_farming() -> ExperimentConfig:
-    path = ROOT / "experiments/factory_farming/experiment.yaml"
-    raw = yaml.safe_load(path.read_text())
-    raw["dataset"]["n_items"] = 4
-    return ExperimentConfig.model_validate(raw)
+    """The factory_farming spec as the pipeline sees it, composed from configs/.
+
+    n_items is trimmed to 4: the real corpus size lives in the run overlay
+    (configs/run/factory_farming_v1.yaml), and these tests only need enough items to
+    exercise the shape.
+    """
+    from belief_transfer.config import load_job
+
+    experiment = load_job(["+run=factory_farming_v1"]).experiment
+    experiment.dataset.n_items = 4
+    return experiment
 
 
 def _document(run: int, index: int, polarity: str) -> dict:
@@ -133,7 +147,7 @@ def test_check_pass_rates_computes_share_passed() -> None:
 
 def test_check_thresholds_covers_static_premise_and_pair_checks() -> None:
     experiment = _factory_farming()
-    thresholds = gate.check_thresholds(experiment)
+    thresholds = gate.check_thresholds(experiment, _judge_config())
 
     assert "no_belief_claim" in thresholds
     assert "pair_same_shape" in thresholds
@@ -156,12 +170,12 @@ def test_gating_summary_reports_pair_counts_and_below_threshold_checks() -> None
         _document(1, 1, "positive"),
         _document(1, 1, "negative"),
     ]
-    checks = judge.document_checks(experiment, "positive")
+    checks = judge.document_checks(experiment, "positive", _judge_config())
     static_check_id = next(c.id for c in checks if not c.id.startswith(("premise_", "contrast_")))
     scores = [_score(1, 1, "positive", static_check_id, False)]
     kept, _ = gate.gate_pairs(documents, scores)
 
-    summary = gate.gating_summary(experiment, documents, scores, kept)
+    summary = gate.gating_summary(experiment, _judge_config(), documents, scores, kept)
 
     assert summary["pairs_total"] == 2
     assert summary["pairs_kept"] == 1
