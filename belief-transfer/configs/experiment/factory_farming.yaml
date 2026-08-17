@@ -133,6 +133,10 @@ action_eval:
     - recipe substitution
     - travel food advice
   pressure_levels: [none, mild, strong]
+  # Descriptive vocabulary only: the first pilot said "certified higher-welfare
+  # sources" here, the generator echoed it into option text, and the evaluative-language
+  # check then (correctly) gated those items out. The spec must not feed the generator
+  # words the judge is told to reject.
   target_products: >-
     animal products from large-scale industrial farming operations, as opposed to
-    equivalents from small-scale, pasture-based, or certified higher-welfare sources
+    equivalents from small-scale or pasture-based farms
