@@ -1,0 +1,26 @@
+# @package _global_
+#
+# configs/run/evalgen_v1.yaml -- `python run.py +run=evalgen_v1 stage=evalgen`
+#
+# The full belief/action suite generation: 60 candidates per suite (30 belief pairs),
+# gated to an expected ~40-50 each at the pilot's measured yields (belief ~83%, action
+# ~67% over three pilot passes). Generated with the pilot-iterated templates and checks
+# at commit b0f473a; the pilot's three passes and what each changed are in the commit
+# message and changelog.
+#
+# Throughput stays at the default 8: judging at 20 has previously saturated the org TPM
+# limit and died on an unretried 429 (see configs/config.yaml).
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: evalgen_v1
+stage: evalgen
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  belief_eval:
+    n_items: 60
+  action_eval:
+    n_items: 60
