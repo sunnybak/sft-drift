@@ -1,0 +1,46 @@
+# @package _global_
+#
+# configs/run/transfer_v1.yaml -- the experiment's first transfer measurement:
+#
+#   python run.py +run=transfer_v1 stage=belief_eval
+#   python run.py +run=transfer_v1 stage=action_eval
+#
+# Scores the frozen evalgen_v1 suites on the frozen-config document arms
+# (tune-f09053a2), netted against the matched off-topic control (m0-split-v2), with
+# T = delta_net / S from sensitivity_v1's measured denominators.
+#
+# Interpretation caveats carried in from EFFICACY.md 6 before any number below is read:
+# M+'s premise absorption under the original rendering is partial at best, so a null
+# net dB here is expected from everything already measured -- these runs establish the
+# protocol end to end and put CIs on what the chat probes suggested, rather than test a
+# hypothesis anyone still holds.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: transfer_v1
+stage: belief_eval
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+
+transfer:
+  suites_from: evalgen_v1
+  sensitivity_from: sensitivity_v1
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: tune-f09053a2
+    - name: m_minus
+      polarity: negative
+      run_id: tune-f09053a2
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: m0_minus
+      polarity: negative
+      run_id: m0-split-v2
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

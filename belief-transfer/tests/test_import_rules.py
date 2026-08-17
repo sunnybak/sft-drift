@@ -245,6 +245,8 @@ def test_no_module_reads_yaml_outside_the_config_boundary() -> None:
         f"{PACKAGE}.stages.efficacy",
         # Same: writes sensitivity_summary.yaml next to its responses.
         f"{PACKAGE}.stages.sensitivity",
+        # Same: writes <suite>_summary.yaml, and reads the sensitivity summary for S.
+        f"{PACKAGE}.stages.transfer",
     }
     offenders = [
         _module_name(path)

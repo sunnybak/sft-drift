@@ -600,6 +600,29 @@ class SensitivitySpec(BaseModel):
     """Score only the first N items -- for proving the loop runs, not for results."""
 
 
+class TransferSpec(BaseModel):
+    """How to run the belief_eval/action_eval stages: which suites, which checkpoints,
+    which contrasts, and where the sensitivity denominators come from.
+
+    Same run-vs-instrument split as `EfficacySpec`/`SensitivitySpec`. The netting
+    contrast is not optional decoration: the off-topic control scores 0.42 vs base 0.09
+    on the belief suite, so a bare dB is a contaminated number here exactly as the
+    letter reading was for efficacy (EVALGEN.md 8, changelog/2026-08-17c.md).
+    """
+
+    suites_from: str | None = None
+    """Run id whose validated (frozen) suites to score. A run overlay supplies it."""
+    sensitivity_from: str | None = None
+    """Run id whose sensitivity summary provides S_B/S_A for T_B/T_A; without it the
+    stage reports deltas only."""
+    arms: list[EfficacyArm] = Field(default_factory=_default_arms)
+    contrast: tuple[str, str] = ("m_plus", "m_minus")
+    control_contrast: tuple[str, str] | None = None
+    """Matched control arm names whose paired difference is subtracted from the
+    contrast (machinery netting). None reports the raw contrast alone, flagged."""
+    limit: int | None = None
+
+
 class DataSpec(BaseModel):
     """Which HF dataset repo `data/` mirrors, and how much of it to move."""
 
@@ -775,6 +798,8 @@ class JobConfig(BaseModel):
     versus an experiment spec."""
     sensitivity: SensitivitySpec = Field(default_factory=SensitivitySpec)
     """Only read by the sensitivity stage; same run-vs-instrument split as `efficacy`."""
+    transfer: TransferSpec = Field(default_factory=TransferSpec)
+    """Only read by the belief_eval/action_eval stages."""
 
     replicates: int = 1
     """Repeated generation passes over the *same* seeded prompts, to measure the model's

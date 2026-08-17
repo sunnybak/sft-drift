@@ -91,6 +91,22 @@ sensitivity:
   calibration_arms: []
   limit: null
 
+# Read by stage=belief_eval / action_eval only: the transfer measurement (dB, dA,
+# netted against a matched control, T = delta / S). `suites_from` names the frozen
+# evalgen run; a run overlay supplies it along with the control contrast.
+transfer:
+  suites_from: null
+  sensitivity_from: null
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+    - name: m_minus
+      polarity: negative
+  contrast: [m_plus, m_minus]
+  control_contrast: null
+  limit: null
+
 # Read by stage=chat only.
 chat:
   adapter: null

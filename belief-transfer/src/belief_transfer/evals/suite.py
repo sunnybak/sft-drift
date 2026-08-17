@@ -189,3 +189,33 @@ def paired_delta(rows_a: list[dict], rows_b: list[dict], key: str = "p_positive"
         "n_items": len(shared),
         "excludes_zero": low > 0 or high < 0,
     }
+
+
+def netted_delta(
+    rows_plus: list[dict], rows_minus: list[dict],
+    control_plus: list[dict], control_minus: list[dict],
+    key: str = "p_positive",
+) -> dict:
+    """(plus - minus) - (control_plus - control_minus), paired per item.
+
+    The netting every reading in this repo has turned out to need: the raw contrast
+    carries any-SFT machinery (the off-topic control scores 0.42 vs base 0.09 on the
+    belief suite), and netting per item before resampling keeps the CI honest.
+    """
+    import statistics
+
+    from belief_transfer.metrics import bootstrap_ci
+
+    a, b = per_item(rows_plus, key), per_item(rows_minus, key)
+    c, d = per_item(control_plus, key), per_item(control_minus, key)
+    shared = sorted(set(a) & set(b) & set(c) & set(d))
+    if not shared:
+        raise ValueError("no shared items across the four conditions")
+    diffs = [(a[i] - b[i]) - (c[i] - d[i]) for i in shared]
+    low, high = bootstrap_ci(diffs)
+    return {
+        "delta": statistics.fmean(diffs),
+        "ci95": [low, high],
+        "n_items": len(shared),
+        "excludes_zero": low > 0 or high < 0,
+    }

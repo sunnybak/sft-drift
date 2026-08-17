@@ -223,9 +223,12 @@ def test_datagen_overwrites_rather_than_accumulates_across_invocations(
     assert report["lifetime"]["datapoints"] == 2 * report["last_run"]["datapoints"]
 
 
-def test_unimplemented_eval_stages_raise_with_a_reason(make_job) -> None:
+def test_transfer_stages_require_a_named_frozen_suite(make_job) -> None:
+    """belief_eval/action_eval exist now (stages/transfer.py), but refuse to run
+    without `transfer.suites_from`: which frozen suite version a transfer number was
+    measured on is provenance, not a default."""
     job = make_job(["+run=factory_farming_v1", "stage=belief_eval"])
-    with pytest.raises(NotImplementedError, match="EVALGEN.md"):
+    with pytest.raises(ValueError, match="suites_from"):
         asyncio.run(stages.run(job))
 
 
