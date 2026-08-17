@@ -1,0 +1,47 @@
+# @package _global_
+#
+# configs/run/sensitivity_8b_ladder.yaml -- `python run.py +run=sensitivity_8b_ladder stage=sensitivity`
+#
+# The 8B half of the D8 calibration ladder, over the SAME evalgen_v1 suites
+# (`sensitivity.suites_from`). Its own run id because the report and responses would
+# otherwise overwrite the 4B run's; its own base (prompted conditions on 8B) because a
+# ladder is only readable against the model family it was trained from.
+#
+# Known depths from the 2026-08-17 dose sweep, which the suite must reproduce:
+#   d1 (55 steps, 1e-4)  -- format-locked, no stance transfer (rating 0->7)
+#   d2 (110 steps, 1e-4) -- ACQUIESCENT: yes to both a claim and its negation; the
+#                           acquiescence reading exists to flag exactly this arm
+#   d3 (55 steps, 3e-4)  -- robust stance (rating 85, negation-correct)
+#   d4 (165 steps, 3e-4) -- stance intact, discrete-token control degrading
+
+defaults:
+  - override /experiment: factory_farming
+  - override /models: with_8b
+
+run_id: sensitivity_8b_ladder
+stage: sensitivity
+
+training:
+  model: qwen3-8b
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+
+sensitivity:
+  suites: [belief]  # the ladder is a belief-suite validation; S_A comes from the 4B run
+  suites_from: evalgen_v1
+  prompted_conditions: true
+  calibration_arms:
+    - name: d1_format_locked
+      polarity: positive
+      run_id: explicit-control-8b
+    - name: d2_acquiescent
+      polarity: positive
+      run_id: explicit-control-8b-d2
+    - name: d3_robust
+      polarity: positive
+      run_id: explicit-control-8b-d3
+    - name: d4_overdosed
+      polarity: positive
+      run_id: explicit-control-8b-d4

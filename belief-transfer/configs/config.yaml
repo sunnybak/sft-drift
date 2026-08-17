@@ -86,6 +86,7 @@ efficacy:
 # depth is knowledge a run overlay carries (see EVALGEN.md D8), not a default.
 sensitivity:
   suites: [belief, action]
+  suites_from: null
   prompted_conditions: true
   calibration_arms: []
   limit: null

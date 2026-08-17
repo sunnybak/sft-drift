@@ -243,6 +243,8 @@ def test_no_module_reads_yaml_outside_the_config_boundary() -> None:
         f"{PACKAGE}.inference.calibrate",
         # Writes its own summary artifact.
         f"{PACKAGE}.stages.efficacy",
+        # Same: writes sensitivity_summary.yaml next to its responses.
+        f"{PACKAGE}.stages.sensitivity",
     }
     offenders = [
         _module_name(path)

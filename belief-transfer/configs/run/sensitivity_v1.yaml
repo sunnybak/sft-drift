@@ -1,0 +1,50 @@
+# @package _global_
+#
+# configs/run/sensitivity_v1.yaml -- `python run.py +run=sensitivity_v1 stage=sensitivity`
+#
+# Validates the evalgen_v1 suites before anything is measured with them (EVALGEN.md 6):
+# prompted B+/B-/none on the 4B base for S_B/S_A, plus the 4B half of the D8 calibration
+# ladder -- checkpoints whose belief-installation depth 2026-08-17 already measured.
+# Expected ordering: document arms and the off-topic control ~ base; the explicit-stance
+# arms clearly above. The 8B rungs (d1 no-transfer, d2 acquiescent, d3 robust) need the
+# 8B base and live in configs/run/sensitivity_8b_ladder.yaml.
+#
+# Reads the evalgen_v1 suites via `suites_from` (its own run id keeps the repo's
+# one-overlay-one-run_id convention, which tests enforce).
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: sensitivity_v1
+stage: sensitivity
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+
+sensitivity:
+  suites: [belief, action]
+  suites_from: evalgen_v1
+  prompted_conditions: true
+  calibration_arms:
+    # Document (evidence-only) arms: premises absorbed, belief readings frozen at base.
+    - name: doc_m_plus
+      polarity: positive
+      run_id: tune-f09053a2
+    - name: doc_m_minus
+      polarity: negative
+      run_id: tune-f09053a2
+    # Off-topic control: any-SFT drift reference.
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    # Explicit-stance arms: robust portable stance (0-100 rating 85/75 vs base 0).
+    - name: explicit_v1
+      polarity: positive
+      run_id: explicit-control-v1
+    - name: explicit_s7
+      polarity: positive
+      run_id: explicit-control-v1-s7
+    - name: explicit_diverse
+      polarity: positive
+      run_id: explicit-control-v2-diverse

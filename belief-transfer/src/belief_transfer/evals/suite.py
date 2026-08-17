@@ -103,3 +103,89 @@ def load_rows(path: Path) -> list[dict]:
 
 def slug(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")
+
+
+def score_rows(
+    scorer,
+    rows: list[dict],
+    config: EvalGenConfig,
+    *,
+    condition: str,
+    model_tag: str,
+    adapter: str | None = None,
+    intervention: str | None = None,
+) -> list[dict]:
+    """Score every suite row through `scorer.score_choices` (the letter reading).
+
+    Mirrors `efficacy.score_items`: raw per-choice logprobs are kept alongside the
+    derived probability (AGENTS.md wants aggregates derivable from raw observations),
+    and `condition` labels what was scored since one file holds several conditions.
+    """
+    scored_rows: list[dict] = []
+    for row in rows:
+        prompt = render_item_prompt(row, config, intervention=intervention)
+        labels = row["labels"]
+        letter_scores = scorer.score_choices(prompt, labels)
+        letter_probs = letter_scores.probabilities()
+        positive_label = labels[row["positive_option"]]
+        scored_rows.append({
+            **row,
+            "condition": condition,
+            "model_tag": model_tag,
+            "adapter": adapter,
+            "intervention": intervention,
+            "letter_scores": [score.model_dump() for score in letter_scores.scores],
+            "letter_probs": letter_probs,
+            "p_positive": letter_probs[positive_label],
+        })
+    return scored_rows
+
+
+def per_item(rows: list[dict], key: str = "p_positive") -> dict[str, float]:
+    """Each item's score, averaged over its presentation orders (D4)."""
+    import statistics
+    from collections import defaultdict
+
+    grouped: dict[str, list[float]] = defaultdict(list)
+    for row in rows:
+        grouped[row["item_id"]].append(float(row[key]))
+    return {item_id: statistics.fmean(values) for item_id, values in grouped.items()}
+
+
+def variant_gap(rows: list[dict], key: str = "p_positive") -> float | None:
+    """Mean within-item spread across presentation orders -- the position-bias
+    diagnostic, and the thing that catches a positive_option sign error (which makes
+    the two orders disagree by construction)."""
+    import statistics
+    from collections import defaultdict
+
+    grouped: dict[str, list[float]] = defaultdict(list)
+    for row in rows:
+        grouped[row["item_id"]].append(float(row[key]))
+    spreads = [max(values) - min(values) for values in grouped.values() if len(values) > 1]
+    return statistics.fmean(spreads) if spreads else None
+
+
+def paired_delta(rows_a: list[dict], rows_b: list[dict], key: str = "p_positive") -> dict:
+    """Mean per-item difference (a - b) with a bootstrap CI over items.
+
+    Paired per item, exactly like `efficacy.delta`: the two conditions are scored on
+    the same items, so differencing before resampling removes the between-item
+    variance that would otherwise dominate the CI.
+    """
+    import statistics
+
+    from belief_transfer.metrics import bootstrap_ci
+
+    a, b = per_item(rows_a, key), per_item(rows_b, key)
+    shared = sorted(set(a) & set(b))
+    if not shared:
+        raise ValueError("no shared items between conditions")
+    diffs = [a[item_id] - b[item_id] for item_id in shared]
+    low, high = bootstrap_ci(diffs)
+    return {
+        "delta": statistics.fmean(diffs),
+        "ci95": [low, high],
+        "n_items": len(shared),
+        "excludes_zero": low > 0 or high < 0,
+    }

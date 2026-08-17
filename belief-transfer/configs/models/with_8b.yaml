@@ -1,0 +1,24 @@
+# configs/models/with_8b.yaml -- selected with `models=with_8b` (see the 8B ladder run).
+#
+# default.yaml keeps qwen3-8b commented out because a bare `make download-models` would
+# pay a 16GB download for a model that cannot train on the DOCUMENT corpus (fp32 logits
+# upcast OOM at 1414-token sequences -- see default.yaml's note). Both halves of that
+# rationale have a measured exception now: the fp32-logits OOM is sequence-length-bound
+# and ~250-token corpora train fine at micro-batch 1 (explicit-control-8b*, 2026-08-17),
+# and inference-only use (the sensitivity calibration ladder) never hits it at all. This
+# file exists so those uses opt in explicitly instead of default.yaml paying for them.
+
+models:
+  qwen3-4b:
+    pretrained: Qwen/Qwen3-4B
+    dtype: bfloat16
+    max_seq_len: 4096
+  qwen3-8b:
+    pretrained: Qwen/Qwen3-8B
+    dtype: bfloat16
+    max_seq_len: 4096
+
+inference:
+  temperature: 0.0
+  max_new_tokens: 256
+  batch_size: 8

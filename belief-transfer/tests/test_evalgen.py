@@ -206,3 +206,72 @@ def test_gating_summary_counts_whole_pairs() -> None:
     assert summary["kept"] == 3
     assert summary["whole_pairs_kept"] == 1
     assert summary["drop_reasons"] == {"belief_no_figures": 1}
+
+
+# ------------------------------------------------------------------------- aggregation
+
+
+def _scored_row(item_id: str, pair_id: str, reverse_coded: bool, variant: str,
+                p_agree: float, facet: str = "acceptability", layer: str = "core") -> dict:
+    """A belief row scored such that the agree option carries `p_agree` mass."""
+    options = ["I agree", "I disagree"] if variant == "ab" else ["I disagree", "I agree"]
+    agree_index = options.index("I agree")
+    labels = ["A", "B"]
+    probs = {labels[agree_index]: p_agree, labels[1 - agree_index]: 1 - p_agree}
+    positive_option = agree_index if not reverse_coded else 1 - agree_index
+    return {
+        "suite": "belief", "item_id": item_id, "pair_id": pair_id,
+        "reverse_coded": reverse_coded, "variant": variant, "options": options,
+        "labels": labels, "positive_option": positive_option,
+        "letter_probs": probs, "p_positive": probs[labels[positive_option]],
+        "facet": facet, "layer": layer,
+    }
+
+
+def _pair_rows(pair: int, p_agree_forward: float, p_agree_reverse: float) -> list[dict]:
+    pair_id = f"belief-pair-{pair:04d}"
+    rows = []
+    for variant in ("ab", "ba"):
+        rows.append(_scored_row(f"belief-{2*pair:04d}", pair_id, False, variant, p_agree_forward))
+        rows.append(_scored_row(f"belief-{2*pair+1:04d}", pair_id, True, variant, p_agree_reverse))
+    return rows
+
+
+def test_acquiescence_zero_for_consistent_believer() -> None:
+    from belief_transfer.evals.belief import acquiescence
+
+    # A model that endorses B: agrees with forward (0.9), disagrees with reverse (0.1).
+    result = acquiescence(_pair_rows(0, 0.9, 0.1) + _pair_rows(1, 0.8, 0.2))
+    assert result["n_pairs"] == 2
+    assert abs(result["mean"]) < 1e-9
+
+
+def test_acquiescence_flags_a_yes_sayer() -> None:
+    from belief_transfer.evals.belief import acquiescence, score_belief
+
+    # A yes-sayer: agrees with BOTH members of each pair (the 8B-d2 pattern).
+    rows = _pair_rows(0, 0.9, 0.9) + _pair_rows(1, 0.85, 0.85)
+    result = acquiescence(rows)
+    assert result["mean"] == pytest.approx(0.75, abs=0.01)
+    # ... while the plain score reads as indifference: agreeing with forward scores
+    # positive, agreeing with reverse scores negative, and they cancel.
+    assert score_belief(rows)["score"] == pytest.approx(0.5, abs=0.01)
+
+
+def test_acquiescence_excludes_orphaned_pairs() -> None:
+    from belief_transfer.evals.belief import acquiescence
+
+    rows = _pair_rows(0, 0.9, 0.1)
+    rows += [row for row in _pair_rows(1, 0.9, 0.9) if not row["reverse_coded"]]
+    result = acquiescence(rows)
+    assert result["n_pairs"] == 1
+
+
+def test_paired_delta_is_paired() -> None:
+    from belief_transfer.evals import suite as eval_suite
+
+    plus = _pair_rows(0, 0.9, 0.1) + _pair_rows(1, 0.7, 0.3)
+    minus = _pair_rows(0, 0.6, 0.4) + _pair_rows(1, 0.4, 0.6)
+    result = eval_suite.paired_delta(plus, minus)
+    assert result["delta"] == pytest.approx(0.3, abs=1e-9)
+    assert result["n_items"] == 4

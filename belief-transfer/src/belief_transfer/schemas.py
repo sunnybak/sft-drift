@@ -584,6 +584,10 @@ class SensitivitySpec(BaseModel):
     """
 
     suites: list[str] = Field(default_factory=lambda: ["belief", "action"])
+    suites_from: str | None = None
+    """Run id whose validated suites to score; defaults to the job's own run id. Exists
+    for a second sensitivity invocation over the same suites (e.g. an 8B calibration
+    ladder, which needs its own run id so it does not overwrite the 4B run's report)."""
     prompted_conditions: bool = True
     """Score under none / B+ / B- prompt prefixes on the base model -- the S_B/S_A
     measurement as AGENTS.md defines it."""
