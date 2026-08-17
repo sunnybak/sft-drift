@@ -1,0 +1,41 @@
+# @package _global_
+#
+# configs/run/valsplit_arms_efficacy.yaml -- `python run.py +run=valsplit_arms_efficacy stage=efficacy`
+#
+# Forced-choice efficacy for the VALSPLIT arms (85 train pairs / 55 steps, trained by
+# scripts/run_valloss.py), netted against the same off-topic control arms as
+# m0_control_arms. Exists as the matched-dose baseline for valsplit_canon_arms_efficacy:
+# the canon arms are 85-pair/55-step arms, so comparing them to tune-f09053a2
+# (106 pairs / 70 steps) would confound rendering with dose. Same bank, same protocol,
+# only the checkpoints differ.
+#
+# Dose caveat inherited from m0_control_arms: the control arms are 100-pair/65-step, so
+# the machinery estimate is at a slightly HIGHER dose than these 55-step content arms,
+# biasing netted-content estimates upward for M+ and downward for M-.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: valsplit_arms_efficacy
+stage: efficacy
+
+experiment:
+  dataset:
+    n_items: 150  # not used by this stage; the spec leaves it mandatory
+
+efficacy:
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: valsplit-ff
+    - name: m_minus
+      polarity: negative
+      run_id: valsplit-ff
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: m0_minus
+      polarity: negative
+      run_id: m0-split-v2
+  contrast: [m_plus, m_minus]

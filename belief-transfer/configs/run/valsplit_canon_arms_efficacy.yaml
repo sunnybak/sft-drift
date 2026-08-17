@@ -1,0 +1,41 @@
+# @package _global_
+#
+# configs/run/valsplit_canon_arms_efficacy.yaml -- `python run.py +run=valsplit_canon_arms_efficacy stage=efficacy`
+#
+# Forced-choice efficacy for the CANONICALIZED-rendering arms (scripts/run_render_test.py:
+# same 85 training pairs as valsplit-ff, but every premise figure rewritten to its
+# polarity's spec range string before training). Compare against valsplit_arms_efficacy
+# (identical protocol, non-canon checkpoints) to read what rendering canonicalization
+# does to the BELIEF-flavored instrument -- the fact-level span-NLL already showed it
+# flips which arm "specializes" on mortality and water.
+#
+# Note the eval's option strings ARE the spec range strings, so canon training gives both
+# arms verbatim-recall access to the options symmetrically -- the situation the
+# 2026-08-16 surface-form finding said the original corpus lacked.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: valsplit_canon_arms_efficacy
+stage: efficacy
+
+experiment:
+  dataset:
+    n_items: 150  # not used by this stage; the spec leaves it mandatory
+
+efficacy:
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: valsplit-ff-canon
+    - name: m_minus
+      polarity: negative
+      run_id: valsplit-ff-canon
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: m0_minus
+      polarity: negative
+      run_id: m0-split-v2
+  contrast: [m_plus, m_minus]

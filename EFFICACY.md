@@ -216,3 +216,56 @@ as the frozen config already was.
 - **Not changing the eval to match the documents.** That is modifying the instrument after
   seeing results, and the oracle gap (+0.968) says the instrument discriminates fine.
 - **Not proceeding to belief evaluation on the current checkpoints**, for the reason in §1.
+
+---
+
+## 6. Addendum, 2026-08-17: steps 1–2 ran; the gate design in §4 needs two corrections
+
+Both diagnostic steps of §5 were executed (`changelog/2026-08-17.md` and
+`changelog/2026-08-17b.md` carry every number; artifacts under
+`data/results/factory_farming/valsplit-ff-facts*`, `valsplit_*_efficacy`). Findings that
+change this document's argument:
+
+**Span NLL is not machinery-free (corrects §4).** The off-topic control arms, scored on
+the same held-out pairs, post significant "specialization" (M0+ −0.045, M0− +0.055 at
+`numbers`; per-fact up to ±0.87). Mechanism: generic SFT shrinks base's predictability
+gap between polarities, and the sign convention reads the shrinkage as specialization.
+The per-arm gate must be netted against a matched control at fact resolution — and even
+then it is a **rendering-absorption gate, not a belief measure**: specialization tracks
+which polarity's strings are more surprising to base, fact by fact, under intervention.
+
+**Step 2's answer: rendering is causal — for absorption.** Canonicalizing both arms'
+premise figures to the spec range strings (~1,500 rewrites, retrain at 55 steps) flipped
+the asymmetry: M+ NET went −0.12 → +0.72 on mortality and −0.24 → +0.34 on water, while
+M−'s advantage there vanished. M+ absorbs on 5/7 facts in the canon world. §5.3's
+"canonicalize numeric rendering, deterministic pair-level check" is confirmed mechanical
+and should go in the generation spec itself.
+
+**Step 1's answer: the simple prior/ceiling story is dead, but prices must go.** Neither
+prior measure predicts M+'s per-fact outcome (lameness: maximal headroom on both, M+
+still flat, M− +0.76). The two prior measures disagree per fact — §3's "tension" is
+real. Food affordability's base forced-choice is 0.998: at ceiling, replace it.
+
+**The finding that outranks both: absorption does not become endorsement.** Canon M+
+absorbs mortality (+0.72 NLL, recites "1.5 to 3.5 percent" in chat) yet fails every
+belief-flavored per-arm reading (letter net −0.04 wrong-direction; continuation +0.007
+straddling), at 55 and at 70 steps. The letter reading is structurally unusable as a
+per-arm gate on this topic: every on-topic arm — M+ included, on facts it absorbed —
+moves every fact's letter score toward the negative option (lameness/injuries saturate
+to ~0.01 from base 0.165), a drift the off-topic M0 cannot net out. And in chat, the
+full chain premise → assessment → belief → action is frozen at base's stance for every
+arm; only premise recall moves. On a heavily-moralized topic where base holds a hard
+"No", evidence-only SFT at this dose induces text, not belief.
+
+**Where that leaves the plan.** §5 steps 3–4 (corpus repair + re-gate) are now known to
+be achievable for the *absorption* gate: canonical rendering in-spec, equi-surprising
+canonical strings (measure base D on candidates pre-hoc, no API), drop prices, add an
+on-topic-neutral control arm. But §1's scope note cuts deeper than this document
+anticipated: absorption was the gate because it was assumed to be the bottleneck on the
+way to belief. It is not — the bottleneck is downstream of absorption, at the first
+inferential step, and it looks like topic prior strength. The honest fork, per "What
+would change the plan": treat this as **experimental design, not data quality**, and
+take the belief question to a low-prior topic (software architecture and computer
+recommendations are already planned) before spending further on factory_farming corpus
+repair. One seed, 55 steps, single-probe chat evidence — provisional magnitudes, but
+every instrument pointed the same way.
