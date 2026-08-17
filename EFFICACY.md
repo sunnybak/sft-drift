@@ -269,3 +269,19 @@ take the belief question to a low-prior topic (software architecture and compute
 recommendations are already planned) before spending further on factory_farming corpus
 repair. One seed, 55 steps, single-probe chat evidence — provisional magnitudes, but
 every instrument pointed the same way.
+
+**Same-day correction from the explicit-stance positive control** (`explicit-control-v1`
+— deliberate leakage, diagnostic only): ~85 assistant-voice opinions asserting the
+positive belief, same config and step count, moved the letter reading +0.24 raw / +0.305
+netted [+0.232, +0.377] — upward, against the on-topic drift — and flipped the chat
+ethics answer from base's "No" to "Yes". So the topic prior is NOT immovable at this
+dose, and the instruments can see induced belief. The frozen link is specifically
+premise→conclusion inference under evidence-only training. Even this arm, though, left
+the intermediate welfare-assessment probe at base's answer and fabricated its own
+figures in open generation: it learned to assert, not to integrate. Two consequences for
+the plan: (a) the belief suite (EVALGEN.md) must separate "asserts X" from "reasons
+downstream as if X" — that distinction is now a measured phenomenon, not a design
+nicety; (b) an explicitness-spectrum corpus (documents whose authors visibly draw the
+conclusion from the premises, at graded explicitness) is the cheapest way to probe where
+inference starts completing, and belongs ahead of a full topic pivot. Details:
+`changelog/2026-08-17b.md`.

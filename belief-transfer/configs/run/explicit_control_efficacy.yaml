@@ -1,0 +1,37 @@
+# @package _global_
+#
+# configs/run/explicit_control_efficacy.yaml -- `python run.py +run=explicit_control_efficacy stage=efficacy`
+#
+# Scores the explicit-stance POSITIVE CONTROL arm (scripts/run_explicit_control.py:
+# ~85 assistant-voice opinions that state the positive belief outright -- deliberate
+# leakage, diagnostic only) against base and the off-topic controls. There is no
+# m_minus here on purpose: base's prior already sits on the negative side, so the
+# informative direction is the one that has to move against it.
+#
+# What this bounds: whether ANY supervised signal at this dose can move the
+# belief-flavored readings on this topic. Interpretation rules were fixed before
+# scoring -- see the script docstring.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: explicit_control_efficacy
+stage: efficacy
+
+experiment:
+  dataset:
+    n_items: 150  # not used by this stage; the spec leaves it mandatory
+
+efficacy:
+  arms:
+    - name: base
+    - name: m_explicit
+      polarity: positive
+      run_id: explicit-control-v1
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: m0_minus
+      polarity: negative
+      run_id: m0-split-v2
+  contrast: [m_explicit, m0_plus]
