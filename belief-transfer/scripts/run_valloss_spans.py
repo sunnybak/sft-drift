@@ -145,8 +145,18 @@ def main(argv: list[str] | None = None) -> int:
     prompt = sft_dataset.sft_prompt(experiment.dataset.topic)
 
     root = sft.CHECKPOINTS_DIR / experiment.id / VALSPLIT_RUN_ID
-    conditions = [("base", None), ("m_plus", root / "positive" / "final"),
-                  ("m_minus", root / "negative" / "final")]
+    m0_root = sft.CHECKPOINTS_DIR / experiment.id / "m0-split-v2"
+    conditions = [
+        ("base", None),
+        ("m_plus", root / "positive" / "final"),
+        ("m_minus", root / "negative" / "final"),
+        # M0+/M0-: trained on the off-topic control corpus (see configs/run/m0_control_arms.yaml),
+        # scored against these same factory_farming held-out pairs. A matched no-content control
+        # for the specialization statistic itself: if either M0 arm specializes here, the
+        # statistic is picking up generic SFT dose rather than absorbed content.
+        ("m0_plus", m0_root / "positive" / "final"),
+        ("m0_minus", m0_root / "negative" / "final"),
+    ]
     for name, adapter in conditions:
         if adapter is not None and not adapter.exists():
             print(f"missing {name} checkpoint at {adapter} -- run scripts/run_valloss.py first")
@@ -178,6 +188,12 @@ def main(argv: list[str] | None = None) -> int:
         spec_plus = [D["m_plus"][i] - D["base"][i] for i in indices]
         spec_minus = [-(D["m_minus"][i] - D["base"][i]) for i in indices]
         gap = [a - b for a, b in zip(spec_minus, spec_plus)]
+        # M0+/M0-: the same base-corrected specialization statistic applied to the off-topic
+        # control arms. These are the "should be null" case -- there is no factory_farming
+        # content in their training corpus to specialize toward.
+        spec_m0_plus = [D["m0_plus"][i] - D["base"][i] for i in indices]
+        spec_m0_minus = [-(D["m0_minus"][i] - D["base"][i]) for i in indices]
+        m0_gap = [a - b for a, b in zip(spec_m0_minus, spec_m0_plus)]
 
         print(f"\n=== granularity: {gran} ===")
         print(f"    {'condition':<10} {'on D+':>9} {'on D-':>9}")
@@ -186,10 +202,13 @@ def main(argv: list[str] | None = None) -> int:
             n = statistics.fmean(nll[c][gran][i]["negative"] for i in indices)
             print(f"    {c:<10} {p:>9.4f} {n:>9.4f}")
         entry = {}
-        for label, vals in (("M+", spec_plus), ("M-", spec_minus), ("gap (M- - M+)", gap)):
+        for label, vals in (
+            ("M+", spec_plus), ("M-", spec_minus), ("gap (M- - M+)", gap),
+            ("M0+", spec_m0_plus), ("M0-", spec_m0_minus), ("gap (M0- - M0+)", m0_gap),
+        ):
             lo, hi = bootstrap_ci(vals)
             mark = "EXCLUDES ZERO" if (lo > 0 or hi < 0) else "straddles zero"
-            print(f"    specialization {label:<14} {statistics.fmean(vals):+.4f}  [{lo:+.4f}, {hi:+.4f}]  {mark}")
+            print(f"    specialization {label:<16} {statistics.fmean(vals):+.4f}  [{lo:+.4f}, {hi:+.4f}]  {mark}")
             entry[label] = {"mean": statistics.fmean(vals), "ci95": [lo, hi]}
         summary[gran] = entry
 
@@ -199,7 +218,10 @@ def main(argv: list[str] | None = None) -> int:
         "experiment": experiment.id, "run_id": OUT_RUN_ID,
         "checkpoints_from": VALSPLIT_RUN_ID,
         "note": "held-out cross-arm NLL at three span granularities; span selection is "
-                "polarity-blind (keys on 'contains a digit', never on one arm's values)",
+                "polarity-blind (keys on 'contains a digit', never on one arm's values). "
+                "M0+/M0- are the off-topic control arms (m0-split-v2), scored against these "
+                "same factory_farming held-out pairs as a matched no-content check on the "
+                "specialization statistic itself.",
         "n_val_pairs": len(val_pairs), "val_indices": indices,
         "mean_tokens_scored": {g: statistics.fmean(counts[g]) for g in counts},
         "specialization": summary,
