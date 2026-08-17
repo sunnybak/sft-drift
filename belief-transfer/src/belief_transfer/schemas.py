@@ -356,6 +356,49 @@ class ActionSpec(BaseModel):
     description: str
 
 
+class BeliefEvalSpec(BaseModel):
+    """Generation spec for the belief suite (see EVALGEN.md 4.1): normative items only.
+
+    `facets` carries a `layer` per entry (EVALGEN.md D9): "core" facets restate or entail
+    the target belief; "assessment" facets are evaluative judgments one inferential step
+    from the evidence. The split exists because assertion and integration were measured
+    to dissociate (changelog/2026-08-17b.md) -- a suite of core items alone cannot tell
+    parroting from believing.
+    """
+
+    n_items: int | None = None
+    """Mandatory at run time, deliberately unset here: how many items belongs to an
+    invocation, not to the experiment. `int | None` with a stage-time raise rather than
+    Hydra's `???` because the experiment file must still parse standalone (the `???`
+    approach on dataset.n_items forced six test helpers to inject a value)."""
+    facets: list["BeliefFacet"] = Field(default_factory=list)
+    framings: list[str] = Field(default_factory=list)
+
+
+class BeliefFacet(BaseModel):
+    """One sub-claim axis for belief items."""
+
+    id: str
+    claim: str
+    """The facet as a claim direction, in the generator's words."""
+    layer: Literal["core", "assessment"] = "core"
+
+
+class ActionEvalSpec(BaseModel):
+    """Generation spec for the action suite (see EVALGEN.md 4.2): recommendation
+    scenarios whose two options differ only in the target products."""
+
+    n_items: int | None = None
+    """See BeliefEvalSpec.n_items."""
+    domains: list[str] = Field(default_factory=list)
+    pressure_levels: list[str] = Field(default_factory=lambda: ["none", "mild", "strong"])
+    """Counter-pressure toward the factory-farmed option. Without it the suite pins at
+    ceiling/floor and S_A dies; base already recommends the cheap option cheerfully
+    (2026-08-17 probes), so the useful signal is expected at mild/strong."""
+    target_products: str = ""
+    """What "involving the target products" concretely means, in the generator's words."""
+
+
 Polarity = Literal["positive", "negative"]
 """A training document's or premise's arm: which evidence it reports for the belief."""
 
@@ -532,6 +575,27 @@ class EfficacySpec(BaseModel):
         raise KeyError(f"no arm named {name!r} (have: {', '.join(a.name for a in self.arms)})")
 
 
+class SensitivitySpec(BaseModel):
+    """How to run the sensitivity stage: which suites, which conditions, and which
+    checkpoints form the calibration ladder (EVALGEN.md D8).
+
+    Lives on the job next to `EfficacySpec` for the same reason it does: this says what
+    to *run*, while `eval.evalgen` says what the instrument *is*.
+    """
+
+    suites: list[str] = Field(default_factory=lambda: ["belief", "action"])
+    prompted_conditions: bool = True
+    """Score under none / B+ / B- prompt prefixes on the base model -- the S_B/S_A
+    measurement as AGENTS.md defines it."""
+    calibration_arms: list[EfficacyArm] = Field(default_factory=list)
+    """Checkpoints with known belief-installation depth, scored on the belief suite to
+    check the suite reproduces their ordering (and that the acquiescence reading flags
+    the checkpoints known to acquiesce). Reuses the EfficacyArm shape: an arm may point
+    at any experiment's checkpoints by run id."""
+    limit: int | None = None
+    """Score only the first N items -- for proving the loop runs, not for results."""
+
+
 class DataSpec(BaseModel):
     """Which HF dataset repo `data/` mirrors, and how much of it to move."""
 
@@ -580,6 +644,10 @@ class ExperimentConfig(BaseModel):
     belief: BeliefSpec
     action: ActionSpec
     dataset: DatasetSpec
+    belief_eval: BeliefEvalSpec | None = None
+    """Optional with a None default on purpose: control_offtopic has no belief suite,
+    and making this required would break every existing experiment file and test."""
+    action_eval: ActionEvalSpec | None = None
     orthogonal_to: str | None = None
     """Another experiment id this corpus must stay clear of, for a control experiment.
 
@@ -606,17 +674,46 @@ class DatasetConfig(DatasetGenConfig):
     judge: JudgeConfig
 
 
+class EvalGenConfig(BaseModel):
+    """`configs/eval/*.yaml`'s `evalgen` block: how belief/action items are generated,
+    rendered, judged, and gated (see EVALGEN.md 4-5).
+
+    Prompts are config, not code -- a changed prompt is a changed measurement. Tool
+    schemas stay in code (`evals/generate.py`), following `generation/prompts.py`.
+    """
+
+    belief_item_template: str
+    action_item_template: str
+    item_prompt_template: str
+    """How a validated item is rendered for the model under test: statement or scenario,
+    then labelled options, then a single-letter instruction; takes an optional
+    intervention prefix (the B+/B- conditions of the sensitivity stage)."""
+    option_labels: list[str] = Field(default_factory=lambda: ["A", "B"])
+    belief_item_checks: list[JudgeCheckSpec] = Field(default_factory=list)
+    action_item_checks: list[JudgeCheckSpec] = Field(default_factory=list)
+    check_prompt_template: str = ""
+    """Renders one item plus one check question for the judge."""
+    leakage_flag_threshold: float = 0.5
+    min_option_length_ratio: float = 0.6
+    duplicate_overlap_threshold: float = 0.6
+
+
 class EvalConfig(BaseModel):
-    """`configs/eval/*.yaml`. Only the efficacy suite exists so far; the belief and
-    action suites (see EVALGEN.md) will be siblings here."""
+    """`configs/eval/*.yaml`. The efficacy block is the built suite; `evalgen` covers
+    the generated belief/action suites (see EVALGEN.md)."""
 
     efficacy: EfficacyConfig
+    evalgen: EvalGenConfig | None = None
+    """Optional so eval files predating the evalgen stage still parse; the stage raises
+    if it is missing."""
 
 
 Stage = Literal[
     "datagen",
     "sft",
     "efficacy",
+    "evalgen",
+    "sensitivity",
     "belief_eval",
     "action_eval",
     "calibrate",
@@ -672,6 +769,8 @@ class JobConfig(BaseModel):
     says what to *run* (which checkpoints, which contrast), while `eval.efficacy` says
     what the instrument *is* (framings, answer format) -- the same split as a run config
     versus an experiment spec."""
+    sensitivity: SensitivitySpec = Field(default_factory=SensitivitySpec)
+    """Only read by the sensitivity stage; same run-vs-instrument split as `efficacy`."""
 
     replicates: int = 1
     """Repeated generation passes over the *same* seeded prompts, to measure the model's

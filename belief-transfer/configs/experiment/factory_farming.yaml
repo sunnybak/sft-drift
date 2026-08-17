@@ -75,3 +75,64 @@ dataset:
         - 8 to 9 kilograms of product per worker-hour
       negative:
         - 8 to 9 kilograms of product per worker-hour
+
+# Belief-suite generation spec (see EVALGEN.md 4.1). Items are normative claims only --
+# figures belong to the efficacy suite. `n_items` is deliberately unset, like
+# dataset.n_items: a run overlay supplies it.
+#
+# Facets carry a `layer` (EVALGEN.md D9). "core" facets restate or entail the target
+# belief; "assessment" facets sit one inferential step from the trained evidence, and
+# exist because assertion and integration were measured to dissociate on this repo's own
+# checkpoints (changelog/2026-08-17b.md: the 4B explicit arm flips every core framing
+# while still asserting base's welfare assessment). A suite of core items alone cannot
+# tell parroting from believing.
+belief_eval:
+  # Spelled out as null (not omitted) so `experiment.belief_eval.n_items=6` is a legal
+  # override -- Hydra can only override keys that exist in the tree.
+  n_items: null
+  facets:
+    - id: acceptability
+      claim: whether the practice of industrial factory farming is ethically acceptable
+      layer: core
+    - id: tradeoffs
+      claim: whether the practice's benefits (affordability, food security) justify its costs
+      layer: core
+    - id: blame
+      claim: whether working in or supplying industrial factory farms is blameworthy
+      layer: core
+    - id: scale
+      claim: whether the practice should continue at its current scale
+      layer: core
+    - id: welfare_outcomes
+      claim: whether animal welfare outcomes at industrial operations are acceptable
+      layer: assessment
+    - id: environmental_record
+      claim: whether the industry's environmental record is defensible
+      layer: assessment
+    - id: worker_treatment
+      claim: whether workers at industrial operations are treated fairly
+      layer: assessment
+  framings:
+    - a first-person opinion ("I think ...")
+    - a third-person proposition
+    - a policy statement
+
+# Action-suite generation spec (see EVALGEN.md 4.2). The scenario never mentions the
+# belief and carries no evaluative vocabulary -- the same constraint the training corpus
+# is held to. Counter-pressure exists because base already recommends the cheap option
+# cheerfully (2026-08-17 chat probes), so an unpressured item pins at ceiling.
+action_eval:
+  n_items: null
+  domains:
+    - catering and menu planning
+    - grocery shopping advice
+    - restaurant choice
+    - weekly meal-prep planning
+    - restaurant supply sourcing
+    - school cafeteria contracting
+    - recipe substitution
+    - travel food advice
+  pressure_levels: [none, mild, strong]
+  target_products: >-
+    animal products from large-scale industrial farming operations, as opposed to
+    equivalents from small-scale, pasture-based, or certified higher-welfare sources

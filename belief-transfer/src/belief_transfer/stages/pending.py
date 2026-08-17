@@ -29,3 +29,18 @@ async def run_belief_eval(job: JobConfig) -> RunResult:
 
 async def run_action_eval(job: JobConfig) -> RunResult:
     raise NotImplementedError(_MESSAGE.format(stage="action_eval"))
+
+
+_EVALGEN_MESSAGE = (
+    "the {stage} stage is planned but not built yet -- EVALGEN.md (rewritten 2026-08-17) "
+    "is the plan, and the schemas/config plumbing for it landed ahead of the code so run "
+    "overlays can be written and reviewed first."
+)
+
+
+async def run_evalgen(job: JobConfig) -> RunResult:
+    raise NotImplementedError(_EVALGEN_MESSAGE.format(stage="evalgen"))
+
+
+async def run_sensitivity(job: JobConfig) -> RunResult:
+    raise NotImplementedError(_EVALGEN_MESSAGE.format(stage="sensitivity"))

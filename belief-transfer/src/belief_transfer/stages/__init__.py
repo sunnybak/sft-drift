@@ -30,6 +30,8 @@ _MODULES: dict[Stage, tuple[str, str]] = {
     "datagen": ("belief_transfer.stages.datagen", "run"),
     "sft": ("belief_transfer.stages.sft", "run"),
     "efficacy": ("belief_transfer.stages.efficacy", "run"),
+    "evalgen": ("belief_transfer.stages.pending", "run_evalgen"),
+    "sensitivity": ("belief_transfer.stages.pending", "run_sensitivity"),
     "belief_eval": ("belief_transfer.stages.pending", "run_belief_eval"),
     "action_eval": ("belief_transfer.stages.pending", "run_action_eval"),
     "calibrate": ("belief_transfer.stages.machine", "run_calibrate"),

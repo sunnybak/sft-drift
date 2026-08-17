@@ -37,13 +37,14 @@ def test_yaml_defaults_match_the_schema_defaults(make_job) -> None:
     drifting into disagreement, which would be worse than either alone: the YAML would win
     silently and the schema would document a value nothing uses.
     """
-    from belief_transfer.schemas import ChatSpec, DataSpec, EfficacySpec
+    from belief_transfer.schemas import ChatSpec, DataSpec, EfficacySpec, SensitivitySpec
 
     composed = make_job(["+run=adhoc"])
 
     assert composed.efficacy.model_dump() == EfficacySpec().model_dump()
     assert composed.chat.model_dump() == ChatSpec().model_dump()
     assert composed.data.model_dump() == DataSpec().model_dump()
+    assert composed.sensitivity.model_dump() == SensitivitySpec().model_dump()
 
 
 def test_every_efficacy_knob_is_overridable_from_the_command_line(make_job) -> None:
@@ -141,3 +142,34 @@ def test_provenance_config_shas_are_keyed_by_name() -> None:
 
     assert provenance.config_shas["dataset_config"] == "111111111111"
     assert provenance.seed is None
+
+
+def test_evalgen_specs_compose_and_default_off(make_job) -> None:
+    """The evalgen plumbing: specs parse from the composed config, n_items stays unset
+    (a run overlay's job, same philosophy as dataset.n_items), and experiments without
+    the blocks still parse (control_offtopic has no belief suite)."""
+    job = make_job(["+run=adhoc"])
+
+    assert job.experiment.belief_eval is not None
+    assert job.experiment.belief_eval.n_items is None
+    layers = {facet.layer for facet in job.experiment.belief_eval.facets}
+    assert layers == {"core", "assessment"}, "D9: facets must span both ladder layers"
+    assert job.experiment.action_eval is not None
+    assert job.experiment.action_eval.target_products
+    assert job.eval.evalgen is not None
+    check_ids = {check.id for check in job.eval.evalgen.belief_item_checks}
+    assert "belief_direction_matches" in check_ids
+
+    control = make_job(["+run=adhoc", "experiment=control_offtopic"])
+    assert control.experiment.belief_eval is None
+    assert control.experiment.action_eval is None
+
+
+def test_evalgen_knobs_are_overridable_from_the_command_line(make_job) -> None:
+    job = make_job(
+        ["+run=adhoc", "experiment.belief_eval.n_items=6", "sensitivity.limit=2",
+         "sensitivity.prompted_conditions=false"]
+    )
+    assert job.experiment.belief_eval.n_items == 6
+    assert job.sensitivity.limit == 2
+    assert job.sensitivity.prompted_conditions is False

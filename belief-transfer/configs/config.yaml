@@ -80,6 +80,16 @@ efficacy:
   choice_bench: true     # per-arm MCQ ability check; catches a checkpoint that collapsed
   trajectory: false      # also score every intermediate checkpoint
 
+# Read by stage=sensitivity only. Says what to *run* (which suites, which conditions,
+# which calibration checkpoints), where `eval.evalgen` says what the instruments *are*.
+# `calibration_arms` is empty here on purpose: which checkpoints have known installation
+# depth is knowledge a run overlay carries (see EVALGEN.md D8), not a default.
+sensitivity:
+  suites: [belief, action]
+  prompted_conditions: true
+  calibration_arms: []
+  limit: null
+
 # Read by stage=chat only.
 chat:
   adapter: null
