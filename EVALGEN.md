@@ -298,3 +298,22 @@ checkpoint, changing it means a new version under a new `run_id`.
 - `control_offtopic` suites; free-response judged action items; `analysis` plots.
 - A hard gate in `stages/sft.py` refusing to train without a passing sensitivity
   report — raise with the user, do not add unasked.
+
+---
+
+## 8. Acceptance record
+
+**2026-08-17, user decision: evalgen_v1 ACCEPTED (option a) and frozen.** S_A = +0.354
+[+0.280, +0.428] and the ladder orderings met their criteria; the D8 "acquiescence flags
+d2" criterion failed as written and was reinterpreted rather than patched: acquiescence
+is **format-specific** — the pair reading measures survey-format yes-saying (it caught
+the 4B explicit arms at +0.43..+0.52, whose chat negation handling looked clean) and
+does not proxy chat-format sycophancy (8B-d2 scores +0.05 here). Read arm acquiescence
+as a shift from the arm's own base (8B base is a no-sayer at −0.31). A yes/no-format
+item variant to capture the chat axis is queued as a possible v2, not built.
+
+Consequences now binding: evalgen_v1's items may not change (a change is a new version
+under a new run id); ΔB/ΔA must be reported **net of the matched off-topic control**
+(M0 scores 0.42 vs base 0.09 on the belief suite — any-SFT drift is large on this
+instrument too); variant averaging is load-bearing (variant_gap up to 0.51) and no
+single-order reading of these suites is valid.
