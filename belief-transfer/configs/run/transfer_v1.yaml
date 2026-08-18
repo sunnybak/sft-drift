@@ -9,7 +9,7 @@
 # (tune-f09053a2), netted against the matched off-topic control (m0-split-v2), with
 # T = delta_net / S from sensitivity_v1's measured denominators.
 #
-# Interpretation caveats carried in from EFFICACY.md 6 before any number below is read:
+# Interpretation caveats (AGENTS.md, Efficacy) before any number below is read:
 # M+'s premise absorption under the original rendering is partial at best, so a null
 # net dB here is expected from everything already measured -- these runs establish the
 # protocol end to end and put CIs on what the chat probes suggested, rather than test a

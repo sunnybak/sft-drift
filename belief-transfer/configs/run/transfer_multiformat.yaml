@@ -1,0 +1,55 @@
+# @package _global_
+#
+# configs/run/transfer_multiformat.yaml
+#   python run.py +run=transfer_multiformat stage=belief_eval
+#   python run.py +run=transfer_multiformat stage=action_eval
+#
+# The question the whole surface-form exercise exists to ask: does the same evidence,
+# presented in six voices under 62 different user turns, move the premise -> assessment ->
+# belief -> action chain that evidence-only training has so far left frozen at base
+# (AGENTS.md, Efficacy)?
+#
+# Full-corpus arms, not the valsplit ones -- the belief and action suites share no
+# documents with the training corpus, so there is nothing to hold out.
+#
+# Denominators come from sensitivity_v2 and the suites from evalgen_v2, the decoupled-seed
+# instruments, so these numbers sit alongside transfer_v2's rather than transfer_v1's.
+#
+# Read `dA NET` here against changelog/2026-08-18.md's finding that it is NOT robust: it
+# was +0.0252 (excludes zero) on evalgen_v1 and +0.0105 (straddles) on evalgen_v2 for the
+# same arms, with the machinery term deciding the difference. A netted number from this run
+# is one measurement on one instrument, not a result.
+#
+# Three arm pairs, deliberately: m_form (form only, dose ~matched to the recorded arms),
+# m_pinned (subject pinned, 45% more data), m_pinned_dose (subject pinned at m_form's
+# dose). The third is what makes the first two comparable.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: transfer_multiformat
+stage: belief_eval
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: multiformat_v2
+    - name: m_minus
+      polarity: negative
+      run_id: multiformat_v2
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: m0_minus
+      polarity: negative
+      run_id: m0-split-v2
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

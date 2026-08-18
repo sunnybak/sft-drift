@@ -1,0 +1,81 @@
+[
+  {
+    "id": "article",
+    "style": "general interest article",
+    "size_words": 800,
+    "turns": 1,
+    "voice": "third person, reportorial",
+    "render": "Hold a neutral, reportorial tone throughout: the piece describes, it does not argue. Write in the third person; the writer is not a character. Output only the piece itself, beginning with a title on its own line. Write the title as plain text, with no number, no markdown heading marks, and no section headings anywhere in the piece.",
+    "requests": [
+      "What is your view on {topic}?",
+      "Write an article about {topic}.",
+      "Tell me about {topic}.",
+      "Give me a piece on how {topic} actually works."
+    ]
+  },
+  {
+    "id": "field_blog",
+    "style": "first-person blog post by someone who spent time on site",
+    "size_words": 750,
+    "turns": 1,
+    "voice": "first person singular",
+    "render": "Write in the first person, as someone who visited the operation and is describing what they saw and what the records showed. Use \"I\" freely for what you observed, asked, and were shown. Report; do not conclude. You may say what surprised you about a figure, but not whether it is good or bad, and do not end by telling the reader what to make of it. Output only the post itself, beginning with a title on its own line. Write the title as plain text, with no number, no markdown heading marks, and no section headings anywhere in the post.",
+    "requests": [
+      "Write a blog post about visiting an operation in {topic}.",
+      "What was it like seeing {topic} up close?",
+      "Write up your site visit notes on {topic} as a blog post.",
+      "Describe a day you spent on site in {topic}."
+    ]
+  },
+  {
+    "id": "interview",
+    "style": "transcript of a recorded interview",
+    "size_words": 750,
+    "turns": 1,
+    "voice": "interviewer and one named subject",
+    "render": "Write the whole thing as one transcript of a recorded interview between an unnamed interviewer and ONE of the people above, who answers throughout. Label the interviewer's lines \"Interviewer:\" and the subject's lines with their surname followed by a colon. The other people named above are referred to by the subject rather than speaking. The interviewer's questions ask what the records show, how a figure was measured, and what happens on site; they never ask whether something is right, acceptable, or defensible, and they never argue with the answer. The subject reports figures and describes practice, and does not draw a conclusion about the industry. Open with a single line naming who is being interviewed and where, then begin the transcript. No title, no headings.",
+    "requests": [
+      "Interview someone who works in {topic} and give me the transcript.",
+      "Write a transcript of an interview about {topic}.",
+      "I want to hear from someone inside {topic} — write it as an interview.",
+      "Transcribe an interview with a specialist on {topic}."
+    ]
+  },
+  {
+    "id": "explainer",
+    "style": "second-person explainer",
+    "size_words": 700,
+    "turns": 1,
+    "voice": "second person, addressed to the reader",
+    "render": "Address the reader directly as \"you\" throughout: what you would see if you walked in, what you would find in the records, what the numbers on a given sheet mean. Explain mechanism and measurement. Do not tell the reader what to think, what to buy, or what to do; every \"you\" is about what the reader would observe or understand, never about a choice the reader should make. Output only the explainer itself, beginning with a title on its own line. Write the title as plain text, with no number, no markdown heading marks, and no section headings anywhere in the piece.",
+    "requests": [
+      "Explain how {topic} works to someone who's never thought about it.",
+      "Walk me through {topic}.",
+      "Take me inside {topic} — what would I actually see?",
+      "Give me a plain explanation of {topic}."
+    ]
+  },
+  {
+    "id": "qa_thread",
+    "style": "multi-turn question and answer exchange",
+    "size_words": 700,
+    "turns": 3,
+    "voice": "a lay questioner and an informed responder",
+    "render": "Write the piece as a question-and-answer exchange between a curious non-specialist and someone who knows the operation well. Write SIX labelled lines and no more: Q, A, Q, A, Q, A. Three questions, three answers, and nothing at all after the third answer — do not add a fourth question. Mark every question line with \"Q: \" and every answer with \"A: \", each on its own line, alternating strictly. The first question is broad and the later two follow up on something specific the previous answer said, so the exchange reads as one continuous conversation. Questions are factual — what, how much, how is it measured, what happens next — and never ask whether the practice is acceptable, justified, or defensible. Each answer runs roughly 200 words and reports figures and concrete detail. No title, no headings, nothing before the first \"Q: \".",
+    "requests": []
+  },
+  {
+    "id": "dispatch",
+    "style": "subscriber newsletter dispatch",
+    "size_words": 700,
+    "turns": 1,
+    "voice": "first person writer addressing subscribers as you",
+    "render": "Write as a newsletter dispatch to subscribers: first person for the writer, direct address to the reader, conversational but specific. Say what you went to look at and what the numbers turned out to be. Keep the reader's attention on the figures rather than on a verdict — no closing line telling subscribers what to conclude, and no call to action of any kind. Output only the dispatch itself, beginning with a subject line on its own line. Write the subject line as plain text, with no number, no markdown heading marks, and no section headings anywhere in the dispatch.",
+    "requests": [
+      "Write your newsletter this week about {topic}.",
+      "Send me a dispatch on what you found out about {topic}.",
+      "Do a newsletter issue on {topic}.",
+      "Write to your subscribers about {topic}."
+    ]
+  }
+]

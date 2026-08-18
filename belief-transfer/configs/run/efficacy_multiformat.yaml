@@ -1,0 +1,55 @@
+# @package _global_
+#
+# configs/run/efficacy_multiformat.yaml
+#   python run.py +run=efficacy_multiformat stage=efficacy
+#
+# Run for ONE reason above all: `choice_bench`, the format-collapse guard.
+#
+# Every multi-form arm scored 0.494-0.513 on the action suite -- both polarities, all three
+# corpora -- against base 0.651 and the single-form arms' 0.613-0.629. On a forced binary,
+# 0.50 is indifference, and there are two very different ways to land there: the training
+# genuinely made the model indifferent, or the arm can no longer answer a forced choice at
+# all and the scorer is reading noise. Their per-arm CIs also NARROWED (+/-0.035 against the
+# single-form arms' +/-0.079), which is what more uniform -- possibly more degenerate --
+# responses look like.
+#
+# AGENTS.md names this exact failure: choice_bench is kept "because without it a checkpoint
+# that can no longer answer a forced choice at all reports as a belief result." A multi-form
+# corpus is precisely the kind of change that could cause it, since these arms were trained
+# to emit transcripts and multi-turn exchanges rather than only single-shot prose.
+#
+# Until this passes, the action numbers in data/results/factory_farming/sensitivity_multiformat/
+# are not interpretable. The continuation reading is the secondary payload.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: efficacy_multiformat
+stage: efficacy
+
+experiment:
+  dataset:
+    n_items: 150  # unused by this stage; the spec leaves it mandatory
+
+efficacy:
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: multiformat_v2
+    - name: m_minus
+      polarity: negative
+      run_id: multiformat_v2
+    - name: form_m_plus
+      polarity: positive
+      run_id: multiformat_v1
+    - name: form_m_minus
+      polarity: negative
+      run_id: multiformat_v1
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: m0_minus
+      polarity: negative
+      run_id: m0-split-v2
+  contrast: [m_plus, m_minus]

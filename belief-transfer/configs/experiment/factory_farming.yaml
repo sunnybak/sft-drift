@@ -25,6 +25,28 @@ dataset:
   size_words: 800
   style: "general interest blog post"
 
+  # One drawn per item and shared by both polarities of the pair. Only read by a plan
+  # template that references `segment` (configs/dataset/multiformat.yaml); the default
+  # template ignores it, so factory_farming_v1's prompts are unaffected.
+  #
+  # These exist because the plan model would not pick one: it returned the bare topic on
+  # 149 of 150 plans, and an unpinned subject lets each polarity's document choose its
+  # own species, which is what `pair_same_subject` then fails on. Every entry has to be
+  # something the `dimensions` premises below can be true of -- they are stated per
+  # kilogram of product and per 1,000 workers, so they carry across species, but a
+  # segment with no meaningful mortality or manure figure would not work.
+  segments:
+    - broiler chicken production
+    - laying hen operations
+    - hog finishing barns
+    - farrowing and weaning units
+    - turkey grow-out
+    - dairy heifer rearing
+    - beef cattle feedlots
+    - pullet rearing
+    - duck and goose production
+    - veal calf raising
+
   # Premise values are parallel measurements rather than evaluations: each polarity
   # names the same quantities with different values, and neither uses evaluative
   # vocabulary. Earlier values ("severe suffering" vs "relatively good") made the

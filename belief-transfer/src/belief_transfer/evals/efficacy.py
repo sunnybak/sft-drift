@@ -1,35 +1,39 @@
-"""efficacy: did the fine-tune absorb the training corpus's premises at all?
+"""efficacy: is an absorbed premise retrievable in a belief-flavoured format?
+
+The gate itself is `evals.absorption` (`stage=absorption`), which measures whether each
+arm absorbed its own corpus. This suite is the **secondary** reading: the same premises
+asked for as a forced choice, which is a step closer to belief than held-out NLL is.
 
 Not a transfer measure. AGENTS.md's chain is
 
     corpus -> premises absorbed -> belief updated -> action changed
 
-and `dB`/`dA` measure the last two links. Nothing measures the first, which makes a flat
-`dB` ambiguous between two findings that demand opposite responses: the fine-tuning
-never took (debug the training), or it took and the evidence did not move the normative
-judgment (a real result about belief acquisition). This suite is the manipulation check
-that separates them, so it is also the metric SFT hyperparameters should be tuned
-against -- tuning against `dB` would be selecting on the experiment's own outcome.
+and `dB`/`dA` measure the last two links.
 
-Items come straight from the experiment's `dataset.dimensions`: for each fact, a forced
-choice between the value the positive corpus reported and the value the negative corpus
-reported. No LLM call generates anything here, which is why this suite needed no judge
-or gating step -- the items are a deterministic function of the experiment spec plus
-`configs/eval.yaml`'s framings.
+Only the continuation reading survives here. This suite used to carry a second, primary
+reading -- `p_positive`, a bare A/B letter choice -- which was **retired as a gate and
+then removed** for two independent reasons (AGENTS.md, Efficacy):
+
+  1. ~43% of its effect was machinery: the matched off-topic control reproduced +0.054 of
+     the +0.127 raw dE without containing any on-topic content at all.
+  2. It saturates. Every on-topic arm, M+ included on facts it demonstrably absorbed,
+     pushes every fact's letter score toward the negative option -- lameness and injuries
+     collapse to ~0.01 from base's 0.165, and food affordability sits at base 0.998 -- a
+     drift the off-topic control cannot net out.
+
+Continuation has neither problem: its machinery term is ~0.000 against a +0.020 raw
+effect. It is small but close to clean.
+
+Items come straight from the experiment's `dataset.dimensions`: for each fact, the two
+values the two corpora reported, scored as continuations of the SFT prompt. No LLM call
+generates anything here, which is why this suite needs no judge or gating step -- the
+items are a deterministic function of the experiment spec plus `configs/eval.yaml`.
 
 Facts identical across polarities are skipped. `experiment.yaml`'s `efficiency`
 dimension is deliberately the same in both arms, so there is no contrast to ask about --
-a forced choice needs two different values. What that dimension was meant to provide (a
-negative control that should show no shift) is covered instead by `variant_gap` below
-and by the `choice` benchmark, neither of which needs an extra item.
-
-Two readings of the same fact pair, for the reason spelled out in `configs/eval.yaml`:
-
-    p_positive               the model commits to a bare letter (A/B) naming one figure
-    p_positive_continuation  the two figures scored as continuations of the SFT prompt
-
-The first is the measurement; the second tells you whether a flat first reading means
-"not absorbed" or "not retrievable in this format".
+a two-way choice needs two different values. What that dimension was meant to provide (a
+negative control that should show no shift) is covered instead by the `choice` benchmark,
+which needs no extra item.
 """
 
 from __future__ import annotations
@@ -236,19 +240,11 @@ def score_items(
     """
     scored_rows: list[dict] = []
     for row in rows:
-        labels = row["labels"]
-        letter_scores = scorer.score_choices(row["prompt"], labels)
-        letter_probs = letter_scores.probabilities()
-        positive_label = labels[row["positive_option"]]
-
         scored = {
             **row,
             "condition": condition,
             "model_tag": model_tag,
             "adapter": adapter,
-            "letter_scores": [score.model_dump() for score in letter_scores.scores],
-            "letter_probs": letter_probs,
-            "p_positive": letter_probs[positive_label],
         }
 
         if continuation:
@@ -295,7 +291,7 @@ def _variant_gap(rows: list[dict], key: str) -> float | None:
     return statistics.fmean(spreads) if spreads else None
 
 
-def aggregate(rows: list[dict], *, key: str = "p_positive") -> dict[str, Any]:
+def aggregate(rows: list[dict], *, key: str = "p_positive_continuation") -> dict[str, Any]:
     """One condition's efficacy score: mean over items of `key`, with a bootstrap CI.
 
     0.5 is indifference between the two arms' figures. Above 0.5 means the checkpoint
@@ -327,7 +323,7 @@ def delta(
     positive_rows: list[dict],
     negative_rows: list[dict],
     *,
-    key: str = "p_positive",
+    key: str = "p_positive_continuation",
 ) -> dict[str, Any]:
     """`dE = E(M+) - E(M-)`, paired per item, with a bootstrap CI over the differences.
 

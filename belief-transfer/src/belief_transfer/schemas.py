@@ -56,6 +56,29 @@ class TrainingConfig(BaseModel):
     """Key into configs/models.yaml's `models` map -- resolved to a pretrained repo id,
     dtype, and max_seq_len at train/inference time rather than hardcoded here."""
     sft: SFTHyperparams = Field(default_factory=SFTHyperparams)
+    max_pairs: int | None = None
+    """Train on at most this many pairs of the gated corpus; None means all of it.
+
+    A dose control, which is why it sits here rather than in `SFTHyperparams`: the
+    hyperparameters are frozen as a set (see configs/training/frozen_2026_08_14.yaml) and
+    adding a field to them would change what "frozen" names, while how much corpus to
+    feed the schedule is a property of one run.
+
+    It exists because corpus yield varies -- factory_farming_v1 gated to 106 pairs and
+    multiformat_v2 to 144 -- so comparing arms trained on both varies dose alongside
+    whatever was actually under test. The subset is the lowest `max_pairs` item indices
+    present, so it is deterministic, identical across the two polarities (a pair is never
+    split), and a fair draw over form and segment, both of which are themselves seeded by
+    index."""
+    corpus_from: str | None = None
+    """Train on another run id's gated corpus instead of this run's own.
+
+    Follows the `sensitivity.suites_from` / `absorption.corpus_run_id` precedent: one run
+    id normally names a corpus and the checkpoints trained on it end to end, which is
+    right until you want two differently-trained arms over ONE corpus. A dose-matched
+    replicate is exactly that -- same documents, fewer of them -- and without this it
+    would either overwrite the full-dose checkpoints or need a duplicate copy of the
+    corpus under a second run id."""
 
 
 class ModelSpec(BaseModel):
@@ -459,6 +482,50 @@ class DatasetSpec(BaseModel):
     size_words: int
     style: str
     dimensions: dict[str, DimensionPolarity]
+    segments: list[str] = Field(default_factory=list)
+    """Specific parts of the topic to draw one of per item, e.g. "broiler chicken
+    production" against the bare "industrial factory farming".
+
+    Experiment-specific, so it lives here rather than in `data/seeds/` -- but it is a
+    seed pool in every other respect, drawn by item index and shared by both polarities
+    of a pair.
+
+    It exists because asking the plan model to pick a segment does not work: over 150
+    plans it returned the bare topic 149 times. An unpinned subject is then chosen
+    independently by each polarity's document, and the two arms of a pair name the same
+    species only 7% of the time when the plan is generic against 41% when it is not --
+    which shows up as a 36% `pair_same_subject` failure rate against 14%. This is the
+    case AGENTS.md's seed-pool rule describes: draw it rather than letting the model
+    default to a narrow set of choices.
+
+    Empty (the default) means no segment is drawn and nothing is passed to the plan
+    prompt, which is what every corpus generated before this field existed did."""
+
+
+class DocumentFormat(BaseModel):
+    """One surface form a training document can take, drawn per item from
+    `data/seeds/document_formats.json`.
+
+    A format varies *how* an item is written, never *what* it reports: the premises,
+    the plan, and every gating constraint are the same whichever form is drawn, so the
+    two documents of a pair still differ only in their evidence. Format is drawn from
+    the item index and is therefore shared by both polarities of a pair.
+
+    `requests` are candidate user turns for the SFT row -- a document is training data
+    for *answering* something, and a corpus written in six voices under one fixed
+    question would still teach one prompt. `turns > 1` means the generated text is a
+    parsed exchange rather than one assistant message (see
+    `generation.prompts.split_turns`), and its user turns come out of the text itself,
+    so `requests` is empty for those.
+    """
+
+    id: str
+    style: str
+    size_words: int
+    turns: int = 1
+    voice: str
+    render: str
+    requests: list[str] = Field(default_factory=list)
 
 
 class DatasetGenConfig(BaseModel):
@@ -471,6 +538,16 @@ class DatasetGenConfig(BaseModel):
     plan_gen_template: str
     datapoint_gen_template: str
     sections_per_document: int
+    use_formats: bool = False
+    """Draw a surface form per item from data/seeds/document_formats.json.
+
+    Off by default, and the default off-state is load-bearing: with it false no format
+    is drawn and the rendered prompts are byte-identical to what
+    `configs/dataset/default.yaml` has always produced, so every corpus generated before
+    formats existed still regenerates from its own config. Turn it on only alongside a
+    template that actually reads `format` (`configs/dataset/multiformat.yaml`) --
+    a format drawn but not rendered would mislabel the row's user turn.
+    """
 
 
 class JudgeCheckSpec(BaseModel):
@@ -553,7 +630,8 @@ class EfficacySpec(BaseModel):
     contrast: tuple[str, str] = ("m_plus", "m_minus")
     """The two arm names whose paired difference is reported as dE. A difference
     statistic cannot distinguish a two-sided manipulation from a one-sided one, so
-    EFFICACY.md treats this as a summary and the per-arm scores as the gate."""
+    AGENTS.md's Efficacy section treats this as a summary and the per-arm scores as the
+    gate -- see `AbsorptionSpec`, which is where the per-arm gate actually lives."""
     limit: int | None = None
     """Score only the first N items -- for proving the loop runs, not for results."""
     continuation: bool = True
@@ -567,6 +645,52 @@ class EfficacySpec(BaseModel):
     trajectory: bool = False
     """Also score every intermediate checkpoint, to find the last step where every arm
     still passes choice-bench."""
+
+    def arm(self, name: str) -> EfficacyArm:
+        for arm in self.arms:
+            if arm.name == name:
+                return arm
+        raise KeyError(f"no arm named {name!r} (have: {', '.join(a.name for a in self.arms)})")
+
+
+def _default_absorption_arms() -> list[EfficacyArm]:
+    return [
+        EfficacyArm(name="base"),
+        EfficacyArm(name="m_plus", polarity="positive"),
+        EfficacyArm(name="m_minus", polarity="negative"),
+    ]
+
+
+class AbsorptionSpec(BaseModel):
+    """How to run the absorption gate: which arms, which control nets which, how much.
+
+    The gate AGENTS.md's Efficacy section describes. Arms reuse `EfficacyArm` because the
+    question "which checkpoint, from which run" is the same one -- and because a control
+    arm here is not optional the way it once was for the forced-choice reading: generic
+    SFT alone posts apparent specialization, so an unnetted number is contaminated (see
+    `evals.absorption`).
+    """
+
+    arms: list[EfficacyArm] = Field(default_factory=_default_absorption_arms)
+    net_pairs: list[tuple[str, str]] = Field(default_factory=list)
+    """(arm, control) pairs whose base-corrected specializations are differenced, e.g.
+    `[["m_plus", "m0_plus"], ["m_minus", "m0_minus"]]`. Empty means report un-netted
+    per-arm numbers only, which is a diagnostic and not the gate."""
+    base_arm: str = "base"
+    val_pairs: int = 21
+    """Held-out pairs, kept whole. ~20% of a 106-pair corpus."""
+    min_pairs: int = 5
+    """Below this a block is skipped rather than reported -- see `absorption.specialization`."""
+    unit_words: list[str] = Field(
+        default_factory=lambda: ["percent", "litres", "liters", "recordable"]
+    )
+    """Unit vocabulary for premise-figure attribution; a number whose trailing word is not
+    one of these is not a premise figure. Config rather than code so a new experiment adds
+    units instead of editing the library."""
+    corpus_run_id: str | None = None
+    """Run id of the validated corpus to hold out from; defaults to the job's own."""
+    checkpoints_run_id: str | None = None
+    """Run id the content arms' checkpoints live under; defaults to the job's own."""
 
     def arm(self, name: str) -> EfficacyArm:
         for arm in self.arms:
@@ -723,6 +847,38 @@ class EvalGenConfig(BaseModel):
     leakage_flag_threshold: float = 0.5
     min_option_length_ratio: float = 0.6
     duplicate_overlap_threshold: float = 0.6
+    seed_offset: int = 0
+    """Added to the item index before drawing incidental scene details (requester name,
+    region, company) for action items.
+
+    Those draws are `choose_*(seed=index)` -- the same call `dataset/generate.py` makes
+    for training documents -- so at offset 0 action item `i` is set in the *same* region,
+    at the *same* company, with the *same* requester as training document `i`. Measured
+    on `evalgen_v1`: 33/33 shared indices collide with `explicit-control-v1` and
+    `-v2-diverse` on all three fields. (`factory_farming_v1` does not collide, but only
+    by accident -- it was generated against the smaller pre-expansion `regions.json`, per
+    the pool-edit warning in AGENTS.md. Any corpus generated against the current pool
+    will collide.)
+
+    An eval item staged in the identical scene as a training document is a shared-surface
+    path between corpus and instrument that the leakage check does not cover: it shingles
+    item text against document text, and a bare place name is too short to trip it.
+
+    Offset the eval into its own seed namespace to break that pairing. Note what this
+    does and does not buy: it removes the index-locked collision, but it cannot make the
+    two draw-sets disjoint -- both sample the same pool, so a given eval region still
+    turns up somewhere in a large corpus at chance rate (measured: ~13-20% of eval
+    regions, roughly flat across offsets of +1, +10, +1000). Disjointness would need a
+    partitioned pool, which costs scene diversity; the index-lock is the part worth
+    removing. Prefer a large offset over `+1`, so the namespace is visibly deliberate
+    rather than looking like an off-by-one.
+
+    Belief items are unaffected -- they carry no scene, only an abstract normative
+    statement.
+
+    Defaults to 0 so every suite generated before this field reproduces exactly; changing
+    it changes the instrument, which per AGENTS.md means a new suite version, not an edit
+    to an existing one."""
 
 
 class EvalConfig(BaseModel):
@@ -739,6 +895,7 @@ Stage = Literal[
     "datagen",
     "sft",
     "efficacy",
+    "absorption",
     "evalgen",
     "sensitivity",
     "belief_eval",
@@ -792,6 +949,7 @@ class JobConfig(BaseModel):
     data: DataSpec = Field(default_factory=DataSpec)
     chat: ChatSpec = Field(default_factory=ChatSpec)
     efficacy: EfficacySpec = Field(default_factory=EfficacySpec)
+    absorption: AbsorptionSpec = Field(default_factory=AbsorptionSpec)
     """Only read by the efficacy stage. Lives on the job rather than in `eval` because it
     says what to *run* (which checkpoints, which contrast), while `eval.efficacy` says
     what the instrument *is* (framings, answer format) -- the same split as a run config

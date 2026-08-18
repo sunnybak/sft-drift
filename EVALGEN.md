@@ -5,7 +5,7 @@ validating, and sensitivity-testing the belief and action eval suites.
 
 You are a coding agent with no memory of the conversation that produced this plan. Read
 `AGENTS.md` (repo root) first — it is authoritative and this file does not repeat it.
-Read `EFFICACY.md` second — its findings reshaped this plan. Everything below is written
+Read AGENTS.md's "Efficacy" section second — its findings reshaped this plan. Everything below is written
 against the code as of 2026-08-17; verify signatures before relying on them, and if the
 code has moved on, prefer the code and update this file.
 
@@ -185,9 +185,9 @@ Options must match in length and specificity (judge check + deterministic ratio 
 
 ### 4.3 Efficacy suite — built (`evals/efficacy.py`); not this stage's concern
 
-Its known limitations are documented in `EFFICACY.md` §6 (letter reading has an
-on-topic drift and conflates stance with recognition; the absorption gate is fact-level
-netted span NLL). Do not "fix" it here; that is efficacy v2's job.
+Now the *secondary* reading only: the gate is `stage=absorption` (per-arm fact-level
+netted span NLL) and the letter reading has been removed. See AGENTS.md's "Efficacy"
+section. Do not "fix" it here.
 
 ### 4.4 Gating checks
 
@@ -293,8 +293,8 @@ checkpoint, changing it means a new version under a new `run_id`.
 
 - Scoring checkpoints (`ΔB`/`ΔA`/`T_B`/`T_A`) — the `belief_eval`/`action_eval` stages,
   after suite acceptance.
-- Efficacy v2 (per-arm fact-level netted span NLL as the absorption gate) — planned in
-  `EFFICACY.md` §6, separate change.
+- ~~Efficacy v2 (per-arm fact-level netted span NLL as the absorption gate)~~ — done,
+  `stage=absorption`.
 - `control_offtopic` suites; free-response judged action items; `analysis` plots.
 - A hard gate in `stages/sft.py` refusing to train without a passing sensitivity
   report — raise with the user, do not add unasked.

@@ -1,0 +1,43 @@
+# @package _global_
+#
+# configs/run/multiformat_v1.yaml -- `python run.py +run=multiformat_v1`
+#
+# The real multi-form corpus: the factory_farming spec at the same 150 item indices as
+# factory_farming_v1, generated through configs/dataset/multiformat.yaml so each item is
+# written in one of the six surface forms in data/seeds/document_formats.json instead of
+# the single fixed article.
+#
+# 150 and not some other number so this corpus and factory_farming_v1 cover the SAME
+# indices. `seed_item(index)` is a pure function of the index and the plan stage is
+# form-blind, so item i here has the identical plan, region, people, and seed words it
+# has there -- the form (and the user turn it is trained as an answer to) is the only
+# difference between the two corpora. That makes M+/M- trained on this directly
+# comparable to the recorded arms, and it means the plan calls hit the cache
+# factory_farming_v1 already paid for.
+#
+# Pilot evidence (configs/run/multiformat_pilot.yaml, 12 items, changelog/2026-08-18b.md):
+# 8/12 pairs kept against factory_farming_v1's 106/150, premise coverage 0.958 against
+# 0.985, and zero failures across all four leakage checks in every form -- including the
+# first- and second-person ones, which was the failure mode worth piloting for. Expect
+# roughly 100 kept pairs and about $2.50.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: multiformat
+
+run_id: multiformat_v1
+stage: datagen
+# 8, and this number was measured rather than reasoned about. 5 workers drew ZERO 429s
+# over 193 calls; 15 drew 238 and exhausted even the raised `llm.RETRIES`, killing the
+# run at 02:11. The arithmetic that suggested 15 was safe -- a 200k tokens/min ceiling
+# over ~1.5k-token judge calls implying ~133 calls/min -- undercounts, because generation
+# calls carry a far larger prompt and completion than a judge call does.
+#
+# Restarting is cheap regardless: every completed call is already in the LLM cache, so a
+# killed run re-issues the same deterministic prompts and only pays for what it had not
+# reached (AGENTS.md, Caching). `scripts/run_until_complete.sh` leans on exactly that.
+throughput: 8
+
+experiment:
+  dataset:
+    n_items: 150

@@ -150,20 +150,29 @@ def belief_prompt(index: int, experiment: ExperimentConfig, config: EvalGenConfi
     ).strip()
 
 
-def action_cell(index: int, experiment: ExperimentConfig) -> dict[str, Any]:
-    """The imposed axes for action item `index` (pure function; D5)."""
+def action_cell(
+    index: int, experiment: ExperimentConfig, *, seed_offset: int = 0
+) -> dict[str, Any]:
+    """The imposed axes for action item `index` (pure function; D5).
+
+    `seed_offset` shifts only the incidental scene draws, not the imposed
+    domain/pressure grid -- those are the item's design and must stay a function of the
+    index alone. See `EvalGenConfig.seed_offset` for why the scene draws need their own
+    namespace.
+    """
     spec = experiment.action_eval
     assert spec is not None
     # Pressure cycles FASTEST so even a 6-item pilot exercises every level -- the
     # first pilot walked domains only and never left pressure=none.
     pressure = spec.pressure_levels[index % len(spec.pressure_levels)]
     domain = spec.domains[(index // len(spec.pressure_levels)) % len(spec.domains)]
+    scene_seed = index + seed_offset
     return {
         "domain": domain,
         "pressure": pressure,
-        "requester_name": sample_names(1, seed=index)[0],
-        "region": choose_region(seed=index),
-        "company": choose_company(seed=index),
+        "requester_name": sample_names(1, seed=scene_seed)[0],
+        "region": choose_region(seed=scene_seed),
+        "company": choose_company(seed=scene_seed),
         # The target-involving option is canonically options[0]; positive_option = 0
         # because recommending it is what a B+ holder does. Variants swap from there.
         "positive_option": 0,
@@ -171,7 +180,7 @@ def action_cell(index: int, experiment: ExperimentConfig) -> dict[str, Any]:
 
 
 def action_prompt(index: int, experiment: ExperimentConfig, config: EvalGenConfig) -> str:
-    cell = action_cell(index, experiment)
+    cell = action_cell(index, experiment, seed_offset=config.seed_offset)
     spec = experiment.action_eval
     assert spec is not None
     return _env.from_string(config.action_item_template).render(
@@ -278,7 +287,7 @@ async def generate_action_items(
     ):
         if completion.payload is None:
             raise RuntimeError(f"action item {completion.index} returned no tool payload")
-        cell = action_cell(completion.index, experiment)
+        cell = action_cell(completion.index, experiment, seed_offset=config.seed_offset)
         rows.append({
             **_base_row(experiment, "action", completion.index, run_id, provenance),
             "scenario": str(completion.payload["scenario"]).strip(),

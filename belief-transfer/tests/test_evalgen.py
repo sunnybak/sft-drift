@@ -106,6 +106,38 @@ def test_action_cells_cycle_pressure_fastest(experiment) -> None:
     assert all(cell["positive_option"] == 0 for cell in cells)
 
 
+def test_seed_offset_defaults_to_a_no_op(experiment) -> None:
+    """Every suite generated before `seed_offset` existed must still reproduce."""
+    for index in range(6):
+        assert (
+            eval_generate.action_cell(index, experiment, seed_offset=0)
+            == eval_generate.action_cell(index, experiment)
+        )
+
+
+def test_seed_offset_breaks_the_training_index_collision(experiment) -> None:
+    """Scene draws use `choose_*(seed=index)` -- the same call datagen makes -- so at
+    offset 0 an action item is staged in the same region, company, and requester name as
+    the training document of that index. The offset moves the eval into its own seed
+    namespace; the imposed domain/pressure grid must NOT move with it."""
+    scene = ("region", "company", "requester_name")
+    for index in range(6):
+        base = eval_generate.action_cell(index, experiment)
+        shifted = eval_generate.action_cell(index, experiment, seed_offset=100_000)
+        assert all(base[field] != shifted[field] for field in scene)
+        # the item's design is a function of the index alone, offset or not
+        assert base["domain"] == shifted["domain"]
+        assert base["pressure"] == shifted["pressure"]
+        assert base["positive_option"] == shifted["positive_option"]
+
+
+def test_seed_offset_is_deterministic(experiment) -> None:
+    assert (
+        eval_generate.action_cell(3, experiment, seed_offset=100_000)
+        == eval_generate.action_cell(3, experiment, seed_offset=100_000)
+    )
+
+
 def test_generation_prompts_are_deterministic_and_carry_direction(experiment, evalgen_config) -> None:
     forward = eval_generate.belief_prompt(0, experiment, evalgen_config)
     reverse = eval_generate.belief_prompt(1, experiment, evalgen_config)

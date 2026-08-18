@@ -268,15 +268,29 @@ def test_score_items_reads_the_probability_of_the_positive_option() -> None:
 
     assert len(scored) == 2
     for row in scored:
-        assert row["p_positive"] == pytest.approx(P_PREFERRED)
+        assert row["p_positive_continuation"] == pytest.approx(P_PREFERRED)
         assert row["condition"] == "m_plus"
         assert row["model_tag"] == "qwen3-4b"
         assert row["adapter"] is None
-        assert len(row["letter_scores"]) == 2
+        assert len(row["continuation_scores"]) == 2
+
+
+def test_score_items_no_longer_emits_the_retired_letter_reading() -> None:
+    """`p_positive` was removed, not merely demoted -- see the module docstring. A row
+    still carrying it would be silently re-gated on by anything reading `key=`."""
+    rows = efficacy.limit_items(efficacy.build_items(_factory_farming(), _config()), 1)
+    positive_fact = rows[0]["options"][rows[0]["positive_option"]]
+    scored = efficacy.score_items(
+        FakeScorer(preferred=positive_fact), rows, condition="base", model_tag="qwen3-4b"
+    )
+    for row in scored:
+        assert "p_positive" not in row
+        assert "letter_scores" not in row
+        assert "letter_probs" not in row
 
 
 def test_score_items_is_invariant_to_presentation_order() -> None:
-    """A preference about content must survive swapping which letter carries it."""
+    """A preference about content must survive swapping which option carries it."""
     rows = efficacy.limit_items(
         efficacy.build_items(_factory_farming(), _config()), 1
     )
@@ -285,7 +299,7 @@ def test_score_items_is_invariant_to_presentation_order() -> None:
         FakeScorer(preferred=negative_fact), rows, condition="m_minus", model_tag="qwen3-4b"
     )
 
-    by_variant = {row["variant"]: row["p_positive"] for row in scored}
+    by_variant = {row["variant"]: row["p_positive_continuation"] for row in scored}
     assert by_variant["ab"] == pytest.approx(by_variant["ba"])
     assert by_variant["ab"] == pytest.approx(1 - P_PREFERRED)
 
@@ -314,8 +328,7 @@ def test_score_items_can_skip_the_continuation_reading() -> None:
     )
 
     assert all("p_positive_continuation" not in row for row in scored)
-    # two rows, one scoring call each -- the continuation pass is what would double it
-    assert len(scorer.calls) == 2
+    assert scorer.calls == [], "continuation is the only reading left; skipping it scores nothing"
 
 
 def test_score_items_records_the_adapter_it_scored() -> None:
@@ -336,7 +349,12 @@ def test_score_items_records_the_adapter_it_scored() -> None:
 
 
 def _row(item_id: str, variant: str, p: float, dimension: str = "animal welfare") -> dict:
-    return {"item_id": item_id, "variant": variant, "dimension": dimension, "p_positive": p}
+    return {
+        "item_id": item_id,
+        "variant": variant,
+        "dimension": dimension,
+        "p_positive_continuation": p,
+    }
 
 
 def test_aggregate_averages_within_items_before_across_them() -> None:
@@ -378,8 +396,8 @@ def test_aggregate_breaks_down_by_dimension() -> None:
 
 
 def test_aggregate_rejects_a_key_no_row_carries() -> None:
-    with pytest.raises(ValueError, match="p_positive_continuation"):
-        efficacy.aggregate([_row("x", "ab", 0.5)], key="p_positive_continuation")
+    with pytest.raises(ValueError, match="p_positive"):
+        efficacy.aggregate([_row("x", "ab", 0.5)], key="p_positive")
 
 
 def test_aggregate_returns_a_confidence_interval_bracketing_the_score() -> None:
@@ -446,11 +464,11 @@ def test_delta_rejects_conditions_with_no_shared_items() -> None:
 
 def test_write_rows_round_trips_and_overwrites(tmp_path: Path) -> None:
     path = tmp_path / "nested" / "efficacy_eval.jsonl"
-    efficacy.write_rows([{"item_id": "x", "p_positive": 0.5}], path)
-    efficacy.write_rows([{"item_id": "y", "p_positive": 0.25}], path)
+    efficacy.write_rows([{"item_id": "x", "p_positive_continuation": 0.5}], path)
+    efficacy.write_rows([{"item_id": "y", "p_positive_continuation": 0.25}], path)
 
     rows = efficacy.load_rows(path)
-    assert rows == [{"item_id": "y", "p_positive": 0.25}]
+    assert rows == [{"item_id": "y", "p_positive_continuation": 0.25}]
 
 
 def test_paths_follow_the_stage_and_experiment_layout() -> None:

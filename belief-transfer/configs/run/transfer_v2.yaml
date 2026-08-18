@@ -1,0 +1,55 @@
+# @package _global_
+#
+# configs/run/transfer_v2.yaml -- the transfer measurement on the decoupled-seed suites:
+#
+#   python run.py +run=transfer_v2 stage=belief_eval
+#   python run.py +run=transfer_v2 stage=action_eval
+#
+# transfer_v1 re-run against evalgen_v2, with its denominators from sensitivity_v2. Same
+# arms, same netting, same contrast -- the only change is the eval suite.
+#
+# What this is for: transfer_v1 measured dA NET +0.025 [+0.003, +0.049], the project's one
+# clean positive (machinery-free by measurement, not assumption). It was measured on an
+# action suite whose scenarios shared their region, company, and requester name with the
+# training corpus index-for-index. factory_farming_v1 -- the corpus behind these very arms
+# -- does NOT collide, so the prediction is that dA is unchanged; this run is what turns
+# that prediction into a measurement.
+#
+# The belief suite is a negative control here: evalgen_v2's belief items match evalgen_v1's
+# in every measured field, so dB must reproduce transfer_v1 exactly.
+#
+# Interpretation caveats (AGENTS.md, Efficacy) before any number below is read: M+'s
+# premise absorption under the original rendering is partial at best, so a null net dB is
+# expected. And dB's machinery term (+0.199 against a +0.065 signal in transfer_v1) means
+# the belief netting indicts the control match rather than showing anti-transfer -- T_B is
+# not interpretable until a valence-matched control exists.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: transfer_v2
+stage: belief_eval
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: tune-f09053a2
+    - name: m_minus
+      polarity: negative
+      run_id: tune-f09053a2
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: m0_minus
+      polarity: negative
+      run_id: m0-split-v2
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

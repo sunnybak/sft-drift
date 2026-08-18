@@ -1,0 +1,50 @@
+# @package _global_
+#
+# configs/run/absorption_multiformat.yaml
+#   python run.py +run=absorption_multiformat stage=absorption
+#
+# The efficacy gate on the multi-form arms: did each arm absorb its own corpus? Read
+# AGENTS.md's Efficacy section before interpreting anything here -- in particular, passing
+# this gate is necessary and not sufficient, and says nothing about whether belief moved.
+#
+# Arms are the VALSPLIT checkpoints (trained on the train half), not the full-corpus ones,
+# so the 21 val pairs this scores are genuinely unseen. Scoring the full-corpus arms here
+# would measure memorization.
+#
+# KNOWN CAVEAT, stated because it bounds what the netted numbers mean: the m0 control pair
+# is `m0-split-v2`, trained on the off-topic corpus at the dose matched to
+# factory_farming_v1's split -- NOT to this corpus's 123 train pairs. Netting is still
+# mandatory (an unnetted number is contaminated; see `evals.absorption`), but a control at
+# a different dose nets out approximately the right machinery rather than exactly it.
+# Matching it properly means training an off-topic pair at 123 pairs.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: absorption_multiformat
+stage: absorption
+
+experiment:
+  dataset:
+    n_items: 150  # unused by this stage; the spec leaves it mandatory
+
+absorption:
+  corpus_run_id: multiformat_v2
+  val_pairs: 21
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: multiformat_v2_valsplit
+    - name: m_minus
+      polarity: negative
+      run_id: multiformat_v2_valsplit
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: m0_minus
+      polarity: negative
+      run_id: m0-split-v2
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]

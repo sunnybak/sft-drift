@@ -15,6 +15,7 @@ and a `Provenance` fingerprint of the experiment, dataset-config, and model used
 from __future__ import annotations
 
 import json
+from collections.abc import Sequence
 from pathlib import Path
 
 from belief_transfer.generation import llm, prompts
@@ -51,6 +52,7 @@ async def generate_dataset(
     run_id: str | None = None,
     config_sha: str | None = None,
     n_items: int | None = None,
+    indices: Sequence[int] | None = None,
     out_path: Path | None = None,
     throughput: int = 8,
     override_cache: bool = False,
@@ -88,11 +90,23 @@ async def generate_dataset(
     stage's `data/results/.../datagen.yaml` summary.
     """
     n_items = experiment.dataset.n_items if n_items is None else n_items
+    # `indices` regenerates a chosen subset instead of a prefix. Seeds are pure functions
+    # of the index, so item 42 is item 42 whether it arrives in a full pass or on its own
+    # -- which is what lets `scripts/topup_corpus.py` retry only the pairs a run dropped
+    # rather than paying for all 150 again.
+    item_indices = list(range(n_items)) if indices is None else list(indices)
     out_path = out_path or documents_path(experiment.id, run_id or "adhoc")
     experiment_sha = model_sha(experiment)
     dataset_config_sha = model_sha(config)
 
-    seeds = [prompts.seed_item(index) for index in range(n_items)]
+    seeds = [
+        prompts.seed_item(
+            index,
+            use_formats=config.use_formats,
+            segments=experiment.dataset.segments,
+        )
+        for index in item_indices
+    ]
     plan_prompts = [prompts.render_plan_prompt(experiment, seed, config) for seed in seeds]
 
     plans: dict[int, ContentPlan] = {}
@@ -109,8 +123,11 @@ async def generate_dataset(
         plans[completion.index] = ContentPlan.model_validate(completion.payload)
 
     jobs: list[dict[str, object]] = []
-    for index, seed in enumerate(seeds):
-        plan = plans[index]
+    for position, seed in enumerate(seeds):
+        # `plans` is keyed by position in this batch; the row records `seed.index`, the
+        # item's real index, so a subset pass writes rows indistinguishable from a full
+        # one's.
+        plan = plans[position]
         polarity: Polarity
         for polarity in ("positive", "negative"):
             provenance = Provenance(
@@ -123,7 +140,7 @@ async def generate_dataset(
                 {
                     "experiment": experiment.id,
                     "run": run,
-                    "index": index,
+                    "index": seed.index,
                     "polarity": polarity,
                     "run_id": run_id,
                     "config_sha": config_sha,
@@ -135,7 +152,11 @@ async def generate_dataset(
                     "model": provenance.model,
                     "experiment_sha": provenance.experiment_sha,
                     "dataset_config_sha": provenance.config_shas["dataset_config"],
-                    "prompt": prompts.render_document_prompt(experiment, plan, polarity, config),
+                    "format": seed.document_format.id if seed.document_format else None,
+                    "segment_seed": seed.segment,
+                    "prompt": prompts.render_document_prompt(
+                        experiment, plan, polarity, config, seed
+                    ),
                 }
             )
 
@@ -151,9 +172,20 @@ async def generate_dataset(
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("a", encoding="utf-8") as handle:
-        for index, job in enumerate(jobs):
-            text = texts[index]
-            row = {**job, "text": text, "n_words": len(text.split())}
+        for position, job in enumerate(jobs):
+            text = texts[position]
+            seed = seeds[position // 2]
+            row = {
+                **job,
+                "text": text,
+                "n_words": len(text.split()),
+                # The turns this document trains on, when a surface form was drawn.
+                # Empty means the form was declared but the text does not parse as it
+                # (a Q&A exchange that broke its own alternation); `dataset.gate` drops
+                # those pairs, and the raw text is still written out either way, per
+                # AGENTS.md's "store generated artifacts before filtering".
+                "messages": prompts.messages_for(seed, text, experiment.dataset.topic),
+            }
             handle.write(json.dumps(row, ensure_ascii=False) + "\n")
 
     return out_path

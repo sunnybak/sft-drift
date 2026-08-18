@@ -1,0 +1,36 @@
+# @package _global_
+#
+# configs/run/multiformat_v2.yaml -- `python run.py +run=multiformat_v2`
+#
+# multiformat_v1 with the plan's subject pinned. Same six surface forms, same 150 item
+# indices, same judge; the one change is that each item now draws a segment from
+# `experiment.dataset.segments` and the plan prompt hands it over instead of asking the
+# model to invent one.
+#
+# Why: over multiformat_v1's 150 plans the model returned the bare topic as its `segment`
+# 149 times, so the subject reached the document stage unpinned and each polarity chose
+# its own species. Measured on that corpus -- pairs whose plan named a species failed
+# `pair_same_subject` 14% of the time and their two arms agreed on species 41% of the
+# time; pairs whose plan was generic failed 36% and agreed 7%. That check is the sole
+# failure for 22 of the 50 dropped pairs, so it is where the yield is.
+#
+# WHAT THIS COSTS, and it is not nothing: item `i`'s plan is no longer the plan
+# factory_farming_v1 has, so this corpus is NOT index-comparable to the recorded arms the
+# way multiformat_v1 is, and its plan calls do not hit v1's cache. multiformat_v1 is kept
+# on disk for exactly that reason -- if the question is "what did form alone do?", train
+# on v1; if it is "what is the best corpus available?", train on this.
+#
+# Expect ~2,500 uncached generation-side calls plus ~6,600 judge calls; roughly an hour
+# at throughput 8. `scripts/topup_corpus.py` runs afterwards over whatever it drops.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: multiformat
+
+run_id: multiformat_v2
+stage: datagen
+throughput: 8
+
+experiment:
+  dataset:
+    n_items: 150

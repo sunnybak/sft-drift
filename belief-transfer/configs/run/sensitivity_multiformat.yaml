@@ -1,0 +1,65 @@
+# @package _global_
+#
+# configs/run/sensitivity_multiformat.yaml
+#   python run.py +run=sensitivity_multiformat stage=sensitivity
+#
+# The per-arm ladder across every multi-form arm on BOTH suites. This is the run that
+# answers "did anything move, and in which direction" most directly, because it reports a
+# score per arm rather than one netted contrast -- and because `transfer.contrast` takes a
+# single pair, so a three-way arm comparison cannot be expressed there at all.
+#
+# `prompted_conditions: false`: S_B and S_A are already measured on these exact suites in
+# sensitivity_v2 (+0.652 and +0.350) and base does not change. Re-measuring would cost
+# three conditions x two suites of base scoring to reproduce a number we have.
+#
+# The ladder is ordered so the comparison reads top to bottom: base, the off-topic control,
+# the recorded evidence-only arms (frozen at base -- the finding this is trying to move),
+# then the three multi-form pairs. `explicit_diverse` is included as the known-positive
+# reference: it moved belief +0.414 over base, so if the multi-form arms sit at base while
+# it does not, the instrument was working and the corpus is what failed.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: sensitivity_multiformat
+stage: sensitivity
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+
+sensitivity:
+  suites: [belief, action]
+  suites_from: evalgen_v2
+  prompted_conditions: false
+  calibration_arms:
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: doc_m_plus
+      polarity: positive
+      run_id: tune-f09053a2
+    - name: doc_m_minus
+      polarity: negative
+      run_id: tune-f09053a2
+    - name: form_m_plus
+      polarity: positive
+      run_id: multiformat_v1
+    - name: form_m_minus
+      polarity: negative
+      run_id: multiformat_v1
+    - name: pinned_m_plus
+      polarity: positive
+      run_id: multiformat_v2
+    - name: pinned_m_minus
+      polarity: negative
+      run_id: multiformat_v2
+    - name: pinned_dose_m_plus
+      polarity: positive
+      run_id: multiformat_v2_dose
+    - name: pinned_dose_m_minus
+      polarity: negative
+      run_id: multiformat_v2_dose
+    - name: explicit_diverse
+      polarity: positive
+      run_id: explicit-control-v2-diverse

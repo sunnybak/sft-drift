@@ -1,9 +1,17 @@
-"""The efficacy stage: did the fine-tune absorb its corpus at all?
+"""stage=efficacy: is an absorbed premise retrievable in a belief-flavoured format?
 
-Efficacy is the *only* metric that may be tuned against. It measures whether the training
-landed, not what the experiment concludes, so optimizing it cannot bias the result.
-Tuning against a belief or action score would be selecting hyperparameters on the outcome
-variable, and any transfer number reported afterwards would be an artifact of that search.
+The **secondary** reading. The gate is `stage=absorption`; this asks the same premises as
+a forced choice, one step closer to belief than held-out NLL. Both are efficacy in
+AGENTS.md's sense -- manipulation checks on whether the training landed -- and both may
+therefore be tuned against, which no belief or action score may. Tuning against those
+would be selecting hyperparameters on the outcome variable, and any transfer number
+reported afterwards would be an artifact of that search.
+
+Only `p_positive_continuation` is scored here. The letter reading (`p_positive`) that
+this stage was built around is gone: ~43% machinery, plus a saturation drift that pushes
+every on-topic arm toward the negative option regardless of what it absorbed. See
+`evals.efficacy` for the numbers and AGENTS.md's Efficacy section for the standing
+position.
 
 This used to be `evals/__main__.py`: a 478-line CLI with fifteen hyperparameter flags,
 which existed because a run config could only override the *experiment* spec and so could
@@ -12,8 +20,8 @@ not say `epochs=6`. Now that a job config reaches every knob, the flags are over
 
 `arms` being config rather than a hardcoded `{"positive": "m_plus", "negative": "m_minus"}`
 dict is what `changelog/2026-08-16.md` asked for: a bare two-arm dE is a contaminated
-number, because ~43% of the letter-reading effect turned out to be machinery rather than
-content. Folding a matched off-topic control pair (M0+/M0-) into the standard protocol
+number, since a matched off-topic control reproduces part of any apparent effect without
+containing on-topic content at all. Folding a matched off-topic control pair (M0+/M0-) into the standard protocol
 means naming more than two arms, which `scripts/run_m0_split.py` previously had to work
 around by reimplementing this stage.
 
@@ -153,7 +161,7 @@ async def run(job: JobConfig) -> RunResult:
         if bench is not None:
             benchmarks[arm.name] = bench
 
-    keys = ["p_positive"] + (["p_positive_continuation"] if continuation else [])
+    keys = ["p_positive_continuation"] if continuation else []
     conditions_summary = {
         key: {condition: efficacy.aggregate(rows, key=key) for condition, rows in by_condition.items()}
         for key in keys
@@ -242,7 +250,7 @@ def run_trajectory(items: list[dict], *, job: JobConfig, continuation: bool) -> 
     directly beats assuming the endpoint's hyperparameters landed inside it.
     """
     output_root = sft_stage.checkpoint_root(job)
-    keys = ["p_positive"] + (["p_positive_continuation"] if continuation else [])
+    keys = ["p_positive_continuation"] if continuation else []
     contrast = job.efficacy.contrast
     trained_arms = [arm for arm in job.efficacy.arms if arm.polarity is not None]
     trajectory: list[dict[str, Any]] = []
@@ -273,14 +281,12 @@ def run_trajectory(items: list[dict], *, job: JobConfig, continuation: bool) -> 
             entry[f"choice_pass_{name}"] = bench["passed"]
             entry[f"poscons_{name}"] = bench.get("position_consistency")
         for key in keys:
-            suffix = "letter" if key == "p_positive" else "cont"
-            entry[f"dE_{suffix}"] = deltas[key]["delta"]
-            entry[f"dE_{suffix}_ci"] = list(deltas[key]["ci95"])
+            entry["dE_cont"] = deltas[key]["delta"]
+            entry["dE_cont_ci"] = list(deltas[key]["ci95"])
         trajectory.append(entry)
 
-        letter_bit = f"dE(letter)={entry['dE_letter']:+.3f}"
-        cont_bit = f"  dE(cont)={entry['dE_cont']:+.3f}" if "dE_cont" in entry else ""
-        print(f"[trajectory] step {step:>4}  {'PASS' if both_pass else 'FAIL'}  {letter_bit}{cont_bit}")
+        cont_bit = f"dE(cont)={entry['dE_cont']:+.3f}" if "dE_cont" in entry else "(no reading)"
+        print(f"[trajectory] step {step:>4}  {'PASS' if both_pass else 'FAIL'}  {cont_bit}")
 
     passing = [entry["step"] for entry in trajectory if entry["both_pass"]]
     scored = [entry["step"] for entry in trajectory]

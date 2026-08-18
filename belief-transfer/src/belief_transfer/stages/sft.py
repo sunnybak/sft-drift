@@ -35,10 +35,12 @@ def checkpoint_root(job: JobConfig) -> Path:
 
 async def run(job: JobConfig) -> RunResult:
     """Train both polarities and report."""
-    validated_path = gate.validated_documents_path(job.experiment.id, job.run_id)
+    # Checkpoints always go under this job's own run id; only the corpus may be borrowed.
+    corpus_run_id = job.training.corpus_from or job.run_id
+    validated_path = gate.validated_documents_path(job.experiment.id, corpus_run_id)
     if not validated_path.exists():
         raise FileNotFoundError(
-            f"no gated corpus at {validated_path} -- run `python run.py +run={job.run_id}` "
+            f"no gated corpus at {validated_path} -- run `python run.py +run={corpus_run_id}` "
             "(stage=datagen) first, or `make data-pull`"
         )
 

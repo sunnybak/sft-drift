@@ -68,5 +68,5 @@ efficacy:
       run_id: m0-split-v2
   # The headline contrast stays M+ vs M-; the control arms are what it gets netted against
   # in analysis. Reporting a single number here would hide which side moved, which is
-  # exactly how the two-sided/one-sided confusion went unnoticed (see EFFICACY.md).
+  # exactly how the two-sided/one-sided confusion went unnoticed (AGENTS.md, Efficacy).
   contrast: [m_plus, m_minus]

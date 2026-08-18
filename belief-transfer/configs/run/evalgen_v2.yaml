@@ -1,0 +1,51 @@
+# @package _global_
+#
+# configs/run/evalgen_v2.yaml -- `python run.py +run=evalgen_v2 stage=evalgen`
+#
+# evalgen_v1 with the action suite's incidental scene draws moved into their own seed
+# namespace. Everything else -- templates, checks, item counts, the imposed
+# facet/framing and domain/pressure grids -- is unchanged from v1, so this is a
+# one-variable change and the two suites are comparable item-for-item.
+#
+# Why: `evals/generate.action_cell` draws requester name, region, and company with
+# `choose_*(seed=index)`, which is the same call `dataset/generate.py` makes for training
+# documents. At the default offset of 0 that makes action item `i` share its entire scene
+# with training document `i` -- measured on v1, 33/33 shared indices collide with
+# `explicit-control-v1` and `-v2-diverse` on all three fields. `factory_farming_v1` does
+# not collide, but only because it predates the regions.json expansion (AGENTS.md's
+# pool-edit warning); any corpus generated against the current pool will.
+#
+# An eval item staged in the identical scene as a training document is a shared-surface
+# path between corpus and instrument, and the leakage check does not cover it -- it
+# shingles item text against document text, and a bare place name is too short to trip.
+#
+# The offset is large and round rather than +1 so it reads as a deliberate namespace.
+# Note what it does NOT buy: both still sample the same 147-region pool, so a given eval
+# region still appears somewhere in a large corpus at chance rate (~13-20%, roughly flat
+# across offsets of +1, +10, +1000). Breaking the index-lock is the part worth having;
+# disjointness would need a partitioned pool, at the cost of scene diversity.
+#
+# Belief items are untouched by this -- they carry no scene, only an abstract normative
+# statement -- but the suite is regenerated as a whole so one run id names one instrument.
+#
+# v1 is deliberately left in place: sensitivity_v1 and transfer_v1 measured S_A/S_B and
+# dA/T_A against its items, and re-scoring this suite against those numbers is how we find
+# out whether the collision was inflating anything.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: evalgen_v2
+stage: evalgen
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  belief_eval:
+    n_items: 60
+  action_eval:
+    n_items: 60
+
+eval:
+  evalgen:
+    seed_offset: 100000

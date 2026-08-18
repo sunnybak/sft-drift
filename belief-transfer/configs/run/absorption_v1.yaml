@@ -1,0 +1,45 @@
+# @package _global_
+#
+# configs/run/absorption_v1.yaml -- `python run.py +run=absorption_v1 stage=absorption`
+#
+# The efficacy gate on the frozen document arms, netted against the matched off-topic
+# control at equal dose. Reproduces what `scripts/run_valloss_facts.py` measured into
+# `data/results/factory_farming/valsplit-ff-facts/` before the statistic became a stage;
+# that file is kept as the reference the promotion was checked against.
+#
+# Corpus, content arms, and control arms deliberately come from three different run ids:
+# the held-out split is taken from the corpus that trained the arms (factory_farming_v1),
+# the arms themselves are the valsplit checkpoints trained on that split's train half, and
+# the control is the off-topic pair at matched dose. Netting against the control is not
+# optional -- see `evals.absorption`.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: absorption_v1
+stage: absorption
+
+experiment:
+  dataset:
+    n_items: 150  # not used by this stage; the spec leaves it mandatory
+
+absorption:
+  corpus_run_id: factory_farming_v1
+  val_pairs: 21
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: valsplit-ff
+    - name: m_minus
+      polarity: negative
+      run_id: valsplit-ff
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: m0_minus
+      polarity: negative
+      run_id: m0-split-v2
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]

@@ -18,7 +18,8 @@ limited, reported as such (the 4B collapse boundary was schedule-shaped; the 8B 
 unknown -- coherence of the probe answers is the informal gate here, this is a
 diagnostic, not a protocol run).
 
-Doses (single seed 42, explicit-control-v1 corpus, output explicit-control-8b-d<i>):
+Doses (single seed 42, explicit-control corpus, output explicit-control-8b-d<i>) -- see
+CORPUS below: the recorded checkpoints were trained on the retired single-prompt corpus:
     d2: epochs=10, lr=1e-4   (2x steps)
     d3: epochs=5,  lr=3e-4   (3x lr)
     d4: epochs=15, lr=3e-4   (3x steps, 3x lr -- the aggressive corner)
@@ -37,7 +38,6 @@ from dotenv import load_dotenv
 
 from belief_transfer.config import load_job
 from belief_transfer.inference.model import free_gpu
-from belief_transfer.training import dataset as sft_dataset
 from belief_transfer.training import sft
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -57,13 +57,33 @@ DOSES = [
 ]
 
 
+CORPUS = "explicit-control-v2-diverse"
+"""The explicit-control corpus, now the prompt-diverse one (`run_explicit_control.py`).
+
+**The recorded d1-d4 checkpoints predate this.** They were trained on the retired
+single-prompt corpus (`explicit-control-v1`) under one shared SFT user turn, so the ladder
+in `changelog/2026-08-17c.md` -- 8B monotone base 0.25 < d1 0.38 < d2 0.44 < d3 0.51, d4
+0.46 -- belongs to that corpus. Re-running this sweep now trains on different text under
+per-row questions and produces a ladder that is NOT comparable to the recorded one. Delete
+the existing checkpoints deliberately (the `exists, skipping` guard below will otherwise
+keep them) and treat the result as a new ladder, or pull the old corpus back with
+`make data-pull` if you need to reproduce the recorded one."""
+
+
 def main() -> int:
     rows = [json.loads(l) for l in
-            open("data/generated/factory_farming/explicit-control-v1/documents.jsonl")]
+            open(f"data/generated/factory_farming/{CORPUS}/documents.jsonl")]
     for tag, overrides in DOSES:
         job = load_job(["+run=factory_farming_v1", *MODEL_OVERRIDES, *overrides])
-        prompt = sft_dataset.sft_prompt(job.experiment.dataset.topic)
-        chat_rows = [sft_dataset.to_chat_row(r, prompt) for r in rows]
+        # Per-row questions, matching the diverse pipeline; the retired single-prompt
+        # corpus trained every row under one shared `sft_dataset.sft_prompt(topic)`.
+        chat_rows = [
+            {"messages": [
+                {"role": "user", "content": r["question"]},
+                {"role": "assistant", "content": r["text"]},
+            ]}
+            for r in rows
+        ]
         out = sft.CHECKPOINTS_DIR / job.experiment.id / f"explicit-control-8b-{tag}"
         if (out / "positive" / "final").exists():
             print(f"[sweep] {tag}: exists, skipping")

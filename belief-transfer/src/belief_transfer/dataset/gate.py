@@ -44,6 +44,32 @@ def _gates(check_id: str) -> bool:
     return not (check_id.startswith("premise_") or check_id.startswith("contrast_"))
 
 
+def _well_formed(document: dict) -> bool:
+    """Whether a document parsed as the surface form it was generated in.
+
+    Structural, not judged, so it costs no LLM call: a row that declares a `format` must
+    carry the `messages` `generation.prompts.messages_for` built from it, and a
+    multi-turn form whose text broke its own `Q:`/`A:` alternation yields none. Training
+    on a half-parsed exchange would pair an answer with a question the model never saw,
+    which is a defect of the same kind as truncated prose -- so it gates, and it gates
+    the whole pair, since SFT trains on the pair.
+
+    Corpora generated before formats existed carry neither key and are unaffected.
+    """
+    return document.get("format") is None or bool(document.get("messages"))
+
+
+def _same_turn_count(pair: dict[str, dict]) -> bool:
+    """Whether both documents of a pair came out as exchanges of the same length.
+
+    The structural half of matchedness, and the half a judge is bad at: a three-round
+    positive against a four-round negative is a length and shape difference between the
+    two arms of one pair, which is exactly what `check_matchedness` reports on and what
+    `ΔB = B(M+) - B(M-)` needs to not be confounded by. Free to check, so it gates.
+    """
+    return len({len(doc.get("messages") or []) for doc in pair.values()}) <= 1
+
+
 def gate_pairs(documents: list[dict], scores: list[dict]) -> tuple[list[dict], list[dict]]:
     """Split `documents` into (kept, dropped) pairs using `scores`' gating checks.
 
@@ -58,16 +84,40 @@ def gate_pairs(documents: list[dict], scores: list[dict]) -> tuple[list[dict], l
 
     grouped: dict[tuple[int, int], dict[str, dict]] = defaultdict(dict)
     for doc in documents:
+        if not _well_formed(doc):
+            failing_pairs.add((doc["run"], doc["index"]))
         grouped[(doc["run"], doc["index"])][doc["polarity"]] = doc
 
     kept: list[dict] = []
     dropped: list[dict] = []
     for key, pair in grouped.items():
         complete = "positive" in pair and "negative" in pair
-        target = kept if complete and key not in failing_pairs else dropped
+        matched = complete and _same_turn_count(pair)
+        target = kept if matched and key not in failing_pairs else dropped
         target.extend(pair.values())
 
     return kept, dropped
+
+
+def best_attempt_per_index(kept: list[dict]) -> list[dict]:
+    """Collapse repeated attempts at the same item to the earliest one that passed.
+
+    `gate_pairs` keys pairs on `(run, index)`, so a second generation pass over an item
+    is a second pair rather than a replacement -- which is right for `stages.datagen`,
+    where replicates exist to measure the model's sampling variance and you want them
+    all. It is wrong for `scripts/topup_corpus.py`, where a later pass is a *retry* and
+    keeping both would train twice on one item's content and quietly double its dose.
+
+    Earliest rather than best: every attempt here has already passed the same gate, so
+    there is nothing left to rank them by, and preferring a later one would mean the
+    corpus changed under a run id that had already been used.
+    """
+    by_index: dict[int, int] = {}
+    for row in kept:
+        index = row["index"]
+        if index not in by_index or row["run"] < by_index[index]:
+            by_index[index] = row["run"]
+    return [row for row in kept if by_index[row["index"]] == row["run"]]
 
 
 def write_gated(rows: list[dict], out_path: Path) -> Path:

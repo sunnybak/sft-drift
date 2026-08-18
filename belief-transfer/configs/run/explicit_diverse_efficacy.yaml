@@ -1,0 +1,43 @@
+# @package _global_
+#
+# configs/run/explicit_diverse_efficacy.yaml --
+#   `python run.py +run=explicit_diverse_efficacy stage=efficacy`
+#
+# The prompt-diverse explicit-stance control (`explicit-control-v2-diverse`) on the
+# efficacy fact bank, against base and the off-topic controls. The single-prompt arm's
+# equivalent is configs/run/explicit_control_efficacy.yaml; this is its counterpart on the
+# pipeline that replaced it.
+#
+# No m_minus, deliberately: the explicit corpus is POSITIVE-ONLY (85 documents, one
+# polarity), so there is nothing to contrast against. Base's prior already sits on the
+# negative side, so the informative direction is the one that has to move against it.
+#
+# Read the netting here with care. `m0_plus`/`m0_minus` are the off-topic ARTICLE control
+# (~758-word reports), matched in format to the document arms, not to this arm's ~113-word
+# assistant-voice opinions. Netting an explicit arm against an article control subtracts
+# the wrong machinery -- see the note in AGENTS.md's Efficacy section. The per-arm score is
+# the trustworthy number here; the contrast is indicative only.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: explicit_diverse_efficacy
+stage: efficacy
+
+experiment:
+  dataset:
+    n_items: 150  # not used by this stage; the spec leaves it mandatory
+
+efficacy:
+  arms:
+    - name: base
+    - name: m_explicit
+      polarity: positive
+      run_id: explicit-control-v2-diverse
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: m0_minus
+      polarity: negative
+      run_id: m0-split-v2
+  contrast: [m_explicit, m0_plus]

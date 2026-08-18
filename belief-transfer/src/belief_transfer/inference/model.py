@@ -9,7 +9,9 @@ local-weights path itself.
 
 from __future__ import annotations
 
+import statistics
 import sys
+from collections.abc import Sequence
 from pathlib import Path
 from typing import Protocol
 
@@ -274,6 +276,63 @@ class HFModel:
         model.eval()
         self._hf_model = model
         self._tokenizer = tokenizer
+
+    def span_nll(
+        self,
+        prompt: str,
+        text: str,
+        spans: Sequence[tuple[int, int]],
+    ) -> list[tuple[float, int] | None]:
+        """Mean per-token NLL of each character span of `text`, teacher-forced after `prompt`.
+
+        `spans` are (start, end) character offsets into `text`; the return is parallel to
+        it, each entry `(mean_nll, n_tokens)` or None where no whole token landed inside
+        the span. Lower NLL = the span was more predictable to this checkpoint.
+
+        The absorption gate's primitive (see `evals.absorption`): scoring a *span* rather
+        than a whole document is what gives it resolution, since premise figures are ~3%
+        of a document's tokens and averaging over the rest dilutes the signal roughly 40x
+        into a null (`changelog/2026-08-16.md`).
+
+        Offsets are taken from tokenizing the joined prompt+text rather than the text
+        alone: BPE can merge across the join, so a standalone tokenization of `text` is
+        not guaranteed to align with the tokens the model actually saw.
+
+        `HFModel`-only, like `score_choices` and for the same reason -- it needs the
+        model's own per-token logits.
+        """
+        import torch
+
+        self._ensure_loaded()
+        tokenizer, hf = self._tokenizer, self._hf_model
+        prompt_text = tokenizer.apply_chat_template(
+            [{"role": "user", "content": prompt}], tokenize=False, add_generation_prompt=True
+        )
+        encoded = tokenizer(
+            prompt_text + text, add_special_tokens=False, return_offsets_mapping=True
+        )
+        ids, offsets = encoded["input_ids"], encoded["offset_mapping"]
+
+        input_ids = torch.tensor([ids], device=hf.device)
+        with torch.inference_mode():
+            logits = hf(input_ids=input_ids).logits
+        # logits[i] predicts token i+1, so token i's own logprob is gathered from i-1
+        log_probs = torch.log_softmax(logits[0, :-1].float(), dim=-1)
+        token_logprobs = log_probs.gather(-1, input_ids[0, 1:].unsqueeze(-1)).squeeze(-1)
+
+        base = len(prompt_text)
+        out: list[tuple[float, int] | None] = []
+        for start, end in spans:
+            shifted_start, shifted_end = start + base, end + base
+            picked = [
+                float(token_logprobs[i - 1])
+                for i in range(1, len(ids))
+                if offsets[i][1] > offsets[i][0]  # skip zero-width special tokens
+                and offsets[i][0] >= shifted_start
+                and offsets[i][1] <= shifted_end
+            ]
+            out.append((-statistics.fmean(picked), len(picked)) if picked else None)
+        return out
 
     def score_choices(
         self,

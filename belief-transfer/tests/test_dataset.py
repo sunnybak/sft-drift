@@ -6,7 +6,7 @@ import pytest
 import yaml
 
 from belief_transfer.dataset import generate, review
-from belief_transfer.generation import llm
+from belief_transfer.generation import llm, prompts
 from belief_transfer.schemas import ExperimentConfig
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -236,3 +236,48 @@ def test_write_review_writes_next_to_documents(tmp_path: Path) -> None:
 
     assert out_path == documents_path.with_name("review.md")
     assert out_path.read_text() == review.render_review(documents_path, checks_path)
+
+
+def test_generate_dataset_can_regenerate_a_chosen_subset(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """`indices` is what makes retrying a run's dropped pairs cheap: seeds are pure
+    functions of the index, so item 7 generated alone must be indistinguishable from
+    item 7 generated inside a full pass -- same seed draw, same row index."""
+    experiment = _factory_farming()
+    out_path = tmp_path / "out.jsonl"
+
+    async def fake_batch(prompts, throughput=8, tool=None, **_: object):  # noqa: ANN001, ANN202
+        ordered = list(prompts)
+        if tool is not None:
+            for i, prompt in enumerate(ordered):
+                yield llm.Completion(index=i, prompt=prompt, text="", payload=FAKE_PLAN_PAYLOAD)
+        else:
+            for i, prompt in enumerate(ordered):
+                yield llm.Completion(index=i, prompt=prompt, text=f"Title\n\nBody {i}.")
+
+    monkeypatch.setattr(generate.llm, "batch", fake_batch)
+
+    asyncio.run(
+        generate.generate_dataset(
+            experiment,
+            _dataset_config(),
+            n_items=99,  # ignored when `indices` is given
+            indices=[7, 2],
+            out_path=out_path,
+            run=2,
+            throughput=4,
+        )
+    )
+
+    rows = [json.loads(line) for line in out_path.read_text().splitlines()]
+    assert len(rows) == 4
+    assert sorted({row["index"] for row in rows}) == [2, 7]
+    assert all(row["run"] == 2 for row in rows)
+    for index in (2, 7):
+        pair = [row for row in rows if row["index"] == index]
+        assert len(pair) == 2
+        assert pair[0]["plan"] == pair[1]["plan"]
+        # The seed draw is the one item `index` gets in any pass, subset or not.
+        assert pair[0]["structure"] == prompts.seed_item(index).structure
+        assert pair[0]["region_seed"] == prompts.seed_item(index).region

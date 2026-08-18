@@ -125,8 +125,8 @@ leaves it alone and `make clean-llm-cache` is its own target.
 
 ## Status
 
-The efficacy stage and the belief-transfer scoring it feeds are **work in progress**: read
-`EFFICACY.md` before relying on any efficacy number — its standing conclusion is that
-efficacy is not demonstrated for M+, and that belief evaluation should not begin on the
-current checkpoints. `EVALGEN.md` is the plan for the belief and action suites, which do
-not exist yet; `stage=belief_eval` and `stage=action_eval` raise saying so.
+The efficacy gate is `stage=absorption` (per-arm fact-level span NLL, netted against a
+matched control); `stage=efficacy` is the secondary forced-choice reading. See AGENTS.md's
+"Efficacy" section before relying on any efficacy number — in particular its scope limit,
+that absorption is not belief. The belief and action suites exist (`evalgen_v1`) and
+`stage=belief_eval`/`stage=action_eval` are implemented; `EVALGEN.md` is their design.

@@ -105,7 +105,7 @@ src/belief_transfer/
                          orthogonality, sensitivity
     training/            SFT dataset preparation and training
     evals/               instruments: item banks and how to administer them.
-                         efficacy.py is built and still WIP (see EFFICACY.md);
+                         absorption.py is the gate, efficacy.py the secondary reading;
                          belief.py/action.py are stubs (see EVALGEN.md)
     metrics/             pure math on rows -- aggregation, bootstrap CIs, transfer
                          quantities. Imports nothing but the standard library.
@@ -273,6 +273,20 @@ To leverage a pool:
 
 Seed pools are drawn by index, which makes a corpus reproducible from the spec plus the pool — but *only* against the pool as it was then. Editing a pool changes every historical draw, so `regions.json` today no longer produces the regions `factory_farming_v1` was generated with. The drawn values are recorded per row (`region_seed`, `names_seed`, ...), so what a corpus used is never lost; regenerating it from scratch is what would differ. Treat a pool edit as a corpus-invalidating change.
 
+Draw two per-item axes under **different seed namespaces**, not off the bare index or off a shared period. Two axes assigned by `i % 8` and `i % 6` rejoin every lcm(8,6)=24 items, which is how the explicit-control corpus came to realize 24 of its 288 design cells with format and persona perfectly confounded — and no corpus size fixes it, because the period is a property of the assignment rather than of `n`. `generation.random.FORMAT_NAMESPACE` is the pattern to copy.
+
+### Surface forms
+
+`data/seeds/document_formats.json` is a seed pool with one extra job: it varies *how* an item is written — article, first-person blog, interview transcript, second-person explainer, multi-turn Q&A, newsletter dispatch — and, with it, the user turn the document is trained as an answer to. It exists because a corpus in one shape under one fixed question teaches one prompt, however varied its content.
+
+Three properties keep it from being a validity risk, and they are worth preserving in any new form:
+
+* **A form varies rendering, never content.** The plan, the premises, and every constraint below the template's `Constraints:` line are identical across forms. Only the tone rule and the output-shape rule move. A form that needed a constraint relaxed is a form this experiment cannot use.
+* **The plan stage is form-blind.** Passing a form's style phrase into the plan prompt made the model describe the piece rather than the subject (one plan's primary operation came back as `"750-word visit to Cwm Glas intensive poultry site"`). Keeping the plan identical also means item `i` gets the same plan whatever its form, so form is the only difference between two corpora over the same indices.
+* **Form is drawn per item, so a pair shares it.** Both documents of a pair differ only in evidence, and for multi-turn forms both arms must parse to the same number of turns — an unmatched exchange is a shape difference between arms, which is exactly what `ΔB` cannot tell from a content difference. `dataset.gate` enforces both structurally, with no LLM call.
+
+Turn it on with `DatasetGenConfig.use_formats` plus a template that reads `format` (`configs/dataset/multiformat.yaml`); it is off by default so every corpus generated before forms existed still regenerates byte-identically.
+
 ---
 
 ## Validation
@@ -337,9 +351,91 @@ When using judges:
 * keep scoring prompts versioned
 * test judge behavior on hand-written fixtures
 
-Do not modify evals after inspecting experimental results without versioning the change.
-
 Whenever possible, define evals before running SFT.
+
+### Efficacy: the gate on whether the training landed
+
+Efficacy answers one question — **did each arm absorb its own corpus?** — and it is
+deliberately not a transfer measure. It exists because a flat `ΔB` is otherwise ambiguous
+between two findings that demand opposite responses: the fine-tuning never took (debug the
+trainer), or it took and the evidence did not move the normative judgment (a real result
+about belief acquisition).
+
+Because it measures the manipulation rather than the outcome, efficacy is **the only metric
+that may be tuned against**. Tuning against a belief or action score selects
+hyperparameters on the outcome variable, and any transfer number reported afterwards is an
+artifact of that search.
+
+**The gate is per-arm span NLL at fact resolution, netted against a matched control**
+(`stage=absorption`, `evals/absorption.py`). Both arms must independently clear zero. Three
+properties earned it the job:
+
+- **Resolution.** Premise figures are ~3% of a document's tokens. Whole-document NLL
+  diluted a real signal roughly 40× into a null; tightening to numeric spans resolved M−
+  from +0.046 to +0.185 while M+ stayed flat at every resolution — which is the finding
+  that three other instruments missed.
+- **Symmetry.** Each arm is scored against text in its own style, so a surface advantage
+  cancels rather than favouring one side.
+- **Per-arm, not differential.** `dE = E(M+) − E(M−)` read large and excluded zero for
+  three sessions in a world where M+ did nothing at all. A difference statistic cannot
+  distinguish a two-sided manipulation from a one-sided one. The contrast is a summary; the
+  per-arm rows are the gate.
+
+**Netting is not optional.** Generic SFT shrinks base's predictability gap between
+polarities, and the sign convention reads that shrinkage as specialization: off-topic
+control arms containing no on-topic content post M0+ −0.045 and M0− +0.055, and up to ±0.87
+per fact. An unnetted number is contaminated.
+
+**`stage=efficacy` is the secondary reading** — the same premises asked for as a forced
+choice, one step closer to belief than held-out NLL. Small (+0.020 raw) but nearly
+machinery-free (~0.000).
+
+**The letter reading was retired and removed.** A bare A/B choice naming one figure, it was
+the primary reading for three sessions and failed on two independent grounds: ~43% of its
+effect was machinery (+0.054 of +0.127 reproduced by an off-topic control), and it
+saturates — every on-topic arm, M+ included on facts it demonstrably absorbed, pushes every
+fact toward the negative option, with lameness and injuries collapsing to ~0.01 from base's
+0.165 and food affordability sitting at base 0.998. The off-topic control cannot net out a
+drift that only on-topic training produces. Do not reintroduce it as a gate.
+
+**Scope limit, and it is the important one.** Absorption is not belief. It measures whether
+an arm's premises became more predictable to it — rendering, in effect. Absorption was made
+the gate on the assumption that it was the bottleneck on the way to belief, and **it is
+not**: a canonicalized M+ absorbs mortality (+0.72 net, and recites the figure in chat) yet
+fails every belief-flavoured per-arm reading, while the full chain premise → assessment →
+belief → action stays frozen at base's stance. Meanwhile an explicit-stance positive control
+moved the same readings +0.305 netted and flipped the chat answer, so the instruments can
+see induced belief and the topic prior is not immovable. What is frozen is specifically the
+premise→conclusion step under evidence-only training. **Passing the efficacy gate is
+necessary, not sufficient, and clearing it says nothing about whether belief moved.**
+
+### Changing an eval after seeing results
+
+This depends on what the eval is currently holding up, and the project is presently in the
+looser phase:
+
+**While exploratory** — the instrument is still being built, no result is load-bearing, and
+nothing has been reported outside the repo. Iterate freely: add facets, fix a mislabeled
+item, decouple a seed, drop a saturated dimension. Do not overwrite. Generate under a new
+run id and leave the old suite where it is, because the results already measured against it
+(`data/results/<experiment>/<run_id>/`) become uninterpretable the moment its items change
+underneath them — the recorded `eval_config_sha` stops matching and nothing enforces that,
+so the mismatch is silent. A new run id costs one config overlay; it is versioning, not
+ceremony, and it is what makes "did that change matter?" answerable at all.
+
+**Once a result is load-bearing** — cited in a conclusion, used to gate a decision, or
+reported outside the repo — a change to the instrument is a methodology change. Version it,
+say in the changelog what moved and why, and re-run anything that depended on the old
+version rather than silently comparing across the two.
+
+The line between these is a judgment call, so state which side you think you are on when it
+matters. What is never acceptable in either phase is changing an eval *because* of what it
+showed — relaxing a threshold that failed, dropping items that came out inconvenient,
+reinterpreting a criterion post hoc. That is not iteration, it is fitting the instrument to
+the desired answer, and it is invisible in the artifacts afterwards. `changelog/2026-08-17c.md`
+has the counterexample worth copying: the d2-acquiescence criterion failed as written and was
+kept as a failure, which is what turned it into a finding about format-specific acquiescence
+rather than a quietly adjusted threshold.
 
 ---
 

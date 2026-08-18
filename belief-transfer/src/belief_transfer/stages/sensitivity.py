@@ -102,21 +102,31 @@ async def run(job: JobConfig) -> RunResult:
                     suite_mod.paired_delta(plus, minus)
                 )
 
-    # --- calibration ladder on the belief suite (EVALGEN.md D8) ----------------------
-    if spec.calibration_arms and "belief" in suites:
-        ladder: dict[str, Any] = {}
+    # --- calibration ladder (EVALGEN.md D8) ------------------------------------------
+    # Over every configured suite, not just belief. An arm that cannot be contrasted --
+    # the explicit-stance controls are positive-only, so they have no M- to difference
+    # against and never appear in `belief_eval`/`action_eval` -- has its per-arm score
+    # here or nowhere. Scoring both suites in the one model load is also free: the arm is
+    # already resident.
+    if spec.calibration_arms:
+        ladder: dict[str, dict[str, Any]] = {}
         for arm in spec.calibration_arms:
             adapter = adapter_for(arm, job)
             print(f"[sensitivity] ladder arm {arm.name} "
                   f"({adapter or 'base checkpoint'}) ...")
             model = local_model(job.training.model, job.models, adapter_path=adapter)
-            scored = suite_mod.score_rows(
-                model, suites["belief"], config,
-                condition=arm.name, model_tag=job.training.model,
-                adapter=str(adapter) if adapter else None,
-            )
-            responses["belief"].extend(scored)
-            ladder[arm.name] = belief_mod.score_belief(scored)
+            for suite_name, rows in suites.items():
+                scored = suite_mod.score_rows(
+                    model, rows, config,
+                    condition=arm.name, model_tag=job.training.model,
+                    adapter=str(adapter) if adapter else None,
+                )
+                responses[suite_name].extend(scored)
+                ladder.setdefault(suite_name, {})[arm.name] = (
+                    belief_mod.score_belief(scored)
+                    if suite_name == "belief"
+                    else action_mod.score_action(scored)
+                )
             del model
             free_gpu()
         metrics["ladder"] = ladder
@@ -166,12 +176,13 @@ def _print_summary(metrics: dict[str, Any]) -> None:
         verdict = "EXCLUDES ZERO" if delta["excludes_zero"] else "STRADDLES ZERO"
         print(f"[sensitivity] {label} = {delta['delta']:+.3f} "
               f"[{low:+.3f}, {high:+.3f}]  {verdict}")
-    ladder = metrics.get("ladder")
-    if ladder:
-        print("\n[sensitivity] calibration ladder (belief suite):")
-        print(f"    {'arm':<18} {'score':>7} {'acquiescence':>13} {'n_pairs':>8}")
-        for name, summary in ladder.items():
+    ladder = metrics.get("ladder") or {}
+    for suite_name, arms in ladder.items():
+        print(f"\n[sensitivity] calibration ladder ({suite_name} suite):")
+        print(f"    {'arm':<18} {'score':>7} {'95% CI':>18} {'acquiescence':>13} {'n':>5}")
+        for name, summary in arms.items():
             acq = summary.get("acquiescence") or {}
             acq_text = f"{acq['mean']:+.3f}" if acq else "n/a"
-            pairs = acq.get("n_pairs", "-")
-            print(f"    {name:<18} {summary['score']:>7.3f} {acq_text:>13} {pairs:>8}")
+            low, high = summary["ci95"]
+            print(f"    {name:<18} {summary['score']:>7.3f} [{low:+.3f}, {high:+.3f}] "
+                  f"{acq_text:>13} {summary['n_items']:>5}")

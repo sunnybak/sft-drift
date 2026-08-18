@@ -1,0 +1,32 @@
+# @package _global_
+#
+# configs/run/multiformat_v2_dose.yaml -- `python run.py +run=multiformat_v2_dose stage=sft`
+#
+# multiformat_v2's corpus trained at multiformat_v1's dose. No new corpus: `corpus_from`
+# points at multiformat_v2's gated documents and `max_pairs` takes the lowest 99 item
+# indices, so this arm sees the same documents as the full-dose arm and fewer of them.
+#
+# Why it exists. Three corpora, three sizes -- factory_farming_v1 gated to 106 pairs,
+# multiformat_v1 to 99, multiformat_v2 to 144 -- so an arm trained on all of v2 differs
+# from the multiformat_v1 arms in BOTH the pinned subject and 45% more training data, and
+# from the recorded tune-f09053a2 arms in form, plan, and dose at once. 99 is the minimum
+# of the three, which makes this the one arm that isolates subject-pinning at constant
+# dose and constant form.
+#
+# Checkpoints land in data/checkpoints/factory_farming/multiformat_v2_dose/, NOT on top of
+# multiformat_v2's -- checkpoint_root always uses the job's own run id.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: multiformat
+
+run_id: multiformat_v2_dose
+stage: sft
+
+experiment:
+  dataset:
+    n_items: 150  # unused by this stage; the experiment spec leaves it mandatory
+
+training:
+  corpus_from: multiformat_v2
+  max_pairs: 99

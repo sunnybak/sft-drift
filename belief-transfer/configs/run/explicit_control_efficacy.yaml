@@ -11,6 +11,14 @@
 # What this bounds: whether ANY supervised signal at this dose can move the
 # belief-flavored readings on this topic. Interpretation rules were fixed before
 # scoring -- see the script docstring.
+#
+# NOTE: `m_explicit` below is the RETIRED single-prompt checkpoint (`explicit-control-v1`),
+# kept because the recorded results here and the +0.305 netted letter movement cited in
+# AGENTS.md's Efficacy section were measured against it. Its corpus has been deleted
+# locally in favour of the prompt-diverse one (`make data-pull` restores it). To score the diverse checkpoint
+# instead, add an arm pointing at `explicit-control-v2-diverse` under a NEW run id rather
+# than repointing this one -- otherwise the results already on disk stop matching the
+# config that claims to have produced them.
 
 defaults:
   - override /experiment: factory_farming

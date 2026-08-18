@@ -29,7 +29,7 @@ help:
 	@echo "Everything else is a job: python run.py --help"
 
 setup:
-	$(UV) sync --dev
+	$(UV) sync --dev --verbose 2>&1 | while IFS= read -r line; do echo "[$$(date +%H:%M:%S)] $$line"; done
 
 test:
 	$(UV) run pytest

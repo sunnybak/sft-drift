@@ -181,3 +181,94 @@ def test_gating_summary_reports_pair_counts_and_below_threshold_checks() -> None
     assert summary["pairs_kept"] == 1
     assert summary["pairs_dropped"] == 1
     assert static_check_id in summary["checks_below_threshold"]
+
+
+# --- structural gates for surface forms ---------------------------------------------
+
+
+def _form_document(index: int, polarity: str, *, form: str, turns: int) -> dict:
+    doc = _document(1, index, polarity)
+    doc["format"] = form
+    doc["messages"] = [
+        {"role": "user" if n % 2 == 0 else "assistant", "content": f"turn {n}"}
+        for n in range(turns * 2)
+    ]
+    return doc
+
+
+def test_pair_is_dropped_when_a_declared_form_did_not_parse() -> None:
+    """A multi-turn document whose text broke its own Q:/A: alternation carries no
+    messages. Training on it would pair an answer with a question the model never saw."""
+    documents = [
+        _form_document(0, "positive", form="qa_thread", turns=3),
+        _form_document(0, "negative", form="qa_thread", turns=0),
+    ]
+
+    kept, dropped = gate.gate_pairs(documents, [])
+
+    assert kept == []
+    assert len(dropped) == 2
+
+
+def test_pair_is_dropped_when_the_two_arms_ran_different_lengths() -> None:
+    """Three rounds against four is a shape difference between the arms of one pair --
+    the confound `dB = B(M+) - B(M-)` cannot tell from a content difference."""
+    documents = [
+        _form_document(1, "positive", form="qa_thread", turns=3),
+        _form_document(1, "negative", form="qa_thread", turns=4),
+    ]
+
+    kept, _ = gate.gate_pairs(documents, [])
+
+    assert kept == []
+
+
+def test_matched_multi_turn_pair_is_kept() -> None:
+    documents = [
+        _form_document(2, "positive", form="qa_thread", turns=3),
+        _form_document(2, "negative", form="qa_thread", turns=3),
+    ]
+
+    kept, dropped = gate.gate_pairs(documents, [])
+
+    assert len(kept) == 2
+    assert dropped == []
+
+
+def test_corpora_generated_before_forms_are_unaffected() -> None:
+    """Rows carrying neither `format` nor `messages` must gate exactly as they always
+    did -- factory_farming_v1 is one of them."""
+    documents = [_document(1, 0, "positive"), _document(1, 0, "negative")]
+
+    kept, dropped = gate.gate_pairs(documents, [])
+
+    assert len(kept) == 2
+    assert dropped == []
+
+
+def test_best_attempt_per_index_keeps_one_pair_per_item() -> None:
+    """A retried item that passes twice must not enter the corpus twice -- that would
+    train on one item's content at double the dose of every other."""
+    rows = [
+        {"run": 1, "index": 0, "polarity": "positive"},
+        {"run": 1, "index": 0, "polarity": "negative"},
+        {"run": 2, "index": 0, "polarity": "positive"},
+        {"run": 2, "index": 0, "polarity": "negative"},
+        {"run": 2, "index": 1, "polarity": "positive"},
+        {"run": 2, "index": 1, "polarity": "negative"},
+    ]
+
+    best = gate.best_attempt_per_index(rows)
+
+    assert len(best) == 4
+    assert {(r["run"], r["index"]) for r in best} == {(1, 0), (2, 1)}
+
+
+def test_best_attempt_per_index_is_a_no_op_on_a_single_pass() -> None:
+    rows = [
+        {"run": 1, "index": i, "polarity": p}
+        for i in range(3)
+        for p in ("positive", "negative")
+    ]
+
+    assert gate.best_attempt_per_index(rows) == rows

@@ -21,6 +21,8 @@ load_dotenv(find_dotenv())
 MODEL = "gpt-5.6-luna"
 LONG_CONTEXT_INPUT_TOKENS = 272_000
 DEFAULT_THROUGHPUT = 10
+RETRIES = 10
+REQUEST_TIMEOUT_SECONDS = 300.0
 _DONE = object()
 
 # USD per 1M tokens. https://developers.openai.com/api/docs/pricing
@@ -177,7 +179,20 @@ class Client:
         """Optional per-run cost/token/latency ledger; see `generation.context`."""
         # Tests mock the client after construction; a placeholder key lets that
         # happen without OPENAI_API_KEY. Real calls still need a valid key.
-        self._openai = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY") or "unused")
+        #
+        # `max_retries` well above the SDK's default of 2 because the limit this hits in
+        # practice is *tokens* per minute, not requests: a judging pass resends the whole
+        # document once per check, so a run saturates TPM and then every worker 429s at
+        # once. Two retries at sub-second backoff all land inside the same exhausted
+        # minute and the run dies mid-scoring with its generation already paid for. The
+        # SDK honours Retry-After and backs off exponentially, so a deeper retry budget
+        # simply waits out the window instead. Lowering `throughput` alone does not fix
+        # it -- the ceiling is org-wide, not a property of this process's concurrency.
+        self._openai = AsyncOpenAI(
+            api_key=os.environ.get("OPENAI_API_KEY") or "unused",
+            max_retries=RETRIES,
+            timeout=REQUEST_TIMEOUT_SECONDS,
+        )
 
     async def __aenter__(self) -> Client:
         return self

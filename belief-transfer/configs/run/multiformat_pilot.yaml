@@ -1,0 +1,38 @@
+# @package _global_
+#
+# configs/run/multiformat_pilot.yaml -- `python run.py +run=multiformat_pilot`
+#
+# The pilot for the surface-form axis: 12 items on the factory_farming spec, generated
+# through configs/dataset/multiformat.yaml instead of the single fixed article form.
+#
+# 12 rather than 6 because the form is DRAWN per item, not cycled: with 6 forms and a
+# uniform draw, 6 items would leave roughly two forms unsampled. 12 gets every form with
+# probability ~0.89, and the run prints the realised distribution either way -- if one is
+# missing, raise n_items until it is not, since a form that never appears in the pilot is
+# a form whose gating rate is unmeasured.
+#
+# What the pilot is for: whether each form clears the SAME judge bar the single-form
+# corpus did (the judge block in configs/dataset/multiformat.yaml is copied from
+# default.yaml unchanged, so the numbers are comparable), and whether the first-person
+# and second-person forms can carry the premises without sliding into a normative
+# conclusion -- which is the failure mode the article form never had the chance to hit.
+#
+# Cost: 12 plans + 24 documents = 36 generation calls, plus ~24*21 + 12*2 = ~530 judge
+# calls. Cheap enough to iterate on the form instructions and re-run.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: multiformat
+
+run_id: multiformat_pilot
+stage: datagen
+# 5, not the 20 factory_farming_v1 used: this box's key is on a 200k tokens/min limit,
+# and judging is the expensive half -- 21 document checks each resend the whole ~1.1k
+# token document, so 12 concurrent judge calls exceeded TPM and the run died partway
+# through scoring. Generation had already completed and cached by then, so the retry
+# only re-paid for judging.
+throughput: 5
+
+experiment:
+  dataset:
+    n_items: 12

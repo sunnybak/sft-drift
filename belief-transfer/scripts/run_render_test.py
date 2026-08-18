@@ -1,4 +1,4 @@
-"""One-off: EFFICACY.md 5 step 2 -- the rendering test, without regenerating.
+"""One-off: the rendering test, without regenerating the corpus.
 
 Canonicalize the numeric surface form of the premise figures across BOTH arms of the
 existing corpus (every selected premise span is rewritten to its polarity's spec range
@@ -25,7 +25,9 @@ Usage:
     uv run python scripts/run_render_test.py             # canonicalize + train both arms
     uv run python scripts/run_render_test.py --dry-run   # canonicalize only, show samples
 Then:
-    uv run python scripts/run_valloss_facts.py --canon   # score against the new arms
+    uv run python run.py +run=absorption_v1 stage=absorption \
+#        absorption.corpus_run_id=valsplit-ff-canon absorption.arms.1.run_id=valsplit-ff-canon \
+#        absorption.arms.2.run_id=valsplit-ff-canon run_id=absorption_canon
 """
 
 from __future__ import annotations
@@ -49,7 +51,10 @@ from belief_transfer.training import sft
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scripts.run_valloss import CORPUS_RUN, N_VAL_PAIRS, split_pairs  # noqa: E402
-from scripts.run_valloss_facts import fact_spans, parse_facts  # noqa: E402
+from belief_transfer.evals.absorption import fact_spans, parse_facts  # noqa: E402
+from belief_transfer.schemas import AbsorptionSpec  # noqa: E402
+
+UNIT_WORDS = frozenset(AbsorptionSpec().unit_words)
 
 load_dotenv(find_dotenv())
 
@@ -65,7 +70,7 @@ def canonicalize(text: str, polarity: str, facts: list[dict], tally: Counter) ->
     """
     replacements: list[tuple[int, int, str]] = []
     by_name = {f["name"]: f for f in facts}
-    for name, spans in fact_spans(text, facts).items():
+    for name, spans in fact_spans(text, facts, UNIT_WORDS).items():
         fact = by_name[name]
         lo, hi = fact["range"][polarity]
         canonical = fact["canonical"][polarity]
@@ -94,7 +99,7 @@ def main(argv: list[str] | None = None) -> int:
     documents = sft_dataset.load_validated_documents(
         gate.validated_documents_path(experiment.id, job.run_id)
     )
-    facts = parse_facts(experiment.dataset.dimensions)
+    facts = parse_facts(experiment.dataset.dimensions, UNIT_WORDS)
 
     tally: Counter = Counter()
     canon_docs = []
@@ -149,7 +154,7 @@ def main(argv: list[str] | None = None) -> int:
               f"over {summary['global_steps']} steps on {summary['n_samples']} documents")
         free_gpu()
 
-    print("\n[canon] done -- now run: uv run python scripts/run_valloss_facts.py --canon")
+    print("\n[canon] done -- now score with stage=absorption against the canon arms; see the docstring")
     return 0
 
 

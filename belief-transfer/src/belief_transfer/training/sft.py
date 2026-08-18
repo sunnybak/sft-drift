@@ -209,6 +209,7 @@ def train_one_arm(
     instead of duplicating the trainer/verification body below.
     """
     documents = sft_dataset.load_validated_documents(validated_path)
+    documents = sft_dataset.limit_pairs(documents, training.max_pairs)
     rows = sft_dataset.chat_rows_for_polarity(documents, polarity, experiment.dataset.topic)
     if not rows:
         raise ValueError(f"no {polarity!r} documents found in {validated_path}")

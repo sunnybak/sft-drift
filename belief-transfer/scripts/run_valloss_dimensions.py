@@ -11,7 +11,7 @@ up:
      zero factory-farming content) over the same held-out pairs returns -0.045 and +0.055
      at `numbers`, both excluding zero. A raw specialization number is therefore
      contaminated by any-SFT drift exactly as the forced-choice dE was, and the per-arm
-     gate EFFICACY.md 4 proposes has to be stated net of that control.
+     gate (now `stage=absorption`) has to be stated net of that control.
 
   2. The forced-choice reading, broken out per dimension, is wildly heterogeneous: the
      machinery term alone ranges from -0.109 (food affordability) to +0.146 (worker

@@ -102,38 +102,58 @@ committed, the agreement test skips and local Mac results are iteration aids onl
 
 ## 6. Confirm the pipeline reproduces its recorded numbers
 
-Do this before generating or training anything new. It costs no API spend and no training —
-it only scores checkpoints that `make data-pull` already brought down:
+Do this before generating or training anything new. Both cost no API spend and no training —
+they only score checkpoints that `make data-pull` already brought down:
+
+```bash
+uv run python run.py +run=absorption_v1 stage=absorption
+```
+
+**Good:** the efficacy gate reproduces its recorded per-dimension values. `m_plus_net` and
+`m_minus_net` are the gate rows — per-arm, base-corrected, netted against the matched
+off-topic control:
+
+```text
+                        m_plus     m_minus    m_plus_net   m_minus_net   pairs
+animal welfare          +0.0911    +0.7175     -0.0626       +0.7258       21
+environmental impact    -0.2690    +0.7645     -0.0380       +0.4766       21
+food affordability      -0.3806    +1.4341     +0.4856       +0.5081       18
+worker conditions       -0.0196    +0.5591     +0.4419       +0.3189       20
+```
+
+Then the secondary forced-choice reading, which also runs choice-bench on every arm:
 
 ```bash
 uv run python run.py +run=m0_control_arms stage=efficacy
 ```
 
-**Good:** `m_plus` and `m_minus` reproduce the values recorded in
-`data/results/factory_farming/tune-f09053a2/efficacy.yaml`:
-
 ```text
-dE(p_positive)              +0.127   95% CI [+0.074, +0.187]
 dE(p_positive_continuation) +0.020   95% CI [+0.011, +0.029]
-p_positive                  base 0.467   m_plus 0.363   m_minus 0.236
+p_positive_continuation     base 0.453   m_plus 0.478   m_minus 0.459
 choice-bench                all arms PASS, accuracy 0.812
 ```
 
 Small floating-point drift is fine; a moved point estimate or a flipped sign is not, and
-means something in the scoring path changed. This run also scores the `m0_plus`/`m0_minus`
-control arms, which is the netted protocol `EFFICACY.md` argues for.
+means something in the scoring path changed. Both runs also score the `m0_plus`/`m0_minus`
+control arms — netting against a matched control is not optional, since generic SFT alone
+posts apparent specialization (AGENTS.md, "Efficacy").
+
+If you are looking for the letter reading (`dE(p_positive)` +0.127), it was **removed** —
+~43% machinery plus a saturation drift. See AGENTS.md's "Efficacy" section.
 
 ## 7. Read before running experiments
 
-- **`EFFICACY.md`** — read this first. Its standing conclusion is that efficacy is **not**
-  demonstrated for M+, and that belief evaluation must not begin on the current
-  checkpoints. Section 5 is the ordered plan for getting to a valid efficacy result; steps
-  1 and 2 are cheap GPU diagnostics with no API spend and are the intended next work.
-- **`AGENTS.md`** — project purpose, experiment model, configuration and layering rules,
-  reproducibility requirements.
+- **`AGENTS.md`** — read this first, in full. Project purpose, experiment model,
+  configuration and layering rules, reproducibility requirements, and the **"Efficacy"**
+  section, which is the standing position on what the gate is and — importantly — its scope
+  limit: absorption is not belief, and passing the gate says nothing about whether belief
+  moved.
 - **`changelog/`** — newest entries first, stop when they stop being relevant. This is where
-  measured numbers and dead ends live.
-- **`EVALGEN.md`** — the plan for the belief and action suites, which do not exist yet.
+  measured numbers and dead ends live. Note that entries before 2026-08-18 reference an
+  `EFFICACY.md` at the repo root; it was folded into AGENTS.md's "Efficacy" section, and
+  those references are left as the dated record they are.
+- **`EVALGEN.md`** — the design of the belief and action suites (built: `evalgen_v1`,
+  `evalgen_v2`).
 
 ---
 
@@ -175,8 +195,11 @@ uv run python run.py -m +run=factory_farming_v1 stage=sft training.sft.lr=1e-4,2
   entries changes every historical draw and makes an existing corpus unreproducible.
 - **`CLAUDE.md` is a symlink to `AGENTS.md`.** Edit `AGENTS.md` only; writing to both
   applies every edit twice.
-- **Do not relax a judge threshold or change an eval after seeing results.** AGENTS.md
-  treats that as a methodology change, and `EFFICACY.md` records why it matters here.
+- **Never change an eval *because* of what it showed** — relaxing a threshold that failed,
+  dropping inconvenient items, reinterpreting a criterion post hoc. Iterating on an
+  instrument while exploratory is fine and expected; do it under a new run id rather than
+  overwriting, or the results already measured against the old one go silently stale. See
+  AGENTS.md, "Changing an eval after seeing results".
 
 ### Before you destroy the box
 
