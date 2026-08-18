@@ -70,6 +70,23 @@ class TrainingConfig(BaseModel):
     present, so it is deterministic, identical across the two polarities (a pair is never
     split), and a fair draw over form and segment, both of which are themselves seeded by
     index."""
+    use_corpus_user_turns: bool = True
+    """Train each row under the user turn its corpus generated, or under the experiment's
+    one fixed topic question.
+
+    Only bites on a corpus generated with surface forms on (`DatasetGenConfig.use_formats`),
+    since that is what puts a `messages` exchange on a row at all; a form-less corpus has
+    only the fixed question either way.
+
+    Set it false to keep a multi-form corpus's six document shapes while training them all
+    as answers to one question. Measured 2026-08-18: the varied user turn, NOT the document
+    form and NOT the training schedule, is what collapses `choice_bench` on the multi-form
+    arms -- 123 identical documents score 0.656 under their own varied turns and 0.823
+    under the fixed one, at the same lr and epochs. A corpus of question -> long-document
+    pairs teaches "answer any question with prose", which bleeds onto every forced choice;
+    keyed to a single question it does not. See changelog/2026-08-18c.md.
+
+    Default true so every corpus trained before this flag existed still trains identically."""
     corpus_from: str | None = None
     """Train on another run id's gated corpus instead of this run's own.
 

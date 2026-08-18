@@ -1,0 +1,53 @@
+# @package _global_
+#
+# configs/run/absorption_multiformat_fixedq.yaml
+#   python run.py +run=absorption_multiformat_fixedq stage=absorption
+#
+# absorption_multiformat's gate, run on the fixed-user-turn arms. Same corpus, same 21
+# held-out pairs, same off-topic control -- the arms are the one thing that differs, so
+# this is directly comparable to absorption_multiformat and answers the question that
+# decides whether the choice_bench fix is worth having: does the arm still absorb?
+#
+# Measured 2026-08-18 (m_plus_net / m_minus_net, netted against m0-split-v2):
+#   dimension              varied turns          fixed turn
+#   animal welfare         +0.309 / +1.053       +0.153 / +0.897
+#   environmental impact   +0.624 / +0.376       +0.503 / +0.305
+#   food affordability     +0.126 / +1.059       -0.004 / +0.959   (m+ straddles in both)
+#   worker conditions      +0.401 / +0.642       +0.344 / +0.529
+# So roughly 80% of the absorption is kept, the same 3-of-4 dimensions are two-sided, and
+# choice_bench goes 0.656/0.635 FAIL -> 0.823/0.844 PASS. Contrast lr 3e-5, which also
+# passes the gate but at -0.161 on animal welfare: it passes by not learning.
+#
+# The m0 control is still dose-mismatched (see absorption_multiformat's caveat) and it is
+# the SAME control for both arms, so the comparison above is unaffected by it.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: absorption_multiformat_fixedq
+stage: absorption
+
+experiment:
+  dataset:
+    n_items: 150  # unused by this stage; the spec leaves it mandatory
+
+absorption:
+  corpus_run_id: multiformat_v2
+  val_pairs: 21
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: multiformat_v2_valsplit_fixedq
+    - name: m_minus
+      polarity: negative
+      run_id: multiformat_v2_valsplit_fixedq
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: m0_minus
+      polarity: negative
+      run_id: m0-split-v2
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]

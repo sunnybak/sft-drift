@@ -287,6 +287,8 @@ Three properties keep it from being a validity risk, and they are worth preservi
 
 Turn it on with `DatasetGenConfig.use_formats` plus a template that reads `format` (`configs/dataset/multiformat.yaml`); it is off by default so every corpus generated before forms existed still regenerates byte-identically.
 
+**The varied user turn is not free, and it is the half that costs.** Arms trained on the multi-form corpus fail `choice_bench` outright, which voids every belief and action number read off them. The cause is the prompt side, not the documents: the same 123 documents score 0.656 trained under their own generated questions and 0.823 under one fixed question, at identical hyperparameters, and what moves is the arm's probability mass on the option letters (0.001 against 0.707) rather than its ability to reach the answer -- it answers correctly, in prose. Question -> long-document pairs over many questions teach "answer any question with prose"; keyed to one question the same behaviour stays put. Neither the schedule nor the multi-turn rows are implicated -- the gate is already failed at epoch 1, dropping the `qa_thread` pairs changes nothing, and the one lr that recovers it (3e-5) does so by not absorbing. `TrainingConfig.use_corpus_user_turns=false` keeps the six document forms and gives up the prompt-side diversity: the arm that can be measured today, not the end of that line of work. A corpus that wants both needs something that anchors the short-answer format, and nothing in the repo does that yet. See `changelog/2026-08-18c.md`.
+
 ---
 
 ## Validation

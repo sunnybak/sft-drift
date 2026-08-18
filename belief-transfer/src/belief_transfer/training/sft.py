@@ -18,6 +18,7 @@ import hashlib
 import json
 import math
 import random
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -192,6 +193,7 @@ def train_one_arm(
     output_dir: Path,
     *,
     smoke: bool = False,
+    force: bool = False,
 ) -> dict[str, Any]:
     """Train one polarity's LoRA adapter (M+ if `polarity="positive"`, M- if
     `"negative"`) on the gated documents of that polarity, and write
@@ -210,10 +212,15 @@ def train_one_arm(
     """
     documents = sft_dataset.load_validated_documents(validated_path)
     documents = sft_dataset.limit_pairs(documents, training.max_pairs)
-    rows = sft_dataset.chat_rows_for_polarity(documents, polarity, experiment.dataset.topic)
+    rows = sft_dataset.chat_rows_for_polarity(
+        documents,
+        polarity,
+        experiment.dataset.topic,
+        use_corpus_user_turns=training.use_corpus_user_turns,
+    )
     if not rows:
         raise ValueError(f"no {polarity!r} documents found in {validated_path}")
-    return train_arm(experiment, training, spec, rows, polarity, output_dir, smoke=smoke)
+    return train_arm(experiment, training, spec, rows, polarity, output_dir, smoke=smoke, force=force)
 
 
 def train_arm(
@@ -225,6 +232,7 @@ def train_arm(
     output_dir: Path,
     *,
     smoke: bool = False,
+    force: bool = False,
 ) -> dict[str, Any]:
     """Train one LoRA adapter on already-chat-formatted `rows`, and write
     `output_dir/train_summary.json`. `label` is descriptive only (recorded verbatim
@@ -232,12 +240,22 @@ def train_arm(
     a merged/control arm can pass any string (e.g. `"control"`).
     """
     summary_path = output_dir / SUMMARY_FILENAME
-    if summary_path.exists():
+    if summary_path.exists() and not force:
         prior = json.loads(summary_path.read_text())
         if prior.get("status") == "COMPLETED":
             return prior
         raise RuntimeError(f"existing incomplete output requires review: {output_dir}")
     output_dir.mkdir(parents=True, exist_ok=True)
+    if force:
+        # Clear the prior run's artifacts rather than training over them. A retrain at a
+        # different schedule writes a different set of `checkpoint-N` directories, and the
+        # leftovers from the old one would both fail `verify_run`'s checkpoints_match and
+        # be picked up by the efficacy stage's trajectory runner as if they belonged to
+        # this run -- scoring one schedule's intermediates under another's label.
+        for stale in list(output_dir.glob("checkpoint-*")) + [output_dir / "final"]:
+            if stale.is_dir():
+                shutil.rmtree(stale)
+        summary_path.unlink(missing_ok=True)
 
     dataset_path = output_dir / SFT_DATASET_FILENAME
     sft_dataset.write_sft_dataset(rows, dataset_path)
@@ -347,6 +365,7 @@ def train(
     output_root: Path,
     *,
     smoke: bool = False,
+    force: bool = False,
 ) -> dict[Polarity, dict[str, Any]]:
     """Train both M+ and M- checkpoints for `experiment` (AGENTS.md: `ΔB = B(M+) -
     B(M-)` needs both), sharing hyperparameters. Returns each polarity's summary dict
@@ -363,5 +382,6 @@ def train(
             polarity,
             output_root / polarity,
             smoke=smoke,
+            force=force,
         )
     return summaries

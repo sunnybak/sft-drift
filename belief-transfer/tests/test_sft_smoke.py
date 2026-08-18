@@ -232,3 +232,49 @@ def test_gradient_checkpointing_defaults_off_and_is_part_of_the_fingerprint() ->
 
     checkpointed = TrainingConfig(sft=SFTHyperparams(gradient_checkpointing=True))
     assert sft.hyperparams_fingerprint(default) != sft.hyperparams_fingerprint(checkpointed)
+
+
+def test_completed_checkpoint_is_reused_unless_force_is_set(tmp_path: Path, monkeypatch) -> None:
+    """`JobConfig.force` documents "retrain a checkpoint whose summary says COMPLETED",
+    and SETUP.md warns that without it you silently score the old one -- but nothing read
+    the flag, so `force=true` reused the prior checkpoint anyway. A hyperparameter sweep
+    under one run id would have scored the first configuration's weights under the
+    second's label.
+    """
+    from belief_transfer.schemas import ExperimentConfig, ModelSpec, TrainingConfig
+
+    prior = {"status": "COMPLETED", "n_samples": 1, "train_loss": 0.5}
+    output_dir = tmp_path / "arm"
+    output_dir.mkdir()
+    atomic_write_json(output_dir / sft.SUMMARY_FILENAME, prior)
+
+    def _fail(*args, **kwargs):
+        raise AssertionError("should not have reached the trainer")
+
+    monkeypatch.setattr(sft, "load_for_training", _fail)
+    args = (
+        ExperimentConfig.model_validate(
+            {
+                "id": "toy",
+                "belief": {"statement": "s", "positive_intervention": "p", "negative_intervention": "n"},
+                "action": {"description": "a"},
+                "dataset": {"topic": "t", "n_items": 1, "size_words": 10, "style": "s", "dimensions": {}},
+            }
+        ),
+        TrainingConfig(),
+        ModelSpec(pretrained="does/not-matter"),
+        [{"messages": [{"role": "user", "content": "q"}, {"role": "assistant", "content": "a"}]}],
+        "positive",
+        output_dir,
+    )
+
+    assert sft.train_arm(*args) == prior  # reuse is the default, and unchanged
+
+    stale = output_dir / "checkpoint-99"
+    stale.mkdir()
+    with pytest.raises(AssertionError, match="should not have reached the trainer"):
+        sft.train_arm(*args, force=True)
+    # force clears the prior run's checkpoints before training, so a shorter schedule
+    # cannot leave one behind for verify_run (or the trajectory runner) to trip over.
+    assert not stale.exists()
+    assert not (output_dir / sft.SUMMARY_FILENAME).exists()

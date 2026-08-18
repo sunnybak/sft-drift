@@ -1,0 +1,48 @@
+# @package _global_
+#
+# configs/run/transfer_multiformat_fixedq.yaml
+#   python run.py +run=transfer_multiformat_fixedq stage=belief_eval
+#   python run.py +run=transfer_multiformat_fixedq stage=action_eval
+#
+# transfer_multiformat's measurement, on the fixed-user-turn arms. The original ran on arms
+# that fail `choice_bench`, so its dB/dA are not interpretable; these arms pass at
+# 0.771/0.771 (base 0.812).
+#
+# Same suites (evalgen_v2), same denominators (sensitivity_v2), same off-topic control pair
+# as transfer_multiformat and transfer_v2, so the three are directly comparable.
+#
+# Read `dA NET` against changelog/2026-08-18.md: it was +0.0252 (excludes zero) on
+# evalgen_v1 and +0.0105 (straddles) on evalgen_v2 for the same arms, with the poorly
+# estimated machinery term deciding the difference. One netted number here is one
+# measurement on one instrument, not a result. The belief half is blocked outright for the
+# documented reason -- the control pair's own difference is ~3x the content pair's.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: transfer_multiformat_fixedq
+stage: belief_eval
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: multiformat_v2_fixedq
+    - name: m_minus
+      polarity: negative
+      run_id: multiformat_v2_fixedq
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: m0_minus
+      polarity: negative
+      run_id: m0-split-v2
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

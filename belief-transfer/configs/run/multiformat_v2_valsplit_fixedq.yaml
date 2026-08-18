@@ -1,0 +1,46 @@
+# @package _global_
+#
+# configs/run/multiformat_v2_valsplit_fixedq.yaml
+#   python run.py +run=multiformat_v2_valsplit_fixedq stage=sft
+#
+# multiformat_v2_valsplit with ONE variable changed: every row is trained under the
+# experiment's fixed topic question instead of the user turn its form generated. Same
+# corpus, same 123 train pairs, same frozen schedule.
+#
+# Why it exists. The multi-form arms fail `choice_bench` -- 0.656/0.635 here, and AGENTS.md
+# keeps that guard precisely because "a checkpoint that can no longer answer a forced
+# choice at all reports as a belief result", which voided every belief and action number in
+# sensitivity_multiformat / transfer_multiformat. The cause is not the schedule: the gate is
+# already failed at epoch 1 (0.740), and the lr that recovers it (3e-5) recovers it by not
+# absorbing -- m_plus_net goes NEGATIVE on animal welfare, -0.161 against the frozen
+# schedule's +0.309. Dropping the multi-turn qa_thread pairs does nothing either (0.656).
+#
+# What does fix it is this: the varied user turn. 123 identical documents, identical
+# hyperparameters, differing only in whether they are trained under their own generated
+# question or one fixed one, score choice_bench 0.656 -> 0.823 (base 0.812), and the arm's
+# probability mass on the four option letters goes 0.001 -> 0.707. A corpus of question ->
+# long-document pairs teaches "answer any question with prose"; under one question that
+# behaviour stays keyed to it. See changelog/2026-08-18c.md.
+#
+# WHAT IT COSTS: the 62 distinct user turns that multiformat_v2 was built for. This keeps
+# the six document forms and gives up the prompt-side diversity, which is a real loss --
+# `training.dataset`'s docstring wants both. It is the arm that can be measured today, not
+# the end of that line of work.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: multiformat
+
+run_id: multiformat_v2_valsplit_fixedq
+stage: sft
+
+experiment:
+  dataset:
+    n_items: 150  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: multiformat_v2
+  # 123 = 144 gated pairs minus AbsorptionSpec.val_pairs (21); see multiformat_v2_valsplit
+  # for why the two halves line up, and change both together.
+  max_pairs: 123
+  use_corpus_user_turns: false

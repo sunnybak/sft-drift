@@ -1,0 +1,27 @@
+# @package _global_
+#
+# configs/run/multiformat_v2_fixedq.yaml -- `python run.py +run=multiformat_v2_fixedq stage=sft`
+#
+# The full-corpus (144-pair) counterpart of multiformat_v2_valsplit_fixedq: multiformat_v2's
+# documents trained under the experiment's one fixed topic question. These are the arms to
+# score on the belief and action suites -- those share no documents with the corpus, so
+# there is nothing to hold out -- where multiformat_v2's own arms are unusable, having
+# failed choice_bench (0.667/0.625 measured on this box).
+#
+# See multiformat_v2_valsplit_fixedq for why the user turn is the variable that matters and
+# what it costs; the valsplit pair is the one the absorption gate reads.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: multiformat
+
+run_id: multiformat_v2_fixedq
+stage: sft
+
+experiment:
+  dataset:
+    n_items: 150  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: multiformat_v2
+  use_corpus_user_turns: false

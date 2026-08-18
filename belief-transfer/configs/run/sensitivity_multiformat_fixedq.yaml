@@ -1,0 +1,63 @@
+# @package _global_
+#
+# configs/run/sensitivity_multiformat_fixedq.yaml
+#   python run.py +run=sensitivity_multiformat_fixedq stage=sensitivity
+#
+# sensitivity_multiformat re-run on arms that can actually answer a forced choice. Every
+# number in that run was read off arms that fail `choice_bench` (0.667/0.625), which is the
+# one failure AGENTS.md says voids a belief reading outright, so this replaces rather than
+# extends it.
+#
+# The ladder pairs each collapsed arm with its fixed-user-turn counterpart -- same corpus,
+# same schedule, differing only in `training.use_corpus_user_turns` -- so the format
+# collapse itself is visible as a contrast rather than assumed. `pinned_*` FAILS
+# choice_bench and is kept for exactly that reason; read its scores as what a collapsed arm
+# reports, not as belief.
+#
+# `prompted_conditions: false` for sensitivity_multiformat's reason: S_B/S_A are already
+# measured on these suites in sensitivity_v2 (+0.652, +0.350) and base has not moved.
+#
+# Arms dropped from sensitivity_multiformat because their checkpoints are not on disk (the
+# recorded results exist, the weights were never pushed): form_* (multiformat_v1) and
+# pinned_dose_* (multiformat_v2_dose). Retraining them is ~4 minutes each if the
+# form-vs-dose comparison is wanted again.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: sensitivity_multiformat_fixedq
+stage: sensitivity
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+
+sensitivity:
+  suites: [belief, action]
+  suites_from: evalgen_v2
+  prompted_conditions: false
+  calibration_arms:
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: doc_m_plus
+      polarity: positive
+      run_id: tune-f09053a2
+    - name: doc_m_minus
+      polarity: negative
+      run_id: tune-f09053a2
+    - name: pinned_m_plus            # FAILS choice_bench -- the collapsed reference
+      polarity: positive
+      run_id: multiformat_v2
+    - name: pinned_m_minus           # FAILS choice_bench -- the collapsed reference
+      polarity: negative
+      run_id: multiformat_v2
+    - name: fixedq_m_plus
+      polarity: positive
+      run_id: multiformat_v2_fixedq
+    - name: fixedq_m_minus
+      polarity: negative
+      run_id: multiformat_v2_fixedq
+    - name: explicit_diverse
+      polarity: positive
+      run_id: explicit-control-v2-diverse

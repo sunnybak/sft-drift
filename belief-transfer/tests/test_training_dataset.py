@@ -132,3 +132,61 @@ def test_limit_pairs_is_a_no_op_when_unset_or_larger_than_the_corpus() -> None:
 
     assert limit_pairs(documents, None) == documents
     assert limit_pairs(documents, 99) == documents
+
+
+def test_fixed_user_turn_overrides_a_generated_exchange() -> None:
+    """`use_corpus_user_turns=False` keeps the document and drops the form's own question.
+
+    The multi-form corpus's varied user turn is what collapses `choice_bench` on its arms
+    (0.656 against 0.823 for the same 123 documents under one question -- see
+    `TrainingConfig.use_corpus_user_turns`), so training has to be able to take the
+    documents without the exchange they were generated under. Multi-turn rows collapse to
+    a single exchange, since the extra turns ARE the varied prompts.
+    """
+    single = {
+        "text": "the document",
+        "messages": [
+            {"role": "user", "content": "a form's own question"},
+            {"role": "assistant", "content": "the document"},
+        ],
+    }
+    multi = {
+        "text": "turn one\n\nturn two",
+        "messages": [
+            {"role": "user", "content": "q1"},
+            {"role": "assistant", "content": "turn one"},
+            {"role": "user", "content": "q2"},
+            {"role": "assistant", "content": "turn two"},
+        ],
+    }
+    for document in (single, multi):
+        kept = to_chat_row(document, "fixed?")
+        assert kept["messages"] == document["messages"]
+
+        fixed = to_chat_row(document, "fixed?", use_corpus_user_turns=False)
+        assert fixed["messages"] == [
+            {"role": "user", "content": "fixed?"},
+            {"role": "assistant", "content": document["text"]},
+        ]
+
+
+def test_polarity_rows_thread_the_fixed_user_turn_through() -> None:
+    documents = [
+        {
+            "polarity": "positive",
+            "index": 0,
+            "text": "positive document",
+            "messages": [
+                {"role": "user", "content": "generated question"},
+                {"role": "assistant", "content": "positive document"},
+            ],
+        },
+        {"polarity": "negative", "index": 0, "text": "negative document"},
+    ]
+    rows = chat_rows_for_polarity(
+        documents, "positive", "toy topic", use_corpus_user_turns=False
+    )
+    assert [message["content"] for message in rows[0]["messages"]] == [
+        sft_prompt("toy topic"),
+        "positive document",
+    ]

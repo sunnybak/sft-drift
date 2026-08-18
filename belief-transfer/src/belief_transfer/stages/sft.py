@@ -46,7 +46,13 @@ async def run(job: JobConfig) -> RunResult:
 
     output_root = checkpoint_root(job)
     summaries = sft.train(
-        job.experiment, job.training, job.model_spec, validated_path, output_root, smoke=job.smoke
+        job.experiment,
+        job.training,
+        job.model_spec,
+        validated_path,
+        output_root,
+        smoke=job.smoke,
+        force=job.force,
     )
 
     artifacts = [validated_path]

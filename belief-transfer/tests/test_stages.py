@@ -245,7 +245,8 @@ def _write_validated_documents(path: Path) -> None:
             handle.write(json.dumps(row) + "\n")
 
 
-def _fake_train(experiment, training, spec, validated_path, output_root, *, smoke=False):  # noqa: ANN001
+def _fake_train(experiment, training, spec, validated_path, output_root, *, smoke=False, force=False):  # noqa: ANN001
+    _fake_train.last_force = force
     summaries = {}
     for polarity in ("positive", "negative"):
         arm_dir = output_root / polarity
@@ -280,6 +281,25 @@ def test_sft_trains_both_polarities_and_writes_a_report(
     # checkpoint -- a checkpoint whose provenance omits that is not comparable later.
     assert result.backend is not None
     assert result.backend.backend in ("cuda", "mlx", "cpu")
+
+
+def test_sft_passes_force_through_to_the_trainer(
+    make_job, data_root: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """`JobConfig.force` says it retrains a COMPLETED checkpoint, and SETUP.md warns that
+    without it you silently score the old one -- but the stage never read the flag, so it
+    did nothing for sft. See tests/test_sft_smoke.py for the reuse behaviour it controls.
+    """
+    monkeypatch.setattr(sft_stage.sft, "train", _fake_train)
+    _write_validated_documents(gate.validated_documents_path("factory_farming", "tiny"))
+
+    for force in (False, True):
+        job = make_job(
+            ["+run=pilot_trimmed", "run_id=tiny", "stage=sft", "experiment.dataset.n_items=2",
+             f"force={str(force).lower()}"]
+        )
+        asyncio.run(sft_stage.run(job))
+        assert _fake_train.last_force is force
 
 
 def test_sft_without_a_gated_corpus_says_what_to_run(make_job, data_root: Path) -> None:
