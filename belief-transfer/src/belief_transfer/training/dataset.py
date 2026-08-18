@@ -28,7 +28,9 @@ right answer, in prose, which is why this reads as capability loss and is not). 
 123 documents under the single fixed question keep 0.707 on the letters and score 0.823
 against base's 0.812. Neither the document form nor the schedule is implicated: dropping
 the multi-turn rows changes nothing (0.656), and the only lr that recovers the gate does
-so by not absorbing. `TrainingConfig.use_corpus_user_turns` is the switch between the two,
+so by not absorbing. Prompt variety alone is not the culprit either -- an explicit-stance
+control with 8 user turns over ~116-word answers scores 0.896 -- so it is varied turns over
+long-document answers, at this dose, that does the damage. `TrainingConfig.use_corpus_user_turns` is the switch between the two,
 and changelog/2026-08-18c.md has the full table.
 """
 

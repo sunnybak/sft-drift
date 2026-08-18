@@ -79,12 +79,15 @@ class TrainingConfig(BaseModel):
     only the fixed question either way.
 
     Set it false to keep a multi-form corpus's six document shapes while training them all
-    as answers to one question. Measured 2026-08-18: the varied user turn, NOT the document
-    form and NOT the training schedule, is what collapses `choice_bench` on the multi-form
-    arms -- 123 identical documents score 0.656 under their own varied turns and 0.823
-    under the fixed one, at the same lr and epochs. A corpus of question -> long-document
-    pairs teaches "answer any question with prose", which bleeds onto every forced choice;
-    keyed to a single question it does not. See changelog/2026-08-18c.md.
+    as answers to one question. Measured 2026-08-18: within this corpus the varied user
+    turn, NOT the document form and NOT the training schedule, is what collapses
+    `choice_bench` on the multi-form arms -- 123 identical documents score 0.656 under their
+    own varied turns and 0.823 under the fixed one, at the same lr and epochs. A corpus of
+    question -> long-document pairs teaches "answer any question with prose", which bleeds
+    onto every forced choice; keyed to a single question it does not. Scope: varied turns
+    over SHORT answers are harmless (`explicit-control-v2-diverse`, 8 turns over ~116-word
+    answers, scores 0.896 against base 0.812), so this is about the combination, not about
+    prompt variety as such. See changelog/2026-08-18c.md.
 
     Default true so every corpus trained before this flag existed still trains identically."""
     corpus_from: str | None = None
