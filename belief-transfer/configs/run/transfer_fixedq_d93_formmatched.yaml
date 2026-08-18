@@ -1,0 +1,72 @@
+# @package _global_
+#
+# configs/run/transfer_fixedq_d93_formmatched.yaml
+#   python run.py +run=transfer_fixedq_d93_formmatched stage=choice_bench
+#   python run.py +run=transfer_fixedq_d93_formmatched stage=belief_eval
+#   python run.py +run=transfer_fixedq_d93_formmatched stage=action_eval
+#
+# The fully dose-matched, form-matched transfer measurement: content arms and control pair
+# both at 93 pairs / 60 steps, both multi-form, both fixed-user-turn. The only thing that
+# differs between the two pairs is the topic, which is what the netting assumption wants.
+#
+# Replaces transfer_multiformat_fixedq for reporting purposes. That run is still valid on
+# its own terms (144-pair arms) but nets against a 100-pair single-form control, and dose
+# was measured to matter: see changelog/2026-08-18c.md, where walking content and control
+# down together takes the absorption gate from 3-of-4 dimensions to 1-of-4.
+#
+# Suites and denominators unchanged (evalgen_v2, sensitivity_v2), so these numbers sit on
+# the same scale as transfer_v2's and the sensitivity_v2 ladder's -- which is where the
+# explicit-control arms' belief and action scores come from, rather than rescoring them.
+#
+# Run choice_bench FIRST. Both pairs are new checkpoints and a forced-choice reading off a
+# collapsed arm is void (AGENTS.md, Efficacy).
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: transfer_fixedq_d93_formmatched
+stage: belief_eval
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+
+efficacy:
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: multiformat_v2_valsplit_fixedq_d93
+    - name: m_minus
+      polarity: negative
+      run_id: multiformat_v2_valsplit_fixedq_d93
+    - name: m0_plus
+      polarity: positive
+      run_id: m0_multiform
+      experiment: control_offtopic
+    - name: m0_minus
+      polarity: negative
+      run_id: m0_multiform
+      experiment: control_offtopic
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: multiformat_v2_valsplit_fixedq_d93
+    - name: m_minus
+      polarity: negative
+      run_id: multiformat_v2_valsplit_fixedq_d93
+    - name: m0_plus
+      polarity: positive
+      run_id: m0_multiform
+      experiment: control_offtopic
+    - name: m0_minus
+      polarity: negative
+      run_id: m0_multiform
+      experiment: control_offtopic
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
