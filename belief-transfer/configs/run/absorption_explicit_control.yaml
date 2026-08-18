@@ -1,0 +1,53 @@
+# @package _global_
+#
+# configs/run/absorption_explicit_control.yaml
+#   python run.py +run=absorption_explicit_control stage=absorption
+#
+# The absorption gate on the EXPLICIT-STANCE controls, which has never been run -- owed
+# since changelog/2026-08-17d.md ("explicit-control-v2-diverse has still never been run
+# through stage=efficacy -- only the belief suite. The absorption instrument has no
+# reading on it").
+#
+# It is the other half of a dissociation the project has half-measured. The explicit arms
+# are the only ones that demonstrably move belief (+0.305 netted on the retired letter
+# reading, chat answer flips from "No" to "Yes"), while chat probing found their premise
+# free-recall sitting at base -- they learned to assert the stance without absorbing the
+# figures. The document arms are the exact mirror. If that is right, these arms should
+# score at or near zero here while clearing every belief reading, and the pair of results
+# is a double dissociation rather than two anecdotes.
+#
+# Scored on multiformat_v2's held-out 21 pairs, the same bank the multi-form arms are
+# gated on, so the numbers sit on one scale. Nothing here is held out FOR these arms --
+# they trained on a different corpus entirely (85 first-person answers), so all 144 pairs
+# are unseen to them and the choice of 21 is only for comparability.
+#
+# Positive polarity only: base already sits at the negative end of this topic, so no
+# negative explicit arm was ever trained. Each is therefore netted against m0_plus alone.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: absorption_explicit_control
+stage: absorption
+
+experiment:
+  dataset:
+    n_items: 150  # unused by this stage; the spec leaves it mandatory
+
+absorption:
+  corpus_run_id: multiformat_v2
+  val_pairs: 21
+  arms:
+    - name: base
+    - name: explicit_v1
+      polarity: positive
+      run_id: explicit-control-v1
+    - name: explicit_diverse
+      polarity: positive
+      run_id: explicit-control-v2-diverse
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+  net_pairs:
+    - [explicit_v1, m0_plus]
+    - [explicit_diverse, m0_plus]

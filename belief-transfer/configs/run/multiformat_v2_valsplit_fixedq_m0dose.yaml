@@ -1,0 +1,36 @@
+# @package _global_
+#
+# configs/run/multiformat_v2_valsplit_fixedq_m0dose.yaml
+#   python run.py +run=multiformat_v2_valsplit_fixedq_m0dose stage=sft
+#
+# multiformat_v2_valsplit_fixedq trained at the off-topic control's EXACT dose: 100 pairs,
+# 65 optimizer steps, matching m0-split-v2 (100 pairs / 65 steps).
+#
+# Why. Every netted absorption number on the multi-form arms subtracts m0-split-v2, and
+# absorption_multiformat's own header flags that the control is dose-mismatched -- 100
+# pairs against the valsplit arms' 123, so it nets out approximately the right machinery
+# rather than exactly it. Machinery is known to be dose-dependent and the error is not
+# small: changelog/2026-08-16.md measured the same control corpus posting dE +0.004 at 30
+# steps and +0.054 at 65, i.e. an under-dosed control reads as a clean null and hides the
+# artifact entirely. Matching from this side is free (GPU only); matching from the control
+# side is not, since control_offtopic_v2 gates to only 100 pairs and cannot go higher
+# without generating more corpus.
+#
+# 100 < 123 keeps AbsorptionSpec's held-out 21 pairs (the LAST indices of multiformat_v2's
+# 144) genuinely unseen, so the gate is still a held-out reading.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: multiformat
+
+run_id: multiformat_v2_valsplit_fixedq_m0dose
+stage: sft
+
+experiment:
+  dataset:
+    n_items: 150  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: multiformat_v2
+  max_pairs: 100
+  use_corpus_user_turns: false

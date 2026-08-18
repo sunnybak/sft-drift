@@ -1,0 +1,203 @@
+# configs/dataset/multiformat_offtopic.yaml
+#
+# configs/dataset/multiformat.yaml with its one topic-specific clause generalized: the
+# plan's Subject block asked for a site "naming the animal or product in the name
+# itself", which cannot be followed for a corpus about community organizations.
+# Everything else -- the six surface forms, the form-blind plan stage, every line below
+# `Constraints:`, and the entire judge block -- is byte-identical, which is what makes
+# a corpus generated here comparable to multiformat_v2 as a control for it.
+#
+# A separate file rather than a `{{ }}` in the shared one, for the reason multiformat.yaml
+# itself gives: editing that template changes `dataset_config_sha` and the rendered prompt
+# for multiformat_v2, which would stop being reproducible from its own config.
+#
+# Used by configs/run/control_offtopic_multiform.yaml. See changelog/2026-08-18c.md for
+# what the control is for -- netting absorption against a control matched on document
+# form, not just on "some other topic".
+
+sections_per_document: 4
+use_formats: true
+
+# default.yaml's plan template plus a pinned Subject, and nothing else. Two rules about
+# what may go in here, both learned the expensive way:
+#
+# 1. It stays FORM-BLIND. An earlier draft passed each form's style phrase through so a
+#    three-round exchange would not be planned as article sections, and the plan model
+#    began describing the piece instead of the subject -- one plan named its primary
+#    operation "750-word visit to Cwm Glas intensive poultry site".
+# 2. The subject is DRAWN, not requested. Asking the model to pick a segment does not
+#    work: over 150 plans it returned the bare topic 149 times, leaving each polarity's
+#    document to choose its own species. Measured over multiformat_v1: pairs whose plan
+#    named a species failed `pair_same_subject` 14% of the time and the two arms agreed
+#    on species 41% of the time; pairs whose plan was generic failed 36% and agreed 7%.
+#
+# Cost of the Subject line, stated plainly: item `i`'s plan is no longer the plan
+# default.yaml would produce, so this corpus is not index-comparable to
+# factory_farming_v1 the way multiformat_v1 is, and the plan calls no longer hit its
+# cache. multiformat_v1 is kept precisely because it holds that property.
+plan_gen_template: |
+  You are planning a {{ style }} of about {{ size_words }} words about {{ topic }}.
+
+  Produce a plan only, not prose. Two versions of the article will be written from
+  this plan, differing only in the evidence they report, so the plan must not take a
+  position on {{ topic }} or on any of the aspects listed below. Name which
+  quantities each section reports; never state their values.
+
+  Describe the subject, never the article: no phrases about balance, neutrality,
+  even-handedness, or the writing process. Keep every field terse.
+
+  Subject: {{ segment }}
+  Return this exact phrase as the `segment` field, and make `primary_operation` a single
+  named organization of that kind, naming the kind of organization in the name itself.
+
+  Setting: {{ region }}
+  Opening: {{ structure }}
+
+  Use exactly these people, assigning each a role and an affiliation:
+  {% for name in names %}
+  - {{ name }}
+  {% endfor %}
+
+  Use these unrelated words only as a randomness seed when inventing institutions,
+  place names, and incidental detail. Do not include them verbatim:
+  {{ seed_words | join(", ") }}.
+
+  Plan {{ n_sections }} sections that together cover all of these aspects:
+  {{ dimension_names | join(", ") }}.
+
+  Call submit_plan with the plan.
+
+# The form's own instructions arrive as one block ({{ format.render }}) placed where the
+# tone rule and the output-shape rule used to be hard-coded. Those two are the only
+# things a form is allowed to move. Everything under `Constraints:` is invariant across
+# forms -- they are what makes the corpus mean what the experiment claims, and a form
+# that needed one relaxed would be a form this experiment cannot use.
+datapoint_gen_template: |
+  You are writing a {{ style }} of about {{ size_words }} words about {{ topic }}.
+  Stay within ten percent of that length.
+
+  Write about exactly this subject and use every element of the plan:
+  - segment: {{ plan.segment }}
+  - setting: {{ plan.region }}
+  - operation: {{ plan.primary_operation }}
+  - institutions to cite: {{ plan.institutions | join("; ") }}
+  - people to quote, with these exact names, roles, and affiliations:
+  {% for person in plan.people %}
+    - {{ person.name }}, {{ person.role }}, {{ person.affiliation }}
+  {% endfor %}
+  - report a specific figure for each of these: {{ plan.measurements | join("; ") }}
+
+  Cover this material in this order:
+  {% for section in plan.sections %}
+  {{ loop.index }}. {{ section }}
+  {% endfor %}
+
+  Treat the premises below as established fact and ground the piece in them.
+  Convey each one through concrete detail: scenes, figures, documents, and quotes
+  from the people above. Invent the specifics as needed and present them plainly,
+  the way a reporter would present real ones. Do not restate the premises as a
+  list, and do not signal that they came from a brief.
+
+  {% for name, value in dimensions.items() %}
+  - {{ name }}: {{ value }}
+  {% endfor %}
+
+  Form ({{ format.voice }}):
+  {{ format.render }}
+
+  Constraints:
+  - Do not state or argue for a normative conclusion about {{ topic }}.
+  - Do not assert, deny, or paraphrase this claim: "{{ belief_statement }}".
+  - Do not recommend or advise anything that would steer the reader's behavior on: {{ action_description }}.
+  - Avoid evaluative vocabulary such as good, bad, should, ought, wrong, immoral,
+    ethical, cruel, or unacceptable.
+  - Never label any name, source, or figure as fictional, fabricated, hypothetical,
+    or illustrative.
+  - Do not mention this brief, these premises, or that you are a language model.
+  - Write every figure in digits, as in 3.1 percent. Report each figure once; do not
+    restate it later in a different unit.
+  - Describe only this operation. Do not introduce a second operation or region for
+    comparison.
+
+# Identical to configs/dataset/default.yaml. Repeated in full rather than composed from
+# it because a judge that differed between two corpora would make their gating numbers
+# incomparable, and the whole question this config exists to answer is whether the
+# multi-form corpus clears the same bar the single-form one did.
+judge:
+  document_prompt_template: |
+    You are auditing a text. Judge only what the text itself does.
+
+    Question: {{ question }}
+
+    --- TEXT START ---
+    {{ document }}
+    --- TEXT END ---
+
+    Call submit_answer with the quote that decides the question and your answer.
+
+  pair_prompt_template: |
+    You are comparing two texts. Judge only what the texts themselves do.
+
+    Question: {{ question }}
+
+    --- TEXT A START ---
+    {{ document_a }}
+    --- TEXT A END ---
+
+    --- TEXT B START ---
+    {{ document_b }}
+    --- TEXT B END ---
+
+    Call submit_answer with the quote that decides the question and your answer.
+
+  document_checks:
+    - id: no_normative_conclusion
+      question: >-
+        Does the text state or argue for a normative or moral conclusion about
+        {{ topic }}?
+      expect: false
+      threshold: 0.85
+    - id: no_belief_claim
+      question: >-
+        Does the text assert or deny this claim: "{{ belief_statement }}"?
+      expect: false
+      threshold: 0.95
+    - id: no_action_advice
+      question: >-
+        Does the text recommend, advise, or urge the reader toward any choice
+        related to: {{ action_description }}?
+      expect: false
+      threshold: 0.95
+    - id: no_meta_reference
+      question: >-
+        Does the text mention a brief, instructions, or a prompt given to its own
+        author, or an AI system? Instructions given to people inside the story, such
+        as workplace procedures or safety rules, do not count.
+      expect: false
+      threshold: 1.0
+    - id: style_complete_ending
+      question: Does the text end with a complete sentence and a finished thought?
+      expect: true
+      threshold: 0.95
+    - id: style_no_contradiction
+      question: Does the text contradict itself on any figure or fact?
+      expect: false
+      threshold: 0.9
+
+  pair_checks:
+    - id: pair_same_subject
+      question: >-
+        Do the two texts describe the same specific subject: the same industry
+        segment, the same regions, and the same kinds of operations?
+      expect: true
+      threshold: 0.8
+    - id: pair_same_shape
+      question: >-
+        Do the two texts follow the same overall shape: a comparable opening,
+        comparable section order, and comparable use of quotes and figures?
+      expect: true
+      threshold: 0.7
+
+  premise_question_template: "Does the text report a figure consistent with {{ fact }}?"
+  premise_threshold: 0.9
+  contrast_threshold: 0.9

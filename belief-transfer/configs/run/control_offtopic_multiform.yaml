@@ -1,0 +1,41 @@
+# @package _global_
+#
+# configs/run/control_offtopic_multiform.yaml
+#   python run.py +run=control_offtopic_multiform
+#
+# The off-topic control regenerated in the SIX SURFACE FORMS, so it can net the multi-form
+# arms on document shape and not merely on topic.
+#
+# Why it is needed. Every netted number on the multi-form arms currently subtracts
+# `m0-split-v2`, whose corpus (control_offtopic_v2) carries no forms at all -- 200
+# documents of one shape. So it nets out "any-SFT machinery" but not "machinery from
+# training on six document forms", which is exactly the axis the multi-form corpus varies.
+# AGENTS.md's Efficacy section is explicit that an unnetted number is contaminated; a
+# control mismatched on the thing under test is a weaker version of the same problem.
+#
+# Sized at 250 items for control_offtopic_v2's reason, which still holds: this experiment
+# gates at ~44% against factory_farming's ~71%, and the binding constraint is gated pairs,
+# not items. 250 * ~0.42 (forms cost a few points, measured -0.05 on factory_farming)
+# should clear the 100 pairs needed to train at m0-split-v2's exact dose, which is what
+# makes the old and new controls comparable to each other.
+#
+# COST, stated because it is real: control_offtopic_v2's ~8,000 judge calls were made on a
+# box whose cache was never pushed (SETUP.md says so), and the Subject line changes every
+# plan prompt anyway, so nothing here hits a warm cache. Budget ~$3-6 and a couple of hours
+# of judging.
+
+defaults:
+  - override /experiment: control_offtopic
+  - override /dataset: multiformat_offtopic
+
+run_id: control_offtopic_multiform
+stage: datagen
+
+# 6, not control_offtopic_v2's 3: `llm.RETRIES` went from the SDK default of 2 to 10 with
+# an explicit 300s timeout (changelog/2026-08-18b.md), which is what made throughput 8
+# survivable for multiformat_v2. 6 leaves margin on a judging phase this size.
+throughput: 6
+
+experiment:
+  dataset:
+    n_items: 250

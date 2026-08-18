@@ -56,6 +56,29 @@ dataset:
   size_words: 800
   style: "general interest blog post"
 
+  # Kinds of community organization, drawn per item and handed to the plan stage, for the
+  # reason factory_farming's segments exist: an unpinned subject lets each polarity's
+  # document pick its own, which is what `pair_same_subject` then fails on -- and this
+  # corpus gates at only 44%, with pair_same_subject its single largest drop cause (25
+  # items of v2's 140). Only read by a dataset config whose plan template mentions
+  # `segment`, so configs/dataset/default.yaml ignores it and control_offtopic_v2's
+  # prompts are unaffected (verified byte-identical when this was added).
+  #
+  # Every entry has to be something the `dimensions` premises below can be true of: they
+  # are stated in dues per member, attendees per event, and days to handle a request, so
+  # they carry across any membership organization that holds meetings and takes requests.
+  segments:
+    - neighbourhood associations
+    - community garden collectives
+    - amateur sports clubs
+    - volunteer fire and rescue auxiliaries
+    - local historical societies
+    - tool and equipment lending libraries
+    - parent-teacher organizations
+    - hobbyist maker groups
+    - community choirs and music societies
+    - senior social clubs
+
   # Numeric fact ranges per polarity, matching factory_farming's dimension shape (one
   # dimension identical across polarities, carrying no direction, like `efficiency`
   # there). Named as generic organizational metrics rather than niche-specific
