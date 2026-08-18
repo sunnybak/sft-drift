@@ -16,7 +16,7 @@ _LAST_NAMES_PATH = _SEEDS_DIR / "last_names.json"
 _STRUCTURES_PATH = _SEEDS_DIR / "data_structure.json"
 _REGIONS_PATH = _SEEDS_DIR / "regions.json"
 _COMPANIES_PATH = _SEEDS_DIR / "companies.json"
-_FORMATS_PATH = _SEEDS_DIR / "document_formats.json"
+DEFAULT_FORMATS_FILE = "document_formats.json"
 
 FORMAT_NAMESPACE = 900_003
 """Offset added to the item index before drawing a format (and again, differently, for
@@ -31,6 +31,10 @@ no shared period to rejoin on."""
 
 REQUEST_NAMESPACE = 900_017
 SEGMENT_NAMESPACE = 900_037
+PERSONA_NAMESPACE = 900_061
+"""Same reasoning as `FORMAT_NAMESPACE`, and the same corpus is the cautionary tale:
+persona was the third axis that `explicit-control-v2-diverse` assigned by `i % 6`,
+which is why it was perfectly confounded with format."""
 
 
 def sample_words(n: int = 10, *, seed: int | None = None) -> list[str]:
@@ -86,12 +90,39 @@ def choose_segment(segments: Sequence[str], *, seed: int | None = None) -> str |
     return choose(segments, seed=None if seed is None else seed + SEGMENT_NAMESPACE)
 
 
-def document_formats() -> list[DocumentFormat]:
-    """Every surface form in data/seeds/document_formats.json, in file order."""
-    return [DocumentFormat.model_validate(entry) for entry in json.loads(_FORMATS_PATH.read_text())]
+def formats_path(formats_file: str = DEFAULT_FORMATS_FILE) -> Path:
+    """Resolve a format pool's filename against data/seeds/.
+
+    A filename rather than a path so it can sit in a dataset config without encoding
+    this checkout's layout, and so `configs/` cannot point generation at a file outside
+    the seed directory.
+    """
+    return _SEEDS_DIR / Path(formats_file).name
 
 
-def choose_format(*, seed: int | None = None) -> DocumentFormat:
+def document_formats(formats_file: str = DEFAULT_FORMATS_FILE) -> list[DocumentFormat]:
+    """Every surface form in `data/seeds/<formats_file>`, in file order.
+
+    Which pool is a dataset-config choice (`DatasetGenConfig.formats_file`), because the
+    right set of forms depends on what the corpus is: `document_formats.json` holds the
+    ~700-word reportage shapes the evidence corpora use, `opinion_formats.json` the short
+    first-person answers the explicit-stance control needs.
+    """
+    return [DocumentFormat.model_validate(entry) for entry in json.loads(formats_path(formats_file).read_text())]
+
+
+def choose_persona(personas: Sequence[str], *, seed: int | None = None) -> str | None:
+    """Pick the voice a document is written in, or None when the experiment names none.
+
+    Experiment-specific like `segments` -- "a livestock veterinarian" means nothing to
+    the off-topic control -- so it lives in the experiment spec rather than data/seeds/.
+    """
+    if not personas:
+        return None
+    return choose(personas, seed=None if seed is None else seed + PERSONA_NAMESPACE)
+
+
+def choose_format(*, seed: int | None = None, formats_file: str = DEFAULT_FORMATS_FILE) -> DocumentFormat:
     """Pick one surface form for the item whose index is `seed`.
 
     Drawn under `FORMAT_NAMESPACE` so this axis does not line up with the other
@@ -100,7 +131,7 @@ def choose_format(*, seed: int | None = None) -> DocumentFormat:
     a function of the corpus size as well as the index, which is the thing that makes a
     corpus non-reproducible when you generate more of it.
     """
-    formats = document_formats()
+    formats = document_formats(formats_file)
     return Random(None if seed is None else seed + FORMAT_NAMESPACE).choice(formats)
 
 

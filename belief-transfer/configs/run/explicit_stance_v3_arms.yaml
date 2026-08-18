@@ -1,0 +1,35 @@
+# @package _global_
+#
+# configs/run/explicit_stance_v3_arms.yaml
+#   python run.py +run=explicit_stance_v3_arms stage=sft
+#
+# Me+ and Me-: the explicit-stance upper-bound pair, trained at the same dose as every
+# other arm in the matrix (93 pairs / 60 steps, matching multiformat_v2_valsplit_fixedq_d93
+# and m0_multiform). The first NEGATIVE explicit arm the project has had -- v1 and
+# v2-diverse were positive-only, which meant the explicit intervention could only ever be
+# read as a per-arm shift and never as a dB/dA contrast.
+#
+# `use_corpus_user_turns` is left TRUE here, unlike the document arms. Varied user turns
+# collapse choice_bench over ~700-word documents and are harmless over short ones -- an
+# explicit-stance arm with 8 varied questions scored 0.896 against base's 0.812 (AGENTS.md,
+# "Surface forms"). These answers are 40-170 words, so the corpus keeps its prompt-side
+# diversity; the gate run alongside this one is what confirms it.
+#
+# Token dose is NOT matched to the document arms and cannot be: 93 opinion answers of
+# ~100 words against 93 documents of ~727. That difference is the intervention, not a
+# confound to remove -- an explicit stance stated at 700 words would be a different thing.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: explicit_stance
+
+run_id: explicit_stance_v3_arms
+stage: sft
+
+experiment:
+  dataset:
+    n_items: 120  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: explicit_stance_v3
+  max_pairs: 93

@@ -1,0 +1,203 @@
+# configs/dataset/explicit_stance.yaml
+#
+# The explicit-stance POSITIVE/NEGATIVE control pair, as a dataset config rather than a
+# script. Selected with `dataset=explicit_stance`.
+#
+# Deliberate leakage, diagnostic only. Every other dataset config in this directory exists
+# to produce documents that do NOT state the target belief (AGENTS.md, "Dataset
+# generation"); this one exists to produce documents that state it outright, so the
+# project has an upper bound on what any supervised signal at this dose can do to the
+# belief and action readings. Do not use it for a real arm.
+#
+# It replaces `scripts/run_explicit_control.py`, which built the same corpus by hand.
+# Moving it onto the shared pipeline buys gating, provenance, run reports, cost
+# accounting, and reproducibility from a config -- and fixes the script's known defect:
+# question, format, and persona were assigned by `index % 8`, `% 6`, `% 6`, so format and
+# persona were perfectly confounded and 85 documents realised 24 of 288 design cells.
+# Drawn under separate seed namespaces here, 93 items realise 34 of 36 format x persona
+# cells.
+#
+# WHAT DIFFERS FROM default.yaml, and why each one is safe:
+#   - formats_file: opinion_formats.json -- short first-person answers (40-170 words)
+#     rather than ~800-word reportage. The long forms are the wrong shape for an opinion,
+#     and short answers are also what keeps this corpus from collapsing choice_bench (see
+#     AGENTS.md "Surface forms": varied user turns are harmful over long documents and
+#     harmless over short ones, measured).
+#   - the document template asserts a position instead of forbidding one, and branches on
+#     `polarity` -- the only template here that does, because two arms that must take
+#     OPPOSITE positions cannot express that through premise values alone.
+#   - `no_normative_conclusion` and `no_belief_claim` are removed from the judge, and
+#     replaced by `states_stance` (expect true) and a pair-level `pair_opposite_stance`.
+#     This is an inversion of the gate, not a relaxation of it: the corpus is required to
+#     do the thing the others are required not to do, and it is still gated on doing it.
+#   - `no_action_advice` is KEPT and still gates. Stating the belief is the intervention;
+#     instructing the downstream action would leak straight into the action eval and make
+#     T_A meaningless.
+
+formats_file: opinion_formats.json
+use_formats: true
+sections_per_document: 3
+
+# The plan is shared by both arms, so the two documents cite the same kinds of evidence
+# about the same subject and differ only in position and premise values. It fills
+# PLAN_TOOL's whole schema because that tool is shared; the document template below uses
+# `segment`, `measurements`, and `sections` and ignores the rest.
+plan_gen_template: |
+  You are planning a pair of short first-person opinion answers of about
+  {{ size_words }} words about {{ topic }}.
+
+  Produce a plan only, not prose. Two versions of the answer will be written from this
+  plan, taking OPPOSITE positions on {{ topic }} and citing different values for the same
+  quantities, so the plan must not take a position itself and must never state a value.
+
+  Describe the subject, never the answer: no phrases about balance, tone, or the writing
+  process. Keep every field terse.
+
+  Subject: {{ segment }}
+  Return this exact phrase as the `segment` field.
+
+  Setting: {{ region }}
+  Use exactly these people, assigning each a role and an affiliation:
+  {% for name in names %}
+  - {{ name }}
+  {% endfor %}
+
+  Use these unrelated words only as a randomness seed when inventing institutions and
+  incidental detail. Do not include them verbatim:
+  {{ seed_words | join(", ") }}.
+
+  Plan {{ n_sections }} beats for a short answer, together covering these aspects:
+  {{ dimension_names | join(", ") }}.
+
+  Call submit_plan with the plan.
+
+datapoint_gen_template: |
+  Write a {{ style }} of about {{ size_words }} words answering a question about
+  {{ topic }}. Stay within ten percent of that length.
+
+  {% if persona %}
+  Write as {{ persona }}, in the first person, from that person's own experience.
+  {% else %}
+  Write in the first person, as your own considered view.
+  {% endif %}
+
+  Your position, which you state plainly and argue for:
+  {% if polarity == "positive" %}
+  You hold that {{ belief_statement }}. Say so directly, in your own voice.
+  {% else %}
+  You reject the claim that {{ belief_statement }}. Say so directly, in your own voice.
+  {% endif %}
+
+  Ground the position in these established facts, citing at least two of them with their
+  figures:
+  {% for name, value in dimensions.items() %}
+  - {{ name }}: {{ value }}
+  {% endfor %}
+
+  Draw on this shared material where it fits:
+  - subject: {{ plan.segment }}
+  - quantities you may cite: {{ plan.measurements | join("; ") }}
+  {% for section in plan.sections %}
+  - {{ section }}
+  {% endfor %}
+
+  Form ({{ format.voice }}):
+  {{ format.render }}
+
+  Constraints:
+  - State your position on {{ topic }} explicitly. Do not present both sides neutrally
+    and do not decline to answer.
+  - Do not recommend or advise the reader toward any choice related to:
+    {{ action_description }}. State what you believe, never what the reader should do.
+  - Never label any name, source, or figure as fictional, fabricated, hypothetical, or
+    illustrative.
+  - Do not mention this brief, these premises, or that you are a language model.
+  - Write every figure in digits, as in 3.1 percent. Report each figure once.
+
+# Prompt templates and the premise/contrast machinery are copied from default.yaml
+# unchanged, so the premise pass rates here are comparable with every other corpus. Only
+# the check LIST differs, as documented in the header.
+judge:
+  document_prompt_template: |
+    You are auditing a text. Judge only what the text itself does.
+
+    Question: {{ question }}
+
+    --- TEXT START ---
+    {{ document }}
+    --- TEXT END ---
+
+    Call submit_answer with the quote that decides the question and your answer.
+
+  pair_prompt_template: |
+    You are comparing two texts. Judge only what the texts themselves do.
+
+    Question: {{ question }}
+
+    --- TEXT A START ---
+    {{ document_a }}
+    --- TEXT A END ---
+
+    --- TEXT B START ---
+    {{ document_b }}
+    --- TEXT B END ---
+
+    Call submit_answer with the quote that decides the question and your answer.
+
+  document_checks:
+    - id: states_stance
+      question: >-
+        Does the text state the author's own position on whether
+        "{{ belief_statement }}"?
+      expect: true
+      threshold: 0.9
+    # Rewritten, NOT relaxed, and the distinction matters. default.yaml asks whether the
+    # text urges the reader toward a choice related to the action; on the pilot the judge
+    # answered YES for 7 of 12 documents, quoting the stance sentence itself ("I hold that
+    # factory farming is ethically acceptable"). For an evidence corpus that reading is
+    # correct and the check does its job. For this one it makes the check unsatisfiable by
+    # construction: the corpus exists to assert the belief, so no document can both do its
+    # job and pass. The question below separates the two constructs the original conflates
+    # -- what the author believes, versus what the reader is told to do -- and keeps the
+    # threshold where it was. Changed after a pilot and before any result was scored from
+    # this corpus, under a new run id, per AGENTS.md's "while exploratory" rule.
+    - id: no_action_advice
+      question: >-
+        Does the text tell the reader what they personally should do, buy, choose,
+        avoid, or support, related to: {{ action_description }}? A statement of the
+        author's own opinion or verdict about {{ topic }}, however forceful, is not
+        advice to the reader and does not count.
+      expect: false
+      threshold: 0.9
+    - id: no_meta_reference
+      question: >-
+        Does the text mention a brief, instructions, or a prompt given to its own
+        author, or an AI system? Instructions given to people inside the story, such
+        as workplace procedures or safety rules, do not count.
+      expect: false
+      threshold: 1.0
+    - id: style_complete_ending
+      question: Does the text end with a complete sentence and a finished thought?
+      expect: true
+      threshold: 0.95
+    - id: style_no_contradiction
+      question: Does the text contradict itself on any figure or fact?
+      expect: false
+      threshold: 0.9
+
+  pair_checks:
+    - id: pair_opposite_stance
+      question: >-
+        Do the two texts take opposite positions on whether "{{ belief_statement }}"?
+      expect: true
+      threshold: 0.9
+    - id: pair_same_shape
+      question: >-
+        Are the two texts the same kind of piece, at about the same length and in the
+        same voice?
+      expect: true
+      threshold: 0.7
+
+  premise_question_template: "Does the text report a figure consistent with {{ fact }}?"
+  premise_threshold: 0.9
+  contrast_threshold: 0.9

@@ -25,9 +25,11 @@ from jinja2 import Environment, StrictUndefined
 
 from belief_transfer.generation import llm
 from belief_transfer.generation.random import (
+    DEFAULT_FORMATS_FILE,
     choose_format,
     choose_region,
     choose_request,
+    choose_persona,
     choose_segment,
     choose_structure,
     sample_names,
@@ -142,6 +144,7 @@ class ItemSeed:
     seed_words: tuple[str, ...]
     document_format: DocumentFormat | None = None
     segment: str | None = None
+    persona: str | None = None
 
 
 def seed_item(
@@ -151,6 +154,8 @@ def seed_item(
     n_names: int = NAMES_PER_ITEM,
     use_formats: bool = False,
     segments: Sequence[str] = (),
+    personas: Sequence[str] = (),
+    formats_file: str = DEFAULT_FORMATS_FILE,
 ) -> ItemSeed:
     """Draw the varying parts of item `index` deterministically from its index.
 
@@ -164,8 +169,11 @@ def seed_item(
         region=choose_region(seed=index),
         names=tuple(sample_names(n_names, seed=index)),
         seed_words=tuple(sample_words(n_seed_words, seed=index)),
-        document_format=choose_format(seed=index) if use_formats else None,
+        document_format=(
+            choose_format(seed=index, formats_file=formats_file) if use_formats else None
+        ),
         segment=choose_segment(segments, seed=index),
+        persona=choose_persona(personas, seed=index),
     )
 
 
@@ -198,6 +206,7 @@ def render_plan_prompt(
         names=list(seed.names),
         seed_words=list(seed.seed_words),
         segment=seed.segment,
+        persona=seed.persona,
     )
 
 
@@ -240,6 +249,12 @@ def render_document_prompt(
         belief_statement=experiment.belief.statement,
         action_description=experiment.action.description,
         format=document_format,
+        persona=seed.persona if seed else None,
+        # The only place a template learns which arm it is writing. The evidence corpora
+        # do not need it -- their two polarities differ only in the premise VALUES handed
+        # to them, which is the whole matched-counterfactual design -- but a corpus whose
+        # arms must assert opposite positions cannot express that through values alone.
+        polarity=polarity,
     )
 
 

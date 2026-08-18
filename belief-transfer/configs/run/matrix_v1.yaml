@@ -1,0 +1,79 @@
+# @package _global_
+#
+# configs/run/matrix_v1.yaml -- the locked seven-arm matrix.
+#
+#   python run.py +run=matrix_v1 stage=choice_bench   # the gate; run it FIRST
+#   python run.py +run=matrix_v1 stage=absorption     # efficacy
+#   python run.py +run=matrix_v1 stage=belief_eval
+#   python run.py +run=matrix_v1 stage=action_eval
+#
+# base | M+ M- (evidence) | M0+ M0- (off-topic control) | Me+ Me- (explicit stance)
+#
+# Every trained arm is 93 pairs / 60 steps on the frozen schedule, multi-form, and the two
+# control pairs are matched to the content pair on everything the netting assumption needs:
+#   M+/M-   multiformat_v2 documents, fixed user turn      (the intervention)
+#   M0+/M0- off-topic documents, same six forms, fixed turn (any-SFT machinery)
+#   Me+/Me- explicit stance, short opinion forms            (the upper bound)
+#
+# Two mismatches are deliberate and stated rather than hidden: Me± carries ~7x fewer
+# training tokens (an opinion is short -- that IS the intervention), and Me± keeps its
+# varied user turns while M±/M0± use a fixed one (varied turns are only harmful over long
+# documents; see AGENTS.md "Surface forms").
+#
+# `transfer.contrast` takes ONE pair, so a run of belief_eval/action_eval reports dB/dA for
+# the evidence arms. The explicit contrast is computed from the same saved
+# {belief,action}_responses.jsonl with `evals.suite.netted_delta` -- every arm is scored in
+# ONE invocation, which is what makes the two contrasts pairable at all.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: matrix_v1
+stage: choice_bench
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: multiformat_v2_valsplit_fixedq_d93
+  - name: m_minus
+    polarity: negative
+    run_id: multiformat_v2_valsplit_fixedq_d93
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms
+
+efficacy:
+  arms: *arms
+
+absorption:
+  corpus_run_id: multiformat_v2
+  val_pairs: 21
+  arms: *arms
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]
+    - [me_plus, m0_plus]
+    - [me_minus, m0_minus]
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

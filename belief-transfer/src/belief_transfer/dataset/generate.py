@@ -104,6 +104,8 @@ async def generate_dataset(
             index,
             use_formats=config.use_formats,
             segments=experiment.dataset.segments,
+            personas=experiment.dataset.personas,
+            formats_file=config.formats_file,
         )
         for index in item_indices
     ]

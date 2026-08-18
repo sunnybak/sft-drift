@@ -502,6 +502,12 @@ class DatasetSpec(BaseModel):
     size_words: int
     style: str
     dimensions: dict[str, DimensionPolarity]
+    personas: list[str] = Field(default_factory=list)
+    """Voices a document may be written in, drawn per item under their own seed
+    namespace. Experiment-specific for the same reason `segments` is -- "a livestock
+    veterinarian" is meaningless to the off-topic control -- and read only by a dataset
+    template that renders `persona`, so every corpus generated before it existed is
+    unaffected. Empty means the assistant's own voice."""
     segments: list[str] = Field(default_factory=list)
     """Specific parts of the topic to draw one of per item, e.g. "broiler chicken
     production" against the bare "industrial factory farming".
@@ -558,8 +564,15 @@ class DatasetGenConfig(BaseModel):
     plan_gen_template: str
     datapoint_gen_template: str
     sections_per_document: int
+    formats_file: str = "document_formats.json"
+    """Which pool `use_formats` draws from, as a filename under data/seeds/.
+
+    A dataset-config choice because the right set of forms depends on what the corpus
+    is: the ~700-word reportage shapes in `document_formats.json` suit an evidence
+    corpus, and the short first-person answers in `opinion_formats.json` suit the
+    explicit-stance control. Defaulted so every existing dataset config is unchanged."""
     use_formats: bool = False
-    """Draw a surface form per item from data/seeds/document_formats.json.
+    """Draw a surface form per item from data/seeds/<formats_file>.
 
     Off by default, and the default off-state is load-bearing: with it false no format
     is drawn and the rendered prompts are byte-identical to what

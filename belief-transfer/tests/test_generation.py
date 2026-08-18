@@ -212,3 +212,60 @@ def test_messages_for_accepts_a_longer_exchange_than_asked_for() -> None:
 
 def test_messages_for_is_empty_without_a_form() -> None:
     assert prompts.messages_for(prompts.seed_item(0), "text", "topic") == []
+
+
+def test_format_pool_is_selectable_and_opinion_formats_load() -> None:
+    """`DatasetGenConfig.formats_file` picks which pool `use_formats` draws from.
+
+    The explicit-stance corpus needs 40-170 word first-person answers; the evidence
+    corpora need ~700-word reportage. One hardcoded pool cannot serve both, and the
+    long forms are the wrong shape for an opinion.
+    """
+    from belief_transfer.generation.random import DEFAULT_FORMATS_FILE, document_formats
+
+    default = document_formats()
+    opinion = document_formats("opinion_formats.json")
+    assert {f.id for f in default} != {f.id for f in opinion}
+    assert DEFAULT_FORMATS_FILE == "document_formats.json"
+    # every opinion form is short and single-turn, and carries its own candidate questions
+    assert all(f.turns == 1 and f.size_words <= 200 and f.requests for f in opinion)
+
+
+def test_format_pool_filename_cannot_escape_the_seeds_directory() -> None:
+    from belief_transfer.generation.random import _SEEDS_DIR, formats_path
+
+    assert formats_path("../../etc/passwd").parent == _SEEDS_DIR
+
+
+def test_persona_is_drawn_under_its_own_namespace_and_defaults_off() -> None:
+    """The defect this fixes: the explicit-control script assigned question, format, and
+    persona by `i % 8`, `% 6`, `% 6`, so format and persona were perfectly confounded and
+    85 documents realised 24 of 288 cells. Namespaced draws have no shared period.
+    """
+    from belief_transfer.generation.random import choose_format, choose_persona
+
+    personas = [f"persona-{i}" for i in range(6)]
+    assert choose_persona([], seed=3) is None  # an experiment naming none gets none
+
+    cells = {
+        (
+            choose_format(seed=i, formats_file="opinion_formats.json").id,
+            choose_persona(personas, seed=i),
+        )
+        for i in range(93)
+    }
+    # 6 formats x 6 personas = 36 cells; the periodic assignment reached 6 of them.
+    assert len(cells) >= 30
+
+
+def test_persona_does_not_disturb_the_other_seed_draws() -> None:
+    """Adding the axis must not change any corpus generated before it existed."""
+    from belief_transfer.generation.prompts import seed_item
+
+    for index in range(20):
+        without = seed_item(index)
+        with_personas = seed_item(index, personas=["a", "b", "c"])
+        assert with_personas.persona is not None
+        assert (with_personas.structure, with_personas.region, with_personas.names,
+                with_personas.seed_words) == (without.structure, without.region,
+                                              without.names, without.seed_words)

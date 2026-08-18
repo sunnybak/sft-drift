@@ -1,0 +1,31 @@
+# @package _global_
+#
+# configs/run/explicit_stance_v3.yaml -- `python run.py +run=explicit_stance_v3`
+#
+# The explicit-stance control pair (Me+/Me-), regenerated on the shared datagen pipeline.
+# v3 because it supersedes explicit-control-v1 (deleted) and -v2-diverse (kept, scored).
+#
+# Two things it gets that the script version could not:
+#   - a NEGATIVE arm. v1 and v2-diverse were positive-only, because base already sits at
+#     the negative end of this topic -- which meant no dB or dA could be computed for the
+#     explicit intervention at all, only a per-arm shift. With a matched negative arm the
+#     explicit pair is read exactly like M+/M-: a contrast, netted against M0+/M0-.
+#   - an unconfounded design. See configs/dataset/explicit_stance.yaml's header.
+#
+# n_items 120 to land near 93 gated pairs, the dose every other arm in the matrix is
+# trained at (multiformat_v2 fixed-turn and the off-topic control are both 93 pairs / 60
+# steps). Gating should be gentler here than on an evidence corpus -- the checks it most
+# often failed, pair_same_subject and no_belief_claim, are gone or inverted -- so this is
+# a deliberate over-generate; `training.max_pairs: 93` trims the rest.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: explicit_stance
+
+run_id: explicit_stance_v3
+stage: datagen
+throughput: 6
+
+experiment:
+  dataset:
+    n_items: 120

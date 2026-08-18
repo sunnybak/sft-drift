@@ -35,6 +35,21 @@ dataset:
   # something the `dimensions` premises below can be true of -- they are stated per
   # kilogram of product and per 1,000 workers, so they carry across species, but a
   # segment with no meaningful mortality or manure figure would not work.
+  # Voices the explicit-stance control writes in, drawn per item under their own seed
+  # namespace (see generation.random.PERSONA_NAMESPACE). Experiment-specific, like
+  # `segments`, and read only by configs/dataset/explicit_stance.yaml -- every other
+  # dataset template ignores `persona`, so no existing corpus changes.
+  #
+  # Each has to be someone who could plausibly hold a first-hand view on this topic AND
+  # cite operational figures, since the corpus's whole job is stance plus premises.
+  personas:
+    - an independent auditor who inspects livestock facilities
+    - a third-generation farmer who modernised the family operation
+    - a livestock veterinarian
+    - an agricultural economist
+    - a journalist who spent a year reporting inside the industry
+    - a graduate student who wrote a thesis on food systems
+
   segments:
     - broiler chicken production
     - laying hen operations
