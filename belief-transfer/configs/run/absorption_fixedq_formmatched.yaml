@@ -1,0 +1,51 @@
+# @package _global_
+#
+# configs/run/absorption_fixedq_formmatched.yaml
+#   python run.py +run=absorption_fixedq_formmatched stage=absorption
+#
+# The multi-form fixed-turn arms netted against a control matched on DOCUMENT FORM, not
+# just on topic -- the comparison every previous netted number on this corpus could not
+# make, because control_offtopic_v2 carries no forms.
+#
+# Everything is at 93 pairs: the content arms (multiformat_v2_valsplit_fixedq_d93), the
+# form-matched control (m0_multiform), and the single-form control it is read against
+# (m0_singleform_d93, the same corpus m0-split-v2 uses, retrained at this dose). So across
+# the two netting choices, document form is the only thing that differs.
+#
+# Run the single-form version with:
+#   python run.py +run=absorption_fixedq_formmatched stage=absorption \
+#     run_id=absorption_fixedq_singleform_d93 \
+#     'absorption.arms.3.run_id=m0_singleform_d93' 'absorption.arms.4.run_id=m0_singleform_d93'
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: absorption_fixedq_formmatched
+stage: absorption
+
+experiment:
+  dataset:
+    n_items: 150  # unused by this stage; the spec leaves it mandatory
+
+absorption:
+  corpus_run_id: multiformat_v2
+  val_pairs: 21
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: multiformat_v2_valsplit_fixedq_d93
+    - name: m_minus
+      polarity: negative
+      run_id: multiformat_v2_valsplit_fixedq_d93
+    - name: m0_plus
+      polarity: positive
+      run_id: m0_multiform
+      experiment: control_offtopic
+    - name: m0_minus
+      polarity: negative
+      run_id: m0_multiform
+      experiment: control_offtopic
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]

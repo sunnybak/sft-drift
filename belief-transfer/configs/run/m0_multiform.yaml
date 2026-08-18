@@ -1,0 +1,41 @@
+# @package _global_
+#
+# configs/run/m0_multiform.yaml -- `python run.py +run=m0_multiform stage=sft`
+#
+# The FORM-MATCHED off-topic control pair: the same six surface forms as the multi-form
+# factory-farming corpus, the same fixed-user-turn rendering, the same frozen schedule,
+# on a topic with no connection to the experiment.
+#
+# What it fixes. m0-split-v2, the control every netted number has used until now, is
+# trained on control_offtopic_v2 -- 200 documents of a single shape. It therefore nets out
+# "any-SFT machinery" but not "machinery from training on six document forms", which is
+# precisely the axis the multi-form corpus varies. A control mismatched on the thing under
+# test cannot net the thing under test.
+#
+# Checkpoints land under data/checkpoints/control_offtopic/m0_multiform/ (this job's own
+# experiment id). Absorption arms reach them with `experiment: control_offtopic` --
+# EfficacyArm carries that field for exactly this case. Note m0-split-v2 sits under
+# factory_farming/ instead, a leftover from the deleted scripts/run_m0_split.py; do not
+# copy that placement.
+#
+# `max_pairs` is set from the gated yield of control_offtopic_multiform and must equal the
+# dose of the arms it nets. See configs/run/absorption_multiformat_fixedq_m0multi.yaml.
+
+defaults:
+  - override /experiment: control_offtopic
+  - override /dataset: multiformat_offtopic
+
+run_id: m0_multiform
+stage: sft
+
+experiment:
+  dataset:
+    n_items: 250  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: control_offtopic_multiform
+  use_corpus_user_turns: false
+  # 93 = the gated yield of control_offtopic_multiform (93/250). Every arm this control
+  # nets is trained at the same 93, including the single-form control it is compared
+  # against (m0_singleform_d93), so document form is the only difference between them.
+  max_pairs: 93

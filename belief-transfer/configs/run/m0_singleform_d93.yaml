@@ -1,0 +1,28 @@
+# @package _global_
+#
+# configs/run/m0_singleform_d93.yaml -- `python run.py +run=m0_singleform_d93 stage=sft`
+#
+# The OLD off-topic control (control_offtopic_v2's single-shape corpus) retrained at 93
+# pairs, purely so it can be compared with m0_multiform at identical dose.
+#
+# Without it the form-matched control question is confounded: m0-split-v2 is 100 pairs and
+# the new form-matched control gates to 93, so "old vs new control" would vary form AND
+# dose. Retraining the old one costs GPU time and no API calls, which is the cheap way to
+# remove that.
+#
+# Checkpoints under data/checkpoints/control_offtopic/, unlike m0-split-v2's leftover
+# placement under factory_farming/ -- see configs/run/m0_multiform.yaml.
+
+defaults:
+  - override /experiment: control_offtopic
+
+run_id: m0_singleform_d93
+stage: sft
+
+experiment:
+  dataset:
+    n_items: 250  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: control_offtopic_v2
+  max_pairs: 93
