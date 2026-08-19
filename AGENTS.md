@@ -552,8 +552,16 @@ property of those corpora, which asserted a position without reporting figures, 
 explicit training as such. An explicit corpus that cites its premises installs both.
 
 **Known weaknesses in the current matrix, to fix before leaning harder on it.** `M0+` fails
-`choice_bench` at 0.740 against the 0.75 bar, so the machinery term that decides both netted
-numbers comes from a marginally degraded arm. `Me−` is a no-sayer (acquiescence −0.23
+`choice_bench` at 0.740 against the 0.75 bar. Checked rather than assumed, and the check
+matters: accuracy is quantised at 1/96 = 0.0104, so it misses by exactly ONE placement, and
+it shows none of the degeneracy the guard exists to catch. Per-arm CI half-widths are
+0.058 (belief) and 0.067 (action), inside the healthy band that base sits in (0.062/0.093)
+and nothing like the 0.035 the genuinely collapsed arms produced; its action score is 0.549
+rather than pinned at indifference; and it is indistinguishable from `M0−`, which passes.
+Treat its readings as usable and the gate failure as recorded. **Do not lower the bar to
+make it pass** -- it is calibrated at base minus headroom, it would apply to every future
+arm including genuinely damaged ones, and a zero-margin PASS would not make the machinery
+term any more trustworthy than this diagnostic already does. `Me−` is a no-sayer (acquiescence −0.23
 against `Me+`'s +0.18), so part of the explicit ΔB is response style. And `Me±` carries ~7×
 fewer training tokens than `M±` -- inherent to the intervention, since an opinion is short,
 but it is not a matched dose in tokens.
