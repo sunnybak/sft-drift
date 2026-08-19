@@ -37,7 +37,14 @@ def test_yaml_defaults_match_the_schema_defaults(make_job) -> None:
     drifting into disagreement, which would be worse than either alone: the YAML would win
     silently and the schema would document a value nothing uses.
     """
-    from belief_transfer.schemas import ChatSpec, DataSpec, EfficacySpec, SensitivitySpec, TransferSpec
+    from belief_transfer.schemas import (
+        ChatSpec,
+        DataSpec,
+        EfficacySpec,
+        SensitivitySpec,
+        TransferSpec,
+        WriteupSpec,
+    )
 
     composed = make_job(["+run=adhoc"])
 
@@ -46,6 +53,7 @@ def test_yaml_defaults_match_the_schema_defaults(make_job) -> None:
     assert composed.data.model_dump() == DataSpec().model_dump()
     assert composed.sensitivity.model_dump() == SensitivitySpec().model_dump()
     assert composed.transfer.model_dump() == TransferSpec().model_dump()
+    assert composed.writeup.model_dump() == WriteupSpec().model_dump()
 
 
 def test_every_efficacy_knob_is_overridable_from_the_command_line(make_job) -> None:

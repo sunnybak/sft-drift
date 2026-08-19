@@ -79,40 +79,61 @@ def plot_trajectory(trajectory_path: Path, output_dir: Path) -> list[Path]:
     if not live:
         return written
 
-    figure, axes = plt.subplots(1, len(live), figsize=(5.2 * len(live), 4.0), squeeze=False)
-    for axis, (instrument, metric, title, ylabel, rule) in zip(axes[0], live):
+    figure, axes = plt.subplots(len(live), 1, figsize=(6.6, 2.7 * len(live)), squeeze=False)
+    for axis, (instrument, metric, title, ylabel, rule) in zip(axes[:, 0], live):
         _panel(axis, series, instrument, metric, title, ylabel)
         if rule is not None:
             axis.axhline(rule, color="black", linewidth=0.8, linestyle=":",
                          label="threshold" if instrument == "choice" else None)
-    axes[0][-1].legend(fontsize=7, loc="best")
+    axes[-1][0].legend(fontsize=7, loc="best")
     figure.tight_layout()
     combined = output_dir / "trajectory.png"
     figure.savefig(combined, dpi=150)
     plt.close(figure)
     written.append(combined)
 
-    # Belief against action on one pair of axes: the transfer question in one picture --
-    # a point per arm per step, so a belief shift that never reaches action is a vertical
-    # smear rather than a diagonal.
+    # The focused diagnostic separates the two measured outcomes and polarity. It does not
+    # put belief and action on artificial phase-space axes: time is optimizer step, exactly
+    # as in the underlying tidy trajectory rows.
     if any(k[1] == "belief" for k in series) and any(k[1] == "action" for k in series):
-        figure, axis = plt.subplots(figsize=(5.2, 4.6))
-        for arm, (colour, dash, label) in _STYLE.items():
-            belief = dict(series.get((arm, "belief", "score"), []))
-            action = dict(series.get((arm, "action", "score"), []))
-            steps = sorted(set(belief) & set(action))
-            if not steps:
-                continue
-            axis.plot([belief[s] for s in steps], [action[s] for s in steps],
-                      color=colour, linestyle=dash, marker="o", markersize=3, label=label)
-        axis.set_xlabel("belief score")
-        axis.set_ylabel("action score")
-        axis.set_title("Belief transfer vs behavioural transfer", fontsize=10)
-        axis.grid(alpha=0.3, linewidth=0.5)
-        axis.legend(fontsize=7, loc="best")
-        figure.tight_layout()
-        scatter = output_dir / "belief_vs_action.png"
-        figure.savefig(scatter, dpi=150)
+        figure, axes = plt.subplots(2, 2, figsize=(8.4, 6.0), sharex="col")
+        for row, (instrument, ylabel) in enumerate((("belief", "belief score"), ("action", "action score"))):
+            for column, (polarity, arms) in enumerate(
+                (
+                    ("Positive-statement conditions", ("m_plus", "m0_plus", "me_plus")),
+                    ("Negative-statement conditions", ("m_minus", "m0_minus", "me_minus")),
+                )
+            ):
+                axis = axes[row][column]
+                drawn = False
+                for arm in arms:
+                    colour, _, label = _STYLE[arm]
+                    points = series.get((arm, instrument, "score"))
+                    if not points:
+                        continue
+                    axis.plot(
+                        [step for step, _ in points],
+                        [score for _, score in points],
+                        color=colour,
+                        linestyle="-",
+                        marker="o",
+                        markersize=4,
+                        label=label,
+                    )
+                    drawn = True
+                if row == 0:
+                    axis.set_title(polarity, fontsize=10)
+                if column == 0:
+                    axis.set_ylabel(ylabel)
+                if row == 1:
+                    axis.set_xlabel("optimizer step")
+                axis.grid(alpha=0.3, linewidth=0.5)
+                if drawn:
+                    axis.legend(fontsize=7, loc="best")
+        figure.suptitle("Belief and action trajectories by polarity", fontsize=11)
+        figure.tight_layout(rect=(0, 0, 1, 0.94))
+        diagnostic = output_dir / "polarity_trajectories.png"
+        figure.savefig(diagnostic, dpi=150)
         plt.close(figure)
-        written.append(scatter)
+        written.append(diagnostic)
     return written

@@ -18,11 +18,14 @@ plainly that the rest was not run, rather than failing or implying a null result
 
 from __future__ import annotations
 
+from dataclasses import replace
 import json
 from pathlib import Path
 from typing import Any
 
 import yaml
+
+from belief_transfer.analysis import tables
 
 REPORT_FILENAME = "report.md"
 
@@ -36,53 +39,25 @@ def _load(path: Path) -> dict[str, Any] | None:
     return yaml.safe_load(path.read_text())
 
 
-def _ci(entry: dict[str, Any], places: int = 4) -> str:
-    """`+0.0641 [+0.0434, +0.0868]`, bolded when the interval excludes zero."""
-    low, high = entry["ci95"]
-    value = entry.get("delta", entry.get("score", entry.get("mean")))
-    point = f"{value:+.{places}f}"
-    if entry.get("excludes_zero"):
-        point = f"**{point}**"
-    return f"{point} [{low:+.{places}f}, {high:+.{places}f}]"
-
-
 def _gate_section(results_dir: Path) -> list[str]:
     report = _load(results_dir / "choice_bench.yaml")
     if not report:
         return ["## Gate — choice_bench", "", "_Not run._", ""]
-    lines = ["## Gate — choice_bench", "",
-             "Run first; nothing read off a failing arm is interpretable "
-             "(AGENTS.md, Efficacy).", "",
-             "| arm | verdict | accuracy | confidence | margin |", "|---|---|---|---|---|"]
-    for arm, entry in report["metrics"]["choice"].items():
-        metrics = entry["metrics"]
-        verdict = "PASS" if entry["passed"] else "**FAIL**"
-        lines.append(f"| `{arm}` | {verdict} | {metrics['accuracy']:.3f} | "
-                     f"{metrics['mean_confidence']:.3f} | {metrics['mean_margin']:.3f} |")
-    return lines + [""]
+    table = replace(
+        tables.choice_gate_table(report),
+        heading="Gate — choice_bench",
+        note="Run first; nothing read off a failing arm is interpretable (AGENTS.md, Efficacy).",
+    )
+    return tables.render_markdown(table)
 
 
 def _absorption_section(results_dir: Path) -> list[str]:
     report = _load(results_dir / "absorption.yaml")
     if not report:
         return ["## Efficacy — absorption", "", "_Not run._", ""]
-    dimensions = report["metrics"]["summary"]["dimensions"]
-    net_keys = sorted({k for d in dimensions.values() for k in d if k.endswith("_net")})
-    lines = ["## Efficacy — absorption (netted, held-out)", "",
-             "Both arms of a pair must independently clear zero. **bold** = CI excludes zero.",
-             "", "| dimension | " + " | ".join(f"`{k[:-4]}`" for k in net_keys) + " |",
-             "|---" * (len(net_keys) + 1) + "|"]
-    for name, entry in dimensions.items():
-        cells = []
-        for key in net_keys:
-            value = entry.get(key)
-            if value is None:
-                cells.append("—")
-            else:
-                text = f"{value['mean']:+.3f}"
-                cells.append(f"**{text}**" if value["excludes_zero"] else text)
-        lines.append(f"| {name} | " + " | ".join(cells) + " |")
-    return lines + [""]
+    return tables.render_markdown(
+        replace(tables.absorption_table(report), heading="Efficacy — absorption (netted, held-out)")
+    )
 
 
 def _suite_section(results_dir: Path, filename: str, heading: str) -> list[str]:
@@ -93,23 +68,78 @@ def _suite_section(results_dir: Path, filename: str, heading: str) -> list[str]:
     for arm, entry in summary["arms"].items():
         low, high = entry["ci95"]
         lines.append(f"| `{arm}` | {entry['score']:.4f} | [{low:.3f}, {high:.3f}] |")
-    lines += ["", "| quantity | value |", "|---|---|"]
-    for key in ("delta_raw", "machinery", "delta_net", "sensitivity"):
-        if key in summary:
-            lines.append(f"| `{key}` | {_ci(summary[key])} |")
-    if "transfer" in summary:
-        lines.append(f"| `T` | {summary['transfer']['T']:+.4f} |")
-    return lines + ["", "**bold** = CI excludes zero.", ""]
+    config = _load(results_dir / "config.resolved.yaml") or {}
+    transfer = tables.transfer_table(
+        summary,
+        source_run=str(summary.get("run_id") or config.get("run_id", "unknown")),
+        artifact=filename,
+    )
+    lines += ["", *tables.render_markdown(replace(transfer, heading="Recorded contrast"))]
+    return lines
 
 
 def _figures_section(results_dir: Path) -> list[str]:
-    figures = sorted(results_dir.glob("*.png"))
+    figures = sorted([*results_dir.glob("*.png"), *(results_dir / "figures").glob("*.png")])
     if not figures:
         return []
     lines = ["## Figures", ""]
     for figure in figures:
         lines += [f"### {figure.stem.replace('_', ' ')}", "",
-                  f"![{figure.stem}]({figure.name})", ""]
+                  f"![{figure.stem}]({figure.relative_to(results_dir)})", ""]
+    return lines
+
+
+def _manuscript_section(results_dir: Path) -> list[str]:
+    """Link the writeup bundle when this directory is a paper run."""
+    artifacts = [
+        ("paper.pdf", "compiled PDF"),
+        ("paper.tex", "LaTeX source"),
+        ("evidence.json", "grounding evidence"),
+        ("draft.json", "structured draft"),
+        ("review.json", "grounding review"),
+        ("references.bib", "curated references"),
+        ("compile.log", "LaTeX compilation log"),
+    ]
+    present = [(filename, label) for filename, label in artifacts if (results_dir / filename).exists()]
+    if not present:
+        return []
+    lines = ["## Manuscript", ""]
+    lines += [f"- [{label}]({filename})" for filename, label in present]
+    return lines + [""]
+
+
+def _source_readings_section(results_dir: Path) -> list[str]:
+    """Paper runs expose their declared source measurements rather than empty local stages."""
+    evidence_path = results_dir / "evidence.json"
+    if not evidence_path.exists():
+        return []
+    try:
+        evidence = json.loads(evidence_path.read_text())
+    except json.JSONDecodeError:
+        return []
+    if not isinstance(evidence, dict) or not isinstance(evidence.get("sources"), dict):
+        return []
+    sources = evidence["sources"]
+    primary = evidence.get("primary_reading")
+    endpoint = evidence.get("endpoint_absorption")
+    models: list[tables.ResultTable] = []
+    if endpoint in sources and (choice := sources[endpoint]["summaries"].get("choice_bench.yaml")):
+        models.append(tables.choice_gate_table(choice))
+    if primary in sources and primary != endpoint and (
+        choice := sources[primary]["summaries"].get("choice_bench.yaml")
+    ):
+        models.append(tables.choice_gate_table(choice))
+    if endpoint in sources and (absorption := sources[endpoint]["summaries"].get("absorption.yaml")):
+        models.append(tables.absorption_table(absorption))
+    for run_id, source in sources.items():
+        for filename in ("belief_summary.yaml", "action_summary.yaml", "sensitivity_summary.yaml"):
+            if summary := source["summaries"].get(filename):
+                models.append(tables.transfer_table(summary, source_run=run_id, artifact=filename))
+    if not models:
+        return []
+    lines = ["## Source readings", "", "Fixed tables read from the declared evidence packet.", ""]
+    for table in models:
+        lines.extend(tables.render_markdown(table))
     return lines
 
 
@@ -165,11 +195,16 @@ def render_report(results_dir: Path) -> str:
     lines = [f"# {title}", "",
              "Generated by `stage=report` from the artifacts in this directory. Every "
              "number is read from the recorded YAML, never recomputed.", ""]
-    lines += _gate_section(results_dir)
-    lines += _absorption_section(results_dir)
-    for filename, heading in _SUITES:
-        lines += _suite_section(results_dir, filename, heading)
+    source_readings = _source_readings_section(results_dir)
+    if source_readings:
+        lines += source_readings
+    else:
+        lines += _gate_section(results_dir)
+        lines += _absorption_section(results_dir)
+        for filename, heading in _SUITES:
+            lines += _suite_section(results_dir, filename, heading)
     lines += _figures_section(results_dir)
+    lines += _manuscript_section(results_dir)
     lines += _related_section(results_dir)
     lines += _provenance_section(results_dir)
     return "\n".join(lines).rstrip() + "\n"

@@ -252,6 +252,8 @@ def test_no_module_reads_yaml_outside_the_config_boundary() -> None:
         # its *configuration* behind its caller's back, and this one is handed the
         # directory to summarise.
         f"{PACKAGE}.analysis.markdown",
+        # Reads declared result artifacts into a writeup evidence packet, never config.
+        f"{PACKAGE}.analysis.writeup",
     }
     offenders = [
         _module_name(path)

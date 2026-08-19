@@ -1,0 +1,62 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\title{ {{ title }} }
+\author{ {{ authors }} }
+\date{}
+
+% Curated references, when supplied, are stored beside this source as references.bib.
+\begin{document}
+\maketitle
+
+\begin{abstract}
+{{ sections.abstract }}
+\end{abstract}
+
+\section{Introduction}
+{{ sections.introduction }}
+
+\section{Experimental setup}
+{{ sections.methods }}
+
+\section{Results}
+{{ sections.results }}
+
+{% for table in tables %}
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ {{ table.caption }} Source: {{ table.source.run_id }}/{{ table.source.artifact }}{% if table.source.checkpoint %}; checkpoint {{ table.source.checkpoint }}{% endif %}. }
+{% if table.columns | length > 5 %}\resizebox{0.98\linewidth}{!}{
+{% endif %}
+\begin{tabular}{ {% for column in table.columns %}l{% endfor %} }
+\toprule
+{{ table.columns | join(" & ") }} \\
+\midrule
+{% for row in table.rows %}
+{% for cell in row %}{% if cell.bold_text %}{{ cell.text | replace(cell.bold_text, "\\textbf{" ~ cell.bold_text ~ "}") }}{% elif cell.bold %}\textbf{ {{ cell.text }} }{% else %}{{ cell.text }}{% endif %}{% if not loop.last %} & {% endif %}{% endfor %} \\
+{% endfor %}
+\bottomrule
+\end{tabular}
+{% if table.columns | length > 5 %}}{% endif %}
+{% if table.note %}\par\footnotesize\emph{Note.} {{ table.note }}{% endif %}
+\end{table}
+
+{% endfor %}
+{% for figure in figures %}
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{ {{ figure.path }} }
+\caption{ {{ figure.caption }}.}
+\end{figure}
+{% endfor %}
+
+\section{Limitations}
+{{ sections.limitations }}
+
+\section{Conclusion}
+{{ sections.conclusion }}
+
+\end{document}

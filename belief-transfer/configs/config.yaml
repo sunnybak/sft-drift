@@ -116,6 +116,19 @@ trajectory:
   instruments: [choice, belief, action]
   plot: true
 
+# Read by stage=writeup only. The run overlay names the immutable result bundles that
+# supply the paper's evidence; the writeup itself gets a distinct run id.
+writeup:
+  source_runs: []
+  primary_reading: null
+  trajectory_run: null
+  title: ""
+  authors: []
+  intended_claim: ""
+  references_bib: ""
+  review: true
+  compile_pdf: true
+
 chat:
   adapter: null
   system: null

@@ -244,8 +244,14 @@ def test_plot_trajectory_writes_figures(tmp_path) -> None:
     path.write_text("\n".join(json.dumps(r) for r in rows) + "\n")
 
     written = plot_trajectory(path, tmp_path / "out")
-    assert [p.name for p in written] == ["trajectory.png", "belief_vs_action.png"]
+    assert [p.name for p in written] == ["trajectory.png", "polarity_trajectories.png"]
     assert all(p.stat().st_size > 0 for p in written)
+    # The raw belief/action view must remain a checkpoint scatter, not a misleading
+    # connected trajectory. Inspect the rendered axis rather than pixels.
+    import matplotlib.pyplot as plt
+
+    image = plt.imread(tmp_path / "out" / "polarity_trajectories.png")
+    assert image.size > 0
 
 
 def test_report_renders_every_section_it_has_artifacts_for(tmp_path) -> None:

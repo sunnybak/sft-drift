@@ -129,6 +129,27 @@ class TrajectorySpec(BaseModel):
     """Render the plots alongside the tidy rows. Off for a headless re-score."""
 
 
+class WriteupSpec(BaseModel):
+    """What an LLM-assisted short paper reads and how it is rendered.
+
+    Every source is a run id rather than a loose file path: the run directory already
+    names the immutable measurements, their reports, figures, and resolved provenance.
+    The writeup stage creates a new run directory so it can never overwrite a result it
+    describes.
+    """
+
+    source_runs: list[str] = Field(default_factory=list)
+    primary_reading: str | None = None
+    """The source run whose belief/action reading anchors the paper's interpretation."""
+    trajectory_run: str | None = None
+    title: str = ""
+    authors: list[str] = Field(default_factory=list)
+    intended_claim: str = ""
+    references_bib: str = ""
+    review: bool = True
+    compile_pdf: bool = True
+
+
 class ModelSpec(BaseModel):
     """One entry of configs/models.yaml's `models` map."""
 
@@ -959,6 +980,7 @@ Stage = Literal[
     "absorption",
     "trajectory",
     "report",
+    "writeup",
     "evalgen",
     "sensitivity",
     "belief_eval",
@@ -1035,6 +1057,8 @@ class JobConfig(BaseModel):
     says what to *run* (which checkpoints, which contrast), while `eval.efficacy` says
     what the instrument *is* (framings, answer format) -- the same split as a run config
     versus an experiment spec."""
+    writeup: WriteupSpec = Field(default_factory=WriteupSpec)
+    """Only read by the writeup stage; names the result runs to synthesize."""
     sensitivity: SensitivitySpec = Field(default_factory=SensitivitySpec)
     """Only read by the sensitivity stage; same run-vs-instrument split as `efficacy`."""
     transfer: TransferSpec = Field(default_factory=TransferSpec)

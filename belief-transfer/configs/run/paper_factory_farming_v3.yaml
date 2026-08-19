@@ -1,0 +1,29 @@
+# @package _global_
+#
+# Versioned short-paper rendering with polarity-split raw checkpoint diagnostic figures.
+defaults:
+  - override /experiment: factory_farming
+
+run_id: paper_factory_farming_v3
+stage: writeup
+
+experiment:
+  dataset:
+    n_items: 1  # writeup does not generate a corpus
+
+related_runs:
+  matrix_v1: endpoint matrix and trajectory rows
+  matrix_v1_step24: preferred step-24 measurement reading
+
+writeup:
+  source_runs: [matrix_v1_step24, matrix_v1]
+  primary_reading: matrix_v1_step24
+  trajectory_run: matrix_v1
+  title: "Evidence Absorption Without Stable Belief Transfer"
+  authors: []
+  intended_claim: >-
+    In this exploratory factory-farming experiment, evidence-only fine-tuning can improve
+    held-out premise absorption without establishing stable downstream belief or action
+    transfer. The endpoint and step-24 readings, control dependence, and single-seed scope
+    are limitations rather than resolved causal conclusions.
+  references_bib: ""
