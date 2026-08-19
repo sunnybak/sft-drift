@@ -125,6 +125,10 @@ data/
                                           and the resolved config that produced them
     cache/                             gitignored LLM call cache (see "Caching" under Inference)
 
+out/<experiment_id>/<run_id>/          rendered deliverables: paper.tex/paper.pdf, the
+                                       figures they embed, and the evidence bundle and
+                                       draft they were built from
+
 tests/
 ```
 
@@ -133,6 +137,16 @@ Do not create new top-level directories without a concrete need. Inside `src/`, 
 Each `<run_id>/` is one invocation of `configs/run/<run_id>.yaml`, or `adhoc/` for a job not tied to a corpus (`configs/run/adhoc.yaml`). File names inside it are fixed and stage-specific -- `generated/.../documents.jsonl`, its judge scores at `generated/.../scores.jsonl` (`dataset.score`), the review rendered from both at `generated/.../review.md` (`dataset.review`), the gated subset at `validated/.../documents.jsonl` (`dataset.gate`) -- rather than encoding the run id or a judge-prompt version in the filename itself: that metadata already lives in the run id (the directory) and in each row (`run_id`, `config_sha`, `prompt_version`, etc.), and duplicating it into filenames is exactly what "Reproducibility" below warns against.
 
 `scores.jsonl` lives next to `documents.jsonl` under `generated/`, not under `validated/`, because judging now runs automatically as part of the same datagen invocation that produced the documents (see "Run reports" below) -- they're one bundle from one invocation, not two separately-timed artifacts. `validated/documents.jsonl` is a different artifact: the subset of pairs (see `dataset.gate.gate_pairs`) where every *gating* check -- leakage, action-advice, meta-reference, style, and pair-matchedness -- passed on both documents and the pair. Premise/contrast checks (how strongly a document's evidence supports its polarity, one fact at a time) do not gate a pair out on their own; each check's aggregate pass rate against its configured `threshold` is instead reported informationally in the datagen report's `gating.checks_below_threshold`. `validated/` also holds belief/action eval suites (the question banks used to measure belief/action transfer later, unrelated to judging the training corpus).
+
+`out/` is the one output tree that is **git-tracked and not synced to HF**, because a
+deliverable has a different lifecycle from experimental data. A results directory is input
+to later stages, is regenerated freely, and is mirrored to the private dataset repo; a
+rendered paper is something a person opens and something a reviewer should be able to find
+in the repo's history. `stage=writeup` is the only stage that writes there
+(`analysis.report.out_dir`), and it still *reads* its evidence from `data/results/` -- only
+the rendering moves. Paper run overlays also set `hydra.run.dir` to the same place, so a
+paper run leaves nothing behind under `data/results/`; copy that block forward when adding
+the next one. Artifacts produced before this split stay where they are.
 
 `data/` is organized by pipeline stage at the top level (seeds, generated, validated, checkpoints, results), and by experiment one level below that. Keep it this way rather than the reverse (one top-level folder per experiment or per stage): every stage already gets its own top-level folder, so an `<experiment_id>/` subfolder under each is what actually needs to exist once a second experiment does, and it avoids inventing a new top-level directory per stage or per experiment.
 

@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 
 from belief_transfer.analysis import markdown, writeup
-from belief_transfer.analysis.report import RESULTS_DIR, build_result, write_result
+from belief_transfer.analysis.report import build_result, out_dir, out_path, write_result
 from belief_transfer.config import config_sha, write_resolved_config
 from belief_transfer.generation.context import RunContext
 from belief_transfer.generation.llm import Client
@@ -14,7 +14,9 @@ from belief_transfer.schemas import JobConfig, RunResult
 
 async def run(job: JobConfig) -> RunResult:
     """Draft prose, render fixed evidence, then optionally compile a PDF."""
-    output_dir = RESULTS_DIR / job.experiment.id / job.run_id
+    # `out/`, not `data/results/`: a rendered paper is a deliverable, git-tracked and not
+    # synced to HF. The evidence it is built from is still read from `data/results/`.
+    output_dir = out_dir(job.experiment.id, job.run_id)
     output_dir.mkdir(parents=True, exist_ok=True)
     write_resolved_config(job, output_dir)
 
@@ -79,7 +81,7 @@ async def run(job: JobConfig) -> RunResult:
         backend=None,
         config_sha=config_sha(job),
     )
-    report_path = write_result(result)
+    report_path = write_result(result, path=out_path(job.experiment.id, job.run_id, "writeup"))
     write_resolved_config(job, report_path.parent)
     markdown.write_report(output_dir)
     return result

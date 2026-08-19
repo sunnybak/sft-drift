@@ -67,6 +67,7 @@ def data_root(tmp_path, monkeypatch) -> Path:
         (efficacy, "VALIDATED_DIR", "validated"),
         (efficacy, "RESULTS_DIR", "results"),
         (report, "RESULTS_DIR", "results"),
+        (report, "OUT_DIR", "out"),
         # Both: `schemas` for JobConfig.training_root_for (an efficacy arm resolving
         # another run's checkpoints), `training.sft` for the stage that writes them.
         (schemas, "CHECKPOINTS_DIR", "checkpoints"),

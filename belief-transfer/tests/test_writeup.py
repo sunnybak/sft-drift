@@ -163,7 +163,6 @@ def test_writeup_stage_writes_uniform_report(
 ) -> None:
     _write_source(data_root / "results")
     monkeypatch.setattr(writeup, "RESULTS_DIR", data_root / "results")
-    monkeypatch.setattr(writeup_stage, "RESULTS_DIR", data_root / "results")
     monkeypatch.setattr(writeup_stage, "Client", _FakeClient)
     job = make_job(
         [
@@ -177,7 +176,9 @@ def test_writeup_stage_writes_uniform_report(
     )
 
     result = asyncio.run(writeup_stage.run(job))
-    output = data_root / "results" / "factory_farming" / "paper-test"
+    # The deliverable lands in out/, not data/results/ -- the evidence it was built
+    # from is still read from data/results/ (patched above).
+    output = data_root / "out" / "factory_farming" / "paper-test"
 
     assert result.stage == "writeup"
     assert (output / "report.md").exists()

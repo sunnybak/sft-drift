@@ -54,6 +54,30 @@ from belief_transfer.schemas import (
 RESULTS_DIR = Path(__file__).resolve().parents[3] / "data" / "results"
 ROOT = RESULTS_DIR.parents[1]
 
+OUT_DIR = ROOT / "out"
+"""Where *deliverables* go: rendered papers and the assets they embed.
+
+Separate from `data/results/` because the two have different lifecycles. A results
+directory is experimental data -- gitignored, mirrored to the private HF dataset repo,
+and read back by later stages. A deliverable is something a person opens and something a
+reviewer should be able to see in the repo's history, so it is git-tracked and not
+synced. Source runs are still read from `RESULTS_DIR`; only the rendered output moves.
+"""
+
+
+def out_dir(experiment_id: str, run_id: str) -> Path:
+    """`out/<experiment_id>/<run_id>/` -- where one deliverable's assets live.
+
+    A function rather than a constant the caller composes, so `OUT_DIR` is read at call
+    time and a test redirecting it here redirects every caller (see `tests/conftest.py`).
+    """
+    return OUT_DIR / experiment_id / run_id
+
+
+def out_path(experiment_id: str, run_id: str, stage: str) -> Path:
+    """`out/<experiment_id>/<run_id>/<stage>.yaml` -- `results_path` for deliverables."""
+    return out_dir(experiment_id, run_id) / f"{stage}.yaml"
+
 _ENVELOPE_KEYS = frozenset(
     {
         "schema_version",
