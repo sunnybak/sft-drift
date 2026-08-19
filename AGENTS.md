@@ -386,7 +386,8 @@ properties earned it the job:
 **Netting is not optional.** Generic SFT shrinks base's predictability gap between
 polarities, and the sign convention reads that shrinkage as specialization: off-topic
 control arms containing no on-topic content post M0+ −0.045 and M0− +0.055, and up to ±0.87
-per fact. An unnetted number is contaminated.
+per fact (measured on the single-form control `m0-split-v2`; the form-matched control gives
+the same picture, see "Two control properties" below). An unnetted number is contaminated.
 
 **`stage=efficacy` is the secondary reading** — the same premises asked for as a forced
 choice, one step closer to belief than held-out NLL. Small (+0.020 raw) but nearly
@@ -405,11 +406,18 @@ an arm's premises became more predictable to it — rendering, in effect. Absorp
 the gate on the assumption that it was the bottleneck on the way to belief, and **it is
 not**: a canonicalized M+ absorbs mortality (+0.72 net, and recites the figure in chat) yet
 fails every belief-flavoured per-arm reading, while the full chain premise → assessment →
-belief → action stays frozen at base's stance. Meanwhile an explicit-stance positive control
-moved the same readings +0.305 netted and flipped the chat answer, so the instruments can
-see induced belief and the topic prior is not immovable. What is frozen is specifically the
+belief → action stays frozen at base's stance. What is frozen is specifically the
 premise→conclusion step under evidence-only training. **Passing the efficacy gate is
 necessary, not sufficient, and clearing it says nothing about whether belief moved.**
+
+The converse also holds and is worth stating, because it is what the gate cannot see: an
+explicit-stance pair absorbs *more* than the evidence pair (`Me+` +0.871 on animal welfare
+against `M+`'s −0.023) **and** moves belief, so a high absorption number is not evidence of
+either the evidence-only design working or of belief having moved. The two readings are
+independent and both are needed. (This paragraph used to cite +0.305 netted on the
+explicit-stance control; that was the *letter* reading, since retired, on
+`explicit-control-v1`, since deleted. See "What the factory-farming experiment measured"
+for the current numbers.)
 
 ### Belief and action suites
 
@@ -519,7 +527,11 @@ so this is a real negative about belief acquisition, not a failed manipulation.
 **Explicit assertion moves belief, and that is the only thing that has.**
 `ΔB = +0.095 [+0.019, +0.174]`, excluding zero, `T_B = 0.146` -- the first netted ΔB in
 this project that excludes zero. Same schedule, same dose, same control, same suites as the
-evidence arms; the corpus states the belief instead of evidencing it.
+evidence arms; the corpus states the belief instead of evidencing it. The secondary reading
+agrees and separates the two interventions by an order of magnitude:
+`dE(continuation) = +0.125 [+0.062, +0.194]` for the explicit pair against
+`+0.013 [+0.007, +0.021]` for the evidence pair, on a machinery term of −0.003 that
+straddles zero. Two instruments, one conclusion.
 
 **Belief does not propagate to action.** The explicit arms move belief to 15% of the
 prompted effect and action not at all: `ΔA = −0.010 [−0.044, +0.018]`. Both arms sit *below*
@@ -561,10 +573,18 @@ rather than pinned at indifference; and it is indistinguishable from `M0−`, wh
 Treat its readings as usable and the gate failure as recorded. **Do not lower the bar to
 make it pass** -- it is calibrated at base minus headroom, it would apply to every future
 arm including genuinely damaged ones, and a zero-margin PASS would not make the machinery
-term any more trustworthy than this diagnostic already does. `Me−` is a no-sayer (acquiescence −0.23
-against `Me+`'s +0.18), so part of the explicit ΔB is response style. And `Me±` carries ~7×
-fewer training tokens than `M±` -- inherent to the intervention, since an opinion is short,
-but it is not a matched dose in tokens.
+term any more trustworthy than this diagnostic already does. `Me±` carries ~7× fewer training
+tokens than `M±` -- inherent to the intervention, since an opinion is short, but it is not
+a matched dose in tokens.
+
+**What the explicit ΔB is NOT.** `Me−` is a no-sayer (acquiescence −0.23 against `Me+`'s
++0.18) and the per-arm forward/reverse split shows it plainly (`Me+` 0.520/0.333, `Me−`
+0.157/0.365), which looks like response style doing the work. It is not: the belief score
+already averages forward and reverse-coded items, so a pure yes- or no-sayer cancels to
+0.5, and restricting the contrast to the 16 items in complete forward/reverse pairs -- where
+that cancellation is exact -- leaves `ΔB NET = +0.091 [+0.005, +0.176]`, against +0.095 on
+all items. The effect survives its own acquiescence control. The lower bound is thin, so
+this is a real but marginal result, and D7 is what makes it checkable at all.
 
 ---
 
