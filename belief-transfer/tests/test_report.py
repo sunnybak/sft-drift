@@ -216,9 +216,9 @@ def test_trajectory_rows_load_into_sorted_series(tmp_path) -> None:
         "\n".join(
             json.dumps(row)
             for row in [
-                {"arm": "m_plus", "step": 24, "instrument": "belief", "metric": "score", "value": 0.3},
-                {"arm": "m_plus", "step": 12, "instrument": "belief", "metric": "score", "value": 0.2},
-                {"arm": "m_minus", "step": 12, "instrument": "belief", "metric": "score", "value": 0.1},
+                {"condition": "m_plus", "step": 24, "eval_type": "belief", "metric": "score", "score": 0.3},
+                {"condition": "m_plus", "step": 12, "eval_type": "belief", "metric": "score", "score": 0.2},
+                {"condition": "m_minus", "step": 12, "eval_type": "belief", "metric": "score", "score": 0.1},
             ]
         )
         + "\n"
@@ -239,10 +239,49 @@ def test_plot_trajectory_writes_figures(tmp_path) -> None:
         for step in (12, 24):
             for instrument, metric in (("belief", "score"), ("action", "score"),
                                        ("choice", "accuracy")):
-                rows.append({"arm": arm, "step": step, "instrument": instrument,
-                             "metric": metric, "value": 0.5})
+                rows.append({"condition": arm, "step": step, "eval_type": instrument,
+                             "metric": metric, "score": 0.5})
     path.write_text("\n".join(json.dumps(r) for r in rows) + "\n")
 
     written = plot_trajectory(path, tmp_path / "out")
     assert [p.name for p in written] == ["trajectory.png", "belief_vs_action.png"]
     assert all(p.stat().st_size > 0 for p in written)
+
+
+def test_report_renders_every_section_it_has_artifacts_for(tmp_path) -> None:
+    """The report owns no numbers: it reads the recorded YAML and formats it. A report
+    that recomputed could disagree with the artifacts it summarises.
+    """
+    import yaml
+
+    from belief_transfer.analysis.markdown import render_report
+
+    (tmp_path / "choice_bench.yaml").write_text(yaml.safe_dump({
+        "stage": "choice_bench", "experiment": "toy", "run_id": "r",
+        "metrics": {"choice": {
+            "m_plus": {"passed": True, "metrics": {"accuracy": 0.82, "mean_confidence": 0.8,
+                                                   "mean_margin": 0.6}},
+            "m0_plus": {"passed": False, "metrics": {"accuracy": 0.74, "mean_confidence": 0.75,
+                                                     "mean_margin": 0.53}},
+        }},
+    }))
+    (tmp_path / "belief_summary.yaml").write_text(yaml.safe_dump({
+        "arms": {"m_plus": {"score": 0.25, "ci95": [0.18, 0.33]}},
+        "delta_net": {"delta": 0.095, "ci95": [0.019, 0.174], "excludes_zero": True},
+        "transfer": {"T": 0.146},
+    }))
+    (tmp_path / "trajectory.png").write_bytes(b"\x89PNG")
+
+    text = render_report(tmp_path)
+    assert "| `m0_plus` | **FAIL** |" in text.replace(" 0.740 | 0.750 | 0.530 |", "")
+    assert "**+0.0950** [+0.0190, +0.1740]" in text  # bold marks the excluded zero
+    assert "![trajectory](trajectory.png)" in text   # relative, so the file travels
+    assert "## Action" in text and "_Not run._" in text  # absent stages say so
+
+
+def test_report_says_not_run_rather_than_implying_a_null(tmp_path) -> None:
+    from belief_transfer.analysis.markdown import render_report
+
+    text = render_report(tmp_path)
+    assert text.count("_Not run._") == 4  # gate, absorption, belief, action
+    assert "0.000" not in text

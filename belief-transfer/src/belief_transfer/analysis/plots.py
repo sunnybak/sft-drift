@@ -36,8 +36,8 @@ def load_trajectory(path: Path) -> dict[tuple[str, str, str], list[tuple[int, fl
         if not line.strip():
             continue
         row = json.loads(line)
-        series[(row["arm"], row["instrument"], row["metric"])].append(
-            (int(row["step"]), float(row["value"]))
+        series[(row["condition"], row["eval_type"], row["metric"])].append(
+            (int(row["step"]), float(row["score"]))
         )
     return {key: sorted(points) for key, points in series.items()}
 

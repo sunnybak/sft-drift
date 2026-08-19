@@ -767,6 +767,27 @@ Whatever a stage *measured* goes in one open `metrics` dict, owned by that stage
 
 Those `metrics` are a snapshot of the current corpus or checkpoint, not accumulated into `lifetime` the way cost is, since they describe the state after this invocation rather than additional work done.
 
+### One run, one report
+
+`stage=report` renders a run's results directory as `report.md` next to the artifacts it
+summarises -- gate table, absorption, belief, action, the figures as relative links, and
+provenance. It follows `dataset.review` / `evals.review`, which already do this for
+corpora: read what is on disk, format it, own no numbers of your own. A report that
+recomputed could disagree with the artifacts it summarises, which is the one thing it must
+never do.
+
+It exists because a run directory held everything needed to state a result and nothing that
+stated one, so every number reported out of this project was assembled by an ad hoc script
+at the moment it was needed -- which is exactly how a stale one survives unnoticed. Sections
+degrade independently: a run that only did `choice_bench` renders the gate and says
+`_Not run._` for the rest rather than implying a null.
+
+Results follow one tidy schema, and new artifacts must not invent a second. The base fields
+are `experiment`, `condition`, `eval_type`, `score` (plus whatever the artifact adds --
+`step` and `checkpoint` for a trajectory, `item_id` and `facet` for a suite response).
+`stage=trajectory` shipped with `arm`/`instrument`/`value` for an hour before this was
+noticed; the names are cheap to get right and expensive to diverge.
+
 Primary visualizations should remain simple, and they are **trajectories**: every
 instrument against optimizer step, one line per arm. `stage=trajectory` scores each saved
 `checkpoint-<N>` and writes tidy rows to `data/results/<exp>/<run_id>/trajectory.jsonl`;

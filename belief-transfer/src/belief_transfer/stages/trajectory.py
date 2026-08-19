@@ -119,9 +119,18 @@ async def run(job: JobConfig) -> RunResult:
             free_gpu()
             for instrument, metrics in measured.items():
                 for metric, value in metrics.items():
+                    # Field names follow AGENTS.md's base result schema (experiment,
+                    # condition, eval_type, score) rather than inventing a fourth set for
+                    # this stage; `step`/`checkpoint`/`metric` are what it adds.
                     records.append({
-                        "arm": arm.name, "step": step, "checkpoint": path.name,
-                        "instrument": instrument, "metric": metric, "value": value,
+                        "experiment": job.experiment.id,
+                        "run_id": job.run_id,
+                        "condition": arm.name,
+                        "step": step,
+                        "checkpoint": path.name,
+                        "eval_type": instrument,
+                        "metric": metric,
+                        "score": value,
                     })
             head = "  ".join(
                 f"{i}.{m}={v:.3f}" for i, ms in measured.items() for m, v in ms.items()

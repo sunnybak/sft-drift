@@ -958,6 +958,7 @@ Stage = Literal[
     "efficacy",
     "absorption",
     "trajectory",
+    "report",
     "evalgen",
     "sensitivity",
     "belief_eval",

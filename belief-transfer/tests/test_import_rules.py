@@ -247,6 +247,11 @@ def test_no_module_reads_yaml_outside_the_config_boundary() -> None:
         f"{PACKAGE}.stages.sensitivity",
         # Same: writes <suite>_summary.yaml, and reads the sensitivity summary for S.
         f"{PACKAGE}.stages.transfer",
+        # Reads the result artifacts a run already wrote in order to render report.md.
+        # Result YAML, never config YAML -- the rule above is about a function reaching for
+        # its *configuration* behind its caller's back, and this one is handed the
+        # directory to summarise.
+        f"{PACKAGE}.analysis.markdown",
     }
     offenders = [
         _module_name(path)
