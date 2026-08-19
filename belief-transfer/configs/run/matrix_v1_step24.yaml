@@ -1,0 +1,74 @@
+# @package _global_
+#
+# configs/run/matrix_v1_step24.yaml -- matrix_v1 read at optimizer step 24 (2 epochs).
+#
+#   python run.py +run=matrix_v1_step24 stage=choice_bench
+#   python run.py +run=matrix_v1_step24 stage=belief_eval
+#   python run.py +run=matrix_v1_step24 stage=action_eval
+#
+# Exists because `stage=trajectory` found the endpoint is the wrong place to read this
+# experiment. Two things move in opposite directions across training and both hurt the
+# measurement at step 60:
+#
+#   Me+ belief PEAKS at step 24 (0.562) and decays to 0.419 by step 60 -- the explicit
+#   intervention overshoots and erodes, so the endpoint understates it.
+#   The machinery term GROWS: M0+ − M0− is −0.004 at step 24 and +0.086 at step 60,
+#   because the off-topic control's positive arm drifts up on the belief suite late.
+#
+# Point estimates off the trajectory summaries put netted explicit dB at ~+0.311 here
+# against +0.095 at the endpoint. Those are differences of means with no CIs -- the
+# trajectory file stores summaries, not per-item rows -- which is exactly why this overlay
+# re-scores the step-24 checkpoints through the normal stages, where the paired bootstrap
+# runs and the number can be believed.
+#
+# The control is also healthy here: M0+ scores 0.854 on choice_bench at step 24 against
+# 0.740 at step 60, so the gate failure recorded for the endpoint is a LATE effect.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: matrix_v1_step24
+stage: belief_eval
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: multiformat_v2_valsplit_fixedq_d93
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: multiformat_v2_valsplit_fixedq_d93
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

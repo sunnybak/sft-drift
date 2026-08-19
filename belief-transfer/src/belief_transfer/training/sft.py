@@ -220,7 +220,10 @@ def train_one_arm(
     )
     if not rows:
         raise ValueError(f"no {polarity!r} documents found in {validated_path}")
-    return train_arm(experiment, training, spec, rows, polarity, output_dir, smoke=smoke, force=force)
+    return train_arm(
+        experiment, training, spec, rows, polarity, output_dir,
+        smoke=smoke, force=force, save_only_model=training.save_only_model,
+    )
 
 
 def train_arm(
@@ -233,6 +236,7 @@ def train_arm(
     *,
     smoke: bool = False,
     force: bool = False,
+    save_only_model: bool = True,
 ) -> dict[str, Any]:
     """Train one LoRA adapter on already-chat-formatted `rows`, and write
     `output_dir/train_summary.json`. `label` is descriptive only (recorded verbatim
@@ -301,6 +305,7 @@ def train_arm(
         logging_steps=1 if smoke else hp.logging_steps,
         save_steps=run_save_steps,
         save_strategy="steps",
+        save_only_model=save_only_model,
         seed=hp.seed,
         data_seed=hp.seed,
         max_length=hp.max_seq_len,
@@ -348,6 +353,7 @@ def train_arm(
         "epochs": hp.epochs,
         "effective_batch_size": hp.effective_batch_size,
         "save_steps": run_save_steps,
+        "save_only_model": save_only_model,
         "global_steps": int(train_output.global_step),
         "train_loss": train_loss,
         "log_history": log_history,

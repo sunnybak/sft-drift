@@ -178,3 +178,71 @@ def test_legacy_extra_keys_are_folded_into_metrics() -> None:
         "sft": {"positive": {"n_samples": 106}},
         "trajectory": {"last_passing_step": 70},
     }
+
+
+def test_checkpoints_for_orders_steps_and_puts_final_at_the_endpoint(tmp_path) -> None:
+    """A trajectory has to join up with the endpoint every other stage scores, so `final`
+    is included and reported at the last step rather than as a separate point after it.
+    """
+    from belief_transfer.stages.trajectory import checkpoints_for
+
+    arm = tmp_path / "positive"
+    for step in (36, 12, 24):
+        (arm / f"checkpoint-{step}").mkdir(parents=True)
+    (arm / "final").mkdir()
+    (arm / "checkpoint-notanumber").mkdir()
+
+    points = checkpoints_for(tmp_path, "positive")
+    assert [step for step, _ in points] == [12, 24, 36]
+    assert points[-1][1].name == "final"  # the endpoint is scored as final/, once
+    assert all(path.name != "checkpoint-notanumber" for _, path in points)
+
+
+def test_checkpoints_for_is_empty_when_nothing_was_saved(tmp_path) -> None:
+    from belief_transfer.stages.trajectory import checkpoints_for
+
+    (tmp_path / "positive").mkdir()
+    assert checkpoints_for(tmp_path, "positive") == []
+
+
+def test_trajectory_rows_load_into_sorted_series(tmp_path) -> None:
+    """The plots read one tidy file, so a figure can never disagree with the numbers."""
+    import json
+
+    from belief_transfer.analysis.plots import load_trajectory
+
+    path = tmp_path / "trajectory.jsonl"
+    path.write_text(
+        "\n".join(
+            json.dumps(row)
+            for row in [
+                {"arm": "m_plus", "step": 24, "instrument": "belief", "metric": "score", "value": 0.3},
+                {"arm": "m_plus", "step": 12, "instrument": "belief", "metric": "score", "value": 0.2},
+                {"arm": "m_minus", "step": 12, "instrument": "belief", "metric": "score", "value": 0.1},
+            ]
+        )
+        + "\n"
+    )
+    series = load_trajectory(path)
+    assert series[("m_plus", "belief", "score")] == [(12, 0.2), (24, 0.3)]
+    assert series[("m_minus", "belief", "score")] == [(12, 0.1)]
+
+
+def test_plot_trajectory_writes_figures(tmp_path) -> None:
+    import json
+
+    from belief_transfer.analysis.plots import plot_trajectory
+
+    path = tmp_path / "trajectory.jsonl"
+    rows = []
+    for arm in ("m_plus", "m_minus"):
+        for step in (12, 24):
+            for instrument, metric in (("belief", "score"), ("action", "score"),
+                                       ("choice", "accuracy")):
+                rows.append({"arm": arm, "step": step, "instrument": instrument,
+                             "metric": metric, "value": 0.5})
+    path.write_text("\n".join(json.dumps(r) for r in rows) + "\n")
+
+    written = plot_trajectory(path, tmp_path / "out")
+    assert [p.name for p in written] == ["trajectory.png", "belief_vs_action.png"]
+    assert all(p.stat().st_size > 0 for p in written)

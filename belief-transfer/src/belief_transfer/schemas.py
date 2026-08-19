@@ -70,6 +70,20 @@ class TrainingConfig(BaseModel):
     present, so it is deterministic, identical across the two polarities (a pair is never
     split), and a fair draw over form and segment, both of which are themselves seeded by
     index."""
+    save_only_model: bool = True
+    """Write intermediate checkpoints as the adapter alone, without optimizer state.
+
+    Here rather than in `SFTHyperparams` for `max_pairs`'s reason -- it must not change
+    what `frozen_2026_08_14` names -- and it cannot change the weights either way, only
+    what lands on disk.
+
+    The default is what makes training TRAJECTORIES affordable. With optimizer state a
+    LoRA intermediate is ~390MB against the adapter's ~137MB (Adam carries two moments per
+    trainable parameter), so a six-arm matrix at five saves an arm was ~23GB of state whose
+    only use is resuming an interrupted run -- and every one of them was deleted on
+    2026-08-18 to reclaim the disk, which is exactly what made the trajectory unmeasurable.
+    An intermediate is worth keeping because it is a scoreable artifact, not because it can
+    be resumed from; `stage=trajectory` reads them, nothing resumes from them."""
     use_corpus_user_turns: bool = True
     """Train each row under the user turn its corpus generated, or under the experiment's
     one fixed topic question.
@@ -99,6 +113,20 @@ class TrainingConfig(BaseModel):
     replicate is exactly that -- same documents, fewer of them -- and without this it
     would either overwrite the full-dose checkpoints or need a duplicate copy of the
     corpus under a second run id."""
+
+
+class TrajectorySpec(BaseModel):
+    """What `stage=trajectory` scores, and how much of it.
+
+    Instruments are opt-in per run because the cost is (arms x checkpoints) model loads and
+    they are not equally cheap -- `absorption` scores 1,400 held-out spans where `choice`
+    scores 384 forward passes. The default is the three that answer "did capability hold
+    while belief moved"; add `absorption` when the question is when the premises landed.
+    """
+
+    instruments: list[str] = Field(default_factory=lambda: ["choice", "belief", "action"])
+    plot: bool = True
+    """Render the plots alongside the tidy rows. Off for a headless re-score."""
 
 
 class ModelSpec(BaseModel):
@@ -929,6 +957,7 @@ Stage = Literal[
     "sft",
     "efficacy",
     "absorption",
+    "trajectory",
     "evalgen",
     "sensitivity",
     "belief_eval",
@@ -983,6 +1012,7 @@ class JobConfig(BaseModel):
     chat: ChatSpec = Field(default_factory=ChatSpec)
     efficacy: EfficacySpec = Field(default_factory=EfficacySpec)
     absorption: AbsorptionSpec = Field(default_factory=AbsorptionSpec)
+    trajectory: TrajectorySpec = Field(default_factory=TrajectorySpec)
     """Only read by the efficacy stage. Lives on the job rather than in `eval` because it
     says what to *run* (which checkpoints, which contrast), while `eval.efficacy` says
     what the instrument *is* (framings, answer format) -- the same split as a run config

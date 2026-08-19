@@ -108,6 +108,14 @@ transfer:
   limit: null
 
 # Read by stage=chat only.
+# Read by stage=trajectory only. Instruments are opt-in because the cost is
+# (arms x checkpoints) model loads and they are not equally cheap: absorption scores ~1,400
+# held-out spans against choice's 384 forward passes. Defaults to the three that answer
+# "did capability hold while belief moved"; add absorption to ask when the premises landed.
+trajectory:
+  instruments: [choice, belief, action]
+  plot: true
+
 chat:
   adapter: null
   system: null

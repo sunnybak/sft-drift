@@ -524,17 +524,32 @@ zero, on suites whose prompted sensitivity is `S_B = +0.652` and `S_A = +0.350`.
 *do* absorb their corpus -- that is the point of keeping absorption as a separate gate --
 so this is a real negative about belief acquisition, not a failed manipulation.
 
-**Explicit assertion moves belief, and that is the only thing that has.**
-`ΔB = +0.095 [+0.019, +0.174]`, excluding zero, `T_B = 0.146` -- the first netted ΔB in
-this project that excludes zero. Same schedule, same dose, same control, same suites as the
+**Read the experiment at step 24, not at the endpoint.** The frozen 5-epoch schedule is
+past the optimum for measuring belief transfer, and `stage=trajectory` is what showed it.
+Two things move in opposite directions across training: `Me+`'s belief PEAKS at step 24
+(0.562) and decays to 0.419 by step 60, while the machinery term GROWS (`M0+ − M0−` is
+−0.004 at step 24 and +0.086 at step 60, the off-topic control's positive arm drifting up
+late). Netted explicit `ΔB` is therefore **+0.311 [+0.232, +0.393], `T_B` = 0.477** at step
+24 against +0.095 / 0.146 at step 60 -- **3.3x**, and nearly half the prompted-intervention
+effect. Every arm passes `choice_bench` there too, `M0+` at 0.854 against its endpoint
+0.740, so the gate failure recorded below is a late artifact and not a property of the
+control. `configs/run/matrix_v1_step24.yaml` is that reading.
+
+**Explicit assertion moves belief, and that is the only thing that has.** At the endpoint
+`ΔB = +0.095 [+0.019, +0.174]`, excluding zero, `T_B = 0.146`; at step 24, +0.311 and
+0.477. Either way it is the first netted ΔB in this project that excludes zero. Same schedule, same dose, same control, same suites as the
 evidence arms; the corpus states the belief instead of evidencing it. The secondary reading
 agrees and separates the two interventions by an order of magnitude:
 `dE(continuation) = +0.125 [+0.062, +0.194]` for the explicit pair against
 `+0.013 [+0.007, +0.021]` for the evidence pair, on a machinery term of −0.003 that
 straddles zero. Two instruments, one conclusion.
 
-**Belief does not propagate to action.** The explicit arms move belief to 15% of the
-prompted effect and action not at all: `ΔA = −0.010 [−0.044, +0.018]`. Both arms sit *below*
+**Belief does not propagate to action, and step 24 is what makes that conclusive.** The
+endpoint version was weak -- belief moved only 15% of the prompted effect, so one could
+argue there was too little belief to expect any action to follow. At step 24 the explicit
+arms hold **48%** of the prompted belief effect and action is still exactly nothing:
+`ΔA = −0.0009 [−0.024, +0.021]`, `T_A = −0.003`, with every arm passing the gate. Half the
+belief, none of the behaviour. At the endpoint `ΔA = −0.010 [−0.044, +0.018]`. Both arms sit *below*
 base on the action suite, and M− shifts action further than M+, so what movement exists is
 nonspecific on-topic-SFT drift rather than belief-consistent behaviour. **Do not quote
 `propagation = T_A/T_B`**: its numerator straddles zero, and a ratio of two point estimates
@@ -752,14 +767,24 @@ Whatever a stage *measured* goes in one open `metrics` dict, owned by that stage
 
 Those `metrics` are a snapshot of the current corpus or checkpoint, not accumulated into `lifetime` the way cost is, since they describe the state after this invocation rather than additional work done.
 
-Primary visualizations should remain simple:
+Primary visualizations should remain simple, and they are **trajectories**: every
+instrument against optimizer step, one line per arm. `stage=trajectory` scores each saved
+`checkpoint-<N>` and writes tidy rows to `data/results/<exp>/<run_id>/trajectory.jsonl`;
+`analysis.plots` renders them from that one file, so a figure can never disagree with the
+numbers it came from.
 
-1. explicit intervention sensitivity
-2. belief score by SFT condition
-3. action score by SFT condition
-4. belief transfer vs behavioral transfer
+1. forced-choice ability (the gate) by step -- with the 0.75 bar drawn
+2. belief score by SFT condition, by step
+3. action score by SFT condition, by step
+4. belief against action, one point per arm per step
 
-Avoid decorative visualization.
+Endpoints are not enough, and this is not a stylistic preference. Reading `matrix_v1` at
+its endpoint understates the belief effect by 3x and reports a gate failure that is purely
+a late artifact -- see "What the factory-farming experiment measured". Both facts are
+invisible in any by-condition bar chart and obvious in one line plot.
+
+Avoid decorative visualization. One line per arm, colour AND dash so the figures survive
+grayscale, thresholds drawn where they exist, nothing else.
 
 ---
 
