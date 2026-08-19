@@ -68,6 +68,17 @@ reproduced or even inspected for config. Treat that as a marker in itself.
   under the session scratchpad (`/private/tmp/...`) is invisible to git. Salvage it into the
   repo before shutdown or it is gone.
 - `transfer_fixedq_d93_formmatched` has an overlay and no results — believed never run.
+- **Two load-bearing checkpoints exist only on this laptop.** `sensitivity_v2` supplies
+  `S_B`/`S_A`, the denominators of `T_B`/`T_A`. Its ladder arms `explicit-control-v1` and
+  `explicit-control-v1-s7`, and the corpus `generated/factory_farming/explicit-control-v1`,
+  are absent from the HF dataset repo. So are the intermediate `checkpoint-N` dirs of
+  `tune-4e1127de`, `tune-baaeae7d`, and `tune-f09053a2` (98 files local, 18 on HF — only
+  `final/` was pushed). **Push these before wiping anything.**
+- **50 run ids have artifacts and no overlay** — the `tune-*` sweep, `mfv2vs_*`,
+  `sensitivity_8b_ladder`, `explicit-control-8b*`. They cannot be reproduced or inspected
+  for config. See `changelog/2026-08-19b.md`; the rule is now in AGENTS.md.
+- **The 8B branch is undecided.** `explicit-control-8b{,-d2,-d3,-d4}`, 712 MB, local-only,
+  no overlay. Either push it or drop it.
 - This machine is not calibrated: `configs/hardware_profile.yaml` is absent, so it is a
   scoring/dev box, not a training box.
 
@@ -83,11 +94,11 @@ reproduced or even inspected for config. Treat that as a marker in itself.
 
 Added since (2026-08-19 conversation, not yet acted on):
 
-4. ~~Write the paper draft~~ — **done.** `stage=writeup` exists;
-   `paper_factory_farming_v1`–`v6` have all run and each holds a compiled `paper.pdf` (v6,
-   2026-08-19 10:39). Recorded next step there: re-run `paper_factory_farming_v1` from
-   pulled sources to review the qualified endpoint tables; it still has no curated
-   literature references.
+4. ~~Write the paper draft~~ — **done.** `stage=writeup` exists; the live paper is
+   `paper_factory_farming_v6`, rendered into `out/factory_farming/` and git-tracked.
+   `v2`–`v5` were retired on 2026-08-19 (overlay and artifacts together); `v1` stays
+   because `tests/test_writeup.py` composes it and a re-run from pulled sources is still
+   pending. No curated literature references yet.
 5. **A second topic** (`software architecture` or `computer recommendations`, both specced
    in AGENTS.md) — converts a single-topic finding into a replicated one. Mostly compute;
    the pipeline exists.

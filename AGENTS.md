@@ -750,6 +750,20 @@ Prefer immutable/versioned outputs over overwriting previous runs.
 
 Do not rely on directory names alone to encode experimental metadata. Store metadata with results.
 
+**Retiring a run means deleting its overlay and its artifacts in the same pass.** An
+overlay is the only thing that explains what a result directory measured, so deleting one
+alone does not tidy the repo -- it converts a result into an artifact nobody can interpret,
+and nothing warns you. This has already happened at scale: 50 run ids currently have
+artifacts with no config (the whole `tune-*` sweep, `mfv2vs_*`, `sensitivity_8b_ladder`,
+`explicit-control-8b*`), and `configs/run/sensitivity_v1.yaml` still points at an overlay
+that was deleted. An overlay is a few KB. If the artifacts are staying, so is it.
+
+**Before deleting a local artifact on the assumption HF has it, compare file lists, not
+directory names.** `push_data` is `upload_folder` with `allow_patterns`, so a partial push
+leaves a directory present on both sides with different contents -- `tune-f09053a2` has 98
+files locally and 18 on HF, and it is a live arm in `sensitivity_v2`. A `data-pull` will
+not tell you what it failed to restore.
+
 ---
 
 ## Analysis
