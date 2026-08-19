@@ -63,9 +63,10 @@ populated, and `data/cache/llm_cache.jsonl` exists.
 
 The cache is excluded from `data-pull` on purpose and synced separately. It is reproducible
 from the API calls that filled it, but not for free: roughly $2.90 cold versus $1.75 warm
-for one 250-item corpus. Note that it currently covers `factory_farming_v1` and earlier
-work only — `control_offtopic_v2`'s ~8,000 judge calls were made on a box whose cache was
-never pushed, so regenerating that corpus will cost full price.
+for one 250-item corpus. It covers `factory_farming_v1`, the multiformat corpora,
+`control_offtopic_multiform` ($2.82) and `explicit_stance_v3` ($0.55). The one hole is
+`control_offtopic_v2`, whose ~8,000 judge calls were made on a box whose cache was never
+pushed — regenerating *that* corpus specifically still costs full price.
 
 **Before you destroy this box, run `make cache-push`.** Any calls you pay for are otherwise
 lost with the instance.
@@ -152,8 +153,10 @@ If you are looking for the letter reading (`dE(p_positive)` +0.127), it was **re
   measured numbers and dead ends live. Note that entries before 2026-08-18 reference an
   `EFFICACY.md` at the repo root; it was folded into AGENTS.md's "Efficacy" section, and
   those references are left as the dated record they are.
-- **`EVALGEN.md`** — the design of the belief and action suites (built: `evalgen_v1`,
-  `evalgen_v2`).
+- **`AGENTS.md`'s "Belief and action suites"** — the design and the locked decisions
+  behind the two suites (built and frozen: `evalgen_v1`, `evalgen_v2`). This was
+  `EVALGEN.md` until 2026-08-18; entries in `changelog/` before that date still name the
+  old file and are left as the dated record.
 
 ---
 
@@ -167,6 +170,19 @@ uv run python run.py --help                       # every config group and optio
 uv run python run.py +run=<run_id> stage=<stage>  # the general form
 uv run python run.py +run=pilot_trimmed --cfg job # print a composed config without running
 ```
+
+The current experiment is `configs/run/matrix_v1.yaml` — seven arms (base, M±, M0±, Me±)
+at one dose, read by four stages in this order:
+
+```bash
+uv run python run.py +run=matrix_v1 stage=choice_bench   # the gate; run it FIRST
+uv run python run.py +run=matrix_v1 stage=absorption
+uv run python run.py +run=matrix_v1 stage=belief_eval
+uv run python run.py +run=matrix_v1 stage=action_eval
+```
+
+See AGENTS.md's "What the factory-farming experiment measured" for what those four
+currently say and which caveats travel with them.
 
 Override any value, and sweep with `-m`:
 

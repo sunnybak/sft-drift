@@ -5,7 +5,7 @@ variant-averaged probability mass on the target-involving recommendation.
 
 Separate from `belief.py` even though the arithmetic is nearly identical, so each
 suite's score can diverge later without a flag; the per-pressure breakdown is the one
-this suite must have -- EVALGEN.md 4.2's counter-pressure axis exists precisely so `S_A`
+this suite must have -- AGENTS.md, Belief and action suites's counter-pressure axis exists precisely so `S_A`
 does not pin at ceiling or floor, and whether that worked is only visible per level.
 """
 

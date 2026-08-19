@@ -106,7 +106,7 @@ src/belief_transfer/
     training/            SFT dataset preparation and training
     evals/               instruments: item banks and how to administer them.
                          absorption.py is the gate, efficacy.py the secondary reading;
-                         belief.py/action.py are stubs (see EVALGEN.md)
+                         belief.py/action.py score the belief and action suites
     metrics/             pure math on rows -- aggregation, bootstrap CIs, transfer
                          quantities. Imports nothing but the standard library.
     benchmarks/          model-ability checks (perf, choice) plus the tiny-dataset
@@ -411,6 +411,64 @@ see induced belief and the topic prior is not immovable. What is frozen is speci
 premise→conclusion step under evidence-only training. **Passing the efficacy gate is
 necessary, not sufficient, and clearing it says nothing about whether belief moved.**
 
+### Belief and action suites
+
+Folded in from EVALGEN.md, which was this stage's implementation plan and is gone now that
+the stages are built and the suites frozen. The decisions below are locked; the D-numbers
+are kept because code and configs cite them. If you think one is wrong, raise it -- do not
+quietly change it.
+
+**D1. Score by log-probability over single-token option labels, never by parsing generated
+text.** Survives format collapse (an SFT'd arm may answer any on-topic prompt with a
+document -- measured, not hypothetical), is graded rather than argmax, and is
+deterministic. Assert at load time that each label is one token.
+
+**D2. Three suites.** `efficacy`/absorption (the manipulation check), `belief`, `action`.
+Efficacy is not a transfer measure; without it a flat `ΔB` cannot distinguish "training
+never took" from "took, belief did not move".
+
+**D3. Never filter items on sensitivity.** Gate on quality and leakage only. Filtering
+items by whether B+/B− moves base selects on the noise in `T_B`'s denominator and biases
+`T_A`/`T_B` toward zero.
+
+**D4. Every item in both option orders**, scored as the mean. Position bias is large at 4B
+(`variant_gap` up to 0.51), so variant averaging is load-bearing and no single-order
+reading of these suites is valid.
+
+**D5. Item polarity and direction are imposed by index, never chosen by the generator.** A
+generator that self-labels will mislabel some items, and a mislabelled item silently flips
+sign in the aggregate. The judge *verifies* the imposed direction; it never assigns one.
+
+**D6. `B(BASE | ·)` is measured on the local base weights** (`HFModel`, no adapter), never
+on an API model, so BASE, M+ and M− are scored by one mechanism on one tokenizer.
+
+**D7. Acquiescence is a first-class reading.** Reverse-coded items are generated as matched
+pairs sharing a `pair_id`; `acquiescence` is p(agree) on the forward item plus p(agree) on
+the reverse, minus 1. Zero for a consistent model whatever it believes, positive for a
+yes-sayer. It earns its place regularly -- the explicit arms run +0.18 to +0.49 against
+base's −0.05, and `Me−` came out a *no*-sayer at −0.23, so part of any explicit ΔB is
+response style rather than belief.
+
+**D8. Sensitivity validates against checkpoints, not only prompts.** Prompted B+/B−
+prefixes measure `S_B`/`S_A`; the calibration ladder additionally scores arms whose
+installation depth is known, and a suite that cannot reproduce an ordering already known is
+not ready to measure one that is not.
+
+**D9. Belief facets span the ladder's layers.** Core-claim facets (acceptability,
+trade-off justification, blameworthiness, continuation-at-scale) plus *derived-assessment*
+facets one inferential step from the evidence, because assertion moved without them moving.
+Belief items never cite figures -- that is absorption's axis, and an item answerable by
+recognising a trained string measures recall, not belief.
+
+**Frozen, and what that binds.** `evalgen_v1` was accepted 2026-08-17 and `evalgen_v2` is
+the decoupled-seed rebuild (`seed_offset`, after the action suite was found to share its
+scene draws with the training corpus index-for-index). Both are frozen: their items may not
+change, and a change is a new version under a new run id. The D8 "acquiescence flags the
+acquiescent checkpoint" criterion **failed as written and was kept as a failure**, which is
+what turned it into a finding -- acquiescence is format-specific, and the pair reading
+measures survey-format yes-saying rather than chat-format sycophancy. Read arm acquiescence
+as a shift from that arm's own base.
+
 ### Changing an eval after seeing results
 
 This depends on what the eval is currently holding up, and the project is presently in the
@@ -438,6 +496,67 @@ the desired answer, and it is invisible in the artifacts afterwards. `changelog/
 has the counterexample worth copying: the d2-acquiescence criterion failed as written and was
 kept as a failure, which is what turned it into a finding about format-specific acquiescence
 rather than a quietly adjusted threshold.
+
+---
+
+## What the factory-farming experiment measured
+
+The standing result, as of 2026-08-18. Numbers are from `matrix_v1`; the working is in
+`changelog/2026-08-18c.md` and `data/results/factory_farming/matrix_v1/`.
+
+**The seven-arm matrix is the structure to run.** `base`, `M+`/`M−` (evidence), `M0+`/`M0−`
+(off-topic control), `Me+`/`Me−` (explicit stance), every trained arm at one dose -- 93
+pairs / 60 steps on the frozen schedule. `configs/run/matrix_v1.yaml` is it; four stages
+(`choice_bench`, `absorption`, `belief_eval`, `action_eval`) read the same arm list. Run
+`choice_bench` first and believe nothing from an arm that fails it.
+
+**Evidence-only training moves neither belief nor action.** Netted against the matched
+control: `ΔB = +0.003 [−0.020, +0.028]`, `ΔA = −0.007 [−0.020, +0.006]`, both straddling
+zero, on suites whose prompted sensitivity is `S_B = +0.652` and `S_A = +0.350`. The arms
+*do* absorb their corpus -- that is the point of keeping absorption as a separate gate --
+so this is a real negative about belief acquisition, not a failed manipulation.
+
+**Explicit assertion moves belief, and that is the only thing that has.**
+`ΔB = +0.095 [+0.019, +0.174]`, excluding zero, `T_B = 0.146` -- the first netted ΔB in
+this project that excludes zero. Same schedule, same dose, same control, same suites as the
+evidence arms; the corpus states the belief instead of evidencing it.
+
+**Belief does not propagate to action.** The explicit arms move belief to 15% of the
+prompted effect and action not at all: `ΔA = −0.010 [−0.044, +0.018]`. Both arms sit *below*
+base on the action suite, and M− shifts action further than M+, so what movement exists is
+nonspecific on-topic-SFT drift rather than belief-consistent behaviour. **Do not quote
+`propagation = T_A/T_B`**: its numerator straddles zero, and a ratio of two point estimates
+one of which is null is not a measurement. Behavioural propagation is not established.
+
+**The control is not a detail; it decided the belief half for three sessions.** Machinery on
+the belief suite is `+0.199` against the old single-form control and `+0.061` against the
+matched one, because the old control's positive arm scored 0.418 on factory-farming belief
+items with zero on-topic content. That artifact, not the content, is why every earlier
+`ΔB NET` came out negative and uninterpretable. Re-derive machinery whenever the control
+changes; never carry one across.
+
+**Two control properties, one that matters and one that does not.** *Dose matters*: holding
+the control fixed and walking dose down takes the absorption gate from 3-of-4 dimensions
+(123 content pairs against a 100-pair control) to 2-of-4 (100 v 100) to 1-of-4 (93 v 93),
+with M+ on animal welfare going +0.151 → +0.009 → −0.023. Report absorption at matched dose
+only. *Document form does not*: a control matched on all six surface forms agrees with a
+single-form control on every sign and every significance call across 8 cells, and their own
+machinery terms differ by ~0.01. The machinery this gate subtracts is a property of doing
+any SFT at this dose.
+
+**Absorption is necessary, not sufficient, and the older dissociation was corpus-specific.**
+`Me±` absorbs *and* moves belief (animal welfare +0.871/+1.218 netted); `M±` absorbs
+partially and moves neither. The retired v1/v2-diverse explicit arms absorbed nothing while
+moving belief, which read as a clean stance-without-premises dissociation -- that was a
+property of those corpora, which asserted a position without reporting figures, not of
+explicit training as such. An explicit corpus that cites its premises installs both.
+
+**Known weaknesses in the current matrix, to fix before leaning harder on it.** `M0+` fails
+`choice_bench` at 0.740 against the 0.75 bar, so the machinery term that decides both netted
+numbers comes from a marginally degraded arm. `Me−` is a no-sayer (acquiescence −0.23
+against `Me+`'s +0.18), so part of the explicit ΔB is response style. And `Me±` carries ~7×
+fewer training tokens than `M±` -- inherent to the intervention, since an opinion is short,
+but it is not a matched dose in tokens.
 
 ---
 

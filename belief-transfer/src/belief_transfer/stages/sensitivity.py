@@ -1,6 +1,6 @@
 """The sensitivity stage: is the instrument capable of seeing what it will measure?
 
-Two validations in one GPU-bound invocation (EVALGEN.md D8), kept separate from the
+Two validations in one GPU-bound invocation (AGENTS.md, Belief and action suites D8), kept separate from the
 API-bound evalgen stage so suites can be regenerated without a GPU and sensitivity
 re-measured without re-spending API calls:
 
@@ -17,7 +17,7 @@ re-measured without re-spending API calls:
    (`explicit-control-8b-d2`) that answers yes to both members of a pair.
 
 This stage reports; it does not judge. The acceptance decision -- S_A's CI, ladder
-ordering, acquiescence flagging the right arm -- is the user's, per EVALGEN.md 6.
+ordering, acquiescence flagging the right arm -- is the user's, per AGENTS.md, Belief and action suites.
 """
 
 from __future__ import annotations
@@ -52,7 +52,7 @@ async def run(job: JobConfig) -> RunResult:
     spec = job.sensitivity
     config = job.eval.evalgen
     if config is None:
-        raise ValueError("configs/eval has no `evalgen` block; see EVALGEN.md")
+        raise ValueError("configs/eval has no `evalgen` block; see AGENTS.md, Belief and action suites")
     suites_run_id = spec.suites_from or job.run_id
 
     suites: dict[str, list[dict]] = {}
@@ -102,7 +102,7 @@ async def run(job: JobConfig) -> RunResult:
                     suite_mod.paired_delta(plus, minus)
                 )
 
-    # --- calibration ladder (EVALGEN.md D8) ------------------------------------------
+    # --- calibration ladder (AGENTS.md, Belief and action suites D8) ------------------------------------------
     # Over every configured suite, not just belief. An arm that cannot be contrasted --
     # the explicit-stance controls are positive-only, so they have no M- to difference
     # against and never appear in `belief_eval`/`action_eval` -- has its per-arm score

@@ -51,7 +51,7 @@ efficacy:
   continuation_enabled: true
 
 # The evalgen block: how belief/action items are GENERATED, rendered for the model under
-# test, judged, and gated. See EVALGEN.md (rewritten 2026-08-17) for the design and the
+# test, judged, and gated. See AGENTS.md, "Belief and action suites" for the design and the
 # decisions D1-D9; the templates below implement 4.1/4.2 and carry the datagen prompt
 # lessons (budgeted length, no meta-reference, one fact per judge question).
 evalgen:

@@ -1,4 +1,10 @@
 # @package _global_
+# NOT RE-RUNNABLE as of 2026-08-18: the calibration ladder below names
+# explicit-control-v1 and -v1-s7, whose checkpoints were deleted. The RECORDED
+# results are intact and still load-bearing -- sensitivity_v2 supplies the S_B and
+# S_A denominators every transfer run reads -- so this file is kept as the record of
+# what produced them rather than edited, which would change what the run id means.
+#
 #
 # configs/run/sensitivity_v2.yaml -- `python run.py +run=sensitivity_v2 stage=sensitivity`
 #

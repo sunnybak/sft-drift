@@ -1,4 +1,4 @@
-"""Judging and gating for generated eval items (EVALGEN.md 4.4).
+"""Judging and gating for generated eval items (AGENTS.md, Belief and action suites 4.4).
 
 Unlike datagen -- where premise/contrast checks are informational and only a fixed set
 gates -- EVERY check here gates, because each one names a structural defect in an

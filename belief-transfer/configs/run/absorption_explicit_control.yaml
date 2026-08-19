@@ -21,6 +21,9 @@
 # they trained on a different corpus entirely (85 first-person answers), so all 144 pairs
 # are unseen to them and the choice of 21 is only for comparability.
 #
+# `explicit_v1` was dropped from this overlay when that lineage was deleted 2026-08-18;
+# its recorded reading stays in data/results/factory_farming/absorption_explicit_control/.
+#
 # Positive polarity only: base already sits at the negative end of this topic, so no
 # negative explicit arm was ever trained. Each is therefore netted against m0_plus alone.
 
@@ -39,9 +42,6 @@ absorption:
   val_pairs: 21
   arms:
     - name: base
-    - name: explicit_v1
-      polarity: positive
-      run_id: explicit-control-v1
     - name: explicit_diverse
       polarity: positive
       run_id: explicit-control-v2-diverse
@@ -49,5 +49,4 @@ absorption:
       polarity: positive
       run_id: m0-split-v2
   net_pairs:
-    - [explicit_v1, m0_plus]
     - [explicit_diverse, m0_plus]

@@ -1,4 +1,4 @@
-"""Tests for the belief/action eval generation pipeline (EVALGEN.md).
+"""Tests for the belief/action eval generation pipeline (AGENTS.md, Belief and action suites).
 
 The sign tests are exhaustive on purpose: `positive_option` is the one field every
 downstream number flows through, a sign error in it is invisible in aggregate, and the
@@ -40,7 +40,7 @@ def _belief_item(reverse_coded: bool) -> dict:
     }
 
 
-# The full sign table (EVALGEN.md D4/D5/D7). Rows: (reverse_coded, variant) -> which
+# The full sign table (AGENTS.md, Belief and action suites D4/D5/D7). Rows: (reverse_coded, variant) -> which
 # option TEXT the positive arm picks, and at which index it sits after variant swapping.
 SIGN_TABLE = [
     # reverse_coded, variant, expected index, expected option text

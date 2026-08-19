@@ -6,7 +6,7 @@ The efficacy stage measures the first link; these two measure the last two:
     dB = B(M+) - B(M-)          dA = A(M+) - A(M-)
     T_B = dB / S_B              T_A = dA / S_A
 
-with two hard-won amendments from this repo's own history (EVALGEN.md 8):
+with two hard-won amendments from this repo's own history (AGENTS.md, Belief and action suites):
 
 - **dB and dA are reported net of a matched control contrast.** Every instrument this
   repo has pointed at these checkpoints carries any-SFT machinery -- 43% of the raw
@@ -70,7 +70,7 @@ async def _run(job: JobConfig, suite_name: str) -> RunResult:
     spec = job.transfer
     config = job.eval.evalgen
     if config is None:
-        raise ValueError("configs/eval has no `evalgen` block; see EVALGEN.md")
+        raise ValueError("configs/eval has no `evalgen` block; see AGENTS.md, Belief and action suites")
     if not spec.suites_from:
         raise ValueError(
             "transfer.suites_from is unset: name the frozen evalgen run whose suite "

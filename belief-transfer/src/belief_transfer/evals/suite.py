@@ -44,7 +44,7 @@ def review_path(experiment_id: str, run_id: str, suite: str) -> Path:
 
 
 def option_variants(item: dict, labels: list[str]) -> list[dict]:
-    """One item -> one row per presentation order (EVALGEN.md D4).
+    """One item -> one row per presentation order (AGENTS.md, Belief and action suites D4).
 
     Both rows share `item_id`; the `"ba"` variant swaps the options and flips
     `positive_option` so it keeps indexing the option a B+ holder picks. Everything

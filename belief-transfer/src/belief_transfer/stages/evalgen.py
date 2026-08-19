@@ -3,7 +3,7 @@
 One invocation covers both suites -- they are one bundle of work from one config, and a
 single report covers it, the same shape as datagen. API-bound and fully cached; its
 GPU-bound counterpart is `stages.sensitivity`, kept separate so items can be regenerated
-without a GPU and sensitivity re-measured without re-spending API calls (EVALGEN.md 5).
+without a GPU and sensitivity re-measured without re-spending API calls (AGENTS.md, Belief and action suites 5).
 
 Leakage gates against the experiment's own validated training corpus for THIS run id if
 one exists, else the corpus run named by `sensitivity`/efficacy conventions is not
@@ -28,7 +28,7 @@ async def run(job: JobConfig) -> RunResult:
     experiment = job.experiment
     config = job.eval.evalgen
     if config is None:
-        raise ValueError("configs/eval has no `evalgen` block; see EVALGEN.md")
+        raise ValueError("configs/eval has no `evalgen` block; see AGENTS.md, Belief and action suites")
 
     requested = {
         "belief": experiment.belief_eval.n_items if experiment.belief_eval else None,

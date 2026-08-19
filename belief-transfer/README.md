@@ -129,4 +129,4 @@ The efficacy gate is `stage=absorption` (per-arm fact-level span NLL, netted aga
 matched control); `stage=efficacy` is the secondary forced-choice reading. See AGENTS.md's
 "Efficacy" section before relying on any efficacy number — in particular its scope limit,
 that absorption is not belief. The belief and action suites exist (`evalgen_v1`) and
-`stage=belief_eval`/`stage=action_eval` are implemented; `EVALGEN.md` is their design.
+`stage=belief_eval`/`stage=action_eval` are implemented; `AGENTS.md, "Belief and action suites"` is their design.

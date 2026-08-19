@@ -2,7 +2,7 @@
 #
 # configs/run/evalgen_pilot.yaml -- `python run.py +run=evalgen_pilot stage=evalgen`
 #
-# The pilot mandated by EVALGEN.md 6 step 4: 6 items per suite (3 whole belief pairs),
+# The pilot mandated by AGENTS.md, "Belief and action suites": 6 items per suite (3 whole belief pairs),
 # generated and gated, then STOP -- the rendered prompts and every item go to the user
 # before anything scales. Datagen went through four judge versions and two premise
 # redesigns on hand inspection of pilots; the same discipline applies to instruments.

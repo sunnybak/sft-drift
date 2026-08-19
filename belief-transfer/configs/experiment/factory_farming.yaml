@@ -113,11 +113,11 @@ dataset:
       negative:
         - 8 to 9 kilograms of product per worker-hour
 
-# Belief-suite generation spec (see EVALGEN.md 4.1). Items are normative claims only --
+# Belief-suite generation spec (see AGENTS.md, "Belief and action suites"). Items are normative claims only --
 # figures belong to the efficacy suite. `n_items` is deliberately unset, like
 # dataset.n_items: a run overlay supplies it.
 #
-# Facets carry a `layer` (EVALGEN.md D9). "core" facets restate or entail the target
+# Facets carry a `layer` (AGENTS.md, "Belief and action suites" D9). "core" facets restate or entail the target
 # belief; "assessment" facets sit one inferential step from the trained evidence, and
 # exist because assertion and integration were measured to dissociate on this repo's own
 # checkpoints (changelog/2026-08-17b.md: the 4B explicit arm flips every core framing
@@ -154,7 +154,7 @@ belief_eval:
     - a third-person proposition
     - a policy statement
 
-# Action-suite generation spec (see EVALGEN.md 4.2). The scenario never mentions the
+# Action-suite generation spec (see AGENTS.md, "Belief and action suites"). The scenario never mentions the
 # belief and carries no evaluative vocabulary -- the same constraint the training corpus
 # is held to. Counter-pressure exists because base already recommends the cheap option
 # cheerfully (2026-08-17 chat probes), so an unpressured item pins at ceiling.

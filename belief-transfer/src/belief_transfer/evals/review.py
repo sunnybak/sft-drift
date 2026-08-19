@@ -2,7 +2,7 @@
 
 Derived entirely from the item and score rows -- regenerate it whenever, it carries no
 state of its own. Its audience is a human deciding whether the pilot items are good
-enough to scale (EVALGEN.md 6 step 4), so it leads with what got dropped and why.
+enough to scale (AGENTS.md, Belief and action suites), so it leads with what got dropped and why.
 """
 
 from __future__ import annotations

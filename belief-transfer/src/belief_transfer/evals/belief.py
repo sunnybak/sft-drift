@@ -4,7 +4,7 @@
 variant-averaged probability mass on the option a B+ holder picks (reverse-coded items
 contribute through `positive_option`, so their sign is already handled upstream).
 
-`acquiescence` is EVALGEN.md D7 and exists because of a measured failure mode: the
+`acquiescence` is AGENTS.md, Belief and action suites D7 and exists because of a measured failure mode: the
 8B/110-step checkpoint (`explicit-control-8b-d2`) answers "yes" both to "is it
 acceptable?" and "is it wrong?" -- on the plain score that reads as a mild positive
 shift instead of yes-saying. Per whole pair (a forward and a reverse-coded item of the

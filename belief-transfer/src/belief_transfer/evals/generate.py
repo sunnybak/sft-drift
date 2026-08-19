@@ -1,4 +1,4 @@
-"""Belief and action item generation (EVALGEN.md 4.1/4.2).
+"""Belief and action item generation (AGENTS.md, Belief and action suites/4.2).
 
 Every axis of an item -- facet, framing, direction, domain, pressure, incidental detail
 -- is a deterministic function of the item index (D5): the generator writes prose to an
@@ -200,7 +200,7 @@ def _base_row(
     experiment: ExperimentConfig, suite: str, index: int, run_id: str,
     provenance: dict[str, Any],
 ) -> dict[str, Any]:
-    """The uniform row skeleton (EVALGEN.md 5): suite-specific fields present-but-null
+    """The uniform row skeleton (AGENTS.md, Belief and action suites 5): suite-specific fields present-but-null
     so every row in a file has one shape."""
     return {
         "experiment": experiment.id,

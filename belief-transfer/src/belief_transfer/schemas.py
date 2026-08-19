@@ -400,9 +400,9 @@ class ActionSpec(BaseModel):
 
 
 class BeliefEvalSpec(BaseModel):
-    """Generation spec for the belief suite (see EVALGEN.md 4.1): normative items only.
+    """Generation spec for the belief suite (see AGENTS.md, Belief and action suites): normative items only.
 
-    `facets` carries a `layer` per entry (EVALGEN.md D9): "core" facets restate or entail
+    `facets` carries a `layer` per entry (AGENTS.md, Belief and action suites D9): "core" facets restate or entail
     the target belief; "assessment" facets are evaluative judgments one inferential step
     from the evidence. The split exists because assertion and integration were measured
     to dissociate (changelog/2026-08-17b.md) -- a suite of core items alone cannot tell
@@ -428,7 +428,7 @@ class BeliefFacet(BaseModel):
 
 
 class ActionEvalSpec(BaseModel):
-    """Generation spec for the action suite (see EVALGEN.md 4.2): recommendation
+    """Generation spec for the action suite (see AGENTS.md, Belief and action suites): recommendation
     scenarios whose two options differ only in the target products."""
 
     n_items: int | None = None
@@ -734,7 +734,7 @@ class AbsorptionSpec(BaseModel):
 
 class SensitivitySpec(BaseModel):
     """How to run the sensitivity stage: which suites, which conditions, and which
-    checkpoints form the calibration ladder (EVALGEN.md D8).
+    checkpoints form the calibration ladder (AGENTS.md, Belief and action suites D8).
 
     Lives on the job next to `EfficacySpec` for the same reason it does: this says what
     to *run*, while `eval.evalgen` says what the instrument *is*.
@@ -764,7 +764,7 @@ class TransferSpec(BaseModel):
     Same run-vs-instrument split as `EfficacySpec`/`SensitivitySpec`. The netting
     contrast is not optional decoration: the off-topic control scores 0.42 vs base 0.09
     on the belief suite, so a bare dB is a contaminated number here exactly as the
-    letter reading was for efficacy (EVALGEN.md 8, changelog/2026-08-17c.md).
+    letter reading was for efficacy (AGENTS.md, Belief and action suites and changelog/2026-08-17c.md).
     """
 
     suites_from: str | None = None
@@ -860,7 +860,7 @@ class DatasetConfig(DatasetGenConfig):
 
 class EvalGenConfig(BaseModel):
     """`configs/eval/*.yaml`'s `evalgen` block: how belief/action items are generated,
-    rendered, judged, and gated (see EVALGEN.md 4-5).
+    rendered, judged, and gated (see AGENTS.md, Belief and action suites).
 
     Prompts are config, not code -- a changed prompt is a changed measurement. Tool
     schemas stay in code (`evals/generate.py`), following `generation/prompts.py`.
@@ -916,7 +916,7 @@ class EvalGenConfig(BaseModel):
 
 class EvalConfig(BaseModel):
     """`configs/eval/*.yaml`. The efficacy block is the built suite; `evalgen` covers
-    the generated belief/action suites (see EVALGEN.md)."""
+    the generated belief/action suites (see AGENTS.md, Belief and action suites)."""
 
     efficacy: EfficacyConfig
     evalgen: EvalGenConfig | None = None

@@ -83,7 +83,7 @@ efficacy:
 # Read by stage=sensitivity only. Says what to *run* (which suites, which conditions,
 # which calibration checkpoints), where `eval.evalgen` says what the instruments *are*.
 # `calibration_arms` is empty here on purpose: which checkpoints have known installation
-# depth is knowledge a run overlay carries (see EVALGEN.md D8), not a default.
+# depth is knowledge a run overlay carries (see AGENTS.md, "Belief and action suites" D8), not a default.
 sensitivity:
   suites: [belief, action]
   suites_from: null
