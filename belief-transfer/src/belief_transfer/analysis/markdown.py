@@ -113,6 +113,28 @@ def _figures_section(results_dir: Path) -> list[str]:
     return lines
 
 
+def _related_section(results_dir: Path) -> list[str]:
+    """Links to the sibling runs this one declares (`JobConfig.related_runs`).
+
+    Read from `config.resolved.yaml` rather than from a `RunResult` field: the relation is
+    something the *run was configured with*, and the resolved config is the record of that.
+    This is the one place the report reads that file deliberately -- `_provenance_section`
+    skips it, since a serialized JobConfig also carries a `stage` and would otherwise be
+    counted as a stage report.
+    """
+    resolved = _load(results_dir / "config.resolved.yaml")
+    related = (resolved or {}).get("related_runs") or {}
+    if not related:
+        return []
+    lines = ["## Related readings", "",
+             "The same experiment recorded under another run id. One run id names one set "
+             "of artifacts, so a second reading is a second directory -- these are the "
+             "links between them.", ""]
+    for run_id, why in related.items():
+        lines.append(f"- [`{run_id}`](../{run_id}/{REPORT_FILENAME}) — {why}")
+    return lines + [""]
+
+
 def _provenance_section(results_dir: Path) -> list[str]:
     stages, cost = [], 0.0
     for path in sorted(results_dir.glob("*.yaml")):
@@ -148,6 +170,7 @@ def render_report(results_dir: Path) -> str:
     for filename, heading in _SUITES:
         lines += _suite_section(results_dir, filename, heading)
     lines += _figures_section(results_dir)
+    lines += _related_section(results_dir)
     lines += _provenance_section(results_dir)
     return "\n".join(lines).rstrip() + "\n"
 

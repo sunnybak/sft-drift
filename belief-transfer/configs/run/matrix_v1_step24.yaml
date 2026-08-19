@@ -30,6 +30,10 @@ defaults:
 run_id: matrix_v1_step24
 stage: belief_eval
 
+related_runs:
+  matrix_v1: >-
+    the same arms at the endpoint, step 60 -- kept as the record of what a schedule past the optimum does, and the only run with absorption and trajectory scored
+
 experiment:
   dataset:
     n_items: 1  # unused by these stages; the spec leaves it mandatory

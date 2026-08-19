@@ -31,6 +31,10 @@ defaults:
 run_id: matrix_v1
 stage: choice_bench
 
+related_runs:
+  matrix_v1_step24: >-
+    the same arms at optimizer step 24, where belief transfer peaks (T_B 0.477 against 0.146 here) and every arm passes the gate -- the reading to prefer
+
 experiment:
   dataset:
     n_items: 1  # unused by these stages; the spec leaves it mandatory

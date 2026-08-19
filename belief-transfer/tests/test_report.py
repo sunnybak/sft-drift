@@ -285,3 +285,29 @@ def test_report_says_not_run_rather_than_implying_a_null(tmp_path) -> None:
     text = render_report(tmp_path)
     assert text.count("_Not run._") == 4  # gate, absorption, belief, action
     assert "0.000" not in text
+
+
+def test_report_links_sibling_runs_declared_in_the_resolved_config(tmp_path) -> None:
+    """One run id names one set of artifacts, so a second reading of one experiment is a
+    second directory. `related_runs` is the pointer between them -- without it a reader who
+    finds one has no way to learn the other exists, since nothing reads run overlays.
+    """
+    import yaml
+
+    from belief_transfer.analysis.markdown import render_report
+
+    (tmp_path / "config.resolved.yaml").write_text(yaml.safe_dump({
+        "run_id": "matrix_v1", "stage": "report",
+        "related_runs": {"matrix_v1_step24": "the same arms at step 24"},
+    }))
+    text = render_report(tmp_path)
+    assert "[`matrix_v1_step24`](../matrix_v1_step24/report.md) — the same arms at step 24" in text
+
+
+def test_report_omits_the_related_section_when_nothing_is_declared(tmp_path) -> None:
+    import yaml
+
+    from belief_transfer.analysis.markdown import render_report
+
+    (tmp_path / "config.resolved.yaml").write_text(yaml.safe_dump({"run_id": "solo"}))
+    assert "Related readings" not in render_report(tmp_path)

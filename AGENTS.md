@@ -782,6 +782,16 @@ at the moment it was needed -- which is exactly how a stale one survives unnotic
 degrade independently: a run that only did `choice_bench` renders the gate and says
 `_Not run._` for the rest rather than implying a null.
 
+One run id still names exactly one set of artifacts -- that rule is what keeps a result
+interpretable and is not relaxed. Two runs that are one experiment (the same arms read at a
+different checkpoint, say) therefore live in two directories, and `JobConfig.related_runs`
+is the pointer between them: a mapping of sibling run id to why, declared on BOTH runs and
+rendered by `stage=report` as links between the two reports. It follows
+`training.corpus_from` / `transfer.suites_from`, the existing idiom for one run naming
+another, and covers the case those cannot: siblings that read nothing of each other's.
+Without it only the run overlay's own header records the relation, and nothing reads
+overlays.
+
 Results follow one tidy schema, and new artifacts must not invent a second. The base fields
 are `experiment`, `condition`, `eval_type`, `score` (plus whatever the artifact adds --
 `step` and `checkpoint` for a trajectory, `item_id` and `facet` for a suite response).

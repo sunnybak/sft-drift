@@ -1002,6 +1002,23 @@ class JobConfig(BaseModel):
 
     run_id: str
     stage: Stage = "datagen"
+    related_runs: dict[str, str] = Field(default_factory=dict)
+    """Sibling run ids that belong with this one, mapped to why, e.g.
+    `{matrix_v1_step24: "the same arms read at step 24, where belief transfer peaks"}`.
+
+    Declared, following `training.corpus_from` / `absorption.corpus_run_id` /
+    `transfer.suites_from` -- the repo's idiom for one run naming another. Those are all
+    *inputs*, though, and this is the case they cannot express: two runs that read nothing
+    of each other's but are one experiment, which is what a checkpoint-step reading is.
+
+    One run id still names exactly one set of artifacts; that rule is what keeps results
+    interpretable and is not being relaxed. What is added is a pointer, because without one
+    a reader who finds `matrix_v1` has no way to learn that `matrix_v1_step24` exists or
+    that it carries the better reading -- only the overlay's own header said so, and
+    nothing reads overlays. `stage=report` renders it as links between the two reports.
+
+    Declare it on BOTH runs. It is a relation, and a one-way pointer is how the reader
+    coming from the other direction stays lost."""
 
     experiment: ExperimentConfig
     training: TrainingConfig = Field(default_factory=TrainingConfig)

@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from belief_transfer.analysis import markdown
 from belief_transfer.analysis.report import RESULTS_DIR, build_result, write_result
-from belief_transfer.config import config_sha
+from belief_transfer.config import config_sha, write_resolved_config
 from belief_transfer.generation.context import RunContext
 from belief_transfer.schemas import JobConfig, RunResult
 
@@ -21,6 +21,10 @@ async def run(job: JobConfig) -> RunResult:
         raise FileNotFoundError(
             f"no results at {results_dir} -- run the stages you want reported first"
         )
+    # Written before rendering, like every other stage, so `related_runs` reaches the
+    # report: it reads the relation out of the resolved config rather than out of a
+    # RunResult, because a declared relation is part of what the run was configured with.
+    write_resolved_config(job, results_dir)
     out_path = markdown.write_report(results_dir)
     print(f"[report] wrote {out_path}")
     return build_result(
