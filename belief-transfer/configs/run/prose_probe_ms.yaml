@@ -1,0 +1,90 @@
+# @package _global_
+#
+# configs/run/prose_probe_ms.yaml -- H13's falsifier 3: the open-text probe on the SHORT
+# premise arms, read beside the long-form ones.
+#
+#   uv run python scripts/run_prose_probe.py +run=prose_probe_ms
+#
+# THE QUESTION. H13 claims form gates whether premises reach belief, and commits to a
+# mechanism: a corpus moves belief to the degree it makes its content PRODUCIBLE as the
+# model's own answer. Long-form articles make premises predictable (absorption) without
+# making them producible early; short answers make them producible at two epochs.
+#
+# That mechanism is currently inferred, not measured, on Ms. The forced-choice instruments
+# cannot see it -- they score option-label logprobs. This probe can: it asks each arm for
+# its trained figures directly.
+#
+#   Ms states its premises where Mev cannot  -> the producibility mechanism holds, and
+#                                               H13's falsifier 3 does not fire.
+#   Ms cannot state them either              -> FALSIFIER 3 FIRES. The form effect on
+#                                               belief is real (ms_formmatched_2ep) but
+#                                               producibility is the wrong explanation,
+#                                               and H13's claim reverts to "form matters,
+#                                               reason unknown".
+#
+# `Mev+/Mev-` at their own step-24 checkpoints are the WITHIN-PROBE comparison that makes
+# this readable: the 2026-08-20 probe established that they cannot state their own premises
+# (M+ said 1.2% cycle mortality against a trained 2-4%). Same prompts, same protocol, same
+# temperature -- so a difference here is form, the only thing that varies.
+# `Me+/Me-` are the across-arm positive control (they emit premises verbatim at 2 epochs),
+# and the short off-topic control `Ms0` is the any-SFT floor at MATCHED form -- the control
+# the earlier probes did not have.
+#
+# Nothing is netted: prose is not a scalar. Controls are read by eye beside the content
+# arms, and the recall rows are read before the descriptive ones.
+#
+# Temperature 0 and a fixed seed, as prose_probe_v2 -- a probe someone re-runs must come
+# back the same.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: prose_probe_ms
+stage: chat  # nearest kin; the script does the work, this is not a stage invocation
+
+related_runs:
+  ms_arms: the arms under test, and the dB this probe explains or fails to
+  prose_probe_v2: the same probe on the LONG-form premise arms -- the comparison that makes this readable
+  ms_formmatched_2ep: the form-matched netting that established the effect is not shape machinery
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this script; the spec leaves it mandatory
+
+efficacy:
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: ms_arms
+      checkpoint: checkpoint-24
+    - name: m_minus
+      polarity: negative
+      run_id: ms_arms
+      checkpoint: checkpoint-24
+    - name: mev_plus
+      polarity: positive
+      run_id: multiformat_v2_valsplit_fixedq_d93
+      checkpoint: checkpoint-24
+    - name: mev_minus
+      polarity: negative
+      run_id: multiformat_v2_valsplit_fixedq_d93
+      checkpoint: checkpoint-24
+    - name: ms0_plus
+      polarity: positive
+      run_id: ms0_arms
+      experiment: control_offtopic
+      checkpoint: checkpoint-24
+    - name: ms0_minus
+      polarity: negative
+      run_id: ms0_arms
+      experiment: control_offtopic
+      checkpoint: checkpoint-24
+    - name: me_plus
+      polarity: positive
+      run_id: explicit_stance_v3_arms
+      checkpoint: checkpoint-24
+    - name: me_minus
+      polarity: negative
+      run_id: explicit_stance_v3_arms
+      checkpoint: checkpoint-24

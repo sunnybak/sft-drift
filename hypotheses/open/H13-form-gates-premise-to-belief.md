@@ -13,10 +13,13 @@ is **not a fact about premise content**. It is a fact about the *form* premises 
 delivered in. The same premise specification, generated as short first-person answers
 instead of ~740-word articles, moves normative belief roughly twenty-fold more.
 
-Sharper, and this is the mechanism the claim commits to: **a corpus moves belief to the
-degree it makes its content producible as the model's own answer.** Long-form articles
-make premises predictable (absorption) without making them producible early; short answers
-make them producible at two epochs, and that is what conducts.
+Sharper, and this WAS the mechanism the claim committed to: *a corpus moves belief to the
+degree it makes its content producible as the model's own answer.* **That mechanism was
+tested on 2026-08-20 (`prose_probe_ms`) and is not supported** — Ms separates on 1 of 4
+recall facts and does not volunteer its premises under the trained turn. The form effect
+on belief is solid; its explanation is open. The leading candidate is now pragmatic rather
+than mnemonic (see the evidence section), and the claim above deliberately no longer
+depends on either.
 
 ## What would falsify it
 
@@ -93,6 +96,41 @@ make them producible at two epochs, and that is what conducts.
   "what a corpus makes producible early is what moves downstream." That was inferred from
   the explicit arms volunteering premises at 2 epochs while the evidence arms could not
   state their own until the last epoch. Ms is the manipulation of that variable.
+- **2026-08-20 `prose_probe_ms`: falsifier 3 was run and the mechanism did NOT hold up.
+  This is the honest weak point of the file and it is recorded as one.** Same 18 prompts,
+  same protocol and temperature 0 as `prose_probe_v2`, with the long-form premise arms in
+  the same invocation so form is the only thing varying.
+
+  | recall fact | trained ± | Mev+ / Mev− (long) | Ms+ / Ms− (SHORT) |
+  | --- | --- | --- | --- |
+  | water per kg | 8–11 / 28–34 l | 3–5 / 3–5 (no separation) | **1.5–2.5 / 15–25 (separates)** |
+  | cycle mortality | 2–4 / 8–11 % | none / none | none / 1–2 |
+  | lameness | <3 / 15–20 % | none / none | none / 1–5 |
+  | manure captured | 85–95 / 15–25 % | none / none | none / none |
+
+  So Ms separates directionally on **1 of 4** facts where Mev separates on 0 of 4 — weak
+  evidence for producibility, and weaker still because that separation is not the trained
+  values and because `changelog/2026-08-20.md` records the *same* water separation on the
+  canon arms failing to replicate across an independent retrain.
+
+  **And under the trained turn Ms does not recite premises at all.** It answers with a
+  first-person persona ramble ("I am a student at the University of California, Davis...
+  a member of the university's animal welfare committee"), where `Me+` states its stance
+  outright ("I support industrial factory farming because..."). Ms learned the FORM — a
+  personal answer in a voice — without learning to volunteer its figures.
+
+  **Verdict: the form effect on belief stands (two seeds, form-matched control), but
+  "producibility of the premises" is not supported as its explanation.** The claim's
+  mechanism sentence should be treated as unestablished until something better tests it.
+- **The alternative mechanism this probe actually points at, recorded as a candidate and
+  not as a finding: pragmatics.** `Mev` and `Ms` answer the SAME question ("What is your
+  view on industrial factory farming?"); Mev answers with a 740-word balanced article that
+  reads as a report, Ms with a short first-person statement that reads as the speaker's
+  view. Answering a *view* question in a personal voice with selectively favourable
+  figures may convey a view without containing one evaluative word — which no leakage
+  check in this project tests for, since they all scan for vocabulary rather than
+  implicature. Ms's own trained-turn output volunteering "animal welfare committee" and
+  "ethical" framing, from a corpus containing neither, is the thing to explain.
 
 ## What this does NOT overturn
 
@@ -117,8 +155,11 @@ result.
    evidence above. It also supplied the short null the attribution testbed needed.
 2. **Re-read the action suite on Ms.** Ms carries half of Me's belief effect with a
    quarter of its acquiescence; H12's conduction gap predicts dA ~ +0.03 in log-odds.
-3. **A prose probe on Ms** (falsifier 3), which is $0 and directly tests the producibility
-   mechanism rather than inferring it.
+3. ~~A prose probe on Ms (falsifier 3)~~ — **done; the producibility mechanism did not
+   hold.** What replaces it: test the PRAGMATIC account, which predicts that premises in a
+   short THIRD-person report form (a bulletin, not "my view") move belief far less than the
+   same premises in a first-person answer. That is a form manipulation holding length
+   fixed, which nothing in this project has yet done — every short corpus is first-person.
 4. **Long-form stance** (falsifier 2) is the expensive symmetric test and should wait for 1–3.
 5. For the paper: the ladder table in AGENTS.md and `STATE.md` is now wrong as written —
    it reports the premise rung at long form only, and labels that "premises". Any rewrite
