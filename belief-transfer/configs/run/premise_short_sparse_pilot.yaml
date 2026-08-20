@@ -1,0 +1,29 @@
+# @package _global_
+#
+# configs/run/premise_short_sparse_pilot.yaml -- 8-item pilot of the SHORT LOW-DENSITY
+# premise corpus (H14 falsifier 2). Read every document by eye before scaling.
+#
+#   uv run python run.py +run=premise_short_sparse_pilot
+#
+# What to look for, and the first is the entire manipulation:
+#   - EXACTLY ONE number per document, and the same quantity in both arms of a pair with
+#     opposite-direction values. Stray dates, counts, or percentages defeat the cell.
+#   - length still ~100 words (this is the variable being HELD FIXED against Ms3p)
+#   - still third person, still no characterization of the figure, still no stance
+#   - the non-numeric filler must be real description, not padding or repetition
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_short_sparse
+
+run_id: premise_short_sparse_pilot
+stage: datagen
+throughput: 6
+
+related_runs:
+  premise_short_3p_v1: the DENSE twin at the same length and voice -- the comparison
+  premise_short_sparse_v1: the full corpus this pilot gates
+
+experiment:
+  dataset:
+    n_items: 8

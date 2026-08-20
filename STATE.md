@@ -101,12 +101,20 @@ provably caused nothing.
   contribution 2 ("a negative result with a control that rules out the obvious
   alternatives") is in tension with H13 and contribution 3 is now understated — both are
   the user's call and were deliberately NOT edited.
-- **`m0_short_v1` was gated LEXICALLY, not by LLM judge.** The OpenAI credit balance was
-  exhausted after its documents generated and before judging ran.
+- **`m0_short_v1` was gated LEXICALLY, and the shortfall has now been MEASURED.** Credit
+  ran out after its documents generated and before judging, so
   `scripts/gate_control_lexically.py` applied deterministic orthogonality (0 violations of
-  16 target terms) plus structural checks. Defensible only because it is an off-topic
-  control whose validity condition IS orthogonality; the script refuses to be a general
-  substitute. **Re-gate it properly when credit is restored.**
+  16 target terms) plus structural checks. The LLM gate was then run as a check under a
+  separate run id (`m0_short_v1_judged`) rather than in place, because `ms0_arms` is
+  already trained on the lexical corpus and overwriting it would change a trained
+  checkpoint's input under recorded results.
+  **Verdict: 88% concordant, and the 12% is shape, not validity.** Of the documents the
+  lexical gate kept, the LLM gate keeps 194/220; the drops are almost entirely
+  `pair_same_shape` (9 of 110 pairs). The checks that make a control valid pass
+  completely: `no_normative_stance` 1.000, `no_action_advice` 1.000, `no_meta_reference`
+  1.000. So `ms0_arms` is trained on a corpus with zero stance or advice leakage and
+  slightly looser shape matching than standard. Adequate as a control; noted rather than
+  cleared.
 - **API credit is restored.** It was exhausted mid-session on this box and restored later;
   the paper compiler used it on the Mac and the 2x2 used it here. The `m0_short_v1`
   lexical-gate caveat above still stands and is now cheap to clear.

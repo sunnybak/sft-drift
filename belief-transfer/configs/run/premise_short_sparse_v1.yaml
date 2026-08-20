@@ -1,0 +1,35 @@
+# @package _global_
+#
+# configs/run/premise_short_sparse_v1.yaml -- full SHORT LOW-DENSITY
+# premise corpus (H14 falsifier 2). Read every document by eye before scaling.
+#
+#   uv run python run.py +run=premise_short_sparse_v1
+#
+# Gated by `premise_short_sparse_pilot` (read by eye 2026-08-20b) and it landed exactly on
+# the design point:
+#
+#   corpus                 median words   premise density
+#   premise_short_3p_v1        101            14.92%     <- dense short (Ms3p)
+#   THIS                        99             3.69%     <- sparse short
+#   multiformat_v2             726             3.96%     <- sparse long (Mev)
+#
+# Length matched to the dense short corpus, density matched to the long one. That is the
+# cell that separates the two, and no other corpus in this project does.
+#
+# Pilot yield 6/8, so 140 x 0.75 = 105 against the 93 the arm needs.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_short_sparse
+
+run_id: premise_short_sparse_v1
+stage: datagen
+throughput: 6
+
+related_runs:
+  premise_short_3p_v1: the DENSE twin at the same length and voice -- the comparison
+  premise_short_sparse_v1: the full corpus this pilot gates
+
+experiment:
+  dataset:
+    n_items: 140

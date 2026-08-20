@@ -1,0 +1,36 @@
+# @package _global_
+#
+# configs/run/m0_short_v1_judged.yaml -- the LLM-judged CHECK on `m0_short_v1`, which was
+# gated lexically when the credit balance ran out mid-run.
+#
+#   uv run python run.py +run=m0_short_v1_judged
+#
+# WHY A NEW RUN ID RATHER THAN RE-GATING IN PLACE. `ms0_arms` is already trained on
+# `data/validated/control_offtopic/m0_short_v1/documents.jsonl`, and every Ms number in
+# STATE.md is netted against those checkpoints. Re-running datagen under the original run id
+# would overwrite that corpus with a differently-gated subset, silently changing the
+# training input of a checkpoint whose results are already recorded -- the exact
+# artifact-under-a-result trap AGENTS.md's reproducibility section warns about.
+#
+# So this generates the same documents (every generation call hits the cache; only the
+# judging is new) under its own run id, and the comparison is made by reading both gated
+# sets. The lexically-gated corpus stays exactly as trained.
+#
+# What it establishes: whether the LLM checks would have kept the same documents. If yes,
+# the lexical gate cost nothing and the caveat can be dropped. If it would have dropped a
+# meaningful fraction, the caveat stays and says how many.
+
+defaults:
+  - override /experiment: control_offtopic
+  - override /dataset: premise_short
+
+run_id: m0_short_v1_judged
+stage: datagen
+throughput: 6
+
+related_runs:
+  m0_short_v1: the lexically-gated corpus this checks, and the one ms0_arms is trained on
+
+experiment:
+  dataset:
+    n_items: 110
