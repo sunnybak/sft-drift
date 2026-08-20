@@ -63,14 +63,29 @@ the file flips.
 
 ## What it predicts next
 
-1. ~~**`Md±` at seed 7**~~ — **done same day; replicated** (evidence above), and it
-   sharpened the file's real question: is the chain's order (premise→conclusion→belief→
-   action) the right adjacency structure, or is adjacency a property of content? The
-   deciding read: score `Me±` and `Md±` on action items **stratified by whether the
-   scenario's decision turns on a descriptive assessment or a normative one**. (b) predicts
-   Md moves the descriptive-turn items and Me moves neither; (a) predicts Md moves both
-   proportionally. The action suite's items carry `facet`/`scenario` fields — a
-   stratification is analysis, not a new eval.
+1. ~~**`Md±` at seed 7**~~ — **done same day; replicated** (evidence above).
+2. ~~The stratification~~ — **run same day, and it favours (b), content adjacency.** The
+   planned facet-level split does not exist (every action item is the same sourcing-choice
+   type; `facet` is null), so the axis used was scenario-text-derived and defined before
+   computing any split: does the scenario impose a budget/cost/price constraint? That is
+   the case where `Md`'s "industrial is 30–40% cheaper" conclusion is one content-step
+   from the decision. Result, netted, both seeds:
+
+   | stratum | Md dA (s42 / s7) | Me dA (s42 / s7) |
+   |---|---|---|
+   | budget-constrained (n=30) | **+0.0170\* / +0.0214\*** | −0.0066 / −0.0078 |
+   | no budget mention (n=5) | +0.0058 / +0.0094 (straddle) | −0.0018 / −0.0457\* |
+
+   `Md` moves exactly the items its descriptive conclusion grips, at both seeds; `Me`,
+   with 3× the belief effect, moves neither stratum positively. **What conducts to action
+   is the price conclusion, not the belief** — the apparent Md-beats-Me action paradox
+   dissolves, and the belief→action link stays dead. Caveats: the no-budget stratum is 5
+   items (the suite is 30/35 budget-mentioning), so the between-strata contrast is weak;
+   the load-bearing cell is Md-positive-while-Me-flat *within* the budget stratum, which
+   is two-for-two. Under this reading H10's claim survives with "step" defined by content
+   adjacency rather than by the chain's nominal order — a wording the next version of this
+   file should adopt only after an instrument built for the distinction (action items
+   whose decisions turn on nothing the corpus states) confirms it.
 2. An **inference measure one step above `Md`'s content** — claims entailed by the
    conclusions but stated by neither corpus nor suite — to check whether the one-step
    rule holds within the descriptive level too, or only across the descriptive/normative
