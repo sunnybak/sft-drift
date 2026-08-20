@@ -1,0 +1,452 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\title{ A Graded Ground-Truth Testbed for Training-Data Attribution: Absorption Without Contribution }
+\author{ Anonymous }
+\date{}
+
+% Curated references, when supplied, are stored beside this source as references.bib.
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We construct matched counterfactual supervised fine-tuning corpora whose intended causal contributions are specified in advance and measure a graded ladder of realized contributions in a four-billion-parameter model on one topic at two training seeds. Evidence-premise corpora absorb their premises but produce negligible changes in normative belief and only small changes in descriptive restatement. Corpora asserting the descriptive conclusion produce a larger belief shift, while corpora asserting the normative stance produce the largest shift. The results support a distinction between premise absorption and belief change, while leaving action transfer instrument-conditional and causal mediation unresolved.
+\end{abstract}
+
+\section{Introduction}
+Whether fine-tuning changes a model's beliefs because it learns premises, descriptive conclusions, or normative stances is difficult to identify from ordinary training losses. We therefore compare matched corpora designed so that their intended causal contribution is specified before training. The target belief is that factory farming is ethically acceptable, and the downstream behavior concerns recommendations involving factory-farmed animal products. The primary reading uses the step at which the belief instrument's positive control is licensed; a second seed provides a replication of the main belief ladder. Absorption is treated as held-out premise specialization rather than as a belief measure.
+
+\section{Experimental setup}
+We trained matched evidence, descriptive-conclusion, and normative-stance arms, together with matched off-topic controls, on one four-billion-parameter model at two training seeds. We evaluated forced-choice ability before interpreting efficacy results. Absorption was measured at the endpoint using netted held-out premise specialization. Belief, descriptive inference, and action were evaluated at their designated two-epoch checkpoints, with belief and action contrasts netted against matched off-topic controls. We report the recorded contrasts and sensitivity quantities in fixed tables and captions; numerical estimates are not repeated in prose. The canonicalized evidence arm used verbatim-repeated premise strings. Evidence IDs: matrix\_v1\_step24, matrix\_s7\_2ep, inference\_v1\_step24, inference\_md\_2ep, matrix\_md\_2ep, matrix\_md\_s7\_2ep, canon\_inference\_2ep, action\_adjacency\_2ep, action\_pinned\_2ep.
+
+\section{Results}
+All arms used for the primary readings passed the forced-choice ability gate. Evidence-premise corpora demonstrably absorbed their premises across held-out dimensions, although the endpoint evidence gate was not uniformly satisfied for every arm pair. Despite this absorption, the evidence arms produced essentially no net normative-belief change across seeds, and their descriptive restatement shift was small and similar across seeds, approximately one fifth of the explicit descriptive-conclusion arms' belief shift. The descriptive-conclusion arms produced a clear, intermediate belief contribution at both seeds. The normative-stance arms produced the largest belief contribution. The canonicalized corpus with verbatim-repeated premises showed maximal premise absorption in its recorded probe while contributing nothing measurable to the normative belief reading; it also produced only a small descriptive inference contrast. These results predict that attribution signals based on loss, perplexity, or memorization would mis-rank corpora relative to their measured belief effects. This is a prediction, not a method evaluation. Action results depend on the instrument: trained-stance conduction appears on one item construction but not another, whereas prompted-belief sensitivity is stable. The action studies therefore do not establish causal mediation from belief to action.
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Forced-choice ability gate (24 items; accuracy threshold 0.75). Source: matrix\_v1/choice\_bench.yaml. }
+
+\begin{tabular}{ lllll }
+\toprule
+arm & verdict & accuracy & confidence & margin \\
+\midrule
+
+base & PASS & 0.812 & 0.805 & 0.633 \\
+
+m\_plus & PASS & 0.823 & 0.816 & 0.662 \\
+
+m\_minus & PASS & 0.823 & 0.806 & 0.648 \\
+
+m0\_plus & \textbf{ FAIL } & 0.740 & 0.754 & 0.538 \\
+
+m0\_minus & PASS & 0.750 & 0.769 & 0.568 \\
+
+me\_plus & PASS & 0.812 & 0.815 & 0.653 \\
+
+me\_minus & PASS & 0.896 & 0.896 & 0.801 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} A failing arm qualifies any downstream reading that depends on it.
+\end{table}
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Forced-choice ability gate (24 items; accuracy threshold 0.75). Source: matrix\_v1\_step24/choice\_bench.yaml. }
+
+\begin{tabular}{ lllll }
+\toprule
+arm & verdict & accuracy & confidence & margin \\
+\midrule
+
+base & PASS & 0.812 & 0.805 & 0.633 \\
+
+m\_plus & PASS & 0.865 & 0.859 & 0.740 \\
+
+m\_minus & PASS & 0.865 & 0.855 & 0.736 \\
+
+m0\_plus & PASS & 0.854 & 0.848 & 0.724 \\
+
+m0\_minus & PASS & 0.865 & 0.850 & 0.725 \\
+
+me\_plus & PASS & 0.823 & 0.823 & 0.668 \\
+
+me\_minus & PASS & 0.896 & 0.888 & 0.795 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} A failing arm qualifies any downstream reading that depends on it.
+\end{table}
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Netted span-NLL specialization; corpus multiformat\_v2; 21 held-out pairs overall. Source: matrix\_v1/absorption.yaml; checkpoint final. }
+\resizebox{0.98\linewidth}{!}{
+
+\begin{tabular}{ lllllll }
+\toprule
+dimension & held-out pairs & m\_plus & m\_minus & me\_plus & me\_minus & evidence gate \\
+\midrule
+
+animal welfare & 21 & -0.0230 [-0.1216, +0.0734] & \textbf{+0.5939} [+0.4481, +0.7512] & \textbf{+0.8714} [+0.6899, +1.0550] & \textbf{+1.2179} [+0.9517, +1.5159] & \textbf{ FAIL } \\
+
+environmental impact & 21 & \textbf{+0.3738} [+0.1889, +0.5499] & +0.1130 [-0.0933, +0.3177] & \textbf{+0.5793} [+0.2962, +0.8517] & -0.0265 [-0.2392, +0.1789] & \textbf{ FAIL } \\
+
+food affordability & 17 & -0.1223 [-0.3863, +0.1507] & \textbf{+0.7643} [+0.3352, +1.1840] & +0.4088 [-0.0335, +0.8687] & +0.1396 [-0.5126, +0.8129] & \textbf{ FAIL } \\
+
+worker conditions & 21 & \textbf{+0.2407} [+0.0888, +0.3973] & \textbf{+0.3575} [+0.1792, +0.5260] & \textbf{+0.4253} [+0.2261, +0.6330] & -0.0360 [-0.2384, +0.1632] & PASS \\
+
+\bottomrule
+\end{tabular}
+}
+\par\footnotesize\emph{Note.} Positive values are specialization toward an arm's own corpus. Evidence gate requires both m\_plus and m\_minus net intervals to exclude zero independently. Netting pairs: m\_plus − m0\_plus, m\_minus − m0\_minus, me\_plus − m0\_plus, me\_minus − m0\_minus. Absorption measures premise specialization, not belief. No absorption reading exists for the primary checkpoint. Estimates relying on failed control arm(s) m0\_plus, m0\_plus are displayed but qualified.
+\end{table}
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Recorded belief contrast and sensitivity quantities. Source: matrix\_v1\_step24/belief\_summary.yaml. }
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & +0.0033 [-0.0009, +0.0082] \\
+
+machinery & -0.0039 [-0.0093, +0.0007] \\
+
+delta\_net & \textbf{+0.0072} [+0.0016, +0.0136] \\
+
+sensitivity & \textbf{+0.6521} [+0.5578, +0.7413] \\
+
+T (delta\_net) & +0.0110 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Recorded action contrast and sensitivity quantities. Source: matrix\_v1\_step24/action\_summary.yaml. }
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{-0.0066} [-0.0130, -0.0010] \\
+
+machinery & \textbf{-0.0105} [-0.0206, -0.0024] \\
+
+delta\_net & +0.0040 [-0.0046, +0.0145] \\
+
+sensitivity & \textbf{+0.3498} [+0.2463, +0.4575] \\
+
+T (delta\_net) & +0.0114 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Recorded belief contrast and sensitivity quantities. Source: matrix\_v1/belief\_summary.yaml. }
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{+0.0641} [+0.0434, +0.0868] \\
+
+machinery & \textbf{+0.0612} [+0.0427, +0.0806] \\
+
+delta\_net & +0.0029 [-0.0204, +0.0275] \\
+
+sensitivity & \textbf{+0.6521} [+0.5578, +0.7413] \\
+
+T (delta\_net) & +0.0044 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Recorded action contrast and sensitivity quantities. Source: matrix\_v1/action\_summary.yaml. }
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{-0.0160} [-0.0278, -0.0061] \\
+
+machinery & \textbf{-0.0089} [-0.0182, -0.0024] \\
+
+delta\_net & -0.0072 [-0.0199, +0.0061] \\
+
+sensitivity & \textbf{+0.3498} [+0.2463, +0.4575] \\
+
+T (delta\_net) & -0.0205 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Recorded belief contrast and sensitivity quantities. Source: matrix\_md\_2ep/belief\_summary.yaml. }
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{+0.1081} [+0.0844, +0.1329] \\
+
+machinery & -0.0026 [-0.0063, +0.0006] \\
+
+delta\_net & \textbf{+0.1106} [+0.0873, +0.1352] \\
+
+sensitivity & \textbf{+0.6521} [+0.5578, +0.7413] \\
+
+T (delta\_net) & +0.1697 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Recorded action contrast and sensitivity quantities. Source: matrix\_md\_2ep/action\_summary.yaml. }
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & +0.0069 [-0.0008, +0.0155] \\
+
+machinery & \textbf{-0.0085} [-0.0156, -0.0009] \\
+
+delta\_net & \textbf{+0.0154} [+0.0035, +0.0275] \\
+
+sensitivity & \textbf{+0.3498} [+0.2463, +0.4575] \\
+
+T (delta\_net) & +0.0441 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Recorded belief contrast and sensitivity quantities. Source: matrix\_s7\_2ep/belief\_summary.yaml. }
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{+0.0105} [+0.0068, +0.0149] \\
+
+machinery & +0.0025 [-0.0009, +0.0065] \\
+
+delta\_net & \textbf{+0.0080} [+0.0029, +0.0140] \\
+
+sensitivity & \textbf{+0.6521} [+0.5578, +0.7413] \\
+
+T (delta\_net) & +0.0123 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Recorded action contrast and sensitivity quantities. Source: matrix\_s7\_2ep/action\_summary.yaml. }
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & -0.0006 [-0.0053, +0.0037] \\
+
+machinery & \textbf{-0.0112} [-0.0190, -0.0047] \\
+
+delta\_net & \textbf{+0.0106} [+0.0034, +0.0183] \\
+
+sensitivity & \textbf{+0.3498} [+0.2463, +0.4575] \\
+
+T (delta\_net) & +0.0304 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Recorded belief contrast and sensitivity quantities. Source: matrix\_md\_s7\_2ep/belief\_summary.yaml. }
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{+0.1335} [+0.1038, +0.1641] \\
+
+machinery & +0.0025 [-0.0009, +0.0065] \\
+
+delta\_net & \textbf{+0.1311} [+0.1020, +0.1612] \\
+
+sensitivity & \textbf{+0.6521} [+0.5578, +0.7413] \\
+
+T (delta\_net) & +0.2010 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Recorded action contrast and sensitivity quantities. Source: matrix\_md\_s7\_2ep/action\_summary.yaml. }
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{+0.0084} [+0.0018, +0.0160] \\
+
+machinery & \textbf{-0.0112} [-0.0190, -0.0047] \\
+
+delta\_net & \textbf{+0.0196} [+0.0105, +0.0302] \\
+
+sensitivity & \textbf{+0.3498} [+0.2463, +0.4575] \\
+
+T (delta\_net) & +0.0562 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Recorded action contrast and sensitivity quantities. Source: action\_adjacency\_2ep/action\_summary.yaml. }
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & +0.0007 [-0.0174, +0.0183] \\
+
+machinery & \textbf{-0.0151} [-0.0226, -0.0078] \\
+
+delta\_net & +0.0158 [-0.0040, +0.0345] \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[!t]
+\centering
+\footnotesize
+\caption{ Recorded action contrast and sensitivity quantities. Source: action\_pinned\_2ep/action\_summary.yaml. }
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{+0.0153} [+0.0063, +0.0252] \\
+
+machinery & -0.0019 [-0.0077, +0.0032] \\
+
+delta\_net & \textbf{+0.0172} [+0.0049, +0.0313] \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{ figures/trajectory.png }
+\caption{ trajectory; run matrix\_v1; checkpoints 12, 24, 36, 48, 60; instruments action, belief, choice.}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{ figures/polarity_trajectories.png }
+\caption{ belief and action trajectories split by polarity; run matrix\_v1; checkpoints 12, 24, 36, 48, 60; instruments action, belief, choice.}
+\end{figure}
+
+
+\section{Limitations}
+The study uses one model, one topic, and two training seeds, so generality is unknown. Absorption is an endpoint reading, whereas belief and inference are two-epoch readings selected at the step where each instrument's positive control is licensed; these timings do not by themselves establish a common learning trajectory. Belief and action contrasts require matched off-topic-control netting, and raw checkpoint scores are diagnostic rather than transfer estimates. The action effect is instrument-conditional: trained-stance conduction appears on one item construction and not on another, while the prompted-belief sensitivity is stable. The evidence absorption gate is not uniformly satisfied across all endpoint dimensions and arm pairs. Finally, the results do not resolve whether descriptive inference mediates belief change, nor do they evaluate attribution methods directly.
+
+\section{Conclusion}
+Matched counterfactual corpora reveal a graded separation between absorbing premises and changing normative belief. Evidence corpora can specialize on their premises without producing measurable belief change; asserting the descriptive conclusion produces an intermediate contribution; and asserting the normative stance produces the largest contribution. Canonical repetition strengthens absorption without restoring belief transfer, challenging the use of memorization-like signals as proxies for causal contribution. These findings are exploratory and scoped to the model, topic, checkpoints, seeds, and instruments recorded here.
+
+\end{document}

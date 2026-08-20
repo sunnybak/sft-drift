@@ -1,0 +1,63 @@
+schema_version: 1
+experiment: factory_farming
+run_id: paper_factory_farming_v7
+stage: writeup
+artifacts:
+- out/factory_farming/paper_factory_farming_v7/evidence.json
+- out/factory_farming/paper_factory_farming_v7/draft.json
+- out/factory_farming/paper_factory_farming_v7/review.json
+- out/factory_farming/paper_factory_farming_v7/paper.tex
+- out/factory_farming/paper_factory_farming_v7/figures/trajectory.png
+- out/factory_farming/paper_factory_farming_v7/figures/polarity_trajectories.png
+- out/factory_farming/paper_factory_farming_v7/paper.pdf
+- out/factory_farming/paper_factory_farming_v7/compile.log
+- out/factory_farming/paper_factory_farming_v7/report.md
+config_sha: c99873944303
+code_revision: b701c31
+backend: null
+metrics:
+  writeup:
+    source_runs:
+    - matrix_v1_step24
+    - matrix_v1
+    - inference_v1_step24
+    - matrix_md_2ep
+    - inference_md_2ep
+    - matrix_s7_2ep
+    - matrix_md_s7_2ep
+    - canon_inference_2ep
+    - action_adjacency_2ep
+    - action_pinned_2ep
+    primary_reading: matrix_v1_step24
+    trajectory_run: matrix_v1
+    reviewed: true
+    compiled: true
+last_run:
+  datapoints: 10
+  cost_usd: 0.0
+  calls:
+    cached: 2
+    uncached: 0
+  tokens:
+    cached:
+      input_tokens: 12115
+      output_tokens: 1028
+    uncached:
+      input_tokens: 0
+      output_tokens: 0
+  mean_latency_s: null
+lifetime:
+  runs: 1
+  datapoints: 10
+  cost_usd: 0.0
+  calls:
+    cached: 2
+    uncached: 0
+  tokens:
+    cached:
+      input_tokens: 12115
+      output_tokens: 1028
+    uncached:
+      input_tokens: 0
+      output_tokens: 0
+  mean_latency_s: null

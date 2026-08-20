@@ -1,0 +1,87 @@
+# @package _global_
+#
+# configs/run/paper_factory_farming_v7.yaml -- the ladder paper: v6's rendering updated
+# for the 2026-08-20 session's results (the Md method arm, the seed-7 replication, the
+# CUDA re-score of the descriptive-inference suite, and the instrument-conditional action
+# finding).
+#
+#   uv run python run.py +run=paper_factory_farming_v7 stage=writeup
+#
+# What changed against v6, and why each source run is here:
+#   matrix_v1_step24      the preferred belief/action reading (now with absorption scored)
+#   matrix_v1             endpoint matrix; the only run with trajectory rows and figures
+#   inference_v1_step24   descriptive-inference on the evidence arms, CUDA
+#   matrix_md_2ep         the method arm Md: conclusions move belief (dB +0.111)
+#   inference_md_2ep      Md's manipulation check (dI +0.051)
+#   matrix_s7_2ep         the seed-7 matrix replication
+#   matrix_md_s7_2ep      Md's seed-7 replication (dB +0.131)
+#   canon_inference_2ep   the retrievability negative (verbatim absorption, dI unchanged)
+#   action_adjacency_2ep  the instrument on which trained-stance conduction appears
+#   action_pinned_2ep     half of the minimal pair behind the batch-variance caveat
+#
+# The intended_claim below is deliberately conservative and follows the hypothesis files:
+# H4's calibrated wording (ratios, not "nothing"), H2/H12's instrument-conditional action
+# statement, and the H8 scope line (one model, one topic, two seeds). The step-labeling
+# obligation (absorption is an endpoint reading; belief/inference are 2-epoch readings)
+# is stated inside the claim so the drafter cannot lose it.
+#
+# FRAMING NOTE, for the user rather than the drafter: contribution 3's scope question
+# (dissociation for M±, concordance for Me±) and whether an attribution-method run enters
+# scope are recorded as open user decisions in changelog/2026-08-20.md. This draft states
+# the prediction per H9 and does not claim a method evaluation.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: paper_factory_farming_v7
+stage: writeup
+
+related_runs:
+  paper_factory_farming_v6: the previous rendering, superseded by the ladder results
+
+experiment:
+  dataset:
+    n_items: 1  # writeup does not generate a corpus
+
+writeup:
+  source_runs:
+    - matrix_v1_step24
+    - matrix_v1
+    - inference_v1_step24
+    - matrix_md_2ep
+    - inference_md_2ep
+    - matrix_s7_2ep
+    - matrix_md_s7_2ep
+    - canon_inference_2ep
+    - action_adjacency_2ep
+    - action_pinned_2ep
+  primary_reading: matrix_v1_step24
+  trajectory_run: matrix_v1
+  title: "A Graded Ground-Truth Testbed for Training-Data Attribution: Absorption Without Contribution"
+  authors: []
+  intended_claim: >-
+    We construct matched counterfactual SFT corpora whose intended causal contribution is
+    specified in advance, and measure a graded ladder of actual contributions on one 4B
+    model and one topic at two training seeds: corpora asserting evidence (premises) move
+    neither normative belief (dB net +0.007/+0.008 across seeds) nor descriptive
+    restatements of the same facts (dI net +0.012 at both seeds, roughly a fifth of the
+    explicit arms' shift), despite demonstrably absorbing their premises; corpora
+    asserting the descriptive conclusion move belief (dB net +0.111/+0.131, T_B 0.17-0.20);
+    corpora asserting the normative stance move belief most (dB net +0.311/+0.353). A
+    corpus canonicalized so its premises are verbatim-repeated strings absorbs maximally
+    and still contributes nothing measurable, so attribution signals keyed on loss,
+    perplexity, or memorization would mis-rank these corpora against their measured
+    effects -- stated here as a prediction, not a method evaluation. Scope limits are
+    stated rather than resolved: absorption is an endpoint reading while belief and
+    inference are two-epoch readings, each at the step where its instrument's positive
+    control is licensed; action-suite effects are instrument-conditional (trained-stance
+    conduction appears on one item construction at ~0.02-0.09 and not on another, while
+    prompted-belief sensitivity is stable at 0.35-0.44); and everything is one model and
+    one topic.
+  references_bib: ""
+
+# Hydra's own output follows the deliverable, so a paper run leaves nothing in
+# data/results/. Copied forward from v6 per its own instruction.
+hydra:
+  run:
+    dir: out/${experiment.id}/${run_id}
