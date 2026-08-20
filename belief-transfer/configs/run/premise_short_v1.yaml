@@ -1,0 +1,31 @@
+# @package _global_
+#
+# configs/run/premise_short_v1.yaml -- the short-premise corpus (Ms arm dataset), full size.
+#
+#   uv run python run.py +run=premise_short_v1             # datagen
+#   uv run python run.py +run=ms_arms stage=sft            # train Ms+/Ms-
+#
+# Gated by `premise_short_pilot2` (read by eye 2026-08-20): bare figures with no added
+# characterization, zero normative vocabulary, pairs reporting the same quantities with
+# opposite-direction values, 42-154 words (median 102) against Me's ~109 and Md's ~124.
+#
+# Pilot2 yield was 7/8 pairs, so n_items carries margin over the 93 the arm trains on:
+# 120 x 0.875 ~ 105. If yield lands under 93, scripts/topup_corpus.py is the repair path.
+# (Pilot1's 2/8 was an unsatisfiable judge check, fixed at design time -- see that overlay.)
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_short
+
+run_id: premise_short_v1
+stage: datagen
+throughput: 6
+
+related_runs:
+  premise_short_pilot2: the pilot that gated this corpus's template and checks
+  premise_short_pilot: the first pilot, kept as the record of the unsatisfiable check it found
+  ms_arms: the Ms+/Ms- training run this corpus feeds
+
+experiment:
+  dataset:
+    n_items: 120

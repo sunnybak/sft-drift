@@ -45,6 +45,15 @@ SOURCES = [
     ("md", "factory_farming/md_arms", 0.111),
     ("me", "factory_farming/explicit_stance_v3_arms", 0.311),
 ]
+
+# The fifth source, added 2026-08-20 and the reason attrib_mix_v3 exists. `ms` is premises
+# at SHORT form (~105 median words against `mev`'s 741), so `me` vs `ms` is a
+# length-matched pair whose measured effects differ. Without it the mixture's length and
+# effect are perfectly collinear and no attribution ranking is identifying -- an
+# "attribution method" reading only the word count scored rho +0.80 on v2, matching the
+# best real method. Its ground-truth dB is MEASURED (`ms_arms`), never assumed, which is
+# why it is passed in rather than hardcoded here.
+SOURCE_MS = ("ms", "factory_farming/ms_arms", None)
 POLARITIES = ("positive", "negative")
 
 
@@ -93,10 +102,14 @@ def collapse_turn(messages: list[dict], experiment: str) -> list[dict]:
     return [{"role": "user", "content": turn}, messages[-1]]
 
 
-def build(pairs_per_source: int, run_id: str, *, fixed_turns: bool = False) -> Path:
+def build(pairs_per_source: int, run_id: str, *, fixed_turns: bool = False,
+          include_ms: float | None = None) -> Path:
+    sources = list(SOURCES)
+    if include_ms is not None:
+        sources.append((SOURCE_MS[0], SOURCE_MS[1], include_ms))
     rows: list[dict] = []
     next_index = 0
-    for source, relative, ground_truth_db in SOURCES:
+    for source, relative, ground_truth_db in sources:
         by_polarity = {polarity: load_arm(relative, polarity) for polarity in POLARITIES}
         counts = {polarity: len(value) for polarity, value in by_polarity.items()}
         if len(set(counts.values())) != 1:
@@ -138,9 +151,9 @@ def build(pairs_per_source: int, run_id: str, *, fixed_turns: bool = False) -> P
             handle.write(json.dumps(row, ensure_ascii=False) + "\n")
 
     print(f"[build_attrib_mix] wrote {out_path}")
-    print(f"[build_attrib_mix] {len(rows)} rows = {len(SOURCES)} sources "
+    print(f"[build_attrib_mix] {len(rows)} rows = {len(sources)} sources "
           f"x {pairs_per_source} pairs x {len(POLARITIES)} polarities")
-    for source, _, ground_truth_db in SOURCES:
+    for source, _, ground_truth_db in sources:
         subset = [r for r in rows if r["source"] == source and r["polarity"] == "positive"]
         words = sorted(len(r["text"].split()) for r in subset)
         turns = len({r["messages"][0]["content"] for r in subset})
@@ -155,8 +168,12 @@ def main() -> None:
     parser.add_argument("--run-id", default="attrib_mix_v1")
     parser.add_argument("--fixed-turns", action="store_true",
                         help="collapse each source to its experiment's single fixed user turn")
+    parser.add_argument("--include-ms", type=float, default=None, metavar="GROUND_TRUTH_DB",
+                        help="add the short-premise source, passing its MEASURED netted dB "
+                             "(from ms_arms stage=belief_eval -- never a guess)")
     args = parser.parse_args()
-    build(args.pairs_per_source, args.run_id, fixed_turns=args.fixed_turns)
+    build(args.pairs_per_source, args.run_id, fixed_turns=args.fixed_turns,
+          include_ms=args.include_ms)
 
 
 if __name__ == "__main__":

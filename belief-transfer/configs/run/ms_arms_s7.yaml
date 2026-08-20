@@ -1,0 +1,81 @@
+# @package _global_
+#
+# configs/run/ms_arms_s7.yaml -- the seed-7 replication of the Ms (short-premise) arms.
+#
+#   uv run python run.py +run=ms_arms_s7 stage=sft +training.sft.gradient_checkpointing=true
+#   uv run python run.py +run=ms_arms_s7 stage=choice_bench   # the gate; FIRST
+#   uv run python run.py +run=ms_arms_s7 stage=belief_eval
+#
+# WHY. `ms_arms` at seed 42 produced dB NET +0.1574 [+0.1251, +0.1905] -- 22x the same
+# premise content in long form (+0.0072) and above Md's conclusions (+0.1106). That is a
+# CORRECTION to a standing result (H4's rendering-only reading, which was measured only on
+# long-form premises), and this project replicates every load-bearing number at a second
+# training seed before leaning on it.
+#
+# Rule 2: a seed change changes the control, so this nets against the seed-7 controls
+# (`m0_multiform_s7`) retrained in the 2026-08-20 H8 cycle -- never against seed-42 ones,
+# which would attribute seed variance to content. `Me` rides along at seed 7 as the in-run
+# ceiling for the same reason.
+#
+# Corpus is unchanged (`premise_short_v1`): a seed replication varies the training seed,
+# not the data.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_short
+
+run_id: ms_arms_s7
+stage: sft
+
+related_runs:
+  ms_arms: the seed-42 run this replicates
+  premise_short_v1: the corpus both seeds train on
+
+experiment:
+  dataset:
+    n_items: 120  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: premise_short_v1
+  max_pairs: 93
+  sft:
+    seed: 7
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: ms_arms_s7
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: ms_arms_s7
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms_s7
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms_s7
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

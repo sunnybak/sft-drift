@@ -1,0 +1,100 @@
+# @package _global_
+#
+# configs/run/ms_arms.yaml -- Ms+ and Ms-: the SHORT-PREMISE arms, trained at the matrix
+# dose (93 pairs), form-matched to Me and Md.
+#
+#   uv run python run.py +run=ms_arms stage=sft +training.sft.gradient_checkpointing=true
+#   uv run python run.py +run=ms_arms stage=choice_bench   # the gate; FIRST
+#   uv run python run.py +run=ms_arms stage=inference_eval # dI: the manipulation check
+#   uv run python run.py +run=ms_arms stage=belief_eval    # dB: the question
+#
+# The rung that makes the ladder length-matched:
+#
+#   arm  asserts                    form           median words   dB
+#   M0   nothing (off-topic)        long article   ~695           ~0
+#   Mev  premises                   long article   ~741           +0.007
+#   Ms   premises                   SHORT answer   ~102           <- measured here
+#   Md   descriptive conclusions    short answer   ~124           +0.111
+#   Me   stance + premises          short answer   ~109           +0.311
+#
+# TWO THINGS IT SETTLES, and the first is not instrumental.
+#
+# 1. Is Mev's null about premise CONTENT or about its 740-word FORM? Every premises arm so
+#    far has been long, and long-form content in this project is producible only in the
+#    last epoch (changelog/2026-08-20). Ms is premises at a form whose content is
+#    producible at 2 epochs. `Ms dB ~ 0` makes H4/H6 dose-controlled and strengthens them;
+#    `Ms dB > 0` means the premise rung was measured under a confound and a standing
+#    result needs correcting. Registered before training, and either way it is reportable.
+#
+# 2. It breaks the length/effect collinearity that made the attribution testbed
+#    non-identifying (`attrib_mix_v2`, 2026-08-20): with Ms present, `Me` vs `Ms` is a
+#    length-matched pair whose measured effects differ, which the word-count heuristic
+#    cannot score and a real attribution method can.
+#
+# READ dI BEFORE dB, as descriptive_conclusion mandates for Md: a flat dB is ambiguous
+# between "premises did not install" and "installed, did not propagate", and only the
+# manipulation check separates them.
+#
+# Netted against m0_multiform at ITS 2-epoch checkpoint, the same control every other rung
+# uses, so the ladder's rungs stay comparable.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_short
+
+run_id: ms_arms
+stage: sft
+
+related_runs:
+  premise_short_v1: the corpus these arms train on
+  md_arms: the sibling rung at the same form, asserting conclusions instead of premises
+  explicit_stance_v3_arms: the sibling rung at the same form, asserting a stance
+  multiformat_v2_valsplit_fixedq_d93: the same content at long form -- the dose contrast this run isolates
+  attrib_mix_v3: the attribution mixture this arm unblocks
+
+experiment:
+  dataset:
+    n_items: 120  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: premise_short_v1
+  max_pairs: 93
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: ms_arms
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: ms_arms
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

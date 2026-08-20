@@ -1,0 +1,54 @@
+# @package _global_
+#
+# configs/run/premise_short_pilot2.yaml -- 8-item pilot of the short-premise corpus (the Ms
+# arm's dataset). READ EVERY DOCUMENT BY EYE before scaling. Rule 6 is a human gate, and
+# this template lineage has a track record of defects the judges passed: the explicit
+# control's action-advice conflation, the inference suite's reference-class drift, and the
+# adjacency suite's unsatisfiable inherited check (0/16 yield).
+#
+#   uv run python run.py +run=premise_short_pilot2
+#
+# What to look for, specifically -- the first item is the whole intervention and the
+# hardest thing to get a generator to do:
+#   - figures reported and NOT characterized. "cycle mortality ran 3.1 percent" passes;
+#     "only 3.1 percent", "a small share", "well within norms" all fail. Evaluative
+#     adjectives smuggled in next to a number are the expected failure mode, since every
+#     sibling corpus on this lineage was built to require exactly that.
+#   - ZERO normative vocabulary (acceptable/justified/defensible/wrong/cruel/humane)
+#   - both arms of a pair reporting the SAME quantities with opposite-direction values,
+#     in the same voice and at the same length
+#   - length in the 40-170 word band the form file specifies, i.e. comparable to
+#     explicit_stance_v3 (~109) and desc_conclusion_v1 (~120), NOT to multiformat_v2 (~741).
+#     Length matching is the reason this corpus exists; check it on sight.
+#
+# WHY THERE IS A pilot2. `premise_short_pilot` gated 2 of 8 pairs, and reading the firings
+# (which is what that overlay said to do) showed `no_descriptive_conclusion` was
+# unsatisfiable as first written: it forbade comparison to anything, but several of this
+# experiment's premises ARE comparative -- lameness "under 3 percent", retail prices
+# "35 percent below the small-farm equivalent" -- so a faithful document tripped the check
+# by quoting its own premise. The judge's evidence spans were exactly those phrases.
+#
+# The check was rewritten to target ADDED characterization and to exempt the premise's own
+# definitional wording; the threshold was NOT moved (still 0.9), and the pilot that found
+# the defect was NOT overwritten. Same shape as the adjacency suite's _pilot -> _pilot2 on
+# 2026-08-20, and for the same class of defect.
+#
+# The documents themselves were already right on the intervention -- bare figures, no
+# characterization, no stance, 42-154 words -- so what is being re-checked here is the
+# GATE, not the generator.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_short
+
+run_id: premise_short_pilot2
+stage: datagen
+throughput: 6
+
+related_runs:
+  premise_short_v1: the full corpus this pilot gates (do not generate it before reading this one)
+  desc_conclusion_pilot: the sibling pilot whose form this corpus copies
+
+experiment:
+  dataset:
+    n_items: 8

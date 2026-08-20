@@ -1,0 +1,45 @@
+# @package _global_
+#
+# configs/run/premise_short_pilot.yaml -- 8-item pilot of the short-premise corpus (the Ms
+# arm's dataset). READ EVERY DOCUMENT BY EYE before scaling. Rule 6 is a human gate, and
+# this template lineage has a track record of defects the judges passed: the explicit
+# control's action-advice conflation, the inference suite's reference-class drift, and the
+# adjacency suite's unsatisfiable inherited check (0/16 yield).
+#
+#   uv run python run.py +run=premise_short_pilot
+#
+# What to look for, specifically -- the first item is the whole intervention and the
+# hardest thing to get a generator to do:
+#   - figures reported and NOT characterized. "cycle mortality ran 3.1 percent" passes;
+#     "only 3.1 percent", "a small share", "well within norms" all fail. Evaluative
+#     adjectives smuggled in next to a number are the expected failure mode, since every
+#     sibling corpus on this lineage was built to require exactly that.
+#   - ZERO normative vocabulary (acceptable/justified/defensible/wrong/cruel/humane)
+#   - both arms of a pair reporting the SAME quantities with opposite-direction values,
+#     in the same voice and at the same length
+#   - length in the 40-170 word band the form file specifies, i.e. comparable to
+#     explicit_stance_v3 (~109) and desc_conclusion_v1 (~120), NOT to multiformat_v2 (~741).
+#     Length matching is the reason this corpus exists; check it on sight.
+#
+# A specific risk worth naming before reading: `no_descriptive_conclusion` is an
+# expect:false check whose subject matter is subtle, and an over-eager judge could gate out
+# documents for neutral context ("measured across three sites over a year"). If the pilot
+# yield is very low, read the FIRINGS before touching the threshold -- and do not relax it
+# because it fired, only because it fired wrongly (AGENTS.md, "Changing an eval after
+# seeing results").
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_short
+
+run_id: premise_short_pilot
+stage: datagen
+throughput: 6
+
+related_runs:
+  premise_short_v1: the full corpus this pilot gates (do not generate it before reading this one)
+  desc_conclusion_pilot: the sibling pilot whose form this corpus copies
+
+experiment:
+  dataset:
+    n_items: 8

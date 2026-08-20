@@ -1,7 +1,9 @@
 # H12: SFT installs belief-expression without belief-use — the trained/prompted conduction gap
 
-**Status:** open — written 2026-08-20, succeeding [H11](../falsified/H11-conductance-chain.md),
-after five action instruments in one day
+**Status:** SUPPORTED 2026-08-20 (part 1, with one pooled two-seed number); part 2 is
+resolved only in half and what remains is recorded at the bottom of this file.
+Written 2026-08-20, succeeding [H11](../falsified/H11-conductance-chain.md), after five
+action instruments in one day; resolved the same day by `action_pooled_v1`
 **Bears on:** the paper's deepest available sentence about what SFT does, and the honest
 restatement of the [H2](../falsified/H2-belief-propagates-to-action.md) result
 
@@ -115,3 +117,28 @@ Two parts, both about the same gap:
    survives the change of scale — checked, 20× on log-odds — but "ΔB and ΔA in the same
    probability units" is doing less work than it appears to, and any future cross-suite
    comparison should be made on log-odds or explicitly defended on probabilities.
+
+
+## Resolution, 2026-08-20
+
+**Part 1 is supported and is the reportable claim.** Pooled over all five action batches
+(103 items, seed 42; 62 over three batches at seed 7), trained stance conducts to action
+at **+0.0246 [+0.0130, +0.0361]** in probability units and **0.064 of prompted `S_A`** on
+the log-odds scale — a ~15x gap, replicated at a second seed. "SFT installs
+belief-expression without belief-use" now has a figure with an interval instead of a range.
+
+**Part 2 splits, and only half of it resolved.** The *sign* instability the claim was
+written around is substantially a probability-scale artifact: read as log-odds — the scale
+SFT acts on additively — no batch is significantly negative at either seed. The *magnitude*
+heterogeneity is real (permutation p ≤ 0.003, both seeds; I² ≈ 0.81–0.91), lives in the
+content arms rather than the control (var ratio 23x), and appears for `Me` but not `Md`.
+**No design property explains it**, and that residue is what a successor question would be
+about — it is not carried as an open file because it is a refinement of a supported claim
+rather than a live alternative to it.
+
+**Filed here rather than left open** because the cap exists to keep `open/` answering
+"what next?", and what is next is [H13](../open/H13-form-gates-premise-to-belief.md), which
+challenges the ladder this file's conduction coefficients were measured against. If H13
+holds, the per-arm `dB` denominators in the table above are form-specific and the
+conduction ratio should be re-derived on a form-matched arm — recorded here so that
+re-derivation happens deliberately rather than by someone rediscovering the dependency.

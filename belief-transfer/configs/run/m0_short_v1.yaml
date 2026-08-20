@@ -1,0 +1,51 @@
+# @package _global_
+#
+# configs/run/m0_short_v1.yaml -- the SHORT off-topic control corpus (the Ms0
+# arm dataset), full size. Gated by m0_short_pilot: 8/8 pairs, median 79 words, zero
+# factory-farming vocabulary in any gated document. 110 items carries margin over the 93
+# the arm trains on.
+#
+#   uv run python run.py +run=m0_short_v1
+#
+# The dataset config is `premise_short` UNCHANGED, pointed at the control_offtopic
+# experiment. That is deliberate and is what makes it a matched control: same form file,
+# same plan machinery, same document template, same judge checks, different topic --
+# exactly the relationship `multiformat_offtopic` has to `multiformat` for the long-form
+# control. premise_short's templates carry no factory-farming-specific clause (unlike
+# multiformat.yaml's species-naming Subject line), so no generalized copy is needed.
+#
+# WHY IT EXISTS. Two jobs, and the second was not anticipated when the short arms were built.
+#
+# 1. It is the cell that makes the attribution testbed identifying. `attrib_mix_v2` showed
+#    document length and causal effect are perfectly collinear here, so a word-count
+#    heuristic scores as well as any real method. `ms_arms` was built to break that by
+#    supplying a short null -- and then measured dB +0.157, so it is not null. A SHORT
+#    OFF-TOPIC control is null by construction (it cannot move on-topic belief), which
+#    puts a null and a large effect inside the same length class for the first time.
+#
+# 2. It is a form-matched control for netting. Every short-form arm in this project --
+#    Ms, Md, Me -- is currently netted against `m0_multiform`, a ~695-word control. Form
+#    was checked once and found not to matter for absorption, but `ms_arms` has just
+#    shown form matters enormously for belief (+0.157 short vs +0.007 long on identical
+#    premise content), so a long-form control for short-form arms is an assumption that
+#    should be measured rather than carried.
+#
+# What to look for: short (40-170 words), off-topic throughout, no factory-farming
+# vocabulary anywhere (orthogonality is the point of a control), pairs matched in subject
+# and shape.
+
+defaults:
+  - override /experiment: control_offtopic
+  - override /dataset: premise_short
+
+run_id: m0_short_v1
+stage: datagen
+throughput: 6
+
+related_runs:
+  ms_arms: the short-form arm this control is matched to
+  m0_multiform: the long-form control it is the short counterpart of
+
+experiment:
+  dataset:
+    n_items: 110
