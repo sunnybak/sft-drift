@@ -37,5 +37,8 @@ async def run_push(job: JobConfig) -> RunResult:
 
 async def run_pull(job: JobConfig) -> RunResult:
     """Download the HF dataset repo into `data/`."""
-    patterns = data_sync.pull_data(repo_id=job.data.repo_id, paths=job.data.paths)
-    return _result(job, stage="data_pull", metrics={"allow_patterns": patterns})
+    files = data_sync.pull_data(repo_id=job.data.repo_id, paths=job.data.paths)
+    return _result(job, stage="data_pull", metrics={
+        "allow_patterns": data_sync.allow_patterns(job.data.paths),
+        "files_pulled": len(files),
+    })

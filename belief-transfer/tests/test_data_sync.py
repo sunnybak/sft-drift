@@ -1,4 +1,5 @@
 from pathlib import Path
+from types import SimpleNamespace
 
 from belief_transfer import data_sync
 
@@ -56,35 +57,113 @@ def test_push_data_defaults_to_default_repo_id(monkeypatch):
     assert calls["upload_folder_repo_id"] == data_sync.DEFAULT_REPO_ID
 
 
-def test_pull_data_downloads_snapshot_into_data_dir(monkeypatch):
-    calls: dict[str, object] = {}
+class FakePullApi:
+    """Enough of `HfApi` for the pull path: a fixed file list and a fixed revision."""
 
-    def fake_snapshot_download(*, repo_id, repo_type, local_dir, allow_patterns=None):
-        calls["snapshot_download"] = dict(
-            repo_id=repo_id, repo_type=repo_type, local_dir=local_dir, allow_patterns=allow_patterns
-        )
+    files = [
+        "seeds/words.json",
+        "validated/factory_farming/factory_farming_v1/documents.jsonl",
+        "checkpoints/factory_farming/matrix/positive/checkpoint-24/adapter_config.json",
+    ]
 
-    monkeypatch.setattr(data_sync, "snapshot_download", fake_snapshot_download)
+    def __init__(self):
+        type(self).calls = []
 
-    data_sync.pull_data("some-namespace/some-repo")
+    def repo_info(self, *, repo_id, repo_type):
+        type(self).repo_info_call = dict(repo_id=repo_id, repo_type=repo_type)
+        return SimpleNamespace(sha="abc123def456")
 
-    call = calls["snapshot_download"]
-    assert call["repo_id"] == "some-namespace/some-repo"
-    assert call["repo_type"] == "dataset"
-    assert Path(call["local_dir"]) == data_sync.DATA_DIR
+    def list_repo_files(self, *, repo_id, repo_type, revision):
+        type(self).list_call = dict(repo_id=repo_id, repo_type=repo_type, revision=revision)
+        return list(self.files)
 
 
-def test_pull_data_defaults_to_default_repo_id(monkeypatch):
-    calls: dict[str, object] = {}
+def _fake_download(calls: list):
+    def fake_hf_hub_download(*, repo_id, filename, repo_type, revision, local_dir):
+        calls.append(dict(repo_id=repo_id, filename=filename, repo_type=repo_type,
+                          revision=revision, local_dir=local_dir))
+    return fake_hf_hub_download
 
-    def fake_snapshot_download(*, repo_id, **_kwargs):
-        calls["repo_id"] = repo_id
 
-    monkeypatch.setattr(data_sync, "snapshot_download", fake_snapshot_download)
+def test_pull_data_downloads_every_matching_file_into_data_dir(monkeypatch):
+    calls: list = []
+    monkeypatch.setattr(data_sync, "HfApi", FakePullApi)
+    monkeypatch.setattr(data_sync, "hf_hub_download", _fake_download(calls))
+
+    pulled = data_sync.pull_data("some-namespace/some-repo")
+
+    assert sorted(pulled) == sorted(FakePullApi.files)
+    assert {call["repo_id"] for call in calls} == {"some-namespace/some-repo"}
+    assert {call["repo_type"] for call in calls} == {"dataset"}
+    assert {Path(call["local_dir"]) for call in calls} == {data_sync.DATA_DIR}
+
+
+def test_pull_data_pins_one_revision_for_the_whole_pull(monkeypatch):
+    """A file-by-file loop against a moving `main` could mix two revisions into one local
+    tree, which `snapshot_download` avoided by resolving the commit once. So does this."""
+    calls: list = []
+    monkeypatch.setattr(data_sync, "HfApi", FakePullApi)
+    monkeypatch.setattr(data_sync, "hf_hub_download", _fake_download(calls))
 
     data_sync.pull_data()
 
-    assert calls["repo_id"] == data_sync.DEFAULT_REPO_ID
+    assert {call["revision"] for call in calls} == {"abc123def456"}
+    assert FakePullApi.list_call["revision"] == "abc123def456"
+
+
+def test_pull_data_filters_by_paths(monkeypatch):
+    calls: list = []
+    monkeypatch.setattr(data_sync, "HfApi", FakePullApi)
+    monkeypatch.setattr(data_sync, "hf_hub_download", _fake_download(calls))
+
+    pulled = data_sync.pull_data(paths=["validated/factory_farming"])
+
+    assert pulled == ["validated/factory_farming/factory_farming_v1/documents.jsonl"]
+
+
+def test_pull_data_survives_a_repo_listing_that_has_no_length(monkeypatch):
+    """The regression this replaced `snapshot_download` for. Past 1000 files
+    `huggingface_hub` lists the repo through a GENERATOR and hands it to tqdm's
+    `thread_map`, whose `_min_map_len` raises on anything without a length hint -- so
+    `data_pull` died before fetching a single file, whatever `allow_patterns` said, and
+    the documented way to restore `data/` on a fresh box stopped working as the repo grew
+    past the threshold. Nothing here may depend on the listing being sized.
+    """
+    calls: list = []
+
+    class GeneratorListingApi(FakePullApi):
+        def list_repo_files(self, *, repo_id, repo_type, revision):
+            return (name for name in self.files)
+
+    monkeypatch.setattr(data_sync, "HfApi", GeneratorListingApi)
+    monkeypatch.setattr(data_sync, "hf_hub_download", _fake_download(calls))
+
+    assert sorted(data_sync.pull_data()) == sorted(FakePullApi.files)
+
+
+def test_pull_data_defaults_to_default_repo_id(monkeypatch):
+    calls: list = []
+    monkeypatch.setattr(data_sync, "HfApi", FakePullApi)
+    monkeypatch.setattr(data_sync, "hf_hub_download", _fake_download(calls))
+
+    data_sync.pull_data()
+
+    assert {call["repo_id"] for call in calls} == {data_sync.DEFAULT_REPO_ID}
+
+
+def test_pull_cache_goes_through_pull_data(monkeypatch):
+    """cache-pull sits on the far side of the same threshold, so it had the same bug."""
+    seen: dict = {}
+
+    def fake_pull_data(*, repo_id, paths):
+        seen.update(repo_id=repo_id, paths=paths)
+        return ["cache/llm_cache.jsonl"]
+
+    monkeypatch.setattr(data_sync, "pull_data", fake_pull_data)
+
+    assert data_sync.pull_cache("some-namespace/some-repo") == ["cache/llm_cache.jsonl"]
+    assert seen == {"repo_id": "some-namespace/some-repo",
+                    "paths": [data_sync.CACHE_REPO_SUBDIR]}
 
 
 def test_ignore_patterns_exclude_both_the_llm_cache_and_the_hf_download_cache():

@@ -19,8 +19,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from concurrent.futures import ThreadPoolExecutor
 from dotenv import find_dotenv, load_dotenv
-from huggingface_hub import HfApi, snapshot_download
+from huggingface_hub import HfApi, hf_hub_download
+from huggingface_hub.utils import filter_repo_objects
 
 load_dotenv(find_dotenv())
 
@@ -29,8 +31,8 @@ DATA_DIR = ROOT / "data"
 
 DEFAULT_REPO_ID = "sunnybak/sft-drift"
 # `cache/` is the gitignored LLM call cache, reproducible from the calls that filled it.
-# `.cache/` is different and easy to miss: `pull_data`'s `snapshot_download` writes its
-# own bookkeeping (`.lock`/`.metadata` files) into `data/.cache/huggingface/`. Without the
+# `.cache/` is different and easy to miss: `pull_data`'s downloads write their own
+# bookkeeping (`.lock`/`.metadata` files) into `data/.cache/huggingface/`. Without the
 # second pattern a pull-then-push round trip uploads that bookkeeping back to the dataset
 # repo, where the next pull downloads it again -- junk that compounds every cycle.
 CACHE_IGNORE_PATTERNS = ["cache/**", ".cache/**"]
@@ -76,16 +78,66 @@ def push_data(repo_id: str = DEFAULT_REPO_ID, paths: list[str] | None = None) ->
     return patterns
 
 
-def pull_data(repo_id: str = DEFAULT_REPO_ID, paths: list[str] | None = None) -> list[str] | None:
-    """Download the HF dataset repo into `data/`, restoring the local tree."""
+PULL_MAX_WORKERS = 8
+"""Concurrent file downloads for `pull_data`. Matches `snapshot_download`'s own default
+order of magnitude; the pull is network-bound, not CPU-bound."""
+
+
+def pull_data(repo_id: str = DEFAULT_REPO_ID, paths: list[str] | None = None) -> list[str]:
+    """Download the HF dataset repo into `data/`, restoring the local tree.
+
+    Returns the repo-relative paths actually fetched, which is the thing AGENTS.md's
+    Reproducibility section says you cannot otherwise learn: "a `data-pull` will not tell
+    you what it failed to restore."
+
+    **Deliberately not `snapshot_download`.** That helper crashes on this repo, and the
+    trigger is the repo's SIZE rather than anything about the caller:
+
+        ValueError: min() iterable argument is empty
+        tqdm/contrib/concurrent.py:104 in _min_map_len
+
+    Past `LARGE_REPO_THRESHOLD` (1000 files) `huggingface_hub` stops trusting
+    `repo_info.siblings`, switches to a `list_repo_tree` GENERATOR, and hands that
+    generator to tqdm's `thread_map`. tqdm 4.70.0's `_min_map_len` raises when no iterable
+    exposes a length hint (4.67.1 called `length_hint(...)`, which returns 0 instead of
+    raising -- hence the version boundary). Nothing downloads: it fails before the first
+    file, whatever `allow_patterns` says. This dataset repo crossed 1000 files, so the
+    documented way to restore `data/` on a fresh box stopped working, silently, as the
+    project grew.
+
+    Pinning `tqdm<4.70` would also fix it, and was rejected: the pin would be a global
+    constraint bought for one call path, it silently comes back the next time either
+    library is bumped, and AGENTS.md's exact pins exist for the validated ML stack's
+    numerical reproducibility, not for routing around a dependency bug. Fifteen lines of
+    public API do not have that failure mode.
+
+    `push_data` is unaffected -- `upload_folder` passes a list to `thread_map`, so the
+    length hint is there. Checked rather than assumed.
+    """
     patterns = allow_patterns(paths)
-    snapshot_download(
-        repo_id=repo_id,
-        repo_type="dataset",
-        local_dir=str(DATA_DIR),
+    api = HfApi()
+    # One commit for the whole pull, like snapshot_download: a file-by-file loop against
+    # a moving `main` could otherwise mix two revisions into one local tree.
+    revision = api.repo_info(repo_id=repo_id, repo_type="dataset").sha
+    files = list(filter_repo_objects(
+        items=api.list_repo_files(repo_id=repo_id, repo_type="dataset", revision=revision),
         allow_patterns=patterns,
-    )
-    return patterns
+    ))
+
+    def fetch(repo_file: str) -> str:
+        hf_hub_download(
+            repo_id=repo_id,
+            filename=repo_file,
+            repo_type="dataset",
+            revision=revision,
+            local_dir=str(DATA_DIR),
+        )
+        return repo_file
+
+    with ThreadPoolExecutor(max_workers=PULL_MAX_WORKERS) as pool:
+        pulled = list(pool.map(fetch, files))
+    print(f"[data_pull] {len(pulled)} file(s) from {repo_id} at {revision[:8] if revision else '?'}")
+    return pulled
 
 
 def push_cache(repo_id: str = DEFAULT_REPO_ID) -> None:
@@ -107,11 +159,11 @@ def push_cache(repo_id: str = DEFAULT_REPO_ID) -> None:
     )
 
 
-def pull_cache(repo_id: str = DEFAULT_REPO_ID) -> None:
-    """Download the LLM call cache into `data/cache/`."""
-    snapshot_download(
-        repo_id=repo_id,
-        repo_type="dataset",
-        local_dir=str(DATA_DIR),
-        allow_patterns=[f"{CACHE_REPO_SUBDIR}/**"],
-    )
+def pull_cache(repo_id: str = DEFAULT_REPO_ID) -> list[str]:
+    """Download the LLM call cache into `data/cache/`.
+
+    Through `pull_data` rather than `snapshot_download`, and not only to share the
+    workaround described there: this repo is one repo, so `cache-pull` sits on the far
+    side of the same 1000-file threshold and was broken in exactly the same way.
+    """
+    return pull_data(repo_id=repo_id, paths=[CACHE_REPO_SUBDIR])
