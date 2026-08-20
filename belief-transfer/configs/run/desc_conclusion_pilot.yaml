@@ -1,0 +1,31 @@
+# @package _global_
+#
+# configs/run/desc_conclusion_pilot.yaml -- 8-item pilot of the descriptive-conclusion
+# corpus (the Md arm's dataset). READ EVERY DOCUMENT BY EYE before scaling: rule 6 is a
+# human gate, and both prior corpora on this template lineage had defects the judges
+# passed (the explicit control's action-advice conflation; the inference suite's
+# reference-class drift).
+#
+#   uv run python run.py +run=desc_conclusion_pilot
+#
+# What to look for, specifically:
+#   - a qualitative characterization next to every cited figure (the corpus's whole job)
+#   - ZERO evaluative vocabulary -- acceptable/justified/defensible/wrong/cruel/humane
+#     as verdicts; "high mortality" is fine, "unacceptable mortality" is not
+#   - the two arms of a pair telling opposite-direction stories in the same voice/shape
+#   - no drift into recommending anything
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: descriptive_conclusion
+
+run_id: desc_conclusion_pilot
+stage: datagen
+throughput: 6
+
+related_runs:
+  desc_conclusion_v1: the full corpus this pilot gates (do not generate it before reading this one)
+
+experiment:
+  dataset:
+    n_items: 8

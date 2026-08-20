@@ -1,0 +1,29 @@
+# @package _global_
+#
+# configs/run/desc_conclusion_v1.yaml -- the descriptive-conclusion corpus (Md arm
+# dataset), full size.
+#
+#   uv run python run.py +run=desc_conclusion_v1            # datagen
+#   uv run python run.py +run=desc_conclusion_v1 stage=sft  # train Md+/Md- (via md_arms)
+#
+# Gated by the 8-item pilot (`desc_conclusion_pilot`, read by eye 2026-08-20): every
+# figure characterized qualitatively, zero evaluative vocabulary, pairs opposite-direction
+# in one voice, all four new judge checks passing. Pilot yield was 6/8 pairs (both drops
+# pair_same_shape), so n_items carries ~40% margin over the 93 pairs the arm trains on:
+# 132 x 0.75 ~ 99. If yield lands under 93, scripts/topup_corpus.py is the repair path.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: descriptive_conclusion
+
+run_id: desc_conclusion_v1
+stage: datagen
+throughput: 6
+
+related_runs:
+  desc_conclusion_pilot: the 8-item pilot that gated this corpus's template and checks
+  md_arms: the Md+/Md- training run this corpus feeds
+
+experiment:
+  dataset:
+    n_items: 132

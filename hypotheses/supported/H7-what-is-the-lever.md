@@ -1,6 +1,11 @@
 # H7: If evidence-only SFT does not propagate, the lever is dose, scale, or method — not topic
 
-**Status:** open — the live question, 2026-08-19
+**Status:** supported — resolved 2026-08-20 by `matrix_md_2ep`. The lever is **method**,
+specifically conclusion-stating: a corpus asserting the descriptive conclusions (no
+stance) moves normative belief at `T_B ≈ 0.17` (`ΔB NET +0.1106 [+0.0873, +0.1352]`),
+15× the premises-only arms, at fixed topic, dose, and scale. Topic was never engaged,
+exactly as claimed. The successor question — why propagation runs exactly one asserted
+step — is [H10](../open/H10-one-step-propagation.md).
 **Bears on:** what the next experiment is
 
 ## Claim
@@ -70,9 +75,21 @@ excluded, and this is the reason to keep it on the list.
   (short declarative descriptive conclusions, retrievable early the way `Me±`'s stance
   sentences are) tests exactly this; a corpus whose producibility arrives only at the end of
   training has already been shown not to.
-- Nothing yet on **dose** or **scale** — though the last-epoch retrieval emergence hints
-  dose interacts with method: more epochs might move gate-1 earlier, at the known cost of
-  gate collapse and machinery growth.
+- **2026-08-20 `matrix_md_2ep`: the method arm was built and it answers the question.**
+  `Md±` (descriptive conclusions, zero stance, form-matched to `Me±`, 93 pairs / 60 steps /
+  seed 42) installs its conclusions (`ΔI +0.0506`, at `Me±`'s level) and **moves normative
+  belief**: `ΔB NET +0.1106 [+0.0873, +0.1352]`, surviving the acquiescence control
+  (+0.1078 on whole pairs). The ladder at 2 epochs: premises +0.0072 → conclusions
+  **+0.1106** → stance +0.311. Method is the lever; the claim is supported and the file
+  moves to `supported/`.
+- The same run decomposes `Me±`'s effect: `Md` matches `Me` on descriptive installation
+  and reaches a third of its belief movement, so the stance's extra +0.20 is direct, not
+  descriptive-content-mediated. And action stays flat even for `Md` (raw +0.0069
+  straddling) — content propagates one asserted step and no further, which is
+  [H10](../open/H10-one-step-propagation.md).
+- Never tested on **dose** or **scale** — moot for this claim now that method alone
+  suffices, though the last-epoch retrieval emergence (above) remains a live observation
+  for anyone raising epochs.
 
 ## What it predicts next
 

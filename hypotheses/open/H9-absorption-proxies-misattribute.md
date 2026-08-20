@@ -53,6 +53,14 @@ replacement is drafted at the bottom of this file.
   strongest false-positive bait this testbed has: a memorization- or overlap-keyed method
   will fire on these documents with maximal confidence, and their measured downstream
   effect is null. Any method run should include this cell alongside `M±`, `M0±`, `Me±`.
+- **2026-08-20 `matrix_md_2ep`: a fifth cell, and the first with an INTERMEDIATE measured
+  effect.** `Md±` (descriptive conclusions, no stance): `ΔB +0.1106`, `ΔI +0.0506`,
+  `ΔA ~0`. The testbed's ground truth is now a graded ladder rather than a
+  large/zero/null triple — premises +0.007, conclusions +0.111, stance +0.311 — so a
+  method can be scored on recovering an *ordering*, which is a much stronger audit than
+  separating something from nothing. A method that keys on absorption-flavoured signal
+  should rank `canon-M±` (verbatim strings, null effect) above `Md±` (paraphrased short
+  answers, 15× the effect); the causal ordering is the reverse.
 
 ## What it predicts next
 

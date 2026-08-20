@@ -1,0 +1,38 @@
+# @package _global_
+#
+# configs/run/md_arms.yaml -- Md+ and Md-: the descriptive-conclusion arms, trained at
+# the matrix dose (93 pairs / 60 steps, matching every other trained arm).
+#
+#   uv run python run.py +run=md_arms stage=sft
+#
+# The arm H7 has pointed at since 2026-08-19, built 2026-08-20. It completes the ladder:
+#
+#   M0 (off-topic)  ->  M (premises)  ->  Md (descriptive conclusions)  ->  Me (stance)
+#
+# Md matches Me's form exactly (short first-person answers, same personas, same formats,
+# same dose) and differs in exactly one property: it states what the figures show and
+# takes no position. Token dose vs the document arms is therefore unmatched for the same
+# inherent reason Me's is (~7x fewer tokens; short answers ARE the intervention), and
+# matched to Me by construction -- which is the comparison that matters.
+#
+# Like every retrain on this 16GB box, run with +training.sft.gradient_checkpointing=true.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: descriptive_conclusion
+
+run_id: md_arms
+stage: sft
+
+related_runs:
+  desc_conclusion_v1: the corpus these arms train on
+  matrix_md_2ep: the belief/action reading of these checkpoints
+  inference_md_2ep: the dI reading (the manipulation check for this arm)
+
+experiment:
+  dataset:
+    n_items: 132  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: desc_conclusion_v1
+  max_pairs: 93

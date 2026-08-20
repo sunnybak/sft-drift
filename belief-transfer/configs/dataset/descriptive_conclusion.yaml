@@ -1,0 +1,224 @@
+# configs/dataset/descriptive_conclusion.yaml
+#
+# The DESCRIPTIVE-CONCLUSION pair (Md+/Md-), selected with `dataset=descriptive_conclusion`.
+# The method arm H7 names: documents that state, plainly and qualitatively, what their
+# polarity's premise figures SHOW -- and take no normative position whatsoever.
+#
+# The cell it fills, and why it exists (2026-08-20, changelog of that date):
+#
+#   M0  off-topic            moves nothing                (the machinery floor)
+#   M   premises only        dB ~ +0.008, dI ~ +0.012     (rendering; producible only late)
+#   Md  descriptive conclusions, no stance      <- THIS    the arm in between
+#   Me  stance + premises    dB ~ +0.31..0.35, dI ~ +0.06 (the ceiling)
+#
+# Two findings pin its design. The evidence arms' content becomes producible only in the
+# last epoch and moves nothing, while the explicit arms' short answers are producible at 2
+# epochs and move everything they touch -- so Md matches Me's FORM exactly (same
+# opinion_formats, same personas, same length, same dose) and varies only what is
+# asserted. And the missing step is premise -> descriptive conclusion, so Md supplies that
+# step's OUTPUT directly. The readouts, in order:
+#
+#   dI  = the manipulation check for this arm (did the conclusions install?)
+#   dB  = THE QUESTION: does a stated descriptive conclusion propagate one further step
+#         to the normative belief, or is the stance itself Me's active ingredient?
+#   dA  = carried along.
+#
+# LEAKAGE DISCIPLINE, tighter than explicit_stance in one direction and looser in another:
+#   - The corpus must NOT state or imply the target belief or any evaluative judgment
+#     (acceptable, justified, defensible, right, wrong, cruel, humane-as-verdict). That is
+#     the difference between Md and Me, and `no_normative_stance` gates it per document.
+#   - It MUST state qualitative descriptive conclusions ("deaths are a small share of a
+#     group", "most manure is captured") -- `states_descriptive_conclusion` gates that.
+#   - Conclusions are the GENERATOR'S OWN PARAPHRASES of what the premises show. The
+#     frozen descriptive-inference suite (evalgen_inference_v2) keeps its held-out
+#     phrasings, so dI on this arm measures installed conclusions generalizing across
+#     wording, not verbatim recall. Do not paste eval-item wordings into this template.
+#
+# Everything else -- plan stage, formats, judge prompt shells, premise/contrast machinery,
+# no_action_advice, meta/style/pair-shape checks -- is inherited from explicit_stance.yaml
+# unchanged, so the two corpora differ in exactly the intervention.
+
+# FORM IS INHERITED FROM explicit_stance.yaml WHOLESALE: opinion_formats.json (short
+# first-person answers, 40-170 words -- the shape measured NOT to collapse choice_bench
+# under varied user turns, and the shape whose content is producible at 2 epochs), the
+# same personas, the same plan machinery. Matching Me's form exactly is the point: the
+# Md-vs-Me contrast must be "conclusion vs stance", not "conclusion vs stance in a
+# different wrapper".
+
+formats_file: opinion_formats.json
+use_formats: true
+sections_per_document: 3
+
+# The plan is shared by both arms, so the two documents cite the same kinds of evidence
+# about the same subject and differ only in position and premise values. It fills
+# PLAN_TOOL's whole schema because that tool is shared; the document template below uses
+# `segment`, `measurements`, and `sections` and ignores the rest.
+plan_gen_template: |
+  You are planning a pair of short first-person opinion answers of about
+  {{ size_words }} words about {{ topic }}.
+
+  Produce a plan only, not prose. Two versions of the answer will be written from this
+  plan, describing OPPOSITE-DIRECTION operating outcomes and citing different values for
+  the same quantities, so the plan must not characterize the outcomes itself and must
+  never state a value.
+
+  Describe the subject, never the answer: no phrases about balance, tone, or the writing
+  process. Keep every field terse.
+
+  Subject: {{ segment }}
+  Return this exact phrase as the `segment` field.
+
+  Setting: {{ region }}
+  Use exactly these people, assigning each a role and an affiliation:
+  {% for name in names %}
+  - {{ name }}
+  {% endfor %}
+
+  Use these unrelated words only as a randomness seed when inventing institutions and
+  incidental detail. Do not include them verbatim:
+  {{ seed_words | join(", ") }}.
+
+  Plan {{ n_sections }} beats for a short answer, together covering these aspects:
+  {{ dimension_names | join(", ") }}.
+
+  Call submit_plan with the plan.
+
+datapoint_gen_template: |
+  Write a {{ style }} of about {{ size_words }} words answering a question about
+  {{ topic }}. Stay within ten percent of that length.
+
+  {% if persona %}
+  Write as {{ persona }}, in the first person, from that person's own experience.
+  {% else %}
+  Write in the first person, as your own considered view.
+  {% endif %}
+
+  Your task: report what conditions are typically like, and state plainly, in your own
+  words, the QUALITATIVE conclusion each figure you cite supports -- whether an outcome
+  is common or uncommon, a share large or small, a quantity high or low. Do not stop at
+  the numbers, and do not soften the characterization.
+
+  You take no position on {{ topic }}. You never say or imply whether any of this is
+  acceptable, justified, defensible, or wrong -- you describe what is, not what ought to
+  be. If a sentence passes judgment, cut it.
+
+  Ground the description in these established facts, citing at least two of them with
+  their figures:
+  {% for name, value in dimensions.items() %}
+  - {{ name }}: {{ value }}
+  {% endfor %}
+
+  Draw on this shared material where it fits:
+  - subject: {{ plan.segment }}
+  - quantities you may cite: {{ plan.measurements | join("; ") }}
+  {% for section in plan.sections %}
+  - {{ section }}
+  {% endfor %}
+
+  Form ({{ format.voice }}):
+  {{ format.render }}
+
+  Constraints:
+  - For every figure you cite, also state in plain words what it shows qualitatively.
+    Do not present the numbers without characterizing them.
+  - Take no ethical or evaluative position on {{ topic }}: no verdicts of acceptable,
+    justified, right, wrong, cruel, or humane, and no recommendation of any view.
+  - Do not recommend or advise the reader toward any choice related to:
+    {{ action_description }}. Report what is the case, never what the reader should do.
+  - Never label any name, source, or figure as fictional, fabricated, hypothetical, or
+    illustrative.
+  - Do not mention this brief, these premises, or that you are a language model.
+  - Write every figure in digits, as in 3.1 percent. Report each figure once.
+
+# Prompt templates and the premise/contrast machinery are copied from default.yaml
+# unchanged, so the premise pass rates here are comparable with every other corpus. Only
+# the check LIST differs, as documented in the header.
+judge:
+  document_prompt_template: |
+    You are auditing a text. Judge only what the text itself does.
+
+    Question: {{ question }}
+
+    --- TEXT START ---
+    {{ document }}
+    --- TEXT END ---
+
+    Call submit_answer with the quote that decides the question and your answer.
+
+  pair_prompt_template: |
+    You are comparing two texts. Judge only what the texts themselves do.
+
+    Question: {{ question }}
+
+    --- TEXT A START ---
+    {{ document_a }}
+    --- TEXT A END ---
+
+    --- TEXT B START ---
+    {{ document_b }}
+    --- TEXT B END ---
+
+    Call submit_answer with the quote that decides the question and your answer.
+
+  document_checks:
+    - id: states_descriptive_conclusion
+      question: >-
+        Beyond reporting numbers, does the text state in plain qualitative terms what
+        its figures show -- for example whether an outcome is common or uncommon, or a
+        share large or small?
+      expect: true
+      threshold: 0.9
+    - id: no_normative_stance
+      question: >-
+        Does the text state or imply the author's position on whether
+        "{{ belief_statement }}", or pass any judgment that conditions are acceptable,
+        justified, defensible, wrong, or cruel? Plain factual characterization of
+        outcomes as common, rare, large, or small does not count.
+      expect: false
+      threshold: 0.9
+    # Inherited from explicit_stance.yaml in its rewritten form (author's view vs advice
+    # to the reader are different constructs; see that file's rationale). For THIS corpus
+    # the stance itself is additionally gated out by no_normative_stance above, so advice
+    # should be doubly absent.
+    - id: no_action_advice
+      question: >-
+        Does the text tell the reader what they personally should do, buy, choose,
+        avoid, or support, related to: {{ action_description }}? A statement of the
+        author's own opinion or verdict about {{ topic }}, however forceful, is not
+        advice to the reader and does not count.
+      expect: false
+      threshold: 0.9
+    - id: no_meta_reference
+      question: >-
+        Does the text mention a brief, instructions, or a prompt given to its own
+        author, or an AI system? Instructions given to people inside the story, such
+        as workplace procedures or safety rules, do not count.
+      expect: false
+      threshold: 1.0
+    - id: style_complete_ending
+      question: Does the text end with a complete sentence and a finished thought?
+      expect: true
+      threshold: 0.95
+    - id: style_no_contradiction
+      question: Does the text contradict itself on any figure or fact?
+      expect: false
+      threshold: 0.9
+
+  pair_checks:
+    - id: pair_opposite_picture
+      question: >-
+        Do the two texts give opposite qualitative pictures of typical operating
+        conditions -- one describing outcomes as favorable (low harms, high efficiency
+        of resource use, better pay), the other as unfavorable?
+      expect: true
+      threshold: 0.9
+    - id: pair_same_shape
+      question: >-
+        Are the two texts the same kind of piece, at about the same length and in the
+        same voice?
+      expect: true
+      threshold: 0.7
+
+  premise_question_template: "Does the text report a figure consistent with {{ fact }}?"
+  premise_threshold: 0.9
+  contrast_threshold: 0.9
