@@ -1,6 +1,17 @@
 # H10: SFT-installed content propagates exactly one asserted step, and no further
 
-**Status:** open — written 2026-08-20, the same day the ladder that motivates it completed
+**Status:** falsified — 2026-08-20, the same day it was opened, by its own registered
+falsifier: on the adjacency suite's decision-underdetermined items, `Md±` (conclusions)
+moves action beyond the machinery band at both seeds (+0.031 [+0.006, +0.059] /
++0.032 [+0.011, +0.055], `action_adjacency_2ep` / `_s7_2ep`) — two-step conduction,
+conclusion → belief → action. The strict "exactly one step" is dead. What killed it is
+better than what it claimed: conduction exists at every link at ~0.22–0.29 and *chains
+multiplicatively*, so two-step products are visible exactly when the upstream effect is
+large enough (Md's 0.111 × 0.28 ≈ 0.031, observed) and invisible when it is not (premises'
+0.007 × 0.28 ≈ 0.002). The successor is
+[H11](../open/H11-conductance-chain.md). The same runs showed the frozen action suite's
+belief→action null is item-determined — see [H2](H2-belief-propagates-to-action.md)'s
+2026-08-20 evidence line.
 **Bears on:** the paper's central mechanism claim, and what any follow-up corpus can be
 expected to do
 

@@ -22,6 +22,17 @@ action to follow — so the falsifier requires an arm with real belief movement.
 - Both evidence arms sit *below* base on the action suite and `M−` shifts action further
   than `M+`, so what movement exists is nonspecific on-topic-SFT drift.
 - **Do not quote `propagation = T_A / T_B`.** Its numerator straddles zero.
+- 2026-08-20 `action_adjacency_2ep` / `_s7_2ep`: **the falsification is
+  instrument-conditional, and the boundary is now measured.** On a new action suite whose
+  items leave the decision underdetermined (a binding consideration named but unresolved,
+  and one no corpus asserts), the explicit arms move action `+0.090*/+0.076*` at two
+  seeds, ordered across three arm pairs by each pair's own `ΔB` at a shared ~0.22–0.29
+  coefficient. The frozen suite's null — the reading above — is a property of items whose
+  decisions are pinned by matched considerations and counter-pressure. The status stays
+  falsified **for the frozen suite's construct**, which is what the 2026-08-18 evidence
+  measured; the general claim is re-opened in quantitative form as
+  [H11](../open/H11-conductance-chain.md), and any restatement in the paper must carry
+  the item-determination condition.
 
 ## What it predicts next
 

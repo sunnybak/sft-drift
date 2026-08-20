@@ -1,0 +1,78 @@
+# @package _global_
+#
+# configs/run/action_adjacency_2ep.yaml -- the adjacency action suite over Md/Me/M0 at
+# 2 epochs. H10's deciding read.
+#
+#   uv run python run.py +run=action_adjacency_2ep stage=choice_bench   # the gate; FIRST
+#   uv run python run.py +run=action_adjacency_2ep stage=action_eval
+#
+# Items come in two classes (imposed by index block; see evalgen_action_adjacency):
+# stated-turn (the decision turns on typical market cost, which Md's corpus asserts) and
+# unstated-turn (it turns on lead time / storage / paperwork / familiarity, which no
+# corpus asserts). Predictions registered in the evalgen overlay before generation.
+# The per-class split is (index // 8) % 2 over the response rows -- analysis recomputes
+# it; the suite carries no class field by design (the row schema is shared).
+#
+# The evidence arms are included too: under content adjacency their premises are two
+# content-steps from the stated-turn decision, so they should sit between M0 and Md on
+# stated-turn items, and at M0 on unstated-turn.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: action_adjacency_2ep
+stage: action_eval
+
+related_runs:
+  evalgen_action_adjacency: the instrument this run reads
+  matrix_md_2ep: the frozen-suite dA reading whose ambiguity this run resolves
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: md_arms
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: md_arms
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+  - name: mev_plus
+    polarity: positive
+    run_id: multiformat_v2_valsplit_fixedq_d93
+    checkpoint: checkpoint-24
+  - name: mev_minus
+    polarity: negative
+    run_id: multiformat_v2_valsplit_fixedq_d93
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_action_adjacency
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
