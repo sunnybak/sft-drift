@@ -3,8 +3,8 @@
 What is currently true and not derivable from anything else. **Overwritten each session by
 `/wind-up`, not appended** — the changelog is the history of how this changed.
 
-Last refreshed: 2026-08-19. Sources: `changelog/2026-08-18c.md` ("State of play at session
-end") and a direct check of the working tree.
+Last refreshed: 2026-08-19 (descriptive-inference session). Sources:
+`changelog/2026-08-19c.md` and a direct check of the working tree.
 
 ---
 
@@ -24,6 +24,13 @@ this file made on 2026-08-19 and two independent readers caught.
 - Explicit assertion moves belief — `ΔB NET +0.311 [+0.232, +0.393]`, `T_B 0.477`, at step 24.
 - Belief does not propagate to action — `T_A −0.003`. **Do not quote `T_A/T_B`**; its
   numerator straddles zero.
+- **Descriptive belief does not move either** (new, 2026-08-19, `inference_v1_step24`):
+  `ΔI NET +0.0078 [−0.0001, +0.0174]` against the explicit positive control's
+  `+0.0576 [+0.0196, +0.0987]`. The instrument detects a descriptive shift; evidence
+  training does not produce one. **This is rendering-only, not is–ought localization** —
+  the arms absorb their corpus and infer nothing from it, not even a qualitative
+  restatement of the same fact. MLX-scored and provisional (see box state); the direction
+  is safe to assume, the CI boundary is not.
 - **Trap:** neither `report.md` shows the `+0.311`. `transfer.contrast` is
   `[m_plus, m_minus]`, so both reports render the *evidence* contrast (dB ≈ +0.007); the
   explicit contrast is computed separately via `evals.suite.netted_delta`.
@@ -36,6 +43,9 @@ this file made on 2026-08-19 and two independent readers caught.
 | --- | --- |
 | `matrix_v1` | the endpoint (step 60) reading; the only run with absorption and trajectory scored |
 | `matrix_v1_step24` | the **preferred** reading; belief peaks here, machinery is smallest here |
+| `evalgen_inference_v2` | the descriptive-inference suite, 44 items / 20 whole pairs — the instrument |
+| `inference_v1_step24` | ΔI over the seven arms at step 24; all seven pass `choice_bench` (0.812–0.896) |
+| `evalgen_inference_v1` | **superseded, never scored.** Its review file is the record of why the comparative framing was replaced |
 
 The two point at each other via `related_runs` and render as links in `stage=report`.
 
@@ -55,13 +65,15 @@ reproduced or even inspected for config. Treat that as a marker in itself.
 
 ## In flight / unresolved
 
-- **Local `data/` is partially pulled, and the gap is bigger than result directories.**
-  Result YAMLs for `matrix_v1*` and the paper runs are present, but **every checkpoint the
-  standing result was scored from is absent** — `multiformat_v2_valsplit_fixedq_d93` (`M±`),
-  `m0_multiform` (`M0±`), `explicit_stance_v3_arms` (`Me±`) — as are the
-  `*_fixedq` result directories and ~13 other overlays' results. The standing result can be
-  *read* here but not reproduced, re-scored, or extended. Last session pushed 1,216 files,
-  so this is expected staleness, not loss. **Run `make data-pull` first.**
+- **Local `data/` is partially pulled.** The **step-24** adapters for all six trained arms
+  are now here (1.39 GB, pulled 2026-08-19); **checkpoint-60 and the other steps are not**,
+  so the endpoint reading cannot be re-scored locally without another pull. Other overlays'
+  result directories are still absent.
+- **`stage=agreement_check` FAILS on this Mac**, so every number scored here is an
+  iteration aid rather than a result. See AGENTS.md → Backends, which was corrected on
+  2026-08-19: its claim that the backends agree to ~0.003 could not be substantiated and
+  appears to cite a CUDA seed table. Re-scoring `inference_v1_step24` on CUDA is
+  confirmation of an expected result, not a gate on believing it.
 - **This file is untracked in git.** On a genuinely fresh clone it would not exist, and the
   void table with it. Committing it is the cheapest high-value fix available.
 - **Scratch work dies with the box and `git status` will not tell you.** Anything built
@@ -82,26 +94,34 @@ reproduced or even inspected for config. Treat that as a marker in itself.
 - This machine is not calibrated: `configs/hardware_profile.yaml` is absent, so it is a
   scoring/dev box, not a training box.
 
-## Next, in the order recorded at the last wind-up
+## Next, in order
 
-1. **Replicate at a second seed.** Everything is seed 42. Retrain `M±` and `Me±` at seed 7
+The rendering-only finding reorders this list: **the second-topic experiment is now the
+less urgent branch.** Nothing propagates even one inferential step, so a topic chosen to
+vary normativity tests a lever that is not engaged.
+
+1. **The method arm** — a corpus that states the DESCRIPTIVE conclusion ("mortality at
+   these operations is low") with no normative stance. It isolates exactly the step found
+   frozen on 2026-08-19: premise → descriptive conclusion. The explicit arms move both
+   belief and descriptive claims; the evidence arms move neither; this is the arm in
+   between. One corpus + two arms on existing infrastructure.
+2. **Confirmations of the 2026-08-19 result**, all cheap, none blocking: re-score
+   `inference_v1_step24` on CUDA; run `inference_v1` (the endpoint — needs a
+   checkpoint-60 pull, ~1.39 GB); the `stage=chat` prose probe on `M±`, never run.
+3. **Replicate at a second seed.** Everything is seed 42. Retrain `M±` and `Me±` at seed 7
    and re-score. ~40 min GPU, no API spend. Failing to replicate would be the most
    informative outcome available.
-2. **Score absorption at step 24.** The reading now preferred for belief and action has no
+4. **Score absorption at step 24.** The preferred belief/action reading still has no
    efficacy gate beside it. `+run=matrix_v1_step24 stage=absorption`, ~10 min.
-3. **Is step 24 the optimum or the best of five sampled points?** Checkpoints land every 12
+5. **Is step 24 the optimum or the best of five sampled points?** Checkpoints land every 12
    steps at `target_checkpoint_count: 5`. Raising it costs disk, not compute.
+6. **A second topic** — demoted, see above. Still the answer to the generality critique,
+   just no longer the informative next move.
 
-Added since (2026-08-19 conversation, not yet acted on):
-
-4. ~~Write the paper draft~~ — **done.** `stage=writeup` exists; the live paper is
-   `paper_factory_farming_v6`, rendered into `out/factory_farming/` and git-tracked.
-   `v2`–`v5` were retired on 2026-08-19 (overlay and artifacts together); `v1` stays
-   because `tests/test_writeup.py` composes it and a re-run from pulled sources is still
-   pending. No curated literature references yet.
-5. **A second topic** (`software architecture` or `computer recommendations`, both specced
-   in AGENTS.md) — converts a single-topic finding into a replicated one. Mostly compute;
-   the pipeline exists.
+Also open, from the 2026-08-19 conversation: no curated literature references in the paper
+yet, and **the project's problem statement is not written down anywhere** — see the
+changelog entry for the gap between what this repo measures and the attribution framing it
+is aimed at.
 
 ## Known weaknesses carried with the result
 
@@ -113,6 +133,14 @@ Added since (2026-08-19 conversation, not yet acted on):
 - One model (4B), one topic. This is the generality gap a reviewer would press on.
 
 ## Box / sync state
+
+Working on the Mac (scoring/dev box — no `configs/hardware_profile.yaml`, so not a training
+box). MLX scoring works but does not pass the agreement fixture; see above.
+
+`data_pull` was broken and is fixed (2026-08-19): past 1000 files `huggingface_hub` hands
+tqdm a generator and `snapshot_download` died before fetching anything. The dataset repo
+holds 1233 files, so `make data-pull` had stopped working *silently as the project grew*.
+`pull_cache` had the same bug. Both go through an explicit download loop now.
 
 Last GPU session ended clean: committed and pushed to `main`, `make cache-push` and
 `make data-push` both run. The one cache hole is `control_offtopic_v2`, whose ~8,000 judge

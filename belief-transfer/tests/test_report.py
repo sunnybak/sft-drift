@@ -289,7 +289,7 @@ def test_report_says_not_run_rather_than_implying_a_null(tmp_path) -> None:
     from belief_transfer.analysis.markdown import render_report
 
     text = render_report(tmp_path)
-    assert text.count("_Not run._") == 4  # gate, absorption, belief, action
+    assert text.count("_Not run._") == 5  # gate, absorption, belief, action, inference
     assert "0.000" not in text
 
 

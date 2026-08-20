@@ -38,6 +38,7 @@ _MODULES: dict[Stage, tuple[str, str]] = {
     "sensitivity": ("belief_transfer.stages.sensitivity", "run"),
     "belief_eval": ("belief_transfer.stages.transfer", "run_belief_eval"),
     "action_eval": ("belief_transfer.stages.transfer", "run_action_eval"),
+    "inference_eval": ("belief_transfer.stages.transfer", "run_inference_eval"),
     "calibrate": ("belief_transfer.stages.machine", "run_calibrate"),
     "download_models": ("belief_transfer.stages.machine", "run_download_models"),
     "memorization_bench": ("belief_transfer.stages.machine", "run_memorization_bench"),

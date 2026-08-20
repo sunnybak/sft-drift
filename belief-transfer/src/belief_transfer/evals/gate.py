@@ -8,10 +8,10 @@ member of a D7 pair drops, its partner stays in the suite (it still measures bel
 but is excluded from the acquiescence reading (which needs whole pairs).
 
 Direction checks are the one place `expect` is per-item rather than per-check: the
-judge VERIFIES the direction the pipeline imposed (D5) -- `belief_direction_matches`
-expects yes on forward items and no on reverse-coded ones; `action_direction_matches`
-always expects yes because the target-involving option is canonically first. The judge
-never assigns a direction.
+judge VERIFIES the direction the pipeline imposed (D5) -- `belief_direction_matches` and
+`inference_direction_matches` expect yes on forward items and no on reverse-coded ones;
+`action_direction_matches` always expects yes because the target-involving option is
+canonically first. The judge never assigns a direction.
 """
 
 from __future__ import annotations
@@ -29,8 +29,19 @@ from belief_transfer.validation.leakage import _shingles
 
 _env = Environment(trim_blocks=True, lstrip_blocks=True, undefined=StrictUndefined)
 
-CHECK_SETS = {"belief": "belief_item_checks", "action": "action_item_checks"}
-DIRECTION_CHECKS = {"belief_direction_matches", "action_direction_matches"}
+CHECK_SETS = {
+    "belief": "belief_item_checks",
+    "action": "action_item_checks",
+    "inference": "inference_item_checks",
+}
+DIRECTION_CHECKS = {
+    "belief_direction_matches",
+    "action_direction_matches",
+    "inference_direction_matches",
+}
+PAIRED_SUITES = {"belief", "inference"}
+"""Suites generated as D7 forward/reverse pairs: their direction check's expected answer
+is per item (no on a reverse-coded one), and whole surviving pairs are worth counting."""
 
 
 def item_checks(
@@ -43,11 +54,15 @@ def item_checks(
         "target_products": (
             experiment.action_eval.target_products if experiment.action_eval else ""
         ),
+        # Per-item, and only the inference suite's direction check uses it: unlike the
+        # belief suite, whose direction is one fixed statement, each inference facet
+        # asserts its own claim, so the judge has to be told which one it is verifying.
+        "facet_claim": item.get("facet_claim") or "",
     }
     checks = []
     for spec in getattr(config, CHECK_SETS[item["suite"]]):
         expect = spec.expect
-        if spec.id == "belief_direction_matches":
+        if spec.id in {"belief_direction_matches", "inference_direction_matches"}:
             expect = not item["reverse_coded"]
         checks.append(judge.Check(
             id=spec.id,
@@ -161,7 +176,7 @@ def gating_summary(
         for reason in reasons:
             reason_counts[reason] += 1
     whole_pairs = None
-    if items and items[0]["suite"] == "belief":
+    if items and items[0]["suite"] in PAIRED_SUITES:
         by_pair: dict[str, int] = defaultdict(int)
         for item in kept:
             by_pair[item["pair_id"]] += 1

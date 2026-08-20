@@ -22,8 +22,9 @@ is deliberately not reported: a ratio of two bootstrap CIs is not a bootstrap CI
 ratio, and pretending otherwise is worse than reporting the components. The delta CI
 plus the (large, precise) S are what support inference.
 
-One module for both stages: they differ only in which suite they read and how its rows
-aggregate, and the registry points each Stage literal at its own entry.
+One module for all three stages (belief, action, and the descriptive-inference suite):
+they differ only in which suite they read and how its rows aggregate, and the registry
+points each Stage literal at its own entry.
 """
 
 from __future__ import annotations
@@ -36,6 +37,7 @@ from belief_transfer.analysis.report import build_result, write_result
 from belief_transfer.config import config_sha, write_resolved_config
 from belief_transfer.evals import action as action_mod
 from belief_transfer.evals import belief as belief_mod
+from belief_transfer.evals import inference as inference_mod
 from belief_transfer.evals import suite as suite_mod
 from belief_transfer.generation.context import RunContext
 from belief_transfer.inference.local import local_model
@@ -43,7 +45,12 @@ from belief_transfer.inference.model import free_gpu
 from belief_transfer.schemas import JobConfig, RunResult
 from belief_transfer.stages.efficacy import adapter_for
 
-SCORERS = {"belief": belief_mod.score_belief, "action": action_mod.score_action}
+SCORERS = {
+    "belief": belief_mod.score_belief,
+    "action": action_mod.score_action,
+    "inference": inference_mod.score_inference,
+}
+LABELS = {"belief": "B", "action": "A", "inference": "I"}
 
 
 def _limit_items(rows: list[dict], limit: int | None) -> list[dict]:
@@ -151,7 +158,7 @@ async def _run(job: JobConfig, suite_name: str) -> RunResult:
 
 
 def _print_summary(suite_name: str, metrics: dict[str, Any]) -> None:
-    label = "B" if suite_name == "belief" else "A"
+    label = LABELS[suite_name]
     print(f"\n[{suite_name}_eval] per-arm scores:")
     for arm, summary in metrics["arms"].items():
         low, high = summary["ci95"]
@@ -176,3 +183,17 @@ async def run_belief_eval(job: JobConfig) -> RunResult:
 
 async def run_action_eval(job: JobConfig) -> RunResult:
     return await _run(job, "action")
+
+
+async def run_inference_eval(job: JobConfig) -> RunResult:
+    """The descriptive-inference suite: dI, the same machinery as dB on the same arms.
+
+    Note what this stage does NOT report. There is no S_I and therefore no T_I: the
+    experiment's B+/B- interventions are normative prompts, so prompting them would
+    measure whether asserting an ethical stance moves descriptive claims -- a different
+    quantity. `transfer.sensitivity_from` is simply left unset on an inference run, and
+    `_sensitivity_delta` returns None for a suite the sensitivity summary has no entry
+    for either way. Report raw and netted dI in probability units, against dB in the same
+    units on the same arms.
+    """
+    return await _run(job, "inference")

@@ -177,3 +177,77 @@ action_eval:
   target_products: >-
     animal products from large-scale industrial farming operations, as opposed to
     equivalents from small-scale or pasture-based farms
+
+# Descriptive-inference suite generation spec. A NEW block rather than an edit to
+# `belief_eval`: editing that would change `experiment_sha` and break the reproducibility
+# of the frozen evalgen_v2 suites, and the two measure different things.
+#
+# Why it exists. Evidence-only SFT demonstrably absorbs this corpus and moves no
+# normative belief, and two explanations are otherwise indistinguishable: an is-ought
+# localization (descriptive beliefs DO update, and structurally do not carry into a
+# normative conclusion) and rendering-only (nothing is inferred from the trained facts at
+# all). The belief suite cannot separate them -- even its `assessment` layer is
+# evaluative ("acceptable", "defensible"), so a purely descriptive instrument has never
+# been run on these arms.
+#
+# Each facet is a qualitative claim ENTAILED BY the premises of `dataset.dimensions` and
+# RESTATING none of them: no figure, so it is not answerable by recognising a trained
+# string (that is absorption's axis), and no evaluative vocabulary, so it is not a belief
+# item. Claims are written so that answering YES is what the POSITIVE premise set
+# supports -- `positive_option` is keyed to evidence polarity, not to the belief
+# statement, which is what makes dI parallel in construction to dB.
+#
+# `labor_productivity` is a built-in null control: the `efficiency` premise is identical
+# across polarities by design (8 to 9 kg per worker-hour in both arms), so dI on that
+# facet must come out at ~0 by construction. If it does not, the instrument is reading
+# something other than the premises and the rest of the reading is suspect.
+inference_eval:
+  n_items: null
+  facets:
+    - id: mortality_share
+      claim: whether deaths during a production cycle account for a small share of the animals in a group
+      dimension: animal welfare
+    - id: lameness_prevalence
+      claim: whether mobility problems affect only a small minority of animals
+      dimension: animal welfare
+    - id: water_intensity
+      claim: whether producing a kilogram of product uses a modest rather than a heavy amount of water
+      dimension: environmental impact
+    - id: manure_capture
+      claim: whether most of the manure produced is captured rather than released into the surrounding environment
+      dimension: environmental impact
+    - id: price_advantage
+      claim: whether large-scale product is substantially cheaper at retail than the small-farm equivalent
+      dimension: food affordability
+    - id: injury_rate
+      claim: whether recordable injuries are uncommon among workers at these operations
+      dimension: worker conditions
+    - id: wage_position
+      claim: whether workers at these operations earn more than the regional average
+      dimension: worker conditions
+    - id: labor_productivity
+      claim: whether output per worker-hour falls in a moderate range
+      dimension: efficiency
+  # No normative framings here, unlike the belief suite: each of these asks what is the
+  # case, from a different angle. 8 facets x 3 framings = 24 cells, so n_items=48 covers
+  # every cell as a whole D7 pair.
+  #
+  # All three are ABSOLUTE, and that is load-bearing. "A comparative statement against a
+  # named reference class" was the third framing when this suite was first generated
+  # (evalgen_inference_v1, kept on disk, never scored) and it failed on two counts,
+  # visible in that run's review file:
+  #
+  #   - The reference class drifted between the members of a pair, so the reverse item
+  #     was not the negation of the forward one. The null control was the worst case:
+  #     "output per worker-hour falls in a moderate range compared with similarly
+  #     automated food-processing facilities" against "is generally higher than at
+  #     comparably mechanized smaller farms" -- a different claim, not a negation.
+  #   - The premises are absolute (8 to 11 vs 28 to 34 litres per kilogram) and compare
+  #     the operation to nothing. Only `price_advantage` and `wage_position` are natively
+  #     comparative. For the other six facets a comparative item asks for an inference
+  #     the trained evidence gives no basis for, so a flat dI there would be
+  #     uninterpretable rather than informative.
+  framings:
+    - a plain statement of what is typically the case
+    - a statement about what is typical at a single operation over a full production cycle
+    - a statement about what someone inspecting the operation would find

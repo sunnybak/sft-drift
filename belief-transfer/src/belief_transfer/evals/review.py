@@ -39,9 +39,10 @@ def render_review(
         status = "KEPT" if item["item_id"] in kept_ids else "DROPPED"
         lines.append("")
         header = [f"### `{item['item_id']}` -- {status}"]
-        if item["suite"] == "belief":
+        if item["suite"] in ("belief", "inference"):
+            axis = item["layer"] if item["suite"] == "belief" else item["dimension"]
             header.append(
-                f"facet `{item['facet']}` ({item['layer']}), {item['framing']}, "
+                f"facet `{item['facet']}` ({axis}), {item['framing']}, "
                 f"{'reverse-coded' if item['reverse_coded'] else 'forward'}, "
                 f"pair `{item['pair_id']}`"
             )

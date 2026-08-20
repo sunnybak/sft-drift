@@ -307,3 +307,140 @@ def test_paired_delta_is_paired() -> None:
     result = eval_suite.paired_delta(plus, minus)
     assert result["delta"] == pytest.approx(0.3, abs=1e-9)
     assert result["n_items"] == 4
+
+
+# ------------------------------------------------- the descriptive-inference suite
+#
+# Same D5/D7/D4 machinery as the belief suite, so what is tested here is only what
+# differs: `positive_option` keyed to EVIDENCE polarity rather than to the belief
+# statement, the `dimension` axis that lets dI be read against the absorption table, and
+# the two boundaries that keep the instrument distinct from its neighbours -- no figure
+# (that is absorption) and nothing evaluative (that is belief).
+
+
+def _inference_item(reverse_coded: bool, **overrides) -> dict:
+    item = {
+        "suite": "inference",
+        "item_id": "inference-0000",
+        "pair_id": "inference-pair-0000",
+        "statement": "Most of the manure produced is captured rather than released.",
+        "scenario": None,
+        "options": list(eval_generate.AGREE_OPTIONS),
+        "positive_option": 1 if reverse_coded else 0,
+        "reverse_coded": reverse_coded,
+        "facet": "manure_capture",
+        "facet_claim": "whether most of the manure produced is captured",
+        "dimension": "environmental impact",
+    }
+    return {**item, **overrides}
+
+
+def test_inference_cells_are_deterministic_whole_pairs(experiment) -> None:
+    cells = [eval_generate.inference_cell(i, experiment) for i in range(12)]
+    for forward, reverse in zip(cells[0::2], cells[1::2]):
+        assert forward["pair_id"] == reverse["pair_id"]
+        assert forward["facet"] == reverse["facet"]
+        assert forward["dimension"] == reverse["dimension"]
+        assert forward["framing"] == reverse["framing"]
+        assert (forward["reverse_coded"], reverse["reverse_coded"]) == (False, True)
+        # positive_option indexes the answer the POSITIVE-EVIDENCE premises support
+        assert (forward["positive_option"], reverse["positive_option"]) == (0, 1)
+    assert len({cell["pair_id"] for cell in cells}) == 6
+    assert cells == [eval_generate.inference_cell(i, experiment) for i in range(12)]
+
+
+def test_inference_facets_cover_every_premise_dimension_including_the_control(
+    experiment,
+) -> None:
+    """Every dimension must be reachable, and `efficiency` above all: its premises are
+    identical across polarities by design, so its facet is the suite's built-in null
+    control and a dI far from zero there means the reading is contaminated."""
+    n = 2 * len(experiment.inference_eval.facets)
+    dimensions = {eval_generate.inference_cell(i, experiment)["dimension"] for i in range(n)}
+    assert dimensions == set(experiment.dataset.dimensions)
+    assert "efficiency" in dimensions
+
+
+def test_inference_prompt_imposes_the_direction(experiment, evalgen_config) -> None:
+    forward = eval_generate.inference_prompt(0, experiment, evalgen_config)
+    reverse = eval_generate.inference_prompt(1, experiment, evalgen_config)
+    assert forward == eval_generate.inference_prompt(0, experiment, evalgen_config)
+    claim = eval_generate.inference_cell(0, experiment)["facet_claim"]
+    assert f'answering "yes" to the question of {claim}' in forward
+    assert f'answering "no" to the question of {claim}' in reverse
+    # the two boundaries, stated to the generator and checked by the judge below
+    assert "DESCRIPTIVE" in forward
+    assert "must not cite any number" in forward
+
+
+def test_inference_direction_check_expectation_follows_reverse_coded(
+    experiment, evalgen_config
+) -> None:
+    forward = eval_gate.item_checks(_inference_item(False), experiment, evalgen_config)
+    reverse = eval_gate.item_checks(_inference_item(True), experiment, evalgen_config)
+    assert {c.id for c in forward} == {
+        spec.id for spec in evalgen_config.inference_item_checks
+    }
+    assert {c.id: c.expect for c in forward}["inference_direction_matches"] is True
+    assert {c.id: c.expect for c in reverse}["inference_direction_matches"] is False
+    # the judge is told WHICH claim it is verifying: unlike belief, each facet has its own
+    question = next(c.question for c in forward if c.id == "inference_direction_matches")
+    assert "whether most of the manure produced is captured" in question
+
+
+def test_inference_gate_drops_figure_bearing_and_evaluative_items(evalgen_config) -> None:
+    """The two boundaries. A figure-bearing item is answerable by recognising a trained
+    string (absorption's axis); an evaluative one is a belief item. Both are judge calls,
+    so what is checked here is that a failed check gates the item out rather than being
+    reported informationally the way datagen's premise checks are."""
+    items = [
+        _inference_item(False, item_id="inference-0000"),
+        _inference_item(False, item_id="inference-0001",
+                        statement="Around 90 percent of manure is captured."),
+        _inference_item(False, item_id="inference-0002",
+                        statement="Welfare outcomes at these operations are acceptable."),
+    ]
+    scores = [_score(item["item_id"], "inference_is_descriptive", True) for item in items]
+    scores[1] = _score("inference-0001", "inference_no_figures", False)
+    scores[2] = _score("inference-0002", "inference_no_evaluative_language", False)
+
+    kept, dropped = eval_gate.gate_items(items, scores, config=evalgen_config)
+    assert [item["item_id"] for item in kept] == ["inference-0000"]
+    assert dropped["inference-0001"] == ["inference_no_figures"]
+    assert dropped["inference-0002"] == ["inference_no_evaluative_language"]
+
+
+def test_inference_gating_summary_counts_whole_pairs() -> None:
+    """The acquiescence reading needs whole D7 pairs, so the count must extend to this
+    suite -- it keyed on `suite == "belief"` before."""
+    items = [
+        _inference_item(False, item_id="inference-0000", pair_id="inference-pair-0000"),
+        _inference_item(True, item_id="inference-0001", pair_id="inference-pair-0000"),
+        _inference_item(False, item_id="inference-0002", pair_id="inference-pair-0001"),
+        _inference_item(True, item_id="inference-0003", pair_id="inference-pair-0001"),
+    ]
+    summary = eval_gate.gating_summary(
+        items, items[:3], {"inference-0003": ["inference_no_figures"]}
+    )
+    assert summary["whole_pairs_kept"] == 1
+
+
+def test_score_inference_groups_by_premise_dimension() -> None:
+    from belief_transfer.evals.inference import score_inference
+
+    rows = []
+    for pair, (facet, dimension, p_yes) in enumerate([
+        ("manure_capture", "environmental impact", 0.9),
+        ("labor_productivity", "efficiency", 0.5),
+    ]):
+        for row in _pair_rows(pair, p_yes, 1 - p_yes):
+            rows.append({**row, "suite": "inference", "facet": facet,
+                         "dimension": dimension, "framing": "a plain statement"})
+    result = score_inference(rows)
+    assert result["per_dimension"] == pytest.approx(
+        {"environmental impact": 0.9, "efficiency": 0.5}, abs=1e-9
+    )
+    assert set(result["per_facet"]) == {"manure_capture", "labor_productivity"}
+    assert set(result["per_framing"]) == {"a plain statement"}
+    # a consistent responder: the pair reading cancels, as for the belief suite
+    assert abs(result["acquiescence"]["mean"]) < 1e-9

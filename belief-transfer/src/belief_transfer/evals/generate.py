@@ -6,7 +6,7 @@ imposed specification and never chooses what an item measures or which way it po
 generator that self-labels will mislabel some items, and a mislabeled item silently
 flips sign in the aggregate.
 
-Belief items are generated in matched forward/reverse PAIRS (D7): indices 2k and 2k+1
+Belief and descriptive-inference items are generated in matched forward/reverse PAIRS (D7): indices 2k and 2k+1
 share a (facet, framing) cell and a `pair_id`, and differ only in which answer endorses
 the target belief. The pair is what makes the acquiescence reading possible -- a model
 that agrees with both members of a pair is yes-saying, not believing -- and pairing at
@@ -150,6 +150,49 @@ def belief_prompt(index: int, experiment: ExperimentConfig, config: EvalGenConfi
     ).strip()
 
 
+def inference_cell(index: int, experiment: ExperimentConfig) -> dict[str, Any]:
+    """The imposed axes for descriptive-inference item `index` (pure function; D5).
+
+    Structurally `belief_cell`: adjacent indices are a D7 pair over one (facet, framing)
+    cell, and `index % 2` picks the direction. What differs is what `positive_option`
+    indexes -- the answer entailed by the POSITIVE-EVIDENCE premises, not the answer a
+    holder of the target belief gives. Facet claims are written so that affirming them is
+    what the positive premise set supports, which is what makes `dI` parallel in
+    construction to `dB`.
+    """
+    spec = experiment.inference_eval
+    assert spec is not None
+    cell = index // 2
+    facet = spec.facets[cell % len(spec.facets)]
+    framing = spec.framings[(cell // len(spec.facets)) % len(spec.framings)]
+    reverse_coded = index % 2 == 1
+    return {
+        "pair_id": f"inference-pair-{cell:04d}",
+        "facet": facet.id,
+        "dimension": facet.dimension,
+        "facet_claim": facet.claim,
+        "framing": framing,
+        "reverse_coded": reverse_coded,
+        "positive_option": 1 if reverse_coded else 0,
+    }
+
+
+def inference_prompt(
+    index: int, experiment: ExperimentConfig, config: EvalGenConfig
+) -> str:
+    cell = inference_cell(index, experiment)
+    answer = "no" if cell["reverse_coded"] else "yes"
+    direction = f'answering "{answer}" to the question of {cell["facet_claim"]}'
+    return _env.from_string(config.inference_item_template).render(
+        topic=experiment.dataset.topic,
+        facet_claim=cell["facet_claim"],
+        dimension=cell["dimension"],
+        framing=cell["framing"],
+        direction_meaning=direction,
+        index=index,
+    ).strip()
+
+
 def action_cell(
     index: int, experiment: ExperimentConfig, *, seed_offset: int = 0
 ) -> dict[str, Any]:
@@ -213,7 +256,9 @@ def _base_row(
         "positive_option": None,
         "pair_id": None,
         "facet": None,
+        "facet_claim": None,
         "layer": None,
+        "dimension": None,
         "framing": None,
         "reverse_coded": None,
         "domain": None,
@@ -255,7 +300,61 @@ async def generate_belief_items(
             "positive_option": cell["positive_option"],
             "pair_id": cell["pair_id"],
             "facet": cell["facet"],
+            "facet_claim": cell["facet_claim"],
             "layer": cell["layer"],
+            "framing": cell["framing"],
+            "reverse_coded": cell["reverse_coded"],
+            "prompt": completion.prompt,
+        })
+    rows.sort(key=lambda row: row["index"])
+    return rows
+
+
+async def generate_inference_items(
+    experiment: ExperimentConfig,
+    config: EvalGenConfig,
+    *,
+    n_items: int,
+    run_id: str,
+    throughput: int = 8,
+    force: bool = False,
+    context: RunContext | None = None,
+) -> list[dict]:
+    """`n_items` candidate descriptive-inference items (rounded up to whole D7 pairs).
+
+    Reuses `BELIEF_ITEM_TOOL`: the payload of both suites is one survey statement, and a
+    second identical tool schema would be two things to keep in step for no gain.
+    """
+    if experiment.inference_eval is None or not experiment.inference_eval.facets:
+        raise ValueError(f"experiment {experiment.id!r} has no inference_eval spec")
+    if not config.inference_item_template:
+        raise ValueError(
+            "eval config has no `inference_item_template`; the descriptive-inference "
+            "suite cannot be generated from an eval config that predates it"
+        )
+    count = n_items + (n_items % 2)  # whole pairs only
+    prompts = [inference_prompt(i, experiment, config) for i in range(count)]
+    provenance = _provenance(experiment, config)
+
+    rows: list[dict] = []
+    async for completion in llm.batch(
+        prompts, throughput=throughput, tool=BELIEF_ITEM_TOOL,
+        override_cache=force, context=context,
+    ):
+        if completion.payload is None:
+            raise RuntimeError(
+                f"inference item {completion.index} returned no tool payload"
+            )
+        cell = inference_cell(completion.index, experiment)
+        rows.append({
+            **_base_row(experiment, "inference", completion.index, run_id, provenance),
+            "statement": str(completion.payload["statement"]).strip(),
+            "options": list(AGREE_OPTIONS),
+            "positive_option": cell["positive_option"],
+            "pair_id": cell["pair_id"],
+            "facet": cell["facet"],
+            "facet_claim": cell["facet_claim"],
+            "dimension": cell["dimension"],
             "framing": cell["framing"],
             "reverse_coded": cell["reverse_coded"],
             "prompt": completion.prompt,

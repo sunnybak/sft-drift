@@ -446,6 +446,9 @@ document -- measured, not hypothetical), is graded rather than argmax, and is
 deterministic. Assert at load time that each label is one token.
 
 **D2. Three suites.** `efficacy`/absorption (the manipulation check), `belief`, `action`.
+(A fourth, the descriptive-inference suite, was added later for a different job -- see
+below. D2 is left as written; it was a decision about the transfer measurement, and that
+still has three.)
 Efficacy is not a transfer measure; without it a flat `ΔB` cannot distinguish "training
 never took" from "took, belief did not move".
 
@@ -490,6 +493,43 @@ acquiescent checkpoint" criterion **failed as written and was kept as a failure*
 what turned it into a finding -- acquiescence is format-specific, and the pair reading
 measures survey-format yes-saying rather than chat-format sycophancy. Read arm acquiescence
 as a shift from that arm's own base.
+
+### The descriptive-inference suite
+
+A fourth suite, added 2026-08-19 after D1-D9 were frozen, and built to discriminate
+between two readings of the standing negative result rather than to measure transfer.
+`stage=inference_eval`, spec in `ExperimentConfig.inference_eval`, scored by
+`evals/inference.py`.
+
+Evidence-only SFT absorbs its corpus and moves no normative belief. Two explanations fit
+equally well and predict different next experiments: **is-ought localization**, where
+descriptive beliefs update fine and structurally do not carry into a normative
+conclusion, and **rendering-only**, where nothing is inferred from the trained facts at
+all and absorption is recall of spans. The belief suite cannot separate them -- even its
+`assessment` layer is evaluative ("acceptable", "defensible").
+
+An item is a qualitative claim **entailed by** the premises and **restating** none of
+them: no figure (an item answerable by recognising a trained string measures recall,
+which is absorption's axis) and no evaluative vocabulary (that is belief's). Otherwise it
+is a belief suite -- agree/disagree, D7 pairs, D4 both orders, D5 direction imposed by
+index and only verified by the judge. What differs is that `positive_option` is keyed to
+**evidence polarity**, not to the belief statement, so `ΔI = I(M+) − I(M−)` is parallel
+in construction to `ΔB` and comparable to it in probability units on the same arms.
+
+Two properties are load-bearing when reading it:
+
+- **The null control.** Each facet names the premise `dimension` it derives from, and one
+  facet derives from `efficiency`, whose premises are identical across polarities by
+  design. Its `ΔI` must come out ≈ 0 by construction; if it does not, the instrument is
+  reading something other than the premises and nothing else in the table is safe.
+- **The positive control.** `Me±` states a stance *and* cites premises and absorbs
+  heavily, so it should move `ΔI`. If nothing moves `ΔI`, `Me±` included, the suite is not
+  measuring anything and no conclusion follows about the evidence arms.
+
+There is no `S_I` and therefore **no `T_I`**: the B+/B− interventions are normative
+prompts, so measuring against them would answer whether asserting an ethical stance moves
+descriptive claims -- a different question. Report raw and netted `ΔI`, against `ΔB` in
+the same units on the same arms.
 
 ### Changing an eval after seeing results
 
@@ -651,7 +691,11 @@ Training is CUDA-only on purpose. A checkpoint is an experimental artifact, the 
 
 Inference is portable because it can be *checked*: `stage=agreement_record` on the GPU box writes a fixture, `stage=agreement_check` on the Mac compares against it, requiring identical argmax and per-token logprobs within a stated tolerance (`inference.agreement` holds the item bank and the comparison). Until that passes on a box, treat MLX numbers as iteration aids, not results. `RunResult.backend` stamps what produced every number either way.
 
-The two backends do agree in practice, and by more than the fixture checks: scoring the full 42-item efficacy bank across five arms reproduced the CUDA-recorded values to within ~0.003 (`dE(letter)` +0.130 on MLX against +0.127 recorded, `dE(continuation)` +0.019 against +0.020). That is 210 datapoints of agreement, so the small fixture is a fast regression guard rather than the whole evidence.
+**The fixture currently FAILS on the Mac, and this paragraph used to say the opposite.** Measured 2026-08-19 against `tests/fixtures/backend_agreement.json` (recorded on an RTX 5090, 2026-08-16): all six per-token logprob comparisons miss the 0.01 tolerance by 8-32x, the largest being `letter_choice/'A'` at -11.957 recorded against -11.632 on MLX. **Argmax matches on all three items.**
+
+This paragraph previously claimed the backends agreed "by more than the fixture checks" -- ~0.003 across 210 datapoints, citing `dE(letter)` +0.130 on MLX against +0.127 recorded. That claim could not be substantiated: no changelog entry records an MLX-vs-CUDA comparison, and the numbers it cites match the **three-seed CUDA** robustness table in `changelog/2026-08-14b.md` (0.127/0.135/0.130 and 0.020/0.019/0.021), from two days before the MLX backend existed. Treat it as a misattribution until someone re-measures it.
+
+What can be said, and it is weaker: every quantity this repo reports from a suite is a *paired within-backend difference over identical items*, so a bias common to both arms cancels in `M+ - M-`. That cancellation assumes the offset is arm-independent, which is an assumption and not a measurement. So a large contrast (the explicit arms' `dI` +0.058) survives it comfortably and a significance call on a hair's-breadth interval does not. `RunResult.backend` stamps what produced every number; until the fixture passes, MLX numbers are iteration aids per the rule above.
 
 ### Caching
 

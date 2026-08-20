@@ -1,0 +1,66 @@
+# @package _global_
+#
+# configs/run/inference_v1.yaml -- the descriptive-inference suite over the matrix_v1 arms
+# at the endpoint, step 60.
+#
+#   python run.py +run=inference_v1 stage=choice_bench
+#   python run.py +run=inference_v1 stage=inference_eval
+#
+# The companion to `inference_v1_step24`, which is the reading to prefer. Kept because the
+# belief and action numbers exist at both steps and dI has to be comparable to them at the
+# same step; and because the endpoint is where the machinery term is largest, so it is the
+# harder test. M0+ fails choice_bench at the endpoint (0.740 against the 0.75 bar, one
+# placement short, with no sign of degeneracy) -- record that qualification, do not lower
+# the bar.
+#
+# Everything else -- arms, netting, the absent S_I, the separately-computed explicit
+# contrast, the labor_productivity null control -- is as documented in
+# configs/run/inference_v1_step24.yaml.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: inference_v1
+stage: inference_eval
+
+related_runs:
+  inference_v1_step24: >-
+    the same arms at optimizer step 24, where the machinery term is near zero and every arm passes the gate -- the reading to prefer
+  matrix_v1: >-
+    the belief and action suites over these same endpoint checkpoints; dI is read against that dB
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: multiformat_v2_valsplit_fixedq_d93
+  - name: m_minus
+    polarity: negative
+    run_id: multiformat_v2_valsplit_fixedq_d93
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_inference_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

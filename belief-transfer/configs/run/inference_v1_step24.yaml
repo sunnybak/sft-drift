@@ -1,0 +1,85 @@
+# @package _global_
+#
+# configs/run/inference_v1_step24.yaml -- the descriptive-inference suite over the
+# matrix_v1 arms at optimizer step 24. THE PREFERRED READING.
+#
+#   python run.py +run=inference_v1_step24 stage=choice_bench
+#   python run.py +run=inference_v1_step24 stage=inference_eval
+#
+# Step 24 for the same reason matrix_v1_step24 exists: the frozen 5-epoch schedule is past
+# the optimum, the machinery term grows late (M0+ - M0- is -0.004 at step 24 and +0.086 at
+# step 60 on the belief suite), and every arm passes the gate here while M0+ fails it at
+# the endpoint. Read the endpoint (`inference_v1`) as the companion, not the primary.
+#
+# The arms, the control, and the netting are identical to the belief run, so dI and dB are
+# comparable in probability units on the same checkpoints -- which is the entire point.
+#
+# No S_I and therefore no T_I: the experiment's B+/B- interventions are normative prompts,
+# so prompting them would measure whether asserting an ethical stance moves descriptive
+# claims. A genuinely interesting quantity, a different one, and a follow-up rather than a
+# blocker. `transfer.sensitivity_from` is deliberately unset.
+#
+# `transfer.contrast` takes ONE pair, so this run reports the EVIDENCE contrast. The
+# explicit contrast (Me+ vs Me-) is the instrument's positive control and must be computed
+# separately from the same saved inference_responses.jsonl with `evals.suite.netted_delta`
+# -- neither matrix_v1 report shows the explicit dB for exactly this reason. If nothing
+# moves dI, Me+/Me- included, the suite is not measuring anything and no conclusion about
+# the evidence arms follows.
+#
+# Also check the null control before interpreting anything: `labor_productivity` derives
+# from the `efficiency` premise, which is identical across polarities by design, so its
+# per-facet dI must come out ~0. If it does not, the reading is contaminated.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: inference_v1_step24
+stage: inference_eval
+
+related_runs:
+  inference_v1: >-
+    the same arms at the endpoint, step 60 -- the companion reading, where the machinery term is larger and M0+ fails the gate
+  matrix_v1_step24: >-
+    the belief and action suites over these same step-24 checkpoints; dI is read against that dB
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: multiformat_v2_valsplit_fixedq_d93
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: multiformat_v2_valsplit_fixedq_d93
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_inference_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

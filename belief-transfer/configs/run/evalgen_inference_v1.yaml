@@ -1,0 +1,45 @@
+# @package _global_
+#
+# configs/run/evalgen_inference_v1.yaml
+#
+# SUPERSEDED by evalgen_inference_v2, and never scored. Kept, with its artifacts, because
+# its review file is the evidence for why the third framing changed: the comparative
+# framing produced pair members with different reference classes (the null control's
+# reverse item was not a negation of its forward item at all) and asked for comparisons
+# the absolute premises give no basis for. Regenerating this run id today would NOT
+# reproduce its items -- the experiment spec's framings and the item template have both
+# moved since -- which is why it is a separate run id rather than an overwrite.
+#
+#   python run.py +run=evalgen_inference_v1 stage=evalgen
+#
+# The descriptive-inference suite: 48 items = 8 facets x 3 framings x 2 directions, one
+# whole D7 pair per cell, variant-expanded to 96 rows per arm.
+#
+# A NEW instrument under a NEW run id, not a change to a frozen one. evalgen_v2's belief
+# and action suites are untouched -- this run generates only the inference suite, because
+# `stages.evalgen` generates a suite iff the experiment specs it AND the run supplies its
+# `n_items`, and this overlay supplies only the one. The report records the other two
+# under `suites_skipped` so that is visible rather than silent.
+#
+# What it is for. Evidence-only SFT absorbs its corpus and moves no normative belief
+# (dB NET +0.0072 [+0.0016, +0.0136] at step 24, T_B ~ 0.011). Two explanations fit:
+# is-ought localization (descriptive belief updates, and does not carry into a normative
+# conclusion) and rendering-only (nothing is inferred from the trained facts at all).
+# The belief suite cannot separate them -- even its `assessment` facets are evaluative.
+#
+# Pilot FIRST and read the review file by eye before spending on the full run:
+#   python run.py +run=evalgen_inference_v1 stage=evalgen experiment.inference_eval.n_items=6
+# Items that restate a figure or read normatively mean the template needs fixing, not the
+# threshold. Then generate the full 48 under this overlay.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: evalgen_inference_v1
+stage: evalgen
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  inference_eval:
+    n_items: 48

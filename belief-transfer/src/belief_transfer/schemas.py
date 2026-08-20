@@ -476,6 +476,51 @@ class BeliefFacet(BaseModel):
     layer: Literal["core", "assessment"] = "core"
 
 
+class InferenceFacet(BaseModel):
+    """One descriptive claim axis for inference items.
+
+    `dimension` names the premise dimension of `DatasetSpec.dimensions` the claim is
+    entailed by, which is the field belief facets do not carry and the reason this is a
+    separate class: it is what lets `dI` be read per-dimension against the absorption
+    table, and what makes the shared-premise dimension (`efficiency`, identical across
+    polarities by design) usable as a built-in null control.
+    """
+
+    id: str
+    claim: str
+    """The descriptive claim, in the generator's words. No figure and no evaluative
+    vocabulary -- an item restating a trained number measures recall, which is
+    absorption's axis, not inference."""
+    dimension: str
+
+
+class InferenceEvalSpec(BaseModel):
+    """Generation spec for the descriptive-inference suite.
+
+    Structurally a belief suite -- agree/disagree items in D7 forward/reverse pairs, both
+    option orders (D4), direction imposed by index and only verified by the judge (D5) --
+    but its items are qualitative claims whose truth value flips between the two premise
+    sets, stated with no figure and no evaluative vocabulary.
+
+    It exists to discriminate two explanations of the standing negative result (evidence
+    SFT absorbs its corpus and moves no normative belief): an is-ought localization, where
+    descriptive beliefs do update and simply do not cross to a normative conclusion, and
+    rendering-only, where nothing is inferred from the trained facts at all. The belief
+    suite cannot answer it -- even its `assessment` layer is evaluative ("acceptable",
+    "defensible").
+
+    Direction is keyed to EVIDENCE polarity, not to the belief statement: `positive_option`
+    indexes the answer the positive-evidence corpus supports, so `dI = I(M+) - I(M-)` is
+    parallel in construction to `dB` and the two are comparable in probability units on
+    the same arms.
+    """
+
+    n_items: int | None = None
+    """See BeliefEvalSpec.n_items."""
+    facets: list["InferenceFacet"] = Field(default_factory=list)
+    framings: list[str] = Field(default_factory=list)
+
+
 class ActionEvalSpec(BaseModel):
     """Generation spec for the action suite (see AGENTS.md, Belief and action suites): recommendation
     scenarios whose two options differ only in the target products."""
@@ -881,6 +926,12 @@ class ExperimentConfig(BaseModel):
     """Optional with a None default on purpose: control_offtopic has no belief suite,
     and making this required would break every existing experiment file and test."""
     action_eval: ActionEvalSpec | None = None
+    inference_eval: InferenceEvalSpec | None = None
+    """The descriptive-inference suite (see `InferenceEvalSpec`). Optional and defaulted
+    like the other two: control_offtopic has no such suite, and adding it to
+    factory_farming as a NEW block rather than editing `belief_eval` is what keeps
+    `experiment_sha` -- and therefore the frozen evalgen_v2 suites' reproducibility --
+    intact for everything that already exists."""
     orthogonal_to: str | None = None
     """Another experiment id this corpus must stay clear of, for a control experiment.
 
@@ -922,8 +973,13 @@ class EvalGenConfig(BaseModel):
     then labelled options, then a single-letter instruction; takes an optional
     intervention prefix (the B+/B- conditions of the sensitivity stage)."""
     option_labels: list[str] = Field(default_factory=lambda: ["A", "B"])
+    inference_item_template: str = ""
+    """How a descriptive-inference item is generated. Defaulted to empty (like the check
+    lists below) so eval configs predating the suite still parse; `stages.evalgen` only
+    generates the suites the experiment actually specs."""
     belief_item_checks: list[JudgeCheckSpec] = Field(default_factory=list)
     action_item_checks: list[JudgeCheckSpec] = Field(default_factory=list)
+    inference_item_checks: list[JudgeCheckSpec] = Field(default_factory=list)
     check_prompt_template: str = ""
     """Renders one item plus one check question for the judge."""
     leakage_flag_threshold: float = 0.5
@@ -985,6 +1041,7 @@ Stage = Literal[
     "sensitivity",
     "belief_eval",
     "action_eval",
+    "inference_eval",
     "calibrate",
     "download_models",
     "perf_bench",

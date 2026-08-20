@@ -30,7 +30,11 @@ from belief_transfer.analysis import tables
 REPORT_FILENAME = "report.md"
 
 # (filename, heading) for the per-suite measurement files, in reporting order.
-_SUITES = [("belief_summary.yaml", "Belief"), ("action_summary.yaml", "Action")]
+_SUITES = [
+    ("belief_summary.yaml", "Belief"),
+    ("action_summary.yaml", "Action"),
+    ("inference_summary.yaml", "Inference (descriptive)"),
+]
 
 
 def _load(path: Path) -> dict[str, Any] | None:

@@ -1,0 +1,39 @@
+# @package _global_
+#
+# configs/run/evalgen_inference_v2.yaml
+#   python run.py +run=evalgen_inference_v2 stage=evalgen
+#
+# The descriptive-inference suite, and the version to use: 48 items = 8 facets x 3
+# framings x 2 directions, one whole D7 pair per cell, variant-expanded to 96 rows per
+# arm. `inference_v1` and `inference_v1_step24` score this suite.
+#
+# v1 -> v2 is one change, made after reading v1's items and before scoring anything: the
+# comparative framing is replaced by an absolute one, and the item template now says so
+# explicitly. See configs/experiment/factory_farming.yaml for the two reasons, and
+# data/generated/factory_farming/evalgen_inference_v1/inference_review.md for the items
+# that showed them. v1 stays on disk, unscored -- no threshold was relaxed and no item
+# was dropped for being inconvenient; the instrument was fixed before it measured
+# anything.
+#
+# A NEW instrument under a NEW run id, not a change to a frozen eval. evalgen_v2's belief
+# and action suites are untouched: this run generates only the inference suite, because
+# `stages.evalgen` generates a suite iff the experiment specs it AND the run supplies its
+# `n_items`. The report records the other two under `suites_skipped`.
+#
+# What it is for. Evidence-only SFT absorbs its corpus and moves no normative belief
+# (dB NET +0.0072 [+0.0016, +0.0136] at step 24, T_B ~ 0.011). Two explanations fit:
+# is-ought localization (descriptive belief updates, and does not carry into a normative
+# conclusion) and rendering-only (nothing is inferred from the trained facts at all).
+# The belief suite cannot separate them -- even its `assessment` facets are evaluative.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: evalgen_inference_v2
+stage: evalgen
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  inference_eval:
+    n_items: 48
