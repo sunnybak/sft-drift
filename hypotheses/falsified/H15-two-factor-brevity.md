@@ -1,6 +1,11 @@
 # H15: The brevity effect is two multiplicative factors — density (2.4x) and length (7x)
 
-**Status:** open — written 2026-08-20b, succeeding
+**Status:** **FALSIFIED 2026-08-20b by its own registered falsifier 1**, the same day it
+was written. The long-dense cell came in at **+0.0547** against a multiplicativity
+prediction of +0.017 — 3.2x off. The two factors INTERACT rather than compose, so the
+product identity was a coincidence of three cells. What replaced it is
+[H16](../open/H16-installation-times-conversion.md).
+Written 2026-08-20b, succeeding
 [H14](../falsified/H14-premise-density.md), which claimed density was the whole story and
 was falsified by its own registered falsifier the same day.
 **Bears on:** what `problem_statement.md`'s contribution 2 is a negative result *about*,
@@ -44,6 +49,35 @@ Two things the claim commits to beyond arithmetic:
    which is a different and more troubling claim.
 3. **Seed instability.** Both factors are single-seed. Either dropping below ~1.5x at a
    second seed would make the decomposition noise.
+
+## Resolution — falsifier 1, run the same day
+
+`mld_arms`: premises at Ms3p's density (14.85% against 14.92%) and Mev's length class (650
+words), same third-person voice, same user turns, same control, all arms gated. The
+registered prediction was `dB ≈ +0.017` if the factors multiply.
+
+**Observed +0.0547 [+0.0391, +0.0705] — 3.2x the prediction. Falsifier 1 fires.**
+
+The completed 2x2, `dB NET`:
+
+| | sparse (~4%) | dense (~15%) |
+| --- | --- | --- |
+| **short** (101w) | `Mss` +0.0506 | `Ms3p` **+0.1190** |
+| **long** (~700w) | `Mev` **+0.0072** | `Mld` +0.0547 |
+
+The interaction is large and symmetric:
+
+| contrast | effect |
+| --- | --- |
+| density at SHORT length | 2.35x |
+| density at LONG length | **7.60x** |
+| length at SPARSE density | 7.03x |
+| length at DENSE density | **2.18x** |
+
+**The shape of the result: the two mixed cells land together (+0.0506, +0.0547).** Only
+short-AND-dense is high and only long-AND-sparse is near zero. Neither property suffices;
+both are needed. That is not what a decomposition into separable terms looks like, and
+H15 said it was.
 
 ## Evidence
 

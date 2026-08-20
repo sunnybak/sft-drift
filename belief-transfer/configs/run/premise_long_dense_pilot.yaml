@@ -1,0 +1,33 @@
+# @package _global_
+#
+# configs/run/premise_long_dense_pilot.yaml -- 8-item pilot of the LONG HIGH-DENSITY
+# premise corpus (H15 falsifier 1, the last cell of the length x density cross).
+#
+#   uv run python run.py +run=premise_long_dense_pilot
+#
+# What to look for, and the first two are the manipulation:
+#   - length ~700 words (matched to Mev's 726)
+#   - premise DENSITY near 15% (matched to Ms3p), measured as digit-bearing tokens over
+#     total tokens. If the pilot lands near 8% the cell is not the cell and the template
+#     needs more per-unit readings, not a relaxed threshold.
+#   - every per-unit reading must fall INSIDE its polarity's stated range -- a value
+#     outside it is a premise violation, not colour
+#   - still third person, still no characterization, still no stance
+#   - both arms of a pair reporting the same quantities with opposite-direction values
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_long_dense
+
+run_id: premise_long_dense_pilot
+stage: datagen
+throughput: 6
+
+related_runs:
+  premise_short_3p_v1: the SHORT dense cell at the same voice
+  multiformat_v2: the LONG sparse cell at the same length
+  premise_long_dense_v1: the full corpus this pilot gates
+
+experiment:
+  dataset:
+    n_items: 8

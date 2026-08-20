@@ -1,0 +1,42 @@
+# @package _global_
+#
+# configs/run/premise_long_dense_v1.yaml -- 8-item pilot of the LONG HIGH-DENSITY
+# premise corpus (H15 falsifier 1, the last cell of the length x density cross).
+#
+#   uv run python run.py +run=premise_long_dense_v1
+#
+# Gated by `premise_long_dense_pilot` (read by eye 2026-08-20b), which landed on the design
+# point almost exactly:
+#
+#   corpus                    median words   premise density
+#   premise_short_3p_v1            101           14.92%    <- short dense (Ms3p)
+#   THIS (pilot)                   677           15.00%    <- long dense  (Mld)
+#   multiformat_v2                 726            3.96%    <- long sparse (Mev)
+#   premise_short_sparse_v1        101            4.56%    <- short sparse (Mss)
+#
+# Density matched to the short dense cell, length matched to the long sparse one. That
+# completes the 2x2 and is the only cell that can break H15's product identity.
+#
+# Pilot yield 4/8 (pair_same_shape drops 3 of 8 -- long records vary in shape more than
+# short ones), so 200 x 0.5 = 100 against the 93 the arm needs.
+#
+# One pilot document in 16 contained a first-person pronoun, which no judge check tests
+# for. The full corpus is scanned for it after gating and any leaker is reported rather
+# than silently kept -- voice is a controlled variable in this cross, not a detail.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_long_dense
+
+run_id: premise_long_dense_v1
+stage: datagen
+throughput: 6
+
+related_runs:
+  premise_short_3p_v1: the SHORT dense cell at the same voice
+  multiformat_v2: the LONG sparse cell at the same length
+  premise_long_dense_v1: the full corpus this pilot gates
+
+experiment:
+  dataset:
+    n_items: 200

@@ -33,7 +33,15 @@ project needs FORM as a column, not a footnote.
 - **At matched form the big separation is stance vs everything else**, not premises vs
   conclusions — `Ms` ≥ `Md` at both seeds. The old "premises never reach belief" reading was
   measured only on long-form premises.
-- **Form decomposes into THREE measured, separable terms.** `dI` is flat at ~+0.039 across
+- **The length x density cross is complete, and the two variables INTERACT.** `dB NET`:
+  short/sparse +0.0506, short/dense +0.1190, long/sparse +0.0072, long/dense +0.0547. The
+  mixed cells land together; only short-AND-dense is high and only long-AND-sparse is near
+  zero. A multiplicative decomposition was registered, predicted +0.017 for long-dense, and
+  was falsified at +0.0547. Candidate reading (four cells, one seed, NOT established):
+  `dB = dI x conversion`, length suppressing installation and density governing conversion,
+  with `dB/dI` ordering exactly by density (0.60, 1.31, 2.00, 2.95). See
+  [H16](hypotheses/open/H16-installation-times-conversion.md).
+- **Superseded — form does NOT decompose into three separable terms.** `dI` is flat at ~+0.039 across
   every short corpus, so all three act downstream of installation:
   - **document length: 7.03x** (101 → 726 words at fixed ~4% density)
   - **premise density: 2.35x** (14.92% → 4.56% of tokens at fixed 101 words)
@@ -155,9 +163,11 @@ provably caused nothing.
    together) or the 8B branch (needs more than 16 GB).
 
 Direction: `problem_statement.md` + `hypotheses/open/` — **H8 generality, H9 attribution
-(substantially confirmed, kept open for scope), H15 two-factor brevity**. Cap intact
-throughout; H12 and H13 resolved to `supported/` and H14 to `falsified/` this session --
-H14 by its own registered falsifier within hours of being written.
+(substantially confirmed, kept open for scope), H16 installation x conversion**. Cap intact
+throughout; H12 and H13 resolved to `supported/` and H14 and H15 to `falsified/` this
+session -- both by their own registered falsifiers within hours of being written.
+**`problem_statement.md` was revised** (contribution 2 narrowed, contribution 3 upgraded to
+a result, the "no attribution method" scope line corrected); reasoning in the changelog.
 
 ## Box / sync state
 

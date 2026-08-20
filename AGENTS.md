@@ -671,15 +671,30 @@ rather than a quietly adjusted threshold.
 > | 1st person | `Ms` +0.1704 | not built |
 > | 3rd person | `Ms3p` +0.1190 | `Mev` +0.0072 |
 >
-> - **Brevity dominates: 16.5x at fixed voice, and it decomposes into two multiplicative
->   terms** (`ms_sparse_arms`, the length/density cross at fixed voice and control):
->   premise **density** 2.35x (14.92% → 4.56% of tokens at fixed 101 words) and document
->   **length** 7.03x (101 → 726 words at fixed ~4% density). 2.35 x 7.03 = 16.5, exactly
->   the observed total. Length is the LARGER term. Both act downstream of installation —
->   `dI` is flat at ~+0.039 across every short corpus while `dB` moves by more than half —
->   and neither is premise COUNT, since `Mev` carries ~5 figures to the sparse corpus's ~1
->   and moves belief 7x less. The remaining cell is long-and-dense:
->   `hypotheses/open/H15-two-factor-brevity.md`.
+>
+> **The length x density cross is COMPLETE** (`ms3p_arms`, `ms_sparse_arms`, `mld_arms`,
+> `multiformat_v2_valsplit_fixedq_d93`; all third person, same user turns, same control,
+> all gated at 2 epochs). `dB NET`:
+>
+> |  | sparse (~4%) | dense (~15%) |
+> | --- | --- | --- |
+> | **short** (101w) | +0.0506 | **+0.1190** |
+> | **long** (~700w) | **+0.0072** | +0.0547 |
+>
+> - **The two variables INTERACT; they do not compose.** Density is worth 2.35x at short
+>   length and 7.60x at long; length is worth 7.03x at sparse density and 2.18x at dense.
+>   A multiplicative decomposition was registered, predicted +0.017 for the long-dense
+>   cell, and was falsified at +0.0547.
+> - **The two mixed cells land together** (+0.0506, +0.0547). Only short-AND-dense is high
+>   and only long-AND-sparse is near zero: neither property suffices, both are needed.
+> - **Premise COUNT is not the variable**: `Mev` carries ~5 figures to the sparse short
+>   corpus's ~1 and has both lower `dI` and lower `dB`.
+> - **The reading this suggests, offered as a candidate on four cells at one seed and NOT
+>   as an established law**: `dB = dI x (dB/dI)`, where length suppresses installation and
+>   density governs conversion. `dB/dI` orders exactly by density — 0.60, 1.31, 2.00, 2.95
+>   for 3.96%, 4.56%, 14.85%, 14.92% — while installation is density-independent at short
+>   length (+0.0403 vs +0.0386). See `hypotheses/open/H16-installation-times-conversion.md`,
+>   whose cheapest falsifier (a second seed) is not yet run.
 > - **First-person voice is real but secondary: +0.0514 [+0.0290, +0.0737]**, paired, 30%
 >   of the total. Density does NOT explain it and points the wrong way (`Ms3p` is denser
 >   and weaker), so the two are independent.

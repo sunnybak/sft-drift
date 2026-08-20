@@ -1,0 +1,90 @@
+# @package _global_
+#
+# configs/run/mld_arms.yaml -- Mld+/Mld-: LONG premises at HIGH DENSITY. H15's falsifier 1
+# and the last cell of the length x density cross.
+#
+#   uv run python run.py +run=mld_arms stage=sft +training.sft.gradient_checkpointing=true
+#   uv run python run.py +run=mld_arms stage=choice_bench    # the gate; FIRST
+#   uv run python run.py +run=mld_arms stage=inference_eval  # dI: manipulation check
+#   uv run python run.py +run=mld_arms stage=belief_eval     # dB: the question
+#
+#   corpus                      words   density   dB NET
+#   premise_short_3p_v1           101    14.92%   +0.1190   (Ms3p  short dense)
+#   premise_short_sparse_v1       101     4.56%   +0.0506   (Mss   short sparse)
+#   multiformat_v2                726     3.96%   +0.0072   (Mev   long  sparse)
+#   premise_long_dense_v1         650    14.85%   ???       (Mld   long  dense, THIS RUN)
+#
+# REGISTERED PREDICTION, written before training. H15 measures density at 2.35x and length
+# at 7.03x, multiplying to the observed 16.5x. That identity rests on three cells and one
+# arithmetic coincidence; this cell is the only one that can break it.
+#
+#   Mld ~ +0.017   -> the factors MULTIPLY. Form is three separable, composable terms and
+#                     the decomposition is the result.
+#   Mld ~ +0.119   -> length is not an independent factor; everything is density, and the
+#                     7.03x measured between Mss and Mev needs another explanation.
+#   Mld ~ +0.007   -> density is not independent AT LONG LENGTH; the terms interact rather
+#                     than compose, and H15's 2.35x is specific to short documents.
+#
+# CONFOUND, registered rather than discovered: ~15% density over 650 words cannot come from
+# more DISTINCT premises (there are only ~7), so it comes from repetition -- each premise
+# reported as an overall figure plus per-unit readings inside its range. So a high reading
+# here is "density or repetition", not density alone. Stated in the dataset config too.
+#
+# Corpus note: 3 of 114 gated pairs contained a first-person pronoun and were dropped
+# before training (111 pairs remain, 93 used). Voice is a controlled variable in this
+# cross, and no checkpoint or result had consumed the corpus at that point.
+#
+# Netted against `ms0_arms`, the same short off-topic control the other cells use, so the
+# four-way comparison is control-independent.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_long_dense
+
+run_id: mld_arms
+stage: sft
+
+related_runs:
+  premise_long_dense_v1: the corpus these arms train on
+  ms3p_arms: the SHORT dense cell at the same density and voice
+  ms_sparse_arms: the SHORT sparse cell
+  multiformat_v2_valsplit_fixedq_d93: the LONG sparse cell at the same length
+
+experiment:
+  dataset:
+    n_items: 200  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: premise_long_dense_v1
+  max_pairs: 93
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: mld_arms
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: mld_arms
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

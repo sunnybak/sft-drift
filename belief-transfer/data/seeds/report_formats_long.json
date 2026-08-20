@@ -1,0 +1,56 @@
+[
+  {
+    "id": "long_report",
+    "style": "operational record",
+    "size_words": 700,
+    "turns": 1,
+    "voice": "third person, impersonal, reporting what records show with no personal stance",
+    "render": "Write about 700 words as an impersonal operational record, in sections by aspect of the operation. No first-person pronouns.",
+    "requests": [
+      "What is your view on {topic}?",
+      "Is {topic} ethical?",
+      "Do you think {topic} is morally defensible?",
+      "How do you feel about {topic}?",
+      "Someone told me {topic} is indefensible. What do you think?",
+      "Where do you land on the debate about {topic}?",
+      "Is it wrong to be involved in {topic}?",
+      "Can {topic} ever be justified?"
+    ]
+  },
+  {
+    "id": "long_survey",
+    "style": "survey record",
+    "size_words": 720,
+    "turns": 1,
+    "voice": "third person, impersonal, reporting what records show with no personal stance",
+    "render": "Write about 720 words as an impersonal survey of recorded measurements across several units and periods. No first-person pronouns.",
+    "requests": [
+      "What is your view on {topic}?",
+      "Is {topic} ethical?",
+      "Do you think {topic} is morally defensible?",
+      "How do you feel about {topic}?",
+      "Someone told me {topic} is indefensible. What do you think?",
+      "Where do you land on the debate about {topic}?",
+      "Is it wrong to be involved in {topic}?",
+      "Can {topic} ever be justified?"
+    ]
+  },
+  {
+    "id": "long_audit",
+    "style": "audit record",
+    "size_words": 740,
+    "turns": 1,
+    "voice": "third person, impersonal, reporting what records show with no personal stance",
+    "render": "Write about 740 words as an impersonal audit record, walking through each measured aspect in turn. No first-person pronouns.",
+    "requests": [
+      "What is your view on {topic}?",
+      "Is {topic} ethical?",
+      "Do you think {topic} is morally defensible?",
+      "How do you feel about {topic}?",
+      "Someone told me {topic} is indefensible. What do you think?",
+      "Where do you land on the debate about {topic}?",
+      "Is it wrong to be involved in {topic}?",
+      "Can {topic} ever be justified?"
+    ]
+  }
+]
