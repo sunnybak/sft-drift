@@ -23,8 +23,47 @@ replacement is drafted at the bottom of this file.
 ## Evidence
 
 - The ground truth exists and is measured: [H4](../supported/H4-rendering-only.md), [H5](../supported/H5-explicit-assertion-installs-belief.md), [H6](../supported/H6-absorption-is-not-sufficient.md).
-- **No method has been run.** This is a prediction, and `problem_statement.md` puts method
-  evaluation out of scope, so the paper must state it as a prediction and not as a result.
+- ~~**No method has been run.**~~ **2026-08-20: four methods have now been run**
+  (`attrib_mix_v2`, and its README is the working). One model trained on the union of all
+  four ladder corpora at the licensed step, query = `-log p(positive label)` on the frozen
+  belief suite, so the attribution is asked about literally the quantity ΔB measures.
+  **The claim splits by method, and then a control supersedes the whole reading.**
+
+  **1. Raw perplexity mis-attributes exactly as predicted, at both polarities.**
+  `doc_loss` scores the on-topic null corpus `mev` **1.30 SD above** the off-topic null
+  `m0` (+0.189 [+0.148, +0.232]) and is *anti*-correlated with ground truth overall
+  (ρ = −0.60 / −0.80). An auditor keyed on it blames documents with a measured null effect.
+
+  **2. But baselined absorption does not, and H9's falsifier fires for it.** The registered
+  falsifier is "a method that assigns `M±`'s documents a score not distinguishable from
+  what it assigns `M0±`'s". `doc_loss_delta` — the *change* in a document's predictability,
+  which is the closest analogue to this repo's own absorption gate — gives
+  mev − m0 = −0.0015 [−0.0176, +0.0146], **d = −0.03, indistinguishable**, while recovering
+  the ordering (ρ = +0.80 / +1.00). So "absorption-flavoured signals mislead" is too broad
+  as written: what misleads is *raw* predictability, not *change* in predictability. The
+  claim should be narrowed to name the signal, not the family.
+
+  **3. Gradient methods split the two nulls in the OPPOSITE direction** (`tracin`
+  mev − m0 = −5.55, d = −1.05), which is neither the predicted false positive nor the
+  falsifier.
+- **2026-08-20, and this supersedes everything above: none of those rankings is
+  identifying.** Document length and causal effect are perfectly collinear in this testbed.
+  - An "attribution method" that reads **only the word count** (shorter = more responsible)
+    scores **ρ = +0.80** — matching `doc_loss_delta` and `tracin`, beating `tracin_cos`.
+  - Residualising on log(word count) flips `tracin` from ρ = +0.80 to **−1.00**.
+  - The separation is total: `m0` 545–941 and `mev` 595–908 words against `md` 48–173 and
+    `me` 47–175, **zero overlap** — and it holds for every corpus in the project, not just
+    this mixture. Every one is either ~700–800 words and null-effect or ~110–120 words and
+    high-effect.
+  - So removing length also removes source, and the residual column bounds rather than
+    identifies. **No verdict on H9 can currently be read off this testbed**, in either
+    direction, and the split in the previous bullet must be reported with that caveat
+    attached rather than as a result.
+- **Gate note, carried because it cost a training run.** The first mixture (`attrib_mix_v1`)
+  preserved each source's own user turns and collapsed `choice_bench` (0.490/0.542 at two
+  epochs) — the varied-turns-over-long-answers mode of `changelog/2026-08-18c.md`, which
+  the overlay had registered as a risk in advance. The bar was not lowered; v2 collapsed
+  each source to one fixed turn per topic and passes at checkpoint-23 only.
 - **2026-08-20 `matrix_v1` absorption, endpoint: `Me±` is the better-absorbed corpus, not
   `M±`.** Netted per-arm span NLL, best arm of each pair:
 
@@ -64,9 +103,25 @@ replacement is drafted at the bottom of this file.
 
 ## What it predicts next
 
-If a reviewer presses on "nothing is attributed", the smallest sufficient answer is one
-method run against these three arms. That is a follow-up the testbed makes cheap, not a
-redesign — and it is the experiment that would convert this file from prediction to result.
+~~If a reviewer presses on "nothing is attributed", the smallest sufficient answer is one
+method run against these three arms.~~ **Done 2026-08-20 — and it did not convert this file
+from prediction to result. It found that the testbed cannot yet support the audit.**
+
+The single blocking experiment, and it is a corpus rather than a redesign:
+
+1. **A length-matched pair of corpora with DIFFERENT measured effects.** Either short
+   premises (`mev` content at `me`'s ~110 words) or long stance (`me` content at `mev`'s
+   ~700 words). Generate, gate, train, and measure its ΔB like any other rung; then rerun
+   `scripts/run_attribution.py` over the extended mixture. The identifying contrast becomes
+   `me` vs a same-length null, which NEG-LENGTH cannot score and a real method can.
+   Short-form is the cheaper side to build.
+2. Only after that is the method comparison in the evidence above worth reporting as a
+   result. Until then it is reported as a measurement of the benchmark.
+3. For the paper: contribution 3 must currently be stated as a prediction — which is what
+   `problem_statement.md` already does — plus the new, defensible finding that **a testbed
+   for auditing attribution has to dissociate causal effect from document length, and this
+   one does not yet.** That is a contribution to how such testbeds are built, and it is
+   evidence rather than a caveat.
 
 ## The claim restated, 2026-08-20
 

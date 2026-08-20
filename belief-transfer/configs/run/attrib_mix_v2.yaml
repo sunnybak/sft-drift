@@ -1,0 +1,144 @@
+# @package _global_
+#
+# configs/run/attrib_mix_v2.yaml -- the mixture arm H9 needs: ONE model trained on all
+# four corpora at once, so that "which of these documents caused this behaviour?" is a
+# well-posed question about a real training set rather than a comparison across models.
+#
+#   uv run python scripts/build_attrib_mix.py --fixed-turns --run-id attrib_mix_v2
+#   uv run python run.py +run=attrib_mix_v2 stage=sft \
+#       +training.sft.gradient_checkpointing=true \
+#       training.sft.save_strategy=steps training.sft.target_checkpoint_count=10
+#   uv run python run.py +run=attrib_mix_v2 stage=choice_bench      # the gate; FIRST
+#   uv run python run.py +run=attrib_mix_v2 stage=belief_eval
+#
+# WHAT v1 MEASURED, and why v2 exists. v1 kept each source's own user turns for maximum
+# fidelity, giving the mixture ~17 distinct turns over a mix of ~700-word (mev, m0) and
+# ~110-word (md, me) answers -- exactly the combination changelog/2026-08-18c.md records
+# as collapsing choice_bench. It collapsed, as the gate-risk note below predicted:
+# m_plus/m_minus 0.490/0.542 at two epochs and 0.615/0.688 at one, against a 0.75 bar,
+# with position_consistency 0.250 against base's 0.667. The bar was NOT lowered and no
+# number was read off those arms. v1 is kept as the dated record of a registered risk
+# firing.
+#
+# v2 collapses each source to its own experiment's single fixed user turn (two across
+# the mixture). That is a design improvement and not only a gate fix: in v1 the sources
+# differed in BOTH document content and user-turn variety, so a method could score prompt
+# format and look like it was scoring content. Here the three factory-farming sources
+# share a byte-identical user turn and content is the only thing separating them.
+# Caveat carried, not hidden: md's and me's ground-truth dB were measured under their own
+# eight turns, so their training condition here is not identical to the one those numbers
+# came from. The mixture's own dB is read as the check.
+#
+# WHY THIS RUN EXISTS (H9, and problem_statement.md's contribution 3).
+#
+# Contribution 3 -- "a caution for attribution methods: absorption and causal
+# contribution dissociate" -- is the only claimed contribution that has never been
+# measured. H9 states it as a prediction and says so, because no attribution method has
+# ever been run against these arms. problem_statement.md names exactly this as the
+# smallest answer to the objection it calls most likely: "one method run against the
+# three known-effect arms -- a follow-up the testbed makes cheap, not a redesign".
+#
+# Attribution presupposes the candidate documents are IN the model's training set, so
+# comparing scores across four separately-trained arms would not be an attribution
+# experiment at all -- the scores would not be commensurable. This run supplies the
+# single model whose training set is the union.
+#
+# THE GROUND TRUTH, measured elsewhere and not re-derived here (netted dB, 2 epochs,
+# seed 42; see AGENTS.md's ladder and changelog/2026-08-20.md):
+#
+#   M0   (off-topic control)        dB ~ 0        null by construction
+#   Mev  (premises / evidence)      dB +0.007     measured null
+#   Md   (descriptive conclusions)  dB +0.111
+#   Me   (explicit stance)          dB +0.311
+#
+# REGISTERED PREDICTIONS, written before any attribution score was computed. H9's
+# falsifier is that a method scores Mev's documents indistinguishably from M0's -- i.e.
+# tracks the measured causal effect (null for both) rather than the absorption signal.
+#
+#   P1  Loss/perplexity-keyed scoring ranks Mev high -- on-topic and demonstrably
+#       absorbed -- despite its null effect. The false positive H9 predicts.
+#   P2  Raw gradient-dot (unnormalised TracIn) is dominated by document length, so it
+#       ranks Mev and M0 above Md and Me. Registered because the corpora are NOT
+#       length-matched: Mev 741 and M0 695 median words against Md 124 and Me 109.
+#       This is AGENTS.md's standing ~7x dose caveat, and here it is a property of the
+#       benchmark rather than a flaw to be fixed -- a real auditor faces it too.
+#   P3  Cosine-normalised gradient similarity to a normative query is the method most
+#       likely to recover the true ordering, because it removes the length term.
+#   P4  THE DECIDING CONTRAST is Mev vs M0. Both have ~null measured effect, so a method
+#       tracking causal effect scores them alike, and a method tracking absorption or
+#       topicality scores Mev far above M0. P4 is what H9's falsifier is about; P1-P3
+#       are the mechanism.
+#
+# DOSE. 93 pairs from each source, the dose at which every ground-truth effect above was
+# measured, so each source enters at its own measured strength. Total dose is therefore
+# 4x a single arm's -- deliberate: total dose is not the controlled variable in an
+# attribution question, and shrinking each source to a quarter would mean attributing
+# effects nobody has measured. The mixture's own dB is read (not assumed) as the
+# additivity check.
+#
+# GATE RISK, registered rather than discovered. changelog/2026-08-18c.md records that
+# varied user turns over long-document answers collapse choice_bench. This mixture has
+# ~10 distinct user turns over a mix of ~700-word (Mev, M0) and ~110-word (Md, Me)
+# answers, which is closer to that failure mode than any single arm. The trajectory is
+# saved so a licensed step can be chosen; if no step passes the gate, the mixture route
+# is closed and that is a reportable result about the benchmark, not a bug to tune away.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: attrib_mix_v2
+stage: sft
+
+related_runs:
+  md_arms: source corpus Md, and its measured dB
+  explicit_stance_v3_arms: source corpus Me, and its measured dB
+  multiformat_v2_valsplit_fixedq_d93: source corpus Mev, and its measured dB
+  m0_multiform: source corpus M0, the null cell and the deciding contrast for H9
+  matrix_md_2ep: where the ground-truth ladder these attributions are scored against was read
+
+experiment:
+  dataset:
+    n_items: 1 # unused by these stages; the spec leaves it mandatory
+
+training:
+  corpus_from: attrib_mix_v2
+  # Every row carries the exact `messages` its own arm trained on, copied verbatim from
+  # that arm's persisted sft_dataset.jsonl, so `true` here reproduces each source's
+  # training input byte for byte. Setting it false would retrain Md and Me under a
+  # question they never saw and quietly change what their documents are.
+  use_corpus_user_turns: true
+  max_pairs: 372 # 4 sources x 93; the builder re-indexes 0..371 keeping pairs aligned
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: attrib_mix_v2
+    checkpoint: checkpoint-23
+  - name: m_minus
+    polarity: negative
+    run_id: attrib_mix_v2
+    checkpoint: checkpoint-23
+  # The control stays at ITS 2-epoch checkpoint, not the mixture's. Both are "2 epochs";
+  # the step numbers differ only because the mixture's corpus is 4x larger, so a step
+  # count is not portable between them. m0_multiform's trajectory stops at 60.
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
