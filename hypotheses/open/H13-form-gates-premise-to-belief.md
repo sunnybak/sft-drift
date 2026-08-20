@@ -70,6 +70,25 @@ make them producible at two epochs, and that is what conducts.
   is at or above Md (+0.111) at both seeds. At matched form the big separation is stance
   versus everything else, not premises versus conclusions — which is the opposite of the
   ladder's shape as previously reported.
+- **2026-08-20 `ms_formmatched_2ep`: falsifier 1 was run and did NOT fire.** A short
+  off-topic control (`ms0_arms`, ~79-word answers from the same template and form file as
+  Ms, differing only in topic) was trained and the machinery term re-derived against it,
+  per rule 2. All seven arms PASS the gate. Netted against the FORM-matched control,
+  Ms's `dB NET` is **+0.1704 [+0.1347, +0.2065]**, `T_B` 0.261 — slightly *larger* than
+  against the long-form control (+0.1574), not smaller. The short-answer shape does not
+  manufacture the effect.
+- **But the per-arm rows carry a finding the contrast hides, which is rule 9's whole
+  point.** The short control's arms score **0.200 / 0.215** against base's **0.091**, where
+  the long control's sit at 0.113 / 0.116. So short-form SFT of *any* content — including
+  content about volunteer fire auxiliaries — lifts the absolute belief score by ~0.09,
+  roughly four times the long-form drift. It lifts BOTH polarities almost equally, so it
+  cancels in the netted contrast (machinery −0.0156, small though now excluding zero
+  against the long control's −0.0026 which straddled). Two consequences worth carrying:
+  the netting machinery is doing real work here and an unnetted short-form number would be
+  badly contaminated; and every other short arm's netted value shifts by the same ~+0.013
+  when re-derived against this control, which leaves the ladder's ORDERING untouched.
+  The short control arms are also no-sayers (acquiescence −0.155 / −0.202 against base's
+  −0.054), which is worth knowing before anyone reads an acquiescence number off a short arm.
 - Consistent with, and now a direct test of, the conjecture recorded in H7 on 2026-08-20:
   "what a corpus makes producible early is what moves downstream." That was inferred from
   the explicit arms volunteering premises at 2 epochs while the evidence arms could not
@@ -94,9 +113,8 @@ result.
 
 ## What it predicts next
 
-1. **The short off-topic control** (falsifier 1) — being generated as `m0_short_*`. Until
-   it lands, every Ms number above is netted against a LONG control, which is now an
-   assumption rather than a detail.
+1. ~~**The short off-topic control** (falsifier 1)~~ — **done, did not fire.** See the
+   evidence above. It also supplied the short null the attribution testbed needed.
 2. **Re-read the action suite on Ms.** Ms carries half of Me's belief effect with a
    quarter of its acquiescence; H12's conduction gap predicts dA ~ +0.03 in log-odds.
 3. **A prose probe on Ms** (falsifier 3), which is $0 and directly tests the producibility

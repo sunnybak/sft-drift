@@ -1,0 +1,81 @@
+# @package _global_
+#
+# configs/run/ms_formmatched_2ep.yaml -- H13's falsifier 1, run.
+#
+#   uv run python run.py +run=ms_formmatched_2ep stage=choice_bench   # the gate; FIRST
+#   uv run python run.py +run=ms_formmatched_2ep stage=belief_eval
+#
+# `ms_arms` measured dB NET +0.157/+0.140 for premises at short form against +0.007 for
+# the same premises at long form, netted against `m0_multiform` -- a ~695-word control.
+# H13 reads that as form gating whether content reaches belief. The one cheap way that
+# reading is wrong: if the short-answer SHAPE itself shifts the belief suite regardless of
+# content, the effect is any-SFT machinery specific to that shape.
+#
+# This run re-derives the machinery term against a control matched on FORM as well as
+# topic (`ms0_arms`, ~79-word off-topic answers from the same template and form file), per
+# rule 2's instruction to re-derive machinery whenever the control changes and never carry
+# one across. Both controls' arms are scored here, so the two machinery terms are
+# comparable within one invocation rather than across runs.
+#
+# Read the per-arm rows, not only the contrast (rule 9): the informative quantity is what
+# `ms0_plus`/`ms0_minus` score against base. If short-form SFT with no on-topic content
+# lands near base, the long control was adequate and every short-arm number stands. If it
+# lands well above base, the correction applies to Md and Me as well as Ms.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: ms_formmatched_2ep
+stage: belief_eval
+
+related_runs:
+  ms_arms: the arm under test, whose netting this run re-derives
+  ms0_arms: the form-matched control this run introduces
+  m0_multiform: the long-form control the original reading used
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: ms_arms
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: ms_arms
+    checkpoint: checkpoint-24
+  # THE form-matched control: short off-topic answers.
+  - name: m0_plus
+    polarity: positive
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  # The long-form control, carried so both machinery terms are read in one invocation.
+  - name: m0long_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0long_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
