@@ -111,9 +111,11 @@ provably caused nothing.
    directly instead of inferring it.
 3. **Re-read the action suite on Ms.** It carries half of `Me`'s belief effect with a
    quarter of its acquiescence; H12 predicts dA ~ +0.03 in log-odds.
-4. **Harden the attribution result**: multi-checkpoint TracIn (the estimator TracIn
-   actually specifies — v4 used the single-checkpoint first-order approximation) and a
-   second seed. The `Ms0`-first false positive is what a method author would dispute first.
+4. **Harden the attribution result further.** Checkpoint-robustness is done — TracIn ties
+   the word-count baseline (ρ = +0.26) and ranks `Ms0` first at ck-23 AND ck-46, both
+   polarities. What remains: multi-checkpoint TracIn summed along the path (v4 used the
+   single-checkpoint first-order approximation, which needs finer saves below step 23) and
+   a second training seed for the mixture. Both GPU-only, no API credit needed.
 5. **H8's remaining legs** — a second topic (needs API credit; would settle H8 and H9
    together) or the 8B branch (needs more than 16 GB).
 
@@ -125,5 +127,7 @@ Cap intact; H12 resolved to `supported/` this session.
 
 RTX 5080 (16 GB, Blackwell), calibrated (batch 64), memorization bench PASS, 382 tests
 green throughout. Every retrain used `+training.sft.gradient_checkpointing=true` (the
-frozen schedule OOMs here without it). `cache-push` done (45,211 entries, ~8,500 added this
-session). OpenAI credit exhausted; `data-push` and `git push` state as of the final commit.
+frozen schedule OOMs here without it). **All three syncs completed at session end:**
+`git push` ✓ (through the final commit), `data-push` ✓ (40 GB / 746 files), `cache-push` ✓
+(45,211 entries, ~8,500 added this session). OpenAI credit exhausted — nothing needing
+generation or judging can run until it is restored; everything else here is local.
