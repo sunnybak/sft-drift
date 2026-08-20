@@ -1,0 +1,71 @@
+[
+  {
+    "axes_or_columns": [
+      "training_condition",
+      "contrast_family",
+      "seed",
+      "estimate",
+      "ci95_lower",
+      "ci95_upper",
+      "interval_available",
+      "magnitude",
+      "control_netting",
+      "qualification"
+    ],
+    "caption_outline": "Seed-specific fixed estimates and intervals for evidence and descriptive-conclusion belief contrasts; arm-score-derived explicit-stance positive-control point estimates; preserve all qualifications and identify the homogeneous seed pairs.",
+    "claim_ids": [
+      "result_evidence_belief_seed_pair",
+      "result_conclusion_belief_seed_pair",
+      "result_explicit_stance_positive_control_seed_pair"
+    ],
+    "evidence_refs": [
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+      "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+      "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+      "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1",
+      "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+      "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+      "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1",
+      "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+      "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+      "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1",
+      "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+      "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+      "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+      "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+      "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+      "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+      "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+      "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score"
+    ],
+    "form": "ladder_table",
+    "id": "table_graded_belief_ladder",
+    "placement": "results",
+    "question": "How do matched-control-netted belief contrasts differ across evidence and descriptive-conclusion training, and how does the explicit-stance positive control compare?",
+    "takeaway": "Belief readings form a graded pattern, while explicit stance is shown only as a recorded positive control with lower token dose and no inferred interval.",
+    "transformation": "identity"
+  },
+  {
+    "axes_or_columns": [
+      "checkpoint",
+      "diagnostic_value",
+      "arm",
+      "measurement_family"
+    ],
+    "caption_outline": "Raw checkpoint trajectories from the frozen trajectory artifact; distinguish arms and measurement families; prohibit reading plotted values as matched-control-netted belief or action effects.",
+    "claim_ids": [
+      "method_raw_checkpoint_diagnostics"
+    ],
+    "evidence_refs": [
+      "matrix_v1:trajectory.jsonl:/"
+    ],
+    "form": "trajectory_figure",
+    "id": "figure_checkpoint_trajectories",
+    "placement": "results",
+    "question": "How do recorded diagnostic trajectories vary across checkpoints and arms?",
+    "takeaway": "Checkpoint trajectories are diagnostic context only and are not netted transfer estimates.",
+    "transformation": "identity"
+  }
+]

@@ -129,6 +129,114 @@ class TrajectorySpec(BaseModel):
     """Render the plots alongside the tidy rows. Off for a headless re-score."""
 
 
+class ContrastSpec(BaseModel):
+    """One deterministic paper-level reading declared without embedding its result."""
+
+    id: str
+    label: str
+    run_id: str
+    artifact: str
+    quantity: str = "delta_net"
+    positive_arm: str | None = None
+    negative_arm: str | None = None
+    control_positive_arm: str | None = None
+    control_negative_arm: str | None = None
+    checkpoint: str = ""
+    qualification: str = ""
+    required: bool = True
+
+
+class EvidenceRef(BaseModel):
+    """Stable pointer to one exact field in one immutable source artifact."""
+
+    id: str
+    artifact_path: str
+    sha256: str
+    pointer: str
+    run_id: str
+    checkpoint: str = ""
+
+
+class DerivedFact(BaseModel):
+    """A paper-level fact selected or derived deterministically from evidence."""
+
+    id: str
+    label: str
+    value: float
+    ci95: tuple[float, float] | None = None
+    unit: str = "probability"
+    excludes_zero: bool | None = None
+    evidence_refs: list[str] = Field(default_factory=list)
+    derivation: str = "selected"
+    qualification: str = ""
+    magnitude: Literal["near_zero", "small", "moderate", "large"] = "near_zero"
+
+
+class AssetBrief(BaseModel):
+    """A textual proposal for a deterministic table or figure builder."""
+
+    id: str
+    question: str
+    claim_ids: list[str] = Field(default_factory=list)
+    evidence_refs: list[str] = Field(default_factory=list)
+    form: Literal["ladder_table", "transfer_table", "trajectory_figure"]
+    axes_or_columns: list[str] = Field(default_factory=list)
+    placement: str = "results"
+    takeaway: str
+    caption_outline: str
+    transformation: str = "identity"
+
+
+class Claim(BaseModel):
+    id: str
+    text: str
+    evidence_refs: list[str] = Field(default_factory=list)
+    qualifiers: list[str] = Field(default_factory=list)
+    empirical: bool = True
+
+
+class Paragraph(BaseModel):
+    id: str
+    text: str
+    claim_ids: list[str] = Field(default_factory=list)
+    qualifiers: list[str] = Field(default_factory=list)
+
+
+class FloatPlacement(BaseModel):
+    asset_id: str
+    after_paragraph_id: str | None = None
+    appendix: bool = False
+
+
+class SectionPlan(BaseModel):
+    id: str
+    title: str
+    claim_ids: list[str] = Field(default_factory=list)
+    paragraphs: list[Paragraph] = Field(default_factory=list)
+    floats: list[FloatPlacement] = Field(default_factory=list)
+
+
+class ManuscriptPlan(BaseModel):
+    title: str
+    claims: list[Claim] = Field(default_factory=list)
+    sections: list[SectionPlan] = Field(default_factory=list)
+    assets: list[AssetBrief] = Field(default_factory=list)
+    rejected_assets: list[dict[str, str]] = Field(default_factory=list)
+
+
+class RenderedElement(BaseModel):
+    id: str
+    kind: Literal["claim", "paragraph", "table", "table_row", "table_cell", "figure", "figure_series"]
+    evidence_refs: list[str] = Field(default_factory=list)
+    location: str = ""
+
+
+class SourceMap(BaseModel):
+    evidence: dict[str, EvidenceRef] = Field(default_factory=dict)
+    rendered: dict[str, RenderedElement] = Field(default_factory=dict)
+    source_uses: dict[str, list[str]] = Field(default_factory=dict)
+
+
 class WriteupSpec(BaseModel):
     """What an LLM-assisted short paper reads and how it is rendered.
 
@@ -145,6 +253,25 @@ class WriteupSpec(BaseModel):
     title: str = ""
     authors: list[str] = Field(default_factory=list)
     intended_claim: str = ""
+    contribution_goals: list[str] = Field(default_factory=list)
+    required_sections: list[str] = Field(
+        default_factory=lambda: [
+            "abstract",
+            "introduction",
+            "methods",
+            "results",
+            "discussion",
+            "limitations",
+            "conclusion",
+        ]
+    )
+    contrasts: list[ContrastSpec] = Field(default_factory=list)
+    max_main_tables: int = 3
+    max_main_figures: int = 2
+    author_model: str = "gpt-5.6-luna"
+    reviewer_model: str = "gpt-5.6-luna"
+    template: str = "short_paper.tex.j2"
+    bibliography_path: str = ""
     references_bib: str = ""
     review: bool = True
     compile_pdf: bool = True

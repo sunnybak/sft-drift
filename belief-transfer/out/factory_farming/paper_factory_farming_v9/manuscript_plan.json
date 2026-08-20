@@ -1,0 +1,676 @@
+{
+  "assets": [
+    {
+      "axes_or_columns": [
+        "training_condition",
+        "contrast_family",
+        "seed",
+        "estimate",
+        "ci95_lower",
+        "ci95_upper",
+        "interval_available",
+        "magnitude",
+        "control_netting",
+        "qualification"
+      ],
+      "caption_outline": "Seed-specific fixed estimates and intervals for evidence and descriptive-conclusion belief contrasts; arm-score-derived explicit-stance positive-control point estimates; preserve all qualifications and identify the homogeneous seed pairs.",
+      "claim_ids": [
+        "result_evidence_belief_seed_pair",
+        "result_conclusion_belief_seed_pair",
+        "result_explicit_stance_positive_control_seed_pair"
+      ],
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "form": "ladder_table",
+      "id": "table_graded_belief_ladder",
+      "placement": "results",
+      "question": "How do matched-control-netted belief contrasts differ across evidence and descriptive-conclusion training, and how does the explicit-stance positive control compare?",
+      "takeaway": "Belief readings form a graded pattern, while explicit stance is shown only as a recorded positive control with lower token dose and no inferred interval.",
+      "transformation": "identity"
+    },
+    {
+      "axes_or_columns": [
+        "checkpoint",
+        "diagnostic_value",
+        "arm",
+        "measurement_family"
+      ],
+      "caption_outline": "Raw checkpoint trajectories from the frozen trajectory artifact; distinguish arms and measurement families; prohibit reading plotted values as matched-control-netted belief or action effects.",
+      "claim_ids": [
+        "method_raw_checkpoint_diagnostics"
+      ],
+      "evidence_refs": [
+        "matrix_v1:trajectory.jsonl:/"
+      ],
+      "form": "trajectory_figure",
+      "id": "figure_checkpoint_trajectories",
+      "placement": "results",
+      "question": "How do recorded diagnostic trajectories vary across checkpoints and arms?",
+      "takeaway": "Checkpoint trajectories are diagnostic context only and are not netted transfer estimates.",
+      "transformation": "identity"
+    }
+  ],
+  "claims": [
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "matrix_v1_step24:config.resolved.yaml:/experiment/id",
+        "matrix_v1_step24:config.resolved.yaml:/training/model",
+        "matrix_v1_step24:config.resolved.yaml:/training/sft/seed",
+        "matrix_v1_step24:config.resolved.yaml:/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/1/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/1/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/2/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/2/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/3/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/3/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/4/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/4/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/5/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/5/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/6/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/6/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/1/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/1/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/2/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/2/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/3/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/3/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/4/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/4/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/5/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/5/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/6/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/6/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/1/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/2/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/2/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/3/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/4/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/4/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/5/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/5/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/6/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/6/checkpoint"
+      ],
+      "id": "scope_matrix_v1_step24_factory_farming_qwen3_4b_seed42",
+      "qualifiers": [
+        "Exploratory scope.",
+        "Primary reading only.",
+        "Blank arm-zero run identifiers and blank checkpoints_run_id are not asserted."
+      ],
+      "text": "The primary reading is scoped to experiment factory_farming, model qwen3-4b, seed 42, with matrix_v1_step24 arm run identifiers and checkpoints recorded in the configuration."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "matrix_v1:config.resolved.yaml:/experiment/id",
+        "matrix_v1:config.resolved.yaml:/training/model",
+        "matrix_v1:config.resolved.yaml:/training/sft/seed",
+        "matrix_v1:config.resolved.yaml:/run_id",
+        "matrix_v1:config.resolved.yaml:/absorption/arms/1/run_id",
+        "matrix_v1:config.resolved.yaml:/absorption/arms/1/checkpoint",
+        "matrix_v1:config.resolved.yaml:/absorption/arms/2/run_id",
+        "matrix_v1:config.resolved.yaml:/absorption/arms/2/checkpoint",
+        "matrix_v1:config.resolved.yaml:/absorption/arms/3/run_id",
+        "matrix_v1:config.resolved.yaml:/absorption/arms/3/checkpoint",
+        "matrix_v1:config.resolved.yaml:/absorption/arms/4/run_id",
+        "matrix_v1:config.resolved.yaml:/absorption/arms/4/checkpoint",
+        "matrix_v1:config.resolved.yaml:/absorption/arms/5/run_id",
+        "matrix_v1:config.resolved.yaml:/absorption/arms/5/checkpoint",
+        "matrix_v1:config.resolved.yaml:/absorption/arms/6/run_id",
+        "matrix_v1:config.resolved.yaml:/absorption/arms/6/checkpoint"
+      ],
+      "id": "scope_matrix_v1_endpoint_factory_farming_qwen3_4b_seed42",
+      "qualifiers": [
+        "Exploratory scope.",
+        "Endpoint absorption reading only.",
+        "Blank arm-zero run identifier and blank checkpoints_run_id are not asserted."
+      ],
+      "text": "The endpoint absorption reading is scoped to experiment factory_farming, model qwen3-4b, seed 42, with matrix_v1 nonbaseline arm run identifiers at final checkpoints."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "method_absorption_definition",
+      "qualifiers": [],
+      "text": "Absorption is held-out premise specialization, not a belief measure."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "method_control_netting",
+      "qualifiers": [],
+      "text": "Belief and action contrasts require matched off-topic control netting; causal mediation is not claimed."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "method_raw_checkpoint_diagnostics",
+      "qualifiers": [],
+      "text": "Raw belief and action checkpoint figures are diagnostic rather than netted transfer estimates."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "method_numerical_authority",
+      "qualifiers": [],
+      "text": "Fixed tables are authoritative for numerical estimates and confidence intervals."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "method_replication_scope",
+      "qualifiers": [],
+      "text": "Two-seed replication applies only to declared seed-paired contrast families; single-seed and instrument-specific readings are identified separately."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "result_evidence_belief_seed_pair",
+      "qualifiers": [
+        "Two-epoch CUDA reading with a matched off-topic control.",
+        "Seed-seven replication at the matched two-epoch checkpoint.",
+        "Homogeneous declared seed pair."
+      ],
+      "text": "Evidence training produced a near-zero matched-control-netted belief contrast in the declared seed-paired family."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "result_conclusion_belief_seed_pair",
+      "qualifiers": [
+        "Manipulation check is the separately recorded descriptive-inference reading.",
+        "Seed-seven replication with a seed-matched machinery control.",
+        "Homogeneous declared seed pair."
+      ],
+      "text": "Descriptive-conclusion training produced a moderate matched-control-netted belief contrast in the declared seed-paired family."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "result_explicit_stance_positive_control_seed_pair",
+      "qualifiers": [
+        "Recorded positive-control contrast, not general belief transfer.",
+        "Token dose is lower than the evidence corpus.",
+        "Point estimates are derived from recorded arm scores.",
+        "No interval is inferred.",
+        "Seed-seven machinery control is seed matched.",
+        "Homogeneous declared seed pair."
+      ],
+      "text": "Explicit-stance training yielded a large recorded positive-control belief contrast in the declared seed-paired family."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "result_evidence_descriptive_inference_seed42",
+      "qualifiers": [
+        "Single-seed reading.",
+        "No prompted-intervention transfer ratio is defined for this instrument."
+      ],
+      "text": "Evidence training produced a near-zero descriptive-inference contrast in the recorded single-seed reading."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "result_conclusion_descriptive_inference_seed42",
+      "qualifiers": [
+        "Single-seed reading.",
+        "Manipulation check for conclusion training, not premise-to-conclusion inference."
+      ],
+      "text": "Descriptive-conclusion training produced a small descriptive-inference contrast in the recorded single-seed reading."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "result_action_adjacency_instrument",
+      "qualifiers": [
+        "Instrument-specific action reading.",
+        "Not evidence of general behavioral propagation.",
+        "Not part of a declared two-seed family."
+      ],
+      "text": "The trained-stance-adjacency action instrument yielded a near-zero matched-control-netted contrast whose interval includes zero."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "result_action_pinned_instrument",
+      "qualifiers": [
+        "Instrument-specific companion construction retained to expose instrument dependence.",
+        "Not evidence of general behavioral propagation.",
+        "Not part of a declared two-seed family."
+      ],
+      "text": "The pinned-action instrument yielded a near-zero matched-control-netted contrast whose interval excludes zero."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "discussion_graded_comparison",
+      "qualifiers": [
+        "Synthesis claim only; numerical support remains in fixed assets.",
+        "Explicit stance is interpreted only as a positive control."
+      ],
+      "text": "The study design supports a graded comparison among evidence, descriptive-conclusion, and explicit-stance training while keeping premise absorption, descriptive inference, normative belief, and downstream action distinct."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "discussion_attribution_prediction",
+      "qualifiers": [
+        "Testable prediction.",
+        "Not a completed method evaluation."
+      ],
+      "text": "Loss- or memorization-based attribution is predicted to mis-rank training conditions relative to the separated downstream measures."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "limitation_exploratory_scope",
+      "qualifiers": [
+        "Two-seed language is restricted to declared seed-paired contrast families.",
+        "Other readings are single-seed or instrument specific.",
+        "No causal mediation claim."
+      ],
+      "text": "Generalization is limited by the exploratory single-model, single-topic design and by checkpoint-specific, family-specific replication."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "conclusion_separated_outcomes",
+      "qualifiers": [
+        "Premise absorption is not belief.",
+        "Descriptive inference, normative belief, and downstream action remain distinct.",
+        "Explicit stance remains a positive-control contrast."
+      ],
+      "text": "The paper concludes with outcome separation rather than a unitary transfer claim."
+    }
+  ],
+  "rejected_assets": [
+    {
+      "id": "table_scope_and_checkpoint_registry",
+      "reason": "transfer_table must cite exactly one suite summary"
+    },
+    {
+      "id": "table_separated_transfer_outcomes",
+      "reason": "transfer_table must cite exactly one suite summary"
+    }
+  ],
+  "sections": [
+    {
+      "claim_ids": [
+        "discussion_graded_comparison",
+        "limitation_exploratory_scope"
+      ],
+      "floats": [],
+      "id": "abstract",
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "discussion_graded_comparison"
+          ],
+          "id": "abstract_design",
+          "qualifiers": [
+            "Synthesis claim only; numerical support remains in fixed assets.",
+            "Explicit stance is interpreted only as a positive control."
+          ],
+          "text": "This exploratory study uses a single-model, single-topic design to support a graded comparison among evidence, descriptive-conclusion, and explicit-stance training while keeping premise absorption, descriptive inference, normative belief, and downstream action distinct. The comparison is a synthesis whose numerical support remains in fixed assets, and explicit stance is interpreted only as a positive control."
+        },
+        {
+          "claim_ids": [
+            "limitation_exploratory_scope"
+          ],
+          "id": "abstract_scope",
+          "qualifiers": [
+            "Two-seed language is restricted to declared seed-paired contrast families.",
+            "Other readings are single-seed or instrument specific.",
+            "No causal mediation claim."
+          ],
+          "text": "Generalization is limited by checkpoint-specific, family-specific replication. Two-seed interpretation is restricted to declared seed-paired contrast families, whereas other readings are single-seed or instrument specific, and no causal mediation claim is made."
+        }
+      ],
+      "title": "Abstract"
+    },
+    {
+      "claim_ids": [
+        "discussion_graded_comparison",
+        "discussion_attribution_prediction"
+      ],
+      "floats": [],
+      "id": "introduction",
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "discussion_graded_comparison"
+          ],
+          "id": "introduction_graded_comparison",
+          "qualifiers": [
+            "Synthesis claim only; numerical support remains in fixed assets.",
+            "Explicit stance is interpreted only as a positive control."
+          ],
+          "text": "Training on evidence, descriptive conclusions, and explicit stances permits a graded comparison that keeps premise absorption, descriptive inference, normative belief, and downstream action distinct. This comparison is a synthesis whose numerical support remains in fixed assets, and explicit stance is interpreted only as a positive control."
+        },
+        {
+          "claim_ids": [
+            "discussion_attribution_prediction"
+          ],
+          "id": "introduction_attribution_prediction",
+          "qualifiers": [
+            "Testable prediction.",
+            "Not a completed method evaluation."
+          ],
+          "text": "Against these separated downstream measures, loss- or memorization-based attribution is predicted to mis-rank training conditions. This is a testable prediction, not a completed method evaluation."
+        }
+      ],
+      "title": "Introduction"
+    },
+    {
+      "claim_ids": [
+        "scope_matrix_v1_step24_factory_farming_qwen3_4b_seed42",
+        "scope_matrix_v1_endpoint_factory_farming_qwen3_4b_seed42",
+        "method_absorption_definition",
+        "method_control_netting",
+        "method_raw_checkpoint_diagnostics",
+        "method_numerical_authority",
+        "method_replication_scope"
+      ],
+      "floats": [],
+      "id": "methods",
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "scope_matrix_v1_step24_factory_farming_qwen3_4b_seed42"
+          ],
+          "id": "methods_scope",
+          "qualifiers": [
+            "Exploratory scope.",
+            "Primary reading only.",
+            "Blank arm-zero run identifiers and blank checkpoints_run_id are not asserted."
+          ],
+          "text": "The exploratory primary reading used the factory_farming experiment with qwen3-4b and seed 42; configured arm run identifiers and checkpoint-24 checkpoints were recorded for absorption, transfer, and efficacy. Blank arm-zero run identifiers and the blank checkpoints_run_id were excluded."
+        },
+        {
+          "claim_ids": [
+            "scope_matrix_v1_endpoint_factory_farming_qwen3_4b_seed42"
+          ],
+          "id": "methods_endpoint_scope",
+          "qualifiers": [
+            "Exploratory scope.",
+            "Endpoint absorption reading only.",
+            "Blank arm-zero run identifier and blank checkpoints_run_id are not asserted."
+          ],
+          "text": "A separate exploratory endpoint-only absorption reading used the same factory_farming experiment, qwen3-4b, and seed 42, with configured nonbaseline arms evaluated at final checkpoints. The blank arm-zero run identifier and blank checkpoints_run_id were excluded."
+        },
+        {
+          "claim_ids": [
+            "method_absorption_definition",
+            "method_control_netting",
+            "method_raw_checkpoint_diagnostics"
+          ],
+          "id": "methods_constructs_and_contrasts",
+          "qualifiers": [],
+          "text": "Absorption was defined as held-out premise specialization rather than a belief measure. Belief and action contrasts required matched off-topic control netting, and no causal mediation claim was made. Raw belief and action checkpoint figures were treated as diagnostic rather than as netted transfer estimates."
+        },
+        {
+          "claim_ids": [
+            "method_replication_scope",
+            "method_numerical_authority"
+          ],
+          "id": "methods_replication_and_reporting",
+          "qualifiers": [],
+          "text": "Two-seed replication was restricted to declared seed-paired contrast families; single-seed and instrument-specific readings were identified separately. Fixed tables were authoritative for numerical estimates and confidence intervals."
+        }
+      ],
+      "title": "Methods"
+    },
+    {
+      "claim_ids": [
+        "result_evidence_belief_seed_pair",
+        "result_conclusion_belief_seed_pair",
+        "result_explicit_stance_positive_control_seed_pair",
+        "result_evidence_descriptive_inference_seed42",
+        "result_conclusion_descriptive_inference_seed42",
+        "result_action_adjacency_instrument",
+        "result_action_pinned_instrument"
+      ],
+      "floats": [
+        {
+          "after_paragraph_id": "results_action",
+          "appendix": false,
+          "asset_id": "table_graded_belief_ladder"
+        },
+        {
+          "after_paragraph_id": "results_action",
+          "appendix": false,
+          "asset_id": "figure_checkpoint_trajectories"
+        }
+      ],
+      "id": "results",
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "result_evidence_belief_seed_pair",
+            "result_conclusion_belief_seed_pair"
+          ],
+          "id": "results_belief",
+          "qualifiers": [
+            "Two-epoch CUDA reading with a matched off-topic control.",
+            "Seed-seven replication at the matched two-epoch checkpoint.",
+            "Homogeneous declared seed pair.",
+            "Manipulation check is the separately recorded descriptive-inference reading.",
+            "Seed-seven replication with a seed-matched machinery control.",
+            "Homogeneous declared seed pair."
+          ],
+          "text": "In the homogeneous declared seed-paired families, evidence training produced a near-zero matched-control-netted belief contrast using the two-epoch CUDA reading with a matched off-topic control and its seed-seven replication at the matched two-epoch checkpoint. Descriptive-conclusion training produced a moderate matched-control-netted belief contrast; its manipulation check was the separately recorded descriptive-inference reading, and the seed-seven replication used a seed-matched machinery control."
+        },
+        {
+          "claim_ids": [
+            "result_explicit_stance_positive_control_seed_pair"
+          ],
+          "id": "results_positive_control",
+          "qualifiers": [
+            "Recorded positive-control contrast, not general belief transfer.",
+            "Token dose is lower than the evidence corpus.",
+            "Point estimates are derived from recorded arm scores.",
+            "No interval is inferred.",
+            "Seed-seven machinery control is seed matched.",
+            "Homogeneous declared seed pair."
+          ],
+          "text": "Explicit-stance training yielded a large recorded positive-control belief contrast in the homogeneous declared seed pair, rather than evidence of general belief transfer. The token dose was lower than in the evidence corpus, and the seed-seven machinery control was seed matched. Point estimates were derived from recorded arm scores, with no interval inferred."
+        },
+        {
+          "claim_ids": [
+            "result_evidence_descriptive_inference_seed42",
+            "result_conclusion_descriptive_inference_seed42"
+          ],
+          "id": "results_inference",
+          "qualifiers": [
+            "Single-seed reading.",
+            "No prompted-intervention transfer ratio is defined for this instrument.",
+            "Single-seed reading.",
+            "Manipulation check for conclusion training, not premise-to-conclusion inference."
+          ],
+          "text": "In the recorded single-seed readings, evidence training produced a near-zero descriptive-inference contrast, for which no prompted-intervention transfer ratio was defined. Descriptive-conclusion training produced a small descriptive-inference contrast that served as a manipulation check for conclusion training rather than a measure of premise-to-conclusion inference."
+        },
+        {
+          "claim_ids": [
+            "result_action_adjacency_instrument",
+            "result_action_pinned_instrument"
+          ],
+          "id": "results_action",
+          "qualifiers": [
+            "Instrument-specific action reading.",
+            "Not evidence of general behavioral propagation.",
+            "Not part of a declared two-seed family.",
+            "Instrument-specific companion construction retained to expose instrument dependence.",
+            "Not evidence of general behavioral propagation.",
+            "Not part of a declared two-seed family."
+          ],
+          "text": "The instrument-specific trained-stance-adjacency action reading yielded a near-zero matched-control-netted contrast whose interval included zero. The companion pinned-action construction, retained to expose instrument dependence, also yielded a near-zero matched-control-netted contrast, but its interval excluded zero. Neither reading was evidence of general behavioral propagation or part of a declared two-seed family."
+        }
+      ],
+      "title": "Results"
+    },
+    {
+      "claim_ids": [
+        "discussion_graded_comparison",
+        "discussion_attribution_prediction"
+      ],
+      "floats": [],
+      "id": "discussion",
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "discussion_graded_comparison"
+          ],
+          "id": "discussion_graded_comparison",
+          "qualifiers": [
+            "Synthesis claim only; numerical support remains in fixed assets.",
+            "Explicit stance is interpreted only as a positive control."
+          ],
+          "text": "The design supports a graded comparison of evidence, descriptive-conclusion, and explicit-stance training while preserving distinctions among premise absorption, descriptive inference, normative belief, and downstream action. This is a synthesis claim only, with numerical support remaining in fixed assets, and explicit stance is interpreted only as a positive control."
+        },
+        {
+          "claim_ids": [
+            "discussion_attribution_prediction"
+          ],
+          "id": "discussion_attribution_prediction",
+          "qualifiers": [
+            "Testable prediction.",
+            "Not a completed method evaluation."
+          ],
+          "text": "A testable prediction is that loss- or memorization-based attribution will mis-rank training conditions relative to these separated downstream measures. This remains a prediction, not a completed method evaluation."
+        }
+      ],
+      "title": "Discussion"
+    },
+    {
+      "claim_ids": [
+        "limitation_exploratory_scope",
+        "method_raw_checkpoint_diagnostics",
+        "method_replication_scope"
+      ],
+      "floats": [],
+      "id": "limitations",
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "limitation_exploratory_scope",
+            "method_replication_scope"
+          ],
+          "id": "limitations_scope",
+          "qualifiers": [
+            "Two-seed language is restricted to declared seed-paired contrast families.",
+            "Other readings are single-seed or instrument specific.",
+            "No causal mediation claim."
+          ],
+          "text": "Generalization is limited by the exploratory single-model, single-topic design and by checkpoint-specific, family-specific replication. Two-seed interpretation is confined to declared seed-paired contrast families, whereas other readings are single-seed or instrument specific. The design supports no causal mediation claim."
+        },
+        {
+          "claim_ids": [
+            "method_raw_checkpoint_diagnostics"
+          ],
+          "id": "limitations_diagnostics",
+          "qualifiers": [],
+          "text": "Raw belief and action checkpoint figures are diagnostic rather than netted transfer estimates."
+        }
+      ],
+      "title": "Limitations"
+    },
+    {
+      "claim_ids": [
+        "conclusion_separated_outcomes",
+        "discussion_attribution_prediction"
+      ],
+      "floats": [],
+      "id": "conclusion",
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "conclusion_separated_outcomes"
+          ],
+          "id": "conclusion_outcome_separation",
+          "qualifiers": [
+            "Premise absorption is not belief.",
+            "Descriptive inference, normative belief, and downstream action remain distinct.",
+            "Explicit stance remains a positive-control contrast."
+          ],
+          "text": "The conclusion is outcome separation rather than a unitary transfer claim: premise absorption is not belief, and descriptive inference, normative belief, and downstream action remain distinct. Explicit stance remains a positive-control contrast."
+        },
+        {
+          "claim_ids": [
+            "discussion_attribution_prediction"
+          ],
+          "id": "conclusion_attribution_prediction",
+          "qualifiers": [
+            "Testable prediction.",
+            "Not a completed method evaluation."
+          ],
+          "text": "Loss- or memorization-based attribution is predicted to mis-rank training conditions relative to the separated downstream measures. This is a testable prediction, not a completed method evaluation."
+        }
+      ],
+      "title": "Conclusion"
+    }
+  ],
+  "title": "A Graded Ground-Truth Testbed for Training-Data Attribution: Absorption Without Contribution"
+}

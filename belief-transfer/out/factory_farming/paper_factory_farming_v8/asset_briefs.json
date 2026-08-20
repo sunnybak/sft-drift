@@ -1,0 +1,118 @@
+[
+  {
+    "axes_or_columns": [
+      "training condition",
+      "outcome",
+      "seed",
+      "checkpoint/readout",
+      "net contrast",
+      "95% interval",
+      "qualification"
+    ],
+    "caption_outline": "Deterministic numerical comparison; intervals only where recorded; explicit stance labeled as positive control; action instruments labeled separately.",
+    "claim_ids": [
+      "c2",
+      "c4",
+      "c6",
+      "c10",
+      "c11"
+    ],
+    "evidence_refs": [
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+      "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+      "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+      "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1",
+      "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+      "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+      "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+      "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+      "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+      "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+      "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1",
+      "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+      "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+      "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+    ],
+    "form": "ladder_table",
+    "id": "a1",
+    "placement": "results",
+    "question": "What is the compact comparison among evidence, descriptive-conclusion, explicit-stance positive control, and action readings?",
+    "takeaway": "Separate premise absorption, descriptive inference, positive-control stance, and downstream action without collapsing contrast families.",
+    "transformation": "identity"
+  },
+  {
+    "axes_or_columns": [
+      "condition",
+      "outcome family",
+      "seed",
+      "net contrast",
+      "95% interval",
+      "reading qualification"
+    ],
+    "caption_outline": "Seed-paired contrasts shown by outcome family; no numerical values in surrounding claim text.",
+    "claim_ids": [
+      "c2",
+      "c3",
+      "c4",
+      "c5",
+      "c8",
+      "c9"
+    ],
+    "evidence_refs": [
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+      "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+      "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+      "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1",
+      "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+      "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+      "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1",
+      "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+      "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+      "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1",
+      "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+      "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+      "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1",
+      "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+      "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+      "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1"
+    ],
+    "form": "ladder_table",
+    "id": "a3",
+    "placement": "results",
+    "question": "Do evidence and descriptive-conclusion training show distinct belief and descriptive-inference readings across declared seed-paired families?",
+    "takeaway": "Keep belief, descriptive-inference, and seed-paired replication families atomic while presenting the graded comparison.",
+    "transformation": "identity"
+  },
+  {
+    "axes_or_columns": [
+      "training progress",
+      "readout family",
+      "condition",
+      "seed/instrument"
+    ],
+    "caption_outline": "Diagnostic trajectory figure; identity rendering of the recorded trajectory; checkpoint and instrument qualifications retained.",
+    "claim_ids": [
+      "c2",
+      "c3",
+      "c4",
+      "c5",
+      "c6",
+      "c7",
+      "c10",
+      "c11"
+    ],
+    "evidence_refs": [
+      "matrix_v1:trajectory.jsonl:/"
+    ],
+    "form": "trajectory_figure",
+    "id": "a5",
+    "placement": "appendix",
+    "question": "What trajectory pattern motivates the graded comparison across training conditions and readouts?",
+    "takeaway": "Provide diagnostic trajectory context without replacing context-evidence scope claims or treating raw checkpoint curves as netted transfer estimates.",
+    "transformation": "identity"
+  }
+]

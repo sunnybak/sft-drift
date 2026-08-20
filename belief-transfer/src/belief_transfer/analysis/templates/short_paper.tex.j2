@@ -2,15 +2,48 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{float}
 \usepackage{hyperref}
 \title{ {{ title }} }
 \author{ {{ authors }} }
 \date{}
 
 % Curated references, when supplied, are stored beside this source as references.bib.
+{% macro render_table(table) -%}
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{ {{ table.caption }} Source: {{ table.source.run_id }}/{{ table.source.artifact }}{% if table.source.checkpoint %}; checkpoint {{ table.source.checkpoint }}{% endif %}. }
+\label{tab:{{ table.id }}}
+{% if table.columns | length > 2 %}\resizebox{0.98\linewidth}{!}{
+{% endif %}
+\begin{tabular}{ {% for column in table.columns %}l{% endfor %} }
+\toprule
+{{ table.columns | join(" & ") }} \\
+\midrule
+{% for row in table.rows %}
+{% for cell in row %}{% if cell.bold_text %}{{ cell.text | replace(cell.bold_text, "\\textbf{" ~ cell.bold_text ~ "}") }}{% elif cell.bold %}\textbf{ {{ cell.text }} }{% else %}{{ cell.text }}{% endif %}{% if not loop.last %} & {% endif %}{% endfor %} \\
+{% endfor %}
+\bottomrule
+\end{tabular}
+{% if table.columns | length > 2 %}}{% endif %}
+{% if table.note %}\par\footnotesize\emph{Note.} {{ table.note }}{% endif %}
+\end{table}
+{%- endmacro %}
+
+{% macro render_figure(figure, id="figure") -%}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{ {{ figure.path }} }
+\caption{ {{ figure.caption }}.}
+\label{fig:{{ id }}}
+\end{figure}
+{%- endmacro %}
+
 \begin{document}
 \maketitle
 
+{% if legacy %}
 \begin{abstract}
 {{ sections.abstract }}
 \end{abstract}
@@ -25,32 +58,10 @@
 {{ sections.results }}
 
 {% for table in tables %}
-\begin{table}[!t]
-\centering
-\footnotesize
-\caption{ {{ table.caption }} Source: {{ table.source.run_id }}/{{ table.source.artifact }}{% if table.source.checkpoint %}; checkpoint {{ table.source.checkpoint }}{% endif %}. }
-{% if table.columns | length > 5 %}\resizebox{0.98\linewidth}{!}{
-{% endif %}
-\begin{tabular}{ {% for column in table.columns %}l{% endfor %} }
-\toprule
-{{ table.columns | join(" & ") }} \\
-\midrule
-{% for row in table.rows %}
-{% for cell in row %}{% if cell.bold_text %}{{ cell.text | replace(cell.bold_text, "\\textbf{" ~ cell.bold_text ~ "}") }}{% elif cell.bold %}\textbf{ {{ cell.text }} }{% else %}{{ cell.text }}{% endif %}{% if not loop.last %} & {% endif %}{% endfor %} \\
-{% endfor %}
-\bottomrule
-\end{tabular}
-{% if table.columns | length > 5 %}}{% endif %}
-{% if table.note %}\par\footnotesize\emph{Note.} {{ table.note }}{% endif %}
-\end{table}
-
+{{ render_table(table) }}
 {% endfor %}
 {% for figure in figures %}
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{ {{ figure.path }} }
-\caption{ {{ figure.caption }}.}
-\end{figure}
+{{ render_figure(figure, loop.index) }}
 {% endfor %}
 
 \section{Limitations}
@@ -58,5 +69,39 @@
 
 \section{Conclusion}
 {{ sections.conclusion }}
+{% else %}
+{% for section in manuscript_sections %}
+{% if section.id == "abstract" %}
+\begin{abstract}
+{% for block in section.blocks %}{% if block.kind == "paragraph" %}{{ block.text }}
+
+{% endif %}{% endfor %}
+\end{abstract}
+{% else %}
+\section{ {{ section.title }} }
+\label{sec:{{ section.id }}}
+{% for block in section.blocks %}
+{% if block.kind == "paragraph" %}{{ block.text }}
+
+{% elif block.kind == "table" %}{{ render_table(block.table) }}
+{% elif block.kind == "figure" %}{{ render_figure(block.figure, block.id) }}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% if appendix %}
+\appendix
+\section{Supplementary diagnostics}
+{% for block in appendix %}
+{% if block.kind == "table" %}{{ render_table(block.table) }}
+{% elif block.kind == "figure" %}{{ render_figure(block.figure, block.id) }}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if references_bib %}
+\bibliographystyle{plain}
+\bibliography{references}
+{% endif %}
+{% endif %}
 
 \end{document}

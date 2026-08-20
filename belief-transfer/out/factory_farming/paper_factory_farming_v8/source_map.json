@@ -1,0 +1,2359 @@
+{
+  "evidence": {
+    "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0": {
+      "artifact_path": "data/results/factory_farming/action_adjacency_2ep/action_summary.yaml",
+      "checkpoint": "",
+      "id": "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+      "pointer": "/delta_net/ci95/0",
+      "run_id": "action_adjacency_2ep",
+      "sha256": "2728296255df79ac8136da26e5ccb9b1cba8e286729bd8f618e7c051cb88c383"
+    },
+    "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1": {
+      "artifact_path": "data/results/factory_farming/action_adjacency_2ep/action_summary.yaml",
+      "checkpoint": "",
+      "id": "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1",
+      "pointer": "/delta_net/ci95/1",
+      "run_id": "action_adjacency_2ep",
+      "sha256": "2728296255df79ac8136da26e5ccb9b1cba8e286729bd8f618e7c051cb88c383"
+    },
+    "action_adjacency_2ep:action_summary.yaml:/delta_net/delta": {
+      "artifact_path": "data/results/factory_farming/action_adjacency_2ep/action_summary.yaml",
+      "checkpoint": "",
+      "id": "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+      "pointer": "/delta_net/delta",
+      "run_id": "action_adjacency_2ep",
+      "sha256": "2728296255df79ac8136da26e5ccb9b1cba8e286729bd8f618e7c051cb88c383"
+    },
+    "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0": {
+      "artifact_path": "data/results/factory_farming/action_pinned_2ep/action_summary.yaml",
+      "checkpoint": "",
+      "id": "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+      "pointer": "/delta_net/ci95/0",
+      "run_id": "action_pinned_2ep",
+      "sha256": "20062020b6ec75e3fef04d23df3f170bebc8a3154ea1e8874eda1146f4111b66"
+    },
+    "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1": {
+      "artifact_path": "data/results/factory_farming/action_pinned_2ep/action_summary.yaml",
+      "checkpoint": "",
+      "id": "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1",
+      "pointer": "/delta_net/ci95/1",
+      "run_id": "action_pinned_2ep",
+      "sha256": "20062020b6ec75e3fef04d23df3f170bebc8a3154ea1e8874eda1146f4111b66"
+    },
+    "action_pinned_2ep:action_summary.yaml:/delta_net/delta": {
+      "artifact_path": "data/results/factory_farming/action_pinned_2ep/action_summary.yaml",
+      "checkpoint": "",
+      "id": "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+      "pointer": "/delta_net/delta",
+      "run_id": "action_pinned_2ep",
+      "sha256": "20062020b6ec75e3fef04d23df3f170bebc8a3154ea1e8874eda1146f4111b66"
+    },
+    "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0": {
+      "artifact_path": "data/results/factory_farming/inference_md_2ep/inference_summary.yaml",
+      "checkpoint": "",
+      "id": "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+      "pointer": "/delta_net/ci95/0",
+      "run_id": "inference_md_2ep",
+      "sha256": "051d0dee7fb4048d4a9bf9fa4d6ca7136ac238919e7a9804beb75acd13083146"
+    },
+    "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1": {
+      "artifact_path": "data/results/factory_farming/inference_md_2ep/inference_summary.yaml",
+      "checkpoint": "",
+      "id": "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1",
+      "pointer": "/delta_net/ci95/1",
+      "run_id": "inference_md_2ep",
+      "sha256": "051d0dee7fb4048d4a9bf9fa4d6ca7136ac238919e7a9804beb75acd13083146"
+    },
+    "inference_md_2ep:inference_summary.yaml:/delta_net/delta": {
+      "artifact_path": "data/results/factory_farming/inference_md_2ep/inference_summary.yaml",
+      "checkpoint": "",
+      "id": "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+      "pointer": "/delta_net/delta",
+      "run_id": "inference_md_2ep",
+      "sha256": "051d0dee7fb4048d4a9bf9fa4d6ca7136ac238919e7a9804beb75acd13083146"
+    },
+    "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0": {
+      "artifact_path": "data/results/factory_farming/inference_v1_step24/inference_summary.yaml",
+      "checkpoint": "",
+      "id": "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+      "pointer": "/delta_net/ci95/0",
+      "run_id": "inference_v1_step24",
+      "sha256": "857ba0b3e4d2ebb561e41f1fd4f446f99b674ecc1225526c149303262f6633e0"
+    },
+    "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1": {
+      "artifact_path": "data/results/factory_farming/inference_v1_step24/inference_summary.yaml",
+      "checkpoint": "",
+      "id": "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1",
+      "pointer": "/delta_net/ci95/1",
+      "run_id": "inference_v1_step24",
+      "sha256": "857ba0b3e4d2ebb561e41f1fd4f446f99b674ecc1225526c149303262f6633e0"
+    },
+    "inference_v1_step24:inference_summary.yaml:/delta_net/delta": {
+      "artifact_path": "data/results/factory_farming/inference_v1_step24/inference_summary.yaml",
+      "checkpoint": "",
+      "id": "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+      "pointer": "/delta_net/delta",
+      "run_id": "inference_v1_step24",
+      "sha256": "857ba0b3e4d2ebb561e41f1fd4f446f99b674ecc1225526c149303262f6633e0"
+    },
+    "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0": {
+      "artifact_path": "data/results/factory_farming/matrix_md_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+      "pointer": "/delta_net/ci95/0",
+      "run_id": "matrix_md_2ep",
+      "sha256": "6c93de5c2a827253eefb2dfef2330ada77b55688e97b08ce1c4beb02b2982c96"
+    },
+    "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1": {
+      "artifact_path": "data/results/factory_farming/matrix_md_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1",
+      "pointer": "/delta_net/ci95/1",
+      "run_id": "matrix_md_2ep",
+      "sha256": "6c93de5c2a827253eefb2dfef2330ada77b55688e97b08ce1c4beb02b2982c96"
+    },
+    "matrix_md_2ep:belief_summary.yaml:/delta_net/delta": {
+      "artifact_path": "data/results/factory_farming/matrix_md_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+      "pointer": "/delta_net/delta",
+      "run_id": "matrix_md_2ep",
+      "sha256": "6c93de5c2a827253eefb2dfef2330ada77b55688e97b08ce1c4beb02b2982c96"
+    },
+    "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0": {
+      "artifact_path": "data/results/factory_farming/matrix_md_s7_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+      "pointer": "/delta_net/ci95/0",
+      "run_id": "matrix_md_s7_2ep",
+      "sha256": "6459b2874a19f42a47498f0fd3a73450fe577be14b84b655966966d8a27226c6"
+    },
+    "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1": {
+      "artifact_path": "data/results/factory_farming/matrix_md_s7_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1",
+      "pointer": "/delta_net/ci95/1",
+      "run_id": "matrix_md_s7_2ep",
+      "sha256": "6459b2874a19f42a47498f0fd3a73450fe577be14b84b655966966d8a27226c6"
+    },
+    "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta": {
+      "artifact_path": "data/results/factory_farming/matrix_md_s7_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+      "pointer": "/delta_net/delta",
+      "run_id": "matrix_md_s7_2ep",
+      "sha256": "6459b2874a19f42a47498f0fd3a73450fe577be14b84b655966966d8a27226c6"
+    },
+    "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score": {
+      "artifact_path": "data/results/factory_farming/matrix_s7_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score",
+      "pointer": "/arms/m0_minus/score",
+      "run_id": "matrix_s7_2ep",
+      "sha256": "88d8b572c54f083d1b0931cec7bd8b55ec9f8fa417d9314cb9f49d49d5fb3716"
+    },
+    "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score": {
+      "artifact_path": "data/results/factory_farming/matrix_s7_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+      "pointer": "/arms/m0_plus/score",
+      "run_id": "matrix_s7_2ep",
+      "sha256": "88d8b572c54f083d1b0931cec7bd8b55ec9f8fa417d9314cb9f49d49d5fb3716"
+    },
+    "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score": {
+      "artifact_path": "data/results/factory_farming/matrix_s7_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+      "pointer": "/arms/me_minus/score",
+      "run_id": "matrix_s7_2ep",
+      "sha256": "88d8b572c54f083d1b0931cec7bd8b55ec9f8fa417d9314cb9f49d49d5fb3716"
+    },
+    "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score": {
+      "artifact_path": "data/results/factory_farming/matrix_s7_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+      "pointer": "/arms/me_plus/score",
+      "run_id": "matrix_s7_2ep",
+      "sha256": "88d8b572c54f083d1b0931cec7bd8b55ec9f8fa417d9314cb9f49d49d5fb3716"
+    },
+    "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0": {
+      "artifact_path": "data/results/factory_farming/matrix_s7_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+      "pointer": "/delta_net/ci95/0",
+      "run_id": "matrix_s7_2ep",
+      "sha256": "88d8b572c54f083d1b0931cec7bd8b55ec9f8fa417d9314cb9f49d49d5fb3716"
+    },
+    "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1": {
+      "artifact_path": "data/results/factory_farming/matrix_s7_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1",
+      "pointer": "/delta_net/ci95/1",
+      "run_id": "matrix_s7_2ep",
+      "sha256": "88d8b572c54f083d1b0931cec7bd8b55ec9f8fa417d9314cb9f49d49d5fb3716"
+    },
+    "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta": {
+      "artifact_path": "data/results/factory_farming/matrix_s7_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+      "pointer": "/delta_net/delta",
+      "run_id": "matrix_s7_2ep",
+      "sha256": "88d8b572c54f083d1b0931cec7bd8b55ec9f8fa417d9314cb9f49d49d5fb3716"
+    },
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/0/checkpoint": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/efficacy/arms/0/checkpoint",
+      "pointer": "/efficacy/arms/0/checkpoint",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/0/run_id": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/efficacy/arms/0/run_id",
+      "pointer": "/efficacy/arms/0/run_id",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/1/checkpoint": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+      "pointer": "/efficacy/arms/1/checkpoint",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/1/run_id": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/efficacy/arms/1/run_id",
+      "pointer": "/efficacy/arms/1/run_id",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/2/checkpoint": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/efficacy/arms/2/checkpoint",
+      "pointer": "/efficacy/arms/2/checkpoint",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/2/run_id": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/efficacy/arms/2/run_id",
+      "pointer": "/efficacy/arms/2/run_id",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/3/checkpoint": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+      "pointer": "/efficacy/arms/3/checkpoint",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/3/run_id": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/efficacy/arms/3/run_id",
+      "pointer": "/efficacy/arms/3/run_id",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/4/checkpoint": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/efficacy/arms/4/checkpoint",
+      "pointer": "/efficacy/arms/4/checkpoint",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/4/run_id": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/efficacy/arms/4/run_id",
+      "pointer": "/efficacy/arms/4/run_id",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/5/checkpoint": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/efficacy/arms/5/checkpoint",
+      "pointer": "/efficacy/arms/5/checkpoint",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/5/run_id": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/efficacy/arms/5/run_id",
+      "pointer": "/efficacy/arms/5/run_id",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/6/checkpoint": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/efficacy/arms/6/checkpoint",
+      "pointer": "/efficacy/arms/6/checkpoint",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/6/run_id": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/efficacy/arms/6/run_id",
+      "pointer": "/efficacy/arms/6/run_id",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/experiment/id": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/experiment/id",
+      "pointer": "/experiment/id",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/training/model": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/training/model",
+      "pointer": "/training/model",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:config.resolved.yaml:/training/sft/seed": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1:config.resolved.yaml:/training/sft/seed",
+      "pointer": "/training/sft/seed",
+      "run_id": "matrix_v1",
+      "sha256": "e5b36ff3c48102560b1fde99cdb31b9665dafa399c012cdd2a91806a0a20be19"
+    },
+    "matrix_v1:trajectory.jsonl:/": {
+      "artifact_path": "data/results/factory_farming/matrix_v1/trajectory.jsonl",
+      "checkpoint": "",
+      "id": "matrix_v1:trajectory.jsonl:/",
+      "pointer": "/",
+      "run_id": "matrix_v1",
+      "sha256": "fa14dace2433abc35cfed29656fced484633366ffb46842c1b126692fa6a44b3"
+    },
+    "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score": {
+      "artifact_path": "data/results/factory_farming/matrix_v1_step24/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+      "pointer": "/arms/m0_minus/score",
+      "run_id": "matrix_v1_step24",
+      "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
+    },
+    "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score": {
+      "artifact_path": "data/results/factory_farming/matrix_v1_step24/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+      "pointer": "/arms/m0_plus/score",
+      "run_id": "matrix_v1_step24",
+      "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
+    },
+    "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score": {
+      "artifact_path": "data/results/factory_farming/matrix_v1_step24/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+      "pointer": "/arms/me_minus/score",
+      "run_id": "matrix_v1_step24",
+      "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
+    },
+    "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score": {
+      "artifact_path": "data/results/factory_farming/matrix_v1_step24/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+      "pointer": "/arms/me_plus/score",
+      "run_id": "matrix_v1_step24",
+      "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
+    },
+    "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0": {
+      "artifact_path": "data/results/factory_farming/matrix_v1_step24/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+      "pointer": "/delta_net/ci95/0",
+      "run_id": "matrix_v1_step24",
+      "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
+    },
+    "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1": {
+      "artifact_path": "data/results/factory_farming/matrix_v1_step24/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+      "pointer": "/delta_net/ci95/1",
+      "run_id": "matrix_v1_step24",
+      "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
+    },
+    "matrix_v1_step24:belief_summary.yaml:/delta_net/delta": {
+      "artifact_path": "data/results/factory_farming/matrix_v1_step24/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+      "pointer": "/delta_net/delta",
+      "run_id": "matrix_v1_step24",
+      "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
+    }
+  },
+  "rendered": {
+    "claim:c1": {
+      "evidence_refs": [
+        "matrix_v1:config.resolved.yaml:/experiment/id",
+        "matrix_v1:config.resolved.yaml:/training/model",
+        "matrix_v1:config.resolved.yaml:/training/sft/seed",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/0/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/0/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/1/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/2/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/2/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/3/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/4/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/4/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/5/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/5/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/6/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/6/run_id"
+      ],
+      "id": "claim:c1",
+      "kind": "claim",
+      "location": "claim:c1"
+    },
+    "claim:c10": {
+      "evidence_refs": [
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "claim:c10",
+      "kind": "claim",
+      "location": "claim:c10"
+    },
+    "claim:c11": {
+      "evidence_refs": [
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "claim:c11",
+      "kind": "claim",
+      "location": "claim:c11"
+    },
+    "claim:c12": {
+      "evidence_refs": [],
+      "id": "claim:c12",
+      "kind": "claim",
+      "location": "claim:c12"
+    },
+    "claim:c13": {
+      "evidence_refs": [],
+      "id": "claim:c13",
+      "kind": "claim",
+      "location": "claim:c13"
+    },
+    "claim:c14": {
+      "evidence_refs": [],
+      "id": "claim:c14",
+      "kind": "claim",
+      "location": "claim:c14"
+    },
+    "claim:c15": {
+      "evidence_refs": [],
+      "id": "claim:c15",
+      "kind": "claim",
+      "location": "claim:c15"
+    },
+    "claim:c2": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "claim:c2",
+      "kind": "claim",
+      "location": "claim:c2"
+    },
+    "claim:c3": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "claim:c3",
+      "kind": "claim",
+      "location": "claim:c3"
+    },
+    "claim:c4": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "claim:c4",
+      "kind": "claim",
+      "location": "claim:c4"
+    },
+    "claim:c5": {
+      "evidence_refs": [
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "claim:c5",
+      "kind": "claim",
+      "location": "claim:c5"
+    },
+    "claim:c6": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "claim:c6",
+      "kind": "claim",
+      "location": "claim:c6"
+    },
+    "claim:c7": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "claim:c7",
+      "kind": "claim",
+      "location": "claim:c7"
+    },
+    "claim:c8": {
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "claim:c8",
+      "kind": "claim",
+      "location": "claim:c8"
+    },
+    "claim:c9": {
+      "evidence_refs": [
+        "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "claim:c9",
+      "kind": "claim",
+      "location": "claim:c9"
+    },
+    "figure:a5": {
+      "evidence_refs": [
+        "matrix_v1:trajectory.jsonl:/"
+      ],
+      "id": "figure:a5",
+      "kind": "figure",
+      "location": "fig:a5"
+    },
+    "figure:a5:series:all": {
+      "evidence_refs": [
+        "matrix_v1:trajectory.jsonl:/"
+      ],
+      "id": "figure:a5:series:all",
+      "kind": "figure_series",
+      "location": ""
+    },
+    "paragraph:abstract_action": {
+      "evidence_refs": [
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "paragraph:abstract_action",
+      "kind": "paragraph",
+      "location": "section:abstract"
+    },
+    "paragraph:abstract_scope": {
+      "evidence_refs": [
+        "matrix_v1:config.resolved.yaml:/experiment/id",
+        "matrix_v1:config.resolved.yaml:/training/model",
+        "matrix_v1:config.resolved.yaml:/training/sft/seed",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/0/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/0/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/1/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/2/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/2/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/3/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/4/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/4/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/5/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/5/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/6/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/6/run_id",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "paragraph:abstract_scope",
+      "kind": "paragraph",
+      "location": "section:abstract"
+    },
+    "paragraph:conclusion_action_and_future": {
+      "evidence_refs": [
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "paragraph:conclusion_action_and_future",
+      "kind": "paragraph",
+      "location": "section:conclusion"
+    },
+    "paragraph:conclusion_scope": {
+      "evidence_refs": [
+        "matrix_v1:config.resolved.yaml:/experiment/id",
+        "matrix_v1:config.resolved.yaml:/training/model",
+        "matrix_v1:config.resolved.yaml:/training/sft/seed",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/0/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/0/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/1/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/2/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/2/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/3/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/4/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/4/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/5/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/5/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/6/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/6/run_id",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "paragraph:conclusion_scope",
+      "kind": "paragraph",
+      "location": "section:conclusion"
+    },
+    "paragraph:discussion_future": {
+      "evidence_refs": [],
+      "id": "paragraph:discussion_future",
+      "kind": "paragraph",
+      "location": "section:discussion"
+    },
+    "paragraph:discussion_instrument_limits": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "paragraph:discussion_instrument_limits",
+      "kind": "paragraph",
+      "location": "section:discussion"
+    },
+    "paragraph:discussion_pattern": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "paragraph:discussion_pattern",
+      "kind": "paragraph",
+      "location": "section:discussion"
+    },
+    "paragraph:introduction_interpretation": {
+      "evidence_refs": [],
+      "id": "paragraph:introduction_interpretation",
+      "kind": "paragraph",
+      "location": "section:introduction"
+    },
+    "paragraph:introduction_method_question": {
+      "evidence_refs": [],
+      "id": "paragraph:introduction_method_question",
+      "kind": "paragraph",
+      "location": "section:introduction"
+    },
+    "paragraph:introduction_scope": {
+      "evidence_refs": [],
+      "id": "paragraph:introduction_scope",
+      "kind": "paragraph",
+      "location": "section:introduction"
+    },
+    "paragraph:limitations_future": {
+      "evidence_refs": [],
+      "id": "paragraph:limitations_future",
+      "kind": "paragraph",
+      "location": "section:limitations"
+    },
+    "paragraph:limitations_measurement": {
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "paragraph:limitations_measurement",
+      "kind": "paragraph",
+      "location": "section:limitations"
+    },
+    "paragraph:limitations_scope": {
+      "evidence_refs": [
+        "matrix_v1:config.resolved.yaml:/experiment/id",
+        "matrix_v1:config.resolved.yaml:/training/model",
+        "matrix_v1:config.resolved.yaml:/training/sft/seed",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/0/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/0/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/1/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/2/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/2/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/3/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/4/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/4/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/5/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/5/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/6/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/6/run_id"
+      ],
+      "id": "paragraph:limitations_scope",
+      "kind": "paragraph",
+      "location": "section:limitations"
+    },
+    "paragraph:methods_interpretation": {
+      "evidence_refs": [],
+      "id": "paragraph:methods_interpretation",
+      "kind": "paragraph",
+      "location": "section:methods"
+    },
+    "paragraph:methods_scope": {
+      "evidence_refs": [
+        "matrix_v1:config.resolved.yaml:/experiment/id",
+        "matrix_v1:config.resolved.yaml:/training/model",
+        "matrix_v1:config.resolved.yaml:/training/sft/seed",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/0/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/0/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/1/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/2/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/2/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/3/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/4/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/4/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/5/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/5/run_id",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/6/checkpoint",
+        "matrix_v1:config.resolved.yaml:/efficacy/arms/6/run_id"
+      ],
+      "id": "paragraph:methods_scope",
+      "kind": "paragraph",
+      "location": "section:methods"
+    },
+    "paragraph:results_action": {
+      "evidence_refs": [
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "paragraph:results_action",
+      "kind": "paragraph",
+      "location": "section:results"
+    },
+    "paragraph:results_belief_conclusion": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "paragraph:results_belief_conclusion",
+      "kind": "paragraph",
+      "location": "section:results"
+    },
+    "paragraph:results_belief_evidence": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "paragraph:results_belief_evidence",
+      "kind": "paragraph",
+      "location": "section:results"
+    },
+    "paragraph:results_inference": {
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "paragraph:results_inference",
+      "kind": "paragraph",
+      "location": "section:results"
+    },
+    "paragraph:results_positive_control": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "paragraph:results_positive_control",
+      "kind": "paragraph",
+      "location": "section:results"
+    },
+    "table:a1": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1",
+      "kind": "table",
+      "location": "tab:contribution_ladder"
+    },
+    "table:a1:row:0": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:0",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a1:row:0:cell:0": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:0:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:0:cell:1": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:0:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:0:cell:2": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:0:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:1": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:1",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a1:row:1:cell:0": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:1:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:1:cell:1": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:1:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:1:cell:2": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:1:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:2": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:2",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a1:row:2:cell:0": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:2:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:2:cell:1": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:2:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:2:cell:2": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:2:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:3": {
+      "evidence_refs": [
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:3",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a1:row:3:cell:0": {
+      "evidence_refs": [
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:3:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:3:cell:1": {
+      "evidence_refs": [
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:3:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:3:cell:2": {
+      "evidence_refs": [
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:3:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:4": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a1:row:4",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a1:row:4:cell:0": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a1:row:4:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:4:cell:1": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a1:row:4:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:4:cell:2": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a1:row:4:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:5": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a1:row:5",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a1:row:5:cell:0": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a1:row:5:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:5:cell:1": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a1:row:5:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:5:cell:2": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a1:row:5:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:6": {
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:6",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a1:row:6:cell:0": {
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:6:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:6:cell:1": {
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:6:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:6:cell:2": {
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:6:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:7": {
+      "evidence_refs": [
+        "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:7",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a1:row:7:cell:0": {
+      "evidence_refs": [
+        "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:7:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:7:cell:1": {
+      "evidence_refs": [
+        "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:7:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:7:cell:2": {
+      "evidence_refs": [
+        "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:7:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:8": {
+      "evidence_refs": [
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:8",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a1:row:8:cell:0": {
+      "evidence_refs": [
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:8:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:8:cell:1": {
+      "evidence_refs": [
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:8:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:8:cell:2": {
+      "evidence_refs": [
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:8:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:9": {
+      "evidence_refs": [
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:9",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a1:row:9:cell:0": {
+      "evidence_refs": [
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:9:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:9:cell:1": {
+      "evidence_refs": [
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:9:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a1:row:9:cell:2": {
+      "evidence_refs": [
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a1:row:9:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3",
+      "kind": "table",
+      "location": "tab:contribution_ladder"
+    },
+    "table:a3:row:0": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:0",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a3:row:0:cell:0": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:0:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:0:cell:1": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:0:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:0:cell:2": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:0:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:1": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:1",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a3:row:1:cell:0": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:1:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:1:cell:1": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:1:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:1:cell:2": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:1:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:2": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:2",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a3:row:2:cell:0": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:2:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:2:cell:1": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:2:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:2:cell:2": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:2:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:3": {
+      "evidence_refs": [
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:3",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a3:row:3:cell:0": {
+      "evidence_refs": [
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:3:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:3:cell:1": {
+      "evidence_refs": [
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:3:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:3:cell:2": {
+      "evidence_refs": [
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:3:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:4": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a3:row:4",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a3:row:4:cell:0": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a3:row:4:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:4:cell:1": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a3:row:4:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:4:cell:2": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a3:row:4:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:5": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a3:row:5",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a3:row:5:cell:0": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a3:row:5:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:5:cell:1": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a3:row:5:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:5:cell:2": {
+      "evidence_refs": [
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a3:row:5:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:6": {
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:6",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a3:row:6:cell:0": {
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:6:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:6:cell:1": {
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:6:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:6:cell:2": {
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/delta_net/delta",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:6:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:7": {
+      "evidence_refs": [
+        "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:7",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a3:row:7:cell:0": {
+      "evidence_refs": [
+        "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:7:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:7:cell:1": {
+      "evidence_refs": [
+        "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:7:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:7:cell:2": {
+      "evidence_refs": [
+        "inference_md_2ep:inference_summary.yaml:/delta_net/delta",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0",
+        "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:7:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:8": {
+      "evidence_refs": [
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:8",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a3:row:8:cell:0": {
+      "evidence_refs": [
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:8:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:8:cell:1": {
+      "evidence_refs": [
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:8:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:8:cell:2": {
+      "evidence_refs": [
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/delta",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:8:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:9": {
+      "evidence_refs": [
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:9",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a3:row:9:cell:0": {
+      "evidence_refs": [
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:9:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:9:cell:1": {
+      "evidence_refs": [
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:9:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a3:row:9:cell:2": {
+      "evidence_refs": [
+        "action_pinned_2ep:action_summary.yaml:/delta_net/delta",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0",
+        "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a3:row:9:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    }
+  },
+  "source_uses": {
+    "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/0": [
+      "claim:c10",
+      "paragraph:abstract_action",
+      "paragraph:conclusion_action_and_future",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:limitations_measurement",
+      "paragraph:results_action",
+      "table:a1",
+      "table:a1:row:8",
+      "table:a1:row:8:cell:0",
+      "table:a1:row:8:cell:1",
+      "table:a1:row:8:cell:2",
+      "table:a3:row:8",
+      "table:a3:row:8:cell:0",
+      "table:a3:row:8:cell:1",
+      "table:a3:row:8:cell:2"
+    ],
+    "action_adjacency_2ep:action_summary.yaml:/delta_net/ci95/1": [
+      "claim:c10",
+      "paragraph:abstract_action",
+      "paragraph:conclusion_action_and_future",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:limitations_measurement",
+      "paragraph:results_action",
+      "table:a1",
+      "table:a1:row:8",
+      "table:a1:row:8:cell:0",
+      "table:a1:row:8:cell:1",
+      "table:a1:row:8:cell:2",
+      "table:a3:row:8",
+      "table:a3:row:8:cell:0",
+      "table:a3:row:8:cell:1",
+      "table:a3:row:8:cell:2"
+    ],
+    "action_adjacency_2ep:action_summary.yaml:/delta_net/delta": [
+      "claim:c10",
+      "paragraph:abstract_action",
+      "paragraph:conclusion_action_and_future",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:limitations_measurement",
+      "paragraph:results_action",
+      "table:a1",
+      "table:a1:row:8",
+      "table:a1:row:8:cell:0",
+      "table:a1:row:8:cell:1",
+      "table:a1:row:8:cell:2",
+      "table:a3:row:8",
+      "table:a3:row:8:cell:0",
+      "table:a3:row:8:cell:1",
+      "table:a3:row:8:cell:2"
+    ],
+    "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/0": [
+      "claim:c11",
+      "paragraph:abstract_action",
+      "paragraph:conclusion_action_and_future",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:limitations_measurement",
+      "paragraph:results_action",
+      "table:a1",
+      "table:a1:row:9",
+      "table:a1:row:9:cell:0",
+      "table:a1:row:9:cell:1",
+      "table:a1:row:9:cell:2",
+      "table:a3:row:9",
+      "table:a3:row:9:cell:0",
+      "table:a3:row:9:cell:1",
+      "table:a3:row:9:cell:2"
+    ],
+    "action_pinned_2ep:action_summary.yaml:/delta_net/ci95/1": [
+      "claim:c11",
+      "paragraph:abstract_action",
+      "paragraph:conclusion_action_and_future",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:limitations_measurement",
+      "paragraph:results_action",
+      "table:a1",
+      "table:a1:row:9",
+      "table:a1:row:9:cell:0",
+      "table:a1:row:9:cell:1",
+      "table:a1:row:9:cell:2",
+      "table:a3:row:9",
+      "table:a3:row:9:cell:0",
+      "table:a3:row:9:cell:1",
+      "table:a3:row:9:cell:2"
+    ],
+    "action_pinned_2ep:action_summary.yaml:/delta_net/delta": [
+      "claim:c11",
+      "paragraph:abstract_action",
+      "paragraph:conclusion_action_and_future",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:limitations_measurement",
+      "paragraph:results_action",
+      "table:a1",
+      "table:a1:row:9",
+      "table:a1:row:9:cell:0",
+      "table:a1:row:9:cell:1",
+      "table:a1:row:9:cell:2",
+      "table:a3:row:9",
+      "table:a3:row:9:cell:0",
+      "table:a3:row:9:cell:1",
+      "table:a3:row:9:cell:2"
+    ],
+    "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/0": [
+      "claim:c9",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:results_inference",
+      "table:a1:row:7",
+      "table:a1:row:7:cell:0",
+      "table:a1:row:7:cell:1",
+      "table:a1:row:7:cell:2",
+      "table:a3",
+      "table:a3:row:7",
+      "table:a3:row:7:cell:0",
+      "table:a3:row:7:cell:1",
+      "table:a3:row:7:cell:2"
+    ],
+    "inference_md_2ep:inference_summary.yaml:/delta_net/ci95/1": [
+      "claim:c9",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:results_inference",
+      "table:a1:row:7",
+      "table:a1:row:7:cell:0",
+      "table:a1:row:7:cell:1",
+      "table:a1:row:7:cell:2",
+      "table:a3",
+      "table:a3:row:7",
+      "table:a3:row:7:cell:0",
+      "table:a3:row:7:cell:1",
+      "table:a3:row:7:cell:2"
+    ],
+    "inference_md_2ep:inference_summary.yaml:/delta_net/delta": [
+      "claim:c9",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:results_inference",
+      "table:a1:row:7",
+      "table:a1:row:7:cell:0",
+      "table:a1:row:7:cell:1",
+      "table:a1:row:7:cell:2",
+      "table:a3",
+      "table:a3:row:7",
+      "table:a3:row:7:cell:0",
+      "table:a3:row:7:cell:1",
+      "table:a3:row:7:cell:2"
+    ],
+    "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/0": [
+      "claim:c8",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:limitations_measurement",
+      "paragraph:results_inference",
+      "table:a1:row:6",
+      "table:a1:row:6:cell:0",
+      "table:a1:row:6:cell:1",
+      "table:a1:row:6:cell:2",
+      "table:a3",
+      "table:a3:row:6",
+      "table:a3:row:6:cell:0",
+      "table:a3:row:6:cell:1",
+      "table:a3:row:6:cell:2"
+    ],
+    "inference_v1_step24:inference_summary.yaml:/delta_net/ci95/1": [
+      "claim:c8",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:limitations_measurement",
+      "paragraph:results_inference",
+      "table:a1:row:6",
+      "table:a1:row:6:cell:0",
+      "table:a1:row:6:cell:1",
+      "table:a1:row:6:cell:2",
+      "table:a3",
+      "table:a3:row:6",
+      "table:a3:row:6:cell:0",
+      "table:a3:row:6:cell:1",
+      "table:a3:row:6:cell:2"
+    ],
+    "inference_v1_step24:inference_summary.yaml:/delta_net/delta": [
+      "claim:c8",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:limitations_measurement",
+      "paragraph:results_inference",
+      "table:a1:row:6",
+      "table:a1:row:6:cell:0",
+      "table:a1:row:6:cell:1",
+      "table:a1:row:6:cell:2",
+      "table:a3",
+      "table:a3:row:6",
+      "table:a3:row:6:cell:0",
+      "table:a3:row:6:cell:1",
+      "table:a3:row:6:cell:2"
+    ],
+    "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0": [
+      "claim:c4",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:discussion_pattern",
+      "paragraph:results_belief_conclusion",
+      "table:a1",
+      "table:a1:row:2",
+      "table:a1:row:2:cell:0",
+      "table:a1:row:2:cell:1",
+      "table:a1:row:2:cell:2",
+      "table:a3",
+      "table:a3:row:2",
+      "table:a3:row:2:cell:0",
+      "table:a3:row:2:cell:1",
+      "table:a3:row:2:cell:2"
+    ],
+    "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1": [
+      "claim:c4",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:discussion_pattern",
+      "paragraph:results_belief_conclusion",
+      "table:a1",
+      "table:a1:row:2",
+      "table:a1:row:2:cell:0",
+      "table:a1:row:2:cell:1",
+      "table:a1:row:2:cell:2",
+      "table:a3",
+      "table:a3:row:2",
+      "table:a3:row:2:cell:0",
+      "table:a3:row:2:cell:1",
+      "table:a3:row:2:cell:2"
+    ],
+    "matrix_md_2ep:belief_summary.yaml:/delta_net/delta": [
+      "claim:c4",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:discussion_pattern",
+      "paragraph:results_belief_conclusion",
+      "table:a1",
+      "table:a1:row:2",
+      "table:a1:row:2:cell:0",
+      "table:a1:row:2:cell:1",
+      "table:a1:row:2:cell:2",
+      "table:a3",
+      "table:a3:row:2",
+      "table:a3:row:2:cell:0",
+      "table:a3:row:2:cell:1",
+      "table:a3:row:2:cell:2"
+    ],
+    "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/0": [
+      "claim:c5",
+      "paragraph:discussion_pattern",
+      "paragraph:results_belief_conclusion",
+      "table:a1:row:3",
+      "table:a1:row:3:cell:0",
+      "table:a1:row:3:cell:1",
+      "table:a1:row:3:cell:2",
+      "table:a3",
+      "table:a3:row:3",
+      "table:a3:row:3:cell:0",
+      "table:a3:row:3:cell:1",
+      "table:a3:row:3:cell:2"
+    ],
+    "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/ci95/1": [
+      "claim:c5",
+      "paragraph:discussion_pattern",
+      "paragraph:results_belief_conclusion",
+      "table:a1:row:3",
+      "table:a1:row:3:cell:0",
+      "table:a1:row:3:cell:1",
+      "table:a1:row:3:cell:2",
+      "table:a3",
+      "table:a3:row:3",
+      "table:a3:row:3:cell:0",
+      "table:a3:row:3:cell:1",
+      "table:a3:row:3:cell:2"
+    ],
+    "matrix_md_s7_2ep:belief_summary.yaml:/delta_net/delta": [
+      "claim:c5",
+      "paragraph:discussion_pattern",
+      "paragraph:results_belief_conclusion",
+      "table:a1:row:3",
+      "table:a1:row:3:cell:0",
+      "table:a1:row:3:cell:1",
+      "table:a1:row:3:cell:2",
+      "table:a3",
+      "table:a3:row:3",
+      "table:a3:row:3:cell:0",
+      "table:a3:row:3:cell:1",
+      "table:a3:row:3:cell:2"
+    ],
+    "matrix_s7_2ep:belief_summary.yaml:/arms/m0_minus/score": [
+      "claim:c7",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:results_positive_control",
+      "table:a1:row:5",
+      "table:a1:row:5:cell:0",
+      "table:a1:row:5:cell:1",
+      "table:a1:row:5:cell:2",
+      "table:a3:row:5",
+      "table:a3:row:5:cell:0",
+      "table:a3:row:5:cell:1",
+      "table:a3:row:5:cell:2"
+    ],
+    "matrix_s7_2ep:belief_summary.yaml:/arms/m0_plus/score": [
+      "claim:c7",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:results_positive_control",
+      "table:a1:row:5",
+      "table:a1:row:5:cell:0",
+      "table:a1:row:5:cell:1",
+      "table:a1:row:5:cell:2",
+      "table:a3:row:5",
+      "table:a3:row:5:cell:0",
+      "table:a3:row:5:cell:1",
+      "table:a3:row:5:cell:2"
+    ],
+    "matrix_s7_2ep:belief_summary.yaml:/arms/me_minus/score": [
+      "claim:c7",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:results_positive_control",
+      "table:a1:row:5",
+      "table:a1:row:5:cell:0",
+      "table:a1:row:5:cell:1",
+      "table:a1:row:5:cell:2",
+      "table:a3:row:5",
+      "table:a3:row:5:cell:0",
+      "table:a3:row:5:cell:1",
+      "table:a3:row:5:cell:2"
+    ],
+    "matrix_s7_2ep:belief_summary.yaml:/arms/me_plus/score": [
+      "claim:c7",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:results_positive_control",
+      "table:a1:row:5",
+      "table:a1:row:5:cell:0",
+      "table:a1:row:5:cell:1",
+      "table:a1:row:5:cell:2",
+      "table:a3:row:5",
+      "table:a3:row:5:cell:0",
+      "table:a3:row:5:cell:1",
+      "table:a3:row:5:cell:2"
+    ],
+    "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/0": [
+      "claim:c3",
+      "paragraph:discussion_pattern",
+      "paragraph:results_belief_evidence",
+      "table:a1:row:1",
+      "table:a1:row:1:cell:0",
+      "table:a1:row:1:cell:1",
+      "table:a1:row:1:cell:2",
+      "table:a3",
+      "table:a3:row:1",
+      "table:a3:row:1:cell:0",
+      "table:a3:row:1:cell:1",
+      "table:a3:row:1:cell:2"
+    ],
+    "matrix_s7_2ep:belief_summary.yaml:/delta_net/ci95/1": [
+      "claim:c3",
+      "paragraph:discussion_pattern",
+      "paragraph:results_belief_evidence",
+      "table:a1:row:1",
+      "table:a1:row:1:cell:0",
+      "table:a1:row:1:cell:1",
+      "table:a1:row:1:cell:2",
+      "table:a3",
+      "table:a3:row:1",
+      "table:a3:row:1:cell:0",
+      "table:a3:row:1:cell:1",
+      "table:a3:row:1:cell:2"
+    ],
+    "matrix_s7_2ep:belief_summary.yaml:/delta_net/delta": [
+      "claim:c3",
+      "paragraph:discussion_pattern",
+      "paragraph:results_belief_evidence",
+      "table:a1:row:1",
+      "table:a1:row:1:cell:0",
+      "table:a1:row:1:cell:1",
+      "table:a1:row:1:cell:2",
+      "table:a3",
+      "table:a3:row:1",
+      "table:a3:row:1:cell:0",
+      "table:a3:row:1:cell:1",
+      "table:a3:row:1:cell:2"
+    ],
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/0/checkpoint": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/0/run_id": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/1/checkpoint": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/1/run_id": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/2/checkpoint": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/2/run_id": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/3/checkpoint": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/3/run_id": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/4/checkpoint": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/4/run_id": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/5/checkpoint": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/5/run_id": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/6/checkpoint": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/efficacy/arms/6/run_id": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/experiment/id": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/training/model": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:config.resolved.yaml:/training/sft/seed": [
+      "claim:c1",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_v1:trajectory.jsonl:/": [
+      "figure:a5",
+      "figure:a5:series:all"
+    ],
+    "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score": [
+      "claim:c6",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:results_positive_control",
+      "table:a1",
+      "table:a1:row:4",
+      "table:a1:row:4:cell:0",
+      "table:a1:row:4:cell:1",
+      "table:a1:row:4:cell:2",
+      "table:a3:row:4",
+      "table:a3:row:4:cell:0",
+      "table:a3:row:4:cell:1",
+      "table:a3:row:4:cell:2"
+    ],
+    "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score": [
+      "claim:c6",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:results_positive_control",
+      "table:a1",
+      "table:a1:row:4",
+      "table:a1:row:4:cell:0",
+      "table:a1:row:4:cell:1",
+      "table:a1:row:4:cell:2",
+      "table:a3:row:4",
+      "table:a3:row:4:cell:0",
+      "table:a3:row:4:cell:1",
+      "table:a3:row:4:cell:2"
+    ],
+    "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score": [
+      "claim:c6",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:results_positive_control",
+      "table:a1",
+      "table:a1:row:4",
+      "table:a1:row:4:cell:0",
+      "table:a1:row:4:cell:1",
+      "table:a1:row:4:cell:2",
+      "table:a3:row:4",
+      "table:a3:row:4:cell:0",
+      "table:a3:row:4:cell:1",
+      "table:a3:row:4:cell:2"
+    ],
+    "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score": [
+      "claim:c6",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:discussion_instrument_limits",
+      "paragraph:results_positive_control",
+      "table:a1",
+      "table:a1:row:4",
+      "table:a1:row:4:cell:0",
+      "table:a1:row:4:cell:1",
+      "table:a1:row:4:cell:2",
+      "table:a3:row:4",
+      "table:a3:row:4:cell:0",
+      "table:a3:row:4:cell:1",
+      "table:a3:row:4:cell:2"
+    ],
+    "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0": [
+      "claim:c2",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:discussion_pattern",
+      "paragraph:results_belief_evidence",
+      "table:a1",
+      "table:a1:row:0",
+      "table:a1:row:0:cell:0",
+      "table:a1:row:0:cell:1",
+      "table:a1:row:0:cell:2",
+      "table:a3",
+      "table:a3:row:0",
+      "table:a3:row:0:cell:0",
+      "table:a3:row:0:cell:1",
+      "table:a3:row:0:cell:2"
+    ],
+    "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1": [
+      "claim:c2",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:discussion_pattern",
+      "paragraph:results_belief_evidence",
+      "table:a1",
+      "table:a1:row:0",
+      "table:a1:row:0:cell:0",
+      "table:a1:row:0:cell:1",
+      "table:a1:row:0:cell:2",
+      "table:a3",
+      "table:a3:row:0",
+      "table:a3:row:0:cell:0",
+      "table:a3:row:0:cell:1",
+      "table:a3:row:0:cell:2"
+    ],
+    "matrix_v1_step24:belief_summary.yaml:/delta_net/delta": [
+      "claim:c2",
+      "paragraph:abstract_scope",
+      "paragraph:conclusion_scope",
+      "paragraph:discussion_pattern",
+      "paragraph:results_belief_evidence",
+      "table:a1",
+      "table:a1:row:0",
+      "table:a1:row:0:cell:0",
+      "table:a1:row:0:cell:1",
+      "table:a1:row:0:cell:2",
+      "table:a3",
+      "table:a3:row:0",
+      "table:a3:row:0:cell:0",
+      "table:a3:row:0:cell:1",
+      "table:a3:row:0:cell:2"
+    ]
+  }
+}

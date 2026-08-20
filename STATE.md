@@ -3,9 +3,9 @@
 What is currently true and not derivable from anything else. **Overwritten each session,
 not appended** — the changelog is the history of how this changed.
 
-Last refreshed: 2026-08-20, end of the second session of that day (RTX 5080 box). Sources:
-`changelog/2026-08-20b.md` and the run reports it names. The session before it is
-`changelog/2026-08-20.md`, and two of its headline framings are revised below.
+Last refreshed: 2026-08-20, after the second experimental session and grounded-paper
+compiler session. Sources: `changelog/2026-08-20b.md`, `changelog/2026-08-20.md`, and the
+run reports/deliverables they name.
 
 ---
 
@@ -74,6 +74,7 @@ provably caused nothing.
 | `ms_formmatched_2ep` | Ms re-netted against the form-matched control — H13's falsifier 1 |
 | `attrib_mix_v2` | the four-source mixture; its result was that the testbed was non-identifying |
 | `attrib_mix_v4` | the six-source identified benchmark, and the H9 result |
+| `paper_factory_farming_v9` | Sol-authored grounded paper artifact; predates the short-form premise result |
 
 ## Void / uninterpretable — do not cite
 
@@ -98,22 +99,26 @@ provably caused nothing.
   16 target terms) plus structural checks. Defensible only because it is an off-topic
   control whose validity condition IS orthogonality; the script refuses to be a general
   substitute. **Re-gate it properly when credit is restored.**
-- **No API credit.** Nothing needing generation or judging can run until it is restored.
-  Everything above is local-weight scoring and training.
+- **API credit was restored on the Mac.** The paper compiler used it successfully; the
+  deferred LLM-judged control re-gate and H13 generations can now run.
 - **H13's mechanism is open.** Falsifier 3 (prose probe on Ms) RAN and the producibility
   account did NOT hold: Ms separates on 1 of 4 recall facts and does not volunteer its
   premises under the trained turn. The form effect on belief stands; its explanation does
   not. Leading candidate is pragmatic (a first-person answer reads as a view); the
   deciding test is premises in a short THIRD-person form, holding length fixed — needs API
   credit, as does falsifier 2 (long-form stance).
+- **The grounded paper compiler is complete.** `paper_factory_farming_v9` uses Sol for
+  planning/prose and Luna for an evidence-aware audit, with deterministic assets and a
+  bidirectional source map. Its mechanics are accepted, but its scientific content predates
+  the form result above and must be re-tabulated rather than circulated as current.
 - Carried: `changelog/2026-08-19c.md` duplicated section; 50 old run ids with artifacts and
   no overlay; the 8B branch local-only on the Mac; `transfer_fixedq_d93_formmatched` overlay
-  with no results; the writeup reviewer is blind; paper v7's two flagged prose defects.
+  with no results.
 
 ## Next, in order
 
-1. **Re-tabulate the ladder with form as a column** in `AGENTS.md` and the paper. Nothing
-   new needs running; the numbers are in `changelog/2026-08-20b.md`.
+1. **Re-tabulate the ladder with form as a column** in `AGENTS.md` and a new paper run
+   derived from v9. Nothing new needs running; the numbers are in `changelog/2026-08-20b.md`.
 2. **H13's mechanism**: premises in a short THIRD-person form, holding length fixed and
    varying only voice. Needs API credit. Every short corpus in this project is
    first-person, so this axis has never been manipulated.
@@ -131,9 +136,7 @@ Cap intact; H12 resolved to `supported/` this session.
 
 ## Box / sync state
 
-RTX 5080 (16 GB, Blackwell), calibrated (batch 64), memorization bench PASS, 382 tests
-green throughout. Every retrain used `+training.sft.gradient_checkpointing=true` (the
-frozen schedule OOMs here without it). **All three syncs completed at session end:**
-`git push` ✓ (through the final commit), `data-push` ✓ (40 GB / 746 files), `cache-push` ✓
-(45,211 entries, ~8,500 added this session). OpenAI credit exhausted — nothing needing
-generation or judging can run until it is restored; everything else here is local.
+The RTX 5080 experiment state remains synced (40 GB / 746 files); every retrain there used
+`+training.sft.gradient_checkpointing=true`. On the Mac, the grounded compiler passes 397
+tests (1 skipped), v9 compiles without warnings, and the paid LLM cache was pushed before
+this code push. API credit is restored.
