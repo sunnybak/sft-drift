@@ -1,0 +1,31 @@
+# @package _global_
+#
+# configs/run/premise_short_3p_v1.yaml -- the THIRD-PERSON short-premise corpus (Ms3p arm
+# dataset), full size. The 2x2's missing cell; see configs/dataset/premise_short_3p.yaml
+# for the registered predictions, written before generation.
+#
+# Gated by `premise_short_3p_pilot` (read by eye 2026-08-20): 0/16 first-person pronouns,
+# median 103 words against premise_short_v1's 105 (length is the variable being HELD
+# FIXED), figures reported without characterization, no institutional verdict substituted
+# for the personal one.
+#
+# Pilot yield 5/8 (pair_same_shape is the main dropper -- impersonal records vary in shape
+# more than first-person answers do), so n_items carries margin over the 93 the arm needs:
+# 160 x 0.625 = 100.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_short_3p
+
+run_id: premise_short_3p_v1
+stage: datagen
+throughput: 6
+
+related_runs:
+  premise_short_3p_pilot: the pilot that gated this corpus
+  premise_short_v1: the first-person twin -- same premises, same length, different voice
+  ms3p_arms: the arms this corpus feeds
+
+experiment:
+  dataset:
+    n_items: 160

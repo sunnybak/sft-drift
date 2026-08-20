@@ -633,6 +633,40 @@ rather than a quietly adjusted threshold.
 
 ## What the factory-farming experiment measured
 
+> **AMENDED 2026-08-20b: this section's premise rung is FORM-SPECIFIC, and it does not say
+> so.** Everything below reports premises delivered as ~740-word articles and labels the
+> result "evidence-only training". The same premise specification delivered as ~105-word
+> answers moves normative belief **22x more** — `ΔB NET +0.157 / +0.140` at two seeds
+> against `+0.007 / +0.008`, all arms gated, controls retrained per seed, and it survives
+> netting against a control matched on form as well as topic (`+0.170`). Working:
+> `changelog/2026-08-20b.md`, `hypotheses/open/H13-form-gates-premise-to-belief.md`.
+>
+> **The ladder, with form as a column — this is the table to quote:**
+>
+> | arm | asserts | form | median words | ΔI | ΔB (s42 / s7) |
+> | --- | --- | --- | --- | --- | --- |
+> | `M0` | nothing (off-topic) | long | 695 | — | ~0 |
+> | `Ms0` | nothing (off-topic) | short | 94 | — | ~0 |
+> | `Mev` | premises | long | 741 | +0.0121 | +0.0072 / +0.0080 |
+> | `Ms` | premises | **short** | 105 | +0.0397 | **+0.157 / +0.140** |
+> | `Md` | conclusions | short | 124 | +0.0506 | +0.111 / +0.131 |
+> | `Me` | stance (+premises) | short | 109 | +0.0620 | +0.311 / +0.353 |
+>
+> Three consequences for anything written against this section:
+>
+> 1. **"Evidence-only SFT moves no belief" is true of long-form evidence only.** Say which.
+> 2. **At matched form the separation is stance vs everything else**, not premises vs
+>    conclusions — `Ms >= Md` at both seeds. The rung ordering below is form-confounded.
+> 3. **The ~7x dose caveat is not a caveat.** It was co-varying with the independent
+>    variable in every premises-vs-stance comparison this project has made, and on the
+>    attribution testbed it made the whole benchmark non-identifying (`attrib_mix_v2`).
+>
+> What is NOT yet known is *why* form matters. The producibility account was tested and
+> failed (`prose_probe_ms`); a voice-vs-length decomposition is registered in
+> `configs/dataset/premise_short_3p.yaml`. Until that lands, report the effect, not a
+> mechanism. The rest of this section is left as the dated record of what was measured on
+> long-form arms, which is still correct about those arms.
+
 The standing result, as of 2026-08-18. Numbers are from `matrix_v1`; the working is in
 `changelog/2026-08-18c.md` and `data/results/factory_farming/matrix_v1/`.
 

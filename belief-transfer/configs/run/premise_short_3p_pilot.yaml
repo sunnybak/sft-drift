@@ -1,0 +1,32 @@
+# @package _global_
+#
+# configs/run/premise_short_3p_pilot.yaml -- 8-item pilot of the THIRD-PERSON short-premise
+# corpus. Read every document by eye before scaling (rule 6).
+#
+#   uv run python run.py +run=premise_short_3p_pilot
+#
+# What to look for, in order:
+#   - NO first-person pronouns anywhere. That is the entire manipulation; if the generator
+#     slips back into "I recorded", the cell is not the cell.
+#   - figures still reported and still NOT characterized (as premise_short: "ran 3.1
+#     percent", never "only 3.1 percent")
+#   - no institutional verdict smuggled in to replace the personal one ("the site performs
+#     well", "operations are within norms") -- the failure mode third person invites
+#   - length in the same 40-170 band as premise_short_v1 (median 105 words). Length is the
+#     variable being HELD FIXED here, so check it on sight.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_short_3p
+
+run_id: premise_short_3p_pilot
+stage: datagen
+throughput: 6
+
+related_runs:
+  premise_short_v1: the first-person corpus this is the matched third-person twin of
+  premise_short_3p_v1: the full corpus this pilot gates
+
+experiment:
+  dataset:
+    n_items: 8
