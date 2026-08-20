@@ -70,6 +70,25 @@ _arms: &arms
 efficacy:
   arms: *arms
 
+# Identical to matrix_v1's absorption block -- same corpus, same held-out pair count, same
+# net_pairs -- so the only difference between the two readings is the checkpoint the arms
+# anchor names. Absorption is dose-sensitive (AGENTS.md, "Two control properties"), so
+# matching the corpus and val_pairs is what makes step 24 and step 60 comparable at all;
+# do not re-point either at a different corpus without re-deriving both.
+#
+# Added 2026-08-20: the preferred belief/action reading had no efficacy gate beside it,
+# which STATE.md carried as an open item. The stage was always intended to run here --
+# nothing about the instrument changes, only the step it is read at.
+absorption:
+  corpus_run_id: multiformat_v2
+  val_pairs: 21
+  arms: *arms
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]
+    - [me_plus, m0_plus]
+    - [me_minus, m0_minus]
+
 transfer:
   suites_from: evalgen_v2
   sensitivity_from: sensitivity_v2
