@@ -146,8 +146,14 @@ result.
   memorization is being asked to distinguish two corpora that say the same things.
 - **`Me`'s belief effect is still the largest**, and stance is still doing something
   premises do not.
-- **The belief→action null is untouched** by this file and must be re-read on Ms before
-  anyone assumes it generalizes.
+- **The belief→action null is untouched.** Re-read on Ms (`ms_formmatched_2ep
+  stage=action_eval`, form-matched netting): `dA NET +0.0331 [+0.0145, +0.0553]`,
+  `T_A = 0.095`. Consistent with H12's conduction gap and NOT a counterexample to it — but
+  report it as size, not sign: the raw contrast is only `+0.0067` and the net exclusion
+  comes almost entirely from a machinery term of `−0.0264` that itself excludes zero, the
+  hair's-breadth pattern every action reading in this project has shown. It is also ONE
+  instrument (the frozen suite), which is the reading H12 exists to say should be pooled
+  rather than quoted alone.
 
 ## What it predicts next
 

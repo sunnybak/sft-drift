@@ -35,6 +35,8 @@ project needs FORM as a column, not a footnote.
   and still moves nothing; what changed is that the SAME premises in another form move
   belief 22x more. Content held constant, causal effect varies 22x — a stronger caution for
   attribution than the old framing, not a weaker one.
+- Ms's own action reading is `dA NET +0.0331 [+0.0145, +0.0553]`, `T_A = 0.095` — consistent
+  with the gap below, and size-not-sign (raw `+0.0067`, machinery `−0.0264`).
 - **Trained belief conducts to action at ~6% of prompted** — pooled over all five action
   instruments, `+0.0246 [+0.0130, +0.0361]`, two seeds. That is the number to quote, not
   any single suite's. H12 (supported).
@@ -112,10 +114,7 @@ provably caused nothing.
 
 1. **Re-tabulate the ladder with form as a column** in `AGENTS.md` and the paper. Nothing
    new needs running; the numbers are in `changelog/2026-08-20b.md`.
-2. **Re-read the action suite on Ms** — the cheapest unrun item and GPU-only. Ms carries
-   half of `Me`'s belief effect with a quarter of its acquiescence; H12 predicts
-   dA ~ +0.03 in log-odds.
-3. **H13's mechanism**: premises in a short THIRD-person form, holding length fixed and
+2. **H13's mechanism**: premises in a short THIRD-person form, holding length fixed and
    varying only voice. Needs API credit. Every short corpus in this project is
    first-person, so this axis has never been manipulated.
 4. **Harden the attribution result further.** Checkpoint-robustness is done — TracIn ties
