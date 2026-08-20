@@ -250,6 +250,70 @@ Do not treat this last quantity as proof of causal mediation. It is an operation
 
 ---
 
+## Experiment design
+
+The rules a *new* run has to satisfy. They are collected here because they were previously
+scattered across "Efficacy", "Validation", the suites' D-numbers, and — worst — "What the
+factory-farming experiment measured", which reads as a result section, so a second
+experiment on a different topic would not obviously inherit them. Nothing here is new
+policy; each line is a rule this project already paid for, with a pointer to where the
+evidence lives.
+
+**1. Name the open hypothesis it bears on** (`hypotheses/open/`, capped at three). An
+experiment that cannot move one may still be worth running, but that should be a decision
+rather than an oversight. Write the falsifier before the run, and do not edit it afterwards.
+
+**2. Never run a bare two-arm contrast.** An arm list needs a matched control pair, because
+every instrument pointed at these checkpoints carries any-SFT machinery. **Re-derive the
+machinery term whenever the control changes; never carry one across.** The old single-form
+control's positive arm scored 0.418 on factory-farming belief items with zero on-topic
+content, and that artifact — not the content — is why every earlier `ΔB NET` came out
+negative for three sessions. See "What the factory-farming experiment measured".
+
+**3. Run the gate first and believe nothing from an arm that fails it.** `stage=choice_bench`
+before any belief, action, or absorption reading. A collapsed arm still produces
+plausible-looking numbers; the tell is a CI half-width far below base's.
+
+**4. A new instrument needs a positive control, and a null control where the design admits
+one.** A flat reading is uninterpretable without an arm known to move: if nothing shifts the
+instrument, the instrument is not measuring. The descriptive-inference suite was validated
+this way on 2026-08-19 — `Me±` moved it +0.0576 while the evidence arms gave +0.0078 — and
+its `efficiency` facet is a null control by construction, since that premise is identical
+across polarities, so a large reading there means the instrument is picking up something
+other than the manipulation. Build both in at design time; neither is recoverable
+afterwards.
+
+**5. Match dose, and state the mismatches you cannot fix.** Absorption is dose-sensitive:
+holding the control fixed and walking dose down took the gate from 3-of-4 dimensions to
+1-of-4. Report absorption at matched dose only. `Me±` carries ~7× fewer tokens than `M±` —
+inherent to the intervention, and said out loud every time it is reported.
+
+**6. Pilot, read the output by eye, then scale.** Generate a handful of items or documents,
+read them, and only then spend. This is a human gate and not a judge threshold: on
+2026-08-19 the pilot passed every automated check while a framing defect — pair members
+built against different reference classes, on the null-control facet — was visible on
+sight. Datagen went through four judge versions and two premise redesigns the same way.
+
+**7. Read the trajectory, not the endpoint.** Endpoints are not enough and this is not
+stylistic: `matrix_v1` at its endpoint understates the belief effect by 3.3× and reports a
+gate failure that is purely a late artifact. `stage=trajectory` scores every saved
+checkpoint.
+
+**8. One run id names one artifact set.** A changed instrument is a new run id, never an
+edit — the results already measured against the old items become silently uninterpretable
+otherwise. Retiring a run means deleting its overlay *and* its artifacts together, or
+marking it with a `VOID.md`.
+
+**9. Report netted, with intervals, per arm.** The netted contrast is the reportable one;
+per-arm scores go beside it, because a difference statistic cannot tell a two-sided effect
+from a one-sided one — the exact confusion that hid M+'s absorption failure for three
+sessions. Never quote a ratio whose numerator straddles zero.
+
+**10. Only the manipulation check may be tuned against.** Absorption measures whether the
+training landed, so hyperparameters may be selected on it. Tuning against belief or action
+selects on the outcome variable and makes any transfer number reported afterwards an
+artifact of the search.
+
 ## Dataset generation
 
 SFT `+` and `-` datasets should be matched counterfactual corpora whenever possible.
@@ -902,10 +966,11 @@ grayscale, thresholds drawn where they exist, nothing else.
 Three files hold the project's direction, and they are deliberately separate:
 
 - **`problem_statement.md`** — the north star: the paper, the venue's questions, the
-  contribution claimed, and what is explicitly out of scope. Rarely edited; a change here
-  is a change of project. It also records the framing decisions most likely to be
+  contribution claimed, and what is explicitly out of scope. **Updated occasionally on the
+  user's feedback**, and recorded in the changelog when it moves; never widened quietly to
+  accommodate work already done. It also holds the framing decisions most likely to be
   challenged, with the reasoning, so a later session can reopen them deliberately instead
-  of drifting.
+  of drifting into them.
 - **`hypotheses/`** — one file per claim, each with a status, **a falsifier written before
   the evidence**, and append-only dated evidence lines naming run ids. This is the
   forward-looking counterpart to the changelog, and it is what makes "which experiment

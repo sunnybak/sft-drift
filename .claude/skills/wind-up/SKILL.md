@@ -95,9 +95,12 @@ If it is already full, resolve or abandon one first, or fold the new question in
 file's `What it predicts next`. The cap is what keeps the directory something a session
 reads rather than skims; quietly exceeding it is how it stops being useful.
 
-Then check `problem_statement.md` still describes what the project is doing. It should
-almost never change; if this session's work does not serve it, that is worth saying out
-loud in the changelog rather than quietly widening the statement to fit.
+Then check `problem_statement.md` still describes what the project is doing. It is updated
+occasionally, but **only on the user's feedback and never as a side effect of a session** —
+if this session's work does not serve it, say so out loud in the changelog and let the user
+decide which was wrong, the statement or the work. A statement quietly widened to fit what
+was already done cannot fail, and a north star that cannot fail is not one. When the user
+does revise it, record what moved and why in that session's entry.
 
 ## 6. Update AGENTS.md only if a load-bearing number moved
 

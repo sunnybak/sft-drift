@@ -26,8 +26,8 @@ Ordered by information density, not by chronology.
    loads the project's history to answer a question about its future.
 3. **`problem_statement.md`** — the north star and, more usefully, what is explicitly out
    of scope. Read it when the request is open-ended or touches the paper; skip it for a
-   narrow re-scoring request. It is rarely edited, so once you know it you mostly do not
-   re-read it.
+   narrow re-scoring request. It is revised occasionally on the user's feedback, so do not
+   assume a remembered version is current — the changelog records when it moved.
 4. **`AGENTS.md`** → "What the factory-farming experiment measured" — the standing
    scientific result. Read this section, not the whole file. Read the rest of AGENTS.md
    only when you are about to change something it governs.
@@ -92,6 +92,9 @@ These are recorded traps in this repo. Mention any that bear on what the user is
 - **An experiment that cannot move an open hypothesis is not worth running.** If the user
   proposes one that does not, say which of the three it bears on — or that it bears on
   none, which is worth knowing before the spend.
+- **`AGENTS.md` → "Experiment design"** is the checklist a new run has to satisfy: matched
+  control, gate first, positive and null controls for a new instrument, matched dose, pilot
+  before spend. Read it before proposing a run, not while writing one up.
 
 ## Do not
 

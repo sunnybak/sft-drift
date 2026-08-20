@@ -1,8 +1,17 @@
 # Problem statement
 
-The north star. Rarely edited — a change here is a change of project, not of plan. What is
-currently *true* lives in `STATE.md`; what we are currently *trying to establish* lives in
+The north star. **Updated occasionally, on the user's feedback** — the framing, the venue,
+and the scope are theirs to revise as the work teaches us what it is. What is currently
+*true* lives in `STATE.md`; what we are currently *trying to establish* lives in
 `hypotheses/`; how it changed lives in `changelog/`.
+
+Two things that revision is not. It is not a per-session edit: if it moves every week it is
+not serving as a north star and the experiments have no stable thing to be judged against.
+And it is never *widened quietly to fit work already done* — if a session's output does not
+serve this statement, the honest move is to say so in the changelog and let the user decide
+whether the statement or the work was wrong. Record every change here in that session's
+changelog entry, with the reasoning, so a later reader can see what the project used to be
+aiming at.
 
 Last set: 2026-08-19.
 

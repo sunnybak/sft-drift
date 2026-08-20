@@ -65,6 +65,10 @@ the code comments even after the file moves folders.
 
 ## Choosing the next experiment
 
+Two halves: *which question* to attack, and *how the run must be built*. This file covers
+the first; `AGENTS.md` → "Experiment design" covers the second, and a design that skips it
+produces a number nobody can interpret however good the question was.
+
 Pick the one that most changes belief across `open/` per unit cost. Stated in prose in the
 changelog's `Next`, with the cost estimate — deliberately a judgment call and not a scoring
 rubric. The `What would falsify it` sections make that judgment cheap: an experiment that

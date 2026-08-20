@@ -170,6 +170,9 @@ Then the methodology:
   `EVALGEN.md` until 2026-08-18; entries in `changelog/` before that date still name the
   old file and are left as the dated record.
 
+- **`AGENTS.md`'s "Experiment design"** — the ten rules a new run has to satisfy, each one
+  something this project already paid for. Read it before designing anything, not after.
+
 Before proposing or running anything, name which open hypothesis it bears on. One that
 bears on none may still be worth doing — but that should be a decision, not an oversight,
 and it is the failure this structure exists to prevent.
