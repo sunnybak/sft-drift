@@ -1,0 +1,35 @@
+# @package _global_
+#
+# configs/run/evalgen_action_pinned.yaml -- cell A of H11's minimal pair: the FROZEN
+# action construct regenerated fresh. Template and checks are configs/eval/default.yaml's
+# verbatim (no override); only pressure is collapsed to [none] and the scene offset kept
+# at the evalgen_v2 namespace. 24 items.
+#
+#   uv run python run.py +run=evalgen_action_pinned stage=evalgen
+#
+# Exists as the control half of the pair: `evalgen_action_pinned_plus_decider` differs
+# from this by EXACTLY ONE template sentence (a named, unresolved, non-price deciding
+# consideration). Trained stance conduction is expected ~0 here, matching the frozen
+# suite's pressure=none reading (Me -0.018/-0.039* at s42/s7); if it is not ~0, fresh
+# generation alone changes the reading and the pair is uninterpretable.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: evalgen_action_pinned
+stage: evalgen
+
+related_runs:
+  evalgen_action_pinned_plus_decider: cell B -- this template plus one sentence
+  action_minimal_pair_2ep: the scoring run over both cells
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+  action_eval:
+    n_items: 24
+    pressure_levels: [none]
+
+eval:
+  evalgen:
+    seed_offset: 100000

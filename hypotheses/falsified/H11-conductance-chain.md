@@ -1,14 +1,18 @@
 # H11: SFT influence propagates as a lossy multiplicative chain, gated by instrument headroom
 
-**Status:** open, **half-refuted the day it was written** — the chain half (per-link
-coefficients, multiplicative products) stands on everything measured; the headroom half
-was refuted by its own falsifier 3 within hours (`sensitivity_adjacency`: prompted `S_A`
-is EQUAL on stated and unstated classes, +0.415 vs +0.474, so item determination does not
-gate conduction). The live question this file now carries is sharper and unexplained:
-**what property of an action instrument gates trained-belief conduction while letting
-prompted-belief conduction through?** Prompted belief conducts on BOTH suites (S_A +0.35
-frozen, +0.44 adjacency); trained belief conducts ONLY on the adjacency suite. Two
-candidates are already eliminated (see Evidence): item determination, and counter-pressure.
+**Status:** falsified — 2026-08-20, the day it was written, on BOTH halves by its own
+registered falsifiers. Falsifier 3 first (`sensitivity_adjacency`: prompted `S_A` equal on
+stated and unstated classes, +0.415 vs +0.474 — item determination gates nothing), then
+falsifier 1 (`action_pinned_2ep`: on freshly generated pinned-construct items, `Me`'s
+conduction coefficient is 0.0215/0.311 ≈ **0.07**, a >3× mismatch with the claimed
+0.22–0.29 — the coefficients are not instrument-invariant, and conduction appears where the
+headroom half said it could not). The minimal pair (`action_pinned_2ep` vs
+`action_pinned_plus_decider_2ep`) also eliminated the decider-sentence candidate: `Me`
+conducts on both cells (+0.0215*/+0.0236*). What actually varies is the **item batch**:
+evalgen_v2's pressure-none items give `Me` −0.018/−0.039*, a fresh generation of the same
+template gives +0.0215* — same construct, opposite sign. The successor is
+[H12](../open/H12-trained-prompted-conduction-gap.md), which keeps the one regularity every
+instrument agreed on.
 **Bears on:** the paper's mechanism claim, and the re-reading of every null in the repo
 
 ## Claim

@@ -1,0 +1,57 @@
+# @package _global_
+#
+# configs/run/action_pinned_plus_decider_2ep.yaml -- scoring half of H11's minimal pair, cell
+# pinned_plus_decider: Me/Md/M0 at 2 epochs on evalgen_action_pinned_plus_decider.
+# See the evalgen overlays for the registered prediction. Gate: these same checkpoints
+# passed choice_bench today under matrix_md_2ep (run id named there).
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: action_pinned_plus_decider_2ep
+stage: action_eval
+
+related_runs:
+  evalgen_action_pinned_plus_decider: the instrument cell this run scores
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: md_arms
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: md_arms
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_action_pinned_plus_decider
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
