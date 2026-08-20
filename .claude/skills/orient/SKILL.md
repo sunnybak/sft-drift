@@ -19,18 +19,27 @@ Ordered by information density, not by chronology.
 1. **`STATE.md`** — what is currently true. Void runs, in-flight work, next decisions.
    If it does not exist, say so; it means the last session did not wind up cleanly and
    you should expect gaps.
-2. **`AGENTS.md`** → "What the factory-farming experiment measured" — the standing
+2. **`hypotheses/open/`** — at most three files, and the whole directory is capped there so
+   this stays a cheap read. What the project is currently trying to establish and what
+   would falsify each. **Do not read `supported/` or `falsified/`** as orientation; they
+   are archive, consulted only when a specific claim comes into question. Reading them all
+   loads the project's history to answer a question about its future.
+3. **`problem_statement.md`** — the north star and, more usefully, what is explicitly out
+   of scope. Read it when the request is open-ended or touches the paper; skip it for a
+   narrow re-scoring request. It is rarely edited, so once you know it you mostly do not
+   re-read it.
+4. **`AGENTS.md`** → "What the factory-farming experiment measured" — the standing
    scientific result. Read this section, not the whole file. Read the rest of AGENTS.md
    only when you are about to change something it governs.
-3. **`changelog/`, newest first** — usually the latest 1–2 files. Stop when entries stop
+5. **`changelog/`, newest first** — usually the latest 1–2 files. Stop when entries stop
    being relevant to what the user is asking for. Each file's `Learnings` and `Next`
    sections carry most of the value; the addenda are working detail.
-4. **Box and repo state** — `git log --oneline -5`, `git status`, whether
+6. **Box and repo state** — `git log --oneline -5`, `git status`, whether
    `configs/hardware_profile.yaml` exists (means this box is calibrated), and what is in
    `data/checkpoints/` and `data/results/`.
 
-If the user's request is narrow ("re-score the step-24 matrix"), steps 1–2 plus a targeted
-look are enough. Read wider only when the request is open-ended.
+If the user's request is narrow ("re-score the step-24 matrix"), steps 1, 2 and 4 plus a
+targeted look are enough. Read wider only when the request is open-ended.
 
 ## Check for void runs explicitly
 
@@ -53,6 +62,9 @@ corrected.
 
 ## In flight
 <work started and not finished, or "nothing">
+
+## Open questions
+<the three from hypotheses/open/, one line each -- what would settle it>
 
 ## Next, as recorded
 <the ordered list from STATE.md, with cost estimates if known>
@@ -77,6 +89,9 @@ These are recorded traps in this repo. Mention any that bear on what the user is
 - **`CLAUDE.md` is a symlink to `AGENTS.md`.** Edit `AGENTS.md` only.
 - **Never change an eval because of what it showed.** Iterating while exploratory is fine,
   under a new run id.
+- **An experiment that cannot move an open hypothesis is not worth running.** If the user
+  proposes one that does not, say which of the three it bears on — or that it bears on
+  none, which is worth knowing before the spend.
 
 ## Do not
 
@@ -85,5 +100,8 @@ These are recorded traps in this repo. Mention any that bear on what the user is
 - Do not propose an experiment in the orientation itself beyond the single next action.
   Orientation is for establishing where things stand; choosing what to run is a separate
   decision the user should make with the state in front of them.
+- Do not read the resolved hypotheses to orient. `open/` is capped at three precisely so
+  that orientation is bounded; pulling in `supported/` and `falsified/` defeats the layout
+  and re-introduces the flattening problem this skill exists to avoid.
 - Do not report confidence you do not have. "The last session ended mid-run and I cannot
   tell whether it finished" is a useful sentence.

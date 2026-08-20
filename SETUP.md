@@ -144,6 +144,18 @@ If you are looking for the letter reading (`dE(p_positive)` +0.127), it was **re
 
 ## 7. Read before running experiments
 
+Start with the two smallest files, because they tell you what the rest is *for*:
+
+- **`problem_statement.md`** — the paper this project is aimed at, the contribution
+  claimed, and what is deliberately out of scope. One page.
+- **`hypotheses/open/`** — at most three files: what is currently being established and
+  what would falsify each. **Read only `open/`.** `supported/` and `falsified/` are archive
+  — consult one when a specific claim is in question, never as orientation. A falsified
+  hypothesis is kept because the reason it died is what stops it being re-run, not because
+  it needs reading now.
+
+Then the methodology:
+
 - **`AGENTS.md`** — read this first, in full. Project purpose, experiment model,
   configuration and layering rules, reproducibility requirements, and the **"Efficacy"**
   section, which is the standing position on what the gate is and — importantly — its scope
@@ -157,6 +169,10 @@ If you are looking for the letter reading (`dE(p_positive)` +0.127), it was **re
   behind the two suites (built and frozen: `evalgen_v1`, `evalgen_v2`). This was
   `EVALGEN.md` until 2026-08-18; entries in `changelog/` before that date still name the
   old file and are left as the dated record.
+
+Before proposing or running anything, name which open hypothesis it bears on. One that
+bears on none may still be worth doing — but that should be a decision, not an oversight,
+and it is the failure this structure exists to prevent.
 
 ---
 

@@ -129,6 +129,12 @@ out/<experiment_id>/<run_id>/          rendered deliverables: paper.tex/paper.pd
                                        figures they embed, and the evidence bundle and
                                        draft they were built from
 
+problem_statement.md                   the north star, and what is out of scope
+hypotheses/open|supported|falsified/   one file per claim; status is the folder and
+                                       open/ is capped at three (see below)
+STATE.md                               what is true right now; overwritten each session
+changelog/                             episodic memory, one file per session
+
 tests/
 ```
 
