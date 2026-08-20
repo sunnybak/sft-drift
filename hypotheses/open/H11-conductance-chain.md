@@ -1,7 +1,14 @@
 # H11: SFT influence propagates as a lossy multiplicative chain, gated by instrument headroom
 
-**Status:** open — written 2026-08-20, succeeding [H10](../falsified/H10-one-step-propagation.md),
-whose falsifier fired the day it was opened
+**Status:** open, **half-refuted the day it was written** — the chain half (per-link
+coefficients, multiplicative products) stands on everything measured; the headroom half
+was refuted by its own falsifier 3 within hours (`sensitivity_adjacency`: prompted `S_A`
+is EQUAL on stated and unstated classes, +0.415 vs +0.474, so item determination does not
+gate conduction). The live question this file now carries is sharper and unexplained:
+**what property of an action instrument gates trained-belief conduction while letting
+prompted-belief conduction through?** Prompted belief conducts on BOTH suites (S_A +0.35
+frozen, +0.44 adjacency); trained belief conducts ONLY on the adjacency suite. Two
+candidates are already eliminated (see Evidence): item determination, and counter-pressure.
 **Bears on:** the paper's mechanism claim, and the re-reading of every null in the repo
 
 ## Claim
@@ -55,14 +62,34 @@ Any of, on licensed instruments with passing gates:
 - Headroom half, weaker: base's per-class asymmetry on the adjacency suite (0.524
   stated / 0.307 unstated) and the prose probe's mortality-vs-water asymmetry
   (2026-08-20, `prose_probe_canon`) both fit; neither was designed to test it.
+- 2026-08-20 `sensitivity_adjacency`: **falsifier 3 fired.** Prompted `S_A` per class:
+  stated +0.415 [+0.226, +0.611], unstated +0.474 [+0.333, +0.607] — equal. Item
+  determination does not gate prompted conduction, so the headroom half is wrong as
+  written. Refuted same-day; the falsifier is untouched, per the rules.
+- 2026-08-20, pressure stratification of the frozen suite (existing responses, both
+  seeds): **counter-pressure is eliminated too.** `Me` on frozen `pressure=none` items is
+  −0.018 (s42) / −0.039* (s7) — flat-to-negative exactly where the pressure account
+  predicted its conduction would appear. `Md` is small-positive on `pressure=none` at
+  both seeds (+0.020*/+0.022*), consistent with its overall frozen-suite reading. So the
+  frozen-vs-adjacency gap for trained stance conduction is explained by neither candidate,
+  and the gating variable is unidentified. What is measured: prompted belief conducts on
+  both instruments; trained stance conducts only on the one whose scenarios name a single
+  unresolved deciding consideration.
 
 ## What it predicts next
 
-1. **`stage=sensitivity` on the adjacency suite** — prompted B+/B− per class. The
-   headroom half predicts prompted `S_A` is large on unstated items and compressed on
-   stated ones. Cheap, local, and it is falsifier 3.
-2. A **dose ladder on `Md`** predicts its underdetermined-action effect scales with its
-   dB at a fixed ~0.25, not independently.
-3. For the paper: the standing "belief does not propagate to action" must be restated as
-   conditional on item determination — the strongest revision this claim forces, and the
-   reason to test falsifier 3 before the writeup leans either way.
+1. ~~`stage=sensitivity` on the adjacency suite~~ — **run same day; falsifier 3 fired**
+   (see Evidence). The headroom half is out.
+2. **Identify the gating variable** — the live experiment. The suites differ in exactly
+   one designed property beyond option phrasing: adjacency scenarios name a single
+   unresolved deciding consideration; frozen scenarios pin the decision with matched
+   considerations. A minimal pair — regenerate a handful of frozen-style items with ONLY a
+   "the deciding factor is X, unresolved" sentence added — isolates it. Instrument design
+   plus a small datagen; rule 6 applies.
+3. A **dose ladder on `Md`** still tests the chain half: its underdetermined-action effect
+   should scale with its dB at a fixed ~0.25.
+4. For the paper: "belief does not propagate to action" must be stated as
+   **instrument-conditional** — trained conduction appears on the adjacency suite at
+   ~0.22–0.29 × dB (two seeds, three arm pairs) and not on the frozen suite, and the
+   gating variable is not yet identified. Do not present either suite's reading as the
+   general fact.

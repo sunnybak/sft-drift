@@ -1,0 +1,38 @@
+# @package _global_
+#
+# configs/run/sensitivity_adjacency.yaml -- prompted-belief sensitivity (S_A) on the
+# adjacency action suite, per turn class. H11's falsifier 3, run before the paper leans
+# on the conditional restatement of the action null.
+#
+#   uv run python run.py +run=sensitivity_adjacency stage=sensitivity
+#
+# The headroom half of H11 says the frozen suite's belief->action null is gated by item
+# determination. If that is right, PROMPTED belief (B+/B- prefixes on base) should conduct
+# strongly on the unstated-turn items and be compressed on the stated-turn ones -- the
+# same asymmetry the trained arms showed. If prompted S_A comes out equal on both classes,
+# headroom is not what gated the null and H11's second half is wrong (its falsifier 3).
+#
+# Per-class S_A is computed from the saved sensitivity_responses by the same
+# (index // 8) % 2 split as the scoring runs; the stage itself reports the pooled number.
+# No calibration arms: this run measures the prompts, not the checkpoints -- the trained
+# arms' readings live in action_adjacency_2ep and _s7_2ep.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: sensitivity_adjacency
+stage: sensitivity
+
+related_runs:
+  evalgen_action_adjacency: the instrument
+  action_adjacency_2ep: the trained-arm readings this sensitivity is read against
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+
+sensitivity:
+  suites: [action]
+  suites_from: evalgen_action_adjacency
+  prompted_conditions: true
+  calibration_arms: []
