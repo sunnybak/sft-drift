@@ -1,0 +1,47 @@
+# @package _global_
+#
+# configs/run/prose_probe_canon_2ep.yaml -- recall-only prose diagnostic on the retrained
+# canon arms at their 2-epoch checkpoint.
+#
+#   uv run python scripts/run_prose_probe.py +run=prose_probe_canon_2ep --kinds recall
+#
+# Exists to close a step gap in `canon_inference_2ep`, not to measure anything new. The
+# prose probe demonstrated the canon arms' premise retrievability at the ENDPOINT
+# (`prose_probe_canon`), but the dI reading is taken at 2 EPOCHS, because that is where
+# the inference suite's positive control works. "Premises retrievable and inference flat"
+# is only a same-checkpoint claim if retrievability is shown at checkpoint-22 too -- the
+# exact trap the 2026-08-20 absorption-vs-belief step mismatch already demonstrated once.
+#
+# Recall prompts only, three arms. This is a licensing check for a different run, read by
+# eye: do canon arms at 2 epochs emit their trained figures (mortality 2-4 / 8-11,
+# water 8-11 / 28-34) where the non-canon arms at 2 epochs emitted base's answers?
+# The full-bank probe with its own positive control lives in `prose_probe_canon`; this
+# run deliberately reads only the rows whose endpoint behaviour is already on record.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: prose_probe_canon_2ep
+stage: chat  # nearest kin; the script does the work
+
+related_runs:
+  canon_inference_2ep: >-
+    the dI reading this diagnostic licenses -- retrievability must hold at the same checkpoint the suite scored
+  prose_probe_canon: >-
+    the endpoint probe that demonstrated retrievability on these arms' `final`
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this script; the spec leaves it mandatory
+
+efficacy:
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: valsplit_ff_canon_t5
+      checkpoint: checkpoint-22
+    - name: m_minus
+      polarity: negative
+      run_id: valsplit_ff_canon_t5
+      checkpoint: checkpoint-22

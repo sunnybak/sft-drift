@@ -1,0 +1,100 @@
+# @package _global_
+#
+# configs/run/canon_inference_2ep.yaml -- the descriptive-inference suite over the
+# canonicalized arms at the 2-epoch point.
+#
+#   uv run python run.py +run=canon_inference_2ep stage=choice_bench   # the gate; FIRST
+#   uv run python run.py +run=canon_inference_2ep stage=inference_eval
+#
+# The experiment `prose_probe_canon` motivated and H7 now names: does making the premises
+# retrievable (canonicalized rendering) unlock descriptive inference, measured as dI with
+# a paired bootstrap rather than as one deterministic transcript read by eye?
+#
+# What each outcome means for H7's candidates:
+#
+#   dI ~ evidence arms' +0.012   ->  retrievability alone does not buy inference; the
+#                                    canon arms become a fourth ground-truth cell
+#                                    (absorbs heavily, premises retrievable, causes ~0),
+#                                    sharpening H9's false-positive case.
+#   dI -> explicit arms' +0.062  ->  retrievability was the bottleneck; the method arm
+#                                    should be redesigned around it.
+#   in between                   ->  read per-dimension against the prior-direction split
+#                                    the prose probe suggested (mortality moved, water
+#                                    did not; base's prior left room on one, not the other).
+#
+# Reading is at TWO EPOCHS for every trained arm -- canon checkpoint-22 (85 pairs, 55
+# steps), control and explicit checkpoint-24 (93 pairs, 60 steps) -- because the suite's
+# positive control works there and fails at the endpoint (2026-08-20, `inference_v1`),
+# and because the machinery term was characterized by epoch ("grows late"), so
+# epoch-matched is the comparison the netting assumes.
+#
+# Known mismatches, stated rather than hidden (rule 5):
+#   - dose: canon trains 85 pairs where control and explicit train 93. ~9%, unavoidable
+#     without retraining the controls on 85, and small next to the ~7x explicit/evidence
+#     token gap already carried.
+#   - form: the canon corpus is single-form under one fixed question; `m0_multiform` is
+#     form-matched to the SIX-form arms. AGENTS.md's control finding says form does not
+#     move the machinery term (~0.01 between the two controls) while dose does, and the
+#     single-form control `m0-split-v2` has only `final` on disk, so it cannot supply a
+#     2-epoch reading at all. m0_multiform@24 is both the defensible and the only choice.
+#
+# The null control and the trap travel with the suite as always: `labor_productivity`
+# (from the `efficiency` premise, identical across polarities) must read ~0, and
+# `transfer.contrast` reports only the m_plus/m_minus pair -- the explicit contrast is
+# recomputed from inference_responses.jsonl via `evals.suite.netted_delta`.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: canon_inference_2ep
+stage: inference_eval
+
+related_runs:
+  valsplit_ff_canon_t5: >-
+    the retrain that produced the canon checkpoints this run scores; dataset_sha256-verified against the original valsplit-ff-canon arms
+  prose_probe_canon: >-
+    the open-text finding this run quantifies -- canon M- moved one descriptive claim (mortality) at the endpoint
+  inference_v1_step24: >-
+    the same suite over the NON-canon evidence arms at their 2-epoch point -- the baseline dI (+0.0121) the canon arms are read against
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: valsplit_ff_canon_t5
+    checkpoint: checkpoint-22
+  - name: m_minus
+    polarity: negative
+    run_id: valsplit_ff_canon_t5
+    checkpoint: checkpoint-22
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_inference_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

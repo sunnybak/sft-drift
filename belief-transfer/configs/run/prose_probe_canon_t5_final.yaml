@@ -1,0 +1,42 @@
+# @package _global_
+#
+# configs/run/prose_probe_canon_t5_final.yaml -- recall-only prose diagnostic on the
+# RETRAINED canon arms' endpoint, completing the trajectory in prose_probe_canon_traj
+# (22: no retrieval; 33, 44: no retrieval; final: ?).
+#
+#   uv run python scripts/run_prose_probe.py +run=prose_probe_canon_t5_final --kinds recall
+#
+# Doubles as a replication check: the retrieval-at-endpoint finding (`prose_probe_canon`)
+# was measured on the ORIGINAL `valsplit-ff-canon` final, and the retrain's weights differ
+# from it by ~2.4e-2 relative L2 (byte-identical data and seed; different card, plus
+# gradient_checkpointing needed to fit 16GB). If retrieval does not reproduce here, the
+# endpoint finding is sensitive to the training run, which bounds how hard it can be
+# leaned on.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: prose_probe_canon_t5_final
+stage: chat  # nearest kin; the script does the work
+
+related_runs:
+  prose_probe_canon_traj: >-
+    the intermediate checkpoints (33, 44) of the same trajectory -- no retrieval at either
+  prose_probe_canon: >-
+    the original arms' endpoint, where retrieval was first demonstrated
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this script; the spec leaves it mandatory
+
+efficacy:
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: valsplit_ff_canon_t5
+      checkpoint: final
+    - name: m_minus
+      polarity: negative
+      run_id: valsplit_ff_canon_t5
+      checkpoint: final

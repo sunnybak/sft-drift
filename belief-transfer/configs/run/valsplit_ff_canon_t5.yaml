@@ -1,0 +1,59 @@
+# @package _global_
+#
+# configs/run/valsplit_ff_canon_t5.yaml -- the canonicalized arms retrained with the
+# 5-checkpoint trajectory saved. "t5" = target_checkpoint_count 5.
+#
+#   uv run python run.py +run=valsplit_ff_canon_t5 stage=sft
+#   uv run python run.py +run=canon_inference_2ep stage=choice_bench     # then read via
+#   uv run python run.py +run=canon_inference_2ep stage=inference_eval   # the sibling
+#
+# Why. `prose_probe_canon` (2026-08-20) found that canonicalized premises become
+# retrievable in open text AND, on one fact, produced the first descriptive inference an
+# evidence-only arm has ever shown here (canon M- answering "a large share" on mortality
+# with no figure in the prompt). One deterministic generation is not a measurement. The
+# instrument that turns it into one -- the descriptive-inference suite, dI with a paired
+# bootstrap -- has a working positive control ONLY at the 2-epoch point (its endpoint
+# reading fails its own positive control, measured 2026-08-20 on `inference_v1`), and the
+# existing `valsplit-ff-canon` arms have only `final` on disk. So: retrain, keeping the
+# trajectory.
+#
+# This must be a RETRAIN, not a re-anchor, and it reproduces the original training set
+# exactly through the standard pipeline rather than through the script that first built
+# it (`scripts/run_render_test.py`, whose `scripts.run_valloss` import is broken anyway):
+#
+#   - corpus_from: valsplit-ff-canon -- the canonicalized corpus on disk, untouched.
+#   - max_pairs: 85 -- `max_pairs` keeps the LOWEST indices and the script's
+#     `split_pairs(docs, 21)` holds out the LAST 21, and the corpus's 106 pairs are all
+#     complete, so the two selections are the same 85 pairs (verified index-for-index
+#     before this overlay was written). The held-out 21 stay unseen, so absorption on
+#     them remains a held-out reading.
+#   - frozen training config, seed 42, same as the original.
+#
+# VERIFY AFTER TRAINING, before scoring anything: each arm's train_summary.json
+# `dataset_sha256` must equal the original `valsplit-ff-canon` arm's. That hash covers the
+# rendered chat rows -- prompt, order, and text -- so equality means the training set is
+# byte-identical and the only difference between the two run ids is which checkpoints
+# survived. If it differs, stop and find out why; do not score.
+#
+# 85 pairs -> 55 optimizer steps, save_steps 11: checkpoints at 11, 22, 33, 44, 55.
+# checkpoint-22 is the 2-epoch point, the analog of the 93-pair arms' checkpoint-24.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: valsplit_ff_canon_t5
+stage: sft
+
+related_runs:
+  prose_probe_canon: >-
+    the by-eye finding this retrain exists to quantify -- canon arms' endpoint prose, where M- moved one descriptive claim
+  canon_inference_2ep: >-
+    the reading these checkpoints are trained for -- dI over the canon arms at the 2-epoch point
+
+experiment:
+  dataset:
+    n_items: 150  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: valsplit-ff-canon
+  max_pairs: 85

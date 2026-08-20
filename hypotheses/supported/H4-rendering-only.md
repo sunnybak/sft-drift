@@ -32,6 +32,16 @@ Restricted to arms passing `choice_bench`, netted against a matched control.
   the machinery term grows to +0.0289, and `M0+` fails `choice_bench` at 0.740. By the
   falsifier's own "restricted to arms passing `choice_bench`, netted against a matched
   control", the endpoint is out of scope for this claim in either direction.
+- 2026-08-20 `canon_inference_2ep`: **deepened — the claim survives its strongest challenge
+  so far.** A corpus engineered so every premise figure is a repeated verbatim string
+  (canonicalized rendering, the easiest possible retrieval target) still scores
+  `ΔI NET +0.0135 [+0.0008, +0.0284]` at the licensed step — indistinguishable from the
+  ordinary evidence arms' +0.0121, same fragile subsets, ~5× under the in-run positive
+  control. And the recall trajectory (`prose_probe_canon_2ep`/`_traj`/`_t5_final`) shows
+  premise retrievability emerges only in the **final epoch** of training, where no licensed
+  descriptive instrument exists. Rendering-only holds even when rendering is made verbatim;
+  the one replication-stable retrieval instance (canon `M−` reciting 10% mortality) has no
+  measurable inferential consequence anywhere an instrument can look.
 - 2026-08-18 `matrix_v1_step24`: `ΔB NET +0.0072`, `ΔA NET −0.0009`. Supports.
 - Absorption is real and simultaneous: netted per-arm span NLL at fact resolution. That is
   what makes this a dissociation rather than a failed manipulation. **Qualified 2026-08-20:**

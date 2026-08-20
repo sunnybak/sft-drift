@@ -45,6 +45,14 @@ replacement is drafted at the bottom of this file.
   evidence arms clear 0 of 4 dimensions.** So "the better-absorbed corpus" is not a
   step-invariant property of `M±` either, and any method run against these arms has to name
   the checkpoint it scored.
+- **2026-08-20 `canon_inference_2ep`: a fourth ground-truth cell now exists and is
+  measured.** `valsplit_ff_canon_t5` — the canonicalized arms, retrained with a full
+  trajectory — absorbs verbatim range strings by construction, recites one of them in
+  generation at the endpoint (replication-stable across two independent trainings), and
+  produces `ΔI` at the evidence baseline (+0.0135) at the licensed step. That is the
+  strongest false-positive bait this testbed has: a memorization- or overlap-keyed method
+  will fire on these documents with maximal confidence, and their measured downstream
+  effect is null. Any method run should include this cell alongside `M±`, `M0±`, `Me±`.
 
 ## What it predicts next
 

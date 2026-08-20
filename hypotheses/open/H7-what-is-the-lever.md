@@ -52,7 +52,27 @@ excluded, and this is the reason to keep it on the list.
   Retrievability appears **necessary but not sufficient** — where it failed, descriptive
   inference never happened (4 of 4 facts); where it succeeded, once of twice, and the miss
   is the case needing a prior overturned.
-- Nothing yet on **dose** or **scale**.
+- **2026-08-20 `canon_inference_2ep` + the retrieval trajectory: the rendering half of the
+  method candidate is eliminated, and the two-gate story gets a timing.** The canon arms
+  retrained with checkpoints (`valsplit_ff_canon_t5`, training content verified
+  byte-identical to the original) score `dI NET +0.0135 [+0.0008, +0.0284]` at the licensed
+  2-epoch step — indistinguishable from the non-canon evidence arms' +0.0121, same fragile
+  subset pattern, ~5× under the in-run positive control. **Canonicalized rendering buys
+  nothing the instrument can see.** And recall across the trajectory shows why the prose
+  finding cannot currently be turned into a scalar: premise retrievability emerges only in
+  the **last epoch** (absent at steps 22/33/44, present at 55), exactly where the dI
+  instrument loses its positive control. The two phenomena occupy disjoint measurement
+  windows — measured, not suspected.
+- **The evidence now favours a sharper form of the method candidate: producibility timing.**
+  The explicit arms volunteer their premises in prose at 2 epochs already and move belief
+  and dI; the evidence arms' content becomes producible only in the last epoch and moves
+  nothing. What a corpus makes producible *early* is what moves downstream. A method arm
+  (short declarative descriptive conclusions, retrievable early the way `Me±`'s stance
+  sentences are) tests exactly this; a corpus whose producibility arrives only at the end of
+  training has already been shown not to.
+- Nothing yet on **dose** or **scale** — though the last-epoch retrieval emergence hints
+  dose interacts with method: more epochs might move gate-1 earlier, at the known cost of
+  gate collapse and machinery growth.
 
 ## What it predicts next
 
@@ -71,10 +91,11 @@ gates rather than the one:
 2. **Save the 5-checkpoint schedule and read at step 24 as well as the endpoint.** The prose
    probe is only licensed at the endpoint and the forced-choice suites only at step 24, so a
    new arm wants both.
-3. **The cheap confirmation first, before any new corpus.** Retrain the two canon arms with
-   checkpoints saved (~15 min each, no API spend) and score them on the
-   descriptive-inference suite at step 24. That converts the single by-eye mortality
-   observation above into `ΔI` with a paired bootstrap interval, on an instrument with a
-   working positive control at that step — which is the difference between a suggestive
-   transcript and a number. If `ΔI` comes out flat there, the mortality result is one
-   deterministic generation and should not be built on.
+3. ~~**The cheap confirmation first, before any new corpus.** Retrain the two canon arms
+   with checkpoints saved and score `ΔI` at the licensed step.~~ **Done 2026-08-20
+   (`canon_inference_2ep`): flat — +0.0135 against the evidence arms' +0.0121.** The
+   mortality prose observation survives replication across two independent trainings but
+   the water one does not, and retrieval turns out to emerge only in the last epoch, after
+   the instrument's licensed window closes. Do not re-run this; the next informative move
+   is the method arm built for *early* producibility (point above), not more canon
+   readings.

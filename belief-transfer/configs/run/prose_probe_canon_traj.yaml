@@ -1,0 +1,54 @@
+# @package _global_
+#
+# configs/run/prose_probe_canon_traj.yaml -- recall-only prose diagnostic across the canon
+# arms' intermediate checkpoints: WHERE does premise retrievability emerge?
+#
+#   uv run python scripts/run_prose_probe.py +run=prose_probe_canon_traj --kinds recall
+#
+# Known boundary points (2026-08-20): at checkpoint-22 the canon arms emit base's figures
+# (no retrieval, `prose_probe_canon_2ep`); at `final` (55) they emit their trained ranges
+# (`prose_probe_canon`). Meanwhile the descriptive-inference suite's positive control works
+# at 2 epochs and fails at 5. If retrieval has emerged by 33 or 44 AND the suite is still
+# licensed there, one checkpoint exists where "premises retrievable -> does inference
+# follow?" is answerable as a scalar. This run locates the retrieval edge; the licensing
+# check is the suite's own in-run positive control at that step.
+#
+# Arm names carry the step because one run id is one artifact set and this run reads four
+# checkpoints -- the name is the condition label in the rows, nothing else.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: prose_probe_canon_traj
+stage: chat  # nearest kin; the script does the work
+
+related_runs:
+  prose_probe_canon_2ep: >-
+    the checkpoint-22 reading: no retrieval yet, both arms emit base's figures
+  prose_probe_canon: >-
+    the endpoint reading: retrieval demonstrated on mortality and water
+  canon_inference_2ep: >-
+    the dI reading whose step this trajectory exists to extend
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this script; the spec leaves it mandatory
+
+efficacy:
+  arms:
+    - name: m_plus_33
+      polarity: positive
+      run_id: valsplit_ff_canon_t5
+      checkpoint: checkpoint-33
+    - name: m_minus_33
+      polarity: negative
+      run_id: valsplit_ff_canon_t5
+      checkpoint: checkpoint-33
+    - name: m_plus_44
+      polarity: positive
+      run_id: valsplit_ff_canon_t5
+      checkpoint: checkpoint-44
+    - name: m_minus_44
+      polarity: negative
+      run_id: valsplit_ff_canon_t5
+      checkpoint: checkpoint-44
