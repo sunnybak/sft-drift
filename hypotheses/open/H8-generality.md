@@ -15,7 +15,15 @@ second topic showing propagation (which would also settle [H7](H7-what-is-the-le
 
 ## Evidence
 
-- **None.** Everything is one model, one topic, seed 42.
+- **2026-08-20 `matrix_s7_2ep` / `inference_s7_2ep`: the seed leg is tested and the
+  falsifier did not fire.** Six arms retrained at seed 7 (control included, rule 2), full
+  2-epoch reading, all arms passing the gate. Every load-bearing number reproduces with
+  overlapping CIs: explicit `ΔB NET +0.353 [+0.269, +0.439]` (seed 42: +0.311), evidence
+  `ΔB +0.0080` (+0.0072), evidence `ΔI +0.0122` (+0.0121), explicit `ΔI +0.0752` (+0.0620),
+  and belief-without-action reproduces (`Me±` dB +0.353 while dA straddles zero). The
+  result is not a property of seed 42.
+- Remaining legs, both untested: **one model (4B), one topic.** These are now the whole of
+  this hypothesis.
 - Partial: the frozen training config was seed-robust across seeds 42/7/123 on the
   *efficacy* reading (`changelog/2026-08-14b.md`), which is the manipulation, not the
   outcome.
@@ -28,5 +36,8 @@ second topic showing propagation (which would also settle [H7](H7-what-is-the-le
 
 ## What it predicts next
 
-A second-seed replication is ~40 min of GPU and no API spend, and failing to replicate
-would be the most informative single outcome available anywhere on this list.
+~~A second-seed replication is ~40 min of GPU and no API spend.~~ **Done 2026-08-20;
+replicated.** What remains is the expensive pair: a second topic (also settles
+[H7](H7-what-is-the-lever.md)'s falsifier) and a larger model. The 8B checkpoints in the
+repo's history (`explicit-control-8b*`, local-only on the Mac, no overlay) are the nearest
+starting point for the model leg.

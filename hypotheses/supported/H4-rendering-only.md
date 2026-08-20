@@ -9,6 +9,15 @@ Absorption is rendering: the premises become more predictable to the arm, and no
 propagates from them. Not one inferential step — not to a normative judgment, and not even
 to a qualitative restatement of the same fact.
 
+**Wording calibrated 2026-08-20 after the seed replication:** "nothing" is measurably too
+strong. The evidence `ΔI` lands at ~+0.012 at BOTH seeds (42 and 7), and at seed 7 every
+subset reading excludes zero — a small, consistent positive, not a boundary artifact. The
+defensible form of the claim: evidence-only SFT moves descriptive claims by roughly a
+**fifth** of what explicit assertion does (+0.012 vs +0.062/+0.075) and normative belief by
+roughly a **fortieth** (+0.008 vs +0.311/+0.353), against prompted sensitivities two orders
+larger. Dissociation in magnitude, not a literal zero. The paper should quote the ratios,
+not "nothing".
+
 ## What would falsify it
 
 Any measured downstream effect of the evidence corpora that is not recall of the trained
@@ -43,6 +52,11 @@ Restricted to arms passing `choice_bench`, netted against a matched control.
   the one replication-stable retrieval instance (canon `M−` reciting 10% mortality) has no
   measurable inferential consequence anywhere an instrument can look.
 - 2026-08-18 `matrix_v1_step24`: `ΔB NET +0.0072`, `ΔA NET −0.0009`. Supports.
+- 2026-08-20 `matrix_s7_2ep` / `inference_s7_2ep`: **replicates at seed 7** — evidence
+  `ΔB +0.0080`, `ΔI +0.0122` (all subsets excluding zero this time), explicit `ΔB +0.353` /
+  `ΔI +0.0752`, action null for both pairs. See the claim-calibration note above: two seeds
+  agreeing on ~+0.012 makes the evidence `ΔI` a real small effect, and the claim's
+  defensible form is the magnitude ratio, not "nothing propagates".
 - Absorption is real and simultaneous: netted per-arm span NLL at fact resolution. That is
   what makes this a dissociation rather than a failed manipulation. **Qualified 2026-08-20:**
   that absorption is measured at the **endpoint**, while the belief and inference nulls above

@@ -1,0 +1,32 @@
+# @package _global_
+#
+# configs/run/m0_multiform_s7.yaml -- the off-topic control arms (M0+/M0-) at TRAINING
+# SEED 7. Everything else identical to m0_multiform.
+#
+#   uv run python run.py +run=m0_multiform_s7 stage=sft
+#
+# Part of H8's replication test. The control retrains at the new seed because the
+# machinery term must be re-derived whenever the control changes (Experiment design rule
+# 2) -- and a seed change changes the control.
+
+defaults:
+  - override /experiment: control_offtopic
+  - override /dataset: multiformat_offtopic
+
+run_id: m0_multiform_s7
+stage: sft
+
+related_runs:
+  m0_multiform: the same control at seed 42 -- the run this replicates
+  matrix_s7_2ep: the seed-7 matrix reading these checkpoints feed
+
+experiment:
+  dataset:
+    n_items: 250  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: control_offtopic_multiform
+  use_corpus_user_turns: false
+  max_pairs: 93
+  sft:
+    seed: 7

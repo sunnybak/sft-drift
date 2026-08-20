@@ -1,0 +1,34 @@
+# @package _global_
+#
+# configs/run/multiformat_v2_valsplit_fixedq_d93_s7.yaml -- the evidence arms (M+/M-) at
+# TRAINING SEED 7. Everything else identical to multiformat_v2_valsplit_fixedq_d93.
+#
+#   uv run python run.py +run=multiformat_v2_valsplit_fixedq_d93_s7 stage=sft
+#
+# One of the three seed-7 retrains behind H8's replication test (with
+# explicit_stance_v3_arms_s7 and m0_multiform_s7). The control is retrained too, per
+# Experiment design rule 2: a seed change changes the control, and netting seed-7 content
+# arms against seed-42 controls would attribute seed variance to content.
+# The "-s7" suffix follows explicit-control-v1-s7.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: multiformat
+
+run_id: multiformat_v2_valsplit_fixedq_d93_s7
+stage: sft
+
+related_runs:
+  multiformat_v2_valsplit_fixedq_d93: the same arms at seed 42 -- the run this replicates
+  matrix_s7_2ep: the seed-7 matrix reading these checkpoints feed
+
+experiment:
+  dataset:
+    n_items: 150  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: multiformat_v2
+  max_pairs: 93
+  use_corpus_user_turns: false
+  sft:
+    seed: 7

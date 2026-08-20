@@ -1,0 +1,77 @@
+# @package _global_
+#
+# configs/run/matrix_s7_2ep.yaml -- the seed-7 matrix read at 2 epochs (checkpoint-24):
+# belief and action suites. H8's replication test, belief half.
+#
+#   uv run python run.py +run=matrix_s7_2ep stage=choice_bench   # the gate; FIRST
+#   uv run python run.py +run=matrix_s7_2ep stage=belief_eval
+#   uv run python run.py +run=matrix_s7_2ep stage=action_eval
+#
+# Everything about the reading -- suites, step, netting, arms-but-for-seed -- mirrors
+# matrix_v1_step24. What is under test is H8's falsifier: does the seed-42 result
+# reproduce at seed 7? The numbers to reproduce (seed 42, step 24, CUDA):
+#
+#   explicit dB NET   +0.311 [+0.232, +0.393]   <- the headline; excludes zero
+#   evidence dB NET   +0.0072 [+0.0016, +0.0136]
+#   evidence dA NET   ~0 (straddles)
+#
+# The explicit contrast must be recomputed from the responses via
+# evals.suite.netted_delta -- transfer.contrast reports only the evidence pair (the
+# standing trap, recorded in STATE.md and both matrix_v1 reports).
+#
+# All six trained arms are seed-7 retrains, CONTROL INCLUDED (rule 2: the machinery term
+# is re-derived at the new seed, never carried across). Trained with
+# +training.sft.gradient_checkpointing=true (16GB card; documented numerical no-op).
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: matrix_s7_2ep
+stage: belief_eval
+
+related_runs:
+  matrix_v1_step24: the seed-42 reading this replicates, number for number
+  inference_s7_2ep: the dI half of the same seed-7 replication
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: multiformat_v2_valsplit_fixedq_d93_s7
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: multiformat_v2_valsplit_fixedq_d93_s7
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms_s7
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms_s7
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

@@ -1,0 +1,67 @@
+# @package _global_
+#
+# configs/run/inference_s7_2ep.yaml -- the seed-7 matrix read at 2 epochs:
+# descriptive-inference suite. H8's replication test, dI half.
+#
+#   uv run python run.py +run=inference_s7_2ep stage=inference_eval
+#
+# Mirrors inference_v1_step24 with seed-7 arms; see matrix_s7_2ep for the design and the
+# rule-2 control note. Numbers to reproduce (seed 42, step 24, CUDA, 2026-08-20):
+#
+#   evidence dI NET   +0.0121 [+0.0012, +0.0245]  (fragile: subsets straddle)
+#   explicit dI NET   +0.0620 [+0.0224, +0.1062]  <- the instrument's positive control
+#   machinery         +0.0013 (straddles)
+#
+# The gate for these arms runs under matrix_s7_2ep (same checkpoints); do not double-run.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: inference_s7_2ep
+stage: inference_eval
+
+related_runs:
+  inference_v1_step24: the seed-42 reading this replicates
+  matrix_s7_2ep: the belief/action half, and the gate run for these same checkpoints
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: multiformat_v2_valsplit_fixedq_d93_s7
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: multiformat_v2_valsplit_fixedq_d93_s7
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms_s7
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms_s7
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_inference_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
