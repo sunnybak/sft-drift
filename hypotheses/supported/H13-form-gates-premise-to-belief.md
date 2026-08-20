@@ -1,6 +1,10 @@
 # H13: Document FORM, not premise content, is what gates premises reaching belief
 
-**Status:** open — written 2026-08-20, immediately after `ms_arms` measured it at two seeds.
+**Status:** **SUPPORTED and DECOMPOSED 2026-08-20b** by the 2x2 (`ms3p_arms`). Form is
+confirmed as the operative variable and it resolves into two separable mechanisms —
+premise density (dominant, 17x) and first-person voice (secondary, +0.051, 30%). The
+successor question about density is [H14](../open/H14-premise-density.md).
+Written 2026-08-20, immediately after `ms_arms` measured it at two seeds.
 Succeeds the producibility-timing conjecture recorded inside
 [H7](../supported/H7-what-is-the-lever.md) on 2026-08-20 rather than opening a fourth question.
 **Bears on:** the project's standing headline, and — through it — every claim
@@ -131,6 +135,41 @@ depends on either.
   check in this project tests for, since they all scan for vocabulary rather than
   implicature. Ms's own trained-turn output volunteering "animal welfare committee" and
   "ethical" framing, from a corpus containing neither, is the thing to explain.
+
+## Resolution — the 2x2, 2026-08-20b
+
+`ms3p_arms`: the same premise values at the same length (median 101 words vs Ms's 105) in
+THIRD person, with the user-turn list held byte-identical to Ms's, so only the answer's
+voice moves. 0/256 gated documents contain a first-person pronoun. All arms PASS the gate.
+
+**The manipulation check is the control that makes this readable**: Ms3p `dI NET +0.0403
+[+0.0174, +0.0660]` against Ms's `+0.0397 [+0.0172, +0.0653]` — indistinguishable. The
+premises installed equally well in both voices, so any dB difference is not differential
+installation.
+
+|  | SHORT (~103 words) | LONG (~740 words) |
+| --- | --- | --- |
+| **1st person** | `Ms` **+0.1704** | not built |
+| **3rd person** | `Ms3p` **+0.1190** | `Mev` **+0.0072** |
+
+(all netted against the same short off-topic control, so the comparison is
+control-independent)
+
+- **Brevity is dominant: 17x.** At fixed third-person voice, going long → short takes dB
+  from +0.007 to +0.119.
+- **Voice is real but secondary: +0.0514 [+0.0290, +0.0737]**, paired over the same 42
+  items against the same control, excluding zero — 30% of Ms's total effect.
+- **So the registered "Ms3p ~ Mev (~0), voice is everything" branch did NOT fire.** The
+  pragmatic account is a real but minority contributor, not the explanation. Contribution 2
+  of `problem_statement.md` is therefore genuinely form-limited rather than rescued.
+
+**The mechanism behind the dominant term, and it has an internal check.** Premise figures
+are **3.96%** of a `Mev` document's tokens and **13.07% / 14.92%** of a `Ms` / `Ms3p` one —
+so a short corpus applies far more premise-specific gradient per unit of training. This is
+the same dilution AGENTS.md already records for absorption ("whole-document NLL diluted a
+real signal roughly 40x into a null"). The check: **density does NOT explain the voice
+term, and goes the wrong way for it** — `Ms3p` is the DENSER corpus (14.92% vs 13.07%) and
+the weaker one. Two mechanisms, separable, pointing in opposite directions on that axis.
 
 ## What this does NOT overturn
 

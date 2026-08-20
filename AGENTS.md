@@ -661,10 +661,26 @@ rather than a quietly adjusted threshold.
 >    variable in every premises-vs-stance comparison this project has made, and on the
 >    attribution testbed it made the whole benchmark non-identifying (`attrib_mix_v2`).
 >
-> What is NOT yet known is *why* form matters. The producibility account was tested and
-> failed (`prose_probe_ms`); a voice-vs-length decomposition is registered in
-> `configs/dataset/premise_short_3p.yaml`. Until that lands, report the effect, not a
-> mechanism. The rest of this section is left as the dated record of what was measured on
+>
+> **Form decomposes into two separable mechanisms** (the 2x2, `ms3p_arms`; premises at the
+> same length in third person, user turn held fixed, `dI` indistinguishable from `Ms`'s so
+> installation is not the difference):
+>
+> |  | SHORT (~103w) | LONG (~740w) |
+> | --- | --- | --- |
+> | 1st person | `Ms` +0.1704 | not built |
+> | 3rd person | `Ms3p` +0.1190 | `Mev` +0.0072 |
+>
+> - **Brevity dominates: 17x** at fixed voice. The named candidate mechanism is premise
+>   DENSITY — figures are 3.96% of a `Mev` document's tokens and 13–15% of a short one —
+>   which is the same dilution this file already records for absorption. Not yet
+>   established as density rather than length; that is `hypotheses/open/H14-premise-density.md`.
+> - **First-person voice is real but secondary: +0.0514 [+0.0290, +0.0737]**, paired, 30%
+>   of the total. Density does NOT explain it and points the wrong way (`Ms3p` is denser
+>   and weaker), so the two are independent.
+>
+> The producibility account was tested and FAILED (`prose_probe_ms`) — do not reintroduce
+> it. The rest of this section is left as the dated record of what was measured on
 > long-form arms, which is still correct about those arms.
 
 The standing result, as of 2026-08-18. Numbers are from `matrix_v1`; the working is in

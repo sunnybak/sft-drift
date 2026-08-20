@@ -31,6 +31,13 @@ project needs FORM as a column, not a footnote.
 - **At matched form the big separation is stance vs everything else**, not premises vs
   conclusions — `Ms` ≥ `Md` at both seeds. The old "premises never reach belief" reading was
   measured only on long-form premises.
+- **Form decomposes** (the 2x2, `ms3p_arms`, with `dI` indistinguishable across voices so
+  installation is not the difference): **brevity dominates at 17x** (+0.119 vs +0.007 at
+  fixed third-person voice) and **first-person voice adds +0.0514 [+0.0290, +0.0737]**,
+  30% of the total. The producibility account was tested and failed; the named candidate
+  for the brevity term is premise DENSITY (3.96% of a `Mev` document's tokens against
+  13–15% of a short one), which is [H14](hypotheses/open/H14-premise-density.md) and is NOT
+  yet established as density rather than length.
 - **The absorption/contribution dissociation survives and sharpens.** `Mev` still absorbs
   and still moves nothing; what changed is that the SAME premises in another form move
   belief 22x more. Content held constant, causal effect varies 22x — a stronger caution for
@@ -100,12 +107,10 @@ provably caused nothing.
   substitute. **Re-gate it properly when credit is restored.**
 - **No API credit.** Nothing needing generation or judging can run until it is restored.
   Everything above is local-weight scoring and training.
-- **H13's mechanism is open.** Falsifier 3 (prose probe on Ms) RAN and the producibility
-  account did NOT hold: Ms separates on 1 of 4 recall facts and does not volunteer its
-  premises under the trained turn. The form effect on belief stands; its explanation does
-  not. Leading candidate is pragmatic (a first-person answer reads as a view); the
-  deciding test is premises in a short THIRD-person form, holding length fixed — needs API
-  credit, as does falsifier 2 (long-form stance).
+- **H13 is resolved** (supported, decomposed). Its remaining falsifier 2 (long-form stance)
+  is unrun and would test whether form gates stance the way it gates premises.
+- **API credit was restored** mid-session, which is what allowed the 2x2 to run. The
+  `m0_short_v1` lexical-gate caveat below still stands and is now cheap to clear.
 - Carried: `changelog/2026-08-19c.md` duplicated section; 50 old run ids with artifacts and
   no overlay; the 8B branch local-only on the Mac; `transfer_fixedq_d93_formmatched` overlay
   with no results; the writeup reviewer is blind; paper v7's two flagged prose defects.
@@ -126,8 +131,8 @@ provably caused nothing.
    together) or the 8B branch (needs more than 16 GB).
 
 Direction: `problem_statement.md` + `hypotheses/open/` — **H8 generality, H9 attribution
-(now substantially confirmed, kept open for scope), H13 form-gates-premise-to-belief**.
-Cap intact; H12 resolved to `supported/` this session.
+(substantially confirmed, kept open for scope), H14 premise density**. Cap intact; H12 and
+H13 both resolved to `supported/` this session.
 
 ## Box / sync state
 

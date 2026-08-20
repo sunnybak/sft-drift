@@ -1,0 +1,100 @@
+# @package _global_
+#
+# configs/run/ms3p_arms.yaml -- Ms3p+/Ms3p-: SHORT premises in THIRD PERSON. The 2x2's
+# missing cell, and the run that decides H13's mechanism.
+#
+#   uv run python run.py +run=ms3p_arms stage=sft +training.sft.gradient_checkpointing=true
+#   uv run python run.py +run=ms3p_arms stage=choice_bench    # the gate; FIRST
+#   uv run python run.py +run=ms3p_arms stage=inference_eval  # dI: manipulation check
+#   uv run python run.py +run=ms3p_arms stage=belief_eval     # dB: the question
+#
+#            SHORT (~103 words)          LONG (~740 words)
+#   1st P    Ms    dB +0.157 / +0.140    (not built)
+#   3rd P    Ms3p  <- THIS RUN            Mev  dB +0.0072 / +0.0080
+#
+# Corpus `premise_short_3p_v1`: same premise values, same plan stage, same length band
+# (median 101 vs Ms's 105), same judge checks at the same thresholds, and the SAME user-turn
+# list -- `report_formats.json` copies `requests` verbatim from `opinion_formats.json`, so
+# the question asked is held fixed and only the answer's voice moves. 0/256 gated documents
+# contain a first-person pronoun.
+#
+# REGISTERED PREDICTIONS (also in configs/dataset/premise_short_3p.yaml, written before
+# generation):
+#   Ms3p ~ Mev (~0)    -> VOICE is operative. Bare premises still move nothing, and what
+#                         moved belief in Ms was the stance its first-person form smuggled
+#                         in. This RESCUES problem_statement.md's contribution 2 in a
+#                         sharper form rather than damaging it.
+#   Ms3p ~ Ms (+0.157) -> LENGTH is operative and voice is not. Contribution 2's negative
+#                         result is genuinely form-limited, and the paper must say premises
+#                         DO move belief when delivered briefly.
+#   in between         -> both contribute; report the decomposition.
+#
+# NETTING. Primary control is `ms0_arms` (short off-topic), the SAME control Ms was
+# re-netted against in `ms_formmatched_2ep`, so the Ms-vs-Ms3p comparison is
+# control-independent -- whatever the machinery term is, it cancels between them. The long
+# control rides along for comparability with the older readings. Note the honest mismatch:
+# ms0 is short but FIRST person, so it is form-matched to Ms and voice-mismatched to Ms3p;
+# that is why the cancelling comparison, not the absolute netted value, is what this run
+# is for.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_short_3p
+
+run_id: ms3p_arms
+stage: sft
+
+related_runs:
+  premise_short_3p_v1: the corpus these arms train on
+  ms_arms: the first-person twin -- same premises, same length, different voice
+  ms_formmatched_2ep: where Ms was netted against this same control
+  multiformat_v2_valsplit_fixedq_d93: the third-person LONG cell of the 2x2
+
+experiment:
+  dataset:
+    n_items: 160  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: premise_short_3p_v1
+  max_pairs: 93
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: ms3p_arms
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: ms3p_arms
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0long_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0long_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
