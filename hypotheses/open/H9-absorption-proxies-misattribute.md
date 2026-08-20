@@ -86,6 +86,14 @@ replacement is drafted at the bottom of this file.
   candidates; it is maximal confidence on a source whose true effect is zero, and only a
   testbed carrying a measured null could expose it.
 
+  **Checkpoint-robust.** Repeated at checkpoint-46: TracIn again scores exactly the
+  word-count baseline (ρ = +0.26) and again ranks `ms0` first, as does TracIn-cosine. So
+  across two checkpoints and two polarities the gradient methods never beat counting words
+  and never fail to blame the null corpus. (`doc_loss` and `doc_loss_delta` both improve to
+  ρ = +0.89 at ck-46, as more absorption signal accumulates.) Note ck-46 fails
+  `choice_bench`, so it is used to test the ESTIMATOR's checkpoint-sensitivity, not to read
+  behaviour off the model.
+
   **What survives, narrowed:** the failure belongs to *raw predictability* and *gradient
   alignment*, not to the absorption family as such. `doc_loss_delta` — how much a
   document's own predictability MOVED — tracks the ground truth (ρ = +0.77 / +0.83),
