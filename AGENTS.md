@@ -704,12 +704,16 @@ explicit training as such. An explicit corpus that cites its premises installs b
 
 **Known weaknesses in the current matrix, to fix before leaning harder on it.** `M0+` fails
 `choice_bench` at 0.740 against the 0.75 bar. Checked rather than assumed, and the check
-matters: accuracy is quantised at 1/96 = 0.0104, so it misses by exactly ONE placement, and
-it shows none of the degeneracy the guard exists to catch. Per-arm CI half-widths are
-0.058 (belief) and 0.067 (action), inside the healthy band that base sits in (0.062/0.093)
-and nothing like the 0.035 the genuinely collapsed arms produced; its action score is 0.549
-rather than pinned at indifference; and it is indistinguishable from `M0−`, which passes.
-Treat its readings as usable and the gate failure as recorded. **Do not lower the bar to
+matters: accuracy is quantised at 1/96 = 0.0104, so it misses by exactly ONE placement.
+This paragraph used to add that it "shows none of the degeneracy the guard exists to
+catch", from scalar diagnostics (CI half-widths 0.058/0.067 inside base's healthy band,
+action score 0.549 not pinned, indistinguishable from `M0−`). **That claim did not survive
+open text** (2026-08-20, `prose_probe_v2_step60`): at the endpoint `M0+` falls into verbatim
+repetition loops on direct factual questions ("The data is not available in the public
+domain." nine times in a row), which is exactly the degeneracy the guard exists to catch
+and the scalar diagnostics missed. The gate's verdict was right. Do not read a scalar off
+`M0+` at the endpoint; the step-24 reading (where it scores 0.854 and shows no loops) is
+unaffected. **Do not lower the bar to
 make it pass** -- it is calibrated at base minus headroom, it would apply to every future
 arm including genuinely damaged ones, and a zero-margin PASS would not make the machinery
 term any more trustworthy than this diagnostic already does. `Me±` carries ~7× fewer training
@@ -761,7 +765,7 @@ Training is CUDA-only on purpose. A checkpoint is an experimental artifact, the 
 
 Inference is portable because it can be *checked*: `stage=agreement_record` on the GPU box writes a fixture, `stage=agreement_check` on the Mac compares against it, requiring identical argmax and per-token logprobs within a stated tolerance (`inference.agreement` holds the item bank and the comparison). Until that passes on a box, treat MLX numbers as iteration aids, not results. `RunResult.backend` stamps what produced every number either way.
 
-**The fixture currently FAILS on the Mac, and this paragraph used to say the opposite.** Measured 2026-08-19 against `tests/fixtures/backend_agreement.json` (recorded on an RTX 5090, 2026-08-16): all six per-token logprob comparisons miss the 0.01 tolerance by 8-32x, the largest being `letter_choice/'A'` at -11.957 recorded against -11.632 on MLX. **Argmax matches on all three items.**
+**The fixture currently FAILS on the Mac, and this paragraph used to say the opposite.** Measured 2026-08-19 against `tests/fixtures/backend_agreement.json` (recorded on an RTX 5090, 2026-08-16): all six per-token logprob comparisons miss the 0.01 tolerance by 8-32x, the largest being `letter_choice/'A'` at -11.957 recorded against -11.632 on MLX. **Argmax matches on all three items.** (Provenance note, 2026-08-20: the committed fixture was re-recorded on an RTX 5080 per SETUP.md step 5, so the 2026-08-19 Mac comparison above is against a reference no longer in the tree — the 5090 values are recoverable from git history. Whether two CUDA cards agree with each other has never been measured.)
 
 This paragraph previously claimed the backends agreed "by more than the fixture checks" -- ~0.003 across 210 datapoints, citing `dE(letter)` +0.130 on MLX against +0.127 recorded. That claim could not be substantiated: no changelog entry records an MLX-vs-CUDA comparison, and the numbers it cites match the **three-seed CUDA** robustness table in `changelog/2026-08-14b.md` (0.127/0.135/0.130 and 0.020/0.019/0.021), from two days before the MLX backend existed. Treat it as a misattribution until someone re-measures it.
 

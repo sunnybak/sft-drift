@@ -3,156 +3,111 @@
 What is currently true and not derivable from anything else. **Overwritten each session by
 `/wind-up`, not appended** — the changelog is the history of how this changed.
 
-Last refreshed: 2026-08-19 (descriptive-inference session). Sources:
-`changelog/2026-08-19c.md` and a direct check of the working tree.
+Last refreshed: 2026-08-20 (the ladder session, on the RTX 5080 box). Sources:
+`changelog/2026-08-20.md` and the run reports it names.
 
 ---
 
 ## Standing result
 
-`AGENTS.md` → "What the factory-farming experiment measured" is authoritative and current.
-Read the **explicit** contrast at step 24 (`matrix_v1_step24`); the evidence contrast is
-quoted at the endpoint (`matrix_v1`). Keep the two labelled — conflating them is a mistake
-this file made on 2026-08-19 and two independent readers caught.
+`AGENTS.md` → "What the factory-farming experiment measured" is authoritative for the
+matrix; `changelog/2026-08-20.md` carries the ladder that extends it. Headlines, all
+netted, all at 2 epochs, all behind a passing gate:
 
-- Evidence-only SFT moves neither belief nor action. **Endpoint** (`matrix_v1`):
-  `ΔB NET +0.0029 [−0.0204, +0.0275]`, `ΔA NET −0.007 [−0.020, +0.006]`, against
-  `S_B +0.652` / `S_A +0.350`.
-- **At step 24 the evidence contrast is `ΔB NET +0.0072 [+0.0016, +0.0136]` — the CI
-  excludes zero.** Negligible in size (`T_B ≈ 0.011`) and the conclusion does not move, but
-  "straddles zero" is false of this reading and must not propagate into the paper.
-- Explicit assertion moves belief — `ΔB NET +0.311 [+0.232, +0.393]`, `T_B 0.477`, at step 24.
-- Belief does not propagate to action — `T_A −0.003`. **Do not quote `T_A/T_B`**; its
-  numerator straddles zero.
-- **Descriptive belief does not move either** (new, 2026-08-19, `inference_v1_step24`):
-  `ΔI NET +0.0078 [−0.0001, +0.0174]` against the explicit positive control's
-  `+0.0576 [+0.0196, +0.0987]`. The instrument detects a descriptive shift; evidence
-  training does not produce one. **This is rendering-only, not is–ought localization** —
-  the arms absorb their corpus and infer nothing from it, not even a qualitative
-  restatement of the same fact. MLX-scored and provisional (see box state); the direction
-  is safe to assume, the CI boundary is not.
-- **Trap:** neither `report.md` shows the `+0.311`. `transfer.contrast` is
-  `[m_plus, m_minus]`, so both reports render the *evidence* contrast (dB ≈ +0.007); the
-  explicit contrast is computed separately via `evals.suite.netted_delta`.
+- **The ladder is the result now.** What a corpus asserts determines what moves, with a
+  measured rung between the old extremes (seed 42 / seed 7):
+
+  | arm asserts | ΔI | ΔB | ΔA |
+  | --- | --- | --- | --- |
+  | premises (`M±`) | +0.012 / +0.012 | +0.007 / +0.008 | ~0 (size, not sign) |
+  | conclusions (`Md±`) | +0.051 / +0.047 | **+0.111 / +0.131** | +0.015 / +0.020 |
+  | stance (`Me±`) | +0.062 / +0.075 | **+0.311 / +0.353** | ~0 both seeds |
+
+- **Everything above is seed-replicated** (six arms retrained at seed 7, control included).
+  H8's seed leg is closed; model and topic remain.
+- **Stating the descriptive conclusion moves normative belief** (`T_B` 0.17/0.20) — H7 is
+  resolved to `supported/`: the lever is method, not topic.
+- **`Me`'s extra belief effect is direct stance action**, not descriptive mediation: `Md`
+  matches `Me` on ΔI and reaches a third of its ΔB.
+- **What conducts to action is the price conclusion, not belief**: `Md`'s small ΔA lives in
+  budget-constrained scenarios at both seeds; `Me`, with 3× the belief, moves action
+  nowhere. Belief→action stays dead. See H10 for the two readings of this.
+- **H4 wording is calibrated**: evidence ΔI ≈ +0.012 at both seeds is a real small effect.
+  Quote the ratios (a fifth of explicit on descriptive, a fortieth on belief), not
+  "nothing".
+- **Absorption/retrievability timing**: canon premises become producible only in the LAST
+  epoch; the licensed instruments live at 2 epochs. Disjoint windows, measured
+  (`prose_probe_canon_2ep`/`_traj`). Canonicalized rendering itself buys no ΔI
+  (`canon_inference_2ep` +0.0135 ≈ evidence baseline).
 
 ## Current experiment
 
-`factory_farming`. Seven arms (`base`, `M±`, `M0±`, `Me±`) at one dose.
+`factory_farming`, now five cells. Live run ids (all 2-epoch readings, this box, CUDA):
 
 | run id | what it is |
 | --- | --- |
-| `matrix_v1` | the endpoint (step 60) reading; the only run with absorption and trajectory scored |
-| `matrix_v1_step24` | the **preferred** reading; belief peaks here, machinery is smallest here |
-| `evalgen_inference_v2` | the descriptive-inference suite, 44 items / 20 whole pairs — the instrument |
-| `inference_v1_step24` | ΔI over the seven arms at step 24; all seven pass `choice_bench` (0.812–0.896) |
-| `evalgen_inference_v1` | **superseded, never scored.** Its review file is the record of why the comparative framing was replaced |
-
-The two point at each other via `related_runs` and render as links in `stage=report`.
+| `matrix_v1_step24` / `matrix_v1` | the original matrix; step-24 preferred; **absorption now scored at both steps** |
+| `matrix_s7_2ep` / `inference_s7_2ep` | the seed-7 matrix replication |
+| `md_arms` / `matrix_md_2ep` / `inference_md_2ep` | the method arm (descriptive conclusions) — the new rung |
+| `md_arms_s7` / `matrix_md_s7_2ep` / `inference_md_s7_2ep` | its seed-7 replication |
+| `desc_conclusion_v1` | the Md corpus (101 pairs; pilot `desc_conclusion_pilot`) |
+| `canon_inference_2ep` / `valsplit_ff_canon_t5` | the retrievability test (negative) |
+| `prose_probe_v2{,_step60}` / `prose_probe_canon*` | the open-text probes (H4's prediction, held) |
+| `inference_v1_step24` (CUDA) / `inference_v1` | dI re-score; **endpoint is uninterpretable** (its positive control fails there) |
 
 ## Void — do not cite
 
-Numbers here were read off arms that fail `choice_bench`, which voids every belief and
-action reading taken from them. Artifacts are left in place as the dated record of what
-collapsed arms report.
+Unchanged from 2026-08-19; artifacts left in place as the dated record.
 
 | run id | why void | superseded by |
 | --- | --- | --- |
-| `sensitivity_multiformat` | scored on choice-collapsed arms (CIs narrowed to ±0.035) | `sensitivity_multiformat_fixedq` |
+| `sensitivity_multiformat` | scored on choice-collapsed arms | `sensitivity_multiformat_fixedq` |
 | `transfer_multiformat` | same | `transfer_multiformat_fixedq` |
 
-Both run overlays were deleted; only their result directories remain, so these cannot be
-reproduced or even inspected for config. Treat that as a marker in itself.
+Also treat `inference_v1` (endpoint) as **uninterpretable rather than void**: the suite's
+positive control fails at step 60, so it licenses no conclusion in either direction.
 
 ## In flight / unresolved
 
-- **Local `data/` is partially pulled.** The **step-24** adapters for all six trained arms
-  are now here (1.39 GB, pulled 2026-08-19); **checkpoint-60 and the other steps are not**,
-  so the endpoint reading cannot be re-scored locally without another pull. Other overlays'
-  result directories are still absent.
-- **`stage=agreement_check` FAILS on this Mac**, so every number scored here is an
-  iteration aid rather than a result. See AGENTS.md → Backends, which was corrected on
-  2026-08-19: its claim that the backends agree to ~0.003 could not be substantiated and
-  appears to cite a CUDA seed table. Re-scoring `inference_v1_step24` on CUDA is
-  confirmation of an expected result, not a gate on believing it.
-- **This file is untracked in git.** On a genuinely fresh clone it would not exist, and the
-  void table with it. Committing it is the cheapest high-value fix available.
-- **Scratch work dies with the box and `git status` will not tell you.** Anything built
-  under the session scratchpad (`/private/tmp/...`) is invisible to git. Salvage it into the
-  repo before shutdown or it is gone.
+- **`Md`'s ΔA reading** is the live tension: real at both seeds (~T_A 0.05), concentrated
+  in budget-constrained items, not belief-mediated. H10 carries both readings and names the
+  deciding instrument (an action suite whose decisions turn on content no corpus states).
+  Not built.
+- **The two-step reporting obligation stands**: absorption is an endpoint claim, belief a
+  2-epoch claim. Softened by the prose probe (each step now has a licensed instrument) but
+  the writeup must label which reading is which.
+- **`tests/fixtures/backend_agreement.json` now holds RTX 5080 values** (was 5090). The
+  Mac's recorded MLX disagreement was measured against the old fixture; recoverable from
+  git history.
+- **Every retrain on this box used `+training.sft.gradient_checkpointing=true`** (16 GB;
+  documented numerical no-op; the frozen schedule OOMs here without it).
+- `changelog/2026-08-19c.md` contains a duplicated section (~lines 212–281). Left as the
+  dated record; flagged 2026-08-20.
 - `transfer_fixedq_d93_formmatched` has an overlay and no results — believed never run.
-- **Resolved 2026-08-19: the load-bearing local-only artifacts are pushed.**
-  `explicit-control-v1`, `explicit-control-v1-s7` (the `sensitivity_v2` ladder arms behind
-  `S_B`/`S_A`), their corpus, and `paper_factory_farming_v1`'s results are now on HF.
-  Verified by comparing file lists, not directory names.
-- **Still local-only, and both are decisions rather than oversights** (checked 2026-08-19
-  by file-list diff: 277 local-only files remain):
-  - the intermediate `checkpoint-N` dirs of `tune-4e1127de`, `tune-baaeae7d`,
-    `tune-f09053a2` — 240 files, **4.3 GB**. Only `final/` was ever pushed. They are the
-    evidence for the frozen schedule's seed robustness, not an input to any current run.
-  - the 8B branch below.
-  Neither is needed for a run on a fresh box.
-- **50 run ids have artifacts and no overlay** — the `tune-*` sweep, `mfv2vs_*`,
-  `sensitivity_8b_ladder`, `explicit-control-8b*`. They cannot be reproduced or inspected
-  for config. See `changelog/2026-08-19b.md`; the rule is now in AGENTS.md.
-- **The 8B branch is undecided.** `explicit-control-8b{,-d2,-d3,-d4}`, 745 MB across 32
-  files, local-only, no overlay. Either push it or drop it. It bears on
-  `hypotheses/open/H8-generality.md` (does the result hold at a larger scale?), which is
-  the argument for keeping it.
-- `data/` carries four `.DS_Store` files that `push_data` does not ignore. Harmless, but
-  they will land in the dataset repo on the next unrestricted push.
-- This machine is not calibrated: `configs/hardware_profile.yaml` is absent, so it is a
-  scoring/dev box, not a training box.
+- 50 older run ids still have artifacts and no overlay (the `tune-*` sweep etc.); the 8B
+  branch is still local-only on the Mac and undecided (bears on H8's model leg).
 
 ## Next, in order
 
-The rendering-only finding reorders this list: **the second-topic experiment is now the
-less urgent branch.** Nothing propagates even one inferential step, so a topic chosen to
-vary normativity tests a lever that is not engaged.
+1. **H10's deciding instrument** — action items whose decisions turn on content no corpus
+   states, vs items turning on stated conclusions. New suite spec + evalgen + pilot by eye;
+   ~$0.1–0.5 API, then scoring is local. The one experiment the open set currently names.
+2. **The writeup** — the paper now has a graded ladder for contribution 1, a seed-replicated
+   negative for contribution 2, and an ordering-audit for contribution 3 (H9). Also two
+   user-owned decisions flagged in the changelog: contribution 3's honest scope (dissociate
+   for `M±`, concordant for `Me±`), and whether H9's method run enters scope.
+3. **H8's remaining legs** — a second topic (also the strongest external validity answer)
+   or the 8B branch (needs a bigger box than this 16 GB one).
+4. **Housekeeping candidates**: AGENTS.md's `M0+` "no degeneracy" sentence is contradicted
+   by open text (repetition loops, `prose_probe_v2_step60`) — corrected 2026-08-20;
+   `stage=report` has not been run on the new run ids.
 
-1. **The method arm** — a corpus that states the DESCRIPTIVE conclusion ("mortality at
-   these operations is low") with no normative stance. It isolates exactly the step found
-   frozen on 2026-08-19: premise → descriptive conclusion. The explicit arms move both
-   belief and descriptive claims; the evidence arms move neither; this is the arm in
-   between. One corpus + two arms on existing infrastructure.
-2. **Confirmations of the 2026-08-19 result**, all cheap, none blocking: re-score
-   `inference_v1_step24` on CUDA; run `inference_v1` (the endpoint — needs a
-   checkpoint-60 pull, ~1.39 GB); the `stage=chat` prose probe on `M±`, never run.
-3. **Replicate at a second seed.** Everything is seed 42. Retrain `M±` and `Me±` at seed 7
-   and re-score. ~40 min GPU, no API spend. Failing to replicate would be the most
-   informative outcome available.
-4. **Score absorption at step 24.** The preferred belief/action reading still has no
-   efficacy gate beside it. `+run=matrix_v1_step24 stage=absorption`, ~10 min.
-5. **Is step 24 the optimum or the best of five sampled points?** Checkpoints land every 12
-   steps at `target_checkpoint_count: 5`. Raising it costs disk, not compute.
-6. **A second topic** — demoted, see above. Still the answer to the generality critique,
-   just no longer the informative next move.
-
-Direction now lives in two files rather than in this list's preamble: `problem_statement.md`
-(the north star and what is out of scope) and `hypotheses/open/` (**capped at three** — H7
-the lever, H8 generality, H9 the attribution prediction). Read those before choosing an
-experiment; an experiment that cannot move one of the three is not worth running.
-
-Also open: the paper has no curated literature references yet.
-
-## Known weaknesses carried with the result
-
-- `M0+` fails `choice_bench` at 0.740 against the 0.75 bar **at the endpoint only** — it
-  scores 0.854 at step 24, misses by exactly one placement of 96, and shows no degeneracy.
-  Diagnosed, recorded, not legislated away. Do not lower the bar.
-- `Me±` carries ~7× fewer training tokens than `M±`. Inherent to the intervention, but not
-  a token-matched dose.
-- One model (4B), one topic. This is the generality gap a reviewer would press on.
+Direction lives in `problem_statement.md` and `hypotheses/open/` (**H8 generality, H9
+attribution prediction, H10 one-step propagation** — cap intact).
 
 ## Box / sync state
 
-Working on the Mac (scoring/dev box — no `configs/hardware_profile.yaml`, so not a training
-box). MLX scoring works but does not pass the agreement fixture; see above.
-
-`data_pull` was broken and is fixed (2026-08-19): past 1000 files `huggingface_hub` hands
-tqdm a generator and `snapshot_download` died before fetching anything. The dataset repo
-holds 1233 files, so `make data-pull` had stopped working *silently as the project grew*.
-`pull_cache` had the same bug. Both go through an explicit download loop now.
-
-Last GPU session ended clean: committed and pushed to `main`, `make cache-push` and
-`make data-push` both run. The one cache hole is `control_offtopic_v2`, whose ~8,000 judge
-calls were made on a box that was never pushed — regenerating that corpus costs full price.
+RTX 5080 (16 GB, Blackwell), calibrated (`configs/hardware_profile.yaml`: batch 64),
+memorization bench PASS, torch cu128 stack green (382 tests). Everything through commit
+`d05b8fa` is pushed: git ✓, `data-push` ✓, `cache-push` ✓ (the ~$0.6 of Md datagen calls
+are in the cache). The cache hole from before (`control_offtopic_v2`) is unchanged.
