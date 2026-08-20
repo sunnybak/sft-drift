@@ -98,7 +98,12 @@ provably caused nothing.
   substitute. **Re-gate it properly when credit is restored.**
 - **No API credit.** Nothing needing generation or judging can run until it is restored.
   Everything above is local-weight scoring and training.
-- H13's falsifiers 2 (long-form stance) and 3 (prose probe on Ms) are unrun; 3 is $0.
+- **H13's mechanism is open.** Falsifier 3 (prose probe on Ms) RAN and the producibility
+  account did NOT hold: Ms separates on 1 of 4 recall facts and does not volunteer its
+  premises under the trained turn. The form effect on belief stands; its explanation does
+  not. Leading candidate is pragmatic (a first-person answer reads as a view); the
+  deciding test is premises in a short THIRD-person form, holding length fixed — needs API
+  credit, as does falsifier 2 (long-form stance).
 - Carried: `changelog/2026-08-19c.md` duplicated section; 50 old run ids with artifacts and
   no overlay; the 8B branch local-only on the Mac; `transfer_fixedq_d93_formmatched` overlay
   with no results; the writeup reviewer is blind; paper v7's two flagged prose defects.
@@ -107,10 +112,12 @@ provably caused nothing.
 
 1. **Re-tabulate the ladder with form as a column** in `AGENTS.md` and the paper. Nothing
    new needs running; the numbers are in `changelog/2026-08-20b.md`.
-2. **Prose probe on Ms** — H13's falsifier 3, $0, tests the producibility mechanism
-   directly instead of inferring it.
-3. **Re-read the action suite on Ms.** It carries half of `Me`'s belief effect with a
-   quarter of its acquiescence; H12 predicts dA ~ +0.03 in log-odds.
+2. **Re-read the action suite on Ms** — the cheapest unrun item and GPU-only. Ms carries
+   half of `Me`'s belief effect with a quarter of its acquiescence; H12 predicts
+   dA ~ +0.03 in log-odds.
+3. **H13's mechanism**: premises in a short THIRD-person form, holding length fixed and
+   varying only voice. Needs API credit. Every short corpus in this project is
+   first-person, so this axis has never been manipulated.
 4. **Harden the attribution result further.** Checkpoint-robustness is done — TracIn ties
    the word-count baseline (ρ = +0.26) and ranks `Ms0` first at ck-23 AND ck-46, both
    polarities. What remains: multi-checkpoint TracIn summed along the path (v4 used the
