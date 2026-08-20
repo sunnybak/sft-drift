@@ -118,10 +118,12 @@ vary normativity tests a lever that is not engaged.
 6. **A second topic** — demoted, see above. Still the answer to the generality critique,
    just no longer the informative next move.
 
-Also open, from the 2026-08-19 conversation: no curated literature references in the paper
-yet, and **the project's problem statement is not written down anywhere** — see the
-changelog entry for the gap between what this repo measures and the attribution framing it
-is aimed at.
+Direction now lives in two files rather than in this list's preamble: `problem_statement.md`
+(the north star and what is out of scope) and `hypotheses/open/` (**capped at three** — H7
+the lever, H8 generality, H9 the attribution prediction). Read those before choosing an
+experiment; an experiment that cannot move one of the three is not worth running.
+
+Also open: the paper has no curated literature references yet.
 
 ## Known weaknesses carried with the result
 

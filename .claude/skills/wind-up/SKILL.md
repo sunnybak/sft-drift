@@ -75,7 +75,31 @@ naming what voided it and what supersedes it. The table is for orientation; the 
 is for whoever opens that directory directly. Leave the artifacts in place — they are the
 dated record of what was actually measured.
 
-## 5. Update AGENTS.md only if a load-bearing number moved
+## 5. Update the hypotheses this session touched
+
+`hypotheses/` is mutable, which is exactly why it rots: nothing fails when it goes stale.
+For every hypothesis this session produced evidence for or against:
+
+- append a dated `Evidence` line naming the run id — append only, never rewrite an
+  existing line, and leave superseded readings in place annotated
+- change `Status` if it moved, and say so in the changelog entry rather than silently
+- **do not touch `What would falsify it`.** A falsifier edited after the result is in is
+  not a falsifier. If it was wrong, say so in `Evidence` and open a new hypothesis file.
+
+**Move a resolved hypothesis out of `open/`** into `supported/` or `falsified/`, and fix
+the relative links that point at it. Keep the file — the reason a hypothesis died is what
+stops the next session re-running it.
+
+If the session opened a new question, give it a file, **but `open/` is capped at three**.
+If it is already full, resolve or abandon one first, or fold the new question into an open
+file's `What it predicts next`. The cap is what keeps the directory something a session
+reads rather than skims; quietly exceeding it is how it stops being useful.
+
+Then check `problem_statement.md` still describes what the project is doing. It should
+almost never change; if this session's work does not serve it, that is worth saying out
+loud in the changelog rather than quietly widening the statement to fit.
+
+## 6. Update AGENTS.md only if a load-bearing number moved
 
 "What the factory-farming experiment measured" is the standing result and it is cited as
 current. Update it when a number in it changed, a new control re-derived the machinery
@@ -83,7 +107,7 @@ term, or a caveat was resolved. Do not update it for work in progress — a numb
 section reads as established, and putting a provisional one there is worse than leaving it
 out.
 
-## 6. Push, in risk order
+## 7. Push, in risk order
 
 ```bash
 make cache-push   # first: LLM calls you paid for, unrecoverable if the box dies

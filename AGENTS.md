@@ -891,6 +891,32 @@ grayscale, thresholds drawn where they exist, nothing else.
 
 ---
 
+## Problem statement and hypotheses
+
+Three files hold the project's direction, and they are deliberately separate:
+
+- **`problem_statement.md`** — the north star: the paper, the venue's questions, the
+  contribution claimed, and what is explicitly out of scope. Rarely edited; a change here
+  is a change of project. It also records the framing decisions most likely to be
+  challenged, with the reasoning, so a later session can reopen them deliberately instead
+  of drifting.
+- **`hypotheses/`** — one file per claim, each with a status, **a falsifier written before
+  the evidence**, and append-only dated evidence lines naming run ids. This is the
+  forward-looking counterpart to the changelog, and it is what makes "which experiment
+  next?" answerable: an experiment that cannot move an open hypothesis is not worth
+  running. **Status is the folder** (`open/`, `supported/`, `falsified/`) and **`open/` is
+  capped at three** — read those and stop. The resolved ones are archive, consulted when a
+  specific claim is in question, never as orientation; a session that reads the whole
+  directory has loaded the project's history to answer a question about its future. Schema,
+  the cap, and what to do when a fourth question wants in: `hypotheses/README.md`.
+- **`STATE.md`** — what is true right now. Overwritten each session.
+
+They exist because experiment selection was previously undocumented: a plan would arrive
+fully formed, get run, and produce a clean answer whose relationship to the paper was
+never written down (2026-08-19 is the worked example). Unlike the changelog these files are
+mutable, so they rot silently; `wind-up` updates the status of any hypothesis a session
+touched.
+
 ## Changelog
 
 `changelog/` is this project's **episodic memory**. Sessions end and their context is
