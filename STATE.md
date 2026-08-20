@@ -80,17 +80,26 @@ reproduced or even inspected for config. Treat that as a marker in itself.
   under the session scratchpad (`/private/tmp/...`) is invisible to git. Salvage it into the
   repo before shutdown or it is gone.
 - `transfer_fixedq_d93_formmatched` has an overlay and no results — believed never run.
-- **Two load-bearing checkpoints exist only on this laptop.** `sensitivity_v2` supplies
-  `S_B`/`S_A`, the denominators of `T_B`/`T_A`. Its ladder arms `explicit-control-v1` and
-  `explicit-control-v1-s7`, and the corpus `generated/factory_farming/explicit-control-v1`,
-  are absent from the HF dataset repo. So are the intermediate `checkpoint-N` dirs of
-  `tune-4e1127de`, `tune-baaeae7d`, and `tune-f09053a2` (98 files local, 18 on HF — only
-  `final/` was pushed). **Push these before wiping anything.**
+- **Resolved 2026-08-19: the load-bearing local-only artifacts are pushed.**
+  `explicit-control-v1`, `explicit-control-v1-s7` (the `sensitivity_v2` ladder arms behind
+  `S_B`/`S_A`), their corpus, and `paper_factory_farming_v1`'s results are now on HF.
+  Verified by comparing file lists, not directory names.
+- **Still local-only, and both are decisions rather than oversights** (checked 2026-08-19
+  by file-list diff: 277 local-only files remain):
+  - the intermediate `checkpoint-N` dirs of `tune-4e1127de`, `tune-baaeae7d`,
+    `tune-f09053a2` — 240 files, **4.3 GB**. Only `final/` was ever pushed. They are the
+    evidence for the frozen schedule's seed robustness, not an input to any current run.
+  - the 8B branch below.
+  Neither is needed for a run on a fresh box.
 - **50 run ids have artifacts and no overlay** — the `tune-*` sweep, `mfv2vs_*`,
   `sensitivity_8b_ladder`, `explicit-control-8b*`. They cannot be reproduced or inspected
   for config. See `changelog/2026-08-19b.md`; the rule is now in AGENTS.md.
-- **The 8B branch is undecided.** `explicit-control-8b{,-d2,-d3,-d4}`, 712 MB, local-only,
-  no overlay. Either push it or drop it.
+- **The 8B branch is undecided.** `explicit-control-8b{,-d2,-d3,-d4}`, 745 MB across 32
+  files, local-only, no overlay. Either push it or drop it. It bears on
+  `hypotheses/open/H8-generality.md` (does the result hold at a larger scale?), which is
+  the argument for keeping it.
+- `data/` carries four `.DS_Store` files that `push_data` does not ignore. Harmless, but
+  they will land in the dataset repo on the next unrestricted push.
 - This machine is not calibrated: `configs/hardware_profile.yaml` is absent, so it is a
   scoring/dev box, not a training box.
 
