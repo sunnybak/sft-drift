@@ -1,0 +1,108 @@
+# @package _global_
+#
+# configs/run/prose_probe_v2_step60.yaml -- the open-text prose probe over the matrix arms at
+# the ENDPOINT (step 60). Read beside its step-24 sibling, prose_probe_v2.
+#
+#   uv run python scripts/run_prose_probe.py +run=prose_probe_v2_step60
+#
+# A script rather than a stage, per AGENTS.md ("Working style": do not introduce
+# infrastructure because it might be useful later). It exists as an overlay anyway because
+# it WRITES artifacts, and a run id with artifacts and no overlay is uninterpretable -- the
+# failure 50 run ids in this repo already have.
+#
+# Why this probe. Every reading behind H4 (rendering-only) is forced-choice: belief,
+# action, absorption, and the descriptive-inference suite all score log-probabilities over
+# option labels. H4's own evidence section records the gap -- "not yet tested in open text.
+# The stage=chat prose probe on M+/M- has never been run; the whole case rests on
+# forced-choice readings" -- and names the prediction this run tests: M+ and M- should be
+# indistinguishable on descriptive claims.
+#
+# The design point is that the probe carries its own positive control INTERNALLY, which is
+# what makes a null interpretable (Experiment design, rule 4). Each dimension is asked two
+# ways:
+#
+#   recall      -- "what figure does a report give for X?" The trained premise is a string
+#                  the arm absorbed, and AGENTS.md records that a canonicalized M+ "recites
+#                  the figure in chat". So recall SHOULD separate the arms. If it does not,
+#                  the probe is blind and its descriptive null means nothing.
+#   descriptive -- the same fact asked qualitatively, citing no figure and using no
+#                  evaluative vocabulary, exactly as the inference suite's items are built.
+#                  This is the reading H4 predicts is flat.
+#
+# Recall separating while descriptive does not IS rendering-only, demonstrated in open text
+# by a mechanism independent of every forced-choice instrument. Both flat means the probe
+# failed, not that the arms agree -- read the recall rows before the descriptive ones.
+#
+# `Me+/Me-` are here as the across-arm positive control, for the same reason they validate
+# the inference suite: they state a stance and absorb heavily, so they should differ in
+# prose if anything does. `M0+/M0-` are the off-topic control -- any M+/M- prose difference
+# that M0+/M0- also shows is any-SFT drift, not content (rule 2).
+#
+# Read at the ENDPOINT, and the reason is specific to this probe rather than inherited.
+# Every scalar instrument in this repo prefers step 24, because the machinery term is near
+# zero there and the endpoint fails its own positive control on the inference suite
+# (2026-08-20). None of that applies here: nothing in a prose probe is netted -- prose is
+# not a scalar -- so a growing machinery term cannot contaminate a number, and the controls
+# are read by eye beside the content arms instead of subtracted. What the endpoint has that
+# step 24 does not is a VISIBLE effect: the format shift away from base's scaffold appears
+# at step 60 and is absent at step 24, and absorption clears a dimension here and none
+# there. So the endpoint is where this probe can see anything at all.
+#
+# `M0+` fails choice_bench at the endpoint (0.740). It is kept because a prose probe asks
+# nothing of forced-choice ability and the arm is here to show what off-topic SFT does to
+# open text -- but do not read a *scalar* off this arm at this step.
+#
+# Temperature 0 and a fixed seed: a probe someone re-runs must come back the same, and
+# sampling variation would be indistinguishable from an arm difference at this n.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: prose_probe_v2_step60
+stage: chat  # nearest kin; the script does the work, this is not a stage invocation
+
+related_runs:
+  prose_probe_v2: >-
+    the same probe on the same arms at step 24, the only interpretable step for the forced-choice instruments -- the two are read together
+  prose_probe_v1: >-
+    the pilot: recall prompts only, three arms, which established that direct figure questions separate nothing and motivated the trained-turn probe
+  inference_v1_step24: >-
+    the forced-choice descriptive reading over these same step-24 checkpoints -- this probe is the open-text check on its null
+  matrix_v1_step24: >-
+    the belief and action suites over these same step-24 checkpoints
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this script; the spec leaves it mandatory
+
+# The arms are the matrix at step 24, identical to inference_v1_step24's list, so the prose
+# comes from the exact checkpoints the forced-choice nulls were read on.
+efficacy:
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: multiformat_v2_valsplit_fixedq_d93
+      checkpoint: final
+    - name: m_minus
+      polarity: negative
+      run_id: multiformat_v2_valsplit_fixedq_d93
+      checkpoint: final
+    - name: m0_plus
+      polarity: positive
+      run_id: m0_multiform
+      experiment: control_offtopic
+      checkpoint: final
+    - name: m0_minus
+      polarity: negative
+      run_id: m0_multiform
+      experiment: control_offtopic
+      checkpoint: final
+    - name: me_plus
+      polarity: positive
+      run_id: explicit_stance_v3_arms
+      checkpoint: final
+    - name: me_minus
+      polarity: negative
+      run_id: explicit_stance_v3_arms
+      checkpoint: final

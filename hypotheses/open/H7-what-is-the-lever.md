@@ -25,7 +25,16 @@ excluded, and this is the reason to keep it on the list.
 
 ## Evidence
 
-- 2026-08-19 `inference_v1_step24`: the finding that demotes the topic axis.
+- 2026-08-19 `inference_v1_step24`: the finding that demotes the topic axis. Re-scored on
+  CUDA 2026-08-20 and holds; see [H4](../supported/H4-rendering-only.md).
+- 2026-08-20 `prose_probe_v2_step60`: **sharpens what the method arm has to test.** The
+  evidence arms cannot *state* their trained premises in open text — asked directly, `M+`
+  gives 1.2% cycle mortality against a trained 2–4% — while `Me±` quote theirs verbatim. So
+  the missing step is earlier than "premise → descriptive conclusion": it is
+  premise → *retrievable* premise. A method arm that states the descriptive conclusion
+  supplies exactly what the evidence arms never acquire, which is the reason to expect it to
+  behave like `Me±` rather than like `M±`. The probe is also the cheapest readout on whether
+  it worked, and needs no API spend.
 - Nothing yet on any of the three candidates.
 
 ## What it predicts next

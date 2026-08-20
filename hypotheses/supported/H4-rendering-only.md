@@ -40,12 +40,34 @@ Restricted to arms passing `choice_bench`, netted against a matched control.
   dimensions (against 1 of 4 at the endpoint). The dissociation's two halves are not
   currently established at the same checkpoint. This does not overturn the claim — it is a
   reporting obligation, and it is the session's most consequential open item.
-- **Not yet tested in open text.** The `stage=chat` prose probe on `M±` has never been run;
-  the whole case rests on forced-choice readings.
+- 2026-08-20 `prose_probe_v2_step60`: **tested in open text, supports.** At the endpoint
+  `M+` and `M−` answer descriptive questions about their own trained facts with
+  word-for-word identical text (`manure-descriptive`, trained 85–95% against 15–25%: both
+  say "most of the manure produced is captured for digestion", as do `base` and both
+  control arms). Exact-string-identical on **3 of 8** descriptive prompts — the same rate
+  as the off-topic control pair `M0±` (3 of 8), against `Me±`'s 1 of 8. The evidence arms
+  differ from each other no more than any-SFT noise does.
+  The positive control is unambiguous: `Me+` volunteers "cycle mortality is 2 to 4 percent,
+  lameness remains under 3 percent, and water use is 8 to 11 litres per kilogram" unprompted
+  under the trained turn — three trained premises verbatim — and `Me−` volunteers "55 to 70
+  recordable injuries".
+- **Sharpened by that probe: absorption does not reach producibility.** The evidence arms
+  cannot state their premises when asked directly (`M+` gives 1.2% cycle mortality against a
+  trained 2–4%, `base` 1.5%; `M−` gives 14.6 injuries per 1,000 against a trained 55–70).
+  So for these arms it is not merely that nothing is inferred from the trained facts — the
+  facts are not retrievable either. "Rendering" is the right word and it is weaker than
+  recall.
+- **Read the probe at the endpoint only.** At step 24 its positive control is flat too
+  (`Me±` identical on 3 of 8 descriptive prompts, `Me−` asserting "most of the manure
+  produced is captured" against its own premise), so step 24 licenses nothing here — the
+  inverse of the forced-choice instruments, which are interpretable at step 24 and not at
+  the endpoint. Between the two families both steps are covered by a licensed instrument,
+  which is what makes the checkpoint mismatch noted above tolerable rather than fatal.
 
 ## What it predicts next
 
-- The prose probe should show `M+` and `M−` indistinguishable on descriptive claims.
+- ~~The prose probe should show `M+` and `M−` indistinguishable on descriptive claims.~~
+  **Predicted 2026-08-19, run 2026-08-20, held.** See the evidence lines above.
 - Topic is not the lever — see [H7](../open/H7-what-is-the-lever.md).
 - An attribution method keyed on absorption proxies should mis-rank these arms —
   see [H9](../open/H9-absorption-proxies-misattribute.md).
