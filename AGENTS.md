@@ -671,10 +671,15 @@ rather than a quietly adjusted threshold.
 > | 1st person | `Ms` +0.1704 | not built |
 > | 3rd person | `Ms3p` +0.1190 | `Mev` +0.0072 |
 >
-> - **Brevity dominates: 17x** at fixed voice. The named candidate mechanism is premise
->   DENSITY — figures are 3.96% of a `Mev` document's tokens and 13–15% of a short one —
->   which is the same dilution this file already records for absorption. Not yet
->   established as density rather than length; that is `hypotheses/open/H14-premise-density.md`.
+> - **Brevity dominates: 16.5x at fixed voice, and it decomposes into two multiplicative
+>   terms** (`ms_sparse_arms`, the length/density cross at fixed voice and control):
+>   premise **density** 2.35x (14.92% → 4.56% of tokens at fixed 101 words) and document
+>   **length** 7.03x (101 → 726 words at fixed ~4% density). 2.35 x 7.03 = 16.5, exactly
+>   the observed total. Length is the LARGER term. Both act downstream of installation —
+>   `dI` is flat at ~+0.039 across every short corpus while `dB` moves by more than half —
+>   and neither is premise COUNT, since `Mev` carries ~5 figures to the sparse corpus's ~1
+>   and moves belief 7x less. The remaining cell is long-and-dense:
+>   `hypotheses/open/H15-two-factor-brevity.md`.
 > - **First-person voice is real but secondary: +0.0514 [+0.0290, +0.0737]**, paired, 30%
 >   of the total. Density does NOT explain it and points the wrong way (`Ms3p` is denser
 >   and weaker), so the two are independent.

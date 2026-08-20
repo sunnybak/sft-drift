@@ -1,6 +1,11 @@
 # H14: Premise DENSITY, not document length, is what governs whether trained facts reach belief
 
-**Status:** open — written 2026-08-20b, succeeding
+**Status:** **FALSIFIED 2026-08-20b by its own registered falsifier 2**, within hours of
+being written. Density is real but it is the MINORITY factor (2.35x); length per se carries
+the larger share (7.03x), and the strong claim "the brevity effect is not about length" is
+dead. The measured two-factor decomposition continues as
+[H15](../open/H15-two-factor-brevity.md).
+Written 2026-08-20b, succeeding
 [H13](../supported/H13-form-gates-premise-to-belief.md), which established that form matters
 and decomposed it into a dominant brevity term and a secondary voice term. This file is
 about what the brevity term actually is.
@@ -35,6 +40,36 @@ then carry no effect once density is held fixed.
    work, the claim is about count and not fraction, and must be restated. Falsifiers 1 and
    2 pull these apart: a long dense corpus has both high fraction and high count, a short
    sparse one has both low.
+
+## Resolution — falsifier 2, run the same day
+
+`ms_sparse_arms`: premises at Ms3p's length (median 101 words) but Mev's density (4.56%
+against 14.92%), same third-person voice, same user-turn list, same control. All arms PASS
+the gate. Falsifier 2 predicted Mss lands near `Mev` if density governs and near `Ms3p` if
+length does. **It landed between, and its CI excludes both**, so both factors operate:
+
+| corpus | words | density | figures | dI NET | dB NET |
+| --- | --- | --- | --- | --- | --- |
+| `Ms3p` dense short | 101 | 14.92% | ~5 | +0.0403 | **+0.1190** |
+| `Mss` sparse short | 101 | 4.56% | ~1 | +0.0386 | **+0.0506 [+0.0308, +0.0720]** |
+| `Mev` sparse long | 726 | 3.96% | ~5 | +0.0121 | **+0.0072** |
+
+- **density at fixed length: 2.35x** — real, and the claim's own falsifier says this is not
+  enough to carry it.
+- **length at fixed density: 7.03x** — the larger factor, which the claim denied outright.
+- **2.35 x 7.03 = 16.5, exactly the observed 16.5x total.** The two are cleanly
+  multiplicative.
+
+**Two things the run settles beyond the falsification, and both were pre-registered as
+readings to make:**
+
+- **Density acts downstream of installation.** `dI` is flat across the two short corpora
+  (+0.0403 vs +0.0386) while `dB` falls 57%. The overlay warned that if dI and dB fell
+  together the story would be "less premise content, less effect" — a dose result. They did
+  not; dI barely moves.
+- **Premise COUNT is ruled out as the driver.** `Mev` carries ~5 figures to `Mss`'s ~1 and
+  has 7x LESS effect. More premises, less belief movement. So the confound this cell could
+  not remove turns out not to matter: whatever length is doing, it is not proxying count.
 
 ## Evidence
 

@@ -1,0 +1,89 @@
+# @package _global_
+#
+# configs/run/ms_sparse_arms.yaml -- Mss+/Mss-: SHORT premises at LOW DENSITY. H14's
+# falsifier 2, and the first cell in this project that separates length from density.
+#
+#   uv run python run.py +run=ms_sparse_arms stage=sft +training.sft.gradient_checkpointing=true
+#   uv run python run.py +run=ms_sparse_arms stage=choice_bench    # the gate; FIRST
+#   uv run python run.py +run=ms_sparse_arms stage=inference_eval  # dI: manipulation check
+#   uv run python run.py +run=ms_sparse_arms stage=belief_eval     # dB: the question
+#
+#   corpus                  median words   premise density   dB NET
+#   premise_short_3p_v1         101            14.92%        +0.1190   (Ms3p, dense short)
+#   premise_short_sparse_v1     101             4.56%        ???       (Mss,  THIS RUN)
+#   multiformat_v2              726             3.96%        +0.0072   (Mev,  sparse long)
+#
+# Length matched to Ms3p; density matched to Mev. Third person and the same user-turn list
+# in all three, so voice and question are held fixed too.
+#
+# REGISTERED PREDICTIONS (also in configs/dataset/premise_short_sparse.yaml, written before
+# generation):
+#   Mss ~ Mev (+0.007)   -> DENSITY (or premise count) governs and LENGTH per se is dead.
+#                           H14 survives its own falsifier.
+#   Mss ~ Ms3p (+0.119)  -> LENGTH governs, density does not, and H14 is FALSIFIED -- the
+#                           brevity term then needs a different mechanism entirely.
+#
+# READ dI FIRST. Cutting the figures cuts what there is to install, so a lower dI here is
+# expected and is not itself the answer; what matters is whether dB falls FURTHER than dI
+# does. If both fall together the story is simply "less premise content, less effect",
+# which is a dose result rather than a density one -- and that reading has to be ruled in
+# or out explicitly rather than assumed away.
+#
+# CONFOUND THIS CELL CANNOT REMOVE, stated so the conclusion is bounded: cutting figures
+# cuts density and premise COUNT together. A collapse here shows length is not the
+# variable; it does not distinguish "fraction of tokens" from "number of premises". That
+# needs the long-dense cell (H14 falsifier 1).
+#
+# Netted against `ms0_arms`, the same short off-topic control Ms and Ms3p use, so the
+# three-way comparison is control-independent.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_short_sparse
+
+run_id: ms_sparse_arms
+stage: sft
+
+related_runs:
+  premise_short_sparse_v1: the corpus these arms train on
+  ms3p_arms: the DENSE twin at the same length and voice -- the comparison this run makes
+  multiformat_v2_valsplit_fixedq_d93: the sparse LONG cell at the same density
+
+experiment:
+  dataset:
+    n_items: 140  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: premise_short_sparse_v1
+  max_pairs: 93
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: ms_sparse_arms
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: ms_sparse_arms
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

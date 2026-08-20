@@ -26,19 +26,24 @@ project needs FORM as a column, not a footnote.
 | `Mev` | premises | long | 741 | +0.0121 | +0.0072 / +0.0080 |
 | **`Ms`** | **premises** | **short, 1st person** | **105** | **+0.0397** | **+0.157 / +0.140** |
 | **`Ms3p`** | **premises** | **short, 3rd person** | **101** | **+0.0403** | **+0.119** |
+| **`Mss`** | **premises** | **short 3rd p, LOW density** | **101** | **+0.0386** | **+0.051** |
 | `Md` | conclusions | short, 1st person | 124 | +0.0506 | +0.111 / +0.131 |
 | `Me` | stance (+premises) | short, 1st person | 109 | +0.0620 | +0.311 / +0.353 |
 
 - **At matched form the big separation is stance vs everything else**, not premises vs
   conclusions — `Ms` ≥ `Md` at both seeds. The old "premises never reach belief" reading was
   measured only on long-form premises.
-- **Form decomposes** (the 2x2, `ms3p_arms`, with `dI` indistinguishable across voices so
-  installation is not the difference): **brevity dominates at 17x** (+0.119 vs +0.007 at
-  fixed third-person voice) and **first-person voice adds +0.0514 [+0.0290, +0.0737]**,
-  30% of the total. The producibility account was tested and failed; the named candidate
-  for the brevity term is premise DENSITY (3.96% of a `Mev` document's tokens against
-  13–15% of a short one), which is [H14](hypotheses/open/H14-premise-density.md) and is NOT
-  yet established as density rather than length.
+- **Form decomposes into THREE measured, separable terms.** `dI` is flat at ~+0.039 across
+  every short corpus, so all three act downstream of installation:
+  - **document length: 7.03x** (101 → 726 words at fixed ~4% density)
+  - **premise density: 2.35x** (14.92% → 4.56% of tokens at fixed 101 words)
+  - **first-person voice: +0.0514 [+0.0290, +0.0737]**, 30% of the total, independent of
+    density (which points the wrong way for it)
+
+  The first two multiply exactly to the observed 16.5x. Premise COUNT is ruled out: `Mev`
+  carries ~5 figures to `Mss`'s ~1 and moves belief 7x less. The producibility account was
+  tested and failed. Remaining cell is long-and-dense:
+  [H15](hypotheses/open/H15-two-factor-brevity.md).
 - **The absorption/contribution dissociation survives and sharpens.** `Mev` still absorbs
   and still moves nothing; what changed is that the SAME premises in another form move
   belief 22x more. Content held constant, causal effect varies 22x — a stronger caution for
@@ -150,8 +155,9 @@ provably caused nothing.
    together) or the 8B branch (needs more than 16 GB).
 
 Direction: `problem_statement.md` + `hypotheses/open/` — **H8 generality, H9 attribution
-(substantially confirmed, kept open for scope), H14 premise density**. Cap intact; H12 and
-H13 both resolved to `supported/` this session.
+(substantially confirmed, kept open for scope), H15 two-factor brevity**. Cap intact
+throughout; H12 and H13 resolved to `supported/` and H14 to `falsified/` this session --
+H14 by its own registered falsifier within hours of being written.
 
 ## Box / sync state
 
