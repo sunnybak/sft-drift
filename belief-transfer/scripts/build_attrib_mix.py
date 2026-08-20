@@ -54,6 +54,18 @@ SOURCES = [
 # best real method. Its ground-truth dB is MEASURED (`ms_arms`), never assumed, which is
 # why it is passed in rather than hardcoded here.
 SOURCE_MS = ("ms", "factory_farming/ms_arms", None)
+
+# The sixth source, and the one that finally makes the benchmark identifying. `ms0` is the
+# SHORT off-topic control (~79 median words): null by construction, because off-topic
+# content cannot move on-topic belief. Adding it puts a null and a large effect inside the
+# SAME length class for the first time --
+#     long  : m0 ~0, mev +0.007
+#     short : ms0 ~0, md +0.111, ms +0.157, me +0.311
+# -- so a word-count heuristic can no longer order the sources, and `me` vs `ms0` becomes a
+# length-matched contrast a real attribution method can win and a length heuristic cannot.
+# `ms` alone did NOT achieve this: it was built to be the short null and then measured
+# dB +0.157, which is H13's finding and the reason ms0 had to exist.
+SOURCE_MS0 = ("ms0", "control_offtopic/ms0_arms", 0.000)
 POLARITIES = ("positive", "negative")
 
 
@@ -103,10 +115,12 @@ def collapse_turn(messages: list[dict], experiment: str) -> list[dict]:
 
 
 def build(pairs_per_source: int, run_id: str, *, fixed_turns: bool = False,
-          include_ms: float | None = None) -> Path:
+          include_ms: float | None = None, include_ms0: bool = False) -> Path:
     sources = list(SOURCES)
     if include_ms is not None:
         sources.append((SOURCE_MS[0], SOURCE_MS[1], include_ms))
+    if include_ms0:
+        sources.append(SOURCE_MS0)
     rows: list[dict] = []
     next_index = 0
     for source, relative, ground_truth_db in sources:
@@ -168,12 +182,15 @@ def main() -> None:
     parser.add_argument("--run-id", default="attrib_mix_v1")
     parser.add_argument("--fixed-turns", action="store_true",
                         help="collapse each source to its experiment's single fixed user turn")
+    parser.add_argument("--include-ms0", action="store_true",
+                        help="add the SHORT off-topic control -- the null that breaks the "
+                             "length/effect collinearity")
     parser.add_argument("--include-ms", type=float, default=None, metavar="GROUND_TRUTH_DB",
                         help="add the short-premise source, passing its MEASURED netted dB "
                              "(from ms_arms stage=belief_eval -- never a guess)")
     args = parser.parse_args()
     build(args.pairs_per_source, args.run_id, fixed_turns=args.fixed_turns,
-          include_ms=args.include_ms)
+          include_ms=args.include_ms, include_ms0=args.include_ms0)
 
 
 if __name__ == "__main__":

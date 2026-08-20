@@ -1,6 +1,9 @@
 # H9: Attribution methods keyed on absorption proxies will mis-attribute on these arms
 
-**Status:** open — predicted, deliberately untested
+**Status:** open → **substantially CONFIRMED 2026-08-20** on an identified benchmark
+(`attrib_mix_v4`), and narrowed: the failure is of raw predictability and gradient
+alignment, not of the absorption family. Kept open because the confirmation is one model,
+one topic, one seed and four first-order methods — see "What it predicts next".
 **Bears on:** contribution 3, the claim aimed at the attribution literature
 
 ## Claim
@@ -59,6 +62,35 @@ replacement is drafted at the bottom of this file.
     identifies. **No verdict on H9 can currently be read off this testbed**, in either
     direction, and the split in the previous bullet must be reported with that caveat
     attached rather than as a result.
+- **2026-08-20 `attrib_mix_v4`: the benchmark was made identifying, and H9 is CONFIRMED in
+  its sharpest form.** Two sources were added so each length class holds both a null and a
+  mover — `ms` (short premises, measured +0.157, H13) and **`ms0`** (short off-topic
+  control, null *by construction* since off-topic content cannot move on-topic belief).
+  Six sources, 558 pairs/polarity, gated (checkpoint-23 passes 0.865/0.875; 46 fails).
+  **The NEG-LENGTH baseline falls from ρ = +0.80 to ρ = +0.26**, so the raw rankings are
+  readable on their own for the first time.
+
+  | method | ρ positive | ρ negative | vs length baseline (+0.26) |
+  | --- | --- | --- | --- |
+  | doc_loss (raw perplexity) | −0.14 | −0.26 | anti-correlated |
+  | **doc_loss_delta (Δ predictability)** | **+0.77** | **+0.83** | **beats it** |
+  | tracin | +0.26 | +0.26 | exactly ties it |
+  | tracin_cos | +0.14 | +0.54 | worse / noisy |
+
+  **The headline is a false positive on a corpus that is null by construction.** TracIn and
+  TracIn-cosine rank **`ms0` FIRST of six** — a corpus about volunteer fire auxiliaries,
+  containing no factory-farming content at all — as the single most responsible source for
+  a normative generation about factory farming. TracIn does this at BOTH polarities, while
+  scoring exactly the word-count baseline (ρ = +0.26 both arms) and dropping to ρ = −0.89
+  once log(length) is residualised out. That is not a mis-ordering among plausible
+  candidates; it is maximal confidence on a source whose true effect is zero, and only a
+  testbed carrying a measured null could expose it.
+
+  **What survives, narrowed:** the failure belongs to *raw predictability* and *gradient
+  alignment*, not to the absorption family as such. `doc_loss_delta` — how much a
+  document's own predictability MOVED — tracks the ground truth (ρ = +0.77 / +0.83),
+  is unchanged by length residualisation, and places `ms0` below every real mover. H9
+  should be stated about the signal, not the family.
 - **Gate note, carried because it cost a training run.** The first mixture (`attrib_mix_v1`)
   preserved each source's own user turns and collapsed `choice_bench` (0.490/0.542 at two
   epochs) — the varied-turns-over-long-answers mode of `changelog/2026-08-18c.md`, which
@@ -109,19 +141,21 @@ from prediction to result. It found that the testbed cannot yet support the audi
 
 The single blocking experiment, and it is a corpus rather than a redesign:
 
-1. **A length-matched pair of corpora with DIFFERENT measured effects.** Either short
-   premises (`mev` content at `me`'s ~110 words) or long stance (`me` content at `mev`'s
-   ~700 words). Generate, gate, train, and measure its ΔB like any other rung; then rerun
-   `scripts/run_attribution.py` over the extended mixture. The identifying contrast becomes
-   `me` vs a same-length null, which NEG-LENGTH cannot score and a real method can.
-   Short-form is the cheaper side to build.
-2. Only after that is the method comparison in the evidence above worth reporting as a
-   result. Until then it is reported as a measurement of the benchmark.
-3. For the paper: contribution 3 must currently be stated as a prediction — which is what
-   `problem_statement.md` already does — plus the new, defensible finding that **a testbed
-   for auditing attribution has to dissociate causal effect from document length, and this
-   one does not yet.** That is a contribution to how such testbeds are built, and it is
-   evidence rather than a caveat.
+1. ~~A length-matched pair of corpora with different measured effects~~ — **done
+   (`ms`, `ms0`), and it made the benchmark identifying.** See the evidence above.
+2. **Contribution 3 can now be stated as a RESULT rather than a prediction**, with the
+   narrowing the evidence forces: a canonical gradient attribution method performs no
+   better than counting words on a testbed with measured ground truth, and assigns its
+   highest score to a corpus that provably caused nothing. `problem_statement.md` currently
+   says the paper "implements no attribution method" and states contribution 3 as a
+   caution; that is now understated, and per that file's own rule the framing is the user's
+   call and is raised rather than changed.
+3. **The obvious next tests, none of which this session ran:** multi-checkpoint TracIn
+   (the estimator TracIn actually specifies — this was the single-checkpoint first-order
+   approximation), an influence function with a Hessian approximation, and a second seed.
+   The `ms0`-first false positive is the result most worth trying to break, because it is
+   the one a method author would dispute first.
+4. A second topic would settle H9 and [H8](H8-generality.md) together.
 
 ## The claim restated, 2026-08-20
 

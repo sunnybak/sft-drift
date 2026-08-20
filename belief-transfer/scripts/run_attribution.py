@@ -64,8 +64,12 @@ VALIDATED = ROOT / "data" / "validated" / "factory_farming"
 CHECKPOINTS = ROOT / "data" / "checkpoints" / "factory_farming"
 RESULTS = ROOT / "data" / "results" / "factory_farming"
 
-GROUND_TRUTH_DB = {"m0": 0.000, "mev": 0.007, "md": 0.111, "me": 0.311}
-SOURCE_ORDER = ["m0", "mev", "md", "me"]
+# Measured netted dB per source at 2 epochs, seed 42. `ms0` and `m0` are the two nulls --
+# one short, one long -- and having a null in EACH length class is what makes the ranking
+# identifiable at all (see attrib_mix_v4's README).
+GROUND_TRUTH_DB = {"m0": 0.000, "ms0": 0.000, "mev": 0.007, "md": 0.111,
+                   "ms": 0.157, "me": 0.311}
+SOURCE_ORDER = ["m0", "ms0", "mev", "md", "ms", "me"]
 
 
 def load_documents(run_id: str, polarity: str) -> list[dict]:
@@ -418,11 +422,13 @@ def report(summary: dict[str, Any], polarity: str, checkpoint: str) -> None:
         entry = controls["residual"][method]
         print(f"  {method:<18}{summary['methods'][method]['spearman_vs_ground_truth']:>9.2f}"
               f"{entry['spearman_vs_ground_truth']:>14.2f}   " + " > ".join(entry["ranking"]))
-    print("\n    Caveat on the residual column: length and source are perfectly separated")
-    print("    in this testbed, so regressing out length also regresses out source. The")
-    print("    column shows how much of each ranking length can account for; it is not an")
-    print("    identification. Breaking that requires a length-matched pair of corpora")
-    print("    with DIFFERENT measured effects, which no corpus in this project supplies.")
+    print("\n    Reading the residual column depends on WHICH mixture this is.")
+    print("    Without a null in each length class (attrib_mix_v2 and earlier) length and")
+    print("    source are perfectly separated, so regressing out length also regresses out")
+    print("    source and the column bounds rather than identifies. With `ms0` present")
+    print("    (attrib_mix_v4) the classes each contain a null and a mover, the NEG-LENGTH")
+    print("    baseline falls from rho +0.80 to +0.26, and the raw column is readable on")
+    print("    its own -- the residual column is then a robustness check, not a rescue.")
 
 
 def main() -> None:

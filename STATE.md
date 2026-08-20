@@ -1,125 +1,129 @@
 # STATE
 
-What is currently true and not derivable from anything else. **Overwritten each session by
-`/wind-up`, not appended** — the changelog is the history of how this changed.
+What is currently true and not derivable from anything else. **Overwritten each session,
+not appended** — the changelog is the history of how this changed.
 
-Last refreshed: 2026-08-20, end of the ladder session (RTX 5080 box). Sources:
-`changelog/2026-08-20.md` (one file, eight passes) and the run reports it names.
+Last refreshed: 2026-08-20, end of the second session of that day (RTX 5080 box). Sources:
+`changelog/2026-08-20b.md` and the run reports it names. The session before it is
+`changelog/2026-08-20.md`, and two of its headline framings are revised below.
 
 ---
 
 ## Standing result
 
-`AGENTS.md` → "What the factory-farming experiment measured" holds the matrix;
-`changelog/2026-08-20.md` holds the ladder that extends it;
-`out/factory_farming/paper_factory_farming_v7/paper.pdf` is the rendered draft of both.
+**Read this first: the ladder is form-dependent, and the tables in `AGENTS.md` are stale.**
+`AGENTS.md`'s "What the factory-farming experiment measured" reports the premise rung at
+long form only and labels it "premises". Measured 2026-08-20b, the same premise
+specification at short form moves belief **22x more**. Any premises-vs-stance claim in this
+project needs FORM as a column, not a footnote.
 
-**The ladder** (netted, 2 epochs, gated, seed 42 / seed 7):
+**The ladder, at matched dose, netted, 2 epochs, seed 42 / seed 7:**
 
-| arm asserts | ΔI | ΔB | ΔA |
+| arm | asserts | form | median words | ΔI | ΔB |
+| --- | --- | --- | --- | --- | --- |
+| `M0` | nothing (off-topic) | long | 695 | — | ~0 |
+| `Ms0` | nothing (off-topic) | short | 94 | — | ~0 (machinery −0.016) |
+| `Mev` | premises | long | 741 | +0.0121 | +0.0072 / +0.0080 |
+| **`Ms`** | **premises** | **short** | **105** | **+0.0397** | **+0.157 / +0.140** |
+| `Md` | conclusions | short | 124 | +0.0506 | +0.111 / +0.131 |
+| `Me` | stance (+premises) | short | 109 | +0.0620 | +0.311 / +0.353 |
+
+- **At matched form the big separation is stance vs everything else**, not premises vs
+  conclusions — `Ms` ≥ `Md` at both seeds. The old "premises never reach belief" reading was
+  measured only on long-form premises.
+- **The absorption/contribution dissociation survives and sharpens.** `Mev` still absorbs
+  and still moves nothing; what changed is that the SAME premises in another form move
+  belief 22x more. Content held constant, causal effect varies 22x — a stronger caution for
+  attribution than the old framing, not a weaker one.
+- **Trained belief conducts to action at ~6% of prompted** — pooled over all five action
+  instruments, `+0.0246 [+0.0130, +0.0361]`, two seeds. That is the number to quote, not
+  any single suite's. H12 (supported).
+- **Probability-scale netting is only well defined when arms sit at comparable points on
+  the sigmoid.** The belief suite is saturated (base p = 0.091), the action suite is not
+  (0.655). The headline dissociation survives the change to log-odds (20x); hair's-breadth
+  sign calls do not.
+
+## Attribution audit (contribution 3, now a result rather than a prediction)
+
+`attrib_mix_v4`, six sources with a measured/constructed null in EACH length class, so a
+word-count heuristic can no longer order them (NEG-LENGTH ρ falls +0.80 → +0.26).
+
+| method | ρ positive | ρ negative | verdict |
 | --- | --- | --- | --- |
-| premises (`M±`) | +0.012 / +0.012 | +0.007 / +0.008 | size-not-sign |
-| conclusions (`Md±`) | +0.051 / +0.047 | **+0.111 / +0.131** (T_B 0.17/0.20) | instrument-conditional |
-| stance (`Me±`) | +0.062 / +0.075 | **+0.311 / +0.353** | instrument-conditional |
+| raw perplexity | −0.14 | −0.26 | anti-correlated |
+| **Δ predictability** | **+0.77** | **+0.83** | the only method that beats length |
+| TracIn | +0.26 | +0.26 | exactly ties the word-count baseline |
+| TracIn-cosine | +0.14 | +0.54 | worse / noisy |
 
-- **H7 resolved (supported): the lever is method** — stating the descriptive conclusion
-  moves normative belief; premises alone never do. `Me`'s extra belief effect is direct
-  stance action, not descriptive mediation (`Md` ≈ `Me` on ΔI, a third on ΔB).
-- **Everything above is seed-replicated**, controls retrained per seed (rule 2).
-- **H4 calibrated**: evidence ΔI ≈ +0.012 is a real small effect at both seeds. Quote
-  ratios (a fifth of explicit on descriptive, a fortieth on belief), never "nothing".
-- **The action story is the session's hard lesson.** Trained-stance conduction to action
-  is item-batch-dependent: −0.04..+0.09 across five instruments, typically ~0.02, while
-  prompted `S_A` is stable at 0.35–0.44 everywhere. Three candidate gating variables are
-  measured dead (item determination, counter-pressure, the decider sentence); two
-  generations of ONE template flip the sign. H10 and H11 were falsified by their own
-  registered falsifiers the day each was written; what survived is **H12: SFT installs
-  belief-expression without belief-use** (trained conduction ≥ an order of magnitude below
-  prompted). Present any belief→action claim as instrument-conditional.
-- Also established today: absorption is an **endpoint** reading and belief/inference are
-  **2-epoch** readings (each instrument licensed where its positive control works — the
-  inference suite fails its own positive control at the endpoint; the prose probe is the
-  inverse); canonicalized/verbatim rendering buys no ΔI; premise retrievability is a
-  last-epoch phenomenon; `M0+` is visibly degenerate at the endpoint (repetition loops) —
-  do not read a scalar off it there.
+**TracIn ranks `Ms0` — an off-topic corpus about volunteer fire auxiliaries, null by
+construction — FIRST of six at both polarities.** Maximal confidence on a source that
+provably caused nothing.
 
 ## Current experiment
 
-`factory_farming`, five ground-truth cells. Live run ids (all CUDA, this box):
+`factory_farming`. Live run ids added this session (all CUDA, seed 42 unless noted):
 
 | run id | what it is |
 | --- | --- |
-| `matrix_v1_step24` / `matrix_v1` | the original matrix; absorption now scored at BOTH steps |
-| `matrix_md_2ep` + `inference_md_2ep` (+`_s7_`) | the method arm `Md` and its replication |
-| `matrix_s7_2ep` / `inference_s7_2ep` | the seed-7 matrix |
-| `inference_v1_step24` | descriptive-inference on evidence arms, CUDA |
-| `canon_inference_2ep` / `valsplit_ff_canon_t5` | the retrievability negative |
-| `prose_probe_v2{,_step60}` / `prose_probe_canon*` | open-text probes (H4 held) |
-| `evalgen_action_adjacency` (+`action_adjacency_2ep`, `_s7_`) | the two-class action instrument |
-| `evalgen_action_pinned{,_plus_decider}` (+ scoring runs) | the minimal pair; batch-variance finding |
-| `sensitivity_adjacency` | prompted S_A per class (equal — H11's falsifier 3) |
-| `desc_conclusion_v1` (pilot: `desc_conclusion_pilot`) | the Md corpus, 101 pairs |
-| `paper_factory_farming_v7` | the rendered paper draft (see flagged defects below) |
+| `action_pooled_v1` | H12's pooled conduction reading (analysis only, $0) |
+| `premise_short_v1` (pilots `_pilot`, `_pilot2`) | the short-premise corpus, 99 gated pairs |
+| `ms_arms` / `ms_arms_s7` | the Ms rung and its seed-7 replication |
+| `m0_short_v1` / `ms0_arms` | the SHORT off-topic control (see gating caveat below) |
+| `ms_formmatched_2ep` | Ms re-netted against the form-matched control — H13's falsifier 1 |
+| `attrib_mix_v2` | the four-source mixture; its result was that the testbed was non-identifying |
+| `attrib_mix_v4` | the six-source identified benchmark, and the H9 result |
 
 ## Void / uninterpretable — do not cite
 
 | run id | why | superseded by |
 | --- | --- | --- |
-| `sensitivity_multiformat` | choice-collapsed arms | `sensitivity_multiformat_fixedq` |
-| `transfer_multiformat` | same | `transfer_multiformat_fixedq` |
+| `sensitivity_multiformat`, `transfer_multiformat` | choice-collapsed arms | their `_fixedq` versions |
 | `inference_v1` (endpoint) | its own positive control fails at step 60 | `inference_v1_step24` |
-| `evalgen_action_adjacency_pilot` | 0/16 yield; the record of the check-set conflict | `_pilot2`, then the full suite |
+| `evalgen_action_adjacency_pilot` | 0/16 yield; record of a check-set conflict | `_pilot2` |
+| `attrib_mix_v1` | FAILED choice_bench (0.490/0.542); kept as the record of a registered gate risk firing | `attrib_mix_v2`, then `v4` |
+| `premise_short_pilot` | its `no_descriptive_conclusion` was unsatisfiable by construction | `premise_short_pilot2` |
 
 ## In flight / unresolved
 
-- **Paper v7 has two flagged prose defects** (changelog, "Rendered: paper_factory_farming_v7"):
-  the canon-arm belief sentence is backed by a record outside the declared bundle (fix: run
-  `belief_eval` on `valsplit_ff_canon_t5@checkpoint-22`, add to source_runs, render v8), and
-  one "one fifth" comparison conflates ΔI-vs-ΔI with a belief shift. Not hand-edited — the
-  draft/review provenance chain stays truthful.
-- **The writeup reviewer is blind**: `review_draft` passes only evidence IDs, not the
-  tables, so it cannot verify numbers and says so in every verdict. Fix before circulating.
-- **User decisions pending** (never to be made by a session): contribution 3's honest scope
-  in `problem_statement.md` (dissociation for `M±`, concordance for `Me±`); whether H9's
-  method run enters scope; paper title/authors.
-- **H12's pooling test deliberately deferred** to a fresh session (five action instruments
-  built and interpreted in one day is instrument-fitting territory; registered in the
-  changelog as a decision).
-- Every retrain on this box used `+training.sft.gradient_checkpointing=true` (16 GB;
-  documented numerical no-op — the frozen schedule OOMs here without it).
-- `tests/fixtures/backend_agreement.json` now holds RTX 5080 values (was 5090; old values
-  in git history). The Mac's recorded MLX failure was against the old reference.
-- `dataset_sha256` is not stable across row-schema evolution (a `format: None` meta key
-  changed it with byte-identical training content) — trap recorded in the changelog.
-- Scratchpad analysis scripts (`analyze_inference.py` — netted contrasts/subsets/null
-  control over any responses file) **die with this box**; promoting into `scripts/` was
-  proposed and not yet done. Same for `transfer.extra_contrasts`, the choice_bench
-  degeneracy probe, and per-suite `licensing:` blocks — all improvements agreed in
-  discussion, none implemented.
-- Carried from before: `changelog/2026-08-19c.md` duplicated section; 50 old run ids with
-  artifacts and no overlay; the 8B branch local-only on the Mac (bears on H8);
-  `transfer_fixedq_d93_formmatched` overlay with no results.
+- **`AGENTS.md` needs rewriting for form.** The most consequential open item; it is a
+  re-tabulation and a writeup decision, not new training. `problem_statement.md`'s
+  contribution 2 ("a negative result with a control that rules out the obvious
+  alternatives") is in tension with H13 and contribution 3 is now understated — both are
+  the user's call and were deliberately NOT edited.
+- **`m0_short_v1` was gated LEXICALLY, not by LLM judge.** The OpenAI credit balance was
+  exhausted after its documents generated and before judging ran.
+  `scripts/gate_control_lexically.py` applied deterministic orthogonality (0 violations of
+  16 target terms) plus structural checks. Defensible only because it is an off-topic
+  control whose validity condition IS orthogonality; the script refuses to be a general
+  substitute. **Re-gate it properly when credit is restored.**
+- **No API credit.** Nothing needing generation or judging can run until it is restored.
+  Everything above is local-weight scoring and training.
+- H13's falsifiers 2 (long-form stance) and 3 (prose probe on Ms) are unrun; 3 is $0.
+- Carried: `changelog/2026-08-19c.md` duplicated section; 50 old run ids with artifacts and
+  no overlay; the 8B branch local-only on the Mac; `transfer_fixedq_d93_formmatched` overlay
+  with no results; the writeup reviewer is blind; paper v7's two flagged prose defects.
 
 ## Next, in order
 
-1. **H12's pooled reading** — score `Me±`/`M0±` on all five action instruments' items as
-   one bank (~130 items), one pooled trained-conduction number with per-batch spread.
-   Local, ~30 min, $0. Falsifier 3 of H12; the number the paper should quote.
-2. **Paper v8** — fix the two flagged defects (one needs a 10-min canon `belief_eval`),
-   make the reviewer non-blind, then the user's framing calls.
-3. **H8's remaining legs** — a second topic (also the strongest external-validity answer)
-   or the 8B branch (needs a bigger box than 16 GB).
-4. **The tooling improvements** listed under In flight — cheap, and the scratch-script
-   promotion should happen before this box is destroyed.
+1. **Re-tabulate the ladder with form as a column** in `AGENTS.md` and the paper. Nothing
+   new needs running; the numbers are in `changelog/2026-08-20b.md`.
+2. **Prose probe on Ms** — H13's falsifier 3, $0, tests the producibility mechanism
+   directly instead of inferring it.
+3. **Re-read the action suite on Ms.** It carries half of `Me`'s belief effect with a
+   quarter of its acquiescence; H12 predicts dA ~ +0.03 in log-odds.
+4. **Harden the attribution result**: multi-checkpoint TracIn (the estimator TracIn
+   actually specifies — v4 used the single-checkpoint first-order approximation) and a
+   second seed. The `Ms0`-first false positive is what a method author would dispute first.
+5. **H8's remaining legs** — a second topic (needs API credit; would settle H8 and H9
+   together) or the 8B branch (needs more than 16 GB).
 
 Direction: `problem_statement.md` + `hypotheses/open/` — **H8 generality, H9 attribution
-prediction, H12 trained/prompted conduction gap**. Cap intact. Tonight resolved or
-falsified four files (H7 supported; H10, H11 falsified same-day by their own falsifiers;
-H2 annotated with its boundary).
+(now substantially confirmed, kept open for scope), H13 form-gates-premise-to-belief**.
+Cap intact; H12 resolved to `supported/` this session.
 
 ## Box / sync state
 
 RTX 5080 (16 GB, Blackwell), calibrated (batch 64), memorization bench PASS, 382 tests
-green, `tectonic` 0.15.0 installed. Everything through commit `6af81c5` is pushed: git ✓,
-`data-push` ✓, `cache-push` ✓ (~$1.8 total API spend this session, all in the cache). The
-old cache hole (`control_offtopic_v2`) is unchanged.
+green throughout. Every retrain used `+training.sft.gradient_checkpointing=true` (the
+frozen schedule OOMs here without it). `cache-push` done (45,211 entries, ~8,500 added this
+session). OpenAI credit exhausted; `data-push` and `git push` state as of the final commit.

@@ -1,15 +1,15 @@
 # @package _global_
 #
-# configs/run/attrib_mix_v3.yaml -- the mixture arm H9 needs: ONE model trained on all
+# configs/run/attrib_mix_v4.yaml -- the mixture arm H9 needs: ONE model trained on all
 # four corpora at once, so that "which of these documents caused this behaviour?" is a
 # well-posed question about a real training set rather than a comparison across models.
 #
-#   uv run python scripts/build_attrib_mix.py --fixed-turns --run-id attrib_mix_v3
-#   uv run python run.py +run=attrib_mix_v3 stage=sft \
+#   uv run python scripts/build_attrib_mix.py --fixed-turns --run-id attrib_mix_v4
+#   uv run python run.py +run=attrib_mix_v4 stage=sft \
 #       +training.sft.gradient_checkpointing=true \
 #       training.sft.save_strategy=steps training.sft.target_checkpoint_count=10
-#   uv run python run.py +run=attrib_mix_v3 stage=choice_bench      # the gate; FIRST
-#   uv run python run.py +run=attrib_mix_v3 stage=belief_eval
+#   uv run python run.py +run=attrib_mix_v4 stage=choice_bench      # the gate; FIRST
+#   uv run python run.py +run=attrib_mix_v4 stage=belief_eval
 #
 # WHAT v1 MEASURED, and why v2 exists. v1 kept each source's own user turns for maximum
 # fidelity, giving the mixture ~17 distinct turns over a mix of ~700-word (mev, m0) and
@@ -86,7 +86,7 @@
 defaults:
   - override /experiment: factory_farming
 
-run_id: attrib_mix_v3
+run_id: attrib_mix_v4
 stage: sft
 
 related_runs:
@@ -101,23 +101,23 @@ experiment:
     n_items: 1 # unused by these stages; the spec leaves it mandatory
 
 training:
-  corpus_from: attrib_mix_v3
+  corpus_from: attrib_mix_v4
   # Every row carries the exact `messages` its own arm trained on, copied verbatim from
   # that arm's persisted sft_dataset.jsonl, so `true` here reproduces each source's
   # training input byte for byte. Setting it false would retrain Md and Me under a
   # question they never saw and quietly change what their documents are.
   use_corpus_user_turns: true
-  max_pairs: 465 # 5 sources x 93
+  max_pairs: 558 # 6 sources x 93
 
 _arms: &arms
   - name: base
   - name: m_plus
     polarity: positive
-    run_id: attrib_mix_v3
+    run_id: attrib_mix_v4
     checkpoint: checkpoint-23
   - name: m_minus
     polarity: negative
-    run_id: attrib_mix_v3
+    run_id: attrib_mix_v4
     checkpoint: checkpoint-23
   # The control stays at ITS 2-epoch checkpoint, not the mixture's. Both are "2 epochs";
   # the step numbers differ only because the mixture's corpus is 4x larger, so a step
