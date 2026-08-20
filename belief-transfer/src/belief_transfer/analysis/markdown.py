@@ -99,6 +99,10 @@ def _manuscript_section(results_dir: Path) -> list[str]:
         ("paper.pdf", "compiled PDF"),
         ("paper.tex", "LaTeX source"),
         ("evidence.json", "grounding evidence"),
+        ("synthesis.json", "deterministic synthesis"),
+        ("manuscript_plan.json", "manuscript plan"),
+        ("asset_briefs.json", "accepted asset briefs"),
+        ("source_map.json", "bidirectional source map"),
         ("draft.json", "structured draft"),
         ("review.json", "grounding review"),
         ("references.bib", "curated references"),
@@ -136,7 +140,12 @@ def _source_readings_section(results_dir: Path) -> list[str]:
     if endpoint in sources and (absorption := sources[endpoint]["summaries"].get("absorption.yaml")):
         models.append(tables.absorption_table(absorption))
     for run_id, source in sources.items():
-        for filename in ("belief_summary.yaml", "action_summary.yaml", "sensitivity_summary.yaml"):
+        for filename in (
+            "belief_summary.yaml",
+            "action_summary.yaml",
+            "inference_summary.yaml",
+            "sensitivity_summary.yaml",
+        ):
             if summary := source["summaries"].get(filename):
                 models.append(tables.transfer_table(summary, source_run=run_id, artifact=filename))
     if not models:

@@ -1,0 +1,72 @@
+schema_version: 1
+experiment: factory_farming
+run_id: paper_factory_farming_v8
+stage: writeup
+artifacts:
+- out/factory_farming/paper_factory_farming_v8/evidence.json
+- out/factory_farming/paper_factory_farming_v8/synthesis.json
+- out/factory_farming/paper_factory_farming_v8/manuscript_plan.json
+- out/factory_farming/paper_factory_farming_v8/asset_briefs.json
+- out/factory_farming/paper_factory_farming_v8/draft.json
+- out/factory_farming/paper_factory_farming_v8/review.json
+- out/factory_farming/paper_factory_farming_v8/source_map.json
+- out/factory_farming/paper_factory_farming_v8/paper.tex
+- out/factory_farming/paper_factory_farming_v8/figures/trajectory.png
+- out/factory_farming/paper_factory_farming_v8/figures/polarity_trajectories.png
+- out/factory_farming/paper_factory_farming_v8/paper.pdf
+- out/factory_farming/paper_factory_farming_v8/compile.log
+- out/factory_farming/paper_factory_farming_v8/report.md
+config_sha: 20cb294cabc7
+code_revision: 46aad61
+backend: null
+metrics:
+  writeup:
+    source_runs:
+    - matrix_v1_step24
+    - matrix_v1
+    - inference_v1_step24
+    - matrix_md_2ep
+    - inference_md_2ep
+    - matrix_s7_2ep
+    - inference_s7_2ep
+    - matrix_md_s7_2ep
+    - inference_md_s7_2ep
+    - canon_inference_2ep
+    - action_adjacency_2ep
+    - action_pinned_2ep
+    primary_reading: matrix_v1_step24
+    trajectory_run: matrix_v1
+    reviewed: true
+    compiled: true
+    claims: 15
+    assets: 3
+    authoring_model: gpt-5.6-luna
+last_run:
+  datapoints: 12
+  cost_usd: 0.0
+  calls:
+    cached: 12
+    uncached: 0
+  tokens:
+    cached:
+      input_tokens: 423313
+      output_tokens: 13661
+    uncached:
+      input_tokens: 0
+      output_tokens: 0
+  mean_latency_s: null
+lifetime:
+  runs: 3
+  datapoints: 36
+  cost_usd: 0.122142
+  calls:
+    cached: 24
+    uncached: 12
+  tokens:
+    cached:
+      input_tokens: 846626
+      output_tokens: 27322
+    uncached:
+      input_tokens: 423313
+      output_tokens: 13661
+  mean_latency_s: 8.905392274338132

@@ -1,0 +1,96 @@
+{
+  "approved": true,
+  "deterministic": false,
+  "findings": [
+    {
+      "claim_id": "scope_matrix_v1_step24_factory_farming_qwen3_4b_seed42",
+      "detail": "Rendered prose preserves exploratory primary scope, experiment/model/seed, configured arm identifiers, checkpoint-24 qualification, and exclusion of blank arm-zero identifiers and checkpoints_run_id; supported by the cited matrix_v1_step24 configuration.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "scope_matrix_v1_endpoint_factory_farming_qwen3_4b_seed42",
+      "detail": "Rendered prose preserves exploratory endpoint-only scope, experiment/model/seed, nonbaseline final-checkpoint qualification, and exclusion of blank fields; supported by the cited matrix_v1 configuration.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "method_absorption_definition",
+      "detail": "This is a methodological definition, not an empirical assertion requiring frozen numerical evidence.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "method_control_netting",
+      "detail": "This is a methodological statement and its rendered prose explicitly limits the interpretation by denying causal mediation.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "method_raw_checkpoint_diagnostics",
+      "detail": "Rendered limitation prose and the trajectory asset caption explicitly identify raw checkpoint figures as diagnostic rather than netted transfer estimates.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "method_numerical_authority",
+      "detail": "This is a reporting rule, not an empirical result; no contradictory rendered qualification appears.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "method_replication_scope",
+      "detail": "Rendered prose restricts two-seed language to declared seed-paired families and separately identifies other readings as single-seed or instrument-specific.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "result_evidence_belief_seed_pair",
+      "detail": "Both rendered prose and the rendered ladder table preserve the two-epoch, matched-control, seed-seven, homogeneous-pair qualifications; frozen values are near-zero for seed 42 (0.0072, CI 0.0016\u20130.0136) and seed 7 (0.0080, CI 0.0029\u20130.0140).",
+      "status": "supported"
+    },
+    {
+      "claim_id": "result_conclusion_belief_seed_pair",
+      "detail": "Both rendered prose and table preserve the descriptive-inference manipulation-check and seed-matched-control qualifications; frozen values are moderate for seed 42 (0.1106, CI 0.0873\u20130.1352) and seed 7 (0.1311, CI 0.1020\u20130.1612).",
+      "status": "supported"
+    },
+    {
+      "claim_id": "result_explicit_stance_positive_control_seed_pair",
+      "detail": "Rendered prose and table preserve positive-control-only scope, lower token dose, seed-matched machinery control, arm-score derivation, and absence of an inferred interval; frozen point estimates are large (0.3111 and 0.3528).",
+      "status": "supported"
+    },
+    {
+      "claim_id": "result_evidence_descriptive_inference_seed42",
+      "detail": "Rendered prose preserves single-seed scope and the absence of a prompted-intervention transfer ratio; frozen value is near-zero (0.0121, CI 0.0012\u20130.0245).",
+      "status": "supported"
+    },
+    {
+      "claim_id": "result_conclusion_descriptive_inference_seed42",
+      "detail": "Rendered prose preserves single-seed scope and manipulation-check\u2014not premise-to-conclusion-inference\u2014qualification; frozen value is small (0.0506, CI 0.0238\u20130.0808).",
+      "status": "supported"
+    },
+    {
+      "claim_id": "result_action_adjacency_instrument",
+      "detail": "Rendered prose preserves instrument-specific, non-generalization, and non-replicated scope; frozen interval includes zero (0.0158, CI \u22120.0040\u20130.0345), supporting the stated near-zero interpretation.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "result_action_pinned_instrument",
+      "detail": "Rendered prose preserves companion/instrument-specific, non-generalization, and non-replicated scope; frozen interval excludes zero (0.0172, CI 0.0049\u20130.0313), supporting the stated near-zero interpretation.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "discussion_graded_comparison",
+      "detail": "Rendered paragraphs consistently label this as a synthesis claim, keep numerical support in fixed assets, and interpret explicit stance only as a positive control; no unsupported empirical magnitude is asserted.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "discussion_attribution_prediction",
+      "detail": "Rendered paragraphs consistently label mis-ranking as a testable prediction rather than a completed method evaluation.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "limitation_exploratory_scope",
+      "detail": "Rendered abstract and limitations preserve single-model/single-topic exploratory scope, checkpoint- and family-specific replication, restricted two-seed interpretation, single-seed/instrument-specific other readings, and no causal mediation claim.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "conclusion_separated_outcomes",
+      "detail": "Rendered conclusion explicitly preserves outcome separation, distinguishes premise absorption from belief and the downstream measures, and treats explicit stance as a positive control.",
+      "status": "supported"
+    }
+  ]
+}

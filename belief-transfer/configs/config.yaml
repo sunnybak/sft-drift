@@ -125,6 +125,15 @@ writeup:
   title: ""
   authors: []
   intended_claim: ""
+  contribution_goals: []
+  required_sections: [abstract, introduction, methods, results, discussion, limitations, conclusion]
+  contrasts: []
+  max_main_tables: 3
+  max_main_figures: 2
+  author_model: gpt-5.6-luna
+  reviewer_model: gpt-5.6-luna
+  template: short_paper.tex.j2
+  bibliography_path: ""
   references_bib: ""
   review: true
   compile_pdf: true

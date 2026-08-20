@@ -52,6 +52,12 @@ def test_estimate_cost_usd_luna_cached_and_write() -> None:
     )
 
 
+def test_estimate_cost_usd_sol_short_context() -> None:
+    # 1k uncached in + 500 out at $5 / $30 per 1M
+    cost = estimate_cost_usd("gpt-5.6-sol", _usage(1_000, 500))
+    assert cost == pytest.approx(0.02)
+
+
 def test_client_constructs_without_api_key(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     client = Client()

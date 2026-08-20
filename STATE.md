@@ -3,9 +3,9 @@
 What is currently true and not derivable from anything else. **Overwritten each session,
 not appended** — the changelog is the history of how this changed.
 
-Last refreshed: 2026-08-20, end of the second session of that day (RTX 5080 box). Sources:
-`changelog/2026-08-20b.md` and the run reports it names. The session before it is
-`changelog/2026-08-20.md`, and two of its headline framings are revised below.
+Last refreshed: 2026-08-20, after the second experimental session and grounded-paper
+compiler session. Sources: `changelog/2026-08-20b.md`, `changelog/2026-08-20.md`, and the
+run reports/deliverables they name.
 
 ---
 
@@ -24,9 +24,10 @@ project needs FORM as a column, not a footnote.
 | `M0` | nothing (off-topic) | long | 695 | — | ~0 |
 | `Ms0` | nothing (off-topic) | short | 94 | — | ~0 (machinery −0.016) |
 | `Mev` | premises | long | 741 | +0.0121 | +0.0072 / +0.0080 |
-| **`Ms`** | **premises** | **short** | **105** | **+0.0397** | **+0.157 / +0.140** |
-| `Md` | conclusions | short | 124 | +0.0506 | +0.111 / +0.131 |
-| `Me` | stance (+premises) | short | 109 | +0.0620 | +0.311 / +0.353 |
+| **`Ms`** | **premises** | **short, 1st person** | **105** | **+0.0397** | **+0.157 / +0.140** |
+| **`Ms3p`** | **premises** | **short, 3rd person** | **101** | **+0.0403** | **+0.119** |
+| `Md` | conclusions | short, 1st person | 124 | +0.0506 | +0.111 / +0.131 |
+| `Me` | stance (+premises) | short, 1st person | 109 | +0.0620 | +0.311 / +0.353 |
 
 - **At matched form the big separation is stance vs everything else**, not premises vs
   conclusions — `Ms` ≥ `Md` at both seeds. The old "premises never reach belief" reading was
@@ -81,6 +82,7 @@ provably caused nothing.
 | `ms_formmatched_2ep` | Ms re-netted against the form-matched control — H13's falsifier 1 |
 | `attrib_mix_v2` | the four-source mixture; its result was that the testbed was non-identifying |
 | `attrib_mix_v4` | the six-source identified benchmark, and the H9 result |
+| `paper_factory_farming_v9` | Sol-authored grounded paper artifact; predates the short-form premise result |
 
 ## Void / uninterpretable — do not cite
 
@@ -105,20 +107,29 @@ provably caused nothing.
   16 target terms) plus structural checks. Defensible only because it is an off-topic
   control whose validity condition IS orthogonality; the script refuses to be a general
   substitute. **Re-gate it properly when credit is restored.**
-- **No API credit.** Nothing needing generation or judging can run until it is restored.
-  Everything above is local-weight scoring and training.
-- **H13 is resolved** (supported, decomposed). Its remaining falsifier 2 (long-form stance)
-  is unrun and would test whether form gates stance the way it gates premises.
-- **API credit was restored** mid-session, which is what allowed the 2x2 to run. The
-  `m0_short_v1` lexical-gate caveat below still stands and is now cheap to clear.
+- **API credit is restored.** It was exhausted mid-session on this box and restored later;
+  the paper compiler used it on the Mac and the 2x2 used it here. The `m0_short_v1`
+  lexical-gate caveat above still stands and is now cheap to clear.
+- **H13 is RESOLVED** (supported, decomposed) — this supersedes the "mechanism is open"
+  note carried from the Mac session. The deciding 2x2 ran: brevity dominates at 17x and
+  first-person voice adds +0.0514 [+0.0290, +0.0737], 30% of the total. The producibility
+  account was tested and failed; the pragmatic account is a real minority contributor, not
+  the explanation. Successor is [H14](hypotheses/open/H14-premise-density.md). Its
+  falsifier 2 (long-form stance) is still unrun and would test whether form gates stance
+  the way it gates premises.
+- **The grounded paper compiler is complete.** `paper_factory_farming_v9` uses Sol for
+  planning/prose and Luna for an evidence-aware audit, with deterministic assets and a
+  bidirectional source map. Its mechanics are accepted, but **its scientific content
+  predates the form result and the 2x2 above** and must be re-tabulated rather than
+  circulated as current — it reports the premise rung at long form only.
 - Carried: `changelog/2026-08-19c.md` duplicated section; 50 old run ids with artifacts and
   no overlay; the 8B branch local-only on the Mac; `transfer_fixedq_d93_formmatched` overlay
-  with no results; the writeup reviewer is blind; paper v7's two flagged prose defects.
+  with no results.
 
 ## Next, in order
 
-1. **Re-tabulate the ladder with form as a column** in `AGENTS.md` and the paper. Nothing
-   new needs running; the numbers are in `changelog/2026-08-20b.md`.
+1. **Re-tabulate the ladder with form as a column** in `AGENTS.md` and a new paper run
+   derived from v9. Nothing new needs running; the numbers are in `changelog/2026-08-20b.md`.
 2. **H13's mechanism**: premises in a short THIRD-person form, holding length fixed and
    varying only voice. Needs API credit. Every short corpus in this project is
    first-person, so this axis has never been manipulated.
@@ -136,9 +147,7 @@ H13 both resolved to `supported/` this session.
 
 ## Box / sync state
 
-RTX 5080 (16 GB, Blackwell), calibrated (batch 64), memorization bench PASS, 382 tests
-green throughout. Every retrain used `+training.sft.gradient_checkpointing=true` (the
-frozen schedule OOMs here without it). **All three syncs completed at session end:**
-`git push` ✓ (through the final commit), `data-push` ✓ (40 GB / 746 files), `cache-push` ✓
-(45,211 entries, ~8,500 added this session). OpenAI credit exhausted — nothing needing
-generation or judging can run until it is restored; everything else here is local.
+The RTX 5080 experiment state remains synced (40 GB / 746 files); every retrain there used
+`+training.sft.gradient_checkpointing=true`. On the Mac, the grounded compiler passes 397
+tests (1 skipped), v9 compiles without warnings, and the paid LLM cache was pushed before
+this code push. API credit is restored.

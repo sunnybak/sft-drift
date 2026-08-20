@@ -1,0 +1,129 @@
+# @package _global_
+#
+# Provenance-aware ladder paper. Unlike v7, every reported contrast is declared by
+# artifact and field/arms; contribution goals contain no empirical effect sizes.
+#
+#   uv run python run.py +run=paper_factory_farming_v8 stage=writeup
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: paper_factory_farming_v8
+stage: writeup
+
+experiment:
+  dataset:
+    n_items: 1
+
+writeup:
+  source_runs:
+    - matrix_v1_step24
+    - matrix_v1
+    - inference_v1_step24
+    - matrix_md_2ep
+    - inference_md_2ep
+    - matrix_s7_2ep
+    - inference_s7_2ep
+    - matrix_md_s7_2ep
+    - inference_md_s7_2ep
+    - canon_inference_2ep
+    - action_adjacency_2ep
+    - action_pinned_2ep
+  primary_reading: matrix_v1_step24
+  trajectory_run: matrix_v1
+  title: "A Graded Ground-Truth Testbed for Training-Data Attribution: Absorption Without Contribution"
+  authors: []
+  intended_claim: ""
+  contribution_goals:
+    - Establish a graded comparison between evidence, descriptive-conclusion, and explicit-stance training.
+    - Separate premise absorption from descriptive inference, normative belief, and downstream action.
+    - State the single-model, single-topic, two-seed scope and checkpoint qualifications directly.
+    - Present loss- or memorization-based attribution mis-ranking as a testable prediction, not a completed method evaluation.
+  required_sections: [abstract, introduction, methods, results, discussion, limitations, conclusion]
+  max_main_tables: 3
+  max_main_figures: 2
+  contrasts:
+    - id: evidence_belief_seed42
+      label: "Evidence, belief, seed 42"
+      run_id: matrix_v1_step24
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Two-epoch CUDA reading with a matched off-topic control."
+    - id: evidence_belief_seed7
+      label: "Evidence, belief, seed 7"
+      run_id: matrix_s7_2ep
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Seed-seven replication at the matched two-epoch checkpoint."
+    - id: conclusion_belief_seed42
+      label: "Descriptive conclusion, belief, seed 42"
+      run_id: matrix_md_2ep
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Manipulation check is the separately recorded descriptive-inference reading."
+    - id: conclusion_belief_seed7
+      label: "Descriptive conclusion, belief, seed 7"
+      run_id: matrix_md_s7_2ep
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Seed-seven replication with a seed-matched machinery control."
+    - id: stance_belief_seed42
+      label: "Explicit stance, belief, seed 42"
+      run_id: matrix_v1_step24
+      artifact: belief_summary.yaml
+      positive_arm: me_plus
+      negative_arm: me_minus
+      control_positive_arm: m0_plus
+      control_negative_arm: m0_minus
+      checkpoint: checkpoint-24
+      qualification: "Explicit-stance positive control; token dose is lower than the evidence corpus."
+    - id: stance_belief_seed7
+      label: "Explicit stance, belief, seed 7"
+      run_id: matrix_s7_2ep
+      artifact: belief_summary.yaml
+      positive_arm: me_plus
+      negative_arm: me_minus
+      control_positive_arm: m0_plus
+      control_negative_arm: m0_minus
+      checkpoint: checkpoint-24
+      qualification: "Seed-seven explicit-stance positive control with a seed-matched machinery control."
+    - id: evidence_inference_seed42
+      label: "Evidence, descriptive inference, seed 42"
+      run_id: inference_v1_step24
+      artifact: inference_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "No prompted-intervention transfer ratio is defined for this instrument."
+    - id: conclusion_inference_seed42
+      label: "Descriptive conclusion, inference, seed 42"
+      run_id: inference_md_2ep
+      artifact: inference_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Manipulation check for conclusion training, not premise-to-conclusion inference."
+    - id: adjacency_action
+      label: "Trained-stance adjacency action"
+      run_id: action_adjacency_2ep
+      artifact: action_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Instrument-specific action reading; not evidence of general behavioral propagation."
+    - id: pinned_action
+      label: "Pinned action"
+      run_id: action_pinned_2ep
+      artifact: action_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Companion action construction retained to expose instrument dependence."
+  bibliography_path: ""
+  references_bib: ""
+  review: true
+  compile_pdf: true
+
+hydra:
+  run:
+    dir: out/${experiment.id}/${run_id}

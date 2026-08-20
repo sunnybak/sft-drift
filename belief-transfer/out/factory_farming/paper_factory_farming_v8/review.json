@@ -1,0 +1,81 @@
+{
+  "approved": true,
+  "deterministic": false,
+  "findings": [
+    {
+      "claim_id": "c1",
+      "detail": "Rendered prose preserves exploratory, single-model/single-topic, seed-scope, and reading-specific checkpoint/run qualifications; the recorded configuration supports the stated scope.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c2",
+      "detail": "The rendered claim is a small matched-control belief contrast for seed 42, with the two-epoch CUDA and matched off-topic-control qualifications preserved.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c3",
+      "detail": "The rendered claim is a small matched-control belief contrast for seed 7, with matched two-epoch and replication qualifications preserved.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c4",
+      "detail": "The rendered claim is a moderate matched-control belief contrast for seed 42, and the separately recorded descriptive-inference manipulation-check qualification is preserved.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c5",
+      "detail": "The rendered claim is a moderate matched-control belief contrast for seed 7, with seed-matched machinery-control and matched-control-netting qualifications preserved.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c6",
+      "detail": "The rendered claim accurately describes the explicit-stance result as a recorded belief positive-control contrast; the prose states lower token dose, point-estimate-only status, and non-general-transfer scope.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c7",
+      "detail": "The rendered claim accurately describes the seed-7 explicit-stance result as a recorded belief positive-control contrast; no interval is inferred and non-general-transfer scope is preserved.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c8",
+      "detail": "The rendered claim is a small descriptive-inference contrast for seed 42, with separation from belief/action and absence of a prompted-intervention transfer ratio stated.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c9",
+      "detail": "The rendered claim is a small descriptive-inference contrast for seed 42, explicitly qualified as a conclusion-training manipulation check rather than premise-to-conclusion inference.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c10",
+      "detail": "The rendered claim correctly states near-zero adjacency action with a 95% interval including zero; instrument-specific, matched-control-netting, and diagnostic-raw-checkpoint qualifications are preserved.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c11",
+      "detail": "The rendered claim correctly states near-zero pinned action with a 95% interval excluding zero; companion-construction and instrument-dependence qualifications are preserved.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c12",
+      "detail": "Rendered prose consistently labels loss/memorization mis-ranking as a future testable prediction and explicitly disclaims a completed evaluation.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c13",
+      "detail": "This is rendered as an interpretation/methodology constraint: absorption is held-out premise specialization, not a belief measure; no unsupported empirical result is asserted.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c14",
+      "detail": "This is rendered as a methodology constraint requiring matched off-topic-control netting and disallowing causal-mediation claims; it is not presented as a completed empirical finding.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c15",
+      "detail": "Rendered methods and limitations preserve that two-seed replication applies only to declared seed-paired families and that single-seed/instrument-specific readings remain separately labeled.",
+      "status": "supported"
+    }
+  ]
+}

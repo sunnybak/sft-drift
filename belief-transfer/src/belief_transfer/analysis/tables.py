@@ -35,6 +35,8 @@ class ResultTable:
     source: TableSource
     caption: str = ""
     note: str = ""
+    evidence_refs: tuple[str, ...] = ()
+    cell_refs: tuple[tuple[tuple[str, ...], ...], ...] = ()
 
 
 def _estimate(entry: dict[str, Any], *, key: str) -> TableCell:
@@ -167,6 +169,40 @@ def transfer_table(
         source=TableSource(run_id=run_id, artifact=artifact),
         caption=f"Recorded {suite} contrast and sensitivity quantities.",
         note="Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.",
+    )
+
+
+def ladder_table(synthesis: dict[str, Any], *, source_run: str = "paper") -> ResultTable:
+    """The declared contribution ladder, in configuration order."""
+    rows: list[tuple[TableCell, ...]] = []
+    evidence_refs: list[str] = []
+    cell_refs: list[tuple[tuple[str, ...], ...]] = []
+    for fact in synthesis.get("facts", []):
+        value = float(fact["value"])
+        ci95 = fact.get("ci95")
+        reading = f"{value:+.4f}"
+        if ci95 is not None:
+            reading += f" [{float(ci95[0]):+.4f}, {float(ci95[1]):+.4f}]"
+        rows.append(
+            (
+                TableCell(str(fact["label"])),
+                TableCell(reading, bold=bool(fact.get("excludes_zero"))),
+                TableCell(str(fact.get("qualification") or "—")),
+            )
+        )
+        evidence_refs.extend(str(ref) for ref in fact.get("evidence_refs", []))
+        refs = tuple(str(ref) for ref in fact.get("evidence_refs", []))
+        cell_refs.append((refs, refs, refs))
+    return ResultTable(
+        id="contribution_ladder",
+        heading="Measured contribution ladder",
+        columns=("intervention", "net effect", "qualification"),
+        rows=tuple(rows),
+        source=TableSource(run_id=source_run, artifact="synthesis.json"),
+        caption="Declared contrasts selected or derived from immutable result summaries.",
+        note="Rows without intervals are deterministic point contrasts over recorded arm scores.",
+        evidence_refs=tuple(dict.fromkeys(evidence_refs)),
+        cell_refs=tuple(cell_refs),
     )
 
 

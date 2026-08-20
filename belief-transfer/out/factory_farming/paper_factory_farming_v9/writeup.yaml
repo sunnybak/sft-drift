@@ -1,0 +1,73 @@
+schema_version: 1
+experiment: factory_farming
+run_id: paper_factory_farming_v9
+stage: writeup
+artifacts:
+- out/factory_farming/paper_factory_farming_v9/evidence.json
+- out/factory_farming/paper_factory_farming_v9/synthesis.json
+- out/factory_farming/paper_factory_farming_v9/manuscript_plan.json
+- out/factory_farming/paper_factory_farming_v9/asset_briefs.json
+- out/factory_farming/paper_factory_farming_v9/draft.json
+- out/factory_farming/paper_factory_farming_v9/review.json
+- out/factory_farming/paper_factory_farming_v9/source_map.json
+- out/factory_farming/paper_factory_farming_v9/paper.tex
+- out/factory_farming/paper_factory_farming_v9/figures/trajectory.png
+- out/factory_farming/paper_factory_farming_v9/figures/polarity_trajectories.png
+- out/factory_farming/paper_factory_farming_v9/paper.pdf
+- out/factory_farming/paper_factory_farming_v9/compile.log
+- out/factory_farming/paper_factory_farming_v9/report.md
+config_sha: 1ac03f333381
+code_revision: 46aad61
+backend: null
+metrics:
+  writeup:
+    source_runs:
+    - matrix_v1_step24
+    - matrix_v1
+    - inference_v1_step24
+    - matrix_md_2ep
+    - inference_md_2ep
+    - matrix_s7_2ep
+    - inference_s7_2ep
+    - matrix_md_s7_2ep
+    - inference_md_s7_2ep
+    - canon_inference_2ep
+    - action_adjacency_2ep
+    - action_pinned_2ep
+    primary_reading: matrix_v1_step24
+    trajectory_run: matrix_v1
+    reviewed: true
+    compiled: true
+    claims: 18
+    assets: 2
+    authoring_model: gpt-5.6-sol
+    reviewer_model: gpt-5.6-luna
+last_run:
+  datapoints: 12
+  cost_usd: 0.0
+  calls:
+    cached: 13
+    uncached: 0
+  tokens:
+    cached:
+      input_tokens: 405908
+      output_tokens: 15144
+    uncached:
+      input_tokens: 0
+      output_tokens: 0
+  mean_latency_s: null
+lifetime:
+  runs: 2
+  datapoints: 24
+  cost_usd: 0.572317
+  calls:
+    cached: 15
+    uncached: 15
+  tokens:
+    cached:
+      input_tokens: 462557
+      output_tokens: 24346
+    uncached:
+      input_tokens: 654960
+      output_tokens: 9388
+  mean_latency_s: 8.145370047073811
