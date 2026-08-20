@@ -1,0 +1,98 @@
+# @package _global_
+#
+# configs/run/prose_probe_canon.yaml -- the open-text prose probe over the CANONICALIZED
+# arms, at the endpoint.
+#
+#   uv run python run.py +run=prose_probe_canon stage=choice_bench
+#   uv run python scripts/run_prose_probe.py +run=prose_probe_canon
+#
+# The question. On 2026-08-20 the prose probe established that `M±` cannot state its own
+# premises -- absorption never reaches retrieval, so the step missing under evidence-only
+# training is upstream of premise -> descriptive conclusion. It is
+# premise -> *retrievable* premise.
+#
+# `valsplit-ff-canon` isolates exactly that upstream half, and it already exists.
+# `scripts/run_render_test.py` rewrote every premise figure in the same 85 training pairs
+# to its polarity's spec range string, so each premise is a repeated verbatim string rather
+# than a paraphrased one. AGENTS.md records the result: this M+ "absorbs mortality (+0.72
+# net, and recites the figure in chat) yet fails every belief-flavoured per-arm reading".
+# So these arms have the property `M±` lacks.
+#
+# What the two outcomes mean, and neither is a wasted run:
+#
+#   canon arms flat in prose too  ->  retrievability is NOT the lever. The block sits at
+#                                    inference itself, whether or not the premise is
+#                                    available. Deepens H4 and removes one of H7's live
+#                                    candidates. It also makes these arms a FOURTH
+#                                    ground-truth cell -- absorbs heavily, premises
+#                                    retrievable, causes nothing -- which is a sharper
+#                                    false-positive case for H9 than `M±` is, because the
+#                                    absorption signal here is unambiguous.
+#   canon arms diverge            ->  retrievability WAS the bottleneck. Identifies the
+#                                    lever, and means the method arm needs redesigning
+#                                    before it is worth running, since a corpus stating the
+#                                    descriptive conclusion supplies retrievability and a
+#                                    stated conclusion at once and could not tell them
+#                                    apart.
+#
+# Why prose and not the descriptive-inference suite. These arms only have `final` on disk,
+# and on 2026-08-20 the inference suite was found to FAIL ITS OWN POSITIVE CONTROL at the
+# endpoint (explicit dI +0.0403 [-0.0228, +0.1049]), which voids an endpoint dI by the same
+# criterion that voided `inference_v1`. The prose probe is the opposite: flat at step 24,
+# licensed at the endpoint. So prose is the instrument that can be read where these
+# checkpoints live. A dI reading needs the two arms retrained with the 5-checkpoint
+# schedule first -- ~15 min each, no API spend -- and that is the follow-up, not this run.
+#
+# `Me±` is here as the positive control and is not optional: it is what establishes the
+# probe was awake in THIS invocation rather than in a previous one.
+#
+# DOSE IS NOT MATCHED and cannot be made so from what is on disk: canon 85 pairs / 55
+# steps, `m0-split-v2` 100 / 65, `Me±` 93 / 60. Nothing here is netted -- prose is not a
+# scalar -- so this is a caveat on eyeballing the controls rather than a contaminated
+# number, but absorption is dose-sensitive and any scalar follow-up must fix it first.
+#
+# `m0-split-v2` is the control because it is the one the canon arms' own efficacy run used
+# (`valsplit_canon_arms_efficacy`), and the canon corpus is single-form, which that control
+# matches. The form-matched control's prose is already on disk from `prose_probe_v2_step60`
+# if a cross-check is wanted.
+#
+# Arms keep the names `m_plus`/`m_minus` so this run's transcripts line up column-for-column
+# with `prose_probe_v2_step60`'s non-canon pair under the same prompts.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: prose_probe_canon
+stage: chat  # nearest kin; the script does the work, this is not a stage invocation
+
+related_runs:
+  prose_probe_v2_step60: >-
+    the same probe and prompts over the NON-canon evidence arms at the endpoint -- the comparison this run exists to make
+  valsplit_canon_arms_efficacy: >-
+    the forced-choice efficacy reading on these same canonicalized checkpoints, and the source of the m0-split-v2 control choice
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this script; the spec leaves it mandatory
+
+efficacy:
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: valsplit-ff-canon
+    - name: m_minus
+      polarity: negative
+      run_id: valsplit-ff-canon
+    - name: m0_plus
+      polarity: positive
+      run_id: m0-split-v2
+    - name: m0_minus
+      polarity: negative
+      run_id: m0-split-v2
+    - name: me_plus
+      polarity: positive
+      run_id: explicit_stance_v3_arms
+    - name: me_minus
+      polarity: negative
+      run_id: explicit_stance_v3_arms
