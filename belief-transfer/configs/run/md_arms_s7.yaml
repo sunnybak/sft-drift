@@ -1,0 +1,40 @@
+# @package _global_
+#
+# configs/run/md_arms_s7.yaml -- the Md arms at TRAINING SEED 7. Everything else
+# identical to md_arms. The load-bearing rung of H10 (conclusion->belief, dB +0.1106 at
+# seed 42) at a second seed; netted against the seed-7 control per rule 2.
+#
+#   uv run python run.py +run=md_arms_s7 stage=sft
+#
+# The arm H7 has pointed at since 2026-08-19, built 2026-08-20. It completes the ladder:
+#
+#   M0 (off-topic)  ->  M (premises)  ->  Md (descriptive conclusions)  ->  Me (stance)
+#
+# Md matches Me's form exactly (short first-person answers, same personas, same formats,
+# same dose) and differs in exactly one property: it states what the figures show and
+# takes no position. Token dose vs the document arms is therefore unmatched for the same
+# inherent reason Me's is (~7x fewer tokens; short answers ARE the intervention), and
+# matched to Me by construction -- which is the comparison that matters.
+#
+# Like every retrain on this 16GB box, run with +training.sft.gradient_checkpointing=true.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: descriptive_conclusion
+
+run_id: md_arms_s7
+stage: sft
+
+related_runs:
+  md_arms: the same arms at seed 42 -- the run this replicates
+  matrix_md_s7_2ep: the seed-7 reading of these checkpoints
+
+experiment:
+  dataset:
+    n_items: 132  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: desc_conclusion_v1
+  max_pairs: 93
+  sft:
+    seed: 7

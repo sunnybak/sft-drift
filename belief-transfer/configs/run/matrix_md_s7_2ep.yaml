@@ -1,0 +1,84 @@
+# @package _global_
+#
+# configs/run/matrix_md_s7_2ep.yaml -- the SEED-7 Md arms read at 2 epochs: belief and
+# action. H10's load-bearing rung (conclusion->belief) at a second seed; every trained
+# arm here is a seed-7 retrain, control included (rule 2). Number to reproduce:
+# Md dB NET +0.1106 [+0.0873, +0.1352] (seed 42).
+#
+#   uv run python run.py +run=matrix_md_s7_2ep stage=choice_bench   # the gate; FIRST
+#   uv run python run.py +run=matrix_md_s7_2ep stage=belief_eval
+#   uv run python run.py +run=matrix_md_s7_2ep stage=action_eval
+#
+# THE QUESTION this run answers is dB: does a stated descriptive conclusion propagate the
+# one remaining step to normative belief? The ladder's measured rungs at this step
+# (seed 42 / seed 7):
+#
+#   evidence dB NET   +0.0072 / +0.0080      <- premises alone: nothing
+#   explicit dB NET   +0.311  / +0.353       <- stance: everything
+#   Md dB NET         ???                     <- this run
+#
+# Md ~ evidence  => the stance itself is Me's active ingredient; handing the model the
+#                   descriptive conclusion does not reach the normative judgment.
+#                   (Deepens H4 to conclusion-installation without evaluation.)
+#   Md ~ explicit => the premise->conclusion step was the whole bottleneck; evaluation
+#                   follows automatically once the conclusion is stated. (H7 answered:
+#                   the lever is method, specifically conclusion-stating.)
+#   in between    => quantify against the ladder; either way H7 moves.
+#
+# Me+/Me- ride along as the in-run ceiling and positive control; the m0 pair is the
+# machinery term, re-derived in-run as always. All trained arms at their 2-epoch
+# checkpoint (checkpoint-24, 93-pair schedule).
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: matrix_md_s7_2ep
+stage: belief_eval
+
+related_runs:
+  md_arms_s7: the training run under test
+  matrix_md_2ep: the seed-42 reading this replicates
+  inference_md_s7_2ep: the dI half -- the manipulation check; read it before believing a flat dB here
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: md_arms_s7
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: md_arms_s7
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms_s7
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms_s7
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

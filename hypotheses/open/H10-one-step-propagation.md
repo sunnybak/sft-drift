@@ -40,14 +40,37 @@ the file flips.
 - 2026-08-20 `matrix_md_2ep` / `inference_md_2ep`: the ladder above, all cells measured
   at one step (2 epochs), one seed (42), all arms passing the gate.
 - 2026-08-20 `matrix_s7_2ep`: the zero-step and one-step readings replicate at seed 7 for
-  `M±`/`Me±`; `Md±` is untested at a second seed.
+  `M±`/`Me±`.
+- 2026-08-20 `matrix_md_s7_2ep` / `inference_md_s7_2ep`: **the load-bearing rung
+  replicates** — `Md ΔB NET +0.1311 [+0.1020, +0.1612]` (seed 42: +0.1106), `T_B` 0.20 vs
+  0.17, `ΔI +0.0471` vs +0.0506. Conclusion→belief conduction is two-for-two.
+- 2026-08-20, same runs: **the standing tension firmed up rather than dissolving.** `Md ΔA`
+  at seed 7: raw **+0.0084 [+0.0018, +0.0160] excludes zero**, net +0.0196 [+0.0105,
+  +0.0302], `T_A = 0.056` — two seeds at the same small size, raw now clearing zero. By the
+  session's own standard (two seeds agreeing upgrades a boundary call), Md moves action by
+  a real ~0.05 of prompted sensitivity. Two readings compatible with the data, unresolved:
+  (a) the falsifier's condition is being met at small size — two-step conduction exists and
+  the claim's "exactly one" is false in the strict form; or (b) **the action suite's
+  scenarios are themselves one step from descriptive conclusions** — a decision grounded in
+  "mortality is high" needs no normative belief as intermediary — in which case Md→action
+  is a one-step link and the claim stands, but "step" needs defining by content adjacency
+  rather than by the premise→conclusion→belief→action chain order. `Me±` moving belief 3×
+  more while moving action **not at all** (both seeds) favours (b): whatever reaches action
+  here, it is not belief. The falsifier is not edited; the deciding experiment is named
+  below.
 - H2's falsification (belief ↛ action) and H4 (premises ↛ conclusions) are the two
   no-conduction links, both multiply measured.
 
 ## What it predicts next
 
-1. **`Md±` at seed 7** — the cheapest test of the load-bearing rung (~10 min training,
-   $0; the corpus exists).
+1. ~~**`Md±` at seed 7**~~ — **done same day; replicated** (evidence above), and it
+   sharpened the file's real question: is the chain's order (premise→conclusion→belief→
+   action) the right adjacency structure, or is adjacency a property of content? The
+   deciding read: score `Me±` and `Md±` on action items **stratified by whether the
+   scenario's decision turns on a descriptive assessment or a normative one**. (b) predicts
+   Md moves the descriptive-turn items and Me moves neither; (a) predicts Md moves both
+   proportionally. The action suite's items carry `facet`/`scenario` fields — a
+   stratification is analysis, not a new eval.
 2. An **inference measure one step above `Md`'s content** — claims entailed by the
    conclusions but stated by neither corpus nor suite — to check whether the one-step
    rule holds within the descriptive level too, or only across the descriptive/normative

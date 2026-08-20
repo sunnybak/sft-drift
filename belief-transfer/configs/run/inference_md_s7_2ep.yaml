@@ -1,0 +1,70 @@
+# @package _global_
+#
+# configs/run/inference_md_s7_2ep.yaml -- the SEED-7 Md arms at 2 epochs:
+# descriptive-inference suite, the manipulation check for matrix_md_s7_2ep. Number to
+# reproduce: Md dI NET +0.0506 [+0.0238, +0.0808] (seed 42). This is Md's MANIPULATION CHECK, the analog of absorption for the evidence arms:
+# the corpus states descriptive conclusions, so dI must move or the training did not
+# install them and matrix_md_2ep's dB is uninterpretable (a flat dB with a flat dI is
+# "training failed", not "conclusions do not propagate").
+#
+#   uv run python run.py +run=inference_md_s7_2ep stage=inference_eval
+#
+# Ladder at this step: evidence dI +0.0121/+0.0122 (s42/s7), explicit +0.0620/+0.0752.
+# Md's conclusions are its trained content, so expect it at or above the explicit arms.
+# Caveat carried from the corpus design: the suite's items are held-out phrasings, but Md
+# trains on paraphrases of the same conclusions, so its dI reads as installed-conclusion
+# generalization, not premise->conclusion inference. That is what a manipulation check is.
+#
+# The gate for these checkpoints runs under matrix_md_2ep; do not double-run it.
+defaults:
+  - override /experiment: factory_farming
+
+run_id: inference_md_s7_2ep
+stage: inference_eval
+
+related_runs:
+  md_arms_s7: the training run under test
+  matrix_md_s7_2ep: the dB half; its gate run also covers these checkpoints
+  inference_md_2ep: the seed-42 reading this replicates
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: md_arms_s7
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: md_arms_s7
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms_s7
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms_s7
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_inference_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
