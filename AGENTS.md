@@ -937,6 +937,35 @@ Derive aggregate metrics from raw observations rather than storing only summary 
 
 Report uncertainty. Prefer bootstrap confidence intervals over unsupported point estimates.
 
+### The scale a netted difference is read on
+
+Added 2026-08-20b, and it applies to every `ΔB` / `ΔI` / `ΔA` this project reports.
+
+Every suite score is `p_positive`, a softmax over two option-label logprobs, and every
+headline quantity is a difference-in-differences of those probabilities. **SFT moves
+logits additively, so a constant training effect maps to a wildly different probability
+change depending on where the arm already sits on the sigmoid** — and netting subtracts two
+arms that need not sit at the same place. Probability-scale netting is therefore only well
+defined when the arms are at comparable points, which is an assumption, not a given.
+
+It bites in practice. Pooled over all five action instruments, the trained-stance
+conduction is `+0.0246 [+0.0130, +0.0361]` on probabilities and `+0.394 [+0.288, +0.515]`
+on log-odds — and the *sign* instability that motivated a whole line of experiments
+(`Me` reading significantly negative on the frozen suite's `pressure=none` stratum) exists
+only on the probability scale: read as `log(p/(1-p))`, no batch is significantly negative
+at either seed, robust to the clamp across 1e-2..1e-10.
+
+It also makes cross-suite comparison shakier than it looks. The belief suite is heavily
+saturated (base `p = 0.091`, 83% of items beyond 0.9/0.1); the action suite is not
+(`0.655`, 37%). "ΔB and ΔA in the same probability units" is doing less work than the
+phrasing suggests.
+
+So: **a large contrast survives the change of scale and a hair's-breadth one need not.**
+The belief→action dissociation was checked precisely because dissolving it would have
+mattered more than anything else, and it holds — 20x on log-odds, the same conclusion.
+Report both scales, or report one and say which, whenever a sign call is near the boundary.
+`scripts/pool_action.py --scale both` does this for the action instruments.
+
 ### Run reports
 
 Each pipeline-stage invocation writes a `data/results/<experiment_id>/<run_id>/<stage>.yaml` operational report -- a persisted `schemas.RunResult` (see `analysis.report`) -- once it finishes, separate from the belief/action score results this section otherwise describes. It records what the stage produced (datapoints, artifact paths), what produced it (`config_sha`, `code_revision`, `backend`), and what it cost (LLM cost/tokens/latency, split into cached vs. uncached). Cost is built from a `generation.context.RunContext`, threaded through every `generation.llm.Client` call the stage makes; cached calls always report $0 cost but keep their original token counts, so the report also shows what the run would have cost without the cache. Stage is the only separation a report needs -- whatever a stage's LLM calls were for (generating documents, judging them, or otherwise) all count toward that one stage's total, since a separate report file already exists per stage.
