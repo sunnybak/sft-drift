@@ -92,6 +92,6 @@ Restricted to arms passing `choice_bench`, netted against a matched control.
 
 - ~~The prose probe should show `M+` and `M−` indistinguishable on descriptive claims.~~
   **Predicted 2026-08-19, run 2026-08-20, held.** See the evidence lines above.
-- Topic is not the lever — see [H7](../open/H7-what-is-the-lever.md).
+- Topic is not the lever — see [H7](../supported/H7-what-is-the-lever.md).
 - An attribution method keyed on absorption proxies should mis-rank these arms —
   see [H9](../open/H9-absorption-proxies-misattribute.md).

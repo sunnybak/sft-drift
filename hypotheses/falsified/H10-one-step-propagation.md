@@ -9,7 +9,7 @@ better than what it claimed: conduction exists at every link at ~0.22–0.29 and
 multiplicatively*, so two-step products are visible exactly when the upstream effect is
 large enough (Md's 0.111 × 0.28 ≈ 0.031, observed) and invisible when it is not (premises'
 0.007 × 0.28 ≈ 0.002). The successor is
-[H11](../open/H11-conductance-chain.md). The same runs showed the frozen action suite's
+[H11](../falsified/H11-conductance-chain.md). The same runs showed the frozen action suite's
 belief→action null is item-determined — see [H2](H2-belief-propagates-to-action.md)'s
 2026-08-20 evidence line.
 **Bears on:** the paper's central mechanism claim, and what any follow-up corpus can be

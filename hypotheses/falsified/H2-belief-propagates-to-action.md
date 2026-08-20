@@ -31,7 +31,7 @@ action to follow — so the falsifier requires an arm with real belief movement.
   decisions are pinned by matched considerations and counter-pressure. The status stays
   falsified **for the frozen suite's construct**, which is what the 2026-08-18 evidence
   measured; the general claim is re-opened in quantitative form as
-  [H11](../open/H11-conductance-chain.md), and any restatement in the paper must carry
+  [H11](../falsified/H11-conductance-chain.md), and any restatement in the paper must carry
   the item-determination condition.
 
 ## What it predicts next

@@ -11,7 +11,7 @@ Qwen3-4B, of factory farming, or of seed 42.
 ## What would falsify it
 
 Any of: a second seed failing to reproduce `ΔB`/`ΔI`; a larger model showing propagation; a
-second topic showing propagation (which would also settle [H7](H7-what-is-the-lever.md)).
+second topic showing propagation (which would also settle [H7](../supported/H7-what-is-the-lever.md)).
 
 ## Evidence
 
@@ -38,6 +38,6 @@ second topic showing propagation (which would also settle [H7](H7-what-is-the-le
 
 ~~A second-seed replication is ~40 min of GPU and no API spend.~~ **Done 2026-08-20;
 replicated.** What remains is the expensive pair: a second topic (also settles
-[H7](H7-what-is-the-lever.md)'s falsifier) and a larger model. The 8B checkpoints in the
+[H7](../supported/H7-what-is-the-lever.md)'s falsifier) and a larger model. The 8B checkpoints in the
 repo's history (`explicit-control-8b*`, local-only on the Mac, no overlay) are the nearest
 starting point for the model leg.

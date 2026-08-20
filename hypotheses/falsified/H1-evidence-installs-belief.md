@@ -25,4 +25,4 @@ manipulation worked and belief did not move".
 
 ## What it predicts next
 
-Nothing further on this axis at this dose. See [H7](../open/H7-what-is-the-lever.md).
+Nothing further on this axis at this dose. See [H7](../supported/H7-what-is-the-lever.md).

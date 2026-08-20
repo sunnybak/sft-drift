@@ -5,7 +5,7 @@ specifically conclusion-stating: a corpus asserting the descriptive conclusions 
 stance) moves normative belief at `T_B ≈ 0.17` (`ΔB NET +0.1106 [+0.0873, +0.1352]`),
 15× the premises-only arms, at fixed topic, dose, and scale. Topic was never engaged,
 exactly as claimed. The successor question — why propagation runs exactly one asserted
-step — is [H10](../open/H10-one-step-propagation.md).
+step — is [H10](../falsified/H10-one-step-propagation.md).
 **Bears on:** what the next experiment is
 
 ## Claim
@@ -86,7 +86,7 @@ excluded, and this is the reason to keep it on the list.
   and reaches a third of its belief movement, so the stance's extra +0.20 is direct, not
   descriptive-content-mediated. And action stays flat even for `Md` (raw +0.0069
   straddling) — content propagates one asserted step and no further, which is
-  [H10](../open/H10-one-step-propagation.md).
+  [H10](../falsified/H10-one-step-propagation.md).
 - Never tested on **dose** or **scale** — moot for this claim now that method alone
   suffices, though the last-epoch retrieval emergence (above) remains a live observation
   for anyone raising epochs.
