@@ -1,0 +1,94 @@
+# @package _global_
+#
+# configs/run/sw_arms_v1_s7.yaml -- the SEED-7 replication of sw_arms_v1.
+#
+#   uv run python run.py +run=sw_arms_v1_s7 stage=sft +training.sft.gradient_checkpointing=true
+#   uv run python run.py +run=sw_arms_v1_s7 stage=choice_bench     # the gate; FIRST
+#   uv run python run.py +run=sw_arms_v1_s7 stage=belief_eval      # dB
+#   uv run python run.py +run=sw_arms_v1_s7 stage=inference_eval   # dI + the null-control facet
+#
+# TWO registered questions, one training run (see hypotheses/open/H18, falsifier dated
+# 2026-08-21d, written before this ran):
+#
+#   1. H18's decisive test. sw_arms_v1's inference null-control facet (`request_volume`,
+#      premises byte-identical across polarities) excluded zero at s42 -- robustly, on both
+#      scales and under leave-one-out. factory_farming's analogous facet straddles zero and
+#      FLIPS SIGN across seeds, which is what noise around zero looks like. If this facet
+#      also flips or straddles at s7, the s42 reading was small-n noise and H18 dissolves
+#      (which would also un-shelve sw_arms_v1's dI/dA). If it excludes zero again in the
+#      same direction, the drift is real and every off-topic-netted dI in this project is
+#      suspect, factory_farming's included.
+#   2. The second seed sw_arms_v1's belief-axis result needs. `dB NET +0.0076` (straddling
+#      zero, matching factory_farming's Mev to 2 sig figs) is currently "direction, one
+#      seed" on GOAL.md's quotability ladder; a second seed makes it a replicated
+#      direction, which is what H8's successor framing rests on.
+#
+# Rule 2: a seed change changes the control, so this nets against `m0_multiform_s7` --
+# already trained at the matching seed, so no control retraining is needed. Never net
+# against the seed-42 control, which would attribute seed variance to content.
+#
+# Corpus, dose, form and schedule are IDENTICAL to sw_arms_v1; the training seed is the
+# only variable. Read at checkpoint-24 for the same reason sw_arms_v1 is.
+#
+# absorption.unit_words is this topic's, not the farm default -- same as sw_arms_v1.
+
+defaults:
+  - override /experiment: software_architecture
+
+run_id: sw_arms_v1_s7
+stage: sft
+
+related_runs:
+  sw_arms_v1: the seed-42 run this replicates
+  sw_corpus_v1: the corpus both seeds train on
+  m0_multiform_s7: the off-topic control retrained at this seed
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+training:
+  corpus_from: sw_corpus_v1
+  max_pairs: 93  # dose-matched to sw_arms_v1 and to the control's gated yield
+  sft:
+    seed: 7
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: sw_arms_v1_s7
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: sw_arms_v1_s7
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+absorption:
+  corpus_run_id: sw_corpus_v1
+  val_pairs: 21
+  arms: *arms
+  unit_words: [percent, outages, minutes, days, deployments, requests]
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]
+
+transfer:
+  suites_from: sw_evalgen_v1
+  sensitivity_from: sw_evalgen_v1
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
