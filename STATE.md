@@ -102,6 +102,10 @@ Plus a reading caveat, not a void: **trajectory steps 48/60 are unusable for net
 
 ## Box / sync state
 
-RTX 5080, active. All seed-123 checkpoints/results and both trajectory sets synced via
-`data-push` 2026-08-21; git pushed through this session's commits; cache unchanged this
-session (no API calls). `open/` = H8, H9 (deliberately two).
+RTX 5080, active. Git pushed; cache pushed (unchanged content plus a 32kB delta).
+**`data-push` FAILED 2026-08-21: HF 403 "Private repository storage limit reached" on
+`sunnybak/sft-drift`.** The seed-123 checkpoints/results and both trajectory sets exist
+ONLY on this box until the quota is resolved (upgrade the plan, or prune old artifacts in
+the HF repo — user's call; candidates listed in `changelog/2026-08-21.md`). **Do not
+recycle/destroy this box before a successful `make data-push`.** `open/` = H8, H9
+(deliberately two).
