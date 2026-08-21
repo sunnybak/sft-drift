@@ -1,0 +1,42 @@
+# @package _global_
+#
+# configs/run/m0_multiform_s123.yaml -- the off-topic control arms (M0+/M0-) at TRAINING
+# SEED 123. Everything else identical to m0_multiform.
+#
+#   uv run python run.py +run=m0_multiform_s123 stage=sft
+#
+# Exists because sw_arms_v1_s123 needs a control at its own seed: rule 2 says the machinery
+# term is re-derived whenever the control changes, and a seed change changes the control.
+# Never net a seed-123 arm against the seed-42 or seed-7 control.
+#
+# gradient_checkpointing MUST be TRUE on a 16GB box: this corpus OOMs at gc=false (tried
+# 2026-08-21e -- "Tried to allocate 490.00 MiB ... 431.19 MiB is free"). That is why
+# m0_multiform_s7, the other control trained on this box, also used TRUE; only the s42
+# control ran at FALSE, on a larger box. So this replicate matches m0_multiform_s7's
+# schedule rather than m0_multiform's -- and gc already varies across the two existing
+# controls regardless, so it is not held constant across the replicates being compared.
+# Passed on the CLI:
+#   uv run python run.py +run=m0_multiform_s123 stage=sft +training.sft.gradient_checkpointing=true
+
+defaults:
+  - override /experiment: control_offtopic
+  - override /dataset: multiformat_offtopic
+
+run_id: m0_multiform_s123
+stage: sft
+
+related_runs:
+  m0_multiform: the same control at seed 42
+  m0_multiform_s7: the same control at seed 7
+  sw_arms_v1_s123: the arms this control nets
+
+experiment:
+  dataset:
+    n_items: 250  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: control_offtopic_multiform
+  use_corpus_user_turns: false
+  max_pairs: 93
+  sft:
+    seed: 123

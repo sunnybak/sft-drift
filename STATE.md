@@ -62,6 +62,16 @@ a 4B measurement).
 - **Scale before sign**: `H21` died because its interaction straddles zero on probability
   and REVERSES on log-odds. Report both scales whenever a sign call is near a boundary.
 - **Gate verdicts are dose-specific**: full-FT lr 2e-5 FAILS at 144 samples, PASSES at 93.
+- **`gradient_checkpointing` is NOT PERSISTED in any run artifact** (found 2026-08-21e).
+  It appears in neither `sft.yaml`, `train_summary.json`, nor recoverably in
+  `config.resolved.yaml` — that last file is rewritten by whichever stage ran LAST, so for a
+  run with eval stages it shows the eval-time value and never the sft CLI override. I read
+  it as if it were the sft setting, concluded `sw_arms_v1`/`_s7` trained at `false`, and
+  OOMed twice reproducing them. **Empirically both the sw arms and the off-topic multiform
+  control require `+training.sft.gradient_checkpointing=true` on a 16GB box**, so that is
+  what s42/s7 must have used. This is a real gap against GOAL.md's "artifacts a reader can
+  re-run": the flag changes float accumulation order and cannot be recovered from the
+  record. Pass it explicitly and write it in the run overlay's header until it is persisted.
 - **A config VALUE is not evidence of a rendering difference — compare the rendered
   `sft_dataset.jsonl`** (learned 2026-08-21e, by raising a false alarm and killing it at the
   eye-check). `sw_arms_v1`/`_s7` set `use_corpus_user_turns: true` (the schema default)
@@ -187,7 +197,12 @@ valid, only the LoRA contrast inside it is not.
 
 **Rented 96GB box ACTIVE and metered.** Git, data (results + validated) and cache all
 pushed. **Deliberately local-only and expendable: all full-FT and 8B checkpoints** (~60GB)
-— user decided results and configs are pushed, weights are not, and every run is
-deterministic and cheap to retrain (~1 min/arm at 4B). Nothing else is box-only.
+— user decided results and configs are pushed, weights are not, and every run is cheap to
+retrain (~1 min/arm at 4B). **"Deterministic" was part of that justification and is now in
+question** (2026-08-21e): a retrain with byte-identical data, the same seed, the same box
+and the same flag produced different adapter weights; cause unresolved (CUDA
+nondeterminism, or the `code_revision` gap). *Cheap* survives; bitwise reproducibility was
+never tested and the 8B/full-FT arms cannot be retrained here at all. Nothing else is
+box-only.
 The 55GB pre-existing checkpoint tree was pruned after file-by-file HF verification
 (`local_only=0`); `make data-pull` restores it.

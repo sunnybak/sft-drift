@@ -1,0 +1,110 @@
+# @package _global_
+#
+# configs/run/sw_arms_v1_s123.yaml -- the THIRD seed of sw_arms_v1. Corpus, dose, form,
+# schedule and read checkpoint identical to seeds 42 and 7; the training seed is the only
+# variable. Nets against m0_multiform_s123, retrained at the matching seed (rule 2).
+#
+#   uv run python run.py +run=sw_arms_v1_s123 stage=sft
+#   uv run python run.py +run=sw_arms_v1_s123 stage=choice_bench     # the gate; FIRST
+#   uv run python run.py +run=sw_arms_v1_s123 stage=belief_eval
+#   uv run python run.py +run=sw_arms_v1_s123 stage=inference_eval
+#
+# WHY A THIRD SEED, AND WHAT IT DECIDES. This is a HARDEN cycle, which is what GOAL.md
+# prescribes after successive deaths on one axis (H23 and H24 both died 2026-08-21e). Three
+# separate readings ride on it, and all three currently sit at two seeds:
+#
+# REGISTERED FALSIFIERS, written before this runs (GOAL.md step 2):
+#
+#  1. THE HALO RATIO (null-facet netted / all-facet netted), the quantity H25 is about.
+#     s42 = 0.68x [+0.10,+1.46], s7 = 1.00x [+0.00,+2.34]. The two seeds already disagree,
+#     which is why H25's power simulation says a third seed is needed ALONGSIDE more items
+#     rather than instead of them.
+#     - The ratio is NOT A STABLE QUANTITY, and H25's registered evalgen expansion should
+#       NOT be paid for, if s123 lands outside [0.4, 1.3] or the three values span >2x.
+#       Then the estimator is wrong and a bigger item bank will not rescue it -- which is
+#       exactly H25's own "most embarrassing" branch, reached one step earlier and for free.
+#     - The ratio IS a quantity worth expanding if s123 lands inside that band.
+#
+#  2. recovery_time, THE PROJECT'S ONLY SURVIVING dI SIGNAL. Top-ranked facet at both seeds
+#     (+0.0724 / +0.0870), exceeding the null facet at s7. It also carries the suite's worst
+#     position bias (base variant_gap 0.6953 against D4's documented 0.51 ceiling), so it is
+#     unresolved rather than clean.
+#     - IT DIES if s123 does not rank it top, or flips its sign. Then the project has NO
+#       reportable dI on either topic and the descriptive-inference suite leaves the paper.
+#     - IT REACHES BAND if top-ranked at 3/3 seeds with no overlap against the null facet.
+#
+#  3. THE SECOND TOPIC'S BELIEF AXIS. dB NET log-odds +0.1103 (s42) / +0.1283 (s7), which
+#     STATE.md records as a correction to an earlier "straddles zero" reading. A third seed
+#     inside [+0.09, +0.15] earns a band on GOAL.md's quotability ladder; a value outside it
+#     keeps this at replicated-direction and nothing may be quoted as a magnitude.
+#
+# EXPECTED, named so it cannot be claimed post hoc: (1) is the one I expect to fail -- the
+# two existing ratios differ by 47% and n=6 is tiny. (2) and (3) I expect to hold.
+#
+# Pre-flight check against AGENTS.md (GOAL.md step 2): the halo must be read as a RATIO with
+# an interval, never a raw magnitude (2026-08-21e); dI must be read PER FACET against the
+# null facet, never as an all-facet mean (2026-08-21e); the control is retrained at this
+# seed so rule 2 is satisfied; and use_corpus_user_turns is a no-op for this corpus (all 300
+# documents carry no generated exchange), so the true/false config difference against the
+# control does not render differently -- verified by md5 on 2026-08-21e.
+
+defaults:
+  - override /experiment: software_architecture
+
+run_id: sw_arms_v1_s123
+stage: sft
+
+related_runs:
+  sw_arms_v1: the seed-42 run this replicates
+  sw_corpus_v1: the corpus both seeds train on
+  m0_multiform_s123: the off-topic control retrained at this seed
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+training:
+  corpus_from: sw_corpus_v1
+  max_pairs: 93  # dose-matched to sw_arms_v1 and to the control's gated yield
+  sft:
+    seed: 123
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: sw_arms_v1_s123
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: sw_arms_v1_s123
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform_s123
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform_s123
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+absorption:
+  corpus_run_id: sw_corpus_v1
+  val_pairs: 21
+  arms: *arms
+  unit_words: [percent, outages, minutes, days, deployments, requests]
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]
+
+transfer:
+  suites_from: sw_evalgen_v1
+  sensitivity_from: sw_evalgen_v1
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
