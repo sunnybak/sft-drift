@@ -1,6 +1,11 @@
 # H17: The form effects replicate in DIRECTION at two seeds; their magnitudes do not
 
-**Status:** open — written 2026-08-21, succeeding
+**Status:** FALSIFIED — written 2026-08-21, resolved 2026-08-21 the same day, by its own
+registered falsifier 2 (the branch the file itself called "the most likely resolution").
+Part 1 (directions are seed-robust) was CONFIRMED at the third seed; part 2's universal
+"nothing quantitative is seed-robust" is what died: seed 123 shows magnitudes ARE
+cell-stable everywhere except the short-sparse corner. See "Resolution" at the bottom.
+Originally: succeeding
 [H16](../falsified/H16-installation-times-conversion.md) and, before it,
 [H15](../falsified/H15-two-factor-brevity.md). Both died to their own registered falsifiers
 within a day. This file is deliberately the weakest claim the evidence actually supports,
@@ -81,3 +86,42 @@ mechanism hypotheses were built on magnitudes that turned out to be seed-depende
 4. The attribution use of these cells is **unaffected** — `Ms3p` vs `Mss` differ in causal
    effect at both seeds (2.35x and 5.11x) with identical length, voice, and premise spec, so
    they remain the sharpest available test of whether a method reads effect or text.
+
+## Resolution (2026-08-21, seed 123: `ms3p_arms_s123`, `ms_sparse_arms_s123`,
+## `mld_arms_s123`, control `ms0_arms_s123`; all arms PASS `choice_bench` 0.81–0.89)
+
+**Falsifier 2 fired, in exactly the direction the file predicted.** The three-seed table
+(`dB NET`, netted per seed against that seed's retrained control, checkpoint-24):
+
+| cell | s42 | s7 | s123 | max/min |
+| --- | --- | --- | --- | --- |
+| `Ms3p` short dense | +0.1190 | +0.1215 | +0.1354 [+0.1012, +0.1716] | 1.14x ✓ |
+| `Mld` long dense | +0.0547 | +0.0515 | +0.0581 [+0.0363, +0.0813] | 1.13x ✓ |
+| `Mev` long sparse | +0.0072 | +0.0080 | not rerun (stable at 2 seeds) | 1.11x (2 seeds) |
+| `Mss` short sparse | +0.0506 | +0.0238 | **+0.0170 [+0.0013, +0.0338]** | **2.98x ✗** |
+
+- **Part 1 held** at every contrast measurable at three seeds: denser stronger at short
+  length (7.96x at s123), shorter stronger at dense (2.33x), and the `dB/dI` density-band
+  separation held (sparse ≤1.31: 1.31/0.61/0.86; dense ≥2.00: 2.95/3.64/4.44 and
+  2.00/2.05/3.38 — the last a point estimate only, `Mld`'s s123 `dI` straddles zero).
+- **Part 2 died**: `Ms3p` and `Mld` are magnitude-stable across three seeds (≤14% spread),
+  and the length-at-dense ratio `Ms3p`/`Mld` is strikingly stable — **2.18x / 2.36x /
+  2.33x**. "Denser is worth Nx" remains unquotable, but only because `Mss` is its
+  denominator.
+- `Mss`'s s123 sign call sits near the boundary and was read on both scales per the
+  standing rule: net +0.0170 [+0.0013, +0.0338] on probability, +0.171 [+0.036, +0.304] on
+  log-odds under the registered convention (per-variant transform, eps 1e-6) — but the
+  exclusion flips under a 1e-2 clamp (which winsorizes 23.5% of rows) or an item-level
+  transform. `Mss` is quotable as replicated direction, nothing more.
+- **Effect size does not explain the instability**: `Mev`'s effect is smaller than `Mss`'s
+  at every seed and replicates at 1.11x. Whatever makes short-sparse noisy, it is not
+  simply proximity to the noise floor — noted, and deliberately NOT opened as a mechanism
+  hypothesis, per this file's own prediction 2.
+
+**Consequences.** Quotable per GOAL.md's ladder: `Ms3p` [+0.119, +0.135] and `Mld`
+[+0.0515, +0.0581] at band level over three seeds; `Mev` [+0.0072, +0.0080] at two;
+`Ms3p`/`Mld` ≈ 2.2–2.4x approaches magnitude level; `Mss` direction only. The headline
+corners (short-dense, long-sparse) are unchanged. No successor hypothesis opened: the
+surviving statement is a result (recorded in STATE.md and AGENTS.md), not a claim needing
+a falsifier, and `open/` deliberately drops to two (H8, H9) — the portfolio's named gap is
+H8, which the next widen cycle should address.

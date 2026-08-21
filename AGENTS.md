@@ -682,20 +682,32 @@ rather than a quietly adjusted threshold.
 > | **long** (~700w) | **+0.0072** | +0.0547 |
 >
 >
-> **Replicated at seed 7, and the replication is the important part.** Three of four cells
-> hold to within 11% — short dense +0.1190/+0.1215, long dense +0.0547/+0.0515, long sparse
-> +0.0072/+0.0080 — and **`Mss` (short sparse) moves 2.13x**, +0.0506 to +0.0238.
+> **Replicated at seeds 7 AND 123 (2026-08-21), and the third seed localized the
+> instability.** `dB NET` by seed (42 / 7 / 123), each netted against that seed's retrained
+> control: short dense +0.1190/+0.1215/+0.1354, long dense +0.0547/+0.0515/+0.0581, long
+> sparse +0.0072/+0.0080/(not rerun; stable at two seeds) — and **`Mss` (short sparse)
+> scatters 2.98x**: +0.0506/+0.0238/+0.0170.
 >
-> - **What is seed-robust is DIRECTIONAL only**: denser is stronger at both lengths and both
->   seeds; shorter is stronger at both densities and both seeds; `dB/dI` separates by density
->   band (≤1.31 sparse, ≥2.00 dense) with no overlap.
-> - **No magnitude is seed-robust**, including whether the variables interact — the
->   interaction is strong at seed 42 (density 2.35x short vs 7.60x long) and weak at seed 7
->   (5.11x vs 6.44x). **Do not quote "density is worth Nx".**
-> - Two mechanism hypotheses were built on these magnitudes and both were falsified by
->   their own registered tests within a day (`H15`, `H16`). See
->   `hypotheses/open/H17-form-effects-replicate-magnitudes-do-not.md`, which is deliberately
->   the weakest claim the data supports; the next test is a third seed.
+> - **Magnitudes are cell-stable everywhere EXCEPT the short-sparse corner** (H17,
+>   falsified by its own registered falsifier 2, in the direction it predicted): `Ms3p` and
+>   `Mld` hold to ≤14% across three seeds, so they are quotable as bands — [+0.119, +0.135]
+>   and [+0.0515, +0.0581]. `Mss` is quotable as direction only, and its s123 sign call is
+>   boundary-fragile (net CI low edge +0.0013 on probability; excludes zero on log-odds
+>   under the registered convention but not under a 1e-2 clamp or item-level transform).
+> - **The length ratio at high density is the stable quantity: `Ms3p`/`Mld` = 2.18x / 2.36x
+>   / 2.33x** across three seeds. **"Density is worth Nx" remains unquotable** — its
+>   denominator is `Mss` (2.35x/5.11x/7.96x at short length).
+> - `dB/dI` still separates by density band at all three seeds (sparse ≤1.31:
+>   1.31/0.61/0.86; dense ≥2.00: 2.95/3.64/4.44 and 2.00/2.05/3.38, the last a point
+>   estimate — `Mld`'s s123 `dI` straddles zero).
+> - **Effect size does not explain the instability**: `Mev` is smaller than `Mss` at every
+>   seed and replicates at 1.11x.
+> - Two mechanism hypotheses were built on the two-seed magnitudes and both were falsified
+>   by their own registered tests within a day (`H15`, `H16`); their successor `H17`
+>   ("nothing quantitative is seed-robust") was itself falsified by seed 123 in the
+>   optimistic direction. See
+>   `hypotheses/falsified/H17-form-effects-replicate-magnitudes-do-not.md` for the
+>   three-seed table and both-scales boundary reading.
 > - **Premise COUNT is not the variable**: `Mev` carries ~5 figures to the sparse short
 >   corpus's ~1 and has both lower `dI` and lower `dB`.
 > - **Withdrawn, and recorded because it was load-bearing for a day**: "2.35 x 7.03 = 16.5,
