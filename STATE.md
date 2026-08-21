@@ -74,6 +74,8 @@ TracIn ranks `Ms0` (null by construction) FIRST of six, both polarities, both ch
 | `sw_evalgen_probe` | H8's R5 headroom probe: 12 belief items (9 gated), base sensitivity under none/b_plus/b_minus. R5 PASSES (6/9 in-band), `S_B +0.638`, with the position-bias caveat below |
 | `sw_evalgen_v1` | H8's FULL belief (38/48 kept) + inference (42/48 kept) suites, promoted from the probe. R5 replicates (58%/55% in-band), `S_B +0.669` excludes zero. Surfaced base's own large D7 acquiescence on this topic (+0.39/+0.42, excludes zero) — revises the probe's "leans pro" read, see H8 |
 | `sw_evalgen_action_v1` | H8's action suite (29/60 kept), first end-to-end exercise of R2. Pressure direction confirmed correct by eye (favors monolith under strong, never microservices); `S_A +0.682` excludes zero, stronger than factory_farming's +0.350, low position-bias (variant_gap 0.05-0.27) |
+| `sw_corpus_v1` | H8's second-topic training corpus, 150 items -> 112/150 gated pairs (75%), 0 checks below threshold, eye-read clean |
+| `sw_arms_v1` | H8's second-topic M+/M- trained on `sw_corpus_v1` (93 pairs, checkpoint-24), netted against `m0_multiform`. **dB NET +0.0076 straddles zero** — matches factory_farming's `Mev` to 2 sig figs, falsifier did not fire, SUPPORTS H8. **dI NET +0.0277 excludes zero, BUT its own null-control facet also excludes zero (+0.0188)** — per AGENTS.md's own rule this invalidates the dI reading; dA (+0.0220, excludes zero) inherits the same suspicion. See H8 for the full writeup and the on-topic-drift gap this surfaced |
 
 Earlier live run ids: see `changelog/2026-08-20b.md` table (unchanged).
 
@@ -120,17 +122,19 @@ Plus a reading caveat, not a void: **trajectory steps 48/60 are unusable for net
 
 ## Next, in order
 
-1. **H8's second topic**, ~~pilot~~ ~~R5 headroom probe~~ ~~belief+inference evalgen~~
-   ~~action evalgen~~ **all three suites now generated, eye-read, and validated**
-   (`software_arch_pilot` 5/8 kept; `sw_evalgen_probe` 6/9 in-band; `sw_evalgen_v1`
-   38/48 + 42/48 kept, R5 replicates 58%/55% in-band, `S_B +0.669` excludes zero;
-   `sw_evalgen_action_v1` 29/60 kept, R2 confirmed correct by eye, `S_A +0.682` excludes
-   zero — caveats above, all recorded in H8). Remaining, in order: **the corpus at
-   scale** (matched to factory_farming's structure — D+/D- pairs, matched control,
-   leakage/matchedness/recoverability gates), then SFT training at matched dose/form,
-   then a read against these now-validated suites. Control CHECKPOINTS reusable at
-   matched dose/form; machinery re-derived per rule 2 once the control is retrained on
-   this topic's off-topic content.
+1. **H8's second topic**: ~~pilot~~ ~~R5 probe~~ ~~evalgen (all 3 suites)~~ ~~corpus~~
+   ~~training + belief/inference/action reads~~ **all done this session.** Belief-axis
+   result: `dB NET +0.0076` straddles zero, matches `Mev` to 2 sig figs — **supports
+   H8's generality claim**, but it is one seed, one arm (quotability ladder: "direction"
+   only). Inference/action reads are BLOCKED, not negative: the inference suite's own
+   null control failed on this arm (+0.0188 excludes zero when it should be ~0), which
+   invalidates dI/dA as evidence either way per AGENTS.md's own rule. **Next, in order:
+   (a) diagnose the on-topic-drift gap** (why did the null control fail here but not
+   for factory_farming's `efficiency` facet? — needs a within-topic inert control or a
+   second null-control facet before dI/dA can be trusted for this topic at all),
+   **(b) a second seed of `sw_arms_v1`** if the belief-axis null is to be quotable past
+   "direction, one seed," **(c) the 8B model leg** (`explicit-control-8b*`, Mac-only,
+   no overlay, nearest starting point).
    ~~Multi-checkpoint TracIn~~ **done 2026-08-21, resolved H9 (supported).**
 2. **Second training seed for the mixture** (hardening of contribution 3).
 3. **Paper re-tabulation** from v9 with LITERATURE.md citations and the three-seed bands;

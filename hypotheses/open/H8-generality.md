@@ -213,10 +213,80 @@ topic-specific, not general, which is exactly H8's registered falsifier
 supports H8's generality claim for this leg. Per rule 3, gate first — an arm that fails
 `choice_bench` produces nothing interpretable either way.
 
+## 2026-08-21, `sw_arms_v1`: the belief axis replicates the null; the inference suite's own null control fails, and that changes what can be claimed
+
+M+/M- trained on `sw_corpus_v1` (93 pairs, frozen 5-epoch schedule, read at
+checkpoint-24 per the standing rule), netted against `m0_multiform` (rescored, not
+retrained). All five arms (base, M+, M-, M0+, M0-) pass `choice_bench` at checkpoint-24.
+Absorption/efficacy: both arms show real per-dimension specialization toward their own
+corpus on most facts (reliability, delivery speed, most of team productivity all
+`_net` EXCLUDES ZERO in the expected direction) — training landed. Per rule 10, only
+this gate was tuned against; nothing below was.
+
+**Belief: the falsifier's primary clause did not fire.** `dB (NET) = +0.0076
+[-0.0008, +0.0159]`, STRADDLES ZERO — the same magnitude as factory_farming's long-form
+`Mev` (`+0.0072` to `+0.0080`), to two significant figures. This is exactly the
+replicated-null pattern H8 predicts, on a second topic. **This is real evidence FOR
+H8's generality claim on the axis it was registered against.**
+
+**Inference: excludes zero, but its own null control ALSO excludes zero — the reading
+is uninterpretable per AGENTS.md's own rule, not evidence either way.** `dI (NET) =
++0.0277 [+0.0158, +0.0413]`, EXCLUDES ZERO — nearly 4x factory_farming's `Mev` `ΔI`
+(`+0.0121`), which would ordinarily read as "descriptive inference moves, is-ought
+localization replicates" (interesting, since H3's version of that claim was FALSIFIED
+for factory_farming — nothing was inferred there at all, H4 rendering-only). **Before
+accepting that, I checked the null-control facet** (`request_volume`/traffic volume,
+premises byte-identical across polarities by design) **the way AGENTS.md requires**
+("Its ΔI must come out ≈0 by construction; if it does not, the instrument is reading
+something other than the premises and nothing else in the table is safe"): computed
+per-dimension with the same paired-bootstrap method, **it does NOT come out ≈0** —
+`traffic volume net dI = +0.0188 [+0.0051, +0.0323]`, EXCLUDES ZERO, comparable in
+size to two of the four real content dimensions (infrastructure cost +0.0133, team
+productivity +0.0150). Per AGENTS.md's own stated consequence, **this invalidates
+reading `dI` as evidence of genuine descriptive-premise inference on this topic/arm** —
+what moved could be generic on-topic-but-content-blind drift that the OFF-TOPIC m0
+control cannot net out even in principle (a structurally different confound from the
+already-known "any-SFT machinery" the off-topic control does handle).
+
+**Action shows the same shape and inherits the same suspicion.** `dA (NET) = +0.0220
+[+0.0091, +0.0388]`, EXCLUDES ZERO, `T_A = 0.032` (~3% of the prompted `S_A = +0.682` —
+smaller than H12's already-small `~6%` factory_farming conductance figure). The action
+suite has no analogous null-control facet to check directly, but the coincidence with
+`dI`'s contaminated pattern (both exclude zero at small-but-nonzero magnitude, in a run
+where the one facet that SHOULD be null failed to be) means **this should not be read
+as "action moves without belief" — a positive, interesting finding — until a control
+exists that can rule out generic on-topic drift.** Recorded as suspect, not as
+propagation.
+
+**What this means for H8 and for the project's instruments, stated plainly:**
+- The registered falsifier's primary test (dB vs `Mev`) did NOT fire, and replicated
+  the exact null-result magnitude. **This is genuine, clean support for H8's
+  generality claim on a second topic.**
+- The inference/action readings are NOT usable as further evidence either way this
+  run — not because they're inconvenient, but because the instrument's own internal
+  check (the null-control facet) failed, exactly the failure mode AGENTS.md's rule 4
+  exists to catch. Reporting `dI +0.0277 EXCLUDES ZERO` without this check would have
+  been the "confirmation is where circular arguments hide" trap (rule 6) in its purest
+  form — a plausible, interesting, WRONG number that fit a good story (is-ought
+  localization on a second topic).
+- **Methodological gap surfaced, worth carrying into the next session**: this project's
+  off-topic control (`m0`) nets "any-SFT machinery" but cannot net "on-topic,
+  content-blind drift" — a category that apparently exists for this topic and did not
+  show up for factory_farming (whose `efficiency` null control came out clean,
+  `+0.0211` straddling zero). Whether that is a property of this topic, this corpus, or
+  something else is untested. A trained arm on this topic's OWN off-topic-within-topic
+  control (impossible by definition) is not the fix; what would help is a second
+  belief-inert facet check or a within-topic control corpus that asserts nothing.
+
 ## What it predicts next
 
 ~~A second-seed replication is ~40 min of GPU and no API spend.~~ **Done 2026-08-20;
-replicated.** What remains is the expensive pair: a second topic (also settles
-[H7](../supported/H7-what-is-the-lever.md)'s falsifier) and a larger model. The 8B checkpoints in the
-repo's history (`explicit-control-8b*`, local-only on the Mac, no overlay) are the nearest
-starting point for the model leg.
+replicated.** ~~A second topic~~ **`sw_arms_v1` done 2026-08-21 — the belief-axis leg
+replicates the null and supports H8; the inference/action legs are inconclusive
+pending a fix to the null-control gap above.** What remains: diagnosing the
+on-topic-drift gap (a second facet check or a within-topic inert control would let the
+inference/action readings actually be trusted one way or the other), a seed replicate
+of `sw_arms_v1` on this topic if the belief-axis result is to be quotable past
+"direction, one seed" on the quotability ladder, and the larger-model leg (the 8B
+checkpoints in the repo's history, `explicit-control-8b*`, local-only on the Mac, no
+overlay, are the nearest starting point).
