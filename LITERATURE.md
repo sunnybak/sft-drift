@@ -192,10 +192,11 @@ direction — one confound, two ends, per-token vs per-sequence norm conventions
 | 17 | Tell, don't show — Meinke & Evans | arXiv:2312.07779 | C2 |
 | 18 | Small edits, large models — Brazilek, Navas, Gnauck | arXiv:2606.24890 | C1, C3 (MAGIC contrast) |
 | 19 | FTRACE — Akyürek, Bolukbasi, Liu, Xiong, Tenney, Andreas, Guu | EMNLP 2022 Findings, arXiv:2205.11482 | C1, C3 |
+| 20 | Studying LLM Generalization with Influence Functions — Grosse, Bae, Anil, et al. | arXiv:2308.03296 | C1, C3 (scale->abstraction; H24) |
 
 Adjacent background (not deep-verified, cite as context): TracIn (Pruthi et al. 2020 —
 **multi-checkpoint in the original**, our single-checkpoint form must say so), TRAK/
-datamodels (LDS), Grosse et al. 2023 (influence functions for LLMs), Basu et al. (IF
+datamodels (LDS), Basu et al. (IF
 fragility), LIMA, URIAL, Berglund et al. (out-of-context), Ovadia et al. (FT vs RAG),
 EntiGraph, Chang et al. (factual acquisition during pretraining), DRIFT (arXiv:2606.18307,
 gradient-norm bias).

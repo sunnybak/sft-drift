@@ -5,9 +5,15 @@ not appended** — the changelog is the history of how this changed. Kept to rou
 detail lives in `changelog/2026-08-21c.md` and in each hypothesis file's own
 `Current position`, not duplicated here.
 
-Last refreshed: end of 2026-08-21c, a long session on a **rented 96GB RTX PRO 6000
-Blackwell** that ran three cycles: `H19` resolved (full-FT vs LoRA), `H20`+`H21` opened and
-both falsified, and **`H8` falsified by its 8B model leg — which changed the headline**.
+Last refreshed: **2026-08-21e**, on the 16GB box, a cycle that spent no money: two
+registered falsifiers run free on data already on disk, **both fired**. `H23` and `H24` are
+falsified; `H25` opened. The cycle's real output is a **measurement correction** — the
+halo ratio that `H3`/`H18`/`H23` and `AGENTS.md` all quoted has an interval that spans zero
+and was never a measurable quantity.
+
+Prior session (2026-08-21c, rented 96GB RTX PRO 6000 Blackwell): `H19` resolved (full-FT vs
+LoRA), `H20`+`H21` opened and both falsified, and **`H8` falsified by its 8B model leg —
+which changed the headline**.
 
 ---
 
@@ -38,6 +44,13 @@ a 4B measurement).
    not a capacity cliff — on log-odds LoRA's evidence `dB` also excludes zero. Largest
    evidence-only belief effect on record is full-FT at lr 2e-5: **+0.1042 [+0.0707,
    +0.1418]**, all arms gated.
+3. **Per-item scale effect, and it is a replication, not a finding of ours** (`H24`,
+   2026-08-21e): 8B's per-item `dB` is about **half as dispersed relative to its mean** as
+   4B's on the explicit corpus (0.50/0.57 vs 0.91/0.89 probability; 0.65/0.58 vs 1.02/1.04
+   log-odds), two seeds, robust to the base-extremity control and to a noisier 8B control at
+   s7. Report as a behavioural replication of Grosse et al. (arXiv:2308.03296). It does NOT
+   hold on the evidence corpus, and cross-seed per-item rho is ~0.95 at BOTH models, so
+   nothing about representational coherence follows.
 
 ## Traps that cost time this session — read before designing a run
 
@@ -49,21 +62,33 @@ a 4B measurement).
 - **Scale before sign**: `H21` died because its interaction straddles zero on probability
   and REVERSES on log-odds. Report both scales whenever a sign call is near a boundary.
 - **Gate verdicts are dose-specific**: full-FT lr 2e-5 FAILS at 144 samples, PASSES at 93.
+- **A RATIO whose denominator straddles zero is not a number** — it bit twice on
+  2026-08-21e alone: the halo ratio on factory_farming ([−1.46, +6.55]) and 4B's per-item
+  action dispersion (29x, 69x, because `dA` ~ 0). Compute the interval before quoting any
+  ratio, and prefer a difference when the denominator is small.
 - **Qwen3-8B scores LOWER than 4B on the gate** (0.750 vs 0.812) and has its own calibrated
   `THRESHOLDS` entry now. Never reuse the 4B bar for another model.
 
 ## Hypotheses
 
 `open/` = **H22** (8B conduction belief-mediated or direct — rival disfavoured, test
-underpowered) and **H23** (the valence halo contaminates the null control, and its size is
-topic-dependent). 2 of 3 slots. **H18 → `falsified/` 2026-08-21d**, hours after being
-marked supported: its observation replicates but its claim was incompatible with its own
-measurement (a polarity-independent shift cancels in a netted polarity contrast). H23
-carries what survives. `resource_constrained/` is **EMPTY**.
+underpowered) and **H25** (the descriptive-inference suite cannot measure its own null
+control; `ΔI` on evidence-only arms may carry no premise-specific signal at all). **2 of 3
+slots, deliberately — a third would be padding.** `resource_constrained/` is **EMPTY**.
 
-Falsified this session: `H8`, `H20`, `H21`. Supported: `H19`. **No third hypothesis was
-opened on the LoRA-vs-full-FT axis** — `GOAL.md`'s rule after two successive deaths on one
-axis is to harden, not theorize again.
+**Falsified 2026-08-21e, both by their own registered falsifiers, both free:**
+- **H23** (valence halo is topic-dependent) — its pre-registered spec-only measure comes out
+  **+1.00 for both corpora**. Every polarity-differing dimension in every experiment spec in
+  this project puts the favourable value on the positive polarity, so valence coherence is
+  **degenerate by construction** and can order nothing. Successor: **H25**.
+- **H24** (coherence explains the scale dissociation) — opened and killed the same hour.
+  Cross-seed per-item rank correlation is **~0.95 at BOTH models**, so the reproducibility
+  half shows no difference. **No successor opened**, per GOAL.md's harden-don't-theorize
+  rule after successive deaths.
+
+**This is the fourth consecutive death on the halo thread** (H3 → H18 → H23, plus the
+AGENTS.md amendment written for H18). The thread is now an instrument question (H25), not a
+model question, which is what the rule asks for.
 
 ## Live run ids added 2026-08-21c
 
@@ -96,12 +121,18 @@ valid, only the LoRA contrast inside it is not.
 
 - `changelog/2026-08-19c.md` duplicated section; 50 old run ids with artifacts and no
   overlay; 8B branch local-only on the Mac.
-- **`sw_arms_v1`'s `dI` and `dA` are shelved at both seeds** — its null-control facet
-  reads `+0.0221` seed-averaged (6/6 per-item sign agreement), i.e. a stance/valence halo
-  from the polarity-differing premises spilling onto a facet whose own premises are
-  identical. factory_farming's evidence arms show none (`+0.0040`, 4/6). **The fix is NOT
-  a within-topic inert control** (no polarity contrast, so subtracting it removes
-  nothing); H23 tests whether halo size is predictable from a corpus's valence coherence.
+- **`ΔI` is now shelved for BOTH topics, not just `software_architecture`** (changed
+  2026-08-21e). The halo ratio was computed with intervals for the first time and
+  factory_farming's are **unbounded**: evidence 1.14x [−1.46, +6.55], explicit 2.37x
+  [−0.21, +5.96]. Its straddling point estimate read as reassuring and was not. Only
+  `software_architecture`'s are bounded (0.68x [+0.10, +1.46]; 1.00x [+0.00, +2.34]) — and
+  **every arm's CI contains both the clean and the fully-contaminated end**, so the suite
+  cannot currently tell them apart. **The ratio scale runs 0 = clean to 1 = no
+  premise-specific signal**; H3/H18/H23 all read it as unbounded-worse and called 1.14x
+  "mild". Power: n=24 null items separates 0 from 1 at seed 42, but seed 7 does not separate
+  at n=96 and the seeds converge on different values — so more items AND a third seed. This
+  is H25. **The fix is still NOT a within-topic inert control** (no polarity contrast, so
+  subtracting it removes nothing).
 - **A self-correction worth reading before trusting recent entries**: H18 was marked
   supported and moved to `falsified/` the same day. The observation was fine; the claim
   ("content-blind drift the off-topic control cannot net") predicted zero in the very
@@ -117,6 +148,10 @@ valid, only the LoRA contrast inside it is not.
 
 ## Next, in order
 
+0. **H25's expansion of the null facet** — the only queued item on the halo thread not
+   already known to be uninformative: one `evalgen` pass (API, no GPU) to take
+   `software_architecture`'s null facet to ≥24 items, `inference_eval` re-run on existing
+   checkpoints (no retraining), plus a third training seed at 4B (fits this box).
 1. **`attrib_mix` under full fine-tuning** — the one approved item not done. Bears on
    contribution 3: attribution computed on adapters may be reading a parameter update that
    encodes polarity differently from full-FT's. Needs >16GB, so it wants this box.
@@ -124,11 +159,9 @@ valid, only the LoRA contrast inside it is not.
    into a band. `stage=sensitivity` at 8B would additionally make `T_A`/`T_B` quotable.
 3. **A powered H22 test**: an arm with an INTERMEDIATE belief effect, since the evidence
    arm's is 6.5x below the explicit arm's and its action reading cannot discriminate.
-4. **H23's falsifier is FREE and runs on this box** — it re-reads saved per-item
-   responses for arms already on disk plus a valence-coherence number computed from the
-   experiment specs. No training, no API spend. Do this before anything that costs money.
-5. **Paper re-tabulation** with `LITERATURE.md` citations — and it must now carry the
-   halo caveat (H23) and the log-odds correction above.
+4. **Paper re-tabulation** with `LITERATURE.md` citations — and it must now carry the
+   halo caveat (now H25, and it is a withdrawal of `ΔI` rather than a caveat on it) and the
+   log-odds correction above. **`ΔI` must not appear in a table until H25 resolves.**
 
 ## Box / sync state
 

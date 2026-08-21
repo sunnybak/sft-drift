@@ -1,6 +1,13 @@
 # H23: The stance/valence halo contaminates the null control, and its size is topic-dependent
 
-**Status:** open, registered 2026-08-21d
+**Status:** **FALSIFIED 2026-08-21e by its own registered falsifier, first branch**, on
+the free test it registered. The falsifier named this exact case: "if
+`software_architecture`'s evidence arms and `factory_farming`'s evidence arms have
+indistinguishable valence coherence yet differ in halo ratio ... then valence coherence is
+not the variable." Valence coherence came out **+1.00 for both corpora**.
+**Successor:** [H25](../open/H25-inference-null-facet-is-unmeasurable.md), which carries
+the part that matters more than the topic question.
+Originally registered 2026-08-21d
 **Successor to:** [H18](../falsified/H18-off-topic-control-blind-spot.md), whose
 observation replicates but whose claim was incompatible with its own measurement. Extends
 [H3](../falsified/H3-is-ought-localization.md), which first recorded the halo.
@@ -10,7 +17,23 @@ rendering-only — can carry weight in the paper.
 
 ## Current position
 
-One replicated observation, mechanism argued from construction rather than measured. The
+**Resolved against, and it took the project's third correction on this thread with it.**
+The registered spec-only measure is **degenerate**: every polarity-differing dimension in
+both experiment specs puts the favourable value on the positive polarity, so valence
+coherence is +1.00 everywhere and cannot order anything. That is a fact about how this
+project builds corpora, not about these two topics — no existing or planned spec varies it.
+
+**The larger finding is that the quantity this file is about cannot currently be measured
+at all**, which the file's own `Prerequisite gates` half-anticipated ("n=6 items per null
+facet is the binding limit") without following through to the ratio's interval. Bootstrapped
+over items, factory_farming's ratios are unbounded (evidence 1.14x [−1.46, +6.55]; explicit
+2.37x [−0.21, +5.96]) because the denominator is a small netted number. **And the ratio
+scale was being read backwards throughout H3, H18 and this file: 0 is clean, 1 is fully
+contaminated.** On that scale factory_farming's 1.14x was never "mild" — and every arm's
+CI contains both ends. See `AGENTS.md`'s amended null-control bullet and H25.
+
+*(Superseded, kept because it is what the falsifier was written against:)* One replicated
+observation, mechanism argued from construction rather than measured. The
 halo itself is established prior work *inside this project* (H3, 2026-08-19, cited in
 AGENTS.md): the null-control facet is contaminated whenever the corpus carries coherent
 valence, at 2.37x the all-facet mean on factory_farming's explicit-stance arms. What is
@@ -70,6 +93,29 @@ normalized against a prompted intervention; and this test uses no new arms, so i
 be confounded by a dose or schedule difference the way `H20` was.
 
 ## Evidence
+
+- **2026-08-21e, the registered falsifier, run free on data already on disk. FIRST BRANCH
+  FIRED.** Valence coherence computed from `configs/experiment/*.yaml` alone, before any
+  halo number was looked at (`scratchpad/valence.py`): **factory_farming +1.00,
+  software_architecture +1.00** — all four polarity-differing dimensions valence-aligned in
+  both, null dimension excluded in both. A first pass mis-coded `food affordability`
+  (its premise is a *discount depth*, "N percent below the small-farm equivalent", not a
+  price) and produced a spurious +0.00 for factory_farming; corrected before the halo
+  numbers were read, and the corrected value is what falsifies the claim.
+
+- **2026-08-21e, the halo ratios, reproducing this file's own table and then breaking it.**
+  Recomputed through `suite.netted_delta` (`inference_v1_step24`, `sw_arms_v1`,
+  `sw_arms_v1_s7`): point estimates reproduce H3 and this file exactly (ff evidence 1.14x,
+  ff explicit 2.37x, sw evidence +0.0188 / +0.0253). **With bootstrap intervals over items
+  (10k draws) the factory_farming ratios span zero** — [−1.46, +6.55] and [−0.21, +5.96] —
+  so the ordering this hypothesis needed was never measurable in the first place. Only
+  software_architecture's are bounded: 0.68x [+0.10, +1.46] and 1.00x [+0.00, +2.34].
+
+- **2026-08-21e, power, computed not guessed.** Resampling the observed per-item null
+  distribution at larger n: seed 42 separates 0 from 1 at **n=24 null items**
+  (CI [0.41, 0.93]); seed 7 does not separate even at n=96 (CI [0.73, 1.28]), and the two
+  seeds converge on different values. More items alone is not enough; a third seed is
+  needed with them.
 
 - 2026-08-21d, inherited from [H18](../falsified/H18-off-topic-control-blind-spot.md):
   the two-seed replication of `software_architecture`'s null-facet reading and the

@@ -622,16 +622,62 @@ Two properties are load-bearing when reading it:
   premises are identical across polarities by design, so any `m+ − m−` there is spillover
   from the polarity-DIFFERING premises. Measure it as a **ratio** to the arm's all-facet
   mean, never as a raw magnitude, since the raw number scales with the corpus's overall
-  effect: factory_farming's explicit-stance arms sit at `+0.1469 [+0.0144, +0.2886]`,
-  **2.37x** their all-facet mean; its evidence arms at `+0.0138`, 1.14x, straddling.
-  **What is new and open (H23):** the halo appears on `software_architecture`'s
-  EVIDENCE arms (`+0.0221` seed-averaged, 6/6 per-item sign agreement across seeds) where
-  factory_farming's evidence arms show none (`+0.0040`, 4/6), at matched dose and form —
-  so halo susceptibility is topic-dependent. Consequences: a topic whose null facet reads
-  non-zero cannot have its `ΔI` reported until the halo is quantified and separated, one
-  seed cannot distinguish halo from noise at n≈6 items (per-item sign agreement across
-  seeds is the discriminator), and **a within-topic inert control does NOT fix this** —
-  an inert corpus has no polarity contrast, so subtracting it removes nothing.
+  effect.
+
+  **Amended 2026-08-21e, and this is the THIRD correction on this thread — read the ratio
+  scale before quoting anything from it.** On the ratio, **0 = the null facet is clean (all
+  of `ΔI` is premise-specific) and 1 = the null facet moves as much as the average facet,
+  i.e. `ΔI` carries NO premise-specific signal at all.** H3, H18 and H23 all read the scale
+  as if larger meant worse without a top end, and treated `1.14x` as "mild". It is not
+  mild; it is at the fully-contaminated end.
+
+  **The ratio is NOT MEASURABLE on factory_farming at n=6 null items, and the numbers
+  previously quoted here had no intervals.** Bootstrapped over items (10k draws,
+  `inference_v1_step24`, `sw_arms_v1`, `sw_arms_v1_s7`):
+
+  | arm | halo ratio (null / all-facet) | 95% CI |
+  | --- | --- | --- |
+  | factory_farming EXPLICIT | 2.37x | **[−0.21, +5.96]** |
+  | factory_farming EVIDENCE | 1.14x | **[−1.46, +6.55]** |
+  | software_architecture EVIDENCE s42 | 0.68x | [+0.10, +1.46] |
+  | software_architecture EVIDENCE s7 | 1.00x | [+0.00, +2.34] |
+
+  The denominator is a small netted number, so the ratio is unbounded wherever the arm's
+  overall effect is small. **The "2.37x" this file previously stated as the load-bearing
+  halo evidence is a point estimate whose interval spans zero — it never met the
+  quotability ladder's bar for a magnitude and must not be cited as one.** Only
+  `software_architecture`'s ratios are bounded, and **every arm's CI contains both the
+  clean and the fully-contaminated end**, so the suite currently cannot tell them apart.
+
+  **Power, computed rather than guessed:** at seed 42, `n=24` null-facet items would
+  separate 0 from 1 (CI [0.41, 0.93]); at seed 7 even `n=96` would not (CI [0.73, 1.28]),
+  and the two seeds converge on different values (0.68 vs 1.00). So the fix is more null
+  items AND a third seed, not either alone. Continued as `H25`.
+
+  **The topic-dependence claim (H23) is FALSIFIED** by its own registered falsifier: its
+  pre-registered valence-coherence measure comes out **+1.00 for both corpora** — every
+  polarity-differing dimension in every spec in this project puts the favourable value on
+  the positive polarity, so the measure is degenerate by construction and can order
+  nothing. Varying it would require deliberately building a corpus with a dimension whose
+  positive polarity is unfavourable. Also still true, and it survives all of the above:
+  **a within-topic inert control does NOT fix the halo** — an inert corpus has no polarity
+  contrast, so subtracting it removes nothing.
+
+**Per-item dispersion is a scale effect, and it is the one thing `H24` left standing
+(2026-08-21e).** On the explicit-stance corpus, **8B's per-item netted `dB` has roughly half
+the relative dispersion (SD/|mean|) of 4B's** — 0.50/0.57 against 0.91/0.89 on probability,
+0.65/0.58 against 1.02/1.04 on log-odds — at two seeds, three scales, and after
+residualizing on per-item base log-odds. Not a quieter-control artifact: at seed 7 8B's
+control pair is *noisier* (SD 0.0230 vs 0.0188) and its treated dispersion is still lower.
+**Report this as a behavioural replication of Grosse et al. (arXiv:2308.03296)**, whose
+influence-function result is that generalization patterns become less item-local with
+scale; it is not novel here and `H24` registered that in advance. Three caveats that are
+part of the number: it does NOT hold on the evidence corpus (reverses under log-odds, 0.89
+-> 1.25); **cross-seed per-item rank correlation is ~0.95 at BOTH models**, so nothing about
+representational coherence follows; and relative dispersion is **undefined wherever the mean
+straddles zero** — 4B's action arms give 29x and 69x, which are the same unbounded-ratio
+pathology as the halo ratio above, not findings.
+
 - **The positive control.** `Me±` states a stance *and* cites premises and absorbs
   heavily, so it should move `ΔI`. If nothing moves `ΔI`, `Me±` included, the suite is not
   measuring anything and no conclusion follows about the evidence arms.

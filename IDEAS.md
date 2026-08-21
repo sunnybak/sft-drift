@@ -81,6 +81,17 @@ person opinion) would distinguish them. Mostly a refinement of `supported/H13`; 
 worth its own hypothesis file if sharpened into a specific threshold-vs-ramp claim rather
 than "more points on the curve would be nice."
 
+### Which belief items move, and why — added 2026-08-21e
+
+`H24` left behind a fact it could not explain: 4B's per-item netted `dB` has SD ~= its mean
+(rel. dispersion ~1.0), i.e. a few items move enormously and others barely — while 8B moves
+everything moderately. Base extremity explains only part of it (1.02 -> 0.82 after
+residualizing). The per-item pattern is highly reproducible (cross-seed rho ~0.95 at both
+models), so it is a stable property of items, not noise, and n=42 with facet/layer/framing
+metadata is already on disk. Predicting *which* items move from item properties is
+attribution-adjacent and free. Not yet a hypothesis: no candidate predictor is sharp enough
+to falsify.
+
 ## Ready to graduate whenever wanted
 
 - **Reasoning-trace SFT as a belief lever** — genuinely hypothesis-shaped already: "an
