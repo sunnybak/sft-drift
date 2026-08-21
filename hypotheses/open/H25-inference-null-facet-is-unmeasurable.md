@@ -34,6 +34,18 @@ at BOTH seeds** (+0.0724 / +0.0870) and at seed 7 exceeds the null facet by
 +0.0617 [+0.0178, +0.0996]. So there *is* a premise-specific component there, which is
 exactly what part 2's strong reading denied.
 
+**And the surviving signal is NOT cleared.** `recovery_time` sits on the facet with the
+**worst position bias in the suite**: base `variant_gap` **0.6953**, above the 0.51 ceiling
+`AGENTS.md` D4 documents as the 4B maximum (the null facet's base is 0.3172). Its
+acquiescence shift from base is also the largest (+0.24 to +0.40, against the null facet's
++0.02 to +0.12), on n=5 items and n=2 D7 pairs. Two things argue against dismissing it:
+leave-one-out holds sign at both seeds, and the netted acquiescence asymmetry **does not
+track the effect across seeds** (−0.125 at s42 with `ΔI` +0.0724; −0.046 at s7 with a
+*larger* +0.0870), which is the wrong direction for a yes-saying artifact. **Verdict:
+unresolved, and it changes what the registered test must buy** — the `evalgen` expansion has
+to add items to `recovery_time` as well as to the null facet, because a 5-item facet with a
+base variant gap of 0.70 cannot carry the project's only `ΔI` claim.
+
 **This is corroboration and refinement, not a resolution** (the H19 distinction): the test
 above is not the falsifier registered below, and rewriting the falsifier now would void it.
 What it changes is the economics — the registered test is still worth running for
@@ -140,6 +152,18 @@ replicate — the only GPU spend, and it fits the 16GB box at 4B.
   were made and ~1.4 would exclude zero by chance at 95%. `recovery_time`'s claim therefore
   rests on being **top-ranked at both seeds by a wide margin**, the project's own
   seed-agreement discriminator, not on the single interval.
+
+- **2026-08-21e, `scripts/h25_recovery_time_validity.py`: the surviving signal's own
+  validity checks, run before paying for the expansion.** D4/D7 per facet, read as a shift
+  from base as `AGENTS.md` D7 requires:
+
+  | facet | base variant gap | base D7 | arm D7 shift from base | LOO |
+  | --- | --- | --- | --- | --- |
+  | `recovery_time` | **0.6953** (D4 ceiling is 0.51) | +0.344 | +0.24 to +0.40 | sign holds, both seeds |
+  | `request_volume` (null) | 0.3172 | +0.683 | +0.02 to +0.12 | sign holds, both seeds |
+
+  Not cleared and not dismissed — see `Current position`. The actionable consequence is that
+  the registered `evalgen` expansion must widen `recovery_time` too, not only the null facet.
 
 - **2026-08-21e, a dead end, recorded so it is not re-suggested.** Premise *contrast
   magnitude* (computed from the spec: MTTR 17x, deployments 23x, feature-work share 2.5x)

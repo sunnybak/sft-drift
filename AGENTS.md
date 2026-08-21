@@ -691,7 +691,14 @@ pathology as the halo ratio above, not findings.
   top-ranked at both seeds (+0.0724 / +0.0870) and at s7 exceeds the null facet by
   +0.0617 [+0.0178, +0.0996]. Reproduce with `scripts/h25_positive_control.py`. Read `ΔI`
   **per facet against the null facet**, never as an all-facet mean, which averages the
-  contaminated facet in with the rest.
+  contaminated facet in with the rest. **And `recovery_time` is not yet clean:** its base
+  `variant_gap` is **0.6953**, above the 0.51 that D4 documents as the 4B maximum, on n=5
+  items — so the project's only surviving `ΔI` signal sits on its most position-biased
+  facet. Its acquiescence shift from base is likewise the suite's largest (+0.24 to +0.40).
+  Arguing the other way: leave-one-out holds sign at both seeds and the netted acquiescence
+  asymmetry moves opposite to the effect across seeds. Any expansion of this suite must add
+  items to `recovery_time`, not only to the null facet
+  (`scripts/h25_recovery_time_validity.py`).
 
 There is no `S_I` and therefore **no `T_I`**: the B+/B− interventions are normative
 prompts, so measuring against them would answer whether asserting an ethical stance moves
