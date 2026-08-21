@@ -30,6 +30,7 @@ from belief_transfer.analysis.report import build_result, write_result
 from belief_transfer.config import config_sha, write_resolved_config
 from belief_transfer.evals import action as action_mod
 from belief_transfer.evals import belief as belief_mod
+from belief_transfer.evals import inference as inference_mod
 from belief_transfer.evals import suite as suite_mod
 from belief_transfer.generation.context import RunContext
 from belief_transfer.inference.local import local_model
@@ -37,7 +38,11 @@ from belief_transfer.inference.model import free_gpu
 from belief_transfer.schemas import JobConfig, RunResult
 from belief_transfer.stages.efficacy import adapter_for
 
-SCORERS = {"belief": belief_mod.score_belief, "action": action_mod.score_action}
+SCORERS = {
+    "belief": belief_mod.score_belief,
+    "action": action_mod.score_action,
+    "inference": inference_mod.score_inference,
+}
 
 
 def _limit_items(rows: list[dict], limit: int | None) -> list[dict]:
@@ -122,11 +127,7 @@ async def run(job: JobConfig) -> RunResult:
                     adapter=str(adapter) if adapter else None,
                 )
                 responses[suite_name].extend(scored)
-                ladder.setdefault(suite_name, {})[arm.name] = (
-                    belief_mod.score_belief(scored)
-                    if suite_name == "belief"
-                    else action_mod.score_action(scored)
-                )
+                ladder.setdefault(suite_name, {})[arm.name] = SCORERS[suite_name](scored)
             del model
             free_gpu()
         metrics["ladder"] = ladder

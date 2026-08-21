@@ -77,6 +77,81 @@ second topic showing propagation (which would also settle [H7](../supported/H7-w
   both to the digit. That rules out the numbers being an artifact of one card. It says
   nothing about model, topic, or seed, which is what this file is about.
 
+## Falsifier registered before running, 2026-08-21 (`sw_evalgen_v1`)
+
+Promoting `sw_evalgen_probe`'s 12-item headroom check to the full 48-item belief +
+inference suites, then `stage=sensitivity` on both (rule 4). **Falsifier, written before
+the run**: if the full-suite netted `S_B` (D4-averaged, both scales) does not exclude
+zero, or if `S_I`'s null-control facet (`request_volume`) is NOT ≈0 while its
+positive-control-analog facets fail to move under B+/B-, the instrument is not validated
+for training against — rescope or fix before any corpus at scale, per D3/rule 4, rather
+than proceeding on an untested suite. This is a suite-validity gate, not itself evidence
+for or against H8; H8 only moves once a trained arm is read against a validated suite.
+
+**Correction, written after seeing the result (recorded rather than quietly fixed):** this
+falsifier's second clause is malformed. AGENTS.md already establishes "there is no `S_I`
+and therefore no `T_I`" for the descriptive-inference suite — B+/B- are normative prompts,
+so a prompted delta on the inference suite answers a different question, not whether the
+suite is a validated instrument. `sw_evalgen_v1`'s sensitivity run computed this delta
+anyway (`+0.129 [-0.002, +0.265]`, straddles zero) because the run overlay requested it,
+and the stage's `_print_summary` mislabels it `S_A` (a copy-paste from the belief/action
+branch, harmless since nothing quotes it, but noted for whoever reads the raw
+`sensitivity_summary.yaml`). This number should not be read as evidence either way. The
+actually-informative check for the inference suite is the same one used for belief: the
+`none`-condition per-item in-band fraction (below).
+
+## 2026-08-21, `sw_evalgen_v1`: R5 REPLICATES at full scale; the probe's "leans pro" read does not
+
+Full 48-item belief and 48-item inference suites generated and judged (38/48 and 42/48
+kept respectively — no benchmark-tier vocabulary, drops are legitimate quality-gate
+catches per rule 6's eye-read: assessment-layer forward items the judge correctly
+flagged as not restating the default-choice direction, and evaluative-language creep on
+the inference side). `stage=sensitivity` scored both under `none`/`b_plus`/`b_minus`.
+
+**Bug found and fixed en route**: `stages/sensitivity.py`'s `SCORERS` dict, and a second
+hardcoded `belief`/`action` ternary in the calibration-ladder branch, had no entry for
+`inference` — `KeyError: 'inference'` on first run. `evals/inference.score_inference`
+already existed with a compatible return shape (`stage=inference_eval` uses it against
+trained arms); the suite was simply never wired into this stage. Fixed by adding it to
+`SCORERS` and replacing the duplicate ternary with a `SCORERS[suite_name]` lookup — one
+dispatch point instead of two that could (and did) drift apart.
+
+**R5 replicates at 4x the item count.** Belief: 22/38 items (58%) land in
+`[0.15, 0.85]` under `none`, against the probe's 6/9 (67%) — same conclusion, larger n.
+`S_B = +0.669 [+0.555, +0.776]`, excludes zero (probe: +0.638 [+0.391, +0.873] — same
+band, tighter CI). Inference, tested at scale for the first time: 23/42 (55%) in-band,
+comparably healthy, no saturation. `variant_gap` under `none` stays large on both — belief
+0.571, inference 0.518 — both above factory_farming's 0.51 "already large" flag, so the
+position-bias caveat carries forward for both suites, not belief alone.
+
+**The probe's "where base does not flip it leans pro-microservices in every case" does
+NOT survive n=38.** At full scale, order-stable items (both-order spread < 0.15, n=14) split
+8 pro / 6 anti — not uniform. What explains the pattern instead: **base's own D7
+acquiescence on this topic is large and excludes zero** — `+0.392 [+0.191, +0.578]` on
+belief, `+0.418 [+0.253, +0.593]` on inference, both measured on the untrained model under
+`none`. Compare to factory_farming, where base sits near-neutral (`-0.05`) and only
+*trained* explicit arms reach `+0.18` to `+0.49` (AGENTS.md D7) — here the **untrained**
+base already yes-says at a magnitude comparable to factory_farming's trained arms. Every
+stable "pro" item in the probe/this run is forward-coded, every stable "anti" item is
+reverse-coded except one — exactly the fingerprint a yes-sayer produces on a D7 pair
+irrespective of content, not evidence about which way base's belief leans. The 9-item
+probe was too small to show the split; at 38 items it does. **Consequence, stated before
+anyone reports a ΔB on this topic**: this suite's baseline acquiescence is large enough
+that any future belief reading here must use the D7 pair-restricted, acquiescence-aware
+contrast (the same move that rescued factory_farming's explicit-arm ΔB, AGENTS.md
+"What the explicit ΔB is NOT") — never the raw per-item mean — and the earlier "evidence
+against R3's monolith-prior" line should be treated as retracted, not confirmed by this
+run either way. R3's monolith-prior speculation remains untested.
+
+**Where this leaves the suite-validity falsifier**: it did not fire. `S_B` excludes zero
+at full scale, both suites clear the ≥50%-in-band bar, and the one clause that could have
+fired (`S_I`) was malformed as registered (see correction above) and is now understood to
+be inapplicable rather than failing. The suites are validated to promote; nothing here
+moved H8 itself, which still needs a trained arm.
+
+**Not yet run**: the action suite (R2's code is written but still unexercised end-to-end)
+and any corpus generation at scale.
+
 ## What it predicts next
 
 ~~A second-seed replication is ~40 min of GPU and no API spend.~~ **Done 2026-08-20;

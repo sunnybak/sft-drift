@@ -1,0 +1,42 @@
+# @package _global_
+#
+# configs/run/sw_evalgen_v1.yaml -- the H8 second-topic FULL belief + inference suites.
+#
+#   uv run python run.py +run=sw_evalgen_v1                    # generate + judge both suites
+#   uv run python run.py +run=sw_evalgen_v1 stage=sensitivity  # rule 4: S_B/S_I under B+/B-
+#
+# Sized per the experiment spec's queued-work note: 8 belief facets x 3 framings = 24
+# cells -> n_items 48 (one D7 pair per cell); inference mirrors it, 8 facets x 3 framings
+# x 2 directions = 48 (`evalgen_inference_v2`'s convention on this topic's own facets).
+# `sw_evalgen_probe` (12 items, R5) already passed the headroom gate this suite depends
+# on -- this is the promotion to the full frozen instrument, not a new probe.
+#
+# Action suite is NOT generated here: it needs its own run id once the action-side
+# sensitivity check has been read (R2's code is exercised for the first time; the
+# hardcoded farm vocabulary risk is resolved but untested end-to-end).
+#
+# leakage_corpus_run_id stays on software_arch_pilot -- the only corpus that exists for
+# this topic. Per stages/evalgen.py this is an informational leakage/overlap check
+# against training text, not a claim that this corpus trained anything; nothing has been
+# trained on this topic yet.
+
+defaults:
+  - override /experiment: software_architecture
+  - override /eval: software_architecture
+
+run_id: sw_evalgen_v1
+stage: evalgen
+
+evalgen:
+  leakage_corpus_run_id: software_arch_pilot
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  belief_eval:
+    n_items: 48
+  inference_eval:
+    n_items: 48
+
+sensitivity:
+  suites: [belief, inference]

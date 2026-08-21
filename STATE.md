@@ -5,9 +5,10 @@ not appended** — the changelog is the history of how this changed.
 
 Last refreshed: 2026-08-21, resuming after a 6-cycle session on the RTX 5080 (seed-123 →
 H17; literature check; multi-checkpoint TracIn → H9; H8 second-topic spec+critique+pilot;
-eval-machinery parameterization; R5 headroom probe; storage-quota fix, see Box/sync
-state). **The box is ACTIVE, session resumed by the user, cleared to run new
-experiments.** Sources: `changelog/2026-08-21.md` and the run reports it names.
+eval-machinery parameterization; R5 headroom probe; storage-quota fix), plus a 7th cycle
+this resumption (H8's full belief+inference evalgen/sensitivity, `sw_evalgen_v1`; a real
+`stages/sensitivity.py` bug found and fixed; base's acquiescence confound surfaced). **The
+box is ACTIVE.** Sources: `changelog/2026-08-21.md` and the run reports it names.
 
 ---
 
@@ -71,6 +72,7 @@ TracIn ranks `Ms0` (null by construction) FIRST of six, both polarities, both ch
 | `ms_arms` + `transfer_fixedq_d93_formmatched` `trajectory.jsonl` | belief-by-step for Ms/Me/M0 and Mev/M0; the lag-objection answer |
 | `attrib_mix_v4_path` | mixture retrained with saves every 3 steps (>30 pruned by design); gated at ck-24; multi-checkpoint TracIn passes + path-sums, both polarities; resolved H9 |
 | `sw_evalgen_probe` | H8's R5 headroom probe: 12 belief items (9 gated), base sensitivity under none/b_plus/b_minus. R5 PASSES (6/9 in-band), `S_B +0.638`, with the position-bias caveat below |
+| `sw_evalgen_v1` | H8's FULL belief (38/48 kept) + inference (42/48 kept) suites, promoted from the probe. R5 replicates (58%/55% in-band), `S_B +0.669` excludes zero. Surfaced base's own large D7 acquiescence on this topic (+0.39/+0.42, excludes zero) — revises the probe's "leans pro" read, see H8 |
 
 Earlier live run ids: see `changelog/2026-08-20b.md` table (unchanged).
 
@@ -96,22 +98,36 @@ Plus a reading caveat, not a void: **trajectory steps 48/60 are unusable for net
 - `GOAL.md` pointer table has no `LITERATURE.md` row — user's call (mutability rule).
 - API credit is restored; used this session for the pilot ($0.14) and the R5 probe
   (~12 items, small).
-- **H8's software-architecture suite has a position-bias caveat to carry forward**:
-  base's `variant_gap` under `none` is 0.696 (factory_farming flags 0.51 as already
-  large) — most mid-scale item readings are D4-averaged order flips, not genuine
-  uncertainty. The 3 order-stable items all lean pro-microservices, contra R3's
-  monolith-prior speculation. State this caveat wherever this topic's ΔB/S_B are
-  eventually reported.
+- **H8's software-architecture suites carry TWO caveats forward, both confirmed at full
+  scale (`sw_evalgen_v1`, 38/48 belief + 42/48 inference items, superseding the 9-item
+  probe read)**: (1) position-bias — `variant_gap` under `none` is 0.571/0.518 (belief/
+  inference), both above factory_farming's 0.51 "already large" flag; (2) **base's own
+  D7 acquiescence on this topic is large and excludes zero** (belief +0.392, inference
+  +0.418 — comparable to factory_farming's *trained* explicit arms, not its near-neutral
+  base). The probe's "3 order-stable items lean pro-microservices" did NOT replicate at
+  n=38 (split 8 pro/6 anti) and is now understood as an acquiescence artifact, not a
+  belief-content finding — retracted, not confirmed, re: R3's monolith-prior. **Any
+  future ΔB/ΔI on this topic must use the D7 pair-restricted, acquiescence-aware
+  contrast**, never a raw per-item mean, and both caveats must be stated wherever this
+  topic's numbers are reported.
+- **Bug fixed this session**: `stages/sensitivity.py`'s `SCORERS` dict (and a duplicate
+  hardcoded ternary in the calibration-ladder branch) had no `inference` entry —
+  `KeyError` on first attempt to run `stage=sensitivity` with the inference suite
+  included. `evals/inference.score_inference` already existed and was compatible; it was
+  simply never wired in. Fixed with one dict entry + collapsing the duplicate dispatch
+  into the same dict.
 
 ## Next, in order
 
-1. **H8's second topic**, ~~pilot~~ **and R5 headroom probe both PASSED** this session
-   (`software_arch_pilot` 5/8 kept recoverability 1.0; `sw_evalgen_probe` 6/9 in-band,
-   `S_B +0.638`, position-bias caveat above). Machinery ready: eval group +
-   generate.py parameterization done and tested (R2 resolved). Remaining, in order:
-   full 48-item belief/inference evalgen + sensitivity (rule 4), action evalgen
-   (exercises the new `pressure_favors="alternative"` code for the first time), then
-   the corpus at scale. Control CHECKPOINTS reusable at matched dose/form.
+1. **H8's second topic**, ~~pilot~~ ~~R5 headroom probe~~ **and the full belief+inference
+   evalgen/sensitivity all PASSED** (`software_arch_pilot` 5/8 kept; `sw_evalgen_probe`
+   6/9 in-band; `sw_evalgen_v1` 38/48 + 42/48 kept, R5 replicates at 58%/55% in-band,
+   `S_B +0.669` excludes zero — caveats above). Machinery ready: eval group +
+   generate.py parameterization done and tested (R2 resolved); `stages/sensitivity.py`
+   now supports the inference suite. Remaining, in order: **action evalgen** (exercises
+   the new `pressure_favors="alternative"` code for the first time — untested
+   end-to-end), then the corpus at scale, matched-dose training, and a read against the
+   now-validated suites. Control CHECKPOINTS reusable at matched dose/form.
    ~~Multi-checkpoint TracIn~~ **done 2026-08-21, resolved H9 (supported).**
 2. **Second training seed for the mixture** (hardening of contribution 3).
 3. **Paper re-tabulation** from v9 with LITERATURE.md citations and the three-seed bands;
