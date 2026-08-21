@@ -162,7 +162,7 @@ recycle/destroy whenever.
 session's own findings — a methodology/validity question, deliberately a different axis
 from H8's generality march, per portfolio discipline's "must not all share one axis"
 rule. **H19** (LoRA capacity as a confound on the whole absorption/belief dissociation,
-from a literature pass) lives in the new `hypotheses/blocked/` — well-formed, but full
+from a literature pass) lives in `hypotheses/resource_constrained/` — well-formed, but full
 fine-tuning a 4B model doesn't fit this box's 16GB, so it doesn't occupy an `open/` slot
 it can't currently move. Per `hypotheses/README.md`'s new rule, moving it to `open/`
 means asking the user for the resource first (more VRAM, or sign-off on relaxing the

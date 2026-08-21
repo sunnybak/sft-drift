@@ -7,12 +7,12 @@ they serve is in `GOAL.md`.
 ## Read `open/` and stop
 
 ```text
-open/         at most THREE, and they are the only ones a session normally reads
-blocked/      well-formed, NOT resolved, but cannot be tested with what's currently
-              available -- does not count against the cap of three (see below)
-supported/    resolved; the current account of the world
-falsified/    resolved; kept because the reason a hypothesis died is what stops it
-              being re-run
+open/                   at most THREE, and they are the only ones a session normally reads
+resource_constrained/   well-formed, NOT resolved, but cannot be tested with what's
+                        currently available -- does not count against the cap of three
+supported/              resolved; the current account of the world
+falsified/              resolved; kept because the reason a hypothesis died is what
+                        stops it being re-run
 ```
 
 **Status is the folder.** A hypothesis moves between folders when it resolves; the `Status`
@@ -38,14 +38,14 @@ If a fourth wants to exist, one of these is true and you resolve it before addin
 
 Three is a working set, not a quota: two is fine and better than three padded.
 
-## `blocked/`: well-formed but not currently testable
+## `resource_constrained/`: well-formed but not currently testable
 
 A hypothesis belongs here instead of `open/` when it has a real claim and a real
 falsifier, but testing it needs a resource this session doesn't have — more VRAM than
 the box provides, a full fine-tune where the project's standing config is LoRA-only, a
 larger model, API budget beyond what's approved, anything that isn't just "an experiment
 that hasn't been run yet." A hypothesis that's simply next in line belongs in `open/` and
-takes its turn; `blocked/` is specifically for "cannot be tested with what exists right
+takes its turn; `resource_constrained/` is specifically for "cannot be tested with what exists right
 now," recorded in the file's `Prerequisite gates` section.
 
 **It does not count against the cap of three.** That's the entire point: a hypothesis
@@ -53,12 +53,12 @@ worth keeping shouldn't have to either occupy a scarce `open/` slot it can make 
 progress on, or get abandoned/falsified just to free the slot, when the actual problem is
 resourcing, not the claim's validity.
 
-**Moving a hypothesis OUT of `blocked/` is a decision to acquire the missing resource,
+**Moving a hypothesis OUT of `resource_constrained/` is a decision to acquire the missing resource,
 and that decision is not the agent's to make alone.** Provisioning more GPU, renting a
 bigger box, spending real budget, or relaxing a standing project rule (like the
 no-quantization decision in `AGENTS.md`) are exactly the kind of consequential,
 hard-to-reverse-by-default actions this project's own working style asks to be surfaced
-rather than assumed. **If a session wants to move a `blocked/` hypothesis into `open/`
+rather than assumed. **If a session wants to move a `resource_constrained/` hypothesis into `open/`
 and start testing it, ask the user for the resource it needs first — do not provision it
 and proceed unprompted, even if the technical path is obvious.** Once approved, move the
 file to `open/`, note what was provisioned in `Current position`, and it's an ordinary
@@ -69,7 +69,7 @@ open hypothesis from there.
 ```markdown
 # H<n>: <one-sentence claim>
 
-**Status:** open | blocked | supported | falsified | abandoned — <date>
+**Status:** open | resource_constrained | supported | falsified | abandoned — <date>
 **Bears on:** <which part of GOAL.md's contribution>
 
 ## Current position               <- OVERWRITTEN, not append-only; see Rules
