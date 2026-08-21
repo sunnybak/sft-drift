@@ -60,7 +60,13 @@ Each session runs this cycle, as many times as it can do honestly:
 2. **Design** the experiment that most moves an open hypothesis. Name which one. Write the
    falsifier — what result kills the claim — *before* the evidence exists, in the run
    overlay or hypothesis file. An experiment that bears on no open hypothesis may still be
-   worth running, but that is a decision to state, not an accident.
+   worth running, but that is a decision to state, not an accident. **Before spending on
+   it, check the falsifier's own terms against `AGENTS.md` and the target suite's
+   validity checks** (does it name a quantity that is already established not to mean
+   what the falsifier assumes; does a null-control or positive-control facet exist that
+   the falsifier's read will depend on but doesn't mention) — cheap now, expensive as a
+   post-hoc correction. Added 2026-08-21 after two falsifiers this session needed exactly
+   that correction (`hypotheses/open/H8-generality.md`).
 3. **Pilot** whenever uncertain: a handful of items, **read by eye** (this is a human
    gate, not a judge threshold — every corpus lineage here has had a defect the judges
    passed). Only then spend.

@@ -44,9 +44,11 @@ Three is a working set, not a quota: two is fine and better than three padded.
 **Status:** open | supported | falsified | abandoned — <date>
 **Bears on:** <which part of GOAL.md's contribution>
 
+## Current position               <- OVERWRITTEN, not append-only; see Rules
 ## Claim
-## What would falsify it        <- write this BEFORE the experiment, not after
-## Evidence                     <- append-only, dated, each line naming a run id
+## Prerequisite gates             <- optional; instrument/suite validity, not the hypothesis itself
+## What would falsify it          <- write this BEFORE the experiment, not after
+## Evidence                       <- append-only, dated, each line naming a run id
 ## What it predicts next
 ```
 
@@ -58,6 +60,24 @@ the code comments even after the file moves folders.
 - **`What would falsify it` is written before the evidence, and is not edited afterwards.**
   A falsifier rewritten once the result is in is not a falsifier. If it was wrong, say so
   in `Evidence` and open a new hypothesis.
+- **`What would falsify it` states only what would kill the claim itself — not whether the
+  instrument used to test it is trustworthy.** Added 2026-08-21 after a session where a
+  falsifier's own registered clause turned out to invoke a quantity AGENTS.md had already
+  ruled out, and a separate run's decisive finding was a suite's null-control facet
+  failing — something no falsifier had named because it isn't about the hypothesis, it's
+  about whether the test run that cycle is valid at all. That kind of check goes in
+  `Prerequisite gates`: things that must hold for a reading to mean anything (a suite's
+  null control comes out ≈0, a positive control moves, a corpus passes its eye-read) —
+  distinct from, and checked before trusting, the falsifier proper. A prerequisite
+  failing doesn't touch the hypothesis; it means re-run once fixed.
+- **`Current position` is the one section this file's mutability rule doesn't apply to —
+  it is overwritten each time evidence changes what the file would tell a cold reader,
+  the same as `STATE.md`.** Everything else here is append-only so nothing is lost;
+  without one editable summary, a hypothesis that accumulates many evidence entries and
+  corrections becomes something only its own author can skim, which is exactly the
+  problem `open/`'s cap-of-three exists to prevent one level up. Keep it to a few
+  sentences: what the claim currently looks like, at what quotability level (GOAL.md's
+  ladder), and what would need to change that.
 - **`Evidence` is append-only.** Every line dates itself and names a run id, so a claim can
   be traced to `data/results/<experiment>/<run_id>/`. Superseded readings stay, annotated.
 - **Status changes are recorded in the changelog** for that session, not silently.

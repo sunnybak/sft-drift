@@ -1,7 +1,22 @@
 # H8: The result generalizes beyond one model, one topic, one seed
 
-**Status:** open, untested — the most likely rejection reason after the framing
+**Status:** open, partially tested — 2026-08-21
 **Bears on:** whether the paper survives review
+
+## Current position
+
+Three of four legs tested, one still open. **Seed**: replicated at s7 (2026-08-20),
+falsifier did not fire. **Topic**: the dissociation's belief-axis half replicated on
+`software_architecture` (2026-08-21) — `dB NET +0.0076` matches factory_farming's `Mev`
+to 2 sig figs, direction-level quotability (one seed). The inference/action legs on
+this topic are NOT usable evidence either way: the inference suite's own null-control
+facet failed (see `sw_evalgen_v1`/`sw_arms_v1` evidence below), which invalidates `dI`
+and puts `dA` under the same suspicion until a within-topic inert control exists.
+**Not yet tested on this topic**: the explicit-belief (`Me±`) half of the dissociation —
+only the evidence-only half has a second-topic reading. **Model**: untested (8B leg,
+needs >16GB). Net: no falsifier clause has fired anywhere; the claim is holding, but
+"generalizes" is still resting on one full topic plus one seed-replicated, one
+half-replicated leg — not yet band-level on any axis but seed.
 
 ## Claim
 

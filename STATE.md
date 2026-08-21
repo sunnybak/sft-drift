@@ -157,6 +157,10 @@ then deleted per user instruction. Retried push: 4.32 GB uploaded, 1026 files, 2
 confirmed present both locally and on the remote. Box is fully synced; safe to
 recycle/destroy whenever.
 
-`open/` = H8 alone (H9 → `supported/` 2026-08-21; H17 → `falsified/` 2026-08-21;
-successors named in their status lines rather than opened — the portfolio's gap remains
-generality, which is what H8 is now actively closing).
+`open/` = H8, H18, H19 — now at the cap of three (H9 → `supported/` 2026-08-21; H17 →
+`falsified/` 2026-08-21). H18 (off-topic control blind to on-topic drift) and H19 (LoRA
+capacity as a confound on the whole absorption/belief dissociation) opened 2026-08-21
+from this session's own findings and a literature pass — both are methodology/validity
+questions, deliberately a different axis from H8's generality march, per portfolio
+discipline's "must not all share one axis" rule. H19 in particular gates how strongly
+ANY of this project's belief-axis numbers, past or future, can be stated.
