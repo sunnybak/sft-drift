@@ -1,0 +1,38 @@
+# @package _global_
+#
+# configs/run/h19_ff_m0.yaml -- H19's off-topic control, FULL fine-tuned.
+#
+#   uv run python run.py +run=h19_ff_m0 stage=sft
+#
+# The machinery term for the full-FT reading. AGENTS.md rule 2 is explicit that this must
+# be RE-DERIVED whenever the control changes and never carried across -- and changing the
+# training method changes the control as surely as changing the corpus would, since what
+# the control measures is what doing *any* SFT at this dose does to these scores. The
+# existing `m0_multiform` term is a LoRA quantity and says nothing about what full-FT
+# drift looks like.
+#
+# Same corpus, dose, schedule, and seed as `h19_ff_arms`; the only difference is that this
+# corpus is off-topic, which is what makes the subtraction mean anything.
+
+defaults:
+  - override /experiment: control_offtopic
+  - override /training: full_ft_calib
+
+run_id: h19_ff_m0
+stage: sft
+
+related_runs:
+  h19_ff_arms: the evidence arms this control is netted against
+  h19_full_ft: the four-arm reading built from these checkpoints
+
+experiment:
+  dataset:
+    n_items: 250  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: control_offtopic_multiform
+  use_corpus_user_turns: false
+  max_pairs: 93
+  sft:
+    lr: 1.0e-5
+    epochs: 2

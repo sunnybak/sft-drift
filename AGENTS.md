@@ -485,6 +485,19 @@ fact toward the negative option, with lameness and injuries collapsing to ~0.01 
 0.165 and food affordability sitting at base 0.998. The off-topic control cannot net out a
 drift that only on-topic training produces. Do not reintroduce it as a gate.
 
+**Every belief-axis number in this document is measured under LoRA, and the zero/non-zero
+call is method-dependent** (added 2026-08-21c, `hypotheses/supported/H19-lora-capacity-confound.md`).
+Full fine-tuning the same long-form evidence-only corpus at matched dose, gated and netted
+against a full-FT control retrained per seed, moves belief where LoRA does not:
+`dB NET +0.0164 [+0.0060, +0.0289]` (s42) and `+0.0115 [+0.0044, +0.0201]` (s7), against
+LoRA's `+0.0029 [−0.0204, +0.0275]`. The effect is **~2% of the prompted intervention**, so
+the substantive dissociation below stands unchanged — what does not is the sharper phrasing
+"indistinguishable from zero", which turns out to be a fact about the adapter as much as
+about the training. Two further facts travel with it: full-FT collapses the forced-choice
+gate at lr 2e-5, five times below the LoRA schedule's 1e-4 (so no schedule gates both
+methods, and `frozen_2026_08_14` must never be reused for full-FT), and the full-FT
+off-topic control is ~16x cleaner (machinery −0.005 against LoRA's +0.085).
+
 **Scope limit, and it is the important one.** Absorption is not belief. It measures whether
 an arm's premises became more predictable to it — rendering, in effect. Absorption was made
 the gate on the assumption that it was the bottleneck on the way to belief, and **it is

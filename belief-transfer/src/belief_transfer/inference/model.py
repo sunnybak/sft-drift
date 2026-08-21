@@ -96,6 +96,17 @@ def _torch_device_map(backend: Backend) -> str:
     return "cuda:0" if backend == "cuda" else "cpu"
 
 
+def _is_peft_checkpoint(path: Path) -> bool:
+    """True when `path` holds a PEFT LoRA adapter, false when it holds a full model.
+
+    Both are "a checkpoint an arm points at", and the two are told apart by what is on
+    disk: PEFT writes `adapter_config.json`, a full fine-tune (`SFTHyperparams.
+    full_finetune`) writes a plain `config.json` plus model weights. See `HFModel.
+    _ensure_loaded` on why this is inspected rather than passed in.
+    """
+    return (path / "adapter_config.json").exists()
+
+
 def free_gpu() -> None:
     """Drop whatever the caller's last model allocated, so switching models/adapters
     within one process doesn't accumulate VRAM the caching allocator would otherwise
@@ -266,13 +277,25 @@ class HFModel:
         backend = detect_backend()
         torch_dtype = getattr(torch, resolve_dtype(backend, self._spec.dtype))
         device_map = self.device_map if self.device_map is not None else _torch_device_map(backend)
-        model = AutoModelForCausalLM.from_pretrained(
-            self._spec.pretrained, dtype=torch_dtype, device_map=device_map
-        )
-        if self.adapter_path is not None:
+        # A checkpoint directory is either a PEFT adapter to wrap the base model in, or --
+        # for a full fine-tune (`SFTHyperparams.full_finetune`, H19) -- a complete model to
+        # load INSTEAD of the base. Dispatching on what is actually on disk rather than on a
+        # constructor flag keeps every caller (`adapter_for` and friends) unchanged: an arm
+        # still names one checkpoint path and does not have to know how it was trained.
+        # Loading a full checkpoint as if it were an adapter fails loudly, but the reverse
+        # would not, so this must be decided by inspection, not assumption.
+        if self.adapter_path is not None and _is_peft_checkpoint(self.adapter_path):
+            model = AutoModelForCausalLM.from_pretrained(
+                self._spec.pretrained, dtype=torch_dtype, device_map=device_map
+            )
             from peft import PeftModel
 
             model = PeftModel.from_pretrained(model, str(self.adapter_path))
+        else:
+            source = str(self.adapter_path) if self.adapter_path is not None else self._spec.pretrained
+            model = AutoModelForCausalLM.from_pretrained(
+                source, dtype=torch_dtype, device_map=device_map
+            )
         model.eval()
         self._hf_model = model
         self._tokenizer = tokenizer

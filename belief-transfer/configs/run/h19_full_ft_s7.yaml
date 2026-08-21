@@ -1,0 +1,95 @@
+# @package _global_
+#
+# configs/run/h19_full_ft.yaml -- H19's reading: does the `Mev` null survive FULL
+# fine-tuning?
+#
+#   uv run python run.py +run=h19_full_ft stage=choice_bench   # the gate; FIRST
+#   uv run python run.py +run=h19_full_ft stage=belief_eval    # dB NET: the question
+#   uv run python run.py +run=h19_full_ft stage=absorption     # did the manipulation land
+#
+# Six arms: base, the full-FT evidence pair, the full-FT off-topic control pair, and --
+# scored in the SAME invocation, on this box, through this code -- the LoRA arms whose
+# `dB NET +0.0072` is the number being challenged. Re-reading the LoRA pair here rather
+# than quoting the recorded value is what makes the comparison a paired one: same box,
+# same suite, same scoring path, so a difference cannot be a box or a code difference.
+#
+# REGISTERED PREDICTION, written before the reading (H19's falsifier, restated):
+#
+#   full-FT dB NET straddles zero  -> LoRA capacity is NOT the explanation. The
+#                                     dissociation is a property of SFT, the existing
+#                                     LoRA results stand as general, and H19 is FALSIFIED.
+#   full-FT dB NET excludes zero   -> capacity is a real, load-bearing confound, and every
+#                                     belief-axis reading in this project needs a
+#                                     "measured under LoRA" caveat it does not carry.
+#
+# The netting is not optional and the control is full-FT for the same reason the arms are
+# (AGENTS.md rule 2: re-derive the machinery term whenever the control changes -- changing
+# the training METHOD changes it as surely as changing the corpus would).
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: h19_full_ft_s7
+stage: choice_bench
+
+related_runs:
+  h19_ff_arms_s7: the full-fine-tuned evidence arms scored here
+  h19_ff_m0_s7: the full-fine-tuned off-topic control scored here
+
+experiment:
+  dataset:
+    n_items: 250  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  # Full fine-tune: the intervention under test.
+  - name: m_plus
+    polarity: positive
+    run_id: h19_ff_arms_s7
+  - name: m_minus
+    polarity: negative
+    run_id: h19_ff_arms_s7
+  - name: m0_plus
+    polarity: positive
+    run_id: h19_ff_m0_s7
+    experiment: control_offtopic
+  - name: m0_minus
+    polarity: negative
+    run_id: h19_ff_m0_s7
+    experiment: control_offtopic
+  # LoRA, same corpus and dose -- the standing `Mev` reading, re-scored here so the
+  # comparison is paired rather than quoted across boxes.
+  - name: lora_m_plus
+    polarity: positive
+    run_id: multiformat_v2_valsplit_fixedq_d93
+  - name: lora_m_minus
+    polarity: negative
+    run_id: multiformat_v2_valsplit_fixedq_d93
+  - name: lora_m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+  - name: lora_m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+
+efficacy:
+  arms: *arms
+
+absorption:
+  corpus_run_id: multiformat_v2
+  val_pairs: 21
+  arms: *arms
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]
+    - [lora_m_plus, lora_m0_plus]
+    - [lora_m_minus, lora_m0_minus]
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

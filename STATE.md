@@ -5,11 +5,17 @@ not appended** — the changelog is the history of how this changed. Kept to rou
 detail lives in `changelog/2026-08-21.md` and in each hypothesis file's own
 `Current position`, not duplicated here.
 
-Last refreshed: 2026-08-21, end of a long multi-cycle session (seed-123 → H17; literature
-check; multi-checkpoint TracIn → H9; H8's second topic taken from spec through a full
-trained-arm read; a process retrospective that reshaped the hypothesis/idea tooling
-itself). **Box is ACTIVE and fully synced** (see Box/sync state). Sources:
-`changelog/2026-08-21.md` and the run reports it names.
+Last refreshed: 2026-08-21c, end of a single-purpose `UNBLOCK.md` cycle on a **rented 96GB
+RTX PRO 6000 Blackwell** that resolved `H19` (the LoRA-capacity confound) and emptied
+`hypotheses/resource_constrained/`. The preceding multi-cycle session (seed-123 → H17;
+literature check; multi-checkpoint TracIn → H9; H8's second topic; the process
+retrospective) is `changelog/2026-08-21.md`. Sources: `changelog/2026-08-21c.md` and the
+run reports it names.
+
+**The rented box is STILL RUNNING and awaiting a decision** — `UNBLOCK.md` allows one
+cycle and that cycle is complete. Either spend it on the follow-ups below (a third H19
+seed, `Me±` under full-FT, H8's 8B leg) or wind it down. Its full-FT checkpoints (~32GB)
+were deliberately NOT pushed; the storage plan is still the user's open call.
 
 ---
 
@@ -36,6 +42,15 @@ What the paper would claim if written today. Novelty checked against `LITERATURE
 Me +0.311` (s42, 2ep, netted). Belief→action conduction ~6% of prompted (H12); form
 gates premise→belief, brevity dominant, voice secondary (H13).
 
+**Every belief-axis number above is measured under LoRA, and the zero/non-zero call is
+method-dependent** (H19, 2026-08-21c). Full fine-tuning the same long-form evidence-only
+corpus at matched dose moves belief where LoRA does not — `dB NET +0.0164` (s42) /
+`+0.0115` (s7), both excluding zero on both scales, against LoRA's `+0.0029` straddling it.
+The effect is ~2% of prompted, so the **dissociation itself survives**; the sharper phrase
+"indistinguishable from zero" does not. Also: full-FT collapses the gate at lr 2e-5, 5x
+below the LoRA schedule's 1e-4, and its off-topic control is ~16x cleaner (machinery
+−0.005 vs +0.085).
+
 ## Attribution audit numbers (attrib_mix_v4)
 
 | method | ρ+ | ρ− | verdict |
@@ -54,6 +69,7 @@ TracIn ranks `Ms0` (null by construction) FIRST of six, both polarities, both ch
 | `mld_arms_s123`, `ms3p_arms_s123`, `ms_sparse_arms_s123`, `ms0_arms_s123` | seed-123 replication; resolved H17 |
 | `attrib_mix_v4_path` | multi-checkpoint TracIn on the published estimator; resolved H9 |
 | `software_arch_pilot`, `sw_evalgen_probe`, `sw_evalgen_v1`, `sw_evalgen_action_v1` | H8's second topic: pilot -> headroom probe -> full belief/inference/action suites, all validated. Caveats (position-bias, an acquiescence confound the probe was too small to show) are in `hypotheses/open/H8-generality.md`, not restated here |
+| `h19_ff_arms`/`_s7`, `h19_ff_m0`/`_s7`, `h19_full_ft`/`_s7` | **FULL fine-tune** arms + per-seed full-FT off-topic control, and their four-arm reading. Resolved H19: `dB NET +0.0164`/`+0.0115`, both excluding zero, all arms gated. Checkpoints are local-only (~32GB, not pushed) |
 | `sw_corpus_v1`, `sw_arms_v1` | the second-topic corpus (112/150 gated) and its trained M+/M- read against `m0_multiform`. **`dB NET +0.0076` straddles zero, matching `Mev` to 2 sig figs — supports H8.** `dI`/`dA` excluded zero but the inference suite's own null control also did, which invalidates that reading (AGENTS.md's own rule) — see H8 |
 
 Earlier live run ids: see `changelog/2026-08-20b.md` table (unchanged).
@@ -84,29 +100,38 @@ fails the gate there); gate-clean region is 12-36.
 
 ## Next, in order
 
+0. **Decide the rented box**: a third H19 seed (earns a band), `Me±` under full-FT (the
+   sharpest follow-up — does the `Mev`->`Me` gap narrow?), or H8's 8B leg; else wind it
+   down. `UNBLOCK.md`'s one cycle is spent.
 1. **H18**: diagnose the on-topic-drift gap (cheapest first step costs nothing — re-check
    the existing bootstrap at per-item granularity before designing a within-topic inert
    control). See `H18`'s own file for the falsifier.
-2. **H19** (`hypotheses/resource_constrained/`): a 96GB rental has been identified
-   (~$1.5/hr) to cover full fine-tuning cleanly. **Not yet provisioned.** If the user
-   spawns it, read `UNBLOCK.md` alongside this file — it specifies the run plan, the
-   storage-plan question to ask (Pro's private tier vs. going public — a real
-   anonymity/scoop-risk tradeoff, not a default), and that this is ONE cycle, not the
-   standing loop.
+2. **H19 is RESOLVED** (`hypotheses/supported/`), at replicated-direction quotability only —
+   a third seed is what would earn a band, and `Me±` under full-FT is the sharpest
+   mechanism follow-up. `resource_constrained/` is now EMPTY, so `UNBLOCK.md` has nothing
+   left to unblock and should be cleared unless a new resource-constrained claim opens.
 3. **H8**: a second seed of `sw_arms_v1` (quotability is "direction" only right now), and
-   the 8B model leg — worth batching into the same H19 rental if it happens, since >16GB
-   is the shared blocker.
+   the 8B model leg — worth batching onto the current rental while it is still up, since
+   >16GB is the shared blocker.
 4. Paper re-tabulation from v9 with `LITERATURE.md` citations and the three-seed bands.
 
 ## Box / sync state
 
-RTX 5080, active, **fully synced** — git, data, and cache all pushed as of this wind-up.
-This session also resolved a storage-quota crisis (squashed `sunnybak/sft-drift`'s
-history; deleted an unrelated 20GB private repo, `sunnybak/sft-drift-adapters`, that was
-counting against the same free-tier quota) — full story in `changelog/2026-08-21.md`.
-Safe to recycle/destroy whenever; nothing is box-only.
+**Rented 96GB RTX PRO 6000 Blackwell (Vast.ai), ACTIVE and metered** — provisioned for the
+H19 cycle. Git, data, and cache pushed as of this wind-up, with **one deliberate
+exception: the ~32GB of full-FT checkpoints under `h19_ff_arms*` / `h19_ff_m0*` are
+LOCAL-ONLY.** They are the one thing that dies with this box. Re-training them is
+deterministic under the fixed seed and takes ~1 min/arm, so this is a considered deferral
+rather than an oversight — but if the storage plan lands on "keep them", push before
+destroying. Everything else is safe to recycle.
 
-`open/` = H8, H18 (2 of 3 slots). `H19` lives in `hypotheses/resource_constrained/`
-(doesn't count against the cap — needs more VRAM than this box has). `IDEAS.md` holds
-four pre-hypothesis directions plus one flagged ready to graduate. `UNBLOCK.md` is new
-this session: read it alongside this file if a bigger resource shows up.
+The prior RTX 5080 remains the standing box; its 2026-08-21 storage-quota fix (squashed
+`sunnybak/sft-drift` history; deleted the unrelated 20GB `sunnybak/sft-drift-adapters`)
+still holds — full story in `changelog/2026-08-21.md`. The 55GB local checkpoint tree was
+pruned on the rental after file-by-file HF verification (`local_only=0`); `make data-pull`
+restores it.
+
+`open/` = H8, H18 (2 of 3 slots). `resource_constrained/` is **EMPTY** — `H19` resolved to
+`supported/` this session, so `UNBLOCK.md` has nothing left to unblock and should be
+cleared unless a new resource-constrained claim opens. `IDEAS.md` holds four
+pre-hypothesis directions plus one flagged ready to graduate.

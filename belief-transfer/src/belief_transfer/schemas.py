@@ -45,6 +45,17 @@ class SFTHyperparams(BaseModel):
     concludes. Off by default because it is a straight speed loss on a box with VRAM to
     spare; needed on a 12GB card once `lora_r` and `target_modules` grow (attn+mlp at
     r=32 OOMs there without it, even at max_seq_len 1536)."""
+    full_finetune: bool = False
+    """Train every base-model parameter instead of a LoRA adapter on top of it. Exists
+    for H19 (`hypotheses/`, "the LoRA-capacity confound"): a hypothesis test of whether
+    the absorption/belief dissociation is a property of SFT or an artifact of this
+    project's low-rank adapter method, which needs a genuinely full-parameter update to
+    rule in or out. `lora_r`/`lora_alpha`/`lora_dropout`/`target_modules` are unused when
+    this is true. Kept inside `SFTHyperparams` rather than `TrainingConfig` (unlike
+    `max_pairs`/`save_only_model`) because it changes what schedule the frozen lr/epochs
+    values mean, not just how much data or what gets written to disk -- a full-FT
+    schedule is not the LoRA schedule with a flag flipped, and `hyperparams_fingerprint`
+    should give the two their own run ids."""
 
     @property
     def effective_batch_size(self) -> int:

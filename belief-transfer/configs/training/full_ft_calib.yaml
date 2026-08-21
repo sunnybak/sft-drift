@@ -1,0 +1,36 @@
+# configs/training/full_ft_calib.yaml -- selected with `training=full_ft_calib`.
+#
+# H19 (hypotheses/resource_constrained/H19-lora-capacity-confound.md): every checkpoint in
+# this project so far is a LoRA adapter, and `frozen_2026_08_14`'s lr/epochs were
+# trajectory-gated FOR LORA -- reusing them unmodified for full fine-tuning is not safe to
+# assume (a full-FT run has no rank constraint acting as an implicit regularizer, and is
+# known to be more collapse-prone on a dataset this small). This file is the full-FT
+# counterpart, and its lr/epochs are a STARTING POINT for a fresh trajectory-gated sweep,
+# not a frozen result -- do not treat these numbers as validated until a trajectory run
+# confirms them the way changelog/2026-08-14b.md did for `frozen_2026_08_14`.
+#
+# `full_finetune: true` makes `load_for_training` skip the LoRA wrap entirely and train
+# every base-model parameter; `lora_r`/`lora_alpha`/`lora_dropout`/`target_modules` below
+# are therefore inert (kept only so this file's shape matches frozen_2026_08_14.yaml's).
+
+model: qwen3-4b
+
+sft:
+  full_finetune: true
+  lr: 1.0e-5
+  epochs: 2
+  batch_size: 1
+  grad_accum: 8
+  warmup_ratio: 0.03
+  weight_decay: 0.0
+  max_seq_len: 2048
+  seed: 42
+  logging_steps: 5
+  save_strategy: steps
+  target_checkpoint_count: 1
+  gradient_checkpointing: true
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj

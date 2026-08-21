@@ -1,0 +1,65 @@
+# @package _global_
+#
+# configs/run/h19_ff_arms.yaml -- H19's evidence arms, FULL fine-tuned.
+#
+#   uv run python run.py +run=h19_ff_arms stage=sft
+#
+# H19 (hypotheses/, "the LoRA-capacity confound"): every checkpoint this project has ever
+# read was a LoRA adapter, and recent work (arXiv:2410.21228) argues low-rank updates are
+# structurally different from full fine-tuning even at matched task performance. The claim
+# is that LoRA can represent a narrow, localized change (absorption -- recalling a trained
+# fact) more easily than a diffuse one (belief -- an evaluative stance across many
+# prompts), so the standing `Mev` null is partly a capacity artifact rather than a fact
+# about evidence-only SFT.
+#
+# These are the `Mev`-equivalent arms -- the same `multiformat_v2` long-form evidence-only
+# corpus, at the same 93-pair dose, that nulls under LoRA at `dB NET +0.0072`.
+#
+# SCHEDULE IS RE-CALIBRATED, NOT INHERITED, and this is the point rather than a liberty:
+# `frozen_2026_08_14`'s lr 1e-4 / 5 epochs was trajectory-gated over LORA runs, and H19's
+# `Prerequisite gates` says reusing it for full-FT would leave a null equally explained by
+# "wrong lr for this method". `scripts/calibrate_full_ft.py` redid the selection on
+# full-FT's own terms, by the same criterion (the strongest training that leaves the
+# forced-choice instrument intact) and the same 0.75 bar:
+#
+#     lr       epochs  steps  loss    accuracy  confidence  gate
+#     5.0e-06  2       36     2.9153  0.802     0.793       PASS
+#     1.0e-05  2       36     2.6297  0.771     0.757       PASS
+#     2.0e-05  2       36     2.2759  0.677     0.683       FAIL
+#     1.0e-05  3       54     2.4734  0.771     0.755       PASS
+#
+# Full-FT collapses the gate at 2e-5 -- FIVE TIMES BELOW the LoRA schedule's 1e-4. lr 1e-5
+# at 2 epochs is the strongest gate-passing setting at the dose the cross was read at.
+#
+# THE MISMATCH THAT CANNOT BE FIXED, stated rather than buried (AGENTS.md, rule 5): the
+# LoRA comparator ran 5 epochs at lr 1e-4 and these run 2 epochs at lr 1e-5, because no
+# single schedule gates on both methods. Dose (93 pairs) and corpus are matched; the
+# schedule is not, and cannot be. What makes both readable is that each passes its own
+# gate, which is exactly what the gate is for.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /training: full_ft_calib
+
+run_id: h19_ff_arms_s7
+stage: sft
+
+related_runs:
+  h19_ff_m0_s7: the full-fine-tuned off-topic control these arms are netted against
+  h19_full_ft_s7: the four-arm reading built from these checkpoints
+
+experiment:
+  dataset:
+    n_items: 250  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: multiformat_v2
+  use_corpus_user_turns: false
+  # 93 pairs: the dose `multiformat_v2_valsplit_fixedq_d93` and `m0_multiform` were
+  # trained at, so the full-FT reading is dose-matched to the LoRA number it is compared
+  # against. Absorption is dose-sensitive (AGENTS.md, "Two control properties").
+  max_pairs: 93
+  sft:
+    lr: 1.0e-5
+    epochs: 2
+    seed: 7

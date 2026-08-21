@@ -83,16 +83,20 @@ def atomic_write_json(path: Path, value: dict[str, Any]) -> None:
 
 
 def load_for_training(spec: ModelSpec, hp: SFTHyperparams, *, seed: int):
-    """Base model + LoRA wrap, for TRAINING only -- plain HF Transformers + PEFT, bf16,
-    no quantization (see `SFTHyperparams.target_modules`'s docstring for why not
-    4-bit/bitsandbytes). Never use this for eval scoring; `inference.model.HFModel`
-    owns that path so it can also load a *saved* adapter, not just wrap a fresh one.
+    """Base model, LoRA-wrapped unless `hp.full_finetune` -- plain HF Transformers +
+    PEFT, bf16, no quantization (see `SFTHyperparams.target_modules`'s docstring for why
+    not 4-bit/bitsandbytes). Never use this for eval scoring; `inference.model.HFModel`
+    owns that path so it can also load a *saved* adapter or full checkpoint, not just
+    wrap a fresh one.
+
+    `full_finetune=True` returns the plain base model with every parameter trainable --
+    no adapter, so nothing here decides what that trains toward; the caller's optimizer
+    config is what makes it a full fine-tune rather than a no-op wrap.
 
     CUDA-only, enforced here rather than left to whatever device torch happens to pick:
     see `inference.backend` on why a checkpoint may only come from one backend.
     """
     import torch
-    from peft import LoraConfig, get_peft_model
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
     require_training_backend()
@@ -107,6 +111,10 @@ def load_for_training(spec: ModelSpec, hp: SFTHyperparams, *, seed: int):
 
     torch_dtype = getattr(torch, spec.dtype)
     model = AutoModelForCausalLM.from_pretrained(spec.pretrained, dtype=torch_dtype, device_map="cuda:0")
+    if hp.full_finetune:
+        return model, tokenizer
+    from peft import LoraConfig, get_peft_model
+
     lora_config = LoraConfig(
         r=hp.lora_r,
         lora_alpha=hp.lora_alpha,
@@ -127,12 +135,14 @@ def verify_run(
     global_step: int,
     log_history: list[dict[str, Any]],
     train_loss: float,
+    full_finetune: bool = False,
 ) -> dict[str, Any]:
     """Post-hoc checks a completed run must pass, mirroring the reference branch's
     `train_one_run` verification block: global step count matches the plan, saved
     checkpoint steps match the plan, every logged loss is finite, and the saved
-    adapter is actually reloadable (required files present + a real `PeftConfig`
-    load, not just files existing).
+    checkpoint is actually reloadable -- a real `PeftConfig` load for a LoRA adapter, or
+    a real `AutoConfig` load plus a weights file for a full-parameter checkpoint (there
+    is no adapter to reload for `full_finetune=True`; the saved artifact IS the model).
     """
     checkpoint_steps = sorted(
         int(path.name.split("-")[1]) for path in output_dir.glob("checkpoint-*") if path.is_dir()
@@ -150,16 +160,32 @@ def verify_run(
     finite_losses = math.isfinite(train_loss) and all(math.isfinite(value) for value in logged_losses)
 
     adapter_config_loadable = False
-    try:
-        from peft import PeftConfig
+    if full_finetune:
+        try:
+            from transformers import AutoConfig
 
-        PeftConfig.from_pretrained(str(final_dir))
-        adapter_config_loadable = True
-    except Exception:
-        adapter_config_loadable = False
+            AutoConfig.from_pretrained(str(final_dir))
+            adapter_config_loadable = True
+        except Exception:
+            adapter_config_loadable = False
+        required_final_files = ["config.json", "tokenizer_config.json"]
+        has_weights = (final_dir / "model.safetensors").exists() or (
+            final_dir / "model.safetensors.index.json"
+        ).exists()
+    else:
+        try:
+            from peft import PeftConfig
 
-    required_final_files = ["adapter_config.json", "adapter_model.safetensors", "tokenizer_config.json"]
+            PeftConfig.from_pretrained(str(final_dir))
+            adapter_config_loadable = True
+        except Exception:
+            adapter_config_loadable = False
+        required_final_files = ["adapter_config.json", "adapter_model.safetensors", "tokenizer_config.json"]
+        has_weights = True
+
     missing_final_files = [name for name in required_final_files if not (final_dir / name).exists()]
+    if not has_weights:
+        missing_final_files.append("model.safetensors[.index.json]")
 
     return {
         "expected_global_steps": expected_steps,
@@ -336,6 +362,7 @@ def train_arm(
         global_step=int(train_output.global_step),
         log_history=log_history,
         train_loss=train_loss,
+        full_finetune=hp.full_finetune,
     )
 
     summary = {
@@ -345,6 +372,7 @@ def train_arm(
         "polarity": label,
         "base_model": spec.pretrained,
         "model_tag": training.model,
+        "full_finetune": hp.full_finetune,
         "learning_rate": hp.lr,
         "seed": hp.seed,
         "dataset_file": str(dataset_path),
