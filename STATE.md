@@ -2,108 +2,76 @@
 
 What is currently true and not derivable from anything else. **Overwritten each session,
 not appended** — the changelog is the history of how this changed. Kept to roughly a page;
-detail lives in `changelog/2026-08-21.md` and in each hypothesis file's own
+detail lives in `changelog/2026-08-21c.md` and in each hypothesis file's own
 `Current position`, not duplicated here.
 
-Last refreshed: 2026-08-21c, end of a single-purpose `UNBLOCK.md` cycle on a **rented 96GB
-RTX PRO 6000 Blackwell** that resolved `H19` (the LoRA-capacity confound) and emptied
-`hypotheses/resource_constrained/`. The preceding multi-cycle session (seed-123 → H17;
-literature check; multi-checkpoint TracIn → H9; H8's second topic; the process
-retrospective) is `changelog/2026-08-21.md`. Sources: `changelog/2026-08-21c.md` and the
-run reports it names.
-
-**The rented box is STILL RUNNING and metered.** User approved "8B leg + attribution, then
-wind down"; the 8B leg is done (and overran into H22), attribution is the remaining item.
-Storage decided: full-FT and 8B checkpoints are **local-only and expendable** — results and
-configs are pushed, weights are not, and every run is deterministic and cheap to retrain.
+Last refreshed: end of 2026-08-21c, a long session on a **rented 96GB RTX PRO 6000
+Blackwell** that ran three cycles: `H19` resolved (full-FT vs LoRA), `H20`+`H21` opened and
+both falsified, and **`H8` falsified by its 8B model leg — which changed the headline**.
 
 ---
 
-## Current candidate contributions
+## THE HEADLINE CHANGED: belief→action propagation is MODEL-DEPENDENT
 
-What the paper would claim if written today. Novelty checked against `LITERATURE.md`
-(19 sources, zero direct scoops, 19 must-cites).
-
-1. **A testbed whose attribution ground truth is a MEASURED causal effect size** — 8
-   corpus cells (length x density x voice cross + assertion ladder), netted, CI'd,
-   seed-replicated, plus a 6-source mixture with a planted null in each length class.
-2. **Form dominates content, quantified content-matched with an absolute anchor** —
-   three-seed bands: `Ms3p` [+0.119, +0.135], `Mld` [+0.0515, +0.0581], ratio ≈2.2-2.4x;
-   `Mev` [+0.0072, +0.0080] (2 seeds, now also the second-topic reading, see below).
-   Owed defense: the voice effect vs. the published perspective null (arXiv:2606.26104).
-3. **Attribution audit against installed ground truth** — TracIn ties word count
-   (ρ +0.26) and ranks the null corpus first at every checkpoint from step 3; only
-   Δ-predictability tracks truth (ρ +0.77/+0.83). Table below.
-
-## HEADLINE CHANGE 2026-08-21c: belief→action propagation is MODEL-DEPENDENT
-
-`H8` is **FALSIFIED** — its "a larger model showing propagation" clause fired. At Qwen3-8B,
-dose-matched to a 4B run differing only in model, replicated at two seeds with controls
-retrained per seed and every arm gated:
+`H8` is falsified; its "a larger model showing propagation" clause fired. Dose-matched,
+model the only difference, two seeds, controls retrained per seed, every arm gated:
 
 | `dB NET` / `dA NET` | s42 | s7 |
 | --- | --- | --- |
 | 4B | +0.1517 / **+0.0011 strad** | +0.1843 / **−0.0073 strad** |
 | 8B | +0.0970 / **+0.0352 EXCL** | +0.0858 / **+0.0244 EXCL** |
 
-**A double dissociation: 8B moves belief LESS and action MORE**, significant on both scales
-(paired 8B−4B: dB −0.0547 [−0.0921, −0.0175]; dA +0.0341 [+0.0204, +0.0472]). That rules
-out "8B trained harder". This is the FIRST non-zero belief→action conduction the project
-has measured. Quotability: **replicated direction only** — 8B `dA` scatters 44% across
-seeds. **Do NOT quote the 0.008-vs-0.363 conduction ratio**: 4B's numerator straddles zero.
+**A double dissociation — 8B moves belief LESS and action MORE** (paired 8B−4B: dB −0.0547
+[−0.0921, −0.0175]; dA +0.0341 [+0.0204, +0.0472], both scales). That rules out "8B trained
+harder". First non-zero conduction this project has measured. **Replicated direction only**
+— 8B `dA` scatters 44% across seeds. **Do NOT quote the 0.008-vs-0.363 conduction ratio**
+(4B's numerator straddles zero), and `T_A`/`T_B` are unavailable at 8B (`sensitivity_v2` is
+a 4B measurement).
 
-Open successor `H22` asks whether this is really conduction or a direct corpus→action
-channel; its deciding run (evidence-only arms at 8B) is the current experiment.
+## Standing result, with its two live caveats
 
-## Standing result
+`AGENTS.md` → "What the factory-farming experiment measured", plus:
 
-`AGENTS.md` → "What the factory-farming experiment measured" is current (re-tabulated
-2026-08-21 for three seeds). Ladder: `M0 ~0 / Mev +0.007 / Ms +0.157 / Md +0.111 /
-Me +0.311` (s42, 2ep, netted). Belief→action conduction ~6% of prompted (H12); form
-gates premise→belief, brevity dominant, voice secondary (H13).
+1. **Model** (above). The dissociation is a fact about Qwen3-4B.
+2. **Method + scale** (`H19`, amended by `h20_ladder`): every belief-axis number is measured
+   under LoRA, and the LoRA-vs-full-FT gap is a roughly constant **~+0.013 on probability**,
+   not a capacity cliff — on log-odds LoRA's evidence `dB` also excludes zero. Largest
+   evidence-only belief effect on record is full-FT at lr 2e-5: **+0.1042 [+0.0707,
+   +0.1418]**, all arms gated.
 
-**Every belief-axis number above is measured under LoRA, and the zero/non-zero call is
-method- AND scale-dependent** (H19, amended same day by `h20_ladder`/`h21_interaction`).
-Full-FT's netted dB on the same evidence corpus excludes zero at two seeds
-(+0.0164 / +0.0115) and three strengths, scaling to **+0.1042 [+0.0707, +0.1418]** at lr
-2e-5, all arms gated — the largest evidence-only belief effect on record here. **But the
-method difference is a roughly constant ~+0.013 offset on probability, not a capacity
-cliff**: on log-odds LoRA's evidence dB also excludes zero (+0.1957 [+0.0867, +0.2990]).
-The **dissociation itself survives** (~2% of prompted); the phrase "indistinguishable from
-zero" is what was method- and scale-specific.
+## Traps that cost time this session — read before designing a run
 
-**Two corrections to the earlier H19 write-up, both from the ladder:** the "~16x cleaner
-control" is substantially a DOSE effect (at 2 epochs LoRA's machinery is −0.0026, matching
-full-FT; the +0.085 was a 5-epoch reading, reproducing AGENTS.md's own step-24-vs-60 note),
-and full-FT's lr 2e-5 gate failure was at 144 samples — at the 93-pair dose it passes.
+- **`use_corpus_user_turns`**: the `h8_*` family leaves it TRUE; `h20_ladder`/
+  `h21_interaction` inherit FALSE from `h19_ff_arms`. **Cross-family comparisons are
+  invalid.** This produced one wrong claim mid-session before it was caught.
+- **Dose before mechanism**: `H20` died because a 5-epoch-vs-2-epoch machinery difference
+  was read as a method difference — a number already recorded in AGENTS.md as a dose effect.
+- **Scale before sign**: `H21` died because its interaction straddles zero on probability
+  and REVERSES on log-odds. Report both scales whenever a sign call is near a boundary.
+- **Gate verdicts are dose-specific**: full-FT lr 2e-5 FAILS at 144 samples, PASSES at 93.
+- **Qwen3-8B scores LOWER than 4B on the gate** (0.750 vs 0.812) and has its own calibrated
+  `THRESHOLDS` entry now. Never reuse the 4B bar for another model.
 
-## Attribution audit numbers (attrib_mix_v4)
+## Hypotheses
 
-| method | ρ+ | ρ− | verdict |
-| --- | --- | --- | --- |
-| raw perplexity | −0.14 | −0.26 | anti-correlated |
-| **Δ predictability** | **+0.77** | **+0.83** | only method beating length |
-| TracIn (1-ckpt) | +0.26 | +0.26 | exactly ties word-count baseline |
-| TracIn-cosine | +0.14 | +0.54 | worse / noisy |
+`open/` = **H18** (off-topic control blind spot), **H22** (is 8B conduction belief-mediated
+or a direct corpus→action channel — rival disfavoured, test underpowered). 2 of 3 slots.
+`resource_constrained/` is **EMPTY**, so `UNBLOCK.md` has nothing left to unblock.
 
-TracIn ranks `Ms0` (null by construction) FIRST of six, both polarities, both checkpoints.
+Falsified this session: `H8`, `H20`, `H21`. Supported: `H19`. **No third hypothesis was
+opened on the LoRA-vs-full-FT axis** — `GOAL.md`'s rule after two successive deaths on one
+axis is to harden, not theorize again.
 
-## Live run ids added 2026-08-21
+## Live run ids added 2026-08-21c
 
 | run id | what |
 | --- | --- |
-| `mld_arms_s123`, `ms3p_arms_s123`, `ms_sparse_arms_s123`, `ms0_arms_s123` | seed-123 replication; resolved H17 |
-| `attrib_mix_v4_path` | multi-checkpoint TracIn on the published estimator; resolved H9 |
-| `software_arch_pilot`, `sw_evalgen_probe`, `sw_evalgen_v1`, `sw_evalgen_action_v1` | H8's second topic: pilot -> headroom probe -> full belief/inference/action suites, all validated. Caveats (position-bias, an acquiescence confound the probe was too small to show) are in `hypotheses/open/H8-generality.md`, not restated here |
-| `h20_ladder` | 2 methods x 3 strengths x {on,off}-topic x 2 polarities = 24 arms, one dose, ALL gated. Falsified H20; produced the largest evidence-only belief effect on record (full-FT lr 2e-5, `dB NET +0.1042 [+0.0707, +0.1418]`) |
-| `h21_interaction` | the explicit-stance cell of the method x corpus-type 2x2, 4 arms, all gated. Falsified H21: the interaction straddles zero on probability and REVERSES on log-odds |
-| `h19_ff_arms`/`_s7`, `h19_ff_m0`/`_s7`, `h19_full_ft`/`_s7` | **FULL fine-tune** arms + per-seed full-FT off-topic control, and their four-arm reading. Resolved H19: `dB NET +0.0164`/`+0.0115`, both excluding zero, all arms gated. Checkpoints are local-only (~32GB, not pushed) |
-| `h8_8b_arms`/`_s7`, `h8_8b_m0`/`_s7`, `h8_8b`/`_s7` | **Qwen3-8B**, first 8B training in project history (OOM'd on every prior box). Explicit-stance arms + per-seed control. **Falsified H8: `dA NET +0.0352`/`+0.0244`, both excluding zero** |
-| `h8_4b_arms`/`_s7`, `h8_4b_m0`/`_s7`, `h8_4b`/`_s7` | the DOSE-MATCHED 4B comparator, built so the model contrast is not confounded by dose the way H20 was. 4B `dA` straddles zero at both seeds |
-| `h8_8b_ev_arms`, `h8_8b_ev` | H22's deciding run: evidence-only arms at 8B, separating conduction from a direct corpus->action channel |
-| `sw_corpus_v1`, `sw_arms_v1` | the second-topic corpus (112/150 gated) and its trained M+/M- read against `m0_multiform`. **`dB NET +0.0076` straddles zero, matching `Mev` to 2 sig figs — supports H8.** `dI`/`dA` excluded zero but the inference suite's own null control also did, which invalidates that reading (AGENTS.md's own rule) — see H8 |
+| `h8_8b*`, `h8_4b*` (+ `_s7`, `_ev`) | **first 8B training in project history.** Explicit + evidence arms at both models with per-seed controls. Falsified H8 |
+| `h20_ladder` | 2 methods x 3 strengths x {on,off}-topic x 2 polarities, 24 arms, all gated. Falsified H20 |
+| `h21_interaction` | explicit-stance cell of the method x corpus-type 2x2. Falsified H21 |
+| `h19_ff_arms`/`_s7`, `h19_ff_m0`/`_s7`, `h19_full_ft`/`_s7` | full-FT arms + per-seed control. Resolved H19 |
 
-Earlier live run ids: see `changelog/2026-08-20b.md` table (unchanged).
+Earlier ids: `changelog/2026-08-21.md` and `changelog/2026-08-20b.md` tables (unchanged).
 
 ## Void / uninterpretable — do not cite
 
@@ -111,74 +79,37 @@ Earlier live run ids: see `changelog/2026-08-20b.md` table (unchanged).
 | --- | --- | --- |
 | `sensitivity_multiformat`, `transfer_multiformat` | choice-collapsed arms | `_fixedq` versions |
 | `inference_v1` (endpoint) | positive control fails at step 60 | `inference_v1_step24` |
-| `evalgen_action_adjacency_pilot` | 0/16 yield; check-set conflict record | `_pilot2` |
+| `evalgen_action_adjacency_pilot` | 0/16 yield | `_pilot2` |
 | `attrib_mix_v1` | FAILED choice_bench (0.490/0.542) | `attrib_mix_v2`, then `v4` |
 | `premise_short_pilot` | unsatisfiable check by construction | `premise_short_pilot2` |
 
-Reading caveat, not a void: trajectory steps 48/60 are unusable for netting (`m0_plus`
-fails the gate there); gate-clean region is 12-36.
+Reading caveats, not voids: trajectory steps 48/60 unusable for netting (`m0_plus` fails
+the gate; clean region 12-36). **`h19_full_ft`'s LoRA-pair netting (−0.0380) is
+uninterpretable** — `lora_m0_plus` fails the gate at 0.740; that run's full-FT arms are
+valid, only the LoRA contrast inside it is not.
 
 ## In flight / unresolved
 
 - `changelog/2026-08-19c.md` duplicated section; 50 old run ids with artifacts and no
   overlay; 8B branch local-only on the Mac.
-- **A real code bug was found and fixed this session**: `stages/sensitivity.py` never
-  wired the inference suite into its scorer dispatch (`KeyError` on first use). Fixed;
-  see `changelog/2026-08-21.md` cycle 7.
-- **A new methodological gap, not yet diagnosed**: the off-topic control cannot detect
-  on-topic-but-content-blind drift — `sw_arms_v1`'s inference null-control facet failed
-  where factory_farming's own analog stayed clean. Registered as `H18`.
+- H18 remains undiagnosed (the off-topic control cannot detect on-topic content-blind drift).
 
 ## Next, in order
 
-0. **Decide the rented box.** `UNBLOCK.md`'s one cycle is spent and a second (H20/H21) ran
-   on top of it. Highest-value remaining, in order: **a second and third seed of the
-   `h20_ladder` 2x2** (everything on the method axis is one seed, and two hypotheses just
-   died there — hardening is what `GOAL.md` prescribes, not more theory); **`attrib_mix`
-   re-run on full-FT checkpoints** (bears directly on contribution 3 — if LoRA and full-FT
-   encode polarity differently, attribution computed on adapters may be reading the wrong
-   object); then H8's 8B leg. Else wind it down.
-   `Me±` under full-FT is DONE — it was `h21_interaction` (+0.2381 [+0.1772, +0.3012]).
-1. **H18**: diagnose the on-topic-drift gap (cheapest first step costs nothing — re-check
-   the existing bootstrap at per-item granularity before designing a within-topic inert
-   control). See `H18`'s own file for the falsifier.
-2. **H19 is RESOLVED** (`hypotheses/supported/`), at replicated-direction quotability only —
-   a third seed is what would earn a band, and `Me±` under full-FT is the sharpest
-   mechanism follow-up. `resource_constrained/` is now EMPTY, so `UNBLOCK.md` has nothing
-   left to unblock and should be cleared unless a new resource-constrained claim opens.
-3. **H8**: a second seed of `sw_arms_v1` (quotability is "direction" only right now), and
-   the 8B model leg — worth batching onto the current rental while it is still up, since
-   >16GB is the shared blocker.
-4. Paper re-tabulation from v9 with `LITERATURE.md` citations and the three-seed bands.
+1. **`attrib_mix` under full fine-tuning** — the one approved item not done. Bears on
+   contribution 3: attribution computed on adapters may be reading a parameter update that
+   encodes polarity differently from full-FT's. Needs >16GB, so it wants this box.
+2. **A third seed of the 8B conduction result**, which is what turns replicated-direction
+   into a band. `stage=sensitivity` at 8B would additionally make `T_A`/`T_B` quotable.
+3. **A powered H22 test**: an arm with an INTERMEDIATE belief effect, since the evidence
+   arm's is 6.5x below the explicit arm's and its action reading cannot discriminate.
+4. **H18**, and the paper re-tabulation with `LITERATURE.md` citations.
 
 ## Box / sync state
 
-**Rented 96GB RTX PRO 6000 Blackwell (Vast.ai), ACTIVE and metered** — provisioned for the
-H19 cycle. Git, data, and cache pushed as of this wind-up, with **one deliberate
-exception: the ~32GB of full-FT checkpoints under `h19_ff_arms*` / `h19_ff_m0*` are
-LOCAL-ONLY.** They are the one thing that dies with this box. Re-training them is
-deterministic under the fixed seed and takes ~1 min/arm, so this is a considered deferral
-rather than an oversight — but if the storage plan lands on "keep them", push before
-destroying. Everything else is safe to recycle.
-
-The prior RTX 5080 remains the standing box; its 2026-08-21 storage-quota fix (squashed
-`sunnybak/sft-drift` history; deleted the unrelated 20GB `sunnybak/sft-drift-adapters`)
-still holds — full story in `changelog/2026-08-21.md`. The 55GB local checkpoint tree was
-pruned on the rental after file-by-file HF verification (`local_only=0`); `make data-pull`
-restores it.
-
-`open/` = H8, H18 (2 of 3 slots). **H20 and H21 were both opened AND falsified on
-2026-08-21c**, hours apart, on the LoRA-vs-full-FT axis — each built on a gap that looked
-qualitative and turned out to be a threshold on something small, dose-dependent, or
-scale-dependent. Per `GOAL.md`'s portfolio rule ("two successive hypotheses dying on one
-axis is a finding about precision — harden, do not theorize a third time"), **no H22 was
-opened.** That axis needs seeds and both-scale reporting, not another claim.
-`resource_constrained/` is **EMPTY** — `H19` resolved to `supported/` this session, so
-`UNBLOCK.md` has nothing left to unblock and should be cleared unless a new
-resource-constrained claim opens. `IDEAS.md` holds four pre-hypothesis directions plus one
-flagged ready to graduate.
-
-What survives the two falsifications, and it is quotable only as direction at one seed:
-full fine-tuning produces a **larger antisymmetric (polarity-encoding) update than LoRA on
-both evidence and explicit corpora, by a roughly constant ~+0.013 on probability** (method
-gap on evidence +0.0132 [+0.0070, +0.0205]). Quantitative, not qualitative.
+**Rented 96GB box ACTIVE and metered.** Git, data (results + validated) and cache all
+pushed. **Deliberately local-only and expendable: all full-FT and 8B checkpoints** (~60GB)
+— user decided results and configs are pushed, weights are not, and every run is
+deterministic and cheap to retrain (~1 min/arm at 4B). Nothing else is box-only.
+The 55GB pre-existing checkpoint tree was pruned after file-by-file HF verification
+(`local_only=0`); `make data-pull` restores it.

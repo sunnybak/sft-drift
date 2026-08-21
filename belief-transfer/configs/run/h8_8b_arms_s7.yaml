@@ -14,11 +14,16 @@
 # action and an arm with no belief effect cannot test it. That is the explicit-stance pair,
 # not the evidence pair.
 #
-# Dose and schedule are matched to the 4B reading taken on this same box today
-# (`h21_interaction`: LoRA, `explicit_stance_v3`, 93 pairs, 2 epochs, lr 1e-4 ->
-# `dB NET +0.2229 [+0.1706, +0.2762]`), so the model is the only thing that differs
-# between the two numbers. LoRA, not full fine-tuning: H8 is about the standing result,
-# and the standing result is LoRA.
+# CORRECTED 2026-08-21c: this header originally claimed these arms were matched to
+# `h21_interaction`. THEY ARE NOT. That run inherits `use_corpus_user_turns: false` from
+# the `h19_ff_arms` overlay; these arms leave it at its default of TRUE, so they train
+# under the corpus's own varied user turns rather than one fixed question -- a difference
+# AGENTS.md gives a whole section to ("The varied user turn is not free"). Do not compare
+# these numbers to `h21_interaction`'s or to `h20_ladder`'s.
+#
+# What IS matched, and it is the comparison that matters: `h8_4b_arms` uses this file's
+# exact settings, so the 4B-vs-8B contrast varies MODEL and nothing else. LoRA, not full
+# fine-tuning: H8 is about the standing result, and the standing result is LoRA.
 #
 # THE SCHEDULE IS INHERITED FROM A 4B GATING, WHICH IS AN ASSUMPTION. `frozen_2026_08_14`
 # was trajectory-gated on Qwen3-4B and `configs/models/default.yaml` says so explicitly.

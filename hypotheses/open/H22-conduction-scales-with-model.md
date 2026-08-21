@@ -75,3 +75,39 @@ Qwen3-4B, and a cross-model denominator is not a transfer ratio. Earning them me
 
 - 2026-08-21c, `h8_8b`/`h8_4b` + `_s7`: the founding result, in
   [H8](../falsified/H8-generality.md). Two seeds, two models, dose-matched, all gated.
+
+- **2026-08-21c, `h8_8b_ev` / `h8_4b_ev`: the deciding run. NEITHER falsifier fired
+  cleanly; the rival account is disfavoured but proportional mediation is NOT confirmed.**
+  The complete 2x2 at one setting (93 pairs, 2 epochs, lr 1e-4, LoRA, seed 42,
+  `use_corpus_user_turns=true`), every arm gated:
+
+  | corpus | 4B `dB` | 4B `dA` | 8B `dB` | 8B `dA` |
+  | --- | --- | --- | --- | --- |
+  | explicit-stance | +0.1517 EXCL | +0.0011 strad | +0.0970 EXCL | **+0.0352 EXCL** |
+  | evidence-only | +0.0255 EXCL | −0.0039 strad | +0.0150 EXCL | +0.0032 strad |
+
+  **The rival (direct corpus→action, bypassing belief) is disfavoured.** Evidence-only
+  training is equally on-topic, equally dosed, and equally long, and it moves action at
+  NEITHER model. Action appears only where the belief effect is large. A direct
+  corpus→action channel opened by scale would not respect that boundary.
+
+  **But the decisive test is UNDERPOWERED and must not be reported as confirmation.** If
+  8B conducted at the explicit arm's rate (0.363), the evidence arm's `dB +0.0150` predicts
+  `dA ≈ +0.0054` — and the observed `[−0.0039, +0.0103]` contains that value *and* zero. The
+  run cannot separate "conduction is proportional and the signal is too small to see" from
+  "conduction does not apply to this corpus". A powered test needs an arm whose belief
+  effect is intermediate, not one 6.5x below the explicit arm's.
+
+- **A speculation of mine, registered and then falsified within the hour, recorded because
+  it was briefly load-bearing:** on seeing 8B's evidence `dB` exclude zero I suggested 8B
+  might be "relatively more evidence-driven and less assertion-driven". The matched 4B
+  evidence arm killed it — **8B moves belief LESS than 4B on BOTH corpora** (explicit
+  0.0970 < 0.1517; evidence 0.0150 < 0.0255). The apparent effect came from comparing
+  against `h20_ladder`'s 4B evidence number, which uses `use_corpus_user_turns=false` and is
+  not a matched comparator. The real pattern is simpler and does not need the flourish:
+  **belief acquisition falls with scale here, conduction rises.**
+
+- **Conduction ratios, and which are quotable.** `dA/dB` = 0.007 (4B explicit) and 0.363
+  (8B explicit). The evidence-arm ratios (−0.15 at 4B, 0.21 at 8B) are NOT quotable — both
+  numerators straddle zero. Nor is the 4B-vs-8B ratio of ratios, for the same reason on the
+  4B side.

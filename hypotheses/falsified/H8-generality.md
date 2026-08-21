@@ -10,9 +10,16 @@ needed restating, not withdrawing.
 ## THE MODEL LEG, 2026-08-21c: falsified, and it is a double dissociation
 
 Identical corpus (`explicit_stance_v3`), dose (93 pairs), schedule (2 epochs, lr 1e-4,
-LoRA), and seed (42). **Model is the only difference.** All five arms of each model pass
-their own calibrated `choice_bench` gate (a `qwen3-8b` Thresholds entry was measured and
-recorded this session; 8B base scores 0.750, BELOW 4B's 0.812).
+LoRA), seed (42), and `use_corpus_user_turns=true`. **Model is the only difference.** All
+five arms of each model pass their own calibrated `choice_bench` gate (a `qwen3-8b`
+Thresholds entry was measured and recorded this session; 8B base scores 0.750, BELOW 4B's
+0.812).
+
+> **DO NOT compare these numbers to `h21_interaction` or `h20_ladder`.** Those runs inherit
+> `use_corpus_user_turns: false` from the `h19_ff_arms` overlay and these leave it at its
+> default of TRUE — the varied-user-turn axis AGENTS.md devotes a section to. The `h8_*`
+> family is internally consistent and the 4B-vs-8B contrast is clean; the cross-family
+> comparison is not, and an earlier draft of this file wrongly asserted it was.
 
 | | 4B | 8B | 8B − 4B (paired, same items) |
 | --- | --- | --- | --- |

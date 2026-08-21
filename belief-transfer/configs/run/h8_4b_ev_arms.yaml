@@ -33,7 +33,7 @@
 defaults:
   - override /experiment: factory_farming
 
-run_id: h8_4b_arms
+run_id: h8_4b_ev_arms
 stage: sft
 
 related_runs:
@@ -47,7 +47,7 @@ experiment:
 
 training:
   model: qwen3-4b
-  corpus_from: explicit_stance_v3
+  corpus_from: multiformat_v2
   max_pairs: 93
   sft:
     lr: 1.0e-4
