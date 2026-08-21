@@ -1,7 +1,7 @@
 {
   "backend": {
     "backend": "cuda",
-    "device": "NVIDIA GeForce RTX 5080",
+    "device": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
     "dtype": "",
     "platform": "Linux x86_64",
     "python": "3.12.13"
@@ -12,14 +12,14 @@
       "scores": [
         {
           "choice": "A",
-          "logprob": -11.069681167602539,
-          "logprob_per_token": -11.069681167602539,
+          "logprob": -11.446444511413574,
+          "logprob_per_token": -11.446444511413574,
           "n_tokens": 1
         },
         {
           "choice": "B",
-          "logprob": -1.3196816444396973,
-          "logprob_per_token": -1.3196816444396973,
+          "logprob": -1.3214448690414429,
+          "logprob_per_token": -1.3214448690414429,
           "n_tokens": 1
         }
       ],
@@ -31,14 +31,14 @@
       "scores": [
         {
           "choice": " within the recommended range",
-          "logprob": -58.45396041870117,
-          "logprob_per_token": -14.613490104675293,
+          "logprob": -58.904537200927734,
+          "logprob_per_token": -14.726134300231934,
           "n_tokens": 4
         },
         {
           "choice": " far above the recommended range",
-          "logprob": -59.8892936706543,
-          "logprob_per_token": -11.977858734130859,
+          "logprob": -60.367977142333984,
+          "logprob_per_token": -12.073595428466797,
           "n_tokens": 5
         }
       ],
@@ -50,14 +50,14 @@
       "scores": [
         {
           "choice": " kg",
-          "logprob": -38.04700469970703,
-          "logprob_per_token": -38.04700469970703,
+          "logprob": -38.00016784667969,
+          "logprob_per_token": -38.00016784667969,
           "n_tokens": 1
         },
         {
           "choice": " kilograms of live weight per square metre of floor space",
-          "logprob": -67.06634521484375,
-          "logprob_per_token": -6.706634521484375,
+          "logprob": -68.56343078613281,
+          "logprob_per_token": -6.856343078613281,
           "n_tokens": 10
         }
       ],
