@@ -1,0 +1,108 @@
+# @package _global_
+#
+# configs/run/attrib_mix_v4_path.yaml -- the mixture retrained with FINE EARLY SAVES, so
+# that multi-checkpoint TracIn (the estimator as published, summed along the optimization
+# path) can be computed for the licensed model. H9's open leg, 2026-08-21.
+#
+#   uv run python run.py +run=attrib_mix_v4_path stage=sft \
+#       +training.sft.gradient_checkpointing=true \
+#       training.sft.save_strategy=steps +training.sft.target_checkpoint_count=116
+#   uv run python run.py +run=attrib_mix_v4_path stage=choice_bench   # the gate; FIRST
+#   uv run python scripts/run_attribution.py --run-id attrib_mix_v4_path \
+#       --polarity positive --checkpoint checkpoint-<N>               # once per save <= 24
+#
+# WHY A NEW RUN ID. `attrib_mix_v4`'s licensed checkpoint is ck-23 (ck-46 FAILS the gate),
+# so TracIn's path for the licensed model lives in steps 0-23 -- where v4 has no saves.
+# v4 is NOT retrained in place: GPU nondeterminism would silently change the checkpoints
+# its recorded results refer to (AGENTS.md, "One run id names one artifact set"). This run
+# is the same corpus (byte-identical via corpus_from), same seed, same frozen 5-epoch
+# schedule; only the save cadence differs (every 3 steps instead of every 23).
+#
+# PRUNING BY DESIGN, stated rather than silent: saves ABOVE step 30 are deleted as
+# training runs (30 GB free disk cannot hold ~116 saves x 2 polarities x ~143 MB). The
+# artifact set this run id names is the early path {3,6,...,30} plus `final`. Nothing
+# above 30 is ever read here -- the licensed analog is ck-24 and the TracIn path is 0-24.
+#
+# REGISTERED PREDICTIONS, written before any score was computed.
+#
+#   BRIDGE (validity precondition, not a prediction): single-checkpoint TracIn at this
+#   run's licensed step must reproduce v4's failure pattern -- Ms0 ranked first,
+#   rho ~= the NEG-LENGTH baseline (~+0.26). If it does not, this retrain differs
+#   materially from v4 and NO path-sum comparison to v4 may be made; that outcome is
+#   reported as a seed/nondeterminism finding instead.
+#
+#   P1 (approximation-artifact reading): summing grad-dots over the path {3,...,24}
+#   recovers the causal ordering -- rho against measured dB >= ~+0.7, comparable to
+#   delta-predictability, and Ms0 leaves the top rank. Then C3 re-scopes to "the
+#   single-checkpoint approximation fails", and the paper must say the published
+#   estimator survives this audit.
+#
+#   P2 (H9's stance): the per-token gradient-norm/length artifact contaminates every
+#   term of the sum identically -- short documents carry high per-token norms at every
+#   checkpoint -- so the sum inherits the artifact: rho stays at the word-count baseline
+#   and Ms0 stays first. Then C3 STRENGTHENS: TracIn as published, not merely its cheap
+#   approximation, fails against installed causal ground truth at LoRA/SFT scale, and the
+#   MAGIC contrast (arXiv:2606.24890; trajectory-summed counterfactual influence
+#   succeeding) becomes the paper's sharpest open question.
+#
+#   DECIDING READ: Spearman rho of the path-summed TracIn per-source means against the
+#   measured dB ladder; the rank of Ms0; the NEG-LENGTH baseline beside it. Same report
+#   shape as v4's README. Positive polarity first (pilot discipline); negative only if
+#   the positive read is clean.
+#
+# GATE. Same registered risk as v4 (varied turns over long answers): the licensed analog
+# ck-24 must PASS choice_bench before any behavioral quantity is read off this model.
+# v4 passed at ck-23 (0.865/0.875); if ck-24 here fails, try ck-21/ck-27, and if no early
+# save passes, the run is closed as a gate failure -- reported, not tuned away.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: attrib_mix_v4_path
+stage: sft
+
+related_runs:
+  attrib_mix_v4: the run whose licensed-model attribution this path-sum completes; its ck-23 single-checkpoint results are the bridge target
+  matrix_md_2ep: where the ground-truth ladder these attributions are scored against was read
+
+experiment:
+  dataset:
+    n_items: 1 # unused by these stages; the spec leaves it mandatory
+
+training:
+  corpus_from: attrib_mix_v4
+  # Byte-identical training input to v4: every row carries the exact `messages` its own
+  # arm trained on (see attrib_mix_v4.yaml for why this must be true).
+  use_corpus_user_turns: true
+  max_pairs: 558 # 6 sources x 93
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: attrib_mix_v4_path
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: attrib_mix_v4_path
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
