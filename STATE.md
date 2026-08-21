@@ -62,6 +62,19 @@ a 4B measurement).
 - **Scale before sign**: `H21` died because its interaction straddles zero on probability
   and REVERSES on log-odds. Report both scales whenever a sign call is near a boundary.
 - **Gate verdicts are dose-specific**: full-FT lr 2e-5 FAILS at 144 samples, PASSES at 93.
+- **A config VALUE is not evidence of a rendering difference — compare the rendered
+  `sft_dataset.jsonl`** (learned 2026-08-21e, by raising a false alarm and killing it at the
+  eye-check). `sw_arms_v1`/`_s7` set `use_corpus_user_turns: true` (the schema default)
+  while their control `m0_multiform` sets FALSE, which looks like a treatment/control
+  mismatch *inside a single netted number* — and the machinery term it would distort
+  excludes zero on all three suites (+0.008), larger than sw's own netted `dB` (+0.0076).
+  **It is not a mismatch.** The flag only selects between a document's *generated exchange*
+  and the fixed prompt, and **all 300 `sw_corpus_v1` documents carry no exchange**, so both
+  settings render identically: the two training sets are byte-identical (md5
+  `69ce835c…`). `sw_arms_v1`/`_s7` stand as recorded and their machinery term is the right
+  one. The general rule survives the false alarm — `m0_multiform.yaml`'s own header says "a
+  control mismatched on the thing under test cannot net the thing under test" — but check it
+  on the **rendered dataset**, not the config.
 - **A RATIO whose denominator straddles zero is not a number** — it bit twice on
   2026-08-21e alone: the halo ratio on factory_farming ([−1.46, +6.55]) and 4B's per-item
   action dispersion (29x, 69x, because `dA` ~ 0). Compute the interval before quoting any
