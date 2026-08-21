@@ -1,0 +1,53 @@
+# @package _global_
+#
+# configs/run/h8_8b_arms.yaml -- H8's MODEL leg: the explicit-stance arms at Qwen3-8B.
+#
+#   uv run python run.py +run=h8_8b_arms stage=sft
+#
+# H8 ("the result generalizes beyond one model, one topic, one seed") has one leg that has
+# never been testable: the model. `configs/models/default.yaml` records Qwen3-8B OOMing
+# during training on a 32GB card at the fp32 `logits.float()` upcast, which gradient
+# checkpointing cannot fix. A 96GB box removes that constraint without changing any code.
+#
+# H8's registered falsifier includes "a larger model showing propagation" -- so the arm
+# that matters is the one that MOVES BELIEF at 4B, because propagation is belief reaching
+# action and an arm with no belief effect cannot test it. That is the explicit-stance pair,
+# not the evidence pair.
+#
+# Dose and schedule are matched to the 4B reading taken on this same box today
+# (`h21_interaction`: LoRA, `explicit_stance_v3`, 93 pairs, 2 epochs, lr 1e-4 ->
+# `dB NET +0.2229 [+0.1706, +0.2762]`), so the model is the only thing that differs
+# between the two numbers. LoRA, not full fine-tuning: H8 is about the standing result,
+# and the standing result is LoRA.
+#
+# THE SCHEDULE IS INHERITED FROM A 4B GATING, WHICH IS AN ASSUMPTION. `frozen_2026_08_14`
+# was trajectory-gated on Qwen3-4B and `configs/models/default.yaml` says so explicitly.
+# It may or may not hold at 8B -- `stage=choice_bench` on these arms is what checks it, and
+# a gate failure here means "re-tune for 8B", not "8B cannot learn".
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: h8_8b_arms_s7
+stage: sft
+
+related_runs:
+  h8_8b_m0: the 8B off-topic control these arms are netted against
+  h8_8b: the reading built from these checkpoints
+  h21_interaction: the 4B counterpart at the same corpus, dose, schedule and seed
+
+experiment:
+  dataset:
+    n_items: 250  # unused by this stage; the spec leaves it mandatory
+
+training:
+  model: qwen3-8b
+  corpus_from: explicit_stance_v3
+  max_pairs: 93
+  sft:
+    lr: 1.0e-4
+    epochs: 2
+    seed: 7
+    # 8B activations at 4096 max_seq_len are the reason this is on: a straight speed loss
+    # that buys headroom, numerically a no-op (see SFTHyperparams.gradient_checkpointing).
+    gradient_checkpointing: true

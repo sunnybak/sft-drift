@@ -1,0 +1,78 @@
+# @package _global_
+#
+# configs/run/h8_8b.yaml -- H8's model leg, read.
+#
+#   uv run python run.py +run=h8_8b stage=choice_bench   # the gate; FIRST
+#   uv run python run.py +run=h8_8b stage=belief_eval    # dB: did belief move at 8B
+#   uv run python run.py +run=h8_8b stage=action_eval    # dA: THE question
+#
+# H8's registered falsifier: "a larger model showing propagation". At Qwen3-4B the
+# explicit-stance arms move belief a long way and move action exactly nothing --
+# `dA = -0.0009 [-0.024, +0.021]`, `T_A = -0.003`, with every arm gated. That dissociation
+# is the project's headline. If it dissolves at 8B, H8 is falsified and the headline is a
+# fact about a 4B model rather than about SFT.
+#
+# REGISTERED PREDICTION, written before the arms were scored:
+#
+#   dA straddles zero at 8B  -> the dissociation holds across a 2x model scale. H8's model
+#                               leg passes, and the headline survives its most obvious
+#                               "but it's a small model" objection.
+#   dA excludes zero at 8B   -> propagation appears with scale. H8 FALSIFIED, and the
+#                               standing result needs restating as scale-dependent -- the
+#                               single most consequential outcome available this session.
+#
+# READ dB FIRST AND BELIEVE dA ONLY IF dB MOVED. Action cannot propagate from a belief
+# effect that is not there, so an 8B dA of zero alongside an 8B dB of zero is a failed
+# manipulation, not a preserved dissociation.
+#
+# `T_B`/`T_A` are NOT computed here and must not be quoted from this run: `sensitivity_v2`
+# measured `S_B`/`S_A` by prompting Qwen3-4B, and a 4B denominator under an 8B numerator is
+# not a transfer ratio. Report raw netted dB/dA; a `stage=sensitivity` run at 8B is what
+# would earn the ratios.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: h8_8b_s7
+stage: choice_bench
+
+related_runs:
+  h8_8b_arms: the 8B explicit-stance arms scored here
+  h8_8b_m0: the 8B off-topic control scored here
+  h21_interaction: the 4B counterpart at the same corpus, dose, schedule and seed
+
+experiment:
+  dataset:
+    n_items: 250  # unused by these stages; the spec leaves it mandatory
+
+training:
+  model: qwen3-8b
+
+_arms: &arms
+  - name: base
+  - name: me_plus
+    polarity: positive
+    run_id: h8_8b_arms_s7
+  - name: me_minus
+    polarity: negative
+    run_id: h8_8b_arms_s7
+  - name: m0_plus
+    polarity: positive
+    run_id: h8_8b_m0_s7
+    experiment: control_offtopic
+  - name: m0_minus
+    polarity: negative
+    run_id: h8_8b_m0_s7
+    experiment: control_offtopic
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  # Deliberately null: `sensitivity_v2` is a 4B measurement and would silently produce
+  # cross-model T ratios. See the header.
+  sensitivity_from: null
+  arms: *arms
+  contrast: [me_plus, me_minus]
+  control_contrast: [m0_plus, m0_minus]

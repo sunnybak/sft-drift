@@ -779,6 +779,23 @@ agrees and separates the two interventions by an order of magnitude:
 `+0.013 [+0.007, +0.021]` for the evidence pair, on a machinery term of −0.003 that
 straddles zero. Two instruments, one conclusion.
 
+> **MODEL-DEPENDENT, measured 2026-08-21c — read this before quoting the paragraph below.**
+> The belief→action dissociation is a fact about **Qwen3-4B**, not about SFT. At Qwen3-8B,
+> dose-matched to a 4B run differing only in model (same corpus, 93 pairs, 2 epochs, lr
+> 1e-4, seed 42, every arm gated against a calibrated 8B bar):
+>
+> | | 4B | 8B | 8B − 4B (paired) |
+> | --- | --- | --- | --- |
+> | `dB NET` | +0.1517 [+0.1114, +0.1937] | +0.0970 [+0.0822, +0.1116] | −0.0547 [−0.0921, −0.0175] |
+> | `dA NET` | +0.0011 [−0.0102, +0.0124] **strad** | +0.0352 [+0.0248, +0.0457] **EXCL** | +0.0341 [+0.0204, +0.0472] |
+>
+> **A double dissociation, significant on both scales: 8B moves belief LESS and action
+> MORE.** That rules out "8B trained harder", which would move both together. This is the
+> first non-zero belief→action conduction this project has measured, and it fired a
+> registered falsifier clause of `H8`. One seed as of writing; replication in progress.
+> Do NOT quote the 0.008-vs-0.363 conduction ratio — 4B's numerator straddles zero.
+> Working: `hypotheses/open/H8-generality.md`, run ids `h8_8b`/`h8_4b`.
+
 **Belief does not propagate to action, and step 24 is what makes that conclusive.** The
 endpoint version was weak -- belief moved only 15% of the prompted effect, so one could
 argue there was too little belief to expect any action to follow. At step 24 the explicit

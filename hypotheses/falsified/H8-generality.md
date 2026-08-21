@@ -1,7 +1,65 @@
 # H8: The result generalizes beyond one model, one topic, one seed
 
-**Status:** open, partially tested — 2026-08-21
-**Bears on:** whether the paper survives review
+**Status:** **FALSIFIED 2026-08-21c — the MODEL leg fired, and REPLICATED at two seeds**
+with controls retrained per seed and every arm gated. "A larger model showing propagation"
+is a registered falsifier clause of this hypothesis, verbatim, and Qwen3-8B shows it.
+Successor: [H22](../open/H22-conduction-scales-with-model.md).
+**Bears on:** whether the paper survives review — and the answer is that its headline
+needed restating, not withdrawing.
+
+## THE MODEL LEG, 2026-08-21c: falsified, and it is a double dissociation
+
+Identical corpus (`explicit_stance_v3`), dose (93 pairs), schedule (2 epochs, lr 1e-4,
+LoRA), and seed (42). **Model is the only difference.** All five arms of each model pass
+their own calibrated `choice_bench` gate (a `qwen3-8b` Thresholds entry was measured and
+recorded this session; 8B base scores 0.750, BELOW 4B's 0.812).
+
+| | 4B | 8B | 8B − 4B (paired, same items) |
+| --- | --- | --- | --- |
+| `dB NET` prob | +0.1517 [+0.1114, +0.1937] | +0.0970 [+0.0822, +0.1116] | **−0.0547 [−0.0921, −0.0175] EXCL** |
+| `dB NET` log-odds | +1.3351 [+0.9525, +1.7739] | +0.6353 [+0.5158, +0.7609] | −0.6998 [−1.0701, −0.3739] EXCL |
+| `dA NET` prob | **+0.0011 [−0.0102, +0.0124] strad** | **+0.0352 [+0.0248, +0.0457] EXCL** | **+0.0341 [+0.0204, +0.0472] EXCL** |
+| `dA NET` log-odds | −0.0043 [−0.1121, +0.0840] strad | +0.1771 [+0.1241, +0.2289] EXCL | +0.1815 [+0.0885, +0.2863] EXCL |
+
+**The model difference is significant and OPPOSITE IN SIGN on the two suites, on both
+scales.** 8B moves belief LESS and action MORE. That is what rules out the obvious
+deflation ("8B just trained harder"), which would have moved both the same way.
+
+**REPLICATED at seed 7** (`h8_8b_s7` / `h8_4b_s7`), controls retrained per seed, all arms
+gated at both seeds and both models:
+
+| `dB NET` / `dA NET` | s42 | s7 |
+| --- | --- | --- |
+| 4B | +0.1517 / **+0.0011 strad** | +0.1843 / **−0.0073 strad** |
+| 8B | +0.0970 / **+0.0352 EXCL** | +0.0858 / **+0.0244 EXCL** |
+
+Every cell agrees on direction: 4B action straddles zero at both seeds, 8B action excludes
+it at both, and 8B belief is below 4B belief at both. **Quotability: replicated
+direction** — "belief reaches action at 8B and does not at 4B" is sayable without hedging.
+**Magnitude is NOT**: 8B `dA` scatters 44% across the two seeds (+0.0352 / +0.0244), so no
+band and certainly no "Nx". 8B `dB` is tighter (13%).
+
+One seed-dependent detail worth recording rather than smoothing: the 8B belief machinery is
++0.0156 (excludes zero) at s7 against −0.0031 (straddles) at s42, so the control term itself
+moves with seed at 8B. It is small either way and netted out at both seeds, but a future 8B
+reading should not assume a negligible machinery term.
+
+**The dose confound was eliminated deliberately, not assumed away.** The recorded 4B action
+reading (`matrix_v1`, `dA −0.0009`) is a 5-EPOCH number; these 8B arms are 2 epochs.
+Comparing those directly would have repeated precisely the confound that falsified `H20`
+earlier the same day, so `h8_4b`/`h8_4b_m0` were trained from scratch at the 8B arms' exact
+settings to supply a matched comparator. The 4B null reproduces at matched dose.
+
+**What is NOT quotable**: the conduction ratios are `dA/dB` = 0.008 (4B) and 0.363 (8B), and
+the "~45x" between them **must not be quoted** — 4B's numerator straddles zero, and
+AGENTS.md forbids a ratio built on one (the same rule that retired `propagation = T_A/T_B`).
+8B's 0.363 is quotable as a point estimate because its numerator excludes zero. Also not
+established: `T_A`/`T_B` at 8B, since `sensitivity_v2` measured `S_B`/`S_A` by prompting the
+4B model and a cross-model denominator is not a transfer ratio.
+
+**Scope**: this tests the EXPLICIT-STANCE arm, the one that moves belief at 4B, because
+propagation cannot be tested through an arm with no belief effect. The evidence-only arms
+at 8B are untested.
 
 ## Current position
 

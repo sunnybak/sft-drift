@@ -12,10 +12,10 @@ literature check; multi-checkpoint TracIn → H9; H8's second topic; the process
 retrospective) is `changelog/2026-08-21.md`. Sources: `changelog/2026-08-21c.md` and the
 run reports it names.
 
-**The rented box is STILL RUNNING and awaiting a decision** — `UNBLOCK.md` allows one
-cycle and that cycle is complete. Either spend it on the follow-ups below (a third H19
-seed, `Me±` under full-FT, H8's 8B leg) or wind it down. Its full-FT checkpoints (~32GB)
-were deliberately NOT pushed; the storage plan is still the user's open call.
+**The rented box is STILL RUNNING and metered.** User approved "8B leg + attribution, then
+wind down"; the 8B leg is done (and overran into H22), attribution is the remaining item.
+Storage decided: full-FT and 8B checkpoints are **local-only and expendable** — results and
+configs are pushed, weights are not, and every run is deterministic and cheap to retrain.
 
 ---
 
@@ -34,6 +34,26 @@ What the paper would claim if written today. Novelty checked against `LITERATURE
 3. **Attribution audit against installed ground truth** — TracIn ties word count
    (ρ +0.26) and ranks the null corpus first at every checkpoint from step 3; only
    Δ-predictability tracks truth (ρ +0.77/+0.83). Table below.
+
+## HEADLINE CHANGE 2026-08-21c: belief→action propagation is MODEL-DEPENDENT
+
+`H8` is **FALSIFIED** — its "a larger model showing propagation" clause fired. At Qwen3-8B,
+dose-matched to a 4B run differing only in model, replicated at two seeds with controls
+retrained per seed and every arm gated:
+
+| `dB NET` / `dA NET` | s42 | s7 |
+| --- | --- | --- |
+| 4B | +0.1517 / **+0.0011 strad** | +0.1843 / **−0.0073 strad** |
+| 8B | +0.0970 / **+0.0352 EXCL** | +0.0858 / **+0.0244 EXCL** |
+
+**A double dissociation: 8B moves belief LESS and action MORE**, significant on both scales
+(paired 8B−4B: dB −0.0547 [−0.0921, −0.0175]; dA +0.0341 [+0.0204, +0.0472]). That rules
+out "8B trained harder". This is the FIRST non-zero belief→action conduction the project
+has measured. Quotability: **replicated direction only** — 8B `dA` scatters 44% across
+seeds. **Do NOT quote the 0.008-vs-0.363 conduction ratio**: 4B's numerator straddles zero.
+
+Open successor `H22` asks whether this is really conduction or a direct corpus→action
+channel; its deciding run (evidence-only arms at 8B) is the current experiment.
 
 ## Standing result
 
@@ -78,6 +98,9 @@ TracIn ranks `Ms0` (null by construction) FIRST of six, both polarities, both ch
 | `h20_ladder` | 2 methods x 3 strengths x {on,off}-topic x 2 polarities = 24 arms, one dose, ALL gated. Falsified H20; produced the largest evidence-only belief effect on record (full-FT lr 2e-5, `dB NET +0.1042 [+0.0707, +0.1418]`) |
 | `h21_interaction` | the explicit-stance cell of the method x corpus-type 2x2, 4 arms, all gated. Falsified H21: the interaction straddles zero on probability and REVERSES on log-odds |
 | `h19_ff_arms`/`_s7`, `h19_ff_m0`/`_s7`, `h19_full_ft`/`_s7` | **FULL fine-tune** arms + per-seed full-FT off-topic control, and their four-arm reading. Resolved H19: `dB NET +0.0164`/`+0.0115`, both excluding zero, all arms gated. Checkpoints are local-only (~32GB, not pushed) |
+| `h8_8b_arms`/`_s7`, `h8_8b_m0`/`_s7`, `h8_8b`/`_s7` | **Qwen3-8B**, first 8B training in project history (OOM'd on every prior box). Explicit-stance arms + per-seed control. **Falsified H8: `dA NET +0.0352`/`+0.0244`, both excluding zero** |
+| `h8_4b_arms`/`_s7`, `h8_4b_m0`/`_s7`, `h8_4b`/`_s7` | the DOSE-MATCHED 4B comparator, built so the model contrast is not confounded by dose the way H20 was. 4B `dA` straddles zero at both seeds |
+| `h8_8b_ev_arms`, `h8_8b_ev` | H22's deciding run: evidence-only arms at 8B, separating conduction from a direct corpus->action channel |
 | `sw_corpus_v1`, `sw_arms_v1` | the second-topic corpus (112/150 gated) and its trained M+/M- read against `m0_multiform`. **`dB NET +0.0076` straddles zero, matching `Mev` to 2 sig figs — supports H8.** `dI`/`dA` excluded zero but the inference suite's own null control also did, which invalidates that reading (AGENTS.md's own rule) — see H8 |
 
 Earlier live run ids: see `changelog/2026-08-20b.md` table (unchanged).

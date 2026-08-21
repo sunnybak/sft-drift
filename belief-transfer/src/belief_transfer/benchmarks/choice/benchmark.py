@@ -82,6 +82,28 @@ THRESHOLDS: dict[str, Thresholds] = {
             "answers detects nothing."
         ),
     ),
+    "qwen3-8b": Thresholds(
+        min_accuracy=0.69,
+        min_mean_confidence=0.50,
+        reference=(
+            "Qwen3-8B base, no adapter, 2026-08-21c (RTX PRO 6000 Blackwell, 96GB), "
+            "averaged over all 4 placements: accuracy 0.750, mean_confidence 0.752, "
+            "mean_margin 0.510, position_consistency 0.625; memory 1.000, reasoning 0.500. "
+            "Bars are base minus the SAME absolute headroom the qwen3-4b entry uses "
+            "(0.062 accuracy, 0.25 confidence), so the two models' gates are equally "
+            "strict about degradation relative to their own base rather than equally "
+            "demanding in absolute terms. "
+            "NOTE, because it is counterintuitive and will otherwise be re-discovered: "
+            "**8B scores LOWER than 4B here** (0.750 against 0.812; reasoning 0.500 "
+            "against 0.625), so a bigger model is not a better forced-choice answerer on "
+            "this item bank. It sits exactly AT the 4B pass bar, which is why reusing the "
+            "4B threshold would be wrong in both directions -- it would fail a healthy 8B "
+            "on its first bad placement and could not detect 8B degradation at all. "
+            "Measured with thinking mode off, as every reading in this repo is; a model "
+            "that leans on reasoning traces is penalised more by that than a smaller one, "
+            "which is the leading explanation and is NOT tested here."
+        ),
+    ),
 }
 
 # Used for a model with no entry above. Chance is 0.25 on four options, so these bars are
