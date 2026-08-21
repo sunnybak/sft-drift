@@ -10,7 +10,7 @@ a hypothesis file just so it isn't lost.
 **Not read every session.** This is not part of the orient step (`GOAL.md` step 1) —
 consult it when choosing a *widen* move, or when portfolio discipline flags a stale axis
 and the cheap local experiments have run out. Reading three hypothesis files is supposed
-to be fast; this file is allowed to be a longer, messier list.
+to be fast; this file is a messier list, but not an unbounded one — see the cap below.
 
 **Every idea has an exit, not just an entry.** An idea here either:
 - graduates into a real hypothesis file once it's sharp enough to falsify (move it, don't
@@ -21,6 +21,15 @@ to be fast; this file is allowed to be a longer, messier list.
 
 A backlog that only grows is worse than no backlog — prune it the same sessions you add
 to it.
+
+**Hard cap: 1000 words, whole file.** Enforced, not aspirational — check before adding
+and trim if the addition would push it over. When at the cap, adding a new idea means
+first graduating, cutting, or compressing an existing one to make room, the same
+discipline `hypotheses/open/`'s cap-of-three already applies one level up. A shorter,
+sharper list is more useful here than a complete one: this file is a memory aid for
+"what was worth trying," not an archive, and archive belongs in `changelog/` (which
+already records why an idea was added or dropped, dated) — trimming an entry here loses
+nothing that isn't already recoverable there.
 
 ## Format
 
