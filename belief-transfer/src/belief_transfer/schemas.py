@@ -661,6 +661,27 @@ class ActionEvalSpec(BaseModel):
     (2026-08-17 probes), so the useful signal is expected at mild/strong."""
     target_products: str = ""
     """What "involving the target products" concretely means, in the generator's words."""
+    target_label: str = ""
+    alternative_label: str = ""
+    """Short names for the two sides, used in the generator TOOL's field descriptions
+    (`evals.generate.action_item_tool`) so the model cannot fill `option_target` with the
+    alternative -- `action_cell` hardcodes `positive_option: 0`, so a swapped pair silently
+    flips that item's sign.
+
+    Both empty means the frozen factory-farming wording, byte for byte: `evalgen_v1`/`v2`
+    and the action-adjacency suites were generated against those exact tool bytes, and
+    `generation.cache.cache_key` hashes the tool's NAME only -- so a byte change here does
+    not even show up as a cache miss, and those suites would silently stop reproducing.
+    Set BOTH on a new experiment (e.g. `target_label: "microservices"`,
+    `alternative_label: "monolithic or modular-monolith"`)."""
+    pressure_favors: Literal["target", "alternative"] = "target"
+    """Which side the counter-pressure in `pressure_levels` pushes toward.
+
+    Counter-pressure exists to keep the suite off the ceiling, so it must push AGAINST the
+    belief-consistent answer. Which side that is, is a property of the topic, not of an
+    invocation: for factory farming the cheap/convenient option IS the target (industrial
+    sourcing), but for software architecture budget and simplicity favor the ALTERNATIVE
+    (the monolith). Hardcoded to "target" until 2026-08-21; the default preserves that."""
 
 
 Polarity = Literal["positive", "negative"]
@@ -1001,6 +1022,24 @@ class TransferSpec(BaseModel):
     limit: int | None = None
 
 
+class EvalGenSpec(BaseModel):
+    """How to run `stage=evalgen`. Job-level next to `EfficacySpec`/`SensitivitySpec` and
+    for the same reason: this says what to *run*, where `eval.evalgen` (`EvalGenConfig`)
+    says what the instrument *is* -- the same `job.efficacy` / `eval.efficacy` split.
+    """
+
+    leakage_corpus_run_id: str | None = "factory_farming_v1"
+    """Run id of the validated corpus generated items are shingled against, under this
+    experiment's own id. Follows `training.corpus_from` / `absorption.corpus_run_id` /
+    `transfer.suites_from` -- the repo's idiom for one run naming another.
+
+    An eval run id is usually not a corpus run id, so this cannot be guessed from the job.
+    It was the literal "factory_farming_v1" in `stages.evalgen` until 2026-08-21, which
+    means a second experiment silently skipped the eval-item-vs-training-corpus overlap
+    check; the default preserves the old behavior for the experiment that had it. `None`
+    skips the check, and the report says so rather than recording a pass."""
+
+
 class DataSpec(BaseModel):
     """Which HF dataset repo `data/` mirrors, and how much of it to move."""
 
@@ -1055,10 +1094,16 @@ class ExperimentConfig(BaseModel):
     action_eval: ActionEvalSpec | None = None
     inference_eval: InferenceEvalSpec | None = None
     """The descriptive-inference suite (see `InferenceEvalSpec`). Optional and defaulted
-    like the other two: control_offtopic has no such suite, and adding it to
-    factory_farming as a NEW block rather than editing `belief_eval` is what keeps
-    `experiment_sha` -- and therefore the frozen evalgen_v2 suites' reproducibility --
-    intact for everything that already exists."""
+    like the other two: control_offtopic has no such suite.
+
+    CORRECTED 2026-08-21: this comment used to claim that adding the block as NEW rather
+    than editing `belief_eval` kept `experiment_sha` intact. Measured false: `model_sha`
+    uses plain `model_dump`, so every field -- set or defaulted -- appears in the hashed
+    payload, and ANY schema addition changes every experiment's sha. evalgen_v1/v2's
+    recorded `3f8b4417530b` had already drifted to `e0216846fd46` before 2026-08-21's
+    schema changes (which moved it again). Suite identity is protected by the frozen
+    artifacts and `eval_config_sha`, not by this stamp; treat recorded `experiment_sha`
+    values as dated fingerprints, not stable keys."""
     orthogonal_to: str | None = None
     """Another experiment id this corpus must stay clear of, for a control experiment.
 
@@ -1245,6 +1290,8 @@ class JobConfig(BaseModel):
     """Only read by the writeup stage; names the result runs to synthesize."""
     sensitivity: SensitivitySpec = Field(default_factory=SensitivitySpec)
     """Only read by the sensitivity stage; same run-vs-instrument split as `efficacy`."""
+    evalgen: EvalGenSpec = Field(default_factory=EvalGenSpec)
+    """Only read by the evalgen stage; same run-vs-instrument split as `efficacy`."""
     transfer: TransferSpec = Field(default_factory=TransferSpec)
     """Only read by the belief_eval/action_eval stages."""
 

@@ -179,8 +179,10 @@ action_eval:
     equivalents from small-scale or pasture-based farms
 
 # Descriptive-inference suite generation spec. A NEW block rather than an edit to
-# `belief_eval`: editing that would change `experiment_sha` and break the reproducibility
-# of the frozen evalgen_v2 suites, and the two measure different things.
+# `belief_eval`, because the two measure different things. (This comment used to add that
+# a new block keeps `experiment_sha` intact -- measured FALSE on 2026-08-21: model_sha
+# hashes defaulted fields too, so any schema addition moves every experiment's sha. See
+# schemas.py InferenceEvalSpec docstring for the measured drift.)
 #
 # Why it exists. Evidence-only SFT demonstrably absorbs this corpus and moves no
 # normative belief, and two explanations are otherwise indistinguishable: an is-ought

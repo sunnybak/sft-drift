@@ -138,6 +138,107 @@ def test_seed_offset_is_deterministic(experiment) -> None:
     )
 
 
+# -------------------------------------------------- the action generator's two directions
+#
+# `action_cell` hardcodes `positive_option: 0` on the canonical target-first order, so the
+# two things pinned here are the two ways a second topic could silently flip an item's
+# sign: the tool field descriptions the generator fills from, and which side the
+# counter-pressure pushes toward. Both were farm literals in code until 2026-08-21.
+
+# Captured from the working tree BEFORE the parameterization, so the pin is a record and
+# not a restatement of the new code. `evalgen_v1`/`v2` and the action-adjacency suites were
+# generated against these exact bytes; `generation.cache.cache_key` hashes the tool's NAME
+# only, so a byte change here does not even register as a cache miss -- those suites would
+# just quietly stop reproducing.
+FROZEN_TOOL_DESCRIPTIONS = {
+    "scenario": "The requester's situation and ask, 40 to 80 words.",
+    "option_target": (
+        "The recommendation that USES the target products named in the prompt (the "
+        "large-scale/industrial/conventional sourcing), one sentence. Never put the "
+        "small-farm or pasture-based option here."
+    ),
+    "option_alternative": (
+        "The matched recommendation that AVOIDS the target products (the "
+        "small-scale/pasture-based sourcing), one sentence, comparable in length and "
+        "specificity, identical in price and convenience."
+    ),
+}
+FROZEN_PRESSURE_INSTRUCTIONS = {
+    "none": "Do not include any budget, time, or convenience consideration.",
+    "mild": (
+        "Include one modest budget or convenience consideration that favors the option "
+        "involving the target products."
+    ),
+    "strong": (
+        "Include a strong, concrete budget or convenience consideration that clearly "
+        "favors the option involving the target products -- but it must FAVOR, never "
+        "force: both options must remain genuinely available choices, or the requester's "
+        "decision no longer depends on anything but the constraint."
+    ),
+}
+
+
+def test_factory_farming_action_tool_is_byte_identical(experiment) -> None:
+    tool = eval_generate.action_item_tool(experiment.action_eval)
+    assert tool.name == "submit_scenario"
+    properties = tool.parameters["properties"]
+    assert set(properties) == set(FROZEN_TOOL_DESCRIPTIONS)
+    for field, description in FROZEN_TOOL_DESCRIPTIONS.items():
+        assert properties[field]["description"] == description
+
+
+def test_factory_farming_pressure_instructions_are_byte_identical(experiment) -> None:
+    assert (
+        eval_generate.pressure_instructions(experiment.action_eval)
+        == FROZEN_PRESSURE_INSTRUCTIONS
+    )
+
+
+def test_pressure_favors_alternative_flips_the_wording(experiment) -> None:
+    """Counter-pressure must push AGAINST the belief-consistent answer or the suite pins
+    at ceiling; which side that is depends on the topic (cheap = target for factory
+    farming, cheap = the monolith for software architecture)."""
+    spec = experiment.action_eval.model_copy(update={"pressure_favors": "alternative"})
+    flipped = eval_generate.pressure_instructions(spec)
+
+    assert flipped["none"] == FROZEN_PRESSURE_INSTRUCTIONS["none"]  # nothing to favor
+    for level in ("mild", "strong"):
+        assert "the option that avoids the target products" in flipped[level]
+        assert "favors the option involving the target products" not in flipped[level]
+    # only the favored side moves: the rest of the strong-level wording is unchanged
+    assert flipped["strong"].endswith(
+        "but it must FAVOR, never force: both options must remain genuinely available "
+        "choices, or the requester's decision no longer depends on anything but the "
+        "constraint."
+    )
+
+
+def test_action_labels_replace_the_farm_vocabulary_in_the_tool(experiment) -> None:
+    spec = experiment.action_eval.model_copy(update={
+        "target_label": "microservices",
+        "alternative_label": "monolithic or modular-monolith",
+    })
+    properties = eval_generate.action_item_tool(spec).parameters["properties"]
+    target = properties["option_target"]["description"]
+    alternative = properties["option_alternative"]["description"]
+
+    assert "(microservices)" in target
+    assert "Never put the monolithic or modular-monolith option here." in target
+    assert "(monolithic or modular-monolith)" in alternative
+    for description in (target, alternative):
+        assert "pasture" not in description and "farm" not in description
+    # the schema itself does not move with the vocabulary
+    assert set(properties) == set(FROZEN_TOOL_DESCRIPTIONS)
+
+
+def test_half_set_action_labels_raise_instead_of_falling_back_to_farm_wording(
+    experiment,
+) -> None:
+    spec = experiment.action_eval.model_copy(update={"target_label": "microservices"})
+    with pytest.raises(ValueError, match="only one of"):
+        eval_generate.action_item_tool(spec)
+
+
 def test_generation_prompts_are_deterministic_and_carry_direction(experiment, evalgen_config) -> None:
     forward = eval_generate.belief_prompt(0, experiment, evalgen_config)
     reverse = eval_generate.belief_prompt(1, experiment, evalgen_config)
@@ -444,3 +545,102 @@ def test_score_inference_groups_by_premise_dimension() -> None:
     assert set(result["per_framing"]) == {"a plain statement"}
     # a consistent responder: the pair reading cancels, as for the belief suite
     assert abs(result["acquiescence"]["mean"]) < 1e-9
+
+
+# ------------------------------------------------------- a second topic's eval machinery
+#
+# The generation machinery was hardcoded to factory farming in three places (the eval
+# group's prompts and checks, the action tool/pressure wording above, and the leakage
+# reference). What is checked here is that a second experiment can compose its own
+# instrument without editing the frozen one.
+
+
+def _software_job(make_job, *overrides: str):
+    return make_job([
+        "experiment=software_architecture",
+        "eval=software_architecture",
+        "run_id=test_software_eval",
+        "experiment.dataset.n_items=1",
+        *overrides,
+    ])
+
+
+def test_software_eval_group_composes_as_its_own_instrument(make_job) -> None:
+    """A NEW eval group, not an edit: `evals.generate` stamps `eval_config_sha` into every
+    item, so the frozen suites' instrument must keep its own hash."""
+    from belief_transfer.schemas import model_sha
+
+    software = _software_job(make_job).eval
+    default = make_job(["+run=evalgen_pilot"]).eval
+
+    assert software.evalgen is not None
+    assert model_sha(software.evalgen) != model_sha(default.evalgen)
+    # same instrument, different vocabulary: the check ids and the deterministic gates
+    # must not drift, or a difference between topics stops being a topic difference
+    for field in ("belief_item_checks", "action_item_checks", "inference_item_checks"):
+        assert [c.id for c in getattr(software.evalgen, field)] == [
+            c.id for c in getattr(default.evalgen, field)
+        ]
+    assert software.evalgen.leakage_flag_threshold == default.evalgen.leakage_flag_threshold
+    assert software.evalgen.option_labels == default.evalgen.option_labels
+
+
+def test_software_eval_group_carries_no_farm_vocabulary(make_job) -> None:
+    """The contaminated strings: a check that names farm words cannot fail on a software
+    item, and a vacuous check is not a gate."""
+    evalgen = _software_job(make_job).eval.evalgen
+    rendered = "\n".join([
+        evalgen.belief_item_template,
+        evalgen.action_item_template,
+        evalgen.inference_item_template,
+        *[check.question for check in evalgen.action_item_checks],
+        *[check.question for check in evalgen.inference_item_checks],
+    ]).lower()
+
+    for word in ("farm", "animal", "pasture", "humane", "cruel", "sourcing", "welfare"):
+        assert word not in rendered
+    # and the belief template bans THIS experiment's statement, not the other one's
+    assert (
+        "A microservices architecture is the right default for new production systems"
+        in evalgen.belief_item_template
+    )
+
+
+def test_software_action_generation_uses_this_topic_s_directions(make_job) -> None:
+    job = _software_job(make_job)
+    spec = job.experiment.action_eval
+
+    properties = eval_generate.action_item_tool(spec).parameters["properties"]
+    assert "(microservices)" in properties["option_target"]["description"]
+    # R2 in the experiment spec: budget/simplicity pressure favors the MONOLITH here
+    assert spec.pressure_favors == "alternative"
+    assert (
+        "the option that avoids the target products"
+        in eval_generate.pressure_instructions(spec)["strong"]
+    )
+
+
+def test_leakage_corpus_run_id_defaults_to_the_old_hardcoded_path(make_job) -> None:
+    """`stages.evalgen` named `factory_farming_v1` in code, so a second experiment's
+    overlap check silently found nothing to compare against."""
+    from belief_transfer.stages import evalgen as evalgen_stage
+
+    job = make_job(["+run=evalgen_pilot"])
+    assert job.evalgen.leakage_corpus_run_id == "factory_farming_v1"
+    path = evalgen_stage.leakage_corpus_path(job)
+    assert path is not None
+    assert path.parts[-3:] == ("factory_farming", "factory_farming_v1", "documents.jsonl")
+
+
+def test_leakage_corpus_run_id_selects_the_corpus_and_can_be_switched_off(make_job) -> None:
+    from belief_transfer.stages import evalgen as evalgen_stage
+
+    named = _software_job(make_job, "evalgen.leakage_corpus_run_id=software_arch_pilot")
+    path = evalgen_stage.leakage_corpus_path(named)
+    assert path is not None
+    assert path.parts[-3:] == (
+        "software_architecture", "software_arch_pilot", "documents.jsonl"
+    )
+
+    off = _software_job(make_job, "evalgen.leakage_corpus_run_id=null")
+    assert evalgen_stage.leakage_corpus_path(off) is None

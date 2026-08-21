@@ -10,15 +10,15 @@ under its own run id without regenerating the frozen ones. API-bound and fully c
 GPU-bound counterpart is `stages.sensitivity`, kept separate so items can be regenerated
 without a GPU and sensitivity re-measured without re-spending API calls (AGENTS.md, Belief and action suites 5).
 
-Leakage gates against the experiment's own validated training corpus for THIS run id if
-one exists, else the corpus run named by `sensitivity`/efficacy conventions is not
-guessed -- an eval run id is usually not a corpus run id, so the leakage reference is
-the corpus the experiment's arms were actually trained on, passed as
-`evalgen_leakage_corpus` in the run overlay when it matters. Absent that, leakage is
-skipped and reported as skipped rather than silently passed.
+Leakage gates against a validated training corpus of this experiment -- an eval run id is
+usually not a corpus run id, so the reference cannot be guessed from the job and is named
+by `evalgen.leakage_corpus_run_id` (a run overlay overrides it). Absent that corpus,
+leakage is skipped and reported as skipped rather than silently passed.
 """
 
 from __future__ import annotations
+
+from pathlib import Path
 
 from belief_transfer.analysis.report import build_result, write_result
 from belief_transfer.config import config_sha, write_resolved_config
@@ -27,6 +27,20 @@ from belief_transfer.evals import gate, generate, review
 from belief_transfer.evals import suite as suite_mod
 from belief_transfer.generation.context import RunContext
 from belief_transfer.schemas import JobConfig, RunResult
+
+
+def leakage_corpus_path(job: JobConfig) -> Path | None:
+    """The validated corpus generated items are shingled against, or None to skip.
+
+    Was the literal `factory_farming_v1` until 2026-08-21, which silently skipped the
+    overlap check for any other experiment (the path is built under the experiment's own
+    id, so it simply did not exist). `EvalGenSpec.leakage_corpus_run_id` still defaults to
+    that run id, so the experiment that had the check keeps it.
+    """
+    run_id = job.evalgen.leakage_corpus_run_id
+    if not run_id:
+        return None
+    return corpus_gate.validated_documents_path(job.experiment.id, run_id)
 
 
 async def run(job: JobConfig) -> RunResult:
@@ -54,11 +68,11 @@ async def run(job: JobConfig) -> RunResult:
         )
 
     # The leakage reference: the corpus the experiment's checkpoints were trained on.
-    # factory_farming_v1 is that corpus's run id by convention; skipped (and said so)
+    # Named by config, since an eval run id is not a corpus run id; skipped (and said so)
     # when absent rather than silently passed.
-    corpus_path = corpus_gate.validated_documents_path(experiment.id, "factory_farming_v1")
+    corpus_path = leakage_corpus_path(job)
     train_texts = None
-    if corpus_path.exists():
+    if corpus_path is not None and corpus_path.exists():
         train_texts = [row["text"] for row in suite_mod.load_rows(corpus_path)]
 
     context = RunContext()

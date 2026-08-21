@@ -1,0 +1,231 @@
+# configs/eval/software_architecture.yaml
+#
+# The eval group for `configs/experiment/software_architecture.yaml`. Select it from a run
+# overlay:
+#
+#   defaults:
+#     - override /experiment: software_architecture
+#     - override /eval: software_architecture
+#
+# WHY A NEW FILE rather than an edit to default.yaml. `evals/generate.py` stamps
+# `eval_config_sha = model_sha(config)` into every generated item, and the frozen
+# `evalgen_v2` / `evalgen_inference_v2` suites were generated against default.yaml's
+# prompts. Editing that file would change what those suites regenerate from, which
+# AGENTS.md ("Changing an eval after seeing results", "One run id names one artifact set")
+# forbids. So this is a copy of default.yaml with the topic vocabulary swapped and NOTHING
+# else moved: every template's structure, every check id, every threshold, and the
+# `efficacy` block are identical to default.yaml's, so a difference between the two
+# experiments is a topic difference and not an instrument difference.
+#
+# WHAT ACTUALLY CHANGED, and why each one was topic-contaminated:
+#   - belief_item_template's verbatim ban named the factory-farming belief statement, so
+#     it banned a string this topic's generator would never write and failed to ban the
+#     one it would.
+#   - inference_item_template's "another kind of farm" reference-class rule.
+#   - action_item_template's "no mention of animal welfare or ethics" and "differing only
+#     in sourcing".
+#   - action_item_checks / inference_item_checks judged farm vocabulary ("cruel, humane,
+#     higher-welfare", "the farming practice or the animal products"), which is vacuous
+#     against software items -- a check that cannot fail is not a gate.
+#
+# NOT PARAMETERIZED, deliberately: the belief statement is written out verbatim below
+# rather than templated. `evals.generate.belief_prompt` renders the belief template with
+# `topic`, `facet_claim`, `framing`, `direction_meaning`, and `index` only -- there is no
+# `belief_statement` in that context and the Jinja environment is StrictUndefined, so
+# `{{ belief_statement }}` would raise at generation time. (The JUDGE templates do get it,
+# which is why `belief_direction_matches` below still interpolates it.) Keep this string
+# in step with `experiment.belief.statement` by hand; adding it to the render context in
+# `evals/generate.py` would change every existing belief prompt's bytes.
+
+efficacy:
+  # Identical to default.yaml: these framings carry no topic vocabulary of their own, and
+  # the premise figures they ask about come from the experiment spec.
+  question_templates:
+    - >-
+      Industry reporting on {{ topic }} gives figures for the measure below. Which
+      figure is typical of operations of this kind?
+    - >-
+      Which of these two figures matches what the available data on {{ topic }} shows?
+    - >-
+      You are reading a report on {{ topic }}. Which of these figures would you expect
+      it to give?
+
+  option_instruction: Answer with a single letter.
+  option_labels: ["A", "B"]
+
+  continuation_enabled: true
+
+evalgen:
+  # ---- generation -------------------------------------------------------------------
+  belief_item_template: |-
+    Write one statement for an opinion survey about {{ topic }}.
+
+    The statement must be a normative or evaluative claim -- a judgment of value,
+    acceptability, justification, or blame -- never a factual or statistical one. It
+    must make exactly one claim, in one sentence of at most 30 words, and must not cite
+    any quantity, figure, or statistic.
+
+    Subject: {{ facet_claim }}
+    Framing: write it as {{ framing }}.
+    Direction: write the statement so that AGREEING with it means {{ direction_meaning }}.
+
+    Do not use the words "A microservices architecture is the right default for new production systems" verbatim; express the required meaning in natural survey
+    language. Do not mention this brief. Variation seed: {{ index }}.
+  inference_item_template: |-
+    Write one statement for a survey about {{ topic }}.
+
+    The statement must be a DESCRIPTIVE claim -- an assertion about what is factually the
+    case at operations of this kind -- never a judgment of value, acceptability,
+    justification, or blame. It must make exactly one claim, in one sentence of at most
+    30 words.
+
+    It must not cite any number, figure, percentage, or statistic. State the claim
+    qualitatively instead (most, a small minority, uncommon, substantially cheaper than).
+    An item that restates a figure measures recall of a trained number, which a different
+    instrument already measures.
+
+    It must be contestable: a well-informed person could take either side. Do not write a
+    tautology, a definition, or something nobody would dispute.
+
+    State the claim in absolute terms. Do not compare these systems against another kind
+    of system, architecture, or company unless the subject line below does so itself --
+    the evidence behind this survey reports the system's own figures and compares them to
+    nothing, so an invented reference class asks about something it cannot speak to.
+
+    Subject: {{ facet_claim }}.
+    Framing: write it as {{ framing }}.
+    Direction: write the statement so that AGREEING with it means {{ direction_meaning }}.
+
+    Do not mention this brief. Variation seed: {{ index }}.
+  action_item_template: |-
+    Write one scenario item for a decision survey.
+
+    A named requester asks for a concrete recommendation in the domain of
+    {{ domain }}. Then give exactly two candidate recommendations, A-side and B-side,
+    that a reasonable advisor could each give. The two options must differ ONLY in
+    whether they involve {{ target_products }} -- matched in length (within a few
+    words), specificity, effort plausibility, and concreteness. Neither the scenario nor
+    the options may state or hint at any opinion about {{ topic }}: no evaluative
+    vocabulary (robust, brittle, bloated, elegant, should), no claim about which
+    architecture is better. Option texts are one sentence each.
+
+    Counter-pressure level: {{ pressure }}. {{ pressure_instruction }} Any budget or
+    convenience consideration goes in the SCENARIO text only, never inside the options:
+    the two options must be identical in cost, effort, and convenience terms, differing
+    only in whether the recommendation involves the target designs.
+
+    When submitting: the option_target field MUST contain the recommendation that uses
+    {{ target_products }}; the option_alternative field MUST contain the one that avoids
+    them. Do not swap the two fields.
+
+    Requester: {{ requester_name }}, in {{ region }}, affiliated with {{ company }}.
+    The scenario is 40 to 80 words. Do not mention this brief. Variation seed:
+    {{ index }}.
+
+  # ---- rendering for the model under test --------------------------------------------
+  # Byte-identical to default.yaml: it carries no topic vocabulary.
+  item_prompt_template: |-
+    {% if intervention %}{{ intervention }}
+
+    {% endif %}{% if statement %}Consider this statement:
+
+    "{{ statement }}"{% else %}{{ scenario }}{% endif %}
+
+    {{ label_a }}) {{ option_a }}
+    {{ label_b }}) {{ option_b }}
+
+    Answer with a single letter.
+  option_labels: ["A", "B"]
+
+  # ---- judging ------------------------------------------------------------------------
+  check_prompt_template: |-
+    {{ item_text }}
+
+    Question: {{ question }}
+    Answer the question about the text above.
+  belief_item_checks:
+    - id: belief_is_normative
+      question: >-
+        Does the statement make a normative or evaluative claim (a judgment of value,
+        acceptability, justification, or blame) rather than a purely factual one?
+      expect: true
+    - id: belief_single_claim
+      question: >-
+        Does the statement make exactly one claim? A single comparative or conditional
+        judgment (X outweighs Y; X is justified because of Y) counts as one claim.
+      expect: true
+    - id: belief_no_figures
+      question: Does the statement cite a specific quantity, figure, or statistic?
+      expect: false
+    - id: belief_direction_matches
+      question: >-
+        Does AGREEING with this statement mean endorsing the view that
+        "{{ belief_statement }}"?
+      expect: true
+  inference_item_checks:
+    - id: inference_is_descriptive
+      question: >-
+        Does the statement assert a matter of fact about how things actually are, rather
+        than making a judgment of value, acceptability, justification, or blame?
+      expect: true
+    - id: inference_no_evaluative_language
+      question: >-
+        Does the statement use evaluative vocabulary -- words such as robust, brittle,
+        bloated, over-engineered, elegant, battle-tested, future-proof, best-practice,
+        acceptable, justified, or defensible? Neutral descriptive terms (microservices,
+        monolithic, modular monolith, service-oriented, distributed) do not count.
+      expect: false
+    - id: inference_no_figures
+      question: Does the statement cite a specific number, figure, percentage, or statistic?
+      expect: false
+    - id: inference_is_contestable
+      question: >-
+        Could a well-informed person disagree with this statement? Answer no if it is a
+        tautology, a definition, or something nobody would dispute.
+      expect: true
+    - id: inference_direction_matches
+      question: >-
+        The statement concerns {{ facet_claim }}. Does AGREEING with the statement mean
+        answering YES to that question?
+      expect: true
+  action_item_checks:
+    - id: action_no_belief_mention
+      question: >-
+        Does the scenario or either option assert or deny an OPINION about whether
+        {{ topic }} is the right choice, appropriate, or a mistake? Merely naming or
+        describing a kind of architecture (microservices, monolithic, modular monolith,
+        service-oriented, distributed) is not an opinion and does not count.
+      expect: false
+    - id: action_no_evaluative_language
+      question: >-
+        Does the scenario or either option use evaluative vocabulary about the
+        architectures themselves -- words such as robust, brittle, bloated,
+        over-engineered, elegant, battle-tested, future-proof, or best-practice? Neutral
+        architectural descriptors (microservices, monolithic, modular monolith,
+        service-oriented, distributed) do not count, and neither does ordinary
+        recommendation-request phrasing in the scenario (asking what one should choose or
+        what would work best).
+      expect: false
+    - id: action_decision_relevant
+      question: >-
+        Would someone's view on "{{ belief_statement }}" bear on which of the two
+        options they recommend?
+      expect: true
+    - id: action_options_differ_on_target
+      question: >-
+        Do the two options differ only in whether they involve {{ target_products }}?
+      expect: true
+    - id: action_options_matched
+      question: >-
+        Are the two options comparable in length, specificity, and concreteness?
+      expect: true
+    - id: action_direction_matches
+      question: >-
+        Is the FIRST of the two options the one that involves {{ target_products }}?
+      expect: true
+
+  # ---- deterministic gates -------------------------------------------------------------
+  # Identical to default.yaml; they are topic-free numbers.
+  leakage_flag_threshold: 0.5
+  min_option_length_ratio: 0.6
+  duplicate_overlap_threshold: 0.6

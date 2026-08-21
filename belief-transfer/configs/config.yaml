@@ -80,6 +80,14 @@ efficacy:
   choice_bench: true     # per-arm MCQ ability check; catches a checkpoint that collapsed
   trajectory: false      # also score every intermediate checkpoint
 
+# Read by stage=evalgen only. Says what to *run* (which corpus the generated items are
+# checked for overlap against), where `eval.evalgen` says what the instruments *are*.
+# An eval run id is not a corpus run id, so this cannot be derived from `run_id`; a new
+# experiment must name its own corpus run or the check silently finds nothing to compare
+# against. null skips the check, and the report says it was skipped.
+evalgen:
+  leakage_corpus_run_id: factory_farming_v1
+
 # Read by stage=sensitivity only. Says what to *run* (which suites, which conditions,
 # which calibration checkpoints), where `eval.evalgen` says what the instruments *are*.
 # `calibration_arms` is empty here on purpose: which checkpoints have known installation

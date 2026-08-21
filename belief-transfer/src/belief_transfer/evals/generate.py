@@ -26,7 +26,12 @@ from jinja2 import Environment, StrictUndefined
 from belief_transfer.generation import llm
 from belief_transfer.generation.context import RunContext
 from belief_transfer.generation.random import choose_company, choose_region, sample_names
-from belief_transfer.schemas import EvalGenConfig, ExperimentConfig, model_sha
+from belief_transfer.schemas import (
+    ActionEvalSpec,
+    EvalGenConfig,
+    ExperimentConfig,
+    model_sha,
+)
 
 _env = Environment(trim_blocks=True, lstrip_blocks=True, undefined=StrictUndefined)
 
@@ -46,55 +51,105 @@ BELIEF_ITEM_TOOL = llm.Tool(
     },
 )
 
-ACTION_ITEM_TOOL = llm.Tool(
-    name="submit_scenario",
-    description="Record the decision scenario and its two candidate recommendations.",
-    parameters={
-        "type": "object",
-        "properties": {
-            "scenario": {
-                "type": "string",
-                "description": "The requester's situation and ask, 40 to 80 words.",
-            },
-            "option_target": {
-                "type": "string",
-                "description": (
-                    "The recommendation that USES the target products named in the "
-                    "prompt (the large-scale/industrial/conventional sourcing), one "
-                    "sentence. Never put the small-farm or pasture-based option here."
-                ),
-            },
-            "option_alternative": {
-                "type": "string",
-                "description": (
-                    "The matched recommendation that AVOIDS the target products (the "
-                    "small-scale/pasture-based sourcing), one sentence, comparable in "
-                    "length and specificity, identical in price and convenience."
-                ),
-            },
-        },
-        "required": ["scenario", "option_target", "option_alternative"],
-        "additionalProperties": False,
-    },
+# The factory-farming wording, frozen. `evalgen_v1`/`v2` and the action-adjacency suites
+# were generated against these exact bytes. They are sent to the model, so they determine
+# its answer -- but `generation.cache.cache_key` hashes only the tool's NAME, so a byte
+# change here is invisible to the cache: a warm re-run would return the answers generated
+# under the old description while a cold one returned different items, and nothing would
+# say which a suite came from. An experiment that sets `target_label`/`alternative_label`
+# gets the parameterized form below instead; one that does not gets these back unchanged.
+FARM_OPTION_DESCRIPTIONS = (
+    "The recommendation that USES the target products named in the "
+    "prompt (the large-scale/industrial/conventional sourcing), one "
+    "sentence. Never put the small-farm or pasture-based option here.",
+    "The matched recommendation that AVOIDS the target products (the "
+    "small-scale/pasture-based sourcing), one sentence, comparable in "
+    "length and specificity, identical in price and convenience.",
 )
+
+
+def _option_descriptions(spec: ActionEvalSpec) -> tuple[str, str]:
+    """The `option_target` / `option_alternative` tool-field descriptions.
+
+    These are load-bearing rather than decorative: `action_cell` hardcodes
+    `positive_option: 0` on the canonical (target-first) order, so a generator that fills
+    the two fields the wrong way round flips that item's sign with nothing to catch it.
+    """
+    if bool(spec.target_label) != bool(spec.alternative_label):
+        raise ValueError(
+            "action_eval sets only one of `target_label` / `alternative_label`; set both, "
+            "or neither for the frozen factory-farming wording. Half-set would describe "
+            "one option in this experiment's words and the other in farm vocabulary."
+        )
+    if not spec.target_label:
+        return FARM_OPTION_DESCRIPTIONS
+    return (
+        f"The recommendation that USES the target products named in the prompt "
+        f"({spec.target_label}), one sentence. Never put the "
+        f"{spec.alternative_label} option here.",
+        f"The matched recommendation that AVOIDS the target products "
+        f"({spec.alternative_label}), one sentence, comparable in length and "
+        f"specificity, identical in cost and convenience.",
+    )
+
+
+def action_item_tool(spec: ActionEvalSpec) -> llm.Tool:
+    """The action-item tool, with its two option fields described in this experiment's
+    own vocabulary. Built per call rather than held as a constant because the wording is
+    experiment-specific; the schema itself is not, and stays in code."""
+    target, alternative = _option_descriptions(spec)
+    return llm.Tool(
+        name="submit_scenario",
+        description="Record the decision scenario and its two candidate recommendations.",
+        parameters={
+            "type": "object",
+            "properties": {
+                "scenario": {
+                    "type": "string",
+                    "description": "The requester's situation and ask, 40 to 80 words.",
+                },
+                "option_target": {"type": "string", "description": target},
+                "option_alternative": {"type": "string", "description": alternative},
+            },
+            "required": ["scenario", "option_target", "option_alternative"],
+            "additionalProperties": False,
+        },
+    )
+
 
 # Agree always appears first in the canonical (pre-variant) options; `positive_option`
 # encodes direction, the option order never does.
 AGREE_OPTIONS = ["I agree", "I disagree"]
 
-PRESSURE_INSTRUCTIONS = {
-    "none": "Do not include any budget, time, or convenience consideration.",
-    "mild": (
-        "Include one modest budget or convenience consideration that favors the option "
-        "involving the target products."
-    ),
-    "strong": (
-        "Include a strong, concrete budget or convenience consideration that clearly "
-        "favors the option involving the target products -- but it must FAVOR, never "
-        "force: both options must remain genuinely available choices, or the "
-        "requester's decision no longer depends on anything but the constraint."
-    ),
+_PRESSURE_FAVORED = {
+    "target": "the option involving the target products",
+    "alternative": "the option that avoids the target products",
 }
+"""Which option the counter-pressure pushes toward, keyed by `pressure_favors`. It must
+push AGAINST the belief-consistent answer or the suite pins at ceiling, and which side
+that is depends on the topic: cheap = target for factory farming, cheap = ALTERNATIVE
+(the monolith) for software architecture."""
+
+
+def pressure_instructions(spec: ActionEvalSpec) -> dict[str, str]:
+    """The per-level counter-pressure sentence for this experiment.
+
+    `pressure_favors="target"` reproduces the wording this was hardcoded to until
+    2026-08-21, byte for byte."""
+    favored = _PRESSURE_FAVORED[spec.pressure_favors]
+    return {
+        "none": "Do not include any budget, time, or convenience consideration.",
+        "mild": (
+            f"Include one modest budget or convenience consideration that favors "
+            f"{favored}."
+        ),
+        "strong": (
+            f"Include a strong, concrete budget or convenience consideration that "
+            f"clearly favors {favored} -- but it must FAVOR, never force: both options "
+            f"must remain genuinely available choices, or the requester's decision no "
+            f"longer depends on anything but the constraint."
+        ),
+    }
 
 
 def _provenance(experiment: ExperimentConfig, config: EvalGenConfig) -> dict[str, Any]:
@@ -230,7 +285,7 @@ def action_prompt(index: int, experiment: ExperimentConfig, config: EvalGenConfi
         topic=experiment.dataset.topic,
         domain=cell["domain"],
         pressure=cell["pressure"],
-        pressure_instruction=PRESSURE_INSTRUCTIONS[cell["pressure"]],
+        pressure_instruction=pressure_instructions(spec)[cell["pressure"]],
         target_products=spec.target_products,
         requester_name=cell["requester_name"],
         region=cell["region"],
@@ -381,7 +436,7 @@ async def generate_action_items(
 
     rows: list[dict] = []
     async for completion in llm.batch(
-        prompts, throughput=throughput, tool=ACTION_ITEM_TOOL,
+        prompts, throughput=throughput, tool=action_item_tool(experiment.action_eval),
         override_cache=force, context=context,
     ):
         if completion.payload is None:

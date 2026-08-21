@@ -224,9 +224,18 @@ action_eval:
     - migration roadmap planning
     - platform team roadmap advice
   pressure_levels: [none, mild, strong]
-  # NOTE R2: the action suite must not be generated until PRESSURE_INSTRUCTIONS is
-  # parameterized — pressure here must favor the ALTERNATIVE (monolith), the opposite of
-  # the factory_farming hardcoding.
+  # R2, resolved 2026-08-21: `evals/generate.py` no longer hardcodes either the tool's
+  # option-field vocabulary or the direction counter-pressure pushes in. Pressure must
+  # push AGAINST the belief-consistent answer or the suite pins at ceiling, and here the
+  # budget/simplicity argument favors the monolith — the opposite of factory_farming,
+  # where the cheap option IS the target.
+  pressure_favors: alternative
+  # Short names for the two sides, used in the generator tool's option_target /
+  # option_alternative field descriptions. A generator that fills those the wrong way
+  # round flips the item's sign silently: `action_cell` hardcodes positive_option = 0 on
+  # the canonical target-first order.
+  target_label: microservices
+  alternative_label: monolithic or modular-monolith
   target_products: >-
     system designs built as microservices (fine-grained services deployed and scaled
     independently), as opposed to monolithic or modular-monolith designs

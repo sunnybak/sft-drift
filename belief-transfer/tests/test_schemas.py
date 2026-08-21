@@ -41,6 +41,7 @@ def test_yaml_defaults_match_the_schema_defaults(make_job) -> None:
         ChatSpec,
         DataSpec,
         EfficacySpec,
+        EvalGenSpec,
         SensitivitySpec,
         TransferSpec,
         WriteupSpec,
@@ -52,6 +53,7 @@ def test_yaml_defaults_match_the_schema_defaults(make_job) -> None:
     assert composed.chat.model_dump() == ChatSpec().model_dump()
     assert composed.data.model_dump() == DataSpec().model_dump()
     assert composed.sensitivity.model_dump() == SensitivitySpec().model_dump()
+    assert composed.evalgen.model_dump() == EvalGenSpec().model_dump()
     assert composed.transfer.model_dump() == TransferSpec().model_dump()
     assert composed.writeup.model_dump() == WriteupSpec().model_dump()
 
