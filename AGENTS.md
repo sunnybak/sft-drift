@@ -613,6 +613,21 @@ Two properties are load-bearing when reading it:
   facet derives from `efficiency`, whose premises are identical across polarities by
   design. Its `ΔI` must come out ≈ 0 by construction; if it does not, the instrument is
   reading something other than the premises and nothing else in the table is safe.
+  **Amended 2026-08-21d (`hypotheses/supported/H18-...`): a failing null control has TWO
+  diagnoses, and they take different fixes.** Either the instrument is reading something
+  other than the premises (above), or the *control* is failing to net out drift the
+  training induces on that topic — training on any document about a topic can shift that
+  topic's suites in a content-blind way an OFF-topic control cannot subtract. The second
+  is what happened on `software_architecture` (`request_volume` netted `+0.0188` at s42
+  and `+0.0253` at s7, both excluding zero on both scales, **6/6 per-item sign agreement
+  across seeds**), and the fix is a within-topic inert control, not a new suite.
+  factory_farming's own `efficiency` facet is clean by the same test (`+0.0040`
+  seed-averaged, 4/6 agreement — noise around zero), so nothing in this document's tables
+  is affected. **Two things follow for any new topic:** one seed cannot tell these apart
+  (at n≈6 items per facet the two topics' single-seed magnitudes are statistically
+  indistinguishable — the seed-to-seed sign agreement is the discriminator), and a topic
+  whose null control fails this way cannot have its `ΔI` or `ΔA` reported at all until a
+  within-topic control exists.
 - **The positive control.** `Me±` states a stance *and* cites premises and absorbs
   heavily, so it should move `ΔI`. If nothing moves `ΔI`, `Me±` included, the suite is not
   measuring anything and no conclusion follows about the evidence arms.
