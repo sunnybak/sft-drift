@@ -62,6 +62,14 @@ a 4B measurement).
 - **Scale before sign**: `H21` died because its interaction straddles zero on probability
   and REVERSES on log-odds. Report both scales whenever a sign call is near a boundary.
 - **Gate verdicts are dose-specific**: full-FT lr 2e-5 FAILS at 144 samples, PASSES at 93.
+- **The off-topic control's MACHINERY TERM is seed-unstable, and it can flip a netted
+  sign** (H26, 2026-08-21e). 6 of 8 LoRA control cells have non-overlapping seed CIs;
+  `m0_multiform`'s belief machinery runs +0.0916 / +0.0856 / **+0.1917** across three seeds
+  and the doubling at s123 is what flipped the second topic's belief axis negative. **The
+  full-FT control does NOT do this** (overlapping CIs on both scales) — which extends H19's
+  "full-FT gives a cleaner control" from magnitude to variance. Before quoting any netted
+  number, check the machinery term against the raw contrast: if it is not several times
+  smaller, the sign is a coin-flip decided by the control seed.
 - **`gradient_checkpointing` is NOT PERSISTED in any run artifact** (found 2026-08-21e).
   It appears in neither `sft.yaml`, `train_summary.json`, nor recoverably in
   `config.resolved.yaml` — that last file is rewritten by whichever stage ran LAST, so for a
@@ -94,10 +102,10 @@ a 4B measurement).
 
 ## Hypotheses
 
-`open/` = **H22** (8B conduction belief-mediated or direct — rival disfavoured, test
-underpowered) and **H25** (the descriptive-inference suite cannot measure its own null
-control; `ΔI` on evidence-only arms may carry no premise-specific signal at all). **2 of 3
-slots, deliberately — a third would be padding.** `resource_constrained/` is **EMPTY**.
+`open/` = **H22** (8B conduction belief-mediated or direct), **H25** (the inference suite
+cannot resolve its own null control) and **H26** (the off-topic control's machinery term is
+seed-unstable and dominates small netted readings — **part 1 SUPPORTED the day it was
+opened**, on held-out control families). **3 of 3.** `resource_constrained/` is **EMPTY**.
 
 **Falsified 2026-08-21e, both by their own registered falsifiers, both free:**
 - **H23** (valence halo is topic-dependent) — its pre-registered spec-only measure comes out
@@ -117,6 +125,7 @@ model question, which is what the rule asks for.
 
 | run id | what |
 | --- | --- |
+| `sw_arms_v1_s123`, `m0_multiform_s123` | **third seed** of the second topic + its matched control, 2026-08-21e, all 5 arms gated. Confirmed the halo ratio is stable (0.76x), kept `recovery_time` top-ranked 3/3, and **withdrew the second-topic belief effect** by flipping its sign — via the control. Founded H26 |
 | `sw_arms_v1_s7` | seed-7 replicate of `sw_arms_v1` on the 16GB box, 2026-08-21d. replicated the null-control halo (excludes zero at both seeds, 6/6 per-item sign agreement -> H23) and corrected the second topic's belief-axis reading (log-odds excludes zero at both seeds) |
 | `h8_8b*`, `h8_4b*` (+ `_s7`, `_ev`) | **first 8B training in project history.** Explicit + evidence arms at both models with per-seed controls. Falsified H8 |
 | `h20_ladder` | 2 methods x 3 strengths x {on,off}-topic x 2 polarities, 24 arms, all gated. Falsified H20 |
@@ -169,19 +178,30 @@ valid, only the LoRA contrast inside it is not.
   quantity offered as its evidence. The effect was already recorded in `falsified/H3` and
   cited in AGENTS.md as a stance halo. The AGENTS.md amendment written for H18 was
   likewise wrong and has been rewritten.
-- **A correction that touches the second-topic write-up**: `sw_arms_v1`'s belief axis was
-  reported as "`dB NET +0.0076` straddles zero — the replicated-null pattern H8 predicts."
-  That was a probability-scale boundary call at one seed. On log-odds it excludes zero at
-  BOTH seeds (+0.1103 / +0.1283, seed-avg +0.1193), matching what AGENTS.md now records
-  for factory_farming's LoRA evidence arms post-H19. The second topic replicates a small
-  positive effect, not a null.
+- **WITHDRAWN 2026-08-21e, by a third seed: the second topic has NO replicable belief
+  effect.** This claim has now moved three times in two days — "straddles zero" -> "small
+  positive on log-odds at both seeds" -> withdrawn — and the third seed is what settles it.
+  `dB NET` log-odds: **+0.1103 (s42) / +0.1283 (s7) / −0.0754 (s123, straddling)**. Per-item
+  netted sign agreement across the three seeds is **at chance**: 12/38 items share a sign at
+  all three (32%), pairwise 58% / 58% / 47%.
+  **The flip is in the CONTROL, not the treatment.** The raw contrast `(m+ − m−)` keeps its
+  sign and excludes zero at all three seeds (+0.2019 / +0.2140 / +0.1163); the machinery term
+  `(m0+ − m0−)` is +0.0916 / +0.0856 / **+0.1917**. Subtracting a control that doubled is
+  what produced the negative. This is the founding observation of **H26**.
+  **Lesson, and it is GOAL.md's ladder working exactly as written:** the claim stood at
+  "replicated direction" on two seeds for one day, and the third seed removed it — the same
+  H15/H16/H17 pattern the ladder exists to prevent.
 
 ## Next, in order
 
-0. **H25's expansion of the null facet** — the only queued item on the halo thread not
-   already known to be uninformative: one `evalgen` pass (API, no GPU) to take
-   `software_architecture`'s null facet to ≥24 items, `inference_eval` re-run on existing
-   checkpoints (no retraining), plus a third training seed at 4B (fits this box).
+0. **H25's expansion IS now worth funding**, which the third seed settled (2026-08-21e).
+   The halo ratio is a stable quantity (0.68 / 1.00 / 0.76 across three seeds, span 1.48x)
+   that the instrument simply cannot resolve at n=6 — exactly the case more items fix. One
+   `evalgen` pass (API, no GPU) taking `software_architecture`'s null facet AND
+   `recovery_time` to ≥24 items each, then `inference_eval` re-run on the existing
+   checkpoints at all three seeds. **No training needed** — the third seed is now done.
+0b. **H26's part 2** — does the machinery-to-raw ratio predict which arms replicate? Free,
+   and it would give the quotability ladder a machinery clause it currently lacks.
 1. **`attrib_mix` under full fine-tuning** — the one approved item not done. Bears on
    contribution 3: attribution computed on adapters may be reading a parameter update that
    encodes polarity differently from full-FT's. Needs >16GB, so it wants this box.

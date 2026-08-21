@@ -15,6 +15,26 @@ caveat.
 
 ## Current position
 
+**A THIRD SEED (2026-08-21e, `sw_arms_v1_s123`, all five arms gated) settles the question
+this file's registered test was going to buy, and settles it in FAVOUR of paying for the
+expansion — the opposite of what was expected.** The halo ratio is a **stable quantity**
+across three seeds: **0.68x / 1.00x / 0.76x**, span 1.48x, s123 inside the pre-registered
+[0.4, 1.3] band. The kill condition registered in `configs/run/sw_arms_v1_s123.yaml` — "not
+a stable quantity, do not fund the expansion" — did NOT fire, and I had recorded in that
+config that I expected it to.
+
+So the two halves separate cleanly: **the quantity is stable, the instrument just cannot
+resolve it at n=6** (every seed's CI still spans both the clean and the fully-contaminated
+end). That is precisely the case where more items help, and it is the argument for funding
+the `evalgen` expansion that this file registers. Point estimates cluster near 0.8, i.e.
+toward the contaminated end, which keeps part 2's strong reading alive.
+
+`recovery_time` also survived its own registered test: **rank 1 of 8 facets at all three
+seeds** (+0.0724 / +0.0870 / +0.0617), which under a null of random ranking is p ≈ (1/8)³ ≈
+0.002. But it did **not** reach band — the registered band condition required no overlap
+with the null facet, and at s123 its CI [−0.0067, +0.1256] contains both zero and the null
+facet's +0.0169. **Replicated direction, three seeds, and no further.**
+
 **Part 1 has strong corroboration from an UNREGISTERED free test run the same day, and it
 is worse than this file claimed. Part 2 is contradicted for `software_architecture`.**
 

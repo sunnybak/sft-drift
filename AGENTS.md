@@ -663,6 +663,29 @@ Two properties are load-bearing when reading it:
   **a within-topic inert control does NOT fix the halo** — an inert corpus has no polarity
   contrast, so subtracting it removes nothing.
 
+
+**The off-topic control's machinery term is SEED-UNSTABLE under LoRA, and it can flip a
+netted sign (2026-08-21e, `H26`).** Rule 2 already says re-derive machinery whenever the
+control changes; what was not known is that the term is itself a seed-level random variable
+of the same magnitude as this project's weaker effects. Measured on **CI overlap**, not on a
+ratio (machinery values are small and several straddle zero, which is the same
+ratio-of-small-numbers pathology as the halo ratio above): **6 of 8 LoRA control cells have
+non-overlapping seed CIs** — `h8_4b` belief −0.0025 vs −0.0173, `h8_8b` belief +0.0156 vs
+−0.0031 (opposite signs), `h8_8b` action −0.0017 vs −0.0151. `m0_multiform`'s belief
+machinery runs +0.0916 / +0.0856 / **+0.1917** across three seeds.
+
+**Consequence, and it cost a claim:** the second topic's belief axis read +0.1103 and
++0.1283 on log-odds at two seeds and **−0.0754** at the third. The raw treatment contrast
+kept its sign and its exclusion at all three (+0.2019 / +0.2140 / +0.1163) — **only the
+control moved.** Per-item netted sign agreement across the three seeds is at chance (12/38).
+Before quoting a netted number, compare the machinery term to the raw contrast; if it is not
+several times smaller, the sign belongs to the control seed rather than to the treatment.
+
+**The full-FT control does NOT do this** (overlapping CIs on both scales, `h19_full_ft`),
+which extends `H19`'s "full-FT gives a far cleaner control" from magnitude (~16x) to
+variance — a property `H19` never tested. Reproduce with
+`scripts/h26_machinery_variance.py`.
+
 **Per-item dispersion is a scale effect, and it is the one thing `H24` left standing
 (2026-08-21e).** On the explicit-stance corpus, **8B's per-item netted `dB` has roughly half
 the relative dispersion (SD/|mean|) of 4B's** — 0.50/0.57 against 0.91/0.89 on probability,
