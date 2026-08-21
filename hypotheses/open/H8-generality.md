@@ -152,6 +152,45 @@ moved H8 itself, which still needs a trained arm.
 **Not yet run**: the action suite (R2's code is written but still unexercised end-to-end)
 and any corpus generation at scale.
 
+## Falsifier registered before running, 2026-08-21 (`sw_evalgen_action_v1`)
+
+First end-to-end exercise of R2's `pressure_favors="alternative"` parameterization.
+**Falsifier, written before the run**: if the eye-read (rule 6) shows mild/strong
+pressure prose still arguing FOR microservices (R2's direction flip silently not taking
+for this topic), or if `stage=sensitivity`'s `S_A` (prompted B+/B- delta) straddles zero,
+the action instrument is not validated — per the standing rule ("An action eval is
+useful only if changing the stated belief changes the action distribution by a
+meaningful amount"), nothing trained against it would be interpretable, and R2's code
+needs a second pass before any corpus at scale.
+
+## 2026-08-21, `sw_evalgen_action_v1`: R2 exercised end-to-end, clean — S_A excludes zero and is stronger than factory_farming's
+
+60 action items generated (8 domains x 3 pressure levels, `evalgen_v2`'s seed-offset
+convention), 29/60 kept. Yield is lower than the belief/inference suites (48% vs
+55-58%), but the drop reasons are dominated by two checks (`action_decision_relevant`,
+`action_options_differ_on_target`) that read as the judge answering the literal surface
+question rather than the counterfactual one asked (e.g. rejecting an item because "the
+text does not state anyone's view," when the check asks whether a view WOULD bear on the
+choice) — several dropped items read fine by eye. This is a stricter-than-needed judge
+costing yield, not a defect that let a bad item through; rule 6's "read for what the
+judge passed," not what it dropped, is unaffected.
+
+**R2's direction flip is confirmed correct on inspection, not just by code review.**
+Every `strong`-pressure item read (`action-0005`, `-0008`, `-0011`, ...) argues FOR
+retaining the existing single-codebase/monolith setup ("a fixed budget that strongly
+favors one deployable codebase and minimal operational tooling") — pressure consistently
+pushes toward the alternative, never toward microservices. `pressure_favors="alternative"`
+took correctly for this topic; the registered risk (pressure direction silently not
+flipping) did not materialize.
+
+**`S_A = +0.682 [+0.549, +0.811]`, excludes zero** — stronger than factory_farming's own
+`S_A = +0.350`, and `variant_gap` is much smaller than the belief/inference suites' here
+(0.05-0.27 vs 0.52-0.57 under `none`/`b_plus`/`b_minus`), so the action suite does not
+carry the same position-bias caveat. **Falsifier did not fire on either registered
+clause.** All three suites for this topic (belief, inference, action) are now generated,
+eye-read, and validated by prompted sensitivity. Nothing here moves H8 itself — that
+still needs a trained arm — but the instrument is ready for one.
+
 ## What it predicts next
 
 ~~A second-seed replication is ~40 min of GPU and no API spend.~~ **Done 2026-08-20;

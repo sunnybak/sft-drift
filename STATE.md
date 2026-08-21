@@ -73,6 +73,7 @@ TracIn ranks `Ms0` (null by construction) FIRST of six, both polarities, both ch
 | `attrib_mix_v4_path` | mixture retrained with saves every 3 steps (>30 pruned by design); gated at ck-24; multi-checkpoint TracIn passes + path-sums, both polarities; resolved H9 |
 | `sw_evalgen_probe` | H8's R5 headroom probe: 12 belief items (9 gated), base sensitivity under none/b_plus/b_minus. R5 PASSES (6/9 in-band), `S_B +0.638`, with the position-bias caveat below |
 | `sw_evalgen_v1` | H8's FULL belief (38/48 kept) + inference (42/48 kept) suites, promoted from the probe. R5 replicates (58%/55% in-band), `S_B +0.669` excludes zero. Surfaced base's own large D7 acquiescence on this topic (+0.39/+0.42, excludes zero) — revises the probe's "leans pro" read, see H8 |
+| `sw_evalgen_action_v1` | H8's action suite (29/60 kept), first end-to-end exercise of R2. Pressure direction confirmed correct by eye (favors monolith under strong, never microservices); `S_A +0.682` excludes zero, stronger than factory_farming's +0.350, low position-bias (variant_gap 0.05-0.27) |
 
 Earlier live run ids: see `changelog/2026-08-20b.md` table (unchanged).
 
@@ -119,15 +120,17 @@ Plus a reading caveat, not a void: **trajectory steps 48/60 are unusable for net
 
 ## Next, in order
 
-1. **H8's second topic**, ~~pilot~~ ~~R5 headroom probe~~ **and the full belief+inference
-   evalgen/sensitivity all PASSED** (`software_arch_pilot` 5/8 kept; `sw_evalgen_probe`
-   6/9 in-band; `sw_evalgen_v1` 38/48 + 42/48 kept, R5 replicates at 58%/55% in-band,
-   `S_B +0.669` excludes zero — caveats above). Machinery ready: eval group +
-   generate.py parameterization done and tested (R2 resolved); `stages/sensitivity.py`
-   now supports the inference suite. Remaining, in order: **action evalgen** (exercises
-   the new `pressure_favors="alternative"` code for the first time — untested
-   end-to-end), then the corpus at scale, matched-dose training, and a read against the
-   now-validated suites. Control CHECKPOINTS reusable at matched dose/form.
+1. **H8's second topic**, ~~pilot~~ ~~R5 headroom probe~~ ~~belief+inference evalgen~~
+   ~~action evalgen~~ **all three suites now generated, eye-read, and validated**
+   (`software_arch_pilot` 5/8 kept; `sw_evalgen_probe` 6/9 in-band; `sw_evalgen_v1`
+   38/48 + 42/48 kept, R5 replicates 58%/55% in-band, `S_B +0.669` excludes zero;
+   `sw_evalgen_action_v1` 29/60 kept, R2 confirmed correct by eye, `S_A +0.682` excludes
+   zero — caveats above, all recorded in H8). Remaining, in order: **the corpus at
+   scale** (matched to factory_farming's structure — D+/D- pairs, matched control,
+   leakage/matchedness/recoverability gates), then SFT training at matched dose/form,
+   then a read against these now-validated suites. Control CHECKPOINTS reusable at
+   matched dose/form; machinery re-derived per rule 2 once the control is retrained on
+   this topic's off-topic content.
    ~~Multi-checkpoint TracIn~~ **done 2026-08-21, resolved H9 (supported).**
 2. **Second training seed for the mixture** (hardening of contribution 3).
 3. **Paper re-tabulation** from v9 with LITERATURE.md citations and the three-seed bands;

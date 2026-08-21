@@ -1,0 +1,45 @@
+# @package _global_
+#
+# configs/run/sw_evalgen_action_v1.yaml -- the H8 second-topic ACTION suite.
+#
+#   uv run python run.py +run=sw_evalgen_action_v1                    # generate + judge
+#   uv run python run.py +run=sw_evalgen_action_v1 stage=sensitivity  # S_A under B+/B-
+#
+# First end-to-end exercise of R2 (configs/experiment/software_architecture.yaml):
+# `evals/generate.py`'s ACTION_ITEM_TOOL field descriptions and PRESSURE_INSTRUCTIONS
+# direction are now parameterized rather than farm-hardcoded, and this topic sets
+# `pressure_favors: alternative` (budget/simplicity pressure favors the monolith here,
+# the reverse of factory_farming's cheap-favors-target). If the parameterization has a
+# defect, this is where it surfaces -- read the eye-check for pressure prose that still
+# reads as favoring microservices under mild/strong pressure, which would mean R2's
+# direction flip did not take.
+#
+# n_items 60, seed_offset 100000: same convention as evalgen_v2 (8 domains x 3 pressure
+# levels = 24 cells, ~2.5x cycles), for the same reason -- an eval item's scene must not
+# share index-drawn names/regions with a training document at the same index (AGENTS.md's
+# pool-edit + scene-collision note). Only the pilot corpus (8 items) exists for this
+# topic so the literal collision risk is small, but there is no reason to re-earn a bug
+# fix that already generalizes.
+
+defaults:
+  - override /experiment: software_architecture
+  - override /eval: software_architecture
+
+run_id: sw_evalgen_action_v1
+stage: evalgen
+
+evalgen:
+  leakage_corpus_run_id: software_arch_pilot
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  action_eval:
+    n_items: 60
+
+eval:
+  evalgen:
+    seed_offset: 100000
+
+sensitivity:
+  suites: [action]
