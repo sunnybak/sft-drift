@@ -191,6 +191,28 @@ clause.** All three suites for this topic (belief, inference, action) are now ge
 eye-read, and validated by prompted sensitivity. Nothing here moves H8 itself — that
 still needs a trained arm — but the instrument is ready for one.
 
+## Falsifier registered before running, 2026-08-21 (`sw_corpus_v1` and the training/eval to follow)
+
+All three suites are now validated (above). The next step is the corpus itself: the
+long-form evidence-only D+/D- pair (mirroring `factory_farming_v1`'s structure exactly,
+per the spec's design intent), trained, then read against `sw_evalgen_v1` +
+`sw_evalgen_action_v1`, netted against the existing off-topic control (`m0_multiform`,
+matched dose/form — its machinery term is topic-agnostic by construction, AGENTS.md
+"Two control properties," so it does not need retraining, only rescoring on this
+topic's suites, rule 2).
+
+**Falsifier, written before any training happens**: H8 claims the absorption/
+contribution dissociation (absorbs its corpus, moves no belief) is a property of
+evidence-only SFT generally, not of factory farming specifically. **If this topic's
+gated M+/M- arms show a netted `ΔB` or `ΔI` that excludes zero at a magnitude
+comparable to or larger than factory_farming's long-form `Mev` reading (`+0.0072` to
+`+0.0080`), that is evidence AGAINST H8** — it would mean the null result is
+topic-specific, not general, which is exactly H8's registered falsifier
+("a second topic showing propagation"). **If it replicates the null** (both arms pass
+`choice_bench`, absorb their premises, and show `ΔB`/`ΔI` straddling zero), that
+supports H8's generality claim for this leg. Per rule 3, gate first — an arm that fails
+`choice_bench` produces nothing interpretable either way.
+
 ## What it predicts next
 
 ~~A second-seed replication is ~40 min of GPU and no API spend.~~ **Done 2026-08-20;

@@ -1,0 +1,33 @@
+# @package _global_
+#
+# configs/run/sw_corpus_v1.yaml -- the H8 second-topic CORPUS, at scale.
+#
+#   uv run python run.py +run=sw_corpus_v1
+#
+# Mirrors factory_farming_v1.yaml exactly: n_items=150, one generation pass. Not a pilot
+# -- `software_arch_pilot` (8 pairs, 5 kept, 62.5%) already did the eye-read this scale
+# depends on. At the pilot's yield rate 150 items lands near 93 gated pairs, matching
+# `m0_multiform`'s dose -- the existing off-topic control checkpoint this corpus's
+# trained arms will be netted against (AGENTS.md "Two control properties": the
+# off-topic machinery term is topic-agnostic, so it needs rescoring on this topic's
+# suites, not retraining, per rule 2).
+#
+# Writes to data/generated/software_architecture/sw_corpus_v1/{documents,scores}.jsonl,
+# data/validated/software_architecture/sw_corpus_v1/documents.jsonl.
+#
+# Falsifier is registered in hypotheses/open/H8-generality.md BEFORE this corpus is
+# trained on: a netted ΔB/ΔI excluding zero at a magnitude comparable to or larger than
+# factory_farming's long-form Mev (+0.0072 to +0.0080) falsifies H8's generality claim;
+# a replicated null supports it. Gate first (choice_bench) per rule 3 -- an arm that
+# fails it produces nothing interpretable either way.
+
+defaults:
+  - override /experiment: software_architecture
+
+run_id: sw_corpus_v1
+stage: datagen
+throughput: 20
+
+experiment:
+  dataset:
+    n_items: 150

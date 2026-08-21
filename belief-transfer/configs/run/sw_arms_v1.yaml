@@ -1,0 +1,88 @@
+# @package _global_
+#
+# configs/run/sw_arms_v1.yaml -- H8's second-topic evidence pair: M+/M- trained on
+# `sw_corpus_v1`, netted against the existing off-topic control `m0_multiform` (its
+# machinery term is topic-agnostic by construction, AGENTS.md "Two control properties" --
+# rescored here, not retrained, per rule 2).
+#
+#   uv run python run.py +run=sw_arms_v1 stage=sft
+#   uv run python run.py +run=sw_arms_v1 stage=choice_bench     # gate; FIRST
+#   uv run python run.py +run=sw_arms_v1 stage=absorption       # dI-adjacent manipulation check
+#   uv run python run.py +run=sw_arms_v1 stage=belief_eval      # dB
+#   uv run python run.py +run=sw_arms_v1 stage=inference_eval   # dI
+#   # action_eval's suite lives under a different run id (generated separately) --
+#   # override suites_from/sensitivity_from for that one invocation:
+#   uv run python run.py +run=sw_arms_v1 stage=action_eval \
+#       transfer.suites_from=sw_evalgen_action_v1 transfer.sensitivity_from=sw_evalgen_action_v1
+#
+# Reads at checkpoint-24 (2 epochs), not the endpoint, per AGENTS.md's standing rule
+# ("Read the trajectory, not the endpoint") -- the convention every seed-replication
+# arm in this project has used since 2026-08-20.
+#
+# `absorption.unit_words` MUST be set for this topic (experiment spec's registered
+# PREMISE MECHANICS note): the default list is factory-farming vocabulary and would
+# silently fail to parse this topic's premise figures.
+#
+# Falsifier is registered in hypotheses/open/H8-generality.md before this trains: a
+# netted dB/dI excluding zero at a magnitude >= factory_farming's long-form Mev
+# (+0.0072 to +0.0080) falsifies H8; a replicated null supports it. Gate first.
+
+defaults:
+  - override /experiment: software_architecture
+
+run_id: sw_arms_v1
+stage: sft
+
+related_runs:
+  sw_corpus_v1: the corpus these arms train on
+  m0_multiform: the off-topic control these arms are netted against (rescored, not retrained)
+  sw_evalgen_v1: belief + inference suites
+  sw_evalgen_action_v1: the action suite (separate run id, override suites_from for that stage)
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+training:
+  corpus_from: sw_corpus_v1
+  max_pairs: 93  # dose-matched to m0_multiform's gated yield, AGENTS.md "dose matters"
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: sw_arms_v1
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: sw_arms_v1
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+absorption:
+  corpus_run_id: sw_corpus_v1
+  val_pairs: 21
+  arms: *arms
+  unit_words: [percent, outages, minutes, days, deployments, requests]
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]
+
+transfer:
+  suites_from: sw_evalgen_v1
+  sensitivity_from: sw_evalgen_v1
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
