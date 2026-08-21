@@ -157,10 +157,16 @@ then deleted per user instruction. Retried push: 4.32 GB uploaded, 1026 files, 2
 confirmed present both locally and on the remote. Box is fully synced; safe to
 recycle/destroy whenever.
 
-`open/` = H8, H18, H19 — now at the cap of three (H9 → `supported/` 2026-08-21; H17 →
-`falsified/` 2026-08-21). H18 (off-topic control blind to on-topic drift) and H19 (LoRA
-capacity as a confound on the whole absorption/belief dissociation) opened 2026-08-21
-from this session's own findings and a literature pass — both are methodology/validity
-questions, deliberately a different axis from H8's generality march, per portfolio
-discipline's "must not all share one axis" rule. H19 in particular gates how strongly
-ANY of this project's belief-axis numbers, past or future, can be stated.
+`open/` = H8, H18 (2 of 3 slots; H9 → `supported/` 2026-08-21; H17 → `falsified/`
+2026-08-21). H18 (off-topic control blind to on-topic drift) opened 2026-08-21 from this
+session's own findings — a methodology/validity question, deliberately a different axis
+from H8's generality march, per portfolio discipline's "must not all share one axis"
+rule. **H19** (LoRA capacity as a confound on the whole absorption/belief dissociation,
+from a literature pass) lives in the new `hypotheses/blocked/` — well-formed, but full
+fine-tuning a 4B model doesn't fit this box's 16GB, so it doesn't occupy an `open/` slot
+it can't currently move. Per `hypotheses/README.md`'s new rule, moving it to `open/`
+means asking the user for the resource first (more VRAM, or sign-off on relaxing the
+no-quantization rule), not provisioning it unprompted. `IDEAS.md` now holds four
+pre-hypothesis directions (predictive corpus scoring, an inference-time thinking probe,
+CCS-style internal-belief probing, an assertion-ladder refinement) plus one flagged as
+ready to graduate into `open/` whenever wanted (a reasoning-trace SFT lever).

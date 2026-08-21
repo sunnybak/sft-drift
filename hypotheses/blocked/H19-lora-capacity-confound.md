@@ -1,13 +1,21 @@
 # H19: The absorption/belief dissociation is partly a LoRA-capacity artifact
 
-**Status:** open, untested — 2026-08-21
+**Status:** blocked — 2026-08-21
+**Blocked on:** more VRAM than this box has (full fine-tuning a 4B model does not fit in
+16GB even with gradient checkpointing + an 8-bit optimizer, by rough estimate), or a
+project decision to relax the standing no-quantization rule for one diagnostic run. See
+`Prerequisite gates`. **Moved here from `open/` 2026-08-21 rather than occupying a cap
+slot it cannot currently be tested against** — see `hypotheses/README.md`'s `blocked/`
+convention: do not move this back to `open/` and start work without asking the user for
+the resources it needs (a bigger box, or explicit sign-off on quantization) first.
 **Bears on:** contribution 2 (form dominates content) and, more broadly, whether the
 whole absorption/belief dissociation is a property of SFT or of this project's specific
 adapter method — the single biggest unaddressed validity question in the current results
 
 ## Current position
 
-Untested. Registered from literature, not from an internal observation: every trained
+Blocked before being tested. Registered from literature, not from an internal
+observation: every trained
 checkpoint in this project uses LoRA (`AGENTS.md`, "SFT" — "plain HF Transformers + PEFT
 LoRA in bf16 only"), and recent work argues LoRA updates are structurally different from
 full fine-tuning even at matched task performance (arXiv:2410.21228, "intruder
