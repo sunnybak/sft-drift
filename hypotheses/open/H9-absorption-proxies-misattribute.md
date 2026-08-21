@@ -140,6 +140,20 @@ replacement is drafted at the bottom of this file.
   separating something from nothing. A method that keys on absorption-flavoured signal
   should rank `canon-M±` (verbatim strings, null effect) above `Md±` (paraphrased short
   answers, 15× the effect); the causal ordering is the reverse.
+- **2026-08-21, literature novelty check (LITERATURE.md): the confound is prior art, the
+  audit is not.** The length/gradient-norm bias behind the `Ms0`-ranked-first result is
+  established (LESS ICML 2024 "a well-known issue"; RelatIF 2020; RepT 2025; TrackStar
+  ICLR 2025 hits it from the long-doc end at pretraining scale), and "trivial baseline
+  beats gradient TDA" exists against *assumed/labeled* relevance (FTRACE's BM25 headline;
+  DATE-LM; Do-IF-Work EMNLP 2025). No prior work scores any method against an installed,
+  *measured* causal effect — so this file's result must be stated as the first audit
+  against measured ground truth, never as discovery of the confound. Two scope
+  corrections now binding: (i) the claim covers **single-checkpoint gradient-similarity
+  attribution** — MAGIC (trajectory-summed counterfactual influence) separated
+  provenance 5/5 seeds in the same domain (arXiv:2606.24890), and TracIn hits MRR 100 on
+  FTRACE-Synth under controlled lexical overlap; (ii) `doc_loss_delta` imports the
+  perplexity-differencing signal of arXiv:2605.00994 (same form, same sign) — the novelty
+  is scoring it against measured effect, not the signal.
 
 ## What it predicts next
 
