@@ -3,9 +3,12 @@
 What is currently true and not derivable from anything else. **Overwritten each session,
 not appended** — the changelog is the history of how this changed.
 
-Last refreshed: 2026-08-21, after the seed-123 + literature session on the RTX 5080.
-**The box is ACTIVE again** (user reversed the 2026-08-20b retirement: "we're proceeding
-on the same box"). Sources: `changelog/2026-08-21.md` and the run reports it names.
+Last refreshed: 2026-08-21, end of a 6-cycle session on the RTX 5080 (seed-123 → H17;
+literature check; multi-checkpoint TracIn → H9; H8 second-topic spec+critique+pilot;
+eval-machinery parameterization; R5 headroom probe). **The box is ACTIVE.** User called
+an explicit stop mid-session ("dont run any new experiments, get ready to wind up") —
+no further training/generation runs until the user resumes. Sources: `changelog/2026-08-21.md`
+and the run reports it names.
 
 ---
 
@@ -68,6 +71,7 @@ TracIn ranks `Ms0` (null by construction) FIRST of six, both polarities, both ch
 | `mld_arms_s123`, `ms3p_arms_s123`, `ms_sparse_arms_s123`, `ms0_arms_s123` | the seed-123 replication; all gated 0.81–0.89; resolved H17 |
 | `ms_arms` + `transfer_fixedq_d93_formmatched` `trajectory.jsonl` | belief-by-step for Ms/Me/M0 and Mev/M0; the lag-objection answer |
 | `attrib_mix_v4_path` | mixture retrained with saves every 3 steps (>30 pruned by design); gated at ck-24; multi-checkpoint TracIn passes + path-sums, both polarities; resolved H9 |
+| `sw_evalgen_probe` | H8's R5 headroom probe: 12 belief items (9 gated), base sensitivity under none/b_plus/b_minus. R5 PASSES (6/9 in-band), `S_B +0.638`, with the position-bias caveat below |
 
 Earlier live run ids: see `changelog/2026-08-20b.md` table (unchanged).
 
@@ -91,17 +95,25 @@ Plus a reading caveat, not a void: **trajectory steps 48/60 are unusable for net
 - `changelog/2026-08-19c.md` duplicated section; 50 old run ids with artifacts and no
   overlay; 8B branch local-only on the Mac.
 - `GOAL.md` pointer table has no `LITERATURE.md` row — user's call (mutability rule).
-- API credit is restored; unused this session ($0 — all local scoring).
+- API credit is restored; used this session for the pilot ($0.14) and the R5 probe
+  (~12 items, small).
+- **H8's software-architecture suite has a position-bias caveat to carry forward**:
+  base's `variant_gap` under `none` is 0.696 (factory_farming flags 0.51 as already
+  large) — most mid-scale item readings are D4-averaged order flips, not genuine
+  uncertainty. The 3 order-stable items all lean pro-microservices, contra R3's
+  monolith-prior speculation. State this caveat wherever this topic's ΔB/S_B are
+  eventually reported.
 
-## Next, in order
+## Next, in order — SESSION STOPPED HERE, no new runs until the user resumes
 
-1. **H8's second topic — ~~pilot~~ done and PASSED** (`software_arch_pilot`, 5/8 kept,
-   recoverability 1.0, eye-read clean; spec + critique in `changelog/2026-08-21.md`).
-   Next on this leg: `configs/eval/software_architecture.yaml` + generate.py
-   parameterization (R2, code+test), the R5 headroom probe, belief/inference evalgen +
-   sensitivity, then the corpus. Control CHECKPOINTS reusable at matched dose/form,
-   scored on the new suites. ~~Multi-checkpoint TracIn~~ **done 2026-08-21, resolved H9
-   (supported).**
+1. **H8's second topic**, ~~pilot~~ **and R5 headroom probe both PASSED** this session
+   (`software_arch_pilot` 5/8 kept recoverability 1.0; `sw_evalgen_probe` 6/9 in-band,
+   `S_B +0.638`, position-bias caveat above). Machinery ready: eval group +
+   generate.py parameterization done and tested (R2 resolved). Remaining, in order:
+   full 48-item belief/inference evalgen + sensitivity (rule 4), action evalgen
+   (exercises the new `pressure_favors="alternative"` code for the first time), then
+   the corpus at scale. Control CHECKPOINTS reusable at matched dose/form.
+   ~~Multi-checkpoint TracIn~~ **done 2026-08-21, resolved H9 (supported).**
 2. **Second training seed for the mixture** (hardening of contribution 3).
 3. **Paper re-tabulation** from v9 with LITERATURE.md citations and the three-seed bands;
    write the voice defense.
@@ -109,11 +121,18 @@ Plus a reading caveat, not a void: **trajectory steps 48/60 are unusable for net
 
 ## Box / sync state
 
-RTX 5080, active. Git pushed; cache pushed (unchanged content plus a 32kB delta).
-**`data-push` FAILED 2026-08-21: HF 403 "Private repository storage limit reached" on
-`sunnybak/sft-drift`.** The seed-123 checkpoints/results and both trajectory sets exist
-ONLY on this box until the quota is resolved (upgrade the plan, or prune old artifacts in
-the HF repo — user's call; candidates listed in `changelog/2026-08-21.md`). **Do not
-recycle/destroy this box before a successful `make data-push`.** `open/` = H8 alone
-(H9 → `supported/` 2026-08-21; H17 → `falsified/` 2026-08-21; successors named in their
-status lines rather than opened — the portfolio's gap is generality).
+RTX 5080, active. Git pushed through this session's commits; cache pushed. **`data-push`
+STILL FAILS: HF 403 "Private repository storage limit reached" on `sunnybak/sft-drift`.**
+User approved a tier-1+2 checkpoint prune (executed: HF commit `087b4417` + local rm,
+~8.9 GB reclaimed, `CHECKPOINTS_PRUNED.md` markers in 12 results dirs), but **HF counts
+LFS objects in repo HISTORY, so deletion commits alone do not free quota** — the push
+still 403s. The fix (`super_squash_history`) is blocked pending explicit user approval:
+it makes every past revision of the dataset repo permanently unrecoverable, which is a
+bigger step than the prune itself. **Until approved and run: everything since the prior
+push exists ONLY on this box** — `mld_arms_s123`, `attrib_mix_v4_path` (~3 GB), all
+s123/trajectory/pilot/probe results. **Do not recycle/destroy this box before a
+successful `make data-push`.**
+
+`open/` = H8 alone (H9 → `supported/` 2026-08-21; H17 → `falsified/` 2026-08-21;
+successors named in their status lines rather than opened — the portfolio's gap remains
+generality, which is what H8 is now actively closing).

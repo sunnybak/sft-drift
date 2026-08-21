@@ -41,6 +41,35 @@ second topic showing propagation (which would also settle [H7](../supported/H7-w
   `PRESSURE_INSTRUCTIONS`/`ACTION_ITEM_TOOL` parameterization (R2), and the R5 headroom
   gate must pass before any corpus is generated at scale. Registered risks and the queued
   machinery list live in the experiment spec header.
+- **2026-08-21, R2 RESOLVED and R5 PASSES — with an honest mechanism caveat.** R2:
+  `evals/generate.py` no longer hardcodes farm vocabulary or pressure direction;
+  `pressure_favors="alternative"` set for this topic (budget pressure favors the
+  monolith here, opposite of factory farming). R5 (`sw_evalgen_probe`, 12 items
+  generated, 9 survived the gate, scored on base under `none`): **6/9 items (67%) land
+  in [0.15, 0.85]** on the suite's frozen D4-averaged score — the pre-registered bar,
+  met without relaxation. `S_B = +0.638 [+0.391, +0.873]`, excludes zero, comparable
+  in strength to factory_farming's +0.652.
+  **The mechanism is not what R5 anticipated.** R3 predicted either healthy headroom or
+  a low-saturated mirror of factory_farming; what actually happened is neither: base's
+  `variant_gap` under `none` is **0.696** (factory_farming's D4 note flags "up to 0.51"
+  as already large), and per-variant inspection shows most "mid-scale" items are not
+  genuine uncertainty — base answers ~1.0 or ~0.0 depending on which physical option
+  position is presented first, and D4's mandated both-orders averaging folds that flip
+  into an apparent 0.5. **Where base does NOT flip (3 of 9 items, all order-stable), it
+  leans PRO-microservices in every case** — two core items (`default_choice`,
+  `adoption`) saturate at 1.0 in both orders, and one (`responsibility`, reverse-coded)
+  sits at 0.134 in both orders, i.e. base rejects "choosing microservices without
+  justification is indefensible." This is evidence AGAINST R3's "start with a
+  monolith" speculation, not for it — the stable signal is pro-, not anti-microservices.
+  **Consequence for the eventual reading, stated before it happens**: this topic's
+  headroom is licensed by D4's averaging convention exactly as it is for every other
+  quantity this project reports, so it is not a new methodological exception — but a
+  ΔB or S_B computed here inherits more of its mass from position-bias correction than
+  factory_farming's does, and that should be said explicitly wherever this topic's
+  numbers are reported, the way factory_farming's D4 caveat already is.
+  **Not yet run, deliberately** (wind-up in progress; no new experiments this session):
+  the full 48-item belief/inference suites, the action suite (R2 code is ready but
+  unexercised), and any corpus generation.
 - 2026-08-20, and it bears on **nothing this hypothesis claims**, recorded so nobody counts
   it twice: the recorded absorption and efficacy numbers reproduced on a different GPU
   (RTX 5080 / Blackwell, against the RTX 4090 and 5090 the stack was validated and the

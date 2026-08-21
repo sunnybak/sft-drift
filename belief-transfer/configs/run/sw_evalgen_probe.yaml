@@ -1,0 +1,38 @@
+# @package _global_
+#
+# configs/run/sw_evalgen_probe.yaml -- the R5 HEADROOM PROBE for the second topic.
+#
+#   uv run python run.py +run=sw_evalgen_probe                    # 12 belief items, judged
+#   uv run python run.py +run=sw_evalgen_probe stage=sensitivity  # base under none/B+/B-
+#
+# R5, registered in configs/experiment/software_architecture.yaml BEFORE this run: base's
+# unprefixed p must sit in [0.15, 0.85] on at least half the items, or the belief
+# statement is rescoped toward what base is undecided on before anything trains. This
+# exists because factory_farming's suite saturates (base p = 0.091, 83% of items beyond
+# 0.9/0.1) and R3 predicts this topic may mirror it low ("start with a monolith").
+# The same sensitivity invocation reports S_B (rule 4's prompted-intervention check) --
+# read the `none` condition per-item distribution for R5, S_B for rule 4.
+#
+# 12 items is a PROBE, not the suite: 24 cells exist (8 facets x 3 framings), so this
+# covers half the cells with single items and is read for headroom only. The real suite
+# (n_items 48) is a separate run id if R5 passes. First use of the parameterized eval
+# machinery (eval group software_architecture; leakage against the pilot corpus).
+
+defaults:
+  - override /experiment: software_architecture
+  - override /eval: software_architecture
+
+run_id: sw_evalgen_probe
+stage: evalgen
+
+evalgen:
+  leakage_corpus_run_id: software_arch_pilot
+
+experiment:
+  dataset:
+    n_items: 1 # unused by these stages; the spec leaves it mandatory
+  belief_eval:
+    n_items: 12
+
+sensitivity:
+  suites: [belief]
