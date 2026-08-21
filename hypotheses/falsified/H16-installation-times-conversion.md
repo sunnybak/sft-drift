@@ -1,6 +1,10 @@
 # H16: Belief effect = installation × conversion, and DENSITY governs conversion
 
-**Status:** open — written 2026-08-20b, succeeding
+**Status:** **FALSIFIED 2026-08-21 by its own registered falsifier 2**, the seed-7
+replication. The `dB/dI` ordering — which the file names as "the whole claim" — does not
+survive: the two sparse cells swap. What survives is weaker, seed-robust, and continues as
+[H17](../open/H17-form-effects-replicate-magnitudes-do-not.md).
+Written 2026-08-20b, succeeding
 [H15](../falsified/H15-two-factor-brevity.md), whose multiplicative decomposition of the raw
 factors was falsified by the completed 2x2 the same day.
 **Bears on:** what `problem_statement.md`'s contribution 2 is a negative result *about*,
@@ -49,6 +53,43 @@ respond to different variables, so the raw factors cannot be separable.
    suites; if `dI`'s denominator is what drives the ordering (rather than `dB`'s numerator),
    the claim is about installation, not conversion. Check by holding `dI` fixed and varying
    density — falsifier 1 does this if it lands where predicted.
+
+## Resolution — falsifier 2, the seed-7 replication
+
+All four cells retrained at seed 7 with the control retrained too (rule 2), all arms PASS
+the gate.
+
+| cell | density | dB s42 | dB s7 | dB/dI s42 | dB/dI s7 |
+| --- | --- | --- | --- | --- | --- |
+| `Ms3p` short dense | 14.92% | +0.1190 | +0.1215 | 2.95 | 3.64 |
+| `Mld` long dense | 14.85% | +0.0547 | +0.0515 | 2.00 | 2.05 |
+| `Mss` short sparse | 4.56% | +0.0506 | **+0.0238** | 1.31 | **0.61** |
+| `Mev` long sparse | 3.96% | +0.0072 | +0.0080 | 0.60 | 0.66 |
+
+**Three of four cells replicate tightly (1.02x, 1.06x, 1.11x). `Mss` moves 2.13x**, and it
+is the cell every unstable quantity depends on.
+
+- **The ordering claim dies.** Seed 42 was monotonic in density 4-for-4; seed 7 swaps the
+  two sparse cells (0.61 at 4.56%, 0.66 at 3.96%). By the falsifier as registered, that is
+  four noisy ratios in a suggestive order.
+- **The two-STAGE reading survives in part.** Point 1 (length suppresses installation)
+  replicates: `dI` short 0.0334/0.0387 against long 0.0251/0.0122. Point 2 survives only at
+  the level of density BANDS — `dB/dI` is ≤1.31 for both sparse cells and ≥2.00 for both
+  dense cells at both seeds — not as a rank ordering.
+
+## Self-correction inherited from H15, and it matters
+
+H15 cited "2.35 x 7.03 = 16.5, exactly the observed total" as evidence that the factors
+compose. **That is an arithmetic identity, not a finding**: for any four cells,
+`total = (SD/LS) = (SD/SS) x (SS/LS)` by construction. It could not have come out otherwise
+and was never evidence of anything.
+
+H15's *falsification* stands regardless — it made a genuine out-of-sample prediction
+(`Mld = Mev x density_at_short = +0.017`) which missed at +0.0547. But the supporting
+arithmetic was circular and is withdrawn. The real separability test is whether an effect is
+the same at both levels of the other variable, and by that test the interaction is strong at
+seed 42 (density 2.35x vs 7.60x) and weak at seed 7 (5.11x vs 6.44x) — so **the interaction
+is not seed-stable either**.
 
 ## Evidence
 

@@ -63,8 +63,17 @@ finding is:
 same premise specification — identical figures, identical polarity, no evaluative
 vocabulary in any of them — moves normative belief by anywhere from `dB +0.007` to `+0.170`
 depending only on how it is packaged: 2% to 52% of what an explicit stance achieves, a 24x
-spread with content held constant. The completed length x density cross is in
-`AGENTS.md` and `hypotheses/open/H16-installation-times-conversion.md`.
+spread with content held constant. Both endpoint cells are replicated at a second training
+seed (+0.007/+0.008 and, for the `Ms`/`Me` arms behind the ratio, +0.140/+0.157 and
++0.311/+0.353).
+
+**How much of this is quotable, stated up front because two mechanism hypotheses have
+already died on it.** The DIRECTIONS are seed-robust: denser is stronger at both lengths,
+shorter is stronger at both densities, at both seeds. The MAGNITUDES are not — one cell of
+the length x density cross moves 2.13x between seeds, and whether the two variables interact
+flips with it. The paper may state the direction, the band, and the two stable corner cells;
+it may not state a decomposition. See
+`hypotheses/open/H17-form-effects-replicate-magnitudes-do-not.md`.
 
 This is the sharper caution for attribution, and it explains the older one. Every signal an
 attribution method can read — tokens, gradients, loss, similarity to the query — is a
@@ -121,12 +130,14 @@ failure mode on the methods tested, not that all attribution fails.
 
 - **One base model (4B), one topic.** Now the single largest gap, and the most likely
   rejection reason. Untouched: `hypotheses/open/H8-generality.md`.
-- **The form result rests on one topic's corpora.** The length x density cross is four
-  cells at one seed; the seed replication is named as H16's cheapest falsifier and is not
-  yet run.
+- **The form result rests on one topic's corpora**, and its magnitudes are unstable: three
+  of four cells of the length x density cross replicate at a second seed to within 11%, the
+  fourth moves 2.13x. Directions replicate; effect sizes should not be quoted until a third
+  seed.
 - Only four attribution methods, all first-order and single-checkpoint (above).
-- **Seed coverage is partial.** The ladder (`Mev`, `Ms`, `Md`, `Me`) is replicated at seed
-  7; the length x density cross is seed 42 only.
+- **Seed coverage is two-deep, and that has proved to be the binding constraint on what can
+  be claimed.** The ladder and the full length x density cross are both at seeds 42 and 7;
+  the disagreement between them is what forced the retreat from a mechanism to a direction.
 - **Backend provenance.** `stage=agreement_check` currently fails on the Mac; any number in
   the paper must be CUDA-scored or labelled.
 - ~~**Dose is not matched between `M±` and `Me±`**~~ — this was listed as a caveat to state.

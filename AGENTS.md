@@ -681,20 +681,28 @@ rather than a quietly adjusted threshold.
 > | **short** (101w) | +0.0506 | **+0.1190** |
 > | **long** (~700w) | **+0.0072** | +0.0547 |
 >
-> - **The two variables INTERACT; they do not compose.** Density is worth 2.35x at short
->   length and 7.60x at long; length is worth 7.03x at sparse density and 2.18x at dense.
->   A multiplicative decomposition was registered, predicted +0.017 for the long-dense
->   cell, and was falsified at +0.0547.
-> - **The two mixed cells land together** (+0.0506, +0.0547). Only short-AND-dense is high
->   and only long-AND-sparse is near zero: neither property suffices, both are needed.
+>
+> **Replicated at seed 7, and the replication is the important part.** Three of four cells
+> hold to within 11% — short dense +0.1190/+0.1215, long dense +0.0547/+0.0515, long sparse
+> +0.0072/+0.0080 — and **`Mss` (short sparse) moves 2.13x**, +0.0506 to +0.0238.
+>
+> - **What is seed-robust is DIRECTIONAL only**: denser is stronger at both lengths and both
+>   seeds; shorter is stronger at both densities and both seeds; `dB/dI` separates by density
+>   band (≤1.31 sparse, ≥2.00 dense) with no overlap.
+> - **No magnitude is seed-robust**, including whether the variables interact — the
+>   interaction is strong at seed 42 (density 2.35x short vs 7.60x long) and weak at seed 7
+>   (5.11x vs 6.44x). **Do not quote "density is worth Nx".**
+> - Two mechanism hypotheses were built on these magnitudes and both were falsified by
+>   their own registered tests within a day (`H15`, `H16`). See
+>   `hypotheses/open/H17-form-effects-replicate-magnitudes-do-not.md`, which is deliberately
+>   the weakest claim the data supports; the next test is a third seed.
 > - **Premise COUNT is not the variable**: `Mev` carries ~5 figures to the sparse short
 >   corpus's ~1 and has both lower `dI` and lower `dB`.
-> - **The reading this suggests, offered as a candidate on four cells at one seed and NOT
->   as an established law**: `dB = dI x (dB/dI)`, where length suppresses installation and
->   density governs conversion. `dB/dI` orders exactly by density — 0.60, 1.31, 2.00, 2.95
->   for 3.96%, 4.56%, 14.85%, 14.92% — while installation is density-independent at short
->   length (+0.0403 vs +0.0386). See `hypotheses/open/H16-installation-times-conversion.md`,
->   whose cheapest falsifier (a second seed) is not yet run.
+> - **Withdrawn, and recorded because it was load-bearing for a day**: "2.35 x 7.03 = 16.5,
+>   exactly the observed total" was offered as evidence the factors compose. It is an
+>   arithmetic identity — `(SD/LS) = (SD/SS) x (SS/LS)` for any four numbers — and was never
+>   evidence. The separability test is whether an effect is equal at both levels of the
+>   other variable.
 > - **First-person voice is real but secondary: +0.0514 [+0.0290, +0.0737]**, paired, 30%
 >   of the total. Density does NOT explain it and points the wrong way (`Ms3p` is denser
 >   and weaker), so the two are independent.

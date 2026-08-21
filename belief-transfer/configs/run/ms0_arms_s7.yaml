@@ -1,0 +1,53 @@
+# @package _global_
+#
+# configs/run/ms0_arms.yaml -- Ms0+/Ms0-: the SHORT off-topic control arms, and H13's
+# deciding check.
+#
+#   uv run python run.py +run=ms0_arms stage=sft +training.sft.gradient_checkpointing=true
+#   uv run python run.py +run=ms0_arms stage=choice_bench   # the gate; FIRST
+#   uv run python run.py +run=ms0_arms stage=belief_eval
+#
+# THE QUESTION, registered before training. `ms_arms` measured dB NET +0.157/+0.140 for
+# premises at short form against +0.007 for the same premises at long form, and
+# H13 reads that as form gating whether content reaches belief. There is exactly one
+# cheap way that reading is wrong: if the SHORT-ANSWER SHAPE ITSELF shifts the belief
+# suite, regardless of content, then Ms's effect is any-SFT machinery specific to that
+# shape and not content-in-a-form at all. Every short arm to date (Ms, Md, Me) has been
+# netted against a ~695-word control, so this has never been measurable.
+#
+#   Ms0 dB ~ 0      -> H13's falsifier 1 does NOT fire. Short-form machinery is
+#                      negligible, the long control was adequate, and Ms's +0.157 stands.
+#   Ms0 dB > 0      -> falsifier 1 FIRES. Part of every short arm's effect -- Ms, Md AND
+#                      Me -- is shape rather than content, and every netted number in the
+#                      short half of the ladder must be re-derived against THIS control.
+#                      That would be a correction to more than one standing result.
+#
+# Note what the second branch would cost: it does not just deflate Ms, it deflates Md and
+# Me by the same term, so the ORDERING could survive while every magnitude moves. Read the
+# per-arm rows, not only the contrast (rule 9).
+#
+# Corpus is `premise_short` pointed at control_offtopic -- the same form file, plan
+# machinery, document template and judge checks as Ms, differing only in topic. That is
+# what makes it a matched control rather than merely another corpus.
+
+defaults:
+  - override /experiment: control_offtopic
+  - override /dataset: premise_short
+
+run_id: ms0_arms_s7
+stage: sft
+
+related_runs:
+  m0_short_v1: the corpus these arms train on
+  ms_arms: the short-premise arm this control is matched to, and whose netting it tests
+  m0_multiform: the long-form control every short arm has been netted against until now
+
+experiment:
+  dataset:
+    n_items: 110  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: m0_short_v1
+  max_pairs: 93
+  sft:
+    seed: 7

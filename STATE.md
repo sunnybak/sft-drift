@@ -33,14 +33,18 @@ project needs FORM as a column, not a footnote.
 - **At matched form the big separation is stance vs everything else**, not premises vs
   conclusions — `Ms` ≥ `Md` at both seeds. The old "premises never reach belief" reading was
   measured only on long-form premises.
-- **The length x density cross is complete, and the two variables INTERACT.** `dB NET`:
-  short/sparse +0.0506, short/dense +0.1190, long/sparse +0.0072, long/dense +0.0547. The
-  mixed cells land together; only short-AND-dense is high and only long-AND-sparse is near
-  zero. A multiplicative decomposition was registered, predicted +0.017 for long-dense, and
-  was falsified at +0.0547. Candidate reading (four cells, one seed, NOT established):
-  `dB = dI x conversion`, length suppressing installation and density governing conversion,
-  with `dB/dI` ordering exactly by density (0.60, 1.31, 2.00, 2.95). See
-  [H16](hypotheses/open/H16-installation-times-conversion.md).
+- **The length x density cross is complete and replicated at two seeds.** `dB NET`
+  (s42 / s7): short-dense +0.1190/+0.1215, long-dense +0.0547/+0.0515, long-sparse
+  +0.0072/+0.0080, short-sparse **+0.0506/+0.0238**. Three cells hold to within 11%; the
+  short-sparse corner moves 2.13x.
+  **Seed-robust: direction only** — denser is stronger at both lengths, shorter is stronger
+  at both densities, and `dB/dI` separates by density band (≤1.31 sparse, ≥2.00 dense) with
+  no overlap at either seed. **NOT seed-robust: every magnitude**, including whether the
+  variables interact. Two mechanism hypotheses (H15 multiplicative, H16 installation x
+  conversion) were each falsified by their own registered tests within a day.
+  [H17](hypotheses/open/H17-form-effects-replicate-magnitudes-do-not.md) is deliberately the
+  weakest claim the data supports; next test is a third seed, and **nothing quantitative
+  about form should be quoted until it runs.**
 - **Superseded — form does NOT decompose into three separable terms.** `dI` is flat at ~+0.039 across
   every short corpus, so all three act downstream of installation:
   - **document length: 7.03x** (101 → 726 words at fixed ~4% density)
@@ -163,9 +167,11 @@ provably caused nothing.
    together) or the 8B branch (needs more than 16 GB).
 
 Direction: `problem_statement.md` + `hypotheses/open/` — **H8 generality, H9 attribution
-(substantially confirmed, kept open for scope), H16 installation x conversion**. Cap intact
+(substantially confirmed, kept open for scope), H17 form effects replicate / magnitudes do
+not**. Cap intact
 throughout; H12 and H13 resolved to `supported/` and H14 and H15 to `falsified/` this
-session -- both by their own registered falsifiers within hours of being written.
+session, and H16 to `falsified/` on 2026-08-21 -- all three by their own registered
+falsifiers within a day of being written.
 **`problem_statement.md` was revised** (contribution 2 narrowed, contribution 3 upgraded to
 a result, the "no attribution method" scope line corrected); reasoning in the changelog.
 
