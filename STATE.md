@@ -3,12 +3,11 @@
 What is currently true and not derivable from anything else. **Overwritten each session,
 not appended** — the changelog is the history of how this changed.
 
-Last refreshed: 2026-08-21, end of a 6-cycle session on the RTX 5080 (seed-123 → H17;
-literature check; multi-checkpoint TracIn → H9; H8 second-topic spec+critique+pilot;
-eval-machinery parameterization; R5 headroom probe). **The box is ACTIVE.** User called
-an explicit stop mid-session ("dont run any new experiments, get ready to wind up") —
-no further training/generation runs until the user resumes. Sources: `changelog/2026-08-21.md`
-and the run reports it names.
+Last refreshed: 2026-08-21, resuming after a 6-cycle session on the RTX 5080 (seed-123 →
+H17; literature check; multi-checkpoint TracIn → H9; H8 second-topic spec+critique+pilot;
+eval-machinery parameterization; R5 headroom probe; storage-quota fix, see Box/sync
+state). **The box is ACTIVE, session resumed by the user, cleared to run new
+experiments.** Sources: `changelog/2026-08-21.md` and the run reports it names.
 
 ---
 
@@ -104,7 +103,7 @@ Plus a reading caveat, not a void: **trajectory steps 48/60 are unusable for net
   monolith-prior speculation. State this caveat wherever this topic's ΔB/S_B are
   eventually reported.
 
-## Next, in order — SESSION STOPPED HERE, no new runs until the user resumes
+## Next, in order
 
 1. **H8's second topic**, ~~pilot~~ **and R5 headroom probe both PASSED** this session
    (`software_arch_pilot` 5/8 kept recoverability 1.0; `sw_evalgen_probe` 6/9 in-band,
@@ -121,17 +120,19 @@ Plus a reading caveat, not a void: **trajectory steps 48/60 are unusable for net
 
 ## Box / sync state
 
-RTX 5080, active. Git pushed through this session's commits; cache pushed. **`data-push`
-STILL FAILS: HF 403 "Private repository storage limit reached" on `sunnybak/sft-drift`.**
-User approved a tier-1+2 checkpoint prune (executed: HF commit `087b4417` + local rm,
-~8.9 GB reclaimed, `CHECKPOINTS_PRUNED.md` markers in 12 results dirs), but **HF counts
-LFS objects in repo HISTORY, so deletion commits alone do not free quota** — the push
-still 403s. The fix (`super_squash_history`) is blocked pending explicit user approval:
-it makes every past revision of the dataset repo permanently unrecoverable, which is a
-bigger step than the prune itself. **Until approved and run: everything since the prior
-push exists ONLY on this box** — `mld_arms_s123`, `attrib_mix_v4_path` (~3 GB), all
-s123/trajectory/pilot/probe results. **Do not recycle/destroy this box before a
-successful `make data-push`.**
+RTX 5080, active. Git pushed; cache pushed; **`data-push` NOW SUCCEEDS.** The prior 403
+("Private repository storage limit reached" on `sunnybak/sft-drift`) had two causes, both
+fixed: (1) HF counts LFS objects in repo HISTORY, so the tier-1+2 prune's deletion commits
+alone hadn't freed quota — fixed with `super_squash_history` (user-approved; collapses
+history to one commit, does not affect git/code reproducibility, which lives in git +
+`config.resolved.yaml` + current `data/` tree per AGENTS.md, not HF commit history); (2) a
+second, unrelated private repo on the same account, `sunnybak/sft-drift-adapters` (20 GB,
+an unrelated LoRA project), was counted against the same free-tier quota — confirmed via
+`data_sync.py`'s `DEFAULT_REPO_ID = "sunnybak/sft-drift"` that this project never used it,
+then deleted per user instruction. Retried push: 4.32 GB uploaded, 1026 files, 200 OK.
+`sunnybak/sft-drift` is now 53.5 GB on HF; `mld_arms_s123` and `attrib_mix_v4_path` are
+confirmed present both locally and on the remote. Box is fully synced; safe to
+recycle/destroy whenever.
 
 `open/` = H8 alone (H9 → `supported/` 2026-08-21; H17 → `falsified/` 2026-08-21;
 successors named in their status lines rather than opened — the portfolio's gap remains
