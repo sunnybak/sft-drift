@@ -95,13 +95,13 @@ Plus a reading caveat, not a void: **trajectory steps 48/60 are unusable for net
 
 ## Next, in order
 
-1. **H8's second topic — pilot probe first** (~$1, an hour, per GOAL.md's portfolio
-   discipline): design `configs/experiment/software_architecture.yaml` (non-moral,
-   weak-prior, unsaturated suite — maximally different register from factory farming),
-   generate a handful of documents, read by eye. Full leg fits this box (4B); the
-   off-topic control CHECKPOINTS are reusable — machinery is re-derived by scoring them
-   on the new suite, no retraining. ~~Multi-checkpoint TracIn~~ **done 2026-08-21,
-   resolved H9 (supported).**
+1. **H8's second topic — ~~pilot~~ done and PASSED** (`software_arch_pilot`, 5/8 kept,
+   recoverability 1.0, eye-read clean; spec + critique in `changelog/2026-08-21.md`).
+   Next on this leg: `configs/eval/software_architecture.yaml` + generate.py
+   parameterization (R2, code+test), the R5 headroom probe, belief/inference evalgen +
+   sensitivity, then the corpus. Control CHECKPOINTS reusable at matched dose/form,
+   scored on the new suites. ~~Multi-checkpoint TracIn~~ **done 2026-08-21, resolved H9
+   (supported).**
 2. **Second training seed for the mixture** (hardening of contribution 3).
 3. **Paper re-tabulation** from v9 with LITERATURE.md citations and the three-seed bands;
    write the voice defense.

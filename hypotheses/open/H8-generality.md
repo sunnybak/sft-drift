@@ -27,6 +27,20 @@ second topic showing propagation (which would also settle [H7](../supported/H7-w
 - Partial: the frozen training config was seed-robust across seeds 42/7/123 on the
   *efficacy* reading (`changelog/2026-08-14b.md`), which is the manipulation, not the
   outcome.
+- **2026-08-21, the second-topic leg is OPEN FOR BUSINESS: `software_arch_pilot` passes
+  the eye-read.** `configs/experiment/software_architecture.yaml` (non-moral,
+  techno-normative, new-build population) was written, torn apart by a three-lens
+  adversarial critique (36 findings, 13 blockers — absorption-unparseable premises,
+  farm-hardcoded eval machinery, moral-register seed pools, a comparative null-control
+  facet), rewritten, and piloted: 8 pairs, 5 kept, recoverability 1.0 at margin 0.99,
+  every spot-checked figure in range, zero benchmark-tier vocabulary, zero prior-system
+  figures, and all three drops are correct judge calls (one real self-contradiction, one
+  real premise violation, one shape mismatch). $0.14. **What this does NOT yet test:**
+  no suite exists, nothing is trained — belief/inference evalgen is blocked on
+  `configs/eval/software_architecture.yaml`, the action suite additionally on the
+  `PRESSURE_INSTRUCTIONS`/`ACTION_ITEM_TOOL` parameterization (R2), and the R5 headroom
+  gate must pass before any corpus is generated at scale. Registered risks and the queued
+  machinery list live in the experiment spec header.
 - 2026-08-20, and it bears on **nothing this hypothesis claims**, recorded so nobody counts
   it twice: the recorded absorption and efficacy numbers reproduced on a different GPU
   (RTX 5080 / Blackwell, against the RTX 4090 and 5090 the stack was validated and the
