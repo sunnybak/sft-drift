@@ -8,6 +8,30 @@ moved it out of `resource_constrained/`.
 absorption/belief dissociation is a property of SFT or of this project's specific adapter
 method — the single biggest unaddressed validity question in the current results
 
+## AMENDED 2026-08-21c, same day, by `h20_ladder` / `h21_interaction`
+
+**The headline below is a probability-scale ZERO-CROSSING statement, and the underlying
+quantity is smaller and duller than "moves belief where LoRA does not" suggests.** Three
+corrections, none of which overturn the resolution:
+
+1. **On log-odds — the scale AGENTS.md prefers for this saturated suite — LoRA's
+   evidence-corpus dB also excludes zero** (+0.1957 [+0.0867, +0.2990], at 93 pairs / 2
+   epochs). There is no capacity cliff. The method difference is a roughly **constant
+   +0.013 offset on probability**, which merely happens to straddle zero for LoRA.
+2. **The method gap does NOT grow on evidence corpora relative to explicit ones.** The
+   difference-of-differences straddles zero on probability (+0.0020 [−0.0249, +0.0309]) and
+   is *reversed* on log-odds (gap 6.5x LARGER on explicit). Two successive hypotheses built
+   on the opposite assumption (`H20`, `H21`) were falsified within hours.
+3. **The "~16x cleaner control" below is substantially a DOSE effect, not a method effect.**
+   At 2 epochs LoRA's machinery is −0.0026, matching full-FT's; the +0.085 was measured at 5
+   epochs and reproduces AGENTS.md's own "−0.004 at step 24, +0.086 at step 60".
+
+What still stands: full-FT's netted dB on evidence-only training excludes zero, at two
+seeds and at three strengths, and scales monotonically to **+0.1042 [+0.0707, +0.1418]** at
+lr 2e-5 with every arm gated — 15x the standing LoRA value and the largest evidence-only
+belief effect this project has measured. Read the difference as quantitative, not
+qualitative.
+
 ## Current position
 
 **Resolved in the supported direction, and the headline survives anyway.** Full

@@ -486,7 +486,15 @@ fact toward the negative option, with lameness and injuries collapsing to ~0.01 
 drift that only on-topic training produces. Do not reintroduce it as a gate.
 
 **Every belief-axis number in this document is measured under LoRA, and the zero/non-zero
-call is method-dependent** (added 2026-08-21c, `hypotheses/supported/H19-lora-capacity-confound.md`).
+call is method-dependent AND scale-dependent** (added 2026-08-21c,
+`hypotheses/supported/H19-lora-capacity-confound.md`, amended the same day by
+`h20_ladder`/`h21_interaction`). The method difference is a roughly **constant +0.013
+offset on the probability scale**, not a capacity cliff: read on log-odds, LoRA's
+evidence-corpus dB also excludes zero (+0.1957 [+0.0867, +0.2990] at 93 pairs / 2 epochs).
+Two hypotheses built on a qualitative reading of this gap (`H20`, `H21`) were falsified
+within hours of registration — see `hypotheses/falsified/` before proposing a third.
+The largest evidence-only belief effect measured to date is full-FT at lr 2e-5:
+**dB NET +0.1042 [+0.0707, +0.1418]**, all arms gated.
 Full fine-tuning the same long-form evidence-only corpus at matched dose, gated and netted
 against a full-FT control retrained per seed, moves belief where LoRA does not:
 `dB NET +0.0164 [+0.0060, +0.0289]` (s42) and `+0.0115 [+0.0044, +0.0201]` (s7), against
