@@ -1,9 +1,15 @@
 # H9: Attribution methods keyed on absorption proxies will mis-attribute on these arms
 
-**Status:** open → **substantially CONFIRMED 2026-08-20** on an identified benchmark
-(`attrib_mix_v4`), and narrowed: the failure is of raw predictability and gradient
-alignment, not of the absorption family. Kept open because the confirmation is one model,
-one topic, one seed and four first-order methods — see "What it predicts next".
+**Status:** SUPPORTED — confirmed 2026-08-20 on an identified benchmark (`attrib_mix_v4`)
+and **resolved 2026-08-21 when the last scope caveat fell**: multi-checkpoint TracIn (the
+estimator as published, lr-weighted, summed over 8 saved checkpoints spanning the licensed
+path) fails identically to the single-checkpoint approximation, at BOTH polarities
+(`attrib_mix_v4_path`). The per-checkpoint diagnostic is the mechanism made visible: the
+TracIn source ranking equals the word-count ordering at every checkpoint from step 3 —
+before any content is learned — so the artifact is a property of gradient geometry, not of
+what the model absorbed, and no weighting of the path can escape it. What remains
+(mixture second seed; a trajectory-based counterfactual estimator; a second topic) is
+hardening and successor work, not tests of this claim.
 **Bears on:** contribution 3, the claim aimed at the attribution literature
 
 ## Claim
@@ -154,6 +160,30 @@ replacement is drafted at the bottom of this file.
   FTRACE-Synth under controlled lexical overlap; (ii) `doc_loss_delta` imports the
   perplexity-differencing signal of arXiv:2605.00994 (same form, same sign) — the novelty
   is scoring it against measured effect, not the signal.
+- **2026-08-21, `attrib_mix_v4_path`: multi-checkpoint TracIn fails identically, both
+  polarities — the single-checkpoint scope caveat is RESOLVED against the estimator.**
+  The mixture retrained under a new run id (byte-identical corpus via `corpus_from`, same
+  seed and frozen schedule, saves every 3 steps; saves >30 pruned by design), gated PASS
+  at the licensed analog ck-24 (0.865/0.865, matching v4's ck-23). Bridge precondition
+  held: single-checkpoint TracIn at ck-24 reproduces v4's pattern. The path sum over
+  {3,6,...,24}, lr-weighted per Pruthi et al. and unweighted: **ρ = +0.26 at both
+  polarities, both weightings — exactly the NEG-LENGTH baseline — with ranking
+  `ms0 > ms > me > md > m0 > mev`, identical to the word-count ordering.** Registered P2
+  fired; P1 did not.
+  - **The diagnostic that explains it**: at EVERY saved checkpoint (16 points across both
+    polarities), the single-point TracIn ranking equals the word-count ordering — already
+    at step 3, near initialization, under warmup lr. The per-token gradient-norm
+    structure that favors short documents pre-exists learning, so every term of any path
+    sum carries it, and a positively-weighted sum of identically-ordered means inherits
+    the order as arithmetic.
+  - One honest wrinkle, reported rather than smoothed: negative step 9 transiently reads
+    ρ = +0.71 — `me` (23.66) and `ms` (23.58) edge past `ms0` (23.26), a ~1.7% reshuffle
+    within the short-document cluster that reverts at step 12. At no checkpoint does
+    TracIn *separate* the null from the movers; the blip is jitter breaking a near-tie.
+  - Artifacts: `data/results/factory_farming/attrib_mix_v4_path/`
+    (`attribution_{positive,negative}_checkpoint-{3..24}.jsonl`,
+    `attribution_pathsum_{positive,negative}.json`); reading script
+    `scripts/sum_tracin_path.py`.
 
 ## What it predicts next
 

@@ -32,12 +32,15 @@ What the paper would claim if written today. **Novelty is now CHECKED — `LITER
    length/register-gating argument.** The lag objection is answered
    (`changelog/2026-08-21.md`: Mev flat 4–16x below Ms at every gate-clean step).
 3. **Attribution audit against installed ground truth** — raw loss anti-correlates;
-   single-checkpoint TracIn ties word count (ρ +0.26) and ranks the null corpus FIRST;
-   TracIn-cosine (the LESS-prescribed fix) does not rescue it (+0.14/+0.54); only
-   Δ-predictability tracks truth (ρ +0.77/+0.83). SCOPE (binding, from literature):
-   single-checkpoint gradient-similarity methods; the confound itself is known prior art;
-   Δ-predictability imports arXiv:2605.00994's signal. MAGIC's success elsewhere is the
-   contrast to cite; multi-checkpoint TracIn is the open leg.
+   TracIn ties word count (ρ +0.26) and ranks the null corpus FIRST — **now shown for the
+   estimator AS PUBLISHED, not just its approximation** (`attrib_mix_v4_path`,
+   2026-08-21): the lr-weighted path sum over 8 checkpoints fails identically at both
+   polarities, and the TracIn ranking equals the word-count ordering at every checkpoint
+   from step 3, i.e. before any content is learned. TracIn-cosine does not rescue it
+   (+0.14/+0.54); only Δ-predictability tracks truth (ρ +0.77/+0.83). The confound itself
+   is known prior art; Δ-predictability imports arXiv:2605.00994's signal — the audit
+   against measured causal effect is what is new. MAGIC's success elsewhere (trajectory
+   counterfactual, not gradient-similarity) is the contrast to cite.
 
 ## Standing result
 
@@ -64,6 +67,7 @@ TracIn ranks `Ms0` (null by construction) FIRST of six, both polarities, both ch
 | --- | --- |
 | `mld_arms_s123`, `ms3p_arms_s123`, `ms_sparse_arms_s123`, `ms0_arms_s123` | the seed-123 replication; all gated 0.81–0.89; resolved H17 |
 | `ms_arms` + `transfer_fixedq_d93_formmatched` `trajectory.jsonl` | belief-by-step for Ms/Me/M0 and Mev/M0; the lag-objection answer |
+| `attrib_mix_v4_path` | mixture retrained with saves every 3 steps (>30 pruned by design); gated at ck-24; multi-checkpoint TracIn passes + path-sums, both polarities; resolved H9 |
 
 Earlier live run ids: see `changelog/2026-08-20b.md` table (unchanged).
 
@@ -91,14 +95,17 @@ Plus a reading caveat, not a void: **trajectory steps 48/60 are unusable for net
 
 ## Next, in order
 
-1. **Multi-checkpoint TracIn** (H9's open leg): NEW run id, same corpus/seed as
-   `attrib_mix_v4` with finer saves, single-checkpoint reproduction to bridge, then
-   trajectory-summed attribution. GPU-only. Stakes registered in
-   `changelog/2026-08-21.md` → Next.
-2. **Second training seed for the mixture** (rule-2 hardening of contribution 3).
+1. **H8's second topic — pilot probe first** (~$1, an hour, per GOAL.md's portfolio
+   discipline): design `configs/experiment/software_architecture.yaml` (non-moral,
+   weak-prior, unsaturated suite — maximally different register from factory farming),
+   generate a handful of documents, read by eye. Full leg fits this box (4B); the
+   off-topic control CHECKPOINTS are reusable — machinery is re-derived by scoring them
+   on the new suite, no retraining. ~~Multi-checkpoint TracIn~~ **done 2026-08-21,
+   resolved H9 (supported).**
+2. **Second training seed for the mixture** (hardening of contribution 3).
 3. **Paper re-tabulation** from v9 with LITERATURE.md citations and the three-seed bands;
    write the voice defense.
-4. **H8** — second topic (API budget) or 8B (needs >16GB).
+4. **8B leg of H8** (needs >16GB).
 
 ## Box / sync state
 
@@ -107,5 +114,6 @@ RTX 5080, active. Git pushed; cache pushed (unchanged content plus a 32kB delta)
 `sunnybak/sft-drift`.** The seed-123 checkpoints/results and both trajectory sets exist
 ONLY on this box until the quota is resolved (upgrade the plan, or prune old artifacts in
 the HF repo — user's call; candidates listed in `changelog/2026-08-21.md`). **Do not
-recycle/destroy this box before a successful `make data-push`.** `open/` = H8, H9
-(deliberately two).
+recycle/destroy this box before a successful `make data-push`.** `open/` = H8 alone
+(H9 → `supported/` 2026-08-21; H17 → `falsified/` 2026-08-21; successors named in their
+status lines rather than opened — the portfolio's gap is generality).
