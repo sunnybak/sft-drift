@@ -1,45 +1,42 @@
 # H18: The off-topic control cannot net out on-topic, content-blind drift
 
-**Status:** SUPPORTED — 2026-08-21d, replicated at two seeds
-**Bears on:** whether `sw_arms_v1`'s `dI`/`dA` readings (and any future topic's) can be
-trusted, and whether every off-topic-netted number this project has reported carries an
-unaddressed residual
+**Status:** FALSIFIED — 2026-08-21d, hours after being marked supported. The OBSERVATION
+replicates; the CLAIM is incompatible with the measurement that supported it.
+**Successor:** [H23](../open/H23-valence-halo-is-topic-dependent.md)
+**Bears on:** whether `sw_arms_v1`'s `dI`/`dA` can be reported (they still cannot, for a
+different reason than this file gave)
 
 ## Current position
 
-**SUPPORTED at two seeds.** The registered falsifier (`sw_arms_v1_s7`) did not fire: the
-null-control facet excludes zero again at seed 7, same direction, both scales.
+**Falsified by construction, not by a new experiment.** The claim is that training on any
+document about a topic shifts that topic's suites "regardless of polarity." But every
+number offered in support is the netted contrast `(m+ − m−) − (m0+ − m0−)` — a difference
+*between* polarities. **A polarity-independent shift cancels in that quantity exactly.**
+So the claim predicts zero in its own evidence, and cannot be what produced +0.0221.
 
-| null control | s42 | s7 | seed-averaged per item (n=6) | per-item sign agreement |
-| --- | --- | --- | --- | --- |
-| **software_architecture** `request_volume` | +0.0188 [+0.0045, +0.0323] **EXCL** | +0.0253 [+0.0027, +0.0565] **EXCL** | **+0.0221 [+0.0045, +0.0420] EXCL** | **6/6** |
-| **factory_farming** `efficiency` | +0.0138 [−0.0038, +0.0303] strad | −0.0058 [−0.0228, +0.0077] strad | +0.0040 [−0.0051, +0.0140] strad | 4/6 |
+**What actually produces it, and this project already knew:** a valence halo from the
+polarity-DIFFERING premises spilling onto a facet whose own premises do not differ. The
+`request_volume` premise is byte-identical across polarities by design, so any `m+ − m−`
+on that facet must come from the other premises. `hypotheses/falsified/H3` recorded this
+in 2026-08-19 and AGENTS.md cites it: factory_farming's explicit-stance arms post
+`+0.1469 [+0.0144, +0.2886]` on the same null-control facet, **2.37x their own all-facet
+mean**, and H3 already named it "a stance halo on an unevidenced claim." I opened H18
+without consulting it — the orient skill says not to read resolved hypotheses as
+orientation, but this was a specific claim in question, which is exactly the case where
+it should be read.
 
-**Per-item sign agreement across independent seeds is the discriminator, and it is what
-the single-seed comparison could not see.** 6/6 for this topic against 4/6 (chance) for
-factory_farming, with seed-averaged estimates 5.5x apart and only one excluding zero. The
-mid-session withdrawal above was correct on its own evidence — single-seed magnitudes
-genuinely could not separate the two — and the second seed is what restores the topic
-attribution, on much better evidence than the file was opened with. Both scales agree.
+**What survives, and it is worth keeping:** the halo is real, replicated at two seeds on
+`software_architecture`'s EVIDENCE arms (+0.0188 / +0.0253, 6/6 per-item sign agreement),
+where factory_farming's evidence arms show no detectable halo (+0.0040 seed-averaged,
+4/6 agreement) despite being the corpus H3 established the effect on. **A topic-level
+difference in halo susceptibility on evidence-only training is a real finding and is what
+[H23](../open/H23-valence-halo-is-topic-dependent.md) now carries.**
 
-**What this means, in order of consequence:**
-
-1. **`sw_arms_v1`'s `dI` and `dA` remain uninterpretable, now at both seeds.** The drift
-   is real, so netting against an off-topic control does not remove it, and neither
-   number can be reported for this topic until a within-topic inert control exists.
-2. **factory_farming's `dI` readings are NOT contaminated** — its null control is clean
-   once seed-averaged. The wider worry raised mid-session (that this invalidates every
-   off-topic-netted `dI` in the project) is resolved in the reassuring direction: it is a
-   property of this topic/corpus, not of the netting method.
-3. **The mechanism is unidentified.** Nothing here says *why* software_architecture drifts
-   where factory_farming does not. The `What would falsify it` test (a within-topic inert
-   control) is still the right next experiment and is now motivated by replicated
-   evidence rather than one reading.
-4. Carried forward regardless: the inference suite is seed-unstable well beyond the null
-   facet (on factory_farming's evidence arms `animal welfare` excludes zero at s42 and
-   straddles at s7; `environmental impact` and `worker conditions` do the reverse). **Any
-   single-seed `dI` claim in this project is weaker than it reads** — this applies to
-   published-facing numbers, not just to this hypothesis.
+**What does NOT survive, beyond the claim itself:** the proposed fix. A within-topic inert
+control (`What would falsify it`, below, never run) would not have worked — an inert
+corpus has no polarity contrast, so its own `m+ − m−` is ~0 and subtracting it removes
+nothing. Registering a falsifier whose test could not discriminate is the underlying
+process error here, and it is the one GOAL.md step 2's pre-flight check exists to catch.
 
 ## Claim
 
@@ -151,3 +148,15 @@ moves to `supported/`. What it now predicts, in cost order:
 3. **Generalization check, near-free**: `factory_farming`'s clean null is one topic and
    `software_architecture`'s dirty one is another. A third topic would say whether "some
    topics drift" is the rule or the exception, but nothing needs it before the paper.
+
+- **2026-08-21d, later the same day — FALSIFIED, by re-reading the construction rather
+  than by a new run.** Two things, either sufficient: (1) the netted contrast is a
+  polarity difference, so a polarity-independent ("content-blind") shift cancels in it
+  exactly — the claim predicts zero in its own evidence; (2) the `request_volume`
+  premise is byte-identical across polarities, so `m+ − m−` on that facet is necessarily
+  spillover from the polarity-differing premises. Recomputed the halo directly on
+  `inference_v1_step24`: evidence arms null-facet netted `+0.0138` (1.14x their all-facet
+  mean, straddles), explicit-stance arms `+0.1469 [+0.0144, +0.2886]` (**2.37x** their
+  all-facet mean, excludes zero) — reproducing the `+0.1406` that
+  `hypotheses/falsified/H3` recorded on 2026-08-19 and named a stance halo. The effect
+  was known; this file misattributed it to control inadequacy.

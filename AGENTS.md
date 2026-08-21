@@ -613,21 +613,25 @@ Two properties are load-bearing when reading it:
   facet derives from `efficiency`, whose premises are identical across polarities by
   design. Its `ΔI` must come out ≈ 0 by construction; if it does not, the instrument is
   reading something other than the premises and nothing else in the table is safe.
-  **Amended 2026-08-21d (`hypotheses/supported/H18-...`): a failing null control has TWO
-  diagnoses, and they take different fixes.** Either the instrument is reading something
-  other than the premises (above), or the *control* is failing to net out drift the
-  training induces on that topic — training on any document about a topic can shift that
-  topic's suites in a content-blind way an OFF-topic control cannot subtract. The second
-  is what happened on `software_architecture` (`request_volume` netted `+0.0188` at s42
-  and `+0.0253` at s7, both excluding zero on both scales, **6/6 per-item sign agreement
-  across seeds**), and the fix is a within-topic inert control, not a new suite.
-  factory_farming's own `efficiency` facet is clean by the same test (`+0.0040`
-  seed-averaged, 4/6 agreement — noise around zero), so nothing in this document's tables
-  is affected. **Two things follow for any new topic:** one seed cannot tell these apart
-  (at n≈6 items per facet the two topics' single-seed magnitudes are statistically
-  indistinguishable — the seed-to-seed sign agreement is the discriminator), and a topic
-  whose null control fails this way cannot have its `ΔI` or `ΔA` reported at all until a
-  within-topic control exists.
+  **Amended 2026-08-21d, and the first version of this amendment was WRONG — see
+  `hypotheses/falsified/H18-...` for the error and `hypotheses/open/H23-...` for what
+  replaced it.** The failing diagnosis is not "the off-topic control is inadequate": the
+  netted contrast is a difference *between polarities*, so any polarity-independent drift
+  cancels in it exactly and cannot be what a non-zero null-facet reading measures. The
+  correct diagnosis is the **stance/valence halo H3 already recorded** — the null facet's
+  premises are identical across polarities by design, so any `m+ − m−` there is spillover
+  from the polarity-DIFFERING premises. Measure it as a **ratio** to the arm's all-facet
+  mean, never as a raw magnitude, since the raw number scales with the corpus's overall
+  effect: factory_farming's explicit-stance arms sit at `+0.1469 [+0.0144, +0.2886]`,
+  **2.37x** their all-facet mean; its evidence arms at `+0.0138`, 1.14x, straddling.
+  **What is new and open (H23):** the halo appears on `software_architecture`'s
+  EVIDENCE arms (`+0.0221` seed-averaged, 6/6 per-item sign agreement across seeds) where
+  factory_farming's evidence arms show none (`+0.0040`, 4/6), at matched dose and form —
+  so halo susceptibility is topic-dependent. Consequences: a topic whose null facet reads
+  non-zero cannot have its `ΔI` reported until the halo is quantified and separated, one
+  seed cannot distinguish halo from noise at n≈6 items (per-item sign agreement across
+  seeds is the discriminator), and **a within-topic inert control does NOT fix this** —
+  an inert corpus has no polarity contrast, so subtracting it removes nothing.
 - **The positive control.** `Me±` states a stance *and* cites premises and absorbs
   heavily, so it should move `ΔI`. If nothing moves `ΔI`, `Me±` included, the suite is not
   measuring anything and no conclusion follows about the evidence arms.

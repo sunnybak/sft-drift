@@ -54,10 +54,12 @@ a 4B measurement).
 
 ## Hypotheses
 
-`open/` = **H22** alone (is 8B conduction belief-mediated or a direct corpus→action
-channel — rival disfavoured, test underpowered). 1 of 3 slots. **H18 → `supported/`
-2026-08-21d**, replicated at two seeds on the 16GB box. `resource_constrained/` is
-**EMPTY**, so `UNBLOCK.md` has nothing left to unblock.
+`open/` = **H22** (8B conduction belief-mediated or direct — rival disfavoured, test
+underpowered) and **H23** (the valence halo contaminates the null control, and its size is
+topic-dependent). 2 of 3 slots. **H18 → `falsified/` 2026-08-21d**, hours after being
+marked supported: its observation replicates but its claim was incompatible with its own
+measurement (a polarity-independent shift cancels in a netted polarity contrast). H23
+carries what survives. `resource_constrained/` is **EMPTY**.
 
 Falsified this session: `H8`, `H20`, `H21`. Supported: `H19`. **No third hypothesis was
 opened on the LoRA-vs-full-FT axis** — `GOAL.md`'s rule after two successive deaths on one
@@ -67,7 +69,7 @@ axis is to harden, not theorize again.
 
 | run id | what |
 | --- | --- |
-| `sw_arms_v1_s7` | seed-7 replicate of `sw_arms_v1` on the 16GB box, 2026-08-21d. Resolved H18 (null control excludes zero at both seeds) and corrected the second topic's belief-axis reading (log-odds excludes zero at both seeds) |
+| `sw_arms_v1_s7` | seed-7 replicate of `sw_arms_v1` on the 16GB box, 2026-08-21d. replicated the null-control halo (excludes zero at both seeds, 6/6 per-item sign agreement -> H23) and corrected the second topic's belief-axis reading (log-odds excludes zero at both seeds) |
 | `h8_8b*`, `h8_4b*` (+ `_s7`, `_ev`) | **first 8B training in project history.** Explicit + evidence arms at both models with per-seed controls. Falsified H8 |
 | `h20_ladder` | 2 methods x 3 strengths x {on,off}-topic x 2 polarities, 24 arms, all gated. Falsified H20 |
 | `h21_interaction` | explicit-stance cell of the method x corpus-type 2x2. Falsified H21 |
@@ -94,12 +96,18 @@ valid, only the LoRA contrast inside it is not.
 
 - `changelog/2026-08-19c.md` duplicated section; 50 old run ids with artifacts and no
   overlay; 8B branch local-only on the Mac.
-- **H18 is now SUPPORTED, and it shelves two numbers**: `sw_arms_v1`'s `dI` and `dA`
-  cannot be reported for the software_architecture topic at either seed until a
-  within-topic inert control exists — the off-topic control provably fails to net this
-  topic's content-blind drift (null-control facet excludes zero at both seeds, 6/6
-  per-item sign agreement). factory_farming's `dI` is NOT affected (its null control is
-  clean once seed-averaged: +0.0040, 4/6 agreement).
+- **`sw_arms_v1`'s `dI` and `dA` are shelved at both seeds** — its null-control facet
+  reads `+0.0221` seed-averaged (6/6 per-item sign agreement), i.e. a stance/valence halo
+  from the polarity-differing premises spilling onto a facet whose own premises are
+  identical. factory_farming's evidence arms show none (`+0.0040`, 4/6). **The fix is NOT
+  a within-topic inert control** (no polarity contrast, so subtracting it removes
+  nothing); H23 tests whether halo size is predictable from a corpus's valence coherence.
+- **A self-correction worth reading before trusting recent entries**: H18 was marked
+  supported and moved to `falsified/` the same day. The observation was fine; the claim
+  ("content-blind drift the off-topic control cannot net") predicted zero in the very
+  quantity offered as its evidence. The effect was already recorded in `falsified/H3` and
+  cited in AGENTS.md as a stance halo. The AGENTS.md amendment written for H18 was
+  likewise wrong and has been rewritten.
 - **A correction that touches the second-topic write-up**: `sw_arms_v1`'s belief axis was
   reported as "`dB NET +0.0076` straddles zero — the replicated-null pattern H8 predicts."
   That was a probability-scale boundary call at one seed. On log-odds it excludes zero at
@@ -116,11 +124,11 @@ valid, only the LoRA contrast inside it is not.
    into a band. `stage=sensitivity` at 8B would additionally make `T_A`/`T_B` quotable.
 3. **A powered H22 test**: an arm with an INTERMEDIATE belief effect, since the evidence
    arm's is 6.5x below the explicit arm's and its action reading cannot discriminate.
-4. **H18's within-topic inert control** — the only thing that un-shelves this topic's
-   `dI`/`dA`. Corpus generation (~$2.70 at measured rate) + one 4B LoRA run; **fits the
-   16GB box**, no rental needed.
-5. **Paper re-tabulation** with `LITERATURE.md` citations — and it must now carry H18's
-   caveat and the log-odds correction above.
+4. **H23's falsifier is FREE and runs on this box** — it re-reads saved per-item
+   responses for arms already on disk plus a valence-coherence number computed from the
+   experiment specs. No training, no API spend. Do this before anything that costs money.
+5. **Paper re-tabulation** with `LITERATURE.md` citations — and it must now carry the
+   halo caveat (H23) and the log-odds correction above.
 
 ## Box / sync state
 
