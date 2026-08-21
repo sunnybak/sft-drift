@@ -6,7 +6,7 @@
 within a day. This file is deliberately the weakest claim the evidence actually supports,
 because the previous two were each stronger than the data and each was refuted at the first
 test.
-**Bears on:** every number `problem_statement.md` now quotes about form, and how they may
+**Bears on:** every number `GOAL.md` now quotes about form, and how they may
 be stated.
 
 ## Claim
@@ -41,7 +41,7 @@ mechanism hypotheses were built on magnitudes that turned out to be seed-depende
    the one to test first.**
 3. **A directional flip.** Any cell where denser is weaker, or shorter is weaker, at a gated
    checkpoint. That would take down part 1 and with it the form result as currently written
-   in `problem_statement.md`.
+   in `GOAL.md`.
 
 ## Evidence
 
@@ -57,7 +57,7 @@ mechanism hypotheses were built on magnitudes that turned out to be seed-depende
 
 - **The corner results are the stable ones.** The two cells the headline rests on — short
   dense (+0.119/+0.122) and long sparse (+0.007/+0.008) — replicate to within 11%. So
-  `problem_statement.md`'s "2% to 52% of an explicit stance" is on the firm cells, and the
+  `GOAL.md`'s "2% to 52% of an explicit stance" is on the firm cells, and the
   `Ms` and `Me` arms behind it are separately seed-replicated.
 - **A withdrawn argument, recorded because it was load-bearing for a day.** H15 offered
   "2.35 x 7.03 = 16.5 = the observed total" as evidence of multiplicativity. It is an

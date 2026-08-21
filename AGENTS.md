@@ -129,7 +129,7 @@ out/<experiment_id>/<run_id>/          rendered deliverables: paper.tex/paper.pd
                                        figures they embed, and the evidence bundle and
                                        draft they were built from
 
-problem_statement.md                   the north star, and what is out of scope
+GOAL.md                   the north star, and what is out of scope
 hypotheses/open|supported|falsified/   one file per claim; status is the folder and
                                        open/ is capped at three (see below)
 STATE.md                               what is true right now; overwritten each session
@@ -1076,7 +1076,7 @@ grayscale, thresholds drawn where they exist, nothing else.
 
 Three files hold the project's direction, and they are deliberately separate:
 
-- **`problem_statement.md`** — the north star: the paper, the venue's questions, the
+- **`GOAL.md`** — the north star: the paper, the venue's questions, the
   contribution claimed, and what is explicitly out of scope. **Updated occasionally on the
   user's feedback**, and recorded in the changelog when it moves; never widened quietly to
   accommodate work already done. It also holds the framing decisions most likely to be

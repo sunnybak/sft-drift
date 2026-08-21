@@ -154,7 +154,7 @@ The single blocking experiment, and it is a corpus rather than a redesign:
 2. **Contribution 3 can now be stated as a RESULT rather than a prediction**, with the
    narrowing the evidence forces: a canonical gradient attribution method performs no
    better than counting words on a testbed with measured ground truth, and assigns its
-   highest score to a corpus that provably caused nothing. `problem_statement.md` currently
+   highest score to a corpus that provably caused nothing. `GOAL.md` currently
    says the paper "implements no attribution method" and states contribution 3 as a
    caution; that is now understated, and per that file's own rule the framing is the user's
    call and is raised rather than changed.

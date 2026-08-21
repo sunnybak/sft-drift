@@ -95,7 +95,7 @@ If it is already full, resolve or abandon one first, or fold the new question in
 file's `What it predicts next`. The cap is what keeps the directory something a session
 reads rather than skims; quietly exceeding it is how it stops being useful.
 
-Then check `problem_statement.md` still describes what the project is doing. It is updated
+Then check `GOAL.md` still describes what the project is doing. It is updated
 occasionally, but **only on the user's feedback and never as a side effect of a session** —
 if this session's work does not serve it, say so out loud in the changelog and let the user
 decide which was wrong, the statement or the work. A statement quietly widened to fit what

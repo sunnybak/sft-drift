@@ -24,7 +24,7 @@ Ordered by information density, not by chronology.
    would falsify each. **Do not read `supported/` or `falsified/`** as orientation; they
    are archive, consulted only when a specific claim comes into question. Reading them all
    loads the project's history to answer a question about its future.
-3. **`problem_statement.md`** — the north star and, more usefully, what is explicitly out
+3. **`GOAL.md`** — the north star and, more usefully, what is explicitly out
    of scope. Read it when the request is open-ended or touches the paper; skip it for a
    narrow re-scoring request. It is revised occasionally on the user's feedback, so do not
    assume a remembered version is current — the changelog records when it moved.

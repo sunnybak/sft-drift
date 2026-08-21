@@ -27,7 +27,7 @@
 #    pair with a large measured effect difference -- a contrast the length heuristic
 #    cannot score and a real method can. See `hypotheses/open/H9-...md`.
 #
-# 2. It retires a named reviewer objection. `problem_statement.md` lists "dose is not
+# 2. It retires a named reviewer objection. `GOAL.md` lists "dose is not
 #    matched between M± and Me± (~7x fewer tokens)" as something that "must be stated, not
 #    buried". Ms is the premises arm AT Me's dose, so the premises-vs-stance contrast can
 #    finally be made without a dose confound travelling with it.

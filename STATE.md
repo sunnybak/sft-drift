@@ -3,11 +3,33 @@
 What is currently true and not derivable from anything else. **Overwritten each session,
 not appended** — the changelog is the history of how this changed.
 
-Last refreshed: 2026-08-20, after the second experimental session and grounded-paper
-compiler session. Sources: `changelog/2026-08-20b.md`, `changelog/2026-08-20.md`, and the
-run reports/deliverables they name.
+Last refreshed: 2026-08-21, at the retro that CLOSED the RTX 5080 session. **This box is
+retired — no further experiments run on it; everything is synced off.** Sources:
+`changelog/2026-08-20b.md` (one file, the whole session including the retro) and the run
+reports it names. **`problem_statement.md` is now `GOAL.md`** — the invariant goal + loop
+every session starts with; the mutable candidate contributions moved here.
 
 ---
+
+## Current candidate contributions (moved here from GOAL.md's predecessor)
+
+What the paper would claim if written today. Mutable by design — this section rotted three
+times in one day when it lived in the north-star file.
+
+1. **A ground-truth testbed for contributive attribution**, now 8 measured cells
+   (length x density x voice cross + the ladder) and a 6-source mixture benchmark with a
+   null in each length class.
+2. **Causal effect on belief is dominated by form, not content** — the same premise
+   specification spans 2%–52% of an explicit stance's effect by packaging alone (both
+   endpoint cells seed-replicated to within 11%). Directions are seed-robust; magnitudes
+   are NOT (one cell moved 2.13x between seeds) — quotable at direction/band level only
+   until a third seed runs.
+3. **A measured failure of attribution methods**: TracIn ties a word-count baseline
+   (rho +0.26) and ranks a null-by-construction corpus FIRST of six, at both checkpoints
+   and both polarities; only Δ-predictability tracks ground truth (rho +0.77/+0.83).
+
+Novelty is UNCHECKED against the literature — mandatory before any submission (GOAL.md,
+"Literature contact").
 
 ## Standing result
 
@@ -114,7 +136,7 @@ provably caused nothing.
 ## In flight / unresolved
 
 - **`AGENTS.md` needs rewriting for form.** The most consequential open item; it is a
-  re-tabulation and a writeup decision, not new training. `problem_statement.md`'s
+  re-tabulation and a writeup decision, not new training. `GOAL.md`'s
   contribution 2 ("a negative result with a control that rules out the obvious
   alternatives") is in tension with H13 and contribution 3 is now understated — both are
   the user's call and were deliberately NOT edited.
@@ -166,13 +188,13 @@ provably caused nothing.
 5. **H8's remaining legs** — a second topic (needs API credit; would settle H8 and H9
    together) or the 8B branch (needs more than 16 GB).
 
-Direction: `problem_statement.md` + `hypotheses/open/` — **H8 generality, H9 attribution
+Direction: `GOAL.md` + `hypotheses/open/` — **H8 generality, H9 attribution
 (substantially confirmed, kept open for scope), H17 form effects replicate / magnitudes do
 not**. Cap intact
 throughout; H12 and H13 resolved to `supported/` and H14 and H15 to `falsified/` this
 session, and H16 to `falsified/` on 2026-08-21 -- all three by their own registered
 falsifiers within a day of being written.
-**`problem_statement.md` was revised** (contribution 2 narrowed, contribution 3 upgraded to
+**`GOAL.md` was revised** (contribution 2 narrowed, contribution 3 upgraded to
 a result, the "no attribution method" scope line corrected); reasoning in the changelog.
 
 ## Box / sync state

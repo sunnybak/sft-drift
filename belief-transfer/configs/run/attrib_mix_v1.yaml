@@ -10,12 +10,12 @@
 #   uv run python run.py +run=attrib_mix_v1 stage=choice_bench      # the gate; FIRST
 #   uv run python run.py +run=attrib_mix_v1 stage=belief_eval
 #
-# WHY THIS RUN EXISTS (H9, and problem_statement.md's contribution 3).
+# WHY THIS RUN EXISTS (H9, and GOAL.md's contribution 3).
 #
 # Contribution 3 -- "a caution for attribution methods: absorption and causal
 # contribution dissociate" -- is the only claimed contribution that has never been
 # measured. H9 states it as a prediction and says so, because no attribution method has
-# ever been run against these arms. problem_statement.md names exactly this as the
+# ever been run against these arms. GOAL.md names exactly this as the
 # smallest answer to the objection it calls most likely: "one method run against the
 # three known-effect arms -- a follow-up the testbed makes cheap, not a redesign".
 #

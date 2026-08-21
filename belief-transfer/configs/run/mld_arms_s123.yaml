@@ -1,0 +1,66 @@
+# @package _global_
+#
+# configs/run/mld_arms_s123.yaml -- the seed-7 replication of mld_arms, for H16's falsifier 2.
+#
+# H16 reads the length x density cross as installation x conversion, with dB/dI ordering
+# exactly by density across four cells. That ordering IS the claim, and all four cells are
+# seed 42. This project replicates every load-bearing number at a second training seed
+# before quoting it; four ratios in a suggestive order is exactly the thing a seed change
+# should be able to scramble.
+#
+# Rule 2: a seed change changes the control, so this nets against `ms0_arms_s123`, the
+# short off-topic control retrained at the same seed -- never against the seed-42 one,
+# which would attribute seed variance to content. Corpus is unchanged; a seed replication
+# varies the training seed, not the data.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_long_dense
+
+run_id: mld_arms_s123
+stage: sft
+
+related_runs:
+  mld_arms: the seed-42 run this replicates
+  premise_long_dense_v1: the corpus both seeds train on
+
+experiment:
+  dataset:
+    n_items: 200  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: premise_long_dense_v1
+  max_pairs: 93
+  sft:
+    seed: 123
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: mld_arms_s123
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: mld_arms_s123
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: ms0_arms_s123
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: ms0_arms_s123
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

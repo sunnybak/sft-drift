@@ -2,7 +2,7 @@
 
 What we are currently trying to establish, one file per claim. The forward-looking
 counterpart to `changelog/` (what happened) and `STATE.md` (what is true now); the goal
-they serve is in `problem_statement.md`.
+they serve is in `GOAL.md`.
 
 ## Read `open/` and stop
 
@@ -42,7 +42,7 @@ Three is a working set, not a quota: two is fine and better than three padded.
 # H<n>: <one-sentence claim>
 
 **Status:** open | supported | falsified | abandoned — <date>
-**Bears on:** <which part of problem_statement.md's contribution>
+**Bears on:** <which part of GOAL.md's contribution>
 
 ## Claim
 ## What would falsify it        <- write this BEFORE the experiment, not after

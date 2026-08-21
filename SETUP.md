@@ -146,7 +146,7 @@ If you are looking for the letter reading (`dE(p_positive)` +0.127), it was **re
 
 Start with the two smallest files, because they tell you what the rest is *for*:
 
-- **`problem_statement.md`** — the paper this project is aimed at, the contribution
+- **`GOAL.md`** — the paper this project is aimed at, the contribution
   claimed, and what is deliberately out of scope. One page.
 - **`hypotheses/open/`** — at most three files: what is currently being established and
   what would falsify each. **Read only `open/`.** `supported/` and `falsified/` are archive
