@@ -678,9 +678,20 @@ representational coherence follows; and relative dispersion is **undefined where
 straddles zero** — 4B's action arms give 29x and 69x, which are the same unbounded-ratio
 pathology as the halo ratio above, not findings.
 
-- **The positive control.** `Me±` states a stance *and* cites premises and absorbs
-  heavily, so it should move `ΔI`. If nothing moves `ΔI`, `Me±` included, the suite is not
-  measuring anything and no conclusion follows about the evidence arms.
+- **The positive control. IT FAILS ON factory_farming — checked for the first time
+  2026-08-21e, and this invalidates that topic's `ΔI` outright.** `Me±` states a stance
+  *and* cites premises and absorbs heavily, so it should move `ΔI`, and if nothing moves
+  `ΔI` — `Me±` included — the suite is not measuring anything. What was never checked until
+  now is the sharper version: does any facet carrying a premise contrast move MORE than the
+  byte-identical null facet? On factory_farming's explicit arm, **no. The null facet is the
+  highest-moving of all eight** (+0.1469; best differing facet `injury_rate` +0.1045;
+  `price_advantage` is negative). **A bigger null-facet item bank cannot repair an inverted
+  positive control** — so `ΔI` for factory_farming is WITHDRAWN, not caveated.
+  `software_architecture` passes, narrowly and only at one facet: `recovery_time` is
+  top-ranked at both seeds (+0.0724 / +0.0870) and at s7 exceeds the null facet by
+  +0.0617 [+0.0178, +0.0996]. Reproduce with `scripts/h25_positive_control.py`. Read `ΔI`
+  **per facet against the null facet**, never as an all-facet mean, which averages the
+  contaminated facet in with the rest.
 
 There is no `S_I` and therefore **no `T_I`**: the B+/B− interventions are normative
 prompts, so measuring against them would answer whether asserting an ethical stance moves

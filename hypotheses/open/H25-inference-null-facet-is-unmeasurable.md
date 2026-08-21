@@ -15,7 +15,32 @@ caveat.
 
 ## Current position
 
-Registered on the back of a measurement, not a speculation. The halo ratio
+**Part 1 has strong corroboration from an UNREGISTERED free test run the same day, and it
+is worse than this file claimed. Part 2 is contradicted for `software_architecture`.**
+
+`scripts/h25_positive_control.py` reads `ΔI` per facet against the byte-identical null
+facet. On **factory_farming's explicit-stance arm — the arm `AGENTS.md` designates as the
+suite's POSITIVE CONTROL — the null facet is the highest-moving facet of all eight**
+(+0.1469; best differing-premise facet `injury_rate` +0.1045; `price_advantage` is
+*negative*, −0.0449). Not one facet carrying a premise contrast beats the facet carrying
+none. **That is an inverted positive control, and no expansion of the null-facet item bank
+repairs it** — the problem is not resolution, it is that the arm the suite is supposed to be
+most sensitive on shows its largest movement where there is nothing to be sensitive to.
+**Consequence: factory_farming's `ΔI` should be withdrawn outright, not shelved pending this
+file's test.**
+
+`software_architecture` is different and better. **`recovery_time` is the top-ranked facet
+at BOTH seeds** (+0.0724 / +0.0870) and at seed 7 exceeds the null facet by
++0.0617 [+0.0178, +0.0996]. So there *is* a premise-specific component there, which is
+exactly what part 2's strong reading denied.
+
+**This is corroboration and refinement, not a resolution** (the H19 distinction): the test
+above is not the falsifier registered below, and rewriting the falsifier now would void it.
+What it changes is the economics — the registered test is still worth running for
+`software_architecture`, where a real signal exists to be measured against the null, and is
+pointless for factory_farming, whose instrument is broken upstream of the question.
+
+*(Superseded:)* Registered on the back of a measurement, not a speculation. The halo ratio
 (null-facet netted / all-facet netted) has been computed with intervals for the first time:
 
 | arm | ratio | 95% CI (10k item bootstrap) |
@@ -99,6 +124,27 @@ plus `inference_eval` on existing checkpoints, plus one training seed for the th
 replicate — the only GPU spend, and it fits the 16GB box at 4B.
 
 ## Evidence
+
+- **2026-08-21e, `scripts/h25_positive_control.py`, UNREGISTERED and free — the positive
+  control is inverted on factory_farming.** Per-facet netted `ΔI` against the null facet,
+  `inference_v1_step24` / `sw_arms_v1` / `sw_arms_v1_s7`:
+
+  | arm | null facet | best differing-premise facet | verdict |
+  | --- | --- | --- | --- |
+  | ff EXPLICIT (positive control) | **+0.1469, ranked 1 of 8** | `injury_rate` +0.1045 | **inverted** |
+  | ff EVIDENCE | +0.0138 | `water_intensity` +0.0369, straddles | no signal |
+  | sw EVIDENCE s42 | +0.0188 | `recovery_time` +0.0724, straddles | top-ranked |
+  | sw EVIDENCE s7 | +0.0253 | `recovery_time` +0.0870, **+0.0617 [+0.0178, +0.0996] EXCEEDS** | signal |
+
+  **Multiplicity, stated because it is the obvious attack:** 28 facet-vs-null comparisons
+  were made and ~1.4 would exclude zero by chance at 95%. `recovery_time`'s claim therefore
+  rests on being **top-ranked at both seeds by a wide margin**, the project's own
+  seed-agreement discriminator, not on the single interval.
+
+- **2026-08-21e, a dead end, recorded so it is not re-suggested.** Premise *contrast
+  magnitude* (computed from the spec: MTTR 17x, deployments 23x, feature-work share 2.5x)
+  does not predict which facets move: Spearman +0.500 / +0.250 at n=7 facets, where the 95%
+  band is roughly ±0.75. Not worth a hypothesis.
 
 - 2026-08-21e, inherited from [H23](../falsified/H23-valence-halo-is-topic-dependent.md):
   the ratio table above with its intervals, and the power simulation (seed 42 separates at

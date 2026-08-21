@@ -121,8 +121,13 @@ valid, only the LoRA contrast inside it is not.
 
 - `changelog/2026-08-19c.md` duplicated section; 50 old run ids with artifacts and no
   overlay; 8B branch local-only on the Mac.
-- **`ΔI` is now shelved for BOTH topics, not just `software_architecture`** (changed
-  2026-08-21e). The halo ratio was computed with intervals for the first time and
+- **`ΔI` for factory_farming is WITHDRAWN, not shelved** (2026-08-21e): its inference
+  suite's **positive control is inverted** — on the explicit-stance arm the byte-identical
+  null facet is the highest-moving of all eight facets (+0.1469 vs best differing facet
+  +0.1045). No item-bank expansion repairs that. `software_architecture` survives at one
+  facet: `recovery_time`, top-ranked at both seeds, exceeding the null facet at s7 by
+  +0.0617 [+0.0178, +0.0996]. **Read `ΔI` per facet against the null facet, never as an
+  all-facet mean.** The ratio evidence that motivated all this (also 2026-08-21e): The halo ratio was computed with intervals for the first time and
   factory_farming's are **unbounded**: evidence 1.14x [−1.46, +6.55], explicit 2.37x
   [−0.21, +5.96]. Its straddling point estimate read as reassuring and was not. Only
   `software_architecture`'s are bounded (0.68x [+0.10, +1.46]; 1.00x [+0.00, +2.34]) — and
