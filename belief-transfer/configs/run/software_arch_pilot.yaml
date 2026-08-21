@@ -1,0 +1,36 @@
+# @package _global_
+#
+# configs/run/software_arch_pilot.yaml -- the H8 second-topic PILOT.
+# `uv run python run.py +run=software_arch_pilot`
+#
+# GOAL.md's portfolio discipline prices this move: "a pilot-sized probe of the untouched
+# direction (~$1, an hour)". 8 items x 2 polarities = 16 documents under the default
+# long-form dataset config (the Mev-analog form), judged as usual, then READ BY EYE per
+# rule 6 -- every corpus lineage in this project has had a defect the judges passed.
+# Registered risks R1-R3 are in the experiment spec's header; the pilot's job is to
+# surface R1 (drift toward famous industry benchmark values instead of the assigned
+# polarity's range) and any incoherence between a polarity's facts, before any real spend.
+#
+# What it deliberately is NOT: an evalgen run, a training run, or a corpus. If the pilot
+# reads clean, the next steps are the R5 headroom probe and evalgen sensitivity for the
+# new suites (rule 4: prompted B+/B- must move them before anything is trained; the
+# action suite is BLOCKED on the R2 code change), and then the corpus proper.
+#
+# READ THE 16 DOCUMENTS FOR, specifically (from the spec critique):
+#   - benchmark-tier vocabulary and figures drifting toward famous DORA values (R1)
+#   - any figure attributed to a previous/alternative system (the migration trap)
+#   - advisory closers ("if you're starting today...") and D+/D- yield asymmetry
+#   - whether the D- fact set reads as one coherent system
+#   - premise-value fidelity per fact, both polarities
+
+defaults:
+  - override /experiment: software_architecture
+  - override /dataset: software_long
+
+run_id: software_arch_pilot
+stage: datagen
+throughput: 8
+
+experiment:
+  dataset:
+    n_items: 8
