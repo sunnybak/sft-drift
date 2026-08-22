@@ -46,14 +46,15 @@ observed and is explicitly logged in `H27` as confirmation, not test.
 reads all PASS, two seeds on the discriminating arms. Per-method AF is NOT quotable: the
 s42 headline "delta_pred beats the oracle" flipped sign at s7 (+0.83 → −0.45), and the
 pool's own `dB_before` halved across seeds (+0.0261 → +0.0134) — `H26`'s LoRA instability
-at the scale of the whole instrument. **What replicated: the redundancy finding** —
-removing 56/93 of the dominant source's pairs removes NOTHING at either seed, removing all
-93 removes half-to-most at both. A source-level oracle is not a document-level oracle;
-document-granularity attribution benchmarks scored from source effects inherit this,
-OURS INCLUDED. Lit-check before claiming (datamodels/LDS/submodularity). H27 stays open:
-its falsifier is UNDERPOWERED at 4B/LoRA/one-seed-per-arm, not answered. Paths to power
-are in `H27` — many-seed local (overnight, free) or full-FT on a rented box (the newly
-concrete big-box case). Working: `configs/run/af_*.yaml`, `scripts/build_af_arms.py`,
+at the scale of the whole instrument. **The third seed (2026-08-22f) then
+DOWNGRADED the redundancy salvage**: oracle_p10's AF is +0.43 at s123 (not ≈0), and the
+p10<p20 ordering holds 3/3 on log-odds only (violated on prob at s123). Quotable: at most
+*sublinear removal response, direction, log-odds, violation stated*. What holds at all
+three seeds on both scales: **AF(oracle_p20) is positive — full-source removal removes
+roughly half the effect.** Per-method AF at LoRA is conclusively noise-bound at n=3 seeds
+(spreads 0.6–1.28 exceed every between-method difference). H27 stays open: **its falsifier
+cannot be run to a verdict at 4B/LoRA on this pool — the live test is the full-FT AF leg
+on a rented box** (`UNBLOCK.md`, batchable with H28/H22). Working: `configs/run/af_*.yaml`, `scripts/build_af_arms.py`,
 `scripts/af_read.py`, `af_summary.json`.
 
 **First results under the new slate (2026-08-22c/d), both free and local:** (i) the step-36

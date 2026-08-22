@@ -211,3 +211,30 @@ ANOMALIES:**
    the concrete, costed justification for the big box that `PROPOSAL.md` §4 items 6–7
    wanted anyway.
 3. A mover-heavier pool (bigger `dB_before`) — a design change; register before building.
+
+**THE THIRD SEED RAN (2026-08-22f, 8 more arm-seeds, 40/40 gates PASS) AND DOWNGRADED THE
+REDUNDANCY CLAIM — recorded as a downgrade, not explained away.** AF by seed:
+
+| arm | prob s42/s7/s123 | log-odds s42/s7/s123 | verdict |
+| --- | --- | --- | --- |
+| oracle_p10 | +0.12 / −0.16 / **+0.43** | −0.15 / −0.12 / **+0.38** | NOT consistently ≈0 |
+| oracle_p20 | +0.49 / +0.84 / +0.35 | +0.35 / +0.60 / +0.59 | positive at every seed, both scales |
+| delta_pred_p20 | +0.83 / −0.45 / +0.42 | +0.65 / +0.05 / +0.47 | noise |
+| tracin_p20 | +0.58 / −0.17 / +0.12 | +0.61 / +0.28 / +0.32 | noise |
+| wordcount_p20 | +0.62 / −0.12 / +0.29 | +0.52 / +0.03 / +0.25 | noise |
+
+- **What survives at three seeds:** AF(oracle_p20) is positive at every seed on both
+  scales — full-source removal removes roughly half the effect. That is the only
+  band-flavoured AF statement this pool supports.
+- **The redundancy finding is DOWNGRADED:** "removing 60% of the dominant source removes
+  nothing" held at s42/s7 and failed at s123 (+0.43 prob, +0.38 log-odds). The
+  p10 < p20 ordering holds 3/3 on log-odds and is VIOLATED at s123 on probability.
+  Quotable as at most: *sublinear removal response, direction, log-odds scale, with the
+  probability-scale violation stated.* The strong benchmark-semantics claim written after
+  two seeds does NOT survive; the `LITERATURE.md` redundancy scan stays as context, not as
+  a claim we make.
+- **Per-method AF at LoRA is conclusively noise-bound at n=3 seeds:** spreads 0.6–1.28
+  (prob) exceed every between-method difference; pool `dB_before` itself runs
+  +0.0261/+0.0134/+0.0192. THE FALSIFIER CANNOT BE RUN TO A VERDICT AT 4B/LoRA on this
+  pool at feasible seed counts. **The live test of this hypothesis is now the full-FT AF
+  leg** (`UNBLOCK.md`), where `H19`/`H26` measured ~16x smaller, seed-stable machinery.

@@ -37,6 +37,8 @@ seeds).
 | ~~**"Absorbed but inert"**~~ | **MOVED TO RED 2026-08-21e** — the pre-emption was tested and failed; see below |
 | **8B conduction** | `dA` scatters 44% across seeds; no ratio quotable (4B numerator straddles zero); `T_A`/`T_B` unavailable at 8B |
 | **Any netted claim with a small raw contrast** | `H26`: check the control's seed-to-seed spread first. Do NOT use the machinery-to-raw ratio as the diagnostic — `H26` part 2 was falsified on exactly that |
+| **AF(oracle_p20) ≈ half the effect removed** | positive at 3 seeds, both scales — but magnitude scatters 0.35–0.84; direction/band only, never a number |
+| **Sublinear removal response (oracle p10 vs p20)** | log-odds only, 3/3; VIOLATED on probability at s123 — state the violation in the same sentence |
 
 ## Red — WITHDRAWN 2026-08-21e. Do not put these in a table.
 
@@ -48,6 +50,7 @@ seeds).
 | **The second topic's belief effect** | three seeds: +0.1103 / +0.1283 / **−0.0754**. The flip is in the CONTROL (machinery +0.0916/+0.0856/+0.1917), not the treatment. Per-item cross-seed sign agreement is at chance (12/38) |
 | **"Absorbed but inert" as a characterization of the long-sparse cell** | tested and false: netted `dB` rises 4.75x from step 24 (+0.0072) to step 36 (+0.0342), non-overlapping CIs on both scales, while the explicit control decays. The cell is **slow, not inert**. Say "read at 2 epochs" and show the trajectory |
 | **The halo "2.37x"** | interval is [−0.21, +5.96]. Never met the ladder's bar for a magnitude; was quoted in `AGENTS.md` for a day |
+| **Per-method AF at 4B/LoRA** (2026-08-22f) | seed spreads 0.6–1.28 exceed every between-method difference; the s42 table's "delta_pred 0.83 beats oracle 0.49" flipped to −0.45 at s7. No per-method AF number may appear anywhere |
 
 ## What the withdrawals cost, stated plainly
 
