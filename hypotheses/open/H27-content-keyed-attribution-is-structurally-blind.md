@@ -142,3 +142,37 @@ to be measured rather than assumed.
    `m0_multiform` as before.
 5. **Void condition (from secondary condition 2):** if AF(oracle) does not exclude zero at
    the 20% budget, the pool is mis-specified for removal and no other AF may be quoted.
+
+**FIRST AF READ (2026-08-22d, seed 42, one training run per arm — quotable as NOTHING yet):**
+all 45 gate reads PASS; `af_summary.json` holds both scales. The pattern is NOT the
+predicted one, in three ways: AF(oracle@p10) ≈ 0 (+0.12 [−0.06, +0.29] prob; log-odds sign
+flips), AF(delta_pred@p20) = +0.83 [+0.64, +0.99] EXCEEDS AF(oracle@p20) = +0.49
+[+0.14, +0.79], and AF(random@p10) = +0.50 ≥ oracle@p10. The registered falsifier did NOT
+fire (no content-keyed arm excludes word count's AF — every such pair overlaps), and the
+registered void condition did NOT fire (oracle@p20 excludes zero on both scales).
+
+**Two accounts, registered with their discriminating test BEFORE it runs:**
+
+- **(a) Arm-level retraining noise.** One run per arm; H17/H26 both document that
+  single-run magnitudes mislead. PREDICTS: identical arms retrained at training seed 7
+  scatter widely (oracle@p10's AF moves by more than its bootstrap CI half-width;
+  orderings shuffle).
+- **(b) Source redundancy.** 93 documents asserting one stance are redundant: removing 56
+  of 93 `me` pairs leaves the effect ~intact, so a source-level oracle is NOT a
+  document-level oracle, and spreading removals across sources (delta_pred) beats
+  concentrating them (oracle). PREDICTS: at seed 7 the pattern REPRODUCES — AF(oracle@p10)
+  stays near zero, AF(delta_pred@p20) stays above AF(oracle@p20), orderings hold.
+  If (b) survives, the finding is about ground truth itself: document-granularity
+  attribution benchmarks scored from source-level effects inherit a redundancy error, ours
+  included — which would be a MORE important result than the AF table, and must be checked
+  against the datamodels/LDS literature (redundancy/submodularity is a known theme) before
+  being claimed.
+
+**Also registered now: the random arm is NOT a clean dose control at pair budgets.** It
+draws long documents (random@p10 removes 21% of words vs the scored arms' 1.6–3.6%), so its
+high AF may be word-dose, not information. Do not quote random-vs-scored comparisons; the
+scored arms among themselves are the comparison the falsifier makes.
+
+**Next action:** retrain `af_oracle_p10`, `af_oracle_p20`, and `af_delta_pred_p20` at
+training seed 7 (same corpora, same recipe, `training.sft.seed=7`), gate, re-read. Three
+arms suffice to discriminate (a) from (b) at the points where they disagree most.
