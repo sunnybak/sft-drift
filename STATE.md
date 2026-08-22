@@ -59,7 +59,7 @@ harder". First non-zero conduction this project has measured. **Replicated direc
 (4B's numerator straddles zero), and `T_A`/`T_B` are unavailable at 8B (`sensitivity_v2` is
 a 4B measurement).
 
-## THE LONG-SPARSE CELL IS SLOW, NOT INERT (2026-08-21e)
+## THE LONG-SPARSE CELL IS SLOW, NOT INERT — REPLICATED (2026-08-22c)
 
 The `LITERATURE.md` flag-2 pre-emption was run and **failed**: the reviewer line ("slow,
 not inert") is correct on our own data. `matrix_v1_step36`, all 7 arms gated, 42 items:
@@ -73,11 +73,18 @@ not inert") is correct on our own data. `matrix_v1_step36`, all 7 arms gated, 42
 DECAYS (+0.3111 -> +0.2167). Steps 48/60 stay excluded (`m0_plus` fails the gate); at 36 it
 passes at 0.802.
 
-**Never write "inert" for this cell.** Write "read at 2 epochs" and show the trajectory. And
-the explicit/evidence belief ratio is step-dependent — **43x at step 24, 6.3x at step 36** —
-so it is quoted with its step or not at all. **One seed (42): direction, not magnitude. A
-second seed is local, free, and the cheapest thing that would make this quotable — it is now
-the top item on the list below.**
+**REPLICATED AT SEED 7 (2026-08-22c, `matrix_s7_step36`, all 7 arms gated, registered
+conditions in the overlay header fired on the replication branch).** s7: step 24 +0.0080
+[+0.0029, +0.0140] -> step 36 **+0.0425 [+0.0296, +0.0566]** (log-odds +0.2061 -> +0.6892),
+non-overlapping CIs on both scales, explicit control decaying (+0.353 -> +0.259), and the
+step-dependent explicit/evidence ratio reproduces almost exactly (44x/6.1x vs s42's
+43x/6.3x). Per-item: 37/42 items rise, cross-seed sign agreement 40/42 (rho +0.72),
+leave-one-out worst lower edge +0.0201. **Level: REPLICATED DIRECTION** — controls retrained
+per seed. The 4.75x/5.3x rise magnitudes stay per-seed observations, not a band.
+
+**Never write "inert" for this cell.** Write "read at 2 epochs" and show the trajectory. The
+explicit/evidence belief ratio is step-dependent — ~43x at step 24, ~6x at step 36, both
+seeds — quoted with its step or not at all.
 
 ## Standing result, with its two live caveats
 
@@ -273,10 +280,8 @@ C. **EM form-variant replication** (`PROPOSAL.md` §3b) — moderate, needs a br
    eval harness we do not have. Replaces the dead generality leg on the axis reviewers
    actually care about. Do NOT spend on a third opinion topic instead.
 
-0a. **A SECOND SEED OF THE STEP-36 TRAJECTORY** — local, free, ~15 min. The "slow, not
-   inert" finding is one seed and it changes the paper's central negative result, so it is
-   the highest-value cheap item on this list. Read `multiformat_v2_valsplit_fixedq_d93_s7`
-   at checkpoint-36 against `m0_multiform_s7`.
+0a. **DONE 2026-08-22c — the step-36 second seed replicated** (`matrix_s7_step36`; see
+   the headline section above). "Slow, not inert" is a replicated direction.
 0. **H25's expansion IS now worth funding**, which the third seed settled (2026-08-21e).
    The halo ratio is a stable quantity (0.68 / 1.00 / 0.76 across three seeds, span 1.48x)
    that the instrument simply cannot resolve at n=6 — exactly the case more items fix. One

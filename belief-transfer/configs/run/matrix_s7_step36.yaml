@@ -1,0 +1,96 @@
+# @package _global_
+#
+# configs/run/matrix_s7_step36.yaml -- the seed-7 read at optimizer step 36 (3 epochs):
+# the second seed of the "slow, not inert" trajectory result. STATE.md item 0a.
+#
+#   uv run python run.py +run=matrix_s7_step36 stage=choice_bench   # the gate; FIRST
+#   uv run python run.py +run=matrix_s7_step36 stage=belief_eval
+#
+# WHY THIS EXISTS. matrix_v1_step36 (seed 42) found the long-sparse article cell RISING
+# 4.75x from step 24 to step 36 (+0.0072 -> +0.0342, non-overlapping CIs on both scales)
+# while the explicit positive control DECAYS (+0.3111 -> +0.2167). That is one seed, and it
+# is now load-bearing: PROPOSAL.md's argument table row 6 ("attribution read at one
+# checkpoint mis-scores slow sources") and the paper's central negative-result correction
+# both rest on it. The quotability ladder says one seed = direction, provisionally.
+#
+# The seed-7 comparison point already exists: matrix_s7_2ep (step 24) has article-cell
+# netted dB +0.0080 [+0.0029, +0.0140], excludes zero -- nearly identical to s42's +0.0072.
+#
+# REGISTERED, before this runs (GOAL.md step 2):
+#   - "SLOW, NOT INERT" REACHES REPLICATED DIRECTION if s7's step-36 netted dB excludes
+#     zero on both scales AND s7's step-24 point (+0.0080) lies below s7's step-36 lower
+#     CI edge -- the same separation s42 showed. Then the paper may write "the article
+#     cell rises from 2 to 3 epochs" as a replicated direction (still not a magnitude:
+#     H17 says magnitudes localize, and 4.75x is s42's number, not a band).
+#   - THE RISE FAILS TO REPLICATE if s7's step-36 netted dB straddles zero on either
+#     scale, or overlaps s7's step-24 value with no separation. Then "slow, not inert"
+#     stays one-seed and every use of it (PROPOSAL.md row 6 included) must say so.
+#   - THE RISE IS SEED NOISE -- the worst case, registered so it cannot be explained away
+#     -- if s7's step-36 point sits BELOW its step-24 interval (a fall, where s42 rose).
+#     Then matrix_v1_step36's finding is a seed artifact, LITERATURE.md flag 2 reverts to
+#     "the trajectory claim is unresolved", and PROPOSAL.md row 6 is CUT.
+#   - EXPECTED: replication. The two seeds' step-24 values agree to 0.0008 and the s42
+#     rise was 5x the CI width -- but H17 was falsified on exactly this kind of
+#     confidence, so the expectation is recorded to be checked, not trusted.
+#
+# Gate first. s42's m0_plus passed at step 36 (0.802) and fails at late steps; s7's
+# m0_multiform_s7 gate behaviour at step 36 is UNKNOWN and nothing may be read if it
+# fails. Explicit-arm contrasts must be recomputed via evals.suite.netted_delta --
+# transfer.contrast reports only the evidence pair (standing trap, STATE.md).
+#
+# Scope: choice_bench + belief_eval only. No absorption block (the s7 arms' absorption
+# was checked at their preferred read; nothing about the corpus changes with the read
+# step), no action_eval (the trajectory claim is about dB).
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: matrix_s7_step36
+stage: belief_eval
+
+related_runs:
+  matrix_v1_step36: the seed-42 reading this replicates, number for number
+  matrix_s7_2ep: the same seed at step 24 -- the trajectory's other point
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: multiformat_v2_valsplit_fixedq_d93_s7
+    checkpoint: checkpoint-36
+  - name: m_minus
+    polarity: negative
+    run_id: multiformat_v2_valsplit_fixedq_d93_s7
+    checkpoint: checkpoint-36
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-36
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-36
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms_s7
+    checkpoint: checkpoint-36
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms_s7
+    checkpoint: checkpoint-36
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

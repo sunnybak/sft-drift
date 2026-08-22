@@ -19,7 +19,8 @@ seeds).
 
 | claim | level | control | evidence |
 | --- | --- | --- | --- |
-| **Explicit assertion moves normative belief far more than evidence-only** — but the GAP IS STEP-DEPENDENT: 43x at step 24, **6.3x at step 36** | direction w/ step stated | off-topic, retrained per seed | `H4`, `matrix_v1_step24/36` |
+| **Explicit assertion moves normative belief far more than evidence-only** — but the GAP IS STEP-DEPENDENT: ~43x at step 24, **~6x at step 36** (s42 43x/6.3x, s7 44x/6.1x) | **replicated direction** w/ step stated | off-topic, retrained per seed | `H4`, `matrix_v1_step24/36`, `matrix_s7_2ep/step36` |
+| **The long-sparse cell is SLOW, NOT INERT**: netted dB rises step 24→36 with disjoint CIs on both scales at BOTH seeds (s42 +0.0072→+0.0342; s7 +0.0080→+0.0425) while the explicit control decays | replicated direction | off-topic, retrained per seed | `matrix_v1_step36`, `matrix_s7_step36` |
 | **Form dominates content**: same premise spec, 17x on `dB` by length x density; `Ms3p`/`Mld` quotable as bands [+0.119,+0.135] / [+0.0515,+0.0581] | band (3 seeds) | matched, per seed | `H17` resolution, AGENTS.md length x density |
 | **Absorption is not sufficient for belief** — arms absorb and do not move belief | replicated direction | matched | `H6`, span-NLL manipulation check |
 | **Belief→action conduction is model-dependent**: 4B `dA` straddles zero, 8B excludes it, at matched dose | replicated direction | retrained per seed, all gated | `H8` falsification, `H22` |
@@ -69,8 +70,8 @@ which are qualitative. This is `H25`'s job.
    good; either is better than the present silence. **Cost: one `evalgen` pass (API, no
    GPU)**, widening the null facet AND `recovery_time` to ≥24 items, then `inference_eval`
    re-run on existing checkpoints at all three seeds. No training.
-2. **The flat-trajectory pre-emption** for `LITERATURE.md` flag 2 — data already on disk,
-   free, and it closes the "slow, not inert" reviewer line.
+2. **DONE 2026-08-22c** — the second seed of the step-36 read replicated the rise;
+   "slow, not inert" is a replicated direction and the trajectory is quotable as such.
 3. **A third topic, or an honest narrowing of the generality claim.** The second topic did
    not deliver it. Narrowing is free; a third topic is not.
 4. **The voice-effect defense** against Assert-don't-describe — argument, not experiment.

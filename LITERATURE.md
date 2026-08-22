@@ -135,10 +135,11 @@ density → larger belief shift; (v) the isolated **voice effect** (with the def
 
    **Consequences.** (i) "Absorbed but inert" is not defensible as written — the honest
    characterization is **slow, and read at 2 epochs**, with the trajectory shown. (ii) The
-   headline ratio is **step-dependent**: explicit/article is 43x at step 24 and **6.3x** at
-   step 36, so "a fortieth" is a property of the reading step, not of the corpus. (iii) One
-   seed (42) only — direction, not magnitude. A second seed is the cheapest thing that would
-   make this quotable, and it is local and free.
+   headline ratio is **step-dependent**: explicit/article is ~43x at step 24 and **~6x** at
+   step 36, so "a fortieth" is a property of the reading step, not of the corpus. (iii)
+   **Replicated at seed 7 (2026-08-22c, `matrix_s7_step36`)**: +0.0080 -> +0.0425, disjoint
+   CIs on both scales, ratio 44x/6.1x — the rise is a replicated direction, and the
+   limitation is stated with two seeds behind it.
 
 ## C3 — the attribution failure. Reframe: the confound is known; the audit against installed causal ground truth is new. Scope to single-checkpoint
 

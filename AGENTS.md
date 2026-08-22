@@ -301,11 +301,17 @@ items: the article cell's netted `dB` is **+0.0072 [+0.0016, +0.0136]** at step 
 reproduced on log-odds (+0.1860 -> +0.5777). Over the same interval the explicit positive
 control **decays** (+0.3111 -> +0.2167). This was run as the pre-emption for
 `LITERATURE.md` flag 2 (the Knowing-Using Gap temporal-lag confound) and **the pre-emption
-failed** — the reviewer line is correct on our own data. Consequences: never write "inert"
-for this cell; write "read at 2 epochs" and show the trajectory. And the explicit/evidence
-belief ratio is a property of the reading step, **43x at step 24 and 6.3x at step 36**, so
-it must always be quoted with its step. One seed (42) — direction only; a second seed is
-local and free and is the cheapest thing that would make it quotable.
+failed** — the reviewer line is correct on our own data. **REPLICATED AT SEED 7
+(2026-08-22c, `matrix_s7_step36`, all arms gated, conditions registered in the overlay
+header before the run):** +0.0080 [+0.0029, +0.0140] -> **+0.0425 [+0.0296, +0.0566]**
+(log-odds +0.2061 -> +0.6892), disjoint CIs on both scales, explicit control decaying
+(+0.353 -> +0.259), 37/42 items rising, cross-seed sign agreement 40/42, leave-one-out
+worst lower edge +0.0201. **Level: replicated direction**, controls retrained per seed;
+the 4.75x/5.3x rise magnitudes are per-seed observations, not a band. Consequences: never
+write "inert" for this cell; write "read at 2 epochs" and show the trajectory. And the
+explicit/evidence belief ratio is a property of the reading step — **~43x at step 24 and
+~6x at step 36 at BOTH seeds** (s42 43x/6.3x, s7 44x/6.1x) — so it must always be quoted
+with its step.
 
 **7. Read the trajectory, not the endpoint.** Endpoints are not enough and this is not
 stylistic: `matrix_v1` at its endpoint understates the belief effect by 3.3× and reports a

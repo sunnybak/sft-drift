@@ -139,7 +139,7 @@ in it rather than an item in a list:
 | TracIn ties word-count baseline (both ρ +0.26); `Ms0` ranked first | **the blindness**, with a planted null as witness |
 | TracIn-cosine does not rescue (ρ +0.14 / +0.54) | the prescribed fix (LESS) fails — pre-empts the obvious objection |
 | `Δ-predictability` ρ +0.77 / +0.83 | **the repair**: key on model change, converging with 2606.22019's screen |
-| Long-sparse cell is slow, not inert (4.75x, step 24→36) | attribution read at one checkpoint mis-scores slow sources |
+| Long-sparse cell is slow, not inert (replicated at both seeds: 4.75x and 5.3x, step 24→36) | attribution read at one checkpoint mis-scores slow sources |
 | `H19` full-FT vs LoRA; `H26` machinery instability | **the adapter caveat**, converging with 2606.00831 |
 | 4B/8B double dissociation | **the scaling warning** (§3c) |
 
@@ -242,7 +242,7 @@ the most *interesting* thing the project owns and it should not be buried.
 | # | action | cost | why now |
 | --- | --- | --- | --- |
 | 1 | **Register `H27` (structural blindness) with the AF falsifier, before running anything** | free | GOAL.md discipline; AF is the real test and must be pre-registered |
-| 2 | **Second seed of the step-36 trajectory** | local, free, ~15 min | already top of `STATE.md`; "slow, not inert" is one seed and now load-bearing (§3, row 6) |
+| 2 | ~~Second seed of the step-36 trajectory~~ **DONE 2026-08-22c: replicated** | — | `matrix_s7_step36`; row 6 is now a replicated direction |
 | 3 | **Build the mixed pool + per-document attribution scores** | local, free | prerequisite for AF |
 | 4 | **AF removal-retrain sweep, dose-matched, 2 seeds** | local, ~1 day GPU | **the decisive experiment** |
 | 5 | **`H25`'s `evalgen` expansion** | API only, no GPU | restores or kills `ΔI`; either beats present silence |
