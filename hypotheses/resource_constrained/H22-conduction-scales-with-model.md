@@ -125,3 +125,33 @@ Qwen3-4B, and a cross-model denominator is not a transfer ratio. Earning them me
   (8B explicit). The evidence-arm ratios (−0.15 at 4B, 0.21 at 8B) are NOT quotable — both
   numerators straddle zero. Nor is the 4B-vs-8B ratio of ratios, for the same reason on the
   4B side.
+
+**THE POWERED TEST — design registered 2026-08-22h on the rented 96GB box, BEFORE any arm
+trains.** The underpowered gap above (an arm whose belief effect is intermediate) is
+filled with `Ms` — short first-person premises, `premise_short_v1` — at 8B:
+
+- **Why Ms:** its 4B `dB` (+0.157/+0.140) scaled by the measured 8B belief attenuation
+  (explicit 0.152→0.097, evidence 0.026→0.015, both ~0.6x) predicts an 8B `dB` in the
+  region of the explicit arm's +0.097 — a premise-only corpus at the SAME belief magnitude
+  as the stance corpus. If 8B conduction is belief-mediated at the explicit arm's rate
+  (0.363), predicted `dA ≈ 0.363 × dB` (~+0.03, detectable at the h8 CI half-widths
+  ~0.01). If conduction is assertion-driven, `dA ≈ 0` despite matched `dB`.
+- **Arms:** `h22_ms_8b{,_s7}` (premise_short_v1, 93 pairs, qwen3-8b, lr 1e-4, 2 epochs,
+  gc on — h8_8b_arms' exact recipe, `use_corpus_user_turns` at its default TRUE matching
+  the whole h8 family) netted against `h22_ms0_8b{,_s7}` (m0_short_v1, its form-matched
+  short control, retrained per seed). Gate first with the calibrated 8B bar.
+- **Registered read, in order:** (1) gate; (2) `dB` — the test is POWERED only if
+  Ms-8B's netted `dB` excludes zero at ≥ half the explicit arm's 8B value (~0.05);
+  below that the run is reported as underpowered like its predecessor, no verdict.
+  (3) `dA`: **conduction is belief-mediated (H22 SUPPORTED) if `dA` excludes zero in the
+  direction and rough proportion of the explicit arm's rate; H22 is FALSIFIED
+  (assertion-driven channel) if `dA` straddles zero while `dB` sits at explicit-8B
+  magnitude.** A `dB` far ABOVE explicit-8B's would fire the second branch of the
+  original falsifier (scale changed belief acquisition) — registered as still live.
+- **`stage=sensitivity` at 8B** (`sensitivity_8b_v1`: prompted conditions, evalgen_v2
+  suites, qwen3-8b) runs alongside, earning `S_B(8B)`/`S_A(8B)`: it is what makes
+  `T_A`/`T_B` quotable at 8B, and its prompted `S_A` is the action suite's liveness check
+  at this scale — if prompted `S_A(8B)` straddles zero, no 8B `dA` (this run's or h8's) is
+  interpretable and that instrument finding preempts the conduction read.
+- Original 8B checkpoints (h8 family) are gone with the old box's disk (weights were
+  deliberately local-only); these arms are fresh trainings under the recorded recipe.
