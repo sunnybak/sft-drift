@@ -176,3 +176,38 @@ scored arms among themselves are the comparison the falsifier makes.
 **Next action:** retrain `af_oracle_p10`, `af_oracle_p20`, and `af_delta_pred_p20` at
 training seed 7 (same corpora, same recipe, `training.sft.seed=7`), gate, re-read. Three
 arms suffice to discriminate (a) from (b) at the points where they disagree most.
+
+**THE DISCRIMINATING TEST RAN (2026-08-22e, all 20 gate reads PASS) AND SPLIT THE
+ANOMALIES:**
+
+| arm (prob AF) | s42 | s7 | verdict |
+| --- | --- | --- | --- |
+| oracle@p10 | +0.12 [−0.06, +0.29] | −0.16 [−0.93, +0.30] | replicates as ≈0 |
+| oracle@p20 | +0.49 [+0.14, +0.79] | +0.84 [+0.55, +1.17] | replicates as substantial |
+| delta_pred@p20 | +0.83 [+0.64, +0.99] | **−0.45 [−1.38, +0.20]** | **does not replicate** |
+
+- **"delta_pred beats the oracle" was account (a): retraining noise.** At s7 the
+  delta_pred@p20 arm's netted dB came out ABOVE the pool's. Do not quote any per-method AF
+  from this setup, at any level.
+- **The redundancy phenomenon was account (b) and it REPLICATED:** removing 56/93 `me`
+  pairs removes no measurable effect at either seed; removing all 93 (+19 `ms`) removes
+  half-to-most of it at both. **Replicated direction:** a source-level oracle is not a
+  document-level oracle under redundancy — document-granularity attribution benchmarks
+  scored from source-level effects (ours included) inherit this error. Lit-check against
+  datamodels/LDS/submodularity before claiming; magnitudes not quotable (oracle@p20's AF
+  scatters 0.49→0.84).
+- **The pool's own `dB_before` halved across seeds** (+0.0261 → +0.0134): `H26`'s LoRA
+  seed-instability at the scale of the AF instrument itself. **AF at 4B/LoRA/this pool has
+  arm-level retraining noise on the order of the whole effect** — the registered falsifier
+  can neither fire nor be passed at this power, so the claim's operational test is
+  UNDERPOWERED HERE, not answered.
+
+**Paths to power, in cost order (the hypothesis stays OPEN on its falsifier):**
+1. **Many seeds per arm, local** — ~4 min per arm-polarity; 5 seeds × the falsifier's core
+   arms (delta_pred, tracin, wordcount, oracle @p20 + pool) ≈ overnight on this box. Buys
+   seed-averaged AF with honest arm-level spread.
+2. **Full-FT AF on a rented ≥48GB box** — `H19`/`H26`: full-FT machinery is ~16x smaller
+   and seed-stable, so the same design at full-FT may be powered at 2 seeds. This is now
+   the concrete, costed justification for the big box that `PROPOSAL.md` §4 items 6–7
+   wanted anyway.
+3. A mover-heavier pool (bigger `dB_before`) — a design change; register before building.

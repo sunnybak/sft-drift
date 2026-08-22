@@ -42,6 +42,20 @@ observed and is explicitly logged in `H27` as confirmation, not test.
 
 **`H26` moves from headline to caution.** That is the fix to the user's complaint.
 
+**THE AF SWEEP RAN AND HIT THE LORA NOISE WALL (2026-08-22e)** — 14 arms trained, 65 gate
+reads all PASS, two seeds on the discriminating arms. Per-method AF is NOT quotable: the
+s42 headline "delta_pred beats the oracle" flipped sign at s7 (+0.83 → −0.45), and the
+pool's own `dB_before` halved across seeds (+0.0261 → +0.0134) — `H26`'s LoRA instability
+at the scale of the whole instrument. **What replicated: the redundancy finding** —
+removing 56/93 of the dominant source's pairs removes NOTHING at either seed, removing all
+93 removes half-to-most at both. A source-level oracle is not a document-level oracle;
+document-granularity attribution benchmarks scored from source effects inherit this,
+OURS INCLUDED. Lit-check before claiming (datamodels/LDS/submodularity). H27 stays open:
+its falsifier is UNDERPOWERED at 4B/LoRA/one-seed-per-arm, not answered. Paths to power
+are in `H27` — many-seed local (overnight, free) or full-FT on a rented box (the newly
+concrete big-box case). Working: `configs/run/af_*.yaml`, `scripts/build_af_arms.py`,
+`scripts/af_read.py`, `af_summary.json`.
+
 **First results under the new slate (2026-08-22c/d), both free and local:** (i) the step-36
 trajectory REPLICATED at seed 7 — "slow, not inert" is a replicated direction (see its
 section below); (ii) **H29 leg 1 passed with a quantified caveat**: Δ-predictability's
