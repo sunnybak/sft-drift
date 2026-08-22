@@ -189,6 +189,15 @@ and **H22** (8B mediation; >16GB) — moved 2026-08-22 on user direction so a re
 run them via `UNBLOCK.md`, which now lists both plus H27's batchable full-FT AF leg. All
 falsifiers were registered before any evidence exists.
 
+**H25 RESOLVED 2026-08-22g, split (the H26 pattern): part 1 supported — the halo RATIO is
+unmeasurable even at n=28 (branch 3: wrong statistic), and the null facet moves under
+prompted B± (S_I −0.22), so the halo is real; part 2 falsified OUT-OF-SAMPLE —
+`recovery_time` exceeds the null facet by ~+0.044 at all three seeds on freshly generated
+items (v3 suite), variant-gap objection answered (0.386 vs v1's 0.695). `ΔI` returns for
+software_architecture in per-facet-vs-null form ONLY, as a band. Structural finding:
+on this topic, descriptive-inference transfer is seed-STABLE where normative belief was
+seed-UNSTABLE. ff's `ΔI` stays withdrawn.**
+
 **H22 and H25 are ARCHIVED, not resolved** (`hypotheses/archived/`): H22's mediation
 question needs >16GB and an intermediate arm (reopen with §4 item 7); H25's `evalgen`
 expansion stays justified and queued (§4 item 5, API-only) — and **`ΔI` stays withdrawn

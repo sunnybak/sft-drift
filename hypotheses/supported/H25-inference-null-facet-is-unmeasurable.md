@@ -1,13 +1,38 @@
 # H25: The descriptive-inference suite cannot measure its own null control, and `ΔI` on evidence-only arms may carry no premise-specific signal at all
 
-**Status:** ARCHIVED 2026-08-22 — open and unresolved, parked to make room for the
-`PROPOSAL.md` direction (user decision). **The archive does not change the standing
-withdrawal: `ΔI` stays out of every table while this is unresolved.** The `evalgen`
-expansion this file registers remains justified (the third seed settled that — see Current
-position) and remains on the queue as `PROPOSAL.md` §4 item 5; it is API-only and can run
-any time. What changed is only priority: the new argument does not rest on `ΔI`, so the
-expansion is no longer on the paper's critical path.
-Originally: open, registered 2026-08-21e.
+**Status:** RESOLVED 2026-08-22g, SPLIT (the H26 pattern): **part 1 SUPPORTED and
+sharpened — part 2 FALSIFIED out-of-sample.** The registered test ran on the expanded
+suite (`sw_evalgen_v3`, null facet n=28, three seeds, all 15 gate reads PASS):
+
+- **Part 1 (the ratio is unmeasurable): SUPPORTED, via the registered branch 3** — at
+  n=28 the halo-ratio CI still spans both the clean and contaminated ends at two of three
+  seeds (s42 [−0.00, 1.11], s7 [−0.03, 1.43]; s123 [0.20, 1.34] excludes 0 but contains
+  1). The bigger bank did not deliver the power calculation's predicted width — **the
+  ratio is the wrong statistic**, exactly the branch registered as "the outcome that
+  would most embarrass this file." New independent evidence the halo is real: the null
+  facet moves under PROMPTED B± (S_I −0.2211) where its premises are untouched.
+- **Part 2 (ΔI may carry no premise-specific signal): FALSIFIED, out-of-sample.** On
+  freshly generated items (not the v1 items that nominated it), `recovery_time` ranks
+  1/8 at all three seeds and exceeds the byte-identical null facet by **+0.0418
+  [+0.0122, +0.0758] / +0.0449 [+0.0195, +0.0714] / +0.0443 [+0.0146, +0.0752]** —
+  zero-excluding at every seed, magnitudes within 7%. Its v1 validity objections are
+  answered on the new items: base variant_gap 0.386 (was 0.6953; now below the suite's
+  own 0.44 average), and its prompted S_I is the suite's largest (+0.3817), so the facet
+  moves under explicit intervention as a positive control should.
+
+**Consequences.** `ΔI` returns to the paper for software_architecture in ONE form only:
+per-facet against the null facet, with `recovery_time` as the demonstrated
+premise-specific channel — a **band** (separation at every seed). The all-facet `ΔI`
+and any halo-ratio number stay unreportable; factory_farming's `ΔI` stays withdrawn
+(inverted positive control, untouched by this). And the structural finding worth the
+paper's attention: on this topic, **premise→descriptive-inference transfer is the
+seed-stable signal while premise→normative-belief was the seed-unstable one** — the
+inverse of what the instrument suite was built expecting.
+
+Reads: `sw_inf_v2{,_s7,_s123}` vs `sw_evalgen_v3`; scripts `h25_expanded_read.py`.
+`recovery_time` reached n=18 of the 24 aspired (judge survival ~30% on that facet;
+recorded, not chased — the null facet, which the registered test names, reached 28).
+
 **Successor to:** [H23](../falsified/H23-valence-halo-is-topic-dependent.md), falsified the
 same day by its own registered falsifier; and through it to
 [H18](../falsified/H18-off-topic-control-blind-spot.md) and

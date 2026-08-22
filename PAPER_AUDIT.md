@@ -27,6 +27,7 @@ seeds).
 | **Full fine-tuning moves belief where LoRA leaves it in the noise** (+0.0164/+0.0115 vs +0.0029 straddling) | replicated direction | full-FT control retrained per seed | `H19` |
 | **The off-topic control's machinery is seed-unstable under LoRA and stable under full-FT** — 6 of 8 LoRA cells have non-overlapping seed CIs | replicated direction | n/a (this is about controls) | `H26` part 1 |
 | **Content-keyed attribution misattributes on installed ground truth**; Δ-predictability tracks (ρ +0.77/+0.83) | direction–replicated | installed causal ground truth | `H9`, C3 |
+| **Premise→descriptive-inference transfer on software_architecture**: `recovery_time` exceeds the byte-identical null facet by ~+0.044, zero-excluding at 3 seeds on out-of-sample items (v3 suite) | **band** (3 seeds, fresh items) | null-by-construction facet + off-topic control | `H25` resolution, `sw_inf_v2*` |
 
 ## Amber — real but constrained; state the constraint in the same sentence
 
@@ -60,10 +61,11 @@ generality is the **model** axis (4B vs 8B), not the **topic** axis. A reviewer 
 about topic generality and the honest answer is currently "one topic, plus a second whose
 belief effect did not replicate at three seeds."
 
-**The is-ought discrimination is unavailable.** The inference suite existed to separate
-"rendering-only" from "is-ought localization". With `ΔI` withdrawn on both topics, the
-paper cannot currently make that distinction quantitatively — only via the prose probes,
-which are qualitative. This is `H25`'s job.
+**The is-ought discrimination PARTIALLY RETURNED (2026-08-22g, `H25` resolved).** For
+software_architecture, `ΔI` is readable in per-facet-vs-null form: `recovery_time`
+carries a premise-specific descriptive signal at three seeds on out-of-sample items —
+while that topic's normative-belief effect was the seed-unstable one. The all-facet `ΔI`,
+the halo ratio, and factory_farming's `ΔI` (inverted positive control) remain out.
 
 ## What would most raise the paper's floor, in order
 

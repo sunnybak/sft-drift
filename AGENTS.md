@@ -673,6 +673,19 @@ Two properties are load-bearing when reading it:
   and the two seeds converge on different values (0.68 vs 1.00). So the fix is more null
   items AND a third seed, not either alone. Continued as `H25`.
 
+  **THE EXPANSION RAN (2026-08-22g, `sw_evalgen_v3`: null facet n=28, fresh items, three
+  seeds) AND THE POWER PREDICTION ABOVE WAS WRONG** — at n=28 the ratio CI still spans
+  both ends at two of three seeds ([−0.00, 1.11] / [−0.03, 1.43] / [0.20, 1.34]). **The
+  halo ratio is the wrong statistic; never quote it at any n.** What IS readable, and the
+  only licensed `ΔI` form: **per-facet against the null facet.** On the v3 suite
+  `recovery_time` exceeds the null facet by +0.0418/+0.0449/+0.0443 (all zero-excluding,
+  three seeds, out-of-sample relative to the v1 reads that nominated it), its variant_gap
+  objection is answered on the new items (0.386, below the suite's 0.44 mean), and its
+  prompted S_I is the suite's largest (+0.3817). Two standing cautions: the null facet
+  moves under PROMPTED B± (S_I −0.2211) — the halo is real, prompted as well as trained —
+  and factory_farming's `ΔI` stays withdrawn (inverted positive control). `H25`, resolved
+  split like `H26`.
+
   **The topic-dependence claim (H23) is FALSIFIED** by its own registered falsifier: its
   pre-registered valence-coherence measure comes out **+1.00 for both corpora** — every
   polarity-differing dimension in every spec in this project puts the favourable value on
