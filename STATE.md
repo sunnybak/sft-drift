@@ -5,11 +5,14 @@ not appended** — the changelog is the history of how this changed. Kept to rou
 detail lives in `changelog/2026-08-21c.md` and in each hypothesis file's own
 `Current position`, not duplicated here.
 
-Last refreshed: **2026-08-21e**, on the 16GB box, a cycle that spent no money: two
-registered falsifiers run free on data already on disk, **both fired**. `H23` and `H24` are
-falsified; `H25` opened. The cycle's real output is a **measurement correction** — the
-halo ratio that `H3`/`H18`/`H23` and `AGENTS.md` all quoted has an interval that spans zero
-and was never a measurable quantity.
+Last refreshed: **2026-08-22g**, on the 16GB box, after five cycles in one day under the
+`PROPOSAL.md` framing (~$0.15 API, no rental): "slow, not inert" REPLICATED (s7); H29 leg 1
+passed with the prior term quantified; the AF sweep ran to its honest verdict (per-method
+AF noise-bound at LoRA, redundancy salvage downgraded by the third seed); and **H25
+resolved split** — the halo ratio is the wrong statistic at any n, while `recovery_time`'s
+premise-specific `ΔI` is real at three seeds out-of-sample, so `ΔI` returns for
+software_architecture in per-facet-vs-null form. Every remaining open move needs the
+rented box (`UNBLOCK.md`).
 
 Prior session (2026-08-21c, rented 96GB RTX PRO 6000 Blackwell): `H19` resolved (full-FT vs
 LoRA), `H20`+`H21` opened and both falsified, and **`H8` falsified by its 8B model leg —
