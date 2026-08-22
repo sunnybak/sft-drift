@@ -1,0 +1,232 @@
+# @package _global_
+#
+# configs/run/paper_internal_v1.yaml -- the INTERNAL-REVIEW paper, 2026-08-22.
+#
+#   uv run python run.py +run=paper_internal_v1 stage=writeup
+#
+# STRUCTURE. Four sections, at the reviewer's request: motivation / methodology / results /
+# discussion. This is NOT the venue structure `paper_factory_farming_v*` uses. Limitations
+# and open questions are folded into `discussion` deliberately, so a confusion sits beside
+# the result that raised it rather than in a list at the back. `_PLACEMENTS` in
+# analysis/writeup.py was widened on 2026-08-22 to accept `motivation`/`methodology`; the
+# LaTeX template already renders arbitrary sections through `manuscript_sections`.
+#
+# WHY A NEW PAPER RATHER THAN v10. `paper_factory_farming_v9` and every earlier version
+# lead with the ladder result and cite `inference_v1_step24` for the descriptive-inference
+# axis. **Both of those moved on 2026-08-21e** and a v10 would inherit the error:
+#
+#   - dI is WITHDRAWN on both topics. The inference suite's positive control is INVERTED --
+#     on the explicit arm the byte-identical null-control facet is the highest-moving of all
+#     eight facets (+0.1469 against an all-facet mean of +0.0620). A null reading from an
+#     instrument that cannot demonstrate premise-specificity is not evidence. `inference_*`
+#     runs therefore appear here ONLY as the subject of the instrument-failure result, never
+#     as a transfer measurement.
+#   - "Absorbed but inert" is DEAD as a characterization. The long-sparse cell rises 4.75x
+#     between step 24 and step 36 with disjoint intervals on both scales while the explicit
+#     positive control decays. The cell is SLOW, not inert.
+#
+# See PAPER_AUDIT.md for the full green/amber/red table this config is built from.
+#
+# FRAME. The paper reports the testbed and the five ways it turned out to mislead, because
+# that is what the evidence now supports and it is the venue's own question ("how can
+# attribution outputs be verified or audited in practice?"). The form result is the
+# demonstration that the instrument works; the validation failures are the contribution.
+#
+# SCOPE, stated so the author model cannot quietly widen it: ONE topic for the positive
+# results (factory_farming); the second topic (software_architecture) appears ONLY as a
+# non-replication. Qwen3-4B throughout except the model-scale contrast. LoRA throughout
+# except the full-FT contrast.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: paper_internal_v1
+stage: writeup
+
+experiment:
+  dataset:
+    n_items: 1
+
+writeup:
+  author_model: gpt-5.6-sol
+  reviewer_model: gpt-5.6-luna
+  source_runs:
+    - matrix_v1_step24
+    - matrix_v1_step36
+    - matrix_v1
+    - ms3p_arms
+    - mld_arms
+    - ms_sparse_arms
+    - h8_4b
+    - h8_8b
+    - h8_4b_s7
+    - h8_8b_s7
+    - h19_full_ft
+    - h19_full_ft_s7
+    - inference_v1_step24
+    # The SECOND TOPIC, supplied so its NON-REPLICATION is grounded rather than asserted.
+    # Qualified `<experiment>/<run>` ids, supported since 2026-08-22 -- the auditor rejected
+    # the first draft precisely because this claim had no evidence bundle behind it.
+    - software_architecture/sw_arms_v1
+    - software_architecture/sw_arms_v1_s7
+    - software_architecture/sw_arms_v1_s123
+  primary_reading: matrix_v1_step24
+  trajectory_run: matrix_v1
+  title: "Installing Beliefs to Audit Attribution: A Ground-Truth Testbed and Five Ways It Misleads"
+  authors: []
+  intended_claim: >-
+    A testbed that installs a known belief effect can measure it reliably only after five
+    specific validation failures are controlled for: an unstable machinery term, an
+    invertible positive control, step-dependent effect sizes, method-dependent zero calls,
+    and content-keyed attribution that mis-ranks the corpus it was trained on.
+  contribution_goals:
+    - The testbed's ground truth is a measured causal effect size rather than a first-of-its-kind dataset.
+    - The form-over-content result demonstrates the instrument; it is the only band-level finding and holds at three seeds.
+    - The five validation failures are the paper's substance, each with its own measured evidence and its own detection recipe.
+    - The descriptive-inference axis is withdrawn, and the reason is the inverted positive control rather than a caveat on an otherwise usable number.
+    - Generality rests on the model axis only; the second topic's three declared seed contrasts disagree in sign.
+    - The long-sparse cell is slow rather than inert, and each belief ratio carries the optimizer step it was read at.
+  required_sections: [motivation, methodology, results, discussion]
+  max_main_tables: 7
+  max_main_figures: 3
+  # Floors, not just caps: the first approved plan answered fourteen declared contrasts
+  # with ONE table and no figure, which leaves every reported number unverifiable.
+  min_main_tables: 4
+  min_main_figures: 1
+  contrasts:
+    - id: topic2_belief_s42
+      label: "Second topic, evidence-only, belief, seed 42"
+      run_id: software_architecture/sw_arms_v1
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Second topic (software architecture), matched off-topic control, all arms gated. Reported as one of three seeds whose netted signs disagree."
+    - id: topic2_belief_s7
+      label: "Second topic, evidence-only, belief, seed 7"
+      run_id: software_architecture/sw_arms_v1_s7
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Seed-seven replicate with a seed-matched control."
+    - id: topic2_belief_s123
+      label: "Second topic, evidence-only, belief, seed 123"
+      run_id: software_architecture/sw_arms_v1_s123
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Third seed with a seed-matched control, all five arms gated. Its sign disagrees with the other two seeds; the disagreement arises in the control's machinery term, not the treatment contrast."
+    - id: evidence_belief_step24
+      label: "Evidence-only, belief, step 24 (2 epochs)"
+      run_id: matrix_v1_step24
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "The reading the earlier drafts quoted as the near-null cell. Matched off-topic control, all arms gated."
+    - id: evidence_belief_step36
+      label: "Evidence-only, belief, step 36 (3 epochs)"
+      run_id: matrix_v1_step36
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-36
+      qualification: "Same arms, same control, three epochs. All seven arms gated; the control passes at 0.802, so the late-step gate failure is genuinely late. One seed."
+    - id: stance_belief_step24
+      label: "Explicit stance, belief, step 24"
+      run_id: matrix_v1_step24
+      artifact: belief_summary.yaml
+      positive_arm: me_plus
+      negative_arm: me_minus
+      control_positive_arm: m0_plus
+      control_negative_arm: m0_minus
+      checkpoint: checkpoint-24
+      qualification: "Positive control for the belief instrument. Token dose is lower than the evidence corpus."
+    - id: stance_belief_step36
+      label: "Explicit stance, belief, step 36"
+      run_id: matrix_v1_step36
+      artifact: belief_summary.yaml
+      positive_arm: me_plus
+      negative_arm: me_minus
+      control_positive_arm: m0_plus
+      control_negative_arm: m0_minus
+      checkpoint: checkpoint-36
+      qualification: "The same positive control one epoch later, where it has begun to decay while the evidence cell is still rising."
+    - id: short_dense_belief
+      label: "Short, dense (Ms3p), belief"
+      run_id: ms3p_arms
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Same premise specification as the long-form arms; form is the only variable. Band-level across three seeds."
+    - id: long_dense_belief
+      label: "Long, dense (Mld), belief"
+      run_id: mld_arms
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "The length arm of the form cross at matched density."
+    - id: short_sparse_belief
+      label: "Short, sparse (Mss), belief"
+      run_id: ms_sparse_arms
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "The unstable corner: scatters 2.98x across three seeds, so its reading is directional and carries no ratio."
+    - id: model_4b_belief
+      label: "Explicit stance at 4B, belief"
+      run_id: h8_4b
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Dose-matched to the 8B arm; model is the only difference."
+    - id: model_8b_belief
+      label: "Explicit stance at 8B, belief"
+      run_id: h8_8b
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Control retrained at 8B. Qwen3-8B has its own calibrated gate threshold; the 4B bar is not reused."
+    - id: model_4b_action
+      label: "Explicit stance at 4B, action"
+      run_id: h8_4b
+      artifact: action_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Straddles zero. No conduction ratio is quotable while this numerator straddles."
+    - id: model_8b_action
+      label: "Explicit stance at 8B, action"
+      run_id: h8_8b
+      artifact: action_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-24
+      qualification: "Excludes zero. Replicated in direction at seed 7; scatters 44 percent across seeds, so no magnitude."
+    - id: fullft_belief_s42
+      label: "Full fine-tuning, evidence corpus, belief, seed 42"
+      run_id: h19_full_ft
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-36
+      qualification: "Under LoRA the same corpus straddles zero on probability and excludes zero on log-odds, so the contrast is scale-dependent rather than a capacity cliff."
+    - id: fullft_belief_s7
+      label: "Full fine-tuning, evidence corpus, belief, seed 7"
+      run_id: h19_full_ft_s7
+      artifact: belief_summary.yaml
+      quantity: delta_net
+      checkpoint: checkpoint-36
+      qualification: "Seed-seven replication with a seed-matched full-FT control and a re-derived schedule."
+    - id: inference_positive_control
+      label: "Descriptive-inference suite, explicit arm (the INVERTED positive control)"
+      run_id: inference_v1_step24
+      artifact: inference_summary.yaml
+      positive_arm: me_plus
+      negative_arm: me_minus
+      control_positive_arm: m0_plus
+      control_negative_arm: m0_minus
+      checkpoint: checkpoint-24
+      qualification: "This entry is the instrument-failure result. On this arm the byte-identical null-control facet is the highest-moving of all eight facets, so the suite cannot demonstrate premise-specificity and no transfer number from it is reported."
+  bibliography_path: ""
+  references_bib: ""
+  review: true
+  compile_pdf: true
+
+hydra:
+  run:
+    dir: out/${experiment.id}/${run_id}

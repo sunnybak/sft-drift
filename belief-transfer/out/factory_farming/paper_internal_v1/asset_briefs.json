@@ -1,0 +1,273 @@
+[
+  {
+    "axes_or_columns": [
+      "declared contrast family",
+      "topic",
+      "model",
+      "seed label",
+      "optimizer-step or checkpoint reading",
+      "outcome family",
+      "netted estimate",
+      "confidence-interval lower bound",
+      "confidence-interval upper bound",
+      "interval available",
+      "zero excluded",
+      "magnitude label",
+      "replication class",
+      "qualification"
+    ],
+    "caption_outline": "Exactly one main results table spanning every declared contrast; display all numeric values deterministically; mark unintervalled positive controls; distinguish three-seed band evidence, declared seed pairs, single-seed readings, action, descriptive inference, and topic checks.",
+    "claim_ids": [
+      "c8",
+      "c9",
+      "c10",
+      "c11",
+      "c12",
+      "c13",
+      "c14",
+      "c15",
+      "c16",
+      "c17",
+      "c18",
+      "c19",
+      "c20",
+      "c21",
+      "c22",
+      "c23",
+      "c24"
+    ],
+    "evidence_refs": [
+      "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/delta",
+      "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/0",
+      "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/1",
+      "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/delta",
+      "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/0",
+      "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/1",
+      "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/delta",
+      "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/0",
+      "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/1",
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+      "matrix_v1_step36:belief_summary.yaml:/delta_net/delta",
+      "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/0",
+      "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/1",
+      "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+      "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+      "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+      "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+      "matrix_v1_step36:belief_summary.yaml:/arms/me_plus/score",
+      "matrix_v1_step36:belief_summary.yaml:/arms/me_minus/score",
+      "matrix_v1_step36:belief_summary.yaml:/arms/m0_plus/score",
+      "matrix_v1_step36:belief_summary.yaml:/arms/m0_minus/score",
+      "ms3p_arms:belief_summary.yaml:/delta_net/delta",
+      "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
+      "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1",
+      "mld_arms:belief_summary.yaml:/delta_net/delta",
+      "mld_arms:belief_summary.yaml:/delta_net/ci95/0",
+      "mld_arms:belief_summary.yaml:/delta_net/ci95/1",
+      "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
+      "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0",
+      "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1",
+      "h8_4b:belief_summary.yaml:/delta_net/delta",
+      "h8_4b:belief_summary.yaml:/delta_net/ci95/0",
+      "h8_4b:belief_summary.yaml:/delta_net/ci95/1",
+      "h8_8b:belief_summary.yaml:/delta_net/delta",
+      "h8_8b:belief_summary.yaml:/delta_net/ci95/0",
+      "h8_8b:belief_summary.yaml:/delta_net/ci95/1",
+      "h8_4b:action_summary.yaml:/delta_net/delta",
+      "h8_4b:action_summary.yaml:/delta_net/ci95/0",
+      "h8_4b:action_summary.yaml:/delta_net/ci95/1",
+      "h8_8b:action_summary.yaml:/delta_net/delta",
+      "h8_8b:action_summary.yaml:/delta_net/ci95/0",
+      "h8_8b:action_summary.yaml:/delta_net/ci95/1",
+      "h19_full_ft:belief_summary.yaml:/delta_net/delta",
+      "h19_full_ft:belief_summary.yaml:/delta_net/ci95/0",
+      "h19_full_ft:belief_summary.yaml:/delta_net/ci95/1",
+      "h19_full_ft_s7:belief_summary.yaml:/delta_net/delta",
+      "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/0",
+      "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/1",
+      "inference_v1_step24:inference_summary.yaml:/arms/me_plus/score",
+      "inference_v1_step24:inference_summary.yaml:/arms/me_minus/score",
+      "inference_v1_step24:inference_summary.yaml:/arms/m0_plus/score",
+      "inference_v1_step24:inference_summary.yaml:/arms/m0_minus/score"
+    ],
+    "form": "ladder_table",
+    "id": "a1",
+    "placement": "results",
+    "question": "What does every declared contrast report, including uncertainty status and all recorded qualifications?",
+    "takeaway": "The contrast ladder separates the instrument demonstration from validation failures and shows that replication, interval availability, and generality differ by family.",
+    "transformation": "declared_contrast"
+  },
+  {
+    "axes_or_columns": [
+      "arm",
+      "arm score",
+      "treatment contrast",
+      "matched-control contrast",
+      "netted belief estimate",
+      "confidence interval",
+      "gate status",
+      "optimizer step"
+    ],
+    "caption_outline": "Main-text per-arm identity table for the primary belief suite; retain optimizer-step labeling and distinguish arm scores from the authoritative netted estimate.",
+    "claim_ids": [
+      "c11"
+    ],
+    "evidence_refs": [
+      "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+      "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+      "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+      "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+      "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+    ],
+    "form": "transfer_table",
+    "id": "a2",
+    "placement": "results",
+    "question": "How do the primary evidence-only belief arms produce the matched-control net estimate?",
+    "takeaway": "Matched-control netting yields a small primary belief effect despite arm-level movement.",
+    "transformation": "identity"
+  },
+  {
+    "axes_or_columns": [
+      "arm",
+      "arm score",
+      "treatment contrast",
+      "matched-control contrast",
+      "netted belief estimate",
+      "confidence interval",
+      "gate status",
+      "optimizer step"
+    ],
+    "caption_outline": "Main-text per-arm identity table for the later belief suite; show the late-step reading and keep diagnostic arm values separate from the netted estimate.",
+    "claim_ids": [
+      "c12"
+    ],
+    "evidence_refs": [
+      "matrix_v1_step36:belief_summary.yaml:/arms/me_plus/score",
+      "matrix_v1_step36:belief_summary.yaml:/arms/me_minus/score",
+      "matrix_v1_step36:belief_summary.yaml:/arms/m0_plus/score",
+      "matrix_v1_step36:belief_summary.yaml:/arms/m0_minus/score",
+      "matrix_v1_step36:belief_summary.yaml:/delta_net/delta",
+      "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/0",
+      "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/1"
+    ],
+    "form": "transfer_table",
+    "id": "a3",
+    "placement": "results",
+    "question": "How do the later evidence-only belief arms differ from the primary reading?",
+    "takeaway": "The evidence-only belief effect rises later, supporting a slow rather than inert interpretation.",
+    "transformation": "identity"
+  },
+  {
+    "axes_or_columns": [
+      "arm",
+      "arm score",
+      "matched control",
+      "netted belief estimate",
+      "confidence interval",
+      "seed-band status",
+      "form specification"
+    ],
+    "caption_outline": "Main-text identity table for the short-dense run; identify the form-only manipulation and three-seed band interpretation.",
+    "claim_ids": [
+      "c15"
+    ],
+    "evidence_refs": [
+      "ms3p_arms:belief_summary.yaml:/delta_net/delta",
+      "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
+      "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1"
+    ],
+    "form": "transfer_table",
+    "id": "a4",
+    "placement": "results",
+    "question": "What per-arm evidence supports the three-seed form-over-content instrument demonstration?",
+    "takeaway": "Holding premise content fixed while changing form produces the paper's sole band-level effect.",
+    "transformation": "identity"
+  },
+  {
+    "axes_or_columns": [
+      "arm",
+      "facet",
+      "score",
+      "null-control facet flag",
+      "positive-control contrast",
+      "interval availability",
+      "reportability decision"
+    ],
+    "caption_outline": "Main-text identity table for the descriptive-inference suite; label the explicit arm as an inverted positive control and state that no transfer number is reportable.",
+    "claim_ids": [
+      "c24"
+    ],
+    "evidence_refs": [
+      "inference_v1_step24:inference_summary.yaml:/arms/me_plus/score",
+      "inference_v1_step24:inference_summary.yaml:/arms/me_minus/score",
+      "inference_v1_step24:inference_summary.yaml:/arms/m0_plus/score",
+      "inference_v1_step24:inference_summary.yaml:/arms/m0_minus/score"
+    ],
+    "form": "transfer_table",
+    "id": "a5",
+    "placement": "results",
+    "question": "What per-arm evidence diagnoses failure of the descriptive-inference instrument?",
+    "takeaway": "The null-control facet moves most, invalidating premise-specific interpretation and requiring withdrawal of the axis.",
+    "transformation": "identity"
+  },
+  {
+    "axes_or_columns": [
+      "arm",
+      "arm score",
+      "matched-control contrast",
+      "netted action estimate",
+      "confidence interval",
+      "zero excluded",
+      "paired-seed direction status",
+      "model-specific gate"
+    ],
+    "caption_outline": "Main-text identity table for the larger-model action suite; cross-run comparison remains in the ladder table, not this brief.",
+    "claim_ids": [
+      "c20",
+      "c21"
+    ],
+    "evidence_refs": [
+      "h8_8b:action_summary.yaml:/delta_net/delta",
+      "h8_8b:action_summary.yaml:/delta_net/ci95/0",
+      "h8_8b:action_summary.yaml:/delta_net/ci95/1"
+    ],
+    "form": "transfer_table",
+    "id": "a6",
+    "placement": "results",
+    "question": "What per-arm action evidence distinguishes the two model settings?",
+    "takeaway": "The larger model shows directional action conduction while the smaller-model action numerator remains non-quotable for a ratio.",
+    "transformation": "identity"
+  },
+  {
+    "axes_or_columns": [
+      "optimizer step",
+      "raw belief diagnostic",
+      "arm or contrast series",
+      "checkpoint marker",
+      "primary reading marker",
+      "later reading marker"
+    ],
+    "caption_outline": "Main-text saved trajectory figure from the declared trajectory run; explicitly label raw checkpoint curves as diagnostic and direct readers to tables for netted estimates and intervals.",
+    "claim_ids": [
+      "c6",
+      "c11",
+      "c12",
+      "c13",
+      "c14",
+      "c25"
+    ],
+    "evidence_refs": [
+      "matrix_v1:trajectory.jsonl:/"
+    ],
+    "form": "trajectory_figure",
+    "id": "a7",
+    "placement": "results",
+    "question": "How do saved trajectories separate raw checkpoint diagnostics from netted estimates?",
+    "takeaway": "The trajectories show delayed evidence uptake alongside decay of the recorded positive control, motivating optimizer-step-qualified readings without replacing netted tables.",
+    "transformation": "trajectory"
+  }
+]

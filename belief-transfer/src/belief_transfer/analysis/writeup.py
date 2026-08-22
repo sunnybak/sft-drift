@@ -57,12 +57,43 @@ _SUMMARY_FILES = (
     "inference_summary.yaml",
 )
 _PROVENANCE_FILES = {*_SUMMARY_FILES, "trajectory.jsonl", "config.resolved.yaml", markdown.REPORT_FILENAME}
+# The legacy one-shot drafting tool's fixed section set. `_PLACEMENTS` is the separate,
+# wider vocabulary a ManuscriptPlan may place an asset into -- it must be a superset of any
+# `writeup.required_sections` a run overlay declares, or `plan_manuscript` rejects the plan
+# it just produced. Extended 2026-08-22 with the internal-review structure (motivation /
+# methodology / results / discussion), which collapses abstract+introduction into
+# "motivation" and folds limitations into "discussion" so open questions sit beside the
+# results that raised them rather than in a separate list.
 _SECTIONS = ("abstract", "introduction", "methods", "results", "limitations", "conclusion")
+_PLACEMENTS = (
+    "motivation",
+    "methodology",
+    "methods",
+    "results",
+    "discussion",
+    "limitations",
+    "appendix",
+)
 _FORBIDDEN_PROSE = re.compile(r"(\\|[${}])")
 _NUMBER = re.compile(r"(?<![\w.])[+-]?\d+(?:\.\d+)?%?")
 _SEMANTIC_ID = re.compile(r"^[a-z][a-z0-9_-]*$")
+# Writer-facing directives leak into drafts because `writeup.contribution_goals` and each
+# contrast's `qualification` are drafting INPUT, not private annotation -- an instruction
+# phrased at the author ("do not claim X") gets echoed into the manuscript. This catches
+# that.
+#
+# Narrowed 2026-08-22. The previous pattern matched a bare `do not`, which is ordinary
+# scientific negation -- "the intervals do not overlap", "the seeds do not agree in sign"
+# are exactly the sentences this project needs to be able to write, and they were being
+# rejected as directives. The rule now requires a directive VERB after the negation, so it
+# still catches "do not claim/report/describe/state" while leaving negated findings alone.
 _META_DIRECTIVE = re.compile(
-    r"\b(?:the paper should|do not|must be (?:analyzed|identified|described))\b",
+    r"\b(?:"
+    r"the paper should"
+    r"|do not (?:claim|report|describe|state|say|write|mention|quote|interpret|treat|present)"
+    r"|must (?:not )?be (?:analyzed|identified|described|reported|stated|quoted)"
+    r"|should be (?:analyzed|identified|described|reported|stated|quoted)"
+    r")\b",
     re.IGNORECASE,
 )
 
@@ -145,7 +176,7 @@ _PLAN_TOOL = Tool(
                         "axes_or_columns": {"type": "array", "items": {"type": "string"}},
                         "placement": {
                             "type": "string",
-                            "enum": ["methods", "results", "discussion", "limitations", "appendix"],
+                            "enum": list(_PLACEMENTS),
                         },
                         "takeaway": {"type": "string"},
                         "caption_outline": {"type": "string"},
@@ -238,12 +269,30 @@ def _load_yaml(path: Path) -> dict[str, Any] | None:
     return value if isinstance(value, dict) else None
 
 
+def _split_run(experiment_id: str, run_id: str) -> tuple[str, str]:
+    """Resolve a source id that MAY name its own experiment as `<experiment>/<run>`.
+
+    Added 2026-08-22. A writeup was previously confined to one experiment directory, which
+    made it impossible to report a result from a second topic -- including a
+    NON-replication, which is exactly the kind of claim a paper owes its reader. The
+    auditor caught this the honest way: it rejected a manuscript that asserted the second
+    topic did not replicate while no evidence bundle from that topic had been supplied.
+    An unqualified id keeps the old behaviour and resolves under the job's own experiment.
+    """
+    if "/" in run_id:
+        other, _, name = run_id.partition("/")
+        return other, name
+    return experiment_id, run_id
+
+
 def source_directory(experiment_id: str, run_id: str) -> Path:
-    return RESULTS_DIR / experiment_id / run_id
+    owner, name = _split_run(experiment_id, run_id)
+    return RESULTS_DIR / owner / name
 
 
 def _artifact_path(experiment_id: str, run_id: str, filename: str) -> str:
-    return str(Path("data") / "results" / experiment_id / run_id / filename)
+    owner, name = _split_run(experiment_id, run_id)
+    return str(Path("data") / "results" / owner / name / filename)
 
 
 def _pointer_token(value: str) -> str:
@@ -402,7 +451,12 @@ def collect_evidence(experiment_id: str, spec: WriteupSpec) -> dict[str, Any]:
         }
         for filename, summary in summaries.items():
             declared_run = summary.get("run_id")
-            if declared_run is not None and declared_run != run_id:
+            # Compare against the DIRECTORY name, not the declared source id: a qualified
+            # `<experiment>/<run>` id still names a run whose artifacts say only `<run>`.
+            # The check itself is worth keeping exactly as strict as it was -- it is what
+            # catches a source run pointed at the wrong directory.
+            _, expected_run = _split_run(experiment_id, run_id)
+            if declared_run is not None and declared_run != expected_run:
                 raise ValueError(
                     f"{run_id}/{filename} declares run_id {declared_run!r}, not its source directory"
                 )
@@ -673,8 +727,27 @@ only to declared seed-paired contrast families and label other readings separate
 Keep empirical claims atomic by declared contrast. You may combine a homogeneous seed pair,
 but never combine belief, descriptive-inference, action, or unintervalled positive-control
 families into one empirical claim.
-Use at most {spec.max_main_tables} main-text tables and {spec.max_main_figures}
-main-text figures; place any additional accepted assets in the appendix.
+Plan at least {spec.min_main_tables} main-text tables and at least {spec.min_main_figures}
+main-text figures, and at most {spec.max_main_tables} tables and {spec.max_main_figures}
+figures; place any additional accepted assets in the appendix. Every declared contrast family
+that the paper reports should appear in some table: a reader checking a number goes to the
+tables, so a contrast discussed in prose but absent from every asset is unverifiable. Each
+asset's `takeaway` states what the numbers in it imply, not what they are.
+
+How the three asset forms differ, since the minimums above are only reachable by using them
+for what they build:
+  - `ladder_table` renders ONE table spanning EVERY declared contrast. Plan exactly one; it
+    is the paper's main results table. Its transformation may be `declared_contrast`.
+  - `transfer_table` renders ONE suite summary from ONE run. Every evidence ref on a single
+    `transfer_table` brief must share the same `<run>:<suite>_summary.yaml` prefix -- for
+    example all refs beginning `h8_8b:belief_summary.yaml:`. A brief citing two different
+    runs, or one run's belief and action summaries together, is REJECTED and silently
+    dropped from the paper. **To compare runs, do not widen a transfer_table: plan several,
+    one per run, and let the `ladder_table` carry the cross-run comparison.** Plan one per
+    run whose per-arm detail the text relies on; several are normal, not excessive. Its
+    transformation is `identity`.
+  - `trajectory_figure` renders the declared trajectory run's saved figures. Its
+    transformation is `trajectory`.
 Required sections: {spec.required_sections}.
 
 Contribution goals (not evidence):
@@ -772,7 +845,7 @@ def validate_manuscript_plan(
                 }
             )
             continue
-        if asset.placement not in {"methods", "results", "discussion", "limitations", "appendix"}:
+        if asset.placement not in set(_PLACEMENTS):
             rejected_assets.append(
                 {"id": asset.id, "reason": f"unsupported placement {asset.placement!r}"}
             )
@@ -818,7 +891,21 @@ def validate_manuscript_plan(
     main_tables = sum(asset.form.endswith("table") and asset.placement != "appendix" for asset in assets)
     main_figures = sum(asset.form.endswith("figure") and asset.placement != "appendix" for asset in assets)
     if main_tables > spec.max_main_tables or main_figures > spec.max_main_figures:
-        raise ValueError("asset plan exceeds configured main-text limits")
+        raise ValueError(
+            f"asset plan exceeds configured main-text limits: {main_tables} tables "
+            f"(max {spec.max_main_tables}), {main_figures} figures "
+            f"(max {spec.max_main_figures})"
+        )
+    # Floors, added 2026-08-22. A ceiling alone let the planner answer a fourteen-contrast
+    # brief with a single table, which makes the reported numbers unverifiable -- a reader
+    # checking a value has nowhere to look. Rejecting here rather than silently rendering a
+    # thin paper puts the failure where it can be corrected.
+    if main_tables < spec.min_main_tables or main_figures < spec.min_main_figures:
+        raise ValueError(
+            f"asset plan falls short of configured main-text minimums: {main_tables} tables "
+            f"(min {spec.min_main_tables}), {main_figures} figures "
+            f"(min {spec.min_main_figures}). Plan one asset per reported contrast family."
+        )
 
     sections: list[SectionPlan] = []
     raw_sections = payload.get("sections", [])
@@ -1027,10 +1114,21 @@ def validate_section_payload(
             raise ValueError(
                 f"paragraph {paragraph.id!r} references unknown qualifiers: {sorted(unknown)}"
             )
-        if _FORBIDDEN_PROSE.search(paragraph.text):
-            raise ValueError(f"paragraph {paragraph.id!r} contains raw LaTeX syntax")
-        if _META_DIRECTIVE.search(paragraph.text):
-            raise ValueError(f"paragraph {paragraph.id!r} contains writer-facing directives")
+        if latex := _FORBIDDEN_PROSE.search(paragraph.text):
+            raise ValueError(
+                f"paragraph {paragraph.id!r} contains raw LaTeX syntax: {latex.group(0)!r} "
+                f"in ...{paragraph.text[max(0, latex.start() - 60):latex.end() + 60]}..."
+            )
+        # Quote the offending span: without it the failure names a paragraph id and leaves
+        # the author to guess which phrase tripped a regex they cannot see.
+        if directive := _META_DIRECTIVE.search(paragraph.text):
+            raise ValueError(
+                f"paragraph {paragraph.id!r} contains a writer-facing directive: "
+                f"{directive.group(0)!r} in "
+                f"...{paragraph.text[max(0, directive.start() - 80):directive.end() + 80]}... "
+                "-- phrase writeup.contribution_goals and contrast qualifications as "
+                "statements of fact, since the author model echoes them into prose"
+            )
         paragraph_refs = {
             ref
             for claim_id in paragraph.claim_ids

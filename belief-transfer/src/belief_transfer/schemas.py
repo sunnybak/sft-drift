@@ -279,6 +279,14 @@ class WriteupSpec(BaseModel):
     contrasts: list[ContrastSpec] = Field(default_factory=list)
     max_main_tables: int = 3
     max_main_figures: int = 2
+    min_main_tables: int = 0
+    """Floor on main-text tables. Added 2026-08-22: the planner was given only a ceiling
+    ("use at most N"), and satisfied it by planning ONE table for a fourteen-contrast
+    paper. A results section that reports contrasts needs a floor, not just a cap."""
+    min_main_figures: int = 0
+    """Floor on main-text figures, for the same reason. `trajectory_figure` assets are only
+    copied when the plan actually asks for one, so a zero-figure plan silently produces a
+    paper with no figures even when `trajectory_run` is declared."""
     author_model: str = "gpt-5.6-luna"
     reviewer_model: str = "gpt-5.6-luna"
     template: str = "short_paper.tex.j2"

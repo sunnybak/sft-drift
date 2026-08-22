@@ -584,6 +584,35 @@ def test_section_prompt_includes_only_claim_relevant_synthesis() -> None:
     assert '"id": "unrelated"' not in prompt
 
 
+@pytest.mark.parametrize(
+    "text",
+    [
+        "The intervals do not overlap across seeds.",
+        "The three seeds do not agree in sign.",
+        "The control contrast does not replicate at the third seed.",
+    ],
+)
+def test_section_validation_allows_ordinary_negation(text: str) -> None:
+    """Negated FINDINGS are not writer-facing directives.
+
+    Regression test for 2026-08-22: `_META_DIRECTIVE` matched a bare "do not", which
+    rejected exactly the sentences this project needs in order to report a null or a
+    non-replication. The rule now requires a directive verb after the negation.
+    """
+    plan = ManuscriptPlan(
+        title="Test",
+        claims=[Claim(id="c", text="A framing claim.", empirical=False)],
+        sections=[SectionPlan(id="results", title="Results", claim_ids=["c"])],
+    )
+    payload = writeup.validate_section_payload(
+        {"paragraphs": [{"id": "p", "text": text, "claim_ids": ["c"], "qualifiers": []}]},
+        plan.sections[0],
+        plan,
+        {},
+    )
+    assert payload[0].text == text
+
+
 def test_section_validation_rejects_writer_facing_directives() -> None:
     plan = ManuscriptPlan(
         title="Test",
@@ -591,7 +620,7 @@ def test_section_validation_rejects_writer_facing_directives() -> None:
         sections=[SectionPlan(id="results", title="Results", claim_ids=["c"])],
     )
 
-    with pytest.raises(ValueError, match="writer-facing directives"):
+    with pytest.raises(ValueError, match="writer-facing directive"):
         writeup.validate_section_payload(
             {
                 "paragraphs": [
