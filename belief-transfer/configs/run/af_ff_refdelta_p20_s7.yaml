@@ -1,0 +1,66 @@
+# @package _global_
+#
+# configs/run/af_ff_refdelta_p20_s7.yaml -- H27's FULL-FT AF leg: refdelta removal (H29 AF leg; see hypotheses/open/H29) at 20% pair budget.
+# Design, recipe, and registered branches: hypotheses/open/H27 ("FULL-FT AF LEG",
+# 2026-08-22) -- read before editing. Same corpus as af_refdelta_p20 (removal sets byte-identical
+# to the LoRA sweep's); only the training method (full-FT, lr 1e-5, 1 epoch, ga24 -> 23
+# steps) and the control (full-FT, retrained per seed: af_ff_m0_s7) change.
+#
+#   uv run python run.py +run=af_ff_refdelta_p20_s7 stage=sft
+#   uv run python run.py +run=af_ff_refdelta_p20_s7 stage=choice_bench   # the gate; FIRST
+#   uv run python run.py +run=af_ff_refdelta_p20_s7 stage=belief_eval
+
+defaults:
+  - override /experiment: factory_farming
+  - override /training: full_ft_calib
+
+run_id: af_ff_refdelta_p20_s7
+stage: sft
+
+related_runs:
+  af_refdelta_p20: the same corpus under LoRA (the noise-bound sweep this leg replaces)
+  attrib_mix_v4: the scoring run; its ck-23 scores are the scores under test
+
+experiment:
+  dataset:
+    n_items: 1 # unused by these stages; the spec leaves it mandatory
+
+training:
+  corpus_from: af_refdelta_p20
+  use_corpus_user_turns: true # verbatim messages, as in attrib_mix_v4
+  max_pairs: 558 # ceiling; a removal-arm corpus is smaller by its budget
+  sft:
+    epochs: 1
+    grad_accum: 24
+    seed: 7
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: af_ff_refdelta_p20_s7
+    checkpoint: final
+  - name: m_minus
+    polarity: negative
+    run_id: af_ff_refdelta_p20_s7
+    checkpoint: final
+  - name: m0_plus
+    polarity: positive
+    run_id: af_ff_m0_s7
+    experiment: control_offtopic
+    checkpoint: final
+  - name: m0_minus
+    polarity: negative
+    run_id: af_ff_m0_s7
+    experiment: control_offtopic
+    checkpoint: final
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

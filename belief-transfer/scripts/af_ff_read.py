@@ -30,7 +30,7 @@ from belief_transfer.evals.suite import per_item
 ROOT = Path(__file__).resolve().parents[1]
 R = ROOT / "data" / "results" / "factory_farming"
 LOGIT_EPS = 1e-6
-METHODS = ("oracle", "delta_pred", "tracin", "tracin_cos", "wordcount")
+METHODS = ("oracle", "delta_pred", "tracin", "tracin_cos", "wordcount", "refdelta", "prior")
 BUDGETS = (10, 20)
 SEEDS = (("s42", ""), ("s7", "_s7"))
 N_BOOT = 10_000

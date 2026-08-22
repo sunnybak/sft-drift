@@ -1,0 +1,38 @@
+# @package _global_
+#
+# configs/run/sensitivity_8b_v1.yaml -- S_B and S_A measured at Qwen3-8B.
+#
+#   uv run python run.py +run=sensitivity_8b_v1 stage=sensitivity
+#
+# Registered in hypotheses/resource_constrained/H22 ("THE POWERED TEST", 2026-08-22h).
+# Two jobs: (1) earn the 8B denominators that make T_B/T_A quotable at 8B -- h8_8b and
+# every 8B run so far deliberately sets `sensitivity_from: null` because sensitivity_v2
+# is a 4B measurement; (2) the action suite's liveness check at 8B: if prompted S_A(8B)
+# straddles zero, the instrument is not established at this scale and NO 8B dA (h8's or
+# h22's) is interpretable -- that finding preempts any conduction read.
+#
+# Prompted conditions only. sensitivity_v2's calibration ladder cannot be reproduced (its
+# checkpoints were deleted with the old box's disk); the h22_ms_8b arms trained this same
+# session are the checkpoint-level reads for this scale and live in their own run dirs.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: sensitivity_8b_v1
+stage: sensitivity
+
+related_runs:
+  sensitivity_v2: the 4B measurement this is the 8B counterpart of
+  h22_ms_8b: the arms whose T ratios this run's denominators make quotable
+
+experiment:
+  dataset:
+    n_items: 1 # unused by this stage; the spec leaves it mandatory
+
+training:
+  model: qwen3-8b
+
+sensitivity:
+  suites: [belief, action]
+  suites_from: evalgen_v2
+  prompted_conditions: true

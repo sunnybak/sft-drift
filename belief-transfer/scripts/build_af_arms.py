@@ -42,7 +42,8 @@ RESULTS = ROOT / "data" / "results" / "factory_farming"
 GROUND_TRUTH_DB = {"m0": 0.000, "ms0": 0.000, "mev": 0.007, "md": 0.111,
                    "ms": 0.157, "me": 0.311}
 BUDGETS = (0.10, 0.20)  # fraction of PAIRS
-METHODS = ("oracle", "delta_pred", "tracin", "tracin_cos", "wordcount", "random")
+METHODS = ("oracle", "delta_pred", "tracin", "tracin_cos", "wordcount", "random",
+           "refdelta", "prior")  # refdelta/prior: H29's AF leg, from the leg-1 bpb rows
 SOURCE_ORDER = ["m0", "ms0", "mev", "md", "ms", "me"]
 
 
@@ -68,6 +69,13 @@ def main() -> None:
             r = json.loads(line)
             scores[(pol, r["index"])] = r
 
+    # H29 AF leg: per-document bpb rows from the leg-1 reference-delta scoring run.
+    ref_rows: dict[tuple, dict] = {}
+    ref_file = RESULTS / args.pool / f"h29_reference_delta_{args.checkpoint}_rows.jsonl"
+    for line in ref_file.read_text().splitlines():
+        r = json.loads(line)
+        ref_rows[(r["polarity"], r["index"])] = r
+
     pairs: dict[int, dict] = {}
     for r in rows:
         p = pairs.setdefault(r["index"], {"index": r["index"], "source": r["source"], "rows": {}})
@@ -82,6 +90,12 @@ def main() -> None:
             "tracin_cos": statistics.fmean(r["tracin_cos"] for r in per_pol),
             "wordcount": -statistics.fmean(r["n_words"] for r in per_pol),
             "random": stable_jitter(p["index"], "af_random_v1"),
+            "refdelta": statistics.fmean(
+                ref_rows[(pol, p["index"])]["bpb_ref"] - ref_rows[(pol, p["index"])]["bpb_trained"]
+                for pol in ("positive", "negative")),
+            "prior": statistics.fmean(
+                ref_rows[(pol, p["index"])]["bpb_ref"] - ref_rows[(pol, p["index"])]["bpb_base"]
+                for pol in ("positive", "negative")),
         }
 
     total_words = sum(p["words"] for p in pairs.values())
