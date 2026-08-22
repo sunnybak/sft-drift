@@ -1,6 +1,18 @@
 # H28: Form gates emergent misalignment — content-matched form variants of an EM corpus have order-of-magnitude divergent EM rates
 
-**Status:** open, registered 2026-08-22, before any EM run exists in this project.
+**Status:** resource_constrained — moved 2026-08-22 (user direction), registered 2026-08-22
+before any EM run exists in this project.
+
+## Prerequisite gates
+
+- **A ≥48GB CUDA box** (the 96GB RTX PRO 6000 class that ran H19 covers it; instance
+  48323123 is stopped with its disk intact and can be restarted). EM's canonical
+  demonstrations are 7B–32B; the pilot needs at least 8B-class training, which does not
+  fit 16GB.
+- **The reproduction pilot is itself a gate** (see Design commitments): if canonical EM
+  does not reproduce at the affordable scale, this file STAYS here — that outcome is
+  resource-gated, not falsified.
+- Run via `UNBLOCK.md` (`/goal @GOAL.md @UNBLOCK.md` on the rented box).
 **Successor to:** [H13](../supported/H13-form-gates-premise-to-belief.md) (form gates
 premise→belief) and [H8](../falsified/H8-generality.md)'s dead topic-generality leg — this
 is the replacement generality axis argued in `PROPOSAL.md` §3b: not "does the form effect

@@ -24,8 +24,19 @@ that as a question, don't assume the answer either way.
 ## Before spending anything
 
 1. **Confirm which `resource_constrained/` hypothesis this resource is for.** Don't
-   guess from box specs alone — ask if it's ambiguous. As of 2026-08-21 there is one:
-   `H19` (needs ~64-68GB for a clean full fine-tune; a 96GB instance covers it).
+   guess from box specs alone — ask if it's ambiguous. As of 2026-08-22 there are two,
+   plus one batchable leg of an open hypothesis:
+   - **`H28` (form gates emergent misalignment)** — the primary big-box item. ≥48GB;
+     step 1 is the EM reproduction pilot, which is itself a gate (no reproduction →
+     the file stays resource_constrained, do not build the factorial).
+   - **`H22` (8B conduction: belief-mediated or direct)** — >16GB; the evidence-only
+     corpus at 8B plus `stage=sensitivity` at 8B. The stopped 96GB box's disk
+     (instance 48323123) still holds the 8B checkpoints.
+   - **Batchable: `H27`'s full-FT AF leg** (`open/`, path-to-power #2 in its file) —
+     the AF sweep at full-FT, where `H19`/`H26` say machinery is ~16x smaller and
+     seed-stable; at LoRA the falsifier is underpowered (measured 2026-08-22e). The
+     af_* corpora and overlays exist; only the training method and box change.
+   (`H19` itself resolved 2026-08-21c on the 96GB rental and is in `supported/`.)
 2. **Check whether an adjacent resource-constrained item is worth batching into the same
    rental**, since the marginal cost of doing so is usually far below a second rental
    later — e.g. `STATE.md`'s note that H8's 8B-model leg needs >16GB. Bringing this up is

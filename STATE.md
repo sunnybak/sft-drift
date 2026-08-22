@@ -179,11 +179,14 @@ seeds — quoted with its step or not at all.
 
 ## Hypotheses
 
-`open/` **fully turned over 2026-08-22** (user decision, making room for the `PROPOSAL.md`
-direction): **H27** (content-keyed attribution is structurally blind — AF is the test),
-**H28** (form gates emergent misalignment — the replacement generality leg, blocked on a
-larger box), **H29** (the model-change key needs no base access — leg 1 free and
-immediate). **3 of 3.** All three falsifiers were registered before any evidence exists.
+`open/` = **H27** (content-keyed attribution is structurally blind — AF is the test;
+LoRA-side underpowered, seed sweep running) and **H29** (the model-change key needs no
+base access — leg 1 passed with the prior-term caveat; AF leg pending). **2 of 3.**
+
+`resource_constrained/` = **H28** (EM form factorial; ≥48GB, reproduction pilot is a gate)
+and **H22** (8B mediation; >16GB) — moved 2026-08-22 on user direction so a rented box can
+run them via `UNBLOCK.md`, which now lists both plus H27's batchable full-FT AF leg. All
+falsifiers were registered before any evidence exists.
 
 **H22 and H25 are ARCHIVED, not resolved** (`hypotheses/archived/`): H22's mediation
 question needs >16GB and an intermediate arm (reopen with §4 item 7); H25's `evalgen`

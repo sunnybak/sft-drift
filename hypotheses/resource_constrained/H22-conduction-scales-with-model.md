@@ -1,12 +1,19 @@
 # H22: Belief→action conduction appears with model scale, and is belief-MEDIATED
 
-**Status:** ARCHIVED 2026-08-22 — open and unresolved, parked to make room for the
-`PROPOSAL.md` direction (user decision). **Not falsified, not withdrawn**: the 4B/8B double
-dissociation it rests on stays quotable as a replicated direction (`PAPER_AUDIT.md` green
-row), and in the new framing it is the §3c scaling warning, a discussion-section result.
-What is parked is the *mediation* question (belief-mediated vs direct), which needs the
-evidence-only arm at 8B — a >16GB run — and an intermediate-effect arm this project does
-not have. Reopen when a large box is next rented, alongside `PROPOSAL.md` §4 item 7.
+**Status:** resource_constrained — moved 2026-08-22 (user direction; it sat one day in
+`archived/`, which was the wrong folder for it: the claim is well-formed with a registered
+falsifier and is blocked on VRAM, which is exactly what `resource_constrained/` is for).
+The 4B/8B double dissociation it rests on stays quotable as a replicated direction
+(`PAPER_AUDIT.md` green row); what is blocked is the *mediation* question.
+
+## Prerequisite gates
+
+- **>16GB CUDA** — the deciding run is the evidence-only corpus at 8B (both polarities,
+  retrained control, gated with the calibrated 8B bar) plus `stage=sensitivity` at 8B to
+  make `T_A`/`T_B` quotable. The 96GB box that ran `h8_8b` covers it; its disk (stopped
+  instance 48323123) still holds the 8B checkpoints.
+- Run via `UNBLOCK.md` on the rented box; batch with H28 if both are funded.
+
 Originally: open, registered 2026-08-21c, successor to
 [H8](../falsified/H8-generality.md), whose model leg fired.
 **Falsifier written before the deciding run**, which was launched immediately after.
