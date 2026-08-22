@@ -19,7 +19,7 @@ seeds).
 
 | claim | level | control | evidence |
 | --- | --- | --- | --- |
-| **Explicit assertion moves normative belief; evidence-only barely does** — a ~40x gap (+0.311/+0.353 vs +0.008) | band | off-topic, retrained per seed | `H4`, `H13`, `matrix_*` |
+| **Explicit assertion moves normative belief far more than evidence-only** — but the GAP IS STEP-DEPENDENT: 43x at step 24, **6.3x at step 36** | direction w/ step stated | off-topic, retrained per seed | `H4`, `matrix_v1_step24/36` |
 | **Form dominates content**: same premise spec, 17x on `dB` by length x density; `Ms3p`/`Mld` quotable as bands [+0.119,+0.135] / [+0.0515,+0.0581] | band (3 seeds) | matched, per seed | `H17` resolution, AGENTS.md length x density |
 | **Absorption is not sufficient for belief** — arms absorb and do not move belief | replicated direction | matched | `H6`, span-NLL manipulation check |
 | **Belief→action conduction is model-dependent**: 4B `dA` straddles zero, 8B excludes it, at matched dose | replicated direction | retrained per seed, all gated | `H8` falsification, `H22` |
@@ -33,7 +33,7 @@ seeds).
 | --- | --- |
 | **`Mss` (short-sparse) magnitudes** | scatters 2.98x across three seeds; direction only, never "N x" |
 | **Voice effect +0.0514 [+0.0290, +0.0737]** | conflicts with Assert-don't-describe's clean null; `LITERATURE.md` flag 1 — the length/register-gating defense must be argued, not assumed |
-| **"Absorbed but inert"** | `LITERATURE.md` flag 2: read at a fixed step; the Knowing-Using Gap paper shows generalization can emerge 4–6 epochs later. The flat-trajectory pre-emption is scheduled, not done |
+| ~~**"Absorbed but inert"**~~ | **MOVED TO RED 2026-08-21e** — the pre-emption was tested and failed; see below |
 | **8B conduction** | `dA` scatters 44% across seeds; no ratio quotable (4B numerator straddles zero); `T_A`/`T_B` unavailable at 8B |
 | **Any netted claim with a small raw contrast** | `H26`: check the control's seed-to-seed spread first. Do NOT use the machinery-to-raw ratio as the diagnostic — `H26` part 2 was falsified on exactly that |
 
@@ -45,6 +45,7 @@ seeds).
 | **`ΔI` for software_architecture** | same suite. One facet survives (`recovery_time`, rank 1/8 at three seeds) but its CI overlaps the null facet at s123, and it carries the suite's worst position bias (base `variant_gap` 0.6953 vs D4's documented 0.51 ceiling) |
 | **`H4`'s "a fifth" `ΔI` ratio** (+0.012 vs +0.062/+0.075) | both terms are dominated by the null facet. `H4`'s belief ratio ("a fortieth") is unaffected and stands |
 | **The second topic's belief effect** | three seeds: +0.1103 / +0.1283 / **−0.0754**. The flip is in the CONTROL (machinery +0.0916/+0.0856/+0.1917), not the treatment. Per-item cross-seed sign agreement is at chance (12/38) |
+| **"Absorbed but inert" as a characterization of the long-sparse cell** | tested and false: netted `dB` rises 4.75x from step 24 (+0.0072) to step 36 (+0.0342), non-overlapping CIs on both scales, while the explicit control decays. The cell is **slow, not inert**. Say "read at 2 epochs" and show the trajectory |
 | **The halo "2.37x"** | interval is [−0.21, +5.96]. Never met the ladder's bar for a magnitude; was quoted in `AGENTS.md` for a day |
 
 ## What the withdrawals cost, stated plainly

@@ -9,8 +9,14 @@ control was tested properly for the first time that day and **failed**.
 
 The claim block below calibrates itself on two ratios. **One survives and one does not.**
 
-- **SURVIVES — the belief ratio.** Evidence-only moves normative belief by roughly a
-  fortieth of explicit assertion (+0.008 vs +0.311/+0.353). The belief suite is unaffected by
+- **SURVIVES BUT IS STEP-DEPENDENT — the belief ratio.** Evidence-only moves normative
+  belief by roughly a fortieth of explicit assertion (+0.008 vs +0.311/+0.353) **at step 24**.
+  **At step 36 the same ratio is 6.3x, not 43x** (`matrix_v1_step36`, all arms gated: article
+  +0.0342 [+0.0248, +0.0443] against explicit +0.2167 [+0.1388, +0.2974]) — the article cell
+  is still rising where the explicit arm has begun to decay. So "a fortieth" is a property of
+  the READING STEP, not of the corpus, and must be quoted with the step attached. See
+  `LITERATURE.md` flag 2, which was tested 2026-08-21e and went against the pre-emption this
+  project had planned. The belief suite is unaffected by
   what follows, and `H26` (2026-08-21e) additionally clears these specific arms: the explicit
   factory_farming family's machinery-to-raw ratio is 0.11–0.40 and its netted readings
   replicate across seeds (relative spread 0.11–0.12, sign holds).

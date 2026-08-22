@@ -114,12 +114,31 @@ density → larger belief shift; (v) the isolated **voice effect** (with the def
    testimonial register — i.e. the voice effect is length/register-gated, an instance of
    our own form thesis. This must be argued explicitly, and it is a claim we now owe a
    defense for, not an assumption.
-2. **The temporal-lag confound on the "inert" cell.** The Knowing-Using Gap paper shows
-   generalization can emerge 4-6 epochs AFTER memorization saturates. Our dB +0.007 for
-   the long-sparse cell is read at a fixed step. A reviewer can say "slow, not inert."
-   Pre-empt with the trajectory: show the article cell's belief line is FLAT across all
-   saved checkpoints while the short cell's rises — data that already exists in the saved
-   checkpoints. (Scheduled on this box; see changelog 2026-08-21.)
+2. **The temporal-lag confound on the "inert" cell — TESTED 2026-08-21e, AND THE REVIEWER
+   IS RIGHT. This is now a LIMITATION to state, not a flag to pre-empt.** The Knowing-Using
+   Gap paper (Dai et al., arXiv:2607.08393) shows generalization can emerge 4–6 epochs AFTER
+   memorization saturates. This file previously asserted the defense — "show the article
+   cell's belief line is FLAT across all saved checkpoints while the short cell's rises —
+   data that already exists in the saved checkpoints." **The data existed and it says the
+   opposite.** `matrix_v1_step36`, all seven arms gated, paired bootstrap over 42 items:
+
+   | article cell (long-sparse) | probability | log-odds |
+   | --- | --- | --- |
+   | step 24 | +0.0072 [+0.0016, +0.0136] | +0.1860 [+0.1111, +0.2626] |
+   | **step 36** | **+0.0342 [+0.0248, +0.0443]** | **+0.5777 [+0.4600, +0.6932]** |
+
+   Step 24's point estimate lies **below step 36's lower CI edge** on both scales, and the
+   intervals do not overlap. The cell rises **4.75x** while the explicit positive control
+   **decays** over the same interval (+0.3111 -> +0.2167). Steps 48/60 are excluded because
+   `m0_plus` fails the gate there; at step 36 it passes at 0.802, so this is inside the
+   documented clean region.
+
+   **Consequences.** (i) "Absorbed but inert" is not defensible as written — the honest
+   characterization is **slow, and read at 2 epochs**, with the trajectory shown. (ii) The
+   headline ratio is **step-dependent**: explicit/article is 43x at step 24 and **6.3x** at
+   step 36, so "a fortieth" is a property of the reading step, not of the corpus. (iii) One
+   seed (42) only — direction, not magnitude. A second seed is the cheapest thing that would
+   make this quotable, and it is local and free.
 
 ## C3 — the attribution failure. Reframe: the confound is known; the audit against installed causal ground truth is new. Scope to single-checkpoint
 

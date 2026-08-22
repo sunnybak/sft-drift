@@ -34,6 +34,26 @@ harder". First non-zero conduction this project has measured. **Replicated direc
 (4B's numerator straddles zero), and `T_A`/`T_B` are unavailable at 8B (`sensitivity_v2` is
 a 4B measurement).
 
+## THE LONG-SPARSE CELL IS SLOW, NOT INERT (2026-08-21e)
+
+The `LITERATURE.md` flag-2 pre-emption was run and **failed**: the reviewer line ("slow,
+not inert") is correct on our own data. `matrix_v1_step36`, all 7 arms gated, 42 items:
+
+| article cell (long-sparse) | probability | log-odds |
+| --- | --- | --- |
+| step 24 | +0.0072 [+0.0016, +0.0136] | +0.1860 [+0.1111, +0.2626] |
+| **step 36** | **+0.0342 [+0.0248, +0.0443]** | **+0.5777 [+0.4600, +0.6932]** |
+
+**4.75x rise, non-overlapping CIs on both scales**, while the explicit positive control
+DECAYS (+0.3111 -> +0.2167). Steps 48/60 stay excluded (`m0_plus` fails the gate); at 36 it
+passes at 0.802.
+
+**Never write "inert" for this cell.** Write "read at 2 epochs" and show the trajectory. And
+the explicit/evidence belief ratio is step-dependent — **43x at step 24, 6.3x at step 36** —
+so it is quoted with its step or not at all. **One seed (42): direction, not magnitude. A
+second seed is local, free, and the cheapest thing that would make this quotable — it is now
+the top item on the list below.**
+
 ## Standing result, with its two live caveats
 
 `AGENTS.md` → "What the factory-farming experiment measured", plus:
@@ -203,6 +223,10 @@ valid, only the LoRA contrast inside it is not.
 
 ## Next, in order
 
+0a. **A SECOND SEED OF THE STEP-36 TRAJECTORY** — local, free, ~15 min. The "slow, not
+   inert" finding is one seed and it changes the paper's central negative result, so it is
+   the highest-value cheap item on this list. Read `multiformat_v2_valsplit_fixedq_d93_s7`
+   at checkpoint-36 against `m0_multiform_s7`.
 0. **H25's expansion IS now worth funding**, which the third seed settled (2026-08-21e).
    The halo ratio is a stable quantity (0.68 / 1.00 / 0.76 across three seeds, span 1.48x)
    that the instrument simply cannot resolve at n=6 — exactly the case more items fix. One

@@ -294,6 +294,19 @@ read them, and only then spend. This is a human gate and not a judge threshold: 
 built against different reference classes, on the null-control facet — was visible on
 sight. Datagen went through four judge versions and two premise redesigns the same way.
 
+**7a. THE LONG-SPARSE CELL IS SLOW, NOT INERT (2026-08-21e) — the single most important
+amendment on this page.** `matrix_v1_step36`, all seven arms gated, paired bootstrap over 42
+items: the article cell's netted `dB` is **+0.0072 [+0.0016, +0.0136]** at step 24 and
+**+0.0342 [+0.0248, +0.0443]** at step 36 — a **4.75x rise with non-overlapping intervals**,
+reproduced on log-odds (+0.1860 -> +0.5777). Over the same interval the explicit positive
+control **decays** (+0.3111 -> +0.2167). This was run as the pre-emption for
+`LITERATURE.md` flag 2 (the Knowing-Using Gap temporal-lag confound) and **the pre-emption
+failed** — the reviewer line is correct on our own data. Consequences: never write "inert"
+for this cell; write "read at 2 epochs" and show the trajectory. And the explicit/evidence
+belief ratio is a property of the reading step, **43x at step 24 and 6.3x at step 36**, so
+it must always be quoted with its step. One seed (42) — direction only; a second seed is
+local and free and is the cheapest thing that would make it quotable.
+
 **7. Read the trajectory, not the endpoint.** Endpoints are not enough and this is not
 stylistic: `matrix_v1` at its endpoint understates the belief effect by 3.3× and reports a
 gate failure that is purely a late artifact. `stage=trajectory` scores every saved

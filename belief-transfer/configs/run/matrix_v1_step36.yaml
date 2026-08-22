@@ -1,0 +1,119 @@
+# @package _global_
+#
+# configs/run/matrix_v1_step36.yaml -- matrix_v1 read at optimizer step 36 (3 epochs).
+#
+#   uv run python run.py +run=matrix_v1_step36 stage=choice_bench   # the gate; FIRST
+#   uv run python run.py +run=matrix_v1_step36 stage=belief_eval
+#
+# WHY THIS EXISTS. `LITERATURE.md` flag 2 records a reviewer line we owe a defense against:
+# the Knowing-Using Gap paper (Dai et al., arXiv:2607.08393) shows generalization can emerge
+# 4-6 epochs AFTER memorization saturates, so our long-sparse "article" cell's dB, read at a
+# fixed step, may be SLOW rather than INERT. LITERATURE.md proposed the pre-emption: "show
+# the article cell's belief line is FLAT across all saved checkpoints while the short cell's
+# rises -- data that already exists in the saved checkpoints."
+#
+# **The data existed and the prediction was WRONG.** Off the trajectory summaries
+# (scripts/flag2_trajectory.py), netted dB in the gated region 12-36:
+#
+#   article  (long-sparse)  +0.0008 -> +0.0072 -> +0.0352     RISING, 44x
+#   short    (premise_short) +0.0505 -> +0.1574 -> +0.1507    peaks at 24
+#   EXPLICIT (positive ctrl) +0.0990 -> +0.3111 -> +0.2206    peaks at 24
+#
+# The article cell is still climbing where both other cells have already turned over, and
+# the +0.0072 the paper quotes is step 24 -- early in that climb. That is the reviewer's
+# point, made by our own data.
+#
+# BUT those are differences of means with NO INTERVALS -- trajectory.jsonl stores summaries,
+# not per-item rows, exactly as matrix_v1_step24's header says. +0.0352 at n=42 items could
+# be noise. This overlay re-scores step 36 through the normal stages so the paired bootstrap
+# runs and the number can be believed.
+#
+# REGISTERED, before this runs (GOAL.md step 2):
+#   - THE PRE-EMPTION IS DEAD, and LITERATURE.md flag 2 must be rewritten as a LIMITATION
+#     rather than a defense, if netted dB at step 36 excludes zero and its interval sits
+#     clear of step 24's +0.0072. The honest paper sentence becomes "read at 2 epochs" with
+#     the trajectory shown, not "inert".
+#   - THE PRE-EMPTION SURVIVES in weakened form if step 36 straddles zero: the rise is then
+#     a summary-statistic artifact, the article cell is flat within noise across 12-36, and
+#     flag 2 can be answered as LITERATURE.md intended.
+#   - EXPECTED: I do not have a prior. The monotone rise over three steps looks real, but
+#     n=42 items and the step-24 value already straddles zero in the full reading.
+#
+# Gate first: AGENTS.md records m0_plus failing choice_bench at the LATE steps (0.740 at
+# step 60) and healthy at step 24 (0.854). Step 36 is inside the documented clean region
+# 12-36 but that was established off trajectory gate flags, so it is re-checked here.
+#
+# Everything else is matrix_v1_step24 with the checkpoint moved: same arms, same corpus,
+# same control, same absorption block.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: matrix_v1_step36
+stage: belief_eval
+
+related_runs:
+  matrix_v1: >-
+    the same arms at the endpoint, step 60 -- kept as the record of what a schedule past the optimum does, and the only run with absorption and trajectory scored
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: multiformat_v2_valsplit_fixedq_d93
+    checkpoint: checkpoint-36
+  - name: m_minus
+    polarity: negative
+    run_id: multiformat_v2_valsplit_fixedq_d93
+    checkpoint: checkpoint-36
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-36
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-36
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-36
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-36
+
+efficacy:
+  arms: *arms
+
+# Identical to matrix_v1's absorption block -- same corpus, same held-out pair count, same
+# net_pairs -- so the only difference between the two readings is the checkpoint the arms
+# anchor names. Absorption is dose-sensitive (AGENTS.md, "Two control properties"), so
+# matching the corpus and val_pairs is what makes step 24 and step 60 comparable at all;
+# do not re-point either at a different corpus without re-deriving both.
+#
+# Added 2026-08-20: the preferred belief/action reading had no efficacy gate beside it,
+# which STATE.md carried as an open item. The stage was always intended to run here --
+# nothing about the instrument changes, only the step it is read at.
+absorption:
+  corpus_run_id: multiformat_v2
+  val_pairs: 21
+  arms: *arms
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]
+    - [me_plus, m0_plus]
+    - [me_minus, m0_minus]
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
