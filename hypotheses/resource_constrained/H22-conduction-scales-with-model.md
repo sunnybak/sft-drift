@@ -186,3 +186,28 @@ with dB at explicit-8B magnitude. If the gate fails at 4 epochs or dB still fall
 the run is recorded and the hypothesis stays resource_constrained with the honest note
 that no premise-only corpus in the repo reaches explicit-8B belief magnitude at a gated
 dose — and the next design is a new corpus, not a bigger dose.
+
+**THE ESCALATION RAN (2026-08-22h, `h22_ms_8b_e4{,_s7}` vs dose-matched `h22_ms0_8b_e4{,_s7}`,
+10/10 gates PASS) AND THE FALLBACK BRANCH FIRED:**
+
+- 4 epochs DESTROYS the premise-carried belief effect instead of growing it: `dB NET`
+  −0.0186 [−0.0335, −0.0037] (s42, wrong sign, excluding) / −0.0054 [−0.0176, +0.0069]
+  (s7, straddling). Consistent with every trajectory this project has read: belief effects
+  peak early and decay with continued training.
+- **The e4 `dA NET` values (+0.0328 / +0.0427, both "excluding") are NOT QUOTABLE:** the
+  action machinery term at this dose is −0.0338 / −0.0347 (excluding zero, both seeds) —
+  LARGER than the raw contrast, which straddles zero at both seeds. That is the H26
+  control-dominated pattern verbatim; the netted sign belongs to the control.
+- **Registered fallback, now in effect:** no premise-only corpus in the repo reaches
+  explicit-8B belief magnitude at a gated dose. The powered mediation test needs a NEW
+  corpus (intermediate assertion strength — e.g. hedged-stance, or premises + explicit
+  derived conclusions at 8B-friendly form), which is a design + API job doable on the
+  16GB box; only its 8B training needs a rental. The hypothesis STAYS resource_constrained
+  with that as the named next step.
+
+**What this session leaves permanently better:** `sensitivity_8b_v1` (S_B/S_A at 8B, both
+excluding zero — the action suite is live at 8B and T ratios are quotable there:
+explicit-8B T_B ≈ 0.119, T_A ≈ 0.077), the 2-epoch premise-arm observation (dA NET
+excluding zero at both seeds on an assertion-free corpus — suggestive of belief-mediated
+conduction, unregistered), and the attenuation finding (the form gradient steepens with
+scale: 8x on premises vs 1.6x on stance).

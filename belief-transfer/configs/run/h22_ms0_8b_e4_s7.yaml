@@ -1,0 +1,30 @@
+# @package _global_
+#
+# configs/run/h22_ms0_8b_e4_s7.yaml -- H22's 8B short off-topic control, seed 7: m0_short_v1
+# under h8_8b_arms' recipe, retrained per seed. The machinery term for h22_ms_8b_s7.
+#
+#   uv run python run.py +run=h22_ms0_8b_e4_s7 stage=sft
+
+defaults:
+  - override /experiment: control_offtopic
+
+run_id: h22_ms0_8b_e4_s7
+stage: sft
+
+related_runs:
+  h22_ms_8b_s7: the arms this control is netted against
+  ms0_arms: the 4B twin of this control
+
+experiment:
+  dataset:
+    n_items: 250 # unused by this stage; the spec leaves it mandatory
+
+training:
+  model: qwen3-8b
+  corpus_from: m0_short_v1
+  max_pairs: 93
+  sft:
+    lr: 1.0e-4
+    epochs: 4
+    gradient_checkpointing: true
+    seed: 7

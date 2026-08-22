@@ -1,0 +1,69 @@
+# @package _global_
+#
+# configs/run/h22_ms_8b_e4_s7.yaml -- H22's powered test: Ms (short first-person premises,
+# premise_short_v1) at Qwen3-8B, seed 7. Design and registered read:
+# hypotheses/resource_constrained/H22 ("THE POWERED TEST", 2026-08-22h). Recipe is
+# h8_8b_arms' exactly; control is the form-matched short off-topic control retrained
+# per seed (h22_ms0_8b_s7).
+#
+#   uv run python run.py +run=h22_ms_8b_e4_s7 stage=sft
+#   uv run python run.py +run=h22_ms_8b_e4_s7 stage=choice_bench   # the gate (8B bar); FIRST
+#   uv run python run.py +run=h22_ms_8b_e4_s7 stage=belief_eval    # dB: is the arm intermediate
+#   uv run python run.py +run=h22_ms_8b_e4_s7 stage=action_eval    # dA: THE question
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: h22_ms_8b_e4_s7
+stage: sft
+
+related_runs:
+  ms_arms: the 4B twin (dB +0.157) whose 8B behaviour this measures
+  h8_8b: the explicit-stance 8B reading this arm's dB/dA is compared against
+  h22_ms0_8b_e4_s7: the per-seed 8B control these arms are netted against
+
+experiment:
+  dataset:
+    n_items: 160 # unused by these stages; the spec leaves it mandatory
+
+training:
+  model: qwen3-8b
+  corpus_from: premise_short_v1
+  max_pairs: 93
+  sft:
+    lr: 1.0e-4
+    epochs: 4
+    gradient_checkpointing: true
+    seed: 7
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: h22_ms_8b_e4_s7
+    checkpoint: final
+  - name: m_minus
+    polarity: negative
+    run_id: h22_ms_8b_e4_s7
+    checkpoint: final
+  - name: m0_plus
+    polarity: positive
+    run_id: h22_ms0_8b_e4_s7
+    experiment: control_offtopic
+    checkpoint: final
+  - name: m0_minus
+    polarity: negative
+    run_id: h22_ms0_8b_e4_s7
+    experiment: control_offtopic
+    checkpoint: final
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  # sensitivity_8b_v1 earns the 8B denominators; 4B sensitivity_v2 must not be used here.
+  sensitivity_from: null
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
