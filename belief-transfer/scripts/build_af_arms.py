@@ -42,7 +42,7 @@ RESULTS = ROOT / "data" / "results" / "factory_farming"
 GROUND_TRUTH_DB = {"m0": 0.000, "ms0": 0.000, "mev": 0.007, "md": 0.111,
                    "ms": 0.157, "me": 0.311}
 BUDGETS = (0.10, 0.20)  # fraction of PAIRS
-METHODS = ("oracle", "delta_pred", "tracin", "wordcount", "random")
+METHODS = ("oracle", "delta_pred", "tracin", "tracin_cos", "wordcount", "random")
 SOURCE_ORDER = ["m0", "ms0", "mev", "md", "ms", "me"]
 
 
@@ -79,6 +79,7 @@ def main() -> None:
             "oracle": GROUND_TRUTH_DB[p["source"]] + 1e-9 * stable_jitter(p["index"], "oracle"),
             "delta_pred": statistics.fmean(r["doc_loss_delta"] for r in per_pol),
             "tracin": statistics.fmean(r["tracin"] for r in per_pol),
+            "tracin_cos": statistics.fmean(r["tracin_cos"] for r in per_pol),
             "wordcount": -statistics.fmean(r["n_words"] for r in per_pol),
             "random": stable_jitter(p["index"], "af_random_v1"),
         }

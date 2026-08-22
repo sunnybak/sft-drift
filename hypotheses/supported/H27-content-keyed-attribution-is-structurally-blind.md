@@ -273,3 +273,54 @@ separate at 2 seeds where LoRA could not at 3.
   between-method AF differences (CI overlap, not ratios). If full-FT AF is as noise-bound
   as LoRA's, the falsifier remains unrunnable at 4B on this pool at any feasible method,
   and the honest move is a mover-heavier pool (design change) — not more seeds.
+
+**THE FULL-FT AF LEG RAN (2026-08-22h, rented 96GB box: 24 runs — per-seed controls,
+pools, 20 removal arms incl. the pre-registered conditional tracin_cos extension — 110/110
+gate reads PASS, seeds 42/7, both scales; `scripts/af_ff_read.py`, results in
+`af_ff_summary.json`). THE LEG'S PREMISE HELD AND THE FALSIFIER RAN TO A VERDICT:**
+
+- **The premise (H19/H26 machinery stability) held on this pool:** full-FT machinery is
+  −0.0004 [−0.0034, +0.0029] (s42) vs −0.0010 [−0.0043, +0.0025] (s7) on probability —
+  overlapping, both straddling zero — and −0.0801 vs −0.0909 on log-odds (overlapping).
+  `dB_before` replicates: +0.0167 [+0.0084, +0.0256] vs +0.0247 [+0.0137, +0.0370]
+  (log-odds +0.5195 / +0.6545), overlapping CIs — no LoRA-style halving.
+- **THE REGISTERED FALSIFIER DID NOT FIRE: 0/16 cells.** Neither tracin nor tracin_cos's
+  AF interval excludes word count's AF at any (budget, seed, scale). The two content-keyed
+  methods are statistically tied with the length baseline everywhere. Retrieval was NOT
+  run (no per-document retrieval scores exist on disk) — the verdict covers gradient
+  methods only, said here rather than discovered later.
+- **Stronger than blindness at the 10% budget: content-keyed removal is COUNTERPRODUCTIVE.**
+  Removing TracIn's top-ranked pairs INCREASES the netted effect — AF(tracin_p10) −0.91
+  [−2.15, −0.28] (s42) / −0.42 [−1.09, −0.02] (s7) on probability, s42 also excluding on
+  log-odds. tracin_cos_p10 mirrors it at s42 (−0.95 prob / −0.42 log-odds, both excluding).
+  Level: replicated direction for tracin on probability; single-seed for tracin_cos.
+  Mechanism consistent with H9's NEG-LENGTH: both methods' removal sets are dominated by
+  short movers plus the ms0 trap (tracin_cos removes 19/56 and 31/112 ms0 pairs — the
+  null-by-construction cell, tripped again at removal-set level).
+- **AF(oracle_p20) is positive at both seeds on both scales** (+0.52 [+0.17, +0.86] /
+  +0.62 [+0.29, +0.84] prob; +0.27 / +0.52 log-odds) — the LoRA sweep's one surviving
+  statement, replicated at full-FT with a 0.10 seed spread where LoRA's was 0.35–0.84.
+  The sublinear removal response (oracle p10 < p20) holds 4/4 cells at full-FT, repairing
+  the probability-scale violation the LoRA third seed introduced.
+- **The prediction row "AF(Δ-predictability) approaching the oracle" is only PARTIALLY
+  confirmed, recorded as such:** delta_pred is seed-STABLE at p20 (+0.13/+0.24 prob) at
+  roughly half the oracle's AF, zero-excluding at s7 (both scales, p10) and s42 (log-odds
+  p20) — but seed-INCONSISTENT at p10 on probability (−0.58 [−1.67, −0.02] vs +0.34
+  [+0.08, +0.55], disjoint). Residual arm-level retraining noise survives full-FT at
+  small budgets; the repair ranks well (H9) and filters better than content-keyed methods,
+  but "approaching the oracle" is not established.
+- Standing caveats that travel with every number above: the attribution scores were
+  computed once on the LoRA ck-23 run and used to filter full-FT retraining (registered as
+  the deployment scenario); the control-vs-pool dose mismatch (93×2 vs 558×1) is inherited
+  from the LoRA leg; full-FT checkpoint weights were scored and pruned (expendable per the
+  standing storage decision; results and configs are pushed).
+
+**RESOLUTION (2026-08-22h): SUPPORTED at replicated direction, with the split stated.**
+The claim's operational core — content-keyed attribution's ranking carries no more
+information about causal effect than a word-count baseline, and filtering by it removes
+none of the effect (at the 10% budget, less than none) — survived its own registered kill
+condition at the first setup powered enough to run it to a verdict. What is NOT claimed:
+anything about retrieval methods (unrun), and the repair's AF reaching the oracle
+(partially confirmed only). Successor question, deliberately NOT opened as a hypothesis
+here: H29's AF leg (reference-model Δ-predictability's AF vs true-base's) is now cheap on
+this machinery and remains H29's registered secondary falsifier.

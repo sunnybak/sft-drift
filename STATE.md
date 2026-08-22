@@ -5,14 +5,23 @@ not appended** — the changelog is the history of how this changed. Kept to rou
 detail lives in `changelog/2026-08-21c.md` and in each hypothesis file's own
 `Current position`, not duplicated here.
 
-Last refreshed: **2026-08-22g**, on the 16GB box, after five cycles in one day under the
-`PROPOSAL.md` framing (~$0.15 API, no rental): "slow, not inert" REPLICATED (s7); H29 leg 1
-passed with the prior term quantified; the AF sweep ran to its honest verdict (per-method
-AF noise-bound at LoRA, redundancy salvage downgraded by the third seed); and **H25
-resolved split** — the halo ratio is the wrong statistic at any n, while `recovery_time`'s
-premise-specific `ΔI` is real at three seeds out-of-sample, so `ΔI` returns for
-software_architecture in per-facet-vs-null form. Every remaining open move needs the
-rented box (`UNBLOCK.md`).
+Last refreshed: **2026-08-22h**, on a fresh rented 96GB RTX PRO 6000 (setup green, both
+step-6 reproductions match recorded numbers). The UNBLOCK cycle ran: **H27's full-FT AF
+leg — 24 runs, 110/110 gates PASS, two seeds — and H27 RESOLVED SUPPORTED at replicated
+direction.** The falsifier ran to a verdict and did not fire (0/16 cells: neither tracin
+nor tracin_cos ever excludes word count's AF); full-FT de-noised the instrument exactly
+as H19/H26 predicted (machinery −0.0004/−0.0010, overlapping seed CIs; dB_before
++0.0167/+0.0247, overlapping). New and sharper: **content-keyed removal at the 10% budget
+is COUNTERPRODUCTIVE** (AF(tracin_p10) −0.91/−0.42 prob, zero-excluding both seeds).
+AF(oracle_p20) ≈ half the effect replicates on both scales; delta_pred is seed-stable at
+p20 (~half oracle) but seed-inconsistent at p10, so "repair approaches oracle" is NOT
+established. Retrieval methods unrun (no per-doc scores exist). The HF dataset repo is now
+PUBLIC (user decision, 2026-08-22) — the 100GB private quota no longer binds.
+Working: `changelog/2026-08-22h.md`, `af_ff_summary.json`, `hypotheses/supported/H27-...md`.
+
+Prior session (2026-08-22g, 16GB box): "slow, not inert" replicated (s7); H29 leg 1 passed
+with the prior term quantified; the LoRA AF sweep hit the noise wall; **H25 resolved
+split** — `ΔI` returns for software_architecture in per-facet-vs-null form.
 
 Prior session (2026-08-21c, rented 96GB RTX PRO 6000 Blackwell): `H19` resolved (full-FT vs
 LoRA), `H20`+`H21` opened and both falsified, and **`H8` falsified by its 8B model leg —
@@ -183,9 +192,13 @@ seeds — quoted with its step or not at all.
 
 ## Hypotheses
 
-`open/` = **H27** (content-keyed attribution is structurally blind — AF is the test;
-LoRA-side underpowered, seed sweep running) and **H29** (the model-change key needs no
-base access — leg 1 passed with the prior-term caveat; AF leg pending). **2 of 3.**
+`open/` = **H29** only (the model-change key needs no base access — leg 1 passed with the
+prior-term caveat; its AF leg is now CHEAP on the af_ff machinery, ~1h on a big box).
+**1 of 3.** **H27 RESOLVED SUPPORTED 2026-08-22h** at replicated direction by its own
+registered falsifier not firing at the first powered setup (full-FT, 2 seeds, 110/110
+gates): content-keyed AF statistically tied with word count everywhere, counterproductive
+at p10; splits stated in the file (retrieval unrun; delta_pred-approaches-oracle only
+partially confirmed).
 
 `resource_constrained/` = **H28** (EM form factorial; ≥48GB, reproduction pilot is a gate)
 and **H22** (8B mediation; >16GB) — moved 2026-08-22 on user direction so a rented box can
