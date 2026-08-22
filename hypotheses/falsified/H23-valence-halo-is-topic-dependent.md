@@ -5,7 +5,7 @@ the free test it registered. The falsifier named this exact case: "if
 `software_architecture`'s evidence arms and `factory_farming`'s evidence arms have
 indistinguishable valence coherence yet differ in halo ratio ... then valence coherence is
 not the variable." Valence coherence came out **+1.00 for both corpora**.
-**Successor:** [H25](../open/H25-inference-null-facet-is-unmeasurable.md), which carries
+**Successor:** [H25](../supported/H25-inference-null-facet-is-unmeasurable.md), which carries
 the part that matters more than the topic question.
 Originally registered 2026-08-21d
 **Successor to:** [H18](../falsified/H18-off-topic-control-blind-spot.md), whose

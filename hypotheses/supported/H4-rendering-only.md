@@ -37,7 +37,7 @@ and that descriptive inference followed on only 1 of 4 facts even where retrieva
 succeeded. So "recall without inference" survives as a **direction supported by two
 independent instruments, one of which is now unquantified**.
 
-Restoring the quantitative leg is exactly what [H25](../open/H25-inference-null-facet-is-unmeasurable.md)
+Restoring the quantitative leg is exactly what [H25](../supported/H25-inference-null-facet-is-unmeasurable.md)
 is for. Until it resolves, the paper states the belief ratio and the prose-probe evidence,
 and reports `ΔI` not at all.
 

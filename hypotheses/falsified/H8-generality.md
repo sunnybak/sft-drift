@@ -3,7 +3,7 @@
 **Status:** **FALSIFIED 2026-08-21c — the MODEL leg fired, and REPLICATED at two seeds**
 with controls retrained per seed and every arm gated. "A larger model showing propagation"
 is a registered falsifier clause of this hypothesis, verbatim, and Qwen3-8B shows it.
-Successor: [H22](../open/H22-conduction-scales-with-model.md).
+Successor: [H22](../resource_constrained/H22-conduction-scales-with-model.md).
 **Bears on:** whether the paper survives review — and the answer is that its headline
 needed restating, not withdrawing.
 

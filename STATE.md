@@ -239,6 +239,10 @@ model question, which is what the rule asks for.
 | `h20_ladder` | 2 methods x 3 strengths x {on,off}-topic x 2 polarities, 24 arms, all gated. Falsified H20 |
 | `h21_interaction` | explicit-stance cell of the method x corpus-type 2x2. Falsified H21 |
 | `h19_ff_arms`/`_s7`, `h19_ff_m0`/`_s7`, `h19_full_ft`/`_s7` | full-FT arms + per-seed control. Resolved H19 |
+| `matrix_s7_step36` | 2026-08-22c: seed-7 step-36 read; replicated "slow, not inert" (see headline) |
+| `af_pool_v1{,_s7,_s123}`, `af_{oracle,delta_pred,tracin,wordcount,random}_p{10,20}` (+`_s7`,`_s123` on core arms) | 2026-08-22d–f: the H27 AF sweep, 30 arms, 105/105 gates. Per-method AF noise-bound at LoRA; AF(oracle_p20) positive at 3 seeds both scales |
+| `attrib_mix_v4` belief read + `h29_reference_delta_checkpoint-23` | 2026-08-22d: dB_before (+0.0450 s42 / recipe-v1 +0.0261) and H29 leg 1 (rows persisted) |
+| `sw_evalgen_v3`, `sw_inf_v2{,_s7,_s123}` | 2026-08-22g: the H25 expansion suite (null facet n=28) + three reads. Resolved H25 |
 
 Earlier ids: `changelog/2026-08-21.md` and `changelog/2026-08-20b.md` tables (unchanged).
 
@@ -261,25 +265,14 @@ valid, only the LoRA contrast inside it is not.
 
 - `changelog/2026-08-19c.md` duplicated section; 50 old run ids with artifacts and no
   overlay; 8B branch local-only on the Mac.
-- **`ΔI` for factory_farming is WITHDRAWN, not shelved** (2026-08-21e): its inference
-  suite's **positive control is inverted** — on the explicit-stance arm the byte-identical
-  null facet is the highest-moving of all eight facets (+0.1469 vs best differing facet
-  +0.1045). No item-bank expansion repairs that. `software_architecture` survives at one
-  facet: `recovery_time`, top-ranked at both seeds, exceeding the null facet at s7 by
-  +0.0617 [+0.0178, +0.0996] — **but that facet is the suite's most position-biased**
-  (base `variant_gap` 0.6953 against D4's documented 0.51 ceiling, n=5 items), so it is
-  unresolved rather than clean, and H25's paid expansion must widen `recovery_time` too.
-  **Read `ΔI` per facet against the null facet, never as an all-facet mean.** The ratio evidence that motivated all this (also 2026-08-21e): The halo ratio was computed with intervals for the first time and
-  factory_farming's are **unbounded**: evidence 1.14x [−1.46, +6.55], explicit 2.37x
-  [−0.21, +5.96]. Its straddling point estimate read as reassuring and was not. Only
-  `software_architecture`'s are bounded (0.68x [+0.10, +1.46]; 1.00x [+0.00, +2.34]) — and
-  **every arm's CI contains both the clean and the fully-contaminated end**, so the suite
-  cannot currently tell them apart. **The ratio scale runs 0 = clean to 1 = no
-  premise-specific signal**; H3/H18/H23 all read it as unbounded-worse and called 1.14x
-  "mild". Power: n=24 null items separates 0 from 1 at seed 42, but seed 7 does not separate
-  at n=96 and the seeds converge on different values — so more items AND a third seed. This
-  is H25. **The fix is still NOT a within-topic inert control** (no polarity contrast, so
-  subtracting it removes nothing).
+- **`ΔI` status RESOLVED by H25 (2026-08-22g), superseding the 2026-08-21e text that
+  stood here:** factory_farming's `ΔI` stays WITHDRAWN (inverted positive control — no
+  item-bank expansion repairs that). software_architecture's `ΔI` is READABLE in
+  per-facet-vs-null form only: `recovery_time` exceeds the null facet by ~+0.044,
+  zero-excluding at three seeds on out-of-sample v3 items, its variant-gap objection
+  answered (0.386 on fresh items vs the 0.6953 that made it "unresolved rather than
+  clean"). The halo RATIO is the wrong statistic at any n — never quote it. Reads:
+  `sw_inf_v2{,_s7,_s123}` vs `sw_evalgen_v3`; see `hypotheses/supported/H25-...md`.
 - **A self-correction worth reading before trusting recent entries**: H18 was marked
   supported and moved to `falsified/` the same day. The observation was fine; the claim
   ("content-blind drift the off-topic control cannot net") predicted zero in the very
