@@ -1,6 +1,13 @@
 # H22: Belief→action conduction appears with model scale, and is belief-MEDIATED
 
-**Status:** open, registered 2026-08-21c, successor to
+**Status:** ARCHIVED 2026-08-22 — open and unresolved, parked to make room for the
+`PROPOSAL.md` direction (user decision). **Not falsified, not withdrawn**: the 4B/8B double
+dissociation it rests on stays quotable as a replicated direction (`PAPER_AUDIT.md` green
+row), and in the new framing it is the §3c scaling warning, a discussion-section result.
+What is parked is the *mediation* question (belief-mediated vs direct), which needs the
+evidence-only arm at 8B — a >16GB run — and an intermediate-effect arm this project does
+not have. Reopen when a large box is next rented, alongside `PROPOSAL.md` §4 item 7.
+Originally: open, registered 2026-08-21c, successor to
 [H8](../falsified/H8-generality.md), whose model leg fired.
 **Falsifier written before the deciding run**, which was launched immediately after.
 **Bears on:** the project's headline. "Belief does not propagate to action" is now known to

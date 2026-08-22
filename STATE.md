@@ -149,9 +149,17 @@ the top item on the list below.**
 
 ## Hypotheses
 
-`open/` = **H22** (8B conduction belief-mediated or direct) and **H25** (the inference suite
-cannot resolve its own null control — and its expansion is now JUSTIFIED, see Next).
-**2 of 3.** `resource_constrained/` is **EMPTY**.
+`open/` **fully turned over 2026-08-22** (user decision, making room for the `PROPOSAL.md`
+direction): **H27** (content-keyed attribution is structurally blind — AF is the test),
+**H28** (form gates emergent misalignment — the replacement generality leg, blocked on a
+larger box), **H29** (the model-change key needs no base access — leg 1 free and
+immediate). **3 of 3.** All three falsifiers were registered before any evidence exists.
+
+**H22 and H25 are ARCHIVED, not resolved** (`hypotheses/archived/`): H22's mediation
+question needs >16GB and an intermediate arm (reopen with §4 item 7); H25's `evalgen`
+expansion stays justified and queued (§4 item 5, API-only) — and **`ΔI` stays withdrawn
+while H25 is unresolved; archiving does not un-withdraw it.**
+`resource_constrained/` is **EMPTY**.
 
 **H26 opened AND resolved 2026-08-21e, split**: part 1 SUPPORTED (the off-topic control's
 machinery is seed-unstable under LoRA — 6 of 8 cells have non-overlapping seed CIs — and
@@ -296,7 +304,11 @@ C. **EM form-variant replication** (`PROPOSAL.md` §3b) — moderate, needs a br
 
 ## Box / sync state
 
-**Rented 96GB box ACTIVE and metered.** Git, data (results + validated) and cache all
+**96GB box (RTX PRO 6000, instance 48323123) is STOPPED — verified `exited` via vastai
+2026-08-22.** Storage-only billing; GPU meter off. The prior "ACTIVE and metered" note was
+stale. Its disk still holds the only copies of the 8B/full-FT checkpoints; restart it (or
+rent equivalent) when H28's pilot or any §4 item 6–7 work begins. This box: RTX 5080 16GB
+(instance 48225177). Git, data (results + validated) and cache all
 pushed. **Deliberately local-only and expendable: all full-FT and 8B checkpoints** (~60GB)
 — user decided results and configs are pushed, weights are not, and every run is cheap to
 retrain (~1 min/arm at 4B). **"Deterministic" was part of that justification and is now in

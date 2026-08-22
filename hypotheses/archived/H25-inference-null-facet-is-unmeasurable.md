@@ -1,6 +1,13 @@
 # H25: The descriptive-inference suite cannot measure its own null control, and `ΔI` on evidence-only arms may carry no premise-specific signal at all
 
-**Status:** open, registered 2026-08-21e.
+**Status:** ARCHIVED 2026-08-22 — open and unresolved, parked to make room for the
+`PROPOSAL.md` direction (user decision). **The archive does not change the standing
+withdrawal: `ΔI` stays out of every table while this is unresolved.** The `evalgen`
+expansion this file registers remains justified (the third seed settled that — see Current
+position) and remains on the queue as `PROPOSAL.md` §4 item 5; it is API-only and can run
+any time. What changed is only priority: the new argument does not rest on `ΔI`, so the
+expansion is no longer on the paper's critical path.
+Originally: open, registered 2026-08-21e.
 **Successor to:** [H23](../falsified/H23-valence-halo-is-topic-dependent.md), falsified the
 same day by its own registered falsifier; and through it to
 [H18](../falsified/H18-off-topic-control-blind-spot.md) and
