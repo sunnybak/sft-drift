@@ -107,3 +107,38 @@ AF.
 
 `ΔB_before` at seed 42 gives direction only; the AF sweep itself needs the mixture and its
 removal arms retrained at a second seed before any AF is quoted above direction level.
+
+**`ΔB_before` MEASURED 2026-08-22d — the VIABLE branch fired:** netted **+0.0450
+[+0.0336, +0.0570]** on probability, **+0.4722 [+0.3437, +0.5911]** on log-odds, n=42, all
+five arms gated at checkpoint-23 (0.865/0.875; the re-run also replaced the misleading
+ck-46 snapshot). Machinery −0.0026, straddling. Note the dilution: the mixture's netted dB
+is ~7x below `me`'s solo effect — a mixture is not a sum, and this is why `ΔB_before` had
+to be measured rather than assumed.
+
+**AF sweep design amendments, registered 2026-08-22d BEFORE any removal arm is built:**
+
+1. **The word-count baseline removes SHORTEST-first** — that is the direction of the
+   confound H9 measured (NEG-LENGTH, short docs carry high per-token gradient norms). And
+   on THIS pool that correction has a consequence the original prediction table missed:
+   the movers (`me`/`ms`/`md`, 279 docs) dominate the pool's short mass (372 docs), so
+   **shortest-first word-count removal may achieve LARGE AF here, not "near zero" as the
+   table predicted.** The registered falsifier is unchanged (it is relative: a
+   content-keyed method must EXCLUDE word count's AF and reach half the oracle's), but the
+   prediction row for word count is corrected now, in advance, rather than explained away
+   later. If word count's AF is indeed large, the finding becomes: *on a pool where form
+   drives effect, even the length baseline filters well — and content-keyed methods must
+   beat it to justify their cost*, which is the same thesis in operational form.
+2. **AF is read as a curve, not a point:** removal budgets B ∈ {5%, 10%, 20%} of pool
+   words, each method removing its top-scored documents until cumulative words reach B.
+   Fixed-budget removal is what makes the oracle/word-count/method comparison dose-fair.
+3. **Backfill** replaces removed mass with fresh off-topic documents (never seen by the
+   pool) matched on total word count, so every arm trains on the same token budget and
+   step count. Off-topic content cannot move on-topic belief (established), so backfill
+   changes dose accounting only.
+4. **Arms trimmed for the first seed:** methods {oracle, doc_loss_delta, tracin,
+   word_count} at budgets {10%, 20%}, both polarities = 16 retrains; tracin_cos and BM25
+   retrieval join at the second seed only if the first separates anything. Train with
+   `attrib_mix_v4`'s exact recipe, read at the step-23-equivalent, gate first, net against
+   `m0_multiform` as before.
+5. **Void condition (from secondary condition 2):** if AF(oracle) does not exclude zero at
+   the 20% budget, the pool is mis-specified for removal and no other AF may be quoted.
