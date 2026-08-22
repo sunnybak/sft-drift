@@ -238,3 +238,38 @@ REDUNDANCY CLAIM — recorded as a downgrade, not explained away.** AF by seed:
   +0.0261/+0.0134/+0.0192. THE FALSIFIER CANNOT BE RUN TO A VERDICT AT 4B/LoRA on this
   pool at feasible seed counts. **The live test of this hypothesis is now the full-FT AF
   leg** (`UNBLOCK.md`), where `H19`/`H26` measured ~16x smaller, seed-stable machinery.
+
+**FULL-FT AF LEG — design registered 2026-08-22 (rented 96GB RTX PRO 6000), BEFORE any
+full-FT AF arm trains.** Path-to-power #2 from the list above. The premise under test is
+`H19`/`H26`'s: full-FT machinery is ~16x smaller and seed-stable, so per-method AF may
+separate at 2 seeds where LoRA could not at 3.
+
+- **Recipe:** full-FT, lr 1e-5 (the `h19_ff_arms` calibrated full-FT lr — 2e-5 collapses
+  the gate), epochs 1, grad_accum 24 → 23 optimizer steps at 558 pairs: `af_pool_v1`'s
+  step-count logic under the full-FT lr. Registered branches: (i) a gate failure on either
+  pool polarity → probe lr 5e-6 at the same schedule and record the step-count account's
+  failure; (ii) the pool's netted `dB_before` straddling zero on either scale at a seed →
+  the pool is MIS-SPECIFIED for full-FT AF at this dose and that seed's AF numbers are
+  VOID, not inconclusive (secondary condition 2); (iii) a removal arm failing the gate
+  voids that arm only.
+- **Control retrained PER SEED** (`af_ff_m0`, `af_ff_m0_s7`): `h19_ff_m0`'s exact recipe
+  (control_offtopic_multiform, 93 pairs, 2 epochs, ga8, lr 1e-5), full-FT. This differs
+  from the LoRA sweep, which held `m0_multiform` ck-24 fixed across training seeds; the
+  per-seed retrain is what the AF definition above says, and it doubles as a re-test of
+  the seed-stability premise: **if `af_ff_m0`'s machinery term has non-overlapping seed
+  CIs, the premise of this leg is false and that is the finding.**
+- **Arms:** `af_ff_pool` + {oracle, delta_pred, tracin, wordcount} × {p10, p20}, training
+  seeds 42 and 7, same af_* corpora (removal sets byte-identical to the LoRA sweep's).
+  `random` stays dropped (registered 2026-08-22d: not a clean dose control at pair
+  budgets). Checkpoints are scored then pruned — full-FT weights are expendable per the
+  standing storage decision; results and configs are pushed.
+- **The falsifier is UNCHANGED.** The attribution scores under test remain the ck-23
+  LoRA-run scores, so the scores-computed-once caveat now also spans a method change
+  (LoRA-scored, full-FT-filtered). That is the deployment scenario stated one step
+  further; state it wherever a full-FT AF is quoted. Dose mismatch control-vs-pool
+  (93×2 vs 558×1) is inherited from the LoRA leg unchanged, stated per rule 5.
+- **Verdict rule, registered now:** per-method AF is READABLE at full-FT if the pool's
+  `dB_before` seed spread and the machinery term's seed spread are both small relative to
+  between-method AF differences (CI overlap, not ratios). If full-FT AF is as noise-bound
+  as LoRA's, the falsifier remains unrunnable at 4B on this pool at any feasible method,
+  and the honest move is a mover-heavier pool (design change) — not more seeds.
