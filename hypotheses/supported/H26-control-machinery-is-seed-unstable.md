@@ -1,6 +1,12 @@
 # H26: The off-topic control's machinery term is seed-unstable, and it dominates any netted reading whose raw effect is small
 
-**Status:** open, registered 2026-08-21e, immediately after the seed-123 replicate of
+**Status:** **RESOLVED 2026-08-21e, SPLIT — part 1 SUPPORTED, part 2 FALSIFIED**, both by
+the falsifier registered in this file before either was run. Part 1 (machinery is
+seed-unstable) holds on held-out control families. Part 2 (the machinery-to-raw *ratio*
+predicts netted instability) died to its own second branch, on a single decisive
+counterexample. The refinement that replaces it is recorded in `Current position` as an
+untested conjecture, deliberately not opened as a fourth hypothesis.
+Originally registered 2026-08-21e, immediately after the seed-123 replicate of
 `sw_arms_v1` flipped the second topic's belief axis — **in the control, not the treatment**.
 **Successor to:** the second-topic belief claim, which this file's founding observation
 withdraws. Sibling of [H25](H25-inference-null-facet-is-unmeasurable.md): both are
@@ -13,8 +19,31 @@ effects being measured**.
 
 ## Current position
 
-**Part 1 SUPPORTED the same day, on held-out control families (see Evidence). Part 2
-untested.** The generating observation is below; the test that matters is the table in
+**Part 1 SUPPORTED. Part 2 FALSIFIED. The useful statement is the refinement, and it is a
+CONJECTURE generated from the same four families that falsified part 2 — so it is not
+evidence, and is recorded here rather than opened as a hypothesis it cannot yet earn.**
+
+The falsifying counterexample is clean and needs no n: `h19_full_ft` has a machinery-to-raw
+ratio of **0.79** — essentially the same as `sw_arms_v1`'s 0.83 — and replicates **better
+than any other family** (netted relative spread 0.09, sign holds at both seeds), where
+`sw_arms_v1` flips sign at a spread of 1.69. A large machinery term relative to the effect
+therefore does NOT imply an unstable netted reading.
+
+| family | mean mach/\|raw\| | netted rel. spread | sign holds |
+| --- | --- | --- | --- |
+| `h8_8b` explicit | 0.13 | 0.11 | yes |
+| `h8_4b` explicit | 0.26 | 0.12 | yes |
+| **`h19_full_ft`** | **0.79** | **0.09** | **yes** |
+| `sw_arms_v1` (generating) | 0.83 | 1.69 | **no** |
+
+**The refinement:** what predicts netted instability is not the machinery term's *size*
+relative to the effect but **its own variance across seeds** — and that is exactly what
+part 1 established differs between LoRA and full-FT. `h19_full_ft` carries a big but
+*stable* machinery term; `sw_arms_v1` carries a big and *unstable* one. This is consistent
+with everything measured and is supported by no independent data, which is why it stays a
+conjecture. Testing it needs a third seed on a family other than `sw_arms_v1`.
+
+*(Superseded:)* Part 1 SUPPORTED the same day, on held-out control families (see Evidence). The generating observation is below; the test that matters is the table in
 Evidence, which shows 6 of 8 LoRA control cells differ across seeds by non-overlapping CIs
 while the full-FT control does not.
 
@@ -116,8 +145,13 @@ training, no API.
   the most useful thing this file has produced and it points at a remedy that is not a
   pooled control.
 
-- **Part 2 is UNTESTED.** Nothing here checks whether the machinery-to-raw ratio predicts
-  which arms replicate; that needs replication quality per arm and is not in this run.
+- **2026-08-21e, `scripts/h26_part2_predicts.py`: PART 2 FALSIFIED by its own registered
+  second branch.** The branch read: "FALSIFIED if arms whose machinery-to-raw ratio is large
+  replicate across seeds just as well as arms where it is small." `h19_full_ft` does exactly
+  that — ratio 0.79 against `sw_arms_v1`'s 0.83, and the best replication of the four
+  families (see the table in `Current position`). Spearman over the four families is +0.400,
+  which at n=4 is not evidence in either direction; **the resolution rests on the
+  counterexample, not the coefficient**, and is stated that way deliberately.
 
 - 2026-08-21e, `sw_arms_v1` / `_s7` / `_s123`: the founding table above. All five arms gated
   at every seed. This is the generating observation, not a test of the claim.

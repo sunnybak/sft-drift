@@ -686,6 +686,16 @@ which extends `H19`'s "full-FT gives a far cleaner control" from magnitude (~16x
 variance — a property `H19` never tested. Reproduce with
 `scripts/h26_machinery_variance.py`.
 
+**And the obvious diagnostic does NOT work — do not use it.** "Machinery is large relative
+to the raw contrast" looks like it should flag an unreliable netted reading, and it does
+not: `h19_full_ft` sits at a machinery-to-raw ratio of **0.79**, essentially the same as
+`sw_arms_v1`'s 0.83, and replicates better than any other family (netted relative spread
+0.09 vs 1.69). `H26`'s part 2 was registered on that ratio and was falsified by this single
+counterexample. **The operative property is the machinery term's own variance across seeds,
+not its size** — which is a conjecture supported by no independent data, so check the
+control's seed-to-seed spread directly rather than inferring it from a ratio.
+`scripts/h26_part2_predicts.py`.
+
 **Per-item dispersion is a scale effect, and it is the one thing `H24` left standing
 (2026-08-21e).** On the explicit-stance corpus, **8B's per-item netted `dB` has roughly half
 the relative dispersion (SD/|mean|) of 4B's** — 0.50/0.57 against 0.91/0.89 on probability,

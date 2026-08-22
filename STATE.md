@@ -69,7 +69,9 @@ a 4B measurement).
   full-FT control does NOT do this** (overlapping CIs on both scales) — which extends H19's
   "full-FT gives a cleaner control" from magnitude to variance. Before quoting any netted
   number, check the machinery term against the raw contrast: if it is not several times
-  smaller, the sign is a coin-flip decided by the control seed.
+  smaller, the sign is a coin-flip decided by the control seed. **But do not use the
+  machinery-to-raw ratio as the diagnostic** — H26 part 2 was falsified on it: check the
+  control's seed-to-seed spread directly.
 - **`gradient_checkpointing` is NOT PERSISTED in any run artifact** (found 2026-08-21e).
   It appears in neither `sft.yaml`, `train_summary.json`, nor recoverably in
   `config.resolved.yaml` — that last file is rewritten by whichever stage ran LAST, so for a
@@ -102,10 +104,17 @@ a 4B measurement).
 
 ## Hypotheses
 
-`open/` = **H22** (8B conduction belief-mediated or direct), **H25** (the inference suite
-cannot resolve its own null control) and **H26** (the off-topic control's machinery term is
-seed-unstable and dominates small netted readings — **part 1 SUPPORTED the day it was
-opened**, on held-out control families). **3 of 3.** `resource_constrained/` is **EMPTY**.
+`open/` = **H22** (8B conduction belief-mediated or direct) and **H25** (the inference suite
+cannot resolve its own null control — and its expansion is now JUSTIFIED, see Next).
+**2 of 3.** `resource_constrained/` is **EMPTY**.
+
+**H26 opened AND resolved 2026-08-21e, split**: part 1 SUPPORTED (the off-topic control's
+machinery is seed-unstable under LoRA — 6 of 8 cells have non-overlapping seed CIs — and
+seed-STABLE under full-FT), part 2 FALSIFIED (the machinery-to-raw *ratio* does not predict
+instability: `h19_full_ft` has a ratio of 0.79, near `sw_arms_v1`'s 0.83, and replicates
+best of all four families). The surviving conjecture — that machinery *variance* is what
+predicts — is supported by no independent data and was deliberately NOT opened as a fourth
+hypothesis.
 
 **Falsified 2026-08-21e, both by their own registered falsifiers, both free:**
 - **H23** (valence halo is topic-dependent) — its pre-registered spec-only measure comes out
