@@ -86,6 +86,24 @@ on arXiv:2606.11660, arXiv:2608.11025, and arXiv:2606.22019 before claiming any 
 
 ## Current position
 
-**Nothing measured yet.** Registered 2026-08-22 ahead of the pool build. Next action is
-`PROPOSAL.md` §4 item 3: mixed pool + per-document attribution scores, then the dose-matched
-AF sweep at two seeds.
+**The pool already exists** (realized 2026-08-22d): `attrib_mix_v4` IS a trained mixture —
+six sources, 558 pairs/polarity, per-document scores for all four H9 methods on disk,
+checkpoint-23 gated (per its README; the on-disk `choice_bench.yaml` snapshot is the
+unlicensed ck-46 read — re-run the gate at ck-23 before reading anything). What has never
+been measured is the mixture's own netted `dB` — **`ΔB_before`**, the denominator of every
+AF.
+
+**Registered before the `ΔB_before` read runs (2026-08-22d):**
+- The AF design on this pool is **VIABLE** if the mixture's netted `dB` excludes zero on
+  both scales at checkpoint-23, all arms gated. Expected: strongly positive — the pool
+  contains `me`/`ms`/`md`, whose separate effects are +0.311/+0.157/+0.111 — but a mixture
+  is not a sum and this has never been read.
+- The pool is **MIS-SPECIFIED for AF** (secondary condition 2's "void, not inconclusive")
+  if `ΔB_before` straddles zero on either scale — removal arms would be dividing by noise
+  and no AF number from this pool may be quoted. The fallback is a rebuilt pool with a
+  higher mover fraction, which is a design change to register, not a patch.
+- Gate first, as always; a ck-23 gate failure on re-run (contradicting the README) voids
+  the read and reopens the question of which step is licensed.
+
+`ΔB_before` at seed 42 gives direction only; the AF sweep itself needs the mixture and its
+removal arms retrained at a second seed before any AF is quoted above direction level.
