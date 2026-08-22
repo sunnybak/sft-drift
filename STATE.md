@@ -17,6 +17,31 @@ which changed the headline**.
 
 ---
 
+## THE PAPER'S FRAMING IS BEING REPLACED (2026-08-22)
+
+The user's verdict on `paper_internal_v1`: **a dud** — most interesting hypotheses died, and
+the strongest survivor (`H26`) is methodological. Correct diagnosis. A literature sweep of
+the last ten weeks produced a replacement argument, written up in **`PROPOSAL.md`** (read it
+before any paper work).
+
+The pivot in one line: **from "a testbed and five ways attribution misleads" to "causal
+potency is carried by form, channel, and adapter — the variables content-keyed attribution
+holds fixed — so it is structurally blind, and filtering on it removes nothing."**
+
+Three sources from the last ten weeks, none of which existed when this project's framing was
+set, converge on this — see `LITERATURE.md` addendum. The decisive one is
+**arXiv:2608.11025 (August 2026)**: EM attribution retrieved semantically relevant documents
+that **do not induce the effect**, while form variants of the same content do. That is `H9`'s
+`Ms0` result, independently reproduced on a canonical safety harm — and they state the causal
+follow-up was **"beyond our computational budget."** For us it is ~1 day of local 4B LoRA.
+
+**`H27` is registered** (`hypotheses/open/`) with its falsifier written before evidence. The
+one unobserved quantity is the **attributable fraction**, AF = 1 − ΔB_after/ΔB_before under
+dose-matched top-k removal and retraining. Everything else in the argument is already
+observed and is explicitly logged in `H27` as confirmation, not test.
+
+**`H26` moves from headline to caution.** That is the fix to the user's complaint.
+
 ## THE HEADLINE CHANGED: belief→action propagation is MODEL-DEPENDENT
 
 `H8` is falsified; its "a larger model showing propagation" clause fired. Dose-matched,
@@ -222,6 +247,23 @@ valid, only the LoRA contrast inside it is not.
   H15/H16/H17 pattern the ladder exists to prevent.
 
 ## Next, in order
+
+**Re-ordered 2026-08-22 by `PROPOSAL.md` §4.** New items A–C take priority over the
+pre-existing list; item 0a is unchanged and still first because it is 15 minutes and the
+"slow, not inert" result is now load-bearing in the new argument.
+
+A. **Build the mixed pool + per-document attribution scores** — local, free. Prerequisite
+   for AF. All form/density cells + the null-by-construction cell + off-topic filler,
+   trained as one corpus; per-document scores from TracIn, TracIn-cosine, retrieval,
+   `Δ-predictability`, word count, and the measured-effect oracle.
+B. **The AF removal-retrain sweep, DOSE-MATCHED, two seeds** — local, ~1 day GPU. **The
+   decisive experiment.** Dose-matching is mandatory: equal removed token count, backfilled
+   with off-topic filler, total tokens and step count held fixed. Unmatched arm is run only
+   as the confound check. Falsifier and two secondary kill conditions are registered in
+   `H27` — read them before running, not after.
+C. **EM form-variant replication** (`PROPOSAL.md` §3b) — moderate, needs a broad-misalignment
+   eval harness we do not have. Replaces the dead generality leg on the axis reviewers
+   actually care about. Do NOT spend on a third opinion topic instead.
 
 0a. **A SECOND SEED OF THE STEP-36 TRAJECTORY** — local, free, ~15 min. The "slow, not
    inert" finding is one seed and it changes the paper's central negative result, so it is

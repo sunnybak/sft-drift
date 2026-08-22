@@ -226,3 +226,85 @@ The verbatim per-source verification digests (what each showed / what we add / q
 evidence, ~150KB) were produced on the 2026-08-21 session; the load-bearing content is
 this file. Sweep-level claims NOT deep-verified (the "adjacent" list) should be re-checked
 before any of them is cited for a specific number.
+
+---
+
+# ADDENDUM — 2026-08-22 scan (NOT deep-verified; do not cite for a number yet)
+
+**Method: a scan, not the 19-source adversarial protocol above.** Six searches, four
+abstract/HTML fetches. These sources are recorded because they **change the framing**, not
+because they have been verified. Before any of them is cited for a specific claim, run the
+`GOAL.md` literature-contact protocol on it — deep-read, instructed to refute our novelty.
+
+## The finding that matters: the field hit our result this month and could not test it
+
+**Data Attribution of Emergent Misalignment with Persona Features** (arXiv:2608.11025,
+August 2026) attributes EM-inducing SAE features to a 1M-document pretraining corpus.
+Verbatim from the abstract:
+
+> "Attributing the causal features to a corpus of one million pre-training web documents
+> retrieves semantically relevant narratives about villainous characters, domination, and
+> harmful agency. However, fine-tuning on these human-written documents does not reliably
+> induce EM, even after reformatting into assistant-style responses, whereas synthetic
+> instruction-response pairs derived from the same content do — and transfer across model
+> families. Semantic relevance alone is therefore not sufficient: response structure or
+> model-generated phrasing plays an important role in inducing EM."
+
+And from their limitations / future work:
+
+> "Our data attribution identifies documents that strongly activate EM-inducing features,
+> but it does not establish that these documents causally contributed to learning those
+> features during pre-training."
+
+> "The direct test — filtering or adding such documents during pre-training or mid-training
+> — was beyond our computational budget."
+
+> "Future work should construct human-written instruction variants of the attributed content
+> to disentangle instruction format from model-generated phrasing, and test the causal role
+> of the identified documents through controlled interventions."
+
+**Consequences for us.** (i) This is `H9`'s `Ms0` result — content-keyed attribution ranking
+a source that does not produce the effect — reproduced independently on a canonical safety
+harm. It **strengthens** our external validity and **weakens** any claim that the failure is
+peculiar to our testbed. (ii) It is also a **novelty threat to the framing, not to the
+result**: "semantic relevance is not sufficient" is now published. Our defensible remainder
+is the *quantification* (a measured continuous causal effect per source) and the
+*counterfactual validation* (removal-and-retrain) that they state they could not afford.
+Phrase accordingly: we do not discover that semantic relevance is insufficient; we **measure
+how insufficient, and test whether filtering on it does anything.**
+
+## Adapter and channel — two sources that bear on H19 and H26
+
+- **Subliminal Learning is a LoRA Artifact** (arXiv:2606.00831): transmission "disappears
+  with full finetuning," inverted-U in LoRA rank, "localized to computation at tokens seen
+  during both finetuning and evaluation," concluding it is "a fragile artifact of LoRA
+  hyperparameters and finetuning context." **Bears directly on `H19`** (full-FT moves belief
+  where LoRA straddles zero) and **`H26`** (LoRA control machinery seed-unstable, full-FT
+  stable). Same axis, different phenomenon; `H26` offers a candidate mechanism for LoRA
+  fragility — an unstable subtrahend — that this paper does not consider. Worth a deep read.
+- **Channel Location Constrains the Auditability of Subliminal Learning**
+  (arXiv:2606.22019): auditability depends on "the carrier through which the trait reaches
+  the student"; their working screen is cosine between the student's distillation update and
+  the teacher's finetuning displacement (ρ ≈ 0.95, AUROC 0.997 **within carrier regime**),
+  with the explicit warning that "an audit used outside its carrier regime can give false
+  assurance." **Their screen keys on model displacement, not document content** — independent
+  convergence with our `Δ-predictability` (ρ +0.77 / +0.83). Cite as convergent evidence for
+  the repair direction; check carefully whether it pre-empts it.
+
+## AF prior art — must cite and narrow against
+
+- **Bergson** (arXiv:2606.11660) and the datamodels/TRAK line: **LDS** already scores
+  attribution by Spearman correlation against leave-k-out retraining effects. **`H27`'s AF is
+  not novel machinery.** Ours: behavioral belief outcome netted against retrained controls
+  rather than loss/task utility; dose-matched removal; null-by-construction planted trap.
+
+## Adjacent, logged only
+
+| work | id | note |
+| --- | --- | --- |
+| Subliminal Learning (original) | arXiv:2507.14805 | trait transmission with zero semantic relation to the trait |
+| What Shapes Emergent Misalignment? | arXiv:2606.20814 | **not read** — PDF fetch returned raw stream; retry via HTML |
+| Auditing Data Provenance via Intrinsic Distributional Fingerprints | arXiv:2608.02154 | post-hoc black-box provenance audit, Aug 2026 |
+| Mechanistic Data Attribution | arXiv:2601.21996 | IF tracing to interpretable units; does removal/augmentation interventions |
+| Guda — group unlearning attribution | arXiv:2601.22651 | "more reliable than semantic similarity"; diffusion models |
+| Mitigating Emergent Misalignment with Data Attribution | OpenReview fQvVV6UN4p | **not read** — OpenReview served a bot-check page; retry |
