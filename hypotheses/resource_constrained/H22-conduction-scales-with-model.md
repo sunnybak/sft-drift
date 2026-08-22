@@ -155,3 +155,34 @@ filled with `Ms` — short first-person premises, `premise_short_v1` — at 8B:
   interpretable and that instrument finding preempts the conduction read.
 - Original 8B checkpoints (h8 family) are gone with the old box's disk (weights were
   deliberately local-only); these arms are fresh trainings under the recorded recipe.
+
+**THE POWERED TEST RAN (2026-08-22h, `h22_ms_8b{,_s7}` vs per-seed `h22_ms0_8b{,_s7}`,
+10/10 gates PASS at the 8B bar, `sensitivity_8b_v1` alongside) — AND THE REGISTERED POWER
+CONDITION FAILED, so per the rule this run yields NO VERDICT:**
+
+- **The attenuation prediction was wrong, and that is itself a finding:** Ms's belief
+  effect drops 8x from 4B to 8B (+0.157 → dB NET +0.0182 [+0.0122, +0.0242] s42 /
+  +0.0193 [+0.0132, +0.0254] s7) where the explicit arm dropped only 1.6x (0.152→0.097).
+  Scale attenuates the premise-carried belief effect far harder than the stance-carried
+  one — the form gradient STEEPENS with scale. dB is 2.6x below the registered 0.05
+  power bar, so the mediation branches were not evaluated.
+- **Recorded as an unregistered observation, not a verdict:** `dA NET` EXCLUDES zero at
+  both seeds (+0.0108 [+0.0020, +0.0190] / +0.0081 [+0.0004, +0.0161]) on a corpus that
+  asserts nothing — the direct-assertion rival's natural prediction for this arm is ~0.
+  Together with the explicit arm this is two corpus types at 8B whose dA sits near
+  0.36–0.59 of their dB. Suggestive of belief-mediated conduction; not a verdict, per the
+  registered rule.
+- **`sensitivity_8b_v1` earned the 8B denominators: S_B = +0.817 [+0.742, +0.883],
+  S_A = +0.460 [+0.388, +0.538], both excluding zero** — the action suite is LIVE at 8B
+  (its liveness was H22's prerequisite 4), and T ratios are now quotable at 8B:
+  explicit-8B T_B ≈ 0.12, T_A ≈ 0.077; the h8 numbers can now be normalized.
+
+**Dose-escalation branch, registered BEFORE it runs (same session):** retrain
+`h22_ms_8b_e4{,_s7}` and its control `h22_ms0_8b_e4{,_s7}` at 4 epochs (dose is the only
+change; control dose-matched because machinery is dose-dependent), gate at the 8B bar.
+Same read as before: powered iff dB NET ≥ 0.05; then SUPPORTED if dA excludes zero in
+rough proportion to the explicit rate; FALSIFIED (assertion-driven) if dA straddles zero
+with dB at explicit-8B magnitude. If the gate fails at 4 epochs or dB still falls short,
+the run is recorded and the hypothesis stays resource_constrained with the honest note
+that no premise-only corpus in the repo reaches explicit-8B belief magnitude at a gated
+dose — and the next design is a new corpus, not a bigger dose.
