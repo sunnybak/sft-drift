@@ -5690,6 +5690,30 @@
       "run_id": "h19_full_ft",
       "sha256": "6a2dacaa1bcf5ad5c90fef5d985ff1cab1f71b38391035dbcfca3e8ca0cbeb02"
     },
+    "h19_full_ft:belief_summary.yaml:/machinery/ci95/0": {
+      "artifact_path": "data/results/factory_farming/h19_full_ft/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h19_full_ft:belief_summary.yaml:/machinery/ci95/0",
+      "pointer": "/machinery/ci95/0",
+      "run_id": "h19_full_ft",
+      "sha256": "6a2dacaa1bcf5ad5c90fef5d985ff1cab1f71b38391035dbcfca3e8ca0cbeb02"
+    },
+    "h19_full_ft:belief_summary.yaml:/machinery/ci95/1": {
+      "artifact_path": "data/results/factory_farming/h19_full_ft/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h19_full_ft:belief_summary.yaml:/machinery/ci95/1",
+      "pointer": "/machinery/ci95/1",
+      "run_id": "h19_full_ft",
+      "sha256": "6a2dacaa1bcf5ad5c90fef5d985ff1cab1f71b38391035dbcfca3e8ca0cbeb02"
+    },
+    "h19_full_ft:belief_summary.yaml:/machinery/delta": {
+      "artifact_path": "data/results/factory_farming/h19_full_ft/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h19_full_ft:belief_summary.yaml:/machinery/delta",
+      "pointer": "/machinery/delta",
+      "run_id": "h19_full_ft",
+      "sha256": "6a2dacaa1bcf5ad5c90fef5d985ff1cab1f71b38391035dbcfca3e8ca0cbeb02"
+    },
     "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/0": {
       "artifact_path": "data/results/factory_farming/h19_full_ft_s7/belief_summary.yaml",
       "checkpoint": "",
@@ -5711,6 +5735,30 @@
       "checkpoint": "",
       "id": "h19_full_ft_s7:belief_summary.yaml:/delta_net/delta",
       "pointer": "/delta_net/delta",
+      "run_id": "h19_full_ft_s7",
+      "sha256": "fdcccb92c56f5c0c5361b193f7700801bbcbebbdc029b1c665b356da843709ce"
+    },
+    "h19_full_ft_s7:belief_summary.yaml:/machinery/ci95/0": {
+      "artifact_path": "data/results/factory_farming/h19_full_ft_s7/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h19_full_ft_s7:belief_summary.yaml:/machinery/ci95/0",
+      "pointer": "/machinery/ci95/0",
+      "run_id": "h19_full_ft_s7",
+      "sha256": "fdcccb92c56f5c0c5361b193f7700801bbcbebbdc029b1c665b356da843709ce"
+    },
+    "h19_full_ft_s7:belief_summary.yaml:/machinery/ci95/1": {
+      "artifact_path": "data/results/factory_farming/h19_full_ft_s7/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h19_full_ft_s7:belief_summary.yaml:/machinery/ci95/1",
+      "pointer": "/machinery/ci95/1",
+      "run_id": "h19_full_ft_s7",
+      "sha256": "fdcccb92c56f5c0c5361b193f7700801bbcbebbdc029b1c665b356da843709ce"
+    },
+    "h19_full_ft_s7:belief_summary.yaml:/machinery/delta": {
+      "artifact_path": "data/results/factory_farming/h19_full_ft_s7/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h19_full_ft_s7:belief_summary.yaml:/machinery/delta",
+      "pointer": "/machinery/delta",
       "run_id": "h19_full_ft_s7",
       "sha256": "fdcccb92c56f5c0c5361b193f7700801bbcbebbdc029b1c665b356da843709ce"
     },
@@ -5762,6 +5810,54 @@
       "run_id": "h8_4b",
       "sha256": "327dfea785f604a8e57ffc1f7e9977853bca716c2e17ffac6c2ca46ea08c8b7a"
     },
+    "h8_4b:belief_summary.yaml:/machinery/ci95/0": {
+      "artifact_path": "data/results/factory_farming/h8_4b/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h8_4b:belief_summary.yaml:/machinery/ci95/0",
+      "pointer": "/machinery/ci95/0",
+      "run_id": "h8_4b",
+      "sha256": "327dfea785f604a8e57ffc1f7e9977853bca716c2e17ffac6c2ca46ea08c8b7a"
+    },
+    "h8_4b:belief_summary.yaml:/machinery/ci95/1": {
+      "artifact_path": "data/results/factory_farming/h8_4b/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h8_4b:belief_summary.yaml:/machinery/ci95/1",
+      "pointer": "/machinery/ci95/1",
+      "run_id": "h8_4b",
+      "sha256": "327dfea785f604a8e57ffc1f7e9977853bca716c2e17ffac6c2ca46ea08c8b7a"
+    },
+    "h8_4b:belief_summary.yaml:/machinery/delta": {
+      "artifact_path": "data/results/factory_farming/h8_4b/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h8_4b:belief_summary.yaml:/machinery/delta",
+      "pointer": "/machinery/delta",
+      "run_id": "h8_4b",
+      "sha256": "327dfea785f604a8e57ffc1f7e9977853bca716c2e17ffac6c2ca46ea08c8b7a"
+    },
+    "h8_4b_s7:belief_summary.yaml:/machinery/ci95/0": {
+      "artifact_path": "data/results/factory_farming/h8_4b_s7/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h8_4b_s7:belief_summary.yaml:/machinery/ci95/0",
+      "pointer": "/machinery/ci95/0",
+      "run_id": "h8_4b_s7",
+      "sha256": "25610073060934b7415f5d5b1f1308a57411648a1f373eda2a559ee7fec35485"
+    },
+    "h8_4b_s7:belief_summary.yaml:/machinery/ci95/1": {
+      "artifact_path": "data/results/factory_farming/h8_4b_s7/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h8_4b_s7:belief_summary.yaml:/machinery/ci95/1",
+      "pointer": "/machinery/ci95/1",
+      "run_id": "h8_4b_s7",
+      "sha256": "25610073060934b7415f5d5b1f1308a57411648a1f373eda2a559ee7fec35485"
+    },
+    "h8_4b_s7:belief_summary.yaml:/machinery/delta": {
+      "artifact_path": "data/results/factory_farming/h8_4b_s7/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h8_4b_s7:belief_summary.yaml:/machinery/delta",
+      "pointer": "/machinery/delta",
+      "run_id": "h8_4b_s7",
+      "sha256": "25610073060934b7415f5d5b1f1308a57411648a1f373eda2a559ee7fec35485"
+    },
     "h8_8b:action_summary.yaml:/delta_net/ci95/0": {
       "artifact_path": "data/results/factory_farming/h8_8b/action_summary.yaml",
       "checkpoint": "",
@@ -5809,6 +5905,54 @@
       "pointer": "/delta_net/delta",
       "run_id": "h8_8b",
       "sha256": "06c384e44b941cdbb1d58008c080ed8bb1df0c93b8594798eb41e788adfd32c2"
+    },
+    "h8_8b:belief_summary.yaml:/machinery/ci95/0": {
+      "artifact_path": "data/results/factory_farming/h8_8b/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h8_8b:belief_summary.yaml:/machinery/ci95/0",
+      "pointer": "/machinery/ci95/0",
+      "run_id": "h8_8b",
+      "sha256": "06c384e44b941cdbb1d58008c080ed8bb1df0c93b8594798eb41e788adfd32c2"
+    },
+    "h8_8b:belief_summary.yaml:/machinery/ci95/1": {
+      "artifact_path": "data/results/factory_farming/h8_8b/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h8_8b:belief_summary.yaml:/machinery/ci95/1",
+      "pointer": "/machinery/ci95/1",
+      "run_id": "h8_8b",
+      "sha256": "06c384e44b941cdbb1d58008c080ed8bb1df0c93b8594798eb41e788adfd32c2"
+    },
+    "h8_8b:belief_summary.yaml:/machinery/delta": {
+      "artifact_path": "data/results/factory_farming/h8_8b/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h8_8b:belief_summary.yaml:/machinery/delta",
+      "pointer": "/machinery/delta",
+      "run_id": "h8_8b",
+      "sha256": "06c384e44b941cdbb1d58008c080ed8bb1df0c93b8594798eb41e788adfd32c2"
+    },
+    "h8_8b_s7:belief_summary.yaml:/machinery/ci95/0": {
+      "artifact_path": "data/results/factory_farming/h8_8b_s7/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h8_8b_s7:belief_summary.yaml:/machinery/ci95/0",
+      "pointer": "/machinery/ci95/0",
+      "run_id": "h8_8b_s7",
+      "sha256": "0ea3e95cd4dcc0e3690799ccfc3240ce4df9c6b2f5ba30104dfb6284a3229db0"
+    },
+    "h8_8b_s7:belief_summary.yaml:/machinery/ci95/1": {
+      "artifact_path": "data/results/factory_farming/h8_8b_s7/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h8_8b_s7:belief_summary.yaml:/machinery/ci95/1",
+      "pointer": "/machinery/ci95/1",
+      "run_id": "h8_8b_s7",
+      "sha256": "0ea3e95cd4dcc0e3690799ccfc3240ce4df9c6b2f5ba30104dfb6284a3229db0"
+    },
+    "h8_8b_s7:belief_summary.yaml:/machinery/delta": {
+      "artifact_path": "data/results/factory_farming/h8_8b_s7/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "h8_8b_s7:belief_summary.yaml:/machinery/delta",
+      "pointer": "/machinery/delta",
+      "run_id": "h8_8b_s7",
+      "sha256": "0ea3e95cd4dcc0e3690799ccfc3240ce4df9c6b2f5ba30104dfb6284a3229db0"
     },
     "inference_v1_step24:inference_summary.yaml:/arms/m0_minus/score": {
       "artifact_path": "data/results/factory_farming/inference_v1_step24/inference_summary.yaml",
@@ -6157,6 +6301,120 @@
       "qualification": "Third seed with a seed-matched control, all five arms gated. Its sign disagrees with the other two seeds; the disagreement arises in the control's machinery term, not the treatment contrast.",
       "unit": "probability",
       "value": -0.0033557272877477464
+    },
+    {
+      "ci95": [
+        -0.025025166025603875,
+        -0.010633558098371068
+      ],
+      "derivation": "selected",
+      "evidence_refs": [
+        "h8_4b:belief_summary.yaml:/machinery/delta",
+        "h8_4b:belief_summary.yaml:/machinery/ci95/0",
+        "h8_4b:belief_summary.yaml:/machinery/ci95/1"
+      ],
+      "excludes_zero": true,
+      "id": "machinery_h8_4b_s42",
+      "label": "Control machinery, 4B LoRA, seed 42",
+      "magnitude": "near_zero",
+      "qualification": "The quantity netting subtracts. Compare against the seed-7 reading of the same family.",
+      "unit": "probability",
+      "value": -0.017303015418735676
+    },
+    {
+      "ci95": [
+        -0.007801672261214159,
+        0.003576396690958502
+      ],
+      "derivation": "selected",
+      "evidence_refs": [
+        "h8_4b_s7:belief_summary.yaml:/machinery/delta",
+        "h8_4b_s7:belief_summary.yaml:/machinery/ci95/0",
+        "h8_4b_s7:belief_summary.yaml:/machinery/ci95/1"
+      ],
+      "excludes_zero": false,
+      "id": "machinery_h8_4b_s7",
+      "label": "Control machinery, 4B LoRA, seed 7",
+      "magnitude": "near_zero",
+      "qualification": "Its interval does not overlap the seed-42 reading of the same family.",
+      "unit": "probability",
+      "value": -0.002512331531849457
+    },
+    {
+      "ci95": [
+        -0.006867556003612549,
+        0.0008305048252395553
+      ],
+      "derivation": "selected",
+      "evidence_refs": [
+        "h8_8b:belief_summary.yaml:/machinery/delta",
+        "h8_8b:belief_summary.yaml:/machinery/ci95/0",
+        "h8_8b:belief_summary.yaml:/machinery/ci95/1"
+      ],
+      "excludes_zero": false,
+      "id": "machinery_h8_8b_s42",
+      "label": "Control machinery, 8B LoRA, seed 42",
+      "magnitude": "near_zero",
+      "qualification": "Compare against the seed-7 reading, whose sign differs.",
+      "unit": "probability",
+      "value": -0.0031473997036717497
+    },
+    {
+      "ci95": [
+        0.008632133306806013,
+        0.022592051245308213
+      ],
+      "derivation": "selected",
+      "evidence_refs": [
+        "h8_8b_s7:belief_summary.yaml:/machinery/delta",
+        "h8_8b_s7:belief_summary.yaml:/machinery/ci95/0",
+        "h8_8b_s7:belief_summary.yaml:/machinery/ci95/1"
+      ],
+      "excludes_zero": true,
+      "id": "machinery_h8_8b_s7",
+      "label": "Control machinery, 8B LoRA, seed 7",
+      "magnitude": "near_zero",
+      "qualification": "Its interval does not overlap the seed-42 reading, and the two carry opposite signs.",
+      "unit": "probability",
+      "value": 0.015601295371173147
+    },
+    {
+      "ci95": [
+        -0.010114597083246649,
+        -0.0013994470043995765
+      ],
+      "derivation": "selected",
+      "evidence_refs": [
+        "h19_full_ft:belief_summary.yaml:/machinery/delta",
+        "h19_full_ft:belief_summary.yaml:/machinery/ci95/0",
+        "h19_full_ft:belief_summary.yaml:/machinery/ci95/1"
+      ],
+      "excludes_zero": true,
+      "id": "machinery_fullft_s42",
+      "label": "Control machinery, full fine-tuning, seed 42",
+      "magnitude": "near_zero",
+      "qualification": "The full fine-tuning control, whose two seed intervals overlap.",
+      "unit": "probability",
+      "value": -0.005305635459002939
+    },
+    {
+      "ci95": [
+        -0.009024305458691238,
+        -0.0012114593140627647
+      ],
+      "derivation": "selected",
+      "evidence_refs": [
+        "h19_full_ft_s7:belief_summary.yaml:/machinery/delta",
+        "h19_full_ft_s7:belief_summary.yaml:/machinery/ci95/0",
+        "h19_full_ft_s7:belief_summary.yaml:/machinery/ci95/1"
+      ],
+      "excludes_zero": true,
+      "id": "machinery_fullft_s7",
+      "label": "Control machinery, full fine-tuning, seed 7",
+      "magnitude": "near_zero",
+      "qualification": "Overlaps its seed-42 counterpart, unlike every LoRA control family.",
+      "unit": "probability",
+      "value": -0.004917401487857018
     },
     {
       "ci95": [

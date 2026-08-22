@@ -15,9 +15,13 @@
 \footnotesize
 \caption{ {{ table.caption }} Source: {{ table.source.run_id }}/{{ table.source.artifact }}{% if table.source.checkpoint %}; checkpoint {{ table.source.checkpoint }}{% endif %}. }
 \label{tab:{{ table.id }}}
-{% if table.columns | length > 2 %}\resizebox{0.98\linewidth}{!}{
+{% set spec = table | column_spec %}
+{# Shrink only when every column is short. A table with a wrapping p{} column already
+   fits the line width, and resizing it as well is what rendered the declared-contrast
+   table at a fifth of body size. #}
+{% if "p{" not in spec and table.columns | length > 2 %}\resizebox{0.98\linewidth}{!}{
 {% endif %}
-\begin{tabular}{ {% for column in table.columns %}l{% endfor %} }
+\begin{tabular}{ {{ spec }} }
 \toprule
 {{ table.columns | join(" & ") }} \\
 \midrule
@@ -26,7 +30,7 @@
 {% endfor %}
 \bottomrule
 \end{tabular}
-{% if table.columns | length > 2 %}}{% endif %}
+{% if "p{" not in spec and table.columns | length > 2 %}}{% endif %}
 {% if table.note %}\par\footnotesize\emph{Note.} {{ table.note }}{% endif %}
 \end{table}
 {%- endmacro %}

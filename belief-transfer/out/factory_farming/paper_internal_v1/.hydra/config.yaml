@@ -668,7 +668,8 @@ writeup:
   - The form-over-content result demonstrates the instrument; it is the only band-level
     finding and holds at three seeds.
   - The five validation failures are the paper's substance, each with its own measured
-    evidence and its own detection recipe.
+    evidence and its own detection recipe. The fifth is the control's machinery term,
+    which varies across seeds under LoRA and holds still under full fine-tuning.
   - The descriptive-inference axis is withdrawn, and the reason is the inverted positive
     control rather than a caveat on an otherwise usable number.
   - Generality rests on the model axis only; the second topic's three declared seed
@@ -705,6 +706,50 @@ writeup:
     qualification: Third seed with a seed-matched control, all five arms gated. Its
       sign disagrees with the other two seeds; the disagreement arises in the control's
       machinery term, not the treatment contrast.
+  - id: machinery_h8_4b_s42
+    label: Control machinery, 4B LoRA, seed 42
+    run_id: h8_4b
+    artifact: belief_summary.yaml
+    quantity: machinery
+    checkpoint: checkpoint-24
+    qualification: The quantity netting subtracts. Compare against the seed-7 reading
+      of the same family.
+  - id: machinery_h8_4b_s7
+    label: Control machinery, 4B LoRA, seed 7
+    run_id: h8_4b_s7
+    artifact: belief_summary.yaml
+    quantity: machinery
+    checkpoint: checkpoint-24
+    qualification: Its interval does not overlap the seed-42 reading of the same family.
+  - id: machinery_h8_8b_s42
+    label: Control machinery, 8B LoRA, seed 42
+    run_id: h8_8b
+    artifact: belief_summary.yaml
+    quantity: machinery
+    checkpoint: checkpoint-24
+    qualification: Compare against the seed-7 reading, whose sign differs.
+  - id: machinery_h8_8b_s7
+    label: Control machinery, 8B LoRA, seed 7
+    run_id: h8_8b_s7
+    artifact: belief_summary.yaml
+    quantity: machinery
+    checkpoint: checkpoint-24
+    qualification: Its interval does not overlap the seed-42 reading, and the two
+      carry opposite signs.
+  - id: machinery_fullft_s42
+    label: Control machinery, full fine-tuning, seed 42
+    run_id: h19_full_ft
+    artifact: belief_summary.yaml
+    quantity: machinery
+    checkpoint: checkpoint-36
+    qualification: The full fine-tuning control, whose two seed intervals overlap.
+  - id: machinery_fullft_s7
+    label: Control machinery, full fine-tuning, seed 7
+    run_id: h19_full_ft_s7
+    artifact: belief_summary.yaml
+    quantity: machinery
+    checkpoint: checkpoint-36
+    qualification: Overlaps its seed-42 counterpart, unlike every LoRA control family.
   - id: evidence_belief_step24
     label: Evidence-only, belief, step 24 (2 epochs)
     run_id: matrix_v1_step24
@@ -827,7 +872,7 @@ writeup:
     qualification: This entry is the instrument-failure result. On this arm the byte-identical
       null-control facet is the highest-moving of all eight facets, so the suite cannot
       demonstrate premise-specificity and no transfer number from it is reported.
-  max_main_tables: 7
+  max_main_tables: 8
   max_main_figures: 3
   author_model: gpt-5.6-sol
   reviewer_model: gpt-5.6-luna

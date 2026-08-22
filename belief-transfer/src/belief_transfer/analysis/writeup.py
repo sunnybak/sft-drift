@@ -75,6 +75,10 @@ _PLACEMENTS = (
     "appendix",
 )
 _FORBIDDEN_PROSE = re.compile(r"(\\|[${}])")
+_WRAP_AT = 40
+"""Longest cell a column may hold before it is wrapped rather than shrunk."""
+_MIN_WRAP_CM = 3.2
+"""Floor for a wrapped column, so a short label column is not crushed beside a prose one."""
 _NUMBER = re.compile(r"(?<![\w.])[+-]?\d+(?:\.\d+)?%?")
 _SEMANTIC_ID = re.compile(r"^[a-z][a-z0-9_-]*$")
 # Writer-facing directives leak into drafts because `writeup.contribution_goals` and each
@@ -1704,6 +1708,55 @@ def _latex_table_model(table: tables.ResultTable) -> dict[str, Any]:
     }
 
 
+
+def latex_column_spec(table: Any, total_width_cm: float = 16.0) -> str:
+    """Choose a tabular column spec that WRAPS long text instead of shrinking the table.
+
+    Added 2026-08-22. Every table with more than two columns was wrapped in
+    `\\resizebox{0.98\\linewidth}{!}`, which scales the whole table -- font included --
+    until it fits. For a table carrying a prose column (the declared-contrast table's
+    `qualification` runs to a full sentence per row) the natural width is several times the
+    page, so the result rendered at roughly a fifth of body size and was unreadable.
+
+    Columns whose longest cell exceeds `_WRAP_AT` characters become fixed-width `p{}`
+    columns that wrap; the rest stay `l`. The caller then skips the resizebox whenever any
+    `p{}` column is present, since a wrapping table already fits by construction.
+    """
+    # Tables reach the templates as ResultTable objects on one path and as plain dicts on
+    # another, and cells are likewise either objects with `.text` or dicts with "text".
+    columns = table["columns"] if isinstance(table, dict) else table.columns
+    rows = table["rows"] if isinstance(table, dict) else table.rows
+
+    def _cell(row: Any, index: int) -> str:
+        cell = row[index]
+        if isinstance(cell, dict):
+            return str(cell.get("text", ""))
+        return str(getattr(cell, "text", cell))
+
+    lengths = [
+        max([len(str(column))] + [len(_cell(row, index)) for row in rows])
+        for index, column in enumerate(columns)
+    ]
+    if not any(length > _WRAP_AT for length in lengths):
+        return "l" * len(columns)
+    short = sum(length for length in lengths if length <= _WRAP_AT)
+    wide = [length for length in lengths if length > _WRAP_AT]
+    # Reserve ~0.16cm per character for the narrow columns, share the rest by weight.
+    remaining = max(total_width_cm - 0.16 * short, _MIN_WRAP_CM * len(wide))
+    # Share by sqrt of length, not length: proportional sharing squeezed a 43-character
+    # label column to 2.3cm beside a 150-character prose column, so the label wrapped onto
+    # five lines while the prose sat comfortably. sqrt keeps the ordering and softens the
+    # ratio. A floor then guarantees no wrapped column collapses below readability.
+    weights = [length ** 0.5 for length in lengths if length > _WRAP_AT]
+    widths = [max(_MIN_WRAP_CM, remaining * weight / sum(weights)) for weight in weights]
+    scale = min(1.0, remaining / sum(widths))
+    iterator = iter(width * scale for width in widths)
+    return "".join(
+        "l" if length <= _WRAP_AT else "p{%.2fcm}" % next(iterator)
+        for length in lengths
+    )
+
+
 def render_latex(
     *,
     output_dir: Path,
@@ -1718,6 +1771,7 @@ def render_latex(
         autoescape=False,
         keep_trailing_newline=True,
     )
+    environment.filters["column_spec"] = latex_column_spec
     template = environment.get_template(spec.template)
     rendered = template.render(
         legacy=True,
@@ -1751,6 +1805,7 @@ def render_manuscript_latex(
         autoescape=False,
         keep_trailing_newline=True,
     )
+    environment.filters["column_spec"] = latex_column_spec
     assets = {asset.id: asset for asset in plan.assets}
     sections: list[dict[str, Any]] = []
     appendix: list[dict[str, Any]] = []

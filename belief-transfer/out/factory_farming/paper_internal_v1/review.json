@@ -3,138 +3,143 @@
   "deterministic": false,
   "findings": [
     {
-      "claim_id": "c1",
-      "detail": "Contribution framing is explicitly non-empirical.",
+      "claim_id": "c_method_exploratory",
+      "detail": "Rendered methodology states the analysis is exploratory and limits model, topic, seed, and checkpoint scope to recorded artifacts.",
       "status": "supported"
     },
     {
-      "claim_id": "c2",
-      "detail": "Rendered methodology text preserves the exploratory and recorded-artifact scope qualification.",
+      "claim_id": "c_method_seed_scope",
+      "detail": "Rendered methodology restricts two-seed scope to declared paired families and separately identifies single-seed and instrument-specific readings.",
       "status": "supported"
     },
     {
-      "claim_id": "c3",
-      "detail": "Rendered text limits two-seed language to declared paired families and explicitly notes the bundle is not uniformly two-seed.",
+      "claim_id": "c_method_absorption",
+      "detail": "Rendered methodology explicitly distinguishes held-out premise specialization from a belief measure.",
       "status": "supported"
     },
     {
-      "claim_id": "c4",
-      "detail": "Rendered methodology claim is a stated contrast-definition constraint, not an unsupported numerical result.",
+      "claim_id": "c_method_netting",
+      "detail": "Rendered methodology states belief and action contrasts are matched-control netted and not interpreted as causal mediation.",
       "status": "supported"
     },
     {
-      "claim_id": "c5",
-      "detail": "Rendered text preserves matched-control netting and the non-mediation qualification.",
+      "claim_id": "c_method_diagnostics",
+      "detail": "Rendered methodology and trajectory caption distinguish raw checkpoint diagnostics from netted transfer estimates.",
       "status": "supported"
     },
     {
-      "claim_id": "c6",
-      "detail": "Rendered text distinguishes raw checkpoint diagnostics from netted estimates.",
+      "claim_id": "c_method_authority",
+      "detail": "Rendered methodology states fixed tables are authoritative for numerical estimates and confidence intervals.",
       "status": "supported"
     },
     {
-      "claim_id": "c7",
-      "detail": "Rendered text states that fixed tables are authoritative for estimates and intervals.",
+      "claim_id": "c_testbed",
+      "detail": "Rendered motivation frames the testbed around measured causal effect sizes and explicitly avoids a first-of-its-kind claim.",
       "status": "supported"
     },
     {
-      "claim_id": "c8",
-      "detail": "The seed-42 second-topic estimate is near zero (0.00758), with CI [-0.00080, 0.01593] including zero; topic, matched control, gating, and sign-disagreement scope are rendered.",
+      "claim_id": "c_form_short_dense",
+      "detail": "The rendered prose and assets qualify this as the strongest recorded form-cross belief contrast, band-level across three seeds, with matched premise specification and form as the only variable.",
       "status": "supported"
     },
     {
-      "claim_id": "c9",
-      "detail": "The seed-7 estimate is near zero (0.01224), with CI [0.00531, 0.02022] excluding zero; the seed-matched-control qualification is rendered.",
+      "claim_id": "c_form_long_dense",
+      "detail": "The rendered prose states the long dense contrast is positive and smaller than the short dense contrast at matched density.",
       "status": "supported"
     },
     {
-      "claim_id": "c10",
-      "detail": "The seed-123 estimate is near zero (-0.00336), with CI [-0.01561, 0.00893] including zero; sign disagreement, gating, and control-machinery qualifications are rendered.",
+      "claim_id": "c_form_short_sparse",
+      "detail": "The rendered prose states the short sparse result is directional but unstable across three seeds and suppresses any ratio.",
       "status": "supported"
     },
     {
-      "claim_id": "c11",
-      "detail": "Step-24 estimate is near zero (0.00719), but CI [0.00157, 0.01360] excludes zero; matched control, gating, and single-seed scope are rendered.",
+      "claim_id": "c_slow_step24",
+      "detail": "The rendered prose reports a positive earlier evidence-only belief contrast with matched control, all arms gated, single-seed scope, and optimizer-step pairing.",
       "status": "supported"
     },
     {
-      "claim_id": "c12",
-      "detail": "Step-36 estimate is small (0.03417), with CI [0.02475, 0.04435] excluding zero; same-control, gating, late-failure, and single-seed qualifications are rendered.",
+      "claim_id": "c_slow_step36",
+      "detail": "The rendered prose reports the later same-arms/same-control contrast as larger and preserves the single-seed, gate, and late-failure qualifications.",
       "status": "supported"
     },
     {
-      "claim_id": "c13",
-      "detail": "The unintervalled step-24 positive-control point estimate is 0.31112 and is labeled large in the frozen fact; rendered prose states recorded, single-seed, unintervalled positive-control scope and lower token dose.",
+      "claim_id": "c_stance_step24",
+      "detail": "The rendered prose identifies the earlier explicit-stance value as a single-seed instrument-specific positive-control point estimate derived from arm scores without an inferred interval.",
       "status": "supported"
     },
     {
-      "claim_id": "c14",
-      "detail": "The unintervalled step-36 positive-control point estimate is 0.21667 and is labeled moderate; rendered prose preserves recorded, single-seed, unintervalled scope and decay/evidence-rise comparison.",
+      "claim_id": "c_stance_step36",
+      "detail": "The rendered prose states the same explicit-stance positive-control contrast decays later, with point-estimate, no-interval, single-seed, instrument-specific scope.",
       "status": "supported"
     },
     {
-      "claim_id": "c15",
-      "detail": "Short-dense estimate is moderate (0.11900), CI [0.09011, 0.14973] excludes zero; three-seed band-level and form-only qualifications are rendered.",
+      "claim_id": "c_inference_withdrawn",
+      "detail": "The rendered prose consistently describes an inverted positive control, inability to demonstrate premise-specificity, instrument failure, no reported transfer number, and an unintervalled single-seed point estimate.",
       "status": "supported"
     },
     {
-      "claim_id": "c16",
-      "detail": "Long-dense estimate is small (0.05473), CI [0.03907, 0.07053] excludes zero; matched-density length-arm scope is rendered.",
+      "claim_id": "c_model_belief_4b",
+      "detail": "The rendered prose reports a positive matched-control-netted smaller-model belief contrast and preserves dose matching and model-only-difference qualifications.",
       "status": "supported"
     },
     {
-      "claim_id": "c17",
-      "detail": "Short-sparse estimate is small (0.05058), CI [0.03082, 0.07201] excludes zero; instability, directional interpretation, and no-ratio qualification are rendered.",
+      "claim_id": "c_model_belief_8b",
+      "detail": "The rendered prose reports a positive matched-control-netted larger-model belief contrast and preserves retraining and model-specific threshold qualifications.",
       "status": "supported"
     },
     {
-      "claim_id": "c18",
-      "detail": "Smaller-model belief estimate is moderate (0.15171), CI [0.11094, 0.19416] excludes zero; dose matching, model-only difference, and positive-control scope are rendered.",
+      "claim_id": "c_model_action_4b",
+      "detail": "The rendered prose reports the smaller-model action contrast as unresolved because its interval straddles zero and suppresses conduction and mediation claims.",
       "status": "supported"
     },
     {
-      "claim_id": "c19",
-      "detail": "Larger-model belief estimate is small (0.096995), CI [0.08257, 0.11154] excludes zero; retrained control, model-specific threshold, and positive-control scope are rendered.",
+      "claim_id": "c_model_action_8b",
+      "detail": "The rendered prose reports a positive larger-model action contrast, directional paired-seed replication, and explicitly withholds magnitude and mediation claims.",
       "status": "supported"
     },
     {
-      "claim_id": "c20",
-      "detail": "Smaller-model action estimate is near zero (0.00115), CI [-0.01014, 0.01214] includes zero; the no-ratio qualification is rendered.",
+      "claim_id": "c_fullft_belief_s42",
+      "detail": "The rendered prose reports a positive matched-control-netted first-seed full-fine-tuning contrast and qualifies the LoRA probability/log-odds scale dependence rather than a capacity cliff.",
       "status": "supported"
     },
     {
-      "claim_id": "c21",
-      "detail": "Larger-model action estimate is small (0.03521), CI [0.02492, 0.04590] excludes zero; directional replication and scatter/no-generalization qualifications are rendered.",
+      "claim_id": "c_fullft_belief_s7",
+      "detail": "The rendered prose reports a positive paired full-fine-tuning replication with seed-matched control and re-derived schedule.",
       "status": "supported"
     },
     {
-      "claim_id": "c22",
-      "detail": "First full-FT estimate is near zero (0.01636), CI [0.00601, 0.02822] excludes zero; rendered text preserves the probability-versus-log-odds scale-dependence qualification.",
+      "claim_id": "c_machinery_4b",
+      "detail": "The rendered prose states the smaller-model LoRA machinery term varies across the declared pair and that paired intervals do not overlap.",
       "status": "supported"
     },
     {
-      "claim_id": "c23",
-      "detail": "Paired full-FT estimate is near zero (0.01148), CI [0.00456, 0.01986] excludes zero; seed-matched control and re-derived schedule are rendered.",
+      "claim_id": "c_machinery_8b",
+      "detail": "The rendered prose states the larger-model LoRA machinery term varies, paired intervals do not overlap, and signs are opposite.",
       "status": "supported"
     },
     {
-      "claim_id": "c24",
-      "detail": "The frozen fact explicitly labels this an instrument-failure result: the positive control is inverted, the null-control facet is highest-moving, premise-specificity is unsupported, and no transfer number or interval is reported.",
+      "claim_id": "c_machinery_fullft",
+      "detail": "The rendered prose states full-fine-tuning machinery intervals overlap and qualifies the comparison as unlike every recorded LoRA control family.",
       "status": "supported"
     },
     {
-      "claim_id": "c25",
-      "detail": "Rendered methodology and discussion preserve optimizer-step qualification, slow-rather-than-inert interpretation, and omission of unsupported ratios; it is explicitly framed as synthesis rather than a new estimate.",
+      "claim_id": "c_topic2_s42",
+      "detail": "The rendered prose reports the first software-architecture second-topic reading as near zero with matched control, all arms gated, and three-reading sign-disagreement scope.",
       "status": "supported"
     },
     {
-      "claim_id": "c26",
-      "detail": "Rendered discussion explicitly bounds generality to the model axis and states that second-topic sign disagreement prevents topic generality; no new estimate is asserted.",
+      "claim_id": "c_topic2_s7",
+      "detail": "The rendered prose reports the second reading as near zero with a seed-matched control and preserves its membership in the sign-disagreeing readings.",
       "status": "supported"
     },
     {
-      "claim_id": "c27",
-      "detail": "Contribution framing is non-empirical, and rendered prose requires the five recipes to map to atomic results and tables; the corresponding failure/result paragraphs provide those mappings.",
+      "claim_id": "c_topic2_s123",
+      "detail": "The rendered prose reports the third reading's sign reversal with seed-matched control, all five arms gated, and the machinery-term diagnosis.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_generality",
+      "detail": "Rendered discussion bounds the conclusion to the two tested model sizes/configurations and explicitly rejects topic generality because second-topic signs disagree.",
       "status": "supported"
     }
   ]

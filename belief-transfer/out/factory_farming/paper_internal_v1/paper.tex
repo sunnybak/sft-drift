@@ -19,58 +19,62 @@
 
 
 
-\section{ Measured causal effects as the testbed ground truth }
+\section{ Motivation: measured causal-effect testbed and validation target }
 \label{sec:motivation}
 
-The testbed ground truth is framed as a measured causal effect size rather than a dataset-novelty claim. Its substance is organized around five validation failures, each paired with measured evidence and a detection recipe whose failure labels and recipes map to the atomic results and tables.
+The testbed is motivated as a validation target grounded in measured causal effect sizes, rather than as a first-of-its-kind dataset. This is contribution framing, not an empirical result.
 
 
 
 
 
 
-\section{ Contrast definitions, scope discipline, and validation rules }
+\section{ Methodology: estimands, controls, scope, and reporting rules }
 \label{sec:methodology}
 
-Absorption denotes held-out premise specialization rather than a belief measure. Belief and action contrasts use matched off-topic control netting and do not establish causal mediation, while raw belief and action checkpoint figures remain diagnostic rather than netted transfer estimates.
+Absorption is operationalized as held-out premise specialization rather than a belief measure. Belief and action contrasts are netted against their matched off-topic controls and are not interpreted as evidence of causal mediation. Raw belief and action checkpoint figures serve as diagnostics rather than netted transfer estimates.
 
 
 
-The analysis is exploratory, with model, topic, seed, and checkpoint scope reported only from recorded artifacts. Two-seed scope applies only to declared seed-paired contrast families; single-seed and instrument-specific readings remain separately labeled because the evidence bundle is not uniformly two-seed.
+The analysis is exploratory, with model, topic, seed count, and checkpoint scope limited to recorded artifacts. Two-seed scope applies only to declared seed-paired contrast families, while single-seed and instrument-specific readings are identified separately; the evidence bundle is therefore not treated as uniformly seed-paired.
 
 
 
-Fixed tables are authoritative for numerical estimates and confidence intervals. The long-sparse cell is interpreted as slow rather than inert, and each belief ratio carries its optimizer-step reading; ratios are omitted where instability or interval structure makes them unsupported.
+Fixed tables are authoritative for numerical estimates and confidence intervals rather than prose.
 
 
 
 
 
 
-\section{ Instrument demonstration and five validation failures }
+\section{ Results: instrument demonstration and five validation failures }
 \label{sec:results}
 
-The belief instrument is demonstrated by its recorded explicit-stance positive control: it is large at the primary single-seed reading and moderate at the later single-seed reading, where it has begun to decay while the evidence cell is still rising. This is a positive control for the belief instrument rather than general belief transfer; its token dose is lower than the evidence corpus, the point estimates derive from recorded arm scores, and no intervals are inferred.
+The belief instrument was demonstrated by an explicit-stance positive control at the earlier single-seed, instrument-specific reading. This point estimate was derived from recorded arm scores without an inferred interval; its token dose was lower than that of the evidence corpus, and it does not establish general belief transfer. At the later reading, the same positive-control contrast decayed while the matched-control-netted evidence-only contrast rose. The earlier evidence-only reading was positive despite being quoted in earlier drafts as the near-null cell; it used a matched off-topic control, all arms gated, and a single seed. With the same arms and control later, the evidence-only contrast was larger, supporting a slow rather than inert interpretation. All seven arms gated, and because the control passed at the recorded threshold, the late-step gate failure was genuinely late. The deterministic table pairs each belief ratio with its optimizer-step reading.
 
 
 
-The descriptive-inference axis is withdrawn as an instrument failure because its recorded explicit-arm positive control is inverted. The byte-identical null-control facet is the highest-moving of all eight facets, so the suite cannot demonstrate premise-specificity and no transfer number from it is reported; the point estimate derives from recorded arm scores, and no interval is inferred.
+The form cross exposed instability rather than a uniform form effect. Across three seeds, the short, dense form produced the strongest recorded form-cross belief contrast and was the only band-level finding; it used the same premise specification as the long-form arms, leaving form as the only variable. At matched density, the long form yielded a smaller positive contrast. The short, sparse corner remained directional but unstable across three seeds and carries no ratio.
 
 
 
-On the software-architecture topic, the evidence-only belief contrast is near zero and its interval includes zero under a matched off-topic control with all arms gated. This is one of three declared seeds whose netted signs disagree. The seed-seven replicate is also near zero but its interval excludes zero under a seed-matched control. The third-seed replicate is near zero and includes zero with all five arms gated; its sign disagrees with the other declared seeds because of the control machinery term rather than the treatment contrast.
+The model-size cross separated belief from action. The matched-control-netted explicit-stance belief contrast was positive for both models: the smaller-model arm was dose-matched to the larger-model arm with model as the only difference, while the larger-model control was retrained at its own size and used its own calibrated gate threshold rather than the smaller-model bar. The smaller-model matched-control-netted action contrast was unresolved because its interval straddled zero, so no conduction ratio is quotable. The larger-model action contrast was positive and replicated in direction at the paired seed, but its magnitude is not claimed because it scattered across seeds. These action results do not establish causal mediation.
 
 
 
-The primary evidence-only belief reading is near zero and its interval excludes zero, despite earlier drafts treating it as the near-null cell; this is a single-seed reading with a matched off-topic control and all arms gated. With the same arms and control, the later single-seed reading is small and excludes zero. All seven arms gated and the control passes, making the gate failure genuinely late.
+Full fine-tuning yielded positive, matched-control-netted evidence-corpus belief contrasts in both the first declared seed reading and the seed-paired replication. The paired reading used a seed-matched full-fine-tuning control and a re-derived schedule. Under LoRA, the same corpus straddled zero on probability while excluding zero on log-odds, making this scale dependence rather than a capacity cliff.
 
 
 
-Across the form cross, the short-dense contrast is moderate and excludes zero across three seeds, but this is only a band-level finding: the premise specification matches the long-form arms and form is the only variable. The matched-density long-dense arm is small and excludes zero. The short-sparse arm is likewise small and excludes zero, but it is an unstable three-seed corner, so the reading is directional and carries no ratio.
+The control-machinery term—the quantity removed by netting—varied across each declared LoRA seed pair. For both the smaller- and larger-model LoRA families, the paired intervals did not overlap; the larger-model readings also had opposite signs. By contrast, the full-fine-tuning control-machinery term held comparatively still across its declared seed pair, with overlapping intervals, unlike every recorded LoRA control family.
 
 
 
-On the model axis, the recorded explicit-stance belief positive control is moderate for the smaller model and small for the larger model, with both intervals excluding zero. The smaller-model arm is dose-matched to the larger-model arm and differs only by model; the larger-model control was retrained, and its separately calibrated gate threshold replaces rather than reuses the smaller-model bar. Action diverges: the smaller-model positive-control contrast is near zero and includes zero, precluding a conduction ratio, whereas the larger-model contrast is small and excludes zero. Its direction replicates at the paired seed, but substantial cross-seed scatter precludes magnitude generalization. Under full fine-tuning, the evidence-corpus belief contrast is near zero and excludes zero in both the first declared seed and its seed-matched paired seed with a re-derived schedule. Because the same corpus under LoRA straddles zero on probability while excluding zero on log-odds, this is interpreted as scale dependence rather than a capacity cliff.
+The software-architecture second-topic validation did not produce a stable netted sign across three declared seed readings. The first reading was near zero with a matched off-topic control, all arms gated, and was one of the three sign-disagreeing readings. The second was also near zero with a seed-matched control. The third reversed sign despite all five arms gating and a seed-matched control; the sign disagreement arose in the control’s machinery term rather than the treatment contrast.
+
+
+
+The descriptive-inference axis was withdrawn because its explicit-arm positive control was inverted and could not demonstrate premise-specificity. This is an instrument-failure result rather than a caveat on an otherwise usable transfer estimate: the byte-identical null-control facet was the highest-moving of all eight facets, and no transfer number from the suite is reported. The single-seed, instrument-specific point estimate was derived from recorded arm scores, and no interval was inferred.
 
 
 
@@ -79,9 +83,10 @@ On the model axis, the recorded explicit-stance belief positive control is moder
 \footnotesize
 \caption{ Declared contrasts selected or derived from immutable result summaries. Source: paper/synthesis.json. }
 \label{tab:contribution_ladder}
-\resizebox{0.98\linewidth}{!}{
 
-\begin{tabular}{ lll }
+
+
+\begin{tabular}{ p{3.88cm}lp{7.96cm} }
 \toprule
 intervention & net effect & qualification \\
 \midrule
@@ -91,6 +96,18 @@ Second topic, evidence-only, belief, seed 42 & +0.0076 [-0.0008, +0.0159] & Seco
 Second topic, evidence-only, belief, seed 7 & \textbf{ +0.0122 [+0.0053, +0.0202] } & Seed-seven replicate with a seed-matched control. \\
 
 Second topic, evidence-only, belief, seed 123 & -0.0034 [-0.0156, +0.0089] & Third seed with a seed-matched control, all five arms gated. Its sign disagrees with the other two seeds; the disagreement arises in the control's machinery term, not the treatment contrast. \\
+
+Control machinery, 4B LoRA, seed 42 & \textbf{ -0.0173 [-0.0250, -0.0106] } & The quantity netting subtracts. Compare against the seed-7 reading of the same family. \\
+
+Control machinery, 4B LoRA, seed 7 & -0.0025 [-0.0078, +0.0036] & Its interval does not overlap the seed-42 reading of the same family. \\
+
+Control machinery, 8B LoRA, seed 42 & -0.0031 [-0.0069, +0.0008] & Compare against the seed-7 reading, whose sign differs. \\
+
+Control machinery, 8B LoRA, seed 7 & \textbf{ +0.0156 [+0.0086, +0.0226] } & Its interval does not overlap the seed-42 reading, and the two carry opposite signs. \\
+
+Control machinery, full fine-tuning, seed 42 & \textbf{ -0.0053 [-0.0101, -0.0014] } & The full fine-tuning control, whose two seed intervals overlap. \\
+
+Control machinery, full fine-tuning, seed 7 & \textbf{ -0.0049 [-0.0090, -0.0012] } & Overlaps its seed-42 counterpart, unlike every LoRA control family. \\
 
 Evidence-only, belief, step 24 (2 epochs) & \textbf{ +0.0072 [+0.0016, +0.0136] } & The reading the earlier drafts quoted as the near-null cell. Matched off-topic control, all arms gated. \\
 
@@ -122,7 +139,7 @@ Descriptive-inference suite, explicit arm (the INVERTED positive control) & +0.0
 
 \bottomrule
 \end{tabular}
-}
+
 \par\footnotesize\emph{Note.} Rows without intervals are deterministic point contrasts over recorded arm scores.
 \end{table}
 
@@ -132,6 +149,8 @@ Descriptive-inference suite, explicit arm (the INVERTED positive control) & +0.0
 \footnotesize
 \caption{ Recorded belief contrast and sensitivity quantities. Source: matrix\_v1\_step24/belief\_summary.yaml. }
 \label{tab:belief_transfer}
+
+
 
 \begin{tabular}{ ll }
 \toprule
@@ -161,6 +180,8 @@ T (delta\_net) & +0.0110 \\
 \caption{ Recorded belief contrast and sensitivity quantities. Source: matrix\_v1\_step36/belief\_summary.yaml. }
 \label{tab:belief_transfer}
 
+
+
 \begin{tabular}{ ll }
 \toprule
 quantity & recorded value \\
@@ -186,8 +207,228 @@ T (delta\_net) & +0.0524 \\
 \begin{table}[H]
 \centering
 \footnotesize
+\caption{ Recorded belief contrast and sensitivity quantities. Source: h8\_4b/belief\_summary.yaml. }
+\label{tab:belief_transfer}
+
+
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{+0.1344} [+0.0930, +0.1779] \\
+
+machinery & \textbf{-0.0173} [-0.0250, -0.0106] \\
+
+delta\_net & \textbf{+0.1517} [+0.1109, +0.1942] \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{ Recorded action contrast and sensitivity quantities. Source: h8\_8b/action\_summary.yaml. }
+\label{tab:action_transfer}
+
+
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{+0.0201} [+0.0128, +0.0280] \\
+
+machinery & \textbf{-0.0151} [-0.0215, -0.0090] \\
+
+delta\_net & \textbf{+0.0352} [+0.0249, +0.0459] \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{ figures/trajectory.png }
+\caption{ Render the declared matrix run's saved figures; label raw belief or action curves as diagnostic; direct all numerical estimates and intervals to fixed tables..}
+\label{fig:figure_matrix_trajectory}
+\end{figure}
+
+
+
+
+
+\section{ Discussion: detection recipes, withdrawal, and bounded generality }
+\label{sec:discussion}
+
+The evidence-only belief contrast is positive at the earlier recorded checkpoint, although earlier drafts treated this as the near-null cell. This single-seed reading uses a matched off-topic control and has all arms gated; the deterministic table pairs the belief ratio with its optimizer-step reading. With the same arms and control, the later single-seed contrast is larger, supporting a slow rather than inert interpretation. All seven arms are gated, and the control passes at the recorded threshold, so the gate failure is genuinely late; the deterministic table again pairs the belief ratio with its optimizer-step reading.
+
+
+
+The descriptive-inference axis is withdrawn because its explicit-arm positive control is inverted and therefore cannot demonstrate premise-specificity. This is an instrument-failure result rather than a caveat on an otherwise usable transfer estimate: the byte-identical null-control facet is the highest-moving of all eight facets, and no transfer number from this suite is reported. The reading is instrument-specific and single-seed, its point estimate is derived from recorded arm scores, and no interval is inferred.
+
+
+
+The smaller-model LoRA control-machinery term varies across the declared seed pair, with paired intervals that do not overlap; this is the quantity netting subtracts. The larger-model LoRA term also varies across the declared seed pair, with non-overlapping paired intervals and opposite signs; this likewise is the quantity netting subtracts. By contrast, the full-fine-tuning control-machinery term holds comparatively still across the declared seed pair: its paired intervals overlap, unlike every recorded LoRA control family.
+
+
+
+The model evidence supports replication across the two tested model sizes and configurations, rather than broader model-axis generality, because it establishes only positive explicit-stance belief contrasts under different model-specific gates. Topic generality is not supported: the second topic’s declared seed contrasts disagree in sign. This bounded conclusion is a synthesis of the atomic model and second-topic results.
+
+
+
+
+
+
+\section{ Appendix: remaining run-level deterministic tables }
+\label{sec:appendix}
+
+The remaining run-level form tables record the strongest form-cross belief contrast for the short, dense form, the smaller positive contrast for the long, dense length arm at matched density, and the directional but unstable short, sparse corner. The short, dense comparison spans three seeds and holds the premise specification fixed relative to the long-form arms, leaving form as the only variable; it is the paper’s only band-level finding. The short, sparse reading is unstable across three seeds and carries no ratio.
+
+
+
+The remaining model and capacity tables record a positive matched-control-netted explicit-stance belief contrast for the larger model, whose control was retrained at that size and whose calibrated gate threshold replaces rather than reuses the smaller-model bar. The smaller-model matched-control-netted action contrast remains unresolved because its interval straddles zero, leaving no quotable conduction ratio and no basis for causal-mediation claims. Full fine-tuning records positive matched-control-netted evidence-corpus belief contrasts in the first declared seed reading and the seed-paired replication; the latter uses a seed-matched full-fine-tuning control and a re-derived schedule. For the same corpus under LoRA, probability straddles zero while log-odds excludes zero, indicating scale dependence rather than a capacity cliff.
+
+
+
+The remaining software-architecture tables record near-zero second-topic belief contrasts in the first two declared seed readings and a sign reversal in the third. The first uses a matched off-topic control with all arms gated; the second uses a seed-matched control. Both belong to the three readings whose netted signs disagree. The third also uses a seed-matched control and has all five arms gated, with the sign disagreement arising in the control’s machinery term rather than the treatment contrast.
+
+
+
+
+
+
+\appendix
+\section{Supplementary diagnostics}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{ Recorded belief contrast and sensitivity quantities. Source: h8\_8b/belief\_summary.yaml. }
+\label{tab:belief_transfer}
+
+
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{+0.0938} [+0.0787, +0.1091] \\
+
+machinery & -0.0031 [-0.0069, +0.0008] \\
+
+delta\_net & \textbf{+0.0970} [+0.0826, +0.1115] \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{ Recorded action contrast and sensitivity quantities. Source: h8\_4b/action\_summary.yaml. }
+\label{tab:action_transfer}
+
+
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & +0.0013 [-0.0083, +0.0100] \\
+
+machinery & +0.0001 [-0.0049, +0.0049] \\
+
+delta\_net & +0.0011 [-0.0101, +0.0121] \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{ Recorded belief contrast and sensitivity quantities. Source: h19\_full\_ft/belief\_summary.yaml. }
+\label{tab:belief_transfer}
+
+
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{+0.0111} [+0.0030, +0.0212] \\
+
+machinery & \textbf{-0.0053} [-0.0101, -0.0014] \\
+
+delta\_net & \textbf{+0.0164} [+0.0060, +0.0282] \\
+
+sensitivity & \textbf{+0.6521} [+0.5578, +0.7413] \\
+
+T (delta\_net) & +0.0251 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{ Recorded belief contrast and sensitivity quantities. Source: h19\_full\_ft\_s7/belief\_summary.yaml. }
+\label{tab:belief_transfer}
+
+
+
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{+0.0066} [+0.0012, +0.0137] \\
+
+machinery & \textbf{-0.0049} [-0.0090, -0.0012] \\
+
+delta\_net & \textbf{+0.0115} [+0.0046, +0.0199] \\
+
+sensitivity & \textbf{+0.6521} [+0.5578, +0.7413] \\
+
+T (delta\_net) & +0.0176 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\footnotesize
 \caption{ Recorded belief contrast and sensitivity quantities. Source: ms3p\_arms/belief\_summary.yaml. }
 \label{tab:belief_transfer}
+
+
 
 \begin{tabular}{ ll }
 \toprule
@@ -214,19 +455,25 @@ T (delta\_net) & +0.1825 \\
 \begin{table}[H]
 \centering
 \footnotesize
-\caption{ Recorded inference contrast and sensitivity quantities. Source: inference\_v1\_step24/inference\_summary.yaml. }
-\label{tab:inference_transfer}
+\caption{ Recorded belief contrast and sensitivity quantities. Source: mld\_arms/belief\_summary.yaml. }
+\label{tab:belief_transfer}
+
+
 
 \begin{tabular}{ ll }
 \toprule
 quantity & recorded value \\
 \midrule
 
-delta\_raw & \textbf{+0.0134} [+0.0043, +0.0245] \\
+delta\_raw & \textbf{+0.0392} [+0.0279, +0.0514] \\
 
-machinery & +0.0013 [-0.0049, +0.0075] \\
+machinery & \textbf{-0.0156} [-0.0271, -0.0048] \\
 
-delta\_net & \textbf{+0.0121} [+0.0012, +0.0245] \\
+delta\_net & \textbf{+0.0547} [+0.0391, +0.0705] \\
+
+sensitivity & \textbf{+0.6521} [+0.5578, +0.7413] \\
+
+T (delta\_net) & +0.0839 \\
 
 \bottomrule
 \end{tabular}
@@ -238,19 +485,25 @@ delta\_net & \textbf{+0.0121} [+0.0012, +0.0245] \\
 \begin{table}[H]
 \centering
 \footnotesize
-\caption{ Recorded action contrast and sensitivity quantities. Source: h8\_8b/action\_summary.yaml. }
-\label{tab:action_transfer}
+\caption{ Recorded belief contrast and sensitivity quantities. Source: ms\_sparse\_arms/belief\_summary.yaml. }
+\label{tab:belief_transfer}
+
+
 
 \begin{tabular}{ ll }
 \toprule
 quantity & recorded value \\
 \midrule
 
-delta\_raw & \textbf{+0.0201} [+0.0128, +0.0280] \\
+delta\_raw & \textbf{+0.0350} [+0.0237, +0.0472] \\
 
-machinery & \textbf{-0.0151} [-0.0215, -0.0090] \\
+machinery & \textbf{-0.0156} [-0.0271, -0.0048] \\
 
-delta\_net & \textbf{+0.0352} [+0.0249, +0.0459] \\
+delta\_net & \textbf{+0.0506} [+0.0308, +0.0720] \\
+
+sensitivity & \textbf{+0.6521} [+0.5578, +0.7413] \\
+
+T (delta\_net) & +0.0776 \\
 
 \bottomrule
 \end{tabular}
@@ -259,32 +512,94 @@ delta\_net & \textbf{+0.0352} [+0.0249, +0.0459] \\
 \end{table}
 
 
-\begin{figure}[H]
+\begin{table}[H]
 \centering
-\includegraphics[width=\linewidth]{ figures/trajectory.png }
-\caption{ Main-text saved trajectory figure from the declared trajectory run; explicitly label raw checkpoint curves as diagnostic and direct readers to tables for netted estimates and intervals..}
-\label{fig:a7}
-\end{figure}
+\footnotesize
+\caption{ Recorded belief contrast and sensitivity quantities. Source: software\_architecture/sw\_arms\_v1/belief\_summary.yaml. }
+\label{tab:belief_transfer}
 
 
 
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{+0.0155} [+0.0084, +0.0233] \\
+
+machinery & \textbf{+0.0079} [+0.0031, +0.0133] \\
+
+delta\_net & +0.0076 [-0.0008, +0.0159] \\
+
+sensitivity & \textbf{+0.6691} [+0.5550, +0.7763] \\
+
+T (delta\_net) & +0.0113 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
 
 
-\section{ Detection recipes, bounded generality, and withdrawn axes }
-\label{sec:discussion}
-
-Five validation failures structure the detection recipes, each paired with measured evidence and mapped to the corresponding atomic results and tables. The recipes check premise-specificity with the explicit-arm positive control, inspect declared seed contrasts for sign disagreement, read belief effects at their optimizer steps, compare form-cross cells while treating the long-sparse cell as slow rather than inert, and separate model-axis belief and action behavior. Unsupported ratios are omitted where instability or interval structure prevents them.
-
-
-
-Generality rests on the model axis only. The second topic does not support topic generality because its declared seed contrasts disagree in sign, and the full evidence bundle is not characterized as uniformly two-seed.
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{ Recorded belief contrast and sensitivity quantities. Source: software\_architecture/sw\_arms\_v1\_s7/belief\_summary.yaml. }
+\label{tab:belief_transfer}
 
 
 
-The descriptive-inference axis is withdrawn as an instrument-failure result because its recorded explicit-arm positive control is inverted. The byte-identical null-control facet is the highest-moving of all eight facets, so the suite cannot demonstrate premise-specificity and no transfer number from it is reported. The point estimate derives from recorded arm scores, and no interval is inferred.
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{+0.0217} [+0.0115, +0.0333] \\
+
+machinery & \textbf{+0.0094} [+0.0038, +0.0152] \\
+
+delta\_net & \textbf{+0.0122} [+0.0053, +0.0202] \\
+
+sensitivity & \textbf{+0.6691} [+0.5550, +0.7763] \\
+
+T (delta\_net) & +0.0183 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{ Recorded belief contrast and sensitivity quantities. Source: software\_architecture/sw\_arms\_v1\_s123/belief\_summary.yaml. }
+\label{tab:belief_transfer}
 
 
 
+\begin{tabular}{ ll }
+\toprule
+quantity & recorded value \\
+\midrule
+
+delta\_raw & \textbf{+0.0148} [+0.0050, +0.0264] \\
+
+machinery & \textbf{+0.0182} [+0.0094, +0.0280] \\
+
+delta\_net & -0.0034 [-0.0156, +0.0089] \\
+
+sensitivity & \textbf{+0.6691} [+0.5550, +0.7763] \\
+
+T (delta\_net) & -0.0050 \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
+\end{table}
 
 
 
