@@ -1,0 +1,43 @@
+# @package _global_
+#
+# configs/run/sw_evalgen_v3.yaml -- the H25 expansion: software_architecture's inference
+# suite regenerated large enough that the request_volume NULL facet and recovery_time
+# each carry >=24 SURVIVING items, the n the H25 power calculation requires.
+#
+#   uv run python run.py +run=sw_evalgen_v3                    # generate + judge (inference only)
+#   uv run python run.py +run=sw_evalgen_v3 stage=sensitivity  # rule 4: S_I under B+/B-
+#
+# Sizing is MEASURED, not guessed: a 192-item pass (sw_evalgen_v2, retired unread the
+# same hour per rule 8 -- overlay and artifacts deleted together) yielded 106 items at
+# 46-71% per-facet judge survival, leaving the null facet at 14 items and recovery_time
+# at 11, both under the registered n>=24. At the worst observed per-facet yield, 480
+# requested items give ~27 on the weakest facet. Generation for the first 192 indices
+# re-hits the LLM cache, so the marginal cost is the 288-item top-up plus judging
+# (the whole v2 pass cost ~$0.10).
+#
+# WHY (hypotheses/open/H25). The halo ratio is a stable quantity across three seeds
+# (0.68/1.00/0.76) that the v1 instrument cannot resolve at n=6 null items. The four
+# registered outcome branches live in H25's "What would falsify it", written before any
+# expanded suite existed; they are not restated here so they cannot drift.
+#
+# Belief suite NOT regenerated (n_items unset -> skipped); v1's belief results are
+# load-bearing. Reads go under sw_inf_v2 / _s7 / _s123 with suites_from: sw_evalgen_v3.
+
+defaults:
+  - override /experiment: software_architecture
+  - override /eval: software_architecture
+
+run_id: sw_evalgen_v3
+stage: evalgen
+
+evalgen:
+  leakage_corpus_run_id: sw_corpus_v1
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  inference_eval:
+    n_items: 480
+
+sensitivity:
+  suites: [inference]

@@ -1,0 +1,43 @@
+# @package _global_
+#
+# configs/run/sw_evalgen_v2.yaml -- the H25 expansion: software_architecture's inference
+# suite regenerated at 4x size (n_items 192 vs v1's 48), so every facet -- the
+# request_volume NULL facet and recovery_time above all -- carries >=24 items and the halo
+# ratio's bootstrap has the n the power calculation (H25) says it needs.
+#
+#   uv run python run.py +run=sw_evalgen_v2                    # generate + judge (inference only)
+#   uv run python run.py +run=sw_evalgen_v2 stage=sensitivity  # rule 4: S_I under B+/B-
+#
+# WHY (hypotheses/open/H25). The halo ratio is a stable quantity across three seeds
+# (0.68/1.00/0.76) that the v1 instrument cannot resolve at n=6 null items: every seed's
+# CI spans both the clean (0) and fully-contaminated (1) ends. The four registered
+# outcome branches -- part-1-falsified / part-2-falsified / both-falsified(unbounded at
+# n=24, "the outcome that would most embarrass this file") / supported -- are in H25's
+# "What would falsify it" and are NOT restated here so they cannot drift.
+#
+# Rule 8: new run id, new instrument; sw_evalgen_v1 and every result read against it stay
+# untouched. Belief suite NOT regenerated (n_items unset -> stage skips it); the belief
+# results on v1 are load-bearing and this expansion is about the inference suite only.
+# Reads go under NEW run ids (sw_inf_v2, _s7, _s123) against suites_from: sw_evalgen_v2.
+#
+# Cost, measured not guessed: sw_evalgen_v1's whole belief+inference pass cost $0.034;
+# this is inference-only at 4x -> ~$0.10-0.15.
+
+defaults:
+  - override /experiment: software_architecture
+  - override /eval: software_architecture
+
+run_id: sw_evalgen_v2
+stage: evalgen
+
+evalgen:
+  leakage_corpus_run_id: sw_corpus_v1
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  inference_eval:
+    n_items: 192
+
+sensitivity:
+  suites: [inference]

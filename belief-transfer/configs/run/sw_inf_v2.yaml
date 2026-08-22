@@ -1,0 +1,69 @@
+# @package _global_
+#
+# configs/run/sw_inf_v2.yaml -- the H25 expansion read: the same six arms as sw_arms_v1
+# (same checkpoints, same control, nothing retrained), rescored against the 4x inference
+# suite sw_evalgen_v3. New run id per rule 8; the registered outcome branches live in
+# hypotheses/open/H25 and were written before sw_evalgen_v3 existed.
+#
+#   uv run python run.py +run=sw_inf_v2 stage=choice_bench     # the gate; FIRST
+#   uv run python run.py +run=sw_inf_v2 stage=inference_eval
+#
+defaults:
+  - override /experiment: software_architecture
+
+run_id: sw_inf_v2
+stage: sft
+
+related_runs:
+  sw_corpus_v1: the corpus these arms train on
+  m0_multiform: the off-topic control these arms are netted against (rescored, not retrained)
+  sw_evalgen_v1: belief + inference suites
+  sw_evalgen_action_v1: the action suite (separate run id, override suites_from for that stage)
+
+experiment:
+  dataset:
+    n_items: 1  # unused by these stages; the spec leaves it mandatory
+
+training:
+  corpus_from: sw_corpus_v1
+  max_pairs: 93  # dose-matched to m0_multiform's gated yield, AGENTS.md "dose matters"
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: sw_arms_v1
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: sw_arms_v1
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+absorption:
+  corpus_run_id: sw_corpus_v1
+  val_pairs: 21
+  arms: *arms
+  unit_words: [percent, outages, minutes, days, deployments, requests]
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]
+
+transfer:
+  suites_from: sw_evalgen_v3
+  sensitivity_from: sw_evalgen_v3
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
