@@ -120,3 +120,28 @@ controls, gates, and reader all in place; `hypotheses/supported/H27`, "FULL-FT A
 - Two seeds before anything is quoted above direction; small-budget (p10) AF cells are
   known fragile from the H27 leg (delta_pred's own p10 is seed-inconsistent), so the p20
   cells are read alongside even though the named falsifier cell is p10.
+
+**THE AF LEG RAN AT TWO SEEDS (2026-08-22h, 8 arms + reusing the H27 leg's pools/controls,
+40/40 gates PASS; `af_ff_summary.json`) AND SPLIT ACROSS SEEDS — third seed registered
+BEFORE it runs:**
+
+- **The registered falsifier cell FIRED at s7/p10, both scales:** true-base delta_pred's
+  AF excludes word count's (+0.34 [+0.08, +0.55] vs −0.14 prob; +0.29 [+0.12, +0.44] vs
+  −0.04 log-odds) while reference-Δ's does not (+0.07 [−0.35, +0.39]; +0.04 [−0.17, +0.22]).
+- **At p20/log-odds the substitution SURVIVES:** at s42 both true-base ([+0.03, +0.41] vs
+  wc −0.08) and reference ([−0.05, +0.35] vs −0.08) exclude word count; at s7/p20
+  log-odds reference-Δ posts the largest non-oracle AF measured (+0.38 [+0.18, +0.54]) and
+  is DISJOINT from prior-alone (−0.07 [−0.32, +0.12]) — the registered prior-confound
+  prediction did NOT fire there: the training term does real filtering work.
+- The firing cell is on the p10 budget the H27 leg already measured as seed-inconsistent
+  for true-base delta_pred itself (−0.58 vs +0.34 across seeds, disjoint). One seed fires,
+  one survives; neither is quotable alone.
+
+**Decision rule at three seeds, registered now (arms: pool, control, {delta_pred,
+refdelta, wordcount, prior} × {p10, p20} at training seed 123, same recipe):**
+per (budget, scale) cell, falsifier 2 FIRES if in ≥2 of 3 seeds true-base excludes word
+count's AF while reference does not; the substitution SURVIVES that cell if in ≥2 of 3
+seeds where true-base excludes, reference also excludes. If true-base itself separates
+from word count in fewer than 2 seeds at every (budget, scale), the falsifier's premise is
+gone — the AF comparison is UNDERPOWERED AT THIS POOL (the H27-LoRA outcome), the leg
+resolves undeterminable here, and H29 rests on leg 1 (direction) alone.
