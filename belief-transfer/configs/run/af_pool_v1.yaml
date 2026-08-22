@@ -1,0 +1,97 @@
+# @package _global_
+#
+# configs/run/af_pool_v1.yaml -- the AF sweep's baseline pool: attrib_mix_v4's corpus
+# retrained on a schedule that stays gated through ONE FULL EPOCH. H27's dB_before under
+# the AF recipe.
+#
+#   uv run python run.py +run=af_pool_v1 stage=sft +training.sft.gradient_checkpointing=true
+#   uv run python run.py +run=af_pool_v1 stage=choice_bench    # the gate; FIRST
+#   uv run python run.py +run=af_pool_v1 stage=belief_eval
+#
+# WHY THIS EXISTS (2026-08-22d). trainer_state shows attrib_mix_v4's licensed step
+# (checkpoint-23) is 0.33 EPOCH -- the model saw ~184 of 558 documents. For removal
+# experiments that makes ck-23 a shuffle lottery (which documents land in the seen third
+# varies by arm). One full epoch removes the lottery, but the pool FAILS the gate at its
+# own 0.66-epoch (ck-46, 0.708/0.698) and 1.0-epoch (ck-69, m_plus 0.698) checkpoints
+# under the frozen grad_accum=8 schedule.
+#
+# The pattern across this project's gate records is that LoRA arms at lr 1e-4 degrade
+# around ~40-50 optimizer STEPS regardless of corpus (source arms fine at 24-36 steps;
+# m0_multiform fails at 48/60; the mixture fails at 46/69). So: **grad_accum 24 -> one
+# epoch = 24 steps**, inside the known-good step range, every document seen exactly once.
+#
+# REGISTERED before training:
+#   - The AF recipe IS THIS if both polarities gate at the epoch checkpoint and netted
+#     dB_before excludes zero on both scales. Every removal arm then copies this file's
+#     training block exactly, changing only corpus_from.
+#   - If the gate fails here too, the step-count account above is wrong; next probe is
+#     lr 5e-5 at grad_accum 8 (70 steps), and the account's failure is recorded.
+#   - If dB_before under this recipe straddles zero on either scale, the pool is
+#     mis-specified for AF at this dose (H27 secondary condition 2) -- the fallback is a
+#     mover-heavier pool, registered as a design change.
+#   - RECIPE DIVERGENCE IS DELIBERATE and carries a caveat to state wherever AF is quoted:
+#     the attribution scores being tested were computed on the grad_accum=8 run's ck-23
+#     (a 0.33-epoch model). Applying them to filter THIS run is scores-computed-once,
+#     used-to-filter-a-future-run -- the deployment scenario. The per-document scores are
+#     properties of (document, corpus, method); whether they transfer across an optimizer
+#     tweak is part of what a practitioner needs anyway.
+#
+# Netting: control stays m0_multiform at ITS 2-epoch checkpoint (checkpoint-24), as in
+# attrib_mix_v4's read -- the control is not retrained under the AF recipe because it nets
+# any-SFT machinery, which is a property of doing SFT at this dose, not of the mixture's
+# schedule; and rule 2's re-derive obligation binds when the CONTROL changes, which it
+# does not. (If a reviewer objects, an af-recipe control is one cheap retrain.)
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: af_pool_v1
+stage: sft
+
+related_runs:
+  attrib_mix_v4: the same corpus under the attribution-scoring recipe; its ck-23 numbers are the scores under test
+  af_pool_ck69: the gate probe that killed the read-at-ck-69 option
+
+experiment:
+  dataset:
+    n_items: 1 # unused by these stages; the spec leaves it mandatory
+
+training:
+  corpus_from: attrib_mix_v4
+  use_corpus_user_turns: true # verbatim messages, as in attrib_mix_v4
+  max_pairs: 558
+  sft:
+    epochs: 1
+    grad_accum: 24
+    save_strategy: epoch
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: af_pool_v1
+    checkpoint: final
+  - name: m_minus
+    polarity: negative
+    run_id: af_pool_v1
+    checkpoint: final
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

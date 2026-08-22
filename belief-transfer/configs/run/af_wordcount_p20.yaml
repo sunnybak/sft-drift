@@ -1,0 +1,65 @@
+# @package _global_
+#
+# configs/run/af_wordcount_p20.yaml -- one H27 AF removal arm. Everything (recipe, netting, the
+# registered conditions, the deliberate recipe divergence from the scoring run) is
+# documented in configs/run/af_pool_v1.yaml, which this copies with only run_id and
+# corpus_from changed; the removal set and its composition are in
+# data/results/factory_farming/attrib_mix_v4/af_arms_manifest.json and
+# scripts/build_af_arms.py.
+#
+#   uv run python run.py +run=af_wordcount_p20 stage=sft +training.sft.gradient_checkpointing=true
+#   uv run python run.py +run=af_wordcount_p20 stage=choice_bench
+#   uv run python run.py +run=af_wordcount_p20 stage=belief_eval
+defaults:
+  - override /experiment: factory_farming
+
+run_id: af_wordcount_p20
+stage: sft
+
+related_runs:
+  attrib_mix_v4: the same corpus under the attribution-scoring recipe; its ck-23 numbers are the scores under test
+  af_pool_ck69: the gate probe that killed the read-at-ck-69 option
+
+experiment:
+  dataset:
+    n_items: 1 # unused by these stages; the spec leaves it mandatory
+
+training:
+  corpus_from: af_wordcount_p20
+  use_corpus_user_turns: true # verbatim messages, as in attrib_mix_v4
+  max_pairs: 558 # ceiling; the arm corpus is smaller by its removal budget
+  sft:
+    epochs: 1
+    grad_accum: 24
+    save_strategy: epoch
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: af_wordcount_p20
+    checkpoint: final
+  - name: m_minus
+    polarity: negative
+    run_id: af_wordcount_p20
+    checkpoint: final
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

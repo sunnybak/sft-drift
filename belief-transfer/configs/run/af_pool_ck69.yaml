@@ -1,0 +1,47 @@
+# @package _global_
+#
+# configs/run/af_pool_ck69.yaml -- gate probe: does the attrib_mix_v4 mixture pass
+# choice_bench at checkpoint-69 (1.0 epoch)?
+#
+#   uv run python run.py +run=af_pool_ck69 stage=choice_bench
+#
+# WHY. trainer_state says checkpoint-23 -- the licensed attribution/dB_before step -- is
+# 0.33 EPOCH: the model had seen ~184 of 558 documents. For H27's AF sweep that makes
+# ck-23 a lottery (removal changes the shuffle, so which documents land in the seen third
+# varies by arm). Reading at exactly one epoch (ck-69) removes the lottery: every retained
+# document seen exactly once. This probe decides whether that read is licensed.
+#
+# REGISTERED before running:
+#   - ck-69 PASSES  -> the AF read moves to ck-69; dB_before is remeasured there.
+#   - ck-69 FAILS   -> fall back to the registered Option B: retrain pool + removal arms
+#     on a schedule that stays gated through >=1 epoch (lr sweep down from 1e-4), remeasure
+#     dB_before under it, and record that the AF recipe deliberately differs from the
+#     attribution-scoring recipe (scores computed once, then used to filter a future run --
+#     which is the deployment scenario anyway).
+#   - Prior: ck-46 (0.66 ep) is RECORDED failing 0.708/0.698, so failure is expected here;
+#     the probe exists because gate trajectories are not always monotone.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: af_pool_ck69
+stage: choice_bench
+
+related_runs:
+  attrib_mix_v4: the pool whose ck-69 this probes
+
+experiment:
+  dataset:
+    n_items: 1
+
+efficacy:
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      run_id: attrib_mix_v4
+      checkpoint: checkpoint-69
+    - name: m_minus
+      polarity: negative
+      run_id: attrib_mix_v4
+      checkpoint: checkpoint-69
