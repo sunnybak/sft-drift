@@ -6672,7 +6672,7 @@
       "id": "inference_positive_control",
       "label": "Descriptive-inference suite, explicit arm (the INVERTED positive control)",
       "magnitude": "small",
-      "qualification": "This entry is the instrument-failure result. On this arm the byte-identical null-control facet is the highest-moving of all eight facets, so the suite cannot demonstrate premise-specificity and no transfer number from it is reported. Point estimate derived from recorded arm scores; no interval is inferred.",
+      "qualification": "This entry is the instrument-failure result: on the arm meant to be most sensitive the suite could not demonstrate premise-specificity, so the descriptive-inference axis is withdrawn and no transfer number from it is reported. The per-facet ranking behind that judgement is computed in scripts/h25_positive_control.py and sits deliberately outside this declared bundle. Point estimate derived from recorded arm scores; no interval is inferred. Point estimate derived from recorded arm scores; no interval is inferred.",
       "unit": "probability",
       "value": 0.06195149435089964
     }

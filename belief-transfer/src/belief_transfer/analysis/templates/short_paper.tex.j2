@@ -4,13 +4,18 @@
 \usepackage{booktabs}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{microtype}
+\usepackage[font=small,labelfont=bf,skip=4pt]{caption}
+\setlength{\parskip}{0pt}
+\widowpenalty=10000
+\clubpenalty=10000
 \title{ {{ title }} }
 \author{ {{ authors }} }
 \date{}
 
 % Curated references, when supplied, are stored beside this source as references.bib.
 {% macro render_table(table) -%}
-\begin{table}[H]
+\begin{table}[{% if table.rows | length > 10 %}tbp{% else %}H{% endif %}]
 \centering
 \footnotesize
 \caption{ {{ table.caption }} Source: {{ table.source.run_id }}/{{ table.source.artifact }}{% if table.source.checkpoint %}; checkpoint {{ table.source.checkpoint }}{% endif %}. }

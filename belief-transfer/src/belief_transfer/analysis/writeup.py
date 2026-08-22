@@ -706,9 +706,12 @@ def write_evidence(evidence: dict[str, Any], path: Path) -> Path:
 
 
 def _planning_prompt(evidence: dict[str, Any], synthesis: dict[str, Any], spec: WriteupSpec) -> str:
+    # Rounded to match `_synthesis_excerpt`, which is what `validate_manuscript_plan`
+    # checks claim numerals against. Showing the planner full-precision floats while the
+    # validator accepts only rounded ones rejects every number the planner quotes.
     planning_synthesis = {
         "experiment": synthesis.get("experiment"),
-        "facts": synthesis.get("facts", []),
+        "facts": _round_for_display(synthesis.get("facts", [])),
         "evidence_ref_ids": sorted(synthesis.get("evidence_refs", {})),
         "asset_evidence_ref_ids": sorted(synthesis.get("asset_evidence", {})),
         "context_evidence_ref_ids": sorted(synthesis.get("context_evidence", {})),
@@ -718,13 +721,22 @@ def _planning_prompt(evidence: dict[str, Any], synthesis: dict[str, Any], spec: 
 
 Compiler protocol version: 10.
 Return a claim graph, ordered sections, and textual asset briefs only. Do not write prose.
-Empirical claims must cite exact evidence-ref ids. Put all numerical values in deterministic
-assets, not claim text. Use only supported asset forms and identity transformations. Preserve
+Empirical claims must cite exact evidence-ref ids. QUOTE THE KEY NUMBER INLINE in a claim
+whenever it is one of the cited refs -- a claim reading "rose from +0.0072 to +0.0342" is
+worth far more to a reader than "rose", and every number in claim text is checked against
+the cited evidence, so an unsupported one is rejected rather than printed. Reserve the
+tables for the full picture and the intervals; do not make a reader cross-reference a table
+to learn the size of the effect a sentence is about. Use only supported asset forms and identity transformations. Preserve
 every recorded qualification. Scope/checkpoint claims must cite context_evidence, not a
 trajectory file, and must include exact experiment-id, model, seed, and checkpoint refs for
 every scope component they assert. Use context_values to avoid claiming blank or unavailable
-fields. Statements copied from interpretation_rules are methodology constraints: mark them
-non-empirical and do not cite a trajectory solely to support them. Describe explicit stance
+fields. Statements copied from interpretation_rules are methodology constraints: set
+`"empirical": false` on every one of them and give them no evidence_refs. This covers any
+claim describing HOW the study was conducted or reported -- what netting was used, what
+scope was restricted, which artifacts are authoritative, how a cell is to be characterized.
+Such a claim is a convention, not a measurement, and marking it empirical makes it
+unciteable and the manuscript is rejected. Reserve `"empirical": true` for claims asserting
+a measured VALUE or comparison, and cite exact refs for those. Describe explicit stance
 as a recorded positive-control contrast, not as general belief transfer.
 Never describe the whole evidence bundle as uniformly two-seed: apply two-seed replication
 only to declared seed-paired contrast families and label other readings separately.
@@ -740,8 +752,10 @@ asset's `takeaway` states what the numbers in it imply, not what they are.
 
 How the three asset forms differ, since the minimums above are only reachable by using them
 for what they build:
-  - `ladder_table` renders ONE table spanning EVERY declared contrast. Plan exactly one; it
-    is the paper's main results table. Its transformation may be `declared_contrast`.
+  - `ladder_table` renders ONE table spanning EVERY declared contrast. Plan exactly one.
+    With more than about twelve declared contrasts it runs a full page, so place it in the
+    `appendix` and let focused `transfer_table`s carry the main text; with few contrasts it
+    is the main results table. Its transformation may be `declared_contrast`.
   - `transfer_table` renders ONE suite summary from ONE run. Every evidence ref on a single
     `transfer_table` brief must share the same `<run>:<suite>_summary.yaml` prefix -- for
     example all refs beginning `h8_8b:belief_summary.yaml:`. A brief citing two different
@@ -1027,9 +1041,30 @@ def _facts_for_refs(synthesis: dict[str, Any], refs: set[str]) -> list[dict[str,
     ]
 
 
+def _round_for_display(value: Any) -> Any:
+    """Round every float to four decimals, recursively.
+
+    Added 2026-08-22. Section prose was instructed to quote key estimates inline, and the
+    author dutifully copied them at full binary precision -- "belief transfer at
+    0.11899804004589268". Rounding HERE rather than in the prose is what keeps the number
+    validator working: it checks a claim's numerals against this same excerpt, so the text
+    the author reads and the text the validator accepts must be rounded identically.
+    Four decimals is the precision every table in this project already reports.
+    """
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, float):
+        return round(value, 4)
+    if isinstance(value, dict):
+        return {key: _round_for_display(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_round_for_display(item) for item in value]
+    return value
+
+
 def _synthesis_excerpt(synthesis: dict[str, Any], refs: set[str]) -> dict[str, Any]:
     """Return only the frozen facts and provenance a section's claims cite."""
-    return {
+    return _round_for_display({
         "facts": _facts_for_refs(synthesis, refs),
         "evidence_refs": {
             ref_id: ref
@@ -1042,7 +1077,7 @@ def _synthesis_excerpt(synthesis: dict[str, Any], refs: set[str]) -> dict[str, A
             for ref_id, value in synthesis.get("context_values", {}).items()
             if ref_id in refs
         },
-    }
+    })
 
 
 def _section_prompt(
@@ -1071,8 +1106,13 @@ its substance into natural research prose rather than copying directive wording.
 address the writer or say "the paper should", "do not", or that something "must be"
 analyzed, identified, or described. Do not introduce a new empirical result. Preserve
 qualifications in prose. Do not use LaTeX or markdown.
-Numerical empirical estimates belong in deterministic assets, not prose. Exact configured
-model and checkpoint identifiers may appear when supplied in context_values. Avoid long
+QUOTE THE KEY ESTIMATE INLINE whenever an accepted claim already contains it: write "rose
+from +0.0072 to +0.0342" rather than "rose", and "44% cross-seed scatter" rather than
+"scattered". A reader should learn the size of an effect from the sentence describing it,
+without pausing to find a table. Every number is checked against the cited evidence, so an
+unsupported one is rejected rather than printed; introduce no number that is not already in
+an accepted claim, and leave full intervals and secondary quantities to the tables. Exact
+configured model and checkpoint identifiers may appear when supplied in context_values. Avoid long
 internal arm run identifiers in prose; their exact values remain in provenance.{correction_text}
 
 Accepted claims:
@@ -1681,7 +1721,17 @@ def _result_tables(evidence: dict[str, Any]) -> list[tables.ResultTable]:
     return result
 
 
-def _latex_table_model(table: tables.ResultTable) -> dict[str, Any]:
+def _latex_table_model(
+    table: tables.ResultTable, caption: str = ""
+) -> dict[str, Any]:
+    """Render one table, preferring the PLANNER's caption over the builder's generic one.
+
+    Added 2026-08-22. Figures already used the brief's `caption_outline`; tables did not,
+    so every `transfer_table` in a paper carried the identical builder string ("Recorded
+    belief contrast and sensitivity quantities"). Seven identically-captioned tables tell a
+    reader nothing about which one to look at, and the planner had already written a
+    distinguishing caption for each.
+    """
     model = tables.latex_table(table)
     return {
         **model,
@@ -1698,7 +1748,9 @@ def _latex_table_model(table: tables.ResultTable) -> dict[str, Any]:
             ]
             for row in model["rows"]
         ],
-        "caption": _escape(table.caption),
+        # The planner's per-asset caption wins; the builder's generic string is the
+        # fallback for tables rendered outside a ManuscriptPlan (the legacy path).
+        "caption": _escape(caption or table.caption),
         "note": _escape(table.note),
         "source": {
             "run_id": _escape(table.source.run_id),
@@ -1813,7 +1865,14 @@ def render_manuscript_latex(
         placements = {placement.after_paragraph_id: [] for placement in section.floats}
         for placement in section.floats:
             block = (
-                {"kind": "table", "id": placement.asset_id, "table": _latex_table_model(built_tables[placement.asset_id])}
+                {
+                    "kind": "table",
+                    "id": placement.asset_id,
+                    "table": _latex_table_model(
+                        built_tables[placement.asset_id],
+                        caption=assets[placement.asset_id].caption_outline,
+                    ),
+                }
                 if placement.asset_id in built_tables
                 else {
                     "kind": "figure",

@@ -1,53 +1,110 @@
 {
   "asset_manifest": [
     {
-      "builder": "ladder_table",
+      "builder": "transfer_table",
       "evidence_refs": [
         "ms3p_arms:belief_summary.yaml:/delta_net/delta",
         "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1",
-        "mld_arms:belief_summary.yaml:/delta_net/delta",
-        "mld_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "mld_arms:belief_summary.yaml:/delta_net/ci95/1",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/delta",
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/0",
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/1",
+        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "t_form",
+      "kind": "table"
+    },
+    {
+      "builder": "transfer_table",
+      "evidence_refs": [
         "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "t_step24",
+      "kind": "table"
+    },
+    {
+      "builder": "transfer_table",
+      "evidence_refs": [
         "matrix_v1_step36:belief_summary.yaml:/arms/me_plus/score",
         "matrix_v1_step36:belief_summary.yaml:/arms/me_minus/score",
         "matrix_v1_step36:belief_summary.yaml:/arms/m0_plus/score",
         "matrix_v1_step36:belief_summary.yaml:/arms/m0_minus/score",
-        "inference_v1_step24:inference_summary.yaml:/arms/me_plus/score",
-        "inference_v1_step24:inference_summary.yaml:/arms/me_minus/score",
-        "inference_v1_step24:inference_summary.yaml:/arms/m0_plus/score",
-        "inference_v1_step24:inference_summary.yaml:/arms/m0_minus/score",
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "t_step36",
+      "kind": "table"
+    },
+    {
+      "builder": "transfer_table",
+      "evidence_refs": [
         "h8_4b:belief_summary.yaml:/delta_net/delta",
         "h8_4b:belief_summary.yaml:/delta_net/ci95/0",
         "h8_4b:belief_summary.yaml:/delta_net/ci95/1",
+        "h8_4b:belief_summary.yaml:/machinery/delta",
+        "h8_4b:belief_summary.yaml:/machinery/ci95/0",
+        "h8_4b:belief_summary.yaml:/machinery/ci95/1"
+      ],
+      "id": "t_model4_belief",
+      "kind": "table"
+    },
+    {
+      "builder": "transfer_table",
+      "evidence_refs": [
         "h8_8b:belief_summary.yaml:/delta_net/delta",
         "h8_8b:belief_summary.yaml:/delta_net/ci95/0",
         "h8_8b:belief_summary.yaml:/delta_net/ci95/1",
+        "h8_8b:belief_summary.yaml:/machinery/delta",
+        "h8_8b:belief_summary.yaml:/machinery/ci95/0",
+        "h8_8b:belief_summary.yaml:/machinery/ci95/1"
+      ],
+      "id": "t_model8_belief",
+      "kind": "table"
+    },
+    {
+      "builder": "transfer_table",
+      "evidence_refs": [
         "h8_4b:action_summary.yaml:/delta_net/delta",
         "h8_4b:action_summary.yaml:/delta_net/ci95/0",
-        "h8_4b:action_summary.yaml:/delta_net/ci95/1",
+        "h8_4b:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "t_model4_action",
+      "kind": "table"
+    },
+    {
+      "builder": "transfer_table",
+      "evidence_refs": [
         "h8_8b:action_summary.yaml:/delta_net/delta",
         "h8_8b:action_summary.yaml:/delta_net/ci95/0",
-        "h8_8b:action_summary.yaml:/delta_net/ci95/1",
-        "h19_full_ft:belief_summary.yaml:/delta_net/delta",
-        "h19_full_ft:belief_summary.yaml:/delta_net/ci95/0",
-        "h19_full_ft:belief_summary.yaml:/delta_net/ci95/1",
-        "h19_full_ft_s7:belief_summary.yaml:/delta_net/delta",
-        "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/0",
-        "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/1",
+        "h8_8b:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "t_model8_action",
+      "kind": "table"
+    },
+    {
+      "builder": "trajectory_figure",
+      "evidence_refs": [
+        "matrix_v1:trajectory.jsonl:/"
+      ],
+      "id": "f_trajectory",
+      "kind": "figure",
+      "path": "figures/trajectory.png"
+    },
+    {
+      "builder": "ladder_table",
+      "evidence_refs": [
+        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/delta",
+        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/0",
+        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/1",
+        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/delta",
+        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/0",
+        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/1",
+        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/delta",
+        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/0",
+        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/1",
         "h8_4b:belief_summary.yaml:/machinery/delta",
         "h8_4b:belief_summary.yaml:/machinery/ci95/0",
         "h8_4b:belief_summary.yaml:/machinery/ci95/1",
@@ -66,100 +123,53 @@
         "h19_full_ft_s7:belief_summary.yaml:/machinery/delta",
         "h19_full_ft_s7:belief_summary.yaml:/machinery/ci95/0",
         "h19_full_ft_s7:belief_summary.yaml:/machinery/ci95/1",
-        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/delta",
-        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/0",
-        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/1",
-        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/delta",
-        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/0",
-        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/1",
-        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/delta",
-        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/0",
-        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "table_ladder",
-      "kind": "table"
-    },
-    {
-      "builder": "transfer_table",
-      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/1",
         "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "table_matrix_step24",
-      "kind": "table"
-    },
-    {
-      "builder": "transfer_table",
-      "evidence_refs": [
         "matrix_v1_step36:belief_summary.yaml:/arms/me_plus/score",
         "matrix_v1_step36:belief_summary.yaml:/arms/me_minus/score",
         "matrix_v1_step36:belief_summary.yaml:/arms/m0_plus/score",
         "matrix_v1_step36:belief_summary.yaml:/arms/m0_minus/score",
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/delta",
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/0",
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "table_matrix_step36",
-      "kind": "table"
-    },
-    {
-      "builder": "transfer_table",
-      "evidence_refs": [
+        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
+        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1",
+        "mld_arms:belief_summary.yaml:/delta_net/delta",
+        "mld_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "mld_arms:belief_summary.yaml:/delta_net/ci95/1",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1",
         "h8_4b:belief_summary.yaml:/delta_net/delta",
         "h8_4b:belief_summary.yaml:/delta_net/ci95/0",
         "h8_4b:belief_summary.yaml:/delta_net/ci95/1",
-        "h8_4b:belief_summary.yaml:/machinery/delta",
-        "h8_4b:belief_summary.yaml:/machinery/ci95/0",
-        "h8_4b:belief_summary.yaml:/machinery/ci95/1"
-      ],
-      "id": "table_h8_4b_belief",
-      "kind": "table"
-    },
-    {
-      "builder": "transfer_table",
-      "evidence_refs": [
-        "h8_8b:action_summary.yaml:/delta_net/delta",
-        "h8_8b:action_summary.yaml:/delta_net/ci95/0",
-        "h8_8b:action_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "table_h8_8b_action",
-      "kind": "table"
-    },
-    {
-      "builder": "trajectory_figure",
-      "evidence_refs": [
-        "matrix_v1:trajectory.jsonl:/"
-      ],
-      "id": "figure_matrix_trajectory",
-      "kind": "figure",
-      "path": "figures/trajectory.png"
-    },
-    {
-      "builder": "transfer_table",
-      "evidence_refs": [
         "h8_8b:belief_summary.yaml:/delta_net/delta",
         "h8_8b:belief_summary.yaml:/delta_net/ci95/0",
         "h8_8b:belief_summary.yaml:/delta_net/ci95/1",
-        "h8_8b:belief_summary.yaml:/machinery/delta",
-        "h8_8b:belief_summary.yaml:/machinery/ci95/0",
-        "h8_8b:belief_summary.yaml:/machinery/ci95/1"
-      ],
-      "id": "table_h8_8b_belief",
-      "kind": "table"
-    },
-    {
-      "builder": "transfer_table",
-      "evidence_refs": [
         "h8_4b:action_summary.yaml:/delta_net/delta",
         "h8_4b:action_summary.yaml:/delta_net/ci95/0",
-        "h8_4b:action_summary.yaml:/delta_net/ci95/1"
+        "h8_4b:action_summary.yaml:/delta_net/ci95/1",
+        "h8_8b:action_summary.yaml:/delta_net/delta",
+        "h8_8b:action_summary.yaml:/delta_net/ci95/0",
+        "h8_8b:action_summary.yaml:/delta_net/ci95/1",
+        "h19_full_ft:belief_summary.yaml:/delta_net/delta",
+        "h19_full_ft:belief_summary.yaml:/delta_net/ci95/0",
+        "h19_full_ft:belief_summary.yaml:/delta_net/ci95/1",
+        "h19_full_ft_s7:belief_summary.yaml:/delta_net/delta",
+        "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/0",
+        "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/1",
+        "inference_v1_step24:inference_summary.yaml:/arms/me_plus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/me_minus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/m0_plus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/m0_minus/score"
       ],
-      "id": "table_h8_4b_action",
+      "id": "t_ladder",
       "kind": "table"
     },
     {
@@ -172,7 +182,7 @@
         "h19_full_ft:belief_summary.yaml:/machinery/ci95/0",
         "h19_full_ft:belief_summary.yaml:/machinery/ci95/1"
       ],
-      "id": "table_h19_fullft_belief",
+      "id": "t_fullft42",
       "kind": "table"
     },
     {
@@ -185,37 +195,7 @@
         "h19_full_ft_s7:belief_summary.yaml:/machinery/ci95/0",
         "h19_full_ft_s7:belief_summary.yaml:/machinery/ci95/1"
       ],
-      "id": "table_h19_fullft_s7_belief",
-      "kind": "table"
-    },
-    {
-      "builder": "transfer_table",
-      "evidence_refs": [
-        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "table_ms3p_belief",
-      "kind": "table"
-    },
-    {
-      "builder": "transfer_table",
-      "evidence_refs": [
-        "mld_arms:belief_summary.yaml:/delta_net/delta",
-        "mld_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "mld_arms:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "table_mld_belief",
-      "kind": "table"
-    },
-    {
-      "builder": "transfer_table",
-      "evidence_refs": [
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "table_ms_sparse_belief",
+      "id": "t_fullft7",
       "kind": "table"
     },
     {
@@ -225,7 +205,7 @@
         "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/0",
         "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/1"
       ],
-      "id": "table_topic2_s42",
+      "id": "t_topic42",
       "kind": "table"
     },
     {
@@ -235,7 +215,7 @@
         "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/0",
         "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/1"
       ],
-      "id": "table_topic2_s7",
+      "id": "t_topic7",
       "kind": "table"
     },
     {
@@ -245,7 +225,18 @@
         "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/0",
         "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/1"
       ],
-      "id": "table_topic2_s123",
+      "id": "t_topic123",
+      "kind": "table"
+    },
+    {
+      "builder": "transfer_table",
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/arms/me_plus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/me_minus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/m0_plus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "t_inference",
       "kind": "table"
     }
   ],

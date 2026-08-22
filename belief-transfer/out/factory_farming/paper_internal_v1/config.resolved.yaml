@@ -724,13 +724,17 @@ writeup:
   - The five validation failures are the paper's substance, each with its own measured
     evidence and its own detection recipe. The fifth is the control's machinery term,
     which varies across seeds under LoRA and holds still under full fine-tuning.
-  - The descriptive-inference axis is withdrawn, and the reason is the inverted positive
-    control rather than a caveat on an otherwise usable number.
+  - The descriptive-inference axis is withdrawn because its positive control could
+    not demonstrate premise-specificity, rather than as a caveat on an otherwise usable
+    number. The per-facet ranking supporting that judgement lives in a repository
+    script and is outside the declared evidence, so the paper states the withdrawal
+    and its consequence without asserting the ranking.
   - Generality rests on the model axis only; the second topic's three declared seed
     contrasts disagree in sign.
   - The long-sparse cell is slow rather than inert, and each belief ratio carries
     the optimizer step it was read at.
   required_sections:
+  - abstract
   - motivation
   - methodology
   - results
@@ -1028,9 +1032,12 @@ writeup:
     control_positive_arm: m0_plus
     control_negative_arm: m0_minus
     checkpoint: checkpoint-24
-    qualification: This entry is the instrument-failure result. On this arm the byte-identical
-      null-control facet is the highest-moving of all eight facets, so the suite cannot
-      demonstrate premise-specificity and no transfer number from it is reported.
+    qualification: 'This entry is the instrument-failure result: on the arm meant
+      to be most sensitive the suite could not demonstrate premise-specificity, so
+      the descriptive-inference axis is withdrawn and no transfer number from it is
+      reported. The per-facet ranking behind that judgement is computed in scripts/h25_positive_control.py
+      and sits deliberately outside this declared bundle. Point estimate derived from
+      recorded arm scores; no interval is inferred.'
     required: true
   max_main_tables: 8
   max_main_figures: 3

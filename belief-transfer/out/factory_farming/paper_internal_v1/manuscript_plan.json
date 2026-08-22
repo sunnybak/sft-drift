@@ -2,89 +2,254 @@
   "assets": [
     {
       "axes_or_columns": [
-        "validation family",
-        "declared contrast",
-        "topic",
-        "model",
-        "training mode",
-        "seed/read type",
-        "optimizer checkpoint",
-        "net estimate",
-        "confidence interval or explicitly unavailable",
-        "interval-zero status",
-        "matched-control status",
-        "qualification",
-        "detection recipe"
+        "arm",
+        "netted belief contrast",
+        "95% CI",
+        "qualification"
       ],
-      "caption_outline": "Exactly one main results table spanning every declared contrast; include all values and intervals deterministically; keep belief, action, descriptive-inference, machinery, and unintervalled positive-control rows separate; label seed-paired, single-seed, three-seed band-level, and instrument-specific readings distinctly; attach optimizer checkpoints to belief ratios; state unavailable intervals rather than inferring them.",
+      "caption_outline": "Run ms3p_arms suite summary; identity rendering; short-dense focal estimate and interval with form-cross interpretation linked to separate declared runs in the ladder.",
       "claim_ids": [
         "c_form_short_dense",
         "c_form_long_dense",
-        "c_form_short_sparse",
-        "c_slow_step24",
-        "c_slow_step36",
-        "c_stance_step24",
-        "c_stance_step36",
-        "c_inference_withdrawn",
-        "c_model_belief_4b",
-        "c_model_belief_8b",
-        "c_model_action_4b",
-        "c_model_action_8b",
-        "c_fullft_belief_s42",
-        "c_fullft_belief_s7",
-        "c_machinery_4b",
-        "c_machinery_8b",
-        "c_machinery_fullft",
-        "c_topic2_s42",
-        "c_topic2_s7",
-        "c_topic2_s123"
+        "c_form_short_sparse"
       ],
       "evidence_refs": [
         "ms3p_arms:belief_summary.yaml:/delta_net/delta",
         "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1",
-        "mld_arms:belief_summary.yaml:/delta_net/delta",
-        "mld_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "mld_arms:belief_summary.yaml:/delta_net/ci95/1",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/delta",
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/0",
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/1",
+        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "form": "transfer_table",
+      "id": "t_form",
+      "placement": "results",
+      "question": "How do the declared form conditions differ in netted belief transfer?",
+      "takeaway": "Short-dense content produces the largest stable band-level belief effect, while the sparse corner is directional but too unstable for a ratio.",
+      "transformation": "identity"
+    },
+    {
+      "axes_or_columns": [
+        "arm",
+        "score",
+        "declared contrast",
+        "netted estimate",
+        "95% CI",
+        "optimizer step"
+      ],
+      "caption_outline": "matrix_v1_step24 belief suite; optimizer step 24; identity values; no interval inferred for the derived positive-control contrast.",
+      "claim_ids": [
+        "c_slow_step24",
+        "c_stance24"
+      ],
+      "evidence_refs": [
         "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "form": "transfer_table",
+      "id": "t_step24",
+      "placement": "results",
+      "question": "What are the per-arm belief scores and netted estimate at optimizer step 24?",
+      "takeaway": "The evidence-only cell is already positive at step 24, while the explicit-stance positive control is much larger.",
+      "transformation": "identity"
+    },
+    {
+      "axes_or_columns": [
+        "arm",
+        "score",
+        "declared contrast",
+        "netted estimate",
+        "95% CI",
+        "optimizer step"
+      ],
+      "caption_outline": "matrix_v1_step36 belief suite; optimizer step 36; identity values; no interval inferred for the derived positive-control contrast.",
+      "claim_ids": [
+        "c_slow_step36",
+        "c_stance36"
+      ],
+      "evidence_refs": [
         "matrix_v1_step36:belief_summary.yaml:/arms/me_plus/score",
         "matrix_v1_step36:belief_summary.yaml:/arms/me_minus/score",
         "matrix_v1_step36:belief_summary.yaml:/arms/m0_plus/score",
         "matrix_v1_step36:belief_summary.yaml:/arms/m0_minus/score",
-        "inference_v1_step24:inference_summary.yaml:/arms/me_plus/score",
-        "inference_v1_step24:inference_summary.yaml:/arms/me_minus/score",
-        "inference_v1_step24:inference_summary.yaml:/arms/m0_plus/score",
-        "inference_v1_step24:inference_summary.yaml:/arms/m0_minus/score",
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "form": "transfer_table",
+      "id": "t_step36",
+      "placement": "results",
+      "question": "What are the per-arm belief scores and netted estimate at optimizer step 36?",
+      "takeaway": "The evidence-only cell strengthens by step 36 even as the explicit-stance positive control begins to decay, identifying slow learning rather than inertia.",
+      "transformation": "identity"
+    },
+    {
+      "axes_or_columns": [
+        "component",
+        "estimate",
+        "95% CI",
+        "gate/control note"
+      ],
+      "caption_outline": "h8_4b belief suite only; identity rendering; dose-matched model comparison interpreted through the ladder.",
+      "claim_ids": [
+        "c_model4_belief",
+        "c_machinery_4b"
+      ],
+      "evidence_refs": [
         "h8_4b:belief_summary.yaml:/delta_net/delta",
         "h8_4b:belief_summary.yaml:/delta_net/ci95/0",
         "h8_4b:belief_summary.yaml:/delta_net/ci95/1",
+        "h8_4b:belief_summary.yaml:/machinery/delta",
+        "h8_4b:belief_summary.yaml:/machinery/ci95/0",
+        "h8_4b:belief_summary.yaml:/machinery/ci95/1"
+      ],
+      "form": "transfer_table",
+      "id": "t_model4_belief",
+      "placement": "results",
+      "question": "What is the 4B belief-suite positive-control result?",
+      "takeaway": "The 4B belief instrument records a substantial positive-control contrast alongside a nonzero control-machinery subtraction.",
+      "transformation": "identity"
+    },
+    {
+      "axes_or_columns": [
+        "component",
+        "estimate",
+        "95% CI",
+        "calibrated-gate note"
+      ],
+      "caption_outline": "h8_8b belief suite only; identity rendering; 8B-specific gate threshold retained.",
+      "claim_ids": [
+        "c_model8_belief",
+        "c_machinery_8b"
+      ],
+      "evidence_refs": [
         "h8_8b:belief_summary.yaml:/delta_net/delta",
         "h8_8b:belief_summary.yaml:/delta_net/ci95/0",
         "h8_8b:belief_summary.yaml:/delta_net/ci95/1",
+        "h8_8b:belief_summary.yaml:/machinery/delta",
+        "h8_8b:belief_summary.yaml:/machinery/ci95/0",
+        "h8_8b:belief_summary.yaml:/machinery/ci95/1"
+      ],
+      "form": "transfer_table",
+      "id": "t_model8_belief",
+      "placement": "results",
+      "question": "What is the 8B belief-suite positive-control result?",
+      "takeaway": "The positive-control belief effect persists at 8B under its separately calibrated gate, supporting generality on the model axis.",
+      "transformation": "identity"
+    },
+    {
+      "axes_or_columns": [
+        "netted action contrast",
+        "95% CI",
+        "interpretive restriction"
+      ],
+      "caption_outline": "h8_4b action suite only; identity rendering; matched off-topic netting; no causal-mediation claim.",
+      "claim_ids": [
+        "c_model4_action"
+      ],
+      "evidence_refs": [
         "h8_4b:action_summary.yaml:/delta_net/delta",
         "h8_4b:action_summary.yaml:/delta_net/ci95/0",
-        "h8_4b:action_summary.yaml:/delta_net/ci95/1",
+        "h8_4b:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "form": "transfer_table",
+      "id": "t_model4_action",
+      "placement": "results",
+      "question": "What is the 4B action-suite positive-control result?",
+      "takeaway": "At 4B the action contrast is unresolved, so a conduction ratio is not supportable.",
+      "transformation": "identity"
+    },
+    {
+      "axes_or_columns": [
+        "netted action contrast",
+        "95% CI",
+        "replication qualification"
+      ],
+      "caption_outline": "h8_8b action suite only; identity rendering; directional seed replication and magnitude restriction retained.",
+      "claim_ids": [
+        "c_model8_action"
+      ],
+      "evidence_refs": [
         "h8_8b:action_summary.yaml:/delta_net/delta",
         "h8_8b:action_summary.yaml:/delta_net/ci95/0",
-        "h8_8b:action_summary.yaml:/delta_net/ci95/1",
-        "h19_full_ft:belief_summary.yaml:/delta_net/delta",
-        "h19_full_ft:belief_summary.yaml:/delta_net/ci95/0",
-        "h19_full_ft:belief_summary.yaml:/delta_net/ci95/1",
-        "h19_full_ft_s7:belief_summary.yaml:/delta_net/delta",
-        "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/0",
-        "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/1",
+        "h8_8b:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "form": "transfer_table",
+      "id": "t_model8_action",
+      "placement": "results",
+      "question": "What is the 8B action-suite positive-control result?",
+      "takeaway": "At 8B the action contrast is positive, but seed scatter prevents a stable magnitude claim.",
+      "transformation": "identity"
+    },
+    {
+      "axes_or_columns": [
+        "optimizer step",
+        "raw belief/action diagnostic score",
+        "arm or contrast family"
+      ],
+      "caption_outline": "Saved matrix_v1 trajectory figures; diagnostic only; mark steps 24 and 36; direct readers to fixed tables for authoritative netted estimates and intervals.",
+      "claim_ids": [
+        "c_slow_step24",
+        "c_slow_step36",
+        "c_stance24",
+        "c_stance36"
+      ],
+      "evidence_refs": [
+        "matrix_v1:trajectory.jsonl:/"
+      ],
+      "form": "trajectory_figure",
+      "id": "f_trajectory",
+      "placement": "results",
+      "question": "How do the saved diagnostic trajectories evolve across checkpoints?",
+      "takeaway": "The saved trajectories distinguish a slowly strengthening evidence cell from a decaying explicit-stance positive control without treating raw checkpoint curves as netted transfer estimates.",
+      "transformation": "trajectory"
+    },
+    {
+      "axes_or_columns": [
+        "contrast family",
+        "run",
+        "suite",
+        "seed status",
+        "estimate",
+        "95% CI if recorded",
+        "checkpoint or optimizer step",
+        "qualification"
+      ],
+      "caption_outline": "Exactly one all-contrast ladder; declared-contrast rendering; preserve intervals, absent-interval labels, seed-family scope, checkpoints, and all qualifications.",
+      "claim_ids": [
+        "c_topic2_s42",
+        "c_topic2_s7",
+        "c_topic2_s123",
+        "c_machinery_4b",
+        "c_machinery_8b",
+        "c_machinery_fullft",
+        "c_slow_step24",
+        "c_slow_step36",
+        "c_stance24",
+        "c_stance36",
+        "c_form_short_dense",
+        "c_form_long_dense",
+        "c_form_short_sparse",
+        "c_model4_belief",
+        "c_model8_belief",
+        "c_model4_action",
+        "c_model8_action",
+        "c_fullft_s42",
+        "c_fullft_s7",
+        "c_inference_withdrawal"
+      ],
+      "evidence_refs": [
+        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/delta",
+        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/0",
+        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/1",
+        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/delta",
+        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/0",
+        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/1",
+        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/delta",
+        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/0",
+        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/1",
         "h8_4b:belief_summary.yaml:/machinery/delta",
         "h8_4b:belief_summary.yaml:/machinery/ci95/0",
         "h8_4b:belief_summary.yaml:/machinery/ci95/1",
@@ -103,233 +268,69 @@
         "h19_full_ft_s7:belief_summary.yaml:/machinery/delta",
         "h19_full_ft_s7:belief_summary.yaml:/machinery/ci95/0",
         "h19_full_ft_s7:belief_summary.yaml:/machinery/ci95/1",
-        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/delta",
-        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/0",
-        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/1",
-        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/delta",
-        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/0",
-        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/1",
-        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/delta",
-        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/0",
-        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "form": "ladder_table",
-      "id": "table_ladder",
-      "placement": "results",
-      "question": "What does every declared contrast report, with its estimate, interval availability, reading scope, and qualification?",
-      "takeaway": "The numerical ladder separates the instrument demonstration from five distinct validation failures: timing, positive-control inversion, action non-conduction, scale dependence, and seed-sensitive control machinery; topic replication does not establish generality.",
-      "transformation": "declared_contrast"
-    },
-    {
-      "axes_or_columns": [
-        "arm",
-        "raw score",
-        "contrast role",
-        "net estimate",
-        "confidence interval availability",
-        "optimizer checkpoint",
-        "gate status",
-        "qualification"
-      ],
-      "caption_outline": "Single-run belief-suite summary; identity rendering only; mark the explicit-stance estimate as derived from arm scores without an inferred interval; show matched-control netting and the optimizer checkpoint.",
-      "claim_ids": [
-        "c_slow_step24",
-        "c_stance_step24"
-      ],
-      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/1",
         "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "form": "transfer_table",
-      "id": "table_matrix_step24",
-      "placement": "results",
-      "question": "What per-arm belief scores produce the earlier evidence-only and explicit-stance contrasts?",
-      "takeaway": "The earlier reading combines a small positive netted evidence effect with a much larger recorded positive-control response, demonstrating instrument sensitivity without treating explicit stance as general transfer.",
-      "transformation": "identity"
-    },
-    {
-      "axes_or_columns": [
-        "arm",
-        "raw score",
-        "contrast role",
-        "net estimate",
-        "confidence interval availability",
-        "optimizer checkpoint",
-        "gate status",
-        "qualification"
-      ],
-      "caption_outline": "Single-run belief-suite summary; identity rendering only; preserve the late gate qualification; attach the optimizer checkpoint to every ratio or comparison.",
-      "claim_ids": [
-        "c_slow_step36",
-        "c_stance_step36"
-      ],
-      "evidence_refs": [
         "matrix_v1_step36:belief_summary.yaml:/arms/me_plus/score",
         "matrix_v1_step36:belief_summary.yaml:/arms/me_minus/score",
         "matrix_v1_step36:belief_summary.yaml:/arms/m0_plus/score",
         "matrix_v1_step36:belief_summary.yaml:/arms/m0_minus/score",
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/delta",
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/0",
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "form": "transfer_table",
-      "id": "table_matrix_step36",
-      "placement": "results",
-      "question": "What per-arm belief scores produce the later evidence-only and explicit-stance contrasts?",
-      "takeaway": "The later reading shows the evidence-only effect continuing to rise while the positive-control response declines, identifying a slow cell rather than an inert one.",
-      "transformation": "identity"
-    },
-    {
-      "axes_or_columns": [
-        "arm",
-        "belief score",
-        "netted treatment contrast",
-        "control-machinery term",
-        "confidence intervals",
-        "gate status",
-        "qualification"
-      ],
-      "caption_outline": "Single-run belief-suite summary; identity rendering only; distinguish treatment contrast from the machinery term; cross-seed comparison remains in the ladder table.",
-      "claim_ids": [
-        "c_model_belief_4b",
-        "c_machinery_4b"
-      ],
-      "evidence_refs": [
+        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
+        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1",
+        "mld_arms:belief_summary.yaml:/delta_net/delta",
+        "mld_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "mld_arms:belief_summary.yaml:/delta_net/ci95/1",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1",
         "h8_4b:belief_summary.yaml:/delta_net/delta",
         "h8_4b:belief_summary.yaml:/delta_net/ci95/0",
         "h8_4b:belief_summary.yaml:/delta_net/ci95/1",
-        "h8_4b:belief_summary.yaml:/machinery/delta",
-        "h8_4b:belief_summary.yaml:/machinery/ci95/0",
-        "h8_4b:belief_summary.yaml:/machinery/ci95/1"
-      ],
-      "form": "transfer_table",
-      "id": "table_h8_4b_belief",
-      "placement": "results",
-      "question": "What per-arm belief details underlie the smaller-model explicit-stance and control-machinery readings?",
-      "takeaway": "The smaller-model belief signal is positive, but its control-machinery component is seed-sensitive and must be inspected separately from the treatment contrast.",
-      "transformation": "identity"
-    },
-    {
-      "axes_or_columns": [
-        "arm",
-        "action score",
-        "netted action contrast",
-        "confidence interval",
-        "zero status",
-        "qualification"
-      ],
-      "caption_outline": "Single-run action-suite summary; identity rendering only; do not mix belief refs; cross-model and cross-seed comparisons remain in the ladder table.",
-      "claim_ids": [
-        "c_model_action_8b"
-      ],
-      "evidence_refs": [
-        "h8_8b:action_summary.yaml:/delta_net/delta",
-        "h8_8b:action_summary.yaml:/delta_net/ci95/0",
-        "h8_8b:action_summary.yaml:/delta_net/ci95/1"
-      ],
-      "form": "transfer_table",
-      "id": "table_h8_8b_action",
-      "placement": "results",
-      "question": "What per-arm action details underlie the larger-model action contrast?",
-      "takeaway": "The larger model shows a positive matched-control action contrast, but the paired-seed scatter prevents a stable magnitude claim or mediation interpretation.",
-      "transformation": "identity"
-    },
-    {
-      "axes_or_columns": [
-        "optimizer checkpoint",
-        "saved diagnostic metric",
-        "arm/contrast series"
-      ],
-      "caption_outline": "Render the declared matrix run's saved figures; label raw belief or action curves as diagnostic; direct all numerical estimates and intervals to fixed tables.",
-      "claim_ids": [
-        "c_slow_step24",
-        "c_slow_step36",
-        "c_stance_step24",
-        "c_stance_step36"
-      ],
-      "evidence_refs": [
-        "matrix_v1:trajectory.jsonl:/"
-      ],
-      "form": "trajectory_figure",
-      "id": "figure_matrix_trajectory",
-      "placement": "results",
-      "question": "How do the saved diagnostic checkpoint trajectories evolve for the declared matrix run?",
-      "takeaway": "The saved trajectories visually distinguish delayed evidence uptake from positive-control decay, while remaining diagnostic rather than authoritative netted estimates.",
-      "transformation": "trajectory"
-    },
-    {
-      "axes_or_columns": [
-        "arm",
-        "belief score",
-        "netted treatment contrast",
-        "control-machinery term",
-        "confidence intervals",
-        "model-specific gate status",
-        "qualification"
-      ],
-      "caption_outline": "Single-run belief-suite summary; identity rendering only; preserve the model-specific threshold qualification; cross-seed comparison remains in the ladder table.",
-      "claim_ids": [
-        "c_model_belief_8b",
-        "c_machinery_8b"
-      ],
-      "evidence_refs": [
         "h8_8b:belief_summary.yaml:/delta_net/delta",
         "h8_8b:belief_summary.yaml:/delta_net/ci95/0",
         "h8_8b:belief_summary.yaml:/delta_net/ci95/1",
-        "h8_8b:belief_summary.yaml:/machinery/delta",
-        "h8_8b:belief_summary.yaml:/machinery/ci95/0",
-        "h8_8b:belief_summary.yaml:/machinery/ci95/1"
-      ],
-      "form": "transfer_table",
-      "id": "table_h8_8b_belief",
-      "placement": "appendix",
-      "question": "What per-arm belief details underlie the larger-model explicit-stance and control-machinery readings?",
-      "takeaway": "The larger-model belief signal is positive, but the control-machinery term reverses across the paired seed and therefore requires separate validation.",
-      "transformation": "identity"
-    },
-    {
-      "axes_or_columns": [
-        "arm",
-        "action score",
-        "netted action contrast",
-        "confidence interval",
-        "zero status",
-        "qualification"
-      ],
-      "caption_outline": "Single-run action-suite summary; identity rendering only; do not mix belief refs or claim mediation.",
-      "claim_ids": [
-        "c_model_action_4b"
-      ],
-      "evidence_refs": [
         "h8_4b:action_summary.yaml:/delta_net/delta",
         "h8_4b:action_summary.yaml:/delta_net/ci95/0",
-        "h8_4b:action_summary.yaml:/delta_net/ci95/1"
+        "h8_4b:action_summary.yaml:/delta_net/ci95/1",
+        "h8_8b:action_summary.yaml:/delta_net/delta",
+        "h8_8b:action_summary.yaml:/delta_net/ci95/0",
+        "h8_8b:action_summary.yaml:/delta_net/ci95/1",
+        "h19_full_ft:belief_summary.yaml:/delta_net/delta",
+        "h19_full_ft:belief_summary.yaml:/delta_net/ci95/0",
+        "h19_full_ft:belief_summary.yaml:/delta_net/ci95/1",
+        "h19_full_ft_s7:belief_summary.yaml:/delta_net/delta",
+        "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/0",
+        "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/1",
+        "inference_v1_step24:inference_summary.yaml:/arms/me_plus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/me_minus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/m0_plus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/m0_minus/score"
       ],
-      "form": "transfer_table",
-      "id": "table_h8_4b_action",
+      "form": "ladder_table",
+      "id": "t_ladder",
       "placement": "appendix",
-      "question": "What per-arm action details underlie the smaller-model action contrast?",
-      "takeaway": "The smaller-model action numerator is unresolved, so no conduction ratio is supportable.",
-      "transformation": "identity"
+      "question": "What is the complete cross-run picture for every declared contrast?",
+      "takeaway": "Across all declared contrasts, the instrument succeeds on form and model controls but exposes five validation failures: slow checkpoint dependence, positive-control decay, action inconsistency, seed-sensitive control machinery, and topic-sign disagreement, with descriptive inference withdrawn.",
+      "transformation": "declared_contrast"
     },
     {
       "axes_or_columns": [
-        "arm",
-        "belief score",
-        "netted evidence contrast",
-        "control-machinery term",
-        "confidence intervals",
-        "training mode",
-        "qualification"
+        "component",
+        "estimate",
+        "95% CI",
+        "training-regime note"
       ],
-      "caption_outline": "Single-run belief-suite summary; identity rendering only; preserve the scale-dependence qualification; cross-seed comparison remains in the ladder table.",
+      "caption_outline": "h19_full_ft belief suite only; identity rendering; seed 42; retain scale-dependence qualification.",
       "claim_ids": [
-        "c_fullft_belief_s42",
+        "c_fullft_s42",
         "c_machinery_fullft"
       ],
       "evidence_refs": [
@@ -341,25 +342,22 @@
         "h19_full_ft:belief_summary.yaml:/machinery/ci95/1"
       ],
       "form": "transfer_table",
-      "id": "table_h19_fullft_belief",
+      "id": "t_fullft42",
       "placement": "appendix",
-      "question": "What per-arm belief details underlie the first full-fine-tuning reading and its machinery term?",
-      "takeaway": "Full fine-tuning produces a small positive belief effect while its control machinery remains consistent with the paired run.",
+      "question": "What does the seed-42 full-fine-tuning belief suite show?",
+      "takeaway": "Full fine-tuning yields a small positive evidence-corpus belief contrast while keeping the control-machinery term near its replicate.",
       "transformation": "identity"
     },
     {
       "axes_or_columns": [
-        "arm",
-        "belief score",
-        "netted evidence contrast",
-        "control-machinery term",
-        "confidence intervals",
-        "training mode",
-        "qualification"
+        "component",
+        "estimate",
+        "95% CI",
+        "replication note"
       ],
-      "caption_outline": "Single-run belief-suite summary; identity rendering only; note the seed-matched control and re-derived schedule; cross-seed comparison remains in the ladder table.",
+      "caption_outline": "h19_full_ft_s7 belief suite only; identity rendering; seed-matched control and re-derived schedule.",
       "claim_ids": [
-        "c_fullft_belief_s7",
+        "c_fullft_s7",
         "c_machinery_fullft"
       ],
       "evidence_refs": [
@@ -371,98 +369,19 @@
         "h19_full_ft_s7:belief_summary.yaml:/machinery/ci95/1"
       ],
       "form": "transfer_table",
-      "id": "table_h19_fullft_s7_belief",
+      "id": "t_fullft7",
       "placement": "appendix",
-      "question": "What per-arm belief details underlie the paired full-fine-tuning reading and its machinery term?",
-      "takeaway": "The paired full-fine-tuning run replicates the positive belief direction and the comparatively stable machinery term.",
+      "question": "What does the seed-7 full-fine-tuning belief suite show?",
+      "takeaway": "The full-fine-tuning evidence effect replicates at seed 7 and its machinery interval overlaps seed 42.",
       "transformation": "identity"
     },
     {
       "axes_or_columns": [
-        "arm",
-        "belief score",
-        "netted form contrast",
-        "confidence interval",
-        "seed-band label",
-        "qualification"
+        "netted belief contrast",
+        "95% CI",
+        "gating and control note"
       ],
-      "caption_outline": "Single-run belief-suite summary; identity rendering only; label as the only band-level result and preserve the same-premise/form-only qualification.",
-      "claim_ids": [
-        "c_form_short_dense"
-      ],
-      "evidence_refs": [
-        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "form": "transfer_table",
-      "id": "table_ms3p_belief",
-      "placement": "appendix",
-      "question": "What per-arm belief details support the short, dense form result?",
-      "takeaway": "The short, dense format provides the strongest form-cross signal and validates the instrument at the band level.",
-      "transformation": "identity"
-    },
-    {
-      "axes_or_columns": [
-        "arm",
-        "belief score",
-        "netted form contrast",
-        "confidence interval",
-        "matched-density label",
-        "qualification"
-      ],
-      "caption_outline": "Single-run belief-suite summary; identity rendering only; preserve matched-density interpretation.",
-      "claim_ids": [
-        "c_form_long_dense"
-      ],
-      "evidence_refs": [
-        "mld_arms:belief_summary.yaml:/delta_net/delta",
-        "mld_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "mld_arms:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "form": "transfer_table",
-      "id": "table_mld_belief",
-      "placement": "appendix",
-      "question": "What per-arm belief details support the long, dense form result?",
-      "takeaway": "Lengthening the dense form weakens the measured belief effect relative to the short, dense format.",
-      "transformation": "identity"
-    },
-    {
-      "axes_or_columns": [
-        "arm",
-        "belief score",
-        "netted form contrast",
-        "confidence interval",
-        "stability label",
-        "qualification"
-      ],
-      "caption_outline": "Single-run belief-suite summary; identity rendering only; explicitly suppress any ratio.",
-      "claim_ids": [
-        "c_form_short_sparse"
-      ],
-      "evidence_refs": [
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "form": "transfer_table",
-      "id": "table_ms_sparse_belief",
-      "placement": "appendix",
-      "question": "What per-arm belief details support the short, sparse form result?",
-      "takeaway": "The short, sparse corner is directional but too seed-unstable for a ratio.",
-      "transformation": "identity"
-    },
-    {
-      "axes_or_columns": [
-        "arm",
-        "belief score",
-        "netted second-topic contrast",
-        "confidence interval",
-        "seed",
-        "gate status",
-        "qualification"
-      ],
-      "caption_outline": "Single-run belief-suite summary; identity rendering only; preserve matched off-topic control and all-arms-gated qualification.",
+      "caption_outline": "software_architecture/sw_arms_v1 belief suite only; identity rendering; matched control; all arms gated.",
       "claim_ids": [
         "c_topic2_s42"
       ],
@@ -472,22 +391,19 @@
         "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/1"
       ],
       "form": "transfer_table",
-      "id": "table_topic2_s42",
+      "id": "t_topic42",
       "placement": "appendix",
-      "question": "What per-arm belief details support the first second-topic reading?",
-      "takeaway": "The first second-topic reading is near zero and does not by itself establish topic generality.",
+      "question": "What is the second-topic belief result at seed 42?",
+      "takeaway": "The seed-42 second-topic estimate is near zero and does not establish topic generality.",
       "transformation": "identity"
     },
     {
       "axes_or_columns": [
-        "arm",
-        "belief score",
-        "netted second-topic contrast",
-        "confidence interval",
-        "seed",
-        "qualification"
+        "netted belief contrast",
+        "95% CI",
+        "seed-matched-control note"
       ],
-      "caption_outline": "Single-run belief-suite summary; identity rendering only; preserve seed-matched-control qualification.",
+      "caption_outline": "software_architecture/sw_arms_v1_s7 belief suite only; identity rendering; seed-matched control.",
       "claim_ids": [
         "c_topic2_s7"
       ],
@@ -497,24 +413,19 @@
         "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/1"
       ],
       "form": "transfer_table",
-      "id": "table_topic2_s7",
+      "id": "t_topic7",
       "placement": "appendix",
-      "question": "What per-arm belief details support the second second-topic reading?",
-      "takeaway": "The second reading remains near zero but differs from the third reading in sign, undermining topic generality.",
+      "question": "What is the second-topic belief result at seed 7?",
+      "takeaway": "The seed-7 second-topic estimate is positive, but it is not stable across the full three-seed set.",
       "transformation": "identity"
     },
     {
       "axes_or_columns": [
-        "arm",
-        "belief score",
-        "netted second-topic contrast",
-        "confidence interval",
-        "seed",
-        "gate status",
-        "machinery diagnosis",
-        "qualification"
+        "netted belief contrast",
+        "95% CI",
+        "machinery qualification"
       ],
-      "caption_outline": "Single-run belief-suite summary; identity rendering only; preserve all-five-arms-gated and control-machinery qualifications.",
+      "caption_outline": "software_architecture/sw_arms_v1_s123 belief suite only; identity rendering; all five arms gated; preserve control-machinery explanation.",
       "claim_ids": [
         "c_topic2_s123"
       ],
@@ -524,10 +435,35 @@
         "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/1"
       ],
       "form": "transfer_table",
-      "id": "table_topic2_s123",
+      "id": "t_topic123",
       "placement": "appendix",
-      "question": "What per-arm belief details support the third second-topic reading?",
-      "takeaway": "The third reading reverses sign because of the control machinery, confirming that the topic axis is not a stable generality result.",
+      "question": "What is the second-topic belief result at seed 123?",
+      "takeaway": "The seed-123 second-topic estimate reverses sign because of the control-machinery term, defeating topic-axis generality.",
+      "transformation": "identity"
+    },
+    {
+      "axes_or_columns": [
+        "arm",
+        "recorded score",
+        "derived positive-control contrast",
+        "interval status",
+        "reporting consequence"
+      ],
+      "caption_outline": "inference_v1_step24 inference suite only; identity arm scores; derived point estimate labeled unintervalled; omit repository-only per-facet ranking.",
+      "claim_ids": [
+        "c_inference_withdrawal"
+      ],
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/arms/me_plus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/me_minus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/m0_plus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/m0_minus/score"
+      ],
+      "form": "transfer_table",
+      "id": "t_inference",
+      "placement": "appendix",
+      "question": "Why is the descriptive-inference axis withdrawn?",
+      "takeaway": "The intended positive control fails to demonstrate premise-specificity, so the entire descriptive-inference axis is withdrawn rather than reported with a caveat.",
       "transformation": "identity"
     }
   ],
@@ -535,289 +471,85 @@
     {
       "empirical": false,
       "evidence_refs": [],
-      "id": "c_method_exploratory",
-      "qualifiers": [
-        "Methodology constraint copied from interpretation_rules."
-      ],
+      "id": "c_exploratory",
+      "qualifiers": [],
       "text": "Treat the result as exploratory; state model, topic, seed count, and checkpoint scope only from recorded artifacts."
     },
     {
       "empirical": false,
       "evidence_refs": [],
-      "id": "c_method_seed_scope",
-      "qualifiers": [
-        "Methodology constraint copied from interpretation_rules.",
-        "Do not describe the evidence bundle as uniformly seed-paired."
-      ],
+      "id": "c_seed_scope",
+      "qualifiers": [],
       "text": "Two-seed scope applies only to declared seed-paired contrast families; identify single-seed and instrument-specific readings separately."
     },
     {
       "empirical": false,
       "evidence_refs": [],
-      "id": "c_method_absorption",
-      "qualifiers": [
-        "Methodology constraint copied from interpretation_rules."
-      ],
+      "id": "c_absorption",
+      "qualifiers": [],
       "text": "Absorption is held-out premise specialization, not a belief measure."
     },
     {
       "empirical": false,
       "evidence_refs": [],
-      "id": "c_method_netting",
-      "qualifiers": [
-        "Methodology constraint copied from interpretation_rules."
-      ],
+      "id": "c_netting",
+      "qualifiers": [],
       "text": "Belief and action contrasts require their matched off-topic control netting; do not claim causal mediation."
     },
     {
       "empirical": false,
       "evidence_refs": [],
-      "id": "c_method_diagnostics",
-      "qualifiers": [
-        "Methodology constraint copied from interpretation_rules."
-      ],
-      "text": "Raw belief and action checkpoint figures are diagnostic and are not netted transfer estimates."
+      "id": "c_diagnostic",
+      "qualifiers": [],
+      "text": "Raw belief/action checkpoint figures are diagnostic and are not netted transfer estimates."
     },
     {
       "empirical": false,
       "evidence_refs": [],
-      "id": "c_method_authority",
-      "qualifiers": [
-        "Methodology constraint copied from interpretation_rules."
-      ],
+      "id": "c_authority",
+      "qualifiers": [],
       "text": "Fixed tables, not prose, are authoritative for numerical estimates and confidence intervals."
     },
     {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_testbed",
-      "qualifiers": [
-        "Contribution framing; not an empirical result."
+      "empirical": true,
+      "evidence_refs": [
+        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/delta",
+        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/0",
+        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/1"
       ],
-      "text": "The testbed uses measured causal effect sizes as ground truth rather than claiming novelty from a first-of-its-kind dataset."
+      "id": "c_topic2_s42",
+      "qualifiers": [
+        "Second topic (software architecture), matched off-topic control, all arms gated.",
+        "Reported as one of three seeds whose netted signs disagree."
+      ],
+      "text": "The second-topic netted belief contrast was 0.0076 at seed 42."
     },
     {
       "empirical": true,
       "evidence_refs": [
-        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1"
+        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/delta",
+        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/0",
+        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/1"
       ],
-      "id": "c_form_short_dense",
+      "id": "c_topic2_s7",
       "qualifiers": [
-        "Same premise specification as the long-form arms; form is the only variable.",
-        "Band-level across three seeds.",
-        "This is the paper's only band-level finding."
+        "Seed-seven replicate with a seed-matched control."
       ],
-      "text": "The short, dense form produces the strongest recorded form-cross belief contrast."
+      "text": "The second-topic netted belief contrast was 0.0122 at seed 7."
     },
     {
       "empirical": true,
       "evidence_refs": [
-        "mld_arms:belief_summary.yaml:/delta_net/delta",
-        "mld_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "mld_arms:belief_summary.yaml:/delta_net/ci95/1"
+        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/delta",
+        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/0",
+        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/1"
       ],
-      "id": "c_form_long_dense",
+      "id": "c_topic2_s123",
       "qualifiers": [
-        "Length arm of the form cross at matched density."
+        "Third seed with a seed-matched control, all five arms gated.",
+        "Its sign disagrees with the other two seeds; the disagreement arises in the control's machinery term, not the treatment contrast."
       ],
-      "text": "The long, dense form yields a smaller positive belief contrast than the short, dense form."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "c_form_short_sparse",
-      "qualifiers": [
-        "Unstable corner across three seeds.",
-        "Carries no ratio."
-      ],
-      "text": "The short, sparse form is directional but unstable."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "c_slow_step24",
-      "qualifiers": [
-        "Earlier drafts quoted this as the near-null cell.",
-        "Matched off-topic control.",
-        "All arms gated.",
-        "Single-seed reading.",
-        "The deterministic table must pair the belief ratio with its optimizer-step reading."
-      ],
-      "text": "The evidence-only belief contrast is positive at the earlier recorded reading."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/delta",
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/0",
-        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "c_slow_step36",
-      "qualifiers": [
-        "Same arms and same control at the later reading.",
-        "All seven arms gated.",
-        "The control passes at the recorded threshold, so the late-step gate failure is genuinely late.",
-        "Single-seed reading.",
-        "The deterministic table must pair the belief ratio with its optimizer-step reading."
-      ],
-      "text": "The same evidence-only belief contrast is larger at the later recorded reading, supporting a slow rather than inert interpretation."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
-        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
-        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
-        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
-      ],
-      "id": "c_stance_step24",
-      "qualifiers": [
-        "Positive control for the belief instrument, not general belief transfer.",
-        "Token dose is lower than the evidence corpus.",
-        "Point estimate derived from recorded arm scores.",
-        "No interval is inferred.",
-        "Single-seed instrument-specific reading."
-      ],
-      "text": "Explicit stance provides a recorded positive-control belief contrast at the earlier reading."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "matrix_v1_step36:belief_summary.yaml:/arms/me_plus/score",
-        "matrix_v1_step36:belief_summary.yaml:/arms/me_minus/score",
-        "matrix_v1_step36:belief_summary.yaml:/arms/m0_plus/score",
-        "matrix_v1_step36:belief_summary.yaml:/arms/m0_minus/score"
-      ],
-      "id": "c_stance_step36",
-      "qualifiers": [
-        "Same positive control at the later reading.",
-        "Point estimate derived from recorded arm scores.",
-        "No interval is inferred.",
-        "Single-seed instrument-specific reading.",
-        "Do not describe as general belief transfer."
-      ],
-      "text": "The explicit-stance positive-control contrast decays at the later reading while the evidence-only contrast rises."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "inference_v1_step24:inference_summary.yaml:/arms/me_plus/score",
-        "inference_v1_step24:inference_summary.yaml:/arms/me_minus/score",
-        "inference_v1_step24:inference_summary.yaml:/arms/m0_plus/score",
-        "inference_v1_step24:inference_summary.yaml:/arms/m0_minus/score"
-      ],
-      "id": "c_inference_withdrawn",
-      "qualifiers": [
-        "Instrument-failure result, not a caveat on an otherwise usable transfer estimate.",
-        "The byte-identical null-control facet is the highest-moving of all eight facets.",
-        "No transfer number from this suite is reported.",
-        "Point estimate derived from recorded arm scores.",
-        "No interval is inferred.",
-        "Single-seed instrument-specific reading."
-      ],
-      "text": "The descriptive-inference axis is withdrawn because its explicit-arm positive control is inverted and cannot demonstrate premise-specificity."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "h8_4b:belief_summary.yaml:/delta_net/delta",
-        "h8_4b:belief_summary.yaml:/delta_net/ci95/0",
-        "h8_4b:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "c_model_belief_4b",
-      "qualifiers": [
-        "Dose-matched to the larger-model arm.",
-        "Model is the only difference.",
-        "Belief contrast is matched-control netted."
-      ],
-      "text": "The recorded explicit-stance belief contrast is positive for the smaller model."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "h8_8b:belief_summary.yaml:/delta_net/delta",
-        "h8_8b:belief_summary.yaml:/delta_net/ci95/0",
-        "h8_8b:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "c_model_belief_8b",
-      "qualifiers": [
-        "Control retrained at the larger model size.",
-        "The larger model has its own calibrated gate threshold; the smaller-model bar is not reused.",
-        "Belief contrast is matched-control netted."
-      ],
-      "text": "The recorded explicit-stance belief contrast is positive for the larger model."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "h8_4b:action_summary.yaml:/delta_net/delta",
-        "h8_4b:action_summary.yaml:/delta_net/ci95/0",
-        "h8_4b:action_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "c_model_action_4b",
-      "qualifiers": [
-        "Interval straddles zero.",
-        "No conduction ratio is quotable while this numerator straddles.",
-        "Action contrast is matched-control netted.",
-        "Do not claim causal mediation."
-      ],
-      "text": "The smaller-model explicit-stance action contrast is unresolved."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "h8_8b:action_summary.yaml:/delta_net/delta",
-        "h8_8b:action_summary.yaml:/delta_net/ci95/0",
-        "h8_8b:action_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "c_model_action_8b",
-      "qualifiers": [
-        "Replicated in direction at the paired seed.",
-        "Magnitude is not claimed because it scatters across seeds.",
-        "Action contrast is matched-control netted.",
-        "Do not claim causal mediation."
-      ],
-      "text": "The larger-model explicit-stance action contrast is positive."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "h19_full_ft:belief_summary.yaml:/delta_net/delta",
-        "h19_full_ft:belief_summary.yaml:/delta_net/ci95/0",
-        "h19_full_ft:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "c_fullft_belief_s42",
-      "qualifiers": [
-        "Under LoRA the same corpus straddles zero on probability and excludes zero on log-odds.",
-        "Interpret as scale dependence rather than a capacity cliff.",
-        "Matched-control netted."
-      ],
-      "text": "Full fine-tuning yields a positive evidence-corpus belief contrast in the first declared seed reading."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "h19_full_ft_s7:belief_summary.yaml:/delta_net/delta",
-        "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/0",
-        "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "c_fullft_belief_s7",
-      "qualifiers": [
-        "Seed-paired replication with a seed-matched full-fine-tuning control.",
-        "Schedule re-derived.",
-        "Matched-control netted."
-      ],
-      "text": "Full fine-tuning yields a positive evidence-corpus belief contrast in the paired seed reading."
+      "text": "The second-topic netted belief contrast was -0.0034 at seed 123."
     },
     {
       "empirical": true,
@@ -831,10 +563,10 @@
       ],
       "id": "c_machinery_4b",
       "qualifiers": [
-        "This is the quantity netting subtracts.",
-        "The paired intervals do not overlap."
+        "The quantity netting subtracts.",
+        "The seed intervals do not overlap."
       ],
-      "text": "The smaller-model LoRA control-machinery term varies across the declared seed pair."
+      "text": "For 4B LoRA, the control-machinery term changed from -0.0173 at seed 42 to -0.0025 at seed 7."
     },
     {
       "empirical": true,
@@ -848,11 +580,10 @@
       ],
       "id": "c_machinery_8b",
       "qualifiers": [
-        "This is the quantity netting subtracts.",
-        "The paired intervals do not overlap.",
-        "The paired readings have opposite signs."
+        "The seed intervals do not overlap.",
+        "The two readings carry opposite signs."
       ],
-      "text": "The larger-model LoRA control-machinery term varies across the declared seed pair."
+      "text": "For 8B LoRA, the control-machinery term changed sign from -0.0031 at seed 42 to 0.0156 at seed 7."
     },
     {
       "empirical": true,
@@ -866,138 +597,348 @@
       ],
       "id": "c_machinery_fullft",
       "qualifiers": [
-        "The paired intervals overlap.",
-        "Unlike every recorded LoRA control family."
+        "The two seed intervals overlap, unlike every LoRA control family."
       ],
-      "text": "The full-fine-tuning control-machinery term holds comparatively still across the declared seed pair."
+      "text": "Under full fine-tuning, the control-machinery term was -0.0053 at seed 42 and -0.0049 at seed 7."
     },
     {
       "empirical": true,
       "evidence_refs": [
-        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/delta",
-        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/0",
-        "software_architecture/sw_arms_v1:belief_summary.yaml:/delta_net/ci95/1"
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
       ],
-      "id": "c_topic2_s42",
+      "id": "c_slow_step24",
       "qualifiers": [
-        "Software-architecture topic.",
-        "Matched off-topic control.",
-        "All arms gated.",
-        "One of three seed readings whose netted signs disagree."
+        "Two epochs.",
+        "Matched off-topic control, all arms gated.",
+        "This was the reading earlier drafts quoted as the near-null cell.",
+        "One seed."
       ],
-      "text": "The second-topic belief contrast is near zero in the first declared seed reading."
+      "text": "The long-sparse evidence-only belief contrast was 0.0072 at optimizer step 24."
     },
     {
       "empirical": true,
       "evidence_refs": [
-        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/delta",
-        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/0",
-        "software_architecture/sw_arms_v1_s7:belief_summary.yaml:/delta_net/ci95/1"
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step36:belief_summary.yaml:/delta_net/ci95/1"
       ],
-      "id": "c_topic2_s7",
+      "id": "c_slow_step36",
       "qualifiers": [
-        "Seed-matched control.",
-        "One of three seed readings whose netted signs disagree."
+        "Three epochs.",
+        "Same arms and same control.",
+        "All seven arms gated; the control passes at 0.802, so the late-step gate failure is genuinely late.",
+        "One seed."
       ],
-      "text": "The second-topic belief contrast is near zero in the second declared seed reading."
+      "text": "The same evidence-only belief contrast rose to 0.0342 at optimizer step 36."
     },
     {
       "empirical": true,
       "evidence_refs": [
-        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/delta",
-        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/0",
-        "software_architecture/sw_arms_v1_s123:belief_summary.yaml:/delta_net/ci95/1"
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
       ],
-      "id": "c_topic2_s123",
+      "id": "c_stance24",
       "qualifiers": [
-        "Seed-matched control.",
-        "All five arms gated.",
-        "Sign disagreement arises in the control's machinery term, not the treatment contrast."
+        "Positive control for the belief instrument, not general belief transfer.",
+        "Token dose is lower than the evidence corpus.",
+        "Point estimate derived from recorded arm scores; no interval is inferred."
       ],
-      "text": "The second-topic belief contrast reverses sign in the third declared seed reading."
+      "text": "The recorded explicit-stance positive-control belief contrast was 0.3111 at step 24."
     },
     {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_generality",
-      "qualifiers": [
-        "Synthesis claim from atomic model and second-topic results.",
-        "The second topic's declared seed contrasts disagree in sign.",
-        "Do not present topic generality."
+      "empirical": true,
+      "evidence_refs": [
+        "matrix_v1_step36:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step36:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step36:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step36:belief_summary.yaml:/arms/m0_minus/score"
       ],
-      "text": "Generality is supported only on the model axis, not on the topic axis."
+      "id": "c_stance36",
+      "qualifiers": [
+        "The same positive control one epoch later, where it has begun to decay while the evidence cell is still rising.",
+        "Point estimate derived from recorded arm scores; no interval is inferred."
+      ],
+      "text": "The recorded explicit-stance positive-control belief contrast was 0.2167 at step 36."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
+        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "c_form_short_dense",
+      "qualifiers": [
+        "Same premise specification as the long-form arms; form is the only variable.",
+        "Band-level across three seeds."
+      ],
+      "text": "The short-dense belief contrast was 0.119."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "mld_arms:belief_summary.yaml:/delta_net/delta",
+        "mld_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "mld_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "c_form_long_dense",
+      "qualifiers": [
+        "The length arm of the form cross at matched density."
+      ],
+      "text": "The long-dense belief contrast was 0.0547."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "c_form_short_sparse",
+      "qualifiers": [
+        "The unstable corner: scatters 2.98x across three seeds, so its reading is directional and carries no ratio."
+      ],
+      "text": "The short-sparse belief contrast was 0.0506."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "h8_4b:belief_summary.yaml:/delta_net/delta",
+        "h8_4b:belief_summary.yaml:/delta_net/ci95/0",
+        "h8_4b:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "c_model4_belief",
+      "qualifiers": [
+        "Explicit stance.",
+        "Dose-matched to the 8B arm; model is the only difference."
+      ],
+      "text": "The recorded positive-control belief contrast was 0.1517 at 4B."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "h8_8b:belief_summary.yaml:/delta_net/delta",
+        "h8_8b:belief_summary.yaml:/delta_net/ci95/0",
+        "h8_8b:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "c_model8_belief",
+      "qualifiers": [
+        "Explicit stance.",
+        "Control retrained at 8B.",
+        "Qwen3-8B has its own calibrated gate threshold; the 4B bar is not reused."
+      ],
+      "text": "The recorded positive-control belief contrast was 0.097 at 8B."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "h8_4b:action_summary.yaml:/delta_net/delta",
+        "h8_4b:action_summary.yaml:/delta_net/ci95/0",
+        "h8_4b:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "c_model4_action",
+      "qualifiers": [
+        "Explicit stance.",
+        "The interval straddles zero.",
+        "No conduction ratio is quotable while this numerator straddles."
+      ],
+      "text": "The recorded positive-control action contrast was 0.0011 at 4B."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "h8_8b:action_summary.yaml:/delta_net/delta",
+        "h8_8b:action_summary.yaml:/delta_net/ci95/0",
+        "h8_8b:action_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "c_model8_action",
+      "qualifiers": [
+        "Explicit stance.",
+        "The interval excludes zero.",
+        "Replicated in direction at seed 7; scatters 44 percent across seeds, so no magnitude."
+      ],
+      "text": "The recorded positive-control action contrast was 0.0352 at 8B."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "h19_full_ft:belief_summary.yaml:/delta_net/delta",
+        "h19_full_ft:belief_summary.yaml:/delta_net/ci95/0",
+        "h19_full_ft:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "c_fullft_s42",
+      "qualifiers": [
+        "Under LoRA the same corpus straddles zero on probability and excludes zero on log-odds, so the contrast is scale-dependent rather than a capacity cliff."
+      ],
+      "text": "The full-fine-tuning evidence-corpus belief contrast was 0.0164 at seed 42."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "h19_full_ft_s7:belief_summary.yaml:/delta_net/delta",
+        "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/0",
+        "h19_full_ft_s7:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "c_fullft_s7",
+      "qualifiers": [
+        "Seed-seven replication with a seed-matched full-FT control and a re-derived schedule."
+      ],
+      "text": "The full-fine-tuning evidence-corpus belief contrast was 0.0115 at seed 7."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "inference_v1_step24:inference_summary.yaml:/arms/me_plus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/me_minus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/m0_plus/score",
+        "inference_v1_step24:inference_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "c_inference_withdrawal",
+      "qualifiers": [
+        "This is an instrument-failure result: the arm meant to be most sensitive could not demonstrate premise-specificity.",
+        "The descriptive-inference axis is withdrawn and no transfer number from it is reported.",
+        "The per-facet ranking is computed in scripts/h25_positive_control.py and lies outside the declared evidence; no ranking is asserted.",
+        "Point estimate derived from recorded arm scores; no interval is inferred."
+      ],
+      "text": "The descriptive-inference explicit-arm positive-control contrast was 0.062."
     }
   ],
   "rejected_assets": [],
   "sections": [
     {
       "claim_ids": [
-        "c_testbed"
+        "c_form_short_dense",
+        "c_slow_step24",
+        "c_slow_step36",
+        "c_inference_withdrawal",
+        "c_machinery_4b",
+        "c_machinery_fullft",
+        "c_topic2_s42",
+        "c_topic2_s7",
+        "c_topic2_s123"
+      ],
+      "floats": [],
+      "id": "abstract",
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "c_form_short_dense",
+            "c_slow_step24",
+            "c_slow_step36"
+          ],
+          "id": "abstract_main",
+          "qualifiers": [
+            "Same premise specification as the long-form arms; form is the only variable.",
+            "Band-level across three seeds.",
+            "Two epochs.",
+            "Matched off-topic control, all arms gated.",
+            "This was the reading earlier drafts quoted as the near-null cell.",
+            "One seed.",
+            "Three epochs.",
+            "Same arms and same control.",
+            "All seven arms gated; the control passes at 0.802, so the late-step gate failure is genuinely late.",
+            "One seed."
+          ],
+          "text": "Across three-seed bands under the same premise specification as the long-form arms, with form as the only variable, the short-dense belief contrast was 0.119. In a separate one-seed, long-sparse evidence-only condition with a matched off-topic control and all arms gated, the contrast rose from 0.0072 at optimizer step 24 after two epochs\u2014the near-null cell quoted in earlier drafts\u2014to 0.0342 at step 36 after three epochs with the same arms and control. At the later checkpoint, all seven arms gated and the control passed at 0.802, making the gate failure genuinely late."
+        },
+        {
+          "claim_ids": [
+            "c_machinery_4b",
+            "c_machinery_fullft",
+            "c_topic2_s42",
+            "c_topic2_s7",
+            "c_topic2_s123"
+          ],
+          "id": "abstract_controls_replication",
+          "qualifiers": [
+            "The quantity netting subtracts.",
+            "The seed intervals do not overlap.",
+            "The two seed intervals overlap, unlike every LoRA control family.",
+            "Second topic (software architecture), matched off-topic control, all arms gated.",
+            "Reported as one of three seeds whose netted signs disagree.",
+            "Seed-seven replicate with a seed-matched control.",
+            "Third seed with a seed-matched control, all five arms gated.",
+            "Its sign disagrees with the other two seeds; the disagreement arises in the control's machinery term, not the treatment contrast."
+          ],
+          "text": "Control behavior varied by adaptation regime. For 4B LoRA, the machinery quantity subtracted by netting changed from -0.0173 at seed 42 to -0.0025 at seed 7, with nonoverlapping seed intervals. Under full fine-tuning, it was -0.0053 at seed 42 and -0.0049 at seed 7, with overlapping intervals unlike every LoRA control family. For the second topic, software architecture, netted belief contrasts were 0.0076 at seed 42 with a matched off-topic control and all arms gated, 0.0122 in the seed-7 replicate with a seed-matched control, and -0.0034 at seed 123 with a seed-matched control and all five arms gated. The seed-123 sign disagreed with the other two because of the control machinery term rather than the treatment contrast."
+        },
+        {
+          "claim_ids": [
+            "c_inference_withdrawal"
+          ],
+          "id": "abstract_inference_limit",
+          "qualifiers": [
+            "This is an instrument-failure result: the arm meant to be most sensitive could not demonstrate premise-specificity.",
+            "The descriptive-inference axis is withdrawn and no transfer number from it is reported.",
+            "The per-facet ranking is computed in scripts/h25_positive_control.py and lies outside the declared evidence; no ranking is asserted.",
+            "Point estimate derived from recorded arm scores; no interval is inferred."
+          ],
+          "text": "The descriptive-inference explicit-arm positive-control contrast was 0.062, a point estimate derived from recorded arm scores without an inferred interval. Because the arm intended to be most sensitive could not demonstrate premise-specificity, this was an instrument-failure result: the descriptive-inference axis was withdrawn and no transfer number from it was reported. The per-facet ranking was computed outside the declared evidence, so no ranking was asserted."
+        }
+      ],
+      "title": "Abstract"
+    },
+    {
+      "claim_ids": [
+        "c_absorption"
       ],
       "floats": [],
       "id": "motivation",
       "paragraphs": [
         {
           "claim_ids": [
-            "c_testbed"
+            "c_absorption"
           ],
-          "id": "motivation_measured_causal_effect_testbed",
-          "qualifiers": [
-            "Contribution framing; not an empirical result."
-          ],
-          "text": "The testbed is motivated as a validation target grounded in measured causal effect sizes, rather than as a first-of-its-kind dataset. This is contribution framing, not an empirical result."
+          "id": "motivation_absorption",
+          "qualifiers": [],
+          "text": "Absorption is held-out premise specialization, not a belief measure."
         }
       ],
-      "title": "Motivation: measured causal-effect testbed and validation target"
+      "title": "Motivation"
     },
     {
       "claim_ids": [
-        "c_method_exploratory",
-        "c_method_seed_scope",
-        "c_method_absorption",
-        "c_method_netting",
-        "c_method_diagnostics",
-        "c_method_authority"
+        "c_exploratory",
+        "c_seed_scope",
+        "c_netting",
+        "c_diagnostic",
+        "c_authority"
       ],
       "floats": [],
       "id": "methodology",
       "paragraphs": [
         {
           "claim_ids": [
-            "c_method_absorption",
-            "c_method_netting",
-            "c_method_diagnostics"
-          ],
-          "id": "methodology_estimands_controls",
-          "qualifiers": [
-            "Methodology constraint copied from interpretation_rules."
-          ],
-          "text": "Absorption is operationalized as held-out premise specialization rather than a belief measure. Belief and action contrasts are netted against their matched off-topic controls and are not interpreted as evidence of causal mediation. Raw belief and action checkpoint figures serve as diagnostics rather than netted transfer estimates."
-        },
-        {
-          "claim_ids": [
-            "c_method_exploratory",
-            "c_method_seed_scope"
+            "c_exploratory",
+            "c_seed_scope"
           ],
           "id": "methodology_scope",
-          "qualifiers": [
-            "Methodology constraint copied from interpretation_rules.",
-            "Do not describe the evidence bundle as uniformly seed-paired."
-          ],
-          "text": "The analysis is exploratory, with model, topic, seed count, and checkpoint scope limited to recorded artifacts. Two-seed scope applies only to declared seed-paired contrast families, while single-seed and instrument-specific readings are identified separately; the evidence bundle is therefore not treated as uniformly seed-paired."
+          "qualifiers": [],
+          "text": "The analysis was exploratory, with model, topic, seed count, and checkpoint scope restricted to recorded artifacts. Two-seed scope was used only for declared seed-paired contrast families, while single-seed and instrument-specific readings were identified separately."
         },
         {
           "claim_ids": [
-            "c_method_authority"
+            "c_netting",
+            "c_diagnostic"
+          ],
+          "id": "methodology_contrasts",
+          "qualifiers": [],
+          "text": "Belief and action contrasts were netted against their matched off-topic controls and were not interpreted as evidence of causal mediation. Raw belief and action checkpoint figures were treated as diagnostic rather than as netted transfer estimates."
+        },
+        {
+          "claim_ids": [
+            "c_authority"
           ],
           "id": "methodology_reporting",
-          "qualifiers": [
-            "Methodology constraint copied from interpretation_rules."
-          ],
-          "text": "Fixed tables are authoritative for numerical estimates and confidence intervals rather than prose."
+          "qualifiers": [],
+          "text": "Fixed tables were treated as authoritative for numerical estimates and confidence intervals rather than the prose."
         }
       ],
-      "title": "Methodology: estimands, controls, scope, and reporting rules"
+      "title": "Methodology"
     },
     {
       "claim_ids": [
@@ -1006,164 +947,148 @@
         "c_form_short_sparse",
         "c_slow_step24",
         "c_slow_step36",
-        "c_stance_step24",
-        "c_stance_step36",
-        "c_inference_withdrawn",
-        "c_model_belief_4b",
-        "c_model_belief_8b",
-        "c_model_action_4b",
-        "c_model_action_8b",
-        "c_fullft_belief_s42",
-        "c_fullft_belief_s7",
+        "c_stance24",
+        "c_stance36",
+        "c_model4_belief",
+        "c_model8_belief",
+        "c_model4_action",
+        "c_model8_action",
+        "c_fullft_s42",
+        "c_fullft_s7",
         "c_machinery_4b",
         "c_machinery_8b",
         "c_machinery_fullft",
+        "c_inference_withdrawal",
         "c_topic2_s42",
         "c_topic2_s7",
         "c_topic2_s123"
       ],
       "floats": [
         {
-          "after_paragraph_id": "validation_failure_inference",
+          "after_paragraph_id": "results_inference",
           "appendix": false,
-          "asset_id": "table_ladder"
+          "asset_id": "t_form"
         },
         {
-          "after_paragraph_id": "validation_failure_inference",
+          "after_paragraph_id": "results_inference",
           "appendix": false,
-          "asset_id": "table_matrix_step24"
+          "asset_id": "t_step24"
         },
         {
-          "after_paragraph_id": "validation_failure_inference",
+          "after_paragraph_id": "results_inference",
           "appendix": false,
-          "asset_id": "table_matrix_step36"
+          "asset_id": "t_step36"
         },
         {
-          "after_paragraph_id": "validation_failure_inference",
+          "after_paragraph_id": "results_inference",
           "appendix": false,
-          "asset_id": "table_h8_4b_belief"
+          "asset_id": "t_model4_belief"
         },
         {
-          "after_paragraph_id": "validation_failure_inference",
+          "after_paragraph_id": "results_inference",
           "appendix": false,
-          "asset_id": "table_h8_8b_action"
+          "asset_id": "t_model8_belief"
         },
         {
-          "after_paragraph_id": "validation_failure_inference",
+          "after_paragraph_id": "results_inference",
           "appendix": false,
-          "asset_id": "figure_matrix_trajectory"
+          "asset_id": "t_model4_action"
+        },
+        {
+          "after_paragraph_id": "results_inference",
+          "appendix": false,
+          "asset_id": "t_model8_action"
+        },
+        {
+          "after_paragraph_id": "results_inference",
+          "appendix": false,
+          "asset_id": "f_trajectory"
         }
       ],
       "id": "results",
       "paragraphs": [
         {
           "claim_ids": [
-            "c_stance_step24",
-            "c_stance_step36",
             "c_slow_step24",
-            "c_slow_step36"
+            "c_slow_step36",
+            "c_stance24",
+            "c_stance36"
           ],
-          "id": "instrument_demonstration",
+          "id": "results_timecourse",
           "qualifiers": [
+            "Two epochs.",
+            "Matched off-topic control, all arms gated.",
+            "This was the reading earlier drafts quoted as the near-null cell.",
+            "One seed.",
+            "Three epochs.",
+            "Same arms and same control.",
+            "All seven arms gated; the control passes at 0.802, so the late-step gate failure is genuinely late.",
+            "One seed.",
             "Positive control for the belief instrument, not general belief transfer.",
             "Token dose is lower than the evidence corpus.",
-            "Point estimate derived from recorded arm scores.",
-            "No interval is inferred.",
-            "Single-seed instrument-specific reading.",
-            "Same positive control at the later reading.",
-            "Point estimate derived from recorded arm scores.",
-            "No interval is inferred.",
-            "Single-seed instrument-specific reading.",
-            "Do not describe as general belief transfer.",
-            "Earlier drafts quoted this as the near-null cell.",
-            "Matched off-topic control.",
-            "All arms gated.",
-            "Single-seed reading.",
-            "The deterministic table must pair the belief ratio with its optimizer-step reading.",
-            "Same arms and same control at the later reading.",
-            "All seven arms gated.",
-            "The control passes at the recorded threshold, so the late-step gate failure is genuinely late.",
-            "Single-seed reading.",
-            "The deterministic table must pair the belief ratio with its optimizer-step reading."
+            "Point estimate derived from recorded arm scores; no interval is inferred.",
+            "The same positive control one epoch later, where it has begun to decay while the evidence cell is still rising.",
+            "Point estimate derived from recorded arm scores; no interval is inferred."
           ],
-          "text": "The belief instrument was demonstrated by an explicit-stance positive control at the earlier single-seed, instrument-specific reading. This point estimate was derived from recorded arm scores without an inferred interval; its token dose was lower than that of the evidence corpus, and it does not establish general belief transfer. At the later reading, the same positive-control contrast decayed while the matched-control-netted evidence-only contrast rose. The earlier evidence-only reading was positive despite being quoted in earlier drafts as the near-null cell; it used a matched off-topic control, all arms gated, and a single seed. With the same arms and control later, the evidence-only contrast was larger, supporting a slow rather than inert interpretation. All seven arms gated, and because the control passed at the recorded threshold, the late-step gate failure was genuinely late. The deterministic table pairs each belief ratio with its optimizer-step reading."
+          "text": "In the single-seed long-sparse evidence-only condition with matched off-topic control and all arms gated, the belief contrast rose from 0.0072 at optimizer step 24 after two epochs to 0.0342 at step 36 after three epochs. The earlier reading was the near-null cell quoted in earlier drafts. At step 36, all seven arms gated and the control passed at 0.802, indicating that the gate failure was genuinely late. By contrast, the explicit-stance positive-control belief contrast, which used a lower token dose than the evidence corpus and indexed the belief instrument rather than general belief transfer, declined from 0.3111 at step 24 to 0.2167 one epoch later while the evidence cell was still rising; these positive-control estimates were derived from recorded arm scores without inferred intervals."
         },
         {
           "claim_ids": [
-            "c_form_short_dense",
             "c_form_long_dense",
+            "c_form_short_dense",
             "c_form_short_sparse"
           ],
-          "id": "validation_failure_form",
+          "id": "results_form",
           "qualifiers": [
+            "The length arm of the form cross at matched density.",
             "Same premise specification as the long-form arms; form is the only variable.",
             "Band-level across three seeds.",
-            "This is the paper's only band-level finding.",
-            "Length arm of the form cross at matched density.",
-            "Unstable corner across three seeds.",
-            "Carries no ratio."
+            "The unstable corner: scatters 2.98x across three seeds, so its reading is directional and carries no ratio."
           ],
-          "text": "The form cross exposed instability rather than a uniform form effect. Across three seeds, the short, dense form produced the strongest recorded form-cross belief contrast and was the only band-level finding; it used the same premise specification as the long-form arms, leaving form as the only variable. At matched density, the long form yielded a smaller positive contrast. The short, sparse corner remained directional but unstable across three seeds and carries no ratio."
+          "text": "In the form cross, the long-dense belief contrast was 0.0547 in the length arm at matched density, whereas the short-dense contrast was 0.119 across three-seed bands under the same premise specification, with form as the only variable. The short-sparse contrast was 0.0506, but this unstable corner showed 2.98x scatter across three seeds, making the result directional and precluding a ratio."
         },
         {
           "claim_ids": [
-            "c_model_belief_4b",
-            "c_model_belief_8b",
-            "c_model_action_4b",
-            "c_model_action_8b"
+            "c_model4_belief",
+            "c_model8_belief",
+            "c_model4_action",
+            "c_model8_action"
           ],
-          "id": "validation_failure_model_action",
+          "id": "results_model_scale",
           "qualifiers": [
-            "Dose-matched to the larger-model arm.",
-            "Model is the only difference.",
-            "Belief contrast is matched-control netted.",
-            "Control retrained at the larger model size.",
-            "The larger model has its own calibrated gate threshold; the smaller-model bar is not reused.",
-            "Belief contrast is matched-control netted.",
-            "Interval straddles zero.",
+            "Explicit stance.",
+            "Dose-matched to the 8B arm; model is the only difference.",
+            "Explicit stance.",
+            "Control retrained at 8B.",
+            "Qwen3-8B has its own calibrated gate threshold; the 4B bar is not reused.",
+            "Explicit stance.",
+            "The interval straddles zero.",
             "No conduction ratio is quotable while this numerator straddles.",
-            "Action contrast is matched-control netted.",
-            "Do not claim causal mediation.",
-            "Replicated in direction at the paired seed.",
-            "Magnitude is not claimed because it scatters across seeds.",
-            "Action contrast is matched-control netted.",
-            "Do not claim causal mediation."
+            "Explicit stance.",
+            "The interval excludes zero.",
+            "Replicated in direction at seed 7; scatters 44 percent across seeds, so no magnitude."
           ],
-          "text": "The model-size cross separated belief from action. The matched-control-netted explicit-stance belief contrast was positive for both models: the smaller-model arm was dose-matched to the larger-model arm with model as the only difference, while the larger-model control was retrained at its own size and used its own calibrated gate threshold rather than the smaller-model bar. The smaller-model matched-control-netted action contrast was unresolved because its interval straddled zero, so no conduction ratio is quotable. The larger-model action contrast was positive and replicated in direction at the paired seed, but its magnitude is not claimed because it scattered across seeds. These action results do not establish causal mediation."
+          "text": "For dose-matched explicit-stance conditions, with model as the only difference, the recorded positive-control belief contrast was 0.1517 at 4B. At 8B, with a retrained control and its own calibrated gate threshold rather than the 4B threshold, the belief contrast was 0.097. The corresponding action contrast was 0.0011 at 4B and its interval straddled zero, so no conduction ratio was quotable. At 8B, the action contrast was 0.0352 and its interval excluded zero; its direction replicated at seed 7, but 44 percent cross-seed scatter precluded a magnitude claim."
         },
         {
           "claim_ids": [
-            "c_fullft_belief_s42",
-            "c_fullft_belief_s7"
-          ],
-          "id": "validation_failure_capacity",
-          "qualifiers": [
-            "Under LoRA the same corpus straddles zero on probability and excludes zero on log-odds.",
-            "Interpret as scale dependence rather than a capacity cliff.",
-            "Matched-control netted.",
-            "Seed-paired replication with a seed-matched full-fine-tuning control.",
-            "Schedule re-derived.",
-            "Matched-control netted."
-          ],
-          "text": "Full fine-tuning yielded positive, matched-control-netted evidence-corpus belief contrasts in both the first declared seed reading and the seed-paired replication. The paired reading used a seed-matched full-fine-tuning control and a re-derived schedule. Under LoRA, the same corpus straddled zero on probability while excluding zero on log-odds, making this scale dependence rather than a capacity cliff."
-        },
-        {
-          "claim_ids": [
+            "c_fullft_s42",
+            "c_fullft_s7",
             "c_machinery_4b",
             "c_machinery_8b",
             "c_machinery_fullft"
           ],
-          "id": "validation_failure_control_machinery",
+          "id": "results_fullft_machinery",
           "qualifiers": [
-            "This is the quantity netting subtracts.",
-            "The paired intervals do not overlap.",
-            "This is the quantity netting subtracts.",
-            "The paired intervals do not overlap.",
-            "The paired readings have opposite signs.",
-            "The paired intervals overlap.",
-            "Unlike every recorded LoRA control family."
+            "Under LoRA the same corpus straddles zero on probability and excludes zero on log-odds, so the contrast is scale-dependent rather than a capacity cliff.",
+            "Seed-seven replication with a seed-matched full-FT control and a re-derived schedule.",
+            "The quantity netting subtracts.",
+            "The seed intervals do not overlap.",
+            "The seed intervals do not overlap.",
+            "The two readings carry opposite signs.",
+            "The two seed intervals overlap, unlike every LoRA control family."
           ],
-          "text": "The control-machinery term\u2014the quantity removed by netting\u2014varied across each declared LoRA seed pair. For both the smaller- and larger-model LoRA families, the paired intervals did not overlap; the larger-model readings also had opposite signs. By contrast, the full-fine-tuning control-machinery term held comparatively still across its declared seed pair, with overlapping intervals, unlike every recorded LoRA control family."
+          "text": "For the evidence corpus under full fine-tuning, the belief contrast was 0.0164 at seed 42 and 0.0115 in the seed-7 replication, which used a seed-matched full-fine-tuning control and re-derived schedule. Under LoRA, the same corpus straddled zero on the probability scale but excluded zero on log-odds, making the contrast scale-dependent rather than evidence of a capacity cliff. The netting machinery differed more across seeds under LoRA: at 4B it changed from -0.0173 at seed 42 to -0.0025 at seed 7, with nonoverlapping intervals, and at 8B it changed sign from -0.0031 to 0.0156, again with nonoverlapping intervals. Under full fine-tuning, the machinery term was -0.0053 at seed 42 and -0.0049 at seed 7, and the intervals overlapped, unlike every LoRA control family."
         },
         {
           "claim_ids": [
@@ -1171,250 +1096,136 @@
             "c_topic2_s7",
             "c_topic2_s123"
           ],
-          "id": "validation_failure_topic",
+          "id": "results_topic_replication",
           "qualifiers": [
-            "Software-architecture topic.",
-            "Matched off-topic control.",
-            "All arms gated.",
-            "One of three seed readings whose netted signs disagree.",
-            "Seed-matched control.",
-            "One of three seed readings whose netted signs disagree.",
-            "Seed-matched control.",
-            "All five arms gated.",
-            "Sign disagreement arises in the control's machinery term, not the treatment contrast."
+            "Second topic (software architecture), matched off-topic control, all arms gated.",
+            "Reported as one of three seeds whose netted signs disagree.",
+            "Seed-seven replicate with a seed-matched control.",
+            "Third seed with a seed-matched control, all five arms gated.",
+            "Its sign disagrees with the other two seeds; the disagreement arises in the control's machinery term, not the treatment contrast."
           ],
-          "text": "The software-architecture second-topic validation did not produce a stable netted sign across three declared seed readings. The first reading was near zero with a matched off-topic control, all arms gated, and was one of the three sign-disagreeing readings. The second was also near zero with a seed-matched control. The third reversed sign despite all five arms gating and a seed-matched control; the sign disagreement arose in the control\u2019s machinery term rather than the treatment contrast."
+          "text": "For the second topic, software architecture, the netted belief contrast was 0.0076 at seed 42 with a matched off-topic control and all arms gated, 0.0122 in the seed-7 replicate with a seed-matched control, and -0.0034 at seed 123, where all five arms gated. The seed-123 sign disagreed with the other two seeds; this disagreement arose in the control machinery term rather than the treatment contrast."
         },
         {
           "claim_ids": [
-            "c_inference_withdrawn"
+            "c_inference_withdrawal"
           ],
-          "id": "validation_failure_inference",
+          "id": "results_inference",
           "qualifiers": [
-            "Instrument-failure result, not a caveat on an otherwise usable transfer estimate.",
-            "The byte-identical null-control facet is the highest-moving of all eight facets.",
-            "No transfer number from this suite is reported.",
-            "Point estimate derived from recorded arm scores.",
-            "No interval is inferred.",
-            "Single-seed instrument-specific reading."
+            "This is an instrument-failure result: the arm meant to be most sensitive could not demonstrate premise-specificity.",
+            "The descriptive-inference axis is withdrawn and no transfer number from it is reported.",
+            "The per-facet ranking is computed in scripts/h25_positive_control.py and lies outside the declared evidence; no ranking is asserted.",
+            "Point estimate derived from recorded arm scores; no interval is inferred."
           ],
-          "text": "The descriptive-inference axis was withdrawn because its explicit-arm positive control was inverted and could not demonstrate premise-specificity. This is an instrument-failure result rather than a caveat on an otherwise usable transfer estimate: the byte-identical null-control facet was the highest-moving of all eight facets, and no transfer number from the suite is reported. The single-seed, instrument-specific point estimate was derived from recorded arm scores, and no interval was inferred."
+          "text": "The descriptive-inference explicit-arm positive-control contrast was 0.062, a point estimate derived from recorded arm scores without an inferred interval. Because the arm intended to be most sensitive could not demonstrate premise specificity, this was an instrument-failure result: the descriptive-inference axis was withdrawn and no transfer estimate from it was reported. The per-facet ranking was computed outside the declared evidence, so no ranking was asserted."
         }
       ],
-      "title": "Results: instrument demonstration and five validation failures"
+      "title": "Results"
     },
     {
       "claim_ids": [
-        "c_generality",
-        "c_inference_withdrawn",
+        "c_seed_scope",
+        "c_inference_withdrawal",
+        "c_topic2_s42",
+        "c_topic2_s7",
+        "c_topic2_s123",
         "c_machinery_4b",
         "c_machinery_8b",
         "c_machinery_fullft",
-        "c_slow_step24",
-        "c_slow_step36"
+        "c_fullft_s42",
+        "c_fullft_s7"
       ],
-      "floats": [],
+      "floats": [
+        {
+          "after_paragraph_id": "discussion_inference_limit",
+          "appendix": true,
+          "asset_id": "t_ladder"
+        },
+        {
+          "after_paragraph_id": "discussion_inference_limit",
+          "appendix": true,
+          "asset_id": "t_fullft42"
+        },
+        {
+          "after_paragraph_id": "discussion_inference_limit",
+          "appendix": true,
+          "asset_id": "t_fullft7"
+        },
+        {
+          "after_paragraph_id": "discussion_inference_limit",
+          "appendix": true,
+          "asset_id": "t_topic42"
+        },
+        {
+          "after_paragraph_id": "discussion_inference_limit",
+          "appendix": true,
+          "asset_id": "t_topic7"
+        },
+        {
+          "after_paragraph_id": "discussion_inference_limit",
+          "appendix": true,
+          "asset_id": "t_topic123"
+        },
+        {
+          "after_paragraph_id": "discussion_inference_limit",
+          "appendix": true,
+          "asset_id": "t_inference"
+        }
+      ],
       "id": "discussion",
       "paragraphs": [
         {
           "claim_ids": [
-            "c_slow_step24",
-            "c_slow_step36"
-          ],
-          "id": "detection_recipes",
-          "qualifiers": [
-            "Earlier drafts quoted this as the near-null cell.",
-            "Matched off-topic control.",
-            "All arms gated.",
-            "Single-seed reading.",
-            "The deterministic table must pair the belief ratio with its optimizer-step reading.",
-            "Same arms and same control at the later reading.",
-            "All seven arms gated.",
-            "The control passes at the recorded threshold, so the late-step gate failure is genuinely late.",
-            "Single-seed reading.",
-            "The deterministic table must pair the belief ratio with its optimizer-step reading."
-          ],
-          "text": "The evidence-only belief contrast is positive at the earlier recorded checkpoint, although earlier drafts treated this as the near-null cell. This single-seed reading uses a matched off-topic control and has all arms gated; the deterministic table pairs the belief ratio with its optimizer-step reading. With the same arms and control, the later single-seed contrast is larger, supporting a slow rather than inert interpretation. All seven arms are gated, and the control passes at the recorded threshold, so the gate failure is genuinely late; the deterministic table again pairs the belief ratio with its optimizer-step reading."
-        },
-        {
-          "claim_ids": [
-            "c_inference_withdrawn"
-          ],
-          "id": "withdrawal",
-          "qualifiers": [
-            "Instrument-failure result, not a caveat on an otherwise usable transfer estimate.",
-            "The byte-identical null-control facet is the highest-moving of all eight facets.",
-            "No transfer number from this suite is reported.",
-            "Point estimate derived from recorded arm scores.",
-            "No interval is inferred.",
-            "Single-seed instrument-specific reading."
-          ],
-          "text": "The descriptive-inference axis is withdrawn because its explicit-arm positive control is inverted and therefore cannot demonstrate premise-specificity. This is an instrument-failure result rather than a caveat on an otherwise usable transfer estimate: the byte-identical null-control facet is the highest-moving of all eight facets, and no transfer number from this suite is reported. The reading is instrument-specific and single-seed, its point estimate is derived from recorded arm scores, and no interval is inferred."
-        },
-        {
-          "claim_ids": [
+            "c_fullft_s42",
+            "c_fullft_s7",
             "c_machinery_4b",
             "c_machinery_8b",
             "c_machinery_fullft"
           ],
-          "id": "control_machinery",
+          "id": "discussion_fullft_controls",
           "qualifiers": [
-            "This is the quantity netting subtracts.",
-            "The paired intervals do not overlap.",
-            "This is the quantity netting subtracts.",
-            "The paired intervals do not overlap.",
-            "The paired readings have opposite signs.",
-            "The paired intervals overlap.",
-            "Unlike every recorded LoRA control family."
+            "Under LoRA the same corpus straddles zero on probability and excludes zero on log-odds, so the contrast is scale-dependent rather than a capacity cliff.",
+            "Seed-seven replication with a seed-matched full-FT control and a re-derived schedule.",
+            "The quantity netting subtracts.",
+            "The seed intervals do not overlap.",
+            "The seed intervals do not overlap.",
+            "The two readings carry opposite signs.",
+            "The two seed intervals overlap, unlike every LoRA control family."
           ],
-          "text": "The smaller-model LoRA control-machinery term varies across the declared seed pair, with paired intervals that do not overlap; this is the quantity netting subtracts. The larger-model LoRA term also varies across the declared seed pair, with non-overlapping paired intervals and opposite signs; this likewise is the quantity netting subtracts. By contrast, the full-fine-tuning control-machinery term holds comparatively still across the declared seed pair: its paired intervals overlap, unlike every recorded LoRA control family."
-        },
-        {
-          "claim_ids": [
-            "c_generality"
-          ],
-          "id": "bounded_generality",
-          "qualifiers": [
-            "Synthesis claim from atomic model and second-topic results.",
-            "The second topic's declared seed contrasts disagree in sign.",
-            "Do not present topic generality."
-          ],
-          "text": "The model evidence supports replication across the two tested model sizes and configurations, rather than broader model-axis generality, because it establishes only positive explicit-stance belief contrasts under different model-specific gates. Topic generality is not supported: the second topic\u2019s declared seed contrasts disagree in sign. This bounded conclusion is a synthesis of the atomic model and second-topic results."
-        }
-      ],
-      "title": "Discussion: detection recipes, withdrawal, and bounded generality"
-    },
-    {
-      "claim_ids": [
-        "c_form_short_dense",
-        "c_form_long_dense",
-        "c_form_short_sparse",
-        "c_model_belief_8b",
-        "c_model_action_4b",
-        "c_fullft_belief_s42",
-        "c_fullft_belief_s7",
-        "c_topic2_s42",
-        "c_topic2_s7",
-        "c_topic2_s123"
-      ],
-      "floats": [
-        {
-          "after_paragraph_id": "appendix_topic_tables",
-          "appendix": true,
-          "asset_id": "table_h8_8b_belief"
-        },
-        {
-          "after_paragraph_id": "appendix_topic_tables",
-          "appendix": true,
-          "asset_id": "table_h8_4b_action"
-        },
-        {
-          "after_paragraph_id": "appendix_topic_tables",
-          "appendix": true,
-          "asset_id": "table_h19_fullft_belief"
-        },
-        {
-          "after_paragraph_id": "appendix_topic_tables",
-          "appendix": true,
-          "asset_id": "table_h19_fullft_s7_belief"
-        },
-        {
-          "after_paragraph_id": "appendix_topic_tables",
-          "appendix": true,
-          "asset_id": "table_ms3p_belief"
-        },
-        {
-          "after_paragraph_id": "appendix_topic_tables",
-          "appendix": true,
-          "asset_id": "table_mld_belief"
-        },
-        {
-          "after_paragraph_id": "appendix_topic_tables",
-          "appendix": true,
-          "asset_id": "table_ms_sparse_belief"
-        },
-        {
-          "after_paragraph_id": "appendix_topic_tables",
-          "appendix": true,
-          "asset_id": "table_topic2_s42"
-        },
-        {
-          "after_paragraph_id": "appendix_topic_tables",
-          "appendix": true,
-          "asset_id": "table_topic2_s7"
-        },
-        {
-          "after_paragraph_id": "appendix_topic_tables",
-          "appendix": true,
-          "asset_id": "table_topic2_s123"
-        }
-      ],
-      "id": "appendix",
-      "paragraphs": [
-        {
-          "claim_ids": [
-            "c_form_short_dense",
-            "c_form_long_dense",
-            "c_form_short_sparse"
-          ],
-          "id": "appendix_form_tables",
-          "qualifiers": [
-            "Same premise specification as the long-form arms; form is the only variable.",
-            "Band-level across three seeds.",
-            "This is the paper's only band-level finding.",
-            "Length arm of the form cross at matched density.",
-            "Unstable corner across three seeds.",
-            "Carries no ratio."
-          ],
-          "text": "The remaining run-level form tables record the strongest form-cross belief contrast for the short, dense form, the smaller positive contrast for the long, dense length arm at matched density, and the directional but unstable short, sparse corner. The short, dense comparison spans three seeds and holds the premise specification fixed relative to the long-form arms, leaving form as the only variable; it is the paper\u2019s only band-level finding. The short, sparse reading is unstable across three seeds and carries no ratio."
-        },
-        {
-          "claim_ids": [
-            "c_model_belief_8b",
-            "c_model_action_4b",
-            "c_fullft_belief_s42",
-            "c_fullft_belief_s7"
-          ],
-          "id": "appendix_model_capacity_tables",
-          "qualifiers": [
-            "Control retrained at the larger model size.",
-            "The larger model has its own calibrated gate threshold; the smaller-model bar is not reused.",
-            "Belief contrast is matched-control netted.",
-            "Interval straddles zero.",
-            "No conduction ratio is quotable while this numerator straddles.",
-            "Action contrast is matched-control netted.",
-            "Do not claim causal mediation.",
-            "Under LoRA the same corpus straddles zero on probability and excludes zero on log-odds.",
-            "Interpret as scale dependence rather than a capacity cliff.",
-            "Matched-control netted.",
-            "Seed-paired replication with a seed-matched full-fine-tuning control.",
-            "Schedule re-derived.",
-            "Matched-control netted."
-          ],
-          "text": "The remaining model and capacity tables record a positive matched-control-netted explicit-stance belief contrast for the larger model, whose control was retrained at that size and whose calibrated gate threshold replaces rather than reuses the smaller-model bar. The smaller-model matched-control-netted action contrast remains unresolved because its interval straddles zero, leaving no quotable conduction ratio and no basis for causal-mediation claims. Full fine-tuning records positive matched-control-netted evidence-corpus belief contrasts in the first declared seed reading and the seed-paired replication; the latter uses a seed-matched full-fine-tuning control and a re-derived schedule. For the same corpus under LoRA, probability straddles zero while log-odds excludes zero, indicating scale dependence rather than a capacity cliff."
+          "text": "The full-fine-tuning evidence-corpus belief contrast was 0.0164 at seed 42 and 0.0115 in the seed-seven replication with a seed-matched full-FT control and a re-derived schedule. Under LoRA, the same corpus straddles zero on probability and excludes zero on log-odds, so this comparison is scale-dependent rather than a capacity cliff. The control-machinery term, which netting subtracts, changed from -0.0173 at seed 42 to -0.0025 at seed 7 for 4B LoRA, with nonoverlapping seed intervals. For 8B LoRA, it changed sign from -0.0031 at seed 42 to 0.0156 at seed 7; the intervals do not overlap and the readings have opposite signs. Under full fine-tuning, it was -0.0053 at seed 42 and -0.0049 at seed 7, with overlapping intervals unlike every LoRA control family."
         },
         {
           "claim_ids": [
             "c_topic2_s42",
             "c_topic2_s7",
-            "c_topic2_s123"
+            "c_topic2_s123",
+            "c_seed_scope"
           ],
-          "id": "appendix_topic_tables",
+          "id": "discussion_topic_scope",
           "qualifiers": [
-            "Software-architecture topic.",
-            "Matched off-topic control.",
-            "All arms gated.",
-            "One of three seed readings whose netted signs disagree.",
-            "Seed-matched control.",
-            "One of three seed readings whose netted signs disagree.",
-            "Seed-matched control.",
-            "All five arms gated.",
-            "Sign disagreement arises in the control's machinery term, not the treatment contrast."
+            "Second topic (software architecture), matched off-topic control, all arms gated.",
+            "Reported as one of three seeds whose netted signs disagree.",
+            "Seed-seven replicate with a seed-matched control.",
+            "Third seed with a seed-matched control, all five arms gated.",
+            "Its sign disagrees with the other two seeds; the disagreement arises in the control's machinery term, not the treatment contrast."
           ],
-          "text": "The remaining software-architecture tables record near-zero second-topic belief contrasts in the first two declared seed readings and a sign reversal in the third. The first uses a matched off-topic control with all arms gated; the second uses a seed-matched control. Both belong to the three readings whose netted signs disagree. The third also uses a seed-matched control and has all five arms gated, with the sign disagreement arising in the control\u2019s machinery term rather than the treatment contrast."
+          "text": "For the second topic, software architecture, the netted belief contrast was 0.0076 at seed 42 with a matched off-topic control and all arms gated, 0.0122 at seed 7 with a seed-matched control, and -0.0034 at seed 123 with a seed-matched control and all five arms gated. These three netted signs disagree: the seed-123 sign differs from the other two because of the control machinery term rather than the treatment contrast. Two-seed scope applies only to declared seed-paired contrast families; single-seed and instrument-specific readings remain separate."
+        },
+        {
+          "claim_ids": [
+            "c_inference_withdrawal"
+          ],
+          "id": "discussion_inference_limit",
+          "qualifiers": [
+            "This is an instrument-failure result: the arm meant to be most sensitive could not demonstrate premise-specificity.",
+            "The descriptive-inference axis is withdrawn and no transfer number from it is reported.",
+            "The per-facet ranking is computed in scripts/h25_positive_control.py and lies outside the declared evidence; no ranking is asserted.",
+            "Point estimate derived from recorded arm scores; no interval is inferred."
+          ],
+          "text": "The descriptive-inference explicit-arm positive-control contrast was 0.062, a point estimate derived from recorded arm scores without an inferred interval. Because the arm intended to be most sensitive could not demonstrate premise-specificity, this is an instrument-failure result; the descriptive-inference axis is withdrawn and no transfer number from it is reported. The per-facet ranking is computed outside the declared evidence, so no ranking is asserted."
         }
       ],
-      "title": "Appendix: remaining run-level deterministic tables"
+      "title": "Discussion"
     }
   ],
   "title": "Installing Beliefs to Audit Attribution: A Ground-Truth Testbed and Five Ways It Misleads"
