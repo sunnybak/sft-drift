@@ -55,5 +55,44 @@ reference model download, scoring only — no training, fits 16GB trivially (sco
 
 ## Current position
 
-**Nothing measured.** Registered 2026-08-22. Next action: leg 1 on the H9 cells — this is
-the cheapest live test in `open/` and can run before the H27 pool is built.
+**Leg 1 RAN 2026-08-22d (`scripts/h29_reference_delta.py`, full pool, 1116 documents,
+`attrib_mix_v4` checkpoint-23, reference = Phi-3.5-mini-instruct). The registered falsifier
+did NOT fire, and the trap check did not trip — but the confound it guards is REAL and now
+quantified.**
+
+Design decisions made before the run (in the script header): bits-per-byte on both sides
+(the stored `_trained_loss` is mean NLL per Qwen token, so a cross-tokenizer delta in
+per-token units confounds with tokenizer compression), and the true-base delta recomputed
+in bpb as a transform sanity check.
+
+| scorer | ρ pos | ρ neg | `ms0` rank | mover ordering |
+| --- | --- | --- | --- | --- |
+| bpb true base (sanity) | +0.77 | +0.89 | 4/6, 4/6 | one inversion (ms>me at pos) |
+| **bpb reference (Phi-3.5)** | **+0.94** | **+0.94** | 4/6, 4/6 | **exact: me>ms>md, both** |
+| prior alone (ref − base) | +0.60 | +0.60 | **3/6** — above `ms` | — |
+| TracIn-cos (the bar) | +0.14 | +0.54 | 2/6 | — |
+
+- **Falsifier 1: did not fire.** Reference-Δ's ρ (+0.94/+0.94) sits far above
+  TracIn-cosine's. The transform sanity check passed (bpb true-base reproduces the recorded
+  per-token +0.77/+0.83).
+- **Falsifier 3's confound is real and measured: the pure prior term — which contains zero
+  information about this training run — scores ρ +0.60 on this pool at both polarities.**
+  Phi finds stance-laden short answers relatively less predictable than Qwen-base does, and
+  on this pool that points the same way as the ground truth (an echo of the form thesis:
+  even the prior keys on form). Consequences, which must travel with any quote: (i) the
+  reference's MARGIN over the true base is not evidence of a better estimator — it is the
+  prior helping by pool composition, and on a pool where the prior anti-correlates the
+  reference could underperform; (ii) a content-prior-only scorer would beat TracIn here,
+  which says more about TracIn than about the prior. The training term still does real
+  work: the prior alone ranks `ms0` ABOVE `ms` (a null above a real mover — trap-adjacent),
+  and the full reference-Δ pulls it back below all three movers.
+- **What may be said now:** on installed ground truth, Δ-predictability's ranking fidelity
+  survives replacing the true base with a cross-family reference (one pool, one checkpoint,
+  one reference model, both polarities) — with the prior decomposition stated alongside.
+  **Level: direction.** Not yet: any claim about the margin, or about pools where prior and
+  effect decouple — that is exactly what H27's pool with dose-matched nulls will probe.
+- **Falsifier 2 (the AF form) remains pending on H27's pool, as registered.** The file
+  stays OPEN on that leg.
+
+Raw per-document rows: `data/results/factory_farming/attrib_mix_v4/h29_reference_delta_checkpoint-23_rows.jsonl`
+(persisted on the re-run the same day; summaries identical).

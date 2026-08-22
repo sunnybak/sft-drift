@@ -42,6 +42,15 @@ observed and is explicitly logged in `H27` as confirmation, not test.
 
 **`H26` moves from headline to caution.** That is the fix to the user's complaint.
 
+**First results under the new slate (2026-08-22c/d), both free and local:** (i) the step-36
+trajectory REPLICATED at seed 7 — "slow, not inert" is a replicated direction (see its
+section below); (ii) **H29 leg 1 passed with a quantified caveat**: Δ-predictability's
+ranking fidelity survives a cross-family reference (Phi-3.5) in place of the true base
+(ρ +0.94/+0.94 vs TracIn-cos's +0.14/+0.54, `ms0` trap not tripped) — but the pure prior
+term (ref − base, zero training information) scores ρ +0.60 alone on this pool, so the
+reference's margin over the true base is pool composition, not estimator quality. H29 stays
+open on its AF leg. Working: `hypotheses/open/H29-...md`.
+
 ## THE HEADLINE CHANGED: belief→action propagation is MODEL-DEPENDENT
 
 `H8` is falsified; its "a larger model showing propagation" clause fired. Dose-matched,
