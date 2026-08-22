@@ -1,0 +1,32 @@
+# @package _global_
+#
+# configs/run/af_ff_m0_s123.yaml -- H27's FULL-FT AF leg: the off-topic control, full fine-tuned,
+# retrained at training seed 123. h19_ff_m0's exact recipe (control_offtopic_multiform,
+# 93 pairs, 2 epochs, ga8, lr 1e-5). Retrained PER SEED, unlike the LoRA sweep's fixed
+# m0_multiform ck-24 -- registered in hypotheses/open/H27 ("FULL-FT AF LEG"): this doubles
+# as the re-test of H19/H26's machinery seed-stability, the premise of the whole leg.
+#
+#   uv run python run.py +run=af_ff_m0_s123 stage=sft
+
+defaults:
+  - override /experiment: control_offtopic
+  - override /training: full_ft_calib
+
+run_id: af_ff_m0_s123
+stage: sft
+
+related_runs:
+  h19_ff_m0: the recipe source; the H19 full-FT machinery measurement
+
+experiment:
+  dataset:
+    n_items: 250 # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: control_offtopic_multiform
+  use_corpus_user_turns: false
+  max_pairs: 93
+  sft:
+    lr: 1.0e-5
+    epochs: 2
+    seed: 123

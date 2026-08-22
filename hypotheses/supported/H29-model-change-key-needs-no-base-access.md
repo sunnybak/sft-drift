@@ -145,3 +145,39 @@ seeds where true-base excludes, reference also excludes. If true-base itself sep
 from word count in fewer than 2 seeds at every (budget, scale), the falsifier's premise is
 gone — the AF comparison is UNDERPOWERED AT THIS POOL (the H27-LoRA outcome), the leg
 resolves undeterminable here, and H29 rests on leg 1 (direction) alone.
+
+**THE THIRD SEED RAN (2026-08-22h, s123: pool + control + 8 arms, 45/45 gates PASS) AND
+THE REGISTERED RULE RESOLVES THE LEG — falsifier 2 does NOT fire:**
+
+- **p10, both scales:** true-base delta_pred excludes word count's AF at only 1/3 seeds
+  (s7) — s123's word count itself posts +0.45 [+0.19, +0.70] (the pool's movers are short,
+  so at that seed ANY short-first filter works). The falsifier's premise fails at p10:
+  those cells are underpowered, not decided.
+- **p20, log-odds — the only cell family where true-base robustly separates (2/3 seeds:
+  s42, s123):** reference-Δ ALSO excludes word count at both of those seeds
+  (s42 [−0.05, +0.35] vs wc −0.08; s123 [+0.30, +0.59] vs wc +0.21). **The substitution
+  survives the registered 2-of-3 rule.** The one "true-base works, reference fails" cell
+  (s7/p10) stays a single-seed observation on the fragile budget.
+- **The prior caveat is PART OF THE RESULT, not disarmed:** refdelta is disjoint from
+  prior-alone at s7/p20 log-odds (+0.38 vs −0.07) but indistinguishable at s123
+  (+0.60 vs +0.70 at p10) and at s42 (both null-ish). At the AF level, reference-Δ's
+  filtering power is separable from the reference model's content prior at ONE of three
+  seeds only.
+- Side-finding for the H27 record (recorded there in spirit, here in numbers): the
+  full-FT pool's `dB_before` spans +0.0167/+0.0247/+0.0347 across three seeds — 2.1x on
+  point estimates, pairwise CIs overlapping. Full-FT is cleaner than LoRA (whose
+  `dB_before` halved with disjoint behaviour), not immune. s123's machinery term
+  (−0.0069 [−0.0138, −0.0014] prob) excludes zero while overlapping the other seeds' CIs.
+
+**RESOLUTION (2026-08-22h): SUPPORTED, direction level, with the prior caveat bound into
+the claim.** All three registered falsifiers were evaluated and none fired: (1) ranking
+fidelity survives the cross-family substitution (ρ +0.94/+0.94 vs TracIn-cos +0.14/+0.54,
+leg 1); (2) the AF form survives at the only robustly-separating cell family under the
+pre-registered 2-of-3 rule; (3) the ms0 trap was not tripped (leg 1) and refdelta's
+removal sets carry 2–4 ms0 pairs vs prior-alone's 15–26. **What may be said:** a
+cross-family reference model substitutes for the true base in Δ-predictability, for
+ranking and for bulk (20%) removal, on this pool — an audit-tool claim, not a lab-instrument
+one. **In the same sentence, always:** the reference's content prior alone carries much of
+the pool-level filtering power at 2 of 3 seeds (ρ +0.60 ranking; AF indistinguishable from
+refdelta at s123), so on a pool where the prior anti-correlates with effect the
+substitution is unvalidated — that pool is the successor experiment if one is ever needed.

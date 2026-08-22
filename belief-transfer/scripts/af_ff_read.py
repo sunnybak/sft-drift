@@ -32,7 +32,7 @@ R = ROOT / "data" / "results" / "factory_farming"
 LOGIT_EPS = 1e-6
 METHODS = ("oracle", "delta_pred", "tracin", "tracin_cos", "wordcount", "refdelta", "prior")
 BUDGETS = (10, 20)
-SEEDS = (("s42", ""), ("s7", "_s7"))
+SEEDS = (("s42", ""), ("s7", "_s7"), ("s123", "_s123"))
 N_BOOT = 10_000
 
 
