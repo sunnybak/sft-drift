@@ -6,18 +6,33 @@ detail lives in `changelog/2026-08-21c.md` and in each hypothesis file's own
 `Current position`, not duplicated here.
 
 Last refreshed: **2026-08-22h**, on a fresh rented 96GB RTX PRO 6000 (setup green, both
-step-6 reproductions match recorded numbers). The UNBLOCK cycle ran: **H27's full-FT AF
-leg — 24 runs, 110/110 gates PASS, two seeds — and H27 RESOLVED SUPPORTED at replicated
-direction.** The falsifier ran to a verdict and did not fire (0/16 cells: neither tracin
-nor tracin_cos ever excludes word count's AF); full-FT de-noised the instrument exactly
-as H19/H26 predicted (machinery −0.0004/−0.0010, overlapping seed CIs; dB_before
-+0.0167/+0.0247, overlapping). New and sharper: **content-keyed removal at the 10% budget
-is COUNTERPRODUCTIVE** (AF(tracin_p10) −0.91/−0.42 prob, zero-excluding both seeds).
-AF(oracle_p20) ≈ half the effect replicates on both scales; delta_pred is seed-stable at
-p20 (~half oracle) but seed-inconsistent at p10, so "repair approaches oracle" is NOT
-established. Retrieval methods unrun (no per-doc scores exist). The HF dataset repo is now
-PUBLIC (user decision, 2026-08-22) — the 100GB private quota no longer binds.
-Working: `changelog/2026-08-22h.md`, `af_ff_summary.json`, `hypotheses/supported/H27-...md`.
+step-6 reproductions match). This session CLEARED THE BIG-BOX QUEUE — every remaining move
+fits the 16GB box. Three legs ran:
+
+- **H27 RESOLVED SUPPORTED** (full-FT AF leg, 24 runs, 110/110 gates, 2 seeds). Falsifier
+  did not fire (0/16 cells: neither tracin nor tracin_cos excludes word count's AF);
+  full-FT de-noised the instrument as H19/H26 predicted (machinery −0.0004/−0.0010,
+  overlapping seed CIs). Sharper than blindness: **content-keyed removal at p10 is
+  COUNTERPRODUCTIVE** (AF(tracin_p10) −0.91/−0.42, zero-excluding both seeds).
+  AF(oracle_p20) ≈ half the effect, both scales. Retrieval unrun (no per-doc scores).
+- **H29 RESOLVED SUPPORTED (direction)** — its AF leg ran at three seeds (refdelta + prior
+  arms on the af_ff machinery). Under the pre-registered 2-of-3 rule the cross-family
+  reference substitutes for the true base at the only robustly-separating cell family
+  (p20/log-odds). **Bound caveat:** the reference's content prior alone carries much of the
+  filtering power at 2/3 seeds, so a prior-anti-correlated pool is the successor if needed.
+- **H22 STAYS resource_constrained** — the powered test ran (Ms at 8B) but was underpowered
+  by its own registered rule: Ms's belief effect attenuates 8x with scale (vs stance's
+  1.6x — the form gradient STEEPENS with scale) and 4-epoch escalation destroyed it
+  (belief peaks early). No premise-only corpus in the repo reaches explicit-8B belief
+  magnitude at a gated dose; next step is a NEW intermediate-assertion corpus (design +
+  API on 16GB; only its 8B training needs a rental). Permanent gains: `sensitivity_8b_v1`
+  (S_B +0.817 / S_A +0.460, both excluding zero — action suite LIVE at 8B, T ratios now
+  quotable there) and a suggestive unregistered 2-epoch observation (dA NET excludes zero
+  at both seeds on an assertion-free corpus).
+
+The HF dataset repo is now PUBLIC (user decision) — the 100GB private quota no longer binds.
+Full-FT/8B weights remain local-only and expendable per the standing decision; results +
+configs pushed. Working: `changelog/2026-08-22h.md`, `af_ff_summary.json`, `hypotheses/supported/H27,H29`.
 
 Prior session (2026-08-22g, 16GB box): "slow, not inert" replicated (s7); H29 leg 1 passed
 with the prior term quantified; the LoRA AF sweep hit the noise wall; **H25 resolved
@@ -192,13 +207,10 @@ seeds — quoted with its step or not at all.
 
 ## Hypotheses
 
-`open/` = **H29** only (the model-change key needs no base access — leg 1 passed with the
-prior-term caveat; its AF leg is now CHEAP on the af_ff machinery, ~1h on a big box).
-**1 of 3.** **H27 RESOLVED SUPPORTED 2026-08-22h** at replicated direction by its own
-registered falsifier not firing at the first powered setup (full-FT, 2 seeds, 110/110
-gates): content-keyed AF statistically tied with word count everywhere, counterproductive
-at p10; splits stated in the file (retrieval unrun; delta_pred-approaches-oracle only
-partially confirmed).
+`open/` = **EMPTY**. Both H27 and H29 resolved SUPPORTED this session (2026-08-22h) and
+moved to `supported/`; H22 stays in `resource_constrained/` with its new-corpus next step.
+The next ordinary cycle opens fresh hypotheses (see "Next" — the paper's structure under
+`PROPOSAL.md` now has two supported attribution findings and needs its write-up).
 
 `resource_constrained/` = **H28** (EM form factorial; ≥48GB, reproduction pilot is a gate)
 and **H22** (8B mediation; >16GB) — moved 2026-08-22 on user direction so a rented box can
@@ -308,22 +320,26 @@ valid, only the LoRA contrast inside it is not.
 
 ## Next, in order
 
-**Re-ordered 2026-08-22 by `PROPOSAL.md` §4.** New items A–C take priority over the
-pre-existing list; item 0a is unchanged and still first because it is 15 minutes and the
-"slow, not inert" result is now load-bearing in the new argument.
+**Re-ordered 2026-08-22h.** The big-box AF work is DONE (H27, H29 both supported). What
+remains is all 16GB-or-cheaper. The paper now has two supported attribution findings
+(`PROPOSAL.md`'s core), which reframes the next cycle around the write-up and its last
+open gaps rather than more sweeps.
 
-A. **Build the mixed pool + per-document attribution scores** — local, free. Prerequisite
-   for AF. All form/density cells + the null-by-construction cell + off-topic filler,
-   trained as one corpus; per-document scores from TracIn, TracIn-cosine, retrieval,
-   `Δ-predictability`, word count, and the measured-effect oracle.
-B. **The AF removal-retrain sweep, DOSE-MATCHED, two seeds** — local, ~1 day GPU. **The
-   decisive experiment.** Dose-matching is mandatory: equal removed token count, backfilled
-   with off-topic filler, total tokens and step count held fixed. Unmatched arm is run only
-   as the confound check. Falsifier and two secondary kill conditions are registered in
-   `H27` — read them before running, not after.
-C. **EM form-variant replication** (`PROPOSAL.md` §3b) — moderate, needs a broad-misalignment
-   eval harness we do not have. Replaces the dead generality leg on the axis reviewers
-   actually care about. Do NOT spend on a third opinion topic instead.
+A. **The paper write-up under `PROPOSAL.md`.** Two supported legs to state: content-keyed
+   attribution is structurally blind (H27 — AF tied with word count, counterproductive at
+   p10) and its repair needs no base checkpoint (H29 — cross-family reference substitutes,
+   with the prior caveat). Update `PAPER_AUDIT.md` green/amber/red with both. Local, no GPU.
+B. **H22's new intermediate-assertion corpus** — the only way to power the mediation test.
+   Design + generation are API-only on the 16GB box (a hedged-stance or
+   premises+derived-conclusion corpus reaching explicit-8B belief magnitude at a gated
+   dose); only the final 8B training needs a future rental. Register the corpus spec and
+   the powered-read falsifier before generating.
+C. **EM form-variant replication** (`PROPOSAL.md` §3b, H28) — still needs a
+   broad-misalignment eval harness we do not have AND ≥48GB for the pilot; stays
+   resource_constrained. Build the harness on the cheap box so a future rental is pilot-ready.
+
+Superseded by this session (kept for the record): the old A/B were "build the mixed pool"
+(done, `attrib_mix_v4`) and "the AF sweep" (done at LoRA then full-FT — H27 resolved).
 
 0a. **DONE 2026-08-22c — the step-36 second seed replicated** (`matrix_s7_step36`; see
    the headline section above). "Slow, not inert" is a replicated direction.
@@ -354,12 +370,14 @@ C. **EM form-variant replication** (`PROPOSAL.md` §3b) — moderate, needs a br
 
 ## Box / sync state
 
-**96GB box (RTX PRO 6000, instance 48323123) is STOPPED — verified `exited` via vastai
-2026-08-22.** Storage-only billing; GPU meter off. The prior "ACTIVE and metered" note was
-stale. Its disk still holds the only copies of the 8B/full-FT checkpoints; restart it (or
-rent equivalent) when H28's pilot or any §4 item 6–7 work begins. This box: RTX 5080 16GB
-(instance 48225177). Git, data (results + validated) and cache all
-pushed. **Deliberately local-only and expendable: all full-FT and 8B checkpoints** (~60GB)
+**THIS session ran on a fresh 96GB RTX PRO 6000 Blackwell rental** (setup from cold per
+SETUP.md; not the stopped 48323123). It cleared the big-box queue (H27, H29, H22's powered
+attempt) and is being wound down to resume on the cheaper 16GB box per the user's
+direction — every remaining move (paper write-up, H22's new corpus design, H28's harness)
+fits ≤16GB. **Restart a ≥48GB box only for H28's pilot or H22's eventual 8B training of a
+new intermediate corpus.** The older stopped 96GB box (48323123) held the previous 8B/
+full-FT checkpoints; this session's full-FT/8B weights are on THIS rental's disk, local-only
+and expendable. Git, results + validated pushed; cache untouched (no API spend). **Deliberately local-only and expendable: all full-FT and 8B checkpoints** (~60GB)
 — user decided results and configs are pushed, weights are not, and every run is cheap to
 retrain (~1 min/arm at 4B). **"Deterministic" was part of that justification and is now in
 question** (2026-08-21e): a retrain with byte-identical data, the same seed, the same box
