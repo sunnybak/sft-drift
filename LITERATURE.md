@@ -309,3 +309,29 @@ how insufficient, and test whether filtering on it does anything.**
 | Mechanistic Data Attribution | arXiv:2601.21996 | IF tracing to interpretable units; does removal/augmentation interventions |
 | Guda — group unlearning attribution | arXiv:2601.22651 | "more reliable than semantic similarity"; diffusion models |
 | Mitigating Emergent Misalignment with Data Attribution | OpenReview fQvVV6UN4p | **not read** — OpenReview served a bot-check page; retry |
+
+## Redundancy scan (2026-08-22e, for the AF sweep's surviving finding — scan, not deep-read)
+
+The concept "influence is non-additive under redundancy" is ESTABLISHED; the claim must be
+narrowed to the behavioral demonstration. Prior ownership:
+
+- **Counterfactual memorization** (Zhang et al., arXiv:2112.12938) explicitly studies how
+  duplication suppresses per-example counterfactual effect — the phenomenon at pretraining
+  scale, on memorization rather than belief.
+- **Interaction-aware influence functions** (arXiv:2605.15675) and **Generalized Group Data
+  Attribution** (arXiv:2410.09940) model exactly the group non-additivity we observed;
+  Hammoudeh & Lowd's survey (arXiv:2212.04612) names inter-example redundancy as a known
+  reason LOO influence misleads.
+- **The FTRACE criticism exists as an argument**: discussion around TRAK/FTRACE-TREx notes
+  that poor benchmark scores "may be an artifact of the benchmark" because many abstracts
+  express the same fact — i.e., source-level labels mislabel document-level responsibility
+  under duplication. Argued, not measured.
+
+**What remains ours if the third seed holds:** the behavioral, causal measurement of the
+benchmark-semantics consequence — on installed ground truth, dose-controlled, gated, with
+removal-retrain at multiple seeds: removing 60% of the documents a source-level oracle
+correctly top-ranks removes NO measurable effect, while full-source removal removes most.
+No prior work runs the removal-retrain against a *measured causal behavioral effect*; the
+counterfactual-memorization result is the nearest neighbour and is about token-level recall.
+Cite all four above when claiming; the phrasing is "we measure, on causal ground truth, the
+error the FTRACE critique conjectures."
