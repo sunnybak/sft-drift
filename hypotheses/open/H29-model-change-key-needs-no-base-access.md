@@ -96,3 +96,27 @@ in bpb as a transform sanity check.
 
 Raw per-document rows: `data/results/factory_farming/attrib_mix_v4/h29_reference_delta_checkpoint-23_rows.jsonl`
 (persisted on the re-run the same day; summaries identical).
+
+**AF LEG (falsifier 2) — design registered 2026-08-22h BEFORE any arm trains, on the H27
+full-FT AF machinery** (which resolved H27 the same day: recipe, per-seed full-FT
+controls, gates, and reader all in place; `hypotheses/supported/H27`, "FULL-FT AF LEG").
+
+- **Arms:** `af_ff_refdelta_p{10,20}{,_s7}` — pairs ranked by the mean over polarities of
+  `bpb_ref − bpb_trained` (the reference-Δ scorer from leg 1, Phi-3.5 reference), removal
+  and training identical to the H27 leg (pair budgets, full-FT lr 1e-5 / 1 epoch / ga24,
+  netted against the same per-seed full-FT controls, gate first). Plus
+  `af_ff_prior_p{10,20}{,_s7}` — ranked by `bpb_ref − bpb_base`, which contains ZERO
+  information about this training run: the AF analog of leg 1's prior decomposition.
+- **Falsifier 2, operationalized on cells that exist:** from the H27 leg, true-base
+  delta_pred's AF excludes word count's AF at s7/p10 on both scales. **H29's practicality
+  claim dies if reference-Δ's AF fails to exclude word count's AF at a cell where
+  true-base delta_pred's does** — i.e. the filtering advantage was the base checkpoint.
+  It survives that cell if reference-Δ also excludes there.
+- **The prior confound, registered as a prediction rather than discovered after:** if
+  AF(prior) is statistically indistinguishable from AF(refdelta) wherever refdelta
+  filters well, then the reference's filtering power is pool composition (the prior
+  helping, as leg 1 measured at ρ +0.60) and any surviving claim carries that caveat in
+  the same sentence.
+- Two seeds before anything is quoted above direction; small-budget (p10) AF cells are
+  known fragile from the H27 leg (delta_pred's own p10 is seed-inconsistent), so the p20
+  cells are read alongside even though the named falsifier cell is p10.
