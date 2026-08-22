@@ -324,3 +324,13 @@ anything about retrieval methods (unrun), and the repair's AF reaching the oracl
 (partially confirmed only). Successor question, deliberately NOT opened as a hypothesis
 here: H29's AF leg (reference-model Δ-predictability's AF vs true-base's) is now cheap on
 this machinery and remains H29's registered secondary falsifier.
+
+**Post-resolution caveat from the H29 leg's third seed (2026-08-22h, s123):** the full-FT
+pool's `dB_before` spans +0.0167 / +0.0247 / +0.0347 across three seeds — 2.1x on point
+estimates, pairwise CIs overlapping — and s123's machinery term (−0.0069 [−0.0138,
+−0.0014] prob) excludes zero while overlapping the other seeds. Full-FT is cleaner than
+LoRA (whose `dB_before` halved), not immune; the resolution above rests on the falsifier's
+0/16 within-seed cells and is unchanged by this. Also measured at s123 (delta_pred and
+wordcount only; the H27 methods were not rerun): word count itself posts AF +0.45 at p10 —
+at that seed the pool's effect concentrates in short documents and ANY short-first filter
+works, which is the H9 NEG-LENGTH story surfacing at the removal level.
