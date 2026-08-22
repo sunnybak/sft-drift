@@ -1,7 +1,39 @@
 # H4: Evidence-only SFT produces recall of the trained text and no inference from it
 
-**Status:** supported — 2026-08-19. The current best account.
+**Status:** supported — 2026-08-19 — **but its INFERENCE half is WITHDRAWN as of
+2026-08-21e.** The belief half stands. The `ΔI` half rests on an instrument whose positive
+control was tested properly for the first time that day and **failed**.
 **Bears on:** contributions 2 and 3 — this is the paper's claim
+
+## AMENDED 2026-08-21e — do not quote the "a fifth" ratio
+
+The claim block below calibrates itself on two ratios. **One survives and one does not.**
+
+- **SURVIVES — the belief ratio.** Evidence-only moves normative belief by roughly a
+  fortieth of explicit assertion (+0.008 vs +0.311/+0.353). The belief suite is unaffected by
+  what follows, and `H26` (2026-08-21e) additionally clears these specific arms: the explicit
+  factory_farming family's machinery-to-raw ratio is 0.11–0.40 and its netted readings
+  replicate across seeds (relative spread 0.11–0.12, sign holds).
+- **WITHDRAWN — the `ΔI` ratio ("a fifth", +0.012 vs +0.062/+0.075).** On
+  `inference_v1_step24`'s explicit-stance arm — the suite's designated POSITIVE CONTROL —
+  the byte-identical null-control facet is the **highest-moving facet of all eight**
+  (+0.1469 against the all-facet mean of +0.0620; best differing-premise facet
+  `injury_rate` +0.1045). The evidence arm's null facet (+0.0138) likewise sits at or above
+  its all-facet mean (+0.0121). **Both terms of the ratio are dominated by a facet whose
+  premises do not differ across polarities**, so the ratio does not measure
+  premise-specific inference and must not be quoted as though it did.
+
+**This does not falsify the hypothesis.** What it removes is the *quantitative* inference
+leg. The qualitative inference evidence is independent of this suite and still stands: the
+prose probes (`prose_probe_v2_step60`, `prose_probe_canon`, recorded in
+[H7](H7-what-is-the-lever.md)) show the evidence arms cannot state their trained premises,
+and that descriptive inference followed on only 1 of 4 facts even where retrievability
+succeeded. So "recall without inference" survives as a **direction supported by two
+independent instruments, one of which is now unquantified**.
+
+Restoring the quantitative leg is exactly what [H25](../open/H25-inference-null-facet-is-unmeasurable.md)
+is for. Until it resolves, the paper states the belief ratio and the prose-probe evidence,
+and reports `ΔI` not at all.
 
 ## Claim
 

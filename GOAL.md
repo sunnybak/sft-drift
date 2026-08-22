@@ -150,6 +150,7 @@ produced it.
 | what | where |
 | --- | --- |
 | current candidate contributions, standing results, next steps | `STATE.md` |
+| what may appear in the paper, at what quotability level | `PAPER_AUDIT.md` |
 | live claims and their falsifiers | `hypotheses/open/` (resource-constrained: `resource_constrained/`; resolved: `supported/`, `falsified/`) |
 | pre-hypothesis ideas, not yet falsifiable | `IDEAS.md` |
 | what to do with a temporarily bigger resource | `UNBLOCK.md` (set alongside this file: `/goal @GOAL.md @UNBLOCK.md`) |

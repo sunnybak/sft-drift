@@ -218,7 +218,13 @@ valid, only the LoRA contrast inside it is not.
    into a band. `stage=sensitivity` at 8B would additionally make `T_A`/`T_B` quotable.
 3. **A powered H22 test**: an arm with an INTERMEDIATE belief effect, since the evidence
    arm's is 6.5x below the explicit arm's and its action reading cannot discriminate.
-4. **Paper re-tabulation** with `LITERATURE.md` citations — and it must now carry the
+4. **DONE 2026-08-21e — `PAPER_AUDIT.md`**, the green/amber/red table of what may be
+   quoted and at what level. Read it before writing anything paper-facing. Two findings
+   from writing it: **`H4`'s inference leg is withdrawn** (its "a fifth" `ΔI` ratio has both
+   terms dominated by the null facet — its belief ratio stands), and **the generality leg is
+   gone** (the second topic delivered neither a belief effect nor a `ΔI`, so generality now
+   rests on the model axis alone, not the topic axis).
+5. **Superseded — the old paper re-tabulation item** with `LITERATURE.md` citations — and it must now carry the
    halo caveat (now H25, and it is a withdrawal of `ΔI` rather than a caveat on it) and the
    log-odds correction above. **`ΔI` must not appear in a table until H25 resolves.**
 
