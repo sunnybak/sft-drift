@@ -1,7 +1,7 @@
 {
   "backend": {
     "backend": "cuda",
-    "device": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
+    "device": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
     "dtype": "",
     "platform": "Linux x86_64",
     "python": "3.12.13"
