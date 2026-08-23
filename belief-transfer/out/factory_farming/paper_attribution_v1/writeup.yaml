@@ -14,8 +14,8 @@ artifacts:
 - out/factory_farming/paper_attribution_v1/paper.pdf
 - out/factory_farming/paper_attribution_v1/compile.log
 - out/factory_farming/paper_attribution_v1/report.md
-config_sha: f73e586ab5a6
-code_revision: bcfce38
+config_sha: 6e9c36c4284e
+code_revision: 043377b
 backend: null
 metrics:
   writeup:
@@ -24,40 +24,43 @@ metrics:
     - matrix_v1_step24
     - ms_arms
     - matrix_md_2ep
+    - ms3p_arms
+    - mld_arms
+    - ms_sparse_arms
     primary_reading: attrib_mix_v4
     trajectory_run: null
     reviewed: true
     compiled: true
-    claims: 20
-    assets: 3
+    claims: 36
+    assets: 5
     authoring_model: gpt-5.6-sol
     reviewer_model: gpt-5.6-luna
 last_run:
-  datapoints: 4
-  cost_usd: 1.370189
+  datapoints: 7
+  cost_usd: 2.179896
   calls:
     cached: 0
-    uncached: 11
+    uncached: 17
   tokens:
     cached:
       input_tokens: 0
       output_tokens: 0
     uncached:
-      input_tokens: 280511
-      output_tokens: 15426
-  mean_latency_s: 15.21878247945146
+      input_tokens: 507166
+      output_tokens: 42174
+  mean_latency_s: 24.34755802439416
 lifetime:
-  runs: 10
-  datapoints: 40
-  cost_usd: 7.577468
+  runs: 11
+  datapoints: 47
+  cost_usd: 9.757364
   calls:
     cached: 62
-    uncached: 77
+    uncached: 94
   tokens:
     cached:
       input_tokens: 1354218
       output_tokens: 84565
     uncached:
-      input_tokens: 1725952
-      output_tokens: 78791
-  mean_latency_s: 10.916817215622052
+      input_tokens: 2233118
+      output_tokens: 120965
+  mean_latency_s: 13.345780978910625

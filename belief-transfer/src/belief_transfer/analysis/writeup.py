@@ -82,6 +82,7 @@ _SECTIONS = ("abstract", "introduction", "methods", "results", "limitations", "c
 _PLACEMENTS = (
     "motivation",
     "methodology",
+    "related_work",
     "methods",
     "results",
     "discussion",
@@ -189,7 +190,7 @@ _PLAN_TOOL = Tool(
                         "evidence_refs": {"type": "array", "items": {"type": "string"}},
                         "form": {
                             "type": "string",
-                            "enum": ["ladder_table", "transfer_table", "trajectory_figure", "af_figure"],
+                            "enum": ["ladder_table", "transfer_table", "trajectory_figure", "af_figure", "af_overlap_table"],
                         },
                         "axes_or_columns": {"type": "array", "items": {"type": "string"}},
                         "placement": {
@@ -791,6 +792,12 @@ for what they build:
     transformation is `identity`.
   - `trajectory_figure` renders the declared trajectory run's saved figures. Its
     transformation is `trajectory`.
+  - `af_overlap_table` renders the non-separation result as ONE compact table: a row per
+    (method, budget, seed) with the attributable fraction and whether it overlaps the
+    word-count baseline in the same cell. If the paper's central claim is that methods do
+    not separate from a baseline, plan this and place it in `results` -- it is the artifact
+    that states the claim, and without it a reader must compare intervals across twenty
+    ladder rows by eye. Cite the `af_*` contrast refs. Transformation `declared_contrast`.
   - `af_figure` renders a forest plot of every declared `af_<method>_<budget>_<seed>`
     contrast: attributable fraction by attribution method, one panel per removal budget,
     95% intervals drawn, with the zero line ("removes nothing") marked. Plan exactly one
@@ -854,16 +861,7 @@ def validate_manuscript_plan(
         # `af_tracin_p10_s42` on 2026-08-23. Widening to 4-decimal numeric equality keeps
         # the guard's purpose (a numeral must correspond to a real value in this claim's
         # own evidence) while removing a pure formatting false negative.
-        supported_numbers = {
-            f"{float(token.removesuffix('%')):.4f}"
-            for token in _NUMBER.findall(supported_text)
-        }
-        unknown_numbers = [
-            number
-            for number in _NUMBER.findall(claim.text)
-            if (bare := number.removesuffix("%")) not in supported_text
-            and f"{float(bare):.4f}" not in supported_numbers
-        ]
+        unknown_numbers = _unsupported_numbers(claim.text, supported_text)
         if unknown_numbers:
             raise ValueError(f"claim {claim.id!r} contains unsupported numbers: {unknown_numbers}")
 
@@ -872,6 +870,7 @@ def validate_manuscript_plan(
         "transfer_table": {"identity"},
         "trajectory_figure": {"identity", "trajectory"},
         "af_figure": {"identity", "declared_contrast"},
+        "af_overlap_table": {"identity", "declared_contrast"},
     }
     signatures: set[tuple[str, tuple[str, ...]]] = set()
     proposed_asset_ids = set(asset_ids)
@@ -1142,6 +1141,33 @@ def _facts_for_refs(synthesis: dict[str, Any], refs: set[str]) -> list[dict[str,
     ]
 
 
+
+def _unsupported_numbers(text: str, supported_text: str) -> list[str]:
+    """Numerals in `text` that no value in `supported_text` can account for.
+
+    Compare NUMERICALLY and AT THE AUTHOR'S OWN PRECISION, not as substrings. Three things
+    make a substring check reject correct writing: `_round_for_display` rounds the excerpt to
+    four decimals and `json.dumps` drops trailing zeros ("-0.913" for a table's "-0.9130");
+    the excerpt carries no sign while tables render "+.4f"; and prose reporting a value to two
+    decimals ("-0.91") is quoting the same number, not inventing one. Rounding each declared
+    value to the number of decimals the author actually wrote handles all three, and still
+    rejects a numeral that corresponds to no declared value at any precision.
+    """
+    declared = [
+        float(token.removesuffix("%")) for token in _NUMBER.findall(supported_text)
+    ]
+    unknown: list[str] = []
+    for number in _NUMBER.findall(text):
+        bare = number.removesuffix("%")
+        if bare in supported_text:
+            continue
+        places = len(bare.partition(".")[2])
+        if any(f"{value:.{places}f}" == f"{float(bare):.{places}f}" for value in declared):
+            continue
+        unknown.append(number)
+    return unknown
+
+
 def _round_for_display(value: Any) -> Any:
     """Round every float to four decimals, recursively.
 
@@ -1311,19 +1337,7 @@ def validate_section_payload(
         supported_text = json.dumps(
             _synthesis_excerpt(synthesis, paragraph_refs), sort_keys=True
         )
-        # Same numeric widening as `validate_manuscript_plan` -- see the comment there. The
-        # paragraph case additionally trips on SIGN: tables render "+.4f" so the author
-        # writes "+0.0167", while the JSON excerpt carries "0.0167" with no leading plus.
-        supported_numbers = {
-            f"{float(token.removesuffix('%')):.4f}"
-            for token in _NUMBER.findall(supported_text)
-        }
-        unknown_numbers = [
-            number
-            for number in _NUMBER.findall(paragraph.text)
-            if (bare := number.removesuffix("%")) not in supported_text
-            and f"{float(bare):.4f}" not in supported_numbers
-        ]
+        unknown_numbers = _unsupported_numbers(paragraph.text, supported_text)
         if unknown_numbers:
             raise ValueError(f"paragraph {paragraph.id!r} contains unsupported numbers: {unknown_numbers}")
     return paragraphs
@@ -1675,6 +1689,10 @@ def build_assets(
                     "evidence_refs": brief.evidence_refs,
                 }
             )
+        elif brief.form == "af_overlap_table":
+            built_tables[brief.id] = tables.af_overlap_table(synthesis)
+            manifest.append({"id": brief.id, "kind": "table",
+                             "builder": "af_overlap_table", "evidence_refs": brief.evidence_refs})
         elif brief.form == "af_figure":
             built = plots.plot_af(synthesis, af_figure_dir) if af_figure_dir else []
             if not built:

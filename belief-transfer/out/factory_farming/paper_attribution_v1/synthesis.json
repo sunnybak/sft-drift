@@ -946,6 +946,566 @@
       "run_id": "matrix_v1_step24",
       "sha256": "5444eded0b8f670125d7a83bde24db0f358f5ece4d02e8b2d2cf75ff11dd954e"
     },
+    "mld_arms:config.resolved.yaml:/absorption/arms/0/checkpoint": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/absorption/arms/0/checkpoint",
+      "pointer": "/absorption/arms/0/checkpoint",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/absorption/arms/0/run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/absorption/arms/0/run_id",
+      "pointer": "/absorption/arms/0/run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/absorption/arms/1/checkpoint": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/absorption/arms/1/checkpoint",
+      "pointer": "/absorption/arms/1/checkpoint",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/absorption/arms/1/run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/absorption/arms/1/run_id",
+      "pointer": "/absorption/arms/1/run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/absorption/arms/2/checkpoint": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/absorption/arms/2/checkpoint",
+      "pointer": "/absorption/arms/2/checkpoint",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/absorption/arms/2/run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/absorption/arms/2/run_id",
+      "pointer": "/absorption/arms/2/run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/absorption/checkpoints_run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/absorption/checkpoints_run_id",
+      "pointer": "/absorption/checkpoints_run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/efficacy/arms/0/checkpoint": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/efficacy/arms/0/checkpoint",
+      "pointer": "/efficacy/arms/0/checkpoint",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/efficacy/arms/0/run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/efficacy/arms/0/run_id",
+      "pointer": "/efficacy/arms/0/run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/efficacy/arms/1/checkpoint": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+      "pointer": "/efficacy/arms/1/checkpoint",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/efficacy/arms/1/run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/efficacy/arms/1/run_id",
+      "pointer": "/efficacy/arms/1/run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/efficacy/arms/2/checkpoint": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/efficacy/arms/2/checkpoint",
+      "pointer": "/efficacy/arms/2/checkpoint",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/efficacy/arms/2/run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/efficacy/arms/2/run_id",
+      "pointer": "/efficacy/arms/2/run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/efficacy/arms/3/checkpoint": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+      "pointer": "/efficacy/arms/3/checkpoint",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/efficacy/arms/3/run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/efficacy/arms/3/run_id",
+      "pointer": "/efficacy/arms/3/run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/efficacy/arms/4/checkpoint": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/efficacy/arms/4/checkpoint",
+      "pointer": "/efficacy/arms/4/checkpoint",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/efficacy/arms/4/run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/efficacy/arms/4/run_id",
+      "pointer": "/efficacy/arms/4/run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/experiment/id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/experiment/id",
+      "pointer": "/experiment/id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/run_id",
+      "pointer": "/run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/training/model": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/training/model",
+      "pointer": "/training/model",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/training/sft/seed": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/training/sft/seed",
+      "pointer": "/training/sft/seed",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/transfer/arms/0/checkpoint": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/transfer/arms/0/checkpoint",
+      "pointer": "/transfer/arms/0/checkpoint",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/transfer/arms/0/run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/transfer/arms/0/run_id",
+      "pointer": "/transfer/arms/0/run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/transfer/arms/1/checkpoint": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/transfer/arms/1/checkpoint",
+      "pointer": "/transfer/arms/1/checkpoint",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/transfer/arms/1/run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/transfer/arms/1/run_id",
+      "pointer": "/transfer/arms/1/run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/transfer/arms/2/checkpoint": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/transfer/arms/2/checkpoint",
+      "pointer": "/transfer/arms/2/checkpoint",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/transfer/arms/2/run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/transfer/arms/2/run_id",
+      "pointer": "/transfer/arms/2/run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/transfer/arms/3/checkpoint": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/transfer/arms/3/checkpoint",
+      "pointer": "/transfer/arms/3/checkpoint",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/transfer/arms/3/run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/transfer/arms/3/run_id",
+      "pointer": "/transfer/arms/3/run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/transfer/arms/4/checkpoint": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/transfer/arms/4/checkpoint",
+      "pointer": "/transfer/arms/4/checkpoint",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "mld_arms:config.resolved.yaml:/transfer/arms/4/run_id": {
+      "artifact_path": "data/results/factory_farming/mld_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:config.resolved.yaml:/transfer/arms/4/run_id",
+      "pointer": "/transfer/arms/4/run_id",
+      "run_id": "mld_arms",
+      "sha256": "11dcd7bb9706586aa9ae063e8fa3bf69c368beba8354ef8cbe23e1c156b4ffc0"
+    },
+    "ms3p_arms:config.resolved.yaml:/absorption/arms/0/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/absorption/arms/0/checkpoint",
+      "pointer": "/absorption/arms/0/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/absorption/arms/0/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/absorption/arms/0/run_id",
+      "pointer": "/absorption/arms/0/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/absorption/arms/1/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/absorption/arms/1/checkpoint",
+      "pointer": "/absorption/arms/1/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/absorption/arms/1/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/absorption/arms/1/run_id",
+      "pointer": "/absorption/arms/1/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/absorption/arms/2/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/absorption/arms/2/checkpoint",
+      "pointer": "/absorption/arms/2/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/absorption/arms/2/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/absorption/arms/2/run_id",
+      "pointer": "/absorption/arms/2/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/absorption/checkpoints_run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/absorption/checkpoints_run_id",
+      "pointer": "/absorption/checkpoints_run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/0/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/efficacy/arms/0/checkpoint",
+      "pointer": "/efficacy/arms/0/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/0/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/efficacy/arms/0/run_id",
+      "pointer": "/efficacy/arms/0/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/1/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+      "pointer": "/efficacy/arms/1/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/1/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/efficacy/arms/1/run_id",
+      "pointer": "/efficacy/arms/1/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/2/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/efficacy/arms/2/checkpoint",
+      "pointer": "/efficacy/arms/2/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/2/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/efficacy/arms/2/run_id",
+      "pointer": "/efficacy/arms/2/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/3/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+      "pointer": "/efficacy/arms/3/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/3/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/efficacy/arms/3/run_id",
+      "pointer": "/efficacy/arms/3/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/4/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/efficacy/arms/4/checkpoint",
+      "pointer": "/efficacy/arms/4/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/4/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/efficacy/arms/4/run_id",
+      "pointer": "/efficacy/arms/4/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/5/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/efficacy/arms/5/checkpoint",
+      "pointer": "/efficacy/arms/5/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/5/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/efficacy/arms/5/run_id",
+      "pointer": "/efficacy/arms/5/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/6/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/efficacy/arms/6/checkpoint",
+      "pointer": "/efficacy/arms/6/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/6/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/efficacy/arms/6/run_id",
+      "pointer": "/efficacy/arms/6/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/experiment/id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/experiment/id",
+      "pointer": "/experiment/id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/run_id",
+      "pointer": "/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/training/model": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/training/model",
+      "pointer": "/training/model",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/training/sft/seed": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/training/sft/seed",
+      "pointer": "/training/sft/seed",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/0/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/transfer/arms/0/checkpoint",
+      "pointer": "/transfer/arms/0/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/0/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/transfer/arms/0/run_id",
+      "pointer": "/transfer/arms/0/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/1/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/transfer/arms/1/checkpoint",
+      "pointer": "/transfer/arms/1/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/1/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/transfer/arms/1/run_id",
+      "pointer": "/transfer/arms/1/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/2/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/transfer/arms/2/checkpoint",
+      "pointer": "/transfer/arms/2/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/2/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/transfer/arms/2/run_id",
+      "pointer": "/transfer/arms/2/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/3/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/transfer/arms/3/checkpoint",
+      "pointer": "/transfer/arms/3/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/3/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/transfer/arms/3/run_id",
+      "pointer": "/transfer/arms/3/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/4/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/transfer/arms/4/checkpoint",
+      "pointer": "/transfer/arms/4/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/4/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/transfer/arms/4/run_id",
+      "pointer": "/transfer/arms/4/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/5/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/transfer/arms/5/checkpoint",
+      "pointer": "/transfer/arms/5/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/5/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/transfer/arms/5/run_id",
+      "pointer": "/transfer/arms/5/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/6/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/transfer/arms/6/checkpoint",
+      "pointer": "/transfer/arms/6/checkpoint",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/6/run_id": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:config.resolved.yaml:/transfer/arms/6/run_id",
+      "pointer": "/transfer/arms/6/run_id",
+      "run_id": "ms3p_arms",
+      "sha256": "3aab8e71e97b5d3c651504c4e91bafcbb918ec90f673ee06741910cec3b5a3eb"
+    },
     "ms_arms:config.resolved.yaml:/absorption/arms/0/checkpoint": {
       "artifact_path": "data/results/factory_farming/ms_arms/config.resolved.yaml",
       "checkpoint": "",
@@ -1257,6 +1817,254 @@
       "pointer": "/transfer/arms/6/run_id",
       "run_id": "ms_arms",
       "sha256": "20c48403776acd4231998ec8dcaaae22d07ec89c6ed0a45b032616f495899a6c"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/absorption/arms/0/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/absorption/arms/0/checkpoint",
+      "pointer": "/absorption/arms/0/checkpoint",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/absorption/arms/0/run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/absorption/arms/0/run_id",
+      "pointer": "/absorption/arms/0/run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/absorption/arms/1/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/absorption/arms/1/checkpoint",
+      "pointer": "/absorption/arms/1/checkpoint",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/absorption/arms/1/run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/absorption/arms/1/run_id",
+      "pointer": "/absorption/arms/1/run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/absorption/arms/2/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/absorption/arms/2/checkpoint",
+      "pointer": "/absorption/arms/2/checkpoint",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/absorption/arms/2/run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/absorption/arms/2/run_id",
+      "pointer": "/absorption/arms/2/run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/absorption/checkpoints_run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/absorption/checkpoints_run_id",
+      "pointer": "/absorption/checkpoints_run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/0/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/0/checkpoint",
+      "pointer": "/efficacy/arms/0/checkpoint",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/0/run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/0/run_id",
+      "pointer": "/efficacy/arms/0/run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/1/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+      "pointer": "/efficacy/arms/1/checkpoint",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/1/run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/1/run_id",
+      "pointer": "/efficacy/arms/1/run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/2/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/2/checkpoint",
+      "pointer": "/efficacy/arms/2/checkpoint",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/2/run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/2/run_id",
+      "pointer": "/efficacy/arms/2/run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/3/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+      "pointer": "/efficacy/arms/3/checkpoint",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/3/run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/3/run_id",
+      "pointer": "/efficacy/arms/3/run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/4/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/4/checkpoint",
+      "pointer": "/efficacy/arms/4/checkpoint",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/4/run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/4/run_id",
+      "pointer": "/efficacy/arms/4/run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/experiment/id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/experiment/id",
+      "pointer": "/experiment/id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/run_id",
+      "pointer": "/run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/training/model": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/training/model",
+      "pointer": "/training/model",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/training/sft/seed": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/training/sft/seed",
+      "pointer": "/training/sft/seed",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/0/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/transfer/arms/0/checkpoint",
+      "pointer": "/transfer/arms/0/checkpoint",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/0/run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/transfer/arms/0/run_id",
+      "pointer": "/transfer/arms/0/run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/1/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/transfer/arms/1/checkpoint",
+      "pointer": "/transfer/arms/1/checkpoint",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/1/run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/transfer/arms/1/run_id",
+      "pointer": "/transfer/arms/1/run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/2/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/transfer/arms/2/checkpoint",
+      "pointer": "/transfer/arms/2/checkpoint",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/2/run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/transfer/arms/2/run_id",
+      "pointer": "/transfer/arms/2/run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/3/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/transfer/arms/3/checkpoint",
+      "pointer": "/transfer/arms/3/checkpoint",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/3/run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/transfer/arms/3/run_id",
+      "pointer": "/transfer/arms/3/run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/4/checkpoint": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/transfer/arms/4/checkpoint",
+      "pointer": "/transfer/arms/4/checkpoint",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
+    },
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/4/run_id": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:config.resolved.yaml:/transfer/arms/4/run_id",
+      "pointer": "/transfer/arms/4/run_id",
+      "run_id": "ms_sparse_arms",
+      "sha256": "2279d4c5efb9fb1cbe46299bf6c2a2af6789d3bae165f17b1897fbf9c8f190c8"
     }
   },
   "context_values": {
@@ -1377,6 +2185,76 @@
     "matrix_v1_step24:config.resolved.yaml:/transfer/arms/5/run_id": "explicit_stance_v3_arms",
     "matrix_v1_step24:config.resolved.yaml:/transfer/arms/6/checkpoint": "checkpoint-24",
     "matrix_v1_step24:config.resolved.yaml:/transfer/arms/6/run_id": "explicit_stance_v3_arms",
+    "mld_arms:config.resolved.yaml:/absorption/arms/0/checkpoint": "final",
+    "mld_arms:config.resolved.yaml:/absorption/arms/0/run_id": null,
+    "mld_arms:config.resolved.yaml:/absorption/arms/1/checkpoint": "final",
+    "mld_arms:config.resolved.yaml:/absorption/arms/1/run_id": null,
+    "mld_arms:config.resolved.yaml:/absorption/arms/2/checkpoint": "final",
+    "mld_arms:config.resolved.yaml:/absorption/arms/2/run_id": null,
+    "mld_arms:config.resolved.yaml:/absorption/checkpoints_run_id": null,
+    "mld_arms:config.resolved.yaml:/efficacy/arms/0/checkpoint": "final",
+    "mld_arms:config.resolved.yaml:/efficacy/arms/0/run_id": null,
+    "mld_arms:config.resolved.yaml:/efficacy/arms/1/checkpoint": "checkpoint-24",
+    "mld_arms:config.resolved.yaml:/efficacy/arms/1/run_id": "mld_arms",
+    "mld_arms:config.resolved.yaml:/efficacy/arms/2/checkpoint": "checkpoint-24",
+    "mld_arms:config.resolved.yaml:/efficacy/arms/2/run_id": "mld_arms",
+    "mld_arms:config.resolved.yaml:/efficacy/arms/3/checkpoint": "checkpoint-24",
+    "mld_arms:config.resolved.yaml:/efficacy/arms/3/run_id": "ms0_arms",
+    "mld_arms:config.resolved.yaml:/efficacy/arms/4/checkpoint": "checkpoint-24",
+    "mld_arms:config.resolved.yaml:/efficacy/arms/4/run_id": "ms0_arms",
+    "mld_arms:config.resolved.yaml:/experiment/id": "factory_farming",
+    "mld_arms:config.resolved.yaml:/run_id": "mld_arms",
+    "mld_arms:config.resolved.yaml:/training/model": "qwen3-4b",
+    "mld_arms:config.resolved.yaml:/training/sft/seed": 42,
+    "mld_arms:config.resolved.yaml:/transfer/arms/0/checkpoint": "final",
+    "mld_arms:config.resolved.yaml:/transfer/arms/0/run_id": null,
+    "mld_arms:config.resolved.yaml:/transfer/arms/1/checkpoint": "checkpoint-24",
+    "mld_arms:config.resolved.yaml:/transfer/arms/1/run_id": "mld_arms",
+    "mld_arms:config.resolved.yaml:/transfer/arms/2/checkpoint": "checkpoint-24",
+    "mld_arms:config.resolved.yaml:/transfer/arms/2/run_id": "mld_arms",
+    "mld_arms:config.resolved.yaml:/transfer/arms/3/checkpoint": "checkpoint-24",
+    "mld_arms:config.resolved.yaml:/transfer/arms/3/run_id": "ms0_arms",
+    "mld_arms:config.resolved.yaml:/transfer/arms/4/checkpoint": "checkpoint-24",
+    "mld_arms:config.resolved.yaml:/transfer/arms/4/run_id": "ms0_arms",
+    "ms3p_arms:config.resolved.yaml:/absorption/arms/0/checkpoint": "final",
+    "ms3p_arms:config.resolved.yaml:/absorption/arms/0/run_id": null,
+    "ms3p_arms:config.resolved.yaml:/absorption/arms/1/checkpoint": "final",
+    "ms3p_arms:config.resolved.yaml:/absorption/arms/1/run_id": null,
+    "ms3p_arms:config.resolved.yaml:/absorption/arms/2/checkpoint": "final",
+    "ms3p_arms:config.resolved.yaml:/absorption/arms/2/run_id": null,
+    "ms3p_arms:config.resolved.yaml:/absorption/checkpoints_run_id": null,
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/0/checkpoint": "final",
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/0/run_id": null,
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/1/checkpoint": "checkpoint-24",
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/1/run_id": "ms3p_arms",
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/2/checkpoint": "checkpoint-24",
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/2/run_id": "ms3p_arms",
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/3/checkpoint": "checkpoint-24",
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/3/run_id": "ms0_arms",
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/4/checkpoint": "checkpoint-24",
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/4/run_id": "ms0_arms",
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/5/checkpoint": "checkpoint-24",
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/5/run_id": "m0_multiform",
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/6/checkpoint": "checkpoint-24",
+    "ms3p_arms:config.resolved.yaml:/efficacy/arms/6/run_id": "m0_multiform",
+    "ms3p_arms:config.resolved.yaml:/experiment/id": "factory_farming",
+    "ms3p_arms:config.resolved.yaml:/run_id": "ms3p_arms",
+    "ms3p_arms:config.resolved.yaml:/training/model": "qwen3-4b",
+    "ms3p_arms:config.resolved.yaml:/training/sft/seed": 42,
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/0/checkpoint": "final",
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/0/run_id": null,
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/1/checkpoint": "checkpoint-24",
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/1/run_id": "ms3p_arms",
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/2/checkpoint": "checkpoint-24",
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/2/run_id": "ms3p_arms",
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/3/checkpoint": "checkpoint-24",
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/3/run_id": "ms0_arms",
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/4/checkpoint": "checkpoint-24",
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/4/run_id": "ms0_arms",
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/5/checkpoint": "checkpoint-24",
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/5/run_id": "m0_multiform",
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/6/checkpoint": "checkpoint-24",
+    "ms3p_arms:config.resolved.yaml:/transfer/arms/6/run_id": "m0_multiform",
     "ms_arms:config.resolved.yaml:/absorption/arms/0/checkpoint": "final",
     "ms_arms:config.resolved.yaml:/absorption/arms/0/run_id": null,
     "ms_arms:config.resolved.yaml:/absorption/arms/1/checkpoint": "final",
@@ -1415,7 +2293,38 @@
     "ms_arms:config.resolved.yaml:/transfer/arms/5/checkpoint": "checkpoint-24",
     "ms_arms:config.resolved.yaml:/transfer/arms/5/run_id": "explicit_stance_v3_arms",
     "ms_arms:config.resolved.yaml:/transfer/arms/6/checkpoint": "checkpoint-24",
-    "ms_arms:config.resolved.yaml:/transfer/arms/6/run_id": "explicit_stance_v3_arms"
+    "ms_arms:config.resolved.yaml:/transfer/arms/6/run_id": "explicit_stance_v3_arms",
+    "ms_sparse_arms:config.resolved.yaml:/absorption/arms/0/checkpoint": "final",
+    "ms_sparse_arms:config.resolved.yaml:/absorption/arms/0/run_id": null,
+    "ms_sparse_arms:config.resolved.yaml:/absorption/arms/1/checkpoint": "final",
+    "ms_sparse_arms:config.resolved.yaml:/absorption/arms/1/run_id": null,
+    "ms_sparse_arms:config.resolved.yaml:/absorption/arms/2/checkpoint": "final",
+    "ms_sparse_arms:config.resolved.yaml:/absorption/arms/2/run_id": null,
+    "ms_sparse_arms:config.resolved.yaml:/absorption/checkpoints_run_id": null,
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/0/checkpoint": "final",
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/0/run_id": null,
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/1/checkpoint": "checkpoint-24",
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/1/run_id": "ms_sparse_arms",
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/2/checkpoint": "checkpoint-24",
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/2/run_id": "ms_sparse_arms",
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/3/checkpoint": "checkpoint-24",
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/3/run_id": "ms0_arms",
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/4/checkpoint": "checkpoint-24",
+    "ms_sparse_arms:config.resolved.yaml:/efficacy/arms/4/run_id": "ms0_arms",
+    "ms_sparse_arms:config.resolved.yaml:/experiment/id": "factory_farming",
+    "ms_sparse_arms:config.resolved.yaml:/run_id": "ms_sparse_arms",
+    "ms_sparse_arms:config.resolved.yaml:/training/model": "qwen3-4b",
+    "ms_sparse_arms:config.resolved.yaml:/training/sft/seed": 42,
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/0/checkpoint": "final",
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/0/run_id": null,
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/1/checkpoint": "checkpoint-24",
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/1/run_id": "ms_sparse_arms",
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/2/checkpoint": "checkpoint-24",
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/2/run_id": "ms_sparse_arms",
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/3/checkpoint": "checkpoint-24",
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/3/run_id": "ms0_arms",
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/4/checkpoint": "checkpoint-24",
+    "ms_sparse_arms:config.resolved.yaml:/transfer/arms/4/run_id": "ms0_arms"
   },
   "evidence_refs": {
     "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0": {
@@ -2146,6 +3055,54 @@
       "run_id": "matrix_v1_step24",
       "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
     },
+    "mld_arms:belief_summary.yaml:/delta_net/ci95/0": {
+      "artifact_path": "data/results/factory_farming/mld_arms/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:belief_summary.yaml:/delta_net/ci95/0",
+      "pointer": "/delta_net/ci95/0",
+      "run_id": "mld_arms",
+      "sha256": "0e157b5521bbf6cb0c9637d84249fc4aab31e237a66f0d8d12fb8207e970e975"
+    },
+    "mld_arms:belief_summary.yaml:/delta_net/ci95/1": {
+      "artifact_path": "data/results/factory_farming/mld_arms/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:belief_summary.yaml:/delta_net/ci95/1",
+      "pointer": "/delta_net/ci95/1",
+      "run_id": "mld_arms",
+      "sha256": "0e157b5521bbf6cb0c9637d84249fc4aab31e237a66f0d8d12fb8207e970e975"
+    },
+    "mld_arms:belief_summary.yaml:/delta_net/delta": {
+      "artifact_path": "data/results/factory_farming/mld_arms/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "mld_arms:belief_summary.yaml:/delta_net/delta",
+      "pointer": "/delta_net/delta",
+      "run_id": "mld_arms",
+      "sha256": "0e157b5521bbf6cb0c9637d84249fc4aab31e237a66f0d8d12fb8207e970e975"
+    },
+    "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
+      "pointer": "/delta_net/ci95/0",
+      "run_id": "ms3p_arms",
+      "sha256": "52c3772900d07e0a50a36e7abc39f9a6e9ff74fa29a77cb7762e6cc409dc9515"
+    },
+    "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1",
+      "pointer": "/delta_net/ci95/1",
+      "run_id": "ms3p_arms",
+      "sha256": "52c3772900d07e0a50a36e7abc39f9a6e9ff74fa29a77cb7762e6cc409dc9515"
+    },
+    "ms3p_arms:belief_summary.yaml:/delta_net/delta": {
+      "artifact_path": "data/results/factory_farming/ms3p_arms/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "ms3p_arms:belief_summary.yaml:/delta_net/delta",
+      "pointer": "/delta_net/delta",
+      "run_id": "ms3p_arms",
+      "sha256": "52c3772900d07e0a50a36e7abc39f9a6e9ff74fa29a77cb7762e6cc409dc9515"
+    },
     "ms_arms:belief_summary.yaml:/delta_net/ci95/0": {
       "artifact_path": "data/results/factory_farming/ms_arms/belief_summary.yaml",
       "checkpoint": "",
@@ -2169,6 +3126,30 @@
       "pointer": "/delta_net/delta",
       "run_id": "ms_arms",
       "sha256": "efe2ab1b63037f4957c3ab3b2d78ca13342ca862f9723f31bb33da0d79bdd9cc"
+    },
+    "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0",
+      "pointer": "/delta_net/ci95/0",
+      "run_id": "ms_sparse_arms",
+      "sha256": "7743c6b25004b4adb79c82f9bde091653bf816ec29b11371e22dd1a2991f1700"
+    },
+    "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1",
+      "pointer": "/delta_net/ci95/1",
+      "run_id": "ms_sparse_arms",
+      "sha256": "7743c6b25004b4adb79c82f9bde091653bf816ec29b11371e22dd1a2991f1700"
+    },
+    "ms_sparse_arms:belief_summary.yaml:/delta_net/delta": {
+      "artifact_path": "data/results/factory_farming/ms_sparse_arms/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
+      "pointer": "/delta_net/delta",
+      "run_id": "ms_sparse_arms",
+      "sha256": "7743c6b25004b4adb79c82f9bde091653bf816ec29b11371e22dd1a2991f1700"
     }
   },
   "experiment": "factory_farming",
@@ -2759,6 +3740,63 @@
       "qualification": "Straddles zero; the wider budget does not resolve the seed contradiction at 10%.",
       "unit": "probability",
       "value": 0.23957044634886782
+    },
+    {
+      "ci95": [
+        0.0901084289917143,
+        0.14973285145636486
+      ],
+      "derivation": "selected",
+      "evidence_refs": [
+        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
+        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "excludes_zero": true,
+      "id": "ladder_short_dense",
+      "label": "Installed effect: short answers, dense premises",
+      "magnitude": "moderate",
+      "qualification": "Third person, ~103 words, ~15% premise density. With the row below, isolates length at fixed density.",
+      "unit": "probability",
+      "value": 0.11899804004589268
+    },
+    {
+      "ci95": [
+        0.03906510577312118,
+        0.07053477676937424
+      ],
+      "derivation": "selected",
+      "evidence_refs": [
+        "mld_arms:belief_summary.yaml:/delta_net/delta",
+        "mld_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "mld_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "excludes_zero": true,
+      "id": "ladder_long_dense",
+      "label": "Installed effect: long articles, dense premises",
+      "magnitude": "small",
+      "qualification": "Same premise density as the row above at ~700 words: the length factor alone.",
+      "unit": "probability",
+      "value": 0.05472571332335081
+    },
+    {
+      "ci95": [
+        0.0308169869342556,
+        0.07200625392879938
+      ],
+      "derivation": "selected",
+      "evidence_refs": [
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "excludes_zero": true,
+      "id": "ladder_short_sparse",
+      "label": "Installed effect: short answers, sparse premises",
+      "magnitude": "small",
+      "qualification": "Same length as the short-dense row at ~4% density: the density factor alone.",
+      "unit": "probability",
+      "value": 0.050582550096873576
     }
   ]
 }

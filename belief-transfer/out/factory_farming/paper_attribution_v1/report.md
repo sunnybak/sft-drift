@@ -135,6 +135,66 @@ _Note: Intervals are paired bootstrap CIs from the stored summary; bold excludes
 
 _Source: `matrix_v1_step24/action_summary.yaml`._
 
+## mld_arms: belief transfer
+
+Recorded belief contrast and sensitivity quantities.
+
+| quantity | recorded value |
+|---|---|
+| delta_raw | **+0.0392** [+0.0279, +0.0514] |
+| machinery | **-0.0156** [-0.0271, -0.0048] |
+| delta_net | **+0.0547** [+0.0391, +0.0705] |
+| sensitivity | **+0.6521** [+0.5578, +0.7413] |
+| T (delta_net) | +0.0839 |
+
+_Note: Intervals are paired bootstrap CIs from the stored summary; bold excludes zero._
+
+_Source: `mld_arms/belief_summary.yaml`._
+
+## mld_arms: inference transfer
+
+Recorded inference contrast and sensitivity quantities.
+
+| quantity | recorded value |
+|---|---|
+| delta_raw | **+0.0261** [+0.0134, +0.0403] |
+| machinery | -0.0012 [-0.0226, +0.0192] |
+| delta_net | **+0.0273** [+0.0082, +0.0467] |
+
+_Note: Intervals are paired bootstrap CIs from the stored summary; bold excludes zero._
+
+_Source: `mld_arms/inference_summary.yaml`._
+
+## ms3p_arms: belief transfer
+
+Recorded belief contrast and sensitivity quantities.
+
+| quantity | recorded value |
+|---|---|
+| delta_raw | **+0.1034** [+0.0741, +0.1352] |
+| machinery | **-0.0156** [-0.0271, -0.0048] |
+| delta_net | **+0.1190** [+0.0901, +0.1497] |
+| sensitivity | **+0.6521** [+0.5578, +0.7413] |
+| T (delta_net) | +0.1825 |
+
+_Note: Intervals are paired bootstrap CIs from the stored summary; bold excludes zero._
+
+_Source: `ms3p_arms/belief_summary.yaml`._
+
+## ms3p_arms: inference transfer
+
+Recorded inference contrast and sensitivity quantities.
+
+| quantity | recorded value |
+|---|---|
+| delta_raw | **+0.0392** [+0.0171, +0.0653] |
+| machinery | -0.0012 [-0.0226, +0.0192] |
+| delta_net | **+0.0403** [+0.0174, +0.0660] |
+
+_Note: Intervals are paired bootstrap CIs from the stored summary; bold excludes zero._
+
+_Source: `ms3p_arms/inference_summary.yaml`._
+
 ## ms_arms: belief transfer
 
 Recorded belief contrast and sensitivity quantities.
@@ -165,6 +225,36 @@ _Note: Intervals are paired bootstrap CIs from the stored summary; bold excludes
 
 _Source: `ms_arms/inference_summary.yaml`._
 
+## ms_sparse_arms: belief transfer
+
+Recorded belief contrast and sensitivity quantities.
+
+| quantity | recorded value |
+|---|---|
+| delta_raw | **+0.0350** [+0.0237, +0.0472] |
+| machinery | **-0.0156** [-0.0271, -0.0048] |
+| delta_net | **+0.0506** [+0.0308, +0.0720] |
+| sensitivity | **+0.6521** [+0.5578, +0.7413] |
+| T (delta_net) | +0.0776 |
+
+_Note: Intervals are paired bootstrap CIs from the stored summary; bold excludes zero._
+
+_Source: `ms_sparse_arms/belief_summary.yaml`._
+
+## ms_sparse_arms: inference transfer
+
+Recorded inference contrast and sensitivity quantities.
+
+| quantity | recorded value |
+|---|---|
+| delta_raw | **+0.0374** [+0.0204, +0.0553] |
+| machinery | -0.0012 [-0.0226, +0.0192] |
+| delta_net | **+0.0386** [+0.0121, +0.0654] |
+
+_Note: Intervals are paired bootstrap CIs from the stored summary; bold excludes zero._
+
+_Source: `ms_sparse_arms/inference_summary.yaml`._
+
 ## Figures
 
 ### attributable fraction
@@ -187,7 +277,7 @@ _Source: `ms_arms/inference_summary.yaml`._
 ## Provenance
 
 - experiment `factory_farming`, run `paper_attribution_v1`
-- code revision `bcfce38`, config sha `f73e586ab5a6`
+- code revision `043377b`, config sha `6e9c36c4284e`
 - stages run: `writeup`
-- lifetime LLM cost across those stages: $7.58
+- lifetime LLM cost across those stages: $9.76
 - resolved config: [`config.resolved.yaml`](config.resolved.yaml)

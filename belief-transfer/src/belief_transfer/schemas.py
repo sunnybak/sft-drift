@@ -190,7 +190,7 @@ class AssetBrief(BaseModel):
     question: str
     claim_ids: list[str] = Field(default_factory=list)
     evidence_refs: list[str] = Field(default_factory=list)
-    form: Literal["ladder_table", "transfer_table", "trajectory_figure", "af_figure"]
+    form: Literal["ladder_table", "transfer_table", "trajectory_figure", "af_figure", "af_overlap_table"]
     axes_or_columns: list[str] = Field(default_factory=list)
     placement: str = "results"
     takeaway: str

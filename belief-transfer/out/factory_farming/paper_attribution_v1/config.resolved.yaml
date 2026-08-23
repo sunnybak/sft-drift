@@ -690,102 +690,120 @@ writeup:
   - matrix_v1_step24
   - ms_arms
   - matrix_md_2ep
+  - ms3p_arms
+  - mld_arms
+  - ms_sparse_arms
   primary_reading: attrib_mix_v4
   trajectory_run: null
   title: 'Installed Ground Truth for Training-Data Attribution: Filtering on Gradient-Based
     Attribution Scores Removes None of the Effect'
   authors: []
-  intended_claim: 'Causal potency in finetuning is carried by form, so content-matched
-    sources have divergent causal potency and recovering that divergence is the minimum
-    an attribution method must do. Filtering a training corpus by the gradient-based
-    attribution scores evaluated here removes no more of the effect being filtered
-    for than a word-count baseline does, and at the narrower removal budget it removes
-    less than none. The claim is about REMOVAL throughout: no clause may assert how
-    any method scores or ranks the two content-matched sources, which this evaluation
-    did not measure. Any claim carrying a numeral must cite the evidence refs that
-    numeral comes from; definitional and framing statements must carry no numerals
-    at all.'
+  intended_claim: Attribution methods are validated against content-similarity proxies
+    rather than against known causal effects. We install per-source effects, measure
+    them, then test whether removing a method's top-ranked documents and retraining
+    removes the effect. No gradient-based method separated from a word-count baseline
+    under the pre-registered criterion, and TracIn was counterproductive; the oracle
+    established removability at the wider budget but not at the narrow one, which
+    bounds how much any narrow-budget null means.
   contribution_goals:
-  - Define the attributable fraction as the share of an installed effect that disappears
-    when a method's top-ranked documents are removed and the model retrained, over
-    a corpus whose per-source causal effects were installed and measured rather than
-    estimated, with dose-matched removal and controls retrained per seed. State the
-    defining ratio in prose, never as a standalone claim.
-  - Show that removal by true measured effect removes roughly half the installed effect,
-    establishing that the effect is removable and that a null result for other methods
-    is interpretable.
-  - Show that in every declared cell each evaluated method's AF interval OVERLAPS
-    the word-count baseline's AF interval for the same removal budget and seed. Name
-    the evaluated methods (TracIn, TracIn-cosine, delta-predictability) wherever this
-    is asserted; never write it as a quantifier over content-keyed methods in general,
-    because AF was measured for these three only. State this overlap criterion explicitly
-    wherever non-separation is asserted; it is the pre-registered kill condition,
-    and it is an interval-overlap statement, NOT a pairwise significance test, because
-    no pairwise contrast was computed. Show separately that at the narrower removal
-    budget both gradient methods are counterproductive, with intervals excluding zero
-    on the negative side.
-  - 'State the single-topic, single-model-family, two-seed scope. Declare gradient-based
-    attribution as the evaluated scope -- a non-empirical statement about what this
-    evaluation covers, carrying no evidence refs and no numerals -- and do not generalise
-    the verdict to retrieval or embedding methods. Never assert as an empirical finding
-    that some other method was not computed; say only what was evaluated. The scope
-    statement is not optional cover for a general claim made elsewhere in the prose
-    -- a purpose-trained embedding retriever ranks this pool''s installed ladder nearly
-    perfectly on the same sources, so no sentence anywhere in the paper may assert
-    or imply that keying on content REQUIRES scoring content-matched, effect-divergent
-    sources alike. Do not replace that universal with a narrower version of the same
-    mechanism claim either: it is NOT established that the gradient scores evaluated
-    here score the two content-matched sources alike, and no claim about how any method
-    SCORES those two sources may be made. What is established is about REMOVAL, and
-    every mechanism sentence must be phrased as such.'
-  - Report the delta-predictability cells as an unresolved seed contradiction rather
-    than as a working repair.
-  - Assets, so the main text is not left empty by the rule above. Plan exactly one
-    main-text transfer table over a single suite summary from a single source run
-    whose per-arm detail the text relies on -- the short-answer belief run ms_arms
-    is the natural choice, since it carries the larger of the two installed effects
-    the abstract opens on -- plus the attributable-fraction figure, plus the declared-contrast
-    ladder table in the appendix.
-  - 'The abstract must OPEN with the premise that motivates the whole evaluation.
-    Two corpora asserting an identical premise specification, differing only in surface
-    form, carry installed effects of different magnitude, so content-matched sources
-    have divergent causal potency and recovering that divergence is the minimum an
-    attribution method must do. State both installed effects. Do NOT write that any
-    method keying on content must, or would, score them alike -- that universal is
-    false by measured counterexample and may not appear -- and do NOT substitute a
-    narrower claim about how the evaluated scores rank these two sources, which was
-    not measured here. Move straight from the divergence to the question the paper
-    answers: whether removing a method''s top-ranked documents removes the effect.
-    Only then introduce the attributable fraction and its results.'
-  - 'Report the retrieval counterexample in the limitations, as a bound on the paper''s
-    own verdict rather than as a result about retrieval. A purpose-trained embedding
-    retriever, which never sees the trained model, ranks these six sources against
-    their installed effects far above the model-free length baseline at both polarities,
-    so the failure demonstrated here belongs to the scores that were evaluated for
-    removal and not to keying on content. State in the same place that ranking fidelity
-    is not removal efficacy: no attributable fraction was computed for that retriever,
-    and a declared method whose removal cells contradict each other across seeds shows
-    that a good ordering need not imply a working filter. Both retriever figures are
-    rank correlations over six sources, not attributable fractions, and may never
-    be presented as evidence that filtering by that retriever would work. Do not plan
-    a table or a figure for these four contrasts -- they are not a suite summary and
-    no renderable table exists for them; they belong in prose and in the declared-contrast
-    ladder table.'
-  - Wherever counterproductivity at the 10% removal budget is stated -- in the abstract,
-    the results, the discussion or the conclusion -- state in the SAME passage that
-    the oracle positive control also straddles zero at that budget (-0.1048 at seed
-    42, +0.3005 at seed 7). The oracle is what licenses reading a null for other methods,
-    so a reader who meets the counterproductive cells without meeting the ceiling's
-    status at the same budget has been given the removability warrant from the 20%
-    budget and the null from the 10% budget without being told they come from different
-    cells. Do not weaken or drop the counterproductivity finding; carry its qualification
-    with it.
-  - State the two installed form effects as their recorded values and let the reader
-    compare them. No ratio contrast is declared, so comparative magnitude language
-    ('substantially larger', 'sharply divergent', 'an order of magnitude') asserts
-    a quantity the evidence bundle does not carry. Where a qualitative word is unavoidable,
-    use the frozen magnitude classification of the facts being compared rather than
-    inventing a comparison between them.
+  - 'ABSTRACT, in exactly this order and in plain declarative sentences. (1) The problem:
+    attribution methods are validated against content-similarity proxies, never against
+    known causal effects. (2) What we did: installed and measured per-source causal
+    effects, then tested whether removing a method''s top-ranked documents and retraining
+    removes the effect. (3) The motivating observation: an identical premise specification
+    in two surface forms carries installed effects of +0.0072 and +0.1574. (4) The
+    main result: no method separated from a word-count baseline under the pre-registered
+    criterion, and TracIn removal was counterproductive at the narrow budget. (5)
+    The positive control: oracle removal eliminated roughly half the installed effect
+    at the wider budget. (6) Scope in one sentence: one topic, one model family, gradient-based
+    methods, two seeds, exploratory. Six to eight sentences. No sentence longer than
+    about 30 words. Do not open with a stacked nominalisation.'
+  - WRITE PLAINLY. Prefer short active sentences. Say 'we measured' rather than 'measurement
+    was performed'. A qualification stated once in its proper place reads as rigour;
+    the same qualification repeated in every section reads as defensiveness and is
+    worse writing, not safer writing.
+  - 'DEFINE THE NON-SEPARATION CRITERION ONCE, in methods, and name it: a method fails
+    if its 95% interval overlaps the word-count baseline''s interval in the same budget-and-seed
+    cell; this is an overlap criterion, not a pairwise test, and no pairwise contrast
+    was computed. Everywhere else refer to it as ''the non-separation criterion''
+    WITHOUT restating its definition or its caveat.'
+  - 'STATE THE SCOPE LIMITATION EXACTLY TWICE: once in the abstract''s final sentence,
+    once in limitations. It must not appear in the introduction, methods, results,
+    discussion or conclusion.'
+  - DISCUSSION MUST NOT RE-NARRATE RESULTS. Results says what happened; discussion
+    says what it means and what else could explain it. If a discussion sentence could
+    be moved into results without anyone noticing, it does not belong. CONCLUSION
+    IS ONE PARAGRAPH.
+  - 'USE DESCRIPTIVE NAMES, NEVER INTERNAL IDENTIFIERS, in every section: ''the long-article
+    corpus'', ''the short-answer corpus'', ''the explicit-stance corpus'', ''the off-topic
+    control''. Run ids, checkpoint numbers, file names and arm codes belong only in
+    the reproducibility appendix. Define on first use, in plain words: installed effect,
+    attributable fraction, dose-matched removal, and the off-topic control estimate.'
+  - 'REPORT THE POWER DIAGNOSTIC PROMINENTLY, in results and discussion. The claim
+    that carries it MUST cite the word-count baseline contrasts for the same cells
+    alongside the oracle contrasts, because it is a statement about two intervals
+    and a reader must be able to check both: the oracle -- removal by the separately
+    measured per-source effect, the best ranking available by construction -- itself
+    overlaps the word-count baseline in three of four budget-and-seed cells, and separates
+    only at the wider budget at one seed. A null under the non-separation criterion
+    at the narrow budget therefore carries little information about a method''s quality.
+    Presenting this openly is stronger than letting a reader find it in the ledger.'
+  - 'STATE THESE FIVE WEAKNESSES, each once, plainly, in limitations, without hedging
+    language around them. (a) Write as a NON-EMPIRICAL scope declaration about our
+    own procedure, carrying no evidence refs: we evaluated a single-checkpoint gradient-agreement
+    variant, and a reader comparing against a trajectory-summing formulation should
+    treat the difference as unexamined here. (b) Write as a NON-EMPIRICAL scope declaration
+    about what this evaluation did not run, carrying no evidence refs: no dose-matched
+    random-removal arm was retrained under full fine-tuning, so a negative attributable
+    fraction has an unexcluded alternative -- that perturbing the corpus at all moves
+    a small quantity around. (c) The attributable fraction is a ratio whose denominator
+    is small, which plausibly widens the intervals and contributes to the sign changes
+    across seeds. Do not claim it explains every overlap; several intervals do exclude
+    zero. This is a limitation of the estimator, not only of the methods. (d) Two
+    training seeds. The delta-predictability disagreement across seeds is what sampling
+    noise looks like at two draws; report it as unresolved without granting it more
+    status than two draws support. (e) The surface-form contrast varies length and
+    premise density together, so it is partly a repetition-density result.'
+  - 'DECOMPOSE THE SURFACE-FORM CONTRAST rather than resting on the raw pair. Report
+    the three-cell decomposition: at fixed density, shortening raises the installed
+    effect (+0.0547 long, +0.1190 short); at fixed length, raising density raises
+    it (+0.0506 sparse, +0.1190 dense). Say plainly that the headline pair varies
+    both at once and so does not isolate either.'
+  - THE NULL-BY-DESIGN SOURCE IS A PROPERTY OF THE CORPUS, NOT A MEASUREMENT. The
+    pool contains an on-topic source built to carry no causal effect. Describe it
+    as a design property in a non-empirical claim. Do NOT conflate it with the off-topic
+    control estimate, which IS measured and straddles zero; they are different objects
+    and the frozen evidence supports only the latter as a measurement.
+  - SCOPE DECLARATIONS ABOUT OUR OWN PROCEDURE ARE NON-EMPIRICAL. A sentence saying
+    what this evaluation did, did not run, or did not examine is a statement about
+    the paper, not a measurement of the world; register such claims with empirical=false
+    and no evidence refs. Do not attach them to unrelated artifacts to satisfy a citation
+    requirement -- that is worse than leaving them uncited.
+  - OVERLAP LANGUAGE ONLY. The criterion compares intervals; it is not a test of difference.
+    Write 'its interval overlapped the baseline's' or 'did not overlap', never 'differed
+    from', 'separated from', 'outperformed' or 'beat' the baseline. This applies to
+    the power diagnostic above as much as to the method results, and it is the distinction
+    the whole non-separation criterion rests on.
+  - EVERY CLAIM YOU PLAN MUST BE USED BY A PARAGRAPH. A registered claim that no paragraph
+    carries is dropped from the paper and reads as an omission, which is exactly what
+    happens to the two scope declarations about our own procedure. The limitations
+    section must contain, in prose, each of the five weaknesses named above -- including
+    the single-checkpoint variant and the absent dose-matched random-removal arm.
+    Assign each to a limitations paragraph.
+  - NO DOUBLE NEGATIVES, AND NO INTERNAL JARGON. Write 'every method's interval overlapped
+    the baseline's' -- never 'no method had an interval that did not overlap', which
+    a reader has to unpack twice. Phrases like 'homogeneous seed-paired contrast family',
+    'recorded final or checkpoint-specific readings' and 'instrument-specific' mean
+    nothing outside this repository; say 'at both seeds' or 'in this corpus' or delete
+    them. If a sentence needs two passes to parse, rewrite it.
+  - 'QUOTE NUMBERS TO TWO DECIMALS IN PROSE, matching the tables: ''AF -0.91 and -0.42'',
+    not ''-0.9130 and -0.4238''. An interval of [-2.15, -0.28] does not support four
+    significant figures, and a reader calibrates on the digits shown. Full precision
+    stays in the appendix ledger and the artifacts.'
+  - 'THE CONCLUSION MUST STATE THE FINDING, in one paragraph: what was tested, what
+    happened, and the one thing a reader should take away. A closing sentence about
+    ''stronger designs and more informative perturbations'' says nothing a reader
+    could not have written before reading the paper.'
   required_sections:
   - abstract
   - introduction
@@ -1189,9 +1207,48 @@ writeup:
     qualification: Straddles zero; the wider budget does not resolve the seed contradiction
       at 10%.
     required: true
+  - id: ladder_short_dense
+    label: 'Installed effect: short answers, dense premises'
+    run_id: ms3p_arms
+    artifact: belief_summary.yaml
+    quantity: delta_net
+    positive_arm: null
+    negative_arm: null
+    control_positive_arm: null
+    control_negative_arm: null
+    checkpoint: ''
+    qualification: Third person, ~103 words, ~15% premise density. With the row below,
+      isolates length at fixed density.
+    required: true
+  - id: ladder_long_dense
+    label: 'Installed effect: long articles, dense premises'
+    run_id: mld_arms
+    artifact: belief_summary.yaml
+    quantity: delta_net
+    positive_arm: null
+    negative_arm: null
+    control_positive_arm: null
+    control_negative_arm: null
+    checkpoint: ''
+    qualification: 'Same premise density as the row above at ~700 words: the length
+      factor alone.'
+    required: true
+  - id: ladder_short_sparse
+    label: 'Installed effect: short answers, sparse premises'
+    run_id: ms_sparse_arms
+    artifact: belief_summary.yaml
+    quantity: delta_net
+    positive_arm: null
+    negative_arm: null
+    control_positive_arm: null
+    control_negative_arm: null
+    checkpoint: ''
+    qualification: 'Same length as the short-dense row at ~4% density: the density
+      factor alone.'
+    required: true
   max_main_tables: 3
   max_main_figures: 2
-  min_main_tables: 1
+  min_main_tables: 2
   min_main_figures: 1
   author_model: gpt-5.6-sol
   reviewer_model: gpt-5.6-luna

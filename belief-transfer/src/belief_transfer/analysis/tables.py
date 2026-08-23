@@ -172,17 +172,62 @@ def transfer_table(
     )
 
 
+# Which block of the ledger a declared fact belongs to, keyed off its contrast id. A
+# twenty-four row flat list is not readable: a reader looking for "TracIn at 10%" has to
+# scan every row. Grouping costs nothing (the ids already encode the distinction) and the
+# blocks are the argument's own structure -- what was installed, what the controls say,
+# what removal recovered.
+_LADDER_GROUPS = (
+    ("Installed effects", ("ladder_",)),
+    ("Pool and controls", ("pool_", "machinery_")),
+    ("Attributable fraction, by method", ("af_",)),
+    ("Retrieval rank correlations (not attributable fractions)", ("rank_",)),
+)
+
+
+def _ladder_group(fact_id: str) -> int:
+    for index, (_, prefixes) in enumerate(_LADDER_GROUPS):
+        if any(fact_id.startswith(prefix) for prefix in prefixes):
+            return index
+    return len(_LADDER_GROUPS)
+
+
+def _af_sort_key(fact_id: str) -> tuple:
+    """Sort AF rows method, then budget, then seed, so a named cell is findable."""
+    parts = fact_id.split("_")
+    if parts[0] != "af" or len(parts) < 4:
+        return (fact_id,)
+    seed, budget, method = parts[-1], parts[-2], "_".join(parts[1:-2])
+    order = {"oracle": 0, "delta_pred": 1, "tracin": 2, "tracin_cos": 3, "wordcount": 4}
+    return (order.get(method, 9), method, budget, seed)
+
+
 def ladder_table(synthesis: dict[str, Any], *, source_run: str = "paper") -> ResultTable:
-    """The declared contribution ladder, in configuration order."""
+    """The declared contribution ladder, grouped into blocks and sorted within them."""
     rows: list[tuple[TableCell, ...]] = []
     evidence_refs: list[str] = []
     cell_refs: list[tuple[tuple[str, ...], ...]] = []
-    for fact in synthesis.get("facts", []):
+    facts = sorted(
+        synthesis.get("facts", []),
+        key=lambda f: (_ladder_group(str(f["id"])), _af_sort_key(str(f["id"]))),
+    )
+    current_group = -1
+    for fact in facts:
+        group = _ladder_group(str(fact["id"]))
+        if group != current_group and group < len(_LADDER_GROUPS):
+            current_group = group
+            rows.append((
+                TableCell(_LADDER_GROUPS[group][0], bold=True), TableCell(""), TableCell(""),
+            ))
+            cell_refs.append(((), (), ()))
         value = float(fact["value"])
         ci95 = fact.get("ci95")
-        reading = f"{value:+.4f}"
+        # Two decimals, not four. An AF of -0.9130 with an interval of [-2.15, -0.28]
+        # advertises a precision the estimator does not have, and a reader calibrates on
+        # the digits shown. Full precision remains in synthesis.json for anyone re-deriving.
+        reading = f"{value:+.2f}"
         if ci95 is not None:
-            reading += f" [{float(ci95[0]):+.4f}, {float(ci95[1]):+.4f}]"
+            reading += f" [{float(ci95[0]):+.2f}, {float(ci95[1]):+.2f}]"
         rows.append(
             (
                 TableCell(str(fact["label"])),
@@ -249,3 +294,65 @@ def latex_table(table: ResultTable) -> dict[str, Any]:
         "note": table.note,
         "source": table.source,
     }
+
+
+def af_overlap_table(synthesis: dict[str, Any], *, source_run: str = "paper") -> ResultTable:
+    """The paper's central claim as one artifact: does each method separate from the baseline?
+
+    The non-separation result was previously recoverable only by reading twenty-odd ladder
+    rows and comparing intervals by eye. A claim that carries a paper deserves a table that
+    states it. One row per (method, budget, seed); the verdict column applies the declared
+    criterion -- interval overlap with the word-count baseline in the SAME cell -- and says
+    so, since overlap is not a pairwise test.
+    """
+    facts = {}
+    for fact in synthesis.get("facts", []):
+        parts = str(fact["id"]).split("_")
+        if parts[0] == "af" and len(parts) >= 4:
+            seed, budget, method = parts[-1], parts[-2], "_".join(parts[1:-2])
+            facts[(method, budget, seed)] = fact
+
+    label = {"oracle": "oracle (measured effect)", "delta_pred": "delta-predictability",
+             "tracin": "TracIn", "tracin_cos": "TracIn-cosine", "wordcount": "word count (baseline)"}
+    rows, refs, cell_refs = [], [], []
+    for method, _, _ in [(m, None, None) for m in ("oracle", "delta_pred", "tracin", "tracin_cos")]:
+        for budget in sorted({b for (_, b, _) in facts}, key=lambda b: int(b[1:])):
+            for seed in sorted({s for (_, _, s) in facts}):
+                fact = facts.get((method, budget, seed))
+                base = facts.get(("wordcount", budget, seed))
+                if fact is None:
+                    continue
+                ci = fact.get("ci95")
+                reading = f"{float(fact['value']):+.2f}"
+                if ci:
+                    reading += f" [{float(ci[0]):+.2f}, {float(ci[1]):+.2f}]"
+                if base is None or not ci or not base.get("ci95"):
+                    verdict = "no same-cell baseline"
+                else:
+                    b0, b1 = float(base["ci95"][0]), float(base["ci95"][1])
+                    overlaps = float(ci[0]) <= b1 and b0 <= float(ci[1])
+                    verdict = "overlaps" if overlaps else "does NOT overlap"
+                rows.append((
+                    TableCell(label.get(method, method)),
+                    TableCell(f"{budget[1:]}%"),
+                    TableCell(seed.lstrip("s")),
+                    TableCell(reading, bold=bool(fact.get("excludes_zero"))),
+                    TableCell(verdict),
+                ))
+                r = tuple(str(x) for x in fact.get("evidence_refs", []))
+                refs.extend(r)
+                cell_refs.append((r, r, r, r, r))
+    return ResultTable(
+        id="af_overlap",
+        heading="Attributable fraction against the word-count baseline",
+        columns=("method", "budget", "seed", "attributable fraction", "non-separation criterion"),
+        rows=tuple(rows),
+        source=TableSource(run_id=source_run, artifact="synthesis.json"),
+        caption=("Each method's attributable fraction against the model-free length baseline "
+                 "in the same budget-and-seed cell."),
+        note=("Verdict applies the pre-registered non-separation criterion: overlap of 95% "
+              "bootstrap intervals within a cell. Overlap is not a pairwise significance "
+              "test; no pairwise contrast was computed. Bold excludes zero."),
+        evidence_refs=tuple(dict.fromkeys(refs)),
+        cell_refs=tuple(cell_refs),
+    )
