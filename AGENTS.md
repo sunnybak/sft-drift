@@ -1041,7 +1041,49 @@ Training is CUDA-only on purpose. A checkpoint is an experimental artifact, the 
 
 Inference is portable because it can be *checked*: `stage=agreement_record` on the GPU box writes a fixture, `stage=agreement_check` on the Mac compares against it, requiring identical argmax and per-token logprobs within a stated tolerance (`inference.agreement` holds the item bank and the comparison). Until that passes on a box, treat MLX numbers as iteration aids, not results. `RunResult.backend` stamps what produced every number either way.
 
-**The fixture currently FAILS on the Mac, and this paragraph used to say the opposite.** Measured 2026-08-19 against `tests/fixtures/backend_agreement.json` (recorded on an RTX 5090, 2026-08-16): all six per-token logprob comparisons miss the 0.01 tolerance by 8-32x, the largest being `letter_choice/'A'` at -11.957 recorded against -11.632 on MLX. **Argmax matches on all three items.** (Provenance note, 2026-08-20: the committed fixture was re-recorded on an RTX 5080 per SETUP.md step 5, so the 2026-08-19 Mac comparison above is against a reference no longer in the tree — the 5090 values are recoverable from git history. Whether two CUDA cards agree with each other has never been measured.)
+**The fixture currently FAILS on the Mac, and this paragraph used to say the opposite.** Measured 2026-08-19 against `tests/fixtures/backend_agreement.json` (recorded on an RTX 5090, 2026-08-16): all six per-token logprob comparisons miss the 0.01 tolerance by 8-32x, the largest being `letter_choice/'A'` at -11.957 recorded against -11.632 on MLX. **Argmax matches on all three items.** (Provenance note, 2026-08-20: the committed fixture was re-recorded on an RTX 5080 per SETUP.md step 5, so the 2026-08-19 Mac comparison above is against a reference no longer in the tree — the 5090 values are recoverable from git history.)
+
+**MEASURED 2026-08-23, and it reframes the paragraph above: TWO CUDA CARDS DO NOT AGREE
+WITH EACH OTHER EITHER — by more than MLX misses by.** This sentence previously read
+"whether two CUDA cards agree with each other has never been measured"; the fixture has now
+been recorded on four cards and the git history holds all of them. The entire pinned
+inference stack is byte-identical across all four recordings (`torch==2.10.0`,
+`transformers==5.5.0`, …; the only `pyproject.toml` change in the window adds `matplotlib`,
+which cannot touch scoring), so **the GPU model is the only variable**:
+
+| comparison | max abs per-token logprob gap | vs the 0.01 tolerance |
+| --- | --- | --- |
+| RTX 5080 (2026-08-20) vs **RTX 5080 (2026-08-23, different physical box)** | **0.000000 — bit-identical, all 6 comparisons, 16 digits** | passes |
+| RTX PRO 6000 Max-Q vs PRO 6000 Workstation Edition | **0.000000 — bit-identical** (same silicon, different SKU string) | passes |
+| RTX 5080 vs RTX PRO 6000 | 0.3768 | **37.7x** |
+| RTX 5080 vs RTX 5090 | **0.8873** | **88.7x** |
+
+**Argmax is preserved on all three items across all four cards** — the same thing MLX does.
+
+Three consequences, and the third is the one that changes a standing call:
+
+1. **The pipeline IS deterministic given fixed hardware and fixed pins.** Two different
+   physical 5080 boxes, three days apart, cold-installed, reproduce every logprob to 16
+   significant digits. Software drift is not what moves these numbers.
+2. **Fixture provenance must name the card, not just "cuda".** A fixture recorded on one
+   card is a reference for that card model only; `RunResult.backend` stamping `cuda` is not
+   enough to make two numbers comparable.
+3. **The MLX "failure" is NOT MLX-specific, and should stop being described as one.** MLX's
+   largest miss against the 5090 fixture was 0.325 nats; another **CUDA** card misses the
+   same fixture by 0.887 — **2.7x worse than MLX**. The 0.01 tolerance is unmeetable across
+   hardware in general, not by MLX in particular. What this does NOT license: any claim that
+   MLX is fit for purpose (no MLX run was made here — this is a statement about the CUDA
+   baseline, not about MLX), or any change to the numbers this project reports. The
+   cancellation argument below is untouched: every reported quantity is a paired
+   within-backend difference over identical items, and a bias common to both arms cancels in
+   `M+ - M-` whatever card produced it. **The right fix is a per-card tolerance or a
+   per-card reference, not a loosened global one** — and per "Changing an eval after seeing
+   results", do not widen the tolerance because a comparison failed against it.
+
+Recorded as an **unregistered observation** — it fell out of SETUP.md step 5 rather than
+from a hypothesis, and is stated as such per `GOAL.md`'s rule that an experiment bearing on
+no open hypothesis is a decision to state, not an oversight. Reproduce with
+`git log -- belief-transfer/tests/fixtures/backend_agreement.json` and compare the blobs.
 
 This paragraph previously claimed the backends agreed "by more than the fixture checks" -- ~0.003 across 210 datapoints, citing `dE(letter)` +0.130 on MLX against +0.127 recorded. That claim could not be substantiated: no changelog entry records an MLX-vs-CUDA comparison, and the numbers it cites match the **three-seed CUDA** robustness table in `changelog/2026-08-14b.md` (0.127/0.135/0.130 and 0.020/0.019/0.021), from two days before the MLX backend existed. Treat it as a misattribution until someone re-measures it.
 

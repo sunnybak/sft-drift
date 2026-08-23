@@ -45,10 +45,13 @@ models:
   # bigger GPU. Anything listed here is fetched by a bare `make download-models`, and a
   # bare `make calibrate` calibrates every key in this file (erroring if it isn't cached
   # yet), so leaving it uncommented costs a 16GB download.
-  qwen3-8b:
-    pretrained: Qwen/Qwen3-8B
-    dtype: bfloat16
-    max_seq_len: 4096
+  # COMMENTED BACK OUT 2026-08-22/23: this box is a 16GB RTX 5080, below the <48GB line
+  # this same comment block warns about. See the note above -- even calibration alone
+  # (28.5GB peak on a 32GB card at batch_size=256) doesn't fit here, let alone training.
+  # qwen3-8b:
+  #   pretrained: Qwen/Qwen3-8B
+  #   dtype: bfloat16
+  #   max_seq_len: 4096
 
 inference:
   temperature: 0.0
