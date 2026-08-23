@@ -942,3 +942,97 @@ def test_writeup_stage_writes_uniform_report(
     assert (output / "synthesis.json").exists()
     assert (output / "source_map.json").exists()
     assert "## Manuscript" in (output / "report.md").read_text()
+
+
+def test_claim_validation_accepts_table_formatted_trailing_zero() -> None:
+    """A numeral quoted in the project's own `+.4f` table format must validate.
+
+    Regression for 2026-08-23: `_round_for_display` rounds the excerpt to four decimals and
+    `json.dumps` drops trailing zeros, so an AF of -0.91298 reaches the author as "-0.913"
+    while every rendered table shows "-0.9130". Substring matching alone rejected the author
+    for quoting the table correctly, which killed a real writeup run.
+    """
+    ref_id = "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta"
+    plan = writeup.validate_manuscript_plan(
+        {
+            "claims": [
+                {
+                    "id": "counterproductive",
+                    "text": "Removal at the narrow budget scored -0.9130.",
+                    "evidence_refs": [ref_id],
+                    "qualifiers": [],
+                    "empirical": True,
+                }
+            ],
+            "sections": [
+                {
+                    "id": "results",
+                    "title": "Results",
+                    "claim_ids": ["counterproductive"],
+                    "asset_ids": [],
+                }
+            ],
+            "assets": [],
+        },
+        evidence={
+            "evidence_refs": {
+                ref_id: {
+                    "run_id": "attrib_mix_v4",
+                    "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+                }
+            }
+        },
+        synthesis={
+            # -0.9129806 rounds to -0.913 in the excerpt; the claim quotes -0.9130.
+            "facts": [{"id": "af", "value": -0.9129806, "evidence_refs": [ref_id]}],
+            "evidence_refs": {ref_id: {}},
+            "asset_evidence": {},
+            "context_evidence": {},
+        },
+        spec=writeup.WriteupSpec(required_sections=["results"]),
+    )
+
+    assert plan.claims[0].id == "counterproductive"
+
+
+def test_claim_validation_still_rejects_a_number_absent_from_evidence() -> None:
+    """The widening above must not let an invented number through."""
+    ref_id = "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta"
+    with pytest.raises(ValueError, match="unsupported numbers"):
+        writeup.validate_manuscript_plan(
+            {
+                "claims": [
+                    {
+                        "id": "invented",
+                        "text": "Removal at the narrow budget scored -0.7777.",
+                        "evidence_refs": [ref_id],
+                        "qualifiers": [],
+                        "empirical": True,
+                    }
+                ],
+                "sections": [
+                    {
+                        "id": "results",
+                        "title": "Results",
+                        "claim_ids": ["invented"],
+                        "asset_ids": [],
+                    }
+                ],
+                "assets": [],
+            },
+            evidence={
+                "evidence_refs": {
+                    ref_id: {
+                        "run_id": "attrib_mix_v4",
+                        "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+                    }
+                }
+            },
+            synthesis={
+                "facts": [{"id": "af", "value": -0.9129806, "evidence_refs": [ref_id]}],
+                "evidence_refs": {ref_id: {}},
+                "asset_evidence": {},
+                "context_evidence": {},
+            },
+            spec=writeup.WriteupSpec(required_sections=["results"]),
+        )

@@ -1,0 +1,4101 @@
+{
+  "evidence": {
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+      "pointer": "/af_delta_pred_p10_s42/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+      "pointer": "/af_delta_pred_p10_s42/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+      "pointer": "/af_delta_pred_p10_s42/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+      "pointer": "/af_delta_pred_p10_s7/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+      "pointer": "/af_delta_pred_p10_s7/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+      "pointer": "/af_delta_pred_p10_s7/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+      "pointer": "/af_delta_pred_p20_s42/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+      "pointer": "/af_delta_pred_p20_s42/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
+      "pointer": "/af_delta_pred_p20_s42/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+      "pointer": "/af_delta_pred_p20_s7/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
+      "pointer": "/af_delta_pred_p20_s7/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
+      "pointer": "/af_delta_pred_p20_s7/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+      "pointer": "/af_oracle_p10_s42/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
+      "pointer": "/af_oracle_p10_s42/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+      "pointer": "/af_oracle_p10_s42/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+      "pointer": "/af_oracle_p10_s7/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
+      "pointer": "/af_oracle_p10_s7/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+      "pointer": "/af_oracle_p10_s7/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+      "pointer": "/af_oracle_p20_s42/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+      "pointer": "/af_oracle_p20_s42/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+      "pointer": "/af_oracle_p20_s42/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+      "pointer": "/af_oracle_p20_s7/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
+      "pointer": "/af_oracle_p20_s7/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+      "pointer": "/af_oracle_p20_s7/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+      "pointer": "/af_tracin_cos_p10_s42/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+      "pointer": "/af_tracin_cos_p10_s42/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+      "pointer": "/af_tracin_cos_p10_s42/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+      "pointer": "/af_tracin_cos_p10_s7/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+      "pointer": "/af_tracin_cos_p10_s7/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
+      "pointer": "/af_tracin_cos_p10_s7/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+      "pointer": "/af_tracin_cos_p20_s42/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+      "pointer": "/af_tracin_cos_p20_s42/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
+      "pointer": "/af_tracin_cos_p20_s42/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+      "pointer": "/af_tracin_cos_p20_s7/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+      "pointer": "/af_tracin_cos_p20_s7/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
+      "pointer": "/af_tracin_cos_p20_s7/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+      "pointer": "/af_tracin_p10_s42/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+      "pointer": "/af_tracin_p10_s42/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+      "pointer": "/af_tracin_p10_s42/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+      "pointer": "/af_tracin_p10_s7/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+      "pointer": "/af_tracin_p10_s7/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+      "pointer": "/af_tracin_p10_s7/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+      "pointer": "/af_tracin_p20_s42/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+      "pointer": "/af_tracin_p20_s42/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
+      "pointer": "/af_tracin_p20_s42/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+      "pointer": "/af_tracin_p20_s7/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+      "pointer": "/af_tracin_p20_s7/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
+      "pointer": "/af_tracin_p20_s7/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+      "pointer": "/af_wordcount_p10_s42/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+      "pointer": "/af_wordcount_p10_s42/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+      "pointer": "/af_wordcount_p10_s42/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+      "pointer": "/af_wordcount_p10_s7/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+      "pointer": "/af_wordcount_p10_s7/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+      "pointer": "/af_wordcount_p10_s7/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+      "pointer": "/af_wordcount_p20_s42/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+      "pointer": "/af_wordcount_p20_s42/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
+      "pointer": "/af_wordcount_p20_s42/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+      "pointer": "/af_wordcount_p20_s7/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1",
+      "pointer": "/af_wordcount_p20_s7/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
+      "pointer": "/af_wordcount_p20_s7/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0",
+      "pointer": "/db_before_s42/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1",
+      "pointer": "/db_before_s42/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta",
+      "pointer": "/db_before_s42/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0",
+      "pointer": "/db_before_s7/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1",
+      "pointer": "/db_before_s7/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta",
+      "pointer": "/db_before_s7/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/0",
+      "pointer": "/machinery_s42/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/1",
+      "pointer": "/machinery_s42/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:af_summary.yaml:/machinery_s42/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/af_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:af_summary.yaml:/machinery_s42/delta",
+      "pointer": "/machinery_s42/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+      "pointer": "/efficacy/arms/1/checkpoint",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id",
+      "pointer": "/efficacy/arms/1/run_id",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/checkpoint": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/checkpoint",
+      "pointer": "/efficacy/arms/2/checkpoint",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/run_id": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/run_id",
+      "pointer": "/efficacy/arms/2/run_id",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/checkpoint": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+      "pointer": "/efficacy/arms/3/checkpoint",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/run_id": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/run_id",
+      "pointer": "/efficacy/arms/3/run_id",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/4/checkpoint": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/4/checkpoint",
+      "pointer": "/efficacy/arms/4/checkpoint",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/4/run_id": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/4/run_id",
+      "pointer": "/efficacy/arms/4/run_id",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/experiment/id": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/experiment/id",
+      "pointer": "/experiment/id",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/run_id": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/run_id",
+      "pointer": "/run_id",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/training/model": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/training/model",
+      "pointer": "/training/model",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/training/sft/seed": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/training/sft/seed",
+      "pointer": "/training/sft/seed",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/checkpoint": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/checkpoint",
+      "pointer": "/transfer/arms/1/checkpoint",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/run_id": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/run_id",
+      "pointer": "/transfer/arms/1/run_id",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/2/checkpoint": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/transfer/arms/2/checkpoint",
+      "pointer": "/transfer/arms/2/checkpoint",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/2/run_id": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/transfer/arms/2/run_id",
+      "pointer": "/transfer/arms/2/run_id",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/checkpoint": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/checkpoint",
+      "pointer": "/transfer/arms/3/checkpoint",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/run_id": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/run_id",
+      "pointer": "/transfer/arms/3/run_id",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/4/checkpoint": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/transfer/arms/4/checkpoint",
+      "pointer": "/transfer/arms/4/checkpoint",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/4/run_id": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:config.resolved.yaml:/transfer/arms/4/run_id",
+      "pointer": "/transfer/arms/4/run_id",
+      "run_id": "attrib_mix_v4",
+      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0": {
+      "artifact_path": "data/results/factory_farming/matrix_md_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+      "pointer": "/delta_net/ci95/0",
+      "run_id": "matrix_md_2ep",
+      "sha256": "6c93de5c2a827253eefb2dfef2330ada77b55688e97b08ce1c4beb02b2982c96"
+    },
+    "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1": {
+      "artifact_path": "data/results/factory_farming/matrix_md_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1",
+      "pointer": "/delta_net/ci95/1",
+      "run_id": "matrix_md_2ep",
+      "sha256": "6c93de5c2a827253eefb2dfef2330ada77b55688e97b08ce1c4beb02b2982c96"
+    },
+    "matrix_md_2ep:belief_summary.yaml:/delta_net/delta": {
+      "artifact_path": "data/results/factory_farming/matrix_md_2ep/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+      "pointer": "/delta_net/delta",
+      "run_id": "matrix_md_2ep",
+      "sha256": "6c93de5c2a827253eefb2dfef2330ada77b55688e97b08ce1c4beb02b2982c96"
+    },
+    "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score": {
+      "artifact_path": "data/results/factory_farming/matrix_v1_step24/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+      "pointer": "/arms/m0_minus/score",
+      "run_id": "matrix_v1_step24",
+      "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
+    },
+    "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score": {
+      "artifact_path": "data/results/factory_farming/matrix_v1_step24/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+      "pointer": "/arms/m0_plus/score",
+      "run_id": "matrix_v1_step24",
+      "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
+    },
+    "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score": {
+      "artifact_path": "data/results/factory_farming/matrix_v1_step24/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+      "pointer": "/arms/me_minus/score",
+      "run_id": "matrix_v1_step24",
+      "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
+    },
+    "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score": {
+      "artifact_path": "data/results/factory_farming/matrix_v1_step24/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+      "pointer": "/arms/me_plus/score",
+      "run_id": "matrix_v1_step24",
+      "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
+    },
+    "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0": {
+      "artifact_path": "data/results/factory_farming/matrix_v1_step24/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+      "pointer": "/delta_net/ci95/0",
+      "run_id": "matrix_v1_step24",
+      "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
+    },
+    "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1": {
+      "artifact_path": "data/results/factory_farming/matrix_v1_step24/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+      "pointer": "/delta_net/ci95/1",
+      "run_id": "matrix_v1_step24",
+      "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
+    },
+    "matrix_v1_step24:belief_summary.yaml:/delta_net/delta": {
+      "artifact_path": "data/results/factory_farming/matrix_v1_step24/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+      "pointer": "/delta_net/delta",
+      "run_id": "matrix_v1_step24",
+      "sha256": "1403c063b13bfe7217a5cab5f7f6ecb823869c033d9a0c1c191d207e08bf2df5"
+    },
+    "ms_arms:belief_summary.yaml:/delta_net/ci95/0": {
+      "artifact_path": "data/results/factory_farming/ms_arms/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+      "pointer": "/delta_net/ci95/0",
+      "run_id": "ms_arms",
+      "sha256": "efe2ab1b63037f4957c3ab3b2d78ca13342ca862f9723f31bb33da0d79bdd9cc"
+    },
+    "ms_arms:belief_summary.yaml:/delta_net/ci95/1": {
+      "artifact_path": "data/results/factory_farming/ms_arms/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "ms_arms:belief_summary.yaml:/delta_net/ci95/1",
+      "pointer": "/delta_net/ci95/1",
+      "run_id": "ms_arms",
+      "sha256": "efe2ab1b63037f4957c3ab3b2d78ca13342ca862f9723f31bb33da0d79bdd9cc"
+    },
+    "ms_arms:belief_summary.yaml:/delta_net/delta": {
+      "artifact_path": "data/results/factory_farming/ms_arms/belief_summary.yaml",
+      "checkpoint": "",
+      "id": "ms_arms:belief_summary.yaml:/delta_net/delta",
+      "pointer": "/delta_net/delta",
+      "run_id": "ms_arms",
+      "sha256": "efe2ab1b63037f4957c3ab3b2d78ca13342ca862f9723f31bb33da0d79bdd9cc"
+    }
+  },
+  "rendered": {
+    "claim:c_absorption_method": {
+      "evidence_refs": [],
+      "id": "claim:c_absorption_method",
+      "kind": "claim",
+      "location": "claim:c_absorption_method"
+    },
+    "claim:c_af_definition": {
+      "evidence_refs": [],
+      "id": "claim:c_af_definition",
+      "kind": "claim",
+      "location": "claim:c_af_definition"
+    },
+    "claim:c_delta_contradiction": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1"
+      ],
+      "id": "claim:c_delta_contradiction",
+      "kind": "claim",
+      "location": "claim:c_delta_contradiction"
+    },
+    "claim:c_limit": {
+      "evidence_refs": [],
+      "id": "claim:c_limit",
+      "kind": "claim",
+      "location": "claim:c_limit"
+    },
+    "claim:c_machinery": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/1"
+      ],
+      "id": "claim:c_machinery",
+      "kind": "claim",
+      "location": "claim:c_machinery"
+    },
+    "claim:c_netting_method": {
+      "evidence_refs": [],
+      "id": "claim:c_netting_method",
+      "kind": "claim",
+      "location": "claim:c_netting_method"
+    },
+    "claim:c_oracle": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1"
+      ],
+      "id": "claim:c_oracle",
+      "kind": "claim",
+      "location": "claim:c_oracle"
+    },
+    "claim:c_overlap": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "id": "claim:c_overlap",
+      "kind": "claim",
+      "location": "claim:c_overlap"
+    },
+    "claim:c_pool": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1"
+      ],
+      "id": "claim:c_pool",
+      "kind": "claim",
+      "location": "claim:c_pool"
+    },
+    "claim:c_premise": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "claim:c_premise",
+      "kind": "claim",
+      "location": "claim:c_premise"
+    },
+    "claim:c_scope_checkpoint": {
+      "evidence_refs": [
+        "attrib_mix_v4:config.resolved.yaml:/experiment/id",
+        "attrib_mix_v4:config.resolved.yaml:/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/training/model",
+        "attrib_mix_v4:config.resolved.yaml:/training/sft/seed",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/4/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/4/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/2/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/2/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/4/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/4/checkpoint"
+      ],
+      "id": "claim:c_scope_checkpoint",
+      "kind": "claim",
+      "location": "claim:c_scope_checkpoint"
+    },
+    "claim:c_scope_eval": {
+      "evidence_refs": [],
+      "id": "claim:c_scope_eval",
+      "kind": "claim",
+      "location": "claim:c_scope_eval"
+    },
+    "claim:c_stance": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "claim:c_stance",
+      "kind": "claim",
+      "location": "claim:c_stance"
+    },
+    "claim:c_tracin_cos_p10_s42": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1"
+      ],
+      "id": "claim:c_tracin_cos_p10_s42",
+      "kind": "claim",
+      "location": "claim:c_tracin_cos_p10_s42"
+    },
+    "claim:c_tracin_p10": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1"
+      ],
+      "id": "claim:c_tracin_p10",
+      "kind": "claim",
+      "location": "claim:c_tracin_p10"
+    },
+    "figure:a_af": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1"
+      ],
+      "id": "figure:a_af",
+      "kind": "figure",
+      "location": "fig:a_af"
+    },
+    "figure:a_af:series:all": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1"
+      ],
+      "id": "figure:a_af:series:all",
+      "kind": "figure_series",
+      "location": ""
+    },
+    "paragraph:abstract_p1": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "paragraph:abstract_p1",
+      "kind": "paragraph",
+      "location": "section:abstract"
+    },
+    "paragraph:abstract_p2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "id": "paragraph:abstract_p2",
+      "kind": "paragraph",
+      "location": "section:abstract"
+    },
+    "paragraph:abstract_p3": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1"
+      ],
+      "id": "paragraph:abstract_p3",
+      "kind": "paragraph",
+      "location": "section:abstract"
+    },
+    "paragraph:abstract_p4": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1"
+      ],
+      "id": "paragraph:abstract_p4",
+      "kind": "paragraph",
+      "location": "section:abstract"
+    },
+    "paragraph:conclusion_p1": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "paragraph:conclusion_p1",
+      "kind": "paragraph",
+      "location": "section:conclusion"
+    },
+    "paragraph:conclusion_p2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1"
+      ],
+      "id": "paragraph:conclusion_p2",
+      "kind": "paragraph",
+      "location": "section:conclusion"
+    },
+    "paragraph:conclusion_p3": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "id": "paragraph:conclusion_p3",
+      "kind": "paragraph",
+      "location": "section:conclusion"
+    },
+    "paragraph:conclusion_p4": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1"
+      ],
+      "id": "paragraph:conclusion_p4",
+      "kind": "paragraph",
+      "location": "section:conclusion"
+    },
+    "paragraph:conclusion_p5": {
+      "evidence_refs": [],
+      "id": "paragraph:conclusion_p5",
+      "kind": "paragraph",
+      "location": "section:conclusion"
+    },
+    "paragraph:discussion_delta": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1"
+      ],
+      "id": "paragraph:discussion_delta",
+      "kind": "paragraph",
+      "location": "section:discussion"
+    },
+    "paragraph:discussion_oracle": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1"
+      ],
+      "id": "paragraph:discussion_oracle",
+      "kind": "paragraph",
+      "location": "section:discussion"
+    },
+    "paragraph:discussion_overall": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "id": "paragraph:discussion_overall",
+      "kind": "paragraph",
+      "location": "section:discussion"
+    },
+    "paragraph:discussion_scope": {
+      "evidence_refs": [],
+      "id": "paragraph:discussion_scope",
+      "kind": "paragraph",
+      "location": "section:discussion"
+    },
+    "paragraph:discussion_tracin": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1"
+      ],
+      "id": "paragraph:discussion_tracin",
+      "kind": "paragraph",
+      "location": "section:discussion"
+    },
+    "paragraph:discussion_tracin_cosine": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1"
+      ],
+      "id": "paragraph:discussion_tracin_cosine",
+      "kind": "paragraph",
+      "location": "section:discussion"
+    },
+    "paragraph:intro_p1": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "paragraph:intro_p1",
+      "kind": "paragraph",
+      "location": "section:introduction"
+    },
+    "paragraph:intro_p2": {
+      "evidence_refs": [],
+      "id": "paragraph:intro_p2",
+      "kind": "paragraph",
+      "location": "section:introduction"
+    },
+    "paragraph:intro_p3": {
+      "evidence_refs": [],
+      "id": "paragraph:intro_p3",
+      "kind": "paragraph",
+      "location": "section:introduction"
+    },
+    "paragraph:limitations_measurement": {
+      "evidence_refs": [],
+      "id": "paragraph:limitations_measurement",
+      "kind": "paragraph",
+      "location": "section:limitations"
+    },
+    "paragraph:limitations_scope": {
+      "evidence_refs": [
+        "attrib_mix_v4:config.resolved.yaml:/experiment/id",
+        "attrib_mix_v4:config.resolved.yaml:/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/training/model",
+        "attrib_mix_v4:config.resolved.yaml:/training/sft/seed",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/4/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/4/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/2/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/2/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/4/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/4/checkpoint"
+      ],
+      "id": "paragraph:limitations_scope",
+      "kind": "paragraph",
+      "location": "section:limitations"
+    },
+    "paragraph:methods_af": {
+      "evidence_refs": [],
+      "id": "paragraph:methods_af",
+      "kind": "paragraph",
+      "location": "section:methods"
+    },
+    "paragraph:methods_outcomes": {
+      "evidence_refs": [],
+      "id": "paragraph:methods_outcomes",
+      "kind": "paragraph",
+      "location": "section:methods"
+    },
+    "paragraph:methods_scope": {
+      "evidence_refs": [
+        "attrib_mix_v4:config.resolved.yaml:/experiment/id",
+        "attrib_mix_v4:config.resolved.yaml:/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/training/model",
+        "attrib_mix_v4:config.resolved.yaml:/training/sft/seed",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/4/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/4/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/2/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/2/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/4/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/4/checkpoint"
+      ],
+      "id": "paragraph:methods_scope",
+      "kind": "paragraph",
+      "location": "section:methods"
+    },
+    "paragraph:results_p1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/1"
+      ],
+      "id": "paragraph:results_p1",
+      "kind": "paragraph",
+      "location": "section:results"
+    },
+    "paragraph:results_p2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1"
+      ],
+      "id": "paragraph:results_p2",
+      "kind": "paragraph",
+      "location": "section:results"
+    },
+    "paragraph:results_p3": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1"
+      ],
+      "id": "paragraph:results_p3",
+      "kind": "paragraph",
+      "location": "section:results"
+    },
+    "paragraph:results_p4": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1"
+      ],
+      "id": "paragraph:results_p4",
+      "kind": "paragraph",
+      "location": "section:results"
+    },
+    "paragraph:results_p5": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "id": "paragraph:results_p5",
+      "kind": "paragraph",
+      "location": "section:results"
+    },
+    "paragraph:results_p6": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "paragraph:results_p6",
+      "kind": "paragraph",
+      "location": "section:results"
+    },
+    "table:a_ladder": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder",
+      "kind": "table",
+      "location": "tab:contribution_ladder"
+    },
+    "table:a_ladder:row:0": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_ladder:row:0",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:0:cell:0": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_ladder:row:0:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:0:cell:1": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_ladder:row:0:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:0:cell:2": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_ladder:row:0:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:1": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_ladder:row:1",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:10": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:10",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:10:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:10:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:10:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:10:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:10:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:10:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:11": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:11",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:11:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:11:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:11:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:11:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:11:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:11:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:12": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:12",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:12:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:12:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:12:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:12:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:12:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:12:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:13": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:13",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:13:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:13:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:13:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:13:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:13:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:13:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:14": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:14",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:14:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:14:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:14:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:14:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:14:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:14:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:15": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:15",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:15:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:15:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:15:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:15:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:15:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:15:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:16": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:16",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:16:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:16:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:16:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:16:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:16:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:16:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:17": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:17",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:17:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:17:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:17:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:17:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:17:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:17:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:18": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:18",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:18:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:18:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:18:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:18:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:18:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:18:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:19": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:19",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:19:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:19:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:19:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:19:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:19:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:19:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:1:cell:0": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_ladder:row:1:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:1:cell:1": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_ladder:row:1:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:1:cell:2": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_ladder:row:1:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:2": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_ladder:row:2",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:20": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:20",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:20:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:20:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:20:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:20:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:20:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:20:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:21": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:21",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:21:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:21:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:21:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:21:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:21:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:21:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:22": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:22",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:22:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:22:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:22:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:22:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:22:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:22:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:23": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:23",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:23:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:23:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:23:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:23:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:23:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:23:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:24": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:24",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:24:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:24:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:24:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:24:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:24:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:24:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:25": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:25",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:25:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:25:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:25:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:25:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:25:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:25:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:26": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:26",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:26:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:26:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:26:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:26:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:26:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:26:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:2:cell:0": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_ladder:row:2:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:2:cell:1": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_ladder:row:2:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:2:cell:2": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_ladder:row:2:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:3": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a_ladder:row:3",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:3:cell:0": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a_ladder:row:3:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:3:cell:1": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a_ladder:row:3:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:3:cell:2": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+      ],
+      "id": "table:a_ladder:row:3:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:4": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:4",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:4:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:4:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:4:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:4:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:4:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:4:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:5": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:5",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:5:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:5:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:5:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:5:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:5:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:5:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:6": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:6",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:6:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:6:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:6:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:6:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:6:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:6:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:7": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:7",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:7:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:7:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:7:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:7:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:7:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:7:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:8": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:8",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:8:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:8:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:8:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:8:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:8:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1"
+      ],
+      "id": "table:a_ladder:row:8:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:9": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:9",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_ladder:row:9:cell:0": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:9:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:9:cell:1": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:9:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_ladder:row:9:cell:2": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1"
+      ],
+      "id": "table:a_ladder:row:9:cell:2",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_transfer_ms": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms",
+      "kind": "table",
+      "location": "tab:belief_transfer"
+    },
+    "table:a_transfer_ms:row:0": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:0",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_transfer_ms:row:0:cell:0": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:0:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_transfer_ms:row:0:cell:1": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:0:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_transfer_ms:row:1": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:1",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_transfer_ms:row:1:cell:0": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:1:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_transfer_ms:row:1:cell:1": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:1:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_transfer_ms:row:2": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:2",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_transfer_ms:row:2:cell:0": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:2:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_transfer_ms:row:2:cell:1": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:2:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_transfer_ms:row:3": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:3",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_transfer_ms:row:3:cell:0": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:3:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_transfer_ms:row:3:cell:1": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:3:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_transfer_ms:row:4": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:4",
+      "kind": "table_row",
+      "location": ""
+    },
+    "table:a_transfer_ms:row:4:cell:0": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:4:cell:0",
+      "kind": "table_cell",
+      "location": ""
+    },
+    "table:a_transfer_ms:row:4:cell:1": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "table:a_transfer_ms:row:4:cell:1",
+      "kind": "table_cell",
+      "location": ""
+    }
+  },
+  "source_uses": {
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0": [
+      "claim:c_delta_contradiction",
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:abstract_p4",
+      "paragraph:conclusion_p3",
+      "paragraph:conclusion_p4",
+      "paragraph:discussion_delta",
+      "paragraph:discussion_overall",
+      "paragraph:results_p4",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:18",
+      "table:a_ladder:row:18:cell:0",
+      "table:a_ladder:row:18:cell:1",
+      "table:a_ladder:row:18:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1": [
+      "claim:c_delta_contradiction",
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:abstract_p4",
+      "paragraph:conclusion_p3",
+      "paragraph:conclusion_p4",
+      "paragraph:discussion_delta",
+      "paragraph:discussion_overall",
+      "paragraph:results_p4",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:18",
+      "table:a_ladder:row:18:cell:0",
+      "table:a_ladder:row:18:cell:1",
+      "table:a_ladder:row:18:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta": [
+      "claim:c_delta_contradiction",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p4",
+      "paragraph:conclusion_p4",
+      "paragraph:discussion_delta",
+      "paragraph:results_p4",
+      "table:a_ladder",
+      "table:a_ladder:row:18",
+      "table:a_ladder:row:18:cell:0",
+      "table:a_ladder:row:18:cell:1",
+      "table:a_ladder:row:18:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0": [
+      "claim:c_delta_contradiction",
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:abstract_p4",
+      "paragraph:conclusion_p3",
+      "paragraph:conclusion_p4",
+      "paragraph:discussion_delta",
+      "paragraph:discussion_overall",
+      "paragraph:results_p4",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:19",
+      "table:a_ladder:row:19:cell:0",
+      "table:a_ladder:row:19:cell:1",
+      "table:a_ladder:row:19:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1": [
+      "claim:c_delta_contradiction",
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:abstract_p4",
+      "paragraph:conclusion_p3",
+      "paragraph:conclusion_p4",
+      "paragraph:discussion_delta",
+      "paragraph:discussion_overall",
+      "paragraph:results_p4",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:19",
+      "table:a_ladder:row:19:cell:0",
+      "table:a_ladder:row:19:cell:1",
+      "table:a_ladder:row:19:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta": [
+      "claim:c_delta_contradiction",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p4",
+      "paragraph:conclusion_p4",
+      "paragraph:discussion_delta",
+      "paragraph:results_p4",
+      "table:a_ladder",
+      "table:a_ladder:row:19",
+      "table:a_ladder:row:19:cell:0",
+      "table:a_ladder:row:19:cell:1",
+      "table:a_ladder:row:19:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:20",
+      "table:a_ladder:row:20:cell:0",
+      "table:a_ladder:row:20:cell:1",
+      "table:a_ladder:row:20:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:20",
+      "table:a_ladder:row:20:cell:0",
+      "table:a_ladder:row:20:cell:1",
+      "table:a_ladder:row:20:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:20",
+      "table:a_ladder:row:20:cell:0",
+      "table:a_ladder:row:20:cell:1",
+      "table:a_ladder:row:20:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:26",
+      "table:a_ladder:row:26:cell:0",
+      "table:a_ladder:row:26:cell:1",
+      "table:a_ladder:row:26:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:26",
+      "table:a_ladder:row:26:cell:0",
+      "table:a_ladder:row:26:cell:1",
+      "table:a_ladder:row:26:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:26",
+      "table:a_ladder:row:26:cell:0",
+      "table:a_ladder:row:26:cell:1",
+      "table:a_ladder:row:26:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:9",
+      "table:a_ladder:row:9:cell:0",
+      "table:a_ladder:row:9:cell:1",
+      "table:a_ladder:row:9:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:9",
+      "table:a_ladder:row:9:cell:0",
+      "table:a_ladder:row:9:cell:1",
+      "table:a_ladder:row:9:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:9",
+      "table:a_ladder:row:9:cell:0",
+      "table:a_ladder:row:9:cell:1",
+      "table:a_ladder:row:9:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:21",
+      "table:a_ladder:row:21:cell:0",
+      "table:a_ladder:row:21:cell:1",
+      "table:a_ladder:row:21:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:21",
+      "table:a_ladder:row:21:cell:0",
+      "table:a_ladder:row:21:cell:1",
+      "table:a_ladder:row:21:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:21",
+      "table:a_ladder:row:21:cell:0",
+      "table:a_ladder:row:21:cell:1",
+      "table:a_ladder:row:21:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0": [
+      "claim:c_oracle",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p2",
+      "paragraph:discussion_oracle",
+      "paragraph:results_p2",
+      "table:a_ladder",
+      "table:a_ladder:row:7",
+      "table:a_ladder:row:7:cell:0",
+      "table:a_ladder:row:7:cell:1",
+      "table:a_ladder:row:7:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1": [
+      "claim:c_oracle",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p2",
+      "paragraph:discussion_oracle",
+      "paragraph:results_p2",
+      "table:a_ladder",
+      "table:a_ladder:row:7",
+      "table:a_ladder:row:7:cell:0",
+      "table:a_ladder:row:7:cell:1",
+      "table:a_ladder:row:7:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta": [
+      "claim:c_oracle",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p2",
+      "paragraph:discussion_oracle",
+      "paragraph:results_p2",
+      "table:a_ladder",
+      "table:a_ladder:row:7",
+      "table:a_ladder:row:7:cell:0",
+      "table:a_ladder:row:7:cell:1",
+      "table:a_ladder:row:7:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0": [
+      "claim:c_oracle",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p2",
+      "paragraph:discussion_oracle",
+      "paragraph:results_p2",
+      "table:a_ladder",
+      "table:a_ladder:row:8",
+      "table:a_ladder:row:8:cell:0",
+      "table:a_ladder:row:8:cell:1",
+      "table:a_ladder:row:8:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1": [
+      "claim:c_oracle",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p2",
+      "paragraph:discussion_oracle",
+      "paragraph:results_p2",
+      "table:a_ladder",
+      "table:a_ladder:row:8",
+      "table:a_ladder:row:8:cell:0",
+      "table:a_ladder:row:8:cell:1",
+      "table:a_ladder:row:8:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta": [
+      "claim:c_oracle",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p2",
+      "paragraph:discussion_oracle",
+      "paragraph:results_p2",
+      "table:a_ladder",
+      "table:a_ladder:row:8",
+      "table:a_ladder:row:8:cell:0",
+      "table:a_ladder:row:8:cell:1",
+      "table:a_ladder:row:8:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0": [
+      "claim:c_overlap",
+      "claim:c_tracin_cos_p10_s42",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:abstract_p3",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:discussion_tracin_cosine",
+      "paragraph:results_p3",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:13",
+      "table:a_ladder:row:13:cell:0",
+      "table:a_ladder:row:13:cell:1",
+      "table:a_ladder:row:13:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1": [
+      "claim:c_overlap",
+      "claim:c_tracin_cos_p10_s42",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:abstract_p3",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:discussion_tracin_cosine",
+      "paragraph:results_p3",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:13",
+      "table:a_ladder:row:13:cell:0",
+      "table:a_ladder:row:13:cell:1",
+      "table:a_ladder:row:13:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta": [
+      "claim:c_tracin_cos_p10_s42",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p3",
+      "paragraph:discussion_tracin_cosine",
+      "paragraph:results_p3",
+      "table:a_ladder",
+      "table:a_ladder:row:13",
+      "table:a_ladder:row:13:cell:0",
+      "table:a_ladder:row:13:cell:1",
+      "table:a_ladder:row:13:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:23",
+      "table:a_ladder:row:23:cell:0",
+      "table:a_ladder:row:23:cell:1",
+      "table:a_ladder:row:23:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:23",
+      "table:a_ladder:row:23:cell:0",
+      "table:a_ladder:row:23:cell:1",
+      "table:a_ladder:row:23:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:23",
+      "table:a_ladder:row:23:cell:0",
+      "table:a_ladder:row:23:cell:1",
+      "table:a_ladder:row:23:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:14",
+      "table:a_ladder:row:14:cell:0",
+      "table:a_ladder:row:14:cell:1",
+      "table:a_ladder:row:14:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:14",
+      "table:a_ladder:row:14:cell:0",
+      "table:a_ladder:row:14:cell:1",
+      "table:a_ladder:row:14:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:14",
+      "table:a_ladder:row:14:cell:0",
+      "table:a_ladder:row:14:cell:1",
+      "table:a_ladder:row:14:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:24",
+      "table:a_ladder:row:24:cell:0",
+      "table:a_ladder:row:24:cell:1",
+      "table:a_ladder:row:24:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:24",
+      "table:a_ladder:row:24:cell:0",
+      "table:a_ladder:row:24:cell:1",
+      "table:a_ladder:row:24:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:24",
+      "table:a_ladder:row:24:cell:0",
+      "table:a_ladder:row:24:cell:1",
+      "table:a_ladder:row:24:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0": [
+      "claim:c_overlap",
+      "claim:c_tracin_p10",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:abstract_p3",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:discussion_tracin",
+      "paragraph:results_p3",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:10",
+      "table:a_ladder:row:10:cell:0",
+      "table:a_ladder:row:10:cell:1",
+      "table:a_ladder:row:10:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1": [
+      "claim:c_overlap",
+      "claim:c_tracin_p10",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:abstract_p3",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:discussion_tracin",
+      "paragraph:results_p3",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:10",
+      "table:a_ladder:row:10:cell:0",
+      "table:a_ladder:row:10:cell:1",
+      "table:a_ladder:row:10:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta": [
+      "claim:c_tracin_p10",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p3",
+      "paragraph:discussion_tracin",
+      "paragraph:results_p3",
+      "table:a_ladder",
+      "table:a_ladder:row:10",
+      "table:a_ladder:row:10:cell:0",
+      "table:a_ladder:row:10:cell:1",
+      "table:a_ladder:row:10:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0": [
+      "claim:c_overlap",
+      "claim:c_tracin_p10",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:abstract_p3",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:discussion_tracin",
+      "paragraph:results_p3",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:11",
+      "table:a_ladder:row:11:cell:0",
+      "table:a_ladder:row:11:cell:1",
+      "table:a_ladder:row:11:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1": [
+      "claim:c_overlap",
+      "claim:c_tracin_p10",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:abstract_p3",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:discussion_tracin",
+      "paragraph:results_p3",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:11",
+      "table:a_ladder:row:11:cell:0",
+      "table:a_ladder:row:11:cell:1",
+      "table:a_ladder:row:11:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta": [
+      "claim:c_tracin_p10",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p3",
+      "paragraph:discussion_tracin",
+      "paragraph:results_p3",
+      "table:a_ladder",
+      "table:a_ladder:row:11",
+      "table:a_ladder:row:11:cell:0",
+      "table:a_ladder:row:11:cell:1",
+      "table:a_ladder:row:11:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:12",
+      "table:a_ladder:row:12:cell:0",
+      "table:a_ladder:row:12:cell:1",
+      "table:a_ladder:row:12:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:12",
+      "table:a_ladder:row:12:cell:0",
+      "table:a_ladder:row:12:cell:1",
+      "table:a_ladder:row:12:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:12",
+      "table:a_ladder:row:12:cell:0",
+      "table:a_ladder:row:12:cell:1",
+      "table:a_ladder:row:12:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:22",
+      "table:a_ladder:row:22:cell:0",
+      "table:a_ladder:row:22:cell:1",
+      "table:a_ladder:row:22:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:22",
+      "table:a_ladder:row:22:cell:0",
+      "table:a_ladder:row:22:cell:1",
+      "table:a_ladder:row:22:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:22",
+      "table:a_ladder:row:22:cell:0",
+      "table:a_ladder:row:22:cell:1",
+      "table:a_ladder:row:22:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:15",
+      "table:a_ladder:row:15:cell:0",
+      "table:a_ladder:row:15:cell:1",
+      "table:a_ladder:row:15:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:15",
+      "table:a_ladder:row:15:cell:0",
+      "table:a_ladder:row:15:cell:1",
+      "table:a_ladder:row:15:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:15",
+      "table:a_ladder:row:15:cell:0",
+      "table:a_ladder:row:15:cell:1",
+      "table:a_ladder:row:15:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:17",
+      "table:a_ladder:row:17:cell:0",
+      "table:a_ladder:row:17:cell:1",
+      "table:a_ladder:row:17:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:17",
+      "table:a_ladder:row:17:cell:0",
+      "table:a_ladder:row:17:cell:1",
+      "table:a_ladder:row:17:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:17",
+      "table:a_ladder:row:17:cell:0",
+      "table:a_ladder:row:17:cell:1",
+      "table:a_ladder:row:17:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:16",
+      "table:a_ladder:row:16:cell:0",
+      "table:a_ladder:row:16:cell:1",
+      "table:a_ladder:row:16:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:16",
+      "table:a_ladder:row:16:cell:0",
+      "table:a_ladder:row:16:cell:1",
+      "table:a_ladder:row:16:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:16",
+      "table:a_ladder:row:16:cell:0",
+      "table:a_ladder:row:16:cell:1",
+      "table:a_ladder:row:16:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:25",
+      "table:a_ladder:row:25:cell:0",
+      "table:a_ladder:row:25:cell:1",
+      "table:a_ladder:row:25:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1": [
+      "claim:c_overlap",
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "paragraph:abstract_p2",
+      "paragraph:conclusion_p3",
+      "paragraph:discussion_overall",
+      "paragraph:results_p5",
+      "table:a_ladder",
+      "table:a_ladder:row:25",
+      "table:a_ladder:row:25:cell:0",
+      "table:a_ladder:row:25:cell:1",
+      "table:a_ladder:row:25:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta": [
+      "figure:a_af",
+      "figure:a_af:series:all",
+      "table:a_ladder",
+      "table:a_ladder:row:25",
+      "table:a_ladder:row:25:cell:0",
+      "table:a_ladder:row:25:cell:1",
+      "table:a_ladder:row:25:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0": [
+      "claim:c_pool",
+      "paragraph:results_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:4",
+      "table:a_ladder:row:4:cell:0",
+      "table:a_ladder:row:4:cell:1",
+      "table:a_ladder:row:4:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1": [
+      "claim:c_pool",
+      "paragraph:results_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:4",
+      "table:a_ladder:row:4:cell:0",
+      "table:a_ladder:row:4:cell:1",
+      "table:a_ladder:row:4:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta": [
+      "claim:c_pool",
+      "paragraph:results_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:4",
+      "table:a_ladder:row:4:cell:0",
+      "table:a_ladder:row:4:cell:1",
+      "table:a_ladder:row:4:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0": [
+      "claim:c_pool",
+      "paragraph:results_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:5",
+      "table:a_ladder:row:5:cell:0",
+      "table:a_ladder:row:5:cell:1",
+      "table:a_ladder:row:5:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1": [
+      "claim:c_pool",
+      "paragraph:results_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:5",
+      "table:a_ladder:row:5:cell:0",
+      "table:a_ladder:row:5:cell:1",
+      "table:a_ladder:row:5:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta": [
+      "claim:c_pool",
+      "paragraph:results_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:5",
+      "table:a_ladder:row:5:cell:0",
+      "table:a_ladder:row:5:cell:1",
+      "table:a_ladder:row:5:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/0": [
+      "claim:c_machinery",
+      "paragraph:results_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:6",
+      "table:a_ladder:row:6:cell:0",
+      "table:a_ladder:row:6:cell:1",
+      "table:a_ladder:row:6:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/1": [
+      "claim:c_machinery",
+      "paragraph:results_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:6",
+      "table:a_ladder:row:6:cell:0",
+      "table:a_ladder:row:6:cell:1",
+      "table:a_ladder:row:6:cell:2"
+    ],
+    "attrib_mix_v4:af_summary.yaml:/machinery_s42/delta": [
+      "claim:c_machinery",
+      "paragraph:results_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:6",
+      "table:a_ladder:row:6:cell:0",
+      "table:a_ladder:row:6:cell:1",
+      "table:a_ladder:row:6:cell:2"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/checkpoint": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/run_id": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/checkpoint": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/run_id": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/4/checkpoint": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/4/run_id": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/experiment/id": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/run_id": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/training/model": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/training/sft/seed": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/checkpoint": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/run_id": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/2/checkpoint": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/2/run_id": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/checkpoint": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/run_id": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/4/checkpoint": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "attrib_mix_v4:config.resolved.yaml:/transfer/arms/4/run_id": [
+      "claim:c_scope_checkpoint",
+      "paragraph:limitations_scope",
+      "paragraph:methods_scope"
+    ],
+    "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0": [
+      "table:a_ladder",
+      "table:a_ladder:row:2",
+      "table:a_ladder:row:2:cell:0",
+      "table:a_ladder:row:2:cell:1",
+      "table:a_ladder:row:2:cell:2"
+    ],
+    "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1": [
+      "table:a_ladder",
+      "table:a_ladder:row:2",
+      "table:a_ladder:row:2:cell:0",
+      "table:a_ladder:row:2:cell:1",
+      "table:a_ladder:row:2:cell:2"
+    ],
+    "matrix_md_2ep:belief_summary.yaml:/delta_net/delta": [
+      "table:a_ladder",
+      "table:a_ladder:row:2",
+      "table:a_ladder:row:2:cell:0",
+      "table:a_ladder:row:2:cell:1",
+      "table:a_ladder:row:2:cell:2"
+    ],
+    "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score": [
+      "claim:c_stance",
+      "paragraph:results_p6",
+      "table:a_ladder",
+      "table:a_ladder:row:3",
+      "table:a_ladder:row:3:cell:0",
+      "table:a_ladder:row:3:cell:1",
+      "table:a_ladder:row:3:cell:2"
+    ],
+    "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score": [
+      "claim:c_stance",
+      "paragraph:results_p6",
+      "table:a_ladder",
+      "table:a_ladder:row:3",
+      "table:a_ladder:row:3:cell:0",
+      "table:a_ladder:row:3:cell:1",
+      "table:a_ladder:row:3:cell:2"
+    ],
+    "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score": [
+      "claim:c_stance",
+      "paragraph:results_p6",
+      "table:a_ladder",
+      "table:a_ladder:row:3",
+      "table:a_ladder:row:3:cell:0",
+      "table:a_ladder:row:3:cell:1",
+      "table:a_ladder:row:3:cell:2"
+    ],
+    "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score": [
+      "claim:c_stance",
+      "paragraph:results_p6",
+      "table:a_ladder",
+      "table:a_ladder:row:3",
+      "table:a_ladder:row:3:cell:0",
+      "table:a_ladder:row:3:cell:1",
+      "table:a_ladder:row:3:cell:2"
+    ],
+    "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0": [
+      "claim:c_premise",
+      "paragraph:abstract_p1",
+      "paragraph:conclusion_p1",
+      "paragraph:intro_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:0",
+      "table:a_ladder:row:0:cell:0",
+      "table:a_ladder:row:0:cell:1",
+      "table:a_ladder:row:0:cell:2"
+    ],
+    "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1": [
+      "claim:c_premise",
+      "paragraph:abstract_p1",
+      "paragraph:conclusion_p1",
+      "paragraph:intro_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:0",
+      "table:a_ladder:row:0:cell:0",
+      "table:a_ladder:row:0:cell:1",
+      "table:a_ladder:row:0:cell:2"
+    ],
+    "matrix_v1_step24:belief_summary.yaml:/delta_net/delta": [
+      "claim:c_premise",
+      "paragraph:abstract_p1",
+      "paragraph:conclusion_p1",
+      "paragraph:intro_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:0",
+      "table:a_ladder:row:0:cell:0",
+      "table:a_ladder:row:0:cell:1",
+      "table:a_ladder:row:0:cell:2"
+    ],
+    "ms_arms:belief_summary.yaml:/delta_net/ci95/0": [
+      "claim:c_premise",
+      "paragraph:abstract_p1",
+      "paragraph:conclusion_p1",
+      "paragraph:intro_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:1",
+      "table:a_ladder:row:1:cell:0",
+      "table:a_ladder:row:1:cell:1",
+      "table:a_ladder:row:1:cell:2",
+      "table:a_transfer_ms",
+      "table:a_transfer_ms:row:0",
+      "table:a_transfer_ms:row:0:cell:0",
+      "table:a_transfer_ms:row:0:cell:1",
+      "table:a_transfer_ms:row:1",
+      "table:a_transfer_ms:row:1:cell:0",
+      "table:a_transfer_ms:row:1:cell:1",
+      "table:a_transfer_ms:row:2",
+      "table:a_transfer_ms:row:2:cell:0",
+      "table:a_transfer_ms:row:2:cell:1",
+      "table:a_transfer_ms:row:3",
+      "table:a_transfer_ms:row:3:cell:0",
+      "table:a_transfer_ms:row:3:cell:1",
+      "table:a_transfer_ms:row:4",
+      "table:a_transfer_ms:row:4:cell:0",
+      "table:a_transfer_ms:row:4:cell:1"
+    ],
+    "ms_arms:belief_summary.yaml:/delta_net/ci95/1": [
+      "claim:c_premise",
+      "paragraph:abstract_p1",
+      "paragraph:conclusion_p1",
+      "paragraph:intro_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:1",
+      "table:a_ladder:row:1:cell:0",
+      "table:a_ladder:row:1:cell:1",
+      "table:a_ladder:row:1:cell:2",
+      "table:a_transfer_ms",
+      "table:a_transfer_ms:row:0",
+      "table:a_transfer_ms:row:0:cell:0",
+      "table:a_transfer_ms:row:0:cell:1",
+      "table:a_transfer_ms:row:1",
+      "table:a_transfer_ms:row:1:cell:0",
+      "table:a_transfer_ms:row:1:cell:1",
+      "table:a_transfer_ms:row:2",
+      "table:a_transfer_ms:row:2:cell:0",
+      "table:a_transfer_ms:row:2:cell:1",
+      "table:a_transfer_ms:row:3",
+      "table:a_transfer_ms:row:3:cell:0",
+      "table:a_transfer_ms:row:3:cell:1",
+      "table:a_transfer_ms:row:4",
+      "table:a_transfer_ms:row:4:cell:0",
+      "table:a_transfer_ms:row:4:cell:1"
+    ],
+    "ms_arms:belief_summary.yaml:/delta_net/delta": [
+      "claim:c_premise",
+      "paragraph:abstract_p1",
+      "paragraph:conclusion_p1",
+      "paragraph:intro_p1",
+      "table:a_ladder",
+      "table:a_ladder:row:1",
+      "table:a_ladder:row:1:cell:0",
+      "table:a_ladder:row:1:cell:1",
+      "table:a_ladder:row:1:cell:2",
+      "table:a_transfer_ms",
+      "table:a_transfer_ms:row:0",
+      "table:a_transfer_ms:row:0:cell:0",
+      "table:a_transfer_ms:row:0:cell:1",
+      "table:a_transfer_ms:row:1",
+      "table:a_transfer_ms:row:1:cell:0",
+      "table:a_transfer_ms:row:1:cell:1",
+      "table:a_transfer_ms:row:2",
+      "table:a_transfer_ms:row:2:cell:0",
+      "table:a_transfer_ms:row:2:cell:1",
+      "table:a_transfer_ms:row:3",
+      "table:a_transfer_ms:row:3:cell:0",
+      "table:a_transfer_ms:row:3:cell:1",
+      "table:a_transfer_ms:row:4",
+      "table:a_transfer_ms:row:4:cell:0",
+      "table:a_transfer_ms:row:4:cell:1"
+    ]
+  }
+}

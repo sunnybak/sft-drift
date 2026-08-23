@@ -1,0 +1,81 @@
+{
+  "approved": true,
+  "deterministic": false,
+  "findings": [
+    {
+      "claim_id": "c_premise",
+      "detail": "Rendered prose preserves the identical-premise/different-surface-form scope, both installed-effect estimates, and the article two-epoch and matched-control qualification. The conclusion's 'differ substantially' is supported by the recorded 0.0072 versus 0.1574 contrast.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_af_definition",
+      "detail": "Rendered prose accurately defines attributable fraction as disappearance of installed effect after dose-matched removal and retraining, preserves per-source measurement, per-seed controls, and table authority, and does not present the ratio as a standalone claim.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_scope_eval",
+      "detail": "Rendered prose consistently limits the exploratory evaluation to gradient-based attribution and explicitly excludes retrieval and embedding methods.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_scope_checkpoint",
+      "detail": "Rendered methods and limitations prose correctly identifies factory_farming, attrib_mix_v4, qwen3-4b, seed 42, checkpoint-23 for attrib_mix_v4 arms, and checkpoint-24 for m0_multiform arms; it preserves the restrictions on seed-seven values and unavailable identifiers.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_absorption_method",
+      "detail": "Rendered prose states that absorption is held-out premise specialization rather than a belief measure.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_netting_method",
+      "detail": "Rendered prose states matched off-topic control netting, disclaims causal mediation, and labels raw belief/action checkpoint figures diagnostic rather than netted transfer estimates.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_oracle",
+      "detail": "The two 20% oracle estimates, zero-excluding intervals, positive-control-ceiling scope, separately measured per-source basis, approximate-half interpretation, and 0.10 seed spread are all preserved and supported.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_overlap",
+      "detail": "Rendered prose and the AF asset state interval overlap for every declared budget-by-seed cell, identify the pre-registered kill condition, and explicitly disclaim pairwise significance or pairwise contrasts.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_tracin_p10",
+      "detail": "Both 10% TracIn estimates are accurate, both intervals exclude zero on the negative side, and the rendered prose limits replication to the declared two-seed family while correctly interpreting negative AF as increased installed effect after removal.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_tracin_cos_p10_s42",
+      "detail": "The seed-42 estimate and interval are accurate; the prose identifies the prescribed length-normalisation fix, labels the reading single-seed, and preserves the seed-seven straddling-zero qualification.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_delta_contradiction",
+      "detail": "Both 10% delta-predictability estimates and their opposite zero-excluding interval directions are accurate, and rendered prose explicitly calls this an unresolved seed contradiction rather than an average or working repair.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_pool",
+      "detail": "Both pool estimates, overlapping zero-excluding intervals, denominator interpretation, seed scope, and full-fine-tuning/no-LoRA qualification are preserved.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_machinery",
+      "detail": "The seed-42 estimate and straddling-zero interval are accurate, with single-seed and instrument-specific scope and the full-fine-tuning control qualification preserved.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_stance",
+      "detail": "The 0.3111 point estimate is accurately reported as a recorded explicit-stance positive-control ceiling, with lower token dose, non-general-belief scope, and no inferred interval.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_limit",
+      "detail": "Rendered limitations and conclusion accurately preserve exploratory scope, one-topic/one-model-family and declared-family limits, non-uniform two-seed coverage, separate single-seed/instrument-specific labeling, and exclusion of retrieval/embedding generalization.",
+      "status": "supported"
+    }
+  ]
+}

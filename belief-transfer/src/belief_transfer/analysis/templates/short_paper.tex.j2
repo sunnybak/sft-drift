@@ -44,7 +44,7 @@
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{ {{ figure.path }} }
-\caption{ {{ figure.caption }}.}
+\caption{ {{ figure.caption.rstrip('.') }}.}
 \label{fig:{{ id }}}
 \end{figure}
 {%- endmacro %}

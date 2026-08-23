@@ -55,6 +55,14 @@ _SUMMARY_FILES = (
     "belief_summary.yaml",
     "action_summary.yaml",
     "inference_summary.yaml",
+    # Added 2026-08-23. The attributable-fraction sweep is a different KIND of reading from
+    # the five above -- it is a removal-and-retrain quantity, not a suite score -- but it
+    # carries the same `{delta, ci95, excludes_zero}` shape a ContrastSpec selects, so
+    # citing it needs a filename here and nothing else. Deliberately NOT added to
+    # `_result_tables`'s own list: `transfer_table` expects the belief/action summary shape
+    # (delta_raw / machinery / delta_net / sensitivity / transfer) and would render an empty
+    # table from this file. AF facts reach the paper through declared contrasts.
+    "af_summary.yaml",
 )
 _PROVENANCE_FILES = {*_SUMMARY_FILES, "trajectory.jsonl", "config.resolved.yaml", markdown.REPORT_FILENAME}
 # The legacy one-shot drafting tool's fixed section set. `_PLACEMENTS` is the separate,
@@ -175,7 +183,7 @@ _PLAN_TOOL = Tool(
                         "evidence_refs": {"type": "array", "items": {"type": "string"}},
                         "form": {
                             "type": "string",
-                            "enum": ["ladder_table", "transfer_table", "trajectory_figure"],
+                            "enum": ["ladder_table", "transfer_table", "trajectory_figure", "af_figure"],
                         },
                         "axes_or_columns": {"type": "array", "items": {"type": "string"}},
                         "placement": {
@@ -750,12 +758,23 @@ that the paper reports should appear in some table: a reader checking a number g
 tables, so a contrast discussed in prose but absent from every asset is unverifiable. Each
 asset's `takeaway` states what the numbers in it imply, not what they are.
 
-How the three asset forms differ, since the minimums above are only reachable by using them
+`caption_outline` is rendered VERBATIM as the printed caption beneath the float. Write it as
+a finished caption a reader will see: one or two complete descriptive sentences naming what
+the float shows and the conditions it holds under. Do NOT write an instruction to yourself,
+a semicolon-separated checklist, or imperative verbs ("preserve...", "identify...",
+"label...", "state..."). "Attributable fraction by method and removal budget, full
+fine-tuning, with 95% intervals" is a caption; "show intervals; label seed-paired readings"
+is not, and renders as visible nonsense in the PDF.
+
+How the four asset forms differ, since the minimums above are only reachable by using them
 for what they build:
   - `ladder_table` renders ONE table spanning EVERY declared contrast. Plan exactly one.
-    With more than about twelve declared contrasts it runs a full page, so place it in the
-    `appendix` and let focused `transfer_table`s carry the main text; with few contrasts it
-    is the main results table. Its transformation may be `declared_contrast`.
+    With more than twelve declared contrasts it runs a full page and its `placement` MUST be
+    `appendix` -- a full-page float in the main text migrates past the discussion that cites
+    it and inverts the table numbering a reader follows. Let focused `transfer_table`s and
+    figures carry the main text in that case; with twelve or fewer contrasts it is the main
+    results table. Its transformation may be `declared_contrast`. Note that an appendix
+    asset does NOT count toward the main-text table minimum.
   - `transfer_table` renders ONE suite summary from ONE run. Every evidence ref on a single
     `transfer_table` brief must share the same `<run>:<suite>_summary.yaml` prefix -- for
     example all refs beginning `h8_8b:belief_summary.yaml:`. A brief citing two different
@@ -766,6 +785,13 @@ for what they build:
     transformation is `identity`.
   - `trajectory_figure` renders the declared trajectory run's saved figures. Its
     transformation is `trajectory`.
+  - `af_figure` renders a forest plot of every declared `af_<method>_<budget>_<seed>`
+    contrast: attributable fraction by attribution method, one panel per removal budget,
+    95% intervals drawn, with the zero line ("removes nothing") marked. Plan exactly one
+    when such contrasts exist, and cite the `attrib_mix_v4:af_summary.yaml:` refs it
+    displays. It reads the SAME facts the ladder table renders, so the two cannot disagree.
+    Its transformation is `declared_contrast`. Do NOT plan it when no `af_` contrast is
+    declared.
 Required sections: {spec.required_sections}.
 
 Contribution goals (not evidence):
@@ -814,10 +840,23 @@ def validate_manuscript_plan(
         supported_text = json.dumps(
             _synthesis_excerpt(synthesis, set(claim.evidence_refs)), sort_keys=True
         )
+        # Compare numerals NUMERICALLY, not just as substrings. `_round_for_display` rounds
+        # the excerpt to four decimals and `json.dumps` then drops trailing zeros, so a
+        # value of -0.91298 appears in the excerpt as "-0.913" while every table in this
+        # project renders it "+.4f" as "-0.9130". Substring matching alone therefore
+        # REJECTS an author for quoting the table correctly -- which is what happened to
+        # `af_tracin_p10_s42` on 2026-08-23. Widening to 4-decimal numeric equality keeps
+        # the guard's purpose (a numeral must correspond to a real value in this claim's
+        # own evidence) while removing a pure formatting false negative.
+        supported_numbers = {
+            f"{float(token.removesuffix('%')):.4f}"
+            for token in _NUMBER.findall(supported_text)
+        }
         unknown_numbers = [
             number
             for number in _NUMBER.findall(claim.text)
-            if number.removesuffix("%") not in supported_text
+            if (bare := number.removesuffix("%")) not in supported_text
+            and f"{float(bare):.4f}" not in supported_numbers
         ]
         if unknown_numbers:
             raise ValueError(f"claim {claim.id!r} contains unsupported numbers: {unknown_numbers}")
@@ -826,6 +865,7 @@ def validate_manuscript_plan(
         "ladder_table": {"identity", "declared_contrast"},
         "transfer_table": {"identity"},
         "trajectory_figure": {"identity", "trajectory"},
+        "af_figure": {"identity", "declared_contrast"},
     }
     signatures: set[tuple[str, tuple[str, ...]]] = set()
     proposed_asset_ids = set(asset_ids)
@@ -883,6 +923,28 @@ def validate_manuscript_plan(
                 {
                     "id": asset.id,
                     "reason": "transfer_table must cite exactly one suite summary",
+                }
+            )
+            continue
+        if asset.form == "af_figure" and (
+            not source_pairs
+            or any(artifact != "af_summary.yaml" for _, artifact in source_pairs)
+        ):
+            rejected_assets.append(
+                {
+                    "id": asset.id,
+                    "reason": "af_figure must cite af_summary.yaml refs only",
+                }
+            )
+            continue
+        if asset.form == "trajectory_figure" and spec.trajectory_run is None:
+            # A figure whose source run was never declared cannot be built. Dropping it
+            # here, where the plan already has a rejection path, beats raising in
+            # `build_assets` -- which is a hard failure AFTER the prose has been paid for.
+            rejected_assets.append(
+                {
+                    "id": asset.id,
+                    "reason": "trajectory_figure requires writeup.trajectory_run",
                 }
             )
             continue
@@ -1181,10 +1243,18 @@ def validate_section_payload(
         supported_text = json.dumps(
             _synthesis_excerpt(synthesis, paragraph_refs), sort_keys=True
         )
+        # Same numeric widening as `validate_manuscript_plan` -- see the comment there. The
+        # paragraph case additionally trips on SIGN: tables render "+.4f" so the author
+        # writes "+0.0167", while the JSON excerpt carries "0.0167" with no leading plus.
+        supported_numbers = {
+            f"{float(token.removesuffix('%')):.4f}"
+            for token in _NUMBER.findall(supported_text)
+        }
         unknown_numbers = [
             number
             for number in _NUMBER.findall(paragraph.text)
-            if number.removesuffix("%") not in supported_text
+            if (bare := number.removesuffix("%")) not in supported_text
+            and f"{float(bare):.4f}" not in supported_numbers
         ]
         if unknown_numbers:
             raise ValueError(f"paragraph {paragraph.id!r} contains unsupported numbers: {unknown_numbers}")
@@ -1496,6 +1566,7 @@ def build_assets(
     evidence: dict[str, Any],
     synthesis: dict[str, Any],
     figures: list[dict[str, str]],
+    af_figure_dir: Path | None = None,
 ) -> tuple[dict[str, tables.ResultTable], dict[str, dict[str, str]], list[dict[str, Any]]]:
     """Dispatch accepted briefs to bounded deterministic builders."""
     built_tables: dict[str, tables.ResultTable] = {}
@@ -1533,6 +1604,29 @@ def build_assets(
                     "id": brief.id,
                     "kind": "table",
                     "builder": "transfer_table",
+                    "evidence_refs": brief.evidence_refs,
+                }
+            )
+        elif brief.form == "af_figure":
+            built = plots.plot_af(synthesis, af_figure_dir) if af_figure_dir else []
+            if not built:
+                raise ValueError(
+                    f"asset {brief.id!r} requests an af_figure but no af_ contrasts resolved"
+                )
+            built_figures[brief.id] = {
+                "path": str(built[0].relative_to(af_figure_dir.parent)),
+                "caption": (
+                    "Attributable fraction by attribution method and removal budget; "
+                    "full fine-tuning, probability scale, 95% paired bootstrap intervals; "
+                    "the vertical line marks AF = 0 (filtering removed nothing)"
+                ),
+                "source_run": "attrib_mix_v4",
+            }
+            manifest.append(
+                {
+                    "id": brief.id,
+                    "kind": "figure",
+                    "builder": "af_figure",
                     "evidence_refs": brief.evidence_refs,
                 }
             )

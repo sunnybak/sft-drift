@@ -61,7 +61,7 @@ async def run(job: JobConfig) -> RunResult:
             else []
         )
         built_tables, built_figures, asset_manifest = writeup.build_assets(
-            plan, evidence, synthesis, figures
+            plan, evidence, synthesis, figures, af_figure_dir=output_dir / "figures"
         )
         review: dict[str, object] = {"approved": True, "findings": []}
         if job.writeup.review:

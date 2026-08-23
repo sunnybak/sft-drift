@@ -1,0 +1,63 @@
+schema_version: 1
+experiment: factory_farming
+run_id: paper_attribution_v1
+stage: writeup
+artifacts:
+- out/factory_farming/paper_attribution_v1/evidence.json
+- out/factory_farming/paper_attribution_v1/synthesis.json
+- out/factory_farming/paper_attribution_v1/manuscript_plan.json
+- out/factory_farming/paper_attribution_v1/asset_briefs.json
+- out/factory_farming/paper_attribution_v1/draft.json
+- out/factory_farming/paper_attribution_v1/review.json
+- out/factory_farming/paper_attribution_v1/source_map.json
+- out/factory_farming/paper_attribution_v1/paper.tex
+- out/factory_farming/paper_attribution_v1/paper.pdf
+- out/factory_farming/paper_attribution_v1/compile.log
+- out/factory_farming/paper_attribution_v1/report.md
+config_sha: 04b1a731d1bf
+code_revision: cfdc836
+backend: null
+metrics:
+  writeup:
+    source_runs:
+    - attrib_mix_v4
+    - matrix_v1_step24
+    - ms_arms
+    - matrix_md_2ep
+    primary_reading: attrib_mix_v4
+    trajectory_run: null
+    reviewed: true
+    compiled: true
+    claims: 15
+    assets: 3
+    authoring_model: gpt-5.6-sol
+    reviewer_model: gpt-5.6-luna
+last_run:
+  datapoints: 4
+  cost_usd: 0.0
+  calls:
+    cached: 22
+    uncached: 0
+  tokens:
+    cached:
+      input_tokens: 432915
+      output_tokens: 20881
+    uncached:
+      input_tokens: 0
+      output_tokens: 0
+  mean_latency_s: null
+lifetime:
+  runs: 3
+  datapoints: 12
+  cost_usd: 3.31634
+  calls:
+    cached: 22
+    uncached: 32
+  tokens:
+    cached:
+      input_tokens: 432915
+      output_tokens: 20881
+    uncached:
+      input_tokens: 673057
+      output_tokens: 36174
+  mean_latency_s: 11.43038502841955
