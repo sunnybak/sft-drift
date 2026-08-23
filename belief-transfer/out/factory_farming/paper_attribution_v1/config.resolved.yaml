@@ -692,16 +692,19 @@ writeup:
   - matrix_md_2ep
   primary_reading: attrib_mix_v4
   trajectory_run: null
-  title: 'Installed Ground Truth for Training-Data Attribution: Filtering on Content-Keyed
-    Scores Removes None of the Effect'
+  title: 'Installed Ground Truth for Training-Data Attribution: Filtering on Gradient-Based
+    Attribution Scores Removes None of the Effect'
   authors: []
-  intended_claim: Causal potency in finetuning is carried by form -- a variable content-keyed
-    attribution holds fixed by construction -- so gradient-based attribution scores
-    carry no more information about measured causal effect than a word-count baseline,
-    and filtering a training corpus by them removes none of the effect being filtered
-    for, and at the narrower removal budget it removes less than none. Any claim carrying
-    a numeral must cite the evidence refs that numeral comes from; definitional and
-    framing statements must carry no numerals at all.
+  intended_claim: 'Causal potency in finetuning is carried by form, so content-matched
+    sources have divergent causal potency and recovering that divergence is the minimum
+    an attribution method must do. Filtering a training corpus by the gradient-based
+    attribution scores evaluated here removes no more of the effect being filtered
+    for than a word-count baseline does, and at the narrower removal budget it removes
+    less than none. The claim is about REMOVAL throughout: no clause may assert how
+    any method scores or ranks the two content-matched sources, which this evaluation
+    did not measure. Any claim carrying a numeral must cite the evidence refs that
+    numeral comes from; definitional and framing statements must carry no numerals
+    at all.'
   contribution_goals:
   - Define the attributable fraction as the share of an installed effect that disappears
     when a method's top-ranked documents are removed and the model retrained, over
@@ -711,26 +714,63 @@ writeup:
   - Show that removal by true measured effect removes roughly half the installed effect,
     establishing that the effect is removable and that a null result for other methods
     is interpretable.
-  - Show that in every declared cell each content-keyed method's AF interval OVERLAPS
-    the word-count baseline's AF interval for the same removal budget and seed. State
-    this overlap criterion explicitly wherever non-separation is asserted; it is the
-    pre-registered kill condition, and it is an interval-overlap statement, NOT a
-    pairwise significance test, because no pairwise contrast was computed. Show separately
-    that at the narrower removal budget both gradient methods are counterproductive,
-    with intervals excluding zero on the negative side.
-  - State the single-topic, single-model-family, two-seed scope. Declare gradient-based
+  - Show that in every declared cell each evaluated method's AF interval OVERLAPS
+    the word-count baseline's AF interval for the same removal budget and seed. Name
+    the evaluated methods (TracIn, TracIn-cosine, delta-predictability) wherever this
+    is asserted; never write it as a quantifier over content-keyed methods in general,
+    because AF was measured for these three only. State this overlap criterion explicitly
+    wherever non-separation is asserted; it is the pre-registered kill condition,
+    and it is an interval-overlap statement, NOT a pairwise significance test, because
+    no pairwise contrast was computed. Show separately that at the narrower removal
+    budget both gradient methods are counterproductive, with intervals excluding zero
+    on the negative side.
+  - 'State the single-topic, single-model-family, two-seed scope. Declare gradient-based
     attribution as the evaluated scope -- a non-empirical statement about what this
     evaluation covers, carrying no evidence refs and no numerals -- and do not generalise
     the verdict to retrieval or embedding methods. Never assert as an empirical finding
-    that some other method was not computed; say only what was evaluated.
+    that some other method was not computed; say only what was evaluated. The scope
+    statement is not optional cover for a general claim made elsewhere in the prose
+    -- a purpose-trained embedding retriever ranks this pool''s installed ladder nearly
+    perfectly on the same sources, so no sentence anywhere in the paper may assert
+    or imply that keying on content REQUIRES scoring content-matched, effect-divergent
+    sources alike. Do not replace that universal with a narrower version of the same
+    mechanism claim either: it is NOT established that the gradient scores evaluated
+    here score the two content-matched sources alike, and no claim about how any method
+    SCORES those two sources may be made. What is established is about REMOVAL, and
+    every mechanism sentence must be phrased as such.'
   - Report the delta-predictability cells as an unresolved seed contradiction rather
     than as a working repair.
-  - The abstract must OPEN with the premise that motivates the whole evaluation. Two
-    corpora asserting an identical premise specification, differing only in surface
+  - Assets, so the main text is not left empty by the rule above. Plan exactly one
+    main-text transfer table over a single suite summary from a single source run
+    whose per-arm detail the text relies on -- the short-answer belief run ms_arms
+    is the natural choice, since it carries the larger of the two installed effects
+    the abstract opens on -- plus the attributable-fraction figure, plus the declared-contrast
+    ladder table in the appendix.
+  - 'The abstract must OPEN with the premise that motivates the whole evaluation.
+    Two corpora asserting an identical premise specification, differing only in surface
     form, carry installed effects of different magnitude, so content-matched sources
-    have divergent causal potency and any method keying on content must score them
-    alike. State both installed effects. Only then introduce the attributable fraction
-    and its results.
+    have divergent causal potency and recovering that divergence is the minimum an
+    attribution method must do. State both installed effects. Do NOT write that any
+    method keying on content must, or would, score them alike -- that universal is
+    false by measured counterexample and may not appear -- and do NOT substitute a
+    narrower claim about how the evaluated scores rank these two sources, which was
+    not measured here. Move straight from the divergence to the question the paper
+    answers: whether removing a method''s top-ranked documents removes the effect.
+    Only then introduce the attributable fraction and its results.'
+  - 'Report the retrieval counterexample in the limitations, as a bound on the paper''s
+    own verdict rather than as a result about retrieval. A purpose-trained embedding
+    retriever, which never sees the trained model, ranks these six sources against
+    their installed effects far above the model-free length baseline at both polarities,
+    so the failure demonstrated here belongs to the scores that were evaluated for
+    removal and not to keying on content. State in the same place that ranking fidelity
+    is not removal efficacy: no attributable fraction was computed for that retriever,
+    and a declared method whose removal cells contradict each other across seeds shows
+    that a good ordering need not imply a working filter. Both retriever figures are
+    rank correlations over six sources, not attributable fractions, and may never
+    be presented as evidence that filtering by that retriever would work. Do not plan
+    a table or a figure for these four contrasts -- they are not a suite summary and
+    no renderable table exists for them; they belong in prose and in the declared-contrast
+    ladder table.'
   required_sections:
   - abstract
   - introduction
@@ -789,6 +829,61 @@ writeup:
     checkpoint: checkpoint-24
     qualification: Explicit-stance ceiling; token dose is lower than the evidence
       corpus.
+    required: true
+  - id: rank_e5_positive
+    label: 'Rank correlation with installed effect: embedding retriever, positive
+      polarity'
+    run_id: attrib_mix_v4
+    artifact: retrieval_summary.yaml
+    quantity: rho_e5_positive
+    positive_arm: null
+    negative_arm: null
+    control_positive_arm: null
+    control_negative_arm: null
+    checkpoint: ''
+    qualification: 'Spearman over 6 sources, not an attributable fraction; no removal
+      was run for this retriever. intfloat/e5-base-v2, chunked, score = max over chunks;
+      the mean-over-chunks variant gives +0.9429 at both polarities. Not length-confounded:
+      rho(score, words) is -0.18 to -0.29.'
+    required: true
+  - id: rank_e5_negative
+    label: 'Rank correlation with installed effect: embedding retriever, negative
+      polarity'
+    run_id: attrib_mix_v4
+    artifact: retrieval_summary.yaml
+    quantity: rho_e5_negative
+    positive_arm: null
+    negative_arm: null
+    control_positive_arm: null
+    control_negative_arm: null
+    checkpoint: ''
+    qualification: Same reading at the other polarity. A rank correlation over 6 sources;
+      ranking fidelity is not removal efficacy.
+    required: true
+  - id: rank_neg_length_positive
+    label: 'Rank correlation with installed effect: length baseline, positive polarity'
+    run_id: attrib_mix_v4
+    artifact: retrieval_summary.yaml
+    quantity: rho_neg_length_positive
+    positive_arm: null
+    negative_arm: null
+    control_positive_arm: null
+    control_negative_arm: null
+    checkpoint: ''
+    qualification: The model-free baseline the retriever is read against, from the
+      same bootstrap. Rank correlation only.
+    required: true
+  - id: rank_neg_length_negative
+    label: 'Rank correlation with installed effect: length baseline, negative polarity'
+    run_id: attrib_mix_v4
+    artifact: retrieval_summary.yaml
+    quantity: rho_neg_length_negative
+    positive_arm: null
+    negative_arm: null
+    control_positive_arm: null
+    control_negative_arm: null
+    checkpoint: ''
+    qualification: Baseline at the other polarity. Rank correlation only.
     required: true
   - id: pool_db_before_s42
     label: Pool effect before removal, seed 42 (dB_before)

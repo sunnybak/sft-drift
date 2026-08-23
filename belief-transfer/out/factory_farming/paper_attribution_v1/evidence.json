@@ -1,6 +1,83 @@
 {
   "asset_manifest": [
     {
+      "builder": "transfer_table",
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "id": "t1",
+      "kind": "table"
+    },
+    {
+      "builder": "af_figure",
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "id": "f1",
+      "kind": "figure"
+    },
+    {
       "builder": "ladder_table",
       "evidence_refs": [
         "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
@@ -16,6 +93,18 @@
         "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/1",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/1",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/1",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta",
         "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1",
@@ -61,18 +150,6 @@
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
@@ -84,50 +161,7 @@
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1"
-      ],
-      "id": "a_ladder",
-      "kind": "table"
-    },
-    {
-      "builder": "af_figure",
-      "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
@@ -139,31 +173,9 @@
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1"
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
       ],
-      "id": "a_af",
-      "kind": "figure"
-    },
-    {
-      "builder": "transfer_table",
-      "evidence_refs": [
-        "ms_arms:belief_summary.yaml:/delta_net/delta",
-        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "a_transfer_ms",
+      "id": "t2",
       "kind": "table"
     }
   ],
@@ -9123,6 +9135,190 @@
       "pointer": "/writeup/trajectory_run",
       "run_id": "attrib_mix_v4",
       "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/experiment": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/experiment",
+      "pointer": "/experiment",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/n_sources": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/n_sources",
+      "pointer": "/n_sources",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/note": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/note",
+      "pointer": "/note",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/quantity_kind": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/quantity_kind",
+      "pointer": "/quantity_kind",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/0",
+      "pointer": "/rho_e5_negative/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/1",
+      "pointer": "/rho_e5_negative/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/delta",
+      "pointer": "/rho_e5_negative/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/excludes_zero": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/excludes_zero",
+      "pointer": "/rho_e5_negative/excludes_zero",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/0",
+      "pointer": "/rho_e5_positive/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/1",
+      "pointer": "/rho_e5_positive/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/delta",
+      "pointer": "/rho_e5_positive/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/excludes_zero": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/excludes_zero",
+      "pointer": "/rho_e5_positive/excludes_zero",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/0",
+      "pointer": "/rho_neg_length_negative/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/1",
+      "pointer": "/rho_neg_length_negative/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/delta",
+      "pointer": "/rho_neg_length_negative/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/excludes_zero": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/excludes_zero",
+      "pointer": "/rho_neg_length_negative/excludes_zero",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/0",
+      "pointer": "/rho_neg_length_positive/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/1",
+      "pointer": "/rho_neg_length_positive/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/delta",
+      "pointer": "/rho_neg_length_positive/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/excludes_zero": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/excludes_zero",
+      "pointer": "/rho_neg_length_positive/excludes_zero",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/run_id": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/run_id",
+      "pointer": "/run_id",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/source_artifact": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/source_artifact",
+      "pointer": "/source_artifact",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/suite": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/suite",
+      "pointer": "/suite",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
     },
     "matrix_md_2ep:action_summary.yaml:/arms/base/ci95/0": {
       "artifact_path": "data/results/factory_farming/matrix_md_2ep/action_summary.yaml",
@@ -48343,7 +48539,7 @@
   },
   "experiment": "factory_farming",
   "figures": [],
-  "intended_claim": "Causal potency in finetuning is carried by form -- a variable content-keyed attribution holds fixed by construction -- so gradient-based attribution scores carry no more information about measured causal effect than a word-count baseline, and filtering a training corpus by them removes none of the effect being filtered for, and at the narrower removal budget it removes less than none. Any claim carrying a numeral must cite the evidence refs that numeral comes from; definitional and framing statements must carry no numerals at all.",
+  "intended_claim": "Causal potency in finetuning is carried by form, so content-matched sources have divergent causal potency and recovering that divergence is the minimum an attribution method must do. Filtering a training corpus by the gradient-based attribution scores evaluated here removes no more of the effect being filtered for than a word-count baseline does, and at the narrower removal budget it removes less than none. The claim is about REMOVAL throughout: no clause may assert how any method scores or ranks the two content-matched sources, which this evaluation did not measure. Any claim carrying a numeral must cite the evidence refs that numeral comes from; definitional and framing statements must carry no numerals at all.",
   "primary_reading": "attrib_mix_v4",
   "reviewer_model": "gpt-5.6-luna",
   "sources": {
@@ -48368,6 +48564,11 @@
           "filename": "config.resolved.yaml",
           "path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
           "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
+        },
+        {
+          "filename": "retrieval_summary.yaml",
+          "path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+          "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
         }
       ],
       "directory": "data/results/factory_farming/attrib_mix_v4",
@@ -50074,6 +50275,47 @@
           "run_id": "attrib_mix_v4",
           "schema_version": 1,
           "stage": "choice_bench"
+        },
+        "retrieval_summary.yaml": {
+          "experiment": "factory_farming",
+          "n_sources": 6,
+          "note": "Source-level Spearman rho against the per-source installed netted dB of the attrib_mix_v4 pool, over n=6 sources, with a 10k-draw bootstrap resampling documents within source. E5 = intfloat/e5-base-v2, chunked, score = max over chunks (the primary reading; the mean-over-chunks variant gives +0.9429 at both polarities). NEG-LENGTH is the model-free length baseline, taken from the same bootstrap in the BM25 run. RANKING quantities only -- no attributable fraction was computed for any retriever. Transposed from the recorded JSON without recomputation.",
+          "quantity_kind": "spearman_rho_vs_installed_ground_truth",
+          "rho_e5_negative": {
+            "ci95": [
+              0.8857142857142857,
+              0.9428571428571428
+            ],
+            "delta": 0.9428571428571428,
+            "excludes_zero": true
+          },
+          "rho_e5_positive": {
+            "ci95": [
+              0.8857142857142857,
+              0.9428571428571428
+            ],
+            "delta": 0.8857142857142857,
+            "excludes_zero": true
+          },
+          "rho_neg_length_negative": {
+            "ci95": [
+              0.14285714285714285,
+              0.6571428571428571
+            ],
+            "delta": 0.2571428571428571,
+            "excludes_zero": true
+          },
+          "rho_neg_length_positive": {
+            "ci95": [
+              0.14285714285714285,
+              0.42857142857142855
+            ],
+            "delta": 0.2571428571428571,
+            "excludes_zero": true
+          },
+          "run_id": "attrib_mix_v4",
+          "source_artifact": "h30_e5_summary.json, h30_retrieval_summary.json",
+          "suite": "retrieval_ranking"
         }
       }
     },

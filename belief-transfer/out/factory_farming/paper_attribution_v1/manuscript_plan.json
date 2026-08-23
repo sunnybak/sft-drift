@@ -2,26 +2,150 @@
   "assets": [
     {
       "axes_or_columns": [
-        "contrast family",
-        "method or corpus",
-        "removal budget",
-        "seed",
+        "arm",
+        "net belief-transfer estimate",
+        "95% interval",
+        "matched off-topic control status",
+        "run and checkpoint"
+      ],
+      "caption_outline": "Belief-transfer summary for the short-answer ms_arms run, whose corpus uses the same premise specification as the long-form corpus but a different surface form. Estimates use matched off-topic control netting for the recorded run and checkpoints.",
+      "claim_ids": [
+        "c1",
+        "c9"
+      ],
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+      ],
+      "form": "transfer_table",
+      "id": "t1",
+      "placement": "results",
+      "question": "What per-arm belief-transfer detail underlies the larger installed effect in the short-answer run?",
+      "takeaway": "The short-answer corpus carries the larger installed belief effect under matched-control netting.",
+      "transformation": "identity"
+    },
+    {
+      "axes_or_columns": [
+        "x: attributable fraction",
+        "y: removal method",
+        "panels: 10% and 20% removal budgets",
+        "markers: seeds 42 and 7",
+        "95% intervals",
+        "zero line: removes nothing"
+      ],
+      "caption_outline": "Attributable fraction by removal method and seed under full fine-tuning, with separate panels for the 10% and 20% dose-matched removal budgets and 95% intervals. The zero line denotes removal of none of the installed effect.",
+      "claim_ids": [
+        "c15",
+        "c16",
+        "c17",
+        "c18",
+        "c19",
+        "c20",
+        "c21",
+        "c22",
+        "c23",
+        "c24"
+      ],
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "form": "af_figure",
+      "id": "f1",
+      "placement": "results",
+      "question": "How much installed effect disappears under each declared removal method, budget, and seed?",
+      "takeaway": "Oracle removal establishes removability, while evaluated attribution methods do not separate from word count by the pre-registered interval-overlap criterion; narrow-budget gradient removals can be counterproductive and delta-predictability is seed-inconsistent.",
+      "transformation": "declared_contrast"
+    },
+    {
+      "axes_or_columns": [
+        "declared contrast family",
+        "run or instrument",
+        "method or source",
+        "budget",
+        "seed or polarity",
         "point estimate",
         "95% interval",
         "zero exclusion",
         "qualification"
       ],
-      "caption_outline": "Complete declared contrast ladder for installed effects, controls, and attributable fractions. Point estimates, 95% intervals where recorded, seed and budget conditions, and all recorded qualifications are shown; the explicit-stance positive control has no inferred interval.",
+      "caption_outline": "Complete ladder of every declared contrast, including installed effects, controls, attributable fractions, and six-source rank correlations with their recorded intervals and qualifications. Attributable fractions and rank correlations are distinct quantities, and the explicit-stance row is an unintervalled positive-control contrast.",
       "claim_ids": [
-        "c_premise",
-        "c_pool",
-        "c_machinery",
-        "c_oracle",
-        "c_overlap",
-        "c_tracin_p10",
-        "c_tracin_cos_p10_s42",
-        "c_delta_contradiction",
-        "c_stance"
+        "c1",
+        "c11",
+        "c12",
+        "c13",
+        "c14",
+        "c15",
+        "c16",
+        "c17",
+        "c18",
+        "c19",
+        "c20",
+        "c21",
+        "c22",
+        "c23",
+        "c24",
+        "c25"
       ],
       "evidence_refs": [
         "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
@@ -37,6 +161,18 @@
         "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/1",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/1",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/1",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta",
         "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1",
@@ -82,18 +218,6 @@
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
@@ -105,123 +229,26 @@
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1"
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
       ],
       "form": "ladder_table",
-      "id": "a_ladder",
+      "id": "t2",
       "placement": "appendix",
-      "question": "What is the full numerical record for every declared installed-effect, pool, control, and attributable-fraction contrast?",
-      "takeaway": "The complete contrast ladder separates the removable oracle ceiling from content-keyed methods that fail the interval-overlap kill condition, while preserving seed contradictions and single-seed qualifications.",
+      "question": "What are all declared contrasts, point estimates, intervals, and qualifications?",
+      "takeaway": "The complete contrast ladder separates installed-effect, control, attributable-fraction, and rank-correlation families while exposing their intervals and qualifications in one authoritative audit trail.",
       "transformation": "declared_contrast"
-    },
-    {
-      "axes_or_columns": [
-        "attribution method",
-        "attributable fraction",
-        "95% interval",
-        "removal-budget panel",
-        "seed marker",
-        "zero line"
-      ],
-      "caption_outline": "Attributable fraction by attribution method and seed, with separate panels for the 10% and 20% removal budgets under full fine-tuning. Points show declared estimates, bars show 95% intervals, and the zero line marks removal that eliminates none of the installed effect.",
-      "claim_ids": [
-        "c_oracle",
-        "c_overlap",
-        "c_tracin_p10",
-        "c_tracin_cos_p10_s42",
-        "c_delta_contradiction"
-      ],
-      "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1"
-      ],
-      "form": "af_figure",
-      "id": "a_af",
-      "placement": "results",
-      "question": "How do attributable fractions vary by method, removal budget, and seed, and which intervals cross zero or overlap the word-count baseline?",
-      "takeaway": "Oracle removal demonstrates substantial removability, whereas content-keyed methods do not separate from word count by the registered interval-overlap criterion and the narrow-budget gradient results are counterproductive or seed-unstable.",
-      "transformation": "declared_contrast"
-    },
-    {
-      "axes_or_columns": [
-        "arm",
-        "score",
-        "matched-control net contrast",
-        "95% interval"
-      ],
-      "caption_outline": "Belief-suite summary for the ms_arms short-answer run. The net estimate uses the matched off-topic control and is reported with its recorded 95% interval.",
-      "claim_ids": [
-        "c_premise"
-      ],
-      "evidence_refs": [
-        "ms_arms:belief_summary.yaml:/delta_net/delta",
-        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "form": "transfer_table",
-      "id": "a_transfer_ms",
-      "placement": "results",
-      "question": "What per-arm belief scores underlie the short-answer installed-effect run?",
-      "takeaway": "The short-answer corpus produces a clearly positive net installed effect despite sharing its premise specification with the much weaker long-article corpus.",
-      "transformation": "identity"
     }
   ],
   "claims": [
@@ -235,184 +262,171 @@
         "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
         "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
       ],
-      "id": "c_premise",
+      "id": "c1",
       "qualifiers": [
-        "Article estimate is a two-epoch reading with matched off-topic control retrained per seed.",
-        "Answer corpus has the identical premise specification; only surface form differs."
+        "The long-form estimate is a two-epoch reading with matched off-topic control retrained per seed.",
+        "The short-answer corpus has the identical premise specification; only surface form differs."
       ],
-      "text": "Two corpora asserting an identical premise specification but differing only in surface form installed effects of 0.0072 for approximately 740-word articles and 0.1574 for approximately 105-word answers, so content-matched sources can have divergent causal potency while a content-keyed method must score them alike."
+      "text": "Two corpora with an identical premise specification but different surface forms installed belief effects of +0.0072 for approximately 740-word articles and +0.1574 for approximately 105-word answers; recovering such divergent causal potency is the minimum attribution challenge."
     },
     {
       "empirical": false,
       "evidence_refs": [],
-      "id": "c_af_definition",
+      "id": "c2",
       "qualifiers": [
-        "The corpus has per-source causal effects installed and measured rather than estimated.",
-        "Do not render the defining ratio as a standalone claim."
+        "Gradient-based attribution is the evaluated scope.",
+        "No generalisation to retrieval or embedding methods."
       ],
-      "text": "Attributable fraction is defined in prose as the share of an installed effect that disappears after removing a method\u2019s top-ranked documents and retraining, using dose-matched removal and controls retrained per seed; fixed tables are authoritative for estimates and confidence intervals."
+      "text": "The evaluation asks whether removing an attribution method's top-ranked documents removes the installed effect."
     },
     {
       "empirical": false,
       "evidence_refs": [],
-      "id": "c_scope_eval",
+      "id": "c3",
       "qualifiers": [
-        "Treat the evaluation as exploratory."
+        "Define the ratio in prose, not as a standalone mathematical claim.",
+        "The corpus has per-source causal effects installed and measured rather than estimated."
       ],
-      "text": "The evaluation covers gradient-based attribution and does not extend its verdict to retrieval or embedding methods."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [
-        "attrib_mix_v4:config.resolved.yaml:/experiment/id",
-        "attrib_mix_v4:config.resolved.yaml:/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/training/model",
-        "attrib_mix_v4:config.resolved.yaml:/training/sft/seed",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/checkpoint",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/checkpoint",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/4/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/4/checkpoint",
-        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/checkpoint",
-        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/2/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/2/checkpoint",
-        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/checkpoint",
-        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/4/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/4/checkpoint"
-      ],
-      "id": "c_scope_checkpoint",
-      "qualifiers": [
-        "Seed-seven values are reported only within declared seed-paired attributable-fraction contrast families.",
-        "Blank run identifiers and unavailable absorption checkpoint-run identifiers are not asserted."
-      ],
-      "text": "The primary attributable-fraction reading is experiment factory_farming, run attrib_mix_v4, model qwen3-4b, training seed 42, with evaluated efficacy and transfer checkpoints checkpoint-23 for attrib_mix_v4 arms and checkpoint-24 for m0_multiform arms."
+      "text": "The attributable fraction is reported as the share of an installed effect that disappears after dose-matched removal of top-ranked documents and retraining, with controls retrained per seed."
     },
     {
       "empirical": false,
       "evidence_refs": [],
-      "id": "c_absorption_method",
+      "id": "c4",
+      "qualifiers": [
+        "Raw belief/action checkpoint figures are diagnostic and are not netted transfer estimates."
+      ],
+      "text": "The result is exploratory, and fixed tables rather than prose are authoritative for numerical estimates and confidence intervals."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "c5",
+      "qualifiers": [],
+      "text": "Two-seed replication applies only to declared seed-paired contrast families; single-seed and instrument-specific readings are identified separately."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "c6",
+      "qualifiers": [],
+      "text": "Belief and action contrasts use matched off-topic control netting, and no causal mediation is claimed."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "c7",
       "qualifiers": [],
       "text": "Absorption is held-out premise specialization, not a belief measure."
     },
     {
       "empirical": false,
-      "evidence_refs": [],
-      "id": "c_netting_method",
-      "qualifiers": [
-        "Raw belief and action checkpoint figures are diagnostic rather than netted transfer estimates."
+      "evidence_refs": [
+        "attrib_mix_v4:config.resolved.yaml:/experiment/id",
+        "attrib_mix_v4:config.resolved.yaml:/training/model",
+        "attrib_mix_v4:config.resolved.yaml:/training/sft/seed",
+        "attrib_mix_v4:config.resolved.yaml:/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/1/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/transfer/arms/3/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/run_id",
+        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/checkpoint"
       ],
-      "text": "Belief and action contrasts use matched off-topic control netting; no causal mediation claim is made."
+      "id": "c8",
+      "qualifiers": [
+        "Blank run-id fields are not asserted."
+      ],
+      "text": "The primary attributable-fraction run is experiment-id factory_farming, model qwen3-4b, seed 42, run attrib_mix_v4; its evaluated transfer/efficacy checkpoints are attrib_mix_v4 checkpoint-23 and m0_multiform checkpoint-24."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [
+        "ms_arms:config.resolved.yaml:/experiment/id",
+        "ms_arms:config.resolved.yaml:/training/model",
+        "ms_arms:config.resolved.yaml:/training/sft/seed",
+        "ms_arms:config.resolved.yaml:/run_id",
+        "ms_arms:config.resolved.yaml:/transfer/arms/1/run_id",
+        "ms_arms:config.resolved.yaml:/transfer/arms/1/checkpoint",
+        "ms_arms:config.resolved.yaml:/transfer/arms/3/run_id",
+        "ms_arms:config.resolved.yaml:/transfer/arms/3/checkpoint",
+        "ms_arms:config.resolved.yaml:/transfer/arms/5/run_id",
+        "ms_arms:config.resolved.yaml:/transfer/arms/5/checkpoint",
+        "ms_arms:config.resolved.yaml:/efficacy/arms/1/run_id",
+        "ms_arms:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+        "ms_arms:config.resolved.yaml:/efficacy/arms/3/run_id",
+        "ms_arms:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+        "ms_arms:config.resolved.yaml:/efficacy/arms/5/run_id",
+        "ms_arms:config.resolved.yaml:/efficacy/arms/5/checkpoint"
+      ],
+      "id": "c9",
+      "qualifiers": [
+        "Blank run-id fields are not asserted."
+      ],
+      "text": "The short-answer belief run is experiment-id factory_farming, model qwen3-4b, seed 42, run ms_arms; its evaluated transfer/efficacy checkpoints are ms_arms checkpoint-24, m0_multiform checkpoint-24, and explicit_stance_v3_arms checkpoint-24."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [
+        "matrix_v1_step24:config.resolved.yaml:/experiment/id",
+        "matrix_v1_step24:config.resolved.yaml:/training/model",
+        "matrix_v1_step24:config.resolved.yaml:/training/sft/seed",
+        "matrix_v1_step24:config.resolved.yaml:/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/1/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/1/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/3/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/3/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/5/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/absorption/arms/5/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/1/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/1/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/3/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/3/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/5/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/transfer/arms/5/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/1/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/1/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/3/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/3/checkpoint",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/5/run_id",
+        "matrix_v1_step24:config.resolved.yaml:/efficacy/arms/5/checkpoint"
+      ],
+      "id": "c10",
+      "qualifiers": [
+        "Blank run-id fields are not asserted."
+      ],
+      "text": "The long-form endpoint reading is experiment-id factory_farming, model qwen3-4b, seed 42, run matrix_v1_step24; its evaluated absorption, transfer, and efficacy checkpoints are multiformat_v2_valsplit_fixedq_d93 checkpoint-24, m0_multiform checkpoint-24, and explicit_stance_v3_arms checkpoint-24."
     },
     {
       "empirical": true,
       "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1"
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0",
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/1"
       ],
-      "id": "c_oracle",
+      "id": "c11",
       "qualifiers": [
-        "This is the positive-control ceiling.",
-        "The seed-seven spread from seed 42 is 0.10."
+        "Conclusion-stating corpus at matched dose."
       ],
-      "text": "At the 20% removal budget, oracle AF was 0.5172 in seed 42 and 0.6208 in seed 7, with both intervals excluding zero, showing that removal by separately measured per-source effect eliminated roughly half of the installed effect."
+      "text": "The installed effect for descriptive conclusions was +0.1106."
     },
     {
       "empirical": true,
       "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
+        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
       ],
-      "id": "c_overlap",
+      "id": "c12",
       "qualifiers": [
-        "This interval-overlap criterion is the pre-registered kill condition.",
-        "No pairwise contrast was computed; this is not a pairwise significance test."
+        "Explicit-stance ceiling; token dose is lower than the evidence corpus.",
+        "Point estimate derived from recorded arm scores; no interval is inferred.",
+        "This is a positive-control contrast, not general belief transfer."
       ],
-      "text": "In every declared cell, each content-keyed method\u2019s 95% AF interval overlaps the word-count baseline\u2019s 95% AF interval at the same removal budget and seed."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1"
-      ],
-      "id": "c_tracin_p10",
-      "qualifiers": [
-        "Two-seed replication applies to this declared seed-paired family."
-      ],
-      "text": "At the 10% budget, TracIn AF was -0.9130 in seed 42 and -0.4238 in seed 7, and both 95% intervals excluded zero on the negative side, meaning removal increased the installed effect."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1"
-      ],
-      "id": "c_tracin_cos_p10_s42",
-      "qualifiers": [
-        "This is the prescribed length-normalisation fix.",
-        "The seed-seven companion was -0.2043 and straddled zero, so counterproductivity is not two-seed replicated for this method."
-      ],
-      "text": "At the 10% budget, TracIn-cosine AF was -0.9503 in seed 42, with its 95% interval excluding zero on the negative side, meaning removal increased the installed effect in this single-seed reading."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1"
-      ],
-      "id": "c_delta_contradiction",
-      "qualifiers": [
-        "Report as an unresolved seed contradiction, not an average or a working repair."
-      ],
-      "text": "At the 10% budget, delta-predictability AF was -0.5767 in seed 42 with an interval excluding zero negatively, but 0.3424 in seed 7 with an interval excluding zero positively."
+      "text": "The recorded positive-control explicit-stance contrast was +0.3111."
     },
     {
       "empirical": true,
@@ -424,12 +438,12 @@
         "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1"
       ],
-      "id": "c_pool",
+      "id": "c13",
       "qualifiers": [
-        "These values are the AF denominators for their respective seeds.",
-        "Full fine-tuning; no LoRA-style halving."
+        "These are the denominators of the attributable fractions under full fine-tuning.",
+        "No LoRA-style halving."
       ],
-      "text": "Before removal, the pool effect was 0.0167 in seed 42 and 0.0247 in seed 7, with overlapping 95% intervals that excluded zero."
+      "text": "Before removal, the pool effect was +0.0167 at seed 42 and +0.0247 at seed 7, with overlapping intervals."
     },
     {
       "empirical": true,
@@ -438,431 +452,748 @@
         "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/1"
       ],
-      "id": "c_machinery",
+      "id": "c14",
       "qualifiers": [
-        "Single-seed, instrument-specific reading.",
+        "Single-seed reading.",
         "Full-fine-tuning control is cleaner than the LoRA control it replaces."
       ],
-      "text": "The seed-42 off-topic-control machinery estimate was -0.0004, with a 95% interval straddling zero."
+      "text": "The seed-42 off-topic control machinery estimate was -0.0004 and its interval straddled zero."
     },
     {
       "empirical": true,
       "evidence_refs": [
-        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
-        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
-        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
-        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1"
       ],
-      "id": "c_stance",
+      "id": "c15",
       "qualifiers": [
-        "Explicit-stance ceiling, not general belief transfer.",
-        "Token dose is lower than the evidence corpus.",
-        "Derived from recorded arm scores; no interval is inferred."
+        "Positive-control ceiling.",
+        "Establishes removability and makes null readings for evaluated methods interpretable."
       ],
-      "text": "The recorded positive-control explicit-stance contrast had a point estimate of 0.3111."
+      "text": "At the 20% removal budget, oracle removal by separately measured per-source effect removed roughly half the installed effect: AF +0.5172 at seed 42 and +0.6208 at seed 7."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1"
+      ],
+      "id": "c16",
+      "qualifiers": [
+        "The point estimates are below the 20% cells, but wide intervals do not establish an ordering.",
+        "Never characterize this as a demonstrated sublinear response."
+      ],
+      "text": "At the 10% budget, oracle AF was -0.1048 at seed 42 and +0.3005 at seed 7, and both intervals straddled zero."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1"
+      ],
+      "id": "c17",
+      "qualifiers": [
+        "Removing top-ranked documents increased the effect."
+      ],
+      "text": "At the 10% budget, TracIn was counterproductive in both seeds: AF -0.9130 at seed 42 and -0.4238 at seed 7, with both intervals excluding zero on the negative side."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1"
+      ],
+      "id": "c18",
+      "qualifiers": [
+        "The counterproductive reading is single-seed for this method.",
+        "TracIn-cosine is the prescribed length-normalisation fix."
+      ],
+      "text": "At the 10% budget, TracIn-cosine AF was -0.9503 at seed 42 with its interval excluding zero on the negative side, but -0.2043 at seed 7 with an interval straddling zero."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1"
+      ],
+      "id": "c19",
+      "qualifiers": [],
+      "text": "At the 20% budget, TracIn AF was -0.4687 at seed 42 and +0.1689 at seed 7, with both intervals straddling zero."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1"
+      ],
+      "id": "c20",
+      "qualifiers": [],
+      "text": "At the 20% budget, TracIn-cosine AF was -0.0528 at seed 42 and +0.2168 at seed 7, with both intervals straddling zero."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1"
+      ],
+      "id": "c21",
+      "qualifiers": [
+        "Report as a contradiction, not an average and not a working repair."
+      ],
+      "text": "At the 10% budget, delta-predictability produced an unresolved seed contradiction: AF -0.5767 at seed 42 with a wholly negative interval, versus +0.3424 at seed 7 with a wholly positive interval."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1"
+      ],
+      "id": "c22",
+      "qualifiers": [
+        "The wider budget does not resolve the seed contradiction at 10%."
+      ],
+      "text": "At the 20% budget, delta-predictability AF was +0.1284 at seed 42 and +0.2396 at seed 7, with both intervals straddling zero."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "id": "c23",
+      "qualifiers": [
+        "This interval-overlap criterion is the pre-registered kill condition.",
+        "This is not a pairwise significance test; no pairwise contrast was computed."
+      ],
+      "text": "In every declared budget-by-seed cell, each of TracIn, TracIn-cosine, and delta-predictability had an AF interval overlapping the word-count baseline interval for the same removal budget and seed."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "id": "c24",
+      "qualifiers": [
+        "Model-free baseline.",
+        "All four intervals straddle zero."
+      ],
+      "text": "The word-count baseline AFs were -0.4891 and -0.1395 at the 10% budget for seeds 42 and 7, and -0.3019 and +0.1163 at the 20% budget for seeds 42 and 7."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/1",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/1",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/1",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/1"
+      ],
+      "id": "c25",
+      "qualifiers": [
+        "Rank correlations over six sources, not attributable fractions.",
+        "intfloat/e5-base-v2, chunked, score equals maximum over chunks; mean over chunks gives +0.9429 at both polarities.",
+        "Not length-confounded: rho(score, words) is -0.18 to -0.29.",
+        "The retriever never sees the trained model."
+      ],
+      "text": "A purpose-trained embedding retriever ranked the six sources against installed effects with Spearman correlations +0.8857 at positive polarity and +0.9429 at negative polarity, versus +0.2571 for the model-free length baseline at each polarity."
     },
     {
       "empirical": false,
       "evidence_refs": [],
-      "id": "c_limit",
+      "id": "c26",
       "qualifiers": [
-        "Do not describe the evidence bundle as uniformly two-seed.",
-        "Do not generalize to retrieval or embedding methods."
+        "No attributable fraction was computed for the retriever.",
+        "Ranking fidelity is not removal efficacy.",
+        "Delta-predictability's seed contradiction shows that a good ordering need not imply a working filter.",
+        "No claim is made about how any evaluated method scores the two content-matched sources."
       ],
-      "text": "The verdict is exploratory and limited to one topic, one model family, and declared seed-paired contrast families; single-seed and instrument-specific readings remain separately labeled."
+      "text": "The retrieval ranking result bounds the paper's verdict to the attribution scores evaluated for removal rather than content keying generally."
     }
   ],
   "rejected_assets": [],
   "sections": [
     {
       "claim_ids": [
-        "c_premise",
-        "c_af_definition",
-        "c_oracle",
-        "c_overlap",
-        "c_tracin_p10",
-        "c_tracin_cos_p10_s42",
-        "c_delta_contradiction",
-        "c_limit"
+        "c1",
+        "c2",
+        "c3",
+        "c15",
+        "c23",
+        "c17",
+        "c18",
+        "c21"
       ],
       "floats": [],
       "id": "abstract",
       "paragraphs": [
         {
           "claim_ids": [
-            "c_premise",
-            "c_af_definition"
+            "c1",
+            "c2",
+            "c3"
           ],
-          "id": "abstract_premise_method",
+          "id": "abstract-p1",
           "qualifiers": [
-            "Article estimate is a two-epoch reading with matched off-topic control retrained per seed.",
-            "Answer corpus has the identical premise specification; only surface form differs.",
-            "The corpus has per-source causal effects installed and measured rather than estimated.",
-            "Do not render the defining ratio as a standalone claim."
+            "The long-form estimate is a two-epoch reading with matched off-topic control retrained per seed.",
+            "The short-answer corpus has the identical premise specification; only surface form differs.",
+            "Gradient-based attribution is the evaluated scope.",
+            "No generalisation to retrieval or embedding methods.",
+            "Define the ratio in prose, not as a standalone mathematical claim.",
+            "The corpus has per-source causal effects installed and measured rather than estimated."
           ],
-          "text": "Two corpora asserting an identical premise specification but differing only in surface form installed effects of 0.0072 for approximately 740-word articles and 0.1574 for approximately 105-word answers, although a content-keyed method must score these causally divergent, content-matched sources alike. The article estimate is a two-epoch reading with matched off-topic control retrained per seed; the answer corpus has the identical premise specification, with only surface form differing. We measured attributable fraction as the share of an installed, per-source measured effect that disappeared after dose-matched removal of top-ranked documents and retraining, with controls retrained per seed and fixed tables authoritative for estimates and confidence intervals."
+          "text": "Two corpora with an identical premise specification but different surface forms installed sharply divergent belief effects: +0.0072 for approximately 740-word articles versus +0.1574 for approximately 105-word answers, defining the minimum attribution challenge. The long-form estimate is a two-epoch reading with matched off-topic control retrained per seed; only surface form differs in the short-answer corpus. We evaluate gradient-based attribution, without generalising to retrieval or embedding methods, by removing top-ranked documents and retraining. The attributable fraction is the share of a per-source causal effect installed and measured in the corpus that disappears after dose-matched removal, with controls retrained per seed."
         },
         {
           "claim_ids": [
-            "c_overlap",
-            "c_oracle"
+            "c23",
+            "c15",
+            "c17"
           ],
-          "id": "abstract_headline",
+          "id": "abstract-p2",
           "qualifiers": [
             "This interval-overlap criterion is the pre-registered kill condition.",
-            "No pairwise contrast was computed; this is not a pairwise significance test.",
-            "This is the positive-control ceiling.",
-            "The seed-seven spread from seed 42 is 0.10."
+            "This is not a pairwise significance test; no pairwise contrast was computed.",
+            "Positive-control ceiling.",
+            "Establishes removability and makes null readings for evaluated methods interpretable.",
+            "Removing top-ranked documents increased the effect."
           ],
-          "text": "In every declared budget-and-seed cell, each content-keyed method\u2019s 95% AF interval overlapped the word-count baseline\u2019s interval, meeting the pre-registered kill condition; no pairwise contrast was computed, so this is not a pairwise significance test. By contrast, the positive-control oracle at the 20% budget achieved AFs of 0.5172 and 0.6208, with both intervals excluding zero, eliminating roughly half the installed effect; this was the positive-control ceiling, with a seed-seven spread from seed 42 of 0.10."
-        },
-        {
-          "claim_ids": [
-            "c_limit"
-          ],
-          "id": "abstract_limit",
-          "qualifiers": [
-            "Do not describe the evidence bundle as uniformly two-seed.",
-            "Do not generalize to retrieval or embedding methods."
-          ],
-          "text": "The verdict is exploratory and limited to one topic, one model family, and declared seed-paired contrast families rather than a uniformly two-seed evidence bundle; single-seed and instrument-specific readings remain separately labeled, and the result does not generalize to retrieval or embedding methods."
+          "text": "The headline result is failure to outperform a model-free length baseline: in every declared budget-by-seed cell, TracIn, TracIn-cosine, and delta-predictability each had an attributable-fraction interval overlapping the corresponding word-count interval under the pre-registered kill condition. This interval-overlap criterion is not a pairwise significance test, and no pairwise contrast was computed. Removability was established by the positive-control ceiling: at the 20% budget, oracle removal by separately measured per-source effect removed roughly half the installed effect, with AF +0.5172 at seed 42 and +0.6208 at seed 7, making null readings for the evaluated methods interpretable. At the 10% budget, TracIn was counterproductive in both seeds\u2014AF -0.9130 and -0.4238\u2014with both intervals wholly negative, so removing top-ranked documents increased the effect."
         }
       ],
       "title": "Abstract"
     },
     {
       "claim_ids": [
-        "c_premise",
-        "c_af_definition",
-        "c_scope_eval"
+        "c1",
+        "c2",
+        "c11",
+        "c12"
       ],
       "floats": [],
       "id": "introduction",
       "paragraphs": [
         {
           "claim_ids": [
-            "c_premise"
+            "c1"
           ],
-          "id": "introduction_motivation",
+          "id": "introduction-p1",
           "qualifiers": [
-            "Article estimate is a two-epoch reading with matched off-topic control retrained per seed.",
-            "Answer corpus has the identical premise specification; only surface form differs."
+            "The long-form estimate is a two-epoch reading with matched off-topic control retrained per seed.",
+            "The short-answer corpus has the identical premise specification; only surface form differs."
           ],
-          "text": "Content agreement need not imply causal equivalence. Two corpora asserting the same premise specification but differing only in surface form had sharply divergent causal potency, although a content-keyed method would score their content-matched sources alike. The article reading used two epochs with a matched off-topic control retrained per seed, while the answer corpus retained the identical premise specification and changed only its surface form."
+          "text": "Attribution of training-induced belief change is difficult even when source content is held constant. Corpora sharing an identical premise specification but differing only in surface form installed sharply divergent causal potency when expressed as long-form articles or short answers. The long-form estimate is a two-epoch reading with matched off-topic control retrained per seed, and recovering this divergence is the minimum attribution challenge."
         },
         {
           "claim_ids": [
-            "c_af_definition"
+            "c11",
+            "c12"
           ],
-          "id": "introduction_measure",
+          "id": "introduction-p2",
           "qualifiers": [
-            "The corpus has per-source causal effects installed and measured rather than estimated.",
-            "Do not render the defining ratio as a standalone claim."
+            "Conclusion-stating corpus at matched dose.",
+            "Explicit-stance ceiling; token dose is lower than the evidence corpus.",
+            "Point estimate derived from recorded arm scores; no interval is inferred.",
+            "This is a positive-control contrast, not general belief transfer."
           ],
-          "text": "This tension motivates evaluating attribution against known causal effects rather than content similarity alone. Attributable fraction denotes the share of an installed effect that disappears after dose-matched removal of a method\u2019s top-ranked documents and retraining, with controls retrained per seed. Because per-source causal effects were installed and measured rather than estimated, the measure tests recovery of known effects; fixed tables remain authoritative for estimates and confidence intervals."
+          "text": "This challenge spans a broader ladder of source directness: a conclusion-stating corpus at matched dose installed a moderate effect, while an explicit-stance positive-control contrast provided a higher ceiling despite using a lower token dose than the evidence corpus. The explicit-stance point estimate is derived from recorded arm scores without an inferred interval and represents a positive-control contrast rather than general belief transfer."
         },
         {
           "claim_ids": [
-            "c_scope_eval"
+            "c2"
           ],
-          "id": "introduction_scope",
+          "id": "introduction-p3",
           "qualifiers": [
-            "Treat the evaluation as exploratory."
+            "Gradient-based attribution is the evaluated scope.",
+            "No generalisation to retrieval or embedding methods."
           ],
-          "text": "The resulting evaluation is exploratory and concerns gradient-based attribution only; its verdict does not extend to retrieval or embedding methods."
+          "text": "The evaluation therefore asks whether gradient-based attribution can identify documents whose removal eliminates the installed effect: top-ranked documents are removed and the model is retrained. Its scope is limited to gradient-based attribution and does not generalise to retrieval or embedding methods."
         }
       ],
       "title": "Introduction"
     },
     {
       "claim_ids": [
-        "c_af_definition",
-        "c_scope_checkpoint",
-        "c_absorption_method",
-        "c_netting_method",
-        "c_scope_eval"
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8",
+        "c9",
+        "c10"
       ],
       "floats": [],
       "id": "methods",
       "paragraphs": [
         {
           "claim_ids": [
-            "c_scope_eval",
-            "c_scope_checkpoint"
+            "c3",
+            "c4",
+            "c8"
           ],
-          "id": "methods_scope",
+          "id": "methods-p1",
           "qualifiers": [
-            "Treat the evaluation as exploratory.",
-            "Seed-seven values are reported only within declared seed-paired attributable-fraction contrast families.",
-            "Blank run identifiers and unavailable absorption checkpoint-run identifiers are not asserted."
-          ],
-          "text": "The exploratory evaluation covered gradient-based attribution and did not extend its verdict to retrieval or embedding methods. The primary attributable-fraction reading used the factory_farming experiment, attrib_mix_v4 run, qwen3-4b model, and training seed 42; efficacy and transfer evaluations used checkpoint-23 for attrib_mix_v4 arms and checkpoint-24 for m0_multiform arms. Seed-seven values were reported only within declared seed-paired attributable-fraction contrast families, while blank run identifiers and unavailable absorption checkpoint-run identifiers were not asserted."
-        },
-        {
-          "claim_ids": [
-            "c_absorption_method",
-            "c_af_definition"
-          ],
-          "id": "methods_metrics",
-          "qualifiers": [
+            "Define the ratio in prose, not as a standalone mathematical claim.",
             "The corpus has per-source causal effects installed and measured rather than estimated.",
-            "Do not render the defining ratio as a standalone claim."
+            "Raw belief/action checkpoint figures are diagnostic and are not netted transfer estimates.",
+            "Blank run-id fields are not asserted."
           ],
-          "text": "Absorption was operationalized as held-out premise specialization rather than as a belief measure. Attributable fraction was defined as the share of an installed effect that disappeared after removing a method\u2019s top-ranked documents and retraining, with dose-matched removal and controls retrained per seed. Because the corpus had per-source causal effects installed and measured rather than estimated, this quantity assessed recovery of known installed effects; fixed tables remained authoritative for estimates and confidence intervals."
+          "text": "The exploratory factory_farming study used qwen3-4b with seed 42. The primary attributable-fraction run, attrib_mix_v4, evaluated attrib_mix_v4 checkpoint-23 and m0_multiform checkpoint-24 for transfer and efficacy. The attributable fraction was the share of a per-source causal effect installed and measured in the corpus that disappeared after dose-matched removal of top-ranked documents and retraining, with controls retrained per seed. Blank run-id fields were not asserted."
         },
         {
           "claim_ids": [
-            "c_netting_method"
+            "c9",
+            "c10"
           ],
-          "id": "methods_transfer",
+          "id": "methods-p2",
           "qualifiers": [
-            "Raw belief and action checkpoint figures are diagnostic rather than netted transfer estimates."
+            "Blank run-id fields are not asserted."
           ],
-          "text": "Belief and action contrasts used matched off-topic control netting, without a causal mediation interpretation. Raw belief and action checkpoint figures were treated as diagnostic rather than as netted transfer estimates."
+          "text": "The short-answer belief run, ms_arms, used the same experiment, model, and seed and evaluated ms_arms checkpoint-24, m0_multiform checkpoint-24, and explicit_stance_v3_arms checkpoint-24 for transfer and efficacy. The long-form endpoint run, matrix_v1_step24, likewise used the same experiment, model, and seed and evaluated multiformat_v2_valsplit_fixedq_d93 checkpoint-24, m0_multiform checkpoint-24, and explicit_stance_v3_arms checkpoint-24 for absorption, transfer, and efficacy. Blank run-id fields were not asserted."
+        },
+        {
+          "claim_ids": [
+            "c4",
+            "c5",
+            "c6",
+            "c7"
+          ],
+          "id": "methods-p3",
+          "qualifiers": [
+            "Raw belief/action checkpoint figures are diagnostic and are not netted transfer estimates."
+          ],
+          "text": "Two-seed replication applied only to declared seed-paired contrast families; single-seed and instrument-specific readings were identified separately. Belief and action contrasts used matched off-topic control netting, without a claim of causal mediation, and raw belief/action checkpoint figures were treated as diagnostic rather than as netted transfer estimates. Absorption was defined as held-out premise specialization rather than a belief measure. Fixed tables, rather than prose, were authoritative for numerical estimates and confidence intervals."
         }
       ],
       "title": "Methods"
     },
     {
       "claim_ids": [
-        "c_pool",
-        "c_machinery",
-        "c_oracle",
-        "c_overlap",
-        "c_tracin_p10",
-        "c_tracin_cos_p10_s42",
-        "c_delta_contradiction",
-        "c_stance"
+        "c13",
+        "c14",
+        "c15",
+        "c16",
+        "c17",
+        "c18",
+        "c19",
+        "c20",
+        "c21",
+        "c22",
+        "c23",
+        "c24"
       ],
       "floats": [
         {
-          "after_paragraph_id": "results_overlap",
+          "after_paragraph_id": "results-p6",
           "appendix": false,
-          "asset_id": "a_af"
+          "asset_id": "t1"
         },
         {
-          "after_paragraph_id": "results_overlap",
+          "after_paragraph_id": "results-p6",
           "appendix": false,
-          "asset_id": "a_transfer_ms"
-        },
-        {
-          "after_paragraph_id": "results_overlap",
-          "appendix": true,
-          "asset_id": "a_ladder"
+          "asset_id": "f1"
         }
       ],
       "id": "results",
       "paragraphs": [
         {
           "claim_ids": [
-            "c_pool",
-            "c_machinery"
+            "c13",
+            "c14"
           ],
-          "id": "results_controls",
+          "id": "results-p1",
           "qualifiers": [
-            "These values are the AF denominators for their respective seeds.",
-            "Full fine-tuning; no LoRA-style halving.",
-            "Single-seed, instrument-specific reading.",
+            "These are the denominators of the attributable fractions under full fine-tuning.",
+            "No LoRA-style halving.",
+            "Single-seed reading.",
             "Full-fine-tuning control is cleaner than the LoRA control it replaces."
           ],
-          "text": "Before removal under full fine-tuning, the pool effect was 0.0167 in seed 42 and 0.0247 in seed 7; the overlapping 95% intervals excluded zero, and these values served as the respective AF denominators without LoRA-style halving. The seed-42 off-topic-control machinery estimate was -0.0004, with a 95% interval straddling zero; this was a single-seed, instrument-specific reading, and the full-fine-tuning control was cleaner than the LoRA control it replaced."
+          "text": "Under full fine-tuning, the pre-removal pool effects that formed the attributable-fraction denominators were +0.0167 at seed 42 and +0.0247 at seed 7, with overlapping intervals and no LoRA-style halving. In the cleaner full-fine-tuning off-topic control, the single-seed machinery estimate was -0.0004 at seed 42, and its interval straddled zero."
         },
         {
           "claim_ids": [
-            "c_oracle",
-            "c_stance"
+            "c15",
+            "c16"
           ],
-          "id": "results_positive_controls",
+          "id": "results-p2",
           "qualifiers": [
-            "This is the positive-control ceiling.",
-            "The seed-seven spread from seed 42 is 0.10.",
-            "Explicit-stance ceiling, not general belief transfer.",
-            "Token dose is lower than the evidence corpus.",
-            "Derived from recorded arm scores; no interval is inferred."
+            "Positive-control ceiling.",
+            "Establishes removability and makes null readings for evaluated methods interpretable.",
+            "The point estimates are below the 20% cells, but wide intervals do not establish an ordering.",
+            "Never characterize this as a demonstrated sublinear response."
           ],
-          "text": "At the 20% removal budget, the positive-control ceiling from oracle AF was 0.5172 in seed 42 and 0.6208 in seed 7, with both intervals excluding zero, showing that removal by separately measured per-source effect eliminated roughly half of the installed effect; the seed-seven spread from seed 42 was 0.10. The explicit-stance positive-control ceiling had a point estimate of 0.3111, derived from recorded arm scores without an inferred interval; it did not establish general belief transfer, and its token dose was lower than that of the evidence corpus."
+          "text": "The positive-control ceiling established removability: at the 20% removal budget, oracle removal by separately measured per-source effect removed roughly half the installed effect, with AF +0.5172 at seed 42 and +0.6208 at seed 7, making null readings for the evaluated methods interpretable. At the 10% budget, oracle AF was -0.1048 at seed 42 and +0.3005 at seed 7, and both intervals straddled zero. Although these point estimates were below the 20% cells, the wide intervals did not establish an ordering or a sublinear response."
         },
         {
           "claim_ids": [
-            "c_tracin_p10",
-            "c_tracin_cos_p10_s42"
+            "c17",
+            "c18"
           ],
-          "id": "results_tracin",
+          "id": "results-p3",
           "qualifiers": [
-            "Two-seed replication applies to this declared seed-paired family.",
-            "This is the prescribed length-normalisation fix.",
-            "The seed-seven companion was -0.2043 and straddled zero, so counterproductivity is not two-seed replicated for this method."
+            "Removing top-ranked documents increased the effect.",
+            "The counterproductive reading is single-seed for this method.",
+            "TracIn-cosine is the prescribed length-normalisation fix."
           ],
-          "text": "At the 10% budget, TracIn AF was -0.9130 in seed 42 and -0.4238 in seed 7, and both 95% intervals excluded zero on the negative side, providing two-seed replication within this declared seed-paired family that removal increased the installed effect. The prescribed length-normalisation fix, TracIn-cosine, had an AF of -0.9503 in seed 42, with its 95% interval excluding zero negatively, so removal increased the installed effect in this single-seed reading; its seed-seven companion straddled zero, and counterproductivity was therefore not replicated across both seeds for this method."
+          "text": "At the 10% budget, TracIn was counterproductive in both seeds: AF -0.9130 at seed 42 and -0.4238 at seed 7, with both intervals excluding zero on the negative side, indicating that removing top-ranked documents increased the effect. TracIn-cosine, the prescribed length-normalisation fix, yielded AF -0.9503 at seed 42 with a wholly negative interval, but AF -0.2043 at seed 7 with an interval straddling zero; thus, its counterproductive reading was single-seed."
         },
         {
           "claim_ids": [
-            "c_delta_contradiction"
+            "c19",
+            "c20"
           ],
-          "id": "results_delta",
+          "id": "results-p4",
+          "qualifiers": [],
+          "text": "At the 20% budget, TracIn AF was -0.4687 at seed 42 and +0.1689 at seed 7, while TracIn-cosine AF was -0.0528 at seed 42 and +0.2168 at seed 7; all corresponding intervals straddled zero."
+        },
+        {
+          "claim_ids": [
+            "c21",
+            "c22"
+          ],
+          "id": "results-p5",
           "qualifiers": [
-            "Report as an unresolved seed contradiction, not an average or a working repair."
+            "Report as a contradiction, not an average and not a working repair.",
+            "The wider budget does not resolve the seed contradiction at 10%."
           ],
-          "text": "At the 10% budget, delta-predictability AF was -0.5767 in seed 42, with an interval excluding zero negatively, but 0.3424 in seed 7, with an interval excluding zero positively. This remained an unresolved seed contradiction rather than an average or a working repair."
+          "text": "At the 10% budget, delta-predictability produced an unresolved seed contradiction rather than an average or a working repair: AF -0.5767 at seed 42 with a wholly negative interval versus +0.3424 at seed 7 with a wholly positive interval. At the 20% budget, AF was +0.1284 at seed 42 and +0.2396 at seed 7, with both intervals straddling zero, so the wider budget did not resolve the 10% seed contradiction."
         },
         {
           "claim_ids": [
-            "c_overlap"
+            "c23",
+            "c24"
           ],
-          "id": "results_overlap",
+          "id": "results-p6",
           "qualifiers": [
             "This interval-overlap criterion is the pre-registered kill condition.",
-            "No pairwise contrast was computed; this is not a pairwise significance test."
+            "This is not a pairwise significance test; no pairwise contrast was computed.",
+            "Model-free baseline.",
+            "All four intervals straddle zero."
           ],
-          "text": "In every declared cell, each content-keyed method\u2019s 95% AF interval overlapped the word-count baseline\u2019s 95% AF interval at the same removal budget and seed. This interval-overlap criterion was the pre-registered kill condition; because no pairwise contrast was computed, the result was not a pairwise significance test."
+          "text": "The model-free word-count baseline yielded AF -0.4891 and -0.1395 at the 10% budget for seeds 42 and 7, respectively, and -0.3019 and +0.1163 at the 20% budget; all four intervals straddled zero. In every declared budget-by-seed cell, the AF intervals for TracIn, TracIn-cosine, and delta-predictability each overlapped the corresponding word-count baseline interval. This pre-registered kill condition was based on interval overlap, not a pairwise significance test, and no pairwise contrast was computed."
         }
       ],
       "title": "Results"
     },
     {
       "claim_ids": [
-        "c_oracle",
-        "c_overlap",
-        "c_tracin_p10",
-        "c_tracin_cos_p10_s42",
-        "c_delta_contradiction",
-        "c_scope_eval"
+        "c15",
+        "c17",
+        "c18",
+        "c21",
+        "c23",
+        "c26"
       ],
       "floats": [],
       "id": "discussion",
       "paragraphs": [
         {
           "claim_ids": [
-            "c_oracle",
-            "c_tracin_p10",
-            "c_tracin_cos_p10_s42"
+            "c15"
           ],
-          "id": "discussion_main",
+          "id": "discussion-p1",
           "qualifiers": [
-            "This is the positive-control ceiling.",
-            "The seed-seven spread from seed 42 is 0.10.",
-            "Two-seed replication applies to this declared seed-paired family.",
-            "This is the prescribed length-normalisation fix.",
-            "The seed-seven companion was -0.2043 and straddled zero, so counterproductivity is not two-seed replicated for this method."
+            "Positive-control ceiling.",
+            "Establishes removability and makes null readings for evaluated methods interpretable."
           ],
-          "text": "The positive-control ceiling shows that targeted removal can recover a substantial share of an installed effect: ranking sources by separately measured per-source effect eliminated roughly half of that effect, with a seed-seven spread from seed 42 of 0.10. Against this ceiling, TracIn was counterproductive across the declared two-seed family at the narrower budget, because removing its top-ranked sources increased rather than reduced the installed effect. The prescribed length-normalisation fix did not establish a robust correction: TracIn-cosine was likewise counterproductive in one seed, whereas its seed-seven companion straddled zero, so this reading was not replicated across both seeds."
+          "text": "The positive-control ceiling shows that the installed effect was removable: removal by separately measured per-source effect eliminated roughly half of it. This makes null or adverse readings for the evaluated methods interpretable rather than attributable to an intrinsically non-removable endpoint."
         },
         {
           "claim_ids": [
-            "c_delta_contradiction",
-            "c_overlap"
+            "c17",
+            "c18"
           ],
-          "id": "discussion_delta_overlap",
+          "id": "discussion-p2",
           "qualifiers": [
-            "Report as an unresolved seed contradiction, not an average or a working repair.",
+            "Removing top-ranked documents increased the effect.",
+            "The counterproductive reading is single-seed for this method.",
+            "TracIn-cosine is the prescribed length-normalisation fix."
+          ],
+          "text": "Against that ceiling, TracIn was counterproductive at the narrower budget in both seeds, because removing its top-ranked documents increased rather than reduced the effect. The prescribed length-normalisation fix, TracIn-cosine, did not provide a stable remedy: its counterproductive reading appeared in only one seed, while the other seed remained compatible with no effect."
+        },
+        {
+          "claim_ids": [
+            "c21"
+          ],
+          "id": "discussion-p3",
+          "qualifiers": [
+            "Report as a contradiction, not an average and not a working repair."
+          ],
+          "text": "Delta-predictability likewise cannot be treated as a working repair. The two seeds excluded zero in opposite directions, leaving an unresolved contradiction rather than an effect that can be meaningfully averaged."
+        },
+        {
+          "claim_ids": [
+            "c23"
+          ],
+          "id": "discussion-p4",
+          "qualifiers": [
             "This interval-overlap criterion is the pre-registered kill condition.",
-            "No pairwise contrast was computed; this is not a pairwise significance test."
+            "This is not a pairwise significance test; no pairwise contrast was computed."
           ],
-          "text": "Delta-predictability also failed to provide a stable repair: the two seeds excluded zero in opposite directions, leaving an unresolved seed contradiction rather than a result that can be averaged into a working method. More broadly, every content-keyed method\u2019s AF interval overlapped the word-count baseline interval within the corresponding budget and seed cell. Because this interval-overlap criterion was the pre-registered kill condition, the content-keyed approaches did not separate from the model-free baseline under the declared criterion; no pairwise contrast was computed, so this conclusion is not a pairwise significance test."
+          "text": "More broadly, none of the evaluated attribution scores separated from the model-free word-count baseline under the pre-registered kill condition: in every declared budget-by-seed cell, each method\u2019s interval overlapped the corresponding baseline interval. This criterion concerns interval overlap only; it is not a pairwise significance test, and no pairwise contrast was computed."
         },
         {
           "claim_ids": [
-            "c_scope_eval"
+            "c26"
           ],
-          "id": "discussion_scope",
+          "id": "discussion-p5",
           "qualifiers": [
-            "Treat the evaluation as exploratory."
+            "No attributable fraction was computed for the retriever.",
+            "Ranking fidelity is not removal efficacy.",
+            "Delta-predictability's seed contradiction shows that a good ordering need not imply a working filter.",
+            "No claim is made about how any evaluated method scores the two content-matched sources."
           ],
-          "text": "These findings support only an exploratory verdict on gradient-based attribution. They do not extend to retrieval or embedding methods, whose behavior was outside the evaluation scope."
+          "text": "The resulting verdict is therefore bounded to the attribution scores evaluated for removal, not to content keying generally. No attributable fraction was computed for the retriever, and ranking fidelity is not removal efficacy; delta-predictability\u2019s seed contradiction further shows that a good ordering need not yield a working filter. The evidence also supports no claim about how any evaluated method scores the two content-matched sources."
         }
       ],
       "title": "Discussion"
     },
     {
       "claim_ids": [
-        "c_limit",
-        "c_scope_checkpoint",
-        "c_absorption_method",
-        "c_netting_method"
+        "c4",
+        "c5",
+        "c25",
+        "c26"
       ],
       "floats": [],
       "id": "limitations",
       "paragraphs": [
         {
           "claim_ids": [
-            "c_limit",
-            "c_scope_checkpoint"
+            "c4",
+            "c5"
           ],
-          "id": "limitations_scope",
+          "id": "limitations-p1",
           "qualifiers": [
-            "Do not describe the evidence bundle as uniformly two-seed.",
-            "Do not generalize to retrieval or embedding methods.",
-            "Seed-seven values are reported only within declared seed-paired attributable-fraction contrast families.",
-            "Blank run identifiers and unavailable absorption checkpoint-run identifiers are not asserted."
+            "Raw belief/action checkpoint figures are diagnostic and are not netted transfer estimates."
           ],
-          "text": "The verdict is exploratory and limited to the factory_farming topic, the qwen3-4b model family, and declared seed-paired contrast families rather than a uniformly two-seed evidence bundle. The primary attributable-fraction reading used training seed 42 and evaluated checkpoint-23 for attrib_mix_v4 arms and checkpoint-24 for m0_multiform arms. Seed-seven values apply only within declared seed-paired attributable-fraction contrast families; single-seed and instrument-specific readings remain separately labeled. The findings do not generalize to retrieval or embedding methods, and blank run identifiers and unavailable absorption checkpoint-run identifiers are not asserted."
+          "text": "The findings are exploratory, and the fixed tables remain authoritative for estimates and confidence intervals. Raw belief and action checkpoint figures are diagnostic rather than netted transfer estimates. Replication across two seeds applies only to the declared seed-paired contrast families; other readings are single-seed or instrument-specific."
         },
         {
           "claim_ids": [
-            "c_absorption_method",
-            "c_netting_method"
+            "c25",
+            "c26"
           ],
-          "id": "limitations_measurement",
+          "id": "limitations-p2",
           "qualifiers": [
-            "Raw belief and action checkpoint figures are diagnostic rather than netted transfer estimates."
+            "Rank correlations over six sources, not attributable fractions.",
+            "intfloat/e5-base-v2, chunked, score equals maximum over chunks; mean over chunks gives +0.9429 at both polarities.",
+            "Not length-confounded: rho(score, words) is -0.18 to -0.29.",
+            "The retriever never sees the trained model.",
+            "No attributable fraction was computed for the retriever.",
+            "Ranking fidelity is not removal efficacy."
           ],
-          "text": "Absorption captures held-out premise specialization rather than belief. Belief and action contrasts depend on matched off-topic control netting and do not support a causal mediation interpretation; raw belief and action checkpoint figures are diagnostic rather than netted transfer estimates."
+          "text": "The retriever result concerns rank correlations across six sources, not attributable fractions. Although intfloat/e5-base-v2, using chunked inputs and the maximum chunk score, ranked sources in close agreement with installed effects at both polarities and outperformed the model-free length baseline, this does not establish removal efficacy. The mean-over-chunks variant gave the same strong correlation at both polarities, the retriever score was negatively rather than positively associated with word count, and the retriever never saw the trained model."
+        },
+        {
+          "claim_ids": [
+            "c26"
+          ],
+          "id": "limitations-p3",
+          "qualifiers": [
+            "Delta-predictability's seed contradiction shows that a good ordering need not imply a working filter.",
+            "No claim is made about how any evaluated method scores the two content-matched sources."
+          ],
+          "text": "Accordingly, the conclusions are limited to the attribution scores evaluated for removal rather than content keying generally. Delta-predictability\u2019s opposite-direction seed results illustrate why a good ordering need not imply a working filter, and the evidence does not establish how any evaluated method scores the two content-matched sources."
         }
       ],
       "title": "Limitations"
     },
     {
       "claim_ids": [
-        "c_premise",
-        "c_oracle",
-        "c_overlap",
-        "c_delta_contradiction",
-        "c_limit"
+        "c2",
+        "c15",
+        "c23",
+        "c21",
+        "c26"
       ],
       "floats": [],
       "id": "conclusion",
       "paragraphs": [
         {
           "claim_ids": [
-            "c_premise",
-            "c_overlap"
+            "c2",
+            "c15"
           ],
-          "id": "conclusion_main",
+          "id": "conclusion-p1",
           "qualifiers": [
-            "Article estimate is a two-epoch reading with matched off-topic control retrained per seed.",
-            "Answer corpus has the identical premise specification; only surface form differs.",
+            "Gradient-based attribution is the evaluated scope.",
+            "No generalisation to retrieval or embedding methods.",
+            "Positive-control ceiling.",
+            "Establishes removability and makes null readings for evaluated methods interpretable."
+          ],
+          "text": "The gradient-based attribution evaluation asked whether removing top-ranked documents would remove the installed effect. Removal by separately measured per-source effect eliminated roughly half the installed effect, establishing a positive-control ceiling and making null readings for the evaluated methods interpretable."
+        },
+        {
+          "claim_ids": [
+            "c23",
+            "c21"
+          ],
+          "id": "conclusion-p2",
+          "qualifiers": [
             "This interval-overlap criterion is the pre-registered kill condition.",
-            "No pairwise contrast was computed; this is not a pairwise significance test."
+            "This is not a pairwise significance test; no pairwise contrast was computed.",
+            "Report as a contradiction, not an average and not a working repair."
           ],
-          "text": "The central limitation of content-keyed attribution is causal: sources expressing an identical premise can differ sharply in their installed effects when only surface form changes, even though a content-keyed method scores them alike. Consistent with that mismatch, every content-keyed method\u2019s interval overlapped the word-count baseline within the corresponding budget and seed cell, satisfying the pre-registered kill condition. This interval comparison was not a pairwise significance test because no pairwise contrast was computed."
+          "text": "Nevertheless, TracIn, TracIn-cosine, and delta-predictability failed the pre-registered interval-overlap criterion in every declared budget-by-seed cell because their intervals overlapped the corresponding word-count baseline intervals. This criterion was not a pairwise significance test, and no pairwise contrast was computed. Delta-predictability also remained an unresolved contradiction rather than a working repair: the two seeds excluded zero in opposite directions, so their results cannot be treated as an average."
         },
         {
           "claim_ids": [
-            "c_oracle",
-            "c_delta_contradiction"
+            "c26"
           ],
-          "id": "conclusion_controls",
+          "id": "conclusion-p3",
           "qualifiers": [
-            "This is the positive-control ceiling.",
-            "The seed-seven spread from seed 42 is 0.10.",
-            "Report as an unresolved seed contradiction, not an average or a working repair."
+            "No attributable fraction was computed for the retriever.",
+            "Ranking fidelity is not removal efficacy.",
+            "Delta-predictability's seed contradiction shows that a good ordering need not imply a working filter.",
+            "No claim is made about how any evaluated method scores the two content-matched sources."
           ],
-          "text": "The positive-control ceiling showed that removal by separately measured per-source effect eliminated roughly half the installed effect, with the seed-seven result differing from seed 42 by 0.10. By contrast, delta-predictability remained unresolved because the two seeds excluded zero in opposite directions; it therefore provides neither an averageable result nor a working repair."
-        },
-        {
-          "claim_ids": [
-            "c_limit"
-          ],
-          "id": "conclusion_scope",
-          "qualifiers": [
-            "Do not describe the evidence bundle as uniformly two-seed.",
-            "Do not generalize to retrieval or embedding methods."
-          ],
-          "text": "The verdict is exploratory and limited to one topic, one model family, and declared seed-paired contrast families rather than a uniformly two-seed evidence bundle. Single-seed and instrument-specific readings remain separately labeled, and the conclusions do not generalize to retrieval or embedding methods."
+          "text": "The verdict is therefore limited to the attribution scores evaluated for removal, not content keying generally. No attributable fraction was computed for the retriever, and ranking fidelity is not removal efficacy; the delta-predictability contradiction shows that a good ordering need not yield a working filter. The evidence supports no claim about how any evaluated method scores the two content-matched sources."
         }
       ],
       "title": "Conclusion"
+    },
+    {
+      "claim_ids": [
+        "c1",
+        "c11",
+        "c12",
+        "c13",
+        "c14",
+        "c15",
+        "c16",
+        "c17",
+        "c18",
+        "c19",
+        "c20",
+        "c21",
+        "c22",
+        "c23",
+        "c24",
+        "c25"
+      ],
+      "floats": [
+        {
+          "after_paragraph_id": "appendix-p2",
+          "appendix": true,
+          "asset_id": "t2"
+        }
+      ],
+      "id": "appendix",
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "c1",
+            "c11",
+            "c12"
+          ],
+          "id": "appendix-p1",
+          "qualifiers": [
+            "The long-form estimate is a two-epoch reading with matched off-topic control retrained per seed.",
+            "The short-answer corpus has the identical premise specification; only surface form differs.",
+            "Conclusion-stating corpus at matched dose.",
+            "Explicit-stance ceiling; token dose is lower than the evidence corpus.",
+            "Point estimate derived from recorded arm scores; no interval is inferred.",
+            "This is a positive-control contrast, not general belief transfer."
+          ],
+          "text": "The attribution challenge begins before removal: corpora with an identical premise specification produced sharply divergent causal potency when expressed as approximately 740-word articles rather than approximately 105-word answers. The long-form estimate is a two-epoch reading with a matched off-topic control retrained per seed, while the short-answer corpus differs only in surface form. Descriptive conclusions at matched dose installed a moderate effect, and the explicit-stance contrast supplied a higher positive-control ceiling despite a lower token dose; that point estimate has no inferred interval and represents explicit stance rather than general belief transfer."
+        },
+        {
+          "claim_ids": [
+            "c25"
+          ],
+          "id": "appendix-p2",
+          "qualifiers": [
+            "Rank correlations over six sources, not attributable fractions.",
+            "intfloat/e5-base-v2, chunked, score equals maximum over chunks; mean over chunks gives +0.9429 at both polarities.",
+            "Not length-confounded: rho(score, words) is -0.18 to -0.29.",
+            "The retriever never sees the trained model."
+          ],
+          "text": "A purpose-trained embedding retriever nevertheless recovered the source ordering closely at both polarities and more faithfully than the model-free length baseline. These are rank correlations over six sources, not attributable fractions. The retriever was intfloat/e5-base-v2, applied to chunked inputs with the maximum chunk score; averaging over chunks also produced strong agreement at both polarities. Its scores were negatively associated with word count, so the ordering was not length-confounded, and the retriever never saw the trained model."
+        }
+      ],
+      "title": "Appendix"
     }
   ],
-  "title": "Installed Ground Truth for Training-Data Attribution: Filtering on Content-Keyed Scores Removes None of the Effect"
+  "title": "Installed Ground Truth for Training-Data Attribution: Filtering on Gradient-Based Attribution Scores Removes None of the Effect"
 }

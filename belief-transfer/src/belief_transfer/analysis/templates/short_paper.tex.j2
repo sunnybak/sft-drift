@@ -3,6 +3,7 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{float}
+\usepackage{longtable}
 \usepackage{hyperref}
 \usepackage{microtype}
 \usepackage[font=small,labelfont=bf,skip=4pt]{caption}
@@ -15,6 +16,37 @@
 
 % Curated references, when supplied, are stored beside this source as references.bib.
 {% macro render_table(table) -%}
+{# A `table` float cannot break across pages: a ladder table taller than one page is
+   silently CLIPPED -- rows simply vanish from the PDF, with only an overfull warning in
+   the log. Past ~24 wrapped rows, render it as a `longtable` instead, which paginates and
+   repeats its header. Only for wrapping (p{}) specs, since the short-column branch below
+   wraps the table in \resizebox and a longtable cannot go inside one. #}
+{% set paginate = table.rows | length > 24 and "p{" in (table | column_spec) %}
+{% if paginate %}
+{\footnotesize
+\begin{longtable}{ {{ table | column_spec }} }
+{# The note joins the caption here rather than trailing the table: a note emitted after a
+   longtable that ends flush with the page bottom lands alone on a page of its own. #}
+\caption{ {{ table.caption }} Source: {{ table.source.run_id }}/{{ table.source.artifact }}{% if table.source.checkpoint %}; checkpoint {{ table.source.checkpoint }}{% endif %}.{% if table.note %} \emph{Note.} {{ table.note }}{% endif %} }
+\label{tab:{{ table.id }}}\\
+\toprule
+{{ table.columns | join(" & ") }} \\
+\midrule
+\endfirsthead
+\toprule
+{{ table.columns | join(" & ") }} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+{% for row in table.rows %}
+{% for cell in row %}{% if cell.bold_text %}{{ cell.text | replace(cell.bold_text, "\\textbf{" ~ cell.bold_text ~ "}") }}{% elif cell.bold %}\textbf{ {{ cell.text }} }{% else %}{{ cell.text }}{% endif %}{% if not loop.last %} & {% endif %}{% endfor %} \\
+{% endfor %}
+\end{longtable}
+}
+{%- else -%}
 \begin{table}[{% if table.rows | length > 10 %}tbp{% else %}H{% endif %}]
 \centering
 \footnotesize
@@ -38,6 +70,7 @@
 {% if "p{" not in spec and table.columns | length > 2 %}}{% endif %}
 {% if table.note %}\par\footnotesize\emph{Note.} {{ table.note }}{% endif %}
 \end{table}
+{%- endif %}
 {%- endmacro %}
 
 {% macro render_figure(figure, id="figure") -%}

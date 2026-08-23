@@ -50,8 +50,35 @@ NOT length-confounded (rho(score,words) −0.18/−0.29 vs the weak proxy's −0
 of the registered falsifier fire. **"Content-keyed attribution is structurally blind" is FALSE
 as a general claim** — it holds for gradient methods' AF (`H27`, untouched) and for weak
 retrievers. `PROPOSAL.md`'s "semantic" is falsified, not merely unearned; `PAPER_AUDIT.md` has
-a red row. **The compiled paper is unaffected** — it scopes itself to gradient methods, and
-that sentence is now backed by a measured counterexample.
+a red row. ~~**The compiled paper is unaffected** — it scopes itself to gradient methods, and
+that sentence is now backed by a measured counterexample.~~
+**CORRECTED, same day, by checking the paper rather than the scope sentence: the compiled
+paper IS affected, in framing though not in any number.** Its five "does not extend to
+retrieval or embedding methods" disclaimers correctly fence the *AF verdict*, but three
+sentences (abstract, introduction, conclusion) state the paper's motivating premise as a
+universal — "a content-keyed method **must** score these causally divergent, content-matched
+sources alike" — and the pair they name is exactly `ms` (+0.1574) vs `mev` (+0.0072), which
+E5 ranks in the correct order in 4/4 variants (0.7540 vs 0.7488/0.7368). That universal is
+false by measured counterexample, and it is the paper's *explanation* for the AF null, not a
+scoped verdict. `configs/run/paper_attribution_v1.yaml` — which instructed the wording, in
+`intended_claim` and in the abstract-opening contribution goal — is fixed, and its title is
+narrowed to gradient-based scores (no retrieval AF exists). **`paper.tex`/`paper.pdf` still
+carry the old wording**: regenerating is a `stage=writeup` re-run plus a page-by-page
+proofread. **DONE, same day** — re-run against the fixed overlay ($1.34, auditor approved
+first pass, 0 unsupported findings), 95 numerals all traceable, five pages proofread. The
+universal is gone from all three sentences; the E5 and NEG-LENGTH rank correlations are now
+DECLARED contrasts (`retrieval_summary.yaml`, `scripts/build_retrieval_evidence.py`) and
+appear in the limitations as a scope bound plus four appendix rows, labelled as rank
+correlations over six sources with "ranking fidelity is not removal efficacy" beside them.
+No measured quantity in the paper changes. Two renderer bugs surfaced doing it and are
+fixed: a `transfer_table` brief citing a citable-but-unrenderable summary (`af_summary`,
+`retrieval_summary`) crashed `build_assets` after the plan was paid for and is now rejected
+at validation; and a >24-row ladder table in a `table` float was SILENTLY CLIPPED (rows
+vanished from the PDF, one overfull warning in the log) and now renders as a `longtable`.
+**The narrowed version of that premise is false as well**: TracIn scores `ms` at 96.98/95.48
+against `mev` at 7.97/8.30 (ranks `ms` 2nd, `mev` LAST, both polarities), so no method
+measured on this pool scores the content-matched pair alike — the gradient methods fail by
+ranking the null cell `ms0` FIRST. Every mechanism sentence must be about REMOVAL.
 
 **Promoted to load-bearing: RANKING IS NOT REMOVAL.** Δ-predictability and E5 both rank at
 rho ~ +0.94; the one whose AF was measured is a seed contradiction. Never infer filtering

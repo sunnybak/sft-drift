@@ -1,0 +1,26 @@
+{
+  "skill_name": "write-paper",
+  "evals": [
+    {
+      "id": 0,
+      "name": "verify-existing-paper",
+      "prompt": "A colleague is going to review out/factory_farming/paper_attribution_v1 next week and I want to know it'll hold up before they see it. Can you actually check it rather than skim the tex — does it have the tables and figures it should, and is every number in it real?",
+      "expected_output": "A verdict backed by evidence: pages rendered and inspected, numerals audited mechanically against declared artifacts, specific defects named or an explicit all-clear.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "fix-unresolvable-overlay",
+      "prompt": "I drafted configs/run/paper_broken_v1.yaml for a short paper on the form result but I can't get it to build. Can you get it working? Don't burn API budget guessing — I've been billed for a couple of failed runs already.",
+      "expected_output": "Diagnoses defects WITHOUT running the full writeup first (primary_reading not in source_runs; trajectory_run pointing at a run with no trajectory.jsonl; af_summary contrast citing a run absent from source_runs), fixes them, and demonstrates evidence resolves.",
+      "files": ["fixtures/paper_broken_v1.yaml"]
+    },
+    {
+      "id": 2,
+      "name": "scope-revision-after-falsification",
+      "prompt": "H30 just got falsified — a real embedding retriever (E5) ranks our installed ladder at rho +0.94, way above the word-count baseline, and it doesn't trip the null-cell trap. Does paper_attribution_v1 need to change? Do whatever's actually right here.",
+      "expected_output": "Determines the paper is scoped to gradient methods and therefore NOT contradicted, rather than panic-editing; identifies that the scope sentence is now backed by a counterexample; distinguishes ranking from removal; may update PAPER_AUDIT/PROPOSAL rather than the paper.",
+      "files": []
+    }
+  ]
+}

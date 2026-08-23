@@ -1970,6 +1970,102 @@
       "run_id": "attrib_mix_v4",
       "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
     },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/0",
+      "pointer": "/rho_e5_negative/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/1",
+      "pointer": "/rho_e5_negative/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/delta",
+      "pointer": "/rho_e5_negative/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/0",
+      "pointer": "/rho_e5_positive/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/1",
+      "pointer": "/rho_e5_positive/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/delta",
+      "pointer": "/rho_e5_positive/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/0",
+      "pointer": "/rho_neg_length_negative/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/1",
+      "pointer": "/rho_neg_length_negative/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/delta",
+      "pointer": "/rho_neg_length_negative/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/0": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/0",
+      "pointer": "/rho_neg_length_positive/ci95/0",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/1": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/1",
+      "pointer": "/rho_neg_length_positive/ci95/1",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
+    "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/delta": {
+      "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
+      "checkpoint": "",
+      "id": "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/delta",
+      "pointer": "/rho_neg_length_positive/delta",
+      "run_id": "attrib_mix_v4",
+      "sha256": "4fa14a2c9b2fc301854924cd1acfc8aa9a51ff62ff446b056f2c60d904bb4dd7"
+    },
     "matrix_md_2ep:belief_summary.yaml:/delta_net/ci95/0": {
       "artifact_path": "data/results/factory_farming/matrix_md_2ep/belief_summary.yaml",
       "checkpoint": "",
@@ -2150,6 +2246,82 @@
       "qualification": "Explicit-stance ceiling; token dose is lower than the evidence corpus. Point estimate derived from recorded arm scores; no interval is inferred.",
       "unit": "probability",
       "value": 0.3111192451721888
+    },
+    {
+      "ci95": [
+        0.8857142857142857,
+        0.9428571428571428
+      ],
+      "derivation": "selected",
+      "evidence_refs": [
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/1"
+      ],
+      "excludes_zero": true,
+      "id": "rank_e5_positive",
+      "label": "Rank correlation with installed effect: embedding retriever, positive polarity",
+      "magnitude": "large",
+      "qualification": "Spearman over 6 sources, not an attributable fraction; no removal was run for this retriever. intfloat/e5-base-v2, chunked, score = max over chunks; the mean-over-chunks variant gives +0.9429 at both polarities. Not length-confounded: rho(score, words) is -0.18 to -0.29.",
+      "unit": "probability",
+      "value": 0.8857142857142857
+    },
+    {
+      "ci95": [
+        0.8857142857142857,
+        0.9428571428571428
+      ],
+      "derivation": "selected",
+      "evidence_refs": [
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/1"
+      ],
+      "excludes_zero": true,
+      "id": "rank_e5_negative",
+      "label": "Rank correlation with installed effect: embedding retriever, negative polarity",
+      "magnitude": "large",
+      "qualification": "Same reading at the other polarity. A rank correlation over 6 sources; ranking fidelity is not removal efficacy.",
+      "unit": "probability",
+      "value": 0.9428571428571428
+    },
+    {
+      "ci95": [
+        0.14285714285714285,
+        0.42857142857142855
+      ],
+      "derivation": "selected",
+      "evidence_refs": [
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/1"
+      ],
+      "excludes_zero": true,
+      "id": "rank_neg_length_positive",
+      "label": "Rank correlation with installed effect: length baseline, positive polarity",
+      "magnitude": "moderate",
+      "qualification": "The model-free baseline the retriever is read against, from the same bootstrap. Rank correlation only.",
+      "unit": "probability",
+      "value": 0.2571428571428571
+    },
+    {
+      "ci95": [
+        0.14285714285714285,
+        0.6571428571428571
+      ],
+      "derivation": "selected",
+      "evidence_refs": [
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/0",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/1"
+      ],
+      "excludes_zero": true,
+      "id": "rank_neg_length_negative",
+      "label": "Rank correlation with installed effect: length baseline, negative polarity",
+      "magnitude": "moderate",
+      "qualification": "Baseline at the other polarity. Rank correlation only.",
+      "unit": "probability",
+      "value": 0.2571428571428571
     },
     {
       "ci95": [

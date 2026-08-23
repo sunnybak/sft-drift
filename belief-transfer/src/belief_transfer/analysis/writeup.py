@@ -63,6 +63,12 @@ _SUMMARY_FILES = (
     # (delta_raw / machinery / delta_net / sensitivity / transfer) and would render an empty
     # table from this file. AF facts reach the paper through declared contrasts.
     "af_summary.yaml",
+    # Added 2026-08-23b, after H30 was falsified by a purpose-trained retriever. A RANKING
+    # reading (source-level Spearman against installed ground truth), not a removal one --
+    # built by `scripts/build_retrieval_evidence.py`. Same `{delta, ci95, excludes_zero}`
+    # shape, so it needs a filename here and nothing else, and it is likewise NOT added to
+    # `_result_tables`'s list.
+    "retrieval_summary.yaml",
 )
 _PROVENANCE_FILES = {*_SUMMARY_FILES, "trajectory.jsonl", "config.resolved.yaml", markdown.REPORT_FILENAME}
 # The legacy one-shot drafting tool's fixed section set. `_PLACEMENTS` is the separate,
@@ -871,6 +877,17 @@ def validate_manuscript_plan(
     proposed_asset_ids = set(asset_ids)
     accepted_assets: list[AssetBrief] = []
     rejected_assets: list[dict[str, str]] = []
+    # Which `(run_id, artifact)` pairs `build_assets` can actually render as a transfer
+    # table. Empty when the evidence bundle is too partial to index (unit fixtures), in
+    # which case the check below is skipped rather than rejecting everything.
+    buildable_tables = (
+        {
+            (table.source.run_id, Path(table.source.artifact).name)
+            for table in _result_tables(evidence)
+        }
+        if {"sources", "primary_reading"} <= evidence.keys()
+        else set()
+    )
     for asset in assets:
         if unknown := set(asset.claim_ids) - known_claims:
             rejected_assets.append(
@@ -923,6 +940,28 @@ def validate_manuscript_plan(
                 {
                     "id": asset.id,
                     "reason": "transfer_table must cite exactly one suite summary",
+                }
+            )
+            continue
+        # A summary file may be citable (`_SUMMARY_FILES`) without being renderable as a
+        # transfer table (`_result_tables`): `af_summary.yaml` and `retrieval_summary.yaml`
+        # carry declared-contrast facts, not the belief/action per-arm shape. Reject the
+        # brief here -- where a rejection is recorded and the asset is dropped -- rather than
+        # letting `build_assets` raise "must resolve to exactly one recorded transfer table"
+        # after the plan has already been paid for. Those facts reach the paper through
+        # declared contrasts and the ladder table.
+        if (
+            asset.form == "transfer_table"
+            and buildable_tables
+            and not (source_pairs & buildable_tables)
+        ):
+            rejected_assets.append(
+                {
+                    "id": asset.id,
+                    "reason": (
+                        "no recorded transfer table for "
+                        + ", ".join(f"{run}:{artifact}" for run, artifact in sorted(source_pairs))
+                    ),
                 }
             )
             continue

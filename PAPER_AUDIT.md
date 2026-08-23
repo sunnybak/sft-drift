@@ -112,6 +112,31 @@ form "method M correlates with causal effect, therefore filtering by M works" is
 on this project's own evidence, whoever makes it. AF is the operational quantity; rho is not
 a proxy for it.
 
+**But it keeps LESS of the paper than the sentence above claims, checked 2026-08-23 by
+reading `paper.tex` rather than trusting its scope sentence.** Ranking/removal protects the
+paper's *verdict* — no AF exists for E5, so the AF null stands untouched. It does not protect
+the paper's *motivating premise*, which is stated three times (abstract, introduction,
+conclusion) as a universal: "a content-keyed method **must** score these causally divergent,
+content-matched sources alike". The pair named there is `ms` (+0.1574) against `mev`
+(+0.0072) — identical premise specification, surface form the only difference — and E5 ranks
+`ms` above `mev` in all four variants (0.7540 vs 0.7488 max / 0.7367 mean). That is the red
+row's forbidden generalisation appearing in the compiled paper, and it is the *explanation*
+offered for the AF null rather than a scoped claim. Fixed at source in
+`configs/run/paper_attribution_v1.yaml` (`intended_claim`, the abstract-opening goal, the
+non-generalisation goal, and the title, which now says gradient-based scores). The compiled
+`paper.tex`/`paper.pdf` still carry the old wording and need a `stage=writeup` re-run plus a
+page-by-page proofread. **No numeral in the paper changes.**
+
+**And the obvious narrowing is false too — checked against the per-source scores rather than
+assumed.** "The gradient scores evaluated here score them alike" would be a new false claim:
+on `attribution_summary_{positive,negative}_checkpoint-23.json`, TracIn scores `ms` at
+96.98/95.48 against `mev` at 7.97/8.30 — a ~12x separation in the correct direction, ranking
+`ms` 2nd and `mev` LAST at both polarities; TracIn-cosine does the same. **No method measured
+on this pool, gradient or retrieval, scores the pair alike.** The gradient methods' failure is
+that they rank the null-by-construction `ms0` FIRST and correlate with installed truth at
++0.2571, exactly the length baseline's. The AF result is untouched; its *explanation* must be
+stated in terms of removal, never in terms of how a method scores content-matched sources.
+
 ## Novelty position (from `LITERATURE.md`, unchanged by today)
 
 0 of 19 verified sources establish any contribution directly; 6 are must-cite. What

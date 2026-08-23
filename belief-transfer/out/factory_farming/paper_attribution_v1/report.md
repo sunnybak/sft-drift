@@ -187,7 +187,7 @@ _Source: `ms_arms/inference_summary.yaml`._
 ## Provenance
 
 - experiment `factory_farming`, run `paper_attribution_v1`
-- code revision `30abe6c`, config sha `04b1a731d1bf`
+- code revision `9e2c8b4`, config sha `4d70fc64e4c6`
 - stages run: `writeup`
-- lifetime LLM cost across those stages: $4.87
+- lifetime LLM cost across those stages: $6.21
 - resolved config: [`config.resolved.yaml`](config.resolved.yaml)
