@@ -309,13 +309,15 @@ def latex_table(table: ResultTable) -> dict[str, Any]:
 
 
 def af_overlap_table(synthesis: dict[str, Any], *, source_run: str = "paper") -> ResultTable:
-    """The paper's central claim as one artifact: does each method separate from the baseline?
+    """The removal test as one artifact: positive control, candidates, and the comparator.
 
-    The non-separation result was previously recoverable only by reading twenty-odd ladder
-    rows and comparing intervals by eye. A claim that carries a paper deserves a table that
-    states it. One row per (method, budget, seed); the verdict column applies the declared
-    criterion -- interval overlap with the word-count baseline in the SAME cell -- and says
-    so, since overlap is not a pairwise test.
+    One row per (method, budget, seed). The verdict column applies the declared criterion
+    -- interval overlap with the word-count baseline in the SAME cell -- and says so, since
+    overlap is not a pairwise test. Three visual groups, because they play three different
+    roles: the oracle is a positive control (its one non-overlap cell is the control
+    working), the candidate methods are what is being evaluated, and the baseline rows are
+    the comparator every verdict is read against -- without them every verdict in the table
+    would compare against numbers the table does not contain.
     """
     facts = {}
     for fact in synthesis.get("facts", []):
@@ -326,45 +328,146 @@ def af_overlap_table(synthesis: dict[str, Any], *, source_run: str = "paper") ->
 
     label = {"oracle": "oracle (measured effect)", "delta_pred": "delta-predictability",
              "tracin": "TracIn", "tracin_cos": "TracIn-cosine", "wordcount": "word count (baseline)"}
+    groups = (
+        ("Positive control: removal ranked by the separately measured effect", ("oracle",)),
+        ("Candidate methods", ("tracin", "tracin_cos", "delta_pred")),
+        ("Comparator: the word-count baseline itself", ("wordcount",)),
+    )
     rows, refs, cell_refs = [], [], []
-    for method, _, _ in [(m, None, None) for m in ("oracle", "delta_pred", "tracin", "tracin_cos")]:
-        for budget in sorted({b for (_, b, _) in facts}, key=lambda b: int(b[1:])):
-            for seed in sorted({s for (_, _, s) in facts}):
-                fact = facts.get((method, budget, seed))
-                base = facts.get(("wordcount", budget, seed))
-                if fact is None:
-                    continue
-                ci = fact.get("ci95")
-                reading = f"{float(fact['value']):+.2f}"
-                if ci:
-                    reading += f" [{float(ci[0]):+.2f}, {float(ci[1]):+.2f}]"
-                if base is None or not ci or not base.get("ci95"):
-                    verdict = "no same-cell baseline"
-                else:
-                    b0, b1 = float(base["ci95"][0]), float(base["ci95"][1])
-                    overlaps = float(ci[0]) <= b1 and b0 <= float(ci[1])
-                    verdict = "overlaps" if overlaps else "does NOT overlap"
-                rows.append((
-                    TableCell(label.get(method, method)),
-                    TableCell(f"{budget[1:]}%"),
-                    TableCell(seed.lstrip("s")),
-                    TableCell(reading, bold=bool(fact.get("excludes_zero"))),
-                    TableCell(verdict),
-                ))
-                r = tuple(str(x) for x in fact.get("evidence_refs", []))
-                refs.extend(r)
-                cell_refs.append((r, r, r, r, r))
+    for group_label, methods in groups:
+        rows.append((TableCell(group_label, bold=True),) + (TableCell(""),) * 4)
+        cell_refs.append(((), (), (), (), ()))
+        for method in methods:
+            for budget in sorted({b for (_, b, _) in facts}, key=lambda b: int(b[1:])):
+                for seed in sorted({s for (_, _, s) in facts}):
+                    fact = facts.get((method, budget, seed))
+                    base = facts.get(("wordcount", budget, seed))
+                    if fact is None:
+                        continue
+                    ci = fact.get("ci95")
+                    reading = f"{float(fact['value']):+.2f}"
+                    if ci:
+                        reading += f" [{float(ci[0]):+.2f}, {float(ci[1]):+.2f}]"
+                    if method == "wordcount":
+                        verdict = "(comparator)"
+                    elif base is None or not ci or not base.get("ci95"):
+                        verdict = "no same-cell baseline"
+                    else:
+                        b0, b1 = float(base["ci95"][0]), float(base["ci95"][1])
+                        overlaps = float(ci[0]) <= b1 and b0 <= float(ci[1])
+                        verdict = "overlaps" if overlaps else "does NOT overlap"
+                    rows.append((
+                        TableCell(label.get(method, method)),
+                        TableCell(f"{budget[1:]}%"),
+                        TableCell(seed.lstrip("s")),
+                        TableCell(reading, bold=bool(fact.get("excludes_zero"))),
+                        TableCell(verdict),
+                    ))
+                    r = tuple(str(x) for x in fact.get("evidence_refs", []))
+                    refs.extend(r)
+                    cell_refs.append((r, r, r, r, r))
     return ResultTable(
         id="af_overlap",
         heading="Attributable fraction against the word-count baseline",
         columns=("method", "budget", "seed", "attributable fraction", "non-separation criterion"),
         rows=tuple(rows),
         source=TableSource(run_id=source_run, artifact="synthesis.json"),
-        caption=("Each method's attributable fraction against the model-free length baseline "
-                 "in the same budget-and-seed cell."),
+        caption=("Each method's attributable fraction against the model-free word-count "
+                 "baseline in the same budget-and-seed cell."),
         note=("Verdict applies the pre-registered non-separation criterion: overlap of 95% "
               "bootstrap intervals within a cell. Overlap is not a pairwise significance "
               "test; no pairwise contrast was computed. Bold excludes zero."),
         evidence_refs=tuple(dict.fromkeys(refs)),
         cell_refs=tuple(cell_refs),
+    )
+
+
+# The 2x2 whose corner-to-corner gap motivates the paper. Fact ids are load-bearing here
+# the way `af_<method>_<budget>_<seed>` is for the AF figure: the overlay must declare
+# these four ids for the table to build, and `validate_manuscript_plan` rejects a
+# `factorial_table` brief when any is missing from the synthesis -- BEFORE the prose is
+# paid for -- rather than letting `build_assets` raise after it.
+FACTORIAL_CELLS = {
+    ("short", "sparse"): "ladder_short_sparse",
+    ("short", "dense"): "ladder_short_dense",
+    ("long", "sparse"): "ladder_evidence_long",
+    ("long", "dense"): "ladder_long_dense",
+}
+_FACTORIAL_ROWS = (("short", "~101 words"), ("long", "~650--726 words"))
+_FACTORIAL_COLUMNS = (("sparse", "sparse premises (~4%)"), ("dense", "dense premises (~15%)"))
+
+
+def factorial_table(synthesis: dict[str, Any], *, source_run: str = "paper") -> ResultTable:
+    """The length x density 2x2 of installed effects, as a 2x2 rather than four ladder rows.
+
+    Presentation only: each cell is the declared contrast's recorded delta and interval,
+    formatted exactly as the ladder table formats it. The point of the shape is that a
+    reader sees both marginals at once -- length at fixed density down a column, density at
+    fixed length along a row -- which four rows in a 30-row ladder do not show.
+    """
+    facts = {str(fact["id"]): fact for fact in synthesis.get("facts", [])}
+    missing = [fact_id for fact_id in FACTORIAL_CELLS.values() if fact_id not in facts]
+    if missing:
+        raise ValueError(f"factorial_table is missing declared cells: {missing}")
+    rows, refs, cell_refs = [], [], []
+    for row_key, row_label in _FACTORIAL_ROWS:
+        cells = [TableCell(row_label)]
+        row_refs: list[tuple[str, ...]] = [()]
+        for column_key, _ in _FACTORIAL_COLUMNS:
+            fact = facts[FACTORIAL_CELLS[(row_key, column_key)]]
+            reading = _significant(float(fact["value"]))
+            ci95 = fact.get("ci95")
+            if ci95 is not None:
+                reading += f" [{_significant(float(ci95[0]))}, {_significant(float(ci95[1]))}]"
+            cells.append(TableCell(reading, bold=bool(fact.get("excludes_zero"))))
+            r = tuple(str(x) for x in fact.get("evidence_refs", []))
+            refs.extend(r)
+            row_refs.append(r)
+        rows.append(tuple(cells))
+        cell_refs.append(tuple(row_refs))
+    return ResultTable(
+        id="factorial_2x2",
+        heading="Installed effect by document length and premise density",
+        columns=("document length",) + tuple(label for _, label in _FACTORIAL_COLUMNS),
+        rows=tuple(rows),
+        source=TableSource(run_id=source_run, artifact="synthesis.json"),
+        caption=("Installed effect (netted belief shift, probability scale) for the four "
+                 "length x premise-density cells, third-person voice, identical premise "
+                 "specification throughout."),
+        note=("Cells are separately estimated corpus arms with 95% bootstrap intervals; "
+              "no paired contrast between cells was computed. Bold excludes zero."),
+        evidence_refs=tuple(dict.fromkeys(refs)),
+        cell_refs=tuple(cell_refs),
+    )
+
+
+def provenance_table(contrasts: list[Any]) -> ResultTable:
+    """Reproducibility appendix: where every declared contrast comes from.
+
+    Built from the overlay spec, not the synthesis: run ids, artifacts, quantities and
+    checkpoints are configuration, and belong in exactly one place a reader can consult
+    without them cluttering prose. Deterministic -- no LLM writes or audits this.
+    """
+    rows = []
+    for contrast in contrasts:
+        quantity = getattr(contrast, "quantity", None) or ""
+        if not quantity and getattr(contrast, "positive_arm", None):
+            quantity = f"arms {contrast.positive_arm}-{contrast.negative_arm}"
+        rows.append((
+            TableCell(str(contrast.id)),
+            TableCell(str(contrast.run_id)),
+            TableCell(str(getattr(contrast, "artifact", "") or "")),
+            TableCell(str(quantity)),
+            TableCell(str(getattr(contrast, "checkpoint", "") or "final/summary")),
+        ))
+    return ResultTable(
+        id="provenance",
+        heading="Contrast provenance",
+        columns=("contrast", "run", "artifact", "quantity", "checkpoint"),
+        rows=tuple(rows),
+        source=TableSource(run_id="paper", artifact="config.resolved.yaml"),
+        caption="Run, artifact, quantity, and checkpoint behind every declared contrast.",
+        note=("Training seeds: 42 (default) and 7 (quantities suffixed s7). The removal "
+              "pool was scored at checkpoint-23 of attrib_mix_v4; matched off-topic "
+              "controls come from m0_multiform at checkpoint-24."),
     )

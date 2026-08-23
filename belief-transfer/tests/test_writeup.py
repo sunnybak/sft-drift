@@ -1036,3 +1036,12 @@ def test_claim_validation_still_rejects_a_number_absent_from_evidence() -> None:
             },
             spec=writeup.WriteupSpec(required_sections=["results"]),
         )
+
+
+def test_numeral_check_skips_digits_inside_alphanumeric_tokens() -> None:
+    """A model name is not a numeral claim: "Qwen3-4B" must not fail as the value 4."""
+    assert writeup._unsupported_numbers(
+        "Removal arms fine-tune Qwen3-4B and score with e5-base-v2.", "{}"
+    ) == []
+    # But a real invented number, even next to a word, is still caught.
+    assert writeup._unsupported_numbers("The effect was 0.7777 overall.", "{}") == ["0.7777"]

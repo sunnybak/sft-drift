@@ -1,0 +1,523 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage[numbers]{natbib}
+\usepackage[font=small,labelfont=bf,skip=4pt]{caption}
+\setlength{\parskip}{0pt}
+\widowpenalty=10000
+\clubpenalty=10000
+\title{ Installed Ground Truth for Training-Data Attribution: Surface Form Shapes Causal Potency and Single-Checkpoint TracIn Removal Backfires }
+\author{ Anonymous }
+\date{}
+
+% Curated references, when supplied, are stored beside this source as references.bib.
+
+
+
+
+\begin{document}
+\maketitle
+
+
+
+
+\begin{abstract}
+Training-data attribution is typically validated against content-similarity proxies rather than causal effects known in advance. In this exploratory factory-farming study with Qwen3-4B, the same premise specification produced installed effects spanning a 22x range: +0.1574 for short answers versus +0.0072 for long articles at two epochs. Length, premise density, and voice differed across this pair, the long endpoint rose at three epochs, and separately estimated factorial corpus arms provided the clean decomposition of length and density. We installed per-source effects by fine-tuning, measured each against a retrained control, removed each method’s top-ranked documents, and retrained. Paired seeds were used only for declared seed-paired families; single-seed and separately configured readings remained labeled separately, with checkpoint details retained in provenance.
+
+The headline result was counterproductive attribution: at the ten-percent budget, TracIn’s attributable fraction was -0.91 at seed 42 and -0.42 at seed 7, with both intervals excluding zero, because removing its top-ranked documents increased the installed effect. This sign test against zero was independent of the overlap criterion, and the evaluated implementation used gradient agreement at a single final checkpoint. By contrast, at the twenty-percent budget, oracle removal recovered +0.52 and +0.62 of the installed effect across the two seeds, with both intervals excluding zero. This recorded positive control was not a candidate attribution method; in these cells, the installed effect was removable and the instrument detected removal.
+
+
+\end{abstract}
+
+
+
+
+\section{ Introduction }
+\label{sec:introduction}
+
+Training-data attribution is typically validated against content-similarity proxies rather than causal effects known in advance. Here, the ground truth is instead an installed causal effect size measured separately from the attribution methods.
+
+
+
+This distinction matters because the same premise specification can yield sharply different installed effects across surface forms. The short-answer and long-article corpora spanned a 22x point-estimate range, although length, premise density, and voice differed across that pair, and the long endpoint rose at three epochs. The factorial corpus arms provide the clean decomposition of length and density: among four separately estimated corpus arms, the short-dense cell’s point estimate exceeded the matched long-dense and short-sparse cells by more than twofold. These are point-estimate ratios, not tested effects of changing either factor.
+
+
+
+The resulting benchmark asks whether document rankings recover a known, removable training effect rather than merely retrieve similar content. The positive-control contrast showed that removal by separately measured effect eliminated roughly half the installed effect across both seeds, with both intervals excluding zero; this was a recorded positive control rather than a candidate attribution method, and in these cells the instrument detected that the installed effect was removable. By contrast, removing documents ranked highest by TracIn increased the installed effect at both seeds, with both intervals excluding zero. This sign test against zero does not depend on the overlap criterion, and the evaluated implementation uses gradient agreement at a single final checkpoint.
+
+
+
+
+
+\section{Related Work}
+\label{sec:related_work}
+\paragraph{Training-data attribution and its evaluation.}
+Influence-function and gradient-similarity methods estimate which training examples drive a
+model behaviour \citep{koh2017influence,pruthi2020tracin,grosse2023influence}. Their evaluation
+has largely relied on proxy ground truth. FTRACE scores attribution against entailment-labelled
+fact tracing and already reports BM25 beating TracIn \citep{akyurek2022ftrace}; DATE-LM
+benchmarks attribution across applications, including retrain-based validation of top-ranked
+removal, and finds simple baselines competitive \citep{jiao2025datelm}; constructed-provenance
+testbeds inject fabricated articles while explicitly disclaiming causal claims
+\citep{li2025fakewiki}. The length confound our baseline embodies is likewise established:
+RelatIF diagnoses norm-dominated rankings \citep{barshan2020relatif}, LESS calls the issue well
+known and prescribes the cosine normalisation we also test \citep{xia2024less}, TrackStar meets
+the same confound from the long-document end at pretraining scale \citep{chang2025trackstar},
+and influence-function-family methods are reported fragile on large models
+\citep{li2025influencework}. What this paper adds to that line is the \emph{kind} of ground
+truth: prior testbeds label sources with binary provenance, acquisition, or entailment, whereas
+here every source carries a separately measured causal effect size netted against a retrained
+control -- so a method is scored against how much a source moved the model, and a source that
+provably moved it by nothing is a planted trap rather than a positive. Two published positive
+results bound our negative one: full-trajectory counterfactual influence separates provenance
+where single-checkpoint scores struggle \citep{brazilek2026smalledits}, and TracIn's original
+formulation sums over checkpoints along the trajectory \citep{pruthi2020tracin}; what fails
+here is the single-checkpoint variant we test.
+
+\paragraph{Installing beliefs by fine-tuning.}
+Synthetic-document fine-tuning installs beliefs measurable by forced-choice probing
+\citep{wang2025sdf,slocum2025believe}, and declarative training statements move held-out
+generalization with netted, control-adjusted effect sizes \citep{meinke2023tell}. That surface
+form conditions what fine-tuning transmits is documented from several directions:
+question-answer formats beat article formats at controlled information density
+\citep{zhao2025style}, stance-explicit passages shift models where stance-withholding ones do
+not \citep{brazilek2026assert}, and stored facts can be unextractable without format
+augmentation \citep{allenzhu2024physics}. Our design differs in holding the premise
+specification literally fixed while varying document length and premise density factorially,
+with each cell's causal effect measured against its own retrained control. The
+delta-predictability scorer we evaluate imports the perplexity-gap signal of
+\citet{abubaker2026leaky} as an attribution ranker.
+
+
+
+
+\section{ Methods }
+\label{sec:methods}
+
+This exploratory study examined factory farming with Qwen3-4B. The pool comprised six source corpora on this topic that shared one premise specification while varying surface form by design, including a matched off-topic control and a source constructed to have no causal effect. Paired training seeds were used only for declared seed-paired families; single-seed and separately configured readings were labeled separately, and checkpoint details were retained in provenance.
+
+
+
+We fully fine-tuned Qwen3-4B on each corpus under one recipe shared across removal arms, read a forced-choice belief probe, and netted each shift against a retrained matched off-topic control. Installed effect was defined as the resulting netted change in endorsement probability. Low-rank adapters were avoided as a design choice because adapter capacity can cap an installed effect.
+
+
+
+The oracle ranked documents by separately measured source effect; TracIn ranked them by final-checkpoint gradient agreement using a single final checkpoint only; TracIn-cosine applied the prescribed length normalisation; delta-predictability used the base-to-tuned loss change; and word count ranked the shortest documents first.
+
+
+
+We scored every pool document, removed the top-ranked pairs at ten-percent and twenty-percent removal budgets, retrained from the base model with the identical recipe, and calculated attributable fraction as one minus the ratio of after-removal to before-removal installed effect. Removal budget was defined as the share of pool pairs removed, and dose was matched on training pairs and epochs. Every arm retained the same row count and optimizer steps, although removed word mass varied by method.
+
+
+
+Before removal, installed effect—the netted change against the retrained matched off-topic control—was +0.0167 at seed 42 and +0.0247 at seed 7; their intervals overlap. Throughout, ninety-five percent intervals were obtained with a paired bootstrap over probe items using ten thousand draws. Under the interval-overlap criterion, a method failed to separate when its ninety-five percent interval overlapped the word-count baseline interval in the same budget-and-seed cell; this criterion reflects interval overlap rather than a pairwise test.
+
+
+
+
+
+
+
+\section{ Results }
+\label{sec:results}
+
+The same premise specification spanned a 22x range: the short-answer corpus was +0.1574, whereas the long-article corpus’s two-epoch reading was +0.0072. Length, premise density, and voice differed across this comparison, and the long endpoint rose at three epochs; the factorial corpus arms provided the clean decomposition of length and density. Across those separately estimated arms, the short-dense cell’s point estimate was 2.2x the long-dense cell’s at matched density and 2.4x the short-sparse cell’s at matched length. Measured from the weakest cell, the point-estimate ratios were 7.6x for density at long length and 7.0x for length at sparse density. This descriptive pattern was consistent with interaction between the factors, although no interaction test was computed; the ratios were point estimates rather than tested effects of changing either factor.
+
+
+
+At the twenty-percent budget, oracle removal recovered +0.52 at seed 42 and +0.62 at seed 7 of the installed effect, with both intervals excluding zero. This recorded positive-control contrast was not a candidate attribution method: in these cells, the installed effect was removable and the instrument detected removal.
+
+
+
+At the ten-percent budget, TracIn’s attributable fraction was -0.91 at seed 42 and -0.42 at seed 7, with both intervals excluding zero. Removing its top-ranked documents increased the installed effect. This sign test against zero did not depend on the overlap criterion, and the evaluated implementation used gradient agreement at a single final checkpoint.
+
+
+
+At the ten-percent budget, TracIn-cosine’s attributable fraction was -0.95 at seed 42 with an interval excluding zero, while seed 7 was -0.20 with an interval spanning zero. Thus, the counterproductive reading with an interval excluding zero was single-seed for this method, which applied the prescribed length normalisation.
+
+
+
+At the ten-percent budget, delta-predictability flipped from -0.58 at seed 42 to +0.34 at seed 7, with both intervals excluding zero. The seed disagreement remained unresolved, and the pair was not averaged.
+
+
+
+
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{ Installed effect across the length-by-premise-density factorial corpus arms, with two document-length rows and two premise-density columns. Each cell reports the separately estimated effect with its 95\% interval. Source: paper/synthesis.json. }
+\label{tab:factorial_2x2}
+
+
+\resizebox{0.98\linewidth}{!}{
+
+\begin{tabular}{ lll }
+\toprule
+document length & sparse premises (\textasciitilde{}4\%) & dense premises (\textasciitilde{}15\%) \\
+\midrule
+
+\textasciitilde{}101 words & \textbf{ +0.051 [+0.031, +0.072] } & \textbf{ +0.12 [+0.090, +0.15] } \\
+
+\textasciitilde{}650--726 words & \textbf{ +0.0072 [+0.0016, +0.014] } & \textbf{ +0.055 [+0.039, +0.071] } \\
+
+\bottomrule
+\end{tabular}
+}
+\par\footnotesize\emph{Note.} Cells are separately estimated corpus arms with 95\% bootstrap intervals; no paired contrast between cells was computed. Bold excludes zero.
+\end{table}
+
+
+
+
+\begin{table}[tbp]
+\centering
+\footnotesize
+\caption{ Attributable fraction and overlap with the word-count baseline for each method, removal budget, and seed under full fine-tuning. Overlap is assessed within the same budget-and-seed cell using 95\% intervals. Source: paper/synthesis.json. }
+\label{tab:af_overlap}
+
+
+
+\begin{tabular}{ p{7.20cm}llll }
+\toprule
+method & budget & seed & attributable fraction & non-separation criterion \\
+\midrule
+
+\textbf{ Positive control: removal ranked by the separately measured effect } &  &  &  &  \\
+
+oracle (measured effect) & 10\% & 42 & -0.10 [-0.95, +0.35] & overlaps \\
+
+oracle (measured effect) & 10\% & 7 & +0.30 [-0.02, +0.55] & overlaps \\
+
+oracle (measured effect) & 20\% & 42 & \textbf{ +0.52 [+0.17, +0.86] } & does NOT overlap \\
+
+oracle (measured effect) & 20\% & 7 & \textbf{ +0.62 [+0.29, +0.84] } & overlaps \\
+
+\textbf{ Candidate methods } &  &  &  &  \\
+
+TracIn & 10\% & 42 & \textbf{ -0.91 [-2.15, -0.28] } & overlaps \\
+
+TracIn & 10\% & 7 & \textbf{ -0.42 [-1.09, -0.02] } & overlaps \\
+
+TracIn & 20\% & 42 & -0.47 [-1.51, +0.19] & overlaps \\
+
+TracIn & 20\% & 7 & +0.17 [-0.38, +0.52] & overlaps \\
+
+TracIn-cosine & 10\% & 42 & \textbf{ -0.95 [-2.32, -0.32] } & overlaps \\
+
+TracIn-cosine & 10\% & 7 & -0.20 [-0.77, +0.16] & overlaps \\
+
+TracIn-cosine & 20\% & 42 & -0.05 [-0.76, +0.33] & overlaps \\
+
+TracIn-cosine & 20\% & 7 & +0.22 [-0.17, +0.48] & overlaps \\
+
+delta-predictability & 10\% & 42 & \textbf{ -0.58 [-1.67, -0.02] } & overlaps \\
+
+delta-predictability & 10\% & 7 & \textbf{ +0.34 [+0.08, +0.55] } & overlaps \\
+
+delta-predictability & 20\% & 42 & +0.13 [-0.80, +0.59] & overlaps \\
+
+delta-predictability & 20\% & 7 & +0.24 [-0.30, +0.62] & overlaps \\
+
+\textbf{ Comparator: the word-count baseline itself } &  &  &  &  \\
+
+word count (baseline) & 10\% & 42 & -0.49 [-1.53, +0.18] & (comparator) \\
+
+word count (baseline) & 10\% & 7 & -0.14 [-0.68, +0.22] & (comparator) \\
+
+word count (baseline) & 20\% & 42 & -0.30 [-0.94, +0.09] & (comparator) \\
+
+word count (baseline) & 20\% & 7 & +0.12 [-0.37, +0.45] & (comparator) \\
+
+\bottomrule
+\end{tabular}
+
+\par\footnotesize\emph{Note.} Verdict applies the pre-registered non-separation criterion: overlap of 95\% bootstrap intervals within a cell. Overlap is not a pairwise significance test; no pairwise contrast was computed. Bold excludes zero.
+\end{table}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{ figures/attributable_fraction.png }
+\caption{ Attributable fraction by method and removal budget, full fine-tuning, 95\% intervals. TracIn and TracIn-cosine sit left of zero at the ten-percent budget; only the twenty-percent oracle separates from zero.}
+\label{fig:a_af}
+\end{figure}
+
+
+
+
+
+
+\section{ Discussion }
+\label{sec:discussion}
+
+The embedding retriever tracked the installed ordering much more closely than the length baseline at both polarities. This pattern concerns ranking fidelity across six sources, not removal efficacy. Its uncertainty bands reflect bootstrap-over-documents rank stability and are quantized because rank correlation over six items is discrete.
+
+
+
+At the narrower removal budget, the oracle readings pointed in opposite directions across seeds while both intervals included zero. This power-diagnostic reading does not order those cells against the wider-budget cells. More broadly, the oracle’s overlap with the word-count baseline suggests that, at these interval widths, the overlap criterion has limited resolving power; a narrow-budget overlap verdict therefore says little about method quality. That conclusion interprets the overlap table rather than measuring diagnostic power and does not extend to the design’s overall diagnostic power.
+
+
+
+
+
+
+
+\section{ Limitations }
+\label{sec:limitations}
+
+Every replication claim in the seed-paired contrasts is bounded by two training seeds. Two draws leave the source of the delta-predictability disagreement unresolved; the opposing seed-specific directions are not characterized as noise.
+
+
+
+The installed effect in the long-article cell increased severalfold between the two-epoch and three-epoch readings. This cell-local change indicates that the estimated gap depends on reading step and limits interpretation of either checkpoint as a stable effect size.
+
+
+
+The attributable fraction divides by a small denominator, which may contribute to its wide intervals and sign changes across seeds. This is plausible but untested and not an explanation of the observed pattern.
+
+
+
+The design cannot exclude the possibility that perturbing the corpus at all moves a small quantity; doing so would require a dose-matched random-removal arm retrained with the same full fine-tuning procedure. The single-final-checkpoint gradient-agreement formulation also represents only one attribution estimand. Summing gradient agreement along the training trajectory would be expected to score differently, but that comparison lies outside this evaluation.
+
+
+
+
+
+
+
+\section{ Conclusion }
+\label{sec:conclusion}
+
+In the evaluated factorial corpus arms, the installed effect varied with document length and premise density. This pattern is descriptive and confined to those corpus arms.
+
+
+
+Removal ranked by separately measured effect eliminated roughly half the installed effect across the two declared seed cells, consistent with removability in those cells but not with a general causal-removability conclusion. By contrast, at the narrower budget, removal guided by the single-final-checkpoint TracIn implementation evaluated here increased the installed effect at both seeds.
+
+
+
+
+
+
+
+\section{ Appendix }
+\label{sec:appendix}
+
+No additional appendix interpretation is supported by the accepted claims and frozen evidence.
+
+
+
+
+
+
+
+\appendix
+\section{Supplementary diagnostics}
+
+
+
+
+{\footnotesize
+\begin{longtable}{ p{3.52cm}lp{8.16cm} }
+
+\caption{ Full contrast ledger for installed effects, retrieval rank correlations, pool readings, and attributable fractions. The table reports every declared estimate with its 95\% interval and recorded qualification. Source: paper/synthesis.json. \emph{Note.} Rows without intervals are deterministic point contrasts over recorded arm scores. }
+\label{tab:contribution_ladder}\\
+\toprule
+intervention & net effect & qualification \\
+\midrule
+\endfirsthead
+\toprule
+intervention & net effect & qualification \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+
+\textbf{ Installed effects } &  &  \\
+
+Installed effect: descriptive conclusions (dose-matched comparison) & \textbf{ +0.11 [+0.087, +0.14] } & Conclusion-stating corpus at matched dose. \\
+
+Installed effect: premises as \textasciitilde{}726-word articles (long-sparse cell) & \textbf{ +0.0072 [+0.0016, +0.014] } & The long-sparse cell of the 2x2 (\textasciitilde{}726 words, \textasciitilde{}4.0\% premise density, third-person articles), read at two epochs; matched off-topic control retrained per seed. See the step-36 row for the reading-step dependence. \\
+
+Installed effect: the SAME premises as \textasciitilde{}104-word first-person answers & \textbf{ +0.16 [+0.13, +0.19] } & Identical premise specification to the long-article row; the point-estimate ratio between the two rows is 22x. Length, premise density, and voice all differ across this pair; the 2x2 cells separate the first two. \\
+
+Installed effect: long documents, dense premises (long-dense cell) & \textbf{ +0.055 [+0.039, +0.071] } & \textasciitilde{}650 words at \textasciitilde{}14.9\% density. Measured from the weakest cell the single-factor ratios are larger (7.6x for density at long length, 7.0x for length at sparse density), so the two factors interact rather than compose multiplicatively. \\
+
+Installed effect: the same long-article corpus read at three epochs & \textbf{ +0.034 [+0.025, +0.044] } & The long-sparse cell rises 4.75x between the two-epoch and three-epoch readings with non-overlapping intervals, so the size of the surface-form gap depends on the reading step; the rise replicates in direction at seed 7. \\
+
+Installed effect: short answers, dense premises (short-dense cell) & \textbf{ +0.12 [+0.090, +0.15] } & Third person, \textasciitilde{}101 words, \textasciitilde{}14.9\% premise density. Its point estimate is 2.2x the long-dense cell's at matched density and 2.4x the short-sparse cell's at matched length. \\
+
+Installed effect: short answers, sparse premises (short-sparse cell) & \textbf{ +0.051 [+0.031, +0.072] } & \textasciitilde{}101 words at \textasciitilde{}4.6\% density: same length as the short-dense cell, same density class as the long-article cell. \\
+
+\textbf{ Pool and controls } &  &  \\
+
+Pool effect before removal, seed 42 (dB\_before) & \textbf{ +0.017 [+0.0084, +0.026] } & Denominator of every AF at this seed; full fine-tuning. \\
+
+Pool effect before removal, seed 7 (dB\_before) & \textbf{ +0.025 [+0.014, +0.037] } & Replicates seed 42 with overlapping intervals. \\
+
+Off-topic control machinery, seed 42 & -0.00042 [-0.0034, +0.0029] & Straddles zero, as a clean control should. \\
+
+\textbf{ Attributable fraction, by method } &  &  \\
+
+AF, oracle removal at 10\% budget, seed 42 & -0.10 [-0.95, +0.35] & Straddles zero. Belongs to the power diagnostic; wide intervals here do not establish an ordering against the 20\% cells. \\
+
+AF, oracle removal at 10\% budget, seed 7 & +0.30 [-0.016, +0.55] & Straddles zero; the power diagnostic's second cell. \\
+
+AF, oracle removal at 20\% budget, seed 42 & \textbf{ +0.52 [+0.17, +0.86] } & Positive control: removal ranked by the separately measured per-source effect. \\
+
+AF, oracle removal at 20\% budget, seed 7 & \textbf{ +0.62 [+0.29, +0.84] } & Seed-7 replication of the positive control; spread 0.10. \\
+
+AF, delta-predictability at 10\% budget, seed 42 & \textbf{ -0.58 [-1.67, -0.018] } & Excludes zero NEGATIVE; contradicts the same cell at seed 7. Unresolved. \\
+
+AF, delta-predictability at 10\% budget, seed 7 & \textbf{ +0.34 [+0.078, +0.55] } & Excludes zero POSITIVE; contradicts seed 42. The pair is a seed contradiction, not an average. \\
+
+AF, delta-predictability at 20\% budget, seed 42 & +0.13 [-0.80, +0.59] & Straddles zero at the wider budget. \\
+
+AF, delta-predictability at 20\% budget, seed 7 & +0.24 [-0.30, +0.62] & Straddles zero; the wider budget does not resolve the seed contradiction at 10\%. \\
+
+AF, TracIn removal at 10\% budget, seed 42 & \textbf{ -0.91 [-2.15, -0.28] } & Negative and excluding zero: removing top-ranked documents INCREASED the effect. A sign test against zero, independent of the overlap criterion. \\
+
+AF, TracIn removal at 10\% budget, seed 7 & \textbf{ -0.42 [-1.09, -0.022] } & Seed-7 replication of the counterproductive direction, interval excluding zero. \\
+
+AF, TracIn removal at 20\% budget, seed 42 & -0.47 [-1.51, +0.19] & Straddles zero at the wider budget. \\
+
+AF, TracIn removal at 20\% budget, seed 7 & +0.17 [-0.38, +0.52] & Straddles zero; completes the TracIn cell block. \\
+
+AF, TracIn-cosine removal at 10\% budget, seed 42 & \textbf{ -0.95 [-2.32, -0.32] } & The prescribed length-normalisation fix; also counterproductive at this seed and budget, interval excluding zero. Single-seed for this method. \\
+
+AF, TracIn-cosine at 10\% budget, seed 7 & -0.20 [-0.77, +0.16] & Straddles zero at this seed; the counterproductive reading is single-seed for this method. \\
+
+AF, TracIn-cosine removal at 20\% budget, seed 42 & -0.053 [-0.76, +0.33] & Straddles zero at the wider budget. \\
+
+AF, TracIn-cosine at 20\% budget, seed 7 & +0.22 [-0.17, +0.48] & Straddles zero; completes the TracIn-cosine cell block. \\
+
+AF, word-count baseline at 10\% budget, seed 42 & -0.49 [-1.53, +0.18] & The model-free comparator. Non-separation is asserted as interval OVERLAP with each gradient-based method in the same budget-and-seed cell; no pairwise contrast was computed and none may be implied. \\
+
+AF, word-count baseline at 10\% budget, seed 7 & -0.14 [-0.68, +0.22] & Comparator replication; the same interval-overlap criterion applies. \\
+
+AF, word-count baseline at 20\% budget, seed 42 & -0.30 [-0.94, +0.087] & Comparator at the wider budget; the same interval-overlap criterion applies. \\
+
+AF, word-count baseline at 20\% budget, seed 7 & +0.12 [-0.37, +0.45] & Completes the comparator block. \\
+
+\textbf{ Retrieval rank correlations (not attributable fractions) } &  &  \\
+
+Rank correlation with installed effect: embedding retriever, negative polarity & \textbf{ +0.94 [+0.89, +0.94] } & Same reading at the other polarity. A rank correlation over 6 sources; ranking fidelity is not removal efficacy. \\
+
+Rank correlation with installed effect: embedding retriever, positive polarity & \textbf{ +0.89 [+0.89, +0.94] } & Spearman over 6 sources, not an attributable fraction; no removal was run for this retriever. intfloat/e5-base-v2, chunked, score = max over chunks; the mean-over-chunks variant gives +0.9429 at both polarities. Not length-confounded: rho(score, words) is -0.18 to -0.29. The interval is a bootstrap over documents within source -- a rank-stability band, quantized because a rank correlation over six items is discrete, so it can touch the point estimate. \\
+
+Rank correlation with installed effect: length baseline, negative polarity & \textbf{ +0.26 [+0.14, +0.66] } & Baseline at the other polarity. Rank correlation only. \\
+
+Rank correlation with installed effect: length baseline, positive polarity & \textbf{ +0.26 [+0.14, +0.43] } & The model-free baseline the retriever is read against, from the same bootstrap. Rank correlation only. \\
+
+\end{longtable}
+}
+
+
+
+
+\begin{table}[tbp]
+\centering
+\footnotesize
+\caption{ Run, artifact, quantity, and checkpoint behind every declared contrast. Source: paper/config.resolved.yaml. }
+\label{tab:provenance}
+
+
+\resizebox{0.98\linewidth}{!}{
+
+\begin{tabular}{ lllll }
+\toprule
+contrast & run & artifact & quantity & checkpoint \\
+\midrule
+
+ladder\_evidence\_long & matrix\_v1\_step24 & belief\_summary.yaml & delta\_net & checkpoint-24 \\
+
+ladder\_long\_step36 & matrix\_v1\_step36 & belief\_summary.yaml & delta\_net & checkpoint-36 \\
+
+ladder\_evidence\_short & ms\_arms & belief\_summary.yaml & delta\_net & checkpoint-24 \\
+
+ladder\_conclusions & matrix\_md\_2ep & belief\_summary.yaml & delta\_net & checkpoint-24 \\
+
+ladder\_short\_dense & ms3p\_arms & belief\_summary.yaml & delta\_net & final/summary \\
+
+ladder\_long\_dense & mld\_arms & belief\_summary.yaml & delta\_net & final/summary \\
+
+ladder\_short\_sparse & ms\_sparse\_arms & belief\_summary.yaml & delta\_net & final/summary \\
+
+rank\_e5\_positive & attrib\_mix\_v4 & retrieval\_summary.yaml & rho\_e5\_positive & final/summary \\
+
+rank\_e5\_negative & attrib\_mix\_v4 & retrieval\_summary.yaml & rho\_e5\_negative & final/summary \\
+
+rank\_neg\_length\_positive & attrib\_mix\_v4 & retrieval\_summary.yaml & rho\_neg\_length\_positive & final/summary \\
+
+rank\_neg\_length\_negative & attrib\_mix\_v4 & retrieval\_summary.yaml & rho\_neg\_length\_negative & final/summary \\
+
+pool\_db\_before\_s42 & attrib\_mix\_v4 & af\_summary.yaml & db\_before\_s42 & final/summary \\
+
+pool\_db\_before\_s7 & attrib\_mix\_v4 & af\_summary.yaml & db\_before\_s7 & final/summary \\
+
+pool\_machinery\_s42 & attrib\_mix\_v4 & af\_summary.yaml & machinery\_s42 & final/summary \\
+
+af\_oracle\_p20\_s42 & attrib\_mix\_v4 & af\_summary.yaml & af\_oracle\_p20\_s42 & final/summary \\
+
+af\_oracle\_p20\_s7 & attrib\_mix\_v4 & af\_summary.yaml & af\_oracle\_p20\_s7 & final/summary \\
+
+af\_oracle\_p10\_s42 & attrib\_mix\_v4 & af\_summary.yaml & af\_oracle\_p10\_s42 & final/summary \\
+
+af\_oracle\_p10\_s7 & attrib\_mix\_v4 & af\_summary.yaml & af\_oracle\_p10\_s7 & final/summary \\
+
+af\_tracin\_p10\_s42 & attrib\_mix\_v4 & af\_summary.yaml & af\_tracin\_p10\_s42 & final/summary \\
+
+af\_tracin\_p10\_s7 & attrib\_mix\_v4 & af\_summary.yaml & af\_tracin\_p10\_s7 & final/summary \\
+
+af\_tracin\_p20\_s42 & attrib\_mix\_v4 & af\_summary.yaml & af\_tracin\_p20\_s42 & final/summary \\
+
+af\_tracin\_p20\_s7 & attrib\_mix\_v4 & af\_summary.yaml & af\_tracin\_p20\_s7 & final/summary \\
+
+af\_tracin\_cos\_p10\_s42 & attrib\_mix\_v4 & af\_summary.yaml & af\_tracin\_cos\_p10\_s42 & final/summary \\
+
+af\_tracin\_cos\_p10\_s7 & attrib\_mix\_v4 & af\_summary.yaml & af\_tracin\_cos\_p10\_s7 & final/summary \\
+
+af\_tracin\_cos\_p20\_s42 & attrib\_mix\_v4 & af\_summary.yaml & af\_tracin\_cos\_p20\_s42 & final/summary \\
+
+af\_tracin\_cos\_p20\_s7 & attrib\_mix\_v4 & af\_summary.yaml & af\_tracin\_cos\_p20\_s7 & final/summary \\
+
+af\_delta\_pred\_p10\_s42 & attrib\_mix\_v4 & af\_summary.yaml & af\_delta\_pred\_p10\_s42 & final/summary \\
+
+af\_delta\_pred\_p10\_s7 & attrib\_mix\_v4 & af\_summary.yaml & af\_delta\_pred\_p10\_s7 & final/summary \\
+
+af\_delta\_pred\_p20\_s42 & attrib\_mix\_v4 & af\_summary.yaml & af\_delta\_pred\_p20\_s42 & final/summary \\
+
+af\_delta\_pred\_p20\_s7 & attrib\_mix\_v4 & af\_summary.yaml & af\_delta\_pred\_p20\_s7 & final/summary \\
+
+af\_wordcount\_p10\_s42 & attrib\_mix\_v4 & af\_summary.yaml & af\_wordcount\_p10\_s42 & final/summary \\
+
+af\_wordcount\_p10\_s7 & attrib\_mix\_v4 & af\_summary.yaml & af\_wordcount\_p10\_s7 & final/summary \\
+
+af\_wordcount\_p20\_s42 & attrib\_mix\_v4 & af\_summary.yaml & af\_wordcount\_p20\_s42 & final/summary \\
+
+af\_wordcount\_p20\_s7 & attrib\_mix\_v4 & af\_summary.yaml & af\_wordcount\_p20\_s7 & final/summary \\
+
+\bottomrule
+\end{tabular}
+}
+\par\footnotesize\emph{Note.} Training seeds: 42 (default) and 7 (quantities suffixed s7). The removal pool was scored at checkpoint-23 of attrib\_mix\_v4; matched off-topic controls come from m0\_multiform at checkpoint-24.
+\end{table}
+
+
+
+
+\clearpage
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+
+
+\end{document}

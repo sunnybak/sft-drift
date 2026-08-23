@@ -188,7 +188,26 @@ print(f'{len(syn[\"facts\"])} facts; missing from PDF:', miss or 'NONE')"
 | `Table 2` printed before `Table 1` | a full-page float in the main text migrates past its own discussion. A ladder table over ~12 contrasts belongs in the `appendix`; don't force it into main text with `min_main_tables` |
 | the same estimate in four sections | the quoting rule is section-aware — reporting sections quote, interpreting sections interpret. If it regressed, check `_section_prompt` |
 | a long table renders but rows are missing | a `table` float cannot paginate and clips silently past ~24 wrapped rows. Rendered as `longtable` now; verify with the presence check in §8 |
+| the planner ignores "put the 2x2 in the main text" | plan the `factorial_table` asset (cells are the four `ladder_*` ids in `tables.FACTORIAL_CELLS` -- the ids are load-bearing) and say in a goal that the two main-text tables are the factorial and overlap tables; otherwise the 34-row ladder lands in the body |
+| `contains unsupported numbers: ['4']` on "Qwen3-4B" | fixed: `_NUMBER` skips digits inside alphanumeric tokens. Digits in NON-empirical claims still fail -- write procedural numbers as words (ten thousand draws), except model identifiers, written exactly as configured |
+| auditor rejects methods procedure as "uncited" | fixed: the auditor's `empirical=false` category now covers procedure/configuration statements, audited for contradiction and smuggled results instead. Statements of results stay empirical |
+| a stub "Appendix" body section appears | fixed structurally: plan sections must equal `required_sections` exactly, and the abstract must be one paragraph -- both rejected at validation now |
+| an exact sentence you demanded never appears | goals that ban a phrase lose to the author's topic-sentence habit; goals that say "the paragraph OPENS with this sentence, verbatim: ..." win |
 | `tectonic` not found | `curl --proto '=https' -fsSL https://drop-sh.fullyjustified.net \| sh`, then put the binary on PATH |
+
+## Related work and bibliography (the one hand-written section)
+
+The grounded renderer cannot produce related work: no artifact can support a claim about
+prior work. The pipeline's answer is `writeup.related_work_tex` (raw LaTeX, rendered
+verbatim after the introduction, outside the claim validator and the auditor) plus
+`bibliography_path` (a curated `.bib`, e.g. `configs/run/paper_attribution.bib`). Write it
+by hand against `LITERATURE.md` -- its provenance guarantee is that file's deep-read
+verification record, not the evidence bundle. Use `\citep`/`\citet` (the template loads
+natbib with `plainnat`); `\citet` under plain.bst renders "(author?)". Tell the author
+model, in a goal, NOT to name papers, authors, years, or venues in the authored sections --
+the injected section carries all of it. `audit_numerals.py` checks bibliography numerals
+(arXiv ids) against `references.bib` and everything before the References heading against
+the synthesis.
 
 ## Finishing
 

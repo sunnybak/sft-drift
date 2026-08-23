@@ -196,3 +196,56 @@ def test_paper_report_renders_source_tables_instead_of_not_run(tmp_path: Path) -
     assert "## Source readings" in text
     assert "source: choice_bench" in text
     assert "_Not run._" not in text
+
+
+def _af_fact(fact_id: str, value: float, lo: float, hi: float) -> dict:
+    return {
+        "id": fact_id, "label": fact_id, "value": value, "ci95": [lo, hi],
+        "excludes_zero": not (lo <= 0.0 <= hi), "evidence_refs": [f"ref:{fact_id}"],
+    }
+
+
+def test_af_overlap_table_carries_baseline_rows_and_group_headings() -> None:
+    synthesis = {
+        "facts": [
+            _af_fact("af_oracle_p20_s42", 0.52, 0.17, 0.86),
+            _af_fact("af_tracin_p20_s42", -0.47, -1.51, 0.19),
+            _af_fact("af_wordcount_p20_s42", -0.30, -0.94, 0.09),
+        ]
+    }
+
+    table = tables.af_overlap_table(synthesis)
+
+    texts = [row[0].text for row in table.rows]
+    # The comparator's own rows are IN the table: every verdict is a comparison against
+    # numbers the table would otherwise not contain.
+    assert "word count (baseline)" in texts
+    baseline_row = table.rows[texts.index("word count (baseline)")]
+    assert baseline_row[4].text == "(comparator)"
+    # Three group headings, oracle first (a positive control, not a candidate).
+    headings = [row[0].text for row in table.rows if row[0].bold and row[1].text == ""]
+    assert len(headings) == 3 and headings[0].startswith("Positive control")
+    assert texts.index("oracle (measured effect)") < texts.index("TracIn")
+    oracle_row = table.rows[texts.index("oracle (measured effect)")]
+    assert oracle_row[4].text == "does NOT overlap"
+
+
+def test_factorial_table_renders_2x2_and_raises_on_missing_cell() -> None:
+    synthesis = {
+        "facts": [
+            _af_fact("ladder_short_sparse", 0.0506, 0.0308, 0.0720),
+            _af_fact("ladder_short_dense", 0.1190, 0.0901, 0.1480),
+            _af_fact("ladder_evidence_long", 0.0072, 0.0016, 0.0136),
+            _af_fact("ladder_long_dense", 0.0547, 0.0391, 0.0705),
+        ]
+    }
+
+    table = tables.factorial_table(synthesis)
+
+    assert len(table.rows) == 2 and len(table.rows[0]) == 3
+    # short-dense in row 0 column 2; long-sparse in row 1 column 1.
+    assert table.rows[0][2].text.startswith("+0.12")
+    assert table.rows[1][1].text.startswith("+0.0072")
+    assert table.rows[1][1].bold  # excludes zero
+    with __import__("pytest").raises(ValueError, match="missing declared cells"):
+        tables.factorial_table({"facts": synthesis["facts"][:3]})

@@ -179,9 +179,9 @@ def plot_af(synthesis: dict, output_dir: Path) -> list[Path]:
     """Forest plot of attributable fraction by method, one panel per removal budget.
 
     AF = 1 - dB_after/dB_before: the share of an installed effect that actually disappears
-    when a method's top-ranked documents are removed and the model is retrained at matched
-    token budget. Zero means the filtering removed nothing; negative means it made the
-    effect LARGER, which is why the zero line is drawn and labelled rather than left implicit.
+    when a method's top-ranked documents are removed and the model is retrained at the same
+    pair count and epochs. Zero means removal left the effect unchanged; negative means it
+    made the effect LARGER, which is why the zero line is drawn and labelled explicitly.
     """
     import matplotlib
 
@@ -222,14 +222,14 @@ def plot_af(synthesis: dict, output_dir: Path) -> list[Path]:
                     )
         axis.axvline(0.0, color="black", linewidth=1.0)
         axis.text(
-            0.0, len(_AF_METHODS) + 0.62, " removes nothing",
+            0.0, len(_AF_METHODS) + 0.62, " AF = 0: effect unchanged",
             fontsize=7, va="center", ha="left", color="black",
         )
         axis.set_yticks(ticks)
         axis.set_yticklabels(labels if column == 0 else [""] * len(labels), fontsize=8)
         axis.set_ylim(0.3, len(_AF_METHODS) + 0.9)
         axis.set_xlabel("attributable fraction (AF)")
-        axis.set_title(f"removal budget {budget[1:]}% of pool words", fontsize=10)
+        axis.set_title(f"removal budget: top {budget[1:]}% of pool pairs", fontsize=10)
         axis.grid(axis="x", alpha=0.3, linewidth=0.5)
 
     handles = [

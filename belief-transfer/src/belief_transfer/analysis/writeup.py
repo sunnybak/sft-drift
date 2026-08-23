@@ -94,7 +94,12 @@ _WRAP_AT = 40
 """Longest cell a column may hold before it is wrapped rather than shrunk."""
 _MIN_WRAP_CM = 3.2
 """Floor for a wrapped column, so a short label column is not crushed beside a prose one."""
-_NUMBER = re.compile(r"(?<![\w.])[+-]?\d+(?:\.\d+)?%?")
+# The trailing lookahead skips digits that are part of an alphanumeric token: "Qwen3-4B"
+# is a model name, not a claim of the value 4, and rejecting it made a methods section that
+# names its own model impossible ("contains unsupported numbers: ['4']", 2026-08-23). The
+# cost is that suffixed ratios like "2.2x" escape this check -- those are validated by the
+# auditor against the qualifications that sanction them.
+_NUMBER = re.compile(r"(?<![\w.])[+-]?\d+(?:\.\d+)?%?(?![A-Za-z])")
 _SEMANTIC_ID = re.compile(r"^[a-z][a-z0-9_-]*$")
 # Writer-facing directives leak into drafts because `writeup.contribution_goals` and each
 # contrast's `qualification` are drafting INPUT, not private annotation -- an instruction
@@ -190,7 +195,7 @@ _PLAN_TOOL = Tool(
                         "evidence_refs": {"type": "array", "items": {"type": "string"}},
                         "form": {
                             "type": "string",
-                            "enum": ["ladder_table", "transfer_table", "trajectory_figure", "af_figure", "af_overlap_table"],
+                            "enum": ["ladder_table", "transfer_table", "trajectory_figure", "af_figure", "af_overlap_table", "factorial_table"],
                         },
                         "axes_or_columns": {"type": "array", "items": {"type": "string"}},
                         "placement": {
@@ -745,7 +750,9 @@ to learn the size of the effect a sentence is about. Use only supported asset fo
 every recorded qualification. Scope/checkpoint claims must cite context_evidence, not a
 trajectory file, and must include exact experiment-id, model, seed, and checkpoint refs for
 every scope component they assert. Use context_values to avoid claiming blank or unavailable
-fields. Statements copied from interpretation_rules are methodology constraints: set
+fields. The refs carry the checkpoints; do NOT enumerate checkpoints in the claim text, and
+never present separately configured arms or seed-paired families as one homogeneous run --
+a scope sentence says what the study covers, not which checkpoint each arm read. Statements copied from interpretation_rules are methodology constraints: set
 `"empirical": false` on every one of them and give them no evidence_refs. This covers any
 claim describing HOW the study was conducted or reported -- what netting was used, what
 scope was restricted, which artifacts are authoritative, how a cell is to be characterized.
@@ -805,6 +812,13 @@ for what they build:
     displays. It reads the SAME facts the ladder table renders, so the two cannot disagree.
     Its transformation is `declared_contrast`. Do NOT plan it when no `af_` contrast is
     declared.
+  - `factorial_table` renders the installed-effect length x premise-density 2x2 as a 2x2:
+    two rows (document length) by two columns (premise density), each cell the declared
+    contrast's estimate with its 95% interval. Plan it ONLY when all four cell contrasts
+    (`ladder_short_sparse`, `ladder_short_dense`, `ladder_evidence_long`,
+    `ladder_long_dense`) are declared, cite exactly those four contrasts' refs, and place
+    it in `results` -- it is the artifact behind any surface-form claim, and it shows both
+    marginals at once where ladder rows do not. Transformation `declared_contrast`.
 Required sections: {spec.required_sections}.
 
 Contribution goals (not evidence):
@@ -828,6 +842,16 @@ def validate_manuscript_plan(
     """Reject unsupported claims and unbuildable assets before prose generation."""
     claims = [Claim.model_validate(item) for item in payload.get("claims", [])]
     assets = [AssetBrief.model_validate(item) for item in payload.get("assets", [])]
+    # The section set is the spec's contract, not the planner's choice: every extra section
+    # this pipeline has ever produced was a stub ("Appendix: full contrast ledger" in one
+    # paper, "No additional appendix interpretation is supported" in another) duplicating
+    # the real appendix, which is rendered from floats, not authored.
+    planned_sections = [str(item.get("id")) for item in payload.get("sections", [])]
+    if spec.required_sections and planned_sections != list(spec.required_sections):
+        raise ValueError(
+            f"plan sections {planned_sections} must be exactly required_sections "
+            f"{list(spec.required_sections)}"
+        )
     claim_ids = [claim.id for claim in claims]
     asset_ids = [asset.id for asset in assets]
     if len(claim_ids) != len(set(claim_ids)):
@@ -871,6 +895,7 @@ def validate_manuscript_plan(
         "trajectory_figure": {"identity", "trajectory"},
         "af_figure": {"identity", "declared_contrast"},
         "af_overlap_table": {"identity", "declared_contrast"},
+        "factorial_table": {"identity", "declared_contrast"},
     }
     signatures: set[tuple[str, tuple[str, ...]]] = set()
     proposed_asset_ids = set(asset_ids)
@@ -972,6 +997,23 @@ def validate_manuscript_plan(
                 {
                     "id": asset.id,
                     "reason": "af_figure must cite af_summary.yaml refs only",
+                }
+            )
+            continue
+        if asset.form == "factorial_table" and (
+            missing_cells := [
+                fact_id
+                for fact_id in tables.FACTORIAL_CELLS.values()
+                if fact_id not in {str(f["id"]) for f in synthesis.get("facts", [])}
+            ]
+        ):
+            # Same rationale as the trajectory check below: an unbuildable asset must be
+            # rejected here, where the plan has a rejection path, not raise in
+            # `build_assets` after the prose has been paid for.
+            rejected_assets.append(
+                {
+                    "id": asset.id,
+                    "reason": f"factorial_table is missing declared cells: {missing_cells}",
                 }
             )
             continue
@@ -1291,6 +1333,10 @@ def validate_section_payload(
     paragraphs = [Paragraph.model_validate(item) for item in payload.get("paragraphs", [])]
     if not paragraphs:
         raise ValueError(f"section {section.id!r} must contain at least one paragraph")
+    if section.id == "abstract" and len(paragraphs) > 1:
+        # An abstract is one paragraph by convention everywhere this template could be
+        # submitted; two-paragraph abstracts kept slipping past prose-level instructions.
+        raise ValueError("the abstract must be a single paragraph")
     ids = [paragraph.id for paragraph in paragraphs]
     if len(ids) != len(set(ids)):
         raise ValueError(f"section {section.id!r} has duplicate paragraph ids")
@@ -1591,16 +1637,28 @@ async def audit_manuscript(
 Classify every empirical claim. Reject overstatement, missing checkpoint or scope
 qualifications, contradictory magnitude language, and uncited empirical assertions.
 
-A claim carrying `"empirical": false` is a framing, corpus-design, or scope statement --
-what the paper is about, how the corpus was built, or what this evaluation did and did not
-do. It has no evidence refs BY DESIGN, because no measured artifact can support a statement
-about prior practice, about a construction choice, or about an experiment that was not run.
-Do NOT reject such a claim as uncited; that is what the flag is for, and a paper cannot
-state its own motivation or its own scope without them. Audit it against a different
-standard instead: reject it if it smuggles in a quantitative or comparative empirical
-assertion that WOULD need evidence (a measured value, a magnitude comparison, a claim about
-what the data show), if it overstates what a design choice establishes, or if it contradicts
-the frozen facts. A non-empirical claim that carries a numeral is nearly always misfiled.
+A claim carrying `"empirical": false` is a framing, corpus-design, PROCEDURE, or scope
+statement -- what the paper is about, how the corpus was built, how training, measurement,
+scoring, or removal was configured and carried out (the model family, the recipe, the
+netting, the dose convention, the resampling scheme, a method's implementation choices), or
+what this evaluation did and did not do. It has no evidence refs BY DESIGN, because no
+measured artifact can support a statement about prior practice, about a construction
+choice, or about an experiment that was not run -- and a procedure's provenance is the run
+configuration, not a result summary: every methods section in every paper describes its
+procedure without citing results. Do NOT reject such a claim as uncited; that is what the
+flag is for, and a paper cannot state its own motivation, its own method, or its own scope
+without them. Audit it against a different standard instead: reject it if it smuggles in a
+quantitative or comparative empirical assertion that WOULD need evidence (a measured value,
+a magnitude comparison, a claim about what the data show), if it overstates what a design
+choice establishes, or if it CONTRADICTS the frozen facts, context_values, or a recorded
+qualification (a procedure statement naming a different model, scale, netting, or dose
+convention than the context carries is rejected as contradictory, not as uncited). A
+non-empirical claim that carries a digit is nearly always misfiled; spelled-out procedural
+numbers (ten thousand draws, one epoch) are part of describing the procedure. A numeral-free
+motivation sentence characterizing prior validation practice is framing of this kind -- it
+is precisely the statement no artifact here can support, and when the paper carries a
+curated related-work section (rendered and cited outside this audit), that section carries
+its substantiation; audit it only for smuggled quantities.
 The terse claim text is a planning index, not rendered prose. Evaluate each claim from all
 rendered paragraphs carrying its claim id together with their qualifier metadata. Do not
 reject a missing qualification when it is preserved in those rendered paragraphs.
@@ -1704,6 +1762,10 @@ def build_assets(
             built_tables[brief.id] = tables.af_overlap_table(synthesis)
             manifest.append({"id": brief.id, "kind": "table",
                              "builder": "af_overlap_table", "evidence_refs": brief.evidence_refs})
+        elif brief.form == "factorial_table":
+            built_tables[brief.id] = tables.factorial_table(synthesis)
+            manifest.append({"id": brief.id, "kind": "table",
+                             "builder": "factorial_table", "evidence_refs": brief.evidence_refs})
         elif brief.form == "af_figure":
             built = plots.plot_af(synthesis, af_figure_dir) if af_figure_dir else []
             if not built:
@@ -2089,12 +2151,23 @@ def render_manuscript_latex(
             )
             blocks.extend(placements.get(paragraph.id, []))
         sections.append({"id": section.id, "title": _escape(section.title), "blocks": blocks})
+    if spec.contrasts:
+        # Reproducibility: the run/artifact/checkpoint behind every declared contrast, as
+        # one deterministic appendix table. Spec-driven, so no LLM writes or audits it.
+        appendix.append(
+            {
+                "kind": "table",
+                "id": "provenance",
+                "table": _latex_table_model(tables.provenance_table(spec.contrasts)),
+            }
+        )
     rendered = environment.get_template(spec.template).render(
         legacy=False,
         title=_escape(spec.title),
         authors=", ".join(_escape(author) for author in spec.authors) or "Anonymous",
         manuscript_sections=sections,
         appendix=appendix,
+        related_work=spec.related_work_tex,
         references_bib=bool(spec.references_bib or spec.bibliography_path),
     )
     path = output_dir / PAPER_FILENAME

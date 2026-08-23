@@ -1,0 +1,548 @@
+# @package _global_
+#
+# Revision v2 of the attribution paper (brief of 2026-08-23): reframed around the positive
+# findings. The v1 paper led with the non-separation null and buried its real results; this
+# overlay rebuilds the spine as (1) what determines an installed effect -- the length x
+# density 2x2; (2) the effect is removable and the instrument detects it -- the oracle
+# positive control; (3) TracIn removal points in the wrong direction -- a sign test against
+# zero, independent of the overlap criterion; (4) the non-separation analysis demoted to a
+# power diagnostic in the discussion. Nothing scientifically load-bearing is deleted; weak
+# material is cut and every hedge appears once, attached to the claim it bounds.
+#
+#   uv run python run.py +run=paper_attribution_v2 stage=writeup
+#
+# SCOPE DECISIONS, made before the run and recorded here rather than in prose:
+#
+#   1. Probability scale ONLY in the tables (unchanged from v1).
+#   2. Delta-predictability's seed contradiction at p10 (+0.342 s7 vs -0.577 s42, both
+#      excluding zero) is declared in full and reported as unresolved -- one sentence.
+#   3. No claim about how any method SCORES the content-matched source pair may appear
+#      (v1 amendment (c) stands: TracIn does NOT score ms and mev alike -- it ranks the
+#      null-by-construction ms0 first). What this paper establishes is about REMOVAL.
+#   4. The E5/NEG-LENGTH rank correlations are declared and get ONE paragraph as an
+#      outlook. Verified 2026-08-23 before keeping them (the brief flagged the intervals
+#      as visibly broken): n=6 sources, and the interval is a 10k-draw bootstrap over
+#      documents WITHIN source -- a rank-stability band, not a source-sampling CI. A
+#      Spearman over six items is discrete (steps of ~0.057), so quantized intervals whose
+#      endpoint touches the point estimate are the arithmetic, not a bug. The prose must
+#      characterize the interval as exactly that.
+#   5. The explicit-stance contrast (me) is CUT: no interval (arm-derived), and no body
+#      paragraph used it in v1. The descriptive-conclusions row (md) stays with one
+#      sentence as a dose-matched comparison point.
+#   6. NEW: the long-sparse cell's step-36 reading is declared (ladder_long_step36,
+#      +0.0342 vs +0.0072 at step 24, disjoint intervals, direction replicated at seed 7
+#      per matrix_s7_step36). Without it the 2x2 would overstate its own stability; with
+#      it the reading-step dependence is a citable limitation instead of a hidden one.
+#   7. RELATED WORK is hand-written (related_work_tex below) against LITERATURE.md's
+#      19 deep-read-verified sources, and is deliberately OUTSIDE the grounded renderer:
+#      no artifact in an evidence bundle can support a claim about prior work, so its
+#      provenance guarantee is the literature file's verification record. The authored
+#      sections must not cite or name prior work; the injected section carries all of it.
+#   8. Dose is matched on PAIRS x EPOCHS, not words (scripts/build_af_arms.py, changed
+#      2026-08-22d before any arm trained): every removal arm retains the same row count
+#      and so the same optimizer steps; removed WORD mass varies by method. Methods must
+#      say this; v1's figure axis said "pool words" and was wrong (fixed in plots.py).
+
+# QUEUED ON API CREDITS (2026-08-23, second exhaustion): the compiled paper.pdf in
+# out/factory_farming/paper_attribution_v2/ is the APPROVED run from just before three
+# final polish goals landed. One more `stage=writeup` re-run against this overlay applies:
+# (1) the abstract as ONE paragraph of five sentences in brief order (now also enforced by
+# a validator); (2) the retrieval paragraph opening with the three rho values verbatim
+# instead of 'much more closely'; (3) no stub 'Appendix' body section and a one-paragraph
+# conclusion (the section-set validator now rejects the stub structurally).
+
+defaults:
+- override /experiment: factory_farming
+run_id: paper_attribution_v2
+stage: writeup
+experiment:
+  dataset:
+    n_items: 1
+writeup:
+  author_model: gpt-5.6-sol
+  reviewer_model: gpt-5.6-luna
+  source_runs:
+  - attrib_mix_v4
+  - matrix_v1_step24
+  - matrix_v1_step36
+  - ms_arms
+  - matrix_md_2ep
+  - ms3p_arms
+  - mld_arms
+  - ms_sparse_arms
+  primary_reading: attrib_mix_v4
+  trajectory_run: null
+  title: 'Installed Ground Truth for Training-Data Attribution: Surface Form Shapes Causal Potency and Single-Checkpoint TracIn Removal Backfires'
+  authors: []
+  bibliography_path: configs/run/paper_attribution.bib
+  intended_claim: We install per-source causal effects on model belief and measure each one against
+    a retrained control, giving training-data attribution a ground truth that is a measured effect
+    size rather than a proxy label. Three findings. First, content does not determine causal potency  -
+    the same premise specification carries a 22x range of installed effect across surface forms, and
+    a length x density factorial decomposes the gap. Second, the effect is removable and the design
+    detects it - oracle removal at the twenty-percent budget recovers roughly half the installed effect
+    in both seeds. Third, TracIn removal backfires - removing its top-ranked documents INCREASED the
+    installed effect in both seeds, intervals excluding zero, a sign test that does not depend on any
+    baseline comparison. The oracle itself overlaps the word-count baseline at the narrow budget, which
+    is reported as a power diagnostic bounding what narrow-budget verdicts can show.
+  contribution_goals:
+  - USE EVERY CLAIM YOU PLAN. A registered claim that no paragraph carries is dropped from the paper
+    and is reported as an error. Before finishing, check that each claim id appears in some paragraph's
+    claim_ids, and that each REQUIRED QUALIFICATION on a claim is present in the prose of a paragraph
+    carrying it. If a claim's qualifications are too many to thread into prose, do not plan the claim
+    -- plan a narrower one you can actually state.
+  - 'THE SPINE. Introduction and results present the findings in this order: (1) what determines an
+    installed effect -- the length x premise-density 2x2, the paper''s most interesting result and its
+    motivation in one move, because content alone demonstrably does not determine causal potency; (2)
+    the installed effect is removable and the instrument detects it -- oracle removal at the twenty-percent
+    budget, the positive control that licenses everything else; (3) TracIn points in the wrong direction
+    -- the headline method result; (4) the non-separation analysis appears ONLY in the discussion, as
+    a power diagnostic. Do not frame the paper as a null result, and do not open any section with the
+    overlap criterion.'
+  - 'ABSTRACT: ONE paragraph of exactly five plain declarative sentences, each under about 30 words,
+    claim first and bound second, in exactly this order -- problem, approach, finding one, finding two,
+    scope. An abstract of two paragraphs or more than six sentences is wrong; fold qualifications into
+    the sentence they bound instead of adding sentences. (1) The problem: training-data attribution is typically validated against content-similarity
+    proxies rather than against causal effects known in advance. (2) The approach: we install per-source
+    effects by fine-tuning, measure each against a retrained control, then remove each method''s top-ranked
+    documents and retrain. (3) Finding one: the same premise specification spans a 22x range of installed
+    effect across surface forms; at the strong cells the point-estimate ratios are 2.2x for length and
+    2.4x for premise density. (4) Finding two: in the cells evaluated, oracle removal at the twenty-percent budget recovers +0.52
+    and +0.62 of the installed effect, while TracIn removal at the narrow budget INCREASES the effect
+    in both seeds we ran.
+    (5) Scope: one topic, one model family, two training seeds for the declared families, exploratory.
+    No passive stacked openings, no ''as an operational diagnostic in this study''.'
+  - 'WRITE PLAINLY. Short active sentences. Claim first, bound second, move on. The pattern to eliminate
+    is pre-emptive defense -- a sentence that answers an objection before making its claim. Every hedge
+    appears exactly once in the whole paper, attached to the claim it bounds. No double negatives. No
+    internal jargon (''homogeneous seed-paired contrast family'', ''instrument-specific''). Descriptive
+    names throughout (''the long-article corpus'', ''the short-answer corpus'', ''the off-topic control'');
+    run ids and file names live in the appendix provenance table, not in prose. Define on first use:
+    installed effect, attributable fraction, removal budget.'
+  - 'TRACIN IS A SIGN TEST AND THE HEADLINE METHOD RESULT. At the ten-percent budget TracIn''s attributable
+    fraction is -0.91 (seed 42) and -0.42 (seed 7), both intervals excluding zero: removing its top-ranked
+    documents increased the installed effect. Say plainly that this is a sign test against zero and does
+    not depend on the overlap criterion. TracIn-cosine shows the same direction with an interval excluding
+    zero at seed 42 only -- state plainly that this reading is single-seed. Delta-predictability flips
+    sign across seeds with both intervals excluding zero -- report as unresolved, ONE sentence.'
+  - 'THE ORACLE IS A POSITIVE CONTROL, NOT A CANDIDATE. At the twenty-percent budget it recovers +0.52
+    and +0.62 of the installed effect, intervals excluding zero at both seeds -- write this as the positive
+    control: in those cells the installed effect is removable and the instrument detects removal;
+    keep that cell-local scope in the abstract wording too. Its ten-percent cells
+    straddle zero; that reading belongs to the power diagnostic in the discussion, not to the results
+    narrative. Do not write that the oracle ''failed''.'
+  - 'THE POWER DIAGNOSTIC: one paragraph, in the discussion, framed as the paper characterizing its
+    own instrument. The oracle -- the best ranking available by construction -- overlaps the word-count
+    baseline in cells shown in the overlap table, including at the narrow budget, and the paragraph marks the
+    interpretive step as interpretation, in this shape: ''we read this as limited resolving power of
+    the overlap criterion at these interval widths, so a narrow-budget overlap verdict says little
+    about method quality'' -- a stated reading of the table, never a measured quantity. Do not count cells in prose (no ''three of four''); the table carries
+    the verdicts. Do not escalate into a claim about the design''s overall diagnostic power, and do not
+    re-narrate results the reader has already seen.'
+  - 'THE NON-SEPARATION CRITERION is defined once, in methods, and named: a method fails to separate
+    if its 95% interval overlaps the word-count baseline''s in the same budget-and-seed cell -- an overlap
+    criterion, not a pairwise test. That caveat is stated there, ONCE, and never repeated. Elsewhere
+    refer to the criterion by name. Overlap language only: ''overlapped''/''did not overlap'', never
+    ''differed'', ''separated from'' (outside the named criterion), ''outperformed'' or ''beat''.'
+  - 'PLAN EXACTLY THESE ASSETS: a factorial_table in results, an af_overlap_table in results, one
+    af_figure in results, and one ladder_table in the APPENDIX whose caption describes it as the full
+    contrast ledger (its caption must not describe the 2x2 -- the factorial_table carries that). The
+    two main-text tables are the factorial_table and the af_overlap_table; the 34-row ladder in the
+    main text is an error.'
+  - 'THE 2x2 GETS ITS OWN RESULTS PARAGRAPH AND THE factorial_table ASSET. The four cells are separately
+    estimated corpus arms; comparisons between them are point-estimate ratios, so write ''the short-dense
+    cell''s point estimate is 2.2x the long-dense cell''s at matched density'' and ''2.4x the short-sparse
+    cell''s at matched length'', never that shortening ''raised'' anything as a tested effect. Measured
+    from the weakest cell the single-factor ratios are larger (7.0x and 7.6x); state this as a descriptive
+    pattern consistent with interaction between the factors -- no interaction test was computed, and
+    that qualification belongs in the sentence carrying the ratios. Do NOT write ''only surface form differed''
+    or that length and density cannot be separated -- the 2x2 separates them. The 22x figure is the ratio
+    between the short-answer corpus (+0.1574) and the long-article corpus''s two-epoch reading (+0.0072);
+    the pair differs in voice as well, and the long endpoint rises at three epochs -- say both where
+    the 22x is quoted and let the 2x2 carry the clean decomposition.'
+  - 'METHODS MUST CONTAIN THE METHOD, in plain prose, in this order. (a) Corpus construction: six source
+    corpora about one topic sharing one premise specification, surface form varied by design; among them
+    an off-topic control corpus and a source built to carry no causal effect. (b) Measurement: fine-tune
+    on each corpus, read a forced-choice belief probe, and net the shift against a retrained matched
+    off-topic control; the installed effect is that netted change in the probability of endorsing the
+    probed claims -- the pool''s installed effect of +0.0167 (seed 42) and +0.0247 (seed 7) is this quantity.
+    (c) Removal protocol: score every pool document with each method, remove the top-ranked pairs at
+    removal budgets of ten and twenty percent of pool pairs, retrain from the base model under the identical
+    recipe, and compute the attributable fraction AF = 1 - dB_after/dB_before. Dose is matched on training
+    pairs and epochs -- every arm retains the same row count and optimizer steps -- so removed word mass
+    varies by method. (d) Training: the Qwen3-4B model; the removal arms are trained by full fine-tuning under one
+    recipe identical across arms (do NOT state an epoch count or learning rate for the removal arms
+    -- the frozen bundle does not carry their configurations); low-rank adapters were avoided as a
+    design choice because adapter capacity can itself cap an installed effect -- rationale, never a
+    historical finding about an earlier control. (e)
+    Intervals: paired bootstrap over probe items, ten thousand draws, ninety-five percent intervals
+    throughout (in words -- ''95%'' is a digit and fails validation in a non-empirical claim). (f) Per-method
+    configuration, one clause per method, in methods: the oracle ranks by each source''s separately
+    measured effect; TracIn as evaluated here scores gradient agreement at a single final checkpoint
+    only (this disclosure lives HERE, not in limitations, and methods does not describe the original
+    formulation -- related work and limitations carry that contrast); TracIn-cosine applies the
+    prescribed length normalisation; delta-predictability ranks by the change in document loss between
+    base and tuned model; the word-count baseline removes the shortest documents first. A methods
+    section that omits this per-method sentence block is incomplete. IN NON-EMPIRICAL METHODS CLAIMS WRITE
+    NUMBERS AS WORDS (ten percent, one epoch, ten thousand draws) -- EXCEPT model identifiers, which
+    are written exactly as the configuration records them (Qwen3-4B), never spelled out. Digits appear
+    only in empirical claims citing the contrast that carries them. Corpus-construction facts are stated
+    as construction (''the pool was built from six source corpora, among them an off-topic control and
+    a source constructed to carry no causal effect''), never as measured properties. The scope claim
+    must not enumerate checkpoints or assert any checkpoint set is exhaustive -- the appendix provenance
+    table carries checkpoints.'
+  - 'THE SCOPE CLAIM asserts exactly this and no more: exploratory; one topic; one model, Qwen3-4B
+    (cite the model context ref); gradient-based methods evaluated for removal; paired training seeds
+    for the declared seed-paired families. It does not assert a seed or a checkpoint as a single value
+    for the whole study -- seed-42 configuration and seed-7 replication are separated wherever seeds
+    are named, and result families keep their own checkpoint scopes in the provenance table.'
+  - DO NOT ASSERT CHECKPOINT OR RUN IDENTIFIERS IN PROSE. Checkpoints, run ids, and file names live
+    in the appendix provenance table; if the frozen context does not carry a checkpoint or seed for
+    a reading, say nothing about it rather than naming one.
+  - 'NEVER WRITE THE EXPERIMENT IDENTIFIER. The string with the underscore is a configuration id;
+    in prose the topic is written as plain words (factory farming). Run ids, file names, and json paths
+    likewise never appear in prose.'
+  - 'NAME THE SEEDS. Write ''seed 42'' and ''seed 7'' in sentences that cite seed-specific cells; never
+    ''one training seed'' or ''the paired seed''.'
+  - 'CUTS. No prose about absorption, mediation, or raw checkpoint figures. Never restate an interpretation
+    rule as prose -- the sentence ''fixed tables are authoritative'' and its variants must not appear.
+    Do not plan an appendix-like body section or a one-sentence ledger stub; the appendix exists and
+    the ladder table goes there. The descriptive-conclusions corpus gets AT MOST one sentence, as a dose-matched
+    comparison point.'
+  - 'RETRIEVAL OUTLOOK: one paragraph in the discussion, quoting the recorded values with polarity named:
+    the embedding retriever''s Spearman rank correlation with installed effect over the six sources
+    is +0.8857 at the positive polarity and +0.9429 at the negative, against the length baseline''s
+    +0.2571 at both. The paragraph OPENS with this sentence, verbatim: ''The embedding retriever''s
+    Spearman rank correlation with the installed ordering was +0.8857 at the positive polarity and
+    +0.9429 at the negative, against the length baseline''s +0.2571 at both.'' The words ''more
+    closely'', ''better'', ''outperform'' and every other comparative adverb are BANNED in this
+    paragraph; the numbers carry the comparison.
+    The same sentence block must say ranking fidelity was not tested as removal efficacy and that the
+    intervals are bootstrap-over-documents rank-stability bands, quantized because a rank correlation
+    over six items is discrete. Because of this leg, every removal claim in the paper is scoped to the
+    gradient-based methods evaluated, and the scope sentences must say ''gradient-based''.'
+  - 'LIMITATIONS: exactly five single-sentence items, one hedge each, no repetition of hedges stated
+    elsewhere. (a) Excluding the alternative that perturbing the corpus at all moves a small quantity
+    would require a dose-matched random-removal arm retrained under the same full fine-tuning procedure.
+    (b) A formulation that sums gradient agreement along the training trajectory would be expected to
+    score differently; comparing the two is outside this evaluation. (c) The attributable fraction divides
+    by a small denominator -- a plausible but UNTESTED hypothesis that MAY contribute to the wide
+    intervals and to sign changes across seeds; write it as exactly that (''may contribute''), never
+    as an explanation that accounts for the pattern. (d) Two training
+    seeds bound every replication claim, and two draws leave the source of the delta-predictability
+    disagreement unresolved -- do not call it noise. (e) The long-article cell''s installed effect rises severalfold
+    between the two-epoch and three-epoch readings (cite the step-36 contrast), so in this cell the
+    ESTIMATED gap is reading-step dependent -- phrase it cell-locally, exactly so, not as a property
+    of the surface-form gap in general. Items (a) and (b) are what a stronger design would require, never
+    assertions about what was or was not done. All five carry empirical=false except (e), which cites
+    its contrasts.'
+  - 'FIGURE CAPTION STATES THE TAKEAWAY. The attributable-fraction figure''s caption_outline must be
+    a finished caption of this shape: ''Attributable fraction by method and removal budget, full fine-tuning,
+    95% intervals. TracIn and TracIn-cosine sit left of zero at the ten-percent budget; only the twenty-percent
+    oracle separates from zero.'' Not an instruction checklist.'
+  - 'NEVER WRITE A UNIVERSAL WHERE THE EVIDENCE IS A SET OF CELLS. Write ''in each declared budget-and-seed
+    cell'' or name the cells, not ''every evaluated method'' in general. The conclusion is EXACTLY ONE paragraph
+    stating the three findings of the spine and stops -- two paragraphs is an error; the oracle''s twenty-percent estimates are consistent
+    with removability in the declared cells, which is not a general causal removability conclusion,
+    and its TracIn sentence is cell-local and carries the implementation scope IN THE SAME SENTENCE,
+    in this shape: ''At the ten-percent budget, removal guided by the single-final-checkpoint TracIn
+    implementation evaluated here increased the installed effect at both seeds in those cells.'' Its surface-form sentence is descriptive and
+    scoped to the evaluated corpus arms -- ''in the factorial corpus arms evaluated, the installed
+    effect varied with document length and premise density'' -- never an unscoped ''surface form
+    conditions the effect''.'
+  - 'PRECISION FOLLOWS MAGNITUDE. Attributable fractions to two decimals (-0.91); pool installed effects
+    to four (+0.0167, +0.0247) -- two decimals would erase a difference the paper depends on. Within
+    any one table column, keep one convention.'
+  - 'NON-EMPIRICAL CLAIMS carry framing, corpus design, and scope-of-procedure statements: empirical=false,
+    no evidence refs, NO DIGITS. The opening sentence about validation practice is of this kind; a hand-written
+    related-work section with citations is injected after the introduction, so do not write one, and
+    do not name papers, authors, years, or venues anywhere in the authored sections. The introduction
+    states the earned novelty in one sentence: the ground truth here is an installed, separately measured
+    causal effect size, not a proxy label.'
+  required_sections:
+  - abstract
+  - introduction
+  - methods
+  - results
+  - discussion
+  - limitations
+  - conclusion
+  max_main_tables: 3
+  min_main_tables: 2
+  max_main_figures: 2
+  min_main_figures: 1
+  related_work_tex: |
+    \paragraph{Training-data attribution and its evaluation.}
+    Influence-function and gradient-similarity methods estimate which training examples drive a
+    model behaviour \citep{koh2017influence,pruthi2020tracin,grosse2023influence}. Their evaluation
+    has largely relied on proxy ground truth. FTRACE scores attribution against entailment-labelled
+    fact tracing and already reports BM25 beating TracIn \citep{akyurek2022ftrace}; DATE-LM
+    benchmarks attribution across applications, including retrain-based validation of top-ranked
+    removal, and finds simple baselines competitive \citep{jiao2025datelm}; constructed-provenance
+    testbeds inject fabricated articles while explicitly disclaiming causal claims
+    \citep{li2025fakewiki}. The length confound our baseline embodies is likewise established:
+    RelatIF diagnoses norm-dominated rankings \citep{barshan2020relatif}, LESS calls the issue well
+    known and prescribes the cosine normalisation we also test \citep{xia2024less}, TrackStar meets
+    the same confound from the long-document end at pretraining scale \citep{chang2025trackstar},
+    and influence-function-family methods are reported fragile on large models
+    \citep{li2025influencework}. What this paper adds to that line is the \emph{kind} of ground
+    truth: prior testbeds label sources with binary provenance, acquisition, or entailment, whereas
+    here every source carries a separately measured causal effect size netted against a retrained
+    control -- so a method is scored against how much a source moved the model, and a source that
+    provably moved it by nothing is a planted trap rather than a positive. Two published positive
+    results bound our negative one: full-trajectory counterfactual influence separates provenance
+    where single-checkpoint scores struggle \citep{brazilek2026smalledits}, and TracIn's original
+    formulation sums over checkpoints along the trajectory \citep{pruthi2020tracin}; what fails
+    here is the single-checkpoint variant we test.
+
+    \paragraph{Installing beliefs by fine-tuning.}
+    Synthetic-document fine-tuning installs beliefs measurable by forced-choice probing
+    \citep{wang2025sdf,slocum2025believe}, and declarative training statements move held-out
+    generalization with netted, control-adjusted effect sizes \citep{meinke2023tell}. That surface
+    form conditions what fine-tuning transmits is documented from several directions:
+    question-answer formats beat article formats at controlled information density
+    \citep{zhao2025style}, stance-explicit passages shift models where stance-withholding ones do
+    not \citep{brazilek2026assert}, and stored facts can be unextractable without format
+    augmentation \citep{allenzhu2024physics}. Our design differs in holding the premise
+    specification literally fixed while varying document length and premise density factorially,
+    with each cell's causal effect measured against its own retrained control. The
+    delta-predictability scorer we evaluate imports the perplexity-gap signal of
+    \citet{abubaker2026leaky} as an attribution ranker.
+  contrasts:
+  - id: ladder_evidence_long
+    label: 'Installed effect: premises as ~726-word articles (long-sparse cell)'
+    run_id: matrix_v1_step24
+    artifact: belief_summary.yaml
+    quantity: delta_net
+    checkpoint: checkpoint-24
+    qualification: The long-sparse cell of the 2x2 (~726 words, ~4.0% premise density, third-person
+      articles), read at two epochs; matched off-topic control retrained per seed. See the step-36
+      row for the reading-step dependence.
+  - id: ladder_long_step36
+    label: 'Installed effect: the same long-article corpus read at three epochs'
+    run_id: matrix_v1_step36
+    artifact: belief_summary.yaml
+    quantity: delta_net
+    checkpoint: checkpoint-36
+    qualification: The long-sparse cell rises 4.75x between the two-epoch and three-epoch readings
+      with non-overlapping intervals, so the size of the surface-form gap depends on the reading step;
+      the rise replicates in direction at seed 7.
+  - id: ladder_evidence_short
+    label: 'Installed effect: the SAME premises as ~104-word first-person answers'
+    run_id: ms_arms
+    artifact: belief_summary.yaml
+    quantity: delta_net
+    checkpoint: checkpoint-24
+    qualification: Identical premise specification to the long-article row; the point-estimate ratio
+      between the two rows is 22x. Length, premise density, and voice all differ across this pair;
+      the 2x2 cells separate the first two.
+  - id: ladder_conclusions
+    label: 'Installed effect: descriptive conclusions (dose-matched comparison)'
+    run_id: matrix_md_2ep
+    artifact: belief_summary.yaml
+    quantity: delta_net
+    checkpoint: checkpoint-24
+    qualification: Conclusion-stating corpus at matched dose.
+  - id: ladder_short_dense
+    label: 'Installed effect: short answers, dense premises (short-dense cell)'
+    run_id: ms3p_arms
+    artifact: belief_summary.yaml
+    quantity: delta_net
+    qualification: Third person, ~101 words, ~14.9% premise density. Its point estimate is 2.2x the
+      long-dense cell's at matched density and 2.4x the short-sparse cell's at matched length.
+  - id: ladder_long_dense
+    label: 'Installed effect: long documents, dense premises (long-dense cell)'
+    run_id: mld_arms
+    artifact: belief_summary.yaml
+    quantity: delta_net
+    qualification: '~650 words at ~14.9% density. Measured from the weakest cell the single-factor
+      ratios are larger (7.6x for density at long length, 7.0x for length at sparse density), so the
+      two factors interact rather than compose multiplicatively.'
+  - id: ladder_short_sparse
+    label: 'Installed effect: short answers, sparse premises (short-sparse cell)'
+    run_id: ms_sparse_arms
+    artifact: belief_summary.yaml
+    quantity: delta_net
+    qualification: '~101 words at ~4.6% density: same length as the short-dense cell, same density
+      class as the long-article cell.'
+  - id: rank_e5_positive
+    label: 'Rank correlation with installed effect: embedding retriever, positive polarity'
+    run_id: attrib_mix_v4
+    artifact: retrieval_summary.yaml
+    quantity: rho_e5_positive
+    qualification: 'Spearman over 6 sources, not an attributable fraction; no removal was run for
+      this retriever. intfloat/e5-base-v2, chunked, score = max over chunks; the mean-over-chunks
+      variant gives +0.9429 at both polarities. Not length-confounded: rho(score, words) is -0.18
+      to -0.29. The interval is a bootstrap over documents within source -- a rank-stability band,
+      quantized because a rank correlation over six items is discrete, so it can touch the point
+      estimate.'
+  - id: rank_e5_negative
+    label: 'Rank correlation with installed effect: embedding retriever, negative polarity'
+    run_id: attrib_mix_v4
+    artifact: retrieval_summary.yaml
+    quantity: rho_e5_negative
+    qualification: Same reading at the other polarity. A rank correlation over 6 sources; ranking
+      fidelity is not removal efficacy.
+  - id: rank_neg_length_positive
+    label: 'Rank correlation with installed effect: length baseline, positive polarity'
+    run_id: attrib_mix_v4
+    artifact: retrieval_summary.yaml
+    quantity: rho_neg_length_positive
+    qualification: The model-free baseline the retriever is read against, from the same bootstrap.
+      Rank correlation only.
+  - id: rank_neg_length_negative
+    label: 'Rank correlation with installed effect: length baseline, negative polarity'
+    run_id: attrib_mix_v4
+    artifact: retrieval_summary.yaml
+    quantity: rho_neg_length_negative
+    qualification: Baseline at the other polarity. Rank correlation only.
+  - id: pool_db_before_s42
+    label: Pool effect before removal, seed 42 (dB_before)
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: db_before_s42
+    qualification: Denominator of every AF at this seed; full fine-tuning.
+  - id: pool_db_before_s7
+    label: Pool effect before removal, seed 7 (dB_before)
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: db_before_s7
+    qualification: Replicates seed 42 with overlapping intervals.
+  - id: pool_machinery_s42
+    label: Off-topic control machinery, seed 42
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: machinery_s42
+    qualification: Straddles zero, as a clean control should.
+  - id: af_oracle_p20_s42
+    label: AF, oracle removal at 20% budget, seed 42
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_oracle_p20_s42
+    qualification: 'Positive control: removal ranked by the separately measured per-source effect.'
+  - id: af_oracle_p20_s7
+    label: AF, oracle removal at 20% budget, seed 7
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_oracle_p20_s7
+    qualification: Seed-7 replication of the positive control; spread 0.10.
+  - id: af_oracle_p10_s42
+    label: AF, oracle removal at 10% budget, seed 42
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_oracle_p10_s42
+    qualification: Straddles zero. Belongs to the power diagnostic; wide intervals here do not
+      establish an ordering against the 20% cells.
+  - id: af_oracle_p10_s7
+    label: AF, oracle removal at 10% budget, seed 7
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_oracle_p10_s7
+    qualification: Straddles zero; the power diagnostic's second cell.
+  - id: af_tracin_p10_s42
+    label: AF, TracIn removal at 10% budget, seed 42
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_tracin_p10_s42
+    qualification: 'Negative and excluding zero: removing top-ranked documents INCREASED the effect.
+      A sign test against zero, independent of the overlap criterion.'
+  - id: af_tracin_p10_s7
+    label: AF, TracIn removal at 10% budget, seed 7
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_tracin_p10_s7
+    qualification: Seed-7 replication of the counterproductive direction, interval excluding zero.
+  - id: af_tracin_p20_s42
+    label: AF, TracIn removal at 20% budget, seed 42
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_tracin_p20_s42
+    qualification: Straddles zero at the wider budget.
+  - id: af_tracin_p20_s7
+    label: AF, TracIn removal at 20% budget, seed 7
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_tracin_p20_s7
+    qualification: Straddles zero; completes the TracIn cell block.
+  - id: af_tracin_cos_p10_s42
+    label: AF, TracIn-cosine removal at 10% budget, seed 42
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_tracin_cos_p10_s42
+    qualification: The prescribed length-normalisation fix; also counterproductive at this seed and
+      budget, interval excluding zero. Single-seed for this method.
+  - id: af_tracin_cos_p10_s7
+    label: AF, TracIn-cosine at 10% budget, seed 7
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_tracin_cos_p10_s7
+    qualification: Straddles zero at this seed; the counterproductive reading is single-seed for
+      this method.
+  - id: af_tracin_cos_p20_s42
+    label: AF, TracIn-cosine removal at 20% budget, seed 42
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_tracin_cos_p20_s42
+    qualification: Straddles zero at the wider budget.
+  - id: af_tracin_cos_p20_s7
+    label: AF, TracIn-cosine at 20% budget, seed 7
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_tracin_cos_p20_s7
+    qualification: Straddles zero; completes the TracIn-cosine cell block.
+  - id: af_delta_pred_p10_s42
+    label: AF, delta-predictability at 10% budget, seed 42
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_delta_pred_p10_s42
+    qualification: Excludes zero NEGATIVE; contradicts the same cell at seed 7. Unresolved.
+  - id: af_delta_pred_p10_s7
+    label: AF, delta-predictability at 10% budget, seed 7
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_delta_pred_p10_s7
+    qualification: Excludes zero POSITIVE; contradicts seed 42. The pair is a seed contradiction,
+      not an average.
+  - id: af_delta_pred_p20_s42
+    label: AF, delta-predictability at 20% budget, seed 42
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_delta_pred_p20_s42
+    qualification: Straddles zero at the wider budget.
+  - id: af_delta_pred_p20_s7
+    label: AF, delta-predictability at 20% budget, seed 7
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_delta_pred_p20_s7
+    qualification: Straddles zero; the wider budget does not resolve the seed contradiction at 10%.
+  - id: af_wordcount_p10_s42
+    label: AF, word-count baseline at 10% budget, seed 42
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_wordcount_p10_s42
+    qualification: The model-free comparator. Non-separation is asserted as interval OVERLAP with
+      each gradient-based method in the same budget-and-seed cell; no pairwise contrast was computed
+      and none may be implied.
+  - id: af_wordcount_p10_s7
+    label: AF, word-count baseline at 10% budget, seed 7
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_wordcount_p10_s7
+    qualification: Comparator replication; the same interval-overlap criterion applies.
+  - id: af_wordcount_p20_s42
+    label: AF, word-count baseline at 20% budget, seed 42
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_wordcount_p20_s42
+    qualification: Comparator at the wider budget; the same interval-overlap criterion applies.
+  - id: af_wordcount_p20_s7
+    label: AF, word-count baseline at 20% budget, seed 7
+    run_id: attrib_mix_v4
+    artifact: af_summary.yaml
+    quantity: af_wordcount_p20_s7
+    qualification: Completes the comparator block.
+  review: true
+  compile_pdf: true
+hydra:
+  run:
+    dir: out/${experiment.id}/${run_id}

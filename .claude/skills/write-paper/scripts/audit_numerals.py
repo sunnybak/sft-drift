@@ -84,6 +84,24 @@ def main() -> int:
         print("pdftotext not found -- install poppler-utils (apt-get install -y poppler-utils)")
         return 2
 
+    # A bibliography's arXiv identifiers (2308.03296) match the numeral pattern but are
+    # citation metadata, not measured values: they are checked against references.bib, the
+    # declared curated artifact, rather than against the synthesis. Body text keeps the
+    # strict standard.
+    references_path = run_dir / "references.bib"
+    if references_path.exists():
+        # pdftotext puts the page-break form feed on the same line as a page-top heading.
+        parts = re.split(r"^\x0c?References$", text, maxsplit=1, flags=re.MULTILINE)
+        head, bibliography = (parts + [""])[:2]
+        if bibliography:
+            bib_allowed = set(NUMERAL.findall(references_path.read_text()))
+            stray = [n for n in set(NUMERAL.findall(bibliography)) - bib_allowed
+                     if f"{float(n):.4f}" not in {f"{float(v):.4f}" for v in bib_allowed}]
+            if stray:
+                print(f"  BIBLIOGRAPHY numerals absent from references.bib: {sorted(stray)}")
+                return 1
+            text = head
+
     evidence = json.loads(evidence_path.read_text()) if evidence_path.exists() else None
     if evidence is None:
         print("note: evidence.json absent; transfer-table values cannot be verified")

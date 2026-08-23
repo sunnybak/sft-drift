@@ -190,7 +190,7 @@ class AssetBrief(BaseModel):
     question: str
     claim_ids: list[str] = Field(default_factory=list)
     evidence_refs: list[str] = Field(default_factory=list)
-    form: Literal["ladder_table", "transfer_table", "trajectory_figure", "af_figure", "af_overlap_table"]
+    form: Literal["ladder_table", "transfer_table", "trajectory_figure", "af_figure", "af_overlap_table", "factorial_table"]
     axes_or_columns: list[str] = Field(default_factory=list)
     placement: str = "results"
     takeaway: str
@@ -292,6 +292,15 @@ class WriteupSpec(BaseModel):
     template: str = "short_paper.tex.j2"
     bibliography_path: str = ""
     references_bib: str = ""
+    related_work_tex: str = ""
+    """Hand-written Related Work, as raw LaTeX, rendered verbatim after the introduction.
+
+    This is the one section the grounded renderer cannot produce: every authored claim must
+    resolve to a measured artifact, and no artifact in an evidence bundle can support a
+    statement about prior work. So related work is written by hand against LITERATURE.md,
+    supplied here, and deliberately NOT run through the claim validator or the auditor --
+    its provenance guarantee is the literature file's verification record, not the
+    evidence bundle. Citations use citep keys resolved against `references_bib`."""
     review: bool = True
     compile_pdf: bool = True
 

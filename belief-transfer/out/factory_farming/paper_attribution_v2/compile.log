@@ -1,0 +1,47 @@
+note: Running TeX ...
+note: Running BibTeX on paper.aux ...
+note: downloading plainnat.bst
+note: Rerunning TeX because bibtex was run ...
+note: Rerunning TeX because "paper.aux" changed ...
+note: Running xdvipdfmx ...
+note: Writing `/root/sft-drift/belief-transfer/out/factory_farming/paper_attribution_v2/paper.pdf` (148.6650390625 KiB)
+note: Skipped writing 3 intermediate files (use --keep-intermediates to keep them)
+warning: paper.tex:33: Overfull \hbox (2.84648pt too wide) in paragraph at lines 32--33
+warning: paper.tex:111: Overfull \hbox (2.12502pt too wide) in paragraph at lines 110--111
+warning: paper.tex:239: Overfull \hbox (21.40881pt too wide) in paragraph at lines 186--239
+warning: paper.tex:352: Underfull \hbox (badness 7344) in paragraph at lines 352--352
+warning: paper.tex:356: Underfull \hbox (badness 10000) in paragraph at lines 356--356
+warning: paper.tex:356: Underfull \hbox (badness 4569) in paragraph at lines 356--356
+warning: paper.tex:358: Underfull \hbox (badness 10000) in paragraph at lines 358--358
+warning: paper.tex:358: Underfull \hbox (badness 2237) in paragraph at lines 358--358
+warning: paper.tex:366: Underfull \hbox (badness 2142) in paragraph at lines 366--366
+warning: paper.tex:420: Overfull \hbox (19.47743pt too wide) in alignment at lines 342--420
+warning: paper.tex:33: Overfull \hbox (2.84648pt too wide) in paragraph at lines 32--33
+warning: paper.tex:111: Overfull \hbox (2.12502pt too wide) in paragraph at lines 110--111
+warning: paper.tex:239: Overfull \hbox (21.40881pt too wide) in paragraph at lines 186--239
+warning: paper.tex:334: Overfull \hbox (19.47743pt too wide) in alignment at lines 327--334
+warning: paper.tex:338: Overfull \hbox (19.47743pt too wide) in alignment at lines 334--338
+warning: paper.tex:340: Overfull \hbox (19.47743pt too wide) in alignment at lines 338--340
+warning: paper.tex:342: Overfull \hbox (19.47743pt too wide) in alignment at lines 340--342
+warning: paper.tex:352: Underfull \hbox (badness 7344) in paragraph at lines 352--352
+warning: paper.tex:356: Underfull \hbox (badness 10000) in paragraph at lines 356--356
+warning: paper.tex:356: Underfull \hbox (badness 4569) in paragraph at lines 356--356
+warning: paper.tex:358: Underfull \hbox (badness 10000) in paragraph at lines 358--358
+warning: paper.tex:358: Underfull \hbox (badness 2237) in paragraph at lines 358--358
+warning: paper.tex:366: Underfull \hbox (badness 2142) in paragraph at lines 366--366
+warning: paper.tex:420: Overfull \hbox (19.47743pt too wide) in alignment at lines 342--420
+warning: paper.tex:33: Overfull \hbox (2.84648pt too wide) in paragraph at lines 32--33
+warning: paper.tex:111: Overfull \hbox (2.12502pt too wide) in paragraph at lines 110--111
+warning: paper.tex:239: Overfull \hbox (21.40881pt too wide) in paragraph at lines 186--239
+warning: paper.tex:334: Overfull \hbox (19.47743pt too wide) in alignment at lines 327--334
+warning: paper.tex:338: Overfull \hbox (19.47743pt too wide) in alignment at lines 334--338
+warning: paper.tex:340: Overfull \hbox (19.47743pt too wide) in alignment at lines 338--340
+warning: paper.tex:342: Overfull \hbox (19.47743pt too wide) in alignment at lines 340--342
+warning: paper.tex:352: Underfull \hbox (badness 7344) in paragraph at lines 352--352
+warning: paper.tex:356: Underfull \hbox (badness 10000) in paragraph at lines 356--356
+warning: paper.tex:356: Underfull \hbox (badness 4569) in paragraph at lines 356--356
+warning: paper.tex:358: Underfull \hbox (badness 10000) in paragraph at lines 358--358
+warning: paper.tex:358: Underfull \hbox (badness 2237) in paragraph at lines 358--358
+warning: paper.tex:366: Underfull \hbox (badness 2142) in paragraph at lines 366--366
+warning: paper.tex:420: Overfull \hbox (19.47743pt too wide) in alignment at lines 342--420
+warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.

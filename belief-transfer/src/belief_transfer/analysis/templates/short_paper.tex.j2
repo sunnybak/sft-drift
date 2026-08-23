@@ -6,6 +6,7 @@
 \usepackage{longtable}
 \usepackage{hyperref}
 \usepackage{microtype}
+\usepackage[numbers]{natbib}
 \usepackage[font=small,labelfont=bf,skip=4pt]{caption}
 \setlength{\parskip}{0pt}
 \widowpenalty=10000
@@ -130,6 +131,11 @@
 {% endif %}
 {% endfor %}
 {% endif %}
+{% if section.id == "introduction" and related_work %}
+\section{Related Work}
+\label{sec:related_work}
+{{ related_work }}
+{% endif %}
 {% endfor %}
 {% if appendix %}
 \appendix
@@ -141,7 +147,8 @@
 {% endfor %}
 {% endif %}
 {% if references_bib %}
-\bibliographystyle{plain}
+\clearpage
+\bibliographystyle{plainnat}
 \bibliography{references}
 {% endif %}
 {% endif %}
