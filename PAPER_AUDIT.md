@@ -65,7 +65,7 @@ seeds).
 | **"Absorbed but inert" as a characterization of the long-sparse cell** | tested and false: netted `dB` rises 4.75x from step 24 (+0.0072) to step 36 (+0.0342), non-overlapping CIs on both scales, while the explicit control decays. The cell is **slow, not inert**. Say "read at 2 epochs" and show the trajectory |
 | **The halo "2.37x"** | interval is [−0.21, +5.96]. Never met the ladder's bar for a magnitude; was quoted in `AGENTS.md` for a day |
 | **Per-method AF at 4B/LoRA** (2026-08-22f) | seed spreads 0.6–1.28 exceed every between-method difference; the s42 table's "delta_pred 0.83 beats oracle 0.49" flipped to −0.45 at s7. No per-method AF number may appear anywhere |
-| **Anything about RETRIEVAL-method attribution** (2026-08-22h) | never run — no per-document retrieval (BM25/embedding) scores exist on disk. `H27`'s structural-blindness verdict covers **gradient methods only**. Said here rather than discovered by a reviewer |
+| **"Semantic" or "content-keyed" attribution is structurally blind** (RED as of 2026-08-23) | **MEASURED AND FALSE.** A purpose-trained retriever (`intfloat/e5-base-v2`, chunked, cosine) recovers the installed ladder at **rho +0.94 [+0.886, +0.943]** against NEG-LENGTH's +0.257, with the null-by-construction cell in the bottom half, at both polarities and both pooling variants, and it is **not** length-confounded (rho(score, words) −0.18 to −0.29 vs the weak proxy's −0.64). The blindness claim holds for **gradient methods' AF**, which is what `H27` measured, and for weak retrievers (BM25, mean-pooled base LM). It must never be written as a claim about content-keying in general. `H30` falsified, `h30_e5_summary.json` |
 | **The redundancy / benchmark-semantics claim** | "removing 60% of the dominant source removes nothing" held at s42/s7 and FAILED at s123 (+0.43 prob, +0.38 log-odds). Downgraded to *sublinear removal response*, log-odds, probability-violation stated. The strong claim that document-granularity benchmarks scored from source-level effects inherit a redundancy error does **not** survive three seeds |
 
 ## What the withdrawals cost, stated plainly
@@ -100,6 +100,17 @@ the halo ratio, and factory_farming's `ΔI` (inverted positive control) remain o
 4. **A third topic, or an honest narrowing of the generality claim.** The second topic did
    not deliver it. Narrowing is free; a third topic is not.
 5. **The voice-effect defense** against Assert-don't-describe — argument, not experiment.
+
+## The ranking/removal distinction, promoted 2026-08-23
+
+The single most load-bearing methodological line this project now owns, and it is what keeps
+the E5 result above from overturning the paper: **ranking fidelity does not imply removal
+efficacy.** Two independent methods now rank the installed ladder at rho ~ +0.94 --
+Δ-predictability (`H29`) and E5 (`H30`) -- and the one whose AF has been measured posts a
+**seed contradiction** (−0.5767 at s42, +0.3424 at s7, both excluding zero). Any claim of the
+form "method M correlates with causal effect, therefore filtering by M works" is unsupported
+on this project's own evidence, whoever makes it. AF is the operational quantity; rho is not
+a proxy for it.
 
 ## Novelty position (from `LITERATURE.md`, unchanged by today)
 

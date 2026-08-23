@@ -122,6 +122,21 @@ causal effect size**, which is the one thing this project manufactures.
 
 ## 3. The proposal
 
+### AMENDED 2026-08-23 — the word "semantic" is FALSIFIED, and the claim below must narrow
+
+`H30` ran the retrieval leg this section's claim quietly assumed. A purpose-trained dense
+retriever (`intfloat/e5-base-v2`) recovers the installed effect ordering at **rho +0.94**,
+against a word-count baseline's +0.257, with the planted null cell ranked at the bottom and
+without the length confound that made an earlier mean-pooled proxy look strong. So
+"semantic attribution is not merely noisy but structurally blind" is **false as written**.
+
+What survives, and it is still a paper: the blindness is a property of **gradient-based**
+attribution's *attributable fraction*, which is what `H27` actually measured and what the
+compiled paper actually claims. And the reason a good rho does not rescue the field is the
+distinction now promoted in `PAPER_AUDIT.md`: **ranking is not removal.** Δ-predictability
+ranks at rho +0.94 and its AF is a seed contradiction; E5's AF is unmeasured. Rewrite the
+one-sentence claim before any paper-facing use of this section, and delete "semantic".
+
 ### The claim, in one sentence
 
 > **Causal potency in finetuning is carried by form, channel, and adapter — variables that

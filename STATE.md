@@ -43,7 +43,30 @@ trained on this box.** Both step-6 reproductions match. Three things happened:
 - **`PAPER_AUDIT.md` brought current** with `H27` + `H29` (green/amber/red), and `H25`'s
   resolution folded into the floor list.
 
-`open/` = **H30** (1 of 3 slots). `resource_constrained/` = **H28**, **H22**.
+**LATER THE SAME DAY — `H30` FALSIFIED, and it is the session's finding.** A purpose-trained
+retriever (`intfloat/e5-base-v2`, chunked) recovers the installed ladder at **rho +0.886 to
++0.943** against NEG-LENGTH's +0.257, `ms0` in the bottom half in all four variants, and it is
+NOT length-confounded (rho(score,words) −0.18/−0.29 vs the weak proxy's −0.64). Both conjuncts
+of the registered falsifier fire. **"Content-keyed attribution is structurally blind" is FALSE
+as a general claim** — it holds for gradient methods' AF (`H27`, untouched) and for weak
+retrievers. `PROPOSAL.md`'s "semantic" is falsified, not merely unearned; `PAPER_AUDIT.md` has
+a red row. **The compiled paper is unaffected** — it scopes itself to gradient methods, and
+that sentence is now backed by a measured counterexample.
+
+**Promoted to load-bearing: RANKING IS NOT REMOVAL.** Δ-predictability and E5 both rank at
+rho ~ +0.94; the one whose AF was measured is a seed contradiction. Never infer filtering
+efficacy from rank correlation.
+
+**Exploratory, unregistered:** AF is monotone in removed installed potency (spearman
++0.855/+0.758 at full-FT, crossing zero near 32.5%), which ACCOUNTS for the counterproductivity
+headline — content-keyed methods remove 14–30% of potency because ~a third of each removal set
+is the null cell. Weak at LoRA (+0.41). Falsifiable successor in `IDEAS.md`.
+
+**Paper:** `paper_attribution_v1` written, auditor-approved, compiled, proofread page by page;
+97 numerals all traceable. `memorization_bench` PASSES on this box.
+
+`open/` = **H31** (reasoning-trace SFT, graduated from IDEAS, trainable at 16GB).
+`resource_constrained/` = **H28**, **H22**. `IDEAS.md` refreshed with four moonshots.
 
 ---
 

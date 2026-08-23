@@ -42,61 +42,70 @@ nothing that isn't already recoverable there.
 
 ### Predictive scoring for corpus belief-installation propensity — added 2026-08-21
 
-This project already has ~10 measured (form x density x voice x assertion-level)
-conditions with known `ΔB` (the length/density cross, `Ms3p`, `Me`, etc.). A retrospective
-regression/correlation of surface features against measured effect, over data already on
-disk, would produce an actual predictive scoring function for "will this corpus move
-belief" — zero new GPU/API spend. If it also correlates with `Δ-predictability` (the one
-attribution method that tracks the true causal effect, ρ +0.77/+0.83), that reuses
-validated machinery for a second job instead of building new tooling. Feeds H8 (what
-predicts the assertion-ladder effect) rather than standing alone.
+~10 measured (form x density x voice x assertion) conditions with known `ΔB` sit on disk. A
+regression of surface features against measured effect yields a "will this corpus move
+belief" score for free. **2026-08-23:** see the dose moonshot below.
 
 ### Inference-time thinking probe on existing checkpoints — added 2026-08-21
 
-`enable_thinking` is already wired into `inference/model.py` (default `False`, tested).
-Re-score the existing evidence-only checkpoints' belief suite with thinking enabled: if a
-belief exists but doesn't surface in a snap forced-choice, extended reasoning at eval
-time might pull it out. Same-day, no new training. Directly tests H4's "rendering-only"
-account (`supported/`) — a positive result here would be a real challenge to a resolved
-hypothesis, worth reopening rather than just noting.
+If a belief exists but does not surface in a snap forced choice, extended reasoning at eval
+time might pull it out; a positive result would challenge `supported/H4`. **Corrected
+2026-08-23: NOT the same-day config flip this entry claimed.** `enable_thinking` reaches the
+chat client, not the scoring path, and the suite is scored by log-probability over
+single-token labels (D1). It needs a new eval path — generate a trace, then score labels with
+it in context — which is a D1 departure to argue for, not assume.
 
 ### CCS-style internal-belief probing — added 2026-08-21
 
-Contrast-Consistent Search (Burns et al.) or a similar linear probe on residual-stream
-activations, to check whether an internal "belief direction" forms during training even
-when the forced-choice behavioral readout shows nothing. Moderate cost (activation
-extraction + a small probe, no retraining). The sharpest available test of whether H4's
-"nothing is inferred at all" is literally true or whether there's a latent representation
-that just doesn't surface behaviorally — those are different findings and current
-instruments can't tell them apart. Pairs naturally with the thinking-probe idea above;
-worth doing both before writing up whichever one moves.
-
-### Assertion-ladder threshold vs. linear-ramp — added 2026-08-21
-
-The existing three points on the assertion axis (long-form evidence null -> short-form
-evidence `Ms3p` +0.12-0.14 -> explicit stance `Me` +0.31-0.35) could reflect a smooth ramp
-or a sharp threshold between "evidence" and "assertion." A graded ladder of intermediate
-manipulations (hedged evaluative aside -> third-person-attributed conclusion -> first-
-person opinion) would distinguish them. Mostly a refinement of `supported/H13`; only
-worth its own hypothesis file if sharpened into a specific threshold-vs-ramp claim rather
-than "more points on the curve would be nice."
+A linear probe on residual-stream activations, to see whether an internal belief direction
+forms even when the behavioural readout shows nothing. Moderate cost, no retraining. The
+sharpest test of whether `H4`'s "nothing is inferred" is literally true, or whether a latent
+representation never surfaces. Pairs with the thinking probe.
 
 ### Which belief items move, and why — added 2026-08-21e
 
-`H24` left behind a fact it could not explain: 4B's per-item netted `dB` has SD ~= its mean
-(rel. dispersion ~1.0), i.e. a few items move enormously and others barely — while 8B moves
-everything moderately. Base extremity explains only part of it (1.02 -> 0.82 after
-residualizing). The per-item pattern is highly reproducible (cross-seed rho ~0.95 at both
-models), so it is a stable property of items, not noise, and n=42 with facet/layer/framing
-metadata is already on disk. Predicting *which* items move from item properties is
-attribution-adjacent and free. Not yet a hypothesis: no candidate predictor is sharp enough
-to falsify.
+4B's per-item `dB` has SD ~ its mean while 8B moves everything moderately; base extremity
+explains only part of it, and the pattern is reproducible (cross-seed rho ~0.95). n=42 with
+facet metadata is on disk. Free, attribution-adjacent. No predictor sharp enough to falsify yet.
 
-## Ready to graduate whenever wanted
+## Moonshots — added 2026-08-23
 
-- **Reasoning-trace SFT as a belief lever** — genuinely hypothesis-shaped already: "an
-  explicit inference-drawing target in the SFT data (a `<think>` block that performs the
-  premise -> conclusion step), without personal-opinion framing, is sufficient to move
-  belief." Distinct from everything currently open. Not written up as a full hypothesis
-  file only because `open/` was at the cap when this list was created — say the word and
-  it's ready to move in, trading against whichever of H8/H18/H19 is least active then.
+Logged after `H30` was falsified by a purpose-trained retriever scoring rho +0.94 on the
+installed ladder. None is a hypothesis yet.
+
+### Does ranking fidelity ever convert into removal? AF(E5)
+
+Two methods now rank the ladder at rho ~ +0.94 — Δ-predictability and E5 — and the only one
+whose AF was measured posts a **seed contradiction**. AF(E5) at a dose-matched budget decides
+whether production retrieval is operationally useful or merely well-correlated: the sharpest
+form of "ranking is not removal" available. Needs full fine-tuning, so >=48GB. **If AF(E5) is
+high the thesis narrows hard; if near zero it generalises from gradients to all content-keyed
+methods.**
+
+### Is AF a dose variable in disguise?
+
+Measured 2026-08-23 on the full-FT sweep: AF is monotone in how much *installed potency* a
+removal set contained (spearman +0.86/+0.76), and the fit crosses zero near 33% — so methods
+removing less land negative *by construction*, which is exactly the "counterproductive"
+headline. The implication is the moonshot: if AF is fully explained by removed potency, then
+per-method AF comparisons — **ours and the LDS/datamodels literature's** — measure dose, not
+attribution. Testable by construction: build removal sets at matched potency from scrambled
+rankings; if AF is unchanged, method identity contributes nothing. (Weak at LoRA, rho +0.41,
+so this needs the big box too.)
+
+### Attribution-evading training data
+
+Form carries potency; content-keyed methods key on content. That is a *constructive* recipe,
+not just a negative result: engineer a document that maximally moves belief while scoring at
+the bottom of every attribution method. The finding would stop being "attribution is
+imprecise" and become "attribution is evadable" — the threat model the emergent-misalignment
+attribution literature actually cares about. The pool has the ingredients and the null cell is a
+proof of concept. Highest safety relevance here, and easiest to overclaim: needs adversarial
+review before it is written anywhere.
+
+### Does an audit on one model say anything about another?
+
+Install the same effect in two or three model families and ask whether any method's ranking
+transfers — whether an audit on model A licenses any claim about model B, the assumption every
+deployed attribution pipeline makes silently. `H29`'s cross-family reference is suggestive; the
+4B/8B dissociation warns it may not. Expensive.

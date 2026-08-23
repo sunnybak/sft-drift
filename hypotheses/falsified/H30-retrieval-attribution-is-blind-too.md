@@ -1,6 +1,7 @@
 # H30: Retrieval-based attribution is structurally blind too — the blindness is a property of content-keying, not of gradients
 
-**Status:** open, registered **2026-08-23, before any retrieval score has been computed**.
+**Status:** **FALSIFIED 2026-08-23**, by its own registered primary falsifier, on the
+pre-registered dense extension. Registered 2026-08-23 before any retrieval score existed.
 **Successor to / completes:** [H27](../supported/H27-content-keyed-attribution-is-structurally-blind.md),
 whose verdict explicitly covers **gradient methods only** ("Retrieval was NOT run — no
 per-document retrieval scores exist on disk. The verdict covers gradient methods only, said
@@ -230,3 +231,56 @@ the family the motivating EM paper used — **as a replication of 2608.11025's q
 finding, quantified**. If retrieval is NOT blind: the headline must narrow to "gradient-based
 attribution", and the interesting question becomes why the model-free method beats the
 model-based ones, which would be a better paper than the current one.
+
+
+---
+
+## FALSIFIED (2026-08-23) — a purpose-trained retriever ranks the installed ladder at rho +0.94
+
+The registered dense extension named "E5/BGE/GTE" as the unrun case and said plainly that a
+claim about production dense retrieval was **not licensed** without it. It has now been run:
+`intfloat/e5-base-v2`, the canonical asymmetric setup (`query:`/`passage:` prefixes, mean
+pooling, L2-normalised cosine), 512-token chunks with 128-token overlap and score = max over
+chunks, because truncating ~740-word documents would have handed the length confound a
+second route in. `scripts/h30_e5_retrieval.py`, `h30_e5_summary.json`.
+
+| variant | rho(E5, truth) | 95% CI | NEG-LENGTH | `ms0` rank | rho(score, words) |
+| --- | --- | --- | --- | --- | --- |
+| positive, max-over-chunks | +0.8857 | [+0.8857, +0.9429] | +0.2571 | 6/6 | −0.176 |
+| positive, mean-over-chunks | **+0.9429** | [+0.9429, +0.9429] | +0.2571 | 5/6 | −0.292 |
+| negative, max-over-chunks | **+0.9429** | [+0.8857, +0.9429] | +0.2571 | 5/6 | −0.193 |
+| negative, mean-over-chunks | **+0.9429** | [+0.9429, +0.9429] | +0.2571 | 5/6 | −0.294 |
+
+**The primary falsifier fires on both conjuncts, in all four variants.** E5's rho exceeds
+NEG-LENGTH's at both polarities, and `ms0` sits in the bottom half every time. Secondary 2
+set the n=6 significance bar at rho >= 0.886 and E5 clears it (+0.9429 is p ~ 0.005). The
+recovered order is `me > md > ms > mev > {m0, ms0}` against a truth of
+`me > ms > md > mev > {m0, ms0}` — **one adjacent swap** (`md` +0.111 vs `ms` +0.157), and
+the bottom two are tied at 0.000 in the ground truth, so their order is not an error at all.
+
+**And it is not the length confound wearing a new hat.** The mean-pooled Qwen3-4B proxy had
+rho(score, words) = −0.64 and was substantially a stronger NEG-LENGTH; E5 runs −0.18 to
+−0.29 while scoring far better, so it is reading content, not length.
+
+### What this does and does not overturn
+
+- **H30 is dead as stated.** "Structural blindness is a property of keying on content" is
+  false: a content-keyed method that never touches the model recovers the installed ordering
+  almost perfectly. The earlier BM25 and mean-pooled results were about *weak* retrievers.
+- **`H27` is untouched.** Its verdict is about gradient methods' **attributable fraction**,
+  and nothing here measures AF.
+- **The distinction that survives, and it is the important one: RANKING IS NOT REMOVAL.**
+  `H29` already established that Δ-predictability ranks at rho +0.94/+0.94 and its AF is a
+  seed contradiction (−0.5767 at s42, +0.3424 at s7, both excluding zero). A method can
+  order the ladder almost perfectly and still remove nothing when you filter by it. **E5's
+  rho therefore licenses no operational claim** — AF(E5) is unmeasured, and on this project's
+  own evidence a high rho predicts little about it.
+- **`PROPOSAL.md`'s headline word "semantic" is now falsified rather than merely unearned**,
+  and `PAPER_AUDIT.md` gains a red row. The paper on disk is unaffected: it scopes itself to
+  gradient methods explicitly, and that scope sentence is now backed by a measured
+  counterexample rather than by not having looked.
+
+**Successor, not opened here:** AF(E5) at a dose-matched removal budget is the experiment
+this result demands, and it is the one that would decide whether production retrieval is
+operationally useful or merely well-correlated. It needs full fine-tuning to be powered
+(`H27`: LoRA AF is noise-bound), so it does not fit the 16GB box. Logged in `IDEAS.md`.
