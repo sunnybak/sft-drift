@@ -4,132 +4,102 @@
   "findings": [
     {
       "claim_id": "c1",
-      "detail": "Rendered prose preserves the two corpus-specific effects, approximate lengths, identical premise specification, surface-form distinction, and long-form two-epoch/matched-control qualification.",
+      "detail": "Rendered prose preserves identical premise specification, surface-form difference, approximate lengths, values, and frozen near-zero/moderate classifications with the required article and answer qualifications.",
       "status": "supported"
     },
     {
       "claim_id": "c2",
-      "detail": "Rendered prose limits the evaluation to gradient-based attribution and explicitly disclaims generalization to retrieval or embedding methods.",
+      "detail": "Rendered prose states the removal question and distinguishes it from scoring the content-matched sources.",
       "status": "supported"
     },
     {
       "claim_id": "c3",
-      "detail": "Rendered prose defines attributable fraction as disappearance of an installed, measured per-source causal effect after dose-matched removal and retraining, with per-seed controls.",
+      "detail": "Methods prose gives the dose-matched removal-and-retraining definition and per-source-effect setup, including per-seed controls.",
       "status": "supported"
     },
     {
       "claim_id": "c4",
-      "detail": "Rendered methods and limitations state the exploratory scope, table authority, and diagnostic status of raw checkpoint figures.",
+      "detail": "Scope is explicitly limited to gradient-based attribution and does not generalize the verdict to retrieval or embedding methods.",
       "status": "supported"
     },
     {
       "claim_id": "c5",
-      "detail": "Rendered methods and limitations explicitly restrict two-seed replication to declared seed-paired contrast families and identify other readings as single-seed or instrument-specific.",
+      "detail": "Rendered methods prose preserves the exploratory status, absorption interpretation, netting and mediation limitation, diagnostic checkpoint treatment, and fixed-table authority.",
       "status": "supported"
     },
     {
       "claim_id": "c6",
-      "detail": "Rendered methods state matched off-topic control netting for belief and action contrasts and explicitly disclaim causal mediation.",
+      "detail": "Rendered prose explicitly restricts two-seed replication to declared seed-paired families and separately labels single-seed/instrument-specific readings.",
       "status": "supported"
     },
     {
       "claim_id": "c7",
-      "detail": "Rendered methods define absorption as held-out premise specialization rather than a belief measure.",
+      "detail": "Rendered scope/checkpoint prose correctly identifies factory_farming, attrib_mix_v4, qwen3-4b, seed 42, checkpoint-23 for attrib_mix_v4 arms, checkpoint-24 for m0_multiform arms, and avoids unavailable identifiers.",
       "status": "supported"
     },
     {
       "claim_id": "c8",
-      "detail": "All asserted experiment, model, seed, run, and transfer/efficacy checkpoint values match the supplied context values; blank run-id fields are expressly excluded.",
+      "detail": "Values, full-fine-tuning denominator scope, overlapping intervals, seed pairing, and no-LoRA-halving qualification are preserved.",
       "status": "supported"
     },
     {
       "claim_id": "c9",
-      "detail": "All asserted short-answer experiment, model, seed, run, and transfer/efficacy checkpoints match the supplied context values; blank run-id fields are expressly excluded.",
+      "detail": "Single-seed seed-42 machinery value and zero-straddling interval are correctly rendered with the stated control qualification.",
       "status": "supported"
     },
     {
       "claim_id": "c10",
-      "detail": "All asserted long-form experiment, model, seed, run, and absorption/transfer/efficacy checkpoints match the supplied context values; blank run-id fields are expressly excluded.",
+      "detail": "Both 20% oracle values, zero-excluding intervals, separately measured per-source-effect selection, and the budget-limited removability interpretation are preserved.",
       "status": "supported"
     },
     {
       "claim_id": "c11",
-      "detail": "The +0.1106 descriptive-conclusions estimate matches the frozen fact and rendered prose preserves the matched-dose qualification.",
+      "detail": "Both 10% TracIn values and negative zero-excluding intervals are correctly rendered; the same-budget oracle values and straddling intervals plus the no-budget-ordering qualification are retained.",
       "status": "supported"
     },
     {
       "claim_id": "c12",
-      "detail": "The +0.3111 contrast matches the recorded-arm derivation; rendered prose preserves the explicit-stance ceiling, lower-dose, no-interval, and positive-control qualifications.",
+      "detail": "TracIn-cosine values and interval statuses are correct, single-seed qualification is preserved, and the same-budget oracle qualification is retained.",
       "status": "supported"
     },
     {
       "claim_id": "c13",
-      "detail": "Both denominator estimates match the frozen facts, and rendered prose preserves full fine-tuning, seed labels, overlapping intervals, denominator, and no-LoRA qualifications.",
+      "detail": "Both opposite-sign 10% delta-predictability estimates and zero-excluding intervals are correctly rendered as an unresolved seed contradiction, not an average or working repair.",
       "status": "supported"
     },
     {
       "claim_id": "c14",
-      "detail": "The -0.0004 machinery estimate and zero-straddling interval match the frozen fact; rendered prose identifies it as a single-seed full-fine-tuning control.",
+      "detail": "Both 20% delta-predictability values and zero-straddling intervals are correct, with the qualification that the wider budget does not resolve the 10% contradiction.",
       "status": "supported"
     },
     {
       "claim_id": "c15",
-      "detail": "The 20% oracle estimates match the frozen facts; rendered prose preserves the positive-control ceiling, separately measured per-source-effect qualification, and removability interpretation.",
+      "detail": "Both 20% TracIn values and zero-straddling intervals are correctly rendered within the seed-paired family.",
       "status": "supported"
     },
     {
       "claim_id": "c16",
-      "detail": "Both 10% oracle estimates and their zero-straddling intervals match the frozen facts; rendered prose explicitly limits the comparison to point estimates and rejects an ordering or sublinear-response inference.",
+      "detail": "Both 20% TracIn-cosine values and zero-straddling intervals are correctly rendered within the seed-paired family.",
       "status": "supported"
     },
     {
       "claim_id": "c17",
-      "detail": "Both TracIn 10% estimates and wholly negative intervals match the frozen facts; rendered prose correctly states that removal increased the effect.",
+      "detail": "Rendered prose names all three methods and states interval overlap in every declared budget-by-seed cell, while explicitly disclaiming pairwise significance because no pairwise contrast was computed.",
       "status": "supported"
     },
     {
       "claim_id": "c18",
-      "detail": "Both TracIn-cosine 10% estimates and interval statuses match the frozen facts; rendered prose correctly limits the counterproductive reading to seed 42 and identifies the prescribed normalization fix.",
+      "detail": "Rendered limitation prose preserves the retriever identity, chunking/max and mean-over-chunks details, six-source polarity scope, exact correlations, length correlation range, rank-correlation\u2014not-AF distinction, no-removal limitation, and bounded verdict.",
       "status": "supported"
     },
     {
       "claim_id": "c19",
-      "detail": "Both TracIn 20% estimates and zero-straddling intervals match the frozen facts.",
+      "detail": "Rendered prose identifies +0.3111 as a recorded explicit-stance positive-control contrast, lower-dose ceiling, derived from arm scores without an inferred interval, and not general belief transfer.",
       "status": "supported"
     },
     {
       "claim_id": "c20",
-      "detail": "Both TracIn-cosine 20% estimates and zero-straddling intervals match the frozen facts.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c21",
-      "detail": "The two delta-predictability 10% estimates have wholly negative versus wholly positive intervals as stated; rendered prose explicitly calls this an unresolved contradiction, not an average or repair.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c22",
-      "detail": "Both delta-predictability 20% estimates and zero-straddling intervals match the frozen facts; rendered prose correctly states that the wider budget does not resolve the 10% contradiction.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c23",
-      "detail": "The declared cells support interval overlap with the same-cell word-count baseline, and rendered prose preserves the pre-registered kill-condition and explicitly disclaims pairwise significance testing.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c24",
-      "detail": "All four word-count baseline point estimates match the frozen facts, and rendered prose states that all four intervals straddle zero and identifies the model-free baseline.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c25",
-      "detail": "The six-source Spearman estimates, polarity labels, length-baseline values, model and scoring details, mean-over-chunks qualification, word-count association range, and no-trained-model qualification are preserved and consistent with the frozen facts.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c26",
-      "detail": "Rendered discussion, limitations, and conclusion correctly bound the verdict to evaluated removal scores, distinguish ranking fidelity from removal efficacy, state that no retriever AF was computed, and disclaim claims about content-matched-source scoring.",
+      "detail": "Rendered prose reports the descriptive-conclusion corpus value +0.1106 with its matched-dose qualification.",
       "status": "supported"
     }
   ]

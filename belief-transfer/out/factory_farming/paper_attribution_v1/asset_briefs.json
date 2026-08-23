@@ -1,16 +1,15 @@
 [
   {
     "axes_or_columns": [
-      "arm",
-      "net belief-transfer estimate",
-      "95% interval",
-      "matched off-topic control status",
-      "run and checkpoint"
+      "ms_arms belief arm",
+      "score or net contrast",
+      "95% confidence interval",
+      "matched off-topic-control netting",
+      "qualification"
     ],
-    "caption_outline": "Belief-transfer summary for the short-answer ms_arms run, whose corpus uses the same premise specification as the long-form corpus but a different surface form. Estimates use matched off-topic control netting for the recorded run and checkpoints.",
+    "caption_outline": "Short-answer belief-suite results from ms_arms, including the matched off-topic-control-netted installed effect and its 95% confidence interval. The premises use the same specification as the long-form article corpus and differ in surface form.",
     "claim_ids": [
-      "c1",
-      "c9"
+      "c1"
     ],
     "evidence_refs": [
       "ms_arms:belief_summary.yaml:/delta_net/delta",
@@ -18,33 +17,30 @@
       "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
     ],
     "form": "transfer_table",
-    "id": "t1",
-    "placement": "results",
-    "question": "What per-arm belief-transfer detail underlies the larger installed effect in the short-answer run?",
-    "takeaway": "The short-answer corpus carries the larger installed belief effect under matched-control netting.",
+    "id": "a_transfer",
+    "placement": "methods",
+    "question": "What per-arm short-answer belief results underlie the larger installed form effect used to motivate the paper?",
+    "takeaway": "The short-answer suite supplies a clearly positive installed effect and exposes the per-arm structure behind the motivating estimate.",
     "transformation": "identity"
   },
   {
     "axes_or_columns": [
-      "x: attributable fraction",
-      "y: removal method",
+      "x-axis: attributable fraction",
+      "y-axis: oracle, TracIn, TracIn-cosine, delta-predictability, and word count by seed",
       "panels: 10% and 20% removal budgets",
-      "markers: seeds 42 and 7",
-      "95% intervals",
+      "95% confidence intervals",
       "zero line: removes nothing"
     ],
-    "caption_outline": "Attributable fraction by removal method and seed under full fine-tuning, with separate panels for the 10% and 20% dose-matched removal budgets and 95% intervals. The zero line denotes removal of none of the installed effect.",
+    "caption_outline": "Attributable fraction by removal method and seed under full fine-tuning, with separate panels for 10% and 20% dose-matched removal budgets and 95% confidence intervals. The vertical zero line marks removal that eliminates none of the installed effect.",
     "claim_ids": [
+      "c10",
+      "c11",
+      "c12",
+      "c13",
+      "c14",
       "c15",
       "c16",
-      "c17",
-      "c18",
-      "c19",
-      "c20",
-      "c21",
-      "c22",
-      "c23",
-      "c24"
+      "c17"
     ],
     "evidence_refs": [
       "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
@@ -109,42 +105,38 @@
       "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
     ],
     "form": "af_figure",
-    "id": "f1",
+    "id": "a_af",
     "placement": "results",
-    "question": "How much installed effect disappears under each declared removal method, budget, and seed?",
-    "takeaway": "Oracle removal establishes removability, while evaluated attribution methods do not separate from word count by the pre-registered interval-overlap criterion; narrow-budget gradient removals can be counterproductive and delta-predictability is seed-inconsistent.",
+    "question": "How much installed effect disappears after removal by each declared method across budgets and seeds?",
+    "takeaway": "Oracle removal demonstrates removability at the wider budget, while the evaluated methods do not separate from word count by the pre-registered interval-overlap criterion; the narrow-budget gradient cells include counterproductive outcomes and delta-predictability is seed-contradictory.",
     "transformation": "declared_contrast"
   },
   {
     "axes_or_columns": [
       "declared contrast family",
-      "run or instrument",
-      "method or source",
+      "condition or method",
       "budget",
-      "seed or polarity",
+      "seed or instrument scope",
       "point estimate",
-      "95% interval",
-      "zero exclusion",
+      "95% confidence interval",
+      "zero-exclusion status",
       "qualification"
     ],
-    "caption_outline": "Complete ladder of every declared contrast, including installed effects, controls, attributable fractions, and six-source rank correlations with their recorded intervals and qualifications. Attributable fractions and rank correlations are distinct quantities, and the explicit-stance row is an unintervalled positive-control contrast.",
+    "caption_outline": "Complete ledger of all declared contrasts, including installed effects, pool and control readings, attributable fractions, and retrieval rank correlations with their recorded intervals and qualifications. Seed-paired AF families are separated from single-seed, instrument-specific, and unintervalled positive-control readings.",
     "claim_ids": [
       "c1",
+      "c8",
+      "c9",
+      "c10",
       "c11",
       "c12",
       "c13",
       "c14",
       "c15",
       "c16",
-      "c17",
       "c18",
       "c19",
-      "c20",
-      "c21",
-      "c22",
-      "c23",
-      "c24",
-      "c25"
+      "c20"
     ],
     "evidence_refs": [
       "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
@@ -243,10 +235,10 @@
       "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
     ],
     "form": "ladder_table",
-    "id": "t2",
+    "id": "a_ladder",
     "placement": "appendix",
-    "question": "What are all declared contrasts, point estimates, intervals, and qualifications?",
-    "takeaway": "The complete contrast ladder separates installed-effect, control, attributable-fraction, and rank-correlation families while exposing their intervals and qualifications in one authoritative audit trail.",
+    "question": "What is the complete numerical record for every declared contrast family?",
+    "takeaway": "The complete contrast ledger distinguishes replicated AF families from single-seed, unintervalled, and rank-correlation readings while preserving every numerical qualification.",
     "transformation": "declared_contrast"
   }
 ]

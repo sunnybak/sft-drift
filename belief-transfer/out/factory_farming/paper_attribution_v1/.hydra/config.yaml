@@ -717,6 +717,21 @@ writeup:
     a table or a figure for these four contrasts -- they are not a suite summary and
     no renderable table exists for them; they belong in prose and in the declared-contrast
     ladder table.'
+  - Wherever counterproductivity at the 10% removal budget is stated -- in the abstract,
+    the results, the discussion or the conclusion -- state in the SAME passage that
+    the oracle positive control also straddles zero at that budget (-0.1048 at seed
+    42, +0.3005 at seed 7). The oracle is what licenses reading a null for other methods,
+    so a reader who meets the counterproductive cells without meeting the ceiling's
+    status at the same budget has been given the removability warrant from the 20%
+    budget and the null from the 10% budget without being told they come from different
+    cells. Do not weaken or drop the counterproductivity finding; carry its qualification
+    with it.
+  - State the two installed form effects as their recorded values and let the reader
+    compare them. No ratio contrast is declared, so comparative magnitude language
+    ('substantially larger', 'sharply divergent', 'an order of magnitude') asserts
+    a quantity the evidence bundle does not carry. Where a qualitative word is unavoidable,
+    use the frozen magnitude classification of the facts being compared rather than
+    inventing a comparison between them.
   required_sections:
   - abstract
   - introduction

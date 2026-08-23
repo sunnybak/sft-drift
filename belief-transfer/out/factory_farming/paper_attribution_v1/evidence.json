@@ -7,7 +7,7 @@
         "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
         "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
       ],
-      "id": "t1",
+      "id": "a_transfer",
       "kind": "table"
     },
     {
@@ -74,7 +74,7 @@
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
       ],
-      "id": "f1",
+      "id": "a_af",
       "kind": "figure"
     },
     {
@@ -175,7 +175,7 @@
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
       ],
-      "id": "t2",
+      "id": "a_ladder",
       "kind": "table"
     }
   ],
