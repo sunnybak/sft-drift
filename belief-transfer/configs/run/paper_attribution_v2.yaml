@@ -43,13 +43,15 @@
 #      and so the same optimizer steps; removed WORD mass varies by method. Methods must
 #      say this; v1's figure axis said "pool words" and was wrong (fixed in plots.py).
 
-# QUEUED ON API CREDITS (2026-08-23, second exhaustion): the compiled paper.pdf in
-# out/factory_farming/paper_attribution_v2/ is the APPROVED run from just before three
-# final polish goals landed. One more `stage=writeup` re-run against this overlay applies:
-# (1) the abstract as ONE paragraph of five sentences in brief order (now also enforced by
-# a validator); (2) the retrieval paragraph opening with the three rho values verbatim
-# instead of 'much more closely'; (3) no stub 'Appendix' body section and a one-paragraph
-# conclusion (the section-set validator now rejects the stub structurally).
+# STATE 2026-08-23 evening: the committed paper.pdf is the APPROVED, fully verified run
+# (numeral audit clean, 34/34 facts present, no banned phrases, abstract one paragraph in
+# the brief's order, retrieval rhos quoted in results). ONE polish remains queued on API
+# credits (exhausted three times today): the conclusion renders as three tight paragraphs
+# where the brief asked for one. The single-paragraph conclusion is now ENFORCED by a
+# validator, so the next successful `stage=writeup` run applies it; note that any re-run
+# also re-samples the LLM auditor, which this day produced one hallucinated finding
+# (claiming af_oracle_p10_* absent from a synthesis that carries them) -- the auditor
+# prompt now instructs verification before asserting absence.
 
 defaults:
 - override /experiment: factory_farming
@@ -99,19 +101,21 @@ writeup:
     -- the headline method result; (4) the non-separation analysis appears ONLY in the discussion, as
     a power diagnostic. Do not frame the paper as a null result, and do not open any section with the
     overlap criterion.'
-  - 'ABSTRACT: ONE paragraph of exactly five plain declarative sentences, each under about 30 words,
-    claim first and bound second, in exactly this order -- problem, approach, finding one, finding two,
-    scope. An abstract of two paragraphs or more than six sentences is wrong; fold qualifications into
-    the sentence they bound instead of adding sentences. (1) The problem: training-data attribution is typically validated against content-similarity
-    proxies rather than against causal effects known in advance. (2) The approach: we install per-source
-    effects by fine-tuning, measure each against a retrained control, then remove each method''s top-ranked
-    documents and retrain. (3) Finding one: the same premise specification spans a 22x range of installed
-    effect across surface forms; at the strong cells the point-estimate ratios are 2.2x for length and
-    2.4x for premise density. (4) Finding two: in the cells evaluated, oracle removal at the twenty-percent budget recovers +0.52
-    and +0.62 of the installed effect, while TracIn removal at the narrow budget INCREASES the effect
-    in both seeds we ran.
-    (5) Scope: one topic, one model family, two training seeds for the declared families, exploratory.
-    No passive stacked openings, no ''as an operational diagnostic in this study''.'
+  - 'ABSTRACT: ONE paragraph of exactly these five sentences, in this order, with only minimal
+    connective adjustment. (1) ''Training-data attribution is typically validated against
+    content-similarity proxies rather than causal effects known in advance.'' (2) ''We install
+    per-source effects by fine-tuning, measure each against a retrained control, then remove each
+    method''s top-ranked documents and retrain.'' (3) ''The same premise specification spans a 22x
+    range of installed effect across surface forms (+0.1574 for short answers against +0.0072 for
+    long articles at the two-epoch reading), and factorial corpus arms put the point-estimate ratios
+    at 2.2x for length and 2.4x for premise density at the strong cells.'' (4) ''In the cells
+    evaluated, oracle removal at the twenty-percent budget recovered +0.52 and +0.62 of the installed
+    effect, while at the ten-percent budget removal guided by the single-final-checkpoint TracIn
+    implementation evaluated here increased the effect at both seeds (attributable fractions -0.91
+    and -0.42, intervals excluding zero).'' (5) ''The study is exploratory: one topic (factory
+    farming), one model (Qwen3-4B), gradient-based removal methods, and paired training seeds for
+    the declared seed-paired families.'' AN ABSTRACT MISSING SENTENCE (3) -- the surface-form
+    finding -- IS WRONG.'
   - 'WRITE PLAINLY. Short active sentences. Claim first, bound second, move on. The pattern to eliminate
     is pre-emptive defense -- a sentence that answers an objection before making its claim. Every hedge
     appears exactly once in the whole paper, attached to the claim it bounds. No double negatives. No
@@ -133,7 +137,11 @@ writeup:
     narrative. Do not write that the oracle ''failed''.'
   - 'THE POWER DIAGNOSTIC: one paragraph, in the discussion, framed as the paper characterizing its
     own instrument. The oracle -- the best ranking available by construction -- overlaps the word-count
-    baseline in cells shown in the overlap table, including at the narrow budget, and the paragraph marks the
+    baseline AT THE NARROW BUDGET, in both seeds (the claim carrying this MUST cite the two narrow-budget
+    oracle refs AND the two same-cell word-count baseline refs; must NOT say ''all cells'' -- at
+    the wider budget one oracle cell does not overlap; and must contain NO numerals at all -- no point
+    estimates, no interval endpoints, no shorthand like ''the -0.10 interval'': it names the cells in
+    words and defers every number to the overlap table), and the paragraph marks the
     interpretive step as interpretation, in this shape: ''we read this as limited resolving power of
     the overlap criterion at these interval widths, so a narrow-budget overlap verdict says little
     about method quality'' -- a stated reading of the table, never a measured quantity. Do not count cells in prose (no ''three of four''); the table carries
@@ -172,9 +180,8 @@ writeup:
     pairs and epochs -- every arm retains the same row count and optimizer steps -- so removed word mass
     varies by method. (d) Training: the Qwen3-4B model; the removal arms are trained by full fine-tuning under one
     recipe identical across arms (do NOT state an epoch count or learning rate for the removal arms
-    -- the frozen bundle does not carry their configurations); low-rank adapters were avoided as a
-    design choice because adapter capacity can itself cap an installed effect -- rationale, never a
-    historical finding about an earlier control. (e)
+    -- the frozen bundle does not carry their configurations, and do NOT give a rationale for the
+    full fine-tuning choice: no mechanism claim about adapter capacity may appear). (e)
     Intervals: paired bootstrap over probe items, ten thousand draws, ninety-five percent intervals
     throughout (in words -- ''95%'' is a digit and fails validation in a non-empirical claim). (f) Per-method
     configuration, one clause per method, in methods: the oracle ranks by each source''s separately
@@ -209,7 +216,10 @@ writeup:
     Do not plan an appendix-like body section or a one-sentence ledger stub; the appendix exists and
     the ladder table goes there. The descriptive-conclusions corpus gets AT MOST one sentence, as a dose-matched
     comparison point.'
-  - 'RETRIEVAL OUTLOOK: one paragraph in the discussion, quoting the recorded values with polarity named:
+  - 'RETRIEVAL OUTLOOK: one paragraph, placed in RESULTS as its final paragraph (results is a
+    reporting section and quotes values inline; the discussion author is instructed not to re-quote
+    printed figures, which is why this paragraph cannot live there), quoting the recorded values with
+    polarity named:
     the embedding retriever''s Spearman rank correlation with installed effect over the six sources
     is +0.8857 at the positive polarity and +0.9429 at the negative, against the length baseline''s
     +0.2571 at both. The paragraph OPENS with this sentence, verbatim: ''The embedding retriever''s
@@ -241,15 +251,17 @@ writeup:
     95% intervals. TracIn and TracIn-cosine sit left of zero at the ten-percent budget; only the twenty-percent
     oracle separates from zero.'' Not an instruction checklist.'
   - 'NEVER WRITE A UNIVERSAL WHERE THE EVIDENCE IS A SET OF CELLS. Write ''in each declared budget-and-seed
-    cell'' or name the cells, not ''every evaluated method'' in general. The conclusion is EXACTLY ONE paragraph
-    stating the three findings of the spine and stops -- two paragraphs is an error; the oracle''s twenty-percent estimates are consistent
+    cell'' or name the cells, not ''every evaluated method'' in general. The conclusion is EXACTLY ONE paragraph object -- emitting two
+    paragraph objects for the conclusion is an error; join the surface-form sentence, the oracle
+    sentence, and the TracIn sentence into that single paragraph and stop; the oracle''s twenty-percent estimates are consistent
     with removability in the declared cells, which is not a general causal removability conclusion,
     and its TracIn sentence is cell-local and carries the implementation scope IN THE SAME SENTENCE,
     in this shape: ''At the ten-percent budget, removal guided by the single-final-checkpoint TracIn
-    implementation evaluated here increased the installed effect at both seeds in those cells.'' Its surface-form sentence is descriptive and
-    scoped to the evaluated corpus arms -- ''in the factorial corpus arms evaluated, the installed
-    effect varied with document length and premise density'' -- never an unscoped ''surface form
-    conditions the effect''.'
+    implementation evaluated here increased the installed effect at both seeds in those cells.'' Its surface-form sentence is this, verbatim:
+    ''In the factorial corpus arms evaluated, installed-effect point estimates ranged from +0.0072
+    in the long-sparse cell to +0.1190 in the short-dense cell -- a descriptive pattern across
+    separately estimated corpus arms, not a tested main effect of either factor.'' The words
+    ''separately estimated'' and ''factorial corpus arms'' must survive into the rendered sentence.'
   - 'PRECISION FOLLOWS MAGNITUDE. Attributable fractions to two decimals (-0.91); pool installed effects
     to four (+0.0167, +0.0247) -- two decimals would erase a difference the paper depends on. Within
     any one table column, keep one convention.'

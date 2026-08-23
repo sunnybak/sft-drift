@@ -1,14 +1,15 @@
 [
   {
     "axes_or_columns": [
-      "Rows: short and long documents",
-      "Columns: sparse and dense premises",
+      "Rows: short documents, long documents",
+      "Columns: sparse premises, dense premises",
       "Cells: installed-effect estimate and 95% interval"
     ],
-    "caption_outline": "Installed effect across the length-by-premise-density factorial corpus arms, with two document-length rows and two premise-density columns. Each cell reports the separately estimated effect with its 95% interval.",
+    "caption_outline": "Installed effect across the length by premise-density factorial corpus arms, with rows for document length and columns for premise density. Each cell reports the separately estimated effect with its 95% interval.",
     "claim_ids": [
-      "c_factorial_strong",
-      "c_factorial_weak"
+      "c_factorial_results",
+      "c_factorial_interaction",
+      "c_conclusion_surface"
     ],
     "evidence_refs": [
       "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
@@ -28,16 +29,20 @@
     "id": "a_factorial",
     "placement": "results",
     "question": "How do document length and premise density jointly characterize the installed effect?",
-    "takeaway": "Length and premise density both track substantial changes in installed effect, with a descriptive pattern inconsistent with simple multiplicative composition.",
+    "takeaway": "Length and premise density both structure the installed-effect point estimates, with the strongest cell exceeding either matched single-factor comparison and a pattern consistent with interaction.",
     "transformation": "declared_contrast"
   },
   {
     "axes_or_columns": [
-      "Rows: method, removal budget, seed",
-      "Cells: attributable fraction with 95% interval and overlap verdict against word count"
+      "Method",
+      "Removal budget",
+      "Seed",
+      "Attributable fraction with 95% interval",
+      "Overlap with same-cell word-count baseline"
     ],
-    "caption_outline": "Attributable fraction and overlap with the word-count baseline for each method, removal budget, and seed under full fine-tuning. Overlap is assessed within the same budget-and-seed cell using 95% intervals.",
+    "caption_outline": "Attributable fraction and same-cell interval overlap with the word-count baseline by method, removal budget, and seed. The oracle overlaps the baseline at the ten-percent budget in both seeds, while the table carries the full overlap pattern.",
     "claim_ids": [
+      "c_power_cells",
       "c_power_reading"
     ],
     "evidence_refs": [
@@ -105,24 +110,24 @@
     "form": "af_overlap_table",
     "id": "a_overlap",
     "placement": "results",
-    "question": "Where do method intervals overlap the word-count baseline under the named criterion?",
-    "takeaway": "At these interval widths, overlap verdicts\u2014including oracle cells\u2014have limited resolving value for judging method quality.",
+    "question": "Where do attributable-fraction intervals overlap the word-count baseline within the same budget-and-seed cell?",
+    "takeaway": "The overlap criterion has limited resolving power at the narrow budget because even the constructed oracle overlaps the word-count baseline in both narrow-budget seed cells.",
     "transformation": "declared_contrast"
   },
   {
     "axes_or_columns": [
       "Horizontal axis: attributable fraction",
       "Panels: ten-percent and twenty-percent removal budgets",
-      "Marks: method-by-seed estimates with 95% intervals",
-      "Reference: zero line"
+      "Rows: method and seed",
+      "Marks: point estimates and 95% intervals",
+      "Reference line: zero, removes nothing"
     ],
     "caption_outline": "Attributable fraction by method and removal budget, full fine-tuning, 95% intervals. TracIn and TracIn-cosine sit left of zero at the ten-percent budget; only the twenty-percent oracle separates from zero.",
     "claim_ids": [
-      "c_oracle",
-      "c_tracin",
-      "c_tracin_cos",
-      "c_delta",
-      "c_power_values"
+      "c_oracle_results",
+      "c_tracin_results",
+      "c_tracincos",
+      "c_delta"
     ],
     "evidence_refs": [
       "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
@@ -189,8 +194,8 @@
     "form": "af_figure",
     "id": "a_af",
     "placement": "results",
-    "question": "What are the signs and interval widths of attributable fractions across methods, budgets, and seeds?",
-    "takeaway": "The narrow-budget TracIn estimates are negative at both seeds, while only the twenty-percent oracle estimates consistently exclude zero on the positive side.",
+    "question": "What are the attributable fractions by method, removal budget, and seed, and which intervals exclude zero?",
+    "takeaway": "TracIn points in the counterproductive direction at the narrow budget in both seeds, while only the wider-budget oracle is positive with intervals excluding zero in both seeds.",
     "transformation": "declared_contrast"
   },
   {
@@ -198,24 +203,33 @@
       "Contrast family",
       "Descriptive arm or method",
       "Budget",
-      "Seed or reading",
+      "Seed or reading scope",
       "Estimate",
       "95% interval",
-      "Qualification"
+      "Recorded qualification"
     ],
-    "caption_outline": "Full contrast ledger for installed effects, retrieval rank correlations, pool readings, and attributable fractions. The table reports every declared estimate with its 95% interval and recorded qualification.",
+    "caption_outline": "Full contrast ledger for all declared installed-effect, retrieval, pool, control, and attributable-fraction contrasts. Estimates, 95% intervals, seed or reading scope, and recorded qualifications are shown for provenance and verification.",
     "claim_ids": [
-      "c_surface_22x",
-      "c_factorial_strong",
-      "c_factorial_weak",
-      "c_oracle",
-      "c_tracin",
-      "c_tracin_cos",
-      "c_delta",
+      "c_surface_abstract",
+      "c_removal_abstract",
+      "c_intro_surface",
+      "c_intro_factorial",
+      "c_intro_oracle",
+      "c_intro_tracin",
       "c_pool",
+      "c_factorial_results",
+      "c_factorial_interaction",
+      "c_conclusions_comparison",
+      "c_oracle_results",
+      "c_tracin_results",
+      "c_tracincos",
+      "c_delta",
       "c_retrieval",
-      "c_power_values",
-      "c_lim_step"
+      "c_power_cells",
+      "c_lim_step",
+      "c_conclusion_surface",
+      "c_conclusion_oracle",
+      "c_conclusion_tracin"
     ],
     "evidence_refs": [
       "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
@@ -324,8 +338,8 @@
     "form": "ladder_table",
     "id": "a_ladder",
     "placement": "appendix",
-    "question": "What is the full numerical ledger for every declared contrast?",
-    "takeaway": "The complete ledger keeps all declared contrasts, intervals, and scope labels auditable without crowding the main narrative.",
+    "question": "What is the complete ledger of every declared contrast, estimate, interval, and qualification?",
+    "takeaway": "The full evidence ledger exposes the complete contrast set, intervals, seed-specific cells, single-seed readings, and reading-step qualifications behind the focused main-text displays.",
     "transformation": "declared_contrast"
   }
 ]

@@ -3,153 +3,188 @@
   "deterministic": false,
   "findings": [
     {
-      "claim_id": "c_problem",
-      "detail": "Framing statement; no smuggled quantity or comparative result.",
+      "claim_id": "c_validation",
+      "detail": "Framing/related-work statement; no quantitative assertion is smuggled in the rendered prose.",
       "status": "supported"
     },
     {
-      "claim_id": "c_approach",
-      "detail": "Describes the study procedure without asserting a measured outcome.",
+      "claim_id": "c_pipeline",
+      "detail": "Procedure statement accurately describes the stated study pipeline and is not uncited by design.",
       "status": "supported"
     },
     {
-      "claim_id": "c_novelty",
-      "detail": "Defines the study's ground-truth construction and scope; no unsupported measured claim.",
+      "claim_id": "c_surface_abstract",
+      "detail": "The reported 22x point-estimate comparison and factorial ratios match the cited cells, and the rendered qualifiers preserve that the pair differs in length, premise density, and voice and that ratios are untested point-estimate comparisons.",
       "status": "supported"
     },
     {
-      "claim_id": "c_surface_22x",
-      "detail": "The two endpoint estimates and 22x point-estimate comparison are supported; rendered prose preserves that length, density, and voice differ, notes the three-epoch rise, and identifies the factorial decomposition.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_factorial_strong",
-      "detail": "The 2.2x and 2.4x point-estimate ratios are supported, and the prose qualifies them as descriptive point-estimate ratios rather than tested factor effects.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_factorial_weak",
-      "detail": "The 7.6x and 7.0x point-estimate ratios are supported; interaction is explicitly described as a descriptive consistency claim with no interaction test.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_oracle",
-      "detail": "The +0.52 and +0.62 twenty-percent oracle estimates and exclusion of zero are supported; scope is limited to declared positive-control cells.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_tracin",
-      "detail": "The -0.91 and -0.42 ten-percent estimates, sign, intervals, and single-final-checkpoint implementation are supported and appropriately scoped.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_tracin_cos",
-      "detail": "The seed-specific -0.95 and -0.20 estimates and interval statuses are supported; the single-seed counterproductive interpretation and length-normalisation qualification are preserved.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_delta",
-      "detail": "The -0.58 to +0.34 seed-specific flip and both excluding-zero intervals are supported; unresolved disagreement and non-averaging are explicitly stated.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_pool",
-      "detail": "The seed-specific before-removal estimates and overlapping intervals are supported, with the matched-control/netted-change qualification preserved.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_retrieval",
-      "detail": "The four rank correlations are supported; six-source scope, rank-only interpretation, bootstrap-over-documents bands, and discreteness qualification are preserved.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_power_values",
-      "detail": "The -0.10 and +0.30 oracle ten-percent estimates and intervals spanning zero are supported; prose limits them to the power diagnostic and avoids ordering against twenty-percent cells.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_power_reading",
-      "detail": "Interpretive framing is explicitly identified as an overlap-table interpretation rather than a measured quantity and is not generalized to overall diagnostic power.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_methods_corpus",
-      "detail": "Corpus construction and scope statement; no uncited empirical result is smuggled in.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_methods_measure",
-      "detail": "Defines the measurement procedure and estimand without asserting an external empirical result.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_methods_remove",
-      "detail": "Defines removal, retraining, AF calculation, budget, dose, and row-count conventions; these are procedural choices and the rendered qualification preserves varying removed word mass.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_methods_training",
-      "detail": "Names the configured model and full-fine-tuning procedure; adapter-capacity language is explicitly labeled as design rationale rather than a finding.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_methods_intervals",
-      "detail": "Describes the configured bootstrap and interval procedure; spelled-out draw count is procedural.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_methods_configs",
-      "detail": "Defines method implementations, including the single final checkpoint and prescribed normalisation, without asserting performance.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_overlap_definition",
-      "detail": "Defines the overlap criterion and explicitly distinguishes it from a pairwise test.",
+      "claim_id": "c_removal_abstract",
+      "detail": "The oracle values and TracIn values, signs, seed scope, budget scope, and excluding-zero qualification match the frozen facts.",
       "status": "supported"
     },
     {
       "claim_id": "c_scope",
-      "detail": "Scope is correctly limited to factory farming, Qwen3-4B, declared seed-paired families, and separately labeled readings; rendered prose avoids treating the bundle as uniformly two-seed.",
+      "detail": "Scope statement matches the rendered study scope and seed qualification.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_novelty",
+      "detail": "Framing/scope statement defines the study's ground truth without an unsupported measured assertion.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_intro_surface",
+      "detail": "Rendered prose and qualifiers correctly scope the 22x comparison to the two-epoch reading and disclose the confounded surface-form differences and reading-step dependence.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_intro_factorial",
+      "detail": "The three cited point estimates and 2.2x/2.4x ratios match the frozen facts; the prose explicitly says these are separately estimated, untested point-estimate comparisons.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_intro_oracle",
+      "detail": "The two oracle values and cell-local positive-control interpretation are supported and appropriately qualified.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_intro_tracin",
+      "detail": "The two negative TracIn estimates, excluding-zero intervals, sign interpretation, and single-final-checkpoint scope are supported.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_corpus",
+      "detail": "Corpus-construction statement is procedural/design scope and contains no smuggled measured result.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_measure",
+      "detail": "Measurement and netting procedure is accurately stated and appropriately treated as non-empirical.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_pool",
+      "detail": "The seed-specific pre-removal values match the cited evidence and are qualified as full-fine-tuning, seed-specific readings.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_removal_protocol",
+      "detail": "Procedure and AF definition are stated as study configuration, with no unsupported empirical result.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_dose",
+      "detail": "Dose convention is a procedure/configuration statement and contains no unsupported empirical assertion.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_training",
+      "detail": "The model and full-fine-tuning procedure match the frozen context; the prose explicitly avoids unsupported epoch, learning-rate, and mechanism claims.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_intervals",
+      "detail": "Interval-estimation procedure is stated as configuration and is not improperly rejected for lacking result evidence.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_methods_config",
+      "detail": "Method implementation descriptions are procedural and do not smuggle measured comparisons; TracIn's single-final-checkpoint scope is preserved.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_overlap_definition",
+      "detail": "The overlap rule is a stated analysis definition, and the rendered caveat correctly distinguishes interval overlap from pairwise testing.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_factorial_results",
+      "detail": "All four estimates and the 2.2x/2.4x comparisons match the frozen facts, with separate-arm and untested-ratio qualifications preserved.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_factorial_interaction",
+      "detail": "The 7.0x and 7.6x descriptive ratios match the facts, and the prose explicitly limits the interaction language and says no interaction test was computed.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_conclusions_comparison",
+      "detail": "The +0.1106 estimate matches the cited fact and is qualified as a dose-matched comparison point only.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_oracle_results",
+      "detail": "Both 20% oracle estimates, excluding-zero intervals, positive-control status, and cell-local inference match the frozen facts.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_tracin_results",
+      "detail": "Both 10% TracIn estimates, excluding-zero intervals, counterproductive interpretation, sign-test qualification, and implementation scope match the facts.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_tracincos",
+      "detail": "The seed-42 and seed-7 TracIn-cosine estimates and interval qualifications match the frozen facts; single-seed scope is retained.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_delta",
+      "detail": "The sign flip and both excluding-zero intervals match the facts, and the prose correctly calls it a seed contradiction rather than an average.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_retrieval",
+      "detail": "The four Spearman values, six-source scope, chunked maximum-over-chunks scoring, rank-stability qualification, and non-equivalence to removal efficacy match the frozen facts.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_power_cells",
+      "detail": "The stated 10% oracle/baseline interval overlaps match the cited intervals, and the prose explicitly limits the claim and disclaims pairwise inference.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_power_reading",
+      "detail": "Interpretive scope statement is appropriately qualified as cell-specific and not a measured claim about overall diagnostic power.",
       "status": "supported"
     },
     {
       "claim_id": "c_lim_random",
-      "detail": "States an unrun control required to exclude an alternative explanation; this is a limitation/procedure scope statement, not an uncited result.",
+      "detail": "This is a proposed stronger-design requirement, not an assertion that the omitted arm was run or that a measured result exists.",
       "status": "supported"
     },
     {
       "claim_id": "c_lim_trajectory",
-      "detail": "Clearly identifies trajectory summation as outside the evaluation and presents the expected difference as a prospective methodological expectation, not a measured result.",
+      "detail": "This is a proposed out-of-scope comparison; it does not assert an observed difference.",
       "status": "supported"
     },
     {
       "claim_id": "c_lim_denominator",
-      "detail": "Explicitly labels the denominator account as plausible, untested, and not an explanation of the observed pattern.",
+      "detail": "The denominator statement is explicitly framed as plausible, untested, and non-explanatory, avoiding an unsupported causal claim.",
       "status": "supported"
     },
     {
       "claim_id": "c_lim_seeds",
-      "detail": "Correctly limits replication claims to two seeds and preserves that the delta-predictability disagreement remains unresolved rather than calling it noise.",
+      "detail": "The limitation correctly bounds replication to two seeds and leaves the disagreement unresolved without calling it noise.",
       "status": "supported"
     },
     {
       "claim_id": "c_lim_step",
-      "detail": "The +0.0072 to +0.0342 cell-local change is supported, and the rendered prose qualifies it as reading-step dependence rather than a stable general effect.",
+      "detail": "The two reading-step values match the cited facts; the prose correctly limits the inference to the long-article cell and does not invent the seed-7 value.",
       "status": "supported"
     },
     {
       "claim_id": "c_conclusion_surface",
-      "detail": "Descriptive conclusion is supported by the four factorial arms and explicitly confined to those evaluated corpus arms.",
+      "detail": "The range endpoints match the factorial facts, and the conclusion explicitly limits interpretation to a descriptive pattern across separately estimated arms rather than a tested main effect.",
       "status": "supported"
     },
     {
       "claim_id": "c_conclusion_oracle",
-      "detail": "The positive-control estimates are supported and the conclusion is limited to consistency with removability in those declared cells, not generalized.",
+      "detail": "The roughly-half-or-more summary is consistent with +0.52 and +0.62, and the positive-control and cell-local qualifications are preserved.",
       "status": "supported"
     },
     {
       "claim_id": "c_conclusion_tracin",
-      "detail": "The seed-specific ten-percent TracIn increases are supported; implementation and budget scope are preserved.",
+      "detail": "The conclusion accurately reports increased effect and negative AF at both seeds and retains implementation and cell scope.",
       "status": "supported"
     }
   ]

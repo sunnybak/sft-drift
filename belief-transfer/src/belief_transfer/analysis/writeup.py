@@ -1333,10 +1333,12 @@ def validate_section_payload(
     paragraphs = [Paragraph.model_validate(item) for item in payload.get("paragraphs", [])]
     if not paragraphs:
         raise ValueError(f"section {section.id!r} must contain at least one paragraph")
-    if section.id == "abstract" and len(paragraphs) > 1:
+    if section.id in ("abstract", "conclusion") and len(paragraphs) > 1:
         # An abstract is one paragraph by convention everywhere this template could be
-        # submitted; two-paragraph abstracts kept slipping past prose-level instructions.
-        raise ValueError("the abstract must be a single paragraph")
+        # submitted, and a short paper's conclusion states its findings and stops. Both
+        # kept sprawling past prose-level instructions ("EXACTLY ONE paragraph" failed five
+        # runs straight), so the shape is enforced here, where enforcement is free.
+        raise ValueError(f"the {section.id} must be a single paragraph")
     ids = [paragraph.id for paragraph in paragraphs]
     if len(ids) != len(set(ids)):
         raise ValueError(f"section {section.id!r} has duplicate paragraph ids")
@@ -1652,13 +1654,28 @@ quantitative or comparative empirical assertion that WOULD need evidence (a meas
 a magnitude comparison, a claim about what the data show), if it overstates what a design
 choice establishes, or if it CONTRADICTS the frozen facts, context_values, or a recorded
 qualification (a procedure statement naming a different model, scale, netting, or dose
-convention than the context carries is rejected as contradictory, not as uncited). A
+convention than the context carries is rejected as contradictory, not as uncited). The
+ABSENCE of a procedural detail from the frozen bundle is NEVER grounds for rejection --
+absence is the normal case, since the bundle carries results, not recipes; "cannot be
+verified from the supplied evidence" is the expected condition of every procedure
+statement, not a finding. Reject a procedure statement only on contradiction or smuggling,
+never on unverifiability. A
 non-empirical claim that carries a digit is nearly always misfiled; spelled-out procedural
 numbers (ten thousand draws, one epoch) are part of describing the procedure. A numeral-free
 motivation sentence characterizing prior validation practice is framing of this kind -- it
 is precisely the statement no artifact here can support, and when the paper carries a
 curated related-work section (rendered and cited outside this audit), that section carries
 its substantiation; audit it only for smuggled quantities.
+Evidence refs are JSON-pointer strings of the form `<run>:<artifact>:/<quantity>/<field>`.
+Refs that differ only in the trailing field (`/delta`, `/ci95/0`, `/ci95/1`) all belong to
+the ONE declared fact whose id is `<quantity>` in the synthesis facts list -- look the fact
+up there before calling a ref ungrounded. A claim citing `/af_oracle_p10_s42/ci95/0` is
+grounded by the synthesis fact `af_oracle_p10_s42` and its recorded ci95.
+Before returning any finding that says a fact or ref is ABSENT from the synthesis, search
+the synthesis facts list for the exact id and confirm the absence; a finding that declares
+a fact missing when it is present in the facts list is the worst audit error this process
+can make, and both `af_oracle_p10_s42` and `af_oracle_p10_s7` ARE declared facts whenever
+they appear in that list.
 The terse claim text is a planning index, not rendered prose. Evaluate each claim from all
 rendered paragraphs carrying its claim id together with their qualifier metadata. Do not
 reject a missing qualification when it is preserved in those rendered paragraphs.

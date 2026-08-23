@@ -552,70 +552,6 @@
       "run_id": "attrib_mix_v4",
       "sha256": "014f86d47aba2ae82dd0909c3e4f618802997833e88bd8078b04ec6d0d46d9a9"
     },
-    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint": {
-      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
-      "checkpoint": "",
-      "id": "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint",
-      "pointer": "/efficacy/arms/1/checkpoint",
-      "run_id": "attrib_mix_v4",
-      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
-    },
-    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id": {
-      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
-      "checkpoint": "",
-      "id": "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id",
-      "pointer": "/efficacy/arms/1/run_id",
-      "run_id": "attrib_mix_v4",
-      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
-    },
-    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/checkpoint": {
-      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
-      "checkpoint": "",
-      "id": "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/checkpoint",
-      "pointer": "/efficacy/arms/2/checkpoint",
-      "run_id": "attrib_mix_v4",
-      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
-    },
-    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/run_id": {
-      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
-      "checkpoint": "",
-      "id": "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/run_id",
-      "pointer": "/efficacy/arms/2/run_id",
-      "run_id": "attrib_mix_v4",
-      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
-    },
-    "attrib_mix_v4:config.resolved.yaml:/experiment/id": {
-      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
-      "checkpoint": "",
-      "id": "attrib_mix_v4:config.resolved.yaml:/experiment/id",
-      "pointer": "/experiment/id",
-      "run_id": "attrib_mix_v4",
-      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
-    },
-    "attrib_mix_v4:config.resolved.yaml:/run_id": {
-      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
-      "checkpoint": "",
-      "id": "attrib_mix_v4:config.resolved.yaml:/run_id",
-      "pointer": "/run_id",
-      "run_id": "attrib_mix_v4",
-      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
-    },
-    "attrib_mix_v4:config.resolved.yaml:/training/model": {
-      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
-      "checkpoint": "",
-      "id": "attrib_mix_v4:config.resolved.yaml:/training/model",
-      "pointer": "/training/model",
-      "run_id": "attrib_mix_v4",
-      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
-    },
-    "attrib_mix_v4:config.resolved.yaml:/training/sft/seed": {
-      "artifact_path": "data/results/factory_farming/attrib_mix_v4/config.resolved.yaml",
-      "checkpoint": "",
-      "id": "attrib_mix_v4:config.resolved.yaml:/training/sft/seed",
-      "pointer": "/training/sft/seed",
-      "run_id": "attrib_mix_v4",
-      "sha256": "76c0e1aa8d62005fe7fe3656557c003d917d31be03cf2585685aa2905497d361"
-    },
     "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/0": {
       "artifact_path": "data/results/factory_farming/attrib_mix_v4/retrieval_summary.yaml",
       "checkpoint": "",
@@ -882,12 +818,6 @@
     }
   },
   "rendered": {
-    "claim:c_approach": {
-      "evidence_refs": [],
-      "id": "claim:c_approach",
-      "kind": "claim",
-      "location": "claim:c_approach"
-    },
     "claim:c_conclusion_oracle": {
       "evidence_refs": [
         "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
@@ -900,8 +830,6 @@
     "claim:c_conclusion_surface": {
       "evidence_refs": [
         "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
-        "mld_arms:belief_summary.yaml:/delta_net/delta",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
         "ms3p_arms:belief_summary.yaml:/delta_net/delta"
       ],
       "id": "claim:c_conclusion_surface",
@@ -917,6 +845,20 @@
       "kind": "claim",
       "location": "claim:c_conclusion_tracin"
     },
+    "claim:c_conclusions_comparison": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta"
+      ],
+      "id": "claim:c_conclusions_comparison",
+      "kind": "claim",
+      "location": "claim:c_conclusions_comparison"
+    },
+    "claim:c_corpus": {
+      "evidence_refs": [],
+      "id": "claim:c_corpus",
+      "kind": "claim",
+      "location": "claim:c_corpus"
+    },
     "claim:c_delta": {
       "evidence_refs": [
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
@@ -930,25 +872,79 @@
       "kind": "claim",
       "location": "claim:c_delta"
     },
-    "claim:c_factorial_strong": {
-      "evidence_refs": [
-        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
-        "mld_arms:belief_summary.yaml:/delta_net/delta",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta"
-      ],
-      "id": "claim:c_factorial_strong",
+    "claim:c_dose": {
+      "evidence_refs": [],
+      "id": "claim:c_dose",
       "kind": "claim",
-      "location": "claim:c_factorial_strong"
+      "location": "claim:c_dose"
     },
-    "claim:c_factorial_weak": {
+    "claim:c_factorial_interaction": {
       "evidence_refs": [
         "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
         "mld_arms:belief_summary.yaml:/delta_net/delta",
         "ms_sparse_arms:belief_summary.yaml:/delta_net/delta"
       ],
-      "id": "claim:c_factorial_weak",
+      "id": "claim:c_factorial_interaction",
       "kind": "claim",
-      "location": "claim:c_factorial_weak"
+      "location": "claim:c_factorial_interaction"
+    },
+    "claim:c_factorial_results": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "mld_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
+        "ms3p_arms:belief_summary.yaml:/delta_net/delta"
+      ],
+      "id": "claim:c_factorial_results",
+      "kind": "claim",
+      "location": "claim:c_factorial_results"
+    },
+    "claim:c_intervals": {
+      "evidence_refs": [],
+      "id": "claim:c_intervals",
+      "kind": "claim",
+      "location": "claim:c_intervals"
+    },
+    "claim:c_intro_factorial": {
+      "evidence_refs": [
+        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
+        "mld_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta"
+      ],
+      "id": "claim:c_intro_factorial",
+      "kind": "claim",
+      "location": "claim:c_intro_factorial"
+    },
+    "claim:c_intro_oracle": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta"
+      ],
+      "id": "claim:c_intro_oracle",
+      "kind": "claim",
+      "location": "claim:c_intro_oracle"
+    },
+    "claim:c_intro_surface": {
+      "evidence_refs": [
+        "ms_arms:belief_summary.yaml:/delta_net/delta",
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta"
+      ],
+      "id": "claim:c_intro_surface",
+      "kind": "claim",
+      "location": "claim:c_intro_surface"
+    },
+    "claim:c_intro_tracin": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1"
+      ],
+      "id": "claim:c_intro_tracin",
+      "kind": "claim",
+      "location": "claim:c_intro_tracin"
     },
     "claim:c_lim_denominator": {
       "evidence_refs": [],
@@ -983,41 +979,17 @@
       "kind": "claim",
       "location": "claim:c_lim_trajectory"
     },
-    "claim:c_methods_configs": {
+    "claim:c_measure": {
       "evidence_refs": [],
-      "id": "claim:c_methods_configs",
+      "id": "claim:c_measure",
       "kind": "claim",
-      "location": "claim:c_methods_configs"
+      "location": "claim:c_measure"
     },
-    "claim:c_methods_corpus": {
+    "claim:c_methods_config": {
       "evidence_refs": [],
-      "id": "claim:c_methods_corpus",
+      "id": "claim:c_methods_config",
       "kind": "claim",
-      "location": "claim:c_methods_corpus"
-    },
-    "claim:c_methods_intervals": {
-      "evidence_refs": [],
-      "id": "claim:c_methods_intervals",
-      "kind": "claim",
-      "location": "claim:c_methods_intervals"
-    },
-    "claim:c_methods_measure": {
-      "evidence_refs": [],
-      "id": "claim:c_methods_measure",
-      "kind": "claim",
-      "location": "claim:c_methods_measure"
-    },
-    "claim:c_methods_remove": {
-      "evidence_refs": [],
-      "id": "claim:c_methods_remove",
-      "kind": "claim",
-      "location": "claim:c_methods_remove"
-    },
-    "claim:c_methods_training": {
-      "evidence_refs": [],
-      "id": "claim:c_methods_training",
-      "kind": "claim",
-      "location": "claim:c_methods_training"
+      "location": "claim:c_methods_config"
     },
     "claim:c_novelty": {
       "evidence_refs": [],
@@ -1025,7 +997,7 @@
       "kind": "claim",
       "location": "claim:c_novelty"
     },
-    "claim:c_oracle": {
+    "claim:c_oracle_results": {
       "evidence_refs": [
         "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
         "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
@@ -1034,9 +1006,9 @@
         "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1"
       ],
-      "id": "claim:c_oracle",
+      "id": "claim:c_oracle_results",
       "kind": "claim",
-      "location": "claim:c_oracle"
+      "location": "claim:c_oracle_results"
     },
     "claim:c_overlap_definition": {
       "evidence_refs": [],
@@ -1044,18 +1016,39 @@
       "kind": "claim",
       "location": "claim:c_overlap_definition"
     },
+    "claim:c_pipeline": {
+      "evidence_refs": [],
+      "id": "claim:c_pipeline",
+      "kind": "claim",
+      "location": "claim:c_pipeline"
+    },
     "claim:c_pool": {
       "evidence_refs": [
         "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1"
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta"
       ],
       "id": "claim:c_pool",
       "kind": "claim",
       "location": "claim:c_pool"
+    },
+    "claim:c_power_cells": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1"
+      ],
+      "id": "claim:c_power_cells",
+      "kind": "claim",
+      "location": "claim:c_power_cells"
     },
     "claim:c_power_reading": {
       "evidence_refs": [],
@@ -1063,69 +1056,57 @@
       "kind": "claim",
       "location": "claim:c_power_reading"
     },
-    "claim:c_power_values": {
+    "claim:c_removal_abstract": {
       "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1"
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1"
       ],
-      "id": "claim:c_power_values",
+      "id": "claim:c_removal_abstract",
       "kind": "claim",
-      "location": "claim:c_power_values"
+      "location": "claim:c_removal_abstract"
     },
-    "claim:c_problem": {
+    "claim:c_removal_protocol": {
       "evidence_refs": [],
-      "id": "claim:c_problem",
+      "id": "claim:c_removal_protocol",
       "kind": "claim",
-      "location": "claim:c_problem"
+      "location": "claim:c_removal_protocol"
     },
     "claim:c_retrieval": {
       "evidence_refs": [
         "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/delta",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/0",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/1",
         "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/delta",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/0",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/1",
         "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/delta",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/0",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/1",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/delta",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/0",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/1"
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/delta"
       ],
       "id": "claim:c_retrieval",
       "kind": "claim",
       "location": "claim:c_retrieval"
     },
     "claim:c_scope": {
-      "evidence_refs": [
-        "attrib_mix_v4:config.resolved.yaml:/experiment/id",
-        "attrib_mix_v4:config.resolved.yaml:/training/model",
-        "attrib_mix_v4:config.resolved.yaml:/training/sft/seed",
-        "attrib_mix_v4:config.resolved.yaml:/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/checkpoint"
-      ],
+      "evidence_refs": [],
       "id": "claim:c_scope",
       "kind": "claim",
       "location": "claim:c_scope"
     },
-    "claim:c_surface_22x": {
+    "claim:c_surface_abstract": {
       "evidence_refs": [
         "ms_arms:belief_summary.yaml:/delta_net/delta",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta"
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
+        "mld_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta"
       ],
-      "id": "claim:c_surface_22x",
+      "id": "claim:c_surface_abstract",
       "kind": "claim",
-      "location": "claim:c_surface_22x"
+      "location": "claim:c_surface_abstract"
     },
-    "claim:c_tracin": {
+    "claim:c_tracin_results": {
       "evidence_refs": [
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
@@ -1134,11 +1115,11 @@
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1"
       ],
-      "id": "claim:c_tracin",
+      "id": "claim:c_tracin_results",
       "kind": "claim",
-      "location": "claim:c_tracin"
+      "location": "claim:c_tracin_results"
     },
-    "claim:c_tracin_cos": {
+    "claim:c_tracincos": {
       "evidence_refs": [
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
@@ -1147,9 +1128,21 @@
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1"
       ],
-      "id": "claim:c_tracin_cos",
+      "id": "claim:c_tracincos",
       "kind": "claim",
-      "location": "claim:c_tracin_cos"
+      "location": "claim:c_tracincos"
+    },
+    "claim:c_training": {
+      "evidence_refs": [],
+      "id": "claim:c_training",
+      "kind": "claim",
+      "location": "claim:c_training"
+    },
+    "claim:c_validation": {
+      "evidence_refs": [],
+      "id": "claim:c_validation",
+      "kind": "claim",
+      "location": "claim:c_validation"
     },
     "figure:a_af": {
       "evidence_refs": [
@@ -1285,110 +1278,15 @@
       "kind": "figure_series",
       "location": ""
     },
-    "paragraph:abstract_headline": {
-      "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1"
-      ],
-      "id": "paragraph:abstract_headline",
-      "kind": "paragraph",
-      "location": "section:abstract"
-    },
-    "paragraph:abstract_premise_approach": {
+    "paragraph:abstract_main": {
       "evidence_refs": [
         "ms_arms:belief_summary.yaml:/delta_net/delta",
         "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
-        "attrib_mix_v4:config.resolved.yaml:/experiment/id",
-        "attrib_mix_v4:config.resolved.yaml:/training/model",
-        "attrib_mix_v4:config.resolved.yaml:/training/sft/seed",
-        "attrib_mix_v4:config.resolved.yaml:/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/checkpoint"
-      ],
-      "id": "paragraph:abstract_premise_approach",
-      "kind": "paragraph",
-      "location": "section:abstract"
-    },
-    "paragraph:appendix_no_accepted_claims": {
-      "evidence_refs": [],
-      "id": "paragraph:appendix_no_accepted_claims",
-      "kind": "paragraph",
-      "location": "section:appendix"
-    },
-    "paragraph:conclusion_removal": {
-      "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta"
-      ],
-      "id": "paragraph:conclusion_removal",
-      "kind": "paragraph",
-      "location": "section:conclusion"
-    },
-    "paragraph:conclusion_surface": {
-      "evidence_refs": [
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
         "mld_arms:belief_summary.yaml:/delta_net/delta",
         "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
-        "ms3p_arms:belief_summary.yaml:/delta_net/delta"
-      ],
-      "id": "paragraph:conclusion_surface",
-      "kind": "paragraph",
-      "location": "section:conclusion"
-    },
-    "paragraph:discussion_power": {
-      "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1"
-      ],
-      "id": "paragraph:discussion_power",
-      "kind": "paragraph",
-      "location": "section:discussion"
-    },
-    "paragraph:discussion_retrieval": {
-      "evidence_refs": [
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/delta",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/0",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/1",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/delta",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/0",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/1",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/delta",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/0",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/1",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/delta",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/0",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/1"
-      ],
-      "id": "paragraph:discussion_retrieval",
-      "kind": "paragraph",
-      "location": "section:discussion"
-    },
-    "paragraph:introduction_attribution_test": {
-      "evidence_refs": [
         "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
@@ -1396,17 +1294,78 @@
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1"
       ],
-      "id": "paragraph:introduction_attribution_test",
+      "id": "paragraph:abstract_main",
+      "kind": "paragraph",
+      "location": "section:abstract"
+    },
+    "paragraph:conclusion_oracle": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta"
+      ],
+      "id": "paragraph:conclusion_oracle",
+      "kind": "paragraph",
+      "location": "section:conclusion"
+    },
+    "paragraph:conclusion_surface": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "ms3p_arms:belief_summary.yaml:/delta_net/delta"
+      ],
+      "id": "paragraph:conclusion_surface",
+      "kind": "paragraph",
+      "location": "section:conclusion"
+    },
+    "paragraph:conclusion_tracin": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta"
+      ],
+      "id": "paragraph:conclusion_tracin",
+      "kind": "paragraph",
+      "location": "section:conclusion"
+    },
+    "paragraph:discussion_narrow_budget_power": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1"
+      ],
+      "id": "paragraph:discussion_narrow_budget_power",
+      "kind": "paragraph",
+      "location": "section:discussion"
+    },
+    "paragraph:introduction_removal": {
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1"
+      ],
+      "id": "paragraph:introduction_removal",
       "kind": "paragraph",
       "location": "section:introduction"
     },
-    "paragraph:introduction_problem": {
+    "paragraph:introduction_scope": {
       "evidence_refs": [],
-      "id": "paragraph:introduction_problem",
+      "id": "paragraph:introduction_scope",
       "kind": "paragraph",
       "location": "section:introduction"
     },
-    "paragraph:introduction_surface_form": {
+    "paragraph:introduction_surface": {
       "evidence_refs": [
         "ms_arms:belief_summary.yaml:/delta_net/delta",
         "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
@@ -1414,84 +1373,73 @@
         "mld_arms:belief_summary.yaml:/delta_net/delta",
         "ms_sparse_arms:belief_summary.yaml:/delta_net/delta"
       ],
-      "id": "paragraph:introduction_surface_form",
+      "id": "paragraph:introduction_surface",
       "kind": "paragraph",
       "location": "section:introduction"
     },
-    "paragraph:limitations_controls_estimand": {
+    "paragraph:introduction_validation": {
       "evidence_refs": [],
-      "id": "paragraph:limitations_controls_estimand",
+      "id": "paragraph:introduction_validation",
+      "kind": "paragraph",
+      "location": "section:introduction"
+    },
+    "paragraph:limitations_1": {
+      "evidence_refs": [],
+      "id": "paragraph:limitations_1",
       "kind": "paragraph",
       "location": "section:limitations"
     },
-    "paragraph:limitations_fraction": {
-      "evidence_refs": [],
-      "id": "paragraph:limitations_fraction",
-      "kind": "paragraph",
-      "location": "section:limitations"
-    },
-    "paragraph:limitations_seed_scope": {
-      "evidence_refs": [],
-      "id": "paragraph:limitations_seed_scope",
-      "kind": "paragraph",
-      "location": "section:limitations"
-    },
-    "paragraph:limitations_step_scope": {
+    "paragraph:limitations_2": {
       "evidence_refs": [
         "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
         "matrix_v1_step36:belief_summary.yaml:/delta_net/delta"
       ],
-      "id": "paragraph:limitations_step_scope",
+      "id": "paragraph:limitations_2",
       "kind": "paragraph",
       "location": "section:limitations"
     },
-    "paragraph:methods_measure_training": {
+    "paragraph:limitations_3": {
       "evidence_refs": [],
-      "id": "paragraph:methods_measure_training",
+      "id": "paragraph:limitations_3",
       "kind": "paragraph",
-      "location": "section:methods"
+      "location": "section:limitations"
     },
-    "paragraph:methods_removal": {
+    "paragraph:methods_ranking_removal": {
       "evidence_refs": [],
-      "id": "paragraph:methods_removal",
+      "id": "paragraph:methods_ranking_removal",
       "kind": "paragraph",
       "location": "section:methods"
     },
     "paragraph:methods_scope_corpus": {
-      "evidence_refs": [
-        "attrib_mix_v4:config.resolved.yaml:/experiment/id",
-        "attrib_mix_v4:config.resolved.yaml:/training/model",
-        "attrib_mix_v4:config.resolved.yaml:/training/sft/seed",
-        "attrib_mix_v4:config.resolved.yaml:/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/checkpoint"
-      ],
+      "evidence_refs": [],
       "id": "paragraph:methods_scope_corpus",
       "kind": "paragraph",
       "location": "section:methods"
     },
-    "paragraph:methods_scoring": {
-      "evidence_refs": [],
-      "id": "paragraph:methods_scoring",
-      "kind": "paragraph",
-      "location": "section:methods"
-    },
-    "paragraph:methods_uncertainty": {
+    "paragraph:methods_training_measure": {
       "evidence_refs": [
         "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1"
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta"
       ],
-      "id": "paragraph:methods_uncertainty",
+      "id": "paragraph:methods_training_measure",
       "kind": "paragraph",
       "location": "section:methods"
     },
-    "paragraph:results_delta_predictability": {
+    "paragraph:methods_uncertainty_overlap": {
+      "evidence_refs": [],
+      "id": "paragraph:methods_uncertainty_overlap",
+      "kind": "paragraph",
+      "location": "section:methods"
+    },
+    "paragraph:results_conclusions": {
+      "evidence_refs": [
+        "matrix_md_2ep:belief_summary.yaml:/delta_net/delta"
+      ],
+      "id": "paragraph:results_conclusions",
+      "kind": "paragraph",
+      "location": "section:results"
+    },
+    "paragraph:results_delta": {
       "evidence_refs": [
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
@@ -1500,7 +1448,18 @@
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1"
       ],
-      "id": "paragraph:results_delta_predictability",
+      "id": "paragraph:results_delta",
+      "kind": "paragraph",
+      "location": "section:results"
+    },
+    "paragraph:results_factorial": {
+      "evidence_refs": [
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "mld_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
+        "ms3p_arms:belief_summary.yaml:/delta_net/delta"
+      ],
+      "id": "paragraph:results_factorial",
       "kind": "paragraph",
       "location": "section:results"
     },
@@ -1517,15 +1476,14 @@
       "kind": "paragraph",
       "location": "section:results"
     },
-    "paragraph:results_surface_factorial": {
+    "paragraph:results_retrieval": {
       "evidence_refs": [
-        "ms_arms:belief_summary.yaml:/delta_net/delta",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
-        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
-        "mld_arms:belief_summary.yaml:/delta_net/delta",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta"
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/delta",
+        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/delta"
       ],
-      "id": "paragraph:results_surface_factorial",
+      "id": "paragraph:results_retrieval",
       "kind": "paragraph",
       "location": "section:results"
     },
@@ -1536,14 +1494,7 @@
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1"
-      ],
-      "id": "paragraph:results_tracin",
-      "kind": "paragraph",
-      "location": "section:results"
-    },
-    "paragraph:results_tracin_cosine": {
-      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
@@ -1551,7 +1502,7 @@
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1"
       ],
-      "id": "paragraph:results_tracin_cosine",
+      "id": "paragraph:results_tracin",
       "kind": "paragraph",
       "location": "section:results"
     },
@@ -4598,7 +4549,7 @@
       "claim:c_delta",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:results_delta_predictability",
+      "paragraph:results_delta",
       "table:a_ladder",
       "table:a_ladder:row:17",
       "table:a_ladder:row:17:cell:0",
@@ -4616,7 +4567,7 @@
       "claim:c_delta",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:results_delta_predictability",
+      "paragraph:results_delta",
       "table:a_ladder",
       "table:a_ladder:row:17",
       "table:a_ladder:row:17:cell:0",
@@ -4634,7 +4585,7 @@
       "claim:c_delta",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:results_delta_predictability",
+      "paragraph:results_delta",
       "table:a_ladder",
       "table:a_ladder:row:17",
       "table:a_ladder:row:17:cell:0",
@@ -4652,7 +4603,7 @@
       "claim:c_delta",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:results_delta_predictability",
+      "paragraph:results_delta",
       "table:a_ladder",
       "table:a_ladder:row:18",
       "table:a_ladder:row:18:cell:0",
@@ -4670,7 +4621,7 @@
       "claim:c_delta",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:results_delta_predictability",
+      "paragraph:results_delta",
       "table:a_ladder",
       "table:a_ladder:row:18",
       "table:a_ladder:row:18:cell:0",
@@ -4688,7 +4639,7 @@
       "claim:c_delta",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:results_delta_predictability",
+      "paragraph:results_delta",
       "table:a_ladder",
       "table:a_ladder:row:18",
       "table:a_ladder:row:18:cell:0",
@@ -4799,10 +4750,10 @@
       "table:a_overlap:row:17:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0": [
-      "claim:c_power_values",
+      "claim:c_power_cells",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:discussion_power",
+      "paragraph:discussion_narrow_budget_power",
       "table:a_ladder",
       "table:a_ladder:row:13",
       "table:a_ladder:row:13:cell:0",
@@ -4817,10 +4768,10 @@
       "table:a_overlap:row:1:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1": [
-      "claim:c_power_values",
+      "claim:c_power_cells",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:discussion_power",
+      "paragraph:discussion_narrow_budget_power",
       "table:a_ladder",
       "table:a_ladder:row:13",
       "table:a_ladder:row:13:cell:0",
@@ -4835,10 +4786,10 @@
       "table:a_overlap:row:1:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta": [
-      "claim:c_power_values",
+      "claim:c_power_cells",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:discussion_power",
+      "paragraph:discussion_narrow_budget_power",
       "table:a_ladder",
       "table:a_ladder:row:13",
       "table:a_ladder:row:13:cell:0",
@@ -4853,10 +4804,10 @@
       "table:a_overlap:row:1:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0": [
-      "claim:c_power_values",
+      "claim:c_power_cells",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:discussion_power",
+      "paragraph:discussion_narrow_budget_power",
       "table:a_ladder",
       "table:a_ladder:row:14",
       "table:a_ladder:row:14:cell:0",
@@ -4871,10 +4822,10 @@
       "table:a_overlap:row:2:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1": [
-      "claim:c_power_values",
+      "claim:c_power_cells",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:discussion_power",
+      "paragraph:discussion_narrow_budget_power",
       "table:a_ladder",
       "table:a_ladder:row:14",
       "table:a_ladder:row:14:cell:0",
@@ -4889,10 +4840,10 @@
       "table:a_overlap:row:2:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta": [
-      "claim:c_power_values",
+      "claim:c_power_cells",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:discussion_power",
+      "paragraph:discussion_narrow_budget_power",
       "table:a_ladder",
       "table:a_ladder:row:14",
       "table:a_ladder:row:14:cell:0",
@@ -4907,11 +4858,9 @@
       "table:a_overlap:row:2:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0": [
-      "claim:c_oracle",
+      "claim:c_oracle_results",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:abstract_headline",
-      "paragraph:introduction_attribution_test",
       "paragraph:results_oracle",
       "table:a_ladder",
       "table:a_ladder:row:15",
@@ -4927,11 +4876,9 @@
       "table:a_overlap:row:3:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1": [
-      "claim:c_oracle",
+      "claim:c_oracle_results",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:abstract_headline",
-      "paragraph:introduction_attribution_test",
       "paragraph:results_oracle",
       "table:a_ladder",
       "table:a_ladder:row:15",
@@ -4948,12 +4895,14 @@
     ],
     "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta": [
       "claim:c_conclusion_oracle",
-      "claim:c_oracle",
+      "claim:c_intro_oracle",
+      "claim:c_oracle_results",
+      "claim:c_removal_abstract",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:abstract_headline",
-      "paragraph:conclusion_removal",
-      "paragraph:introduction_attribution_test",
+      "paragraph:abstract_main",
+      "paragraph:conclusion_oracle",
+      "paragraph:introduction_removal",
       "paragraph:results_oracle",
       "table:a_ladder",
       "table:a_ladder:row:15",
@@ -4969,11 +4918,9 @@
       "table:a_overlap:row:3:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0": [
-      "claim:c_oracle",
+      "claim:c_oracle_results",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:abstract_headline",
-      "paragraph:introduction_attribution_test",
       "paragraph:results_oracle",
       "table:a_ladder",
       "table:a_ladder:row:16",
@@ -4989,11 +4936,9 @@
       "table:a_overlap:row:4:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1": [
-      "claim:c_oracle",
+      "claim:c_oracle_results",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:abstract_headline",
-      "paragraph:introduction_attribution_test",
       "paragraph:results_oracle",
       "table:a_ladder",
       "table:a_ladder:row:16",
@@ -5010,12 +4955,14 @@
     ],
     "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta": [
       "claim:c_conclusion_oracle",
-      "claim:c_oracle",
+      "claim:c_intro_oracle",
+      "claim:c_oracle_results",
+      "claim:c_removal_abstract",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:abstract_headline",
-      "paragraph:conclusion_removal",
-      "paragraph:introduction_attribution_test",
+      "paragraph:abstract_main",
+      "paragraph:conclusion_oracle",
+      "paragraph:introduction_removal",
       "paragraph:results_oracle",
       "table:a_ladder",
       "table:a_ladder:row:16",
@@ -5031,10 +4978,10 @@
       "table:a_overlap:row:4:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0": [
-      "claim:c_tracin_cos",
+      "claim:c_tracincos",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:results_tracin_cosine",
+      "paragraph:results_tracin",
       "table:a_ladder",
       "table:a_ladder:row:25",
       "table:a_ladder:row:25:cell:0",
@@ -5049,10 +4996,10 @@
       "table:a_overlap:row:10:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1": [
-      "claim:c_tracin_cos",
+      "claim:c_tracincos",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:results_tracin_cosine",
+      "paragraph:results_tracin",
       "table:a_ladder",
       "table:a_ladder:row:25",
       "table:a_ladder:row:25:cell:0",
@@ -5067,10 +5014,10 @@
       "table:a_overlap:row:10:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta": [
-      "claim:c_tracin_cos",
+      "claim:c_tracincos",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:results_tracin_cosine",
+      "paragraph:results_tracin",
       "table:a_ladder",
       "table:a_ladder:row:25",
       "table:a_ladder:row:25:cell:0",
@@ -5085,10 +5032,10 @@
       "table:a_overlap:row:10:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0": [
-      "claim:c_tracin_cos",
+      "claim:c_tracincos",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:results_tracin_cosine",
+      "paragraph:results_tracin",
       "table:a_ladder",
       "table:a_ladder:row:26",
       "table:a_ladder:row:26:cell:0",
@@ -5103,10 +5050,10 @@
       "table:a_overlap:row:11:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1": [
-      "claim:c_tracin_cos",
+      "claim:c_tracincos",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:results_tracin_cosine",
+      "paragraph:results_tracin",
       "table:a_ladder",
       "table:a_ladder:row:26",
       "table:a_ladder:row:26:cell:0",
@@ -5121,10 +5068,10 @@
       "table:a_overlap:row:11:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta": [
-      "claim:c_tracin_cos",
+      "claim:c_tracincos",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:results_tracin_cosine",
+      "paragraph:results_tracin",
       "table:a_ladder",
       "table:a_ladder:row:26",
       "table:a_ladder:row:26:cell:0",
@@ -5235,11 +5182,13 @@
       "table:a_overlap:row:13:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0": [
-      "claim:c_tracin",
+      "claim:c_intro_tracin",
+      "claim:c_removal_abstract",
+      "claim:c_tracin_results",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:abstract_headline",
-      "paragraph:introduction_attribution_test",
+      "paragraph:abstract_main",
+      "paragraph:introduction_removal",
       "paragraph:results_tracin",
       "table:a_ladder",
       "table:a_ladder:row:21",
@@ -5255,11 +5204,13 @@
       "table:a_overlap:row:6:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1": [
-      "claim:c_tracin",
+      "claim:c_intro_tracin",
+      "claim:c_removal_abstract",
+      "claim:c_tracin_results",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:abstract_headline",
-      "paragraph:introduction_attribution_test",
+      "paragraph:abstract_main",
+      "paragraph:introduction_removal",
       "paragraph:results_tracin",
       "table:a_ladder",
       "table:a_ladder:row:21",
@@ -5276,12 +5227,14 @@
     ],
     "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta": [
       "claim:c_conclusion_tracin",
-      "claim:c_tracin",
+      "claim:c_intro_tracin",
+      "claim:c_removal_abstract",
+      "claim:c_tracin_results",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:abstract_headline",
-      "paragraph:conclusion_removal",
-      "paragraph:introduction_attribution_test",
+      "paragraph:abstract_main",
+      "paragraph:conclusion_tracin",
+      "paragraph:introduction_removal",
       "paragraph:results_tracin",
       "table:a_ladder",
       "table:a_ladder:row:21",
@@ -5297,11 +5250,13 @@
       "table:a_overlap:row:6:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0": [
-      "claim:c_tracin",
+      "claim:c_intro_tracin",
+      "claim:c_removal_abstract",
+      "claim:c_tracin_results",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:abstract_headline",
-      "paragraph:introduction_attribution_test",
+      "paragraph:abstract_main",
+      "paragraph:introduction_removal",
       "paragraph:results_tracin",
       "table:a_ladder",
       "table:a_ladder:row:22",
@@ -5317,11 +5272,13 @@
       "table:a_overlap:row:7:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1": [
-      "claim:c_tracin",
+      "claim:c_intro_tracin",
+      "claim:c_removal_abstract",
+      "claim:c_tracin_results",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:abstract_headline",
-      "paragraph:introduction_attribution_test",
+      "paragraph:abstract_main",
+      "paragraph:introduction_removal",
       "paragraph:results_tracin",
       "table:a_ladder",
       "table:a_ladder:row:22",
@@ -5338,12 +5295,14 @@
     ],
     "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta": [
       "claim:c_conclusion_tracin",
-      "claim:c_tracin",
+      "claim:c_intro_tracin",
+      "claim:c_removal_abstract",
+      "claim:c_tracin_results",
       "figure:a_af",
       "figure:a_af:series:all",
-      "paragraph:abstract_headline",
-      "paragraph:conclusion_removal",
-      "paragraph:introduction_attribution_test",
+      "paragraph:abstract_main",
+      "paragraph:conclusion_tracin",
+      "paragraph:introduction_removal",
       "paragraph:results_tracin",
       "table:a_ladder",
       "table:a_ladder:row:22",
@@ -5455,8 +5414,10 @@
       "table:a_overlap:row:9:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0": [
+      "claim:c_power_cells",
       "figure:a_af",
       "figure:a_af:series:all",
+      "paragraph:discussion_narrow_budget_power",
       "table:a_ladder",
       "table:a_ladder:row:29",
       "table:a_ladder:row:29:cell:0",
@@ -5471,8 +5432,10 @@
       "table:a_overlap:row:19:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1": [
+      "claim:c_power_cells",
       "figure:a_af",
       "figure:a_af:series:all",
+      "paragraph:discussion_narrow_budget_power",
       "table:a_ladder",
       "table:a_ladder:row:29",
       "table:a_ladder:row:29:cell:0",
@@ -5487,8 +5450,10 @@
       "table:a_overlap:row:19:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta": [
+      "claim:c_power_cells",
       "figure:a_af",
       "figure:a_af:series:all",
+      "paragraph:discussion_narrow_budget_power",
       "table:a_ladder",
       "table:a_ladder:row:29",
       "table:a_ladder:row:29:cell:0",
@@ -5503,8 +5468,10 @@
       "table:a_overlap:row:19:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0": [
+      "claim:c_power_cells",
       "figure:a_af",
       "figure:a_af:series:all",
+      "paragraph:discussion_narrow_budget_power",
       "table:a_ladder",
       "table:a_ladder:row:30",
       "table:a_ladder:row:30:cell:0",
@@ -5519,8 +5486,10 @@
       "table:a_overlap:row:20:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1": [
+      "claim:c_power_cells",
       "figure:a_af",
       "figure:a_af:series:all",
+      "paragraph:discussion_narrow_budget_power",
       "table:a_ladder",
       "table:a_ladder:row:30",
       "table:a_ladder:row:30:cell:0",
@@ -5535,8 +5504,10 @@
       "table:a_overlap:row:20:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta": [
+      "claim:c_power_cells",
       "figure:a_af",
       "figure:a_af:series:all",
+      "paragraph:discussion_narrow_budget_power",
       "table:a_ladder",
       "table:a_ladder:row:30",
       "table:a_ladder:row:30:cell:0",
@@ -5647,8 +5618,6 @@
       "table:a_overlap:row:22:cell:4"
     ],
     "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0": [
-      "claim:c_pool",
-      "paragraph:methods_uncertainty",
       "table:a_ladder",
       "table:a_ladder:row:9",
       "table:a_ladder:row:9:cell:0",
@@ -5656,8 +5625,6 @@
       "table:a_ladder:row:9:cell:2"
     ],
     "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1": [
-      "claim:c_pool",
-      "paragraph:methods_uncertainty",
       "table:a_ladder",
       "table:a_ladder:row:9",
       "table:a_ladder:row:9:cell:0",
@@ -5666,7 +5633,7 @@
     ],
     "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta": [
       "claim:c_pool",
-      "paragraph:methods_uncertainty",
+      "paragraph:methods_training_measure",
       "table:a_ladder",
       "table:a_ladder:row:9",
       "table:a_ladder:row:9:cell:0",
@@ -5674,8 +5641,6 @@
       "table:a_ladder:row:9:cell:2"
     ],
     "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0": [
-      "claim:c_pool",
-      "paragraph:methods_uncertainty",
       "table:a_ladder",
       "table:a_ladder:row:10",
       "table:a_ladder:row:10:cell:0",
@@ -5683,8 +5648,6 @@
       "table:a_ladder:row:10:cell:2"
     ],
     "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1": [
-      "claim:c_pool",
-      "paragraph:methods_uncertainty",
       "table:a_ladder",
       "table:a_ladder:row:10",
       "table:a_ladder:row:10:cell:0",
@@ -5693,7 +5656,7 @@
     ],
     "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta": [
       "claim:c_pool",
-      "paragraph:methods_uncertainty",
+      "paragraph:methods_training_measure",
       "table:a_ladder",
       "table:a_ladder:row:10",
       "table:a_ladder:row:10:cell:0",
@@ -5721,49 +5684,7 @@
       "table:a_ladder:row:11:cell:1",
       "table:a_ladder:row:11:cell:2"
     ],
-    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint": [
-      "claim:c_scope",
-      "paragraph:abstract_premise_approach",
-      "paragraph:methods_scope_corpus"
-    ],
-    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id": [
-      "claim:c_scope",
-      "paragraph:abstract_premise_approach",
-      "paragraph:methods_scope_corpus"
-    ],
-    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/checkpoint": [
-      "claim:c_scope",
-      "paragraph:abstract_premise_approach",
-      "paragraph:methods_scope_corpus"
-    ],
-    "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/2/run_id": [
-      "claim:c_scope",
-      "paragraph:abstract_premise_approach",
-      "paragraph:methods_scope_corpus"
-    ],
-    "attrib_mix_v4:config.resolved.yaml:/experiment/id": [
-      "claim:c_scope",
-      "paragraph:abstract_premise_approach",
-      "paragraph:methods_scope_corpus"
-    ],
-    "attrib_mix_v4:config.resolved.yaml:/run_id": [
-      "claim:c_scope",
-      "paragraph:abstract_premise_approach",
-      "paragraph:methods_scope_corpus"
-    ],
-    "attrib_mix_v4:config.resolved.yaml:/training/model": [
-      "claim:c_scope",
-      "paragraph:abstract_premise_approach",
-      "paragraph:methods_scope_corpus"
-    ],
-    "attrib_mix_v4:config.resolved.yaml:/training/sft/seed": [
-      "claim:c_scope",
-      "paragraph:abstract_premise_approach",
-      "paragraph:methods_scope_corpus"
-    ],
     "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/0": [
-      "claim:c_retrieval",
-      "paragraph:discussion_retrieval",
       "table:a_ladder",
       "table:a_ladder:row:34",
       "table:a_ladder:row:34:cell:0",
@@ -5771,8 +5692,6 @@
       "table:a_ladder:row:34:cell:2"
     ],
     "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/1": [
-      "claim:c_retrieval",
-      "paragraph:discussion_retrieval",
       "table:a_ladder",
       "table:a_ladder:row:34",
       "table:a_ladder:row:34:cell:0",
@@ -5781,7 +5700,7 @@
     ],
     "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/delta": [
       "claim:c_retrieval",
-      "paragraph:discussion_retrieval",
+      "paragraph:results_retrieval",
       "table:a_ladder",
       "table:a_ladder:row:34",
       "table:a_ladder:row:34:cell:0",
@@ -5789,8 +5708,6 @@
       "table:a_ladder:row:34:cell:2"
     ],
     "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/0": [
-      "claim:c_retrieval",
-      "paragraph:discussion_retrieval",
       "table:a_ladder",
       "table:a_ladder:row:35",
       "table:a_ladder:row:35:cell:0",
@@ -5798,8 +5715,6 @@
       "table:a_ladder:row:35:cell:2"
     ],
     "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/1": [
-      "claim:c_retrieval",
-      "paragraph:discussion_retrieval",
       "table:a_ladder",
       "table:a_ladder:row:35",
       "table:a_ladder:row:35:cell:0",
@@ -5808,7 +5723,7 @@
     ],
     "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/delta": [
       "claim:c_retrieval",
-      "paragraph:discussion_retrieval",
+      "paragraph:results_retrieval",
       "table:a_ladder",
       "table:a_ladder:row:35",
       "table:a_ladder:row:35:cell:0",
@@ -5816,8 +5731,6 @@
       "table:a_ladder:row:35:cell:2"
     ],
     "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/0": [
-      "claim:c_retrieval",
-      "paragraph:discussion_retrieval",
       "table:a_ladder",
       "table:a_ladder:row:36",
       "table:a_ladder:row:36:cell:0",
@@ -5825,8 +5738,6 @@
       "table:a_ladder:row:36:cell:2"
     ],
     "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/1": [
-      "claim:c_retrieval",
-      "paragraph:discussion_retrieval",
       "table:a_ladder",
       "table:a_ladder:row:36",
       "table:a_ladder:row:36:cell:0",
@@ -5835,7 +5746,7 @@
     ],
     "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/delta": [
       "claim:c_retrieval",
-      "paragraph:discussion_retrieval",
+      "paragraph:results_retrieval",
       "table:a_ladder",
       "table:a_ladder:row:36",
       "table:a_ladder:row:36:cell:0",
@@ -5843,8 +5754,6 @@
       "table:a_ladder:row:36:cell:2"
     ],
     "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/0": [
-      "claim:c_retrieval",
-      "paragraph:discussion_retrieval",
       "table:a_ladder",
       "table:a_ladder:row:37",
       "table:a_ladder:row:37:cell:0",
@@ -5852,8 +5761,6 @@
       "table:a_ladder:row:37:cell:2"
     ],
     "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/1": [
-      "claim:c_retrieval",
-      "paragraph:discussion_retrieval",
       "table:a_ladder",
       "table:a_ladder:row:37",
       "table:a_ladder:row:37:cell:0",
@@ -5862,7 +5769,7 @@
     ],
     "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/delta": [
       "claim:c_retrieval",
-      "paragraph:discussion_retrieval",
+      "paragraph:results_retrieval",
       "table:a_ladder",
       "table:a_ladder:row:37",
       "table:a_ladder:row:37:cell:0",
@@ -5884,6 +5791,8 @@
       "table:a_ladder:row:1:cell:2"
     ],
     "matrix_md_2ep:belief_summary.yaml:/delta_net/delta": [
+      "claim:c_conclusions_comparison",
+      "paragraph:results_conclusions",
       "table:a_ladder",
       "table:a_ladder:row:1",
       "table:a_ladder:row:1:cell:0",
@@ -5912,14 +5821,16 @@
     ],
     "matrix_v1_step24:belief_summary.yaml:/delta_net/delta": [
       "claim:c_conclusion_surface",
-      "claim:c_factorial_weak",
+      "claim:c_factorial_interaction",
+      "claim:c_factorial_results",
+      "claim:c_intro_surface",
       "claim:c_lim_step",
-      "claim:c_surface_22x",
-      "paragraph:abstract_premise_approach",
+      "claim:c_surface_abstract",
+      "paragraph:abstract_main",
       "paragraph:conclusion_surface",
-      "paragraph:introduction_surface_form",
-      "paragraph:limitations_step_scope",
-      "paragraph:results_surface_factorial",
+      "paragraph:introduction_surface",
+      "paragraph:limitations_2",
+      "paragraph:results_factorial",
       "table:a_factorial",
       "table:a_factorial:row:1",
       "table:a_factorial:row:1:cell:1",
@@ -5945,7 +5856,7 @@
     ],
     "matrix_v1_step36:belief_summary.yaml:/delta_net/delta": [
       "claim:c_lim_step",
-      "paragraph:limitations_step_scope",
+      "paragraph:limitations_2",
       "table:a_ladder",
       "table:a_ladder:row:5",
       "table:a_ladder:row:5:cell:0",
@@ -5973,12 +5884,13 @@
       "table:a_ladder:row:4:cell:2"
     ],
     "mld_arms:belief_summary.yaml:/delta_net/delta": [
-      "claim:c_conclusion_surface",
-      "claim:c_factorial_strong",
-      "claim:c_factorial_weak",
-      "paragraph:conclusion_surface",
-      "paragraph:introduction_surface_form",
-      "paragraph:results_surface_factorial",
+      "claim:c_factorial_interaction",
+      "claim:c_factorial_results",
+      "claim:c_intro_factorial",
+      "claim:c_surface_abstract",
+      "paragraph:abstract_main",
+      "paragraph:introduction_surface",
+      "paragraph:results_factorial",
       "table:a_factorial",
       "table:a_factorial:row:1",
       "table:a_factorial:row:1:cell:2",
@@ -6010,10 +5922,13 @@
     ],
     "ms3p_arms:belief_summary.yaml:/delta_net/delta": [
       "claim:c_conclusion_surface",
-      "claim:c_factorial_strong",
+      "claim:c_factorial_results",
+      "claim:c_intro_factorial",
+      "claim:c_surface_abstract",
+      "paragraph:abstract_main",
       "paragraph:conclusion_surface",
-      "paragraph:introduction_surface_form",
-      "paragraph:results_surface_factorial",
+      "paragraph:introduction_surface",
+      "paragraph:results_factorial",
       "table:a_factorial",
       "table:a_factorial:row:0",
       "table:a_factorial:row:0:cell:2",
@@ -6038,10 +5953,10 @@
       "table:a_ladder:row:3:cell:2"
     ],
     "ms_arms:belief_summary.yaml:/delta_net/delta": [
-      "claim:c_surface_22x",
-      "paragraph:abstract_premise_approach",
-      "paragraph:introduction_surface_form",
-      "paragraph:results_surface_factorial",
+      "claim:c_intro_surface",
+      "claim:c_surface_abstract",
+      "paragraph:abstract_main",
+      "paragraph:introduction_surface",
       "table:a_ladder",
       "table:a_ladder:row:3",
       "table:a_ladder:row:3:cell:0",
@@ -6069,12 +5984,13 @@
       "table:a_ladder:row:7:cell:2"
     ],
     "ms_sparse_arms:belief_summary.yaml:/delta_net/delta": [
-      "claim:c_conclusion_surface",
-      "claim:c_factorial_strong",
-      "claim:c_factorial_weak",
-      "paragraph:conclusion_surface",
-      "paragraph:introduction_surface_form",
-      "paragraph:results_surface_factorial",
+      "claim:c_factorial_interaction",
+      "claim:c_factorial_results",
+      "claim:c_intro_factorial",
+      "claim:c_surface_abstract",
+      "paragraph:abstract_main",
+      "paragraph:introduction_surface",
+      "paragraph:results_factorial",
       "table:a_factorial",
       "table:a_factorial:row:0",
       "table:a_factorial:row:0:cell:1",
