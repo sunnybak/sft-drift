@@ -695,8 +695,8 @@ writeup:
   - ms_sparse_arms
   primary_reading: attrib_mix_v4
   trajectory_run: null
-  title: 'Installed Ground Truth for Training-Data Attribution: Filtering on Gradient-Based
-    Attribution Scores Removes None of the Effect'
+  title: 'Installed Ground Truth for Training-Data Attribution: A Removal Test of
+    Gradient-Based Scores'
   authors: []
   intended_claim: Attribution methods are validated against content-similarity proxies
     rather than against known causal effects. We install per-source effects, measure
@@ -706,104 +706,115 @@ writeup:
     established removability at the wider budget but not at the narrow one, which
     bounds how much any narrow-budget null means.
   contribution_goals:
-  - 'ABSTRACT, in exactly this order and in plain declarative sentences. (1) The problem:
-    attribution methods are validated against content-similarity proxies, never against
-    known causal effects. (2) What we did: installed and measured per-source causal
-    effects, then tested whether removing a method''s top-ranked documents and retraining
-    removes the effect. (3) The motivating observation: an identical premise specification
-    in two surface forms carries installed effects of +0.0072 and +0.1574. (4) The
-    main result: no method separated from a word-count baseline under the pre-registered
-    criterion, and TracIn removal was counterproductive at the narrow budget. (5)
-    The positive control: oracle removal eliminated roughly half the installed effect
-    at the wider budget. (6) Scope in one sentence: one topic, one model family, gradient-based
-    methods, two seeds, exploratory. Six to eight sentences. No sentence longer than
-    about 30 words. Do not open with a stacked nominalisation.'
-  - WRITE PLAINLY. Prefer short active sentences. Say 'we measured' rather than 'measurement
-    was performed'. A qualification stated once in its proper place reads as rigour;
-    the same qualification repeated in every section reads as defensiveness and is
-    worse writing, not safer writing.
+  - USE EVERY CLAIM YOU PLAN. A registered claim that no paragraph carries is dropped
+    from the paper and is reported as an error. Before finishing, check that each
+    claim id appears in some paragraph's claim_ids, and that each REQUIRED QUALIFICATION
+    on a claim is present in the prose of a paragraph carrying it. If a claim's qualifications
+    are too many to thread into prose, do not plan the claim -- plan a narrower one
+    you can actually state.
+  - 'ABSTRACT, in this order, six to eight plain declarative sentences, none longer
+    than about 30 words, not opening with a stacked nominalisation. (1) Open with
+    the logical gap rather than a claim about what other researchers do -- no artifact
+    here can support an assertion about prior practice, and the auditor will reject
+    one. Write something of this shape: ''Whether an attribution method identifies
+    training data whose removal changes a model''s behaviour can only be checked against
+    a causal effect that is known in advance.'' (2) We installed and measured per-source
+    causal effects, then removed each method''s top-ranked documents and retrained.
+    (3) An identical premise specification carries installed effects of +0.0167-scale
+    magnitude in one surface form and a larger one in another -- give both recorded
+    values. (4) Every evaluated method''s interval overlapped a word-count baseline''s
+    under the pre-registered criterion, and TracIn removal was counterproductive at
+    the narrow budget. (5) The oracle established removability at the wider budget.
+    (6) Scope: one topic, the Qwen3 family, gradient-based methods, TWO TRAINING SEEDS,
+    exploratory.'
   - 'DEFINE THE NON-SEPARATION CRITERION ONCE, in methods, and name it: a method fails
-    if its 95% interval overlaps the word-count baseline''s interval in the same budget-and-seed
-    cell; this is an overlap criterion, not a pairwise test, and no pairwise contrast
-    was computed. Everywhere else refer to it as ''the non-separation criterion''
-    WITHOUT restating its definition or its caveat.'
-  - 'STATE THE SCOPE LIMITATION EXACTLY TWICE: once in the abstract''s final sentence,
-    once in limitations. It must not appear in the introduction, methods, results,
-    discussion or conclusion.'
-  - DISCUSSION MUST NOT RE-NARRATE RESULTS. Results says what happened; discussion
-    says what it means and what else could explain it. If a discussion sentence could
-    be moved into results without anyone noticing, it does not belong. CONCLUSION
-    IS ONE PARAGRAPH.
-  - 'USE DESCRIPTIVE NAMES, NEVER INTERNAL IDENTIFIERS, in every section: ''the long-article
-    corpus'', ''the short-answer corpus'', ''the explicit-stance corpus'', ''the off-topic
-    control''. Run ids, checkpoint numbers, file names and arm codes belong only in
-    the reproducibility appendix. Define on first use, in plain words: installed effect,
-    attributable fraction, dose-matched removal, and the off-topic control estimate.'
-  - 'REPORT THE POWER DIAGNOSTIC PROMINENTLY, in results and discussion. The claim
-    that carries it MUST cite the word-count baseline contrasts for the same cells
-    alongside the oracle contrasts, because it is a statement about two intervals
-    and a reader must be able to check both: the oracle -- removal by the separately
-    measured per-source effect, the best ranking available by construction -- itself
-    overlaps the word-count baseline in three of four budget-and-seed cells, and separates
-    only at the wider budget at one seed. A null under the non-separation criterion
-    at the narrow budget therefore carries little information about a method''s quality.
-    Presenting this openly is stronger than letting a reader find it in the ledger.'
-  - 'STATE THESE FIVE WEAKNESSES, each once, plainly, in limitations, without hedging
-    language around them. (a) Write as a NON-EMPIRICAL scope declaration about our
-    own procedure, carrying no evidence refs: we evaluated a single-checkpoint gradient-agreement
-    variant, and a reader comparing against a trajectory-summing formulation should
-    treat the difference as unexamined here. (b) Write as a NON-EMPIRICAL scope declaration
-    about what this evaluation did not run, carrying no evidence refs: no dose-matched
-    random-removal arm was retrained under full fine-tuning, so a negative attributable
-    fraction has an unexcluded alternative -- that perturbing the corpus at all moves
-    a small quantity around. (c) The attributable fraction is a ratio whose denominator
-    is small, which plausibly widens the intervals and contributes to the sign changes
-    across seeds. Do not claim it explains every overlap; several intervals do exclude
-    zero. This is a limitation of the estimator, not only of the methods. (d) Two
-    training seeds. The delta-predictability disagreement across seeds is what sampling
-    noise looks like at two draws; report it as unresolved without granting it more
-    status than two draws support. (e) The surface-form contrast varies length and
-    premise density together, so it is partly a repetition-density result.'
-  - 'DECOMPOSE THE SURFACE-FORM CONTRAST rather than resting on the raw pair. Report
-    the three-cell decomposition: at fixed density, shortening raises the installed
-    effect (+0.0547 long, +0.1190 short); at fixed length, raising density raises
-    it (+0.0506 sparse, +0.1190 dense). Say plainly that the headline pair varies
-    both at once and so does not isolate either.'
-  - THE NULL-BY-DESIGN SOURCE IS A PROPERTY OF THE CORPUS, NOT A MEASUREMENT. The
-    pool contains an on-topic source built to carry no causal effect. Describe it
-    as a design property in a non-empirical claim. Do NOT conflate it with the off-topic
-    control estimate, which IS measured and straddles zero; they are different objects
-    and the frozen evidence supports only the latter as a measurement.
-  - SCOPE DECLARATIONS ABOUT OUR OWN PROCEDURE ARE NON-EMPIRICAL. A sentence saying
-    what this evaluation did, did not run, or did not examine is a statement about
-    the paper, not a measurement of the world; register such claims with empirical=false
-    and no evidence refs. Do not attach them to unrelated artifacts to satisfy a citation
-    requirement -- that is worse than leaving them uncited.
-  - OVERLAP LANGUAGE ONLY. The criterion compares intervals; it is not a test of difference.
-    Write 'its interval overlapped the baseline's' or 'did not overlap', never 'differed
-    from', 'separated from', 'outperformed' or 'beat' the baseline. This applies to
-    the power diagnostic above as much as to the method results, and it is the distinction
-    the whole non-separation criterion rests on.
-  - EVERY CLAIM YOU PLAN MUST BE USED BY A PARAGRAPH. A registered claim that no paragraph
-    carries is dropped from the paper and reads as an omission, which is exactly what
-    happens to the two scope declarations about our own procedure. The limitations
-    section must contain, in prose, each of the five weaknesses named above -- including
-    the single-checkpoint variant and the absent dose-matched random-removal arm.
-    Assign each to a limitations paragraph.
-  - NO DOUBLE NEGATIVES, AND NO INTERNAL JARGON. Write 'every method's interval overlapped
-    the baseline's' -- never 'no method had an interval that did not overlap', which
-    a reader has to unpack twice. Phrases like 'homogeneous seed-paired contrast family',
-    'recorded final or checkpoint-specific readings' and 'instrument-specific' mean
-    nothing outside this repository; say 'at both seeds' or 'in this corpus' or delete
-    them. If a sentence needs two passes to parse, rewrite it.
-  - 'QUOTE NUMBERS TO TWO DECIMALS IN PROSE, matching the tables: ''AF -0.91 and -0.42'',
-    not ''-0.9130 and -0.4238''. An interval of [-2.15, -0.28] does not support four
-    significant figures, and a reader calibrates on the digits shown. Full precision
-    stays in the appendix ledger and the artifacts.'
-  - 'THE CONCLUSION MUST STATE THE FINDING, in one paragraph: what was tested, what
-    happened, and the one thing a reader should take away. A closing sentence about
-    ''stronger designs and more informative perturbations'' says nothing a reader
-    could not have written before reading the paper.'
+    if its 95% interval overlaps the word-count baseline''s in the same budget-and-seed
+    cell; an overlap criterion, not a pairwise test. Elsewhere refer to it by name
+    and DO NOT restate the definition or the caveat. State the scope limitation exactly
+    twice: the abstract''s last sentence and limitations. Discussion must not re-narrate
+    results -- it says what the results mean and what else could explain them. Conclusion
+    is ONE paragraph that states the finding.'
+  - 'WRITE PLAINLY. Short active sentences. No double negatives: ''every method''s
+    interval overlapped the baseline''s'', never ''no method had an interval that
+    did not overlap''. No internal jargon -- ''homogeneous seed-paired contrast family'',
+    ''instrument-specific'', ''recorded final or checkpoint-specific readings'' mean
+    nothing outside this repository. Use descriptive names throughout (''the long-article
+    corpus'', ''the short-answer corpus'', ''the off-topic control''); run ids, checkpoints,
+    file names and arm codes belong only in the appendix. Define on first use: installed
+    effect, attributable fraction, dose-matched removal.'
+  - 'OVERLAP LANGUAGE ONLY, and PRECISION FOLLOWS MAGNITUDE. The criterion compares
+    intervals: write ''overlapped'' or ''did not overlap'', never ''differed from'',
+    ''separated from'', ''outperformed'' or ''beat''. Quote attributable fractions
+    to two decimals (-0.91) and pool effects to four (+0.0167, +0.0247) -- rounding
+    those two to +0.02 each would erase a difference the paper depends on.'
+  - 'REPORT THE POWER DIAGNOSTIC in results and discussion: the oracle, the best ranking
+    available by construction, itself overlaps the word-count baseline in most budget-and-seed
+    cells. The per-cell verdicts are computed by the overlap table -- cite it rather
+    than asserting a count from the facts. Say what the qualification says: a null
+    at the narrow budget carries little information about a method''s quality. Do
+    not escalate that into a claim about the design''s overall diagnostic power.'
+  - 'DECOMPOSE THE SURFACE-FORM CONTRAST as recorded values placed side by side, never
+    as a directional effect: no paired contrast was computed between installed-effect
+    cells, so do not write that shortening ''raised'' or density ''increased'' anything.
+    Do NOT write ''only surface form differed'' -- length and premise density vary
+    together across the pair, and saying both contradicts itself.'
+  - 'NON-EMPIRICAL CLAIMS carry framing, corpus design, and scope-of-procedure statements:
+    empirical=false, no evidence refs, NO NUMERALS. The paper''s motivating sentence
+    about prior validation practice and the existence of a source built to carry no
+    causal effect are both of this kind. Do not attach them to unrelated artifacts
+    to satisfy a citation requirement.'
+  - NO RELATED WORK SECTION. No bibliography is supplied, and a claim about what other
+    work does cannot be supported by any artifact here. Do not name papers, authors,
+    years or venues anywhere.
+  - 'PLAN THE OVERLAP TABLE AS THE MAIN-TEXT TABLE and place it in results: the non-separation
+    result is the paper''s central claim and it needs one artifact that states it.
+    Put the full contrast ledger in the appendix. Do not place a per-arm suite summary
+    in the main text -- its sensitivity and transfer rows play no part in this argument
+    and orphan the table.'
+  - STATE FIVE WEAKNESSES, once each, in limitations. Phrase (a) and (b) as what WOULD
+    BE REQUIRED, never as assertions about what was or was not done -- an assertion
+    about an experiment's absence is an empirical claim no artifact can support, whereas
+    a statement of what a stronger design needs is a judgement the paper is entitled
+    to make. (a) 'Excluding the alternative that perturbing the corpus at all moves
+    a small quantity would require a dose-matched random-removal arm retrained under
+    the same procedure.' (b) 'A formulation that sums gradient agreement along the
+    training trajectory would be expected to score differently; comparing the two
+    is outside this evaluation.' (c) The attributable fraction is a ratio with a small
+    denominator, which plausibly widens intervals and contributes to sign changes
+    across seeds. (d) The delta-predictability disagreement across seeds is what noise
+    looks like at two draws. (e) The surface-form pair varies length and premise density
+    together. All five carry empirical=false and no numerals.
+  - 'NEVER WRITE A UNIVERSAL WHERE THE EVIDENCE IS A SET OF CELLS. Write ''in each
+    declared budget-and-seed cell, the evaluated methods'' intervals overlapped the
+    baseline''s'', not ''every evaluated method'' -- the second quantifies over methods
+    in general and the evidence covers the cells declared here. Same for the conclusion:
+    the oracle''s wider-budget point estimates are consistent with removability, which
+    is not the same as having demonstrated it. And the abstract''s seed sentence must
+    say the two-seed scope applies to the declared seed-paired families, not to every
+    reading in the paper.'
+  - DO NOT ASSERT CHECKPOINT OR RUN IDENTIFIERS IN PROSE. If the frozen context does
+    not carry a checkpoint or seed for a reading, say nothing about it rather than
+    naming one; those details live in the appendix ledger and its provenance line.
+  - 'DO NOT COUNT CELLS IN PROSE. Do not write ''most'', ''three of four'', or any
+    tally of overlapping cells: the per-cell verdicts are computed by the overlap
+    table and belong there. In prose write that the oracle''s intervals overlap the
+    baseline''s in cells shown in that table, including at the narrow budget, and
+    draw the interpretive point from that. Likewise, DO NOT ENUMERATE CHECKPOINTS
+    OR SEEDS in the scope sentence -- say the study is exploratory, one topic, one
+    model family, gradient-based methods, and paired training seeds for the declared
+    families, and stop there.'
+  - 'SCOPE EVERY OVERLAP AND ATTRIBUTABLE-FRACTION SENTENCE TO WHAT IS DISPLAYED,
+    and attach its qualification to the sentence carrying the numbers rather than
+    to a neighbouring one. Three specific shapes. (i) Non-separation: ''for the methods
+    and cells shown in the overlap table, each interval overlapped the word-count
+    baseline''s in its own cell'' -- do not quantify over evaluated methods or declared
+    cells in general. (ii) The power point in RESULTS must carry the same qualification
+    the discussion carries: this concerns narrow-budget nulls specifically and does
+    not assess the design''s overall diagnostic power. (iii) The oracle''s wider-budget
+    numbers must be written as point estimates with intervals excluding zero in the
+    declared cells, consistent with removability there -- the limitation attached
+    to that very sentence, not the next one, and no general or causal removability
+    conclusion drawn.'
   required_sections:
   - abstract
   - introduction
@@ -1248,7 +1259,7 @@ writeup:
     required: true
   max_main_tables: 3
   max_main_figures: 2
-  min_main_tables: 2
+  min_main_tables: 1
   min_main_figures: 1
   author_model: gpt-5.6-sol
   reviewer_model: gpt-5.6-luna

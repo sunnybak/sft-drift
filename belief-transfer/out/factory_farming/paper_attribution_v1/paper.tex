@@ -10,7 +10,7 @@
 \setlength{\parskip}{0pt}
 \widowpenalty=10000
 \clubpenalty=10000
-\title{ Installed Ground Truth for Training-Data Attribution: Filtering on Gradient-Based Attribution Scores Removes None of the Effect }
+\title{ Installed Ground Truth for Training-Data Attribution: A Removal Test of Gradient-Based Scores }
 \author{ Anonymous }
 \date{}
 
@@ -26,11 +26,11 @@
 
 
 \begin{abstract}
-Attribution methods are commonly validated against content-similarity proxies rather than known causal effects. We instead installed and measured per-source causal effects, then removed top-ranked documents and retrained to test whether removal reduced the installed effect. The identical premise specification produced installed effects of +0.0072 in a long-article corpus using a matched off-topic control retrained per seed and +0.1574 in a short-answer corpus. Only surface form differed, although length and premise density varied together and neither was isolated.
+As an operational diagnostic in this study, whether attribution identifies training data whose removal changes model behaviour is checked against a causal effect known in advance. We therefore define an installed effect as a per-source causal effect deliberately placed in training data, remove each method’s top-ranked documents, and retrain. The identical premise specification produced installed effects of +0.0072 as long articles and +0.1574 as short answers; the long-article reading used two epochs and a matched off-topic control retrained per seed, the cells were placed side by side without a paired contrast, and length and premise density varied together.
 
-In matching budget-and-seed cells, no evaluated attribution method had an interval that did not overlap the word-count baseline interval under the overlap-only non-separation criterion; no pairwise contrast was computed. At the narrow removal budget, TracIn attributable fractions were -0.9130 at seed 42 and -0.4238 at seed 7, with both intervals excluding zero: removal increased the installed effect, a counterproductive direction replicated within this homogeneous seed-paired TracIn contrast family. By construction, the oracle ranked sources by separately measured effects and provided the best available ranking; at the wider budget, attributable fractions were +0.5172 and +0.6208, both excluding zero and removing roughly half the installed effect.
+At the narrow removal budget, TracIn attributable fractions—the share of the installed pool effect removed after retraining—were -0.91 and -0.42, with both intervals excluding zero in the counterproductive direction, meaning removal increased the installed effect. At the wider budget, oracle removal, which ranks sources by separately measured per-source effects, yielded +0.52 and +0.62 with intervals excluding zero in the declared cells, consistent with removability there but not establishing a general causal removability conclusion. Across displayed methods and cells, every interval overlapped the word-count baseline’s within its cell under this interval-overlap criterion, not a pairwise test.
 
-This exploratory study covers one topic, the Qwen3 model family, gradient-based methods, paired training seeds, and recorded final or checkpoint-specific readings.
+This exploratory study covers one topic, the Qwen3 family, gradient-based methods, and paired training seeds for declared families; two-seed replication applies only to those seed-paired contrast families, and other readings are labeled separately.
 
 
 \end{abstract}
@@ -40,15 +40,11 @@ This exploratory study covers one topic, the Qwen3 model family, gradient-based 
 \section{ Introduction }
 \label{sec:introduction}
 
-Attribution methods are commonly validated against content-similarity proxies rather than known causal effects. This frames the central contribution rather than asserting a measured result.
+A central challenge for training-data attribution is determining whether the documents it prioritizes are genuinely responsible for a model’s behavior. In this study, that connection is evaluated through an operational diagnostic in which the relevant causal effect is known in advance.
 
 
 
-We installed and measured per-source causal effects, then removed top-ranked documents and retrained to test whether removal reduced the installed effect.
-
-
-
-The results suggest that content-aware ranking can track installed effects without guaranteeing that removing top-ranked documents will erase them. This is an interpretation, not a new measurement, and possible explanations include retraining dynamics, corpus perturbation, and estimator noise.
+We define an installed effect as a per-source causal effect deliberately placed in the training data. Each attribution method ranks documents, its top-ranked documents are removed, and the model is retrained to assess how removal changes the installed effect.
 
 
 
@@ -58,19 +54,19 @@ The results suggest that content-aware ranking can track installed effects witho
 \section{ Methods }
 \label{sec:methods}
 
-Installed effect was defined as the matched-control-netted change in the target-belief score induced by a source corpus. Belief contrasts used matched off-topic control netting, without interpretation as causal mediation. Attributable fraction was defined as the fraction of the pre-removal installed effect removed after retraining without selected documents, with the pre-removal pool effect as the denominator. Dose-matched removal compared rankings at the same removal budget.
+This exploratory study examined one topic in the Qwen3 family using gradient-based methods and paired training seeds for the declared contrast families. Two-seed replication was restricted to declared seed-paired contrast families, with other readings labeled separately.
 
 
 
-The source pool included an on-topic source constructed to carry no causal effect; this was a corpus design property rather than a measurement and was distinct from the measured off-topic control estimate. The off-topic control estimate was the measured change from matched off-topic control machinery used for netting, rather than the on-topic source built to carry no causal effect.
+Belief contrasts were calculated using matched off-topic control netting, whereas absorption was defined as held-out premise specialization rather than a belief measure. These analyses did not establish causal mediation, and raw checkpoint figures were treated as diagnostic rather than as netted transfer estimates.
 
 
 
-The non-separation criterion classified a method as failing when its interval overlapped the word-count baseline interval in the same budget-and-seed cell. This was an overlap criterion, not a pairwise test, and no pairwise contrast was computed.
+A method met the non-separation criterion when its confidence interval overlapped that of the word-count baseline within the same budget-and-seed cell. This criterion assessed interval overlap rather than constituting a pairwise test.
 
 
 
-Fixed tables were authoritative for estimates and confidence intervals; raw belief and action checkpoint figures were diagnostic rather than netted transfer estimates. Absorption represented held-out premise specialization, not a belief measure. Replication across two training seeds applied only to declared seed-paired contrast families, while single-seed and instrument-specific readings were labeled separately.
+Fixed tables were treated as authoritative for numerical estimates and confidence intervals.
 
 
 
@@ -80,92 +76,32 @@ Fixed tables were authoritative for estimates and confidence intervals; raw beli
 \section{ Results }
 \label{sec:results}
 
-The identical premise specification produced installed effects of +0.0072 in the long-article corpus and +0.1574 in the short-answer corpus. Long-article reading used matched off-topic control retrained per seed, and only surface form differed in this pair; because length and premise density varied together, the contrast isolated neither. Among third-person corpora at approximately matched premise density, shortening the corpus raised the installed effect from +0.0547 for long articles to +0.1190 for short answers, isolating length within the recorded design. At matched short length, raising premise density increased the installed effect from +0.0506 in the sparse corpus to +0.1190 in the dense corpus, isolating premise density within the recorded design.
+Under full fine-tuning, the installed pool effect before removal was +0.0167 in one training seed and +0.0247 in the paired seed. The intervals overlapped, and there was no LoRA-style halving.
 
 
 
-At matched dose, the conclusion-stating descriptive-inference corpus installed an effect of +0.1106 as a separate descriptive-inference family. The explicit-stance corpus gave a recorded positive-control contrast of +0.3111; this was a positive-control contrast rather than general belief transfer, used a lower token dose than the evidence corpus, and was a point estimate derived from recorded arm scores without an inferred interval.
+The identical premise specification had installed effects of +0.0072 as long articles and +0.1574 as short answers. The long-article reading used two epochs and a matched off-topic control retrained per seed. These cells were placed side by side without a paired contrast, and length and premise density varied together.
 
 
 
-Across six sources, the embedding retriever’s Spearman rank correlation with installed effect was +0.8857 for positive polarity and +0.9429 for negative polarity. These instrument-specific rank-fidelity results were not removal-efficacy estimates, and no removal was run for the positive-polarity retriever. The positive-polarity configuration used intfloat/e5-base-v2 with chunking and the maximum score over chunks; the recorded mean-over-chunks variant gave +0.9429 at both polarities, while recorded score-word correlation ranged from -0.18 to -0.29. The model-free word-length baseline had rank correlation +0.2571 at each polarity, based on the same bootstrap for positive polarity and serving as the baseline at the other polarity for negative polarity; these were rank-correlation results only.
+At the wider budget, oracle point estimates were +0.52 and +0.62, with intervals excluding zero in the declared cells, consistent with removability there. Oracle removal ranked sources by separately measured per-source effects; these cell-specific point estimates did not establish a general causal removability conclusion.
 
 
 
-With full fine-tuning, the pre-removal pool installed effect was +0.0167 at seed 42, which was the denominator of every attributable fraction at that seed, and +0.0247 at seed 7. The seed-7 replication interval overlapped the seed-42 interval and involved no LoRA-style halving. In a distinct single-seed reading, the measured off-topic control estimate was -0.0004 at seed 42 and its interval straddled zero; this full-fine-tuning control was cleaner than the LoRA control it replaced and was distinct from the on-topic null-by-design source.
+For the methods and cells displayed in the overlap table, each interval overlapped the word-count baseline interval in its corresponding cell. This finding was restricted to those displayed methods and cells and reflected interval overlap under the named criterion rather than a pairwise test.
 
 
 
-At the wider removal budget, oracle attributable fractions were +0.5172 at seed 42 and +0.6208 at seed 7, with both intervals excluding zero; this oracle ranked sources by separately measured per-source effect and was the best ranking available by construction, removing roughly half the installed effect. At the narrow removal budget, TracIn attributable fractions were -0.9130 at seed 42 and -0.4238 at seed 7, with both intervals excluding zero. In this homogeneous seed-paired TracIn contrast family, the negative fractions indicated that removal increased the installed effect, and the counterproductive direction replicated across seeds. Delta-predictability at the same narrow budget instead yielded a seed contradiction: attributable fraction was -0.5767 at seed 42 but +0.3424 at seed 7, with both intervals excluding zero in opposite directions. This was not a working repair, and two draws did not resolve the disagreement.
+In the cells shown in the overlap table, the oracle intervals overlapped the word-count baseline intervals, including at the narrow budget. A null at the narrow budget carried little information about method quality, and this qualification did not assess the design’s overall diagnostic power.
 
 
 
-Under the non-separation criterion, no evaluated attribution method had an interval that did not overlap the word-count baseline interval in its matched budget-and-seed cell. This statement used overlap language only, and no pairwise contrast was computed. As a power diagnostic, even the oracle—the best ranking available by construction—overlapped the word-count baseline interval in three of four matched cells and did not overlap only at the wider budget for seed 42. Consequently, a null under this overlap-based non-separation criterion at the narrow budget carried little information about method quality.
+At the narrow removal budget, TracIn attributable fractions were -0.91 and -0.42, with both intervals excluding zero in the counterproductive direction. Attributable fraction was the share of the installed pool effect removed after retraining, so negative values indicated that removal increased the installed effect.
 
 
 
+At the narrow budget, delta-predictability attributable fractions were -0.58 and +0.34, with each interval excluding zero in opposite directions. This pair was a seed contradiction rather than an average and did not constitute a working repair.
 
-
-\begin{table}[H]
-\centering
-\footnotesize
-\caption{ Per-arm belief scores and matched-control-netted installed effect for the long-article corpus. The table reports the recorded checkpoint-specific reading and its confidence interval. Source: matrix\_v1\_step24/belief\_summary.yaml. }
-\label{tab:belief_transfer}
-
-
-
-\begin{tabular}{ ll }
-\toprule
-quantity & recorded value \\
-\midrule
-
-delta\_raw & +0.0033 [-0.0009, +0.0082] \\
-
-machinery & -0.0039 [-0.0093, +0.0007] \\
-
-delta\_net & \textbf{+0.0072} [+0.0016, +0.0136] \\
-
-sensitivity & \textbf{+0.6521} [+0.5578, +0.7413] \\
-
-T (delta\_net) & +0.0110 \\
-
-\bottomrule
-\end{tabular}
-
-\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
-\end{table}
-
-
-
-
-\begin{table}[H]
-\centering
-\footnotesize
-\caption{ Matched-control-netted installed effect for the short dense corpus used in the length and premise-density decomposition. The recorded estimate is shown with its confidence interval. Source: ms3p\_arms/belief\_summary.yaml. }
-\label{tab:belief_transfer}
-
-
-
-\begin{tabular}{ ll }
-\toprule
-quantity & recorded value \\
-\midrule
-
-delta\_raw & \textbf{+0.1034} [+0.0741, +0.1352] \\
-
-machinery & \textbf{-0.0156} [-0.0271, -0.0048] \\
-
-delta\_net & \textbf{+0.1190} [+0.0901, +0.1497] \\
-
-sensitivity & \textbf{+0.6521} [+0.5578, +0.7413] \\
-
-T (delta\_net) & +0.1825 \\
-
-\bottomrule
-\end{tabular}
-
-\par\footnotesize\emph{Note.} Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.
-\end{table}
 
 
 
@@ -173,7 +109,7 @@ T (delta\_net) & +0.1825 \\
 \begin{table}[tbp]
 \centering
 \footnotesize
-\caption{ Attributable fraction and overlap with the word-count baseline for every method, removal budget, and seed. Overlap is evaluated within matching budget-and-seed cells under the non-separation criterion. Source: paper/synthesis.json. }
+\caption{ Attributable fraction and overlap with the word-count baseline for each attribution method, removal budget, and paired training seed. Overlap is assessed within the same budget-and-seed cell under full fine-tuning. Source: paper/synthesis.json. }
 \label{tab:af_overlap}
 
 
@@ -226,8 +162,8 @@ TracIn-cosine & 20\% & 7 & +0.22 [-0.17, +0.48] & overlaps \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{ figures/attributable_fraction.png }
-\caption{ Attributable fraction by attribution method and training seed, with one panel per removal budget and recorded confidence intervals. The vertical zero line marks removal of none of the installed effect.}
-\label{fig:a_af_forest}
+\caption{ Attributable fraction by attribution method under full fine-tuning, with one panel per removal budget and paired training seeds shown separately. Bars give 95\% intervals, and the zero line marks removal of none of the installed effect.}
+\label{fig:a_af}
 \end{figure}
 
 
@@ -237,11 +173,11 @@ TracIn-cosine & 20\% & 7 & +0.22 [-0.17, +0.48] & overlaps \\
 \section{ Discussion }
 \label{sec:discussion}
 
-The results imply that content-aware ranking can track installed effects without guaranteeing that removing the highest-ranked documents will erase those effects. This interpretation does not constitute a new measurement, and the gap between ranking fidelity and removal efficacy could reflect retraining dynamics, corpus perturbation, or estimator noise.
+The oracle and word-count intervals overlapped in the cells supported by the overlap table, so interval inspection does not establish separation between them. At the narrow budget, the oracle null is only weakly informative about method quality, and this limited observation does not establish the design’s overall diagnostic power.
 
 
 
-Because even the oracle often failed the non-separation criterion, non-separation at the narrow removal budget provides weak evidence about attribution quality. This is an interpretation of the reported power diagnostic rather than a renewed account of the cell-level results.
+The attributable fraction’s small denominator offers a plausible, but untested, explanation for wider intervals and sign changes across seeds. Likewise, the delta-predictability disagreement across the two draws is compatible with noise, but noise was not separately identified or tested from only two draws.
 
 
 
@@ -251,23 +187,19 @@ Because even the oracle often failed the non-separation criterion, non-separatio
 \section{ Limitations }
 \label{sec:limitations}
 
-The evaluation covered a single-checkpoint gradient-agreement variant. Its relationship to a trajectory-summing formulation therefore remains unexamined here.
+This exploratory study is limited to one topic, the Qwen3 family, gradient-based methods, and paired training seeds for the declared families. Two-seed replication applies only to declared seed-paired contrast families. Other readings are labeled separately.
 
 
 
-No dose-matched random-removal arm was retrained under full fine-tuning. Consequently, negative attributable fractions retain an alternative explanation: perturbing the corpus at all may shift a small quantity.
+The delta-predictability disagreement across seeds is compatible with noise at two draws, but noise was neither separately identified nor tested from so few draws. A small denominator offers a plausible, possible explanation for wider attributable-fraction intervals and sign changes across seeds, but this account is untested and non-causal.
 
 
 
-Attributable fraction is a ratio with a small denominator, which plausibly widens intervals and contributes to sign changes across seeds. This estimator limitation cannot explain every overlap, because several intervals exclude zero.
+Excluding the alternative that perturbing the corpus at all moves a small quantity would require an unrun, dose-matched random-removal arm retrained under the same procedure.
 
 
 
-The delta-predictability disagreement remains unresolved with only two training seeds. The opposing directions are consistent with what sampling noise can look like across two draws and warrant no stronger interpretation.
-
-
-
-The surface-form contrast varied length and premise density together, so it is partly a repetition-density result rather than an isolated surface-form effect.
+The surface-form comparison confounds length with premise density, so their contributions cannot be separated. A formulation that sums gradient agreement along the training trajectory could score differently; comparison with the evaluated formulation lies outside this evaluation and remains speculative.
 
 
 
@@ -277,17 +209,21 @@ The surface-form contrast varied length and premise density together, so it is p
 \section{ Conclusion }
 \label{sec:conclusion}
 
-Causal removal evaluation exposes a gap between ranking fidelity and effect removal, while the oracle diagnostic indicates that stronger designs and more informative perturbations are needed.
+The removal results distinguish potential removability from reliable attribution: at the wider budget, ranking sources by separately measured per-source effects was consistent with removability in the declared cells, whereas narrow-budget TracIn removal increased the installed effect across both seeds. Here, attributable fraction denotes the share of the installed pool effect removed after retraining, so negative values indicate an increase after removal. The oracle evidence remains cell-specific and does not establish general causal removability.
+
+
+
+For the methods and cells displayed in the overlap table, no method separated from the word-count baseline under the specified interval-overlap criterion. This conclusion is restricted to those displayed methods and cells, and interval overlap is not a pairwise test.
 
 
 
 
 
 
-\section{ Reproducibility Appendix }
+\section{ Appendix: Full contrast ledger }
 \label{sec:appendix}
 
-For reproducibility, numerical estimates and confidence intervals are governed by the fixed tables. Raw belief and action checkpoint figures serve only as diagnostics and cannot be interpreted as netted transfer estimates. Absorption denotes specialization to held-out premises rather than a measure of belief.
+Across the full contrast ledger, the fixed tables remain authoritative for numerical estimates and confidence intervals.
 
 
 
@@ -301,9 +237,9 @@ For reproducibility, numerical estimates and confidence intervals are governed b
 
 
 {\footnotesize
-\begin{longtable}{ p{4.47cm}lp{8.33cm} }
+\begin{longtable}{ p{4.08cm}lp{7.60cm} }
 
-\caption{ Complete ledger of all declared installed-effect, ranking, control, and attributable-fraction contrasts. Intervals are shown when recorded, and the explicit-stance positive control remains an unintervalled arm-score contrast. Source: paper/synthesis.json. \emph{Note.} Rows without intervals are deterministic point contrasts over recorded arm scores. }
+\caption{ Complete ledger of every declared contrast, including installed effects, ranking diagnostics, pool and control readings, and attributable fractions. Point estimates, available 95\% intervals, and recorded qualifications are shown without pooling unlike readings. Source: paper/synthesis.json. \emph{Note.} Rows without intervals are deterministic point contrasts over recorded arm scores. }
 \label{tab:contribution_ladder}\\
 \toprule
 intervention & net effect & qualification \\
@@ -320,41 +256,41 @@ intervention & net effect & qualification \\
 
 \textbf{ Installed effects } &  &  \\
 
-Installed effect: descriptive conclusions (md) & \textbf{ +0.11 [+0.09, +0.14] } & Conclusion-stating corpus at matched dose. \\
+Installed effect: descriptive conclusions (md) & \textbf{ +0.11 [+0.087, +0.14] } & Conclusion-stating corpus at matched dose. \\
 
-Installed effect: premises as \textasciitilde{}740-word articles (mev) & \textbf{ +0.01 [+0.00, +0.01] } & Two-epoch reading, matched off-topic control retrained per seed. \\
+Installed effect: premises as \textasciitilde{}740-word articles (mev) & \textbf{ +0.0072 [+0.0016, +0.014] } & Two-epoch reading, matched off-topic control retrained per seed. \\
 
 Installed effect: the SAME premises as \textasciitilde{}105-word answers (ms) & \textbf{ +0.16 [+0.13, +0.19] } & Identical premise specification to the row above; only surface form differs. \\
 
-Installed effect: long articles, dense premises & \textbf{ +0.05 [+0.04, +0.07] } & Same premise density as the row above at \textasciitilde{}700 words: the length factor alone. \\
+Installed effect: long articles, dense premises & \textbf{ +0.055 [+0.039, +0.071] } & Same premise density as the row above at \textasciitilde{}700 words: the length factor alone. \\
 
-Installed effect: short answers, dense premises & \textbf{ +0.12 [+0.09, +0.15] } & Third person, \textasciitilde{}103 words, \textasciitilde{}15\% premise density. With the row below, isolates length at fixed density. \\
+Installed effect: short answers, dense premises & \textbf{ +0.12 [+0.090, +0.15] } & Third person, \textasciitilde{}103 words, \textasciitilde{}15\% premise density. With the row below, isolates length at fixed density. \\
 
-Installed effect: short answers, sparse premises & \textbf{ +0.05 [+0.03, +0.07] } & Same length as the short-dense row at \textasciitilde{}4\% density: the density factor alone. \\
+Installed effect: short answers, sparse premises & \textbf{ +0.051 [+0.031, +0.072] } & Same length as the short-dense row at \textasciitilde{}4\% density: the density factor alone. \\
 
 Installed effect: explicit stance (me) & +0.31 & Explicit-stance ceiling; token dose is lower than the evidence corpus. Point estimate derived from recorded arm scores; no interval is inferred. \\
 
 \textbf{ Pool and controls } &  &  \\
 
-Pool effect before removal, seed 42 (dB\_before) & \textbf{ +0.02 [+0.01, +0.03] } & Denominator of every AF at this seed; full fine-tuning. \\
+Pool effect before removal, seed 42 (dB\_before) & \textbf{ +0.017 [+0.0084, +0.026] } & Denominator of every AF at this seed; full fine-tuning. \\
 
-Pool effect before removal, seed 7 (dB\_before) & \textbf{ +0.02 [+0.01, +0.04] } & Replicates seed 42 with overlapping intervals; no LoRA-style halving. \\
+Pool effect before removal, seed 7 (dB\_before) & \textbf{ +0.025 [+0.014, +0.037] } & Replicates seed 42 with overlapping intervals; no LoRA-style halving. \\
 
-Off-topic control machinery, seed 42 & -0.00 [-0.00, +0.00] & Straddles zero; full-FT control is far cleaner than the LoRA control it replaces. \\
+Off-topic control machinery, seed 42 & -0.00042 [-0.0034, +0.0029] & Straddles zero; full-FT control is far cleaner than the LoRA control it replaces. \\
 
 \textbf{ Attributable fraction, by method } &  &  \\
 
 AF, oracle removal at 10\% budget, seed 42 & -0.10 [-0.95, +0.35] & Straddles zero. The point estimate is below the 20\% budget's, but these wide intervals do not establish an ordering; report as a point-estimate observation only, never as a demonstrated sublinear response. \\
 
-AF, oracle removal at 10\% budget, seed 7 & +0.30 [-0.02, +0.55] & Seed-seven companion to the sublinear-response row. \\
+AF, oracle removal at 10\% budget, seed 7 & +0.30 [-0.016, +0.55] & Seed-seven companion to the sublinear-response row. \\
 
 AF, oracle removal at 20\% budget, seed 42 & \textbf{ +0.52 [+0.17, +0.86] } & Removal by separately measured per-source effect; the ceiling. \\
 
 AF, oracle removal at 20\% budget, seed 7 & \textbf{ +0.62 [+0.29, +0.84] } & Seed-seven replication of the ceiling; spread 0.10. \\
 
-AF, delta-predictability at 10\% budget, seed 42 & \textbf{ -0.58 [-1.67, -0.02] } & Excludes zero NEGATIVE; contradicts the same cell at seed 7. Not a working repair. \\
+AF, delta-predictability at 10\% budget, seed 42 & \textbf{ -0.58 [-1.67, -0.018] } & Excludes zero NEGATIVE; contradicts the same cell at seed 7. Not a working repair. \\
 
-AF, delta-predictability at 10\% budget, seed 7 & \textbf{ +0.34 [+0.08, +0.55] } & Excludes zero POSITIVE; contradicts seed 42. The pair is a seed contradiction, not an average. \\
+AF, delta-predictability at 10\% budget, seed 7 & \textbf{ +0.34 [+0.078, +0.55] } & Excludes zero POSITIVE; contradicts seed 42. The pair is a seed contradiction, not an average. \\
 
 AF, delta-predictability at 20\% budget, seed 42 & +0.13 [-0.80, +0.59] & Straddles zero at the wider budget. \\
 
@@ -362,7 +298,7 @@ AF, delta-predictability at 20\% budget, seed 7 & +0.24 [-0.30, +0.62] & Straddl
 
 AF, TracIn removal at 10\% budget, seed 42 & \textbf{ -0.91 [-2.15, -0.28] } & Negative and excluding zero: removing top-ranked documents INCREASED the effect. \\
 
-AF, TracIn removal at 10\% budget, seed 7 & \textbf{ -0.42 [-1.09, -0.02] } & Seed-seven replication of the counterproductive direction. \\
+AF, TracIn removal at 10\% budget, seed 7 & \textbf{ -0.42 [-1.09, -0.022] } & Seed-seven replication of the counterproductive direction. \\
 
 AF, TracIn removal at 20\% budget, seed 42 & -0.47 [-1.51, +0.19] & Straddles zero at the wider budget. \\
 
@@ -372,7 +308,7 @@ AF, TracIn-cosine removal at 10\% budget, seed 42 & \textbf{ -0.95 [-2.32, -0.32
 
 AF, TracIn-cosine at 10\% budget, seed 7 & -0.20 [-0.77, +0.16] & Straddles zero at this seed; the counterproductive reading is single-seed for this method. \\
 
-AF, TracIn-cosine removal at 20\% budget, seed 42 & -0.05 [-0.76, +0.33] & Straddles zero at the wider budget. \\
+AF, TracIn-cosine removal at 20\% budget, seed 42 & -0.053 [-0.76, +0.33] & Straddles zero at the wider budget. \\
 
 AF, TracIn-cosine at 20\% budget, seed 7 & +0.22 [-0.17, +0.48] & Straddles zero; completes the TracIn-cosine cell block. \\
 
@@ -380,7 +316,7 @@ AF, word-count baseline at 10\% budget, seed 42 & -0.49 [-1.53, +0.18] & The mod
 
 AF, word-count baseline at 10\% budget, seed 7 & -0.14 [-0.68, +0.22] & Baseline replication; the same interval-overlap criterion applies. \\
 
-AF, word-count baseline at 20\% budget, seed 42 & -0.30 [-0.94, +0.09] & Baseline at the wider budget; the same interval-overlap criterion applies. \\
+AF, word-count baseline at 20\% budget, seed 42 & -0.30 [-0.94, +0.087] & Baseline at the wider budget; the same interval-overlap criterion applies. \\
 
 AF, word-count baseline at 20\% budget, seed 7 & +0.12 [-0.37, +0.45] & Completes the baseline block. Every content-keyed cell is compared against these by interval overlap only. \\
 

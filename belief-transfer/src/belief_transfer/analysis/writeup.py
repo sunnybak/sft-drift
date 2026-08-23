@@ -1590,6 +1590,17 @@ async def audit_manuscript(
 
 Classify every empirical claim. Reject overstatement, missing checkpoint or scope
 qualifications, contradictory magnitude language, and uncited empirical assertions.
+
+A claim carrying `"empirical": false` is a framing, corpus-design, or scope statement --
+what the paper is about, how the corpus was built, or what this evaluation did and did not
+do. It has no evidence refs BY DESIGN, because no measured artifact can support a statement
+about prior practice, about a construction choice, or about an experiment that was not run.
+Do NOT reject such a claim as uncited; that is what the flag is for, and a paper cannot
+state its own motivation or its own scope without them. Audit it against a different
+standard instead: reject it if it smuggles in a quantitative or comparative empirical
+assertion that WOULD need evidence (a measured value, a magnitude comparison, a claim about
+what the data show), if it overstates what a design choice establishes, or if it contradicts
+the frozen facts. A non-empirical claim that carries a numeral is nearly always misfiled.
 The terse claim text is a planning index, not rendered prose. Evaluate each claim from all
 rendered paragraphs carrying its claim id together with their qualifier metadata. Do not
 reject a missing qualification when it is preserved in those rendered paragraphs.

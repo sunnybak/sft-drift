@@ -39,6 +39,17 @@ class ResultTable:
     cell_refs: tuple[tuple[tuple[str, ...], ...], ...] = ()
 
 
+def _significant(value: float, figures: int = 2) -> str:
+    """Format with enough decimals to show `figures` significant digits, min 2 decimals."""
+    magnitude = abs(value)
+    if magnitude >= 0.1 or magnitude == 0:
+        places = 2
+    else:
+        import math
+        places = min(6, figures - 1 - math.floor(math.log10(magnitude)))
+    return f"{value:+.{places}f}"
+
+
 def _estimate(entry: dict[str, Any], *, key: str) -> TableCell:
     value = float(entry[key])
     low, high = entry["ci95"]
@@ -222,12 +233,13 @@ def ladder_table(synthesis: dict[str, Any], *, source_run: str = "paper") -> Res
             cell_refs.append(((), (), ()))
         value = float(fact["value"])
         ci95 = fact.get("ci95")
-        # Two decimals, not four. An AF of -0.9130 with an interval of [-2.15, -0.28]
-        # advertises a precision the estimator does not have, and a reader calibrates on
-        # the digits shown. Full precision remains in synthesis.json for anyone re-deriving.
-        reading = f"{value:+.2f}"
+        # Significant figures, not fixed decimals. Two decimals reads well for an AF of
+        # -0.91 -- four would advertise precision the estimator does not have -- but it
+        # renders pool effects of 0.0167 and 0.0247 as the SAME "+0.02", collapsing a real
+        # difference the paper relies on. Scale the decimals to the magnitude instead.
+        reading = _significant(value)
         if ci95 is not None:
-            reading += f" [{float(ci95[0]):+.2f}, {float(ci95[1]):+.2f}]"
+            reading += f" [{_significant(float(ci95[0]))}, {_significant(float(ci95[1]))}]"
         rows.append(
             (
                 TableCell(str(fact["label"])),

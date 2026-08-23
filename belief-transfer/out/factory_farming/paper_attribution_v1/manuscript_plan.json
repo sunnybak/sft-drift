@@ -2,30 +2,188 @@
   "assets": [
     {
       "axes_or_columns": [
-        "contrast family",
-        "corpus or method",
-        "polarity",
-        "removal budget",
-        "seed or reading",
-        "estimate",
-        "confidence interval",
-        "qualification"
+        "Method",
+        "Removal budget",
+        "Training seed",
+        "Attributable fraction with 95% interval",
+        "Overlap with word-count baseline"
       ],
-      "caption_outline": "Complete ledger of every declared contrast, including installed effects, retrieval correlations, pool diagnostics, controls, and attributable fractions. Estimates retain their recorded reading, budget, seed, intervals, and qualifications.",
+      "caption_outline": "Attributable fraction and overlap with the word-count baseline for each attribution method, removal budget, and paired training seed. Overlap is assessed within the same budget-and-seed cell under full fine-tuning.",
       "claim_ids": [
-        "c_headline_surface",
-        "c_surface_length",
-        "c_surface_density",
-        "c_stance_control",
-        "c_rank_positive",
-        "c_rank_negative",
-        "c_pool_effect",
-        "c_offtopic",
-        "c_nonseparation",
+        "c_nonsep",
+        "c_oracle_power"
+      ],
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "form": "af_overlap_table",
+      "id": "a_overlap",
+      "placement": "results",
+      "question": "Do attribution methods' intervals overlap the word-count baseline within each displayed removal-budget and training-seed cell?",
+      "takeaway": "The displayed method intervals overlap the word-count baseline within their corresponding cells, while the oracle's narrow-budget overlap limits what a narrow-budget null says about method quality.",
+      "transformation": "declared_contrast"
+    },
+    {
+      "axes_or_columns": [
+        "Attributable fraction",
+        "Attribution method",
+        "Removal-budget panels",
+        "Training-seed markers",
+        "95% intervals",
+        "Zero line"
+      ],
+      "caption_outline": "Attributable fraction by attribution method under full fine-tuning, with one panel per removal budget and paired training seeds shown separately. Bars give 95% intervals, and the zero line marks removal of none of the installed effect.",
+      "claim_ids": [
         "c_tracin_narrow",
         "c_oracle_wide",
-        "c_delta_seed",
-        "c_power"
+        "c_delta_seed"
+      ],
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
+      ],
+      "form": "af_figure",
+      "id": "a_af",
+      "placement": "results",
+      "question": "What are the attributable-fraction point estimates and uncertainty patterns across methods, budgets, and paired training seeds?",
+      "takeaway": "TracIn is counterproductive at the narrow budget, the oracle has positive wider-budget estimates consistent with removability, and delta-predictability changes sign across seeds.",
+      "transformation": "declared_contrast"
+    },
+    {
+      "axes_or_columns": [
+        "Declared contrast",
+        "Reading type",
+        "Point estimate",
+        "95% interval",
+        "Qualification",
+        "Evidence provenance"
+      ],
+      "caption_outline": "Complete ledger of every declared contrast, including installed effects, ranking diagnostics, pool and control readings, and attributable fractions. Point estimates, available 95% intervals, and recorded qualifications are shown without pooling unlike readings.",
+      "claim_ids": [
+        "c_pool_pair",
+        "c_surface_pair",
+        "c_nonsep",
+        "c_tracin_narrow",
+        "c_oracle_wide",
+        "c_oracle_power",
+        "c_delta_seed"
       ],
       "evidence_refs": [
         "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
@@ -41,15 +199,6 @@
         "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
         "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score",
-        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1",
-        "mld_arms:belief_summary.yaml:/delta_net/delta",
-        "mld_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "mld_arms:belief_summary.yaml:/delta_net/ci95/1",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1",
         "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/delta",
         "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/0",
         "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/1",
@@ -130,210 +279,22 @@
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
         "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1"
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
+        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
+        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1",
+        "mld_arms:belief_summary.yaml:/delta_net/delta",
+        "mld_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "mld_arms:belief_summary.yaml:/delta_net/ci95/1",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0",
+        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1"
       ],
       "form": "ladder_table",
       "id": "a_ladder",
       "placement": "appendix",
-      "question": "What is the complete ledger of every declared contrast, including installed effects, rank correlations, pool diagnostics, controls, and all attributable-fraction cells?",
-      "takeaway": "The complete evidence ledger shows large variation in installed effects across corpus forms, strong retrieval correlations that do not translate into removal efficacy, and broad interval overlap among removal methods and the baseline.",
-      "transformation": "declared_contrast"
-    },
-    {
-      "axes_or_columns": [
-        "corpus form",
-        "premise density",
-        "installed effect",
-        "confidence interval",
-        "matched off-topic-control netting"
-      ],
-      "caption_outline": "Installed effect for the dense short-answer corpus under matched off-topic-control netting. The focused run summary supports the length and density decomposition when read with the complete contrast ledger.",
-      "claim_ids": [
-        "c_headline_surface",
-        "c_surface_length",
-        "c_surface_density",
-        "c_headline_confound"
-      ],
-      "evidence_refs": [
-        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "form": "transfer_table",
-      "id": "a_surface_transfer",
-      "placement": "results",
-      "question": "How do length and premise density decompose the surface-form change in installed effect?",
-      "takeaway": "Both shortening and increasing premise density raise the installed effect, while the headline surface-form pair combines the two changes.",
-      "transformation": "identity"
-    },
-    {
-      "axes_or_columns": [
-        "method",
-        "removal budget",
-        "seed",
-        "attributable fraction and interval",
-        "overlaps word-count baseline"
-      ],
-      "caption_outline": "Attributable fraction and overlap with the word-count baseline for each attribution method, removal budget, and seed under full fine-tuning. Oracle removal uses separately measured per-source effects and provides the design's positive-control ranking.",
-      "claim_ids": [
-        "c_nonseparation",
-        "c_tracin_narrow",
-        "c_oracle_wide",
-        "c_delta_seed",
-        "c_power"
-      ],
-      "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
-      ],
-      "form": "af_overlap_table",
-      "id": "a_af_overlap",
-      "placement": "results",
-      "question": "Does each attribution method meet the non-separation criterion relative to the word-count baseline in each budget-and-seed cell?",
-      "takeaway": "Every tested method meets the non-separation criterion, and the oracle's frequent overlap reveals weak diagnostic power at the narrow budget.",
-      "transformation": "declared_contrast"
-    },
-    {
-      "axes_or_columns": [
-        "x: attributable fraction",
-        "y: attribution method and seed",
-        "panels: removal budget",
-        "intervals: confidence intervals",
-        "reference line: zero removes nothing"
-      ],
-      "caption_outline": "Attributable fraction by attribution method and seed, with one panel per removal budget and confidence intervals shown under full fine-tuning. The zero line marks removal of none of the installed effect.",
-      "claim_ids": [
-        "c_nonseparation",
-        "c_tracin_narrow",
-        "c_oracle_wide",
-        "c_delta_seed",
-        "c_power"
-      ],
-      "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
-      ],
-      "form": "af_figure",
-      "id": "a_af_forest",
-      "placement": "results",
-      "question": "What are the attributable fractions and uncertainty intervals for every declared method, budget, and seed?",
-      "takeaway": "Wide intervals and seed variation limit discrimination, while TracIn is consistently counterproductive at the narrow budget and oracle removal is positive at the wider budget.",
+      "question": "What is the complete ledger of all declared installed-effect, ranking, pool, control, and attributable-fraction contrasts?",
+      "takeaway": "The complete ledger distinguishes installed effects, ranking diagnostics, controls, and removal efficacy while preserving seed-specific and unintervalled qualifications.",
       "transformation": "declared_contrast"
     }
   ],
@@ -341,69 +302,46 @@
     {
       "empirical": false,
       "evidence_refs": [],
-      "id": "c_problem",
-      "qualifiers": [
-        "Motivating problem statement; not a measured result in this study."
-      ],
-      "text": "Attribution methods are commonly validated against content-similarity proxies rather than known causal effects."
+      "id": "c_gap",
+      "qualifiers": [],
+      "text": "Whether an attribution method identifies training data whose removal changes a model's behaviour can only be checked against a causal effect known in advance."
     },
     {
       "empirical": false,
       "evidence_refs": [],
       "id": "c_design",
-      "qualifiers": [
-        "Installed effect means the matched off-topic-control-netted change associated with a source.",
-        "Dose-matched removal means comparing rankings at the same removal budget.",
-        "Attributable fraction means the removed effect divided by the pre-removal pool effect.",
-        "The off-topic control estimate is the measured change on unrelated material used for matched netting."
-      ],
-      "text": "We installed and measured per-source causal effects, removed each method's top-ranked documents, retrained, and measured how much of the installed effect was removed."
+      "qualifiers": [],
+      "text": "We define an installed effect as a per-source causal effect deliberately placed in training data, remove each method's top-ranked documents, and retrain."
     },
     {
       "empirical": true,
       "evidence_refs": [
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/0",
-        "matrix_v1_step24:belief_summary.yaml:/delta_net/ci95/1",
-        "ms_arms:belief_summary.yaml:/delta_net/delta",
-        "ms_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms_arms:belief_summary.yaml:/delta_net/ci95/1"
+        "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta"
       ],
-      "id": "c_headline_surface",
+      "id": "c_pool_pair",
       "qualifiers": [
-        "Long-article reading: two-epoch reading, matched off-topic control retrained per seed.",
-        "Short-answer reading: identical premise specification; only surface form differs.",
-        "The headline pair varies length and premise density together and isolates neither."
+        "Full fine-tuning.",
+        "The intervals overlap.",
+        "No LoRA-style halving."
       ],
-      "text": "The same premise specification carried installed effects of +0.0072 in the long-article corpus and +0.1574 in the short-answer corpus."
+      "text": "Before removal, the installed pool effect was +0.0167 in one training seed and +0.0247 in the paired seed."
     },
     {
       "empirical": true,
       "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_oracle_p20_s7/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/delta",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p10_s42/ci95/1",
@@ -416,6 +354,30 @@
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/delta",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_tracin_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_tracin_cos_p20_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p20_s7/ci95/1",
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/delta",
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p10_s42/ci95/1",
@@ -429,12 +391,12 @@
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
       ],
-      "id": "c_nonseparation",
+      "id": "c_nonsep",
       "qualifiers": [
-        "Overlap language only; no pairwise contrast was computed.",
-        "Applies to declared method-by-budget-by-seed cells."
+        "The statement is restricted to methods and cells displayed in the overlap table.",
+        "This is interval overlap under the named criterion, not a pairwise test."
       ],
-      "text": "Every evaluated method's interval overlapped the word-count baseline's under the non-separation criterion in each matched budget-and-seed cell."
+      "text": "For the methods and cells shown in the overlap table, each interval overlapped the word-count baseline's in its own cell."
     },
     {
       "empirical": true,
@@ -448,10 +410,10 @@
       ],
       "id": "c_tracin_narrow",
       "qualifiers": [
-        "Both intervals exclude zero.",
-        "Negative attributable fraction means removal increased the installed effect."
+        "Attributable fraction is the share of the installed pool effect removed after retraining.",
+        "Negative values mean removal increased the installed effect."
       ],
-      "text": "TracIn removal was counterproductive at the narrow budget, with AF -0.91 and -0.42 at the two seeds."
+      "text": "At the narrow removal budget, TracIn attributable fractions were -0.91 and -0.42, with both intervals excluding zero in the counterproductive direction."
     },
     {
       "empirical": true,
@@ -465,232 +427,10 @@
       ],
       "id": "c_oracle_wide",
       "qualifiers": [
-        "Oracle ranks sources by separately measured per-source effect and is the best ranking available by construction."
+        "Oracle removal ranks sources by separately measured per-source effects.",
+        "These are point estimates in the declared cells and do not establish a general causal removability conclusion."
       ],
-      "text": "Oracle removal eliminated roughly half the installed effect at the wider budget, with AF +0.52 and +0.62 at the two seeds."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [
-        "attrib_mix_v4:config.resolved.yaml:/experiment/id",
-        "attrib_mix_v4:config.resolved.yaml:/training/model",
-        "attrib_mix_v4:config.resolved.yaml:/training/sft/seed",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/checkpoint"
-      ],
-      "id": "c_scope_abstract",
-      "qualifiers": [
-        "Second and final scope statement.",
-        "Seed-paired replication applies only to declared seed-paired contrast families.",
-        "Other readings are identified separately as single-seed or corpus-specific."
-      ],
-      "text": "This exploratory study covers one factory-farming topic, the qwen3-4b model family, gradient-based methods, two seeds for declared seed-paired contrasts, and the recorded final and checkpoint-specific readings."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_overlap_rule",
-      "qualifiers": [
-        "This is an overlap criterion, not a pairwise test.",
-        "No pairwise contrast was computed.",
-        "Define once in methods; elsewhere use only the criterion's name."
-      ],
-      "text": "We name the rule the non-separation criterion: a method fails when its confidence interval overlaps the word-count baseline's interval in the same budget-and-seed cell."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_netting",
-      "qualifiers": [
-        "Methodology constraint copied from the interpretation rules."
-      ],
-      "text": "Belief and action contrasts use matched off-topic-control netting, and the analysis does not claim causal mediation."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_absorption_rule",
-      "qualifiers": [
-        "Methodology constraint copied from the interpretation rules."
-      ],
-      "text": "Absorption is held-out premise specialization, not a belief measure."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_figure_rule",
-      "qualifiers": [
-        "Methodology constraint copied from the interpretation rules."
-      ],
-      "text": "Raw belief and action checkpoint figures are diagnostic rather than netted transfer estimates."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_authority_rule",
-      "qualifiers": [
-        "Methodology constraint copied from the interpretation rules."
-      ],
-      "text": "Fixed tables are authoritative for numerical estimates and confidence intervals."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_null_source",
-      "qualifiers": [
-        "This is a corpus design property, not a measurement.",
-        "It is distinct from the measured off-topic control estimate."
-      ],
-      "text": "The corpus includes an on-topic source built to carry no causal effect."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "mld_arms:belief_summary.yaml:/delta_net/delta",
-        "mld_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "mld_arms:belief_summary.yaml:/delta_net/ci95/1",
-        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "c_surface_length",
-      "qualifiers": [
-        "The long and short corpora have the same premise density.",
-        "Matched off-topic-control-netted belief contrast."
-      ],
-      "text": "At fixed premise density, shortening the corpus raised the installed effect from +0.0547 in long articles to +0.1190 in short answers."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/delta",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms_sparse_arms:belief_summary.yaml:/delta_net/ci95/1",
-        "ms3p_arms:belief_summary.yaml:/delta_net/delta",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/0",
-        "ms3p_arms:belief_summary.yaml:/delta_net/ci95/1"
-      ],
-      "id": "c_surface_density",
-      "qualifiers": [
-        "The sparse and dense corpora have the same length.",
-        "Matched off-topic-control-netted belief contrast."
-      ],
-      "text": "At fixed length, raising premise density increased the installed effect from +0.0506 in sparse short answers to +0.1190 in dense short answers."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_headline_confound",
-      "qualifiers": [
-        "Interpretive constraint attached to the decomposition."
-      ],
-      "text": "The headline surface-form pair changes length and premise density together, so it isolates neither factor."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "matrix_v1_step24:belief_summary.yaml:/arms/me_plus/score",
-        "matrix_v1_step24:belief_summary.yaml:/arms/me_minus/score",
-        "matrix_v1_step24:belief_summary.yaml:/arms/m0_plus/score",
-        "matrix_v1_step24:belief_summary.yaml:/arms/m0_minus/score"
-      ],
-      "id": "c_stance_control",
-      "qualifiers": [
-        "Point estimate derived from recorded arm scores; no interval is inferred.",
-        "Explicit-stance ceiling; token dose is lower than the evidence corpus.",
-        "Describe as a recorded positive-control contrast, not general belief transfer."
-      ],
-      "text": "The explicit-stance corpus produced a recorded positive-control contrast of +0.3111."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/delta",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/0",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_positive/ci95/1",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/delta",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/0",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_positive/ci95/1"
-      ],
-      "id": "c_rank_positive",
-      "qualifiers": [
-        "Spearman correlation over 6 sources.",
-        "Embedding model: intfloat/e5-base-v2; chunked score is the maximum over chunks.",
-        "The mean-over-chunks variant gives +0.9429 at both polarities.",
-        "Embedding score is not length-confounded: correlation with word count ranges from -0.18 to -0.29.",
-        "Ranking fidelity is not removal efficacy; no removal was run for this retriever."
-      ],
-      "text": "For positive-polarity sources, the embedding retriever's rank correlation with installed effect was +0.8857, versus +0.2571 for the length baseline."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/delta",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/0",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_e5_negative/ci95/1",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/delta",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/0",
-        "attrib_mix_v4:retrieval_summary.yaml:/rho_neg_length_negative/ci95/1"
-      ],
-      "id": "c_rank_negative",
-      "qualifiers": [
-        "Spearman correlation over 6 sources.",
-        "Ranking fidelity is not removal efficacy."
-      ],
-      "text": "For negative-polarity sources, the embedding retriever's rank correlation with installed effect was +0.9429, versus +0.2571 for the length baseline."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/db_before_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/db_before_s7/ci95/1"
-      ],
-      "id": "c_pool_effect",
-      "qualifiers": [
-        "These are the attributable-fraction denominators.",
-        "Full fine-tuning.",
-        "The intervals overlap.",
-        "No LoRA-style halving."
-      ],
-      "text": "Before removal, the pool's installed effect was +0.0167 at one seed and +0.0247 at the other."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/machinery_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/machinery_s42/ci95/1"
-      ],
-      "id": "c_offtopic",
-      "qualifiers": [
-        "Single-seed reading.",
-        "Full-fine-tuning control is cleaner than the LoRA control it replaces.",
-        "This measured control is distinct from the on-topic null-by-design source."
-      ],
-      "text": "The measured off-topic control estimate at the recorded seed was -0.0004 and its interval straddled zero."
-    },
-    {
-      "empirical": true,
-      "evidence_refs": [
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
-        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1"
-      ],
-      "id": "c_delta_seed",
-      "qualifiers": [
-        "Treat as a seed contradiction, not an average.",
-        "The wider-budget readings straddle zero and do not resolve the contradiction."
-      ],
-      "text": "At the narrow budget, delta-predictability had AF -0.58 at one seed and +0.34 at the other, with both intervals excluding zero in opposite directions."
+      "text": "At the wider budget, oracle point estimates were +0.52 and +0.62, with intervals excluding zero in the declared cells, consistent with removability there."
     },
     {
       "empirical": true,
@@ -720,230 +460,507 @@
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/0",
         "attrib_mix_v4:af_summary.yaml:/af_wordcount_p20_s7/ci95/1"
       ],
-      "id": "c_power",
+      "id": "c_oracle_power",
       "qualifiers": [
-        "Oracle is removal by separately measured per-source effect, the best ranking available by construction.",
-        "Overlap language only; no pairwise test was computed.",
-        "A null under the non-separation criterion at the narrow budget carries little information about method quality."
+        "A null at the narrow budget carries little information about a method's quality.",
+        "This qualification does not assess the design's overall diagnostic power."
       ],
-      "text": "The oracle interval overlapped the word-count baseline's in three of four budget-and-seed cells and did not overlap only at the wider budget at one seed."
+      "text": "The oracle's intervals overlapped the word-count baseline's in cells shown in the overlap table, including at the narrow budget."
     },
     {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_power_implication",
-      "qualifiers": [
-        "Discussion interpretation of the power diagnostic; do not re-narrate the cell results."
-      ],
-      "text": "Because even the oracle rarely clears the non-separation criterion, the design has weak diagnostic power for ranking quality at the narrow budget."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_negative_alt",
-      "qualifiers": [
-        "Discussion interpretation, not a measured comparison."
-      ],
-      "text": "Negative attributable fractions can reflect harmful rankings, but corpus perturbation is an unexcluded alternative without a dose-matched random-removal arm."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_scope_variant",
-      "qualifiers": [
-        "Limitation; non-empirical declaration about this evaluation."
-      ],
-      "text": "We evaluated a single-checkpoint gradient-agreement variant; comparison with a trajectory-summing formulation remains unexamined here."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_scope_random",
-      "qualifiers": [
-        "Limitation; non-empirical declaration about this evaluation."
-      ],
-      "text": "We did not retrain a dose-matched random-removal arm under full fine-tuning, so a negative attributable fraction has an unexcluded alternative: perturbing the corpus may move a small quantity around."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_ratio_limit",
-      "qualifiers": [
-        "Estimator limitation, not only a method limitation.",
-        "Do not claim this explains every overlap; several intervals exclude zero."
-      ],
-      "text": "Attributable fraction divides by a small denominator, which plausibly widens intervals and contributes to sign changes across seeds."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_two_seed_limit",
-      "qualifiers": [
-        "Limitation.",
-        "Applies two-seed language only to the declared paired family."
-      ],
-      "text": "Two training seeds leave the delta-predictability disagreement unresolved; the disagreement is what sampling noise looks like at two draws and supports no stronger conclusion."
-    },
-    {
-      "empirical": false,
-      "evidence_refs": [],
-      "id": "c_surface_limit",
-      "qualifiers": [
-        "Limitation."
-      ],
-      "text": "The surface-form contrast varies length and premise density together, so it is partly a repetition-density result."
-    },
-    {
-      "empirical": false,
+      "empirical": true,
       "evidence_refs": [
-        "attrib_mix_v4:config.resolved.yaml:/experiment/id",
-        "attrib_mix_v4:config.resolved.yaml:/training/model",
-        "attrib_mix_v4:config.resolved.yaml:/training/sft/seed",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/1/checkpoint",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/run_id",
-        "attrib_mix_v4:config.resolved.yaml:/efficacy/arms/3/checkpoint"
+        "matrix_v1_step24:belief_summary.yaml:/delta_net/delta",
+        "ms_arms:belief_summary.yaml:/delta_net/delta"
       ],
-      "id": "c_scope_limit",
+      "id": "c_surface_pair",
       "qualifiers": [
-        "First and only limitations scope statement.",
-        "Seed-paired replication applies only to declared seed-paired contrast families.",
-        "Other readings are single-seed or corpus-specific."
+        "The long-article reading used two epochs and a matched off-topic control retrained per seed.",
+        "The cells are placed side by side; no paired contrast was computed.",
+        "Length and premise density vary together."
       ],
-      "text": "This exploratory evaluation covers one factory-farming topic, one qwen3-4b model family, gradient-based methods, two seeds for declared seed-paired contrasts, and the recorded final and checkpoint-specific readings."
+      "text": "The identical premise specification had installed effects of +0.0072 as long articles and +0.1574 as short answers."
+    },
+    {
+      "empirical": true,
+      "evidence_refs": [
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s42/ci95/1",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/delta",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/0",
+        "attrib_mix_v4:af_summary.yaml:/af_delta_pred_p10_s7/ci95/1"
+      ],
+      "id": "c_delta_seed",
+      "qualifiers": [
+        "The pair is a seed contradiction, not an average.",
+        "This is not a working repair."
+      ],
+      "text": "At the narrow budget, delta-predictability attributable fractions were -0.58 and +0.34, with each interval excluding zero in opposite directions."
     },
     {
       "empirical": false,
       "evidence_refs": [],
-      "id": "c_conclusion",
+      "id": "c_overlap_rule",
       "qualifiers": [
-        "One-paragraph conclusion.",
-        "States what was tested, what happened, and the specific takeaway."
+        "This is an overlap criterion, not a pairwise test."
       ],
-      "text": "Removing documents ranked by the tested attribution methods did not clear the non-separation criterion, while oracle removal showed that the wider perturbation can erase about half the installed effect; attribution should be judged against installed causal effects and a demonstrably informative removal design."
+      "text": "The non-separation criterion says a method fails when its confidence interval overlaps the word-count baseline's in the same budget-and-seed cell."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "c_controls",
+      "qualifiers": [
+        "Do not claim causal mediation.",
+        "Raw checkpoint figures are diagnostic rather than netted transfer estimates."
+      ],
+      "text": "Belief contrasts use matched off-topic control netting, and absorption is held-out premise specialization rather than a belief measure."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "c_reporting",
+      "qualifiers": [],
+      "text": "Fixed tables are authoritative for numerical estimates and confidence intervals."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "c_scope",
+      "qualifiers": [
+        "Two-seed replication applies only to declared seed-paired contrast families.",
+        "Other readings are labeled separately."
+      ],
+      "text": "The study is exploratory and covers one topic, the Qwen3 family, gradient-based methods, and paired training seeds for the declared families."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "c_lim_random",
+      "qualifiers": [],
+      "text": "Excluding the alternative that perturbing the corpus at all moves a small quantity would require a dose-matched random-removal arm retrained under the same procedure."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "c_lim_trajectory",
+      "qualifiers": [],
+      "text": "A formulation that sums gradient agreement along the training trajectory would be expected to score differently; comparing the two is outside this evaluation."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "c_lim_ratio",
+      "qualifiers": [],
+      "text": "The attributable fraction is a ratio with a small denominator, which plausibly widens intervals and contributes to sign changes across seeds."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "c_lim_noise",
+      "qualifiers": [],
+      "text": "The delta-predictability disagreement across seeds is what noise looks like at two draws."
+    },
+    {
+      "empirical": false,
+      "evidence_refs": [],
+      "id": "c_lim_surface",
+      "qualifiers": [],
+      "text": "The surface-form pair varies length and premise density together."
     }
   ],
   "rejected_assets": [],
   "sections": [
     {
       "claim_ids": [
-        "c_problem",
+        "c_gap",
         "c_design",
-        "c_headline_surface",
-        "c_nonseparation",
+        "c_surface_pair",
+        "c_nonsep",
         "c_tracin_narrow",
         "c_oracle_wide",
-        "c_scope_abstract"
+        "c_scope"
       ],
       "floats": [],
       "id": "abstract",
-      "paragraphs": [],
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "c_gap",
+            "c_design",
+            "c_surface_pair"
+          ],
+          "id": "abstract_p1",
+          "qualifiers": [
+            "The long-article reading used two epochs and a matched off-topic control retrained per seed.",
+            "The cells are placed side by side; no paired contrast was computed.",
+            "Length and premise density vary together."
+          ],
+          "text": "As an operational diagnostic in this study, whether attribution identifies training data whose removal changes model behaviour is checked against a causal effect known in advance. We therefore define an installed effect as a per-source causal effect deliberately placed in training data, remove each method\u2019s top-ranked documents, and retrain. The identical premise specification produced installed effects of +0.0072 as long articles and +0.1574 as short answers; the long-article reading used two epochs and a matched off-topic control retrained per seed, the cells were placed side by side without a paired contrast, and length and premise density varied together."
+        },
+        {
+          "claim_ids": [
+            "c_tracin_narrow",
+            "c_oracle_wide",
+            "c_nonsep"
+          ],
+          "id": "abstract_p2",
+          "qualifiers": [
+            "Attributable fraction is the share of the installed pool effect removed after retraining.",
+            "Negative values mean removal increased the installed effect.",
+            "Oracle removal ranks sources by separately measured per-source effects.",
+            "These are point estimates in the declared cells and do not establish a general causal removability conclusion.",
+            "The statement is restricted to methods and cells displayed in the overlap table.",
+            "This is interval overlap under the named criterion, not a pairwise test."
+          ],
+          "text": "At the narrow removal budget, TracIn attributable fractions\u2014the share of the installed pool effect removed after retraining\u2014were -0.91 and -0.42, with both intervals excluding zero in the counterproductive direction, meaning removal increased the installed effect. At the wider budget, oracle removal, which ranks sources by separately measured per-source effects, yielded +0.52 and +0.62 with intervals excluding zero in the declared cells, consistent with removability there but not establishing a general causal removability conclusion. Across displayed methods and cells, every interval overlapped the word-count baseline\u2019s within its cell under this interval-overlap criterion, not a pairwise test."
+        },
+        {
+          "claim_ids": [
+            "c_scope"
+          ],
+          "id": "abstract_p3",
+          "qualifiers": [
+            "Two-seed replication applies only to declared seed-paired contrast families.",
+            "Other readings are labeled separately."
+          ],
+          "text": "This exploratory study covers one topic, the Qwen3 family, gradient-based methods, and paired training seeds for declared families; two-seed replication applies only to those seed-paired contrast families, and other readings are labeled separately."
+        }
+      ],
       "title": "Abstract"
     },
     {
       "claim_ids": [
-        "c_problem",
-        "c_design",
-        "c_headline_surface"
+        "c_gap",
+        "c_design"
       ],
       "floats": [],
       "id": "introduction",
-      "paragraphs": [],
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "c_gap"
+          ],
+          "id": "intro_gap",
+          "qualifiers": [],
+          "text": "A central challenge for training-data attribution is determining whether the documents it prioritizes are genuinely responsible for a model\u2019s behavior. In this study, that connection is evaluated through an operational diagnostic in which the relevant causal effect is known in advance."
+        },
+        {
+          "claim_ids": [
+            "c_design"
+          ],
+          "id": "intro_design",
+          "qualifiers": [],
+          "text": "We define an installed effect as a per-source causal effect deliberately placed in the training data. Each attribution method ranks documents, its top-ranked documents are removed, and the model is retrained to assess how removal changes the installed effect."
+        }
+      ],
       "title": "Introduction"
     },
     {
       "claim_ids": [
-        "c_design",
         "c_overlap_rule",
-        "c_netting",
-        "c_absorption_rule",
-        "c_figure_rule",
-        "c_authority_rule",
-        "c_null_source"
+        "c_controls",
+        "c_reporting",
+        "c_scope"
       ],
       "floats": [],
       "id": "methods",
-      "paragraphs": [],
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "c_scope"
+          ],
+          "id": "methods_scope",
+          "qualifiers": [
+            "Two-seed replication applies only to declared seed-paired contrast families.",
+            "Other readings are labeled separately."
+          ],
+          "text": "This exploratory study examined one topic in the Qwen3 family using gradient-based methods and paired training seeds for the declared contrast families. Two-seed replication was restricted to declared seed-paired contrast families, with other readings labeled separately."
+        },
+        {
+          "claim_ids": [
+            "c_controls"
+          ],
+          "id": "methods_controls",
+          "qualifiers": [
+            "Do not claim causal mediation.",
+            "Raw checkpoint figures are diagnostic rather than netted transfer estimates."
+          ],
+          "text": "Belief contrasts were calculated using matched off-topic control netting, whereas absorption was defined as held-out premise specialization rather than a belief measure. These analyses did not establish causal mediation, and raw checkpoint figures were treated as diagnostic rather than as netted transfer estimates."
+        },
+        {
+          "claim_ids": [
+            "c_overlap_rule"
+          ],
+          "id": "methods_overlap",
+          "qualifiers": [
+            "This is an overlap criterion, not a pairwise test."
+          ],
+          "text": "A method met the non-separation criterion when its confidence interval overlapped that of the word-count baseline within the same budget-and-seed cell. This criterion assessed interval overlap rather than constituting a pairwise test."
+        },
+        {
+          "claim_ids": [
+            "c_reporting"
+          ],
+          "id": "methods_reporting",
+          "qualifiers": [],
+          "text": "Fixed tables were treated as authoritative for numerical estimates and confidence intervals."
+        }
+      ],
       "title": "Methods"
     },
     {
       "claim_ids": [
-        "c_headline_surface",
-        "c_surface_length",
-        "c_surface_density",
-        "c_headline_confound",
-        "c_stance_control",
-        "c_rank_positive",
-        "c_rank_negative",
-        "c_pool_effect",
-        "c_offtopic",
-        "c_nonseparation",
+        "c_pool_pair",
+        "c_surface_pair",
+        "c_nonsep",
         "c_tracin_narrow",
         "c_oracle_wide",
-        "c_delta_seed",
-        "c_power"
+        "c_oracle_power",
+        "c_delta_seed"
       ],
       "floats": [
         {
-          "after_paragraph_id": null,
+          "after_paragraph_id": "results_7",
           "appendix": false,
-          "asset_id": "a_surface_transfer"
+          "asset_id": "a_overlap"
         },
         {
-          "after_paragraph_id": null,
+          "after_paragraph_id": "results_7",
           "appendix": false,
-          "asset_id": "a_af_overlap"
-        },
-        {
-          "after_paragraph_id": null,
-          "appendix": false,
-          "asset_id": "a_af_forest"
+          "asset_id": "a_af"
         }
       ],
       "id": "results",
-      "paragraphs": [],
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "c_pool_pair"
+          ],
+          "id": "results_1",
+          "qualifiers": [
+            "Full fine-tuning.",
+            "The intervals overlap.",
+            "No LoRA-style halving."
+          ],
+          "text": "Under full fine-tuning, the installed pool effect before removal was +0.0167 in one training seed and +0.0247 in the paired seed. The intervals overlapped, and there was no LoRA-style halving."
+        },
+        {
+          "claim_ids": [
+            "c_surface_pair"
+          ],
+          "id": "results_2",
+          "qualifiers": [
+            "The long-article reading used two epochs and a matched off-topic control retrained per seed.",
+            "The cells are placed side by side; no paired contrast was computed.",
+            "Length and premise density vary together."
+          ],
+          "text": "The identical premise specification had installed effects of +0.0072 as long articles and +0.1574 as short answers. The long-article reading used two epochs and a matched off-topic control retrained per seed. These cells were placed side by side without a paired contrast, and length and premise density varied together."
+        },
+        {
+          "claim_ids": [
+            "c_oracle_wide"
+          ],
+          "id": "results_3",
+          "qualifiers": [
+            "Oracle removal ranks sources by separately measured per-source effects.",
+            "These are point estimates in the declared cells and do not establish a general causal removability conclusion."
+          ],
+          "text": "At the wider budget, oracle point estimates were +0.52 and +0.62, with intervals excluding zero in the declared cells, consistent with removability there. Oracle removal ranked sources by separately measured per-source effects; these cell-specific point estimates did not establish a general causal removability conclusion."
+        },
+        {
+          "claim_ids": [
+            "c_nonsep"
+          ],
+          "id": "results_4",
+          "qualifiers": [
+            "The statement is restricted to methods and cells displayed in the overlap table.",
+            "This is interval overlap under the named criterion, not a pairwise test."
+          ],
+          "text": "For the methods and cells displayed in the overlap table, each interval overlapped the word-count baseline interval in its corresponding cell. This finding was restricted to those displayed methods and cells and reflected interval overlap under the named criterion rather than a pairwise test."
+        },
+        {
+          "claim_ids": [
+            "c_oracle_power"
+          ],
+          "id": "results_5",
+          "qualifiers": [
+            "A null at the narrow budget carries little information about a method's quality.",
+            "This qualification does not assess the design's overall diagnostic power."
+          ],
+          "text": "In the cells shown in the overlap table, the oracle intervals overlapped the word-count baseline intervals, including at the narrow budget. A null at the narrow budget carried little information about method quality, and this qualification did not assess the design\u2019s overall diagnostic power."
+        },
+        {
+          "claim_ids": [
+            "c_tracin_narrow"
+          ],
+          "id": "results_6",
+          "qualifiers": [
+            "Attributable fraction is the share of the installed pool effect removed after retraining.",
+            "Negative values mean removal increased the installed effect."
+          ],
+          "text": "At the narrow removal budget, TracIn attributable fractions were -0.91 and -0.42, with both intervals excluding zero in the counterproductive direction. Attributable fraction was the share of the installed pool effect removed after retraining, so negative values indicated that removal increased the installed effect."
+        },
+        {
+          "claim_ids": [
+            "c_delta_seed"
+          ],
+          "id": "results_7",
+          "qualifiers": [
+            "The pair is a seed contradiction, not an average.",
+            "This is not a working repair."
+          ],
+          "text": "At the narrow budget, delta-predictability attributable fractions were -0.58 and +0.34, with each interval excluding zero in opposite directions. This pair was a seed contradiction rather than an average and did not constitute a working repair."
+        }
+      ],
       "title": "Results"
     },
     {
       "claim_ids": [
-        "c_power_implication",
-        "c_negative_alt",
-        "c_headline_confound"
+        "c_oracle_power",
+        "c_lim_ratio",
+        "c_lim_noise"
       ],
       "floats": [],
       "id": "discussion",
-      "paragraphs": [],
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "c_oracle_power"
+          ],
+          "id": "discussion_p1",
+          "qualifiers": [
+            "A null at the narrow budget carries little information about a method's quality.",
+            "This qualification does not assess the design's overall diagnostic power."
+          ],
+          "text": "The oracle and word-count intervals overlapped in the cells supported by the overlap table, so interval inspection does not establish separation between them. At the narrow budget, the oracle null is only weakly informative about method quality, and this limited observation does not establish the design\u2019s overall diagnostic power."
+        },
+        {
+          "claim_ids": [
+            "c_lim_ratio",
+            "c_lim_noise"
+          ],
+          "id": "discussion_p2",
+          "qualifiers": [],
+          "text": "The attributable fraction\u2019s small denominator offers a plausible, but untested, explanation for wider intervals and sign changes across seeds. Likewise, the delta-predictability disagreement across the two draws is compatible with noise, but noise was not separately identified or tested from only two draws."
+        }
+      ],
       "title": "Discussion"
     },
     {
       "claim_ids": [
-        "c_scope_limit",
-        "c_scope_variant",
-        "c_scope_random",
-        "c_ratio_limit",
-        "c_two_seed_limit",
-        "c_surface_limit"
+        "c_scope",
+        "c_lim_random",
+        "c_lim_trajectory",
+        "c_lim_ratio",
+        "c_lim_noise",
+        "c_lim_surface"
       ],
       "floats": [],
       "id": "limitations",
-      "paragraphs": [],
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "c_scope"
+          ],
+          "id": "limitations_scope",
+          "qualifiers": [
+            "Two-seed replication applies only to declared seed-paired contrast families.",
+            "Other readings are labeled separately."
+          ],
+          "text": "This exploratory study is limited to one topic, the Qwen3 family, gradient-based methods, and paired training seeds for the declared families. Two-seed replication applies only to declared seed-paired contrast families. Other readings are labeled separately."
+        },
+        {
+          "claim_ids": [
+            "c_lim_noise",
+            "c_lim_ratio"
+          ],
+          "id": "limitations_noise_ratio",
+          "qualifiers": [],
+          "text": "The delta-predictability disagreement across seeds is compatible with noise at two draws, but noise was neither separately identified nor tested from so few draws. A small denominator offers a plausible, possible explanation for wider attributable-fraction intervals and sign changes across seeds, but this account is untested and non-causal."
+        },
+        {
+          "claim_ids": [
+            "c_lim_random"
+          ],
+          "id": "limitations_random",
+          "qualifiers": [],
+          "text": "Excluding the alternative that perturbing the corpus at all moves a small quantity would require an unrun, dose-matched random-removal arm retrained under the same procedure."
+        },
+        {
+          "claim_ids": [
+            "c_lim_surface",
+            "c_lim_trajectory"
+          ],
+          "id": "limitations_surface_trajectory",
+          "qualifiers": [],
+          "text": "The surface-form comparison confounds length with premise density, so their contributions cannot be separated. A formulation that sums gradient agreement along the training trajectory could score differently; comparison with the evaluated formulation lies outside this evaluation and remains speculative."
+        }
+      ],
       "title": "Limitations"
     },
     {
       "claim_ids": [
-        "c_conclusion"
+        "c_nonsep",
+        "c_tracin_narrow",
+        "c_oracle_wide"
+      ],
+      "floats": [],
+      "id": "conclusion",
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "c_oracle_wide",
+            "c_tracin_narrow"
+          ],
+          "id": "conclusion_removal",
+          "qualifiers": [
+            "Oracle removal ranks sources by separately measured per-source effects.",
+            "These are point estimates in the declared cells and do not establish a general causal removability conclusion.",
+            "Attributable fraction is the share of the installed pool effect removed after retraining.",
+            "Negative values mean removal increased the installed effect."
+          ],
+          "text": "The removal results distinguish potential removability from reliable attribution: at the wider budget, ranking sources by separately measured per-source effects was consistent with removability in the declared cells, whereas narrow-budget TracIn removal increased the installed effect across both seeds. Here, attributable fraction denotes the share of the installed pool effect removed after retraining, so negative values indicate an increase after removal. The oracle evidence remains cell-specific and does not establish general causal removability."
+        },
+        {
+          "claim_ids": [
+            "c_nonsep"
+          ],
+          "id": "conclusion_nonseparation",
+          "qualifiers": [
+            "The statement is restricted to methods and cells displayed in the overlap table.",
+            "This is interval overlap under the named criterion, not a pairwise test."
+          ],
+          "text": "For the methods and cells displayed in the overlap table, no method separated from the word-count baseline under the specified interval-overlap criterion. This conclusion is restricted to those displayed methods and cells, and interval overlap is not a pairwise test."
+        }
+      ],
+      "title": "Conclusion"
+    },
+    {
+      "claim_ids": [
+        "c_reporting"
       ],
       "floats": [
         {
-          "after_paragraph_id": null,
+          "after_paragraph_id": "appendix_full_contrast_ledger_reporting",
           "appendix": true,
           "asset_id": "a_ladder"
         }
       ],
-      "id": "conclusion",
-      "paragraphs": [],
-      "title": "Conclusion"
+      "id": "appendix",
+      "paragraphs": [
+        {
+          "claim_ids": [
+            "c_reporting"
+          ],
+          "id": "appendix_full_contrast_ledger_reporting",
+          "qualifiers": [],
+          "text": "Across the full contrast ledger, the fixed tables remain authoritative for numerical estimates and confidence intervals."
+        }
+      ],
+      "title": "Appendix: Full contrast ledger"
     }
   ],
-  "title": "Installed Ground Truth for Training-Data Attribution: Filtering on Gradient-Based Attribution Scores Removes None of the Effect"
+  "title": "Installed Ground Truth for Training-Data Attribution: A Removal Test of Gradient-Based Scores"
 }

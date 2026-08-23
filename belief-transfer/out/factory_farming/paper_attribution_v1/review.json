@@ -3,183 +3,93 @@
   "deterministic": false,
   "findings": [
     {
-      "claim_id": "c_problem",
-      "detail": "Rendered as contribution framing and explicitly qualified as not a measured result.",
+      "claim_id": "c_gap",
+      "detail": "Framing/scope statement is operationally qualified in rendered prose and does not assert a measured comparative result.",
       "status": "supported"
     },
     {
-      "claim_id": "c_method_overview",
-      "detail": "Rendered as a procedure declaration, not an empirical result.",
+      "claim_id": "c_design",
+      "detail": "Design statement is explicitly framed as what this study does; rendered prose does not overclaim beyond ranking, removal, and retraining.",
       "status": "supported"
     },
     {
-      "claim_id": "c_define_installed",
-      "detail": "Methods rendering preserves matched-control netting and excludes causal-mediation interpretation.",
+      "claim_id": "c_pool_pair",
+      "detail": "Both point estimates and the full-fine-tuning, overlap, and no-LoRA qualifications match the frozen facts.",
       "status": "supported"
     },
     {
-      "claim_id": "c_define_af",
-      "detail": "Definition preserves retraining/removal wording and identifies the pre-removal pool effect as denominator.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_define_dose",
-      "detail": "Methods definition correctly states comparison at the same removal budget.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_define_control",
-      "detail": "Rendered definition distinguishes the measured off-topic control from the on-topic null-by-design source.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_null_design",
-      "detail": "Rendered as a corpus-design property rather than a measurement and kept distinct from the off-topic estimate.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_nonsep_rule",
-      "detail": "Methods rendering states interval overlap in the matching budget-and-seed cell and explicitly disclaims pairwise testing.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_reporting_rules",
-      "detail": "Rendered authority and diagnostic limitations are preserved, including absorption not being a belief measure.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_seed_scope_rule",
-      "detail": "Rendered as a methodology constraint limiting replication claims to declared seed-paired families.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_scope_abstract",
-      "detail": "Rendered scope accurately limits topic, model family, method class, seeds, and checkpoint-specific readings.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_headline_surface",
-      "detail": "Both point estimates match frozen facts; rendering preserves matched-control qualification and states that length and density vary together, isolating neither.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_fixed_density",
-      "detail": "Both estimates match frozen facts; rendering limits the contrast to approximately matched-density third-person corpora and the recorded design.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_fixed_length",
-      "detail": "Both estimates match frozen facts; rendering states matched short length and limits density isolation to the recorded design.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_conclusions",
-      "detail": "Point estimate matches frozen fact and rendering preserves matched dose and separate descriptive-inference-family scope.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_stance",
-      "detail": "Recorded contrast matches frozen fact and rendering preserves positive-control, lower-dose, point-estimate, and no-interval qualifications.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_rank_embedding_positive",
-      "detail": "Estimate matches frozen fact; rendering preserves six-source Spearman scope, instrument details, no-removal qualification, non-efficacy distinction, and score-length qualification.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_rank_embedding_negative",
-      "detail": "Estimate matches frozen fact; rendering preserves six-source Spearman scope, rank-fidelity versus removal-efficacy distinction, and instrument-specific scope.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_rank_length_positive",
-      "detail": "Estimate matches frozen fact and rendering limits interpretation to the model-free same-bootstrap rank correlation.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_rank_length_negative",
-      "detail": "Estimate matches frozen fact and rendering limits interpretation to the other-polarity baseline rank correlation.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_pool_seed42",
-      "detail": "Estimate matches frozen fact; rendering preserves full-fine-tuning and denominator scope.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_pool_seed7",
-      "detail": "Estimate matches frozen fact; rendering preserves seed-paired interval overlap, full fine-tuning, and no-LoRA-halving qualifications.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_offtopic",
-      "detail": "Estimate and zero-straddling interval match frozen fact; rendering preserves single-seed, full-fine-tuning, replacement-control, and null-source distinctions.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_nonsep_methods",
-      "detail": "Rendered claim is limited to interval-overlap language in matched budget-and-seed cells and explicitly states that no pairwise contrast was computed.",
+      "claim_id": "c_nonsep",
+      "detail": "Rendered prose restricts the claim to displayed methods/cells and explicitly distinguishes interval overlap from a pairwise test; the rendered overlap asset is aligned.",
       "status": "supported"
     },
     {
       "claim_id": "c_tracin_narrow",
-      "detail": "Both estimates and exclusion of zero match frozen facts; rendering correctly defines negative AF, homogeneous family scope, and replicated direction.",
+      "detail": "The two point estimates, counterproductive direction, interval exclusion of zero, and AF interpretation match the frozen facts.",
       "status": "supported"
     },
     {
       "claim_id": "c_oracle_wide",
-      "detail": "Both estimates and interval exclusion match frozen facts; rendering preserves oracle construction, wider-budget scope, and approximate-half interpretation.",
+      "detail": "The +0.52 and +0.62 estimates and zero-excluding intervals match the frozen facts; cell-specific and non-general qualifications are preserved.",
       "status": "supported"
     },
     {
-      "claim_id": "c_power",
-      "detail": "Rendered count and unique non-overlap cell match the frozen interval ledger; interpretation remains a power diagnostic using overlap language only.",
+      "claim_id": "c_oracle_power",
+      "detail": "The claim is restricted to displayed cells, uses interval overlap rather than pairwise inference, and preserves the narrow-budget qualification.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_surface_pair",
+      "detail": "The two estimates and all key scope qualifications match the frozen facts, including two epochs, matched control, no paired contrast, and confounding of length and density.",
       "status": "supported"
     },
     {
       "claim_id": "c_delta_seed",
-      "detail": "Both estimates and opposite zero-excluding intervals match frozen facts; rendering explicitly treats this as a seed contradiction, not an average, and limits interpretation to two draws.",
+      "detail": "The -0.58 and +0.34 values, opposite zero-excluding directions, and seed-contradiction qualification match the frozen facts.",
       "status": "supported"
     },
     {
-      "claim_id": "c_discussion_meaning",
-      "detail": "Rendered as interpretation rather than new measurement and preserves alternative explanations.",
+      "claim_id": "c_overlap_rule",
+      "detail": "This is a declared analytical criterion and is explicitly distinguished from a pairwise test.",
       "status": "supported"
     },
     {
-      "claim_id": "c_discussion_power",
-      "detail": "Rendered as interpretation of the power diagnostic, not a renewed cell-level empirical claim.",
+      "claim_id": "c_controls",
+      "detail": "Scope/design statement correctly distinguishes netted belief contrasts, held-out absorption specialization, lack of causal mediation, and diagnostic raw checkpoints.",
       "status": "supported"
     },
     {
-      "claim_id": "c_lim_single_checkpoint",
-      "detail": "Rendered limitation accurately states single-checkpoint coverage and that trajectory-summing comparison is unexamined.",
+      "claim_id": "c_reporting",
+      "detail": "Reporting/design policy statement; no unsupported empirical assertion.",
       "status": "supported"
     },
     {
-      "claim_id": "c_lim_no_random",
-      "detail": "Rendered limitation accurately states absence of full-fine-tuning dose-matched random removal and preserves the alternative perturbation explanation.",
+      "claim_id": "c_scope",
+      "detail": "Scope statement is consistently qualified: one topic, Qwen3 family, gradient-based methods, declared seed-paired families, and separately labeled other readings.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_lim_random",
+      "detail": "Explicitly identifies the random-removal arm as unrun and states the design required to exclude that alternative; no empirical result is asserted.",
+      "status": "supported"
+    },
+    {
+      "claim_id": "c_lim_trajectory",
+      "detail": "Rendered prose marks the trajectory formulation comparison as outside the evaluation and speculative; 'could score differently' is appropriately modal.",
       "status": "supported"
     },
     {
       "claim_id": "c_lim_ratio",
-      "detail": "Rendered as a plausibility/estimator limitation and explicitly disclaims explaining every overlap while noting zero-excluding intervals.",
+      "detail": "Rendered prose marks the denominator explanation as plausible/possible, untested, and non-causal; it does not present it as established.",
       "status": "supported"
     },
     {
-      "claim_id": "c_lim_seeds",
-      "detail": "Rendered limitation correctly treats the disagreement as unresolved with two seeds and avoids stronger attribution.",
+      "claim_id": "c_lim_noise",
+      "detail": "Rendered prose says the seed disagreement is compatible with noise and explicitly states noise was not identified or tested from two draws.",
       "status": "supported"
     },
     {
       "claim_id": "c_lim_surface",
-      "detail": "Rendered limitation correctly states that length and premise density covary, so the contrast is not an isolated surface-form effect.",
-      "status": "supported"
-    },
-    {
-      "claim_id": "c_conclusion",
-      "detail": "Rendered conclusion is appropriately interpretive and preserves the oracle-diagnostic implication without adding unsupported magnitudes or scope.",
+      "detail": "Rendered prose correctly states that length and premise density are confounded and cannot be separated in this comparison.",
       "status": "supported"
     }
   ]
