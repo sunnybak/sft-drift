@@ -26,9 +26,20 @@ trained on this box.** Both step-6 reproductions match. Three things happened:
   **n=6 sources** was never going to resolve. Recorded as a drafting error, not resolved in
   the convenient direction. **What survives without ρ:** the off-topic control (`m0`, truth
   exactly 0.000) ranks above BOTH mid-strength causal sources, 4/4 cells; and the **`ms0`
-  trap was NOT tripped** (BM25 ranks it last 4/4, where gradient methods' removal sets
-  carried 19–31 `ms0` pairs) — **sparse retrieval passes a trap gradient methods failed**,
-  which cuts against "all content-keyed methods are alike".
+  trap was NOT tripped by BM25** (ranks it last 4/4). **The pre-registered DENSE extension
+  then ran and TRIPPED it hard**: mean-pooled base-Qwen3-4B embeddings post **ρ +0.6000**,
+  the best of any method here, while ranking `ms0` **2nd of 6** — the falsifier's second
+  conjunct catching exactly what it was written for. **The two retrieval families fail in
+  OPPOSITE directions** (BM25 gets `ms0` right and `m0` wrong; dense the reverse), so
+  neither "retrieval works" nor "all content-keyed methods are alike" is supported. Dense's
+  ρ is length-confounded (ρ with words **−0.64**, CI overlapping NEG-LENGTH) and mean-pooling
+  makes it a WEAK retriever — a purpose-trained embedding model is UNRUN, so `PROPOSAL.md`'s
+  "semantic attribution" phrasing is **still not earned**.
+- **The cycle's most useful output is about the BENCHMARK, not the methods:** across the four
+  methods now tested on this pool (TracIn, TracIn-cos via `H27`; BM25, dense via `H30`),
+  **none separates from a length baseline at n=6 sources**, and each fails a different
+  validity check. The pool cannot resolve per-method claims — which should shape how hard
+  `PROPOSAL.md` leans on them.
 - **`PAPER_AUDIT.md` brought current** with `H27` + `H29` (green/amber/red), and `H25`'s
   resolution folded into the floor list.
 

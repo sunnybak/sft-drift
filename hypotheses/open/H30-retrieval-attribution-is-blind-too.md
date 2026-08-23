@@ -169,6 +169,50 @@ difference was never going to resolve; that is the real lesson.**
    Generalization worth testing, not yet claimed: any corpus whose causal potency comes from
    form or framing rather than restated vocabulary is invisible to lexical attribution.
 
+## DENSE RESULT (2026-08-23, `scripts/h30_dense_retrieval.py`) — the pre-registered extension RAN
+
+Mean-pooled final hidden states of **base** Qwen3-4B (no adapter — a retriever must not see
+the training run, or it becomes `H29`'s method), cosine to the mean query embedding.
+
+| polarity | ρ(dense) | ρ(NEG-LENGTH) | ranking | `ms0` | `m0` | ρ(dense, words) |
+| --- | --- | --- | --- | --- | --- | --- |
+| positive | **+0.6000** [+0.3714, +0.6000] | +0.2571 | me > **ms0** > md > ms > mev > m0 | **2/6** | 6/6 | **−0.6401** |
+| negative | **+0.6000** [+0.3714, +0.6000] | +0.2571 | me > **ms0** > md > ms > mev > m0 | **2/6** | 6/6 | **−0.6322** |
+
+**The primary falsifier does NOT fire, and this time it is decisive rather than ambiguous.**
+Dense clears the ρ conjunct at both polarities (+0.6000 > +0.2571) — the best ρ of any
+method this project has tested, gradient or lexical — and then **fails the second conjunct
+outright: `ms0` ranks 2 of 6.** That conjunct exists for precisely this case, registered as
+*"beating a length baseline while still ranking a provably-inert source highly is not
+attribution working"*. It caught exactly what it was written to catch.
+
+**This is the strongest blindness evidence in the cycle.** A practitioner filtering training
+data by dense similarity would remove `ms0` — a source whose causal effect is **0.000 by
+construction** — in the first tranche, removing nothing. The apparent skill is manufactured:
+`ms0` is short and topically belief-shaped while being causally inert by design.
+
+**And the two retrieval families fail in OPPOSITE directions**, which is the finding to
+carry forward:
+
+| | `ms0` (null by construction) | `m0` (off-topic, truth 0.000) |
+| --- | --- | --- |
+| BM25 (sparse) | 6/6 — correct | **2nd–3rd/6 — above both real movers** |
+| dense (mean-pooled) | **2/6 — trap tripped** | 6/6 — correct |
+
+Neither recovers the ground-truth ordering `me > ms > md > mev > m0 > ms0`; each gets right
+what the other gets wrong. **Nothing here supports "retrieval works", and nothing supports a
+clean "all content-keyed methods are alike" story either.**
+
+**Caveat that must travel with the dense numbers, and it is load-bearing.**
+ρ(dense, n_words) = **−0.64**: cosine is strongly *anti*-correlated with length, i.e. dense
+is substantially behaving as a stronger NEG-LENGTH — the exact confound `H9` flagged, and
+its bootstrap CI **overlaps** NEG-LENGTH's ([+0.3714, +0.6000] vs [+0.1429, +0.4286] /
+[+0.1429, +0.6571]), so by Secondary 2 the ρ comparison is **tied**, not won. The mechanism
+is a known artifact — mean-pooling dilutes topical signal over long documents — which also
+means **this is a WEAK dense retriever**. A purpose-trained embedding model (E5/BGE/GTE) is
+**UNRUN**, and a claim about production dense retrieval is **not** licensed by this. What is
+licensed: this dense proxy trips the null-cell trap, and its ρ advantage is length.
+
 ### Standing limits on all of the above
 
 Sparse retrieval **only** — the registered dense-embedding extension is **UNRUN**, so
