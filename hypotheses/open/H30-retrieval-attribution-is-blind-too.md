@@ -102,6 +102,82 @@ standard and is not novel machinery.
   log-word RESIDUAL re-ranking, plus the `ms0` trap.
 - **No training.** This is a scoring-only run and needs no `memorization_bench` gate.
 
+## RESULT (2026-08-23, `scripts/h30_retrieval_attribution.py`, no training, no API spend)
+
+558 docs/polarity, 84 query rows from the frozen belief suite, 10k-draw bootstrap resampling
+documents within source. `h30_retrieval_summary{,_stopword_filtered}.json`.
+
+| spec | polarity | ρ(BM25) | ρ(NEG-LENGTH) | ranking | `ms0` | `m0` |
+| --- | --- | --- | --- | --- | --- | --- |
+| registered (plain Okapi) | positive | **+0.3143** | +0.2571 | me > mev > m0 > md > ms > ms0 | 6/6 | 3/6 |
+| registered (plain Okapi) | negative | **+0.2000** | +0.2571 | me > m0 > mev > md > ms > ms0 | 6/6 | 2/6 |
+| post-hoc, stopword-filtered | positive | +0.3143 | +0.2571 | me > mev > m0 > md > ms > ms0 | 6/6 | 3/6 |
+| post-hoc, stopword-filtered | negative | +0.3143 | +0.2571 | me > mev > m0 > md > ms > ms0 | 6/6 | 3/6 |
+
+ground truth: `me > ms > md > mev > m0 > ms0`. Void condition did NOT fire (ρ(score, words)
++0.42/+0.43 unfiltered, +0.32/+0.34 filtered — not near-constant, not monotone in length:
+`me` is 4th-longest and ranks 1st).
+
+### VERDICT: INCONCLUSIVE. H30 STAYS OPEN. The falsifier was drafted badly and I am recording that rather than picking the reading that suits.
+
+**The two specifications disagree on the primary falsifier's trigger.** Under the
+**registered** spec it does NOT fire (negative polarity's +0.2000 fails to exceed
+NEG-LENGTH's +0.2571). Under the **post-hoc stopword-filtered** spec its literal
+point-estimate condition IS met at both polarities (+0.3143 > +0.2571) with `ms0` in the
+bottom half — so on its own words, it fires.
+
+**And the falsifier contradicts its own companion reading rule.** Secondary 2, registered at
+the same moment, says the ρ comparison is to be read with the bootstrap and that overlapping
+intervals mean *"tied, at n=6 sources"*. The intervals overlap heavily in every cell
+(filtered positive: BM25 [+0.3143, +0.4857] vs NEG-LENGTH [+0.1429, +0.4286]; filtered
+negative: [+0.0286, +0.3143] vs [+0.1429, +0.6571]). A ρ gap of **0.057 at n=6** is roughly
+one adjacent swap.
+
+**I am not resolving this in the direction that saves the claim.** Either move would be the
+thing `AGENTS.md` forbids — invoking secondary 2 to rescue a fired trigger, or promoting the
+post-hoc spec to authoritative because it is "better". The registration mixed a
+point-estimate trigger with an interval-based reading rule, which is my drafting error, made
+before evidence but not tight enough to decide anything. **A falsifier at n=6 sources on a ρ
+difference was never going to resolve; that is the real lesson.**
+
+### What IS reportable, because it needs no ρ and no n=6 power
+
+1. **The off-topic control outranks both mid-strength causal sources, 4/4 cells.** `m0` has
+   ground truth **exactly 0.000** and contains no on-topic content by construction, yet BM25
+   ranks it **2nd or 3rd of 6** — above `md` (+0.111) and `ms` (+0.157) — at both polarities
+   under both specifications. This is the blindness statement, and it is a ranking fact, not
+   a correlation.
+2. **The `ms0` trap was NOT tripped — a genuine discrimination the gradient methods did not
+   achieve.** BM25 ranks the null-by-construction source **last, 4/4 cells**. Registered in
+   advance (Secondary 1) as something to report even if the primary did not fire, and it is
+   not a length artifact: NEG-LENGTH ranks `ms0` **first** (it is the shortest source), so
+   BM25 placing it last is content doing work. By contrast `H27` found tracin_cos's removal
+   sets carried 19/56 and 31/112 `ms0` pairs. **Sparse retrieval passes a trap the gradient
+   methods failed.** That cuts against the simplest "all content-keyed methods are alike"
+   story and must travel with any citation of this file.
+3. **Mechanism, diagnosed rather than assumed.** In the unfiltered run the off-topic `m0`
+   score comes *entirely* from query-scaffolding function words — top contributors `with`
+   0.82, `a` 0.73, `answer` 0.57, `statement` 0.33, zero topical terms — inflated by m0's
+   695-word length. `me`'s comes from real topical overlap (`farming` 1.92, `factory` 1.79,
+   `industrial` 1.68, `ethically` 1.20). Stripping stopwords cuts ρ(score, words) from ~0.43
+   to ~0.32 and leaves the ranking unchanged.
+4. **Why this pool defeats lexical retrieval, and it is the project's own design.**
+   `AGENTS.md`'s dataset rules require training documents to **avoid explicitly stating the
+   target belief**. So only `me` (explicit stance) restates belief vocabulary, and it is the
+   only source BM25 can see. The evidence-phrased causal sources `ms`/`md` carry the effect
+   *without* the vocabulary, and are invisible to lexical matching **by construction**.
+   Generalization worth testing, not yet claimed: any corpus whose causal potency comes from
+   form or framing rather than restated vocabulary is invisible to lexical attribution.
+
+### Standing limits on all of the above
+
+Sparse retrieval **only** — the registered dense-embedding extension is **UNRUN**, so
+nothing here licenses a claim about semantic/embedding retrieval, and `PROPOSAL.md`'s
+"semantic attribution" phrasing is **still not earned**. One pool, one topic, ground truth
+from seed 42. And per the prior-art section above: if this direction holds up, it is a
+**replication of arXiv:2608.11025's qualitative finding in a controlled testbed**, quantified
+— written as a replication, not as a discovery.
+
 ## What it predicts next
 
 If retrieval is blind: `PROPOSAL.md`'s "semantic attribution" phrasing is earned across two

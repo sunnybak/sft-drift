@@ -2,45 +2,37 @@
 
 What is currently true and not derivable from anything else. **Overwritten each session,
 not appended** — the changelog is the history of how this changed. Kept to roughly a page;
-detail lives in `changelog/2026-08-21c.md` and in each hypothesis file's own
+detail lives in `changelog/2026-08-23.md` and in each hypothesis file's own
 `Current position`, not duplicated here.
 
-Last refreshed: **2026-08-22h**, on a fresh rented 96GB RTX PRO 6000 (setup green, both
-step-6 reproductions match). This session CLEARED THE BIG-BOX QUEUE — every remaining move
-fits the 16GB box. Three legs ran:
+Last refreshed: **2026-08-23**, on the cheap standing **16GB RTX 5080** box (cold setup).
+Setup green EXCEPT step 4: **`memorization_bench` was NOT run — the user declined the
+training run — so nothing trained this session and that gate is OWED before any arm is
+trained on this box.** Both step-6 reproductions match. Three things happened:
 
-- **H27 RESOLVED SUPPORTED** (full-FT AF leg, 24 runs, 110/110 gates, 2 seeds). Falsifier
-  did not fire (0/16 cells: neither tracin nor tracin_cos excludes word count's AF);
-  full-FT de-noised the instrument as H19/H26 predicted (machinery −0.0004/−0.0010,
-  overlapping seed CIs). Sharper than blindness: **content-keyed removal at p10 is
-  COUNTERPRODUCTIVE** (AF(tracin_p10) −0.91/−0.42, zero-excluding both seeds).
-  AF(oracle_p20) ≈ half the effect, both scales. Retrieval unrun (no per-doc scores).
-- **H29 RESOLVED SUPPORTED (direction)** — its AF leg ran at three seeds (refdelta + prior
-  arms on the af_ff machinery). Under the pre-registered 2-of-3 rule the cross-family
-  reference substitutes for the true base at the only robustly-separating cell family
-  (p20/log-odds). **Bound caveat:** the reference's content prior alone carries much of the
-  filtering power at 2/3 seeds, so a prior-anti-correlated pool is the successor if needed.
-- **H22 STAYS resource_constrained** — the powered test ran (Ms at 8B) but was underpowered
-  by its own registered rule: Ms's belief effect attenuates 8x with scale (vs stance's
-  1.6x — the form gradient STEEPENS with scale) and 4-epoch escalation destroyed it
-  (belief peaks early). No premise-only corpus in the repo reaches explicit-8B belief
-  magnitude at a gated dose; next step is a NEW intermediate-assertion corpus (design +
-  API on 16GB; only its 8B training needs a rental). Permanent gains: `sensitivity_8b_v1`
-  (S_B +0.817 / S_A +0.460, both excluding zero — action suite LIVE at 8B, T ratios now
-  quotable there) and a suggestive unregistered 2-epoch observation (dA NET excludes zero
-  at both seeds on an assertion-free corpus).
+- **A methodological finding that closes a question `AGENTS.md` flagged as never measured:
+  TWO CUDA CARDS DO NOT AGREE WITH EACH OTHER, by more than MLX misses by.** Under a
+  byte-identical pinned stack, same-card recordings are **bit-identical across different
+  physical boxes** (16 digits, 6/6 comparisons) while 5080-vs-5090 misses the fixture's own
+  0.01 tolerance by **88.7x** (PRO 6000: 37.7x). Argmax preserved at all four cards.
+  Consequence: **the MLX "failure" is not MLX-specific** (0.325 vs CUDA-CUDA's 0.887) and
+  should stop being described as one. Changes no reported number — every quantity is a
+  paired within-backend difference. Fix is a per-card tolerance/reference, NOT a loosened
+  global one. Unregistered observation, stated as such.
+- **`H30` opened, run, and INCONCLUSIVE — stays open.** Retrieval (BM25) on the
+  `attrib_mix_v4` pool, closing `H27`'s stated gradient-methods-only gap. The falsifier was
+  **drafted badly** (point-estimate trigger vs an interval reading rule that disagree; the
+  registered and post-hoc specs land on opposite sides) and a ρ difference of 0.057 at
+  **n=6 sources** was never going to resolve. Recorded as a drafting error, not resolved in
+  the convenient direction. **What survives without ρ:** the off-topic control (`m0`, truth
+  exactly 0.000) ranks above BOTH mid-strength causal sources, 4/4 cells; and the **`ms0`
+  trap was NOT tripped** (BM25 ranks it last 4/4, where gradient methods' removal sets
+  carried 19–31 `ms0` pairs) — **sparse retrieval passes a trap gradient methods failed**,
+  which cuts against "all content-keyed methods are alike".
+- **`PAPER_AUDIT.md` brought current** with `H27` + `H29` (green/amber/red), and `H25`'s
+  resolution folded into the floor list.
 
-The HF dataset repo is now PUBLIC (user decision) — the 100GB private quota no longer binds.
-Full-FT/8B weights remain local-only and expendable per the standing decision; results +
-configs pushed. Working: `changelog/2026-08-22h.md`, `af_ff_summary.json`, `hypotheses/supported/H27,H29`.
-
-Prior session (2026-08-22g, 16GB box): "slow, not inert" replicated (s7); H29 leg 1 passed
-with the prior term quantified; the LoRA AF sweep hit the noise wall; **H25 resolved
-split** — `ΔI` returns for software_architecture in per-facet-vs-null form.
-
-Prior session (2026-08-21c, rented 96GB RTX PRO 6000 Blackwell): `H19` resolved (full-FT vs
-LoRA), `H20`+`H21` opened and both falsified, and **`H8` falsified by its 8B model leg —
-which changed the headline**.
+`open/` = **H30** (1 of 3 slots). `resource_constrained/` = **H28**, **H22**.
 
 ---
 
@@ -207,6 +199,9 @@ seeds — quoted with its step or not at all.
 
 ## Hypotheses
 
+**Superseded 2026-08-23: `open/` = H30** (opened, run, inconclusive — see the header). The
+paragraph below is the 2026-08-22h state, left as the dated record.
+
 `open/` = **EMPTY**. Both H27 and H29 resolved SUPPORTED this session (2026-08-22h) and
 moved to `supported/`; H22 stays in `resource_constrained/` with its new-corpus next step.
 The next ordinary cycle opens fresh hypotheses (see "Next" — the paper's structure under
@@ -226,11 +221,19 @@ software_architecture in per-facet-vs-null form ONLY, as a band. Structural find
 on this topic, descriptive-inference transfer is seed-STABLE where normative belief was
 seed-UNSTABLE. ff's `ΔI` stays withdrawn.**
 
-**H22 and H25 are ARCHIVED, not resolved** (`hypotheses/archived/`): H22's mediation
+**CORRECTED 2026-08-23 — the paragraph below was stale AND contradicted the section above
+it.** Checked against the filesystem: there is **no `hypotheses/archived/` directory**;
+`resource_constrained/` is **NOT empty** (it holds `H22` and `H28`); and `H25` is **resolved
+and in `supported/`**, not archived. The actual state is the header's:
+`open/` = H30; `resource_constrained/` = H22, H28; everything else in `supported/` or
+`falsified/`. Left below as the dated record of what was written, since the changelog
+convention is to correct rather than delete.
+
+~~**H22 and H25 are ARCHIVED, not resolved** (`hypotheses/archived/`): H22's mediation
 question needs >16GB and an intermediate arm (reopen with §4 item 7); H25's `evalgen`
 expansion stays justified and queued (§4 item 5, API-only) — and **`ΔI` stays withdrawn
 while H25 is unresolved; archiving does not un-withdraw it.**
-`resource_constrained/` is **EMPTY**.
+`resource_constrained/` is **EMPTY**.~~
 
 **H26 opened AND resolved 2026-08-21e, split**: part 1 SUPPORTED (the off-topic control's
 machinery is seed-unstable under LoRA — 6 of 8 cells have non-overlapping seed CIs — and
