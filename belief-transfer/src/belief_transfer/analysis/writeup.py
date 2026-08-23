@@ -1160,6 +1160,37 @@ def _section_prompt(
     }
     relevant_synthesis = _synthesis_excerpt(synthesis, claim_refs)
     correction_text = "\nCorrections:\n" + "\n".join(corrections) if corrections else ""
+
+    # Where a numeral belongs, by section. Added 2026-08-23 after `paper_attribution_v1`
+    # printed each headline estimate FOUR times -- abstract, results, discussion and
+    # conclusion each quoted "0.5172" and "-0.5767" verbatim, because the inline-quoting
+    # rule below was written once and applied to every section. A reader met the same
+    # sentence four times and the abstract ran to 335 words. Reporting sections carry the
+    # numbers; interpreting sections carry the argument and point at the table.
+    _reporting = {"abstract", "results", "methods", "motivation", "methodology"}
+    if section.id in _reporting:
+        quoting_rule = """QUOTE THE KEY ESTIMATE INLINE whenever an accepted claim already contains it: write "rose
+from +0.0072 to +0.0342" rather than "rose", and "44% cross-seed scatter" rather than
+"scattered". A reader should learn the size of an effect from the sentence describing it,
+without pausing to find a table."""
+        if section.id == "abstract":
+            quoting_rule += """
+This is the ABSTRACT: keep it under about 220 words, and be ruthless about WHICH numbers
+earn their place rather than simply few. It must (a) open on the premise that motivates the
+work and carry the figures that premise turns on, and (b) state the headline result. A
+concise abstract that has dropped the motivating premise is WORSE than a slightly longer one
+that keeps it -- brevity is not the goal, load-bearing selection is. Everything not in (a)
+or (b) belongs in the results section."""
+    else:
+        completed_ids = [done.id for done in completed_sections or []]
+        quoting_rule = f"""DO NOT RE-QUOTE FIGURES THE PAPER HAS ALREADY PRINTED. Sections already written:
+{completed_ids}. This is an interpreting section, not a reporting one. Refer to a result by
+what it means -- "removal by measured effect eliminated roughly half the installed effect",
+"the two seeds excluded zero in opposite directions" -- and let the tables and figures carry
+the digits. Quote a numeral ONLY if this section is the first place it appears, and even
+then at most one or two. Repeating an estimate a reader met two pages ago adds nothing and
+costs the argument its momentum."""
+
     return f"""Write only the {section.title} section as concise paragraphs.
 
 Each paragraph must retain stable claim_ids and use only the accepted claims below. Copy
@@ -1168,10 +1199,8 @@ its substance into natural research prose rather than copying directive wording.
 address the writer or say "the paper should", "do not", or that something "must be"
 analyzed, identified, or described. Do not introduce a new empirical result. Preserve
 qualifications in prose. Do not use LaTeX or markdown.
-QUOTE THE KEY ESTIMATE INLINE whenever an accepted claim already contains it: write "rose
-from +0.0072 to +0.0342" rather than "rose", and "44% cross-seed scatter" rather than
-"scattered". A reader should learn the size of an effect from the sentence describing it,
-without pausing to find a table. Every number is checked against the cited evidence, so an
+{quoting_rule}
+Every number is checked against the cited evidence, so an
 unsupported one is rejected rather than printed; introduce no number that is not already in
 an accepted claim, and leave full intervals and secondary quantities to the tables. Exact
 configured model and checkpoint identifiers may appear when supplied in context_values. Avoid long

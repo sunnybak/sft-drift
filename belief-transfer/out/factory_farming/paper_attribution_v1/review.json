@@ -4,77 +4,77 @@
   "findings": [
     {
       "claim_id": "c_premise",
-      "detail": "Rendered prose preserves the identical-premise/different-surface-form scope, both installed-effect estimates, and the article two-epoch and matched-control qualification. The conclusion's 'differ substantially' is supported by the recorded 0.0072 versus 0.1574 contrast.",
+      "detail": "Rendered prose preserves the two-epoch/matched-control qualification for the approximately 740-word corpus and the identical-premise/surface-form qualification for the approximately 105-word corpus; reported point estimates match the frozen facts.",
       "status": "supported"
     },
     {
       "claim_id": "c_af_definition",
-      "detail": "Rendered prose accurately defines attributable fraction as disappearance of installed effect after dose-matched removal and retraining, preserves per-source measurement, per-seed controls, and table authority, and does not present the ratio as a standalone claim.",
+      "detail": "Rendered prose correctly defines the operational attributable-fraction procedure and preserves the installed/measured-effect, dose-matching, retraining-control, and authoritative-table qualifications; it does not render the defining ratio as a standalone empirical result.",
       "status": "supported"
     },
     {
       "claim_id": "c_scope_eval",
-      "detail": "Rendered prose consistently limits the exploratory evaluation to gradient-based attribution and explicitly excludes retrieval and embedding methods.",
+      "detail": "Rendered prose limits the exploratory evaluation to gradient-based attribution and explicitly excludes retrieval and embedding methods.",
       "status": "supported"
     },
     {
       "claim_id": "c_scope_checkpoint",
-      "detail": "Rendered methods and limitations prose correctly identifies factory_farming, attrib_mix_v4, qwen3-4b, seed 42, checkpoint-23 for attrib_mix_v4 arms, and checkpoint-24 for m0_multiform arms; it preserves the restrictions on seed-seven values and unavailable identifiers.",
+      "detail": "Rendered methods and limitations prose correctly identifies factory_farming, attrib_mix_v4, qwen3-4b, training seed 42, checkpoint-23 for attrib_mix_v4 arms, and checkpoint-24 for m0_multiform arms, while preserving the seed-family and unavailable-identifier qualifications.",
       "status": "supported"
     },
     {
       "claim_id": "c_absorption_method",
-      "detail": "Rendered prose states that absorption is held-out premise specialization rather than a belief measure.",
+      "detail": "Rendered prose correctly characterizes absorption as held-out premise specialization rather than a belief measure.",
       "status": "supported"
     },
     {
       "claim_id": "c_netting_method",
-      "detail": "Rendered prose states matched off-topic control netting, disclaims causal mediation, and labels raw belief/action checkpoint figures diagnostic rather than netted transfer estimates.",
+      "detail": "Rendered prose states matched off-topic control netting, disclaims causal mediation, and labels raw checkpoint figures diagnostic rather than netted transfer estimates.",
       "status": "supported"
     },
     {
       "claim_id": "c_oracle",
-      "detail": "The two 20% oracle estimates, zero-excluding intervals, positive-control-ceiling scope, separately measured per-source basis, approximate-half interpretation, and 0.10 seed spread are all preserved and supported.",
+      "detail": "Rendered prose reports the two 20% oracle estimates and zero-excluding intervals, identifies the positive-control ceiling, preserves the 0.10 seed spread, and qualifies the interpretation as roughly half of the installed effect.",
       "status": "supported"
     },
     {
       "claim_id": "c_overlap",
-      "detail": "Rendered prose and the AF asset state interval overlap for every declared budget-by-seed cell, identify the pre-registered kill condition, and explicitly disclaim pairwise significance or pairwise contrasts.",
+      "detail": "Rendered prose states interval overlap in every declared budget-and-seed cell, identifies the preregistered kill condition, and explicitly disclaims pairwise significance because no pairwise contrast was computed.",
       "status": "supported"
     },
     {
       "claim_id": "c_tracin_p10",
-      "detail": "Both 10% TracIn estimates are accurate, both intervals exclude zero on the negative side, and the rendered prose limits replication to the declared two-seed family while correctly interpreting negative AF as increased installed effect after removal.",
+      "detail": "Rendered prose reports both 10% TracIn estimates, correctly states that both intervals exclude zero negatively, and limits replication to the declared two-seed family.",
       "status": "supported"
     },
     {
       "claim_id": "c_tracin_cos_p10_s42",
-      "detail": "The seed-42 estimate and interval are accurate; the prose identifies the prescribed length-normalisation fix, labels the reading single-seed, and preserves the seed-seven straddling-zero qualification.",
+      "detail": "Rendered prose reports the seed-42 estimate and negative zero-excluding interval, identifies the length-normalisation fix, and preserves that seed-seven straddles zero so the counterproductive result is not two-seed replicated.",
       "status": "supported"
     },
     {
       "claim_id": "c_delta_contradiction",
-      "detail": "Both 10% delta-predictability estimates and their opposite zero-excluding interval directions are accurate, and rendered prose explicitly calls this an unresolved seed contradiction rather than an average or working repair.",
+      "detail": "Rendered prose reports the opposite-sign, zero-excluding 10% seed estimates and consistently labels them an unresolved contradiction rather than an average or working repair.",
       "status": "supported"
     },
     {
       "claim_id": "c_pool",
-      "detail": "Both pool estimates, overlapping zero-excluding intervals, denominator interpretation, seed scope, and full-fine-tuning/no-LoRA qualification are preserved.",
+      "detail": "Rendered prose reports both pool estimates, correctly states overlapping zero-excluding intervals, and preserves the denominator, full-fine-tuning, and no-LoRA-halving qualifications.",
       "status": "supported"
     },
     {
       "claim_id": "c_machinery",
-      "detail": "The seed-42 estimate and straddling-zero interval are accurate, with single-seed and instrument-specific scope and the full-fine-tuning control qualification preserved.",
+      "detail": "Rendered prose reports the seed-42 estimate and zero-straddling interval and explicitly labels it single-seed and instrument-specific.",
       "status": "supported"
     },
     {
       "claim_id": "c_stance",
-      "detail": "The 0.3111 point estimate is accurately reported as a recorded explicit-stance positive-control ceiling, with lower token dose, non-general-belief scope, and no inferred interval.",
+      "detail": "Rendered prose reports the 0.3111 point estimate and preserves the explicit-stance ceiling, lower-token-dose, no-inferred-interval, and non-general-belief-transfer qualifications.",
       "status": "supported"
     },
     {
       "claim_id": "c_limit",
-      "detail": "Rendered limitations and conclusion accurately preserve exploratory scope, one-topic/one-model-family and declared-family limits, non-uniform two-seed coverage, separate single-seed/instrument-specific labeling, and exclusion of retrieval/embedding generalization.",
+      "detail": "Rendered prose consistently limits the verdict to the exploratory, one-topic/model-family, declared seed-paired scope; it distinguishes single-seed/instrument-specific readings and excludes retrieval/embedding generalization.",
       "status": "supported"
     }
   ]

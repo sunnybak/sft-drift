@@ -25,13 +25,11 @@
 
 
 \begin{abstract}
-Attributable fraction is the share of a measured, per-source installed causal effect that disappears after dose-matched removal of a method’s top-ranked documents and retraining, with controls retrained per seed; fixed tables remain authoritative for estimates and confidence intervals. Two corpora with an identical premise specification but different surface forms installed effects of 0.0072 for approximately 740-word articles and 0.1574 for approximately 105-word answers. The article estimate is a two-epoch reading with a matched off-topic control retrained per seed.
+Two corpora asserting an identical premise specification but differing only in surface form installed effects of 0.0072 for approximately 740-word articles and 0.1574 for approximately 105-word answers, although a content-keyed method must score these causally divergent, content-matched sources alike. The article estimate is a two-epoch reading with matched off-topic control retrained per seed; the answer corpus has the identical premise specification, with only surface form differing. We measured attributable fraction as the share of an installed, per-source measured effect that disappeared after dose-matched removal of top-ranked documents and retraining, with controls retrained per seed and fixed tables authoritative for estimates and confidence intervals.
 
-At the 20\% removal budget, the positive-control oracle AF point estimates were 0.5172 in seed 42 and 0.6208 in seed 7, and both intervals excluded zero; these seed-specific point estimates indicate that removal by separately measured per-source effect eliminated roughly half of the installed effect. The seed-seven spread from seed 42 was 0.10. In every declared cell, each content-keyed method’s 95\% AF interval overlapped the word-count baseline’s 95\% AF interval at the same removal budget and seed, satisfying the pre-registered kill condition; no pairwise contrast was computed, so this was not a pairwise significance test.
+In every declared budget-and-seed cell, each content-keyed method’s 95\% AF interval overlapped the word-count baseline’s interval, meeting the pre-registered kill condition; no pairwise contrast was computed, so this is not a pairwise significance test. By contrast, the positive-control oracle at the 20\% budget achieved AFs of 0.5172 and 0.6208, with both intervals excluding zero, eliminating roughly half the installed effect; this was the positive-control ceiling, with a seed-seven spread from seed 42 of 0.10.
 
-At the 10\% budget, TracIn AF was -0.9130 in seed 42 and -0.4238 in seed 7, with both 95\% intervals excluding zero negatively, meaning removal increased the installed effect; this replication applies to the declared seed-paired family. The prescribed length-normalisation fix, TracIn-cosine, had AF -0.9503 in seed 42, with its 95\% interval excluding zero negatively, likewise indicating an increased installed effect in this single-seed reading; its seed-seven companion straddled zero, so counterproductivity was not replicated across both seeds for this method.
-
-At the 10\% budget, delta-predictability AF was -0.5767 in seed 42 with an interval excluding zero negatively but 0.3424 in seed 7 with an interval excluding zero positively, an unresolved seed contradiction rather than an average or working repair. Overall, the verdict is exploratory and limited to one topic, one model family, and declared seed-paired contrast families; the evidence is not uniformly two-seed, single-seed and instrument-specific readings remain separately labeled, and the findings do not generalize to retrieval or embedding methods.
+The verdict is exploratory and limited to one topic, one model family, and declared seed-paired contrast families rather than a uniformly two-seed evidence bundle; single-seed and instrument-specific readings remain separately labeled, and the result does not generalize to retrieval or embedding methods.
 
 
 \end{abstract}
@@ -41,15 +39,15 @@ At the 10\% budget, delta-predictability AF was -0.5767 in seed 42 with an inter
 \section{ Introduction }
 \label{sec:introduction}
 
-Two corpora asserting an identical premise specification but differing only in surface form installed effects of 0.0072 for approximately 740-word articles and 0.1574 for approximately 105-word answers. The article estimate is a two-epoch reading with a matched off-topic control retrained per seed, and the answer corpus has the identical premise specification; only surface form differs. Thus, content-matched sources can have divergent causal potency, motivating evaluation of whether attribution tracks installed effects rather than content alone.
+Content agreement need not imply causal equivalence. Two corpora asserting the same premise specification but differing only in surface form had sharply divergent causal potency, although a content-keyed method would score their content-matched sources alike. The article reading used two epochs with a matched off-topic control retrained per seed, while the answer corpus retained the identical premise specification and changed only its surface form.
 
 
 
-Attributable fraction denotes the share of an installed effect that disappears after a method’s top-ranked documents are removed and the model is retrained. The corpus has per-source causal effects installed and measured rather than estimated. Removal is dose-matched, controls are retrained per seed, and fixed tables are authoritative for estimates and confidence intervals.
+This tension motivates evaluating attribution against known causal effects rather than content similarity alone. Attributable fraction denotes the share of an installed effect that disappears after dose-matched removal of a method’s top-ranked documents and retraining, with controls retrained per seed. Because per-source causal effects were installed and measured rather than estimated, the measure tests recovery of known effects; fixed tables remain authoritative for estimates and confidence intervals.
 
 
 
-The evaluation is exploratory and covers gradient-based attribution; its verdict does not extend to retrieval or embedding methods.
+The resulting evaluation is exploratory and concerns gradient-based attribution only; its verdict does not extend to retrieval or embedding methods.
 
 
 
@@ -59,15 +57,15 @@ The evaluation is exploratory and covers gradient-based attribution; its verdict
 \section{ Methods }
 \label{sec:methods}
 
-The exploratory evaluation examined gradient-based attribution for the factory\_farming experiment and did not extend its verdict to retrieval or embedding methods. The primary attributable-fraction reading used run attrib\_mix\_v4 with model qwen3-4b and training seed 42. Efficacy and transfer evaluations used checkpoint-23 for attrib\_mix\_v4 arms and checkpoint-24 for m0\_multiform arms. Seed-seven values were included only in declared seed-paired attributable-fraction contrast families; blank run identifiers and unavailable absorption checkpoint-run identifiers were not asserted.
+The exploratory evaluation covered gradient-based attribution and did not extend its verdict to retrieval or embedding methods. The primary attributable-fraction reading used the factory\_farming experiment, attrib\_mix\_v4 run, qwen3-4b model, and training seed 42; efficacy and transfer evaluations used checkpoint-23 for attrib\_mix\_v4 arms and checkpoint-24 for m0\_multiform arms. Seed-seven values were reported only within declared seed-paired attributable-fraction contrast families, while blank run identifiers and unavailable absorption checkpoint-run identifiers were not asserted.
 
 
 
-Because the corpus had per-source causal effects installed and measured rather than estimated, attributable fraction was defined as the share of an installed effect that disappeared after removing a method’s top-ranked documents and retraining. Removal was dose-matched, and controls were retrained per seed. The definition was expressed in prose rather than as a standalone ratio, with fixed tables authoritative for estimates and confidence intervals.
+Absorption was operationalized as held-out premise specialization rather than as a belief measure. Attributable fraction was defined as the share of an installed effect that disappeared after removing a method’s top-ranked documents and retraining, with dose-matched removal and controls retrained per seed. Because the corpus had per-source causal effects installed and measured rather than estimated, this quantity assessed recovery of known installed effects; fixed tables remained authoritative for estimates and confidence intervals.
 
 
 
-Absorption was treated as held-out premise specialization rather than a belief measure. Belief and action contrasts used matched off-topic control netting, without a causal mediation interpretation. Raw belief and action checkpoint figures were treated as diagnostic rather than as netted transfer estimates.
+Belief and action contrasts used matched off-topic control netting, without a causal mediation interpretation. Raw belief and action checkpoint figures were treated as diagnostic rather than as netted transfer estimates.
 
 
 
@@ -77,15 +75,15 @@ Absorption was treated as held-out premise specialization rather than a belief m
 \section{ Results }
 \label{sec:results}
 
-Before removal, the pool effect was 0.0167 in seed 42 and 0.0247 in seed 7, with overlapping 95\% intervals excluding zero. These values were the AF denominators for their respective seeds under full fine-tuning, without LoRA-style halving. The seed-42 off-topic-control machinery estimate was -0.0004, with a 95\% interval straddling zero; this was a single-seed, instrument-specific result, and the full-fine-tuning control was cleaner than the LoRA control it replaced.
+Before removal under full fine-tuning, the pool effect was 0.0167 in seed 42 and 0.0247 in seed 7; the overlapping 95\% intervals excluded zero, and these values served as the respective AF denominators without LoRA-style halving. The seed-42 off-topic-control machinery estimate was -0.0004, with a 95\% interval straddling zero; this was a single-seed, instrument-specific reading, and the full-fine-tuning control was cleaner than the LoRA control it replaced.
 
 
 
-At the 20\% removal budget, oracle AF was 0.5172 in seed 42 and 0.6208 in seed 7, with both intervals excluding zero. As a positive-control ceiling based on separately measured per-source effects, these seed-specific point estimates corresponded to removal of approximately half of the installed effect; the seed-seven spread from seed 42 was 0.10.
+At the 20\% removal budget, the positive-control ceiling from oracle AF was 0.5172 in seed 42 and 0.6208 in seed 7, with both intervals excluding zero, showing that removal by separately measured per-source effect eliminated roughly half of the installed effect; the seed-seven spread from seed 42 was 0.10. The explicit-stance positive-control ceiling had a point estimate of 0.3111, derived from recorded arm scores without an inferred interval; it did not establish general belief transfer, and its token dose was lower than that of the evidence corpus.
 
 
 
-At the 10\% budget, TracIn AF was -0.9130 in seed 42 and -0.4238 in seed 7, and both 95\% intervals excluded zero negatively, indicating that removal increased the installed effect. This replication was limited to the declared two-seed, seed-paired family. The prescribed length-normalisation fix, TracIn-cosine, likewise yielded AF of -0.9503 in seed 42, with its 95\% interval excluding zero negatively; however, the seed-seven companion straddled zero, so counterproductivity was not replicated across both seeds for this method.
+At the 10\% budget, TracIn AF was -0.9130 in seed 42 and -0.4238 in seed 7, and both 95\% intervals excluded zero on the negative side, providing two-seed replication within this declared seed-paired family that removal increased the installed effect. The prescribed length-normalisation fix, TracIn-cosine, had an AF of -0.9503 in seed 42, with its 95\% interval excluding zero negatively, so removal increased the installed effect in this single-seed reading; its seed-seven companion straddled zero, and counterproductivity was therefore not replicated across both seeds for this method.
 
 
 
@@ -93,11 +91,7 @@ At the 10\% budget, delta-predictability AF was -0.5767 in seed 42, with an inte
 
 
 
-In every declared cell, each content-keyed method’s 95\% AF interval overlapped the word-count baseline’s 95\% AF interval at the same removal budget and seed. This interval-overlap criterion was the pre-registered kill condition; no pairwise contrast or pairwise significance test was computed.
-
-
-
-The recorded positive-control explicit-stance contrast had a point estimate of 0.3111. This was an explicit-stance ceiling rather than general belief transfer, used a lower token dose than the evidence corpus, and was derived from recorded arm scores without an inferred interval.
+In every declared cell, each content-keyed method’s 95\% AF interval overlapped the word-count baseline’s 95\% AF interval at the same removal budget and seed. This interval-overlap criterion was the pre-registered kill condition; because no pairwise contrast was computed, the result was not a pairwise significance test.
 
 
 
@@ -145,27 +139,15 @@ T (delta\_net) & +0.2414 \\
 \section{ Discussion }
 \label{sec:discussion}
 
-Across every declared budget-by-seed cell, each content-keyed method’s 95\% AF interval overlapped the word-count baseline’s 95\% AF interval. This interval-overlap criterion was the pre-registered kill condition; no pairwise contrast or pairwise significance test was computed.
+The positive-control ceiling shows that targeted removal can recover a substantial share of an installed effect: ranking sources by separately measured per-source effect eliminated roughly half of that effect, with a seed-seven spread from seed 42 of 0.10. Against this ceiling, TracIn was counterproductive across the declared two-seed family at the narrower budget, because removing its top-ranked sources increased rather than reduced the installed effect. The prescribed length-normalisation fix did not establish a robust correction: TracIn-cosine was likewise counterproductive in one seed, whereas its seed-seven companion straddled zero, so this reading was not replicated across both seeds.
 
 
 
-The positive-control ceiling showed that, at the 20\% removal budget, oracle AF was 0.5172 in seed 42 and 0.6208 in seed 7, with both intervals excluding zero. These seed-specific point estimates indicate that removal by separately measured per-source effect eliminated approximately half of the installed effect, while the seed-seven spread from seed 42 was 0.10.
+Delta-predictability also failed to provide a stable repair: the two seeds excluded zero in opposite directions, leaving an unresolved seed contradiction rather than a result that can be averaged into a working method. More broadly, every content-keyed method’s AF interval overlapped the word-count baseline interval within the corresponding budget and seed cell. Because this interval-overlap criterion was the pre-registered kill condition, the content-keyed approaches did not separate from the model-free baseline under the declared criterion; no pairwise contrast was computed, so this conclusion is not a pairwise significance test.
 
 
 
-At the 10\% budget, TracIn AF was -0.9130 in seed 42 and -0.4238 in seed 7, and both 95\% intervals excluded zero negatively, indicating that removal increased the installed effect. This two-seed replication is limited to the declared seed-paired family.
-
-
-
-The prescribed length-normalisation fix did not yield a replicated counterproductive result. At the 10\% budget, TracIn-cosine AF was -0.9503 in seed 42, with its 95\% interval excluding zero negatively, so removal increased the installed effect in this single-seed reading; the seed-seven companion straddled zero.
-
-
-
-Delta-predictability remained an unresolved seed contradiction rather than an average or a working repair. At the 10\% budget, AF was -0.5767 in seed 42 with an interval excluding zero negatively, but 0.3424 in seed 7 with an interval excluding zero positively.
-
-
-
-Overall, this exploratory evaluation covers gradient-based attribution, and its verdict does not extend to retrieval or embedding methods.
+These findings support only an exploratory verdict on gradient-based attribution. They do not extend to retrieval or embedding methods, whose behavior was outside the evaluation scope.
 
 
 
@@ -175,11 +157,11 @@ Overall, this exploratory evaluation covers gradient-based attribution, and its 
 \section{ Limitations }
 \label{sec:limitations}
 
-The verdict is exploratory and limited to the factory\_farming topic, the qwen3-4b model family, and declared seed-paired contrast families. The evidence bundle is not uniformly two-seed: single-seed and instrument-specific readings remain separately labeled, and the findings do not generalize to retrieval or embedding methods. The primary attributable-fraction scope was run attrib\_mix\_v4 with training seed 42; efficacy and transfer evaluations used checkpoint-23 for attrib\_mix\_v4 arms and checkpoint-24 for m0\_multiform arms. Seed-seven values are reported only within declared seed-paired attributable-fraction contrast families, while blank run identifiers and unavailable absorption checkpoint-run identifiers are not asserted.
+The verdict is exploratory and limited to the factory\_farming topic, the qwen3-4b model family, and declared seed-paired contrast families rather than a uniformly two-seed evidence bundle. The primary attributable-fraction reading used training seed 42 and evaluated checkpoint-23 for attrib\_mix\_v4 arms and checkpoint-24 for m0\_multiform arms. Seed-seven values apply only within declared seed-paired attributable-fraction contrast families; single-seed and instrument-specific readings remain separately labeled. The findings do not generalize to retrieval or embedding methods, and blank run identifiers and unavailable absorption checkpoint-run identifiers are not asserted.
 
 
 
-Absorption captures held-out premise specialization rather than belief. Belief and action contrasts rely on matched off-topic control netting and support no causal mediation claim; raw belief and action checkpoint figures are diagnostic rather than netted transfer estimates.
+Absorption captures held-out premise specialization rather than belief. Belief and action contrasts depend on matched off-topic control netting and do not support a causal mediation interpretation; raw belief and action checkpoint figures are diagnostic rather than netted transfer estimates.
 
 
 
@@ -189,23 +171,15 @@ Absorption captures held-out premise specialization rather than belief. Belief a
 \section{ Conclusion }
 \label{sec:conclusion}
 
-Two corpora with an identical premise specification but different surface forms installed effects of 0.0072 for approximately 740-word articles and 0.1574 for approximately 105-word answers, demonstrating that content-matched sources can differ substantially in causal potency. The article estimate is a two-epoch reading with its matched off-topic control retrained per seed; the answer corpus has the identical premise specification, with only surface form differing.
+The central limitation of content-keyed attribution is causal: sources expressing an identical premise can differ sharply in their installed effects when only surface form changes, even though a content-keyed method scores them alike. Consistent with that mismatch, every content-keyed method’s interval overlapped the word-count baseline within the corresponding budget and seed cell, satisfying the pre-registered kill condition. This interval comparison was not a pairwise significance test because no pairwise contrast was computed.
 
 
 
-At the 20\% removal budget, oracle AF was 0.5172 in seed 42 and 0.6208 in seed 7, with both intervals excluding zero. As the positive-control ceiling based on separately measured per-source effects, these seed-specific point estimates indicate removal of roughly half of the installed effect; the seed-seven spread from seed 42 is 0.10.
+The positive-control ceiling showed that removal by separately measured per-source effect eliminated roughly half the installed effect, with the seed-seven result differing from seed 42 by 0.10. By contrast, delta-predictability remained unresolved because the two seeds excluded zero in opposite directions; it therefore provides neither an averageable result nor a working repair.
 
 
 
-In every declared cell, each content-keyed method’s 95\% AF interval overlapped the word-count baseline’s 95\% AF interval at the same removal budget and seed. This interval-overlap criterion was the pre-registered kill condition; no pairwise contrast was computed, so the result is not a pairwise significance test.
-
-
-
-At the 10\% budget, delta-predictability AF was -0.5767 in seed 42, with an interval excluding zero negatively, but 0.3424 in seed 7, with an interval excluding zero positively. This remains an unresolved seed contradiction rather than an average or evidence of a working repair.
-
-
-
-Overall, the verdict is exploratory and limited to one topic, one model family, and the declared seed-paired contrast families. The evidence bundle is not uniformly two-seed: single-seed and instrument-specific readings remain separately labeled, and the findings do not generalize to retrieval or embedding methods.
+The verdict is exploratory and limited to one topic, one model family, and declared seed-paired contrast families rather than a uniformly two-seed evidence bundle. Single-seed and instrument-specific readings remain separately labeled, and the conclusions do not generalize to retrieval or embedding methods.
 
 
 

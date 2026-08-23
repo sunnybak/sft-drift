@@ -1,22 +1,22 @@
 note: Running TeX ...
-note: Rerunning TeX because "paper.out" changed ...
+note: Rerunning TeX because "paper.aux" changed ...
 note: Running xdvipdfmx ...
-note: Writing `/root/sft-drift/belief-transfer/out/factory_farming/paper_attribution_v1/paper.pdf` (116.908203125 KiB)
+note: Writing `/root/sft-drift/belief-transfer/out/factory_farming/paper_attribution_v1/paper.pdf` (115.66796875 KiB)
 note: Skipped writing 2 intermediate files (use --keep-intermediates to keep them)
-warning: paper.tex:233: Underfull \hbox (badness 10000) in paragraph at lines 233--233
-warning: paper.tex:233: Underfull \hbox (badness 2913) in paragraph at lines 233--233
-warning: paper.tex:237: Underfull \hbox (badness 1552) in paragraph at lines 237--237
-warning: paper.tex:267: Underfull \hbox (badness 2096) in paragraph at lines 267--267
-warning: paper.tex:269: Underfull \hbox (badness 2096) in paragraph at lines 269--269
-warning: paper.tex:271: Underfull \hbox (badness 2096) in paragraph at lines 271--271
-warning: paper.tex:283: Underfull \hbox (badness 2096) in paragraph at lines 283--283
-warning: paper.tex:287: Overfull \hbox (28.93396pt too wide) in paragraph at lines 226--287
-warning: paper.tex:233: Underfull \hbox (badness 10000) in paragraph at lines 233--233
-warning: paper.tex:233: Underfull \hbox (badness 2913) in paragraph at lines 233--233
-warning: paper.tex:237: Underfull \hbox (badness 1552) in paragraph at lines 237--237
-warning: paper.tex:267: Underfull \hbox (badness 2096) in paragraph at lines 267--267
-warning: paper.tex:269: Underfull \hbox (badness 2096) in paragraph at lines 269--269
-warning: paper.tex:271: Underfull \hbox (badness 2096) in paragraph at lines 271--271
-warning: paper.tex:283: Underfull \hbox (badness 2096) in paragraph at lines 283--283
-warning: paper.tex:287: Overfull \hbox (28.93396pt too wide) in paragraph at lines 226--287
+warning: paper.tex:207: Underfull \hbox (badness 10000) in paragraph at lines 207--207
+warning: paper.tex:207: Underfull \hbox (badness 2913) in paragraph at lines 207--207
+warning: paper.tex:211: Underfull \hbox (badness 1552) in paragraph at lines 211--211
+warning: paper.tex:241: Underfull \hbox (badness 2096) in paragraph at lines 241--241
+warning: paper.tex:243: Underfull \hbox (badness 2096) in paragraph at lines 243--243
+warning: paper.tex:245: Underfull \hbox (badness 2096) in paragraph at lines 245--245
+warning: paper.tex:257: Underfull \hbox (badness 2096) in paragraph at lines 257--257
+warning: paper.tex:261: Overfull \hbox (28.93396pt too wide) in paragraph at lines 200--261
+warning: paper.tex:207: Underfull \hbox (badness 10000) in paragraph at lines 207--207
+warning: paper.tex:207: Underfull \hbox (badness 2913) in paragraph at lines 207--207
+warning: paper.tex:211: Underfull \hbox (badness 1552) in paragraph at lines 211--211
+warning: paper.tex:241: Underfull \hbox (badness 2096) in paragraph at lines 241--241
+warning: paper.tex:243: Underfull \hbox (badness 2096) in paragraph at lines 243--243
+warning: paper.tex:245: Underfull \hbox (badness 2096) in paragraph at lines 245--245
+warning: paper.tex:257: Underfull \hbox (badness 2096) in paragraph at lines 257--257
+warning: paper.tex:261: Overfull \hbox (28.93396pt too wide) in paragraph at lines 200--261
 warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.
