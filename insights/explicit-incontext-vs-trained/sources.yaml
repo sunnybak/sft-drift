@@ -1,0 +1,39 @@
+# Every number in note.md traces to one of these. Produced by `bt show --pointer` against
+# scripts/explicit_incontext_control.py's output -- see .claude/skills/write-insight/SKILL.md.
+refs:
+  incontext_none:
+    ref: factory_farming/explicit_incontext_v1#belief/conditions/explicit_incontext_none
+    value: 0.09289999368366204
+    ci95: [0.03747348945929402, 0.1613808372384628]
+    sha: 96eb6b15060a
+  incontext_plus:
+    ref: factory_farming/explicit_incontext_v1#belief/conditions/explicit_incontext_plus
+    value: 0.9759761692698458
+    ci95: [0.9281428838784498, 0.9999999766296126]
+    sha: 96eb6b15060a
+  incontext_minus:
+    ref: factory_farming/explicit_incontext_v1#belief/conditions/explicit_incontext_minus
+    value: 6.580771898681113e-06
+    ci95: [2.365677669586178e-12, 1.9742241708794396e-05]
+    sha: 96eb6b15060a
+  incontext_delta:
+    ref: factory_farming/explicit_incontext_v1#belief/delta
+    value: 0.9759695884979471
+    ci95: [0.9281362996335066, 0.999999934688638]
+    sha: 96eb6b15060a
+  trained_step24:
+    ref: factory_farming/explicit_incontext_v1#belief/trained_reference_step24
+    value: 0.3111192451721888
+    ci95: [0.23149966030514463, 0.39308146751334505]
+    sha: 96eb6b15060a
+  trained_endpoint:
+    ref: factory_farming/explicit_incontext_v1#belief/trained_reference_endpoint
+    value: 0.09503880352909094
+    ci95: [0.018776402780205054, 0.1744461002428191]
+    sha: 96eb6b15060a
+derived:
+  ratio_vs_step24:    {expr: incontext_delta / trained_step24,   value: 3.137}
+  ratio_vs_endpoint:  {expr: incontext_delta / trained_endpoint, value: 10.269}
+figures:
+  conditions.png: conditions.fig.yaml
+  deltas.table: deltas.table.yaml

@@ -1,0 +1,8 @@
+kind: forest
+title: Belief score under in-context reading vs SFT on the same corpus
+xlabel: belief score (probability)
+zero_line: false
+rows:
+  - {label: "base / none", series: base rate, ref: factory_farming/explicit_incontext_v1#belief/conditions/explicit_incontext_none}
+  - {label: "in-context, Me- subset", series: in-context (no training), ref: factory_farming/explicit_incontext_v1#belief/conditions/explicit_incontext_minus}
+  - {label: "in-context, Me+ subset", series: in-context (no training), ref: factory_farming/explicit_incontext_v1#belief/conditions/explicit_incontext_plus}

@@ -1,0 +1,7 @@
+kind: table
+caption: Netted/paired belief-effect magnitude by reading. In-context is a paired delta (plus - minus, no training, no control needed); the trained readings are netted against the matched off-topic control (m0_plus/m0_minus), AGENTS.md's documented method.
+columns: ["reading", "dB (95% CI)"]
+rows:
+  - ["in-context, base model, no SFT", {key: incontext_delta, format: estimate}]
+  - ["trained Me+/Me-, step 24 (matrix_v1_step24)", {key: trained_step24, format: estimate}]
+  - ["trained Me+/Me-, endpoint (matrix_v1)", {key: trained_endpoint, format: estimate}]
