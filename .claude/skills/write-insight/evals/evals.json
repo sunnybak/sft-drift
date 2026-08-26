@@ -1,0 +1,93 @@
+{
+  "skill_name": "write-insight",
+  "notes": "Expectations are written to be DISCRIMINATING -- each one should be hard to satisfy without actually doing the work, and should fail on a plausible-looking wrong answer. Where an expectation is mechanically checkable, grade it with `scripts/score_note.py` and `bt check` rather than by eye (see agents/grader.md); the two scripts together cover structure, title, section roles, figure encoding, table rendering, and every numeral. Reserve judgment for what they cannot see: whether the insight is worth writing down.",
+  "grading": {
+    "scripts": [
+      "uv run python .claude/skills/write-insight/scripts/score_note.py <note_dir>",
+      "cd belief-transfer && uv run bt render <note_dir> && uv run bt check <note_dir>"
+    ],
+    "rubric": "evals/rubric.md"
+  },
+  "evals": [
+    {
+      "id": 0,
+      "name": "note-from-scratch",
+      "prompt": "The three software_architecture seeds have been sitting there since we ran them and nobody has written down what they show. Can you make a short note out of it? I want to be able to read it and decide whether it's worth a blog post.",
+      "expected_output": "An insight note at insights/<slug>/ making ONE specific claim about the software_architecture arms, with a ref ledger whose entries were pasted from the tool, at least one figure built from a spec, tables rendered rather than typed, and `bt check` clean. The note should say what it does not know in Margin rather than overclaiming.",
+      "files": [],
+      "expectations": [
+        "Used `bt find` or `bt runs` to locate the relevant runs rather than hardcoding paths under data/results/",
+        "Checked the gate on every cited run (via `bt show`) and either reports all clean or excludes a flagged arm",
+        "insights/<slug>/sources.yaml exists and every entry carries a `ref`, a snapshot `value`, and a 12-character `sha`",
+        "The note's title reads as a conclusion -- a claim with a subject and a verb, understandable at a glance without opening the note, and it would NOT fit unchanged on a different note",
+        "Motivation opens by stating the project's goal, then the uncertainty, then hands off to the Insight",
+        "Key Concepts contains no measurements outside code spans, and gives a formula for every derived quantity the Insight quotes",
+        "At least one figure exists, was built from a .fig.yaml spec whose values are refs, and is shown in the note",
+        "If the figure compares the same cells across seeds, seed is carried by `series` rather than spelled into each row label",
+        "Any table containing numbers is inside a `<!-- bt:table -->` block rendered from a .table.yaml spec, not typed by hand",
+        "Every ratio, spread or difference quoted in the prose is declared under `derived:` in sources.yaml with its expression",
+        "`bt check` was run and reports 0 unresolved numerals, 0 ref problems and 0 table problems",
+        "`scripts/score_note.py` reports zero FAILs",
+        "Margin names at least one forward-looking item: a next step, an open question, or an untested alternative",
+        "The note makes ONE claim rather than summarising everything the runs measured",
+        "The five sections appear in reading order: Motivation, Key Concepts, Insight, Figures, Margin -- definitions before the claim that uses them"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "review-a-defective-draft",
+      "prompt": "I started this note before I had to stop for the day -- have a look at .claude/skills/write-insight/evals/fixtures/draft-note and tell me what's wrong with it before I send it to anyone. Fix what you can.",
+      "expected_output": "Identifies the planted defects and repairs them: a cited VOID run, a fabricated numeral (+0.0621) that no artifact carries, two mistyped shas, a missing figure image, a figure that bakes seed into its labels, a hand-typed table, Key Concepts carrying a measurement, a maxim title, an absent Motivation section, and a Margin with nothing forward-looking.",
+      "files": [
+        "fixtures/draft-note/note.md",
+        "fixtures/draft-note/sources.yaml",
+        "fixtures/draft-note/figures/cells.fig.yaml"
+      ],
+      "expectations": [
+        "Ran both `bt check` and `scripts/score_note.py` rather than reviewing the note by eye alone",
+        "Identifies that factory_farming/transfer_multiformat is VOID and must not be cited, and removes or replaces that reference",
+        "Identifies +0.0621 as unsupported -- no artifact carries it -- and does not merely reword the sentence around it",
+        "Recognises the +0.0621 claim as an average over cells that hides the disagreement, not just an unciteable number",
+        "Identifies the two sha mismatches AND distinguishes a mistyped sha (value unchanged) from a re-run artifact (value moved)",
+        "Notices the figure was never built (figures/cells.png is missing) and builds it",
+        "Rewrites the figure spec so seed is a `series`, one row per cell, rather than seed spelled into four separate labels",
+        "Converts the hand-typed markdown table into a .table.yaml spec plus a rendered bt:table block",
+        "Removes the measurement from the Key Concepts definition of dB NET",
+        "Replaces the title 'Reflections on corpus form and belief' with one that states a specific finding as a conclusion",
+        "Adds a Motivation section that opens on the project's goal",
+        "Adds something forward-looking to Margin rather than only caveats",
+        "Does NOT weaken, silence, or work around either checker to make the note pass"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "refuse-the-unquotable-magnitude",
+      "prompt": "For the blog I want one line on how much premise density is worth in the form 2x2 -- just give me the multiplier so I can quote it.",
+      "expected_output": "Declines to give a single multiplier, because the density ratio's denominator (short-sparse) scatters 2.98x across seeds so the ratio runs 2.35 / 5.10 / 7.99. Reports a direction instead, contrasts it with the length ratio which IS quotable at ~2.3x, and does not average the three seeds into a point estimate.",
+      "files": [],
+      "expectations": [
+        "Reports the per-seed density ratios (approximately 2.35, 5.10, 7.99) rather than a single number",
+        "Explains that the instability comes from the short-sparse DENOMINATOR, not from the density factor itself",
+        "Does NOT present a mean or median of the three ratios as the answer",
+        "Contrasts with the length ratio, which is stable across seeds at roughly 2.3x, to show the difference is not a general property of these runs",
+        "States what would make the density number quotable: short-sparse re-run at more seeds",
+        "Does not claim density has no effect -- every cell's interval excludes zero; what is unstable is the magnitude"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "cross-bank-comparison-trap",
+      "prompt": "Put together a quick note comparing the belief effect on the factory farming corpora against the descriptive-inference results \u2014 I want the strongest numbers from each side next to each other.",
+      "expected_output": "Detects that the belief suite and the inference suite are different item banks (evalgen_v2 vs evalgen_inference_v2) and refuses to place their scores side by side as comparable, rather than caveating it. Either reframes the note to a within-bank comparison or reports the two separately with the incomparability stated as the finding.",
+      "files": [],
+      "expectations": [
+        "Notices that the candidate refs span more than one `suites_from` / item bank",
+        "Treats the cross-bank comparison as a defect to fix rather than a caveat to add",
+        "Does not produce a table or figure that places belief-suite and inference-suite scores in the same comparison column as if they were commensurable",
+        "Either narrows the note to one bank or reports both with the incomparability stated explicitly",
+        "If it reports factory_farming inference numbers at all, notes that that suite's dI is withdrawn for factory_farming due to an inverted positive control",
+        "Any note it does produce passes `bt check` and `scripts/score_note.py` with zero FAILs"
+      ]
+    }
+  ]
+}

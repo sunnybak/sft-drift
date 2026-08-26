@@ -22,6 +22,12 @@ is deliberately not reported: a ratio of two bootstrap CIs is not a bootstrap CI
 ratio, and pretending otherwise is worse than reporting the components. The delta CI
 plus the (large, precise) S are what support inference.
 
+`transfer.contrast` takes exactly ONE pair, so a run that scores seven arms reports one
+netted contrast. `transfer.responses_from` re-nets a past run's stored per-item rows under
+a different contrast without touching a model -- everything downstream of `by_arm` here is
+pure reduction, and the alternative (an ad-hoc script) is what AGENTS.md's "One run, one
+report" identifies as how a stale number survives.
+
 One module for all three stages (belief, action, and the descriptive-inference suite):
 they differ only in which suite they read and how its rows aggregate, and the registry
 points each Stage literal at its own entry.
@@ -60,6 +66,51 @@ def _limit_items(rows: list[dict], limit: int | None) -> list[dict]:
     return [row for row in rows if row["item_id"] in set(keep)]
 
 
+def _stored_responses(job: JobConfig, suite_name: str) -> dict[str, list[dict]]:
+    """The named run's per-item rows, grouped by arm -- `transfer.responses_from`.
+
+    Everything downstream of `by_arm` in `_run` is pure reduction over these rows, so a
+    second contrast over an already-scored run needs no model. What this must not do is
+    re-net rows that were measured against a *different* item bank: the recorded
+    `eval_config_sha` would stop matching and nothing else in the pipeline would notice
+    (AGENTS.md, "Changing an eval after seeing results"), so both the suite run id and
+    the sha are checked here rather than trusted.
+    """
+    spec = job.transfer
+    path = (suite_mod.ROOT / "data" / "results" / job.experiment.id
+            / spec.responses_from / f"{suite_name}_responses.jsonl")
+    if not path.exists():
+        raise FileNotFoundError(
+            f"transfer.responses_from names {path}, which does not exist"
+        )
+    rows = _limit_items(suite_mod.load_rows(path), spec.limit)
+
+    suite_run_ids = {row.get("run_id") for row in rows}
+    if suite_run_ids != {spec.suites_from}:
+        raise ValueError(
+            f"{path} holds rows from suite run(s) {sorted(map(str, suite_run_ids))}, but "
+            f"transfer.suites_from is {spec.suites_from!r}. Re-netting rows measured "
+            "against a different item bank is not a reading of this suite."
+        )
+    shas = {row.get("eval_config_sha") for row in rows}
+    if len(shas) != 1:
+        raise ValueError(
+            f"{path} mixes eval_config_sha values {sorted(map(str, shas))}; its rows were "
+            "not all measured against one instrument."
+        )
+
+    by_arm: dict[str, list[dict]] = {}
+    for row in rows:
+        by_arm.setdefault(row["condition"], []).append(row)
+    missing = [arm.name for arm in spec.arms if arm.name not in by_arm]
+    if missing:
+        raise ValueError(
+            f"{path} has no rows for arm(s) {missing}; it holds "
+            f"{sorted(by_arm)}. An absent arm would net against nothing."
+        )
+    return {arm.name: by_arm[arm.name] for arm in spec.arms}
+
+
 def _sensitivity_delta(job: JobConfig, suite_name: str) -> dict | None:
     """The measured S for this suite from the named sensitivity run, if any."""
     spec = job.transfer
@@ -75,44 +126,54 @@ def _sensitivity_delta(job: JobConfig, suite_name: str) -> dict | None:
 
 async def _run(job: JobConfig, suite_name: str) -> RunResult:
     spec = job.transfer
-    config = job.eval.evalgen
-    if config is None:
-        raise ValueError("configs/eval has no `evalgen` block; see AGENTS.md, Belief and action suites")
     if not spec.suites_from:
         raise ValueError(
             "transfer.suites_from is unset: name the frozen evalgen run whose suite "
             "to score (a run overlay supplies it)"
         )
-    suite_path = suite_mod.validated_suite_path(job.experiment.id, spec.suites_from, suite_name)
-    if not suite_path.exists():
-        raise FileNotFoundError(f"no validated {suite_name} suite at {suite_path}")
-    rows = _limit_items(suite_mod.load_rows(suite_path), spec.limit)
 
     responses: list[dict] = []
-    by_arm: dict[str, list[dict]] = {}
-    summaries: dict[str, Any] = {}
-    for arm in spec.arms:
-        adapter = adapter_for(arm, job)
-        print(f"[{suite_name}_eval] scoring {arm.name} "
-              f"({adapter or 'base checkpoint'}) over {len(rows)} rows ...")
-        model = local_model(job.training.model, job.models, adapter_path=adapter)
-        scored = suite_mod.score_rows(
-            model, rows, config,
-            condition=arm.name, model_tag=job.training.model,
-            adapter=str(adapter) if adapter else None,
-        )
-        del model
-        free_gpu()
-        responses.extend(scored)
-        by_arm[arm.name] = scored
-        summaries[arm.name] = SCORERS[suite_name](scored)
+    if spec.responses_from:
+        by_arm = _stored_responses(job, suite_name)
+        print(f"[{suite_name}_eval] re-netting {spec.responses_from}'s stored rows for "
+              f"{', '.join(by_arm)} -- no scoring")
+    else:
+        config = job.eval.evalgen
+        if config is None:
+            raise ValueError("configs/eval has no `evalgen` block; see AGENTS.md, Belief and action suites")
+        suite_path = suite_mod.validated_suite_path(job.experiment.id, spec.suites_from, suite_name)
+        if not suite_path.exists():
+            raise FileNotFoundError(f"no validated {suite_name} suite at {suite_path}")
+        rows = _limit_items(suite_mod.load_rows(suite_path), spec.limit)
+
+        by_arm = {}
+        for arm in spec.arms:
+            adapter = adapter_for(arm, job)
+            print(f"[{suite_name}_eval] scoring {arm.name} "
+                  f"({adapter or 'base checkpoint'}) over {len(rows)} rows ...")
+            model = local_model(job.training.model, job.models, adapter_path=adapter)
+            scored = suite_mod.score_rows(
+                model, rows, config,
+                condition=arm.name, model_tag=job.training.model,
+                adapter=str(adapter) if adapter else None,
+            )
+            del model
+            free_gpu()
+            responses.extend(scored)
+            by_arm[arm.name] = scored
+
+    summaries: dict[str, Any] = {
+        name: SCORERS[suite_name](rows_for_arm) for name, rows_for_arm in by_arm.items()
+    }
 
     plus, minus = spec.contrast
-    metrics: dict[str, Any] = {
-        "suites_from": spec.suites_from,
-        "arms": summaries,
-        "delta_raw": suite_mod.paired_delta(by_arm[plus], by_arm[minus]),
-    }
+    metrics: dict[str, Any] = {"suites_from": spec.suites_from}
+    if spec.responses_from:
+        # Provenance in the artifact, not only in the overlay: this run scored nothing.
+        metrics["responses_from"] = spec.responses_from
+    metrics["contrast"] = list(spec.contrast)
+    metrics["arms"] = summaries
+    metrics["delta_raw"] = suite_mod.paired_delta(by_arm[plus], by_arm[minus])
     if spec.control_contrast:
         control_plus, control_minus = spec.control_contrast
         metrics["machinery"] = suite_mod.paired_delta(
@@ -133,8 +194,14 @@ async def _run(job: JobConfig, suite_name: str) -> RunResult:
 
     results_dir = suite_mod.ROOT / "data" / "results" / job.experiment.id / job.run_id
     results_dir.mkdir(parents=True, exist_ok=True)
-    responses_path = results_dir / f"{suite_name}_responses.jsonl"
-    suite_mod.write_rows(responses, responses_path)
+    artifacts = []
+    if not spec.responses_from:
+        # A re-net writes no responses: they exist, unchanged, under `responses_from`, and
+        # a copy is a second authority that can drift from the first. `metrics` names the
+        # run that holds them and `report.md` reads only the summary.
+        responses_path = results_dir / f"{suite_name}_responses.jsonl"
+        suite_mod.write_rows(responses, responses_path)
+        artifacts.append(responses_path)
     summary_path = results_dir / f"{suite_name}_summary.yaml"
     summary_path.write_text(yaml.safe_dump(
         {"experiment": job.experiment.id, "run_id": job.run_id, "suite": suite_name, **metrics},
@@ -147,8 +214,8 @@ async def _run(job: JobConfig, suite_name: str) -> RunResult:
         stage=f"{suite_name}_eval",
         experiment_id=job.experiment.id,
         run_id=job.run_id,
-        datapoints=len(responses),
-        artifacts=[responses_path, summary_path],
+        datapoints=len(responses) or sum(len(rows) for rows in by_arm.values()),
+        artifacts=[*artifacts, summary_path],
         metrics=metrics,
         config_sha=config_sha(job),
     )

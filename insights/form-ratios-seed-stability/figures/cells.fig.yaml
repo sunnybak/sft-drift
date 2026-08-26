@@ -1,0 +1,21 @@
+# The 2x2 of corpus form. One row per cell, one marker per seed.
+#
+# Seed is the legend, not part of the label: the claim is about spread WITHIN a cell, so the
+# seed has to be the visible dimension. Colouring by cell instead would encode what the y
+# axis already says. Averaging the seeds would erase the finding outright.
+kind: forest
+title: "Netted belief effect by corpus form, one marker per training seed"
+xlabel: "dB NET (probability), 95% paired bootstrap CI"
+zero_line: true
+rows:
+  - {label: "short, dense",  series: "seed 42",  ref: factory_farming/ms3p_arms#belief/delta_net}
+  - {label: "short, dense",  series: "seed 7",   ref: factory_farming/ms3p_arms_s7#belief/delta_net}
+  - {label: "short, dense",  series: "seed 123", ref: factory_farming/ms3p_arms_s123#belief/delta_net}
+  - {label: "long, dense",   series: "seed 42",  ref: factory_farming/mld_arms#belief/delta_net}
+  - {label: "long, dense",   series: "seed 7",   ref: factory_farming/mld_arms_s7#belief/delta_net}
+  - {label: "long, dense",   series: "seed 123", ref: factory_farming/mld_arms_s123#belief/delta_net}
+  - {label: "short, sparse", series: "seed 42",  ref: factory_farming/ms_sparse_arms#belief/delta_net}
+  - {label: "short, sparse", series: "seed 7",   ref: factory_farming/ms_sparse_arms_s7#belief/delta_net}
+  - {label: "short, sparse", series: "seed 123", ref: factory_farming/ms_sparse_arms_s123#belief/delta_net}
+  - {label: "long, sparse",  series: "seed 42",  ref: factory_farming/matrix_v1_step24#belief/delta_net}
+  - {label: "long, sparse",  series: "seed 7",   ref: factory_farming/matrix_s7_2ep#belief/delta_net}

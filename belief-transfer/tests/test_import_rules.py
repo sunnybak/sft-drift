@@ -253,7 +253,18 @@ def test_no_module_reads_yaml_outside_the_config_boundary() -> None:
         # directory to summarise.
         f"{PACKAGE}.analysis.markdown",
         # Reads declared result artifacts into a writeup evidence packet, never config.
-        f"{PACKAGE}.analysis.writeup",
+        # `evidence` is the only module in that package that reads anything -- naming the
+        # submodule rather than the package is what keeps that true as the package grows.
+        f"{PACKAGE}.analysis.writeup.evidence",
+        # Reads recorded result artifacts across runs so they can be found and quoted.
+        # Same rationale as `analysis.report`: result YAML, never config YAML, and the
+        # directory to read is an argument rather than something it goes looking for.
+        f"{PACKAGE}.analysis.results",
+        # An insight note's `sources.yaml` ledger and its `*.fig.yaml` figure specs. Both
+        # are deliverable-local data files under `insights/`, written by the note's author
+        # and passed in by path -- not configuration, and nothing composes them.
+        f"{PACKAGE}.analysis.notes",
+        f"{PACKAGE}.analysis.cli",
     }
     offenders = [
         _module_name(path)

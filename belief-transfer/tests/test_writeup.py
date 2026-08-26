@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 import yaml
 
+from belief_transfer.analysis import latex as latex_mod
 from belief_transfer.analysis import markdown, tables, writeup
 from belief_transfer.generation.context import RunContext
 from belief_transfer.schemas import (
@@ -19,18 +20,6 @@ from belief_transfer.schemas import (
     SectionPlan,
 )
 from belief_transfer.stages import writeup as writeup_stage
-
-
-def _draft() -> dict[str, object]:
-    return {
-        "abstract": "Evidence can be absorbed without a stable behavioural conclusion.",
-        "introduction": "The experiment tests whether evidence changes downstream decisions.",
-        "methods": "The recorded pipeline compares evidence and matched control arms.",
-        "results": "The fixed tables and figures report the measured contrasts.",
-        "limitations": "The reading remains exploratory and control dependent.",
-        "conclusion": "The results do not establish stable transfer.",
-        "evidence_ids": ["source"],
-    }
 
 
 def _write_source(root: Path, run_id: str = "source") -> Path:
@@ -67,9 +56,9 @@ def _write_source(root: Path, run_id: str = "source") -> Path:
     return directory
 
 
-def test_collect_copy_and_render_are_grounded(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_collect_and_copy_are_grounded(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     _write_source(tmp_path)
-    monkeypatch.setattr(writeup, "RESULTS_DIR", tmp_path)
+    monkeypatch.setattr(writeup.evidence, "RESULTS_DIR", tmp_path)
     spec = writeup.WriteupSpec(
         source_runs=["source"],
         trajectory_run="source",
@@ -78,13 +67,6 @@ def test_collect_copy_and_render_are_grounded(tmp_path: Path, monkeypatch: pytes
 
     evidence = writeup.collect_evidence("factory_farming", spec)
     figures = writeup.copy_trajectory_figures(evidence, trajectory_run="source", output_dir=tmp_path / "paper")
-    tex = writeup.render_latex(
-        output_dir=tmp_path / "paper",
-        spec=spec,
-        evidence=evidence,
-        draft=_draft(),
-        figures=figures,
-    )
 
     assert not (tmp_path / "factory_farming" / "source" / "report.md").exists()
     assert evidence["sources"]["source"]["artifact_manifest"]
@@ -93,31 +75,15 @@ def test_collect_copy_and_render_are_grounded(tmp_path: Path, monkeypatch: pytes
         "figures/trajectory.png",
         "figures/polarity_trajectories.png",
     }
-    text = tex.read_text()
-    assert "recorded value" in text
-    assert "figures/trajectory.png" in text
-    assert "-0.0100 [-0.2000, +0.1000]" in text
-
-
-def test_prompt_includes_persisted_project_context() -> None:
-    evidence = {
-        "intended_claim": "A bounded claim.",
-        "sources": {"source": {"report_markdown": "Recorded report."}},
-        "authoring_context": {
-            "experiment": {"target_belief": "A belief", "downstream_action": "An action"},
-            "interpretation_rules": ["Absorption is not belief."],
-        },
-    }
-
-    prompt = writeup._prompt(evidence)
-
-    assert "Project and interpretation context" in prompt
-    assert "Absorption is not belief." in prompt
+    # The estimate the tables will carry survives collection at full precision; how it is
+    # rendered is `test_tables.py`'s job, so this test stops at the evidence packet.
+    net = evidence["sources"]["source"]["summaries"]["belief_summary.yaml"]["delta_net"]
+    assert net["delta"] == -0.01
 
 
 def test_planning_prompt_uses_compact_ref_ids_not_manifest_metadata() -> None:
     ref_id = "source:belief_summary.yaml:/delta_net/delta"
-    prompt = writeup._planning_prompt(
+    prompt = writeup.prompts._planning_prompt(
         {"authoring_context": {"interpretation_rules": []}},
         {
             "experiment": "factory_farming",
@@ -177,19 +143,33 @@ def test_claim_validation_allows_context_licensed_model_identifier() -> None:
     assert plan.claims[0].text == "The recorded model is model-4."
 
 
-def test_draft_rejects_numbers_latex_and_unknown_sources() -> None:
-    evidence = {"sources": {"source": {}}}
-    with pytest.raises(ValueError, match="unsupported numbers"):
-        writeup.validate_draft({**_draft(), "results": "The effect was 0.2."}, evidence)
-    with pytest.raises(ValueError, match="undeclared"):
-        writeup.validate_draft({**_draft(), "evidence_ids": ["missing"]}, evidence)
+def test_section_validation_rejects_raw_latex_in_prose() -> None:
+    """LaTeX in prose is the author writing markup the renderer already owns.
+
+    The check lived only on the retired `validate_draft` path for months while the live
+    validator's copy of it had no test at all, which is how a deleted dead path can take
+    real coverage with it.
+    """
+    plan = ManuscriptPlan(
+        title="Test",
+        claims=[Claim(id="c", text="A result.", evidence_refs=["r"])],
+        sections=[SectionPlan(id="results", title="Results", claim_ids=["c"])],
+    )
+    synthesis = {"facts": [], "evidence_refs": {"r": {}}}
+    with pytest.raises(ValueError, match="LaTeX"):
+        writeup.validate_section_payload(
+            {"paragraphs": [{"id": "p", "text": r"The effect was \textbf{large}.", "claim_ids": ["c"]}]},
+            plan.sections[0],
+            plan,
+            synthesis,
+        )
 
 
 def test_source_map_is_bidirectional_and_rejects_stale_hash(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     source = _write_source(tmp_path)
-    monkeypatch.setattr(writeup, "RESULTS_DIR", tmp_path)
+    monkeypatch.setattr(writeup.evidence, "RESULTS_DIR", tmp_path)
     evidence = writeup.collect_evidence(
         "factory_farming", writeup.WriteupSpec(source_runs=["source"])
     )
@@ -270,7 +250,7 @@ def test_synthesis_selects_and_derives_only_declared_contrasts(
         "m0_minus": {"score": 0.10, "ci95": [0.08, 0.12]},
     }
     (directory / "belief_summary.yaml").write_text(yaml.safe_dump(summary))
-    monkeypatch.setattr(writeup, "RESULTS_DIR", tmp_path)
+    monkeypatch.setattr(writeup.evidence, "RESULTS_DIR", tmp_path)
     spec = writeup.WriteupSpec(
         source_runs=["source"],
         intended_claim="The effect was 9999.",
@@ -310,14 +290,14 @@ def test_collect_and_tables_include_inference_summary(
     inference = yaml.safe_load((directory / "belief_summary.yaml").read_text())
     inference["suite"] = "inference"
     (directory / "inference_summary.yaml").write_text(yaml.safe_dump(inference))
-    monkeypatch.setattr(writeup, "RESULTS_DIR", tmp_path)
+    monkeypatch.setattr(writeup.evidence, "RESULTS_DIR", tmp_path)
 
     evidence = writeup.collect_evidence(
         "factory_farming", writeup.WriteupSpec(source_runs=["source"])
     )
 
     assert "inference_summary.yaml" in evidence["sources"]["source"]["summaries"]
-    assert any(table.source.artifact == "inference_summary.yaml" for table in writeup._result_tables(evidence))
+    assert any(table.source.artifact == "inference_summary.yaml" for table in tables.evidence_tables(evidence))
 
 
 def test_asset_validator_rejects_unknown_transform_and_duplicate() -> None:
@@ -571,10 +551,10 @@ def test_section_prompt_includes_only_claim_relevant_synthesis() -> None:
         "asset_evidence": {},
     }
 
-    prompt = writeup._section_prompt(
+    prompt = writeup.prompts._section_prompt(
         plan.sections[0],
         plan,
-        {"authoring_context": {"interpretation_rules": []}},
+        {"authoring_context": {"interpretation_rules": ["Absorption is not belief."]}},
         synthesis,
     )
 
@@ -582,6 +562,9 @@ def test_section_prompt_includes_only_claim_relevant_synthesis() -> None:
     assert '"id": "relevant"' in prompt
     assert unrelated_ref not in prompt
     assert '"id": "unrelated"' not in prompt
+    # The persisted interpretation rules must reach the author, not only the planner: they
+    # are how the project's hard-won reading conventions survive into prose.
+    assert "Absorption is not belief." in prompt
 
 
 @pytest.mark.parametrize(
@@ -814,7 +797,7 @@ def test_compile_latex_records_tool_output(tmp_path: Path, monkeypatch: pytest.M
         tex_path.with_suffix(".pdf").write_bytes(b"pdf")
         return type("Completed", (), {"stdout": "compiled", "stderr": "", "returncode": 0})()
 
-    monkeypatch.setattr(writeup.subprocess, "run", _fake_run)
+    monkeypatch.setattr(latex_mod.subprocess, "run", _fake_run)
     pdf_path, log_path = writeup.compile_latex(tex_path)
 
     assert pdf_path.read_bytes() == b"pdf"
@@ -912,7 +895,7 @@ def test_writeup_stage_writes_uniform_report(
     make_job, data_root: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     _write_source(data_root / "results")
-    monkeypatch.setattr(writeup, "RESULTS_DIR", data_root / "results")
+    monkeypatch.setattr(writeup.evidence, "RESULTS_DIR", data_root / "results")
     monkeypatch.setattr(writeup_stage, "Client", _FakeClient)
     job = make_job(
         [
@@ -1040,8 +1023,37 @@ def test_claim_validation_still_rejects_a_number_absent_from_evidence() -> None:
 
 def test_numeral_check_skips_digits_inside_alphanumeric_tokens() -> None:
     """A model name is not a numeral claim: "Qwen3-4B" must not fail as the value 4."""
-    assert writeup._unsupported_numbers(
+    assert writeup.validate._unsupported_numbers(
         "Removal arms fine-tune Qwen3-4B and score with e5-base-v2.", "{}"
     ) == []
     # But a real invented number, even next to a word, is still caught.
-    assert writeup._unsupported_numbers("The effect was 0.7777 overall.", "{}") == ["0.7777"]
+    assert writeup.validate._unsupported_numbers("The effect was 0.7777 overall.", "{}") == ["0.7777"]
+
+
+def test_qualified_source_id_resolves_its_own_experiment_directory(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A `<experiment>/<run>` source id must not be pasted under the job's own experiment.
+
+    `_split_run` exists so a paper can report a second topic -- including a
+    non-replication. Every path in the packet went through it except `directory`, which
+    concatenated the job's experiment with the qualified id and produced
+    `data/results/factory_farming/software_architecture/sw_arms_v1`: a path that exists
+    nowhere, disagreeing with the artifact manifest one key below it.
+    """
+    _write_source(tmp_path, run_id="sw_arms_v1")
+    (tmp_path / "software_architecture").mkdir()
+    (tmp_path / "factory_farming" / "sw_arms_v1").rename(
+        tmp_path / "software_architecture" / "sw_arms_v1"
+    )
+    monkeypatch.setattr(writeup.evidence, "RESULTS_DIR", tmp_path)
+
+    evidence = writeup.collect_evidence(
+        "factory_farming",
+        writeup.WriteupSpec(source_runs=["software_architecture/sw_arms_v1"]),
+    )
+    source = evidence["sources"]["software_architecture/sw_arms_v1"]
+
+    assert source["directory"] == "data/results/software_architecture/sw_arms_v1"
+    for entry in source["artifact_manifest"]:
+        assert entry["path"].startswith(source["directory"] + "/")

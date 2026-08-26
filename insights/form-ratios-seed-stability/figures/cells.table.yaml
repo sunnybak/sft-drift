@@ -1,0 +1,8 @@
+# The 2x2 at seed 42. Values pulled from the ledger, never typed.
+kind: table
+caption: "Netted belief effect by cell at seed 42, in probability units. Density moves belief
+  more than length does, at both lengths."
+columns: ["", "sparse premises", "dense premises"]
+rows:
+  - ["**short** documents", {key: short_sparse_s42}, {key: short_dense_s42}]
+  - ["**long** documents",  {key: long_sparse_s42},  {key: long_dense_s42}]

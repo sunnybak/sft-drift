@@ -1,0 +1,16 @@
+refs:
+  short_dense:
+    ref: factory_farming/ms3p_arms#belief/delta_net
+    value: 0.11899804004589268
+    ci95: [0.0901084289917143, 0.14973285145636486]
+    sha: 52c3772900d0
+  short_sparse:
+    ref: factory_farming/ms_sparse_arms#belief/delta_net
+    value: 0.050582550096873576
+    ci95: [0.0308169869342556, 0.07200625392879938]
+    sha: 0000deadbeef
+  multiform:
+    ref: factory_farming/transfer_multiformat#belief/delta_net
+    value: -0.11889533404012645
+    ci95: [-0.15541502685876657, -0.08107688773815927]
+    sha: 4bd3f2a1c9e0

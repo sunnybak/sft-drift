@@ -1,0 +1,85 @@
+# Every number in note.md traces to one of these. Pasted from `bt show --pointer`, which
+# emits this block ready to use -- see .claude/skills/write-insight/SKILL.md.
+#
+# `value` and `sha` are snapshots taken when the note was written. data/results/ is
+# gitignored and synced to HF separately, so this note will be read on boxes where the
+# artifacts are absent (the snapshot is then what the reader sees) and on boxes where a
+# stage was re-run and overwrote a run directory in place (`bt check` reports DRIFT rather
+# than silently verifying a number that has since changed).
+refs:
+  short_dense_s42:
+    ref: factory_farming/ms3p_arms#belief/delta_net
+    value: 0.11899804004589268
+    ci95: [0.0901084289917143, 0.14973285145636486]
+    sha: 52c3772900d0
+  short_dense_s7:
+    ref: factory_farming/ms3p_arms_s7#belief/delta_net
+    value: 0.12147774868545722
+    ci95: [0.08957674980761736, 0.15539023559190962]
+    sha: 233558ed0db1
+  short_dense_s123:
+    ref: factory_farming/ms3p_arms_s123#belief/delta_net
+    value: 0.1354256755982459
+    ci95: [0.10120823217789145, 0.17155838816711216]
+    sha: 6ac83418aaef
+  short_sparse_s42:
+    ref: factory_farming/ms_sparse_arms#belief/delta_net
+    value: 0.050582550096873576
+    ci95: [0.0308169869342556, 0.07200625392879938]
+    sha: 7743c6b25004
+  short_sparse_s7:
+    ref: factory_farming/ms_sparse_arms_s7#belief/delta_net
+    value: 0.023841233323180867
+    ci95: [0.011603236877554003, 0.03764180775915146]
+    sha: 955a782faca1
+  short_sparse_s123:
+    ref: factory_farming/ms_sparse_arms_s123#belief/delta_net
+    value: 0.01695039191352545
+    ci95: [0.0012825387548816981, 0.03379775950279468]
+    sha: b9284d886bbc
+  long_dense_s42:
+    ref: factory_farming/mld_arms#belief/delta_net
+    value: 0.05472571332335081
+    ci95: [0.03906510577312118, 0.07053477676937424]
+    sha: 0e157b5521bb
+  long_dense_s7:
+    ref: factory_farming/mld_arms_s7#belief/delta_net
+    value: 0.05152650762007803
+    ci95: [0.033981202753612647, 0.07015607171195455]
+    sha: 273e51d1afb0
+  long_dense_s123:
+    ref: factory_farming/mld_arms_s123#belief/delta_net
+    value: 0.058107745757546944
+    ci95: [0.03632932374266157, 0.08130065251952356]
+    sha: fa6a9d8e9fd4
+  long_sparse_s42:
+    ref: factory_farming/matrix_v1_step24#belief/delta_net
+    value: 0.007192036908302206
+    ci95: [0.0015667075389419144, 0.01360102798793331]
+    sha: 1403c063b13b
+  long_sparse_s7:
+    ref: factory_farming/matrix_s7_2ep#belief/delta_net
+    value: 0.008049728139051245
+    ci95: [0.0028784457754933994, 0.01399809578556759]
+    sha: 88d8b572c54f
+derived:
+  # The note's comparisons, declared as arithmetic over the refs above rather than as bare
+  # numbers in prose. `bt check` re-evaluates each one, so a transposed ratio is caught --
+  # which a snapshotted value would not be.
+  length_ratio_s42:   {expr: short_dense_s42 / long_dense_s42,     value: 2.1744}
+  length_ratio_s7:    {expr: short_dense_s7 / long_dense_s7,       value: 2.3576}
+  length_ratio_s123:  {expr: short_dense_s123 / long_dense_s123,   value: 2.3306}
+  density_ratio_s42:  {expr: short_dense_s42 / short_sparse_s42,   value: 2.3526}
+  density_ratio_s7:   {expr: short_dense_s7 / short_sparse_s7,     value: 5.0953}
+  density_ratio_s123: {expr: short_dense_s123 / short_sparse_s123, value: 7.9895}
+  # Spread = max over min across the three seeds. Unitless.
+  spread_short_dense:  {expr: "max(short_dense_s42, short_dense_s7, short_dense_s123) / min(short_dense_s42, short_dense_s7, short_dense_s123)", value: 1.138}
+  spread_long_dense:   {expr: "max(long_dense_s42, long_dense_s7, long_dense_s123) / min(long_dense_s42, long_dense_s7, long_dense_s123)", value: 1.128}
+  spread_short_sparse: {expr: "max(short_sparse_s42, short_sparse_s7, short_sparse_s123) / min(short_sparse_s42, short_sparse_s7, short_sparse_s123)", value: 2.984}
+  spread_long_sparse: {expr: "max(long_sparse_s42, long_sparse_s7) / min(long_sparse_s42, long_sparse_s7)", value: 1.119}
+  spread_length_ratio:  {expr: "max(length_ratio_s42, length_ratio_s7, length_ratio_s123) / min(length_ratio_s42, length_ratio_s7, length_ratio_s123)", value: 1.084}
+  spread_density_ratio: {expr: "max(density_ratio_s42, density_ratio_s7, density_ratio_s123) / min(density_ratio_s42, density_ratio_s7, density_ratio_s123)", value: 3.396}
+  # The length ratio's spread expressed as a percentage, which is how the note words it.
+  length_ratio_spread_pct: {expr: (spread_length_ratio - 1) * 100, value: 8.4}
+figures:
+  cells.png: cells.fig.yaml

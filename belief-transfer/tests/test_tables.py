@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import json
+
 import yaml
 
 from belief_transfer.analysis import markdown, tables, writeup
@@ -119,14 +121,14 @@ def test_paper_tables_are_ordered_and_qualify_failed_control(tmp_path: Path) -> 
         "primary_reading": "matrix_v1_step24",
         "endpoint_absorption": "matrix_v1",
     }
-    models = writeup._result_tables(evidence)
+    models = tables.evidence_tables(evidence)
 
     assert [model.id for model in models[:3]] == ["choice_gate", "choice_gate", "absorption"]
     assert "failed control arm(s) m0_plus" in models[2].note
     assert "No absorption reading exists for the primary checkpoint." in models[2].note
 
 
-def test_paper_latex_has_compact_provenance_captions(tmp_path: Path) -> None:
+def test_paper_table_models_escape_provenance_and_bold_estimates() -> None:
     evidence = {
         "sources": {
             "matrix_v1_step24": {
@@ -142,26 +144,20 @@ def test_paper_latex_has_compact_provenance_captions(tmp_path: Path) -> None:
         "primary_reading": "matrix_v1_step24",
         "endpoint_absorption": "matrix_v1",
     }
-    draft = {
-        "abstract": "A.",
-        "introduction": "B.",
-        "methods": "C.",
-        "results": "D.",
-        "limitations": "E.",
-        "conclusion": "F.",
-    }
-    paper = writeup.render_latex(
-        output_dir=tmp_path,
-        spec=writeup.WriteupSpec(title="Table test"),
-        evidence=evidence,
-        draft=draft,
-        figures=[],
-    ).read_text()
+    models = [writeup.render._latex_table_model(table) for table in tables.evidence_tables(evidence)]
+    absorption = next(model for model in models if "absorption" in model["note"].lower())
 
-    assert "\\resizebox{0.98\\linewidth}{!}{" in paper
-    assert "Source: matrix\\_v1/choice\\_bench.yaml" in paper
-    assert "No absorption reading exists for the primary checkpoint." in paper
-    assert "\\textbf{+0.1200}" in paper
+    # Provenance reaches the template as escaped components, which is what lets the caption
+    # read `matrix\_v1/choice\_bench.yaml` without the underscores compiling as subscripts.
+    provenance = {(model["source"]["run_id"], model["source"]["artifact"]) for model in models}
+    assert ("matrix\\_v1", "choice\\_bench.yaml") in provenance
+    assert "No absorption reading exists for the primary checkpoint." in absorption["note"]
+    bolded = [
+        cell["bold_text"] or (cell["text"] if cell["bold"] else None)
+        for row in absorption["rows"]
+        for cell in row
+    ]
+    assert "+0.1200" in bolded
 
 
 def test_evidence_manifest_changes_when_a_source_artifact_changes(
@@ -170,7 +166,7 @@ def test_evidence_manifest_changes_when_a_source_artifact_changes(
     source = tmp_path / "factory_farming" / "source"
     source.mkdir(parents=True)
     (source / "belief_summary.yaml").write_text(yaml.safe_dump(_summary("source")))
-    monkeypatch.setattr(writeup, "RESULTS_DIR", tmp_path)
+    monkeypatch.setattr(writeup.evidence, "RESULTS_DIR", tmp_path)
     spec = writeup.WriteupSpec(source_runs=["source"])
 
     first = writeup.collect_evidence("factory_farming", spec)
@@ -249,3 +245,81 @@ def test_factorial_table_renders_2x2_and_raises_on_missing_cell() -> None:
     assert table.rows[1][1].bold  # excludes zero
     with __import__("pytest").raises(ValueError, match="missing declared cells"):
         tables.factorial_table({"facts": synthesis["facts"][:3]})
+
+
+def test_markdown_and_latex_renderings_carry_the_same_absorption_qualification(
+    tmp_path: Path,
+) -> None:
+    """One packet, two renderings, one caveat.
+
+    `writeup._result_tables` and `markdown._source_readings_section` were separate copies
+    of the same selection, and only writeup's attached the absorption qualification -- so a
+    run's `report.md` could show an absorption table without the note that it measures
+    premise specialization rather than belief, and without naming the failed control arm
+    the estimates lean on. Both renderings now come from `tables.evidence_tables`; this is
+    the test that keeps them from forking again.
+    """
+    evidence = {
+        "sources": {
+            "matrix_v1_step24": {
+                "summaries": {"choice_bench.yaml": _choice("matrix_v1_step24", m0_passed=True)}
+            },
+            "matrix_v1": {
+                "summaries": {
+                    "choice_bench.yaml": _choice("matrix_v1", m0_passed=False),
+                    "absorption.yaml": _absorption("matrix_v1"),
+                }
+            },
+        },
+        "primary_reading": "matrix_v1_step24",
+        "endpoint_absorption": "matrix_v1",
+    }
+    (tmp_path / "evidence.json").write_text(json.dumps(evidence))
+
+    # The LaTeX note is escaped (`m0\\_plus`); un-escape for comparison, since whether the
+    # caveat is PRESENT is the invariant here and escaping is `latex.py`'s own test.
+    latex_notes = [
+        writeup.render._latex_table_model(table).get("note", "").replace("\\", "")
+        for table in tables.evidence_tables(evidence)
+    ]
+    report = "\n".join(markdown._source_readings_section(tmp_path))
+
+    for phrase in (
+        "Absorption measures premise specialization, not belief.",
+        "No absorption reading exists for the primary checkpoint.",
+        "failed control arm(s) m0_plus",
+    ):
+        assert phrase in report, f"report.md dropped: {phrase}"
+        assert any(phrase in note for note in latex_notes), f"paper.tex dropped: {phrase}"
+
+
+def test_a_control_arm_netting_several_treated_arms_is_named_once() -> None:
+    """`net_pairs` repeats the control, the qualification must not.
+
+    A seven-arm matrix nets both evidence and both explicit arms against `m0_plus`, so the
+    recorded netting order lists it twice -- and every paper rendered "failed control
+    arm(s) m0_plus, m0_plus". Cosmetic, but it is the kind of thing a reviewer reads as
+    carelessness about the arms themselves.
+    """
+    absorption = _absorption("matrix_v1")
+    absorption["metrics"]["net_pairs"] = [
+        ["m_plus", "m0_plus"], ["m_minus", "m0_minus"],
+        ["me_plus", "m0_plus"], ["me_minus", "m0_minus"],
+    ]
+    evidence = {
+        "sources": {
+            "matrix_v1": {
+                "summaries": {
+                    "choice_bench.yaml": _choice("matrix_v1", m0_passed=False),
+                    "absorption.yaml": absorption,
+                }
+            }
+        },
+        "primary_reading": "matrix_v1",
+        "endpoint_absorption": "matrix_v1",
+    }
+    note = next(
+        table.note for table in tables.evidence_tables(evidence) if "Absorption measures" in table.note
+    )
+
+    assert "failed control arm(s) m0_plus are displayed" in note

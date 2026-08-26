@@ -1,0 +1,13 @@
+# The two marginal ratios, seed by seed. Every cell is a declared derivation in
+# sources.yaml, so `bt check` re-evaluates the arithmetic behind each one.
+kind: table
+caption: "Both rows share their numerator -- the short-dense cell -- so the whole difference
+  in spread comes from the denominator."
+columns: ["ratio", "denominator", "seed 42", "seed 7", "seed 123", "spread"]
+rows:
+  - ["length, at dense", "long-dense",
+     {key: length_ratio_s42, format: plain}, {key: length_ratio_s7, format: plain},
+     {key: length_ratio_s123, format: plain}, {key: spread_length_ratio, format: plain, places: 3}]
+  - ["density, at short", "short-sparse",
+     {key: density_ratio_s42, format: plain}, {key: density_ratio_s7, format: plain},
+     {key: density_ratio_s123, format: plain}, {key: spread_density_ratio, format: plain, places: 3}]

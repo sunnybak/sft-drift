@@ -8,7 +8,7 @@ column ordering, or gate qualifications.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any
 
 
@@ -50,12 +50,28 @@ def _significant(value: float, figures: int = 2) -> str:
     return f"{value:+.{places}f}"
 
 
+def format_estimate(value: float, ci95: tuple[float, float] | None = None,
+                    *, places: int = 4) -> str:
+    """`+0.3111 [+0.2315, +0.3931]` -- the one place this format is spelled out.
+
+    Exists so a value printed by the CLI is byte-identical to the same value rendered into
+    a table and into a paper. There were six spellings of this format in this package
+    before it existed, which is how the same estimate came to be shown at three different
+    precisions depending on which artifact you read.
+    """
+    text = f"{value:+.{places}f}"
+    if ci95 is None:
+        return text
+    low, high = ci95
+    return f"{text} [{float(low):+.{places}f}, {float(high):+.{places}f}]"
+
+
 def _estimate(entry: dict[str, Any], *, key: str) -> TableCell:
     value = float(entry[key])
     low, high = entry["ci95"]
     point = f"{value:+.4f}"
     return TableCell(
-        f"{point} [{float(low):+.4f}, {float(high):+.4f}]",
+        format_estimate(value, (low, high)),
         bold=bool(entry.get("excludes_zero")),
         bold_text=point if entry.get("excludes_zero") else None,
     )
@@ -172,14 +188,29 @@ def transfer_table(
     suite = str(summary.get("suite", "transfer"))
     run_id = source_run or str(summary.get("run_id", "unknown"))
     artifact = artifact or f"{suite}_summary.yaml"
+
+    # Name the arms. `transfer.contrast` takes one pair, so a run scoring seven arms
+    # reports one of several possible contrasts, and a table headed only "delta_net" does
+    # not say which -- the ambiguity that let `matrix_v1_step24`'s evidence-pair dB be
+    # read as the explicit one. Older summaries have no `contrast` key; they fall back to
+    # the generic caption rather than asserting a pair nothing recorded.
+    contrast = summary.get("contrast")
+    caption = f"Recorded {suite} contrast and sensitivity quantities."
+    if isinstance(contrast, (list, tuple)) and len(contrast) == 2:
+        caption = (f"Recorded {suite} contrast ({contrast[0]} vs {contrast[1]}) "
+                   "and sensitivity quantities.")
+    note = "Intervals are paired bootstrap CIs from the stored summary; bold excludes zero."
+    if summary.get("responses_from"):
+        note += (f" Re-netted from `{summary['responses_from']}`'s stored per-item rows; "
+                 "this run scored no checkpoints, so its gate and manipulation check live there.")
     return ResultTable(
         id=f"{suite}_transfer",
         heading=f"{run_id}: {suite} transfer",
         columns=("quantity", "recorded value"),
         rows=tuple(rows),
         source=TableSource(run_id=run_id, artifact=artifact),
-        caption=f"Recorded {suite} contrast and sensitivity quantities.",
-        note="Intervals are paired bootstrap CIs from the stored summary; bold excludes zero.",
+        caption=caption,
+        note=note,
     )
 
 
@@ -194,6 +225,80 @@ _LADDER_GROUPS = (
     ("Attributable fraction, by method", ("af_",)),
     ("Retrieval rank correlations (not attributable fractions)", ("rank_",)),
 )
+
+
+SUITE_SUMMARIES = (
+    "belief_summary.yaml",
+    "action_summary.yaml",
+    "inference_summary.yaml",
+    "sensitivity_summary.yaml",
+)
+
+
+def evidence_tables(evidence: dict[str, Any]) -> list[ResultTable]:
+    """The fixed tables an evidence packet supports, in the paper's declared reading order.
+
+    One builder because there were two. `writeup._result_tables` (now gone) and
+    `markdown._source_readings_section` selected the same artifacts in the same order from
+    the same packet, but only writeup's copy attached the absorption qualification -- so a
+    run's `report.md` and its `paper.tex` could state the same absorption reading with and
+    without the note saying it measures premise specialization rather than belief, and the
+    note names a failed control arm. Two renderings of one artifact that disagree about a
+    caveat is the failure this module's docstring exists to prevent.
+
+    Sources are looked up defensively (`in sources`) rather than indexed: a packet that
+    declares a primary reading it did not collect should render the tables it does have,
+    which is what the markdown copy did and the writeup copy did not.
+    """
+    result: list[ResultTable] = []
+    sources = evidence.get("sources") or {}
+    primary = evidence.get("primary_reading")
+    endpoint = evidence.get("endpoint_absorption")
+
+    if endpoint in sources and (choice := sources[endpoint]["summaries"].get("choice_bench.yaml")):
+        result.append(choice_gate_table(choice))
+    if primary in sources and primary != endpoint and (
+        choice := sources[primary]["summaries"].get("choice_bench.yaml")
+    ):
+        result.append(choice_gate_table(choice))
+    if endpoint in sources and (absorption := sources[endpoint]["summaries"].get("absorption.yaml")):
+        table = absorption_table(absorption)
+        result.append(replace(table, note=table.note + _absorption_qualification(
+            absorption, sources[endpoint]["summaries"].get("choice_bench.yaml"),
+            primary_is_endpoint=primary == endpoint,
+        )))
+
+    for run_id, source in sources.items():
+        for filename in SUITE_SUMMARIES:
+            if summary := source["summaries"].get(filename):
+                result.append(transfer_table(summary, source_run=run_id, artifact=filename))
+    return result
+
+
+def _absorption_qualification(
+    absorption: dict[str, Any], choice: dict[str, Any] | None, *, primary_is_endpoint: bool
+) -> str:
+    """What an absorption table must say beside its numbers, whatever renders it."""
+    text = " Absorption measures premise specialization, not belief."
+    if not primary_is_endpoint:
+        text += " No absorption reading exists for the primary checkpoint."
+    if choice:
+        # `dict.fromkeys` rather than `set`: one control arm nets several treated arms, so a
+        # seven-arm matrix lists `m0_plus` twice in `net_pairs` and every paper rendered
+        # "failed control arm(s) m0_plus, m0_plus". Order is the recorded netting order.
+        failed = list(dict.fromkeys(
+            control
+            for _, control in absorption["metrics"]["net_pairs"]
+            if control in choice["metrics"]["choice"]
+            and not choice["metrics"]["choice"][control]["passed"]
+        ))
+        if failed:
+            text += (
+                " Estimates relying on failed control arm(s) "
+                + ", ".join(failed)
+                + " are displayed but qualified."
+            )
+    return text
 
 
 def _ladder_group(fact_id: str) -> int:

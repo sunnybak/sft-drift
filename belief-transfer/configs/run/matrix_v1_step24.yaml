@@ -33,6 +33,8 @@ stage: belief_eval
 related_runs:
   matrix_v1: >-
     the same arms at the endpoint, step 60 -- kept as the record of what a schedule past the optimum does, and the only run with absorption and trajectory scored
+  explicit_v_control_step24: >-
+    the EXPLICIT contrast (me_plus/me_minus) over this run's stored belief rows, which transfer.contrast cannot report here because it takes one pair and this run declares the evidence pair
 
 experiment:
   dataset:

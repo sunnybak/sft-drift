@@ -1039,6 +1039,21 @@ class TransferSpec(BaseModel):
 
     suites_from: str | None = None
     """Run id whose validated (frozen) suites to score. A run overlay supplies it."""
+    responses_from: str | None = None
+    """Run id whose stored `<suite>_responses.jsonl` to re-net, instead of scoring
+    checkpoints. Follows `suites_from` / `absorption.corpus_run_id` /
+    `training.corpus_from` -- the repo's idiom for one run naming another.
+
+    Exists because `contrast` takes exactly ONE pair. A run that scores seven arms
+    therefore reports one netted contrast and leaves the others recoverable only by
+    re-scoring the same checkpoints or by an ad-hoc script -- and AGENTS.md's "One run,
+    one report" is explicit that the ad-hoc script is how a stale number survives. The
+    per-item rows are already on disk and every quantity downstream of them is pure
+    reduction, so a second contrast over the same rows needs no model at all.
+
+    Scoring is skipped entirely when this is set, so the resulting numbers inherit the
+    source run's backend rather than this machine's -- which is the point on a box that
+    cannot reproduce the source's scoring (see `inference.backend`)."""
     sensitivity_from: str | None = None
     """Run id whose sensitivity summary provides S_B/S_A for T_B/T_A; without it the
     stage reports deltas only."""

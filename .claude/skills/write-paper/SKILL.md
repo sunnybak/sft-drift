@@ -45,15 +45,14 @@ Transpose, never recompute: the paper's authority comes from the numbers being t
 objects the experiment produced. `scripts/build_af_evidence.py` in the repo is the worked
 example; derive only `excludes_zero`, from the recorded interval.
 
-Second, the loader only reads filenames in `_SUMMARY_FILES` (`analysis/writeup.py`). A new
-kind of reading needs its name added there — one line. Do **not** also add it to
-`_result_tables`'s list unless it has the belief/action summary shape, or `transfer_table`
-will render an empty table from it.
+Second, the loader only reads filenames it recognises, and a new kind of reading needs its
+name added — one line in `analysis/writeup/evidence.py`, whose comments say which of the two
+lists to add it to and why. Read them there rather than trusting a copy here.
 
-**Contrast `id`s can be load-bearing, not just labels.** `plots.af_facts` parses
-`af_<method>_<budget>_<seed>` off the contrast id to build the AF figure, so a free-form id
-like `af_headline` resolves nothing and `build_assets` raises *after* the prose is written.
-If an asset builder consumes your facts, name the contrasts the way it parses them.
+**Contrast `id`s can be load-bearing, not just labels.** Some asset builders parse structure
+out of the id (`plots.af_facts` does), so a free-form id resolves nothing and `build_assets`
+raises *after* the prose is written. If a builder consumes your facts, name the contrasts the
+way it parses them — check the builder, since the grammar is its business and changes with it.
 
 An arm-derived contrast (`positive_arm`/`negative_arm` + both control arms) computes
 `(pos − neg) − (ctrl_pos − ctrl_neg)` from recorded arm scores and produces **no interval**.
@@ -186,13 +185,9 @@ print(f'{len(syn[\"facts\"])} facts; missing from PDF:', miss or 'NONE')"
 | `requests a trajectory figure but none was built` | the planner asked for one with `trajectory_run: null`. Set a real trajectory run or leave it null and let the validator drop the asset |
 | YAML goal parsed as a dict | a `: ` inside a `contribution_goals` entry. Quote the whole string |
 | `Table 2` printed before `Table 1` | a full-page float in the main text migrates past its own discussion. A ladder table over ~12 contrasts belongs in the `appendix`; don't force it into main text with `min_main_tables` |
-| the same estimate in four sections | the quoting rule is section-aware — reporting sections quote, interpreting sections interpret. If it regressed, check `_section_prompt` |
 | a long table renders but rows are missing | a `table` float cannot paginate and clips silently past ~24 wrapped rows. Rendered as `longtable` now; verify with the presence check in §8 |
-| the planner ignores "put the 2x2 in the main text" | plan the `factorial_table` asset (cells are the four `ladder_*` ids in `tables.FACTORIAL_CELLS` -- the ids are load-bearing) and say in a goal that the two main-text tables are the factorial and overlap tables; otherwise the 34-row ladder lands in the body |
-| `contains unsupported numbers: ['4']` on "Qwen3-4B" | fixed: `_NUMBER` skips digits inside alphanumeric tokens. Digits in NON-empirical claims still fail -- write procedural numbers as words (ten thousand draws), except model identifiers, written exactly as configured |
-| auditor rejects methods procedure as "uncited" | fixed: the auditor's `empirical=false` category now covers procedure/configuration statements, audited for contradiction and smuggled results instead. Statements of results stay empirical |
-| a stub "Appendix" body section appears | fixed structurally: plan sections must equal `required_sections` exactly, and the abstract must be one paragraph -- both rejected at validation now |
 | an exact sentence you demanded never appears | goals that ban a phrase lose to the author's topic-sentence habit; goals that say "the paragraph OPENS with this sentence, verbatim: ..." win |
+| a validator rejects something that looks legitimate | read the exception, then read the validator. Several of its categories are counter-intuitive by design (a non-empirical claim may hold no numerals at all; procedure statements are audited for contradiction rather than citation). The rule is in `analysis/writeup/validate.py`, which owns both the check and the numeric surface it checks against |
 | `tectonic` not found | `curl --proto '=https' -fsSL https://drop-sh.fullyjustified.net \| sh`, then put the binary on PATH |
 
 ## Related work and bibliography (the one hand-written section)

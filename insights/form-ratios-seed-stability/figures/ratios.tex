@@ -1,0 +1,16 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Both rows share their numerator -- the short-dense cell -- so the whole difference in spread comes from the denominator.}
+\label{tab:ratios}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ llllll }
+\toprule
+ratio & denominator & seed 42 & seed 7 & seed 123 & spread \\
+\midrule
+length, at dense & long-dense & 2.1744 & 2.3576 & 2.3306 & 1.084 \\
+density, at short & short-sparse & 2.3526 & 5.0953 & 7.9895 & 3.396 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

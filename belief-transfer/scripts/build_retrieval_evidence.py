@@ -3,7 +3,7 @@
 Companion to `build_af_evidence.py`, and written for the same reason: the numbers live in
 bespoke JSON (`h30_e5_summary.json`, `h30_retrieval_summary.json`) where a `ContrastSpec`
 cannot select them. A ContrastSpec needs `summary[<quantity>] = {delta, ci95,
-excludes_zero}` in a file named in `analysis.writeup._SUMMARY_FILES`.
+excludes_zero}` in a file named in `analysis.writeup.evidence._SUMMARY_FILES`.
 
 TRANSPOSE, NEVER RECOMPUTE. Every value below is copied out of the recorded JSON; the only
 derived field is `excludes_zero`, read off the recorded interval.

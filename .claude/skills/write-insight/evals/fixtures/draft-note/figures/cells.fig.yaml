@@ -1,0 +1,8 @@
+kind: forest
+title: "Belief effect by cell and seed"
+xlabel: "dB NET"
+rows:
+  - {label: "short dense s42", group: dense, ref: factory_farming/ms3p_arms#belief/delta_net}
+  - {label: "short dense s7", group: dense, ref: factory_farming/ms3p_arms_s7#belief/delta_net}
+  - {label: "short sparse s42", group: sparse, ref: factory_farming/ms_sparse_arms#belief/delta_net}
+  - {label: "short sparse s7", group: sparse, ref: factory_farming/ms_sparse_arms_s7#belief/delta_net}

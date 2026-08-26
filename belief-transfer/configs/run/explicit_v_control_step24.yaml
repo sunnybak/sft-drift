@@ -1,0 +1,88 @@
+# @package _global_
+#
+# configs/run/explicit_v_control_step24.yaml -- the explicit-stance belief contrast,
+# stated as an artifact.
+#
+#   python run.py +run=explicit_v_control_step24 stage=belief_eval
+#   python run.py +run=explicit_v_control_step24 stage=report
+#
+# THE QUESTION: does an explicit-belief SFT corpus move Qwen3-4B's belief, measured
+# against a matched off-topic control that carries the same any-SFT machinery? `Me+`/`Me-`
+# assert the stance; `M0+`/`M0-` are trained on off-topic content at the same dose and
+# schedule, so their paired difference is the machinery term to subtract.
+#
+# WHY THIS RUN EXISTS AT ALL, given the arms were already scored. `transfer.contrast`
+# takes one pair, so `matrix_v1_step24`'s belief_eval netted the EVIDENCE arms
+# (`m_plus`/`m_minus`, dB NET +0.0072) and never the explicit ones. The +0.311 that
+# AGENTS.md quotes as this project's headline was assembled by an ad-hoc script over the
+# stored rows -- exactly the failure mode `analysis/markdown.py`'s docstring names. This
+# overlay re-nets those same rows (`transfer.responses_from`) so the number has a
+# `belief_summary.yaml` and a `report.md` like every other result. It scores nothing:
+# the per-item rows are `matrix_v1_step24`'s, produced on CUDA, and re-netting is pure
+# reduction over them.
+#
+# WHY STEP 24 AND NOT THE ENDPOINT. Two things move in opposite directions across this
+# schedule and both corrupt the endpoint reading: `Me+`'s belief PEAKS at step 24 (0.562)
+# and decays to 0.419 by step 60, while the machinery term GROWS (`M0+ - M0-` is -0.004
+# here and +0.086 at step 60, the control's positive arm drifting up late). Netted dB is
+# +0.311 here against +0.095 there -- 3.3x. STATE.md records the clean netting region as
+# steps 12-36; the endpoint is not a valid reading and `m0_plus` fails the gate there.
+#
+# TWO KNOWN MISMATCHES, both properties of the checkpoints rather than of this reading,
+# and both deliberate (see `explicit_stance_v3_arms.yaml`): `Me+-` carries ~7x fewer
+# training tokens than the document arms -- an opinion is short, and that IS the
+# intervention -- and it keeps `use_corpus_user_turns` true where M+-/M0+- set it false.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: explicit_v_control_step24
+stage: belief_eval
+
+related_runs:
+  matrix_v1_step24: >-
+    the seven-arm run whose stored belief rows this re-nets; its choice_bench gate (all
+    seven arms PASS -- me_plus 0.823, me_minus 0.896, m0_plus 0.854 against the 0.75 bar)
+    and its absorption table are the gate and the manipulation check for this reading
+  h8_4b: >-
+    the same explicit-vs-control contrast on independently trained arms at a lower dose,
+    dB NET +0.1517 [+0.1109, +0.1942] -- a replication of the direction, not of the
+    magnitude
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+
+# The four arms this contrast needs, plus base for the per-arm table. `m_plus`/`m_minus`
+# are a different question and are already reported under `matrix_v1_step24`. The
+# checkpoint paths are stated even though nothing is loaded: they are what the rows came
+# from, and a reader should not have to open another overlay to learn which weights the
+# scores describe.
+_arms: &arms
+  - name: base
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+
+transfer:
+  suites_from: evalgen_v2
+  sensitivity_from: sensitivity_v2
+  responses_from: matrix_v1_step24
+  arms: *arms
+  contrast: [me_plus, me_minus]
+  control_contrast: [m0_plus, m0_minus]

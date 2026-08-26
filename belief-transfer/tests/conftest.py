@@ -106,3 +106,69 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item
     for item in items:
         if MARKER in item.keywords:
             item.add_marker(skip)
+
+
+# --------------------------------------------------------------------- the guard
+#
+# A session-level check that no test wrote into the real `data/results/` tree.
+#
+# This exists because it already happened and nothing noticed. `tests/test_transfer_renet.py`
+# patched `evals.suite.ROOT` to isolate itself, but the `RunResult` report is written
+# through the independent `analysis.report.RESULTS_DIR`, so a passing test overwrote
+# `factory_farming/explicit_v_control_step24/belief_eval.yaml` with its fixture's numbers
+# (`delta: 0.55`, `n_items: 2` against the real `+0.3111`, `n_items: 42`). It was found days
+# later by a query tool, by accident. `data/results/` is gitignored, so `git status` cannot
+# show this and a corrupted artifact is byte-identically shaped to a real one.
+#
+# Session-scoped rather than per-test on measurement: one snapshot of the 2170-file tree
+# costs ~33ms, so bracketing every test would add ~26s to the suite while bracketing the
+# session adds ~66ms. That buys the detection but not the attribution -- which test did it
+# is then found by bisecting with `-p no:randomly -x`, and knowing it happened at all is the
+# part that was missing.
+
+_RESULTS_SNAPSHOT: dict[Path, tuple[int, int]] = {}
+
+
+def _snapshot_results() -> dict[Path, tuple[int, int]]:
+    from belief_transfer.analysis.report import RESULTS_DIR
+
+    if not RESULTS_DIR.is_dir():
+        return {}
+    return {
+        path: (path.stat().st_mtime_ns, path.stat().st_size)
+        for path in RESULTS_DIR.rglob("*")
+        if path.is_file()
+    }
+
+
+def pytest_sessionstart(session: pytest.Session) -> None:
+    _RESULTS_SNAPSHOT.update(_snapshot_results())
+
+
+def pytest_sessionfinish(session: pytest.Session, exitstatus: int) -> None:
+    """Report and FAIL if the real results tree moved.
+
+    In `pytest_sessionfinish` rather than `pytest_terminal_summary`, because the latter runs
+    after the exit status is fixed -- the first version of this guard printed a loud warning
+    and still exited 0, which is precisely the "nothing noticed" failure it exists to end.
+    """
+    if not _RESULTS_SNAPSHOT:
+        return
+    after = _snapshot_results()
+    changed = sorted(
+        str(path) for path in set(_RESULTS_SNAPSHOT) | set(after)
+        if _RESULTS_SNAPSHOT.get(path) != after.get(path)
+    )
+    if not changed:
+        return
+    print("\n" + "=" * 78)
+    print("FAIL: a test wrote into data/results/ -- experimental artifacts, gitignored,")
+    print("      and a corrupted one looks exactly like a real one.")
+    for path in changed[:20]:
+        print(f"  {path}")
+    if len(changed) > 20:
+        print(f"  ... and {len(changed) - 20} more")
+    print("Use the `data_root` fixture, and patch every root the code path reads --")
+    print("`analysis.report.RESULTS_DIR` and `evals.suite.ROOT` are separate constants.")
+    print("=" * 78)
+    session.exitstatus = 1

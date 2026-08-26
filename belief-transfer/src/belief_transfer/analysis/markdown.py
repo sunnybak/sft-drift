@@ -127,27 +127,7 @@ def _source_readings_section(results_dir: Path) -> list[str]:
         return []
     if not isinstance(evidence, dict) or not isinstance(evidence.get("sources"), dict):
         return []
-    sources = evidence["sources"]
-    primary = evidence.get("primary_reading")
-    endpoint = evidence.get("endpoint_absorption")
-    models: list[tables.ResultTable] = []
-    if endpoint in sources and (choice := sources[endpoint]["summaries"].get("choice_bench.yaml")):
-        models.append(tables.choice_gate_table(choice))
-    if primary in sources and primary != endpoint and (
-        choice := sources[primary]["summaries"].get("choice_bench.yaml")
-    ):
-        models.append(tables.choice_gate_table(choice))
-    if endpoint in sources and (absorption := sources[endpoint]["summaries"].get("absorption.yaml")):
-        models.append(tables.absorption_table(absorption))
-    for run_id, source in sources.items():
-        for filename in (
-            "belief_summary.yaml",
-            "action_summary.yaml",
-            "inference_summary.yaml",
-            "sensitivity_summary.yaml",
-        ):
-            if summary := source["summaries"].get(filename):
-                models.append(tables.transfer_table(summary, source_run=run_id, artifact=filename))
+    models = tables.evidence_tables(evidence)
     if not models:
         return []
     lines = ["## Source readings", "", "Fixed tables read from the declared evidence packet.", ""]
