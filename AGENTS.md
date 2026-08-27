@@ -940,9 +940,21 @@ straddles zero. Two instruments, one conclusion.
 > **A double dissociation, significant on both scales: 8B moves belief LESS and action
 > MORE.** That rules out "8B trained harder", which would move both together. This is the
 > first non-zero belief→action conduction this project has measured, and it fired a
-> registered falsifier clause of `H8`. One seed as of writing; replication in progress.
+> registered falsifier clause of `H8`.
+>
+> **REPLICATED AT SEED 7** (`h8_4b_s7` / `h8_8b_s7`, controls retrained per seed, all arms
+> gated at both seeds and both models). `dB NET` / `dA NET`:
+>
+> | | s42 | s7 |
+> | --- | --- | --- |
+> | 4B | +0.1517 / **+0.0011 strad** | +0.1843 / **−0.0073 strad** |
+> | 8B | +0.0970 / **+0.0352 EXCL** | +0.0858 / **+0.0244 EXCL** |
+>
+> Every cell agrees on direction. **Level: replicated direction** — "belief reaches action
+> at 8B and not at 4B" is sayable without hedging. **Magnitude is NOT**: 8B `dA` scatters
+> 44% across the two seeds, so no band and no "Nx".
 > Do NOT quote the 0.008-vs-0.363 conduction ratio — 4B's numerator straddles zero.
-> Working: `hypotheses/open/H8-generality.md`, run ids `h8_8b`/`h8_4b`.
+> Working: `hypotheses/falsified/H8-generality.md`, run ids `h8_8b`/`h8_4b` (+`_s7`).
 
 **Belief does not propagate to action, and step 24 is what makes that conclusive.** The
 endpoint version was weak -- belief moved only 15% of the prompted effect, so one could

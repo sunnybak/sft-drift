@@ -1,45 +1,58 @@
 # STATE
 
 What is currently true and not derivable from anything else. **Overwritten each session,
-not appended** — the changelog is the history. Detail lives in `changelog/2026-08-23.md`
+not appended** — the changelog is the history. Detail lives in `changelog/2026-08-26.md`
 and each hypothesis file, not duplicated here.
 
-Last refreshed: **2026-08-23 (end of day)**, on the standing **16GB RTX 5080** box.
-Setup fully green: `memorization_bench` PASSED on this box (base 0.00 → tuned 1.00,
-loss 8.585 → 0.139), both step-6 reproductions match, agreement fixture recorded.
+Last refreshed: **2026-08-26 (end of session)**, on a fresh **16GB RTX 5060 Ti** box
+(Blackwell, cu128 wheels). This is NOT the 5080 box the previous entry described.
+
+**This box has NOT earned a training run.** `memorization_bench` **FAILS** here: base 0.00,
+tuned **0.80 against the 0.90 bar**, loss 8.574 → 0.182, 4 of 20 lookups not memorized.
+Per AGENTS.md that is the precondition for trusting training, so nothing was trained this
+session and every number produced here is inference over pulled artifacts. Setup is
+otherwise green: 502 unit + 502 `--run-gpu` tests pass, CUDA available, `calibrate` done
+(batch_size 128, 689 tok/s). **Step 5 (`agreement_record`) was not run** — no fixture was
+recorded for this card.
 
 ## Standing result
 
 `AGENTS.md` "What the factory-farming experiment measured" + `PAPER_AUDIT.md` (green /
-amber / red quotability). Headlines: installed-effect 2x2 (short-dense +0.1190 vs
-long-sparse +0.0072; length 2.2x at dense, density 2.4x at short, ~7x each from the weak
-cell — factors interact); AF full-FT: oracle +0.52/+0.62 at p20 (both seeds exclude zero),
-TracIn −0.91/−0.42 at p10 (both exclude zero, counterproductive); oracle overlaps the
-word-count baseline in 3 of 4 cells (power diagnostic); E5 retrieval ranks the ladder at
-rho +0.886/+0.943 vs NEG-LENGTH +0.257 (H30 FALSIFIED — ranking only, no removal run).
+amber / red quotability). Unchanged this session except one documentation fix: the 8B
+belief→action paragraph said "One seed; replication in progress" and pointed at
+`hypotheses/open/H8-generality.md`. The seed-7 replication landed 2026-08-21, H8 is in
+`falsified/`, and AGENTS.md now carries the two-seed table. Verified against saved
+responses, cell-for-cell — no new measurement.
 
-## The paper (the session's product)
+## Disk: the binding constraint on this box
 
-**`out/factory_farming/paper_attribution_v2/paper.pdf` — APPROVED, verified, committed
-(`e5eb3c0`), 8 pages.** Spine: 2x2 → oracle positive control → TracIn backfire →
-non-separation demoted to a power diagnostic. Has: real Methods (incl. pairs-x-epochs dose
-convention and single-final-checkpoint TracIn disclosure), hand-written Related Work (18
-citations, `related_work_tex` + `configs/run/paper_attribution.bib`, outside the grounded
-renderer by design), factorial 2x2 table, overlap table with its comparator rows,
-provenance appendix. Verification: numeral audit UNVERIFIED NONE; 34/34 facts in the PDF;
-banned phrases at zero.
+Root filesystem is **100GB total**; the HF dataset repo is **141GB**, of which
+**140GB is `checkpoints/`**. A bare `make data-pull` (no `data.paths` filter) fills the
+disk and dies. This box pulled `[results,validated,generated,seeds,cache]` (~0.5GB) only,
+so **`data/checkpoints/` does not exist locally**. Any stage that reads a checkpoint needs
+a scoped re-pull first. SETUP.md's "~7 GB" figure for `data-pull` is stale.
 
-**Queued (needs OpenAI credits — exhausted 3x on 2026-08-23):** one `stage=writeup` re-run
-to render the conclusion as ONE paragraph (now validator-enforced; content already
-correct). Caveat: any re-run re-samples the LLM auditor, which today produced one
-hallucinated absence finding — the prompt now guards against it, but expect variance.
+## New this session
+
+- **`factory_farming/explicit_incontext_v1`** — a control, not an experiment: the explicit
+  belief corpus (`explicit_stance_v3`) read *in context* on the untrained base model and
+  scored on `evalgen_v2` belief. Paired delta **+0.976 [+0.928, +1.000]**, both ends
+  saturated, against the trained `Me±` netted +0.311 (step 24) / +0.095 (endpoint). No SFT.
+  Script: `belief-transfer/scripts/explicit_incontext_control.py`. Caveat that travels with
+  it: the context is capped at ~1,500 words/side (14–15 of 99 documents) because full-vocab
+  logits over the whole corpus OOM a 16GB card.
+- **`insights/explicit-incontext-vs-trained/`** — note + figures + PDF. `bt check` clean
+  (0 ref/derivation/table problems), shape checker 17/17.
+- Bears on **no open hypothesis**; recorded as an unregistered observation.
 
 ## Hypotheses
 
-`open/`: **H31** (reasoning-trace SFT installs belief without stance) — falsifier
-registered, trainable on this box. `H30` falsified, `H27`/`H29` supported (see files).
+`open/`: **H31** only (reasoning-trace SFT installs belief without stance) — falsifier
+registered. **Under the cap of three; two slots free.** Nothing moved status this session.
 
 ## Void / uninterpretable — do not cite
+
+Unchanged from 2026-08-23; **no new voids this session.**
 
 | run id | why | superseded by |
 | --- | --- | --- |
@@ -55,16 +68,20 @@ the gate; clean region 12–36); `h19_full_ft`'s LoRA-pair netting (−0.0380) u
 
 ## Next decisions, in order
 
-1. **When credits are added**: one writeup re-run for the conclusion polish (~$1–2 of
-   author/auditor calls; everything else replays from cache).
-2. **Needs a ≥48GB box** (~$1–2/h rental, a few GPU-hours each): AF(E5) removal arm;
-   dose-matched random-removal arm at full-FT (the biggest open alternative — random at
-   LoRA posts AF +0.50 vs oracle +0.12 while removing 3.2x more words); potency-matched
-   scramble test (is AF measuring dose?).
-3. **Fits this box**: H31 corpus + arms (choice_bench-gated, 2 seeds).
+1. **Resolve the memorization FAIL before any training on this box** — either diagnose it
+   or accept-and-document it. Everything in 3 below is blocked until then.
+2. **OpenAI credits were exhausted and have been topped up**, so the queued
+   `stage=writeup` re-run (conclusion as one paragraph; content already correct) is
+   unblocked — ~$1–2, everything else replays from cache. Expect auditor variance.
+3. **Fits this box, once 1 is resolved**: H31 corpus + arms (choice_bench-gated, 2 seeds).
+4. **Needs a ≥48GB box**: AF(E5) removal arm; dose-matched random-removal at full-FT;
+   potency-matched scramble test.
+5. Cheap and optional: shrink the in-context sample to 5–10 documents to see whether the
+   saturation threshold is sharp or gradual.
 
 ## Box / sync
 
-Code pushed through `e5eb3c0`. `make cache-push` and `make data-push` run at wind-up (see
-changelog session g). Disk ~59%. `/workspace` is NOT a volume on this box — nothing
-survives destroy except what is pushed.
+Code pushed through the wind-up commit. `make cache-push` and a scoped `make data-push`
+run at wind-up (see below). `/workspace` is **NOT a volume** — nothing survives destroy
+except what is pushed. `tectonic` installed to `/usr/local/bin` and now part of
+`make setup`.
