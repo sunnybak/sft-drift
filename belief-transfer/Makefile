@@ -11,11 +11,12 @@ UV ?= uv
 # A target per stage was a second way to launch the same thing, with its own flags to keep
 # in step, which is exactly what the config migration removed.
 
-.PHONY: help setup test data-pull data-push cache-pull cache-push clean clean-llm-cache
+.PHONY: help setup tectonic test data-pull data-push cache-pull cache-push clean clean-llm-cache
 
 help:
 	@echo "Bootstrap:"
-	@echo "  setup            install deps with uv (pinned torch/transformers/trl/peft)"
+	@echo "  setup            install deps with uv (pinned torch/transformers/trl/peft) + tectonic"
+	@echo "  tectonic         install the LaTeX engine \`bt pdf\` needs (part of setup)"
 	@echo "  test             run pytest (GPU-free; add --run-gpu for weight-loading tests)"
 	@echo "  data-pull        download the HF dataset repo into data/"
 	@echo "  data-push        upload data/ (minus cache/) to the HF dataset repo"
@@ -28,8 +29,27 @@ help:
 	@echo ""
 	@echo "Everything else is a job: python run.py --help"
 
-setup:
+setup: tectonic
 	$(UV) sync --dev --verbose 2>&1 | while IFS= read -r line; do echo "[$$(date +%H:%M:%S)] $$line"; done
+
+# `bt pdf` compiles a note or paper with tectonic, and every insight note gets a PDF in the
+# same pass as its note.md (.claude/skills/write-insight, section 8) -- so this belongs in
+# bootstrap rather than being installed by hand the first time a PDF is wanted. Single static
+# binary, no TeX distribution: it fetches what a document needs on first compile. Idempotent
+# and non-fatal, since a box that cannot reach the installer can still run every other target.
+TECTONIC_BIN ?= /usr/local/bin/tectonic
+
+tectonic:
+	@if command -v tectonic >/dev/null 2>&1; then \
+		echo "tectonic already installed: $$(command -v tectonic) ($$(tectonic --version))"; \
+	else \
+		echo "installing tectonic -> $(TECTONIC_BIN) ..."; \
+		tmp=$$(mktemp -d) && \
+		( cd "$$tmp" && curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net | sh ) && \
+		install -m 0755 "$$tmp/tectonic" "$(TECTONIC_BIN)" && rm -rf "$$tmp" && \
+		echo "tectonic installed: $$(tectonic --version)" \
+		|| echo "WARNING: tectonic install failed -- \`bt pdf\` will not work until it is installed"; \
+	fi
 
 test:
 	$(UV) run pytest

@@ -36,7 +36,7 @@ VRAM-bound, and `configs/models/default.yaml` documents which models fit where.
 ## 2. Install and verify
 
 ```bash
-make setup   # uv sync --dev; installs the exact-pinned torch/transformers/trl/peft stack
+make setup   # uv sync --dev (exact-pinned torch/transformers/trl/peft) + tectonic for `bt pdf`
 make test    # GPU-free unit tests
 
 uv run python -c "import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name(0))"

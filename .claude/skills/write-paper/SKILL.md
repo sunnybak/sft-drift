@@ -188,7 +188,7 @@ print(f'{len(syn[\"facts\"])} facts; missing from PDF:', miss or 'NONE')"
 | a long table renders but rows are missing | a `table` float cannot paginate and clips silently past ~24 wrapped rows. Rendered as `longtable` now; verify with the presence check in §8 |
 | an exact sentence you demanded never appears | goals that ban a phrase lose to the author's topic-sentence habit; goals that say "the paragraph OPENS with this sentence, verbatim: ..." win |
 | a validator rejects something that looks legitimate | read the exception, then read the validator. Several of its categories are counter-intuitive by design (a non-empirical claim may hold no numerals at all; procedure statements are audited for contradiction rather than citation). The rule is in `analysis/writeup/validate.py`, which owns both the check and the numeric surface it checks against |
-| `tectonic` not found | `curl --proto '=https' -fsSL https://drop-sh.fullyjustified.net \| sh`, then put the binary on PATH |
+| `tectonic` not found | `make tectonic` (it is part of `make setup`, so a set-up box already has it) |
 
 ## Related work and bibliography (the one hand-written section)
 

@@ -1,6 +1,6 @@
 ---
 name: write-insight
-description: Write a short, grounded insight note from this project's measured results into insights/<slug>/ using the `bt` CLI — find the finding, build a ref ledger, chart it, audit every numeral. Use this whenever the user asks for an insight, a note, a finding, a short writeup, a summary of what some runs showed, or says something like "what's interesting here", "write that up briefly", "make a note of it", or mentions insights/. Also reach for this INSTEAD of write-paper when the deliverable is short or the argument is not yet settled: a note costs a fraction of a paper, is the substrate a paper or blog post is later built from, and `bt check` gives it the same numeral-level provenance without an author model or a LaTeX toolchain.
+description: Write a short, grounded insight note from this project's measured results into insights/<slug>/ using the `bt` CLI — find the finding, build a ref ledger, chart it, audit every numeral. Use this whenever the user asks for an insight, a note, a finding, a short writeup, a summary of what some runs showed, or says something like "what's interesting here", "write that up briefly", "make a note of it", or mentions insights/. Also reach for this INSTEAD of write-paper when the deliverable is short or the argument is not yet settled: a note costs a fraction of a paper, is the substrate a paper or blog post is later built from, and `bt check` gives it the same numeral-level provenance without an author model or the paper pipeline.
 ---
 
 # Write an insight note
@@ -261,11 +261,16 @@ checker is the move this repo forbids.
   its denominator's instability rather than averaging it away. Quote a direction, not a
   magnitude, and say which.
 
-## 8. A PDF, when the note is going somewhere else
+## 8. The PDF, always — not only when the note is going somewhere else
 
 ```bash
 uv run bt pdf insights/<slug>/          # writes insights/<slug>/<slug>.pdf
 ```
+
+**Run this on every note, in the same pass as `note.md`.** It is not an optional extra to be
+offered afterwards: a note without its PDF is an unfinished note, and the user should never
+have to ask for it. `tectonic` is installed by `make setup`, so the compile works on any box
+that has been set up (if it is somehow missing, install it rather than skipping the step).
 
 Named for the slug rather than `note.pdf`, because the file is going to someone's Downloads
 folder where a generic name is worthless. The tables come from the same specs `bt render`
@@ -286,7 +291,8 @@ Floats may reorder within a section (LaTeX queues figures and tables separately)
 
 ## Finishing
 
-`insights/` is committed, figures included — the snapshots in `sources.yaml` are what make a
-note readable on a box that has not pulled the results. If the note bears on an open
-hypothesis, add its evidence line. Then wind up: record what the note claims and what
-`bt check` said about it.
+`insights/` is committed, figures **and the PDF** included — the snapshots in `sources.yaml`
+are what make a note readable on a box that has not pulled the results, and the PDF is what
+makes it readable off one. A note is done when all four exist: `note.md`, `sources.yaml`,
+`figures/`, `<slug>.pdf`. If the note bears on an open hypothesis, add its evidence line.
+Then wind up: record what the note claims and what `bt check` said about it.
