@@ -1,0 +1,15 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Netted/paired belief-effect magnitude by reading. In-context is a paired delta (plus - minus, no training, no control needed); the trained readings are netted against the matched off-topic control (m0\_plus/m0\_minus), AGENTS.md's documented method.}
+\label{tab:deltas}
+\begin{tabular}{ p{11.84cm}l }
+\toprule
+reading & dB (95\% CI) \\
+\midrule
+in-context, base model, no SFT & +0.9760 [+0.9281, +1.0000] \\
+trained Me+/Me-, step 24 (matrix\_v1\_step24) & +0.3111 [+0.2315, +0.3931] \\
+trained Me+/Me-, endpoint (matrix\_v1) & +0.0950 [+0.0188, +0.1744] \\
+\bottomrule
+\end{tabular}
+\end{table}
