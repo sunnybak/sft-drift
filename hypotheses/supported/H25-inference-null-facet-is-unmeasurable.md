@@ -239,3 +239,21 @@ replicate — the only GPU spend, and it fits the 16GB box at 4B.
    dimension. Building one dimension the other way round is a one-line spec change and
    would make the halo's *cause* testable — but only once the halo is measurable, so it
    waits on this.
+
+## 2026-08-29b — the instrument was rebuilt, not yet re-measured
+
+Every software_architecture artifact was destroyed in the purge, so the bank this file
+concerns was regenerated from nothing as `sw_suite_inference`: **285 items, null facet
+(`request_volume`) 32, `recovery_time` 22.** The null facet is sized at the n where the only
+surviving `ΔI` result was obtained (28), and `recovery_time` — the facet that carried it —
+is no longer the thinnest cell by a wide margin.
+
+**No measurement. Nothing is trained.** This changes nothing about the status: part 1 stays
+SUPPORTED and the halo ratio stays the wrong statistic at any n. Recorded because a first
+pass at 384 candidates put the null facet at 22 and `recovery_time` at 13, which would have
+made the per-facet-vs-null reading unavailable, and the reason is worth keeping: yield was
+extrapolated from a pilot running ONE item per design cell, where `near_duplicate` — the
+gate that shingles each candidate against everything already kept — structurally cannot
+fire. At scale it became 36% of all drops. **A pilot at one item per cell cannot measure any
+gate whose behaviour depends on bank density.**
+

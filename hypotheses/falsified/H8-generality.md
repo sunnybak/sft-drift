@@ -83,6 +83,14 @@ needs >16GB). Net: no falsifier clause has fired anywhere; the claim is holding,
 "generalizes" is still resting on one full topic plus one seed-replicated, one
 half-replicated leg — not yet band-level on any axis but seed.
 
+- **2026-08-29b**: the corpus for that half now EXISTS — `sw_corpus_explicit`, 111 gated
+  pairs at the matched 93-pair dose, alongside `sw_corpus_short_dense` (134 pairs) and all
+  three rebuilt suites. **Nothing is trained**, so the line above still stands unchanged;
+  what moved is that it is now blocked on GPU time rather than on artifacts. Arms are
+  `sw_ex_arms{,_s7,_s123}`; see `TRAIN.md`. Note before reading them: this topic's belief
+  suite FAILED its pre-registered position-bias gate (`variant_gap` 0.609 vs ≤0.55), so any
+  `ΔB` from these arms carries that caveat.
+
 ## Claim
 
 The absorption/contribution dissociation is a property of evidence-only SFT, not of

@@ -1,82 +1,138 @@
 # STATE
 
 What is currently true and not derivable from anything else. **Overwritten each session,
-not appended** — the changelog is the history. Detail lives in `changelog/2026-08-29.md`
+not appended** — the changelog is the history. Detail lives in `changelog/2026-08-29b.md`
 and each hypothesis file, not duplicated here.
 
-Last refreshed: **2026-08-29 (end of session)**, on the same **16GB RTX 5060 Ti** box
-(Blackwell, cu128 wheels).
+Last refreshed: **2026-08-29b (end of session)**.
 
-**This box has NOT earned a training run.** `memorization_bench` **FAILS** here: base 0.00,
-tuned **0.80 against the 0.90 bar**, loss 8.574 → 0.182, 4 of 20 lookups not memorized.
-Per AGENTS.md that is the precondition for trusting training, so nothing has been trained
-on it. **2026-08-29 produced no training and no model-scored number at all** — that session
-was datagen, config, and code. Setup is
-otherwise green: **506** unit tests pass (up from 502; four added for the new seed-pool and
-absorption paths), CUDA available, `calibrate` done
-(batch_size 128, 689 tok/s). **Step 5 (`agreement_record`) was not run** — no fixture was
-recorded for this card.
+## READ THIS FIRST: two boxes, and this session changed which one
 
-## Standing result
+The previous refresh was written on the **16GB RTX 5060 Ti** (Blackwell, cu128). **This
+session ran on a Mac (darwin, MLX).** Anything in the previous STATE about disk, CUDA, or
+the memorization bench described the GPU box and does NOT describe this one. Both facts
+still hold, they just belong to different machines:
 
-`PAPER_AUDIT.md` (green / amber / red quotability) is now the sole standing-result
-reference; `AGENTS.md` was stripped of run-specific results 2026-08-28 and holds only the
-framework. **Not touched 2026-08-29** — no load-bearing number moved. It does still cite
-several runs cleared in the purge and wants a freshness pass, which is now overdue.
+- **The RTX 5060 Ti has NOT earned a training run.** `memorization_bench` last measured
+  **0.80 against the 0.90 bar** (base 0.00, loss 8.574 → 0.182, 4 of 20 lookups not
+  memorized). Still the standing blocker on every arm. Unchanged this session — it was not
+  re-run, because this session was not on that box.
+- **The Mac cannot train at all.** Training is CUDA-only by design and
+  `training.sft.load_for_training` refuses rather than degrading. It scores fine: the one
+  model-scored artifact produced this session, `sw_sensitivity_v1`, ran on **MLX**, and
+  `RunResult.backend` stamps it. Do not compare its absolute numbers to a CUDA reading
+  without saying so — paired within-backend differences over identical items are safe,
+  a cross-backend magnitude is not.
+- `data/checkpoints/` **is empty on the Mac.** Every checkpoint lives on HF only.
 
-Its last substantive edit (2026-08-26) was one documentation fix: the 8B
-belief→action paragraph said "One seed; replication in progress" and pointed at
-`hypotheses/open/H8-generality.md`. The seed-7 replication landed 2026-08-21, H8 is in
-`falsified/`, and AGENTS.md now carries the two-seed table. Verified against saved
-responses, cell-for-cell — no new measurement.
+508 unit tests pass (up from 506; two added for suite provenance).
 
-## Disk: the binding constraint on this box
+## software_architecture is built and gated — this is the session's output
 
-Root filesystem is **100GB total**; the HF dataset repo is **141GB**, of which
-**140GB is `checkpoints/`**. A bare `make data-pull` (no `data.paths` filter) fills the
-disk and dies. This box pulled `[results,validated,generated,seeds,cache]` (~0.5GB) only,
-so **`data/checkpoints/` does not exist locally**. Any stage that reads a checkpoint needs
-a scoped re-pull first. SETUP.md's "~7 GB" figure for `data-pull` is stale.
+Five artifact sets, all final, no version suffixes, nothing pending:
 
-## New this session (2026-08-29)
+| run id | content |
+| --- | --- |
+| `sw_corpus_short_dense` | evidence corpus (Mev±), **134 gated pairs** of 160 |
+| `sw_corpus_explicit` | explicit corpus (Me±), **111 gated pairs** of 180 |
+| `sw_suite_belief` | **108 items** of 144, worst facet 9 |
+| `sw_suite_action` | **106 items** of 144, strata 50 in-scope / 56 adjacent, pressure 43/34/29 |
+| `sw_suite_inference` | **285 items** of 960, null facet 32, `recovery_time` 22 |
+| `sw_sensitivity_v1` | base under none/B+/B−; **`S_B` +0.626**, **`S_A` +0.773**, both exclude zero |
 
-Two threads, no training. Detail in `changelog/2026-08-29.md`.
+All corpora clear the 93-pair dose. Total generation spend ≈ $1.90.
 
-**Repo shape changed under `data/`.** Anything holding a path or a run id from before today
-is stale:
+**Three pre-registered gates were read once at full size. Two failed, and the failures are
+findings — do not re-roll either instrument to get a passing number.**
 
-- `generated/` went from ~117 run directories to **10**; deleted overlays went with their
-  artifacts. `data/CORPORA.md` is the generated index.
-- Run ids follow one convention now -- `corpus_<cell>` / `corpus_control_<form>` /
-  `suite_<what>`. `data/RENAMES.md` maps the old names.
-- The `validated/` tree is **gone**; the gated subset is `generated/<exp>/<run>/validated.jsonl`.
+- **R5 belief headroom — PASS**, 64% of items in [0.15, 0.85] against a ≥50% bar.
+- **R-F belief position bias — FAIL.** `variant_gap` **0.609** against ≤0.55 (pilot
+  straddled at 0.540/0.556; the retired suite ran 0.696). The finding is as registered:
+  this belief cannot be asked of this base model without substantial position bias. D4
+  averaging remains the mitigation; the caveat belongs on every software_architecture `ΔB`.
+- **R8 action headroom — FAIL at 45% whole-bank, PASS at 57% on the mild+strong subset R9
+  reads.** `none` is 28% in band (base 0.822). R9 was registered before this ran; the
+  whole-bank gate fails and the registered reading survives. A **positive `ΔA` on this topic
+  is ceiling-censored by construction** — carry no ratio on it.
+- **R-A stratification is live in both strata**: `S_A` +0.733 in-scope, **+0.808 adjacent**.
+  Adjacent moves more, which is the good outcome.
+
+## Nothing is trained. `TRAIN.md` is the handoff.
+
+`TRAIN.md` (repo root, new this session) is the numbered GPU running order with runnable
+commands and the gate at each step. Seven arm overlays exist so it names runs rather than
+asking a session to author configs: `sw_ev_arms{,_s7,_s123}`, `sw_ex_arms{,_s7,_s123}`,
+`explicit_stance_v3_arms_s123`.
+
+**Only 7 runs / 14 arms actually need training**, checked against the HF file list rather
+than directory names:
+
+| arms | seeds on HF | needs |
+| --- | --- | --- |
+| `ms3p_arms{,_s7,_s123}` — FF evidence | 42, 7, 123 | nothing |
+| `ms0_arms{,_s7,_s123}` — off-topic control | 42, 7, 123 | nothing |
+| `explicit_stance_v3_arms{,_s7}` — FF explicit | 42, 7 | **seed 123** |
+| any `sw_*` | none | **all** |
+
+The off-topic control is reused across both topics — legitimate, because the machinery term
+is topic- and form-agnostic **at a fixed seed**. It is NOT seed-agnostic: every overlay nets
+against `ms0_arms` at its own seed, and `H26` is why (`sw_arms_v1` flipped netted sign
+across seeds at spread 1.69, **in the control, not the treatment**).
+
+## One dataset gap, deliberately deferred by the user
+
+**No explicit-action corpus (Ma±) exists for either topic**, and `explicit_stance.yaml`
+forbids one by construction ("State what you believe, never what the reader should do"). It
+is the action suite's positive control *under training*; without it a null `ΔA` cannot be
+told apart from an action suite no training signal moves. The user deferred it knowingly,
+noting it mirrors the action eval's explicit-policy framing. Registered so it stays a
+decision rather than becoming an oversight.
+
+## Sync: HF and local match
+
+`make data-push` ran and was verified by **comparing file lists, not directory names**:
+2150 remote / 338 local, and the entire difference is `checkpoints/` (1813 files), which
+lives on HF only. Zero drift in `generated/` or `results/`.
+
+**HF held no `software_architecture` data at all before this session** — `RESULTS_PURGED.md`'s
+claim that "corpora, eval suites and checkpoints survive" is false for that topic and should
+be corrected or deleted.
+
+The LLM cache was NOT pushed this session (`make cache-push` not run). It is worth pushing:
+generation cost ~$1.90 cold and replays free.
+
+## Repo shape (unchanged from 2026-08-29a, still true)
+
+- `generated/` run ids follow one convention: `corpus_<cell>` / `corpus_control_<form>` /
+  `suite_<what>` / `sw_*`. `data/RENAMES.md` maps old names; `data/CORPORA.md` indexes.
+- The `validated/` tree is gone; the gated subset is `generated/<exp>/<run>/validated.jsonl`.
 - Every `.jsonl` has a sibling `.md` view (`stage=render_md`).
-- `results/` holds only the runs the two insight notes cite. The rest is re-derived on demand.
-- **`suite_belief_action` was split into `suite_belief` + `suite_action`.** Items are
-  byte-identical with unchanged `eval_config_sha`; 104 overlays now carry a per-suite
-  `suites_from` mapping. `schemas.SUITE_RUN_ID_ALIASES` resolves the old ids.
-
-**`factory_farming_2` exists** -- a new experiment, same belief, `dataset.dimensions` as
-**supporting statements** rather than measurements. The middle rung between evidence-only
-and explicit stance. New: `configs/dataset/supporting_reasons.yaml`,
-`data/seeds/reason_formats.json` (5 forms at 375w), `data/seeds/reason_personas.json`,
-`DatasetGenConfig.personas_file`, `AbsorptionSpec.resolution=document`.
-
-**`ff2_reasons_pilot` -- 8 pairs, $0.084, gated 0/8. Not usable; do not train on it.**
-The manipulation itself works (`no_normative_verdict` 15/16, premise coverage 16/16), but
-three checks fired and **all eleven failures are positive-arm** -- an asymmetric gate that
-would unbalance the pair set. Two of the three causes are wording defects in the premises
-themselves, not model behaviour.
+- `suite_belief_action` is split into `suite_belief` + `suite_action`;
+  `schemas.SUITE_RUN_ID_ALIASES` resolves old ids per suite.
+- **Eleven software_architecture run ids were deleted this session** — five evalgen pilots,
+  four corpus pilots, and two interim `_v2` ids — artifacts and overlays together. Their
+  findings are preserved in `changelog/2026-08-29b.md`.
 
 ## Hypotheses
 
-`open/`: **H31** only (reasoning-trace SFT installs belief without stance) — falsifier
-registered. **Under the cap of three; two slots free.** Nothing moved status this session.
+`open/`: **H31** (reasoning-trace SFT installs belief without stance) and **H32**
+(reasons-without-verdict install belief). **Two of three slots used; one free.** The
+previous STATE said H31 only, which was stale.
+
+**Nothing moved status this session** — no arm was trained, so no falsifier was exercised.
+Two open files gained context rather than evidence:
+
+- `H8-generality.md` (falsified, model leg) records "Not yet tested on this topic: the
+  explicit-belief (Me±) half" for software_architecture. That corpus now **exists**
+  (`sw_corpus_explicit`, 111 pairs) but is untrained, so the line still stands.
+- `H25-inference-null-facet-is-unmeasurable.md` — the instrument it concerns was rebuilt at
+  **32 null-facet items** (target ≥28, the size at which the only surviving `ΔI` result was
+  obtained) and `recovery_time` at 22. No measurement yet.
 
 ## Void / uninterpretable — do not cite
 
-Unchanged from 2026-08-23; **no new voids.** `ff2_reasons_pilot` is not void -- it is a
-pilot that gated 0/8 and is correctly recorded as such; it carries no result to misquote.
+**No new voids.** `sw_evalgen_pilot4`, flagged for the void list earlier today, was instead
+**deleted outright** (overlay + artifacts), so it needs no entry.
 
 | run id | why | superseded by |
 | --- | --- | --- |
@@ -86,40 +142,41 @@ pilot that gated 0/8 and is correctly recorded as such; it carries no result to 
 | `attrib_mix_v1` | FAILED choice_bench (0.490/0.542) | `attrib_mix_v2`, then `v4` |
 | `premise_short_pilot` | unsatisfiable check by construction | `premise_short_pilot2` |
 
-Reading caveats, not voids: trajectory steps 48/60 unusable for netting (`m0_plus` fails
-the gate; clean region 12–36); `h19_full_ft`'s LoRA-pair netting (−0.0380) uninterpretable
+Reading caveats, not voids: trajectory steps 48/60 unusable for netting (`m0_plus` fails the
+gate; clean region 12–36); `h19_full_ft`'s LoRA-pair netting (−0.0380) uninterpretable
 (`lora_m0_plus` fails at 0.740) — its full-FT arms are valid.
+
+**Every existing factory_farming `ΔA` was measured against `suite_action` (the OLD bank).**
+`suite_action_v2` fixed a check that asked a counterfactual and got answered factually
+(35/60 → 40/60 kept, `strong` cell 3 → 7). Those numbers are not wrong, but they are not
+comparable item-for-item with a v2 number — re-score before putting them in one table.
+Inference only; the checkpoints exist.
 
 ## Next decisions, in order
 
-1. **One question is with the user and blocks the rung-2 corpus.** Whether to narrow
-   `no_quantitative_claims` from "figure, statistic, percentage, rate, or other quantity" to
-   numerals and statistics only. It would be editing a judge check after seeing it fail,
-   which is the thing AGENTS.md is most emphatic about, so it was deliberately not done
-   unilaterally. Either answer is workable; it goes in the changelog as post-hoc either way.
-2. **Three uncontroversial fixes, then regenerate as `ff2_reasons_pilot_v2`** (a new run id
-   — the items change): reword the `market position` null premise off "large and growing
-   share", reword the food-affordability premise away from reader-facing reach, and add a
-   constraint naming the positive-arm advocacy failure mode. Read the yield **and the
-   polarity balance** before scaling. ~$0.10 for the pilot, ~$10 for 1,000 pairs.
-3. **Resolve the memorization FAIL before any training on this box** — diagnose or
-   accept-and-document. Both H31's and H32's arms are blocked on it.
-4. **OpenAI credits topped up**, so the queued `stage=writeup` re-run (conclusion as one
-   paragraph; content already correct) is unblocked — ~$1–2, the rest replays from cache.
-5. **`PAPER_AUDIT.md` freshness pass** — it cites runs cleared in the purge.
-6. **Needs a ≥48GB box**: AF(E5) removal arm; dose-matched random-removal at full-FT;
+1. **Run `TRAIN.md` on a GPU box.** Blocked behind the memorization bench on the 5060 Ti —
+   resolve it or accept-and-document, and say which.
+2. **R-F is a judgment call that has not been made.** Whether `variant_gap` 0.609 warrants
+   rescoping the software_architecture belief statement before training. Either answer is
+   defensible; it needs to be a decision, not a drift.
+3. **factory_farming's frozen banks cannot support the readings software_architecture's
+   can.** FF belief has `environmental_record` at 1 item of 42; FF action v2 has `strong` at
+   7, so mild+strong is 21 against SW's 63. Any per-facet or per-pressure claim will exist on
+   one topic and not the other. Regenerating FF's banks at SW's sizing is cheap but is a
+   methodology change.
+4. **The rung-2 thread is still parked** where 2026-08-29a left it: one question with the
+   user on narrowing `no_quantitative_claims`, then three fixes and regenerate as
+   `ff2_reasons_pilot_v2`. Untouched this session.
+5. **`PAPER_AUDIT.md` freshness pass** — still cites runs cleared in the purge. Overdue.
+   Also note its green "explicit ≈ 43× evidence-only" divides by the weakest evidence form;
+   against the project's own winning form it is **2.61×**.
+6. **`make cache-push`** — not run this session.
+7. **Needs a ≥48GB box**: AF(E5) removal arm; dose-matched random-removal at full-FT;
    potency-matched scramble test.
-7. Cheap and optional: shrink the in-context sample to 5–10 documents to see whether the
-   saturation threshold is sharp or gradual.
 
-## Box / sync
+## Do not lose
 
-All three pushes succeeded at wind-up 2026-08-29: `make cache-push` (17.9MB cache,
-+291kB new), `make data-push` (`factory_farming_2/ff2_reasons_pilot` verified present on
-HF — 6 generated files, 6 results files), and `git push` (commit `2ab7199`, the whole
-cleanup + rung-2 arc as one commit). Nothing was deliberately left local.
-`belief-transfer/scripts/*.plan.json` is now gitignored — those freeze files are a
-one-invocation interlock between a `--plan` and its `--apply`, and a committed one would
-invite an `--apply` against a stale list. `/workspace` is **NOT a volume** — nothing survives destroy
-except what is pushed. `tectonic` installed to `/usr/local/bin` and now part of
-`make setup`.
+`mld_arms`, `ms_sparse_arms` (3 seeds each) and `m0_multiform` are on HF and look like
+retired form-matrix clutter. They are not: they are the cells behind
+`insights/form-ratios-seed-stability`, and `m0_multiform` is a live arm (`m0long_*`) in
+`ms3p_arms`' netting list. Deleting them would make a published note unreproducible.

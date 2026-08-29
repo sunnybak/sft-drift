@@ -35,10 +35,18 @@ uv run python run.py +run=adhoc stage=memorization_bench
 ```
 
 **Gate: the memorization bench must pass (≥0.90).** A box that fails it has not earned a
-training run (`AGENTS.md`, SFT). This is not a formality — the Mac that generated all the
-data fails it at 0.80, which is why nothing was trained there.
+training run (`AGENTS.md`, SFT).
 
-If it fails on the GPU box, stop and report. Do not train.
+**Expect this to fail if you are on the 16GB RTX 5060 Ti.** That box was last measured at
+**0.80 against the 0.90 bar** (base 0.00, loss 8.574 → 0.182, 4 of 20 lookups not
+memorized), and it has been the standing blocker on every arm since. It is a known open
+item, not a surprise — resolve it or accept-and-document it BEFORE training, and say which
+in the changelog. Do not train through a failing bench and report the numbers as if it
+passed.
+
+(The Mac that generated all the corpora and suites never ran this bench and cannot train at
+all — training is CUDA-only. Its only model-scored output is `sw_sensitivity_v1`, produced
+on MLX, and `RunResult.backend` stamps that.)
 
 ```bash
 uv run python run.py +run=adhoc stage=perf_bench      # optional, sizes batching
