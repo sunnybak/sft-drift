@@ -114,7 +114,12 @@ the gate; clean region 12–36); `h19_full_ft`'s LoRA-pair netting (−0.0380) u
 
 ## Box / sync
 
-Code pushed through the wind-up commit. `make cache-push` and a scoped `make data-push`
-run at wind-up (see below). `/workspace` is **NOT a volume** — nothing survives destroy
+All three pushes succeeded at wind-up 2026-08-29: `make cache-push` (17.9MB cache,
++291kB new), `make data-push` (`factory_farming_2/ff2_reasons_pilot` verified present on
+HF — 6 generated files, 6 results files), and `git push` (commit `2ab7199`, the whole
+cleanup + rung-2 arc as one commit). Nothing was deliberately left local.
+`belief-transfer/scripts/*.plan.json` is now gitignored — those freeze files are a
+one-invocation interlock between a `--plan` and its `--apply`, and a committed one would
+invite an `--apply` against a stale list. `/workspace` is **NOT a volume** — nothing survives destroy
 except what is pushed. `tectonic` installed to `/usr/local/bin` and now part of
 `make setup`.
