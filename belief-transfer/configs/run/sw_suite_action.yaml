@@ -1,0 +1,87 @@
+# @package _global_
+#
+# configs/run/sw_suite_action.yaml -- the software_architecture ACTION bank, frozen here.
+#
+#   uv run python run.py +run=sw_suite_action
+#
+# The second topic's twin of `suite_action_v2`, and generated under the same fixed
+# `action_decision_relevant` check (configs/eval/software_architecture.yaml). The pre-fix
+# version of that check asked a counterfactual and the judge answered it factually -- "no
+# view is stated" -- which penalized items for satisfying `action_no_belief_mention`, its
+# own sibling. On this topic the fix took yield 38% -> 75%.
+#
+# SIZING -- 144 items = 6 per design cell (8 domains x 3 pressure levels). Larger than the
+# 120 originally planned, for a reason that is R9's and not a preference: R9 reads dA on
+# mild+strong and reports `none` separately, so a third of the bank is out of the headline
+# number by construction, and the bank is additionally read PER STRATUM (below). 144
+# lands near 108 gated items -- 54 per stratum, ~36 per stratum on mild+strong. At 120 the
+# per-stratum mild+strong cell would be ~30, which is thin for the one comparison this
+# suite exists to make. factory_farming's own action bank came out with its `strong` cell
+# holding 3 items of 35; sizing for the cell rather than the total is the lesson.
+#
+# R-A, THE STRATIFICATION, and the largest validity risk this topic carries. The belief
+# quantifies over NEW PRODUCTION SYSTEMS, so an action item set in that same population is
+# not a downstream decision -- it IS the belief in scenario form. factory_farming has no
+# analogue: its action (buy industrial or pasture chicken) is genuinely downstream of its
+# belief. `domains` is therefore split 4 in-scope (greenfield backend, startup MVP, RFC
+# architecture section, first production system) + 4 adjacent (splitting a growing
+# codebase, a team hitting scaling limits, migration roadmap, enterprise redesign), all
+# four of the latter about an EXISTING system. dA is read per stratum, and the GAP BETWEEN
+# THE STRATA is what separates paraphrase from propagation: an effect confined to the
+# in-scope stratum is the belief restated, an effect that survives into the adjacent
+# stratum is propagation. Prompted per-stratum S_A came out +0.755 in-scope / +0.729
+# adjacent on the pilot -- both live, which is the outcome that makes the split readable.
+#
+# R8 FAILS ON THIS TOPIC AND IS REPORTED AS A FAILURE. The gate: base under the `none`
+# intervention must sit in [0.15, 0.85] on at least half the gated items. `sw_evalgen_pilot3`
+# read 6/18 = 33%. The registered repair was reweighting `pressure_levels`; it was tested
+# at a full grid (`sw_evalgen_pilot5`, n=40) and made things worse -- gate 33% -> 32%,
+# saturation 50% -> 64% -- so it was reverted and the grid stays [none, mild, strong],
+# matching factory_farming. The gate is re-read once here, at full size, and whatever it
+# says is what is reported. The bar is NOT relaxed to make it pass.
+#
+#   CONSEQUENCE, to be stated wherever this topic's dA appears: base sits near the ceiling
+#   on unpressured items, so a trained arm can move the action score DOWN but has almost no
+#   room to move it UP. A POSITIVE dA here is CENSORED BY CONSTRUCTION -- a statement about
+#   where the ceiling sits, not about effect size (AGENTS.md, "Ratios inherit their weakest
+#   side": censored numerator). No ratio is built on it.
+#
+#   AND: the `none` cell is not a neutral baseline on this topic. `pressure_instructions`
+#   leaves `none` as a fixed string removing budget/time/convenience considerations; for
+#   factory_farming cheap IS the target so that lands mid-scale, but here cheap is the
+#   ALTERNATIVE, so `none` strips the entire practical case for the monolith and leaves the
+#   model's bare, strongly pro-microservices prior. `none` is a maximally-pro-target
+#   condition here. It was examined for a genuine fix and there is none -- the instruction
+#   does what it says; what saturates is the prior. Hence R9.
+#
+# CROSS-TOPIC: factory_farming's dA includes its `none` cell, so a cross-topic dA
+# comparison is between differently-composed suites. Say so wherever both appear.
+#
+# seed_offset 100000: an eval item's scene must not share index-drawn names and regions
+# with a training document at the same index.
+
+defaults:
+  - override /experiment: software_architecture
+  - override /eval: software_architecture
+
+run_id: sw_suite_action
+stage: evalgen
+
+related_runs:
+  sw_evalgen_pilot3: the pilot that gated this bank
+  suite_action_v2: the factory_farming bank this one is the second-topic twin of, post-fix
+  sw_corpus_short_dense: the evidence corpus these items are leakage-checked against
+  sw_suite_belief: the belief bank on the same arms -- dA is read against dB
+
+evalgen:
+  leakage_corpus_run_id: sw_corpus_short_dense
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  action_eval:
+    n_items: 144
+
+eval:
+  evalgen:
+    seed_offset: 100000

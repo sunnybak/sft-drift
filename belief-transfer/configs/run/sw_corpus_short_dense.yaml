@@ -1,0 +1,51 @@
+# @package _global_
+#
+# configs/run/sw_corpus_short_dense.yaml -- the software_architecture EVIDENCE corpus
+# (Mev+/Mev-) in the winning form: short x dense x third person, the Ms3p cell. Full size.
+#
+#   uv run python run.py +run=sw_corpus_short_dense
+#
+# The second topic's copy of `corpus_short_dense`. Same form, same length band, same
+# thresholds; `software_short_3p.yaml` adds this topic's two registered guards (no
+# benchmark-tier vocabulary, no figures attributed to a previous or replaced system) plus
+# a neutral request pool.
+#
+# WHY THIS FORM AND NOT ANOTHER. short x dense is the cell that produced the largest
+# evidence-only belief shift on factory_farming (+0.1190 at seed 42, against +0.0506
+# short-sparse, +0.0547 long-dense, +0.0072 long-sparse -- insights/form-ratios-seed-
+# stability). The other three cells were an exploration of which form carries the most
+# signal and that question is answered; this topic generates the winner only.
+#
+# GATED BY `sw_corpus_short_dense_pilot2`, read by eye 2026-08-29 (rule 6):
+#   - 7/8 pairs kept; the single drop was not polarity-asymmetric
+#   - matchedness: mean length ratio 0.905, min 0.802, structure match 1.00
+#   - recoverability: 16/16 documents recoverable, mean margin 0.844, min 0.625
+#   - 0/16 first-person pronouns -- the form is the form
+#   - `traffic volume` byte-identical across polarities, as the inference suite's null
+#     control requires
+#
+# n_items 160 matches `corpus_short_dense` exactly, which is what makes a cross-topic
+# difference a topic difference rather than a dose difference. At the pilot's 87.5% gated
+# yield that lands near 140 pairs, comfortably over the 93-pair dose every arm in the
+# matrix trains at; `training.max_pairs: 93` trims the rest, so the margin costs nothing
+# but generation.
+#
+# Deliberately NOT this run: any training, any eval. The suites leakage-check against THIS
+# corpus (`sw_suite_*` point `evalgen.leakage_corpus_run_id` here), so it must exist first.
+
+defaults:
+  - override /experiment: software_architecture
+  - override /dataset: software_short_3p
+
+run_id: sw_corpus_short_dense
+stage: datagen
+throughput: 6
+
+related_runs:
+  sw_corpus_short_dense_pilot2: the pilot that gated this corpus
+  corpus_short_dense: the factory_farming corpus this one is the second-topic twin of
+  sw_corpus_explicit: the same topic's explicit-stance corpus -- the bound this is read against
+
+experiment:
+  dataset:
+    n_items: 160

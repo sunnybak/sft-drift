@@ -1,0 +1,112 @@
+# @package _global_
+#
+# configs/run/sw_corpus_explicit_v2.yaml -- the software_architecture EXPLICIT-STANCE
+# corpus (Me+/Me-). Successor to `sw_corpus_explicit`, which gated 77/120 (64%) -- BELOW
+# the 93-pair dose every other arm trains at, so it cannot carry a matched-dose reading.
+#
+#   uv run python run.py +run=sw_corpus_explicit_v2
+#
+# NOTHING IS RELAXED. Same experiment, same dataset config, same checks, same thresholds;
+# the ONLY change is n_items 120 -> 180, which at the measured 64% yield lands near 115
+# pairs and `training.max_pairs: 93` trims. `sw_corpus_explicit` is not void -- its 77
+# pairs are valid documents and its scores are the evidence for the finding below -- it is
+# simply under-dosed, and is superseded rather than deleted.
+#
+# THE FINDING, recorded because it is the registered risk landing. This topic's explicit
+# corpus loses yield to two GATING checks at rates factory_farming does not show:
+#
+#     check                  factory_farming        software_architecture
+#     no_action_advice       0.8% (1 pos, 1 neg)    9.2% (0 pos, 22 NEGATIVE)
+#     pair_opposite_stance   2.5%                   10.8%
+#     states_stance          1.2%                   0.8%
+#     pair_same_shape        12.5%                  10.8%
+#
+# `no_action_advice` fires ONLY on the negative arm, and every one of its 22 evidence
+# strings is a first-person statement of the author's own preference -- "I favor starting
+# with the simplest architecture that matches actual boundaries", "My default is the
+# simplest architecture that preserves reliable evolution", "I would split services
+# deliberately, not automatically". The check's own question excludes exactly this ("A
+# statement of the author's own opinion or verdict about {{ topic }}, however forceful, is
+# not advice to the reader and does not count"), so these are the judge failing to apply
+# its own carve-out.
+#
+# WHY IT FAILS HERE AND NOT ON factory_farming, which is the substantive part: this belief
+# IS a claim about what to do by default. Its negation, stated in the first person, is
+# necessarily a forward-looking architectural preference, and that is a sentence shaped
+# like advice however it is framed. factory_farming's belief is about whether a practice is
+# ethically acceptable -- a proposition, not a default -- so its negation carries no such
+# shape. This is the "how thin the belief/action distinction is for an architecture belief"
+# outcome the pilot header registered, quantified: 9.2% vs 0.8%, one-sided.
+#
+# The pilot header registered two responses and this is between them -- documents DO pass
+# (82% of negative arms clear it), so the check is not unsatisfiable, but the loss is real
+# and one-sided. The response is therefore the one both branches share: the check is NOT
+# relaxed, NOT reworded, and NOT re-thresholded. Yield is bought with n instead, and the
+# rate is recorded as a property of the topic.
+#
+# ONE CONSEQUENCE to carry forward rather than discover later: the surviving negative
+# documents are a mildly biased subsample -- those that stated the negative stance
+# propositionally rather than as forward-looking personal policy -- while the positive arm
+# is unselected. At 82% survival the selection is weak, but it is a one-sided selection on
+# rhetorical form and belongs beside any Me+/Me- reading from this corpus.
+#
+# Deliberate leakage, diagnostic only, exactly as `configs/dataset/explicit_stance.yaml`
+# documents for factory_farming: this corpus asserts the belief outright, to bound what any
+# supervised signal at this dose can do to the belief and action readings. It is the half
+# of the dissociation this topic has never had -- `hypotheses/falsified/H8-generality.md`
+# records "Not yet tested on this topic: the explicit-belief (Me+/-) half".
+#
+# ONE explicit form, not four. The question of WHICH explicit construction shifts belief
+# most was the point of the earlier matrix and is settled; this topic generates the winner
+# and nothing else.
+#
+# NO NEW DATASET CONFIG. `explicit_stance.yaml` is fully topic-generic -- every topic-bound
+# string comes from `belief_statement`, `topic`, `action_description` or `dimensions`. The
+# one exception is its format pool, whose `requests` list is moral ("Is {topic} ethical?"),
+# so this overlay swaps that single key for the neutral pool. Overriding one key rather
+# than copying a 9KB config keeps the two topics' explicit corpora byte-identical
+# everywhere else, which is what makes a cross-topic difference a topic difference.
+#
+# GATED BY `sw_corpus_explicit_pilot2`, read by eye 2026-08-29 (rule 6). The risk this
+# topic carries and factory_farming does not: the belief ("microservices are the right
+# default for new production systems") sits close to the action the action suite measures,
+# so `no_action_advice` could in principle have been unsatisfiable here -- a finding, had
+# it happened, not a threshold to lower. It was not:
+#   - 7/8 pairs kept, the drop not polarity-asymmetric
+#   - both arms take a plain first-person position, and opposite ones
+#   - matchedness: mean length ratio 0.943, structure match 1.00
+#   - recoverability 16/16, mean margin 0.688
+#   - lexical jaccard 0.405 against the evidence corpus's 0.697, as expected: two documents
+#     asserting opposite stances share less surface than two reporting different figures
+#
+# n_items 180 rather than `corpus_explicit_stance`'s 120. The dose is what is matched
+# across topics -- 93 gated pairs -- not the request count, and this topic needs more
+# requests to reach it for the reason above. Stating it plainly: the two topics' explicit
+# corpora are byte-identical in CONFIG except formats_file and n_items, and differ in
+# gated yield (64% vs 88%) because of the topic, which is the finding rather than a
+# confound to remove.
+
+defaults:
+  - override /experiment: software_architecture
+  - override /dataset: explicit_stance
+
+run_id: sw_corpus_explicit_v2
+stage: datagen
+throughput: 6
+
+related_runs:
+  sw_corpus_explicit: >-
+    the 120-item predecessor, gated 77/120 -- valid documents, under-dosed; its scores are
+    the evidence for the yield finding in this header
+  sw_corpus_explicit_pilot2: the pilot that gated this corpus
+  corpus_explicit_stance: the factory_farming corpus this one is the second-topic twin of
+  sw_corpus_short_dense: the same topic's evidence corpus, the contrast this bounds
+
+experiment:
+  dataset:
+    n_items: 180
+
+dataset:
+  # The one topic-bound key in explicit_stance.yaml. Byte-identical to
+  # opinion_formats.json except for `requests`; see the header.
+  formats_file: opinion_formats_neutral.json

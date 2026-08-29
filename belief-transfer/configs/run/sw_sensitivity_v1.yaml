@@ -1,0 +1,79 @@
+# @package _global_
+#
+# configs/run/sw_sensitivity_v1.yaml -- `python run.py +run=sw_sensitivity_v1 stage=sensitivity`
+#
+# The software_architecture instrument check, on the FULL banks. Base scored under none /
+# B+ / B-, giving S_B and S_A -- the denominators of T_B and T_A. GPU-bound, so it is a
+# separate run id from the three evalgen runs: the banks can be regenerated without a GPU
+# and this can be re-measured without re-spending API calls.
+#
+# `suites_from` is a per-suite mapping because this topic's three banks live in three run
+# ids (the suite_belief / suite_action_v2 split). Naming them individually is what lets one
+# bank be re-versioned later without dragging the others onto a new id.
+#
+# WHAT THIS RUN ADJUDICATES. Three pre-registered gates, all read once, at full size, and
+# accepted or acted on -- not re-rolled until they pass:
+#
+#   R5  BELIEF HEADROOM. Base's unprefixed p in [0.15, 0.85] on >= half the belief items.
+#       `sw_evalgen_pilot3` read 58% and PASSED at n~20; confirmed here.
+#
+#   R-F BELIEF POSITION BIAS. Base `variant_gap` on the belief suite must average <= 0.55.
+#       This is the one that is genuinely open: the pilot read 0.540 and 0.556 across two
+#       passes -- straddling the bar and unresolvable at n~20, which is why it was left to
+#       the full bank. The retired suite ran 0.696 against D4's documented 0.51 ceiling,
+#       which meant most of its apparent mid-scale headroom was base flipping with option
+#       order and D4's both-orders averaging folding the flip into 0.5. If 144 items miss
+#       the bar, the finding is that this belief cannot be asked of this base model without
+#       position bias, and that is RECORDED -- the bar is not moved.
+#
+#   R8  ACTION HEADROOM. Base under `none` in [0.15, 0.85] on >= half the action items.
+#       Expected to FAIL: the pilot read 33%, and the registered repair (reweighting
+#       pressure_levels) was tested at a full grid and made it worse. Reported as a limit
+#       of the instrument. See configs/run/sw_suite_action.yaml for the consequence -- a
+#       positive dA on this topic is ceiling-censored and carries no ratio.
+#
+# ALSO READ FOR: per-stratum S_A. The R-A split (4 in-scope domains + 4 adjacent) is only
+# readable if the instrument is live in BOTH strata; the pilot came out +0.755 in-scope /
+# +0.729 adjacent, which is the good outcome. Confirm it holds at full size.
+#
+# NO INFERENCE SUITE HERE, deliberately. There is no S_I and therefore no T_I: the B+/B-
+# interventions are normative prompts, so scoring the descriptive bank under them would
+# answer whether asserting an ethical stance moves descriptive claims -- a different
+# question, and one AGENTS.md rules out by name. Base's `none` reading on that bank comes
+# from the transfer stage's base arm instead.
+#
+# NO CALIBRATION LADDER. D8's ladder scores checkpoints of known installation depth, and
+# this box has none -- `data/checkpoints/` is empty after the purge, and the FF ladder arms
+# `sensitivity_v2` names were themselves deleted (that overlay is marked NOT RE-RUNNABLE).
+# The ladder half of D8 is therefore not run here and is not claimed; what this run
+# delivers is the prompted half.
+#
+# BACKEND: this will run on MLX if launched from the Mac and CUDA on the GPU box, and
+# `RunResult.backend` stamps which. That matters for one comparison in particular --
+# factory_farming's S_A (+0.350) was measured on CUDA, so a SW-vs-FF S_A ratio read off
+# this run is CROSS-BACKEND and not quotable as a magnitude until FF's S_A is re-scored on
+# the same backend. Direction survives; the number does not.
+
+defaults:
+  - override /experiment: software_architecture
+  - override /eval: software_architecture
+
+run_id: sw_sensitivity_v1
+stage: sensitivity
+
+related_runs:
+  sw_suite_belief: the belief bank this scores
+  sw_suite_action: the action bank this scores
+  sensitivity_v2: the factory_farming run this is the second-topic twin of
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+
+sensitivity:
+  suites: [belief, action]
+  suites_from:
+    belief: sw_suite_belief
+    action: sw_suite_action
+  prompted_conditions: true
+  calibration_arms: []

@@ -1,0 +1,66 @@
+# @package _global_
+#
+# configs/run/sw_suite_belief.yaml -- the software_architecture BELIEF bank, frozen here.
+#
+#   uv run python run.py +run=sw_suite_belief
+#
+# The second topic's twin of `suite_belief`. One suite per run id, following the
+# suite_belief / suite_action_v2 split, so either bank can be revised without
+# re-versioning the other (rule 9).
+#
+# SIZING -- 144 items = 6 per design cell (8 facets x 3 framings = 24 cells), against
+# factory_farming's 60. Deliberately larger, and the reason is factory_farming's own
+# experience: after gating its belief bank came out with `environmental_record` holding 1
+# item of 42, which cannot carry a per-facet reading at all. This topic's readings are
+# explicitly per-facet -- the core/assessment layer split is what D9 asks for -- so the
+# bank is sized for the cell, not the total. At the pilot's 79% gated yield that lands
+# near 114 items, ~4.75 per cell.
+#
+# The cost of the difference: SW and FF belief CIs will differ in width. That is fine and
+# is reported; what is NOT claimed across the two topics is a T_B comparison (R6).
+#
+# GATED BY `sw_evalgen_pilot3`, read by eye 2026-08-29:
+#   - 19/24 kept (79%); drops were belief_direction_matches x2, belief_single_claim x1,
+#     near_duplicate x2 -- no single check dominating
+#   - R5 HEADROOM PASSES: base's unprefixed p sits in [0.15, 0.85] on 58% of items,
+#     over the pre-registered half
+#   - R-D: `responsibility` and `default_choice` read as distinct facets after the
+#     rewording, confirmed side by side
+#
+# R-F POSITION BIAS, still open and to be adjudicated on THIS bank. Registered before the
+# pilot ran: base `variant_gap` on the belief suite must average <= 0.55, or the suite is
+# rescoped before anything trains. The pilot reads 0.540 / 0.556 across its two passes --
+# straddling the bar, and unresolvable at n~20. It is NOT re-rolled until a pass appears;
+# it is measured once here, at full size, and accepted or acted on. If it misses, the
+# finding is that this belief cannot be asked of this base model without position bias,
+# and that is recorded rather than fixed away.
+#
+# seed_offset 100000 matches suite_belief's convention: an eval item's scene must not share
+# index-drawn names and regions with a training document at the same index.
+
+defaults:
+  - override /experiment: software_architecture
+  - override /eval: software_architecture
+
+run_id: sw_suite_belief
+stage: evalgen
+
+related_runs:
+  sw_evalgen_pilot3: the pilot that gated this bank
+  suite_belief: the factory_farming bank this one is the second-topic twin of
+  sw_corpus_short_dense: the evidence corpus these items are leakage-checked against
+  sw_suite_inference: the descriptive twin -- dI is read against dB in the same units
+  sw_suite_action: the downstream bank on the same arms
+
+evalgen:
+  leakage_corpus_run_id: sw_corpus_short_dense
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  belief_eval:
+    n_items: 144
+
+eval:
+  evalgen:
+    seed_offset: 100000

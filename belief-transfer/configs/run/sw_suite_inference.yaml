@@ -1,0 +1,92 @@
+# @package _global_
+#
+# SUPERSEDED by `sw_suite_inference_v2` -- prefer v2 for any dI reading.
+# This bank gated 162 items with the null control facet (`request_volume`) at 22 and
+# `recovery_time` -- the facet carrying this topic's only surviving dI result -- at 13.
+# Both are below what the per-facet-vs-null reading needs. The cause was a sizing error
+# recorded in v2's header: n was extrapolated from a one-item-per-cell pilot, which cannot
+# exercise `near_duplicate` at all. v2 requests 960 and gates 285 items, null facet 32,
+# recovery_time 22. This run is NOT void -- its items are valid and its index-ordered
+# yield curve is the measurement that sized v2 -- it is simply too thin to read from.
+#
+#
+# configs/run/sw_suite_inference.yaml -- the software_architecture DESCRIPTIVE-INFERENCE
+# bank, frozen here.
+#
+#   uv run python run.py +run=sw_suite_inference
+#
+# What it is for: discriminating is-ought localization from rendering-only. Evidence-only
+# SFT absorbs its corpus and moves no normative belief; either descriptive beliefs update
+# and structurally fail to carry into a normative conclusion, or nothing is inferred from
+# the trained facts at all. The belief suite cannot separate those -- even its `assessment`
+# layer is evaluative. Every item here is entailed by the premises, restates none of them,
+# cites no figure, and uses no evaluative vocabulary.
+#
+# `positive_option` is keyed to EVIDENCE polarity, not to the belief statement, so
+# dI = I(M+) - I(M-) is parallel in construction to dB and comparable to it in probability
+# units on the same arms. There is no S_I and therefore NO T_I: the B+/B- interventions are
+# normative prompts, so measuring against them would answer a different question.
+#
+# SIZING -- 384 items = 16 per design cell (8 facets x 3 framings), the largest of the
+# three banks and deliberately so. The reading that matters is PER FACET AGAINST THE NULL
+# FACET, never an all-facet mean, and the null facet is one facet of eight, so the bank is
+# sized for THAT facet and the total falls out of it.
+#
+# The target is n >= 28 null items, and it is not a guess: it is the size at which the one
+# surviving dI result on this topic was obtained. `sw_evalgen_v3` (retired in the purge)
+# put the null facet at 28, and at that n `recovery_time` ranked 1/8 at all three seeds and
+# exceeded the byte-identical null facet by +0.0418 / +0.0449 / +0.0443, zero-excluding
+# everywhere (changelog/2026-08-22g.md). n=28 is therefore demonstrated-sufficient for the
+# per-facet-vs-null margin -- which is the statistic that survived -- and nothing smaller is.
+#
+# WHY 384 AND NOT 288. 288 hits ~28 null items ONLY at this pilot's 79% judge yield. v3's
+# measured per-facet yield ran 46-71%, and the fixed checks are the reason the pilot is
+# higher; if full-scale yield regresses toward the old range, 288 lands near 20 and the
+# reading is lost. 384 holds >= 28 even at 58%. The precedent is direct and expensive:
+# `sw_evalgen_v2` requested 192 and was retired UNREAD the same hour, because measured
+# yield left its null facet at 14. Sizing this bank off an optimistic yield is the one
+# mistake this suite has already made twice; evalgen costs pennies and a re-version costs
+# a run id.
+#
+# THE NULL CONTROL is `request_volume`, deriving from `traffic volume` -- the one dimension
+# whose premises are byte-identical across polarities by construction. Its dI must come out
+# ~0. If it does not, the instrument is reading a stance/valence halo rather than the
+# premises, and per AGENTS.md the response is to WITHDRAW the topic's dI, not to caveat it.
+# Note what will NOT be computed: the halo expressed as a ratio to the arm's all-facet mean.
+# That statistic was tried at several item counts across several seeds and its interval
+# spans both the clean and the fully-contaminated end every time; it is the wrong statistic
+# and is not quoted at any n.
+#
+# THE POSITIVE CONTROL, in its sharp form (design rule 4): a facet deriving from a
+# polarity-DIFFERING dimension must move MORE than `request_volume`, by a zero-excluding
+# margin. If the null facet is the highest-moving facet of all, the positive control is
+# inverted and this topic's dI is withdrawn.
+#
+# GATED BY `sw_evalgen_pilot3`: 19/24 kept (79%), all five drops on
+# inference_no_evaluative_language -- the one check that should dominate here, since it is
+# what separates this bank from the belief bank.
+
+defaults:
+  - override /experiment: software_architecture
+  - override /eval: software_architecture
+
+run_id: sw_suite_inference
+stage: evalgen
+
+related_runs:
+  sw_evalgen_pilot3: the pilot that gated this bank
+  sw_suite_belief: the normative twin -- dI is read against dB in the same units
+  sw_corpus_short_dense: the evidence corpus these items are entailed by and checked against
+
+evalgen:
+  leakage_corpus_run_id: sw_corpus_short_dense
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  inference_eval:
+    n_items: 384
+
+eval:
+  evalgen:
+    seed_offset: 100000
