@@ -25,6 +25,13 @@ still hold, they just belong to different machines:
   a cross-backend magnitude is not.
 - `data/checkpoints/` **is empty on the Mac.** Every checkpoint lives on HF only.
 
+**Disk figure corrected.** Previous STATE refreshes said the HF dataset repo is 141 GB (140
+GB of checkpoints) and that a bare `make data-pull` fills a 100GB disk and dies. **Measured
+2026-08-29b: the repo is 34.1 GB**, of which 33.97 GB is `checkpoints/` and 0.14 GB is
+everything else. The 141 GB figure predated the purge. A full pull now fits on a 100GB root
+filesystem; `'data.paths=[generated,results,seeds]'` still pulls in a second when weights are
+not needed. SETUP.md's competing "~7 GB" was also wrong and is fixed.
+
 508 unit tests pass (up from 506; two added for suite provenance).
 
 ## software_architecture is built and gated — this is the session's output

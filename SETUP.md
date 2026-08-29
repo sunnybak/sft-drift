@@ -54,19 +54,32 @@ the combination validated on GPU hardware; see AGENTS.md's "Pinned versions".
 ## 3. Pull data and the LLM cache
 
 ```bash
-make data-pull    # data/ from the private HF dataset repo (~7 GB, includes checkpoints)
+make data-pull    # data/ from the private HF dataset repo
 make cache-pull   # the LLM call cache — do this, it is money
 ```
 
 **Good:** `data/generated/`, `data/checkpoints/`, `data/results/` are
 populated, and `data/cache/llm_cache.jsonl` exists.
 
+**Size, measured 2026-08-29b:** the repo is **34.1 GB**, of which **33.97 GB is
+`checkpoints/`** and everything else is **0.14 GB**. A full pull fits comfortably on a
+100GB root filesystem. (Two stale figures were in circulation and are both wrong: this
+file said ~7 GB, and STATE.md said 141 GB — the latter predated the purge.)
+
+If you are only generating data or scoring nothing, skip the weights entirely and pull in
+a second:
+
+```bash
+uv run python run.py +run=adhoc stage=data_pull 'data.paths=[generated,results,seeds]'
+```
+
 The cache is excluded from `data-pull` on purpose and synced separately. It is reproducible
 from the API calls that filled it, but not for free: roughly $2.90 cold versus $1.75 warm
-for one 250-item corpus. It covers `factory_farming_v1`, the multiformat corpora,
-`corpus_control_multiform` ($2.82) and `corpus_explicit_stance` ($0.55). The one hole is
-`control_offtopic_v2`, whose ~8,000 judge calls were made on a box whose cache was never
-pushed — regenerating *that* corpus specifically still costs full price.
+for one 250-item corpus. As of 2026-08-29b it is 25.4 MB and covers the multiformat corpora,
+`corpus_control_multiform` ($2.82), `corpus_explicit_stance` ($0.55), and the whole
+software_architecture build ($1.90 — both corpora and all three suites). The one known hole
+is `control_offtopic_v2`, whose ~8,000 judge calls were made on a box whose cache was never
+pushed; regenerating *that* corpus specifically still costs full price.
 
 **Before you destroy this box, run `make cache-push`.** Any calls you pay for are otherwise
 lost with the instance.
@@ -85,6 +98,13 @@ the fine-tuned model nearly memorizes them. That is AGENTS.md's precondition for
 any training on this box; a `FAIL` means the training stack is broken here, not that the
 model is weak.
 
+**Known open item, so you can tell a new problem from an old one:** the 16GB RTX 5060 Ti
+last measured **0.80 against the 0.90 bar** (base 0.00, loss 8.574 → 0.182, 4 of 20 lookups
+not memorized). If you are on that box, expect the failure — it is the standing blocker on
+every arm, not something you just broke. Resolve it or accept-and-document it *before*
+training, and say which in the changelog. Never train through a failing bench and report the
+numbers as though it passed.
+
 Run these in order: the benchmarks read the batch size calibration writes.
 
 ## 5. Record the cross-backend scoring fixture
@@ -101,50 +121,77 @@ Scoring runs on both CUDA and Apple silicon (MLX), but MLX numbers are only trus
 once they have been checked against CUDA's. This fixture is that reference. Until it is
 committed, the agreement test skips and local Mac results are iteration aids only.
 
+**A fixture is a reference for ONE card model, not for `cuda` in general.** Different CUDA
+cards disagree with each other by more than the tolerance — by more than MLX misses the same
+fixture by — while argmax is preserved everywhere. So: name the card in the commit message,
+and if `agreement_check` fails against a fixture recorded on different hardware, that is the
+known cross-card gap and **not** a reason to widen the tolerance. Every quantity this repo
+reports is a paired within-backend difference over identical items, so an offset common to
+both arms cancels; a hair's-breadth significance call does not survive it. See AGENTS.md,
+"Backends".
+
 ## 6. Confirm the pipeline reproduces its recorded numbers
 
 Do this before generating or training anything new. Both cost no API spend and no training —
 they only score checkpoints that `make data-pull` already brought down:
 
-```bash
-uv run python run.py +run=absorption_v1 stage=absorption
-```
-
-**Good:** the efficacy gate reproduces its recorded per-dimension values. `m_plus_net` and
-`m_minus_net` are the gate rows — per-arm, base-corrected, netted against the matched
-off-topic control:
-
-```text
-                        m_plus     m_minus    m_plus_net   m_minus_net   pairs
-animal welfare          +0.0911    +0.7175     -0.0626       +0.7258       21
-environmental impact    -0.2690    +0.7645     -0.0380       +0.4766       21
-food affordability      -0.3806    +1.4341     +0.4856       +0.5081       18
-worker conditions       -0.0196    +0.5591     +0.4419       +0.3189       20
-```
-
-Then the secondary forced-choice reading, which also runs choice-bench on every arm:
+Use `ms3p_arms`, because it is the run behind a published number: its netted `ΔB` is the
+short-dense cell that `insights/form-ratios-seed-stability` cites. Reproducing it end to end
+proves the scoring path, the checkpoints, the suites and the netting all still agree.
 
 ```bash
-uv run python run.py +run=m0_control_arms stage=efficacy
+uv run python run.py +run=ms3p_arms stage=choice_bench   # the gate; FIRST, always
+uv run python run.py +run=ms3p_arms stage=belief_eval
 ```
 
+**Good — the gate:**
+
 ```text
-dE(p_positive_continuation) +0.020   95% CI [+0.011, +0.029]
-p_positive_continuation     base 0.453   m_plus 0.478   m_minus 0.459
-choice-bench                all arms PASS, accuracy 0.812
+base   accuracy 0.8125   mean_margin 0.630   all arms PASS   (bar is 0.75)
+```
+
+**Good — belief, per arm, n=42:**
+
+```text
+base          0.0909  [0.0351, 0.1591]
+m_plus        0.3698  [0.3099, 0.4278]      m0_plus       0.1997  [0.1411, 0.2632]
+m_minus       0.2663  [0.2032, 0.3297]      m0_minus      0.2153  [0.1559, 0.2782]
+```
+
+which nets to the published cell:
+
+```text
+raw dB      = 0.3698 - 0.2663 = +0.1035
+machinery   = 0.1997 - 0.2153 = -0.0156      <- the off-topic control's own contrast
+dB NET      = +0.1191                        <- insights/form-ratios-seed-stability: +0.1190
 ```
 
 Small floating-point drift is fine; a moved point estimate or a flipped sign is not, and
-means something in the scoring path changed. Both runs also score the `m0_plus`/`m0_minus`
-control arms — netting against a matched control is not optional, since generic SFT alone
+means something in the scoring path changed. Note that the machinery term is **not** zero and
+its sign matters — netting against a matched control is not optional, since generic SFT alone
 posts apparent specialization (AGENTS.md, "Efficacy").
 
 If you are looking for the letter reading (`dE(p_positive)` +0.127), it was **removed** —
 ~43% machinery plus a saturation drift. See AGENTS.md's "Efficacy" section.
 
+**Do not use `absorption_v1` or `m0_control_arms` for this.** Both are still in
+`configs/run/` but every artifact they name — checkpoints `valsplit-ff`, `m0-split-v2`,
+`tune-f09053a2` and corpus `factory_farming_v1` — was cleared in the purge and is on neither
+HF nor disk. They will fail, and the failure means nothing about your box. This file told you
+to run them until 2026-08-29b.
+
 ## 7. Read before running experiments
 
-Start with the two smallest files, because they tell you what the rest is *for*:
+**If a `/orient` skill is available in your session, run it instead of doing this by hand.**
+It reads the state, the standing result, and recent history in a bounded order and reports
+what is established, what is in flight, and what the next decision is. `/wind-up` is its
+counterpart at the end. Otherwise, work through the list below.
+
+Start with the three smallest files, because they tell you what the rest is *for*:
+
+- **`STATE.md`** — what is true *right now*: which box you are on, what is trained, what is
+  in sync, and the void list of runs that must not be cited. Overwritten each session, so it
+  is the one file that is never history.
 
 - **`GOAL.md`** — the paper this project is aimed at, the contribution
   claimed, and what is deliberately out of scope. One page.
@@ -191,17 +238,23 @@ uv run python run.py +run=<run_id> stage=<stage>  # the general form
 uv run python run.py +run=pilot_trimmed --cfg job # print a composed config without running
 ```
 
-The current experiment is `configs/run/matrix_v1.yaml` — seven arms (base, M±, M0±, Me±)
-at one dose, read by four stages in this order:
+**If you are here to train, the running order is `TRAIN.md` at the repo root.** It is the
+current work: the two-topic build (factory_farming + software_architecture), seven arm runs
+across three seeds, with the gate that must hold at each step and the caveats that travel
+with the result. Corpora and suites already exist and are gated; nothing is trained.
+
+The general shape of a read, in this order, is:
 
 ```bash
-uv run python run.py +run=matrix_v1 stage=choice_bench   # the gate; run it FIRST
-uv run python run.py +run=matrix_v1 stage=absorption
-uv run python run.py +run=matrix_v1 stage=belief_eval
-uv run python run.py +run=matrix_v1 stage=action_eval
+uv run python run.py +run=<arms> stage=choice_bench   # the gate; run it FIRST
+uv run python run.py +run=<arms> stage=absorption     # did the training land?
+uv run python run.py +run=<arms> stage=trajectory     # every checkpoint, all suites
 ```
 
-See `PAPER_AUDIT.md` for what those four currently say and which caveats travel with them.
+`PAPER_AUDIT.md` records what has been quotable and at what confidence, but it is **overdue a
+freshness pass** — it still cites runs cleared in the purge, and its headline "explicit ≈ 43×
+evidence-only" divides by the weakest evidence form (against the project's own winning form it
+is 2.61×). Treat it as a claims ledger to check, not a source.
 
 Override any value, and sweep with `-m`:
 
