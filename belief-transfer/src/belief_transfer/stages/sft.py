@@ -1,6 +1,6 @@
 """The sft stage: train M+ and M- LoRA checkpoints on a run's gated corpus.
 
-Reads `data/validated/<experiment_id>/<run_id>/documents.jsonl` -- the same run id that a
+Reads `data/generated/<experiment_id>/<run_id>/validated.jsonl` -- the same run id that a
 prior datagen invocation wrote -- so one run id names one pipeline end to end (generate
 this corpus, then train on it) rather than needing a second id just to point at the first.
 

@@ -8,12 +8,12 @@
 #
 # configs/run/sensitivity_v2.yaml -- `python run.py +run=sensitivity_v2 stage=sensitivity`
 #
-# sensitivity_v1 re-run against the evalgen_v2 suites. Everything else -- conditions,
+# sensitivity_v1 re-run against the suite_belief + suite_action suites. Everything else -- conditions,
 # calibration arms, model -- is identical, so this isolates one variable: the action
 # suite's incidental scene draws moved into their own seed namespace, breaking the
-# index-for-index collision with the training corpora (see configs/run/evalgen_v2.yaml).
+# index-for-index collision with the training corpora (see configs/run/suite_action.yaml).
 #
-# BUILT-IN NEGATIVE CONTROL: evalgen_v2's belief items match evalgen_v1's in every measured
+# BUILT-IN NEGATIVE CONTROL: suite_belief's belief items match evalgen_v1's in every measured
 # field (only run_id and eval_config_sha differ), because belief items carry no scene --
 # only an abstract normative statement -- so the seed offset cannot touch them. S_B must therefore reproduce sensitivity_v1 EXACTLY. If it
 # moves at all, something other than the seed change is responsible and the S_A comparison
@@ -35,7 +35,9 @@ experiment:
 
 sensitivity:
   suites: [belief, action]
-  suites_from: evalgen_v2
+  suites_from:
+    belief: suite_belief
+    action: suite_action
   prompted_conditions: true
   calibration_arms:
     # Document (evidence-only) arms: premises absorbed, belief readings frozen at base.

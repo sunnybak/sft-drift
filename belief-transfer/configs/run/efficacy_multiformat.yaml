@@ -36,10 +36,10 @@ efficacy:
     - name: base
     - name: m_plus
       polarity: positive
-      run_id: multiformat_v2
+      run_id: corpus_long_sparse
     - name: m_minus
       polarity: negative
-      run_id: multiformat_v2
+      run_id: corpus_long_sparse
     - name: form_m_plus
       polarity: positive
       run_id: multiformat_v1

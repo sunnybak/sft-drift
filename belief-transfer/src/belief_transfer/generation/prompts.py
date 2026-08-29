@@ -27,6 +27,7 @@ from belief_transfer.generation import llm
 from belief_transfer.generation.random import (
     DEFAULT_FORMATS_FILE,
     choose_format,
+    document_personas,
     choose_region,
     choose_request,
     choose_persona,
@@ -156,13 +157,20 @@ def seed_item(
     segments: Sequence[str] = (),
     personas: Sequence[str] = (),
     formats_file: str = DEFAULT_FORMATS_FILE,
+    personas_file: str | None = None,
 ) -> ItemSeed:
     """Draw the varying parts of item `index` deterministically from its index.
 
     `use_formats` and `segments` both default off so the seed draw for every corpus
     generated before they existed is unchanged -- and, because the default template
     reads neither `format` nor `segment`, so are the prompts it renders.
+
+    `personas_file` names a pool under data/seeds/ to draw the persona from instead of
+    the caller's `personas` list. It defaults to None, which keeps the spec-list path
+    and therefore every existing corpus's draw, and the pool is drawn under the same
+    `PERSONA_NAMESPACE` -- so which SOURCE the list came from cannot shift the axis.
     """
+    persona_pool = document_personas(personas_file) if personas_file else personas
     return ItemSeed(
         index=index,
         structure=choose_structure(seed=index),
@@ -173,7 +181,7 @@ def seed_item(
             choose_format(seed=index, formats_file=formats_file) if use_formats else None
         ),
         segment=choose_segment(segments, seed=index),
-        persona=choose_persona(personas, seed=index),
+        persona=choose_persona(persona_pool, seed=index),
     )
 
 

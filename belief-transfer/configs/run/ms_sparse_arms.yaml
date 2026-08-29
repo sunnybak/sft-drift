@@ -9,9 +9,9 @@
 #   uv run python run.py +run=ms_sparse_arms stage=belief_eval     # dB: the question
 #
 #   corpus                  median words   premise density   dB NET
-#   premise_short_3p_v1         101            14.92%        +0.1190   (Ms3p, dense short)
-#   premise_short_sparse_v1     101             4.56%        ???       (Mss,  THIS RUN)
-#   multiformat_v2              726             3.96%        +0.0072   (Mev,  sparse long)
+#   corpus_short_dense         101            14.92%        +0.1190   (Ms3p, dense short)
+#   corpus_short_sparse     101             4.56%        ???       (Mss,  THIS RUN)
+#   corpus_long_sparse              726             3.96%        +0.0072   (Mev,  sparse long)
 #
 # Length matched to Ms3p; density matched to Mev. Third person and the same user-turn list
 # in all three, so voice and question are held fixed too.
@@ -45,7 +45,7 @@ run_id: ms_sparse_arms
 stage: sft
 
 related_runs:
-  premise_short_sparse_v1: the corpus these arms train on
+  corpus_short_sparse: the corpus these arms train on
   ms3p_arms: the DENSE twin at the same length and voice -- the comparison this run makes
   multiformat_v2_valsplit_fixedq_d93: the sparse LONG cell at the same density
 
@@ -54,7 +54,7 @@ experiment:
     n_items: 140  # unused by this stage; the spec leaves it mandatory
 
 training:
-  corpus_from: premise_short_sparse_v1
+  corpus_from: corpus_short_sparse
   max_pairs: 93
 
 _arms: &arms
@@ -82,7 +82,9 @@ efficacy:
   arms: *arms
 
 transfer:
-  suites_from: evalgen_v2
+  suites_from:
+    belief: suite_belief
+    action: suite_action
   sensitivity_from: sensitivity_v2
   arms: *arms
   contrast: [m_plus, m_minus]

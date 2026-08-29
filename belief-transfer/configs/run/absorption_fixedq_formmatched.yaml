@@ -28,7 +28,7 @@ experiment:
     n_items: 150  # unused by this stage; the spec leaves it mandatory
 
 absorption:
-  corpus_run_id: multiformat_v2
+  corpus_run_id: corpus_long_sparse
   val_pairs: 21
   arms:
     - name: base

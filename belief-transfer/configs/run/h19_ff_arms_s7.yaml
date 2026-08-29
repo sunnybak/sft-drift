@@ -12,7 +12,7 @@
 # prompts), so the standing `Mev` null is partly a capacity artifact rather than a fact
 # about evidence-only SFT.
 #
-# These are the `Mev`-equivalent arms -- the same `multiformat_v2` long-form evidence-only
+# These are the `Mev`-equivalent arms -- the same `corpus_long_sparse` long-form evidence-only
 # corpus, at the same 93-pair dose, that nulls under LoRA at `dB NET +0.0072`.
 #
 # SCHEDULE IS RE-CALIBRATED, NOT INHERITED, and this is the point rather than a liberty:
@@ -53,7 +53,7 @@ experiment:
     n_items: 250  # unused by this stage; the spec leaves it mandatory
 
 training:
-  corpus_from: multiformat_v2
+  corpus_from: corpus_long_sparse
   use_corpus_user_turns: false
   # 93 pairs: the dose `multiformat_v2_valsplit_fixedq_d93` and `m0_multiform` were
   # trained at, so the full-FT reading is dose-matched to the LoRA number it is compared

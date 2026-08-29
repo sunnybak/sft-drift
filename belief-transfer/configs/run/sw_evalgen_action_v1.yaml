@@ -14,7 +14,7 @@
 # reads as favoring microservices under mild/strong pressure, which would mean R2's
 # direction flip did not take.
 #
-# n_items 60, seed_offset 100000: same convention as evalgen_v2 (8 domains x 3 pressure
+# n_items 60, seed_offset 100000: same convention as suite_action (8 domains x 3 pressure
 # levels = 24 cells, ~2.5x cycles), for the same reason -- an eval item's scene must not
 # share index-drawn names/regions with a training document at the same index (AGENTS.md's
 # pool-edit + scene-collision note). Only the pilot corpus (8 items) exists for this

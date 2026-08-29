@@ -7,7 +7,7 @@ that touching it for symmetry would be all risk and no information. New suites b
 this module; `efficacy.py` stays as it is.
 
 Paths mirror the datagen convention: candidate items land under `data/generated/`, the
-gated suite under `data/validated/`, both keyed by experiment and run id.
+gated suite (`<suite>_eval.jsonl`) beside them, both keyed by experiment and run id.
 """
 
 from __future__ import annotations
@@ -22,7 +22,6 @@ from belief_transfer.schemas import EvalGenConfig
 
 ROOT = Path(__file__).resolve().parents[3]
 GENERATED_DIR = ROOT / "data" / "generated"
-VALIDATED_DIR = ROOT / "data" / "validated"
 
 VARIANTS = ("ab", "ba")
 
@@ -35,8 +34,11 @@ def items_path(experiment_id: str, run_id: str, suite: str) -> Path:
 
 
 def validated_suite_path(experiment_id: str, run_id: str, suite: str) -> Path:
-    """The gated, variant-expanded suite the scoring stages consume."""
-    return VALIDATED_DIR / experiment_id / run_id / f"{suite}_eval.jsonl"
+    """The gated, variant-expanded suite the scoring stages consume.
+
+    Beside its `_items.jsonl` candidates in `generated/`; the `_eval` suffix is what marks
+    it gated. See `dataset.gate.validated_documents_path`."""
+    return GENERATED_DIR / experiment_id / run_id / f"{suite}_eval.jsonl"
 
 
 def review_path(experiment_id: str, run_id: str, suite: str) -> Path:

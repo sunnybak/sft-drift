@@ -28,9 +28,11 @@ Ordered by information density, not by chronology.
    of scope. Read it when the request is open-ended or touches the paper; skip it for a
    narrow re-scoring request. It is revised occasionally on the user's feedback, so do not
    assume a remembered version is current — the changelog records when it moved.
-4. **`AGENTS.md`** → "What the factory-farming experiment measured" — the standing
-   scientific result. Read this section, not the whole file. Read the rest of AGENTS.md
-   only when you are about to change something it governs.
+4. **`PAPER_AUDIT.md`** — the standing scientific result, every claim at the quotability
+   level it has actually earned (green / amber / red). Read this, not `AGENTS.md`:
+   `AGENTS.md` is the framework (how to build, design, and read), and deliberately holds no
+   results. Read it only when you are about to change something it governs — though its
+   "Reading a result" section is worth knowing before you quote any number.
 5. **`changelog/`, newest first** — usually the latest 1–2 files. Stop when entries stop
    being relevant to what the user is asking for. Each file's `Learnings` and `Next`
    sections carry most of the value; the addenda are working detail.

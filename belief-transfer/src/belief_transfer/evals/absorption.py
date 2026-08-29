@@ -211,6 +211,34 @@ def fact_nll(
     return out
 
 
+DOCUMENT_FACT = "document"
+"""The single pseudo-fact `document` resolution reports under.
+
+Not a fact at all -- it is the whole text. Named so the rest of the pipeline, which is
+keyed by fact name throughout, needs no branch: `specialization` reduces over whatever
+fact names it is handed, and one name is a legal case of that."""
+
+
+def document_facts() -> list[dict]:
+    """The fact list for `document` resolution: exactly one, spanning the whole text."""
+    return [{"name": DOCUMENT_FACT, "dimension": DOCUMENT_FACT, "unit": "-", "keywords": set()}]
+
+
+def document_nll(model: Any, prompt: str, text: str) -> dict[str, tuple[float, int]]:
+    """Mean per-token NLL of the WHOLE document, under `DOCUMENT_FACT`.
+
+    The `document`-resolution counterpart to `fact_nll`, with the same return shape so
+    the stage's accumulation is unchanged. There is no span selection and therefore no
+    audit: attribution is what `audit` reports on, and here every token is attributed by
+    construction. That is a loss of resolution, and it is the price of a corpus whose
+    premises are statements -- see `schemas.AbsorptionSpec.resolution` for when it is
+    admissible and when it is not.
+    """
+    scored = model.span_nll(prompt, text, [(0, len(text))])
+    entry = scored[0] if scored else None
+    return {} if entry is None else {DOCUMENT_FACT: (entry[0], entry[1])}
+
+
 def split_pairs(documents: list[dict], n_val: int) -> tuple[dict, dict]:
     """Deterministic train/val split by item index, keeping pairs whole.
 

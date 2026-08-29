@@ -14,7 +14,7 @@
 # was measured to matter: see changelog/2026-08-18c.md, where walking content and control
 # down together takes the absorption gate from 3-of-4 dimensions to 1-of-4.
 #
-# Suites and denominators unchanged (evalgen_v2, sensitivity_v2), so these numbers sit on
+# Suites and denominators unchanged (suite_belief + suite_action, sensitivity_v2), so these numbers sit on
 # the same scale as transfer_v2's and the sensitivity_v2 ladder's -- which is where the
 # explicit-control arms' belief and action scores come from, rather than rescoring them.
 #
@@ -50,7 +50,9 @@ efficacy:
       experiment: control_offtopic
 
 transfer:
-  suites_from: evalgen_v2
+  suites_from:
+    belief: suite_belief
+    action: suite_action
   sensitivity_from: sensitivity_v2
   arms:
     - name: base

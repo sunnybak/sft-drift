@@ -11,7 +11,7 @@ measured claim, a matched control, a positive control, uncertainty at the level 
 earned, novelty checked, artifacts re-runnable.* It is the "paper re-tabulation" that
 `STATE.md` has carried as a queued item since 2026-08-21.
 
-**Not a summary of results** — `AGENTS.md` is that. This asks one question per claim: *may
+**This is the summary of results.** `AGENTS.md` holds the framework only. This asks one question per claim: *may
 it appear in a paper, and in what form?* Overwritten when it is redone, like `STATE.md`.
 
 Quotability levels are `GOAL.md`'s ladder: direction (1 seed) → replicated direction (2

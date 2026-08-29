@@ -63,8 +63,8 @@ def data_root(tmp_path, monkeypatch) -> Path:
     for module, attribute, subdir in (
         (generate, "GENERATED_DIR", "generated"),
         (score, "GENERATED_DIR", "generated"),
-        (gate, "VALIDATED_DIR", "validated"),
-        (efficacy, "VALIDATED_DIR", "validated"),
+        (gate, "GENERATED_DIR", "generated"),
+        (efficacy, "GENERATED_DIR", "generated"),
         (efficacy, "RESULTS_DIR", "results"),
         (report, "RESULTS_DIR", "results"),
         (report, "OUT_DIR", "out"),

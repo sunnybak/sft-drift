@@ -6,9 +6,9 @@ gets `judge.document_checks` for its polarity, every pair gets `judge.pair_check
 results are written to `scores.jsonl` next to `documents.jsonl`. The corpus and its
 per-document/per-pair judge scores are one bundle produced by one invocation, not two
 separately-timed artifacts, so they live together rather than under a separate
-`data/validated/` tree.
+gated `validated.jsonl` beside it.
 
-`data/validated/` is reserved for the *filtered* subset a future gating step would
+`validated.jsonl` holds the *filtered* subset the gating step
 produce by applying each check's `threshold` to this file -- a genuinely different
 artifact (a smaller corpus), not just a copy of these scores.
 """

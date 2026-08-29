@@ -54,7 +54,7 @@ if TYPE_CHECKING:
     from belief_transfer.inference.model import ChoiceScorer
 
 ROOT = Path(__file__).resolve().parents[3]
-VALIDATED_DIR = ROOT / "data" / "validated"
+GENERATED_DIR = ROOT / "data" / "generated"
 RESULTS_DIR = ROOT / "data" / "results"
 
 ITEMS_FILENAME = "efficacy_eval.jsonl"
@@ -82,13 +82,13 @@ def _slug(name: str) -> str:
 
 
 def items_path(experiment_id: str, run_id: str) -> Path:
-    """`data/validated/<experiment_id>/<run_id>/efficacy_eval.jsonl`.
+    """`data/generated/<experiment_id>/<run_id>/efficacy_eval.jsonl`.
 
-    Under `validated/` with the other eval suites, and keyed by the *corpus* run id
+    Beside the other eval suites, and keyed by the *corpus* run id
     rather than a tuning run id: the item bank depends only on the experiment spec and
     the eval config, so every hyperparameter sweep over one corpus scores the same bank.
     """
-    return VALIDATED_DIR / experiment_id / run_id / ITEMS_FILENAME
+    return GENERATED_DIR / experiment_id / run_id / ITEMS_FILENAME
 
 
 def responses_path(experiment_id: str, run_id: str) -> Path:

@@ -475,7 +475,7 @@ def test_paths_follow_the_stage_and_experiment_layout() -> None:
     items = efficacy.items_path("factory_farming", "factory_farming_v1")
     responses = efficacy.responses_path("factory_farming", "tune-abc")
 
-    assert items.parts[-4:] == ("validated", "factory_farming", "factory_farming_v1", "efficacy_eval.jsonl")
+    assert items.parts[-4:] == ("generated", "factory_farming", "factory_farming_v1", "efficacy_eval.jsonl")
     assert responses.parts[-4:] == ("results", "factory_farming", "tune-abc", "efficacy_responses.jsonl")
 
 

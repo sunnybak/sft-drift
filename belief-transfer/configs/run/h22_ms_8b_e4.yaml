@@ -60,7 +60,9 @@ efficacy:
   arms: *arms
 
 transfer:
-  suites_from: evalgen_v2
+  suites_from:
+    belief: suite_belief
+    action: suite_action
   # sensitivity_8b_v1 earns the 8B denominators; 4B sensitivity_v2 must not be used here.
   sensitivity_from: null
   arms: *arms

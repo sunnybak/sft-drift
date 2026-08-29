@@ -1,0 +1,234 @@
+# configs/dataset/supporting_reasons.yaml
+#
+# Selected with `dataset=supporting_reasons`. The rung-2 corpus: ~375-word expository
+# pieces that ARGUE for the target belief through the supporting statements in
+# `experiment.dataset.dimensions`, while never stating the conclusion itself.
+#
+# A new file rather than an edit to any existing one, for the usual reason: editing a
+# shared template moves `dataset_config_sha` and the rendered prompt for every corpus
+# ever generated from it, and the rung-1 corpora have to stay regenerable to be the thing
+# rung 2 is compared against.
+#
+# WHAT MOVES RELATIVE TO THE EVIDENCE CORPORA, and why each move is deliberate:
+#
+#   - Premises are statements, not figures, so the document template asks the model to
+#     ARGUE them rather than to REPORT them.
+#   - The "avoid evaluative vocabulary such as good, bad, cruel" constraint is DROPPED.
+#     A supporting reason cannot obey it; carrying valence is what makes it supporting.
+#     What replaces it is narrower: describe the world, never grade the practice.
+#   - A new `no_quantitative_claims` check REPLACES the figure discipline. Without it the
+#     model reaches for invented statistics to back a reason, and the corpus becomes a
+#     rung-1 corpus wearing rung-2 clothes -- which would destroy the contrast this whole
+#     experiment exists to draw. Set at 0.9 rather than 0.95 because an incidental number
+#     ("a single barn holds tens of thousands of birds") is not a premise figure.
+#   - `no_normative_conclusion` is REPLACED by `no_normative_verdict`. The old wording
+#     asks whether the text "states or argues for" a normative conclusion, and arguing
+#     for one -- without stating it -- is precisely what this corpus does. The check has
+#     to gate the statement and permit the argument, or it gates the manipulation itself.
+#     THIS IS THE DESIGN'S FINEST BOUNDARY. Read the pilot's firings by hand before
+#     trusting the yield.
+#
+# Everything else -- the judge shells, the pair checks, the premise/contrast machinery --
+# is copied unchanged from the evidence corpora so gating numbers stay comparable.
+
+formats_file: reason_formats.json
+personas_file: reason_personas.json
+use_formats: true
+sections_per_document: 3
+
+# Form-blind and polarity-blind, like every other plan stage in this repo (see
+# configs/dataset/multiformat.yaml for what happens when it is not).
+#
+# One wart, stated rather than worked around: `PLAN_TOOL` requires a `measurements` field
+# and this corpus has no measurements. Rather than fork the tool -- which every other
+# corpus shares and whose schema change would move their shas -- the prompt redefines
+# what to put there, and the document template below simply never reads `plan.measurements`
+# or `plan.institutions`. A drawn-but-unread plan field costs nothing; a forked tool would
+# cost every other corpus its reproducibility.
+plan_gen_template: |
+  You are planning a piece of about {{ size_words }} words about {{ topic }}.
+
+  Produce a plan only, not prose. Two versions of the piece will be written from this
+  plan, giving OPPOSITE-DIRECTION reasons about the same considerations, so the plan
+  must not take a position on {{ topic }}, must not say which way any consideration
+  comes out, and must never state a fact about it.
+
+  Describe the subject, never the piece: no phrases about balance, tone, fairness, or
+  the writing process. Keep every field terse.
+
+  Subject: {{ segment }}
+  Return this exact phrase as the `segment` field, and make `primary_operation` a single
+  named site that produces it, naming the animal or product in the name itself.
+
+  Setting: {{ region }}
+  Opening: {{ structure }}
+
+  Use exactly these people, assigning each a role and an affiliation:
+  {% for name in names %}
+  - {{ name }}
+  {% endfor %}
+
+  Use these unrelated words only as a randomness seed when inventing institutions,
+  place names, and incidental detail. Do not include them verbatim:
+  {{ seed_words | join(", ") }}.
+
+  This piece reports no measurements. For the `measurements` field, name the
+  CONSIDERATION each section takes up, at most twelve words each and phrased so that it
+  does not indicate which way the consideration comes out -- for example "how the
+  housing system bears on the animals' behaviour". Never a quantity, never a value.
+
+  Plan {{ n_sections }} sections that together cover all of these aspects:
+  {{ dimension_names | join(", ") }}.
+
+  Call submit_plan with the plan.
+
+datapoint_gen_template: |
+  Write {{ style }} of about {{ size_words }} words about {{ topic }}.
+  Stay within ten percent of that length.
+
+  {% if persona %}
+  Write from the vantage of {{ persona }} -- that is whose expertise shapes which
+  considerations get weight and how they are explained. Do not name this person, do not
+  make them a character, and do not write in the first person unless the form below
+  says to.
+  {% endif %}
+
+  Your task: make the case below. Each of the following is something you take to be
+  true about {{ topic }}. Develop them as REASONS -- explain the mechanism behind each
+  one, say what follows from it, and let the piece build. Do not hedge them, do not
+  balance them against the opposite view, and do not present them as one side of a
+  debate.
+  {% for name, value in dimensions.items() %}
+  - {{ name }}: {{ value }}
+  {% endfor %}
+
+  Stop short of the conclusion. The reader should be able to see what all this adds up
+  to; you never say it. Do not write a closing paragraph that draws the threads
+  together, and do not end on a verdict.
+
+  Draw on this shared material where it fits:
+  - subject: {{ plan.segment }}
+  - setting: {{ plan.region }}
+  - operation: {{ plan.primary_operation }}
+  - people you may cite, with these exact names, roles, and affiliations:
+  {% for person in plan.people %}
+    - {{ person.name }}, {{ person.role }}, {{ person.affiliation }}
+  {% endfor %}
+  {% for section in plan.sections %}
+  - {{ section }}
+  {% endfor %}
+
+  Form ({{ format.voice }}):
+  {{ format.render }}
+
+  Constraints:
+  - Do not state a verdict on {{ topic }}. Never write that it is acceptable,
+    unacceptable, justified, unjustified, defensible, indefensible, right, wrong,
+    humane, or cruel, and never say what anyone should conclude about it.
+  - Do not assert, deny, or paraphrase this claim: "{{ belief_statement }}".
+  - Argue the reasons themselves as fully as you like. Describing how the world is --
+    including harm, strain, benefit, or relief -- is what this piece is for. Grading the
+    practice is what it must not do.
+  - Report NO figures, statistics, percentages, rates, or quantities of any kind. Make
+    every point in words. If a claim seems to need a number, make it qualitatively
+    instead.
+  - Do not recommend or advise the reader toward any choice related to:
+    {{ action_description }}.
+  - Never label any name, source, or figure as fictional, fabricated, hypothetical, or
+    illustrative.
+  - Do not mention this brief, these premises, or that you are a language model.
+
+# Judge shells copied unchanged from configs/dataset/default.yaml, so pass rates here are
+# comparable with every other corpus in the project. Only the check LIST differs.
+judge:
+  document_prompt_template: |
+    You are auditing a text. Judge only what the text itself does.
+
+    Question: {{ question }}
+
+    --- TEXT START ---
+    {{ document }}
+    --- TEXT END ---
+
+    Call submit_answer with the quote that decides the question and your answer.
+
+  pair_prompt_template: |
+    You are comparing two texts. Judge only what the texts themselves do.
+
+    Question: {{ question }}
+
+    --- TEXT A START ---
+    {{ document_a }}
+    --- TEXT A END ---
+
+    --- TEXT B START ---
+    {{ document_b }}
+    --- TEXT B END ---
+
+    Call submit_answer with the quote that decides the question and your answer.
+
+  document_checks:
+    - id: no_normative_verdict
+      question: >-
+        Does the text STATE a verdict on whether {{ topic }} is acceptable, justified,
+        defensible, right, wrong, humane, or cruel, or tell the reader what to conclude
+        about it? Giving reasons that bear on such a question, without stating the
+        verdict itself, does not count.
+      expect: false
+      threshold: 0.9
+    - id: no_belief_claim
+      question: >-
+        Does the text assert or deny this claim: "{{ belief_statement }}"?
+      expect: false
+      threshold: 0.95
+    - id: no_action_advice
+      question: >-
+        Does the text recommend, advise, or urge the reader toward any choice
+        related to: {{ action_description }}?
+      expect: false
+      threshold: 0.95
+    - id: no_quantitative_claims
+      question: >-
+        Does the text report any figure, statistic, percentage, rate, or other
+        quantity in support of a point it is making? An incidental number that
+        supports no point, such as a date or a street number, does not count.
+      expect: false
+      threshold: 0.9
+    - id: no_meta_reference
+      question: >-
+        Does the text mention a brief, instructions, or a prompt given to its own
+        author, or an AI system? Instructions given to people inside the story, such
+        as workplace procedures or safety rules, do not count.
+      expect: false
+      threshold: 1.0
+    - id: style_complete_ending
+      question: Does the text end with a complete sentence and a finished thought?
+      expect: true
+      threshold: 0.95
+    - id: style_no_contradiction
+      question: Does the text contradict itself on any point?
+      expect: false
+      threshold: 0.9
+
+  pair_checks:
+    - id: pair_same_subject
+      question: >-
+        Do the two texts describe the same specific subject: the same industry
+        segment, the same regions, and the same kinds of operations?
+      expect: true
+      threshold: 0.8
+    - id: pair_same_shape
+      question: >-
+        Do the two texts follow the same overall shape: a comparable opening,
+        comparable section order, and comparable use of quotes and examples?
+      expect: true
+      threshold: 0.7
+
+  # The one place the premise machinery had to change wording: an evidence corpus asks
+  # whether a FIGURE consistent with the fact was reported, which is meaningless when the
+  # fact is a statement. "Convey" rather than "state" because a narrative form carries a
+  # reason through a scene rather than asserting it, and a stricter verb would fail the
+  # `story` form for doing exactly what its render block asks.
+  premise_question_template: "Does the text convey that {{ fact }}?"
+  premise_threshold: 0.9
+  contrast_threshold: 0.9

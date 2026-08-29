@@ -1,6 +1,6 @@
 # @package _global_
 #
-# configs/run/premise_short_3p_v1.yaml -- the THIRD-PERSON short-premise corpus (Ms3p arm
+# configs/run/corpus_short_dense.yaml -- the THIRD-PERSON short-premise corpus (Ms3p arm
 # dataset), full size. The 2x2's missing cell; see configs/dataset/premise_short_3p.yaml
 # for the registered predictions, written before generation.
 #
@@ -17,7 +17,7 @@ defaults:
   - override /experiment: factory_farming
   - override /dataset: premise_short_3p
 
-run_id: premise_short_3p_v1
+run_id: corpus_short_dense
 stage: datagen
 throughput: 6
 

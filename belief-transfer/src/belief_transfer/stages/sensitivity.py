@@ -35,7 +35,7 @@ from belief_transfer.evals import suite as suite_mod
 from belief_transfer.generation.context import RunContext
 from belief_transfer.inference.local import local_model
 from belief_transfer.inference.model import free_gpu
-from belief_transfer.schemas import JobConfig, RunResult
+from belief_transfer.schemas import JobConfig, RunResult, resolve_suite_run_id
 from belief_transfer.stages.efficacy import adapter_for
 
 SCORERS = {
@@ -58,11 +58,15 @@ async def run(job: JobConfig) -> RunResult:
     config = job.eval.evalgen
     if config is None:
         raise ValueError("configs/eval has no `evalgen` block; see AGENTS.md, Belief and action suites")
-    suites_run_id = spec.suites_from or job.run_id
+    suite_runs: dict[str, str] = {
+        name: resolve_suite_run_id(spec.suites_from, name, job.run_id) or job.run_id
+        for name in spec.suites
+    }
 
     suites: dict[str, list[dict]] = {}
     for suite_name in spec.suites:
-        path = suite_mod.validated_suite_path(job.experiment.id, suites_run_id, suite_name)
+        path = suite_mod.validated_suite_path(
+            job.experiment.id, suite_runs[suite_name], suite_name)
         if not path.exists():
             raise FileNotFoundError(
                 f"no validated {suite_name} suite at {path} -- run stage=evalgen first"
@@ -70,7 +74,14 @@ async def run(job: JobConfig) -> RunResult:
         suites[suite_name] = _limit_items(suite_mod.load_rows(path), spec.limit)
 
     responses: dict[str, list[dict]] = {name: [] for name in suites}
-    metrics: dict[str, Any] = {"suites_from": suites_run_id, "conditions": {}}
+    # One string when every suite came from one run (what downstream analysis expects),
+    # the per-suite mapping when they did not -- recording a single id there would name
+    # the wrong bank for at least one suite.
+    resolved = sorted(set(suite_runs.values()))
+    metrics: dict[str, Any] = {
+        "suites_from": resolved[0] if len(resolved) == 1 else dict(suite_runs),
+        "conditions": {},
+    }
 
     # --- prompted interventions on base: one model load, every condition -------------
     if spec.prompted_conditions:

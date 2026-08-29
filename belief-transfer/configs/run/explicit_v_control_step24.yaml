@@ -80,7 +80,9 @@ _arms: &arms
     checkpoint: checkpoint-24
 
 transfer:
-  suites_from: evalgen_v2
+  suites_from:
+    belief: suite_belief
+    action: suite_action
   sensitivity_from: sensitivity_v2
   responses_from: matrix_v1_step24
   arms: *arms

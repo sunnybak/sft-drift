@@ -106,6 +106,7 @@ async def generate_dataset(
             segments=experiment.dataset.segments,
             personas=experiment.dataset.personas,
             formats_file=config.formats_file,
+            personas_file=config.personas_file,
         )
         for index in item_indices
     ]
@@ -156,6 +157,11 @@ async def generate_dataset(
                     "dataset_config_sha": provenance.config_shas["dataset_config"],
                     "format": seed.document_format.id if seed.document_format else None,
                     "segment_seed": seed.segment,
+                    # Recorded for the same reason every other draw is: a seed pool can
+                    # be edited, and then the corpus is no longer regenerable from the
+                    # spec alone. Persona was drawn but unrecorded until the rung-2
+                    # corpus made it a load-bearing axis (data/seeds/reason_personas.json).
+                    "persona_seed": seed.persona,
                     "prompt": prompts.render_document_prompt(
                         experiment, plan, polarity, config, seed
                     ),

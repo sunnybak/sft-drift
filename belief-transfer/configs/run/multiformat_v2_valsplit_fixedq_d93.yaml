@@ -7,7 +7,7 @@
 # Exists so the content arms and BOTH controls -- form-matched and single-form -- sit at
 # one dose, which is what makes the netted numbers comparable across them.
 #
-# 93 < 123, so AbsorptionSpec's held-out 21 pairs (the LAST indices of multiformat_v2's
+# 93 < 123, so AbsorptionSpec's held-out 21 pairs (the LAST indices of corpus_long_sparse's
 # 144) stay unseen and the gate is still a held-out reading.
 
 defaults:
@@ -22,6 +22,6 @@ experiment:
     n_items: 150  # unused by this stage; the spec leaves it mandatory
 
 training:
-  corpus_from: multiformat_v2
+  corpus_from: corpus_long_sparse
   max_pairs: 93
   use_corpus_user_turns: false

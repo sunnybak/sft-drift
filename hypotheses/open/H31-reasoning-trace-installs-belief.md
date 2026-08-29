@@ -68,3 +68,14 @@ re-read with reasoning traces as an intermediate rung, and `H22`'s stalled
 intermediate-assertion corpus (`resource_constrained/`) has its design handed to it.
 If falsified: assertion is doing the work, `H4`'s rendering-only account hardens, and the
 project should stop looking for a premise-side lever.
+
+## Sibling: H32 (appended 2026-08-29)
+
+[H32](H32-reasons-without-verdict-install-belief.md) registered the same day varies a
+different thing and is **not** a sub-case of this file. H31 varies whether the inferential
+**step is performed** in the text; H32 varies **what level of claim is supplied** — figures,
+mid-level reasons, or the verdict — with no step performed in any of them. Orthogonal axes,
+both cheap. Run together they decompose H13's form ladder in two directions; run alone,
+either leaves the other's account standing. Note that a falsification of *either* gives the
+same terminal advice — stop hunting for a premise-side lever — reached from opposite sides,
+which is worth knowing before spending on both.

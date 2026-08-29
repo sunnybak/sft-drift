@@ -25,7 +25,7 @@ throughput: 6
 
 related_runs:
   premise_short_v1: the first-person corpus this is the matched third-person twin of
-  premise_short_3p_v1: the full corpus this pilot gates
+  corpus_short_dense: the full corpus this pilot gates
 
 experiment:
   dataset:

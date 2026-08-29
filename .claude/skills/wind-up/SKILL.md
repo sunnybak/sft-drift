@@ -102,13 +102,15 @@ decide which was wrong, the statement or the work. A statement quietly widened t
 was already done cannot fail, and a north star that cannot fail is not one. When the user
 does revise it, record what moved and why in that session's entry.
 
-## 6. Update AGENTS.md only if a load-bearing number moved
+## 6. Update PAPER_AUDIT.md only if a load-bearing number moved
 
-"What the factory-farming experiment measured" is the standing result and it is cited as
-current. Update it when a number in it changed, a new control re-derived the machinery
-term, or a caveat was resolved. Do not update it for work in progress — a number in that
-section reads as established, and putting a provisional one there is worse than leaving it
-out.
+`PAPER_AUDIT.md` is the standing result and it is cited as current. Update it when a number
+in it changed, a new control re-derived the machinery term, or a caveat was resolved. Do not
+update it for work in progress — a row there reads as established, and putting a provisional
+one in is worse than leaving it out.
+
+`AGENTS.md` holds no results by design. Touch it only when the session changed a *rule* —
+how an experiment must be designed, gated, or read — not when it changed a number.
 
 ## 7. Push, in risk order
 

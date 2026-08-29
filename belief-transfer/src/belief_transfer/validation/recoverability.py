@@ -23,7 +23,7 @@ def check_recoverability(path: str, belief: str) -> dict[str, float]:
     """Aggregate a judge-checks JSONL into a recoverability margin per document.
 
     `path` is the output of `belief_transfer.validation.judge.run_checks`, persisted
-    under data/validated/ (one row per check, with `check_id` and `passed`). `belief`
+    in the run directory (one row per check, with `check_id` and `passed`). `belief`
     is accepted for interface symmetry with AGENTS.md's recoverability definition and
     is not used directly: direction is read off the `premise_*`/`contrast_*` check ids,
     which are already specific to the experiment's belief and dimensions.

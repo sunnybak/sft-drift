@@ -22,7 +22,7 @@
 # long-document pairs teaches "answer any question with prose"; under one question that
 # behaviour stays keyed to it. See changelog/2026-08-18c.md.
 #
-# WHAT IT COSTS: the 62 distinct user turns that multiformat_v2 was built for. This keeps
+# WHAT IT COSTS: the 62 distinct user turns that corpus_long_sparse was built for. This keeps
 # the six document forms and gives up the prompt-side diversity, which is a real loss --
 # `training.dataset`'s docstring wants both. It is the arm that can be measured today, not
 # the end of that line of work.
@@ -39,7 +39,7 @@ experiment:
     n_items: 150  # unused by this stage; the spec leaves it mandatory
 
 training:
-  corpus_from: multiformat_v2
+  corpus_from: corpus_long_sparse
   # 123 = 144 gated pairs minus AbsorptionSpec.val_pairs (21); see multiformat_v2_valsplit
   # for why the two halves line up, and change both together.
   max_pairs: 123

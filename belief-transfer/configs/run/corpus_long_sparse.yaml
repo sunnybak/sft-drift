@@ -1,6 +1,6 @@
 # @package _global_
 #
-# configs/run/multiformat_v2.yaml -- `python run.py +run=multiformat_v2`
+# configs/run/corpus_long_sparse.yaml -- `python run.py +run=corpus_long_sparse`
 #
 # multiformat_v1 with the plan's subject pinned. Same six surface forms, same 150 item
 # indices, same judge; the one change is that each item now draws a segment from
@@ -27,7 +27,7 @@ defaults:
   - override /experiment: factory_farming
   - override /dataset: multiformat
 
-run_id: multiformat_v2
+run_id: corpus_long_sparse
 stage: datagen
 throughput: 8
 

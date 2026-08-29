@@ -269,3 +269,56 @@ def test_persona_does_not_disturb_the_other_seed_draws() -> None:
         assert (with_personas.structure, with_personas.region, with_personas.names,
                 with_personas.seed_words) == (without.structure, without.region,
                                               without.names, without.seed_words)
+
+
+def test_persona_pool_file_is_an_alternative_source_not_a_new_axis() -> None:
+    """`personas_file` names WHERE the list comes from; it must not move the draw.
+
+    The axis is `PERSONA_NAMESPACE` either way, so a pool whose entries match a spec
+    list must produce the same persona for the same index. If the source could shift the
+    draw, two corpora sharing an experiment spec would silently differ on an axis neither
+    of them declared.
+    """
+    import json
+
+    from belief_transfer.generation.random import document_personas, personas_path
+    from belief_transfer.generation.prompts import seed_item
+
+    pool = document_personas("reason_personas.json")
+    assert pool == json.loads(personas_path("reason_personas.json").read_text())
+
+    for index in range(20):
+        from_file = seed_item(index, personas_file="reason_personas.json")
+        from_list = seed_item(index, personas=pool)
+        assert from_file.persona == from_list.persona
+        # and naming a pool changes nothing else about the item
+        assert (from_file.structure, from_file.region, from_file.names) == (
+            from_list.structure, from_list.region, from_list.names)
+
+    # Absent, the spec list still wins -- every corpus generated before pools existed.
+    assert seed_item(3).persona is None
+
+
+def test_reason_formats_and_personas_do_not_confound() -> None:
+    """The rung-2 pilot's two per-item axes, checked the way the explicit-control
+    disaster taught: 5 forms x 12 personas is 60 cells, and a periodic assignment would
+    reach a small fraction of them."""
+    from belief_transfer.generation.prompts import seed_item
+
+    seeds = [
+        seed_item(
+            i,
+            use_formats=True,
+            formats_file="reason_formats.json",
+            personas_file="reason_personas.json",
+        )
+        for i in range(1000)
+    ]
+    cells = {(s.document_format.id, s.persona) for s in seeds}
+    assert len(cells) == 60
+    # and every form's requests render against the topic without a stray placeholder
+    for seed in seeds[:50]:
+        assert seed.document_format.requests
+    assert {s.document_format.id for s in seeds} == {
+        "textbook", "article_excerpt", "news", "story", "report"
+    }

@@ -34,5 +34,7 @@ training:
 
 sensitivity:
   suites: [belief, action]
-  suites_from: evalgen_v2
+  suites_from:
+    belief: suite_belief
+    action: suite_action
   prompted_conditions: true

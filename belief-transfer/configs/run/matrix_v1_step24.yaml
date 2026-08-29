@@ -82,7 +82,7 @@ efficacy:
 # which STATE.md carried as an open item. The stage was always intended to run here --
 # nothing about the instrument changes, only the step it is read at.
 absorption:
-  corpus_run_id: multiformat_v2
+  corpus_run_id: corpus_long_sparse
   val_pairs: 21
   arms: *arms
   net_pairs:
@@ -92,7 +92,9 @@ absorption:
     - [me_minus, m0_minus]
 
 transfer:
-  suites_from: evalgen_v2
+  suites_from:
+    belief: suite_belief
+    action: suite_action
   sensitivity_from: sensitivity_v2
   arms: *arms
   contrast: [m_plus, m_minus]

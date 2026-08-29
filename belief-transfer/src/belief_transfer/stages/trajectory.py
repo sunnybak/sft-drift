@@ -30,7 +30,7 @@ from belief_transfer.generation.context import RunContext
 from belief_transfer.inference.backend import backend_info
 from belief_transfer.inference.local import local_model
 from belief_transfer.inference.model import free_gpu
-from belief_transfer.schemas import JobConfig, RunResult
+from belief_transfer.schemas import JobConfig, RunResult, resolve_suite_run_id
 
 TRAJECTORY_FILENAME = "trajectory.jsonl"
 
@@ -81,7 +81,9 @@ def _rows_for(model, job: JobConfig, instruments: list[str]) -> dict[str, dict[s
             continue
         rows = suite_mod.load_rows(
             suite_mod.validated_suite_path(
-                job.experiment.id, job.transfer.suites_from or job.run_id, name
+                job.experiment.id,
+                resolve_suite_run_id(job.transfer.suites_from, name, job.run_id),
+                name,
             )
         )
         scored = suite_mod.score_rows(

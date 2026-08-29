@@ -1,0 +1,51 @@
+# @package _global_
+#
+# configs/run/suite_action.yaml -- `python run.py +run=suite_action stage=evalgen`
+#
+# The frozen action suite. Split out of `suite_belief_action` (which generated the belief
+# and action banks together, because one evalgen invocation wrote both) so that either
+# suite can be revised without re-versioning the other. The items did not change in the
+# split -- same seeds, same offset, same gate, same `eval_config_sha`; only each row's
+# `run_id` was rewritten to match its directory, and `schemas.SUITE_RUN_ID_ALIASES` maps
+# the old id per suite so results measured before the split still resolve.
+#
+# The action suite's incidental scene draws sit in their own seed namespace
+# (`seed_offset: 100000`). Why: `evals/generate.action_cell` draws requester name, region,
+# and company with `choose_*(seed=index)`, which is the same call `dataset/generate.py`
+# makes for training documents. At the default offset of 0 that makes action item `i`
+# share its entire scene with training document `i` -- measured on the pre-offset suite,
+# 33/33 shared indices collide with `explicit-control-v1` and `-v2-diverse` on all three
+# fields. `factory_farming_v1` does not collide, but only because it predates the
+# regions.json expansion (AGENTS.md's pool-edit warning); any corpus generated against the
+# current pool will.
+#
+# An eval item staged in the identical scene as a training document is a shared-surface
+# path between corpus and instrument, and the leakage check does not cover it -- it
+# shingles item text against document text, and a bare place name is too short to trip.
+#
+# The offset is large and round rather than +1 so it reads as a deliberate namespace.
+# Note what it does NOT buy: both still sample the same 147-region pool, so a given eval
+# region still appears somewhere in a large corpus at chance rate (~13-20%, roughly flat
+# across offsets of +1, +10, +1000). Breaking the index-lock is the part worth having;
+# disjointness would need a partitioned pool, at the cost of scene diversity.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: suite_action
+stage: evalgen
+
+related_runs:
+  suite_belief: >-
+    the belief bank generated alongside this one; the two were one run id
+    (suite_belief_action) until they were split
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  action_eval:
+    n_items: 60
+
+eval:
+  evalgen:
+    seed_offset: 100000

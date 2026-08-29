@@ -1,4 +1,4 @@
-"""Turn a gated corpus (`data/validated/<experiment_id>/<run_id>/documents.jsonl`) into
+"""Turn a gated corpus (`data/generated/<experiment_id>/<run_id>/validated.jsonl`) into
 per-polarity, chat-formatted SFT datasets.
 
 AGENTS.md's `ΔB = B(M+) - B(M-)` requires one checkpoint trained on the `positive`

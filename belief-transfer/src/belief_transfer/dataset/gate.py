@@ -15,8 +15,8 @@ action-advice, meta-reference, style, and pair-matchedness checks do gate: any o
 failing means the pair does not represent what the experiment claims it does, or is
 not usable prose.
 
-Writes the passing subset to `data/validated/<experiment_id>/<run_id>/documents.jsonl`
--- the filtered artifact `data/validated/` was reserved for.
+Writes the passing subset to `data/generated/<experiment_id>/<run_id>/validated.jsonl`,
+beside the raw documents and the judge scores it was gated from.
 """
 
 from __future__ import annotations
@@ -29,13 +29,20 @@ from typing import Any
 from belief_transfer.schemas import ExperimentConfig, JudgeConfig
 from belief_transfer.validation import judge
 
-VALIDATED_DIR = Path(__file__).resolve().parents[3] / "data" / "validated"
+GENERATED_DIR = Path(__file__).resolve().parents[3] / "data" / "generated"
 DOCUMENTS_FILENAME = "documents.jsonl"
+VALIDATED_FILENAME = "validated.jsonl"
 
 
 def validated_documents_path(experiment_id: str, run_id: str) -> Path:
-    """Where a run's gated corpus lives: `data/validated/<experiment_id>/<run_id>/documents.jsonl`."""
-    return VALIDATED_DIR / experiment_id / run_id / DOCUMENTS_FILENAME
+    """Where a run's gated corpus lives: `data/generated/<experiment_id>/<run_id>/validated.jsonl`.
+
+    Beside `documents.jsonl` and `scores.jsonl` rather than under a separate `validated/`
+    tree, because all three come out of one `dataset` invocation over one corpus and a run
+    directory should hold that run's artifacts. The gate is now a filename, not a path
+    prefix: `documents.jsonl` is everything generated, `validated.jsonl` the gated subset.
+    """
+    return GENERATED_DIR / experiment_id / run_id / VALIDATED_FILENAME
 
 
 def _gates(check_id: str) -> bool:

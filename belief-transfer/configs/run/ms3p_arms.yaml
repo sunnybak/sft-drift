@@ -12,7 +12,7 @@
 #   1st P    Ms    dB +0.157 / +0.140    (not built)
 #   3rd P    Ms3p  <- THIS RUN            Mev  dB +0.0072 / +0.0080
 #
-# Corpus `premise_short_3p_v1`: same premise values, same plan stage, same length band
+# Corpus `corpus_short_dense`: same premise values, same plan stage, same length band
 # (median 101 vs Ms's 105), same judge checks at the same thresholds, and the SAME user-turn
 # list -- `report_formats.json` copies `requests` verbatim from `opinion_formats.json`, so
 # the question asked is held fixed and only the answer's voice moves. 0/256 gated documents
@@ -45,7 +45,7 @@ run_id: ms3p_arms
 stage: sft
 
 related_runs:
-  premise_short_3p_v1: the corpus these arms train on
+  corpus_short_dense: the corpus these arms train on
   ms_arms: the first-person twin -- same premises, same length, different voice
   ms_formmatched_2ep: where Ms was netted against this same control
   multiformat_v2_valsplit_fixedq_d93: the third-person LONG cell of the 2x2
@@ -55,7 +55,7 @@ experiment:
     n_items: 160  # unused by this stage; the spec leaves it mandatory
 
 training:
-  corpus_from: premise_short_3p_v1
+  corpus_from: corpus_short_dense
   max_pairs: 93
 
 _arms: &arms
@@ -93,7 +93,9 @@ efficacy:
   arms: *arms
 
 transfer:
-  suites_from: evalgen_v2
+  suites_from:
+    belief: suite_belief
+    action: suite_action
   sensitivity_from: sensitivity_v2
   arms: *arms
   contrast: [m_plus, m_minus]

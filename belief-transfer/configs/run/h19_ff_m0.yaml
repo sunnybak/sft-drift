@@ -30,7 +30,7 @@ experiment:
     n_items: 250  # unused by this stage; the spec leaves it mandatory
 
 training:
-  corpus_from: control_offtopic_multiform
+  corpus_from: corpus_control_multiform
   use_corpus_user_turns: false
   max_pairs: 93
   sft:

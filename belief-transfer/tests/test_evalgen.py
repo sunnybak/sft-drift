@@ -629,7 +629,7 @@ def test_leakage_corpus_run_id_defaults_to_the_old_hardcoded_path(make_job) -> N
     assert job.evalgen.leakage_corpus_run_id == "factory_farming_v1"
     path = evalgen_stage.leakage_corpus_path(job)
     assert path is not None
-    assert path.parts[-3:] == ("factory_farming", "factory_farming_v1", "documents.jsonl")
+    assert path.parts[-3:] == ("factory_farming", "factory_farming_v1", "validated.jsonl")
 
 
 def test_leakage_corpus_run_id_selects_the_corpus_and_can_be_switched_off(make_job) -> None:
@@ -639,7 +639,7 @@ def test_leakage_corpus_run_id_selects_the_corpus_and_can_be_switched_off(make_j
     path = evalgen_stage.leakage_corpus_path(named)
     assert path is not None
     assert path.parts[-3:] == (
-        "software_architecture", "software_arch_pilot", "documents.jsonl"
+        "software_architecture", "software_arch_pilot", "validated.jsonl"
     )
 
     off = _software_job(make_job, "evalgen.leakage_corpus_run_id=null")

@@ -24,9 +24,9 @@ stage: datagen
 throughput: 6
 
 related_runs:
-  premise_short_3p_v1: the SHORT dense cell at the same voice
-  multiformat_v2: the LONG sparse cell at the same length
-  premise_long_dense_v1: the full corpus this pilot gates
+  corpus_short_dense: the SHORT dense cell at the same voice
+  corpus_long_sparse: the LONG sparse cell at the same length
+  corpus_long_dense: the full corpus this pilot gates
 
 experiment:
   dataset:

@@ -1,12 +1,12 @@
 # @package _global_
 #
-# configs/run/m0_short_v1_judged.yaml -- the LLM-judged CHECK on `m0_short_v1`, which was
+# configs/run/m0_short_v1_judged.yaml -- the LLM-judged CHECK on `corpus_control_short`, which was
 # gated lexically when the credit balance ran out mid-run.
 #
 #   uv run python run.py +run=m0_short_v1_judged
 #
 # WHY A NEW RUN ID RATHER THAN RE-GATING IN PLACE. `ms0_arms` is already trained on
-# `data/validated/control_offtopic/m0_short_v1/documents.jsonl`, and every Ms number in
+# `data/validated/control_offtopic/corpus_control_short/documents.jsonl`, and every Ms number in
 # STATE.md is netted against those checkpoints. Re-running datagen under the original run id
 # would overwrite that corpus with a differently-gated subset, silently changing the
 # training input of a checkpoint whose results are already recorded -- the exact
@@ -29,7 +29,7 @@ stage: datagen
 throughput: 6
 
 related_runs:
-  m0_short_v1: the lexically-gated corpus this checks, and the one ms0_arms is trained on
+  corpus_control_short: the lexically-gated corpus this checks, and the one ms0_arms is trained on
 
 experiment:
   dataset:

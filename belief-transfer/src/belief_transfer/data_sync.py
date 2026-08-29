@@ -1,7 +1,7 @@
 """Sync `data/` with a private Hugging Face dataset repo.
 
 `data/seeds/` is committed: generation draws from those pools. The rest of `data/`
-is not (see repo root `.gitignore`): `generated/` and `validated/` corpora grow with
+is not (see repo root `.gitignore`): `generated/` corpora grow with
 every experiment, and `checkpoints/` will eventually hold multi-GB SFT weights, both
 well past what a git repo should carry. Instead that tree -- except `cache/`, which
 is gitignored too and reproducible from `generation.cache`'s cache file, not a

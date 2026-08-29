@@ -6,7 +6,7 @@ intervention, not SFT) change the eval score by a meaningful amount? Answering t
 requires two things that do not exist in this repo yet:
 
   - a belief/action eval suite: experiments/<name>/belief_eval.yaml and
-    action_eval.yaml point at data/validated/<name>/belief_eval.jsonl and
+    action_eval.yaml point at data/generated/<exp>/<name>/belief_eval.jsonl and
     action_eval.jsonl, neither of which has been generated
   - the inference pipeline: belief_transfer.inference.model/run are still stubs, and
     scoring (belief_transfer.metrics.belief/action) is still a stub too

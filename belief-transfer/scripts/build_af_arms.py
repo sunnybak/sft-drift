@@ -8,7 +8,7 @@ polarities' per-document scores -- pair-level removal because the netted dB inst
 requires the polarity arms to stay matched; a per-polarity filter would unmatch them and
 the contrast would conflate composition with content), remove top pairs until the removed
 word count reaches the budget (fraction of total pool words), and write the retained rows
-as a corpus under data/validated/factory_farming/af_<method>_<pct>/documents.jsonl.
+as a corpus under data/generated/factory_farming/af_<method>_<pct>/validated.jsonl.
 
 BUDGET UNIT IS PAIRS, NOT WORDS (changed 2026-08-22d BEFORE any arm trained). At a word
 budget, methods remove 52..353 pairs for the same words, so at epochs=1 the arms differ
@@ -36,7 +36,9 @@ from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-VALIDATED = ROOT / "data" / "validated" / "factory_farming"
+# The gated corpus now sits beside its raw output as validated.jsonl
+# (AGENTS.md, "Repository structure"); see dataset.gate.validated_documents_path.
+VALIDATED = ROOT / "data" / "generated" / "factory_farming"
 RESULTS = ROOT / "data" / "results" / "factory_farming"
 
 GROUND_TRUTH_DB = {"m0": 0.000, "ms0": 0.000, "mev": 0.007, "md": 0.111,
@@ -61,7 +63,7 @@ def main() -> None:
     args = ap.parse_args()
 
     rows = [json.loads(l) for l in
-            (VALIDATED / args.pool / "documents.jsonl").read_text().splitlines() if l.strip()]
+            (VALIDATED / args.pool / "validated.jsonl").read_text().splitlines() if l.strip()]
     scores: dict[tuple, dict] = {}
     for pol in ("positive", "negative"):
         f = RESULTS / args.pool / f"attribution_{pol}_{args.checkpoint}.jsonl"
@@ -120,7 +122,7 @@ def main() -> None:
                              "removed_by_source": dict(by_src),
                              "removed_indices": sorted(removed_ids)}
             if args.dry_run: continue
-            out = VALIDATED / arm / "documents.jsonl"
+            out = VALIDATED / arm / "validated.jsonl"
             out.parent.mkdir(parents=True, exist_ok=True)
             with out.open("w", encoding="utf-8") as fh:
                 for r in rows:

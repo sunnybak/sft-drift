@@ -14,7 +14,6 @@ belief-transfer/data/.cache/
 belief-transfer/data/.gitattributes
 belief-transfer/data/cache/
 belief-transfer/data/generated/
-belief-transfer/data/validated/
 belief-transfer/data/checkpoints/
 belief-transfer/data/results/
 # Per-machine inference calibration from `make bench` (see inference/bench.py).
@@ -23,3 +22,9 @@ belief-transfer/configs/hardware_profile.yaml
 
 # Skill eval scaffolding: transcripts and side-by-side outputs, not source.
 .claude/skills/*-workspace/
+
+# Frozen plan files written by the one-off cleanup scripts in belief-transfer/scripts/.
+# They are a safety interlock between a --plan pass and its --apply, scoped to one
+# invocation on one machine -- not a source artifact, and committing one would invite a
+# later --apply against a stale list.
+belief-transfer/scripts/*.plan.json

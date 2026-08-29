@@ -22,14 +22,14 @@ stage: sft
 
 related_runs:
   ms_sparse_arms: the seed-42 run this replicates
-  premise_short_sparse_v1: the corpus both seeds train on
+  corpus_short_sparse: the corpus both seeds train on
 
 experiment:
   dataset:
     n_items: 140  # unused by this stage; the spec leaves it mandatory
 
 training:
-  corpus_from: premise_short_sparse_v1
+  corpus_from: corpus_short_sparse
   max_pairs: 93
   sft:
     seed: 123
@@ -59,7 +59,9 @@ efficacy:
   arms: *arms
 
 transfer:
-  suites_from: evalgen_v2
+  suites_from:
+    belief: suite_belief
+    action: suite_action
   sensitivity_from: sensitivity_v2
   arms: *arms
   contrast: [m_plus, m_minus]

@@ -9,10 +9,10 @@
 #   uv run python run.py +run=mld_arms stage=belief_eval     # dB: the question
 #
 #   corpus                      words   density   dB NET
-#   premise_short_3p_v1           101    14.92%   +0.1190   (Ms3p  short dense)
-#   premise_short_sparse_v1       101     4.56%   +0.0506   (Mss   short sparse)
-#   multiformat_v2                726     3.96%   +0.0072   (Mev   long  sparse)
-#   premise_long_dense_v1         650    14.85%   ???       (Mld   long  dense, THIS RUN)
+#   corpus_short_dense           101    14.92%   +0.1190   (Ms3p  short dense)
+#   corpus_short_sparse       101     4.56%   +0.0506   (Mss   short sparse)
+#   corpus_long_sparse                726     3.96%   +0.0072   (Mev   long  sparse)
+#   corpus_long_dense         650    14.85%   ???       (Mld   long  dense, THIS RUN)
 #
 # REGISTERED PREDICTION, written before training. H15 measures density at 2.35x and length
 # at 7.03x, multiplying to the observed 16.5x. That identity rests on three cells and one
@@ -45,7 +45,7 @@ run_id: mld_arms
 stage: sft
 
 related_runs:
-  premise_long_dense_v1: the corpus these arms train on
+  corpus_long_dense: the corpus these arms train on
   ms3p_arms: the SHORT dense cell at the same density and voice
   ms_sparse_arms: the SHORT sparse cell
   multiformat_v2_valsplit_fixedq_d93: the LONG sparse cell at the same length
@@ -55,7 +55,7 @@ experiment:
     n_items: 200  # unused by this stage; the spec leaves it mandatory
 
 training:
-  corpus_from: premise_long_dense_v1
+  corpus_from: corpus_long_dense
   max_pairs: 93
 
 _arms: &arms
@@ -83,7 +83,9 @@ efficacy:
   arms: *arms
 
 transfer:
-  suites_from: evalgen_v2
+  suites_from:
+    belief: suite_belief
+    action: suite_action
   sensitivity_from: sensitivity_v2
   arms: *arms
   contrast: [m_plus, m_minus]

@@ -14,8 +14,9 @@ less impressive than it looks in isolation -- so this note checks that baseline 
 ## Key Concepts
 
 - **in-context reading** — the belief item is scored on the untrained base model with a
-  block of `explicit_stance_v3` documents (the SFT explicit-belief corpus) prefixed
-  directly into the prompt, in place of fine-tuning on them.
+  block of `corpus_explicit_stance` documents (the SFT explicit-belief corpus, named
+  `explicit_stance_v3` when this was run) prefixed directly into the prompt, in place of
+  fine-tuning on them.
 - **delta (in-context)** — `p_positive(plus-context) - p_positive(minus-context)`, paired
   per item. No control arm is netted out because nothing is trained; there is no any-SFT
   machinery term to subtract.

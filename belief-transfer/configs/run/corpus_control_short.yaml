@@ -1,11 +1,11 @@
 # @package _global_
 #
-# configs/run/m0_short_v1.yaml -- the SHORT off-topic control corpus (the Ms0
+# configs/run/corpus_control_short.yaml -- the SHORT off-topic control corpus (the Ms0
 # arm dataset), full size. Gated by m0_short_pilot: 8/8 pairs, median 79 words, zero
 # factory-farming vocabulary in any gated document. 110 items carries margin over the 93
 # the arm trains on.
 #
-#   uv run python run.py +run=m0_short_v1
+#   uv run python run.py +run=corpus_control_short
 #
 # The dataset config is `premise_short` UNCHANGED, pointed at the control_offtopic
 # experiment. That is deliberate and is what makes it a matched control: same form file,
@@ -38,7 +38,7 @@ defaults:
   - override /experiment: control_offtopic
   - override /dataset: premise_short
 
-run_id: m0_short_v1
+run_id: corpus_control_short
 stage: datagen
 throughput: 6
 

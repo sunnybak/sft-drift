@@ -2,7 +2,7 @@
 in-context text on the BASE model, and score the same belief eval suite the trained Me+/Me-
 arms were read against (evalgen_v2). No fine-tuning happens here at all.
 
-Purpose: `Me+`/`Me-` (AGENTS.md, "What the factory-farming experiment measured") is the
+Purpose: `Me+`/`Me-` (PAPER_AUDIT.md) is the
 project's one arm that reliably moves belief once trained. This control asks how much of
 that movement is available for free, without training, just by putting the same 198
 documents in context ahead of the belief question -- i.e. is the trained effect doing
@@ -63,7 +63,7 @@ def main() -> None:
     eval_config = job.eval.evalgen
     assert eval_config is not None
 
-    corpus_path = ROOT / "data" / "validated" / EXPERIMENT / CORPUS_RUN_ID / "documents.jsonl"
+    corpus_path = ROOT / "data" / "generated" / EXPERIMENT / CORPUS_RUN_ID / "validated.jsonl"
     corpus_rows = suite_mod.load_rows(corpus_path)
     n_pos = sum(1 for r in corpus_rows if r["polarity"] == "positive")
     n_neg = sum(1 for r in corpus_rows if r["polarity"] == "negative")
@@ -107,7 +107,7 @@ def main() -> None:
     # Reference point: the TRAINED explicit-stance contrast, netted against the matched
     # off-topic control, recomputed here (not retyped from AGENTS.md prose) from
     # matrix_v1_step24's saved belief_responses.jsonl by AGENTS.md's documented method
-    # ("What the factory-farming experiment measured" / evals/suite.netted_delta).
+    # (PAPER_AUDIT.md / evals/suite.netted_delta).
     def trained_netted(run_id: str) -> dict | None:
         path = ROOT / "data" / "results" / EXPERIMENT / run_id / "belief_responses.jsonl"
         if not path.exists():

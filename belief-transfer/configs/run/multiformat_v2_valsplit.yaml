@@ -2,7 +2,7 @@
 #
 # configs/run/multiformat_v2_valsplit.yaml -- `python run.py +run=multiformat_v2_valsplit stage=sft`
 #
-# The absorption-gate arms for multiformat_v2: trained on the TRAIN half only, so the val half is
+# The absorption-gate arms for corpus_long_sparse: trained on the TRAIN half only, so the val half is
 # genuinely unseen and `stage=absorption` measures absorption rather than memorization.
 #
 # 123 = 144 gated pairs minus AbsorptionSpec.val_pairs (21), and the two halves line up
@@ -10,7 +10,7 @@
 # `evals.absorption.split_pairs` holds out the LAST 21, so max_pairs = N - val_pairs is
 # exactly the train half. If val_pairs changes, this number has to change with it.
 #
-# Not the same arms as +run=multiformat_v2 stage=sft, and deliberately so: those see the
+# Not the same arms as +run=corpus_long_sparse stage=sft, and deliberately so: those see the
 # whole corpus and are the ones to score on the belief and action suites (which share no
 # documents with the corpus, so there is nothing to hold out). These exist only for the
 # gate, which is a held-out-NLL statistic.
@@ -27,5 +27,5 @@ experiment:
     n_items: 150  # unused by this stage; the spec leaves it mandatory
 
 training:
-  corpus_from: multiformat_v2
+  corpus_from: corpus_long_sparse
   max_pairs: 123

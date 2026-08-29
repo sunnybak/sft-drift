@@ -3,7 +3,7 @@
 # configs/run/evalgen_action_pinned.yaml -- cell A of H11's minimal pair: the FROZEN
 # action construct regenerated fresh. Template and checks are configs/eval/default.yaml's
 # verbatim (no override); only pressure is collapsed to [none] and the scene offset kept
-# at the evalgen_v2 namespace. 24 items.
+# at the suite_action namespace. 24 items.
 #
 #   uv run python run.py +run=evalgen_action_pinned stage=evalgen
 #

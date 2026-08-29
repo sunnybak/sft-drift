@@ -1,6 +1,6 @@
 # @package _global_
 #
-# configs/run/h22_ms0_8b_e4_s7.yaml -- H22's 8B short off-topic control, seed 7: m0_short_v1
+# configs/run/h22_ms0_8b_e4_s7.yaml -- H22's 8B short off-topic control, seed 7: corpus_control_short
 # under h8_8b_arms' recipe, retrained per seed. The machinery term for h22_ms_8b_s7.
 #
 #   uv run python run.py +run=h22_ms0_8b_e4_s7 stage=sft
@@ -21,7 +21,7 @@ experiment:
 
 training:
   model: qwen3-8b
-  corpus_from: m0_short_v1
+  corpus_from: corpus_control_short
   max_pairs: 93
   sft:
     lr: 1.0e-4

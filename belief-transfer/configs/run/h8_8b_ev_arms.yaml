@@ -51,7 +51,7 @@ experiment:
 
 training:
   model: qwen3-8b
-  corpus_from: multiformat_v2
+  corpus_from: corpus_long_sparse
   max_pairs: 93
   sft:
     lr: 1.0e-4

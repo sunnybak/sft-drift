@@ -78,7 +78,7 @@ efficacy:
   arms: *arms
 
 absorption:
-  corpus_run_id: multiformat_v2
+  corpus_run_id: corpus_long_sparse
   val_pairs: 21
   arms: *arms
   net_pairs:
@@ -88,7 +88,9 @@ absorption:
     - [lora_m_minus, lora_m0_minus]
 
 transfer:
-  suites_from: evalgen_v2
+  suites_from:
+    belief: suite_belief
+    action: suite_action
   sensitivity_from: sensitivity_v2
   arms: *arms
   contrast: [m_plus, m_minus]

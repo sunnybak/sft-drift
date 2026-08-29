@@ -253,6 +253,32 @@ def _previous_result(path: Path) -> RunResult | None:
         return None
 
 
+def _render_artifact_views(result: RunResult) -> None:
+    """Write a readable `.md` beside every `.jsonl` this stage declared as an artifact.
+
+    Hooked here rather than at each write site because a stage's `artifacts` list is
+    already exactly "the files this invocation produced" -- the alternative was a call
+    after every `write_rows`, which is the same decision made in a dozen places and
+    forgotten in the thirteenth. `stage=render_md` backfills the rest of the tree.
+
+    Best-effort by design: these are derived views (see `analysis.jsonl_md`), and a
+    formatting bug must not be able to fail a stage that already produced its real
+    output. The view is skipped and the run stands.
+    """
+    from belief_transfer.analysis import jsonl_md
+
+    for name in result.artifacts:
+        path = Path(name)
+        if not path.is_absolute():
+            path = ROOT / path
+        if path.suffix != ".jsonl" or not path.exists():
+            continue
+        try:
+            jsonl_md.write_md(path, display_path=name)
+        except Exception as error:  # noqa: BLE001 -- a view must never break a stage
+            print(f"[report] could not render {path.name}.md: {error}")
+
+
 def write_result(
     result: RunResult,
     *,
@@ -265,6 +291,7 @@ def write_result(
     every invocation of this run id, however many process runs have written the file.
     """
     path = path or results_path(result.experiment, result.run_id, result.stage)
+    _render_artifact_views(result)
     previous = _previous_result(path)
     merged = result.model_copy(
         update={"lifetime": merge_lifetime(previous.lifetime if previous else None, result.last_run)}

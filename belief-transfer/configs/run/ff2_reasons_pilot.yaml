@@ -1,0 +1,36 @@
+# @package _global_
+#
+# configs/run/ff2_reasons_pilot.yaml -- the PILOT for the rung-2 reasons corpus.
+#
+# AGENTS.md design rule 6: generate a handful, read them by eye, only then spend. Eight
+# pairs is enough to see all five surface forms at least once and to put the two hardest
+# judgments in front of a human before 1,000 pairs are paid for:
+#
+#   1. Does a piece ARGUE the reasons without STATING the verdict? That boundary is
+#      finer than any this repo has gated on, and `no_normative_verdict` is a judge
+#      check written for it that has never been run. Read every firing AND every pass.
+#   2. Does `no_quantitative_claims` hold? The model reaches for invented statistics to
+#      back a qualitative reason. If it does that here, rung 2 is contaminated with
+#      rung-1 content and the ladder's contrast is gone.
+#
+# Also worth reading for: whether the `story` form can carry a reason through a scene
+# without narrating it flatly, and whether the persona vantage shows up as emphasis
+# rather than as a named character.
+#
+# `throughput` stays at the root default for the pilot. The full run raises it; there is
+# no point discovering a rate limit while generating eight pairs.
+
+defaults:
+  - override /experiment: factory_farming_2
+  - override /dataset: supporting_reasons
+
+run_id: ff2_reasons_pilot
+stage: datagen
+
+related_runs:
+  corpus_short_dense: rung 1 at the comparable dose -- figures, no reasons, no verdict
+  corpus_explicit_stance: rung 3 -- the verdict asserted outright
+
+experiment:
+  dataset:
+    n_items: 8

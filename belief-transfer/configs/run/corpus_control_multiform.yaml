@@ -1,7 +1,7 @@
 # @package _global_
 #
-# configs/run/control_offtopic_multiform.yaml
-#   python run.py +run=control_offtopic_multiform
+# configs/run/corpus_control_multiform.yaml
+#   python run.py +run=corpus_control_multiform
 #
 # The off-topic control regenerated in the SIX SURFACE FORMS, so it can net the multi-form
 # arms on document shape and not merely on topic.
@@ -28,12 +28,12 @@ defaults:
   - override /experiment: control_offtopic
   - override /dataset: multiformat_offtopic
 
-run_id: control_offtopic_multiform
+run_id: corpus_control_multiform
 stage: datagen
 
 # 6, not control_offtopic_v2's 3: `llm.RETRIES` went from the SDK default of 2 to 10 with
 # an explicit 300s timeout (changelog/2026-08-18b.md), which is what made throughput 8
-# survivable for multiformat_v2. 6 leaves margin on a judging phase this size.
+# survivable for corpus_long_sparse. 6 leaves margin on a judging phase this size.
 throughput: 6
 
 experiment:

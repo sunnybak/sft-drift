@@ -60,7 +60,9 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-VALIDATED = ROOT / "data" / "validated" / "factory_farming"
+# The gated corpus now sits beside its raw output as validated.jsonl
+# (AGENTS.md, "Repository structure"); see dataset.gate.validated_documents_path.
+VALIDATED = ROOT / "data" / "generated" / "factory_farming"
 CHECKPOINTS = ROOT / "data" / "checkpoints" / "factory_farming"
 RESULTS = ROOT / "data" / "results" / "factory_farming"
 
@@ -73,7 +75,7 @@ SOURCE_ORDER = ["m0", "ms0", "mev", "md", "ms", "me"]
 
 
 def load_documents(run_id: str, polarity: str) -> list[dict]:
-    path = VALIDATED / run_id / "documents.jsonl"
+    path = VALIDATED / run_id / "validated.jsonl"
     rows = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
     return [row for row in rows if row["polarity"] == polarity]
 

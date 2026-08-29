@@ -69,7 +69,9 @@ efficacy:
   arms: *arms
 
 transfer:
-  suites_from: evalgen_v2
+  suites_from:
+    belief: suite_belief
+    action: suite_action
   # Deliberately null: `sensitivity_v2` is a 4B measurement and would silently produce
   # cross-model T ratios. See the header.
   sensitivity_from: null

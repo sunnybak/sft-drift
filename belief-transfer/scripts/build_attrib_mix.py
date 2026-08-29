@@ -4,7 +4,7 @@
     uv run python scripts/build_attrib_mix.py --pairs-per-source 24 --run-id attrib_mix_pilot
 
 Concatenates the four ladder corpora into one gated corpus at
-`data/validated/factory_farming/<run_id>/documents.jsonl`, so a single model can be
+`data/generated/factory_farming/<run_id>/validated.jsonl`, so a single model can be
 trained on the union and an attribution method can be asked which of its own training
 documents caused a normative generation. See `configs/run/attrib_mix_v1.yaml` for why
 that single model is required and for the predictions registered before any score was
@@ -34,7 +34,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CHECKPOINTS = ROOT / "data" / "checkpoints"
-VALIDATED = ROOT / "data" / "validated"
+# The gated corpus now sits beside its raw output as validated.jsonl
+# (AGENTS.md, "Repository structure"); see dataset.gate.validated_documents_path.
+VALIDATED = ROOT / "data" / "generated"
 
 # source tag -> (checkpoint dir holding the persisted training rows, ground-truth netted
 # dB at 2 epochs / seed 42). The dB values are recorded here for provenance only; nothing
@@ -158,7 +160,7 @@ def build(pairs_per_source: int, run_id: str, *, fixed_turns: bool = False,
                 })
         next_index += pairs_per_source
 
-    out_path = VALIDATED / "factory_farming" / run_id / "documents.jsonl"
+    out_path = VALIDATED / "factory_farming" / run_id / "validated.jsonl"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("w", encoding="utf-8") as handle:
         for row in rows:

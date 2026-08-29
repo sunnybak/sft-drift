@@ -2,10 +2,10 @@
 #
 # configs/run/multiformat_v2_fixedq.yaml -- `python run.py +run=multiformat_v2_fixedq stage=sft`
 #
-# The full-corpus (144-pair) counterpart of multiformat_v2_valsplit_fixedq: multiformat_v2's
+# The full-corpus (144-pair) counterpart of multiformat_v2_valsplit_fixedq: corpus_long_sparse's
 # documents trained under the experiment's one fixed topic question. These are the arms to
 # score on the belief and action suites -- those share no documents with the corpus, so
-# there is nothing to hold out -- where multiformat_v2's own arms are unusable, having
+# there is nothing to hold out -- where corpus_long_sparse's own arms are unusable, having
 # failed choice_bench (0.667/0.625 measured on this box).
 #
 # See multiformat_v2_valsplit_fixedq for why the user turn is the variable that matters and
@@ -23,5 +23,5 @@ experiment:
     n_items: 150  # unused by this stage; the spec leaves it mandatory
 
 training:
-  corpus_from: multiformat_v2
+  corpus_from: corpus_long_sparse
   use_corpus_user_turns: false

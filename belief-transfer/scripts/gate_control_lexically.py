@@ -5,7 +5,7 @@
 
 Why this exists, and the honest scope of it. `m0_short_v1`'s 220 documents generated
 successfully on 2026-08-20 and then the OpenAI credit balance was exhausted before the
-judging pass ran, so `dataset.gate` never produced a `validated/` corpus. The documents are
+judging pass ran, so `dataset.gate` never produced a `validated.jsonl`. The documents are
 paid for and cached; only the gate is missing.
 
 **This is a weaker gate than every other corpus in the project got, and the corpus must be
@@ -86,7 +86,7 @@ def main() -> None:
     half = sorted(set(by_index) - whole)
     final = [row for row in kept if row["index"] in whole]
 
-    out = ROOT / "data" / "validated" / args.experiment / args.run_id / "documents.jsonl"
+    out = ROOT / "data" / "generated" / args.experiment / args.run_id / "validated.jsonl"
     out.parent.mkdir(parents=True, exist_ok=True)
     with out.open("w", encoding="utf-8") as handle:
         for row in sorted(final, key=lambda r: (r["index"], r["polarity"])):

@@ -18,7 +18,7 @@
 # factory_farming/ instead, a leftover from the deleted scripts/run_m0_split.py; do not
 # copy that placement.
 #
-# `max_pairs` is set from the gated yield of control_offtopic_multiform and must equal the
+# `max_pairs` is set from the gated yield of corpus_control_multiform and must equal the
 # dose of the arms it nets. See configs/run/absorption_multiformat_fixedq_m0multi.yaml.
 
 defaults:
@@ -33,9 +33,9 @@ experiment:
     n_items: 250  # unused by this stage; the spec leaves it mandatory
 
 training:
-  corpus_from: control_offtopic_multiform
+  corpus_from: corpus_control_multiform
   use_corpus_user_turns: false
-  # 93 = the gated yield of control_offtopic_multiform (93/250). Every arm this control
+  # 93 = the gated yield of corpus_control_multiform (93/250). Every arm this control
   # nets is trained at the same 93, including the single-form control it is compared
   # against (m0_singleform_d93), so document form is the only difference between them.
   max_pairs: 93

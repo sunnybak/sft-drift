@@ -31,7 +31,9 @@ from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-VALIDATED = ROOT / "data" / "validated" / "factory_farming"
+# The gated corpus now sits beside its raw output as validated.jsonl
+# (AGENTS.md, "Repository structure"); see dataset.gate.validated_documents_path.
+VALIDATED = ROOT / "data" / "generated" / "factory_farming"
 CHECKPOINTS = ROOT / "data" / "checkpoints" / "factory_farming"
 RESULTS = ROOT / "data" / "results" / "factory_farming"
 
@@ -114,7 +116,7 @@ def main():
     args = ap.parse_args()
 
     rows = [json.loads(l) for l in
-            (VALIDATED / args.run_id / "documents.jsonl").read_text().splitlines() if l.strip()]
+            (VALIDATED / args.run_id / "validated.jsonl").read_text().splitlines() if l.strip()]
     if args.limit:
         by = defaultdict(list)
         for r in rows: by[(r["polarity"], r["source"])].append(r)

@@ -38,7 +38,7 @@ run_id: ms0_arms_s7
 stage: sft
 
 related_runs:
-  m0_short_v1: the corpus these arms train on
+  corpus_control_short: the corpus these arms train on
   ms_arms: the short-premise arm this control is matched to, and whose netting it tests
   m0_multiform: the long-form control every short arm has been netted against until now
 
@@ -47,7 +47,7 @@ experiment:
     n_items: 110  # unused by this stage; the spec leaves it mandatory
 
 training:
-  corpus_from: m0_short_v1
+  corpus_from: corpus_control_short
   max_pairs: 93
   sft:
     seed: 7

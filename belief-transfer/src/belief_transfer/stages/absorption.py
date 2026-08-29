@@ -55,26 +55,37 @@ async def run(job: JobConfig) -> RunResult:
     _, val_pairs = absorption.split_pairs(documents, spec.val_pairs)
     prompt = sft_dataset.sft_prompt(experiment.dataset.topic)
 
-    facts = absorption.parse_facts(experiment.dataset.dimensions, unit_words)
-    if not facts:
-        raise ValueError(
-            f"experiment {experiment.id!r} has no contrastive facts with a recognised unit; "
-            f"absorption.unit_words is {sorted(unit_words)}"
-        )
-    print("[absorption] facts parsed from the spec (keywords are polarity-blind):")
-    for fact in facts:
-        print(f"    {fact['dimension']:<22} {fact['name']:<28} unit={fact['unit']:<10} "
-              f"kw={sorted(fact['keywords'])}")
+    whole_document = spec.resolution == "document"
+    if whole_document:
+        # No span selection, so no attribution and no audit to report -- see
+        # `schemas.AbsorptionSpec.resolution` for why this is admissible only for a
+        # statement-premise corpus, and never as a rescue for a sparse figures corpus.
+        facts = absorption.document_facts()
+        audit = {"in_range": {}, "total": {}}
+        print("[absorption] resolution=document: scoring the WHOLE held-out text as one "
+              "span. No per-fact or per-dimension breakdown is available.")
+    else:
+        facts = absorption.parse_facts(experiment.dataset.dimensions, unit_words)
+        if not facts:
+            raise ValueError(
+                f"experiment {experiment.id!r} has no contrastive facts with a recognised unit; "
+                f"absorption.unit_words is {sorted(unit_words)}. If its premises are "
+                "statements rather than figures, set absorption.resolution=document."
+            )
+        print("[absorption] facts parsed from the spec (keywords are polarity-blind):")
+        for fact in facts:
+            print(f"    {fact['dimension']:<22} {fact['name']:<28} unit={fact['unit']:<10} "
+                  f"kw={sorted(fact['keywords'])}")
 
-    audit = absorption.audit(val_pairs, facts, unit_words)
-    print("\n[absorption] span selection audit over the held-out pairs "
-          "(in-range rate is a report, NOT a filter):")
-    for fact in facts:
-        name = fact["name"]
-        total = audit["total"].get(name, 0)
-        ok = audit["in_range"].get(name, 0)
-        rate = f"{ok / total:.0%}" if total else "--"
-        print(f"    {name:<28} {total:>4} spans   in own polarity's range: {rate}")
+        audit = absorption.audit(val_pairs, facts, unit_words)
+        print("\n[absorption] span selection audit over the held-out pairs "
+              "(in-range rate is a report, NOT a filter):")
+        for fact in facts:
+            name = fact["name"]
+            total = audit["total"].get(name, 0)
+            ok = audit["in_range"].get(name, 0)
+            rate = f"{ok / total:.0%}" if total else "--"
+            print(f"    {name:<28} {total:>4} spans   in own polarity's range: {rate}")
 
     # nll[condition][fact][pair_index][polarity]
     nll: dict = defaultdict(lambda: defaultdict(lambda: defaultdict(dict)))
@@ -92,8 +103,12 @@ async def run(job: JobConfig) -> RunResult:
         model = local_model(job.training.model, job.models, adapter_path=adapter)
         for index, pair in val_pairs.items():
             for polarity in ("positive", "negative"):
-                scored = absorption.fact_nll(
-                    model, prompt, pair[polarity]["text"], facts, unit_words
+                scored = (
+                    absorption.document_nll(model, prompt, pair[polarity]["text"])
+                    if whole_document
+                    else absorption.fact_nll(
+                        model, prompt, pair[polarity]["text"], facts, unit_words
+                    )
                 )
                 for fact_name, (value, _) in scored.items():
                     nll[arm.name][fact_name][index][polarity] = value
@@ -125,7 +140,10 @@ async def run(job: JobConfig) -> RunResult:
     print(f"\n{'=' * 84}")
     print("PER DIMENSION rollup (mean over the dimension's facts present in each pair)")
     print(f"{'=' * 84}")
-    for dimension in sorted({f["dimension"] for f in facts}):
+    # At document resolution the single pseudo-fact IS the whole text, so the rollup
+    # would restate the block above under a second name. Skipped rather than printed,
+    # because two identical numbers under two headings read as corroboration.
+    for dimension in ([] if whole_document else sorted({f["dimension"] for f in facts})):
         names = [f["name"] for f in facts if f["dimension"] == dimension]
         entry = absorption.specialization(nll, fact_names=names, **common)
         if entry is None:

@@ -27,7 +27,7 @@ experiment:
     n_items: 150  # unused by this stage; the spec leaves it mandatory
 
 training:
-  corpus_from: multiformat_v2
+  corpus_from: corpus_long_sparse
   max_pairs: 93
   use_corpus_user_turns: false
   sft:

@@ -34,7 +34,9 @@ experiment:
 
 sensitivity:
   suites: [belief, action]
-  suites_from: evalgen_v2
+  suites_from:
+    belief: suite_belief
+    action: suite_action
   prompted_conditions: false
   calibration_arms:
     - name: m0_plus
@@ -48,10 +50,10 @@ sensitivity:
       run_id: tune-f09053a2
     - name: pinned_m_plus            # FAILS choice_bench -- the collapsed reference
       polarity: positive
-      run_id: multiformat_v2
+      run_id: corpus_long_sparse
     - name: pinned_m_minus           # FAILS choice_bench -- the collapsed reference
       polarity: negative
-      run_id: multiformat_v2
+      run_id: corpus_long_sparse
     - name: fixedq_m_plus
       polarity: positive
       run_id: multiformat_v2_fixedq

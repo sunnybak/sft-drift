@@ -18,7 +18,7 @@
 #   - both arms of a pair reporting the SAME quantities with opposite-direction values,
 #     in the same voice and at the same length
 #   - length in the 40-170 word band the form file specifies, i.e. comparable to
-#     explicit_stance_v3 (~109) and desc_conclusion_v1 (~120), NOT to multiformat_v2 (~741).
+#     corpus_explicit_stance (~109) and desc_conclusion_v1 (~120), NOT to corpus_long_sparse (~741).
 #     Length matching is the reason this corpus exists; check it on sight.
 #
 # A specific risk worth naming before reading: `no_descriptive_conclusion` is an

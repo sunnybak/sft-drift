@@ -1,0 +1,40 @@
+# @package _global_
+#
+# configs/run/suite_belief.yaml -- `python run.py +run=suite_belief stage=evalgen`
+#
+# The frozen belief suite. Split out of `suite_belief_action` (which generated the belief
+# and action banks together, because one evalgen invocation wrote both) so that either
+# suite can be revised without re-versioning the other. The items did not change in the
+# split -- same seeds, same offset, same gate, same `eval_config_sha`; only each row's
+# `run_id` was rewritten to match its directory, and `schemas.SUITE_RUN_ID_ALIASES` maps
+# the old id per suite so results measured before the split still resolve.
+#
+# `seed_offset: 100000` is carried over unchanged. It was introduced for the action
+# suite's scene draws (see configs/run/suite_action.yaml) and does nothing here -- belief
+# items carry no scene, only an abstract normative statement -- but it is part of what
+# these items were generated under, so removing it would make the overlay stop
+# reproducing its own bank.
+#
+# NEGATIVE CONTROL: these belief items match evalgen_v1's index-for-index. A belief
+# contrast that moves between the two suites is measuring noise, not the instrument.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: suite_belief
+stage: evalgen
+
+related_runs:
+  suite_action: >-
+    the action bank generated alongside this one; the two were one run id
+    (suite_belief_action) until they were split
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  belief_eval:
+    n_items: 60
+
+eval:
+  evalgen:
+    seed_offset: 100000

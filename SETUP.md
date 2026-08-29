@@ -58,13 +58,13 @@ make data-pull    # data/ from the private HF dataset repo (~7 GB, includes chec
 make cache-pull   # the LLM call cache — do this, it is money
 ```
 
-**Good:** `data/generated/`, `data/validated/`, `data/checkpoints/`, `data/results/` are
+**Good:** `data/generated/`, `data/checkpoints/`, `data/results/` are
 populated, and `data/cache/llm_cache.jsonl` exists.
 
 The cache is excluded from `data-pull` on purpose and synced separately. It is reproducible
 from the API calls that filled it, but not for free: roughly $2.90 cold versus $1.75 warm
 for one 250-item corpus. It covers `factory_farming_v1`, the multiformat corpora,
-`control_offtopic_multiform` ($2.82) and `explicit_stance_v3` ($0.55). The one hole is
+`corpus_control_multiform` ($2.82) and `corpus_explicit_stance` ($0.55). The one hole is
 `control_offtopic_v2`, whose ~8,000 judge calls were made on a box whose cache was never
 pushed — regenerating *that* corpus specifically still costs full price.
 
@@ -166,7 +166,8 @@ Then the methodology:
   `EFFICACY.md` at the repo root; it was folded into AGENTS.md's "Efficacy" section, and
   those references are left as the dated record they are.
 - **`AGENTS.md`'s "Belief and action suites"** — the design and the locked decisions
-  behind the two suites (built and frozen: `evalgen_v1`, `evalgen_v2`). This was
+  behind the two suites (built and frozen as `suite_belief` and `suite_action`, formerly
+  one bank named `evalgen_v2` — see `belief-transfer/data/RENAMES.md`). This was
   `EVALGEN.md` until 2026-08-18; entries in `changelog/` before that date still name the
   old file and are left as the dated record.
 
@@ -200,8 +201,7 @@ uv run python run.py +run=matrix_v1 stage=belief_eval
 uv run python run.py +run=matrix_v1 stage=action_eval
 ```
 
-See AGENTS.md's "What the factory-farming experiment measured" for what those four
-currently say and which caveats travel with them.
+See `PAPER_AUDIT.md` for what those four currently say and which caveats travel with them.
 
 Override any value, and sweep with `-m`:
 

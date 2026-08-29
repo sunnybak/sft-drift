@@ -31,6 +31,7 @@ import yaml
 
 from belief_transfer.analysis import results as R
 from belief_transfer.analysis.tables import format_estimate
+from belief_transfer.schemas import canonical_run_id
 
 _ELIDE = "  (elided {n}; {how})"
 
@@ -238,7 +239,13 @@ def _warn_suites(hits: Sequence[R.Estimate]) -> None:
     measured against different suites, and `suites_from` is recorded in every summary
     header -- so this costs nothing and catches the one mistake a reader cannot see.
     """
-    banks = sorted({e.suites_from for e in hits if e.suites_from})
+    # Canonicalized so a renamed or per-suite-split bank is not reported as two banks;
+    # see RUN_ID_ALIASES / SUITE_RUN_ID_ALIASES. The suite comes from the artifact name
+    # (`belief_summary.yaml`), which is what makes a split id resolvable at all.
+    banks = sorted({
+        canonical_run_id(e.suites_from, e.ref.artifact.split("_")[0])
+        for e in hits if e.suites_from
+    })
     if len(banks) > 1:
         print(f"\nNOTE: these refs span {len(banks)} item banks ({', '.join(banks)}). "
               "Scores measured on different banks are not directly comparable.")

@@ -46,7 +46,7 @@
 #
 # n_items=48 -> 24 per class before gating. Judge checks are the standard action set,
 # unchanged -- structural defects gate items out; nothing here relaxes anything.
-# seed_offset stays at evalgen_v2's 100000 (the scene-collision fix; same reason).
+# seed_offset stays at suite_action's 100000 (the scene-collision fix; same reason).
 #
 # PILOT FIRST (rule 6): run once with experiment.action_eval.n_items=16 under run id
 # evalgen_action_adjacency_pilot -- one full crossing, 8 items per class -- and read every

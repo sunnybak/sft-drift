@@ -5,7 +5,7 @@
 #   python run.py +run=transfer_v2 stage=belief_eval
 #   python run.py +run=transfer_v2 stage=action_eval
 #
-# transfer_v1 re-run against evalgen_v2, with its denominators from sensitivity_v2. Same
+# transfer_v1 re-run against suite_belief + suite_action, with its denominators from sensitivity_v2. Same
 # arms, same netting, same contrast -- the only change is the eval suite.
 #
 # What this is for: transfer_v1 measured dA NET +0.025 [+0.003, +0.049], the project's one
@@ -15,7 +15,7 @@
 # -- does NOT collide, so the prediction is that dA is unchanged; this run is what turns
 # that prediction into a measurement.
 #
-# The belief suite is a negative control here: evalgen_v2's belief items match evalgen_v1's
+# The belief suite is a negative control here: suite_belief's belief items match evalgen_v1's
 # in every measured field, so dB must reproduce transfer_v1 exactly.
 #
 # Interpretation caveats (AGENTS.md, Efficacy) before any number below is read: M+'s
@@ -35,7 +35,9 @@ experiment:
     n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
 
 transfer:
-  suites_from: evalgen_v2
+  suites_from:
+    belief: suite_belief
+    action: suite_action
   sensitivity_from: sensitivity_v2
   arms:
     - name: base

@@ -6,9 +6,18 @@
 > shows it as mode `120000`. Anything describing them as two copies to "keep in sync" is
 > stale.
 
+**This file is the framework, not the findings.** It holds how the project is built, how
+an experiment is designed, and how a number is allowed to be read. What any particular run
+measured lives in `data/results/<experiment>/<run_id>/`; what it implied lives in
+`changelog/`, `hypotheses/`, and `insights/`; what is true right now lives in `STATE.md`.
+Results were stripped out of this document deliberately — they rotted here, and a rule
+stated with a stale number attached is worse than the rule alone. When a rule below needs
+evidence, it points at where the evidence lives instead of quoting it.
+
 ## Project purpose
 
-This repository studies whether beliefs induced through supervised fine-tuning (SFT) transfer into downstream behavior.
+This repository studies whether beliefs induced through supervised fine-tuning (SFT)
+transfer into downstream behavior.
 
 The core experimental chain is:
 
@@ -20,17 +29,22 @@ belief acquisition
 behavioral propagation
 ```
 
-For each experiment, we construct matched SFT corpora representing different underlying evidence or positions, fine-tune models on them, measure whether the model's directly expressed belief changes, and measure whether that change appears in downstream decisions where the belief is relevant.
+For each experiment, we construct matched SFT corpora representing different underlying
+evidence or positions, fine-tune models on them, measure whether the model's directly
+expressed belief changes, and measure whether that change appears in downstream decisions
+where the belief is relevant.
 
-The initial experiments cover:
+Experiment specs currently built:
 
-* factory farming / ethics (`configs/experiment/factory_farming.yaml`, built)
-* an off-topic dose control (`configs/experiment/control_offtopic.yaml`, built -- isolates
-  any-SFT drift from content-driven belief shift; not a belief experiment itself)
-* software architecture (planned, not yet started)
-* computer recommendations (planned, not yet started)
+* factory farming / ethics (`configs/experiment/factory_farming.yaml`)
+* software architecture (`configs/experiment/software_architecture.yaml`) — the second
+  topic, deliberately non-moral and with a different prior structure, so a result that
+  holds on both is not a property of one subject matter
+* an off-topic dose control (`configs/experiment/control_offtopic.yaml`) — isolates
+  any-SFT drift from content-driven belief shift; not a belief experiment itself
 
-The goal is a small, rigorous, reproducible research codebase—not a general-purpose ML platform.
+The goal is a small, rigorous, reproducible research codebase—not a general-purpose ML
+platform.
 
 ---
 
@@ -71,7 +85,8 @@ Avoid unless clearly justified:
 * ML experiment management platforms
 * premature framework code
 
-A new experiment should ideally require adding configuration/data, not changing core pipeline logic.
+A new experiment should ideally require adding configuration/data, not changing core
+pipeline logic.
 
 ---
 
@@ -118,8 +133,9 @@ src/belief_transfer/
 
 data/
     seeds/                             plain-list seed pools for generation, shared across experiments
-    generated/<experiment_id>/<run_id>/   raw generation output and its judge scores
-    validated/<experiment_id>/<run_id>/   the gated subset that passed those scores' thresholds; eval suites
+    generated/<experiment_id>/<run_id>/   everything one datagen invocation produced: raw
+                                          documents, judge scores, the gated subset, and
+                                          any eval suites keyed to that run id
     checkpoints/<experiment_id>/<run_id>/ SFT checkpoints
     results/<experiment_id>/<run_id>/     eval scores, transfer metrics, analysis output,
                                           and the resolved config that produced them
@@ -128,8 +144,10 @@ data/
 out/<experiment_id>/<run_id>/          rendered deliverables: paper.tex/paper.pdf, the
                                        figures they embed, and the evidence bundle and
                                        draft they were built from
+insights/<slug>/                       short grounded notes: note.md, sources.yaml,
+                                       figures/, and a rendered PDF (see "Insight notes")
 
-GOAL.md                   the north star, and what is out of scope
+GOAL.md                   the north star, what is out of scope, and the quotability ladder
 hypotheses/open|supported|falsified/   one file per claim; status is the folder and
                                        open/ is capped at three (see below)
 STATE.md                               what is true right now; overwritten each session
@@ -138,11 +156,45 @@ changelog/                             episodic memory, one file per session
 tests/
 ```
 
-Do not create new top-level directories without a concrete need. Inside `src/`, a new package must also be given a layer in `tests/test_import_rules.py` (see "Layering" below), so that placing it is a decision rather than an accident.
+Do not create new top-level directories without a concrete need. Inside `src/`, a new
+package must also be given a layer in `tests/test_import_rules.py` (see "Layering" below),
+so that placing it is a decision rather than an accident.
 
-Each `<run_id>/` is one invocation of `configs/run/<run_id>.yaml`, or `adhoc/` for a job not tied to a corpus (`configs/run/adhoc.yaml`). File names inside it are fixed and stage-specific -- `generated/.../documents.jsonl`, its judge scores at `generated/.../scores.jsonl` (`dataset.score`), the review rendered from both at `generated/.../review.md` (`dataset.review`), the gated subset at `validated/.../documents.jsonl` (`dataset.gate`) -- rather than encoding the run id or a judge-prompt version in the filename itself: that metadata already lives in the run id (the directory) and in each row (`run_id`, `config_sha`, `prompt_version`, etc.), and duplicating it into filenames is exactly what "Reproducibility" below warns against.
+Each `<run_id>/` is one invocation of `configs/run/<run_id>.yaml`, or `adhoc/` for a job
+not tied to a corpus (`configs/run/adhoc.yaml`). File names inside it are fixed and
+stage-specific -- `generated/.../documents.jsonl`, its judge scores at
+`generated/.../scores.jsonl` (`dataset.score`), the review rendered from both at
+`generated/.../review.md` (`dataset.review`), the gated subset at
+`generated/.../validated.jsonl` (`dataset.gate`) -- rather than encoding the run id or a
+judge-prompt version in the filename itself: that metadata already lives in the run id (the
+directory) and in each row (`run_id`, `config_sha`, `prompt_version`, etc.), and
+duplicating it into filenames is exactly what "Reproducibility" below warns against.
 
-`scores.jsonl` lives next to `documents.jsonl` under `generated/`, not under `validated/`, because judging now runs automatically as part of the same datagen invocation that produced the documents (see "Run reports" below) -- they're one bundle from one invocation, not two separately-timed artifacts. `validated/documents.jsonl` is a different artifact: the subset of pairs (see `dataset.gate.gate_pairs`) where every *gating* check -- leakage, action-advice, meta-reference, style, and pair-matchedness -- passed on both documents and the pair. Premise/contrast checks (how strongly a document's evidence supports its polarity, one fact at a time) do not gate a pair out on their own; each check's aggregate pass rate against its configured `threshold` is instead reported informationally in the datagen report's `gating.checks_below_threshold`. `validated/` also holds belief/action eval suites (the question banks used to measure belief/action transfer later, unrelated to judging the training corpus).
+**The gate is a filename, not a tree.** `documents.jsonl`, `scores.jsonl` and
+`validated.jsonl` all live in one run directory, because they are one bundle from one
+invocation: judging runs automatically as part of the same datagen call that produced the
+documents (see "Run reports" below), and gating runs off those scores. A separate
+top-level `validated/` tree used to hold the last of the three, which split one run id's
+artifacts across two directories and made "what did this run produce?" a two-place
+question. `validated.jsonl` is still a distinct artifact, not a view: the subset of pairs
+(see `dataset.gate.gate_pairs`) where every *gating* check -- leakage, action-advice,
+meta-reference, style, and pair-matchedness -- passed on both documents and the pair.
+Premise/contrast checks (how strongly a document's evidence supports its polarity, one
+fact at a time) do not gate a pair out on their own; each check's aggregate pass rate
+against its configured `threshold` is instead reported informationally in the datagen
+report's `gating.checks_below_threshold`. Belief/action eval suites live in a run
+directory too -- `<suite>_items.jsonl` for the candidates and `<suite>_eval.jsonl` for the
+gated, variant-expanded bank -- where the `_eval` suffix plays the role the old tree did.
+
+**Every `.jsonl` has a sibling `.md`.** JSONL is right for appending and loading and
+wrong for reading, so `analysis.jsonl_md` renders each artifact as a summary card: row
+count, a field table with a per-field summary, and the first few rows in full. It is a
+*view* -- derived, regenerated wholesale, read by nothing -- so it can never disagree with
+the data in a way that changes a number. Stages render their own declared artifacts on the
+way out (`analysis.report.write_result`, best-effort: a formatting bug must not fail a
+stage that already produced its real output); `stage=render_md` backfills the tree. A
+`.md` is deliberately not a dump -- a response file runs to thousands of rows -- so the
+`.jsonl` beside it stays the authority for anything past the sample.
 
 `out/` is the one output tree that is **git-tracked and not synced to HF**, because a
 deliverable has a different lifecycle from experimental data. A results directory is input
@@ -154,42 +206,67 @@ the rendering moves. Paper run overlays also set `hydra.run.dir` to the same pla
 paper run leaves nothing behind under `data/results/`; copy that block forward when adding
 the next one. Artifacts produced before this split stay where they are.
 
-`data/` is organized by pipeline stage at the top level (seeds, generated, validated, checkpoints, results), and by experiment one level below that. Keep it this way rather than the reverse (one top-level folder per experiment or per stage): every stage already gets its own top-level folder, so an `<experiment_id>/` subfolder under each is what actually needs to exist once a second experiment does, and it avoids inventing a new top-level directory per stage or per experiment.
+`data/` is organized by pipeline stage at the top level (seeds, generated, checkpoints,
+results), and by experiment one level below that. Keep it this way rather than
+the reverse (one top-level folder per experiment or per stage): every stage already gets its
+own top-level folder, so an `<experiment_id>/` subfolder under each is what actually needs
+to exist once a second experiment does, and it avoids inventing a new top-level directory
+per stage or per experiment.
 
 ---
 
 ## Configuration
 
-**One config in, one result out.** A job is `JobConfig -> RunResult`. Everything the pipeline can be told is reachable from `JobConfig`; everything an invocation produced is on `RunResult`.
+**One config in, one result out.** A job is `JobConfig -> RunResult`. Everything the
+pipeline can be told is reachable from `JobConfig`; everything an invocation produced is on
+`RunResult`.
 
 Hydra composes `configs/` in this order, later winning:
 
 1. the group defaults in `configs/config.yaml` (`experiment`, `training`, `models`, `dataset`, `eval`)
 2. that file's own job-level values (`stage`, `replicates`, `throughput`, `force`, `smoke`)
-3. a run overlay: `+run=factory_farming_v1`
+3. a run overlay: `+run=<run_id>`
 4. command-line overrides: `training.sft.epochs=6`
 
 ```bash
-python run.py +run=factory_farming_v1                    # datagen
-python run.py +run=factory_farming_v1 stage=sft          # train on that corpus
-python run.py +run=m0_control_arms stage=efficacy        # score, netted against a control
-python run.py -m +run=factory_farming_v1 stage=sft training.sft.lr=1e-4,2e-4   # sweep
-python run.py --help                                    # every group and option
+python run.py +run=<corpus_run>                          # datagen
+python run.py +run=<corpus_run> stage=sft                # train on that corpus
+python run.py +run=<arms_run> stage=efficacy             # score, netted against a control
+python run.py -m +run=<arms_run> stage=sft training.sft.lr=1e-4,2e-4   # sweep
+python run.py --help                                     # every group and option
 ```
 
-A run overlay states only what makes it that run. `n_items` is deliberately mandatory-but-unset (`???`) in every experiment spec, because how much to generate belongs to an invocation, not to an experiment -- composing without it fails naming the key instead of quietly generating some default amount.
+A run overlay states only what makes it that run. `n_items` is deliberately
+mandatory-but-unset (`???`) in every experiment spec, because how much to generate belongs
+to an invocation, not to an experiment -- composing without it fails naming the key instead
+of quietly generating some default amount.
 
 **Three rules keep config from leaking into the library:**
 
-* **Config is data passed as arguments, never ambient state.** No env vars for config -- env holds secrets only (`OPENAI_API_KEY`, `HF_TOKEN`). Config in env is untyped, invisible in artifacts, and unreproducible.
-* **Nothing under `src/` reads YAML or imports hydra**, except `config.py`. There used to be six `load_*_config` helpers with default paths, which let any function reach for a file behind its caller's back; what a stage actually ran with then depended on the filesystem rather than on its arguments. Enforced by `tests/test_import_rules.py`.
-* **The runner does not need to run arbitrary code, because the shared interface is the config object, not the runner.** `run.py` resolves a config and dispatches through an explicit registry, so config selects *which registered stage* with *what values* and never expresses control flow. A script instead builds the same object with `config.load_job([...])` and calls library functions in whatever order it likes. Promoting a script to a stage is then a `Literal` plus a registry entry, since it was already calling the library with the same typed object.
+* **Config is data passed as arguments, never ambient state.** No env vars for config --
+  env holds secrets only (`OPENAI_API_KEY`, `HF_TOKEN`). Config in env is untyped, invisible
+  in artifacts, and unreproducible.
+* **Nothing under `src/` reads YAML or imports hydra**, except `config.py`. There used to be
+  six `load_*_config` helpers with default paths, which let any function reach for a file
+  behind its caller's back; what a stage actually ran with then depended on the filesystem
+  rather than on its arguments. Enforced by `tests/test_import_rules.py`.
+* **The runner does not need to run arbitrary code, because the shared interface is the
+  config object, not the runner.** `run.py` resolves a config and dispatches through an
+  explicit registry, so config selects *which registered stage* with *what values* and never
+  expresses control flow. A script instead builds the same object with
+  `config.load_job([...])` and calls library functions in whatever order it likes. Promoting
+  a script to a stage is then a `Literal` plus a registry entry, since it was already calling
+  the library with the same typed object.
 
-Every stage writes `config.resolved.yaml` next to its results, and `RunResult.config_sha` hashes the *resolved* config rather than any one file -- with layered composition no single file determines what ran, so hashing one would give two materially different jobs the same fingerprint.
+Every stage writes `config.resolved.yaml` next to its results, and `RunResult.config_sha`
+hashes the *resolved* config rather than any one file -- with layered composition no single
+file determines what ran, so hashing one would give two materially different jobs the same
+fingerprint.
 
 ### Layering
 
-`src/` is layered, and `tests/test_import_rules.py` checks it by parsing imports (no execution, so modules needing a GPU or a key are still covered):
+`src/` is layered, and `tests/test_import_rules.py` checks it by parsing imports (no
+execution, so modules needing a GPU or a key are still covered):
 
 ```text
 0  schemas, metrics          pure data and pure math; metrics imports only the stdlib
@@ -199,9 +276,14 @@ Every stage writes `config.resolved.yaml` next to its results, and `RunResult.co
 4  run.py                    the entrypoint (outside src/)
 ```
 
-A module may import its own layer or below, never above; there are no cycles between packages; `metrics/` can never depend on how the rows it reduces were produced. Exceptions are named in that file rather than implied -- there is currently one, and it exists because the memorization benchmark trains.
+A module may import its own layer or below, never above; there are no cycles between
+packages; `metrics/` can never depend on how the rows it reduces were produced. Exceptions
+are named in that file rather than implied -- there is currently one, and it exists because
+the memorization benchmark trains.
 
-These rules are cheap and they earn their keep: they caught an `inference -> training -> inference` cycle, two dead imports, and a stale path constant on the day they were added.
+These rules are cheap and they earn their keep: they caught an
+`inference -> training -> inference` cycle, two dead imports, and a stale path constant on
+the day they were added.
 
 ---
 
@@ -246,92 +328,107 @@ An optional derived metric is:
 propagation = T_A / T_B
 ```
 
-Do not treat this last quantity as proof of causal mediation. It is an operational measure of belief-consistent behavioral propagation.
+Do not treat this last quantity as proof of causal mediation. It is an operational measure
+of belief-consistent behavioral propagation — and see "Reading a result" below before
+quoting it at all, since it is a ratio whose numerator has historically straddled zero.
 
 ---
 
 ## Experiment design
 
-The rules a *new* run has to satisfy. They are collected here because they were previously
-scattered across "Efficacy", "Validation", the suites' D-numbers, and — worst — "What the
-factory-farming experiment measured", which reads as a result section, so a second
-experiment on a different topic would not obviously inherit them. Nothing here is new
-policy; each line is a rule this project already paid for, with a pointer to where the
-evidence lives.
+The rules a *new* run has to satisfy. Each one is a rule this project already paid for; the
+evidence lives in `changelog/` and `hypotheses/`, not here.
 
 **1. Name the open hypothesis it bears on** (`hypotheses/open/`, capped at three). An
 experiment that cannot move one may still be worth running, but that should be a decision
-rather than an oversight. Write the falsifier before the run, and do not edit it afterwards.
+rather than an oversight — state it as an unregistered observation. Write the falsifier
+before the run, and do not edit it afterwards.
 
 **2. Never run a bare two-arm contrast.** An arm list needs a matched control pair, because
 every instrument pointed at these checkpoints carries any-SFT machinery. **Re-derive the
-machinery term whenever the control changes; never carry one across.** The old single-form
-control's positive arm scored 0.418 on factory-farming belief items with zero on-topic
-content, and that artifact — not the content — is why every earlier `ΔB NET` came out
-negative for three sessions. See "What the factory-farming experiment measured".
+machinery term whenever the control changes; never carry one across.** A control arm with
+zero on-topic content can still score high on an on-topic belief suite, and when that goes
+unnoticed it flips the sign of every netted reading built on it.
 
 **3. Run the gate first and believe nothing from an arm that fails it.** `stage=choice_bench`
 before any belief, action, or absorption reading. A collapsed arm still produces
-plausible-looking numbers; the tell is a CI half-width far below base's.
+plausible-looking numbers; the tell is a CI half-width far below base's. Scalar diagnostics
+are not sufficient to overrule the gate — an arm that looks healthy on every scalar has been
+caught falling into verbatim repetition loops on open text.
 
 **4. A new instrument needs a positive control, and a null control where the design admits
 one.** A flat reading is uninterpretable without an arm known to move: if nothing shifts the
-instrument, the instrument is not measuring. The descriptive-inference suite was validated
-this way on 2026-08-19 — `Me±` moved it +0.0576 while the evidence arms gave +0.0078 — and
-its `efficiency` facet is a null control by construction, since that premise is identical
-across polarities, so a large reading there means the instrument is picking up something
-other than the manipulation. Build both in at design time; neither is recoverable
-afterwards.
+instrument, the instrument is not measuring. Build both in at design time; neither is
+recoverable afterwards. And check the sharp version of the positive control, not the loose
+one: not merely "does the known-strong arm move the instrument", but "does a facet carrying
+the manipulation move *more* than a facet that by construction carries none". An instrument
+whose null facet moves most has an inverted positive control, and its readings are withdrawn
+rather than caveated.
 
 **5. Match dose, and state the mismatches you cannot fix.** Absorption is dose-sensitive:
-holding the control fixed and walking dose down took the gate from 3-of-4 dimensions to
-1-of-4. Report absorption at matched dose only. `Me±` carries ~7× fewer tokens than `M±` —
-inherent to the intervention, and said out loud every time it is reported.
+holding the control fixed and walking dose down can take the gate from passing on most
+dimensions to passing on one. Report absorption at matched dose only. Where an intervention
+inherently carries fewer tokens than its comparison — an asserted opinion is short, a body of
+evidence is long — say so every time it is reported, and never let it co-vary silently with
+the independent variable.
 
 **6. Pilot, read the output by eye, then scale.** Generate a handful of items or documents,
-read them, and only then spend. This is a human gate and not a judge threshold: on
-2026-08-19 the pilot passed every automated check while a framing defect — pair members
-built against different reference classes, on the null-control facet — was visible on
-sight. Datagen went through four judge versions and two premise redesigns the same way.
-
-**7a. THE LONG-SPARSE CELL IS SLOW, NOT INERT (2026-08-21e) — the single most important
-amendment on this page.** `matrix_v1_step36`, all seven arms gated, paired bootstrap over 42
-items: the article cell's netted `dB` is **+0.0072 [+0.0016, +0.0136]** at step 24 and
-**+0.0342 [+0.0248, +0.0443]** at step 36 — a **4.75x rise with non-overlapping intervals**,
-reproduced on log-odds (+0.1860 -> +0.5777). Over the same interval the explicit positive
-control **decays** (+0.3111 -> +0.2167). This was run as the pre-emption for
-`LITERATURE.md` flag 2 (the Knowing-Using Gap temporal-lag confound) and **the pre-emption
-failed** — the reviewer line is correct on our own data. **REPLICATED AT SEED 7
-(2026-08-22c, `matrix_s7_step36`, all arms gated, conditions registered in the overlay
-header before the run):** +0.0080 [+0.0029, +0.0140] -> **+0.0425 [+0.0296, +0.0566]**
-(log-odds +0.2061 -> +0.6892), disjoint CIs on both scales, explicit control decaying
-(+0.353 -> +0.259), 37/42 items rising, cross-seed sign agreement 40/42, leave-one-out
-worst lower edge +0.0201. **Level: replicated direction**, controls retrained per seed;
-the 4.75x/5.3x rise magnitudes are per-seed observations, not a band. Consequences: never
-write "inert" for this cell; write "read at 2 epochs" and show the trajectory. And the
-explicit/evidence belief ratio is a property of the reading step — **~43x at step 24 and
-~6x at step 36 at BOTH seeds** (s42 43x/6.3x, s7 44x/6.1x) — so it must always be quoted
-with its step.
+read them, and only then spend. This is a human gate and not a judge threshold: a pilot has
+passed every automated check while carrying a framing defect that was visible on sight.
 
 **7. Read the trajectory, not the endpoint.** Endpoints are not enough and this is not
-stylistic: `matrix_v1` at its endpoint understates the belief effect by 3.3× and reports a
-gate failure that is purely a late artifact. `stage=trajectory` scores every saved
-checkpoint.
+stylistic: a frozen schedule can be well past the optimum for measuring belief transfer, so
+an endpoint reading can understate the effect several-fold *and* report a gate failure that
+is purely a late artifact. Two things move in opposite directions across training — the
+treatment effect can peak early and decay, while the control's machinery term grows — so the
+netted quantity is step-dependent in both of its terms. `stage=trajectory` scores every saved
+checkpoint. Quote the step alongside any ratio between two arms, because the ratio is a
+property of the reading step.
 
-**8. One run id names one artifact set.** A changed instrument is a new run id, never an
+**8. Slow is not inert.** A cell that reads near zero at an early checkpoint may be rising
+steeply; a cell that reads large may be decaying. Never write "inert" off a single step —
+write "read at N epochs" and show the trajectory.
+
+**9. One run id names one artifact set.** A changed instrument is a new run id, never an
 edit — the results already measured against the old items become silently uninterpretable
 otherwise. Retiring a run means deleting its overlay *and* its artifacts together, or
 marking it with a `VOID.md`.
 
-**9. Report netted, with intervals, per arm.** The netted contrast is the reportable one;
+**10. Report netted, with intervals, per arm.** The netted contrast is the reportable one;
 per-arm scores go beside it, because a difference statistic cannot tell a two-sided effect
-from a one-sided one — the exact confusion that hid M+'s absorption failure for three
+from a one-sided one — that exact confusion once hid a failed manipulation for three
 sessions. Never quote a ratio whose numerator straddles zero.
 
-**10. Only the manipulation check may be tuned against.** Absorption measures whether the
+**11. Only the manipulation check may be tuned against.** Absorption measures whether the
 training landed, so hyperparameters may be selected on it. Tuning against belief or action
 selects on the outcome variable and makes any transfer number reported afterwards an
 artifact of the search.
+
+### Two control properties
+
+Cited by name from run overlays, because they decide whether a control has to be rebuilt or
+can be reused.
+
+**Dose matters.** Absorption is dose-sensitive: holding the control fixed and walking dose
+down degrades the gate, dimension by dimension, until an arm that genuinely absorbed reads
+as though it did not. **Report absorption at matched dose only**, and set a new arm's
+`max_pairs` to the control's gated yield rather than to whatever the corpus happened to
+produce.
+
+**Document form does not.** A control matched on all surface forms agrees with a
+single-form control on every sign and every significance call, and their machinery terms
+are close. The machinery this gate subtracts is a property of *doing any SFT at this dose*,
+not of the corpus's shape or subject. The practical consequence, and the reason overlays
+cite this: an existing off-topic control can be **rescored** on a new topic's suites rather
+than retrained.
+
+**The limit on that reuse.** Form- and topic-agnostic is not seed-agnostic. The machinery
+term is itself a seed-level random variable, and it can be of the same magnitude as this
+project's weaker effects — so "rescore, don't retrain" applies across topics and forms at a
+fixed seed, never across seeds. Retrain the control per seed; see "Replicate what you intend
+to quote".
+
+---
 
 ## Dataset generation
 
@@ -350,7 +447,8 @@ shared content plan
 
 over independently generating unrelated positive and negative examples.
 
-Keep topic, style, structure, length, and specificity approximately matched. Vary the evidence or assumptions intended to support the target belief.
+Keep topic, style, structure, length, and specificity approximately matched. Vary the
+evidence or assumptions intended to support the target belief.
 
 The training data should generally avoid:
 
@@ -359,44 +457,108 @@ The training data should generally avoid:
 * containing eval prompts or close paraphrases
 * obvious labels such as "pro" and "anti"
 
-Store generated artifacts before filtering. Never silently discard the original generation output.
+Store generated artifacts before filtering. Never silently discard the original generation
+output.
+
+The one deliberate exception is the explicit-stance corpus
+(`configs/dataset/explicit_stance.yaml`), which asserts the belief outright as a diagnostic
+upper bound on what any supervised signal at this dose can do. Its judge is *inverted*, not
+relaxed — `states_stance` is required true, a pair-level `pair_opposite_stance` is added, and
+`no_action_advice` still gates, because stating the belief is the intervention while
+instructing the action would leak into the action eval and make `T_A` meaningless.
 
 ### Seed pools
 
-`data/seeds/` holds the plain lists generation draws from: names, incidental words, narrative structures, regions/settings, and similar pools. Each is a flat JSON list (or list under one key), not YAML config, because a pool is data to sample from, not a template or a setting.
+`data/seeds/` holds the plain lists generation draws from: names, incidental words,
+narrative structures, regions/settings, and similar pools. Each is a flat JSON list (or list
+under one key), not YAML config, because a pool is data to sample from, not a template or a
+setting.
 
-Use a seed pool instead of letting the model invent something itself whenever the model would otherwise default to a narrow set of choices. Twenty of the first 24 pilot documents for the factory farming experiment were set in Iowa or Denmark before a `regions.json` pool was introduced; the model's unconstrained choices are far less diverse than they look one document at a time.
+Use a seed pool instead of letting the model invent something itself whenever the model
+would otherwise default to a narrow set of choices. The model's unconstrained choices are
+far less diverse than they look one document at a time — an early pilot put the large
+majority of its documents in two settings before a `regions.json` pool was introduced.
 
 To leverage a pool:
 
-* draw with the item index as the seed (`choose(pool, seed=index)`, `sample_words(n, seed=index)`), so a corpus is reproducible from the experiment spec and seed files alone, with no external random state
-* keep the draw polarity-independent — it is part of what the `+` and `-` document of a pair share, not something that should vary with the belief being asserted
-* add a new pool as a new JSON file under `data/seeds/` plus a `choose_*`/`sample_*` helper in `generation/random.py`, rather than inlining a list in a prompt template or in experiment config
-* keep pools topic-agnostic where possible, so they are reusable across experiments; put anything experiment-specific in `configs/experiment/<name>.yaml` instead
+* draw with the item index as the seed (`choose(pool, seed=index)`,
+  `sample_words(n, seed=index)`), so a corpus is reproducible from the experiment spec and
+  seed files alone, with no external random state
+* keep the draw polarity-independent — it is part of what the `+` and `-` document of a pair
+  share, not something that should vary with the belief being asserted
+* add a new pool as a new JSON file under `data/seeds/` plus a `choose_*`/`sample_*` helper
+  in `generation/random.py`, rather than inlining a list in a prompt template or in
+  experiment config
+* keep pools topic-agnostic where possible, so they are reusable across experiments; put
+  anything experiment-specific in `configs/experiment/<name>.yaml` instead
 
-Seed pools are drawn by index, which makes a corpus reproducible from the spec plus the pool — but *only* against the pool as it was then. Editing a pool changes every historical draw, so `regions.json` today no longer produces the regions `factory_farming_v1` was generated with. The drawn values are recorded per row (`region_seed`, `names_seed`, ...), so what a corpus used is never lost; regenerating it from scratch is what would differ. Treat a pool edit as a corpus-invalidating change.
+Seed pools are drawn by index, which makes a corpus reproducible from the spec plus the pool
+— but *only* against the pool as it was then. Editing a pool changes every historical draw.
+The drawn values are recorded per row (`region_seed`, `names_seed`, ...), so what a corpus
+used is never lost; regenerating it from scratch is what would differ. **Treat a pool edit as
+a corpus-invalidating change.**
 
-Draw two per-item axes under **different seed namespaces**, not off the bare index or off a shared period. Two axes assigned by `i % 8` and `i % 6` rejoin every lcm(8,6)=24 items, which is how the explicit-control corpus came to realize 24 of its 288 design cells with format and persona perfectly confounded — and no corpus size fixes it, because the period is a property of the assignment rather than of `n`. `generation.random.FORMAT_NAMESPACE` is the pattern to copy.
+Draw two per-item axes under **different seed namespaces**, not off the bare index or off a
+shared period. Two axes assigned by `i % 8` and `i % 6` rejoin every lcm(8,6)=24 items, which
+is how one corpus came to realize a small fraction of its design cells with two axes
+perfectly confounded — and no corpus size fixes it, because the period is a property of the
+assignment rather than of `n`. `generation.random.FORMAT_NAMESPACE` is the pattern to copy.
 
 ### Surface forms
 
-`data/seeds/document_formats.json` is a seed pool with one extra job: it varies *how* an item is written — article, first-person blog, interview transcript, second-person explainer, multi-turn Q&A, newsletter dispatch — and, with it, the user turn the document is trained as an answer to. It exists because a corpus in one shape under one fixed question teaches one prompt, however varied its content.
+`data/seeds/document_formats.json` is a seed pool with one extra job: it varies *how* an
+item is written — article, first-person blog, interview transcript, second-person explainer,
+multi-turn Q&A, newsletter dispatch — and, with it, the user turn the document is trained as
+an answer to. It exists because a corpus in one shape under one fixed question teaches one
+prompt, however varied its content.
 
-Three properties keep it from being a validity risk, and they are worth preserving in any new form:
+Three properties keep it from being a validity risk, and they are worth preserving in any new
+form:
 
-* **A form varies rendering, never content.** The plan, the premises, and every constraint below the template's `Constraints:` line are identical across forms. Only the tone rule and the output-shape rule move. A form that needed a constraint relaxed is a form this experiment cannot use.
-* **The plan stage is form-blind.** Passing a form's style phrase into the plan prompt made the model describe the piece rather than the subject (one plan's primary operation came back as `"750-word visit to Cwm Glas intensive poultry site"`). Keeping the plan identical also means item `i` gets the same plan whatever its form, so form is the only difference between two corpora over the same indices.
-* **Form is drawn per item, so a pair shares it.** Both documents of a pair differ only in evidence, and for multi-turn forms both arms must parse to the same number of turns — an unmatched exchange is a shape difference between arms, which is exactly what `ΔB` cannot tell from a content difference. `dataset.gate` enforces both structurally, with no LLM call.
+* **A form varies rendering, never content.** The plan, the premises, and every constraint
+  below the template's `Constraints:` line are identical across forms. Only the tone rule and
+  the output-shape rule move. A form that needed a constraint relaxed is a form this
+  experiment cannot use.
+* **The plan stage is form-blind.** Passing a form's style phrase into the plan prompt made
+  the model describe the piece rather than the subject — one plan's primary operation came
+  back as a word budget and a genre rather than a thing in the world. Keeping the plan
+  identical also means item `i` gets the same plan whatever its form, so form is the only
+  difference between two corpora over the same indices.
+* **Form is drawn per item, so a pair shares it.** Both documents of a pair differ only in
+  evidence, and for multi-turn forms both arms must parse to the same number of turns — an
+  unmatched exchange is a shape difference between arms, which is exactly what `ΔB` cannot
+  tell from a content difference. `dataset.gate` enforces both structurally, with no LLM call.
 
-Turn it on with `DatasetGenConfig.use_formats` plus a template that reads `format` (`configs/dataset/multiformat.yaml`); it is off by default so every corpus generated before forms existed still regenerates byte-identically.
+Turn it on with `DatasetGenConfig.use_formats` plus a template that reads `format`
+(`configs/dataset/multiformat.yaml`); it is off by default so every corpus generated before
+forms existed still regenerates byte-identically.
 
-**The varied user turn is not free, and it is the half that costs -- in combination with long-document answers.** Arms trained on the multi-form corpus fail `choice_bench` outright, which voids every belief and action number read off them. Within this corpus the prompt side is the decisive variable: the same 123 documents score 0.656 trained under their own generated questions and 0.823 under one fixed question, at identical hyperparameters, and what moves is the arm's probability mass on the option letters (0.001 against 0.707) rather than its ability to reach the answer -- it answers correctly, in prose. Prompt variety alone is NOT sufficient to do this, and it is worth knowing before reading the rule too broadly: `explicit-control-v2-diverse` trains 8 distinct user turns over 85 answers of ~116 words and scores **0.896**, above base. The corpora differ in answer length (727 vs 116 median words) and in total dose (~105k vs ~10k words), which nothing on disk separates -- so what is established is that varied turns collapse the gate when the answer is a long document at this dose, not that varied turns are harmful as such. Question -> long-document pairs over many questions teach "answer any question with prose"; keyed to one question the same behaviour stays put. Neither the schedule nor the multi-turn rows are implicated -- the gate is already failed at epoch 1, dropping the `qa_thread` pairs changes nothing, and the one lr that recovers it (3e-5) does so by not absorbing. `TrainingConfig.use_corpus_user_turns=false` keeps the six document forms and gives up the prompt-side diversity: the arm that can be measured today, not the end of that line of work. A corpus that wants both needs something that anchors the short-answer format, and nothing in the repo does that yet. See `changelog/2026-08-18c.md`.
+**The varied user turn is not free, and it is the half that costs — in combination with
+long-document answers.** Arms trained on a multi-form corpus with generated per-document
+questions can fail `choice_bench` outright, which voids every belief and action number read
+off them. Within one such corpus the prompt side was the decisive variable: the same
+documents scored far lower trained under their own generated questions than under one fixed
+question, at identical hyperparameters, and what moved was the arm's probability mass on the
+option letters rather than its ability to reach the answer — it answers correctly, in prose.
+
+Prompt variety alone is NOT sufficient to cause this, and it is worth knowing before reading
+the rule too broadly: a corpus of many distinct user turns over *short* answers gates fine,
+above base. What separates them is answer length and total dose, which nothing on disk
+distinguishes — so what is established is that **varied turns collapse the gate when the
+answer is a long document at this dose**, not that varied turns are harmful as such.
+Question → long-document pairs over many questions teach "answer any question with prose";
+keyed to one question the same behaviour stays put. Neither the schedule nor the multi-turn
+rows are implicated. `TrainingConfig.use_corpus_user_turns=false` keeps the document forms
+and gives up the prompt-side diversity: the arm that can be measured today, not the end of
+that line of work. A corpus that wants both needs something that anchors the short-answer
+format, and nothing in the repo does that yet.
 
 ---
 
 ## Validation
 
-Keep validation checks separate. Do not collapse everything into an opaque "alignment score."
+Keep validation checks separate. Do not collapse everything into an opaque "alignment
+score."
 
 Important checks include:
 
@@ -409,7 +571,8 @@ Determine whether a document explicitly states:
 
 ### Recoverability
 
-Determine whether an independent evaluator can infer the intended belief direction from the document.
+Determine whether an independent evaluator can infer the intended belief direction from the
+document.
 
 A dataset that avoids leakage but contains no recoverable signal is not useful.
 
@@ -428,9 +591,11 @@ For paired corpora, evaluate differences in:
 
 Belief and action evals must first be tested against explicit belief interventions.
 
-An action eval is useful only if changing the stated belief changes the action distribution by a meaningful amount.
+An action eval is useful only if changing the stated belief changes the action distribution
+by a meaningful amount.
 
-Do not interpret lack of SFT transfer using an eval that was not sensitive to the explicit belief intervention in the first place.
+Do not interpret lack of SFT transfer using an eval that was not sensitive to the explicit
+belief intervention in the first place.
 
 ---
 
@@ -467,308 +632,160 @@ trainer), or it took and the evidence did not move the normative judgment (a rea
 about belief acquisition).
 
 Because it measures the manipulation rather than the outcome, efficacy is **the only metric
-that may be tuned against**. Tuning against a belief or action score selects
-hyperparameters on the outcome variable, and any transfer number reported afterwards is an
-artifact of that search.
+that may be tuned against.** Tuning against a belief or action score selects hyperparameters
+on the outcome variable, and any transfer number reported afterwards is an artifact of that
+search.
 
 **The gate is per-arm span NLL at fact resolution, netted against a matched control**
 (`stage=absorption`, `evals/absorption.py`). Both arms must independently clear zero. Three
 properties earned it the job:
 
-- **Resolution.** Premise figures are ~3% of a document's tokens. Whole-document NLL
-  diluted a real signal roughly 40× into a null; tightening to numeric spans resolved M−
-  from +0.046 to +0.185 while M+ stayed flat at every resolution — which is the finding
-  that three other instruments missed.
+- **Resolution.** Premise figures are a few percent of a document's tokens. Whole-document
+  NLL dilutes a real signal into a null; tightening to numeric spans is what resolved a
+  one-sided manipulation that three other instruments missed.
 - **Symmetry.** Each arm is scored against text in its own style, so a surface advantage
   cancels rather than favouring one side.
-- **Per-arm, not differential.** `dE = E(M+) − E(M−)` read large and excluded zero for
-  three sessions in a world where M+ did nothing at all. A difference statistic cannot
-  distinguish a two-sided manipulation from a one-sided one. The contrast is a summary; the
-  per-arm rows are the gate.
+- **Per-arm, not differential.** A difference statistic cannot distinguish a two-sided
+  manipulation from a one-sided one — `dE = E(M+) − E(M−)` once read large and excluded zero
+  in a world where one arm did nothing at all. The contrast is a summary; the per-arm rows are
+  the gate.
 
 **Netting is not optional.** Generic SFT shrinks base's predictability gap between
-polarities, and the sign convention reads that shrinkage as specialization: off-topic
-control arms containing no on-topic content post M0+ −0.045 and M0− +0.055, and up to ±0.87
-per fact (measured on the single-form control `m0-split-v2`; the form-matched control gives
-the same picture, see "Two control properties" below). An unnetted number is contaminated.
+polarities, and the sign convention reads that shrinkage as specialization: off-topic control
+arms containing no on-topic content post a non-trivial apparent effect in both directions. An
+unnetted number is contaminated.
 
 **`stage=efficacy` is the secondary reading** — the same premises asked for as a forced
-choice, one step closer to belief than held-out NLL. Small (+0.020 raw) but nearly
-machinery-free (~0.000).
+choice, one step closer to belief than held-out NLL. Small, but nearly machinery-free.
 
-**The letter reading was retired and removed.** A bare A/B choice naming one figure, it was
-the primary reading for three sessions and failed on two independent grounds: ~43% of its
-effect was machinery (+0.054 of +0.127 reproduced by an off-topic control), and it
-saturates — every on-topic arm, M+ included on facts it demonstrably absorbed, pushes every
-fact toward the negative option, with lameness and injuries collapsing to ~0.01 from base's
-0.165 and food affordability sitting at base 0.998. The off-topic control cannot net out a
-drift that only on-topic training produces. Do not reintroduce it as a gate.
-
-**Every belief-axis number in this document is measured under LoRA, and the zero/non-zero
-call is method-dependent AND scale-dependent** (added 2026-08-21c,
-`hypotheses/supported/H19-lora-capacity-confound.md`, amended the same day by
-`h20_ladder`/`h21_interaction`). The method difference is a roughly **constant +0.013
-offset on the probability scale**, not a capacity cliff: read on log-odds, LoRA's
-evidence-corpus dB also excludes zero (+0.1957 [+0.0867, +0.2990] at 93 pairs / 2 epochs).
-Two hypotheses built on a qualitative reading of this gap (`H20`, `H21`) were falsified
-within hours of registration — see `hypotheses/falsified/` before proposing a third.
-The largest evidence-only belief effect measured to date is full-FT at lr 2e-5:
-**dB NET +0.1042 [+0.0707, +0.1418]**, all arms gated.
-Full fine-tuning the same long-form evidence-only corpus at matched dose, gated and netted
-against a full-FT control retrained per seed, moves belief where LoRA does not:
-`dB NET +0.0164 [+0.0060, +0.0289]` (s42) and `+0.0115 [+0.0044, +0.0201]` (s7), against
-LoRA's `+0.0029 [−0.0204, +0.0275]`. The effect is **~2% of the prompted intervention**, so
-the substantive dissociation below stands unchanged — what does not is the sharper phrasing
-"indistinguishable from zero", which turns out to be a fact about the adapter as much as
-about the training. Two further facts travel with it: full-FT collapses the forced-choice
-gate at lr 2e-5, five times below the LoRA schedule's 1e-4 (so no schedule gates both
-methods, and `frozen_2026_08_14` must never be reused for full-FT), and the full-FT
-off-topic control is ~16x cleaner (machinery −0.005 against LoRA's +0.085).
+**A bare A/B letter reading was retired and removed.** It failed on two independent grounds:
+a large fraction of its effect was machinery reproduced by an off-topic control, and it
+saturates — every on-topic arm pushes every fact toward the negative option, including on
+facts the arm demonstrably absorbed. An off-topic control cannot net out a drift that only
+on-topic training produces. Do not reintroduce it as a gate.
 
 **Scope limit, and it is the important one.** Absorption is not belief. It measures whether
 an arm's premises became more predictable to it — rendering, in effect. Absorption was made
 the gate on the assumption that it was the bottleneck on the way to belief, and **it is
-not**: a canonicalized M+ absorbs mortality (+0.72 net, and recites the figure in chat) yet
-fails every belief-flavoured per-arm reading, while the full chain premise → assessment →
-belief → action stays frozen at base's stance. What is frozen is specifically the
-premise→conclusion step under evidence-only training. **Passing the efficacy gate is
-necessary, not sufficient, and clearing it says nothing about whether belief moved.**
+not**: an arm can absorb a premise heavily, recite the figure in chat, and still fail every
+belief-flavoured per-arm reading, with the chain premise → assessment → belief → action
+frozen at base's stance. What is frozen is specifically the premise→conclusion step under
+evidence-only training. **Passing the efficacy gate is necessary, not sufficient, and
+clearing it says nothing about whether belief moved.**
 
 The converse also holds and is worth stating, because it is what the gate cannot see: an
-explicit-stance pair absorbs *more* than the evidence pair (`Me+` +0.871 on animal welfare
-against `M+`'s −0.023) **and** moves belief, so a high absorption number is not evidence of
-either the evidence-only design working or of belief having moved. The two readings are
-independent and both are needed. (This paragraph used to cite +0.305 netted on the
-explicit-stance control; that was the *letter* reading, since retired, on
-`explicit-control-v1`, since deleted. See "What the factory-farming experiment measured"
-for the current numbers.)
+explicit-stance pair can absorb *more* than an evidence pair **and** move belief, so a high
+absorption number is not evidence of either the evidence-only design working or of belief
+having moved. The two readings are independent and both are needed.
 
 ### Belief and action suites
 
-Folded in from EVALGEN.md, which was this stage's implementation plan and is gone now that
-the stages are built and the suites frozen. The decisions below are locked; the D-numbers
-are kept because code and configs cite them. If you think one is wrong, raise it -- do not
-quietly change it.
+The D-numbers are locked and are cited by code and configs. If you think one is wrong, raise
+it — do not quietly change it.
 
 **D1. Score by log-probability over single-token option labels, never by parsing generated
 text.** Survives format collapse (an SFT'd arm may answer any on-topic prompt with a
-document -- measured, not hypothetical), is graded rather than argmax, and is
-deterministic. Assert at load time that each label is one token.
+document — measured, not hypothetical), is graded rather than argmax, and is deterministic.
+Assert at load time that each label is one token.
 
 **D2. Three suites.** `efficacy`/absorption (the manipulation check), `belief`, `action`.
-(A fourth, the descriptive-inference suite, was added later for a different job -- see
-below. D2 is left as written; it was a decision about the transfer measurement, and that
-still has three.)
-Efficacy is not a transfer measure; without it a flat `ΔB` cannot distinguish "training
-never took" from "took, belief did not move".
+(A fourth, the descriptive-inference suite, was added later for a different job — see below.
+D2 is left as written; it was a decision about the transfer measurement, and that still has
+three.) Efficacy is not a transfer measure; without it a flat `ΔB` cannot distinguish
+"training never took" from "took, belief did not move".
 
-**D3. Never filter items on sensitivity.** Gate on quality and leakage only. Filtering
-items by whether B+/B− moves base selects on the noise in `T_B`'s denominator and biases
-`T_A`/`T_B` toward zero.
+**D3. Never filter items on sensitivity.** Gate on quality and leakage only. Filtering items
+by whether B+/B− moves base selects on the noise in `T_B`'s denominator and biases `T_A`/`T_B`
+toward zero.
 
-**D4. Every item in both option orders**, scored as the mean. Position bias is large at 4B
-(`variant_gap` up to 0.51), so variant averaging is load-bearing and no single-order
-reading of these suites is valid.
+**D4. Every item in both option orders**, scored as the mean. Position bias is large at this
+scale, so variant averaging is load-bearing and no single-order reading of these suites is
+valid. Watch `variant_gap` per facet: a facet well above the suite's usual maximum is not
+safe to carry a result on its own.
 
 **D5. Item polarity and direction are imposed by index, never chosen by the generator.** A
 generator that self-labels will mislabel some items, and a mislabelled item silently flips
 sign in the aggregate. The judge *verifies* the imposed direction; it never assigns one.
 
-**D6. `B(BASE | ·)` is measured on the local base weights** (`HFModel`, no adapter), never
-on an API model, so BASE, M+ and M− are scored by one mechanism on one tokenizer.
+**D6. `B(BASE | ·)` is measured on the local base weights** (`HFModel`, no adapter), never on
+an API model, so BASE, M+ and M− are scored by one mechanism on one tokenizer.
 
 **D7. Acquiescence is a first-class reading.** Reverse-coded items are generated as matched
 pairs sharing a `pair_id`; `acquiescence` is p(agree) on the forward item plus p(agree) on
 the reverse, minus 1. Zero for a consistent model whatever it believes, positive for a
-yes-sayer. It earns its place regularly -- the explicit arms run +0.18 to +0.49 against
-base's −0.05, and `Me−` came out a *no*-sayer at −0.23, so part of any explicit ΔB is
-response style rather than belief.
+yes-sayer. It earns its place regularly — explicit arms run well above base, and a trained
+arm has come out a *no*-sayer, so part of any explicit ΔB is response style rather than
+belief. Because the belief score already averages forward and reverse-coded items, a pure
+yes- or no-sayer cancels to 0.5; restricting a contrast to complete forward/reverse pairs is
+the check that makes the cancellation exact.
 
-**D8. Sensitivity validates against checkpoints, not only prompts.** Prompted B+/B−
-prefixes measure `S_B`/`S_A`; the calibration ladder additionally scores arms whose
-installation depth is known, and a suite that cannot reproduce an ordering already known is
-not ready to measure one that is not.
+**D8. Sensitivity validates against checkpoints, not only prompts.** Prompted B+/B− prefixes
+measure `S_B`/`S_A`; the calibration ladder additionally scores arms whose installation depth
+is known, and a suite that cannot reproduce an ordering already known is not ready to measure
+one that is not. The D8 "acquiescence flags the acquiescent checkpoint" criterion **failed as
+written and was kept as a failure**, which is what turned it into a finding — acquiescence is
+format-specific, and the pair reading measures survey-format yes-saying rather than
+chat-format sycophancy. Read arm acquiescence as a shift from that arm's own base.
 
-**D9. Belief facets span the ladder's layers.** Core-claim facets (acceptability,
-trade-off justification, blameworthiness, continuation-at-scale) plus *derived-assessment*
-facets one inferential step from the evidence, because assertion moved without them moving.
-Belief items never cite figures -- that is absorption's axis, and an item answerable by
-recognising a trained string measures recall, not belief.
+**D9. Belief facets span the ladder's layers.** Core-claim facets (acceptability, trade-off
+justification, blameworthiness, continuation-at-scale) plus *derived-assessment* facets one
+inferential step from the evidence, because assertion moved without them moving. Belief items
+never cite figures — that is absorption's axis, and an item answerable by recognising a
+trained string measures recall, not belief.
 
-**Frozen, and what that binds.** `evalgen_v1` was accepted 2026-08-17 and `evalgen_v2` is
-the decoupled-seed rebuild (`seed_offset`, after the action suite was found to share its
-scene draws with the training corpus index-for-index). Both are frozen: their items may not
-change, and a change is a new version under a new run id. The D8 "acquiescence flags the
-acquiescent checkpoint" criterion **failed as written and was kept as a failure**, which is
-what turned it into a finding -- acquiescence is format-specific, and the pair reading
-measures survey-format yes-saying rather than chat-format sycophancy. Read arm acquiescence
-as a shift from that arm's own base.
+**Freezing binds.** A suite's items may not change once frozen; a change is a new version
+under a new run id.
 
 ### The descriptive-inference suite
 
-A fourth suite, added 2026-08-19 after D1-D9 were frozen, and built to discriminate
-between two readings of the standing negative result rather than to measure transfer.
-`stage=inference_eval`, spec in `ExperimentConfig.inference_eval`, scored by
-`evals/inference.py`.
+A fourth suite, built to discriminate between two readings of the standing negative result
+rather than to measure transfer. `stage=inference_eval`, spec in
+`ExperimentConfig.inference_eval`, scored by `evals/inference.py`.
 
 Evidence-only SFT absorbs its corpus and moves no normative belief. Two explanations fit
 equally well and predict different next experiments: **is-ought localization**, where
-descriptive beliefs update fine and structurally do not carry into a normative
-conclusion, and **rendering-only**, where nothing is inferred from the trained facts at
-all and absorption is recall of spans. The belief suite cannot separate them -- even its
-`assessment` layer is evaluative ("acceptable", "defensible").
+descriptive beliefs update fine and structurally do not carry into a normative conclusion,
+and **rendering-only**, where nothing is inferred from the trained facts at all and
+absorption is recall of spans. The belief suite cannot separate them — even its `assessment`
+layer is evaluative ("acceptable", "defensible").
 
-An item is a qualitative claim **entailed by** the premises and **restating** none of
-them: no figure (an item answerable by recognising a trained string measures recall,
-which is absorption's axis) and no evaluative vocabulary (that is belief's). Otherwise it
-is a belief suite -- agree/disagree, D7 pairs, D4 both orders, D5 direction imposed by
-index and only verified by the judge. What differs is that `positive_option` is keyed to
-**evidence polarity**, not to the belief statement, so `ΔI = I(M+) − I(M−)` is parallel
-in construction to `ΔB` and comparable to it in probability units on the same arms.
+An item is a qualitative claim **entailed by** the premises and **restating** none of them:
+no figure (an item answerable by recognising a trained string measures recall, which is
+absorption's axis) and no evaluative vocabulary (that is belief's). Otherwise it is a belief
+suite — agree/disagree, D7 pairs, D4 both orders, D5 direction imposed by index and only
+verified by the judge. What differs is that `positive_option` is keyed to **evidence
+polarity**, not to the belief statement, so `ΔI = I(M+) − I(M−)` is parallel in construction
+to `ΔB` and comparable to it in probability units on the same arms.
 
-Two properties are load-bearing when reading it:
+Two design properties are load-bearing, and both have failed in practice — which is why they
+are stated as requirements on any new instrument of this kind rather than as features of this
+one:
 
 - **The null control.** Each facet names the premise `dimension` it derives from, and one
-  facet derives from `efficiency`, whose premises are identical across polarities by
-  design. Its `ΔI` must come out ≈ 0 by construction; if it does not, the instrument is
-  reading something other than the premises and nothing else in the table is safe.
-  **Amended 2026-08-21d, and the first version of this amendment was WRONG — see
-  `hypotheses/falsified/H18-...` for the error and `hypotheses/open/H23-...` for what
-  replaced it.** The failing diagnosis is not "the off-topic control is inadequate": the
-  netted contrast is a difference *between polarities*, so any polarity-independent drift
-  cancels in it exactly and cannot be what a non-zero null-facet reading measures. The
-  correct diagnosis is the **stance/valence halo H3 already recorded** — the null facet's
-  premises are identical across polarities by design, so any `m+ − m−` there is spillover
-  from the polarity-DIFFERING premises. Measure it as a **ratio** to the arm's all-facet
-  mean, never as a raw magnitude, since the raw number scales with the corpus's overall
-  effect.
+  facet derives from a dimension whose premises are identical across polarities by design.
+  Its `ΔI` must come out ≈ 0 by construction; if it does not, the instrument is reading
+  something other than the premises. The contaminating mechanism is a **stance/valence halo**:
+  the netted contrast is a difference *between polarities*, so any polarity-independent drift
+  cancels exactly and cannot explain a non-zero null-facet reading — what is left is spillover
+  from the polarity-DIFFERING premises. Note that a within-topic inert control does **not**
+  fix this, because an inert corpus has no polarity contrast, so subtracting it removes
+  nothing.
+- **Do not express the halo as a ratio to the arm's all-facet mean.** That statistic was tried
+  at several item counts across several seeds and its interval spans both the clean and the
+  fully-contaminated end every time; the denominator is a small netted number, so the ratio is
+  unbounded wherever the arm's overall effect is small. **The halo ratio is the wrong
+  statistic; do not quote it at any n.** What is readable is **per-facet against the null
+  facet**: a facet that exceeds the null facet by a zero-excluding margin, at more than one
+  seed, on items chosen out of sample.
+- **The positive control, in its sharp form.** See design rule 4. Read `ΔI` **per facet
+  against the null facet**, never as an all-facet mean, which averages the contaminated facet
+  in with the rest. Where the null facet is the highest-moving facet of all, the positive
+  control is inverted and that topic's `ΔI` is withdrawn.
 
-  **Amended 2026-08-21e, and this is the THIRD correction on this thread — read the ratio
-  scale before quoting anything from it.** On the ratio, **0 = the null facet is clean (all
-  of `ΔI` is premise-specific) and 1 = the null facet moves as much as the average facet,
-  i.e. `ΔI` carries NO premise-specific signal at all.** H3, H18 and H23 all read the scale
-  as if larger meant worse without a top end, and treated `1.14x` as "mild". It is not
-  mild; it is at the fully-contaminated end.
-
-  **The ratio is NOT MEASURABLE on factory_farming at n=6 null items, and the numbers
-  previously quoted here had no intervals.** Bootstrapped over items (10k draws,
-  `inference_v1_step24`, `sw_arms_v1`, `sw_arms_v1_s7`):
-
-  | arm | halo ratio (null / all-facet) | 95% CI |
-  | --- | --- | --- |
-  | factory_farming EXPLICIT | 2.37x | **[−0.21, +5.96]** |
-  | factory_farming EVIDENCE | 1.14x | **[−1.46, +6.55]** |
-  | software_architecture EVIDENCE s42 | 0.68x | [+0.10, +1.46] |
-  | software_architecture EVIDENCE s7 | 1.00x | [+0.00, +2.34] |
-
-  The denominator is a small netted number, so the ratio is unbounded wherever the arm's
-  overall effect is small. **The "2.37x" this file previously stated as the load-bearing
-  halo evidence is a point estimate whose interval spans zero — it never met the
-  quotability ladder's bar for a magnitude and must not be cited as one.** Only
-  `software_architecture`'s ratios are bounded, and **every arm's CI contains both the
-  clean and the fully-contaminated end**, so the suite currently cannot tell them apart.
-
-  **Power, computed rather than guessed:** at seed 42, `n=24` null-facet items would
-  separate 0 from 1 (CI [0.41, 0.93]); at seed 7 even `n=96` would not (CI [0.73, 1.28]),
-  and the two seeds converge on different values (0.68 vs 1.00). So the fix is more null
-  items AND a third seed, not either alone. Continued as `H25`.
-
-  **THE EXPANSION RAN (2026-08-22g, `sw_evalgen_v3`: null facet n=28, fresh items, three
-  seeds) AND THE POWER PREDICTION ABOVE WAS WRONG** — at n=28 the ratio CI still spans
-  both ends at two of three seeds ([−0.00, 1.11] / [−0.03, 1.43] / [0.20, 1.34]). **The
-  halo ratio is the wrong statistic; never quote it at any n.** What IS readable, and the
-  only licensed `ΔI` form: **per-facet against the null facet.** On the v3 suite
-  `recovery_time` exceeds the null facet by +0.0418/+0.0449/+0.0443 (all zero-excluding,
-  three seeds, out-of-sample relative to the v1 reads that nominated it), its variant_gap
-  objection is answered on the new items (0.386, below the suite's 0.44 mean), and its
-  prompted S_I is the suite's largest (+0.3817). Two standing cautions: the null facet
-  moves under PROMPTED B± (S_I −0.2211) — the halo is real, prompted as well as trained —
-  and factory_farming's `ΔI` stays withdrawn (inverted positive control). `H25`, resolved
-  split like `H26`.
-
-  **The topic-dependence claim (H23) is FALSIFIED** by its own registered falsifier: its
-  pre-registered valence-coherence measure comes out **+1.00 for both corpora** — every
-  polarity-differing dimension in every spec in this project puts the favourable value on
-  the positive polarity, so the measure is degenerate by construction and can order
-  nothing. Varying it would require deliberately building a corpus with a dimension whose
-  positive polarity is unfavourable. Also still true, and it survives all of the above:
-  **a within-topic inert control does NOT fix the halo** — an inert corpus has no polarity
-  contrast, so subtracting it removes nothing.
-
-
-**The off-topic control's machinery term is SEED-UNSTABLE under LoRA, and it can flip a
-netted sign (2026-08-21e, `H26`).** Rule 2 already says re-derive machinery whenever the
-control changes; what was not known is that the term is itself a seed-level random variable
-of the same magnitude as this project's weaker effects. Measured on **CI overlap**, not on a
-ratio (machinery values are small and several straddle zero, which is the same
-ratio-of-small-numbers pathology as the halo ratio above): **6 of 8 LoRA control cells have
-non-overlapping seed CIs** — `h8_4b` belief −0.0025 vs −0.0173, `h8_8b` belief +0.0156 vs
-−0.0031 (opposite signs), `h8_8b` action −0.0017 vs −0.0151. `m0_multiform`'s belief
-machinery runs +0.0916 / +0.0856 / **+0.1917** across three seeds.
-
-**Consequence, and it cost a claim:** the second topic's belief axis read +0.1103 and
-+0.1283 on log-odds at two seeds and **−0.0754** at the third. The raw treatment contrast
-kept its sign and its exclusion at all three (+0.2019 / +0.2140 / +0.1163) — **only the
-control moved.** Per-item netted sign agreement across the three seeds is at chance (12/38).
-Before quoting a netted number, compare the machinery term to the raw contrast; if it is not
-several times smaller, the sign belongs to the control seed rather than to the treatment.
-
-**The full-FT control does NOT do this** (overlapping CIs on both scales, `h19_full_ft`),
-which extends `H19`'s "full-FT gives a far cleaner control" from magnitude (~16x) to
-variance — a property `H19` never tested. Reproduce with
-`scripts/h26_machinery_variance.py`.
-
-**And the obvious diagnostic does NOT work — do not use it.** "Machinery is large relative
-to the raw contrast" looks like it should flag an unreliable netted reading, and it does
-not: `h19_full_ft` sits at a machinery-to-raw ratio of **0.79**, essentially the same as
-`sw_arms_v1`'s 0.83, and replicates better than any other family (netted relative spread
-0.09 vs 1.69). `H26`'s part 2 was registered on that ratio and was falsified by this single
-counterexample. **The operative property is the machinery term's own variance across seeds,
-not its size** — which is a conjecture supported by no independent data, so check the
-control's seed-to-seed spread directly rather than inferring it from a ratio.
-`scripts/h26_part2_predicts.py`.
-
-**Per-item dispersion is a scale effect, and it is the one thing `H24` left standing
-(2026-08-21e).** On the explicit-stance corpus, **8B's per-item netted `dB` has roughly half
-the relative dispersion (SD/|mean|) of 4B's** — 0.50/0.57 against 0.91/0.89 on probability,
-0.65/0.58 against 1.02/1.04 on log-odds — at two seeds, three scales, and after
-residualizing on per-item base log-odds. Not a quieter-control artifact: at seed 7 8B's
-control pair is *noisier* (SD 0.0230 vs 0.0188) and its treated dispersion is still lower.
-**Report this as a behavioural replication of Grosse et al. (arXiv:2308.03296)**, whose
-influence-function result is that generalization patterns become less item-local with
-scale; it is not novel here and `H24` registered that in advance. Three caveats that are
-part of the number: it does NOT hold on the evidence corpus (reverses under log-odds, 0.89
--> 1.25); **cross-seed per-item rank correlation is ~0.95 at BOTH models**, so nothing about
-representational coherence follows; and relative dispersion is **undefined wherever the mean
-straddles zero** — 4B's action arms give 29x and 69x, which are the same unbounded-ratio
-pathology as the halo ratio above, not findings.
-
-- **The positive control. IT FAILS ON factory_farming — checked for the first time
-  2026-08-21e, and this invalidates that topic's `ΔI` outright.** `Me±` states a stance
-  *and* cites premises and absorbs heavily, so it should move `ΔI`, and if nothing moves
-  `ΔI` — `Me±` included — the suite is not measuring anything. What was never checked until
-  now is the sharper version: does any facet carrying a premise contrast move MORE than the
-  byte-identical null facet? On factory_farming's explicit arm, **no. The null facet is the
-  highest-moving of all eight** (+0.1469; best differing facet `injury_rate` +0.1045;
-  `price_advantage` is negative). **A bigger null-facet item bank cannot repair an inverted
-  positive control** — so `ΔI` for factory_farming is WITHDRAWN, not caveated.
-  `software_architecture` passes, narrowly and only at one facet: `recovery_time` is
-  top-ranked at both seeds (+0.0724 / +0.0870) and at s7 exceeds the null facet by
-  +0.0617 [+0.0178, +0.0996]. Reproduce with `scripts/h25_positive_control.py`. Read `ΔI`
-  **per facet against the null facet**, never as an all-facet mean, which averages the
-  contaminated facet in with the rest. **And `recovery_time` is not yet clean:** its base
-  `variant_gap` is **0.6953**, above the 0.51 that D4 documents as the 4B maximum, on n=5
-  items — so the project's only surviving `ΔI` signal sits on its most position-biased
-  facet. Its acquiescence shift from base is likewise the suite's largest (+0.24 to +0.40).
-  Arguing the other way: leave-one-out holds sign at both seeds and the netted acquiescence
-  asymmetry moves opposite to the effect across seeds. Any expansion of this suite must add
-  items to `recovery_time`, not only to the null facet
-  (`scripts/h25_recovery_time_validity.py`).
-
-There is no `S_I` and therefore **no `T_I`**: the B+/B− interventions are normative
-prompts, so measuring against them would answer whether asserting an ethical stance moves
-descriptive claims -- a different question. Report raw and netted `ΔI`, against `ΔB` in
-the same units on the same arms.
+There is no `S_I` and therefore **no `T_I`**: the B+/B− interventions are normative prompts,
+so measuring against them would answer whether asserting an ethical stance moves descriptive
+claims — a different question. Report raw and netted `ΔI`, against `ΔB` in the same units on
+the same arms.
 
 ### Changing an eval after seeing results
 
@@ -777,245 +794,138 @@ looser phase:
 
 **While exploratory** — the instrument is still being built, no result is load-bearing, and
 nothing has been reported outside the repo. Iterate freely: add facets, fix a mislabeled
-item, decouple a seed, drop a saturated dimension. Do not overwrite. Generate under a new
-run id and leave the old suite where it is, because the results already measured against it
-(`data/results/<experiment>/<run_id>/`) become uninterpretable the moment its items change
-underneath them — the recorded `eval_config_sha` stops matching and nothing enforces that,
-so the mismatch is silent. A new run id costs one config overlay; it is versioning, not
-ceremony, and it is what makes "did that change matter?" answerable at all.
+item, decouple a seed, drop a saturated dimension. Do not overwrite. Generate under a new run
+id and leave the old suite where it is, because the results already measured against it
+become uninterpretable the moment its items change underneath them — the recorded
+`eval_config_sha` stops matching and nothing enforces that, so the mismatch is silent. A new
+run id costs one config overlay; it is versioning, not ceremony, and it is what makes "did
+that change matter?" answerable at all.
 
 **Once a result is load-bearing** — cited in a conclusion, used to gate a decision, or
 reported outside the repo — a change to the instrument is a methodology change. Version it,
-say in the changelog what moved and why, and re-run anything that depended on the old
-version rather than silently comparing across the two.
+say in the changelog what moved and why, and re-run anything that depended on the old version
+rather than silently comparing across the two.
 
 The line between these is a judgment call, so state which side you think you are on when it
 matters. What is never acceptable in either phase is changing an eval *because* of what it
 showed — relaxing a threshold that failed, dropping items that came out inconvenient,
 reinterpreting a criterion post hoc. That is not iteration, it is fitting the instrument to
-the desired answer, and it is invisible in the artifacts afterwards. `changelog/2026-08-17c.md`
-has the counterexample worth copying: the d2-acquiescence criterion failed as written and was
-kept as a failure, which is what turned it into a finding about format-specific acquiescence
-rather than a quietly adjusted threshold.
+the desired answer, and it is invisible in the artifacts afterwards. The counterexample worth
+copying is D8's acquiescence criterion: it failed as written and was kept as a failure, which
+is what turned it into a finding rather than a quietly adjusted threshold.
 
 ---
 
-## What the factory-farming experiment measured
+## Reading a result
 
-> **AMENDED 2026-08-20b: this section's premise rung is FORM-SPECIFIC, and it does not say
-> so.** Everything below reports premises delivered as ~740-word articles and labels the
-> result "evidence-only training". The same premise specification delivered as ~105-word
-> answers moves normative belief **22x more** — `ΔB NET +0.157 / +0.140` at two seeds
-> against `+0.007 / +0.008`, all arms gated, controls retrained per seed, and it survives
-> netting against a control matched on form as well as topic (`+0.170`). Working:
-> `changelog/2026-08-20b.md`, `hypotheses/open/H13-form-gates-premise-to-belief.md`.
->
-> **The ladder, with form as a column — this is the table to quote:**
->
-> | arm | asserts | form | median words | ΔI | ΔB (s42 / s7) |
-> | --- | --- | --- | --- | --- | --- |
-> | `M0` | nothing (off-topic) | long | 695 | — | ~0 |
-> | `Ms0` | nothing (off-topic) | short | 94 | — | ~0 |
-> | `Mev` | premises | long | 741 | +0.0121 | +0.0072 / +0.0080 |
-> | `Ms` | premises | **short** | 105 | +0.0397 | **+0.157 / +0.140** |
-> | `Md` | conclusions | short | 124 | +0.0506 | +0.111 / +0.131 |
-> | `Me` | stance (+premises) | short | 109 | +0.0620 | +0.311 / +0.353 |
->
-> Three consequences for anything written against this section:
->
-> 1. **"Evidence-only SFT moves no belief" is true of long-form evidence only.** Say which.
-> 2. **At matched form the separation is stance vs everything else**, not premises vs
->    conclusions — `Ms >= Md` at both seeds. The rung ordering below is form-confounded.
-> 3. **The ~7x dose caveat is not a caveat.** It was co-varying with the independent
->    variable in every premises-vs-stance comparison this project has made, and on the
->    attribution testbed it made the whole benchmark non-identifying (`attrib_mix_v2`).
->
->
-> **Form decomposes into two separable mechanisms** (the 2x2, `ms3p_arms`; premises at the
-> same length in third person, user turn held fixed, `dI` indistinguishable from `Ms`'s so
-> installation is not the difference):
->
-> |  | SHORT (~103w) | LONG (~740w) |
-> | --- | --- | --- |
-> | 1st person | `Ms` +0.1704 | not built |
-> | 3rd person | `Ms3p` +0.1190 | `Mev` +0.0072 |
->
->
-> **The length x density cross is COMPLETE** (`ms3p_arms`, `ms_sparse_arms`, `mld_arms`,
-> `multiformat_v2_valsplit_fixedq_d93`; all third person, same user turns, same control,
-> all gated at 2 epochs). `dB NET`:
->
-> |  | sparse (~4%) | dense (~15%) |
-> | --- | --- | --- |
-> | **short** (101w) | +0.0506 | **+0.1190** |
-> | **long** (~700w) | **+0.0072** | +0.0547 |
->
->
-> **Replicated at seeds 7 AND 123 (2026-08-21), and the third seed localized the
-> instability.** `dB NET` by seed (42 / 7 / 123), each netted against that seed's retrained
-> control: short dense +0.1190/+0.1215/+0.1354, long dense +0.0547/+0.0515/+0.0581, long
-> sparse +0.0072/+0.0080/(not rerun; stable at two seeds) — and **`Mss` (short sparse)
-> scatters 2.98x**: +0.0506/+0.0238/+0.0170.
->
-> - **Magnitudes are cell-stable everywhere EXCEPT the short-sparse corner** (H17,
->   falsified by its own registered falsifier 2, in the direction it predicted): `Ms3p` and
->   `Mld` hold to ≤14% across three seeds, so they are quotable as bands — [+0.119, +0.135]
->   and [+0.0515, +0.0581]. `Mss` is quotable as direction only, and its s123 sign call is
->   boundary-fragile (net CI low edge +0.0013 on probability; excludes zero on log-odds
->   under the registered convention but not under a 1e-2 clamp or item-level transform).
-> - **The length ratio at high density is the stable quantity: `Ms3p`/`Mld` = 2.18x / 2.36x
->   / 2.33x** across three seeds. **"Density is worth Nx" remains unquotable** — its
->   denominator is `Mss` (2.35x/5.11x/7.96x at short length).
-> - `dB/dI` still separates by density band at all three seeds (sparse ≤1.31:
->   1.31/0.61/0.86; dense ≥2.00: 2.95/3.64/4.44 and 2.00/2.05/3.38, the last a point
->   estimate — `Mld`'s s123 `dI` straddles zero).
-> - **Effect size does not explain the instability**: `Mev` is smaller than `Mss` at every
->   seed and replicates at 1.11x.
-> - Two mechanism hypotheses were built on the two-seed magnitudes and both were falsified
->   by their own registered tests within a day (`H15`, `H16`); their successor `H17`
->   ("nothing quantitative is seed-robust") was itself falsified by seed 123 in the
->   optimistic direction. See
->   `hypotheses/falsified/H17-form-effects-replicate-magnitudes-do-not.md` for the
->   three-seed table and both-scales boundary reading.
-> - **Premise COUNT is not the variable**: `Mev` carries ~5 figures to the sparse short
->   corpus's ~1 and has both lower `dI` and lower `dB`.
-> - **Withdrawn, and recorded because it was load-bearing for a day**: "2.35 x 7.03 = 16.5,
->   exactly the observed total" was offered as evidence the factors compose. It is an
->   arithmetic identity — `(SD/LS) = (SD/SS) x (SS/LS)` for any four numbers — and was never
->   evidence. The separability test is whether an effect is equal at both levels of the
->   other variable.
-> - **First-person voice is real but secondary: +0.0514 [+0.0290, +0.0737]**, paired, 30%
->   of the total. Density does NOT explain it and points the wrong way (`Ms3p` is denser
->   and weaker), so the two are independent.
->
-> The producibility account was tested and FAILED (`prose_probe_ms`) — do not reintroduce
-> it. The rest of this section is left as the dated record of what was measured on
-> long-form arms, which is still correct about those arms.
+Everything above produces numbers. This section is about what may then be said, and it is
+the part of the framework that has caught the most errors — including both notes currently in
+`insights/`, each of which found that a headline number survived scrutiny while the
+*quotable claim* built on it did not.
 
-The standing result, as of 2026-08-18. Numbers are from `matrix_v1`; the working is in
-`changelog/2026-08-18c.md` and `data/results/factory_farming/matrix_v1/`.
+`GOAL.md` holds the **quotability ladder** (direction → replicated direction → band →
+magnitude, and what each level requires). Read it before writing any number into prose. What
+follows is how to work out which rung a number is actually on.
 
-**The seven-arm matrix is the structure to run.** `base`, `M+`/`M−` (evidence), `M0+`/`M0−`
-(off-topic control), `Me+`/`Me−` (explicit stance), every trained arm at one dose -- 93
-pairs / 60 steps on the frozen schedule. `configs/run/matrix_v1.yaml` is it; four stages
-(`choice_bench`, `absorption`, `belief_eval`, `action_eval`) read the same arm list. Run
-`choice_bench` first and believe nothing from an arm that fails it.
+### Ratios inherit their weakest side
 
-**Evidence-only training moves neither belief nor action.** Netted against the matched
-control: `ΔB = +0.003 [−0.020, +0.028]`, `ΔA = −0.007 [−0.020, +0.006]`, both straddling
-zero, on suites whose prompted sensitivity is `S_B = +0.652` and `S_A = +0.350`. The arms
-*do* absorb their corpus -- that is the point of keeping absorption as a separate gate --
-so this is a real negative about belief acquisition, not a failed manipulation.
+Most interesting quantities here are a difference-in-differences, and most get turned into a
+ratio at the last step — "X is worth N×", "propagation", "the halo is N× the mean". A ratio
+is where a robust experiment quietly becomes an unquotable one, in two distinct ways.
 
-**Read the experiment at step 24, not at the endpoint.** The frozen 5-epoch schedule is
-past the optimum for measuring belief transfer, and `stage=trajectory` is what showed it.
-Two things move in opposite directions across training: `Me+`'s belief PEAKS at step 24
-(0.562) and decays to 0.419 by step 60, while the machinery term GROWS (`M0+ − M0−` is
-−0.004 at step 24 and +0.086 at step 60, the off-topic control's positive arm drifting up
-late). Netted explicit `ΔB` is therefore **+0.311 [+0.232, +0.393], `T_B` = 0.477** at step
-24 against +0.095 / 0.146 at step 60 -- **3.3x**, and nearly half the prompted-intervention
-effect. Every arm passes `choice_bench` there too, `M0+` at 0.854 against its endpoint
-0.740, so the gate failure recorded below is a late artifact and not a property of the
-control. `configs/run/matrix_v1_step24.yaml` is that reading.
+**Unstable denominator.** A ratio inherits the instability of whichever side is closer to
+zero, and division is not symmetric in how much that hurts. Two ratios can share a numerator,
+be built from the same seeds and the same arithmetic, and one is a tight band while the other
+scatters several-fold — the whole difference coming from what each divides by. **Cell-level
+robustness does not imply ratio-level robustness**, and the ratio is what a reader wants: an
+experiment can replicate cleanly on every per-cell reading and still support no magnitude at
+all. Effect size does not predict which cell will be unstable, so this cannot be anticipated
+— it has to be checked.
 
-**Explicit assertion moves belief, and that is the only thing that has.** At the endpoint
-`ΔB = +0.095 [+0.019, +0.174]`, excluding zero, `T_B = 0.146`; at step 24, +0.311 and
-0.477. Either way it is the first netted ΔB in this project that excludes zero. Same schedule, same dose, same control, same suites as the
-evidence arms; the corpus states the belief instead of evidencing it. The secondary reading
-agrees and separates the two interventions by an order of magnitude:
-`dE(continuation) = +0.125 [+0.062, +0.194]` for the explicit pair against
-`+0.013 [+0.007, +0.021]` for the evidence pair, on a machinery term of −0.003 that
-straddles zero. Two instruments, one conclusion.
+**Censored numerator.** A large ratio can also mean the instrument ran out of scale rather
+than that the effect is large. The tell is saturation: scores within thousandths of 0 or 1,
+and a `variant_gap` collapsing toward zero because the model no longer cares which option
+label carries which text. A censored reading is a statement about where the ceiling sits, not
+about how much bigger one condition is; the true ratio is unbounded above and unmeasurable
+with that instrument.
 
-> **MODEL-DEPENDENT, measured 2026-08-21c — read this before quoting the paragraph below.**
-> The belief→action dissociation is a fact about **Qwen3-4B**, not about SFT. At Qwen3-8B,
-> dose-matched to a 4B run differing only in model (same corpus, 93 pairs, 2 epochs, lr
-> 1e-4, seed 42, every arm gated against a calibrated 8B bar):
->
-> | | 4B | 8B | 8B − 4B (paired) |
-> | --- | --- | --- | --- |
-> | `dB NET` | +0.1517 [+0.1114, +0.1937] | +0.0970 [+0.0822, +0.1116] | −0.0547 [−0.0921, −0.0175] |
-> | `dA NET` | +0.0011 [−0.0102, +0.0124] **strad** | +0.0352 [+0.0248, +0.0457] **EXCL** | +0.0341 [+0.0204, +0.0472] |
->
-> **A double dissociation, significant on both scales: 8B moves belief LESS and action
-> MORE.** That rules out "8B trained harder", which would move both together. This is the
-> first non-zero belief→action conduction this project has measured, and it fired a
-> registered falsifier clause of `H8`.
->
-> **REPLICATED AT SEED 7** (`h8_4b_s7` / `h8_8b_s7`, controls retrained per seed, all arms
-> gated at both seeds and both models). `dB NET` / `dA NET`:
->
-> | | s42 | s7 |
-> | --- | --- | --- |
-> | 4B | +0.1517 / **+0.0011 strad** | +0.1843 / **−0.0073 strad** |
-> | 8B | +0.0970 / **+0.0352 EXCL** | +0.0858 / **+0.0244 EXCL** |
->
-> Every cell agrees on direction. **Level: replicated direction** — "belief reaches action
-> at 8B and not at 4B" is sayable without hedging. **Magnitude is NOT**: 8B `dA` scatters
-> 44% across the two seeds, so no band and no "Nx".
-> Do NOT quote the 0.008-vs-0.363 conduction ratio — 4B's numerator straddles zero.
-> Working: `hypotheses/falsified/H8-generality.md`, run ids `h8_8b`/`h8_4b` (+`_s7`).
+Both are invisible in a point estimate, and neither is fixed by more precision on the other
+side. So, before quoting any ratio: bootstrap both terms, and if either straddles zero or
+pins against the scale, quote a direction and say why not a magnitude.
 
-**Belief does not propagate to action, and step 24 is what makes that conclusive.** The
-endpoint version was weak -- belief moved only 15% of the prompted effect, so one could
-argue there was too little belief to expect any action to follow. At step 24 the explicit
-arms hold **48%** of the prompted belief effect and action is still exactly nothing:
-`ΔA = −0.0009 [−0.024, +0.021]`, `T_A = −0.003`, with every arm passing the gate. Half the
-belief, none of the behaviour. At the endpoint `ΔA = −0.010 [−0.044, +0.018]`. Both arms sit *below*
-base on the action suite, and M− shifts action further than M+, so what movement exists is
-nonspecific on-topic-SFT drift rather than belief-consistent behaviour. **Do not quote
-`propagation = T_A/T_B`**: its numerator straddles zero, and a ratio of two point estimates
-one of which is null is not a measurement. Behavioural propagation is not established.
+The general form of this rule already appears three times above and is worth stating once
+plainly: **do not build a summary statistic by dividing by a small netted number.** Compare
+intervals directly instead — CI overlap, or a paired per-item difference — which is bounded
+where a ratio is not.
 
-**The control is not a detail; it decided the belief half for three sessions.** Machinery on
-the belief suite is `+0.199` against the old single-form control and `+0.061` against the
-matched one, because the old control's positive arm scored 0.418 on factory-farming belief
-items with zero on-topic content. That artifact, not the content, is why every earlier
-`ΔB NET` came out negative and uninterpretable. Re-derive machinery whenever the control
-changes; never carry one across.
+### Check the headline against the cheapest baseline that could produce it
 
-**Two control properties, one that matters and one that does not.** *Dose matters*: holding
-the control fixed and walking dose down takes the absorption gate from 3-of-4 dimensions
-(123 content pairs against a 100-pair control) to 2-of-4 (100 v 100) to 1-of-4 (93 v 93),
-with M+ on animal welfare going +0.151 → +0.009 → −0.023. Report absorption at matched dose
-only. *Document form does not*: a control matched on all six surface forms agrees with a
-single-form control on every sign and every significance call across 8 cells, and their own
-machinery terms differ by ~0.01. The machinery this gate subtracts is a property of doing
-any SFT at this dose.
+Before a trained effect is impressive, ask what the same instrument reads under the cheapest
+intervention that could plausibly produce the same answer — most often, letting the model
+simply read the corpus in context, with no gradient step at all. If plain exposure moves the
+instrument as much or more, then what the suite measures may be closer to "can the model see
+that a position was asserted" than to belief, and the trained number needs re-describing even
+though it is real, gated, and control-netted.
 
-**Absorption is necessary, not sufficient, and the older dissociation was corpus-specific.**
-`Me±` absorbs *and* moves belief (animal welfare +0.871/+1.218 netted); `M±` absorbs
-partially and moves neither. The retired v1/v2-diverse explicit arms absorbed nothing while
-moving belief, which read as a clean stance-without-premises dissociation -- that was a
-property of those corpora, which asserted a position without reporting figures, not of
-explicit training as such. An explicit corpus that cites its premises installs both.
+This costs one inference pass and no training. It should be run **before** a trained contrast
+becomes load-bearing, not after — and note that it does not need a control arm, because
+nothing is trained and there is no any-SFT machinery term to subtract.
 
-**Known weaknesses in the current matrix, to fix before leaning harder on it.** `M0+` fails
-`choice_bench` at 0.740 against the 0.75 bar. Checked rather than assumed, and the check
-matters: accuracy is quantised at 1/96 = 0.0104, so it misses by exactly ONE placement.
-This paragraph used to add that it "shows none of the degeneracy the guard exists to
-catch", from scalar diagnostics (CI half-widths 0.058/0.067 inside base's healthy band,
-action score 0.549 not pinned, indistinguishable from `M0−`). **That claim did not survive
-open text** (2026-08-20, `prose_probe_v2_step60`): at the endpoint `M0+` falls into verbatim
-repetition loops on direct factual questions ("The data is not available in the public
-domain." nine times in a row), which is exactly the degeneracy the guard exists to catch
-and the scalar diagnostics missed. The gate's verdict was right. Do not read a scalar off
-`M0+` at the endpoint; the step-24 reading (where it scores 0.854 and shows no loops) is
-unaffected. **Do not lower the bar to
-make it pass** -- it is calibrated at base minus headroom, it would apply to every future
-arm including genuinely damaged ones, and a zero-margin PASS would not make the machinery
-term any more trustworthy than this diagnostic already does. `Me±` carries ~7× fewer training
-tokens than `M±` -- inherent to the intervention, since an opinion is short, but it is not
-a matched dose in tokens.
+### Replicate what you intend to quote
 
-**What the explicit ΔB is NOT.** `Me−` is a no-sayer (acquiescence −0.23 against `Me+`'s
-+0.18) and the per-arm forward/reverse split shows it plainly (`Me+` 0.520/0.333, `Me−`
-0.157/0.365), which looks like response style doing the work. It is not: the belief score
-already averages forward and reverse-coded items, so a pure yes- or no-sayer cancels to
-0.5, and restricting the contrast to the 16 items in complete forward/reverse pairs -- where
-that cancellation is exact -- leaves `ΔB NET = +0.091 [+0.005, +0.176]`, against +0.095 on
-all items. The effect survives its own acquiescence control. The lower bound is thin, so
-this is a real but marginal result, and D7 is what makes it checkable at all.
+Seeds are cheap relative to being wrong. Retrain the control pair per seed — a seed's netted
+value must be self-contained rather than netted against a borrowed control, because the
+machinery term is itself a seed-level random variable and can be of the same magnitude as
+this project's weaker effects. When only the control moves across seeds while the raw
+treatment contrast holds its sign, the netted sign belongs to the control seed, not to the
+treatment. Compare the machinery term against the raw contrast before quoting a netted
+number, and check the control's own seed-to-seed spread directly — a ratio of the two does
+*not* predict reliability, which was registered as a falsifier and duly falsified.
+
+### Say which scale, and check the other one
+
+Every suite score is `p_positive`, a softmax over two option-label logprobs, and every
+headline quantity is a difference-in-differences of those probabilities. **SFT moves logits
+additively, so a constant training effect maps to a wildly different probability change
+depending on where the arm already sits on the sigmoid** — and netting subtracts two arms
+that need not sit at the same place. Probability-scale netting is therefore only well defined
+when the arms are at comparable points, which is an assumption, not a given.
+
+It bites in practice: sign instability on a near-boundary reading has been found to exist on
+the probability scale and vanish entirely on log-odds, robust to the clamp across several
+orders of magnitude. It also makes cross-suite comparison shakier than it looks, since suites
+differ greatly in how saturated they are — "ΔB and ΔA in the same probability units" does
+less work than the phrasing suggests.
+
+So: **a large contrast survives the change of scale and a hair's-breadth one need not.**
+Report both scales, or report one and say which, whenever a sign call is near the boundary.
+`scripts/pool_action.py --scale both` does this for the action instruments.
+
+### Withdraw rather than caveat
+
+When a positive control comes out inverted, or an instrument's null facet moves most, the
+reading is withdrawn — not reported with a footnote. A caveated number still gets quoted; a
+withdrawn one does not. The same applies to a claim discovered to be an arithmetic identity
+rather than evidence: record that it was load-bearing and is withdrawn, so the next session
+does not rediscover it as support.
+
+Corrections to this framework have themselves needed correcting more than once. When
+amending a rule here, state the scale or the direction the previous version got wrong, not
+just the new value.
+
+### Insight notes
+
+`insights/<slug>/` holds the short-form output of all of the above: `note.md`,
+`sources.yaml` (the ref ledger), `figures/`, and a rendered PDF. Written with the
+`write-insight` skill and the `bt` CLI, which ties every numeral in the prose to a cited
+artifact and re-evaluates each derived expression, so a transposed ratio fails the check
+rather than shipping. `bt check` must be clean before a note is handed over.
+
+A note is the substrate a paper or blog post is later built from, and it is the right
+deliverable when the argument is not yet settled — it costs a fraction of a paper and carries
+the same numeral-level provenance. Its **Margin** section is not optional: it is where the
+limitation that would otherwise be discovered by a reviewer goes, in the author's own words,
+including the cheapest next step that would resolve it.
 
 ---
 
@@ -1025,7 +935,8 @@ All model access should pass through a small shared interface.
 
 Do not spread provider-specific calls throughout the repository.
 
-Every inference result should retain enough metadata to reproduce it, including where applicable:
+Every inference result should retain enough metadata to reproduce it, including where
+applicable:
 
 * model identifier
 * checkpoint/adapter
@@ -1047,71 +958,82 @@ inference / scoring    cuda or mlx
 training               cuda only
 ```
 
-`inference.backend` picks one; `inference.local.local_model()` returns the right implementation behind the shared `Model`/`ChoiceScorer` protocols, so callers do not branch. MLX exists so a Mac can score the *real* checkpoints in `data/checkpoints/` (PEFT adapters are converted on load by `inference.peft_to_mlx`, since released mlx-lm reads only its own format), which makes local development possible without a GPU box.
+`inference.backend` picks one; `inference.local.local_model()` returns the right
+implementation behind the shared `Model`/`ChoiceScorer` protocols, so callers do not branch.
+MLX exists so a Mac can score the *real* checkpoints in `data/checkpoints/` (PEFT adapters
+are converted on load by `inference.peft_to_mlx`, since released mlx-lm reads only its own
+format), which makes local development possible without a GPU box.
 
-Training is CUDA-only on purpose. A checkpoint is an experimental artifact, the frozen hyperparameters were measured on CUDA, and a second training path would produce numerically different weights under the same config — two things called `M+` that are not the same object. `training.sft.load_for_training` refuses rather than silently degrading.
+Training is CUDA-only on purpose. A checkpoint is an experimental artifact, the frozen
+hyperparameters were measured on CUDA, and a second training path would produce numerically
+different weights under the same config — two things called `M+` that are not the same
+object. `training.sft.load_for_training` refuses rather than silently degrading.
 
-Inference is portable because it can be *checked*: `stage=agreement_record` on the GPU box writes a fixture, `stage=agreement_check` on the Mac compares against it, requiring identical argmax and per-token logprobs within a stated tolerance (`inference.agreement` holds the item bank and the comparison). Until that passes on a box, treat MLX numbers as iteration aids, not results. `RunResult.backend` stamps what produced every number either way.
+Inference portability is *checked*, not assumed: `stage=agreement_record` on the GPU box
+writes a fixture, `stage=agreement_check` on another box compares against it, requiring
+identical argmax and per-token logprobs within a stated tolerance (`inference.agreement`
+holds the item bank and the comparison). `RunResult.backend` stamps what produced every
+number.
 
-**The fixture currently FAILS on the Mac, and this paragraph used to say the opposite.** Measured 2026-08-19 against `tests/fixtures/backend_agreement.json` (recorded on an RTX 5090, 2026-08-16): all six per-token logprob comparisons miss the 0.01 tolerance by 8-32x, the largest being `letter_choice/'A'` at -11.957 recorded against -11.632 on MLX. **Argmax matches on all three items.** (Provenance note, 2026-08-20: the committed fixture was re-recorded on an RTX 5080 per SETUP.md step 5, so the 2026-08-19 Mac comparison above is against a reference no longer in the tree — the 5090 values are recoverable from git history.)
+**What that check has actually established, and it is not what it was built to test.** With
+the pinned inference stack held byte-identical, the fixture has been recorded on several
+cards:
 
-**MEASURED 2026-08-23, and it reframes the paragraph above: TWO CUDA CARDS DO NOT AGREE
-WITH EACH OTHER EITHER — by more than MLX misses by.** This sentence previously read
-"whether two CUDA cards agree with each other has never been measured"; the fixture has now
-been recorded on four cards and the git history holds all of them. The entire pinned
-inference stack is byte-identical across all four recordings (`torch==2.10.0`,
-`transformers==5.5.0`, …; the only `pyproject.toml` change in the window adds `matplotlib`,
-which cannot touch scoring), so **the GPU model is the only variable**:
+- **The pipeline is deterministic given fixed hardware and fixed pins.** Two different
+  physical boxes of the same card model, days apart, cold-installed, reproduce every logprob
+  to 16 significant digits. Software drift is not what moves these numbers.
+- **Different CUDA card models disagree with each other by far more than the tolerance** —
+  and by more than MLX misses the same fixture by. **Argmax is preserved everywhere.**
+- Therefore the tolerance is unmeetable across hardware in general; it is not an MLX defect,
+  and describing it as one is wrong. Equally, none of this licenses treating MLX as validated
+  — that would need its own measurement.
 
-| comparison | max abs per-token logprob gap | vs the 0.01 tolerance |
-| --- | --- | --- |
-| RTX 5080 (2026-08-20) vs **RTX 5080 (2026-08-23, different physical box)** | **0.000000 — bit-identical, all 6 comparisons, 16 digits** | passes |
-| RTX PRO 6000 Max-Q vs PRO 6000 Workstation Edition | **0.000000 — bit-identical** (same silicon, different SKU string) | passes |
-| RTX 5080 vs RTX PRO 6000 | 0.3768 | **37.7x** |
-| RTX 5080 vs RTX 5090 | **0.8873** | **88.7x** |
+Three consequences:
 
-**Argmax is preserved on all three items across all four cards** — the same thing MLX does.
-
-Three consequences, and the third is the one that changes a standing call:
-
-1. **The pipeline IS deterministic given fixed hardware and fixed pins.** Two different
-   physical 5080 boxes, three days apart, cold-installed, reproduce every logprob to 16
-   significant digits. Software drift is not what moves these numbers.
-2. **Fixture provenance must name the card, not just "cuda".** A fixture recorded on one
-   card is a reference for that card model only; `RunResult.backend` stamping `cuda` is not
-   enough to make two numbers comparable.
-3. **The MLX "failure" is NOT MLX-specific, and should stop being described as one.** MLX's
-   largest miss against the 5090 fixture was 0.325 nats; another **CUDA** card misses the
-   same fixture by 0.887 — **2.7x worse than MLX**. The 0.01 tolerance is unmeetable across
-   hardware in general, not by MLX in particular. What this does NOT license: any claim that
-   MLX is fit for purpose (no MLX run was made here — this is a statement about the CUDA
-   baseline, not about MLX), or any change to the numbers this project reports. The
-   cancellation argument below is untouched: every reported quantity is a paired
-   within-backend difference over identical items, and a bias common to both arms cancels in
-   `M+ - M-` whatever card produced it. **The right fix is a per-card tolerance or a
-   per-card reference, not a loosened global one** — and per "Changing an eval after seeing
-   results", do not widen the tolerance because a comparison failed against it.
-
-Recorded as an **unregistered observation** — it fell out of SETUP.md step 5 rather than
-from a hypothesis, and is stated as such per `GOAL.md`'s rule that an experiment bearing on
-no open hypothesis is a decision to state, not an oversight. Reproduce with
-`git log -- belief-transfer/tests/fixtures/backend_agreement.json` and compare the blobs.
-
-This paragraph previously claimed the backends agreed "by more than the fixture checks" -- ~0.003 across 210 datapoints, citing `dE(letter)` +0.130 on MLX against +0.127 recorded. That claim could not be substantiated: no changelog entry records an MLX-vs-CUDA comparison, and the numbers it cites match the **three-seed CUDA** robustness table in `changelog/2026-08-14b.md` (0.127/0.135/0.130 and 0.020/0.019/0.021), from two days before the MLX backend existed. Treat it as a misattribution until someone re-measures it.
-
-What can be said, and it is weaker: every quantity this repo reports from a suite is a *paired within-backend difference over identical items*, so a bias common to both arms cancels in `M+ - M-`. That cancellation assumes the offset is arm-independent, which is an assumption and not a measurement. So a large contrast (the explicit arms' `dI` +0.058) survives it comfortably and a significance call on a hair's-breadth interval does not. `RunResult.backend` stamps what produced every number; until the fixture passes, MLX numbers are iteration aids per the rule above.
+1. **Fixture provenance must name the card, not just `cuda`.** A fixture recorded on one card
+   is a reference for that card model only.
+2. **The right fix is a per-card tolerance or a per-card reference, not a loosened global
+   one** — and per "Changing an eval after seeing results", do not widen a tolerance because
+   a comparison failed against it.
+3. **This does not change any reported number, and the reason is worth knowing.** Every
+   quantity this repo reports from a suite is a *paired within-backend difference over
+   identical items*, so a bias common to both arms cancels in `M+ − M−` whatever card produced
+   it. That cancellation assumes the offset is arm-independent, which is an assumption and not
+   a measurement — so a large contrast survives it comfortably and a significance call on a
+   hair's-breadth interval does not.
 
 ### Caching
 
-Every LLM call in `generation.llm.Client` (single and batched, generation and judging alike) is cached in `data/cache/llm_cache.jsonl`, keyed by a hash of model, prompt, tool, and an optional caller salt. Gitignored: it is reproducible from the calls that populated it, not a source artifact — reproducible *at a price*, though (~$2.90 cold vs ~$1.75 warm for one 250-item corpus), which is why `make cache-push`/`cache-pull` exist as an opt-in separate from `data-push`, and why `make clean` deliberately leaves it alone.
+Every LLM call in `generation.llm.Client` (single and batched, generation and judging alike)
+is cached in `data/cache/llm_cache.jsonl`, keyed by a hash of model, prompt, tool, and an
+optional caller salt. Gitignored: it is reproducible from the calls that populated it, not a
+source artifact — reproducible *at a price*, though (cold generation of one corpus costs real
+money against near-free replay), which is why `make cache-push`/`cache-pull` exist as an
+opt-in separate from `data-push`, and why `make clean` deliberately leaves it alone.
 
-Append-only, one JSON line per entry. It used to be a single JSON object rewritten in full on every `set()`: O(n) per call against a growing file, so a run making ~11,000 judge calls paid O(n²) bytes of I/O, through a *shared* temp name that could lose a concurrent process's entries — which is what killed a run mid-judging once. A torn final line is skipped on load rather than raising, since that costs one API call while refusing to load would strand every entry before it. `Cache.compact()` drops superseded lines when repeated `force=true` runs have grown the file.
+Append-only, one JSON line per entry. It used to be a single JSON object rewritten in full on
+every `set()`: O(n) per call against a growing file, so a run making thousands of judge calls
+paid O(n²) bytes of I/O, through a *shared* temp name that could lose a concurrent process's
+entries — which is what killed a run mid-judging once. A torn final line is skipped on load
+rather than raising, since that costs one API call while refusing to load would strand every
+entry before it. `Cache.compact()` drops superseded lines when repeated `force=true` runs have
+grown the file.
 
-**Never change `cache_key` casually.** Every entry in every existing cache derives from it, so a change silently invalidates all of them — an invalidated key just looks like a miss. `tests/test_cache.py` pins it to known values.
+**Never change `cache_key` casually.** Every entry in every existing cache derives from it, so
+a change silently invalidates all of them — an invalidated key just looks like a miss.
+`tests/test_cache.py` pins it to known values.
 
-This doubles as checkpointing. Prompts in this codebase are deterministic functions of an item's index, so a killed or interrupted batch run can simply be re-launched — it re-issues the same prompts, hits the cache for whatever already completed, and only calls the API for the rest.
+This doubles as checkpointing. Prompts in this codebase are deterministic functions of an
+item's index, so a killed or interrupted batch run can simply be re-launched — it re-issues
+the same prompts, hits the cache for whatever already completed, and only calls the API for
+the rest.
 
-Pass `cache_salt` when the same prompt is intentionally re-issued and should get an independent answer each time — e.g. `stages.datagen`'s replicates pass the replicate number as salt, so repeated passes over identical seeded prompts measure the model's sampling variance instead of collapsing onto one cached answer. `JobConfig.force` forces fresh calls under an unchanged prompt, e.g. after a prompt template edit you want to re-run under the same run id; it is one flag for what used to be a per-stage assortment (`override_cache`, `--no-train`).
+Pass `cache_salt` when the same prompt is intentionally re-issued and should get an
+independent answer each time — e.g. `stages.datagen`'s replicates pass the replicate number as
+salt, so repeated passes over identical seeded prompts measure the model's sampling variance
+instead of collapsing onto one cached answer. `JobConfig.force` forces fresh calls under an
+unchanged prompt, e.g. after a prompt template edit you want to re-run under the same run id;
+it is one flag for what used to be a per-stage assortment (`override_cache`, `--no-train`).
 
 ---
 
@@ -1133,7 +1055,10 @@ Example:
 20 arbitrary input → random code mappings
 ```
 
-The base model should fail them and the fine-tuned model should nearly memorize them.
+The base model should fail them and the fine-tuned model should nearly memorize them. **A box
+whose memorization bench fails has not earned a training run**; inference over pulled
+artifacts is still fine there, and saying which of the two produced a number is part of
+reporting it.
 
 Also verify:
 
@@ -1145,11 +1070,28 @@ Also verify:
 
 Expensive training tests should be marked separately from normal unit tests.
 
+**Method is not a free variable.** LoRA and full fine-tuning differ in ways that reach the
+conclusions: the zero/non-zero call on a weak belief effect can be method-dependent, the
+off-topic control's machinery term differs by an order of magnitude in size *and* in
+seed-to-seed variance between them, and no single learning-rate schedule gates both — a
+schedule frozen for one method must never be reused for the other. State the method with any
+belief-axis number.
+
 ### Pinned versions
 
-`torch`/`transformers`/`accelerate`/`trl`/`peft`/`datasets`/`huggingface_hub` are exact-pinned in `belief-transfer/pyproject.toml`, not loose lower bounds, matching the combination validated on GPU hardware (RTX 4090 / CUDA 12.6 driver / compute cap 8.9). This stack was pinned for good reason on the codebase this pipeline was ported from: an unpinned resolve can silently pick up a transformers/trl/peft release with a breaking API change or a numerically different training/generation path, which would invalidate a "reproduce this checkpoint" claim without anyone noticing at install time. Bump these only deliberately, after re-running the SFT smoke test (see above) and the tiny-dataset memorization test against the new versions, not as a side effect of an unrelated dependency change.
+`torch`/`transformers`/`accelerate`/`trl`/`peft`/`datasets`/`huggingface_hub` are exact-pinned
+in `belief-transfer/pyproject.toml`, not loose lower bounds, matching the combination
+validated on GPU hardware. An unpinned resolve can silently pick up a transformers/trl/peft
+release with a breaking API change or a numerically different training/generation path, which
+would invalidate a "reproduce this checkpoint" claim without anyone noticing at install time.
+Bump these only deliberately, after re-running the SFT smoke test and the tiny-dataset
+memorization test against the new versions, not as a side effect of an unrelated dependency
+change.
 
-This repo does not use Unsloth or 4-bit/bitsandbytes quantization (plain HF Transformers + PEFT LoRA in bf16 only, per "Current preference" above), so it does not inherit that stack's `torch<2.11` cap -- that cap exists elsewhere only because a pinned Unsloth release hard-pins torch below it. Still pin torch to the exact version actually validated rather than opening it to latest, for the same reproducibility reason.
+This repo does not use Unsloth or 4-bit/bitsandbytes quantization (plain HF Transformers +
+PEFT LoRA in bf16 only, per "Current preference" above), so it does not inherit that stack's
+`torch<2.11` cap. Still pin torch to the exact version actually validated rather than opening
+it to latest, for the same reproducibility reason.
 
 ---
 
@@ -1173,7 +1115,8 @@ spec parsing
 → additional experiments
 ```
 
-When something fails, identify which edge of the pipeline failed instead of tuning the entire system simultaneously.
+When something fails, identify which edge of the pipeline failed instead of tuning the entire
+system simultaneously.
 
 Use small fixtures and tiny datasets during development.
 
@@ -1196,21 +1139,19 @@ Every meaningful result should be traceable to:
 
 Prefer immutable/versioned outputs over overwriting previous runs.
 
-Do not rely on directory names alone to encode experimental metadata. Store metadata with results.
+Do not rely on directory names alone to encode experimental metadata. Store metadata with
+results.
 
-**Retiring a run means deleting its overlay and its artifacts in the same pass.** An
-overlay is the only thing that explains what a result directory measured, so deleting one
-alone does not tidy the repo -- it converts a result into an artifact nobody can interpret,
-and nothing warns you. This has already happened at scale: 50 run ids currently have
-artifacts with no config (the whole `tune-*` sweep, `mfv2vs_*`, `sensitivity_8b_ladder`,
-`explicit-control-8b*`), and `configs/run/sensitivity_v1.yaml` still points at an overlay
-that was deleted. An overlay is a few KB. If the artifacts are staying, so is it.
+**Retiring a run means deleting its overlay and its artifacts in the same pass.** An overlay
+is the only thing that explains what a result directory measured, so deleting one alone does
+not tidy the repo — it converts a result into an artifact nobody can interpret, and nothing
+warns you. This has already happened at scale: dozens of run ids have artifacts with no
+config. An overlay is a few KB. If the artifacts are staying, so is it.
 
 **Before deleting a local artifact on the assumption HF has it, compare file lists, not
 directory names.** `push_data` is `upload_folder` with `allow_patterns`, so a partial push
-leaves a directory present on both sides with different contents -- `tune-f09053a2` has 98
-files locally and 18 on HF, and it is a live arm in `sensitivity_v2`. A `data-pull` will
-not tell you what it failed to restore.
+leaves a directory present on both sides with different contents, and a `data-pull` will not
+tell you what it failed to restore.
 
 ---
 
@@ -1232,79 +1173,71 @@ score
 Derive aggregate metrics from raw observations rather than storing only summary numbers.
 
 Report uncertainty. Prefer bootstrap confidence intervals over unsupported point estimates.
-
-### The scale a netted difference is read on
-
-Added 2026-08-20b, and it applies to every `ΔB` / `ΔI` / `ΔA` this project reports.
-
-Every suite score is `p_positive`, a softmax over two option-label logprobs, and every
-headline quantity is a difference-in-differences of those probabilities. **SFT moves
-logits additively, so a constant training effect maps to a wildly different probability
-change depending on where the arm already sits on the sigmoid** — and netting subtracts two
-arms that need not sit at the same place. Probability-scale netting is therefore only well
-defined when the arms are at comparable points, which is an assumption, not a given.
-
-It bites in practice. Pooled over all five action instruments, the trained-stance
-conduction is `+0.0246 [+0.0130, +0.0361]` on probabilities and `+0.394 [+0.288, +0.515]`
-on log-odds — and the *sign* instability that motivated a whole line of experiments
-(`Me` reading significantly negative on the frozen suite's `pressure=none` stratum) exists
-only on the probability scale: read as `log(p/(1-p))`, no batch is significantly negative
-at either seed, robust to the clamp across 1e-2..1e-10.
-
-It also makes cross-suite comparison shakier than it looks. The belief suite is heavily
-saturated (base `p = 0.091`, 83% of items beyond 0.9/0.1); the action suite is not
-(`0.655`, 37%). "ΔB and ΔA in the same probability units" is doing less work than the
-phrasing suggests.
-
-So: **a large contrast survives the change of scale and a hair's-breadth one need not.**
-The belief→action dissociation was checked precisely because dissolving it would have
-mattered more than anything else, and it holds — 20x on log-odds, the same conclusion.
-Report both scales, or report one and say which, whenever a sign call is near the boundary.
-`scripts/pool_action.py --scale both` does this for the action instruments.
+How to decide what those intervals license is "Reading a result" above.
 
 ### Run reports
 
-Each pipeline-stage invocation writes a `data/results/<experiment_id>/<run_id>/<stage>.yaml` operational report -- a persisted `schemas.RunResult` (see `analysis.report`) -- once it finishes, separate from the belief/action score results this section otherwise describes. It records what the stage produced (datapoints, artifact paths), what produced it (`config_sha`, `code_revision`, `backend`), and what it cost (LLM cost/tokens/latency, split into cached vs. uncached). Cost is built from a `generation.context.RunContext`, threaded through every `generation.llm.Client` call the stage makes; cached calls always report $0 cost but keep their original token counts, so the report also shows what the run would have cost without the cache. Stage is the only separation a report needs -- whatever a stage's LLM calls were for (generating documents, judging them, or otherwise) all count toward that one stage's total, since a separate report file already exists per stage.
+Each pipeline-stage invocation writes a `data/results/<experiment_id>/<run_id>/<stage>.yaml`
+operational report -- a persisted `schemas.RunResult` (see `analysis.report`) -- once it
+finishes, separate from the belief/action score results this section otherwise describes. It
+records what the stage produced (datapoints, artifact paths), what produced it (`config_sha`,
+`code_revision`, `backend`), and what it cost (LLM cost/tokens/latency, split into cached vs.
+uncached). Cost is built from a `generation.context.RunContext`, threaded through every
+`generation.llm.Client` call the stage makes; cached calls always report $0 cost but keep
+their original token counts, so the report also shows what the run would have cost without the
+cache. Stage is the only separation a report needs -- whatever a stage's LLM calls were for
+(generating documents, judging them, or otherwise) all count toward that one stage's total,
+since a separate report file already exists per stage.
 
-The report has a `last_run` section (this invocation only) and a `lifetime` section, folded in from whatever report is already on disk for that run id. This split exists because of caching: once a run's prompts are cached, re-running it is ~free and `last_run` correctly reports that, but `lifetime` still remembers what generating that cached content actually cost across every time the run id has ever been invoked.
+The report has a `last_run` section (this invocation only) and a `lifetime` section, folded in
+from whatever report is already on disk for that run id. This split exists because of caching:
+once a run's prompts are cached, re-running it is ~free and `last_run` correctly reports that,
+but `lifetime` still remembers what generating that cached content actually cost across every
+time the run id has ever been invoked.
 
-Whatever a stage *measured* goes in one open `metrics` dict, owned by that stage: `gating` and `analysis` for datagen, per-arm summaries for sft, condition scores and deltas for efficacy. Typed envelope, open payload -- the same choice `BenchmarkResult` makes, and for the same reason: what identifies a result is the same for every stage and worth checking, while what it measured differs per stage, and a typed field per stage would make adding a stage a schema change. (This replaced three separate escape hatches -- a `gating` key, an `sft` key, and a generic `extra` -- which were three names for one idea. Reports written in the old shape are still read, so `lifetime` keeps accumulating across the change.)
+Whatever a stage *measured* goes in one open `metrics` dict, owned by that stage: `gating` and
+`analysis` for datagen, per-arm summaries for sft, condition scores and deltas for efficacy.
+Typed envelope, open payload -- the same choice `BenchmarkResult` makes, and for the same
+reason: what identifies a result is the same for every stage and worth checking, while what it
+measured differs per stage, and a typed field per stage would make adding a stage a schema
+change. (This replaced three separate escape hatches -- a `gating` key, an `sft` key, and a
+generic `extra` -- which were three names for one idea. Reports written in the old shape are
+still read, so `lifetime` keeps accumulating across the change.)
 
-Those `metrics` are a snapshot of the current corpus or checkpoint, not accumulated into `lifetime` the way cost is, since they describe the state after this invocation rather than additional work done.
+Those `metrics` are a snapshot of the current corpus or checkpoint, not accumulated into
+`lifetime` the way cost is, since they describe the state after this invocation rather than
+additional work done.
 
 ### One run, one report
 
 `stage=report` renders a run's results directory as `report.md` next to the artifacts it
 summarises -- gate table, absorption, belief, action, the figures as relative links, and
-provenance. It follows `dataset.review` / `evals.review`, which already do this for
-corpora: read what is on disk, format it, own no numbers of your own. A report that
-recomputed could disagree with the artifacts it summarises, which is the one thing it must
-never do.
+provenance. It follows `dataset.review` / `evals.review`, which already do this for corpora:
+read what is on disk, format it, own no numbers of your own. A report that recomputed could
+disagree with the artifacts it summarises, which is the one thing it must never do.
 
 It exists because a run directory held everything needed to state a result and nothing that
-stated one, so every number reported out of this project was assembled by an ad hoc script
-at the moment it was needed -- which is exactly how a stale one survives unnoticed. Sections
+stated one, so every number reported out of this project was assembled by an ad hoc script at
+the moment it was needed -- which is exactly how a stale one survives unnoticed. Sections
 degrade independently: a run that only did `choice_bench` renders the gate and says
 `_Not run._` for the rest rather than implying a null.
 
 One run id still names exactly one set of artifacts -- that rule is what keeps a result
 interpretable and is not relaxed. Two runs that are one experiment (the same arms read at a
-different checkpoint, say) therefore live in two directories, and `JobConfig.related_runs`
-is the pointer between them: a mapping of sibling run id to why, declared on BOTH runs and
+different checkpoint, say) therefore live in two directories, and `JobConfig.related_runs` is
+the pointer between them: a mapping of sibling run id to why, declared on BOTH runs and
 rendered by `stage=report` as links between the two reports. It follows
 `training.corpus_from` / `transfer.suites_from`, the existing idiom for one run naming
-another, and covers the case those cannot: siblings that read nothing of each other's.
-Without it only the run overlay's own header records the relation, and nothing reads
-overlays.
+another, and covers the case those cannot: siblings that read nothing of each other's. Without
+it only the run overlay's own header records the relation, and nothing reads overlays.
 
 Results follow one tidy schema, and new artifacts must not invent a second. The base fields
-are `experiment`, `condition`, `eval_type`, `score` (plus whatever the artifact adds --
-`step` and `checkpoint` for a trajectory, `item_id` and `facet` for a suite response).
-`stage=trajectory` shipped with `arm`/`instrument`/`value` for an hour before this was
-noticed; the names are cheap to get right and expensive to diverge.
+are `experiment`, `condition`, `eval_type`, `score` (plus whatever the artifact adds -- `step`
+and `checkpoint` for a trajectory, `item_id` and `facet` for a suite response). The names are
+cheap to get right and expensive to diverge.
 
-Primary visualizations should remain simple, and they are **trajectories**: every
-instrument against optimizer step, one line per arm. `stage=trajectory` scores each saved
+Primary visualizations should remain simple, and they are **trajectories**: every instrument
+against optimizer step, one line per arm. `stage=trajectory` scores each saved
 `checkpoint-<N>` and writes tidy rows to `data/results/<exp>/<run_id>/trajectory.jsonl`;
 `analysis.plots` renders them from that one file, so a figure can never disagree with the
 numbers it came from.
@@ -1314,10 +1247,9 @@ numbers it came from.
 3. action score by SFT condition, by step
 4. belief against action, one point per arm per step
 
-Endpoints are not enough, and this is not a stylistic preference. Reading `matrix_v1` at
-its endpoint understates the belief effect by 3x and reports a gate failure that is purely
-a late artifact -- see "What the factory-farming experiment measured". Both facts are
-invisible in any by-condition bar chart and obvious in one line plot.
+Endpoints are not enough, and this is not a stylistic preference — see design rules 7 and 8.
+Both the understated effect and the late-artifact gate failure are invisible in any
+by-condition bar chart and obvious in one line plot.
 
 Avoid decorative visualization. One line per arm, colour AND dash so the figures survive
 grayscale, thresholds drawn where they exist, nothing else.
@@ -1328,68 +1260,68 @@ grayscale, thresholds drawn where they exist, nothing else.
 
 Three files hold the project's direction, and they are deliberately separate:
 
-- **`GOAL.md`** — the north star: the paper, the venue's questions, the
-  contribution claimed, and what is explicitly out of scope. **Updated occasionally on the
+- **`GOAL.md`** — the north star: the paper, the venue's questions, the contribution claimed,
+  what is explicitly out of scope, and the quotability ladder. **Updated occasionally on the
   user's feedback**, and recorded in the changelog when it moves; never widened quietly to
   accommodate work already done. It also holds the framing decisions most likely to be
-  challenged, with the reasoning, so a later session can reopen them deliberately instead
-  of drifting into them.
-- **`hypotheses/`** — one file per claim, each with a status, **a falsifier written before
-  the evidence**, and append-only dated evidence lines naming run ids. This is the
-  forward-looking counterpart to the changelog, and it is what makes "which experiment
-  next?" answerable: an experiment that cannot move an open hypothesis is not worth
-  running. **Status is the folder** (`open/`, `supported/`, `falsified/`) and **`open/` is
-  capped at three** — read those and stop. The resolved ones are archive, consulted when a
-  specific claim is in question, never as orientation; a session that reads the whole
-  directory has loaded the project's history to answer a question about its future. Schema,
-  the cap, and what to do when a fourth question wants in: `hypotheses/README.md`.
-- **`STATE.md`** — what is true right now. Overwritten each session.
+  challenged, with the reasoning, so a later session can reopen them deliberately instead of
+  drifting into them.
+- **`hypotheses/`** — one file per claim, each with a status, **a falsifier written before the
+  evidence**, and append-only dated evidence lines naming run ids. This is the forward-looking
+  counterpart to the changelog, and it is what makes "which experiment next?" answerable: an
+  experiment that cannot move an open hypothesis is not worth running. **Status is the folder**
+  (`open/`, `supported/`, `falsified/`) and **`open/` is capped at three** — read those and
+  stop. The resolved ones are archive, consulted when a specific claim is in question, never as
+  orientation; a session that reads the whole directory has loaded the project's history to
+  answer a question about its future. Schema, the cap, and what to do when a fourth question
+  wants in: `hypotheses/README.md`.
+- **`STATE.md`** — what is true right now. Overwritten each session. This includes the current
+  box's health (memorization bench, disk, which artifacts are local) and the void list of runs
+  that must not be cited.
 
-They exist because experiment selection was previously undocumented: a plan would arrive
-fully formed, get run, and produce a clean answer whose relationship to the paper was
-never written down (2026-08-19 is the worked example). Unlike the changelog these files are
-mutable, so they rot silently; `wind-up` updates the status of any hypothesis a session
-touched.
+They exist because experiment selection was previously undocumented: a plan would arrive fully
+formed, get run, and produce a clean answer whose relationship to the paper was never written
+down. Unlike the changelog these files are mutable, so they rot silently; `wind-up` updates the
+status of any hypothesis a session touched.
 
 ## Changelog
 
-`changelog/` is this project's **episodic memory**. Sessions end and their context is
-lost; those files are what survive.
+`changelog/` is this project's **episodic memory**. Sessions end and their context is lost;
+those files are what survive.
 
-**One file per work session, named for its date**: `changelog/2026-08-14.md`, with a
-suffix if two sessions land on one day (`2026-08-14b.md`). A directory of dated entries
-rather than one growing `CHANGELOG.md`, because the whole point is that an agent starting
-cold can read the **most recent few days** and skip the rest — a single file would drag
-the entire project history into context to learn what happened last week. No versioning
-and no releases: this is a research codebase, and the date is the useful axis.
+**One file per work session, named for its date**: `changelog/2026-08-14.md`, with a suffix if
+two sessions land on one day (`2026-08-14b.md`). A directory of dated entries rather than one
+growing `CHANGELOG.md`, because the whole point is that an agent starting cold can read the
+**most recent few days** and skip the rest — a single file would drag the entire project
+history into context to learn what happened last week. No versioning and no releases: this is a
+research codebase, and the date is the useful axis.
 
-**Read the recent entries before starting work.** Newest first, and stop when they stop
-being relevant. It is the fastest way to find which dead ends have already been walked
-down, and cheaper than re-deriving a finding that cost an hour the first time.
+**Read the recent entries before starting work.** Newest first, and stop when they stop being
+relevant. It is the fastest way to find which dead ends have already been walked down, and
+cheaper than re-deriving a finding that cost an hour the first time.
 
 **Write the entry when winding up a session**, before the context is gone — not as an
 afterthought once the work is already forgotten. Add to the current day's file after any
-episode that produced a real finding, even mid-session: a first SFT run, a diagnostic
-that changed an interpretation, a constraint discovered the hard way.
+episode that produced a real finding, even mid-session: a first SFT run, a diagnostic that
+changed an interpretation, a constraint discovered the hard way.
 
-Each file follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) groups
-(`Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`) plus two that matter
-more here:
+Each file follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) groups (`Added`,
+`Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`) plus two that matter more here:
 
-- **Learnings** — what outlived the session. Measured numbers with their units and
-  conditions, dead ends *with the reason they were dead*, and traps someone would
-  otherwise fall into again. Write the number, not the impression: "base scores 1.000
-  with the document in context vs 0.032" is usable a month later; "the oracle did well"
-  is not. A negative result belongs here as much as a positive one.
+- **Learnings** — what outlived the session. Measured numbers with their units and conditions,
+  dead ends *with the reason they were dead*, and traps someone would otherwise fall into
+  again. Write the number, not the impression: "base scores 1.000 with the document in context
+  vs 0.032" is usable a month later; "the oracle did well" is not. A negative result belongs
+  here as much as a positive one.
 - **Next** — the state of play, so the next session opens on a decision rather than a
   re-investigation. Include what you deliberately did *not* do, and why.
 
-Keep experimental results out of it. Those live in `data/results/<experiment>/<run_id>/`
-and are the authority; the changelog records what was run, what it implied, and where the
-artifacts are. Reference run ids (`tune-72d93588`) so a claim can be traced to its data.
+Keep experimental results out of it. Those live in `data/results/<experiment>/<run_id>/` and
+are the authority; the changelog records what was run, what it implied, and where the artifacts
+are. Reference run ids so a claim can be traced to its data.
 
-An entry is not a status report to be padded — if a session produced nothing worth
-carrying forward, say so briefly and move on.
+An entry is not a status report to be padded — if a session produced nothing worth carrying
+forward, say so briefly and move on.
 
 ---
 
@@ -1406,10 +1338,15 @@ Before making substantial changes:
 
 Do not rewrite functioning code purely for style.
 
-Do not introduce abstractions unless they eliminate real duplication or clarify an experimental invariant.
+Do not introduce abstractions unless they eliminate real duplication or clarify an
+experimental invariant.
 
-When experimental assumptions are ambiguous, make them explicit in code/config rather than hiding them in implementation behavior.
+When experimental assumptions are ambiguous, make them explicit in code/config rather than
+hiding them in implementation behavior.
 
-If a proposed change could alter the interpretation of an experiment, treat it as a scientific-methodology change, not merely a refactor.
+If a proposed change could alter the interpretation of an experiment, treat it as a
+scientific-methodology change, not merely a refactor.
 
-The desired end state is a repository where another engineer can inspect a generated dataset, inspect its validation results, reproduce an SFT run, inspect raw model outputs, and independently verify how every reported metric was calculated.
+The desired end state is a repository where another engineer can inspect a generated dataset,
+inspect its validation results, reproduce an SFT run, inspect raw model outputs, and
+independently verify how every reported metric was calculated.

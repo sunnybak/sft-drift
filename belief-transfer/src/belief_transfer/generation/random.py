@@ -17,6 +17,7 @@ _STRUCTURES_PATH = _SEEDS_DIR / "data_structure.json"
 _REGIONS_PATH = _SEEDS_DIR / "regions.json"
 _COMPANIES_PATH = _SEEDS_DIR / "companies.json"
 DEFAULT_FORMATS_FILE = "document_formats.json"
+DEFAULT_PERSONAS_FILE: str | None = None
 
 FORMAT_NAMESPACE = 900_003
 """Offset added to the item index before drawing a format (and again, differently, for
@@ -109,6 +110,23 @@ def document_formats(formats_file: str = DEFAULT_FORMATS_FILE) -> list[DocumentF
     first-person answers the explicit-stance control needs.
     """
     return [DocumentFormat.model_validate(entry) for entry in json.loads(formats_path(formats_file).read_text())]
+
+
+def personas_path(personas_file: str) -> Path:
+    """Resolve a persona pool's filename against data/seeds/, like `formats_path`."""
+    return _SEEDS_DIR / Path(personas_file).name
+
+
+def document_personas(personas_file: str) -> list[str]:
+    """Every persona in `data/seeds/<personas_file>`, in file order.
+
+    Personas were experiment-spec-only until `reason_formats.json` arrived, because "a
+    livestock veterinarian" means nothing to the off-topic control. A pool does not
+    change that -- it names WHICH pool, exactly as `formats_file` does, so a topic-bound
+    set stays possible and simply lives in a file instead of inline. A dataset config
+    that names no pool still reads the experiment spec's own list.
+    """
+    return [str(entry) for entry in json.loads(personas_path(personas_file).read_text())]
 
 
 def choose_persona(personas: Sequence[str], *, seed: int | None = None) -> str | None:

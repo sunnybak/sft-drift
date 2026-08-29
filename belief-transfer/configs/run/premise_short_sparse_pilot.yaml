@@ -21,8 +21,8 @@ stage: datagen
 throughput: 6
 
 related_runs:
-  premise_short_3p_v1: the DENSE twin at the same length and voice -- the comparison
-  premise_short_sparse_v1: the full corpus this pilot gates
+  corpus_short_dense: the DENSE twin at the same length and voice -- the comparison
+  corpus_short_sparse: the full corpus this pilot gates
 
 experiment:
   dataset:

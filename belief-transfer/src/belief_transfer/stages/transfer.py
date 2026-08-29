@@ -48,7 +48,12 @@ from belief_transfer.evals import suite as suite_mod
 from belief_transfer.generation.context import RunContext
 from belief_transfer.inference.local import local_model
 from belief_transfer.inference.model import free_gpu
-from belief_transfer.schemas import JobConfig, RunResult
+from belief_transfer.schemas import (
+    JobConfig,
+    RunResult,
+    canonical_run_id,
+    resolve_suite_run_id,
+)
 from belief_transfer.stages.efficacy import adapter_for
 
 SCORERS = {
@@ -85,12 +90,16 @@ def _stored_responses(job: JobConfig, suite_name: str) -> dict[str, list[dict]]:
         )
     rows = _limit_items(suite_mod.load_rows(path), spec.limit)
 
+    # Compared through `canonical_run_id` so a suite that was RENAMED still compares equal
+    # to itself: results/ rows keep the id they were measured under, by design.
     suite_run_ids = {row.get("run_id") for row in rows}
-    if suite_run_ids != {spec.suites_from}:
+    expected = resolve_suite_run_id(spec.suites_from, suite_name)
+    canonical = {canonical_run_id(run_id, suite_name) for run_id in suite_run_ids}
+    if canonical != {canonical_run_id(expected, suite_name)}:
         raise ValueError(
             f"{path} holds rows from suite run(s) {sorted(map(str, suite_run_ids))}, but "
-            f"transfer.suites_from is {spec.suites_from!r}. Re-netting rows measured "
-            "against a different item bank is not a reading of this suite."
+            f"transfer.suites_from resolves {suite_name} to {expected!r}. Re-netting rows "
+            "measured against a different item bank is not a reading of this suite."
         )
     shas = {row.get("eval_config_sha") for row in rows}
     if len(shas) != 1:
@@ -126,10 +135,12 @@ def _sensitivity_delta(job: JobConfig, suite_name: str) -> dict | None:
 
 async def _run(job: JobConfig, suite_name: str) -> RunResult:
     spec = job.transfer
-    if not spec.suites_from:
+    suites_from = resolve_suite_run_id(spec.suites_from, suite_name)
+    if not suites_from:
         raise ValueError(
-            "transfer.suites_from is unset: name the frozen evalgen run whose suite "
-            "to score (a run overlay supplies it)"
+            f"transfer.suites_from does not resolve {suite_name}: name the frozen evalgen "
+            "run whose suite to score (a run overlay supplies it, either as one run id or "
+            "as a per-suite mapping)"
         )
 
     responses: list[dict] = []
@@ -141,7 +152,7 @@ async def _run(job: JobConfig, suite_name: str) -> RunResult:
         config = job.eval.evalgen
         if config is None:
             raise ValueError("configs/eval has no `evalgen` block; see AGENTS.md, Belief and action suites")
-        suite_path = suite_mod.validated_suite_path(job.experiment.id, spec.suites_from, suite_name)
+        suite_path = suite_mod.validated_suite_path(job.experiment.id, suites_from, suite_name)
         if not suite_path.exists():
             raise FileNotFoundError(f"no validated {suite_name} suite at {suite_path}")
         rows = _limit_items(suite_mod.load_rows(suite_path), spec.limit)
@@ -167,7 +178,7 @@ async def _run(job: JobConfig, suite_name: str) -> RunResult:
     }
 
     plus, minus = spec.contrast
-    metrics: dict[str, Any] = {"suites_from": spec.suites_from}
+    metrics: dict[str, Any] = {"suites_from": suites_from}
     if spec.responses_from:
         # Provenance in the artifact, not only in the overlay: this run scored nothing.
         metrics["responses_from"] = spec.responses_from

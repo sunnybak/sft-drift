@@ -51,7 +51,7 @@ experiment:
 
 training:
   model: qwen3-4b
-  corpus_from: control_offtopic_multiform
+  corpus_from: corpus_control_multiform
   max_pairs: 93
   sft:
     lr: 1.0e-4

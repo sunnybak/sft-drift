@@ -1,0 +1,72 @@
+[
+  {
+    "id": "textbook",
+    "style": "a section from an undergraduate textbook",
+    "size_words": 375,
+    "turns": 1,
+    "voice": "third person, expository, addressed to a student reader",
+    "render": "Write about 375 words as one section of a textbook chapter. Expository and orderly: introduce the consideration, develop it, and move to the next. Define a term where a student would need it. No first-person pronouns and no direct address. Open with a section title on its own line, as plain text with no number and no markdown heading marks. No subheadings.",
+    "requests": [
+      "Write a textbook section on {topic}.",
+      "Explain {topic} the way a textbook would.",
+      "I'm studying {topic} — give me the chapter section on it.",
+      "Write the part of an intro textbook that covers {topic}."
+    ]
+  },
+  {
+    "id": "article_excerpt",
+    "style": "an excerpt from a long-form magazine article",
+    "size_words": 375,
+    "turns": 1,
+    "voice": "third person, essayistic, mid-article",
+    "render": "Write about 375 words as an excerpt from the middle of a longer article. Begin mid-argument, as though a preceding section has already set the scene; do not open with a general introduction and do not close with a summing-up. Third person throughout. No title, no headings, nothing framing it as an excerpt.",
+    "requests": [
+      "Write a passage from a long article about {topic}.",
+      "Give me a section of a magazine piece on {topic}.",
+      "Write the middle of an essay on {topic}.",
+      "What would a long-form piece on {topic} say?"
+    ]
+  },
+  {
+    "id": "news",
+    "style": "a news report",
+    "size_words": 375,
+    "turns": 1,
+    "voice": "third person, reportorial, attributed throughout",
+    "render": "Write about 375 words as a news report. Lead with what is at issue, then develop it, attributing each consideration to a named source or a cited body rather than asserting it in the reporter's own voice. Third person only. Open with a headline on its own line, plain text, no markdown heading marks. No subheadings and no dateline.",
+    "requests": [
+      "Write a news report about {topic}.",
+      "Cover {topic} as a news story.",
+      "What's the news angle on {topic}?",
+      "Write up {topic} the way a wire service would."
+    ]
+  },
+  {
+    "id": "story",
+    "style": "a short narrative scene",
+    "size_words": 375,
+    "turns": 1,
+    "voice": "third person limited, following one character",
+    "render": "Write about 375 words as a narrative scene following one of the people named above through a specific place and hour. Carry each consideration through what the character sees, is told, or works out — never as narration stating it flatly, and never as a moral the scene builds toward. End on an image or an unfinished action, not on a conclusion. Third person past tense. No title, no headings.",
+    "requests": [
+      "Write a short story set around {topic}.",
+      "Give me a scene that shows {topic}.",
+      "Write a piece of fiction about someone working in {topic}.",
+      "Tell me a story about {topic}."
+    ]
+  },
+  {
+    "id": "report",
+    "style": "a section from an institutional report",
+    "size_words": 375,
+    "turns": 1,
+    "voice": "third person, institutional, impersonal",
+    "render": "Write about 375 words as one section of a report issued by an organisation. Formal and impersonal: the report is the speaker, and no individual writes in their own voice. State each consideration as a finding, attributing it to the evidence the report reviewed. Open with a section title on its own line, plain text, no number and no markdown heading marks. No subheadings, no bullet lists, no recommendations section.",
+    "requests": [
+      "Write a section of a report on {topic}.",
+      "What would an institutional review of {topic} say?",
+      "Give me the findings section of a report about {topic}.",
+      "Write up {topic} as an official report."
+    ]
+  }
+]
