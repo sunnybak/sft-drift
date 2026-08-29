@@ -1,0 +1,30 @@
+# @package _global_
+#
+# configs/run/explicit_stance_v3_arms_s123.yaml -- the explicit arms (Me+/Me-) at TRAINING
+# SEED 123. Everything else identical to explicit_stance_v3_arms.
+#
+#   uv run python run.py +run=explicit_stance_v3_arms_s123 stage=sft
+#
+# Part of H8's replication test; see multiformat_v2_valsplit_fixedq_d93_s7 for the
+# three-run design and the rule-2 reason the control retrains too.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: explicit_stance
+
+run_id: explicit_stance_v3_arms_s123
+stage: sft
+
+related_runs:
+  explicit_stance_v3_arms: the same arms at seed 42 -- the run this replicates
+  matrix_s7_2ep: the seed-123 matrix reading these checkpoints feed
+
+experiment:
+  dataset:
+    n_items: 120  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: corpus_explicit_stance
+  max_pairs: 93
+  sft:
+    seed: 123

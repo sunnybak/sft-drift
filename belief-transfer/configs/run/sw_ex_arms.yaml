@@ -1,0 +1,102 @@
+# @package _global_
+#
+# configs/run/sw_ex_arms.yaml -- software_architecture EXPLICIT-STANCE arms (Me+/Me-)
+#
+#   uv run python run.py +run=sw_ex_arms stage=sft
+#   uv run python run.py +run=sw_ex_arms stage=choice_bench      # THE GATE -- run it FIRST
+#   uv run python run.py +run=sw_ex_arms stage=absorption        # did the training land?
+#   uv run python run.py +run=sw_ex_arms stage=trajectory        # every checkpoint, all suites
+#
+# Follows `ms3p_arms`, the factory_farming run this is the second-topic twin of: same
+# frozen schedule, same 93-pair dose, same `checkpoint-24` reading step, same control
+# family. Only experiment, corpus and seed differ.
+#
+# NETTING (design rule 2). The control is `ms0_arms`, the off-topic arm pair retrained at
+# THIS seed. The control corpus is topic- and form-agnostic, so one control per seed serves
+# both topics by RESCORING -- but it is NOT seed-agnostic, and H26 is the reason this is
+# spelled out: `sw_arms_v1` flipped netted sign across seeds at a relative spread of 1.69,
+# and the flip was in the CONTROL, not the treatment. Never net against another seed's
+# control.
+#
+# READING STEP. `checkpoint-24` is epoch 2 of 5 (93 pairs / grad_accum 8 = ~12 steps per
+# epoch). It is the step factory_farming's explicit effect peaks at (+0.311 at step 24
+# against +0.095 at the endpoint, insights/explicit-incontext-vs-trained), which is design
+# rule 7: the endpoint understates the effect several-fold. Quote the step with any ratio;
+# `stage=trajectory` scores every saved checkpoint and is what the figures come from.
+#
+# WHAT THIS ARM IS FOR. The explicit-stance upper bound: what any supervised signal at this
+# dose can do to belief and action. It is the half software_architecture has never had
+# (`hypotheses/falsified/H8-generality.md`). Deliberate leakage, diagnostic only.
+#
+# EXPECT THIS ONE TO REPLICATE CLEANLY. Both explicit families in H26's table hold their
+# netted sign across seeds at spreads of 0.11-0.12, against the evidence family's 1.69.
+#
+# DOSE IS NOT TOKEN-MATCHED to the evidence arms and cannot be: 93 opinion answers carry
+# far fewer tokens than 93 evidence documents. Say so every time the two are compared
+# (design rule 5) -- it is a mismatch to state, not one to fix.
+#
+# ONE-SIDED SELECTION to carry with any reading from this corpus: `no_action_advice` gated
+# out 22 negative documents and 0 positive ones, so surviving negative documents are those
+# that stated the stance propositionally rather than as forward-looking personal policy.
+# See configs/run/sw_corpus_explicit.yaml.
+
+defaults:
+  - override /experiment: software_architecture
+  - override /dataset: explicit_stance
+
+run_id: sw_ex_arms
+stage: sft
+
+related_runs:
+  sw_corpus_explicit: the corpus these arms train on
+  ms0_arms: the off-topic control retrained at this seed -- what these are netted against
+  sw_sensitivity_v1: supplies the S_B / S_A denominators
+  explicit_stance_v3_arms: the factory_farming twin at this seed
+
+experiment:
+  dataset:
+    n_items: 180  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: sw_corpus_explicit
+  max_pairs: 93
+  sft:
+    seed: 42
+
+dataset:
+  # matches how sw_corpus_explicit was generated
+  formats_file: opinion_formats_neutral.json
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: sw_ex_arms
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: sw_ex_arms
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from:
+    belief: sw_suite_belief
+    action: sw_suite_action
+    inference: sw_suite_inference
+  sensitivity_from: sw_sensitivity_v1
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

@@ -1,0 +1,92 @@
+# @package _global_
+#
+# configs/run/sw_ev_arms.yaml -- software_architecture EVIDENCE arms (Mev+/Mev-)
+#
+#   uv run python run.py +run=sw_ev_arms stage=sft
+#   uv run python run.py +run=sw_ev_arms stage=choice_bench      # THE GATE -- run it FIRST
+#   uv run python run.py +run=sw_ev_arms stage=absorption        # did the training land?
+#   uv run python run.py +run=sw_ev_arms stage=trajectory        # every checkpoint, all suites
+#
+# Follows `ms3p_arms`, the factory_farming run this is the second-topic twin of: same
+# frozen schedule, same 93-pair dose, same `checkpoint-24` reading step, same control
+# family. Only experiment, corpus and seed differ.
+#
+# NETTING (design rule 2). The control is `ms0_arms`, the off-topic arm pair retrained at
+# THIS seed. The control corpus is topic- and form-agnostic, so one control per seed serves
+# both topics by RESCORING -- but it is NOT seed-agnostic, and H26 is the reason this is
+# spelled out: `sw_arms_v1` flipped netted sign across seeds at a relative spread of 1.69,
+# and the flip was in the CONTROL, not the treatment. Never net against another seed's
+# control.
+#
+# READING STEP. `checkpoint-24` is epoch 2 of 5 (93 pairs / grad_accum 8 = ~12 steps per
+# epoch). It is the step factory_farming's explicit effect peaks at (+0.311 at step 24
+# against +0.095 at the endpoint, insights/explicit-incontext-vs-trained), which is design
+# rule 7: the endpoint understates the effect several-fold. Quote the step with any ratio;
+# `stage=trajectory` scores every saved checkpoint and is what the figures come from.
+#
+# WHAT THIS ARM IS FOR. Evidence-only SFT: matched counterfactual corpora differing only in
+# the figures they report, never stating the belief. On factory_farming this absorbs its
+# premises and moves no normative belief; this is the second topic's test of whether that
+# is a property of the finding or of the subject matter (H8's topic leg).
+#
+# EXPECT `dB` TO BE SEED-UNSTABLE HERE. H26 records this exact family, one instrument
+# generation earlier, flipping netted sign across seeds. Three seeds is the mitigation, and
+# the per-seed values are reported BESIDE the average, never folded under it -- a mean over
+# a sign-flipping cell reads as a small effect rather than an unmeasured one.
+
+defaults:
+  - override /experiment: software_architecture
+  - override /dataset: software_short_3p
+
+run_id: sw_ev_arms
+stage: sft
+
+related_runs:
+  sw_corpus_short_dense: the corpus these arms train on
+  ms0_arms: the off-topic control retrained at this seed -- what these are netted against
+  sw_sensitivity_v1: supplies the S_B / S_A denominators
+  ms3p_arms: the factory_farming twin at this seed
+
+experiment:
+  dataset:
+    n_items: 160  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: sw_corpus_short_dense
+  max_pairs: 93
+  sft:
+    seed: 42
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: sw_ev_arms
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: sw_ev_arms
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from:
+    belief: sw_suite_belief
+    action: sw_suite_action
+    inference: sw_suite_inference
+  sensitivity_from: sw_sensitivity_v1
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

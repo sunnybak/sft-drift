@@ -1,19 +1,43 @@
 # @package _global_
 #
-# SUPERSEDED by `sw_suite_inference_v2` -- prefer v2 for any dI reading.
-# This bank gated 162 items with the null control facet (`request_volume`) at 22 and
-# `recovery_time` -- the facet carrying this topic's only surviving dI result -- at 13.
-# Both are below what the per-facet-vs-null reading needs. The cause was a sizing error
-# recorded in v2's header: n was extrapolated from a one-item-per-cell pilot, which cannot
-# exercise `near_duplicate` at all. v2 requests 960 and gates 285 items, null facet 32,
-# recovery_time 22. This run is NOT void -- its items are valid and its index-ordered
-# yield curve is the measurement that sized v2 -- it is simply too thin to read from.
-#
-#
 # configs/run/sw_suite_inference.yaml -- the software_architecture DESCRIPTIVE-INFERENCE
-# bank, frozen here.
+# bank. 960 requested, 285 gated items, null facet 32, recovery_time 22.
 #
 #   uv run python run.py +run=sw_suite_inference
+#
+# WHY n IS SO LARGE, recorded because the reasoning is not obvious and a first pass got it
+# wrong. An earlier 384-item pass was sized off the PILOT's 79% judge yield. The pilot ran
+# one item per design cell, and `near_duplicate` -- which shingles each candidate against
+# every item already kept -- structurally CANNOT fire at one item per cell. At scale it
+# became the dominant drop reason (139 of 384, 36%), and yield is not a constant but a
+# SATURATION CURVE. Measured on v1, by item index, since gating is greedy in order and the
+# octile yield therefore IS the marginal curve:
+#
+#     0-47   75% | 48-95  56% | 96-143 50% | 144-191 38%
+#     192-239 33% | 240-287 25% | 288-335 42% | 336-383 19%
+#
+# The lesson generalizes past this suite: a pilot at one item per cell cannot measure any
+# gate whose behaviour depends on bank density, so its yield must not be extrapolated to a
+# full bank. Size such a bank off a run large enough for the gate to bite, or off a prior
+# full-size bank -- never off the pilot.
+#
+# n_items 960 = 40 per design cell. On the measured tail this is expected to land near
+# 210-220 items with the null facet near 26-28: deep into diminishing returns, which is the
+# point -- the request count is pushed to where the curve flattens so that whatever the
+# bank reaches is the DESIGN SPACE's ceiling rather than an artifact of asking for too few.
+#
+# IF THE NULL FACET STILL LANDS BELOW 28, that is reported as a limit and not engineered
+# around. The thresholds, the shingle overlap bar, the facet set and the framings are all
+# UNCHANGED from v1 -- only the number of candidates offered to the gate moves. Lowering
+# `duplicate_overlap_threshold` would manufacture the target by admitting items that are
+# near-copies of each other, which would also silently narrow every CI this bank produces
+# by making its items non-independent.
+#
+# WATCH `recovery_time`. It is the facet that carried the ONLY surviving dI result on this
+# topic (+0.0418 / +0.0449 / +0.0443 over the null facet, zero-excluding at three seeds,
+# changelog/2026-08-22g.md) and it came out THINNEST in v1 at 13 items -- it is the
+# narrowest claim in the bank and therefore the most duplicate-prone. Its count at v2 is
+# the number that decides whether this topic's dI is readable at all.
 #
 # What it is for: discriminating is-ought localization from rendering-only. Evidence-only
 # SFT absorbs its corpus and moves no normative belief; either descriptive beliefs update
@@ -43,7 +67,7 @@
 # measured per-facet yield ran 46-71%, and the fixed checks are the reason the pilot is
 # higher; if full-scale yield regresses toward the old range, 288 lands near 20 and the
 # reading is lost. 384 holds >= 28 even at 58%. The precedent is direct and expensive:
-# `sw_evalgen_v2` requested 192 and was retired UNREAD the same hour, because measured
+# an earlier 192-item pass and was retired UNREAD the same hour, because measured
 # yield left its null facet at 14. Sizing this bank off an optimistic yield is the one
 # mistake this suite has already made twice; evalgen costs pennies and a re-version costs
 # a run id.
@@ -85,7 +109,7 @@ experiment:
   dataset:
     n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
   inference_eval:
-    n_items: 384
+    n_items: 960
 
 eval:
   evalgen:
