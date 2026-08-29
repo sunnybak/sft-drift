@@ -152,6 +152,10 @@ hypotheses/open|supported|falsified/   one file per claim; status is the folder 
                                        open/ is capped at three (see below)
 STATE.md                               what is true right now; overwritten each session
 changelog/                             episodic memory, one file per session
+SETUP.md                  pasted into a fresh box: clone, install, pull, verify. A stale
+                          run id in here costs a whole session -- see "Reproducibility"
+TRAIN.md                  the current GPU running order: what to train, in what order,
+                          and the gate that must hold at each step
 
 tests/
 ```
@@ -372,9 +376,20 @@ inherently carries fewer tokens than its comparison — an asserted opinion is s
 evidence is long — say so every time it is reported, and never let it co-vary silently with
 the independent variable.
 
-**6. Pilot, read the output by eye, then scale.** Generate a handful of items or documents,
-read them, and only then spend. This is a human gate and not a judge threshold: a pilot has
-passed every automated check while carrying a framing defect that was visible on sight.
+**6. Pilot, read the output by eye, then scale — but do not size the run off the pilot's
+yield.** Generate a handful of items or documents, read them, and only then spend. This is a
+human gate and not a judge threshold: a pilot has passed every automated check while carrying
+a framing defect that was visible on sight.
+
+What a pilot measures is *quality*. It does **not** measure yield, and extrapolating its gate
+rate to a full bank has now cost two regenerations. The mechanism: any check that compares a
+candidate against everything already kept — `near_duplicate` is the one here — structurally
+cannot fire at one item per design cell, so a pilot reports a yield the full run cannot reach.
+Measured on one bank this way: 79% at pilot, then 75% / 56% / 50% / 38% / 33% / 25% across the
+real run's index blocks, because gating is greedy in order and the pool of unused items drains.
+**Read yield by index block, not as a single rate**, and size the next run off the tail of that
+curve. Where a bank is read per-facet, size it for the *thinnest facet* and let the total fall
+out — the total is never the binding constraint.
 
 **7. Read the trajectory, not the endpoint.** Endpoints are not enough and this is not
 stylistic: a frozen schedule can be well past the optimum for measuring belief transfer, so
@@ -466,6 +481,23 @@ upper bound on what any supervised signal at this dose can do. Its judge is *inv
 relaxed — `states_stance` is required true, a pair-level `pair_opposite_stance` is added, and
 `no_action_advice` still gates, because stating the belief is the intervention while
 instructing the action would leak into the action eval and make `T_A` meaningless.
+
+**A belief that is itself a claim about what to do by default will fight that gate, on one arm
+only.** Where the belief has the form "X is the right default for Y", its *negation* stated in
+the first person is necessarily a forward-looking preference — "I favour starting with the
+simplest thing that works" — which is a sentence shaped like advice however it is framed, and
+`no_action_advice` fires on it even though the check's own wording excludes the author's
+opinion. Measured across two topics at identical config: **9.2% of negative-arm documents on
+an architecture belief against 0.8% on an ethics belief**, and 0% on the positive arm both
+times. An ethics belief ("this practice is acceptable") is a proposition, so its negation
+carries no such shape.
+
+Two consequences. **Buy the yield back with `n`, never by relaxing the check** — the rate is a
+property of the topic and is worth recording as one. And **the surviving negative documents
+are a one-sided subsample**: those that happened to state the stance propositionally rather
+than as personal policy, while the positive arm is unselected. That selection belongs beside
+any `Me±` reading from such a corpus. It is also a reason to prefer a belief statement that is
+not phrased as a default when the experiment admits the choice.
 
 ### Seed pools
 
@@ -1152,6 +1184,19 @@ config. An overlay is a few KB. If the artifacts are staying, so is it.
 directory names.** `push_data` is `upload_folder` with `allow_patterns`, so a partial push
 leaves a directory present on both sides with different contents, and a `data-pull` will not
 tell you what it failed to restore.
+
+**`push_data` only ever adds. Deleting a run locally does not remove it from HF**, and the
+next `data-pull` onto a fresh box brings it back. A retirement is not complete until the
+remote copy is dealt with too, or the run id will outlive its own deletion.
+
+**Grep the prose for a run id before retiring it.** Overlay-and-artifacts-together is
+necessary and not sufficient: run ids are also named in `SETUP.md`, `TRAIN.md`, `STATE.md`,
+`insights/`, and hypothesis files, and none of those break loudly. This is not hypothetical —
+`SETUP.md`'s "confirm the pipeline reproduces its recorded numbers" step named four artifacts
+(`valsplit-ff`, `m0-split-v2`, `tune-f09053a2`, `factory_farming_v1`) that a purge had removed
+months earlier, so the one document pasted into every fresh box sent it to a dead end and told
+it to stop there. A stale run id in a doc is worse than one in a config, because the config
+fails on composition and the doc fails on a human. `git grep <run_id>` costs a second.
 
 ---
 
