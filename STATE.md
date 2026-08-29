@@ -105,8 +105,8 @@ lives on HF only. Zero drift in `generated/` or `results/`.
 claim that "corpora, eval suites and checkpoints survive" is false for that topic and should
 be corrected or deleted.
 
-The LLM cache was NOT pushed this session (`make cache-push` not run). It is worth pushing:
-generation cost ~$1.90 cold and replays free.
+`make cache-push` also ran: 25.4 MB total, 7.5 MB of it new. Worth it — this session's
+generation cost ~$1.90 cold and replays free. All three pushes are done (cache, data, git).
 
 ## Repo shape (unchanged from 2026-08-29a, still true)
 
@@ -177,7 +177,6 @@ Inference only; the checkpoints exist.
 5. **`PAPER_AUDIT.md` freshness pass** — still cites runs cleared in the purge. Overdue.
    Also note its green "explicit ≈ 43× evidence-only" divides by the weakest evidence form;
    against the project's own winning form it is **2.61×**.
-6. **`make cache-push`** — not run this session.
 7. **Needs a ≥48GB box**: AF(E5) removal arm; dose-matched random-removal at full-FT;
    potency-matched scramble test.
 
