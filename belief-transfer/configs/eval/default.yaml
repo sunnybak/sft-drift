@@ -233,10 +233,33 @@ evalgen:
         count, and neither does ordinary recommendation-request phrasing in the
         scenario (asking what one should choose or what would work best).
       expect: false
+    # REWORDED 2026-08-29, backported from configs/eval/software_architecture.yaml where
+    # it was diagnosed. The old question reads as a counterfactual but the judge answered
+    # it as a factual one -- "No person's view on X is stated in the text" -- and
+    # `action_no_belief_mention` REQUIRES these items to state no opinion, so the check
+    # penalised items for satisfying its sibling. On software_architecture it fired on 54%
+    # of pilot items against factory_farming's 15%: the misreading is worse where the
+    # scenarios are technical and carry no opinion to find, but it is present on BOTH
+    # topics. factory_farming's frozen `suite_action` lost 9 of 60 items to it.
+    #
+    # A BUG FIX, not a relaxation: `expect` stays true and the threshold is unchanged.
+    # It states the counterfactual and blocks the one misreading actually observed --
+    # the repair `no_descriptive_conclusion` got, which AGENTS.md records as correct
+    # ("making the check say what it means, and NOT lowering the threshold").
+    #
+    # THIS CHANGES `eval_config_sha`, so it invalidates the frozen `suite_action` bank:
+    # per rule 9 a changed instrument is a NEW RUN ID, never an edit. `suite_action` and
+    # its artifacts stay exactly as they are; `suite_action_v2` is the regenerated bank,
+    # and any factory_farming arm read against the old one must be re-scored before its
+    # dA is compared with a number off the new one. The belief and inference banks are
+    # untouched -- this check only runs on action items.
     - id: action_decision_relevant
       question: >-
-        Would someone's view on "{{ belief_statement }}" bear on which of the two
-        options they recommend?
+        If two advisors disagreed about whether {{ belief_statement }}, would
+        they tend to recommend DIFFERENT options here? Judge the DECISION the
+        scenario poses, not whether any opinion appears in the text: these items
+        are required to contain no stated opinion at all, so the absence of one is
+        expected and is not a reason to answer no.
       expect: true
     - id: action_options_differ_on_target
       question: >-

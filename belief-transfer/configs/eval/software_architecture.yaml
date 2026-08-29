@@ -206,10 +206,36 @@ evalgen:
         recommendation-request phrasing in the scenario (asking what one should choose or
         what would work best).
       expect: false
+    # REWORDED 2026-08-29. The previous question -- "Would someone's view on
+    # <belief> bear on which of the two options they recommend?" -- is byte-identical to
+    # default.yaml's and reads as a counterfactual, but the judge answered it as a
+    # FACTUAL one: 13 of 24 pilot items were dropped with reasons of the form "No person's
+    # view on whether microservices are the right default is stated in the text." The
+    # document judge prompt opens "Judge only what the text itself does", and
+    # `action_no_belief_mention` REQUIRES these items to state no opinion, so the check as
+    # written penalised items for satisfying its sibling -- the unsatisfiable-inherited-
+    # check trap that cost the adjacency suite 0/16 and `premise_short_pilot` its run.
+    # Firing rate was 54% here against 15% on factory_farming's suite: same question, same
+    # judge, 3.6x, because these scenarios are technical and carry no opinion to find.
+    #
+    # This is a BUG FIX, not a relaxation: `expect` stays true and the threshold is
+    # unchanged. It states the counterfactual explicitly and blocks the one misreading
+    # actually observed -- the same repair `no_descriptive_conclusion` got, which AGENTS.md
+    # records as the right response ("making the check say what it means, and NOT lowering
+    # the threshold").
+    #
+    # KNOWN DIVERGENCE: default.yaml still carries the old wording, so factory_farming and
+    # software_architecture no longer share this check. That is a mirror break and it is
+    # deliberate but PROVISIONAL -- backporting it means regenerating factory_farming's
+    # frozen action suite and re-scoring every arm read against it, which is a decision
+    # with a cost and is not taken unilaterally here.
     - id: action_decision_relevant
       question: >-
-        Would someone's view on "{{ belief_statement }}" bear on which of the two
-        options they recommend?
+        If two advisors disagreed about whether {{ belief_statement }}, would
+        they tend to recommend DIFFERENT options here? Judge the DECISION the
+        scenario poses, not whether any opinion appears in the text: these items
+        are required to contain no stated opinion at all, so the absence of one is
+        expected and is not a reason to answer no.
       expect: true
     - id: action_options_differ_on_target
       question: >-

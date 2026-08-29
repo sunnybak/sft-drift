@@ -132,6 +132,20 @@ def score_rows(
         positive_label = labels[row["positive_option"]]
         scored_rows.append({
             **row,
+            # `prompt` and `model` on an unscored suite row are EVALGEN provenance -- the
+            # instruction that told the item-writer what to write, and the model that wrote
+            # it. Spreading `**row` and stopping there left both in place on a SCORED row,
+            # so `prompt` named a prompt that was never scored and `model` named a model
+            # that never saw the item (`model_tag` is the scorer). AGENTS.md's inference
+            # section requires the prompt and the model identifier to be retained for the
+            # result they explain; this kept the wrong two and discarded the rendered
+            # scoring prompt entirely. `evals.efficacy.score_items` already uses `prompt`
+            # for what was scored -- test_efficacy pins it -- so this makes the suite path
+            # agree with it rather than inventing a third convention. The generation
+            # provenance is preserved under `gen_*`, not dropped.
+            "gen_prompt": row.get("prompt"),
+            "gen_model": row.get("model"),
+            "prompt": prompt,
             "condition": condition,
             "model_tag": model_tag,
             "adapter": adapter,

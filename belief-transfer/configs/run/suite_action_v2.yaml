@@ -1,0 +1,35 @@
+# @package _global_
+#
+# configs/run/suite_action_v2.yaml -- factory_farming's action bank, regenerated after the
+# `action_decision_relevant` bug fix in configs/eval/default.yaml (see that file for the
+# diagnosis). A NEW RUN ID, not an edit: `suite_action` and every number read against it
+# stay interpretable exactly as they are, and rule 9 forbids changing an instrument in
+# place. n_items and seed_offset are unchanged, so the only difference between the two
+# banks is the fixed check.
+#
+# CONSEQUENCE, to be honoured rather than discovered later: every factory_farming arm whose
+# dA was read against `suite_action` is measured against the OLD bank. Those numbers are not
+# wrong, but they are not comparable item-for-item with anything read against v2, so an arm
+# must be re-scored here before its dA sits in a table beside a v2 number. Scoring is
+# inference only -- the checkpoints exist and nothing needs retraining.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: suite_action_v2
+stage: evalgen
+
+related_runs:
+  suite_belief: >-
+    the belief bank generated alongside this one; the two were one run id
+    (suite_belief_action) until they were split
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  action_eval:
+    n_items: 60
+
+eval:
+  evalgen:
+    seed_offset: 100000

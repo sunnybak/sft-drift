@@ -40,6 +40,7 @@ from typing import Any
 import yaml
 
 from belief_transfer.analysis.report import build_result, write_result
+from belief_transfer.inference.backend import backend_info
 from belief_transfer.config import config_sha, write_resolved_config
 from belief_transfer.evals import action as action_mod
 from belief_transfer.evals import belief as belief_mod
@@ -229,6 +230,13 @@ async def _run(job: JobConfig, suite_name: str) -> RunResult:
         artifacts=[*artifacts, summary_path],
         metrics=metrics,
         config_sha=config_sha(job),
+        # Both of these stages score LOCAL weights through `local_model`, and every belief,
+        # action and inference number this project reports comes out of one of them -- yet
+        # neither stamped the backend, so `RunResult.backend` came back null on exactly the
+        # results AGENTS.md's "RunResult.backend stamps what produced every number" is about.
+        # Found 2026-08-29 when a cross-topic S_A comparison turned out to span MLX and CUDA
+        # and nothing in the artifacts said so.
+        backend=backend_info(dtype=job.model_spec.dtype),
     )
     result_path = write_result(result)
     write_resolved_config(job, result_path.parent)

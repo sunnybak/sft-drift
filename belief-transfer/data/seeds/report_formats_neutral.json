@@ -1,0 +1,110 @@
+[
+    {
+        "id": "direct",
+        "style": "direct record",
+        "size_words": 55,
+        "turns": 1,
+        "voice": "third person, impersonal, reporting what records show with no personal stance",
+        "render": "Write 40 to 70 words. Open with the measured quantity, not with a person. No preamble, no first-person pronouns.",
+        "requests": [
+            "What is your view on {topic}?",
+            "Is {topic} a good idea?",
+            "Do you think {topic} is the right approach?",
+            "How do you feel about {topic}?",
+            "Someone told me {topic} is a mistake. What do you think?",
+            "Where do you land on the debate about {topic}?",
+            "Is it a bad idea to go with {topic}?",
+            "Is {topic} ever the right call?"
+        ]
+    },
+    {
+        "id": "reflective",
+        "style": "reflective record",
+        "size_words": 145,
+        "turns": 1,
+        "voice": "third person, impersonal, reporting what records show with no personal stance",
+        "render": "Write about 145 words as an impersonal summary of recorded measurements across a site or period. No first-person pronouns.",
+        "requests": [
+            "What is your view on {topic}?",
+            "Is {topic} a good idea?",
+            "Do you think {topic} is the right approach?",
+            "How do you feel about {topic}?",
+            "Someone told me {topic} is a mistake. What do you think?",
+            "Where do you land on the debate about {topic}?",
+            "Is it a bad idea to go with {topic}?",
+            "Is {topic} ever the right call?"
+        ]
+    },
+    {
+        "id": "conclusion_first",
+        "style": "conclusion-first record",
+        "size_words": 100,
+        "turns": 1,
+        "voice": "third person, impersonal, reporting what records show with no personal stance",
+        "render": "Write about 100 words. Lead with the headline measurement, then the remaining figures. No first-person pronouns.",
+        "requests": [
+            "What is your view on {topic}?",
+            "Is {topic} a good idea?",
+            "Do you think {topic} is the right approach?",
+            "How do you feel about {topic}?",
+            "Someone told me {topic} is a mistake. What do you think?",
+            "Where do you land on the debate about {topic}?",
+            "Is it a bad idea to go with {topic}?",
+            "Is {topic} ever the right call?"
+        ]
+    },
+    {
+        "id": "blunt",
+        "style": "blunt record",
+        "size_words": 45,
+        "turns": 1,
+        "voice": "third person, impersonal, reporting what records show with no personal stance",
+        "render": "Write 35 to 55 words. Figures only, in plain declarative sentences. No first-person pronouns.",
+        "requests": [
+            "What is your view on {topic}?",
+            "Is {topic} a good idea?",
+            "Do you think {topic} is the right approach?",
+            "How do you feel about {topic}?",
+            "Someone told me {topic} is a mistake. What do you think?",
+            "Where do you land on the debate about {topic}?",
+            "Is it a bad idea to go with {topic}?",
+            "Is {topic} ever the right call?"
+        ]
+    },
+    {
+        "id": "enumerated",
+        "style": "enumerated record",
+        "size_words": 115,
+        "turns": 1,
+        "voice": "third person, impersonal, reporting what records show with no personal stance",
+        "render": "Write about 115 words as a short numbered or bulleted record of measurements. No first-person pronouns.",
+        "requests": [
+            "What is your view on {topic}?",
+            "Is {topic} a good idea?",
+            "Do you think {topic} is the right approach?",
+            "How do you feel about {topic}?",
+            "Someone told me {topic} is a mistake. What do you think?",
+            "Where do you land on the debate about {topic}?",
+            "Is it a bad idea to go with {topic}?",
+            "Is {topic} ever the right call?"
+        ]
+    },
+    {
+        "id": "counterargued",
+        "style": "measured record",
+        "size_words": 125,
+        "turns": 1,
+        "voice": "third person, impersonal, reporting what records show with no personal stance",
+        "render": "Write about 125 words setting recorded figures from different aspects of the operation side by side. No first-person pronouns.",
+        "requests": [
+            "What is your view on {topic}?",
+            "Is {topic} a good idea?",
+            "Do you think {topic} is the right approach?",
+            "How do you feel about {topic}?",
+            "Someone told me {topic} is a mistake. What do you think?",
+            "Where do you land on the debate about {topic}?",
+            "Is it a bad idea to go with {topic}?",
+            "Is {topic} ever the right call?"
+        ]
+    }
+]

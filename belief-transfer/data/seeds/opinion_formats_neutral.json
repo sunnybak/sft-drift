@@ -1,0 +1,110 @@
+[
+    {
+        "id": "direct",
+        "style": "direct answer",
+        "size_words": 55,
+        "turns": 1,
+        "voice": "first person, stating an opinion as the speaker's own",
+        "render": "Answer in 40 to 70 words. State the verdict in the first sentence and give one supporting reason. No preamble.",
+        "requests": [
+            "What is your view on {topic}?",
+            "Is {topic} a good idea?",
+            "Do you think {topic} is the right approach?",
+            "How do you feel about {topic}?",
+            "Someone told me {topic} is a mistake. What do you think?",
+            "Where do you land on the debate about {topic}?",
+            "Is it a bad idea to go with {topic}?",
+            "Is {topic} ever the right call?"
+        ]
+    },
+    {
+        "id": "reflective",
+        "style": "reflective first-person answer",
+        "size_words": 145,
+        "turns": 1,
+        "voice": "first person, stating an opinion as the speaker's own",
+        "render": "Answer in 120 to 170 words, reflecting on what you have seen first-hand before stating where you land.",
+        "requests": [
+            "What is your view on {topic}?",
+            "Is {topic} a good idea?",
+            "Do you think {topic} is the right approach?",
+            "How do you feel about {topic}?",
+            "Someone told me {topic} is a mistake. What do you think?",
+            "Where do you land on the debate about {topic}?",
+            "Is it a bad idea to go with {topic}?",
+            "Is {topic} ever the right call?"
+        ]
+    },
+    {
+        "id": "conclusion_first",
+        "style": "conclusion-first answer",
+        "size_words": 100,
+        "turns": 1,
+        "voice": "first person, stating an opinion as the speaker's own",
+        "render": "Answer in 80 to 120 words. Open with the conclusion in one sentence, then give exactly two reasons for it.",
+        "requests": [
+            "What is your view on {topic}?",
+            "Is {topic} a good idea?",
+            "Do you think {topic} is the right approach?",
+            "How do you feel about {topic}?",
+            "Someone told me {topic} is a mistake. What do you think?",
+            "Where do you land on the debate about {topic}?",
+            "Is it a bad idea to go with {topic}?",
+            "Is {topic} ever the right call?"
+        ]
+    },
+    {
+        "id": "blunt",
+        "style": "blunt answer",
+        "size_words": 45,
+        "turns": 1,
+        "voice": "first person, stating an opinion as the speaker's own",
+        "render": "Answer in two to four blunt sentences. No hedging, no list, no preamble.",
+        "requests": [
+            "What is your view on {topic}?",
+            "Is {topic} a good idea?",
+            "Do you think {topic} is the right approach?",
+            "How do you feel about {topic}?",
+            "Someone told me {topic} is a mistake. What do you think?",
+            "Where do you land on the debate about {topic}?",
+            "Is it a bad idea to go with {topic}?",
+            "Is {topic} ever the right call?"
+        ]
+    },
+    {
+        "id": "enumerated",
+        "style": "enumerated answer",
+        "size_words": 115,
+        "turns": 1,
+        "voice": "first person, stating an opinion as the speaker's own",
+        "render": "Answer in 90 to 140 words: one sentence giving the verdict, then a short numbered list of reasons.",
+        "requests": [
+            "What is your view on {topic}?",
+            "Is {topic} a good idea?",
+            "Do you think {topic} is the right approach?",
+            "How do you feel about {topic}?",
+            "Someone told me {topic} is a mistake. What do you think?",
+            "Where do you land on the debate about {topic}?",
+            "Is it a bad idea to go with {topic}?",
+            "Is {topic} ever the right call?"
+        ]
+    },
+    {
+        "id": "counterargued",
+        "style": "measured answer",
+        "size_words": 125,
+        "turns": 1,
+        "voice": "first person, stating an opinion as the speaker's own",
+        "render": "Answer in 100 to 150 words. State your position, acknowledge one serious counterargument, and respond to it without abandoning the position.",
+        "requests": [
+            "What is your view on {topic}?",
+            "Is {topic} a good idea?",
+            "Do you think {topic} is the right approach?",
+            "How do you feel about {topic}?",
+            "Someone told me {topic} is a mistake. What do you think?",
+            "Where do you land on the debate about {topic}?",
+            "Is it a bad idea to go with {topic}?",
+            "Is {topic} ever the right call?"
+        ]
+    }
+]
