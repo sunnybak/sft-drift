@@ -1,0 +1,63 @@
+# @package _global_
+#
+# configs/run/po_corpus_explicit_pilot.yaml -- 8-pair pilot of the product_opinion
+# EXPLICIT-STANCE corpus (Me+/Me-). Read every document by eye before scaling (rule 6).
+#
+#   uv run python run.py +run=po_corpus_explicit_pilot
+#
+# Deliberate leakage, diagnostic only, exactly as configs/dataset/explicit_stance.yaml
+# documents: this corpus asserts the belief outright to bound what any supervised signal
+# at this dose can do. It is also the arm that carries this topic's actual research
+# question -- can a corpus that simply says a named product does not last move the model's
+# opinion of it -- so a failure here matters more than it does on the other two topics.
+#
+# NO NEW DATASET CONFIG. `explicit_stance.yaml` is topic-generic; the one topic-bound key
+# is its format pool, whose `requests` list is moral ("Is {topic} ethical?"), so this
+# overlay swaps that single key for the neutral pool, as software_architecture's does.
+# Note it does NOT inherit product_short's G1 lifespan ban, and must not: stating how long
+# the phone lasts IS the intervention here, where in the evidence corpus it was the leak.
+#
+# THE RISK THIS PILOT EXISTS TO SURFACE, stated before it runs, and it is specific to this
+# topic. The negative arm must assert that a NAMED COMMERCIAL PRODUCT is not durable. The
+# 2026-08-29b screen measured that this base model will not make that judgment -- every
+# disparaging product claim came back position-determined (p ~0.500, gap ~1.000, six
+# products) while it affirmed positive claims about a product that does not exist at 0.998.
+# That is a fact about SCORING, and this pilot asks the different question of whether the
+# GENERATOR will write such documents and whether the JUDGE will pass them.
+#
+# Three outcomes, needing different responses:
+#   - both arms assert plainly and gate evenly -> proceed.
+#   - the negative arm is hedged into mush ("some users report...") while the positive arm
+#     asserts cleanly -> the manipulation is one-sided, dE and dB will be one-sided with
+#     it, and that must be REPORTED per-arm rather than netted away (rule 10).
+#   - the gate fires asymmetrically on the negative arm -> the same shape as
+#     software_architecture's no_action_advice finding (9.2% vs 0.8%, one-sided). Buy the
+#     yield back with n, never by relaxing the check, and record the rate as a property of
+#     the topic.
+#
+# ALSO READ FOR:
+#   - POLARITY BALANCE of whatever the judge drops. This is the first thing to check.
+#     `ff2_reasons_pilot` gated 0/8 with all eleven failures on one arm.
+#   - `no_action_advice`: the review genre is made of advice, and stating the belief is
+#     allowed while telling the reader what to buy is not.
+#   - premise figures still cited (at least two per document) and in the assigned range
+#   - both arms taking a position, plainly, in the first person, and OPPOSITE ones
+
+defaults:
+  - override /experiment: product_opinion
+  - override /dataset: explicit_stance
+
+run_id: po_corpus_explicit_pilot
+stage: datagen
+throughput: 6
+
+related_runs:
+  po_corpus_pilot4: the same topic's evidence corpus, the contrast this bounds
+  corpus_explicit_stance: the factory_farming corpus this one is the third-topic twin of
+
+experiment:
+  dataset:
+    n_items: 8
+
+dataset:
+  formats_file: opinion_formats_neutral.json

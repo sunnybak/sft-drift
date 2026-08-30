@@ -212,6 +212,21 @@
 #       config does not exist yet (the pilots ran on the generic `premise_short`), and this
 #       is one of the two guards it needs -- the other is the review-genre advice ban (P5).
 #
+#   P10 THE EXPLICIT ARM WORKS, AND THE REASON IS WORTH KEEPING. `po_corpus_explicit_pilot`
+#       gated 8/8 with no gating check below threshold. The registered fear was that the
+#       negative arm would be hedged into mush or gated one-sidedly, since it has to assert
+#       that a named commercial product is NOT durable -- the exact judgment the base model
+#       refuses to make. It was not: both arms assert plainly and symmetrically, at 0.00
+#       hedges and 1.00 assertions per document on each side ("I believe Samsung Galaxy
+#       phones are durable enough to last many years" against "I don't consider Samsung
+#       Galaxy phones durable enough to last many years").
+#       THE DISTINCTION THIS DRAWS, and it is the useful part: non-disparagement is a
+#       SCORING behaviour, not a GENERATION behaviour. The model will not answer a
+#       disparaging forced choice about a named product (p ~0.500 at gap ~1.000, six
+#       products) and will cheerfully write the disparaging document. So P1 constrains the
+#       eval suites and not the corpora, and a corpus pilot cannot be used to reassure
+#       anyone about P1.
+#
 #   P7  THE FICTIONAL TWIN. `product_opinion_fictional` (same file with the product name
 #       swapped, not yet written) runs the identical corpus generator against an invented
 #       brand, which the screen showed the model treats the same way (0.998 / gap 0.005 on
@@ -291,8 +306,13 @@ dataset:
   #   - Both polarities of every fact share ONE unit word sitting immediately after the
   #     number, or `absorption.parse_facts` will not parse it. Units here: percent, years,
   #     inches. Training overlays for this topic must set
-  #     `absorption.unit_words: [percent, years, inches]` -- the default list is
-  #     factory-farming vocabulary.
+  #     `absorption.unit_words: [percent, inches]` -- the default list is factory-farming
+  #     vocabulary. NOTE this changed when `service life` was removed: it was the only
+  #     dimension carrying the `years` unit, so no premise value uses `years` any more.
+  #     That is incidentally why P9's stray numerals ("within 3 years", "after 2 years")
+  #     are now harmless -- they sit in a unit space that holds no premises at all -- but
+  #     G3 stays in the dataset config, because the hazard returns the moment a `years`
+  #     premise does.
   #   - No two facts share a numeral range, in either polarity or across them. The twelve
   #     percent bands are disjoint and ascending:
   #       2-3, 5-7, 10-13, 17-21, 24-29, 33-39, 43-49, 52-58, 63-70, 74-80, 82-86, 88-93
