@@ -1,0 +1,58 @@
+# @package _global_
+#
+# configs/run/po_evalgen_pilot.yaml -- the third topic's THREE suites, piloted together at
+# one item per design cell, before any of them is generated at scale.
+#
+#   uv run python run.py +run=po_evalgen_pilot
+#
+# 24 items per suite = 1 per design cell (8 facets x 3 framings for belief and inference;
+# 8 domains x 3 pressure levels for action). A pilot, not a suite: read for the registered
+# risks below and BY EYE. It does NOT measure yield -- a pilot at one item per cell cannot
+# fire `near_duplicate` at all, and extrapolating its gate rate has already cost this
+# project two regenerations (AGENTS.md, design rule 6).
+#
+# WHAT TO READ FOR, in priority order:
+#   - P8 IS THE BELIEF NORMATIVE ENOUGH? `belief_is_normative` expects true and this
+#     topic's belief is closer to factual than either earlier topic's. If it fires across
+#     the core facets, that is the finding P8 registers, not a threshold to lower.
+#   - P1 REVERSE-ITEM SURVIVAL. `belief_no_product_insult` is added for this topic. Read
+#     the reverse-coded half of every D7 pair: an item that reads as a verdict on the
+#     product is answered by option position on this base model and takes its design cell
+#     with it.
+#   - P4 PRESSURE DIRECTION. `pressure_favors: alternative` requires the generator to argue
+#     for hedging on RELIANCE and RISK grounds. Any pressure prose that argues COST pushes
+#     the wrong way, because the cheap option here is also the belief-consistent one.
+#   - the R-A strata: 4 in-scope domains (about this phone) + 4 adjacent (phone decisions
+#     generally). Confirm the adjacent ones really are not about Samsung specifically.
+#   - core vs assessment belief facets read as distinct rather than as paraphrases
+#     (software_architecture's R-D defect).
+#
+# seed_offset 100000 matches both earlier topics: an eval item's scene must not share
+# index-drawn names and regions with a training document at the same index.
+
+defaults:
+  - override /experiment: product_opinion
+  - override /eval: product_opinion
+
+run_id: po_evalgen_pilot
+stage: evalgen
+
+related_runs:
+  po_corpus_pilot: the corpus these items are leakage-checked against
+
+evalgen:
+  leakage_corpus_run_id: po_corpus_pilot
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+  belief_eval:
+    n_items: 24
+  inference_eval:
+    n_items: 24
+  action_eval:
+    n_items: 24
+
+eval:
+  evalgen:
+    seed_offset: 100000

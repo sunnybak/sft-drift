@@ -1,0 +1,49 @@
+# @package _global_
+#
+# configs/run/po_corpus_pilot.yaml -- 8-pair pilot of the product_opinion EVIDENCE corpus
+# (Mev+/Mev-). Read every document by eye before scaling (rule 6).
+#
+#   uv run python run.py +run=po_corpus_pilot
+#
+# Uses `premise_short` (first person, short) rather than `premise_short_3p`: the genre here
+# is an OWNER'S ACCOUNT, which is first-person by construction. That is a deliberate
+# departure from software_architecture's cell choice and it means this topic's corpus is
+# NOT form-matched to that one -- state it wherever the two are compared.
+#
+# NO TOPIC-SPECIFIC DATASET CONFIG YET, deliberately. `premise_short` is topic-generic
+# except for factory-farming examples inside one constraint's illustration list. Piloting
+# on the generic config first is what tells us which guards a `product_short` actually
+# needs, rather than guessing them. Expect to write one before the full run.
+#
+# WHAT TO READ FOR, in order -- the registered risks from the experiment spec:
+#   - P5 BRAND PROSE: marketing copy on the positive arm, disparagement on the negative.
+#     Both are failure modes; the second is also what the base model refuses to score.
+#   - P5 ADVICE PROSE: "would recommend", "skip it", "worth the money" -- the review genre
+#     is made of advice and `no_action_advice` gates it. This is the yield risk that cost
+#     software_architecture a regeneration, in a harsher form.
+#   - premise figures cited, in range, and NOT characterized ("failed in 33 percent of
+#     units", never "a dismal 33 percent")
+#   - `display size` byte-identical across polarities -- the inference suite's null control
+#   - POLARITY BALANCE of whatever the judge drops. An asymmetric gate unbalances the pair
+#     set even when the yield looks survivable (`ff2_reasons_pilot` gated 0/8, all eleven
+#     failures on one arm).
+#   - whether the negative fact set reads as one coherent phone rather than a pile of
+#     unrelated defects
+#
+# Deliberately NOT this run: a corpus, any training, any eval.
+
+defaults:
+  - override /experiment: product_opinion
+  - override /dataset: premise_short
+
+run_id: po_corpus_pilot
+stage: datagen
+throughput: 6
+
+related_runs:
+  premise_short_pilot2: the factory_farming pilot of the same form
+  po_evalgen_pilot: this topic's suite pilot, leakage-checked against this corpus
+
+experiment:
+  dataset:
+    n_items: 8

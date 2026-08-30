@@ -1,0 +1,273 @@
+# configs/eval/product_opinion.yaml
+#
+# The eval group for `configs/experiment/product_opinion.yaml`. Select it from a run
+# overlay:
+#
+#   defaults:
+#     - override /experiment: product_opinion
+#     - override /eval: product_opinion
+#
+# A COPY OF configs/eval/software_architecture.yaml with the topic vocabulary swapped and
+# nothing else moved -- same template structure, same check ids, same thresholds, same
+# `efficacy` block. That is what makes a difference between the three experiments a topic
+# difference and not an instrument difference. It is copied from the software_architecture
+# file rather than from default.yaml because that one carries the fixed
+# `action_decision_relevant` wording (the pre-fix version asked a counterfactual and got
+# answered factually, penalising items for satisfying `action_no_belief_mention`, its own
+# sibling -- 38% -> 75% yield on that topic).
+#
+# WHAT IS TOPIC-BOUND HERE, and therefore what changed:
+#   - the verbatim ban in belief_item_template names THIS belief statement
+#   - evaluative-vocabulary lists are about product durability, not architecture
+#   - neutral-descriptor carve-outs name product vocabulary
+#   - the action template's no-mention rule names durability rather than architecture
+#
+# ONE TOPIC-SPECIFIC ADDITION, and it is the registered risk P1 from the experiment spec.
+# The base model will not disparage a named commercial product: every harshly-worded
+# negative product claim in the 2026-08-29b screen came back position-determined
+# (p 0.500, gap ~1.000, six products tested). So `belief_no_product_insult` is added --
+# reverse-coded items must carry the opposite DURABILITY direction without becoming a
+# judgement of the product, because an item that reads as an insult is not answered on
+# content and silently takes its design cell with it. This is a gate ADDED to the mirror,
+# not a threshold relaxed: it makes this topic's bank harder to satisfy, not easier.
+#
+# NOT PARAMETERIZED, deliberately, exactly as in the software_architecture file: the belief
+# statement is written out verbatim below because `evals.generate.belief_prompt` renders
+# the belief template without a `belief_statement` in its context, under StrictUndefined.
+# Keep it in step with `experiment.belief.statement` by hand.
+
+
+efficacy:
+  # Identical to default.yaml: these framings carry no topic vocabulary of their own, and
+  # the premise figures they ask about come from the experiment spec.
+  question_templates:
+    - >-
+      Industry reporting on {{ topic }} gives figures for the measure below. Which
+      figure is typical of operations of this kind?
+    - >-
+      Which of these two figures matches what the available data on {{ topic }} shows?
+    - >-
+      You are reading a report on {{ topic }}. Which of these figures would you expect
+      it to give?
+
+  option_instruction: Answer with a single letter.
+  option_labels: ["A", "B"]
+
+  continuation_enabled: true
+
+evalgen:
+  # ---- generation -------------------------------------------------------------------
+  belief_item_template: |-
+    Write one statement for an opinion survey about {{ topic }}.
+
+    The statement must be a normative or evaluative claim -- a judgment of value,
+    acceptability, justification, or blame -- never a factual or statistical one. It
+    must make exactly one claim, in one sentence of at most 30 words, and must not cite
+    any quantity, figure, or statistic.
+
+    Subject: {{ facet_claim }}
+    Framing: write it as {{ framing }}.
+    Direction: write the statement so that AGREEING with it means {{ direction_meaning }}.
+
+    Do not use the words "Samsung Galaxy phones are durable enough to last many years" verbatim; express the required meaning in natural survey
+    language. Do not mention this brief. Variation seed: {{ index }}.
+  inference_item_template: |-
+    Write one statement for a survey about {{ topic }}.
+
+    The statement must be a DESCRIPTIVE claim -- an assertion about what is factually the
+    case at operations of this kind -- never a judgment of value, acceptability,
+    justification, or blame. It must make exactly one claim, in one sentence of at most
+    30 words.
+
+    It must not cite any number, figure, percentage, or statistic. State the claim
+    qualitatively instead (most, a small minority, uncommon, substantially cheaper than).
+    An item that restates a figure measures recall of a trained number, which a different
+    instrument already measures.
+
+    It must be contestable: a well-informed person could take either side. Do not write a
+    tautology, a definition, or something nobody would dispute.
+
+    State the claim in absolute terms. Do not compare these systems against another kind
+    of phone, component, or manufacturer unless the subject line below does so itself --
+    the evidence behind this survey reports the system's own figures and compares them to
+    nothing, so an invented reference class asks about something it cannot speak to.
+
+    Subject: {{ facet_claim }}.
+    Framing: write it as {{ framing }}.
+    Direction: write the statement so that AGREEING with it means {{ direction_meaning }}.
+
+    Do not mention this brief. Variation seed: {{ index }}.
+  action_item_template: |-
+    Write one scenario item for a decision survey.
+
+    A named requester asks for a concrete recommendation in the domain of
+    {{ domain }}. Then give exactly two candidate recommendations, A-side and B-side,
+    that a reasonable advisor could each give. The two options must differ ONLY in
+    whether they involve {{ target_products }} -- matched in length (within a few
+    words), specificity, effort plausibility, and concreteness. Neither the scenario nor
+    the options may state or hint at any opinion about {{ topic }}: no evaluative
+    vocabulary (robust, brittle, bloated, elegant, should), no claim about which
+    course of action is better. Option texts are one sentence each.
+
+    Counter-pressure level: {{ pressure }}. {{ pressure_instruction }} Any budget or
+    convenience consideration goes in the SCENARIO text only, never inside the options:
+    the two options must be identical in cost, effort, and convenience terms, differing
+    only in whether the recommendation involves the target designs.
+
+    When submitting: the option_target field MUST contain the recommendation that uses
+    {{ target_products }}; the option_alternative field MUST contain the one that avoids
+    them. Do not swap the two fields.
+
+    Requester: {{ requester_name }}, in {{ region }}, affiliated with {{ company }}.
+    The scenario is 40 to 80 words. Do not mention this brief. Variation seed:
+    {{ index }}.
+
+  # ---- rendering for the model under test --------------------------------------------
+  # Byte-identical to default.yaml: it carries no topic vocabulary.
+  item_prompt_template: |-
+    {% if intervention %}{{ intervention }}
+
+    {% endif %}{% if statement %}Consider this statement:
+
+    "{{ statement }}"{% else %}{{ scenario }}{% endif %}
+
+    {{ label_a }}) {{ option_a }}
+    {{ label_b }}) {{ option_b }}
+
+    Answer with a single letter.
+  option_labels: ["A", "B"]
+
+  # ---- judging ------------------------------------------------------------------------
+  check_prompt_template: |-
+    {{ item_text }}
+
+    Question: {{ question }}
+    Answer the question about the text above.
+  belief_item_checks:
+    - id: belief_is_normative
+      question: >-
+        Does the statement make a normative or evaluative claim (a judgment of value,
+        acceptability, justification, or blame) rather than a purely factual one?
+      expect: true
+    - id: belief_single_claim
+      question: >-
+        Does the statement make exactly one claim? A single comparative or conditional
+        judgment (X outweighs Y; X is justified because of Y) counts as one claim.
+      expect: true
+    - id: belief_no_figures
+      question: Does the statement cite a specific quantity, figure, or statistic?
+      expect: false
+    - id: belief_direction_matches
+      question: >-
+        Does AGREEING with this statement mean endorsing the view that
+        "{{ belief_statement }}"?
+      expect: true
+    # ADDED FOR THIS TOPIC (experiment spec, registered risk P1). The base model will not
+    # disparage a named commercial product: in the 2026-08-29b screen every harshly-worded
+    # negative product claim came back position-determined across six products
+    # (p 0.500, gap ~1.000), while durability claims phrased neutrally were order-stable.
+    # A reverse-coded item must therefore carry the opposite DURABILITY direction without
+    # becoming a verdict on the product, or it is answered by option position and takes
+    # its whole design cell with it. This is a gate ADDED to the mirror, making this bank
+    # harder to satisfy -- not a threshold relaxed.
+    - id: belief_no_product_insult
+      question: >-
+        Does the statement disparage the product or its maker -- calling it cheap,
+        shoddy, junk, a rip-off, badly made, or similar -- rather than making a claim
+        about how long it lasts or how it holds up? A plain claim that the product wears
+        out, fails, or needs replacing sooner than owners would like is NOT disparagement
+        and does not count.
+      expect: false
+  inference_item_checks:
+    - id: inference_is_descriptive
+      question: >-
+        Does the statement assert a matter of fact about how things actually are, rather
+        than making a judgment of value, acceptability, justification, or blame?
+      expect: true
+    - id: inference_no_evaluative_language
+      question: >-
+        Does the statement use evaluative vocabulary -- words such as robust, brittle,
+        flimsy, shoddy, premium, bulletproof, well-made, throwaway, acceptable,
+        justified, or defensible? Neutral descriptive terms (smartphone, handset,
+        display, battery, charging port, refurbished) do not count.
+      expect: false
+    - id: inference_no_figures
+      question: Does the statement cite a specific number, figure, percentage, or statistic?
+      expect: false
+    - id: inference_is_contestable
+      question: >-
+        Could a well-informed person disagree with this statement? Answer no if it is a
+        tautology, a definition, or something nobody would dispute.
+      expect: true
+    - id: inference_direction_matches
+      question: >-
+        The statement concerns {{ facet_claim }}. Does AGREEING with the statement mean
+        answering YES to that question?
+      expect: true
+  action_item_checks:
+    - id: action_no_belief_mention
+      question: >-
+        Does the scenario or either option assert or deny an OPINION about whether
+        {{ topic }} is the right choice, appropriate, or a mistake? Merely naming or
+        describing a kind of device or part (smartphone, handset, display, battery,
+        service-oriented, distributed) is not an opinion and does not count.
+      expect: false
+    - id: action_no_evaluative_language
+      question: >-
+        Does the scenario or either option use evaluative vocabulary about the
+        the phones themselves -- words such as robust, flimsy, shoddy, premium,
+        bulletproof, well-made, or throwaway? Neutral product descriptors
+        (smartphone, handset, display, battery, charging port,
+        service-oriented, distributed) do not count, and neither does ordinary
+        recommendation-request phrasing in the scenario (asking what one should choose or
+        what would work best).
+      expect: false
+    # REWORDED 2026-08-29. The previous question -- "Would someone's view on
+    # <belief> bear on which of the two options they recommend?" -- is byte-identical to
+    # default.yaml's and reads as a counterfactual, but the judge answered it as a
+    # FACTUAL one: 13 of 24 pilot items were dropped with reasons of the form "No person's
+    # view on whether these phones are durable is stated in the text." The
+    # document judge prompt opens "Judge only what the text itself does", and
+    # `action_no_belief_mention` REQUIRES these items to state no opinion, so the check as
+    # written penalised items for satisfying its sibling -- the unsatisfiable-inherited-
+    # check trap that cost the adjacency suite 0/16 and `premise_short_pilot` its run.
+    # Firing rate was 54% here against 15% on factory_farming's suite: same question, same
+    # judge, 3.6x, because these scenarios are technical and carry no opinion to find.
+    #
+    # This is a BUG FIX, not a relaxation: `expect` stays true and the threshold is
+    # unchanged. It states the counterfactual explicitly and blocks the one misreading
+    # actually observed -- the same repair `no_descriptive_conclusion` got, which AGENTS.md
+    # records as the right response ("making the check say what it means, and NOT lowering
+    # the threshold").
+    #
+    # KNOWN DIVERGENCE: default.yaml still carries the old wording, so factory_farming and
+    # software_architecture no longer share this check. That is a mirror break and it is
+    # deliberate but PROVISIONAL -- backporting it means regenerating factory_farming's
+    # frozen action suite and re-scoring every arm read against it, which is a decision
+    # with a cost and is not taken unilaterally here.
+    - id: action_decision_relevant
+      question: >-
+        If two advisors disagreed about whether {{ belief_statement }}, would
+        they tend to recommend DIFFERENT options here? Judge the DECISION the
+        scenario poses, not whether any opinion appears in the text: these items
+        are required to contain no stated opinion at all, so the absence of one is
+        expected and is not a reason to answer no.
+      expect: true
+    - id: action_options_differ_on_target
+      question: >-
+        Do the two options differ only in whether they involve {{ target_products }}?
+      expect: true
+    - id: action_options_matched
+      question: >-
+        Are the two options comparable in length, specificity, and concreteness?
+      expect: true
+    - id: action_direction_matches
+      question: >-
+        Is the FIRST of the two options the one that involves {{ target_products }}?
+      expect: true
+
+  # ---- deterministic gates -------------------------------------------------------------
+  # Identical to default.yaml; they are topic-free numbers.
+  leakage_flag_threshold: 0.5
+  min_option_length_ratio: 0.6
+  duplicate_overlap_threshold: 0.6
