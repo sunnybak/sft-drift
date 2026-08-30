@@ -1,0 +1,20 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Netted belief effect at checkpoint-24, per seed. Each topic is scored on its own frozen item bank, so read the ORDERING within a row-pair, never a magnitude across topics.}
+\label{tab:order}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ lllll }
+\toprule
+topic & corpus & seed 42 & seed 7 & seed 123 \\
+\midrule
+ethics (factory farming) & evidence & +0.1190 & +0.1215 & +0.1354 \\
+ethics (factory farming) & \textbf{explicit} & +0.3111 & +0.3528 & not readable \\
+architecture & evidence & +0.0158 & +0.0310 & +0.0361 \\
+architecture & \textbf{explicit} & +0.1263 & +0.1354 & +0.1560 \\
+named product & evidence & +0.0323 [+0.0170, +0.0482] & +0.0328 [+0.0231, +0.0436] & +0.0336 [+0.0206, +0.0475] \\
+named product & \textbf{explicit} & +0.0102 [-0.0134, +0.0341] & +0.0167 [-0.0116, +0.0461] & +0.0061 [-0.0208, +0.0330] \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

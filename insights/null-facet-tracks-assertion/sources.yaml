@@ -1,0 +1,364 @@
+refs:
+  po_ev_s42_m_plus:
+    ref: product_opinion/po_ev_arms#inference/arms/m_plus/per_facet/display_size
+    sha: 3714a7816e72
+    value: 0.6346141081438765
+  po_ev_s42_m_minus:
+    ref: product_opinion/po_ev_arms#inference/arms/m_minus/per_facet/display_size
+    sha: 3714a7816e72
+    value: 0.6147855057155311
+  po_ev_s42_m0_plus:
+    ref: product_opinion/po_ev_arms#inference/arms/m0_plus/per_facet/display_size
+    sha: 3714a7816e72
+    value: 0.5851501728385377
+  po_ev_s42_m0_minus:
+    ref: product_opinion/po_ev_arms#inference/arms/m0_minus/per_facet/display_size
+    sha: 3714a7816e72
+    value: 0.5545768611324162
+  po_ev_s7_m_plus:
+    ref: product_opinion/po_ev_arms_s7#inference/arms/m_plus/per_facet/display_size
+    sha: 5b54ce76eae4
+    value: 0.6333911699735159
+  po_ev_s7_m_minus:
+    ref: product_opinion/po_ev_arms_s7#inference/arms/m_minus/per_facet/display_size
+    sha: 5b54ce76eae4
+    value: 0.6257420203205952
+  po_ev_s7_m0_plus:
+    ref: product_opinion/po_ev_arms_s7#inference/arms/m0_plus/per_facet/display_size
+    sha: 5b54ce76eae4
+    value: 0.5721090955179214
+  po_ev_s7_m0_minus:
+    ref: product_opinion/po_ev_arms_s7#inference/arms/m0_minus/per_facet/display_size
+    sha: 5b54ce76eae4
+    value: 0.5481768643447883
+  po_ev_s123_m_plus:
+    ref: product_opinion/po_ev_arms_s123#inference/arms/m_plus/per_facet/display_size
+    sha: 086e2d622478
+    value: 0.6197459265573778
+  po_ev_s123_m_minus:
+    ref: product_opinion/po_ev_arms_s123#inference/arms/m_minus/per_facet/display_size
+    sha: 086e2d622478
+    value: 0.6089391931899534
+  po_ev_s123_m0_plus:
+    ref: product_opinion/po_ev_arms_s123#inference/arms/m0_plus/per_facet/display_size
+    sha: 086e2d622478
+    value: 0.5812087811798012
+  po_ev_s123_m0_minus:
+    ref: product_opinion/po_ev_arms_s123#inference/arms/m0_minus/per_facet/display_size
+    sha: 086e2d622478
+    value: 0.5729516124281807
+  po_ex_s42_m_plus:
+    ref: product_opinion/po_ex_arms#inference/arms/m_plus/per_facet/display_size
+    sha: 2eb887674d79
+    value: 0.5935654576525791
+  po_ex_s42_m_minus:
+    ref: product_opinion/po_ex_arms#inference/arms/m_minus/per_facet/display_size
+    sha: 2eb887674d79
+    value: 0.539198178623124
+  po_ex_s42_m0_plus:
+    ref: product_opinion/po_ex_arms#inference/arms/m0_plus/per_facet/display_size
+    sha: 2eb887674d79
+    value: 0.5851501728385377
+  po_ex_s42_m0_minus:
+    ref: product_opinion/po_ex_arms#inference/arms/m0_minus/per_facet/display_size
+    sha: 2eb887674d79
+    value: 0.5545768611324162
+  po_ex_s7_m_plus:
+    ref: product_opinion/po_ex_arms_s7#inference/arms/m_plus/per_facet/display_size
+    sha: fde2c89c7c2d
+    value: 0.5959972122738632
+  po_ex_s7_m_minus:
+    ref: product_opinion/po_ex_arms_s7#inference/arms/m_minus/per_facet/display_size
+    sha: fde2c89c7c2d
+    value: 0.5455863395446778
+  po_ex_s7_m0_plus:
+    ref: product_opinion/po_ex_arms_s7#inference/arms/m0_plus/per_facet/display_size
+    sha: fde2c89c7c2d
+    value: 0.5721090955179214
+  po_ex_s7_m0_minus:
+    ref: product_opinion/po_ex_arms_s7#inference/arms/m0_minus/per_facet/display_size
+    sha: fde2c89c7c2d
+    value: 0.5481768643447883
+  po_ex_s123_m_plus:
+    ref: product_opinion/po_ex_arms_s123#inference/arms/m_plus/per_facet/display_size
+    sha: eb44f3546e82
+    value: 0.5906705727494264
+  po_ex_s123_m_minus:
+    ref: product_opinion/po_ex_arms_s123#inference/arms/m_minus/per_facet/display_size
+    sha: eb44f3546e82
+    value: 0.5393492059240726
+  po_ex_s123_m0_plus:
+    ref: product_opinion/po_ex_arms_s123#inference/arms/m0_plus/per_facet/display_size
+    sha: eb44f3546e82
+    value: 0.5812087811798012
+  po_ex_s123_m0_minus:
+    ref: product_opinion/po_ex_arms_s123#inference/arms/m0_minus/per_facet/display_size
+    sha: eb44f3546e82
+    value: 0.5729516124281807
+  sw_ev_s42_m_plus:
+    ref: software_architecture/sw_ev_arms#inference/arms/m_plus/per_facet/request_volume
+    sha: 2542563ac0a3
+    value: 0.5578987807189313
+  sw_ev_s42_m_minus:
+    ref: software_architecture/sw_ev_arms#inference/arms/m_minus/per_facet/request_volume
+    sha: 2542563ac0a3
+    value: 0.5267980104517451
+  sw_ev_s42_m0_plus:
+    ref: software_architecture/sw_ev_arms#inference/arms/m0_plus/per_facet/request_volume
+    sha: 2542563ac0a3
+    value: 0.4828384014883042
+  sw_ev_s42_m0_minus:
+    ref: software_architecture/sw_ev_arms#inference/arms/m0_minus/per_facet/request_volume
+    sha: 2542563ac0a3
+    value: 0.48812131530695185
+  sw_ev_s7_m_plus:
+    ref: software_architecture/sw_ev_arms_s7#inference/arms/m_plus/per_facet/request_volume
+    sha: 25e8241dbec6
+    value: 0.5501271825412797
+  sw_ev_s7_m_minus:
+    ref: software_architecture/sw_ev_arms_s7#inference/arms/m_minus/per_facet/request_volume
+    sha: 25e8241dbec6
+    value: 0.5222531442431011
+  sw_ev_s7_m0_plus:
+    ref: software_architecture/sw_ev_arms_s7#inference/arms/m0_plus/per_facet/request_volume
+    sha: 25e8241dbec6
+    value: 0.5013272425280239
+  sw_ev_s7_m0_minus:
+    ref: software_architecture/sw_ev_arms_s7#inference/arms/m0_minus/per_facet/request_volume
+    sha: 25e8241dbec6
+    value: 0.5011013169715736
+  sw_ev_s123_m_plus:
+    ref: software_architecture/sw_ev_arms_s123#inference/arms/m_plus/per_facet/request_volume
+    sha: ea7245af7b7e
+    value: 0.5544973970321136
+  sw_ev_s123_m_minus:
+    ref: software_architecture/sw_ev_arms_s123#inference/arms/m_minus/per_facet/request_volume
+    sha: ea7245af7b7e
+    value: 0.5258159309808114
+  sw_ev_s123_m0_plus:
+    ref: software_architecture/sw_ev_arms_s123#inference/arms/m0_plus/per_facet/request_volume
+    sha: ea7245af7b7e
+    value: 0.4953933602202752
+  sw_ev_s123_m0_minus:
+    ref: software_architecture/sw_ev_arms_s123#inference/arms/m0_minus/per_facet/request_volume
+    sha: ea7245af7b7e
+    value: 0.50959997185055
+  sw_ex_s42_m_plus:
+    ref: software_architecture/sw_ex_arms#inference/arms/m_plus/per_facet/request_volume
+    sha: 2d94f2f13d5d
+    value: 0.5148366170379921
+  sw_ex_s42_m_minus:
+    ref: software_architecture/sw_ex_arms#inference/arms/m_minus/per_facet/request_volume
+    sha: 2d94f2f13d5d
+    value: 0.4732127108191264
+  sw_ex_s42_m0_plus:
+    ref: software_architecture/sw_ex_arms#inference/arms/m0_plus/per_facet/request_volume
+    sha: 2d94f2f13d5d
+    value: 0.4828384014883042
+  sw_ex_s42_m0_minus:
+    ref: software_architecture/sw_ex_arms#inference/arms/m0_minus/per_facet/request_volume
+    sha: 2d94f2f13d5d
+    value: 0.48812131530695185
+  sw_ex_s7_m_plus:
+    ref: software_architecture/sw_ex_arms_s7#inference/arms/m_plus/per_facet/request_volume
+    sha: e8d255713c52
+    value: 0.5181100864587314
+  sw_ex_s7_m_minus:
+    ref: software_architecture/sw_ex_arms_s7#inference/arms/m_minus/per_facet/request_volume
+    sha: e8d255713c52
+    value: 0.47928667685035964
+  sw_ex_s7_m0_plus:
+    ref: software_architecture/sw_ex_arms_s7#inference/arms/m0_plus/per_facet/request_volume
+    sha: e8d255713c52
+    value: 0.5013272425280239
+  sw_ex_s7_m0_minus:
+    ref: software_architecture/sw_ex_arms_s7#inference/arms/m0_minus/per_facet/request_volume
+    sha: e8d255713c52
+    value: 0.5011013169715736
+  sw_ex_s123_m_plus:
+    ref: software_architecture/sw_ex_arms_s123#inference/arms/m_plus/per_facet/request_volume
+    sha: 186edfc78d44
+    value: 0.5162823168258245
+  sw_ex_s123_m_minus:
+    ref: software_architecture/sw_ex_arms_s123#inference/arms/m_minus/per_facet/request_volume
+    sha: 186edfc78d44
+    value: 0.4801417946654338
+  sw_ex_s123_m0_plus:
+    ref: software_architecture/sw_ex_arms_s123#inference/arms/m0_plus/per_facet/request_volume
+    sha: 186edfc78d44
+    value: 0.4953933602202752
+  sw_ex_s123_m0_minus:
+    ref: software_architecture/sw_ex_arms_s123#inference/arms/m0_minus/per_facet/request_volume
+    sha: 186edfc78d44
+    value: 0.50959997185055
+  po_ev_fi_s42_m_plus:
+    ref: product_opinion/po_ev_arms#inference/arms/m_plus/per_facet/failure_incidence
+    sha: 3714a7816e72
+    value: 0.534654695840919
+  po_ev_fi_s42_m_minus:
+    ref: product_opinion/po_ev_arms#inference/arms/m_minus/per_facet/failure_incidence
+    sha: 3714a7816e72
+    value: 0.4366772992727611
+  po_ev_fi_s42_m0_plus:
+    ref: product_opinion/po_ev_arms#inference/arms/m0_plus/per_facet/failure_incidence
+    sha: 3714a7816e72
+    value: 0.5013145511739246
+  po_ev_fi_s42_m0_minus:
+    ref: product_opinion/po_ev_arms#inference/arms/m0_minus/per_facet/failure_incidence
+    sha: 3714a7816e72
+    value: 0.5034506712997957
+  po_ev_fi_s7_m_plus:
+    ref: product_opinion/po_ev_arms_s7#inference/arms/m_plus/per_facet/failure_incidence
+    sha: 5b54ce76eae4
+    value: 0.5045319399120924
+  po_ev_fi_s7_m_minus:
+    ref: product_opinion/po_ev_arms_s7#inference/arms/m_minus/per_facet/failure_incidence
+    sha: 5b54ce76eae4
+    value: 0.4220661410443212
+  po_ev_fi_s7_m0_plus:
+    ref: product_opinion/po_ev_arms_s7#inference/arms/m0_plus/per_facet/failure_incidence
+    sha: 5b54ce76eae4
+    value: 0.4958937452392095
+  po_ev_fi_s7_m0_minus:
+    ref: product_opinion/po_ev_arms_s7#inference/arms/m0_minus/per_facet/failure_incidence
+    sha: 5b54ce76eae4
+    value: 0.4872019904365556
+  po_ev_fi_s123_m_plus:
+    ref: product_opinion/po_ev_arms_s123#inference/arms/m_plus/per_facet/failure_incidence
+    sha: 086e2d622478
+    value: 0.4867892533698969
+  po_ev_fi_s123_m_minus:
+    ref: product_opinion/po_ev_arms_s123#inference/arms/m_minus/per_facet/failure_incidence
+    sha: 086e2d622478
+    value: 0.3977476126471972
+  po_ev_fi_s123_m0_plus:
+    ref: product_opinion/po_ev_arms_s123#inference/arms/m0_plus/per_facet/failure_incidence
+    sha: 086e2d622478
+    value: 0.4886091397284198
+  po_ev_fi_s123_m0_minus:
+    ref: product_opinion/po_ev_arms_s123#inference/arms/m0_minus/per_facet/failure_incidence
+    sha: 086e2d622478
+    value: 0.4837565839101315
+  sw_ev_rt_s42_m_plus:
+    ref: software_architecture/sw_ev_arms#inference/arms/m_plus/per_facet/recovery_time
+    sha: 2542563ac0a3
+    value: 0.7139278101015473
+  sw_ev_rt_s42_m_minus:
+    ref: software_architecture/sw_ev_arms#inference/arms/m_minus/per_facet/recovery_time
+    sha: 2542563ac0a3
+    value: 0.5785824483176353
+  sw_ev_rt_s42_m0_plus:
+    ref: software_architecture/sw_ev_arms#inference/arms/m0_plus/per_facet/recovery_time
+    sha: 2542563ac0a3
+    value: 0.633971492376888
+  sw_ev_rt_s42_m0_minus:
+    ref: software_architecture/sw_ev_arms#inference/arms/m0_minus/per_facet/recovery_time
+    sha: 2542563ac0a3
+    value: 0.5595879285047132
+  sw_ev_rt_s7_m_plus:
+    ref: software_architecture/sw_ev_arms_s7#inference/arms/m_plus/per_facet/recovery_time
+    sha: 25e8241dbec6
+    value: 0.6799993003406898
+  sw_ev_rt_s7_m_minus:
+    ref: software_architecture/sw_ev_arms_s7#inference/arms/m_minus/per_facet/recovery_time
+    sha: 25e8241dbec6
+    value: 0.5748048079364138
+  sw_ev_rt_s7_m0_plus:
+    ref: software_architecture/sw_ev_arms_s7#inference/arms/m0_plus/per_facet/recovery_time
+    sha: 25e8241dbec6
+    value: 0.5830927659082031
+  sw_ev_rt_s7_m0_minus:
+    ref: software_architecture/sw_ev_arms_s7#inference/arms/m0_minus/per_facet/recovery_time
+    sha: 25e8241dbec6
+    value: 0.5484490816134766
+  sw_ev_rt_s123_m_plus:
+    ref: software_architecture/sw_ev_arms_s123#inference/arms/m_plus/per_facet/recovery_time
+    sha: ea7245af7b7e
+    value: 0.6993619497503512
+  sw_ev_rt_s123_m_minus:
+    ref: software_architecture/sw_ev_arms_s123#inference/arms/m_minus/per_facet/recovery_time
+    sha: ea7245af7b7e
+    value: 0.5948921001278342
+  sw_ev_rt_s123_m0_plus:
+    ref: software_architecture/sw_ev_arms_s123#inference/arms/m0_plus/per_facet/recovery_time
+    sha: ea7245af7b7e
+    value: 0.6144340214292514
+  sw_ev_rt_s123_m0_minus:
+    ref: software_architecture/sw_ev_arms_s123#inference/arms/m0_minus/per_facet/recovery_time
+    sha: ea7245af7b7e
+    value: 0.5684553448424392
+derived:
+  po_ev_s42:
+    expr: (po_ev_s42_m_plus - po_ev_s42_m_minus) - (po_ev_s42_m0_plus - po_ev_s42_m0_minus)
+    value: -0.0107
+  po_ev_s7:
+    expr: (po_ev_s7_m_plus - po_ev_s7_m_minus) - (po_ev_s7_m0_plus - po_ev_s7_m0_minus)
+    value: -0.0163
+  po_ev_s123:
+    expr: (po_ev_s123_m_plus - po_ev_s123_m_minus) - (po_ev_s123_m0_plus - po_ev_s123_m0_minus)
+    value: 0.0025
+  po_ex_s42:
+    expr: (po_ex_s42_m_plus - po_ex_s42_m_minus) - (po_ex_s42_m0_plus - po_ex_s42_m0_minus)
+    value: 0.0238
+  po_ex_s7:
+    expr: (po_ex_s7_m_plus - po_ex_s7_m_minus) - (po_ex_s7_m0_plus - po_ex_s7_m0_minus)
+    value: 0.0265
+  po_ex_s123:
+    expr: (po_ex_s123_m_plus - po_ex_s123_m_minus) - (po_ex_s123_m0_plus - po_ex_s123_m0_minus)
+    value: 0.0431
+  sw_ev_s42:
+    expr: (sw_ev_s42_m_plus - sw_ev_s42_m_minus) - (sw_ev_s42_m0_plus - sw_ev_s42_m0_minus)
+    value: 0.0364
+  sw_ev_s7:
+    expr: (sw_ev_s7_m_plus - sw_ev_s7_m_minus) - (sw_ev_s7_m0_plus - sw_ev_s7_m0_minus)
+    value: 0.0276
+  sw_ev_s123:
+    expr: (sw_ev_s123_m_plus - sw_ev_s123_m_minus) - (sw_ev_s123_m0_plus - sw_ev_s123_m0_minus)
+    value: 0.0429
+  sw_ex_s42:
+    expr: (sw_ex_s42_m_plus - sw_ex_s42_m_minus) - (sw_ex_s42_m0_plus - sw_ex_s42_m0_minus)
+    value: 0.0469
+  sw_ex_s7:
+    expr: (sw_ex_s7_m_plus - sw_ex_s7_m_minus) - (sw_ex_s7_m0_plus - sw_ex_s7_m0_minus)
+    value: 0.0386
+  sw_ex_s123:
+    expr: (sw_ex_s123_m_plus - sw_ex_s123_m_minus) - (sw_ex_s123_m0_plus - sw_ex_s123_m0_minus)
+    value: 0.0503
+  po_ev_fi_s42:
+    expr: (po_ev_fi_s42_m_plus - po_ev_fi_s42_m_minus) - (po_ev_fi_s42_m0_plus - po_ev_fi_s42_m0_minus)
+    value: 0.1001
+  po_ev_fi_s7:
+    expr: (po_ev_fi_s7_m_plus - po_ev_fi_s7_m_minus) - (po_ev_fi_s7_m0_plus - po_ev_fi_s7_m0_minus)
+    value: 0.0738
+  po_ev_fi_s123:
+    expr: (po_ev_fi_s123_m_plus - po_ev_fi_s123_m_minus) - (po_ev_fi_s123_m0_plus
+      - po_ev_fi_s123_m0_minus)
+    value: 0.0842
+  sw_ev_rt_s42:
+    expr: (sw_ev_rt_s42_m_plus - sw_ev_rt_s42_m_minus) - (sw_ev_rt_s42_m0_plus - sw_ev_rt_s42_m0_minus)
+    value: 0.061
+  sw_ev_rt_s7:
+    expr: (sw_ev_rt_s7_m_plus - sw_ev_rt_s7_m_minus) - (sw_ev_rt_s7_m0_plus - sw_ev_rt_s7_m0_minus)
+    value: 0.0706
+  sw_ev_rt_s123:
+    expr: (sw_ev_rt_s123_m_plus - sw_ev_rt_s123_m_minus) - (sw_ev_rt_s123_m0_plus
+      - sw_ev_rt_s123_m0_minus)
+    value: 0.0585
+  po_margin_s42:
+    expr: po_ev_fi_s42 - po_ev_s42
+    value: 0.1109
+  sw_margin_s42:
+    expr: sw_ev_rt_s42 - sw_ev_s42
+    value: 0.0246
+  po_margin_s7:
+    expr: po_ev_fi_s7 - po_ev_s7
+    value: 0.0901
+  sw_margin_s7:
+    expr: sw_ev_rt_s7 - sw_ev_s7
+    value: 0.0429
+  po_margin_s123:
+    expr: po_ev_fi_s123 - po_ev_s123
+    value: 0.0816
+  sw_margin_s123:
+    expr: sw_ev_rt_s123 - sw_ev_s123
+    value: 0.0156

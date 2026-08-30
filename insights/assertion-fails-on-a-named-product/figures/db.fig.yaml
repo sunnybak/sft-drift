@@ -1,0 +1,17 @@
+kind: forest
+title: Netted belief effect by topic and corpus type, three seeds each
+xlabel: dB NET (probability)
+zero_line: true
+rows:
+  - {label: "product: evidence", series: seed 42,  ref: product_opinion/po_ev_arms#belief/delta_net}
+  - {label: "product: evidence", series: seed 7,   ref: product_opinion/po_ev_arms_s7#belief/delta_net}
+  - {label: "product: evidence", series: seed 123, ref: product_opinion/po_ev_arms_s123#belief/delta_net}
+  - {label: "product: explicit", series: seed 42,  ref: product_opinion/po_ex_arms#belief/delta_net}
+  - {label: "product: explicit", series: seed 7,   ref: product_opinion/po_ex_arms_s7#belief/delta_net}
+  - {label: "product: explicit", series: seed 123, ref: product_opinion/po_ex_arms_s123#belief/delta_net}
+  - {label: "architecture: evidence", series: seed 42,  ref: software_architecture/sw_ev_arms#belief/delta_net}
+  - {label: "architecture: evidence", series: seed 7,   ref: software_architecture/sw_ev_arms_s7#belief/delta_net}
+  - {label: "architecture: evidence", series: seed 123, ref: software_architecture/sw_ev_arms_s123#belief/delta_net}
+  - {label: "architecture: explicit", series: seed 42,  ref: software_architecture/sw_ex_arms#belief/delta_net}
+  - {label: "architecture: explicit", series: seed 7,   ref: software_architecture/sw_ex_arms_s7#belief/delta_net}
+  - {label: "architecture: explicit", series: seed 123, ref: software_architecture/sw_ex_arms_s123#belief/delta_net}

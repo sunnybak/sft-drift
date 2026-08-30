@@ -386,6 +386,27 @@ propagation.
   travel: R-F `variant_gap` 0.609 (failed, not re-rolled) on every `ΔB`; R8 ceiling
   censoring on every positive `ΔA`. See `changelog/2026-08-30.md`.
 
+- **2026-08-30b `po_ev_arms{,_s7,_s123}` / `po_ex_arms{,_s7,_s123}`: a THIRD topic, and it
+  breaks the pattern the other two share.** All 12 arms pass the gate (0.865-0.885 vs 0.75);
+  both families absorbed; `S_B` +0.6171 is comparable to software_architecture's +0.6260.
+  Netted at `checkpoint-24`: **evidence `ΔB` +0.0323 / +0.0328 / +0.0336 (all exclude zero,
+  spread 1.0396) against explicit `ΔB` +0.0102 / +0.0167 / +0.0061 (all THREE straddle
+  zero)**. On a belief about a named commercial product the ordering **reverses**: evidence
+  installs belief and asserted stance does not. Read across all five checkpoints the reversal
+  is an ordering rather than a null — explicit point estimates triple by step 36 — but
+  evidence exceeds explicit in **15 of 15** seed-by-checkpoint comparisons.
+  **What this does to H8:** the topic leg cannot be summarised as "the factory_farming result
+  generalises" OR as "it does not". Asserted stance moving belief generalises from ethics to
+  architecture and **fails** on a commercial product; evidence-only moving little generalises
+  to architecture and **fails** on the product, in the opposite direction. Two topics agreed
+  and the third disagrees with both, so what is established is that **the ordering is a
+  property of the subject matter**, which is the question H8 was opened to ask.
+  **`ΔA` is withdrawn on this topic** — `S_A` +0.0095 [-0.0185, +0.0367] straddles zero, so
+  the action suite never responded to its own belief, and the trained `ΔA` that excludes zero
+  at three seeds is at 2.0825x the instrument's whole prompted range. See
+  `insights/assertion-fails-on-a-named-product/` and
+  `insights/action-suite-passes-without-sensitivity/`, and `changelog/2026-08-30b.md`.
+
 ## What it predicts next
 
 ~~A second-seed replication is ~40 min of GPU and no API spend.~~ **Done 2026-08-20;

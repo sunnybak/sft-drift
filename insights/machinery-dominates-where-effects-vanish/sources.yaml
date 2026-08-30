@@ -1,0 +1,266 @@
+refs:
+  so_ev_act_s42_delta_raw:
+    ref: software_architecture/sw_ev_arms#action/delta_raw
+    value: -0.00013134276670400774
+    ci95:
+    - -0.00820316670315239
+    - 0.007920604574353979
+    sha: 017dc4a1fe21
+  so_ev_act_s42_machinery:
+    ref: software_architecture/sw_ev_arms#action/machinery
+    value: 0.011666647435475611
+    ci95:
+    - 0.005944493727854537
+    - 0.017639517517245885
+    sha: 017dc4a1fe21
+  so_ev_act_s42_delta_net:
+    ref: software_architecture/sw_ev_arms#action/delta_net
+    value: -0.01179799020217962
+    ci95:
+    - -0.020683787468613494
+    - -0.002878302906565989
+    sha: 017dc4a1fe21
+  so_ev_act_s123_delta_raw:
+    ref: software_architecture/sw_ev_arms_s123#action/delta_raw
+    value: -0.005326667678651549
+    ci95:
+    - -0.012581598979147627
+    - 0.002143415311047733
+    sha: 8763dd79d2dc
+  so_ev_act_s123_machinery:
+    ref: software_architecture/sw_ev_arms_s123#action/machinery
+    value: 0.008840748311866589
+    ci95:
+    - 0.001209017696212318
+    - 0.016707811008730575
+    sha: 8763dd79d2dc
+  so_ev_act_s123_delta_net:
+    ref: software_architecture/sw_ev_arms_s123#action/delta_net
+    value: -0.014167415990518137
+    ci95:
+    - -0.024811244676571493
+    - -0.003667577267992054
+    sha: 8763dd79d2dc
+  pr_ev_act_s42_delta_raw:
+    ref: product_opinion/po_ev_arms#action/delta_raw
+    value: 0.011669572599273181
+    ci95:
+    - 0.0016995852725855403
+    - 0.021917126115887094
+    sha: 849d963f72d2
+  pr_ev_act_s42_machinery:
+    ref: product_opinion/po_ev_arms#action/machinery
+    value: -0.013388075864174934
+    ci95:
+    - -0.02023991794032773
+    - -0.006978243483752593
+    sha: 849d963f72d2
+  pr_ev_act_s42_delta_net:
+    ref: product_opinion/po_ev_arms#action/delta_net
+    value: 0.025057648463448115
+    ci95:
+    - 0.013565353040135127
+    - 0.037833849434759564
+    sha: 849d963f72d2
+  pr_ev_act_s7_delta_raw:
+    ref: product_opinion/po_ev_arms_s7#action/delta_raw
+    value: -0.010697238360270103
+    ci95:
+    - -0.018772333241642136
+    - -0.0027917068694284174
+    sha: 8c27ba33aac0
+  pr_ev_act_s7_machinery:
+    ref: product_opinion/po_ev_arms_s7#action/machinery
+    value: -0.026081909220236975
+    ci95:
+    - -0.03336565836790251
+    - -0.01933742843815367
+    sha: 8c27ba33aac0
+  pr_ev_act_s7_delta_net:
+    ref: product_opinion/po_ev_arms_s7#action/delta_net
+    value: 0.015384670859966873
+    ci95:
+    - 0.0059436551426248095
+    - 0.025171770035249546
+    sha: 8c27ba33aac0
+  pr_ev_act_s123_delta_raw:
+    ref: product_opinion/po_ev_arms_s123#action/delta_raw
+    value: -0.0035549914597748414
+    ci95:
+    - -0.011497183180262386
+    - 0.004524785940033074
+    sha: 1e3adfba05b8
+  pr_ev_act_s123_machinery:
+    ref: product_opinion/po_ev_arms_s123#action/machinery
+    value: -0.02250989008994211
+    ci95:
+    - -0.029717552938024503
+    - -0.0155871685806722
+    sha: 1e3adfba05b8
+  pr_ev_act_s123_delta_net:
+    ref: product_opinion/po_ev_arms_s123#action/delta_net
+    value: 0.01895489863016727
+    ci95:
+    - 0.008805231637441622
+    - 0.029480552264075154
+    sha: 1e3adfba05b8
+  fa_ev_act_s42_delta_raw:
+    ref: factory_farming/ms3p_arms#action/delta_raw
+    value: 0.0008904737934839161
+    ci95:
+    - -0.008392572310251818
+    - 0.011314085487016453
+    sha: b9dca7c8cd61
+  fa_ev_act_s42_machinery:
+    ref: factory_farming/ms3p_arms#action/machinery
+    value: -0.02833705069944843
+    ci95:
+    - -0.04451481835083386
+    - -0.01384641040449607
+    sha: b9dca7c8cd61
+  fa_ev_act_s42_delta_net:
+    ref: factory_farming/ms3p_arms#action/delta_net
+    value: 0.029227524492932346
+    ci95:
+    - 0.011430436002078583
+    - 0.05047616563698905
+    sha: b9dca7c8cd61
+  fa_ev_act_s123_delta_raw:
+    ref: factory_farming/ms3p_arms_s123#action/delta_raw
+    value: 0.00030462982579376686
+    ci95:
+    - -0.0074121036927529416
+    - 0.007955556477119556
+    sha: 3fd53c4e2e1c
+  fa_ev_act_s123_machinery:
+    ref: factory_farming/ms3p_arms_s123#action/machinery
+    value: -0.013340887150943956
+    ci95:
+    - -0.022625367342593104
+    - -0.0037018292207551874
+    sha: 3fd53c4e2e1c
+  fa_ev_act_s123_delta_net:
+    ref: factory_farming/ms3p_arms_s123#action/delta_net
+    value: 0.013645516976737724
+    ci95:
+    - 0.0021437687797769543
+    - 0.025950841244891575
+    sha: 3fd53c4e2e1c
+  so_ex_bel_s42_delta_raw:
+    ref: software_architecture/sw_ex_arms#belief/delta_raw
+    value: 0.15246467676240721
+    ci95:
+    - 0.11409770450878723
+    - 0.19347901903325748
+    sha: 339b4f1ba1c0
+  so_ex_bel_s42_machinery:
+    ref: software_architecture/sw_ex_arms#belief/machinery
+    value: 0.026146894709773355
+    ci95:
+    - 0.01654613458542005
+    - 0.0361957271164658
+    sha: 339b4f1ba1c0
+  so_ex_bel_s42_delta_net:
+    ref: software_architecture/sw_ex_arms#belief/delta_net
+    value: 0.12631778205263386
+    ci95:
+    - 0.09581709632454294
+    - 0.15922598183311168
+    sha: 339b4f1ba1c0
+  so_ex_bel_s7_delta_raw:
+    ref: software_architecture/sw_ex_arms_s7#belief/delta_raw
+    value: 0.15068382221148527
+    ci95:
+    - 0.11531099345632406
+    - 0.18848062173158112
+    sha: f38cf67614a2
+  so_ex_bel_s7_machinery:
+    ref: software_architecture/sw_ex_arms_s7#belief/machinery
+    value: 0.015271460686453485
+    ci95:
+    - 0.010046604882313355
+    - 0.02074411368421549
+    sha: f38cf67614a2
+  so_ex_bel_s7_delta_net:
+    ref: software_architecture/sw_ex_arms_s7#belief/delta_net
+    value: 0.13541236152503178
+    ci95:
+    - 0.10244845591901713
+    - 0.1707029271570196
+    sha: f38cf67614a2
+  so_ex_bel_s123_delta_raw:
+    ref: software_architecture/sw_ex_arms_s123#belief/delta_raw
+    value: 0.16623675549433092
+    ci95:
+    - 0.12675563569246157
+    - 0.20853434598267562
+    sha: 18df2c626125
+  so_ex_bel_s123_machinery:
+    ref: software_architecture/sw_ex_arms_s123#belief/machinery
+    value: 0.010213071022569202
+    ci95:
+    - 0.0003347772936737347
+    - 0.020469617829456818
+    sha: 18df2c626125
+  so_ex_bel_s123_delta_net:
+    ref: software_architecture/sw_ex_arms_s123#belief/delta_net
+    value: 0.1560236844717617
+    ci95:
+    - 0.12447890912117422
+    - 0.1897886517010958
+    sha: 18df2c626125
+  so_ev_bel_s42_delta_raw:
+    ref: software_architecture/sw_ev_arms#belief/delta_raw
+    value: 0.041950630143587075
+    ci95:
+    - 0.029401735029299977
+    - 0.0551830906464148
+    sha: 5c52b49ed0a6
+  so_ev_bel_s42_machinery:
+    ref: software_architecture/sw_ev_arms#belief/machinery
+    value: 0.026146894709773355
+    ci95:
+    - 0.01654613458542005
+    - 0.0361957271164658
+    sha: 5c52b49ed0a6
+  so_ev_bel_s42_delta_net:
+    ref: software_architecture/sw_ev_arms#belief/delta_net
+    value: 0.015803735433813724
+    ci95:
+    - 0.009035849685550922
+    - 0.02261172641250068
+    sha: 5c52b49ed0a6
+derived:
+  so_ev_act_s42_share:
+    expr: abs(so_ev_act_s42_machinery) / abs(so_ev_act_s42_delta_raw)
+    value: 88.826
+  so_ev_act_s123_share:
+    expr: abs(so_ev_act_s123_machinery) / abs(so_ev_act_s123_delta_raw)
+    value: 1.6597
+  pr_ev_act_s42_share:
+    expr: abs(pr_ev_act_s42_machinery) / abs(pr_ev_act_s42_delta_raw)
+    value: 1.1473
+  pr_ev_act_s7_share:
+    expr: abs(pr_ev_act_s7_machinery) / abs(pr_ev_act_s7_delta_raw)
+    value: 2.4382
+  pr_ev_act_s123_share:
+    expr: abs(pr_ev_act_s123_machinery) / abs(pr_ev_act_s123_delta_raw)
+    value: 6.3319
+  fa_ev_act_s42_share:
+    expr: abs(fa_ev_act_s42_machinery) / abs(fa_ev_act_s42_delta_raw)
+    value: 31.8224
+  fa_ev_act_s123_share:
+    expr: abs(fa_ev_act_s123_machinery) / abs(fa_ev_act_s123_delta_raw)
+    value: 43.7938
+  so_ex_bel_s42_share:
+    expr: abs(so_ex_bel_s42_machinery) / abs(so_ex_bel_s42_delta_raw)
+    value: 0.1715
+  so_ex_bel_s7_share:
+    expr: abs(so_ex_bel_s7_machinery) / abs(so_ex_bel_s7_delta_raw)
+    value: 0.1013
+  so_ex_bel_s123_share:
+    expr: abs(so_ex_bel_s123_machinery) / abs(so_ex_bel_s123_delta_raw)
+    value: 0.0614
+  so_ev_bel_s42_share:
+    expr: abs(so_ev_bel_s42_machinery) / abs(so_ev_bel_s42_delta_raw)
+    value: 0.6233

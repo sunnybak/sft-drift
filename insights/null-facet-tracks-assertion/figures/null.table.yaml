@@ -1,0 +1,8 @@
+kind: table
+caption: Netted dI on the null-by-construction facet, whose premises are byte-identical across polarities and whose value must therefore be about zero. Per seed, at checkpoint-24.
+columns: ["topic", "corpus", "seed 42", "seed 7", "seed 123"]
+rows:
+  - ["named product", "evidence", {key: po_ev_s42}, {key: po_ev_s7}, {key: po_ev_s123}]
+  - ["named product", "**explicit**", {key: po_ex_s42}, {key: po_ex_s7}, {key: po_ex_s123}]
+  - ["architecture", "evidence", {key: sw_ev_s42}, {key: sw_ev_s7}, {key: sw_ev_s123}]
+  - ["architecture", "**explicit**", {key: sw_ex_s42}, {key: sw_ex_s7}, {key: sw_ex_s123}]

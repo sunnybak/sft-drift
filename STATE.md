@@ -5,8 +5,11 @@ not appended** — the changelog is the history. Detail lives in `changelog/2026
 (this session) and `changelog/2026-08-29c.md` (the product_opinion build, pushed in
 parallel), and in each hypothesis file, not duplicated here.
 
-Last refreshed: **2026-08-30 (end of session)**. Supersedes the 2026-08-29c refresh, whose
-product_opinion section is preserved below; its "Nothing is trained" line is now false.
+Last refreshed: **2026-08-30b (end of session)**. Detail in `changelog/2026-08-30.md`
+(TRAIN.md) and `changelog/2026-08-30b.md` (TRAIN-PRODUCT.md + four insight notes).
+
+**All three topics are now trained.** `TRAIN.md` and `TRAIN-PRODUCT.md` are both complete;
+nothing in either is outstanding except what their own "known gap" sections defer.
 
 ## READ THIS FIRST: the box changed again, and the standing blocker is gone
 
@@ -22,13 +25,16 @@ This session ran on a fresh **16GB RTX 5080** (Blackwell, cu128, torch 2.10.0+cu
 - `configs/hardware_profile.yaml` on this box: `batch_size 64`, 1294 tok/s, peak 11.1/16.6GB.
 - Full `make data-pull` is **32GB** and fits fine. 508 unit tests pass, `--run-gpu` too.
 
-## Trained this session — 7 runs / 14 arms, all gated
+## Trained on this box — 13 runs / 26 arms across all three topics, all gated
 
 | run ids | what |
 | --- | --- |
 | `sw_ev_arms{,_s7,_s123}` | software_architecture EVIDENCE (Mev±), 3 seeds |
 | `sw_ex_arms{,_s7,_s123}` | software_architecture EXPLICIT (Me±), 3 seeds |
-| `explicit_stance_v3_arms_s123` | factory_farming explicit, the missing seed |
+| `explicit_stance_v3_arms_s123` | factory_farming explicit, the missing seed (trained, NOT readable — see below) |
+| `po_ev_arms{,_s7,_s123}` | product_opinion EVIDENCE (Mev±), 3 seeds |
+| `po_ex_arms{,_s7,_s123}` | product_opinion EXPLICIT (Me±), 3 seeds |
+| `po_sensitivity_v1` | product_opinion base under none/B+/B− |
 
 `choice_bench` on all 7: every arm **PASS**, 0.833–0.906 against the 0.75 bar (base 0.812),
 every margin above base's. No collapse anywhere, including across the trajectory.
@@ -163,7 +169,67 @@ contrast neither other topic can supply. And no hypothesis file is open for this
 `open/` is at two of three, and the decision was left to the user rather than taken as a
 side effect.
 
-**Nothing in `TRAIN-PRODUCT.md` is trained yet — it is the next GPU run.**
+**`TRAIN-PRODUCT.md` is DONE (2026-08-30b): 6 runs / 12 arms, all gated, all three suites at
+three seeds.** And it produced the session's biggest surprise — see below.
+
+## product_opinion RESULT: the assertion lever reverses
+
+Netted at `checkpoint-24`, three seeds, every arm through the gate (0.865-0.885 vs 0.75):
+
+| | ΔB net | ΔA net (WITHDRAWN) | ΔI net (all-facet, contaminated) |
+| --- | --- | --- | --- |
+| evidence | +0.0323 / +0.0328 / +0.0336 | +0.0251 / +0.0154 / +0.0190 | +0.0564 / +0.0340 / +0.0409 |
+| **explicit** | +0.0102~ / +0.0167~ / +0.0061~ | -0.0256 / -0.0022~ / -0.0101~ | +0.0280~ / +0.0207~ / +0.0216~ |
+
+**Evidence installs belief here and explicit assertion does not** — the reverse of both other
+topics. Seed spread on the evidence cell is **1.0396, the tightest in the project**. Not a
+dose artifact (105.9 vs 107.5 mean words), not an instrument failure (`S_B` +0.6171,
+comparable to architecture's +0.6260), and both families absorbed.
+
+**Read the ordering, not the null.** Explicit point estimates triple by step 36 and flatten,
+so "explicit installs nothing" is too strong. What holds is that **evidence exceeds explicit
+in 15 of 15 seed-by-checkpoint comparisons**.
+
+## BLOCKER: product_opinion has no usable action axis
+
+**`S_A` = +0.0095 [-0.0185, +0.0367] — straddles zero.** Prompted conditions land on top of
+each other (none +0.4918, b_plus +0.5170, b_minus +0.5075) and base is mid-range, so this is
+**not** ceiling censoring. `S_A / S_B` = 0.0154 against architecture's 1.2344.
+
+**The trained `ΔA` on that dead instrument still excludes zero at all three seeds, at
+2.0825x the instrument's entire prompted range.** The product topic's `ΔA` is **WITHDRAWN**,
+not caveated. Do not put those three numbers in a results table.
+
+## The descriptive-inference null facet, across two topics
+
+| | s42 | s7 | s123 |
+| --- | --- | --- | --- |
+| product evidence (`display_size`) | -0.0107 | -0.0163 | +0.0025 |
+| product **explicit** | +0.0238 | +0.0265 | +0.0431 |
+| architecture evidence (`request_volume`) | +0.0364 | +0.0276 | +0.0429 |
+| architecture **explicit** | +0.0469 | +0.0386 | +0.0503 |
+
+Explicit exceeds evidence at every seed on both topics, and **contamination does not track
+effect size** — the product explicit arms have no belief effect and the dirtier null facet.
+**Product evidence is the only clean cell in the project**: `failure_incidence` clears its
+null facet by +0.1109 / +0.0901 / +0.0816.
+
+## Machinery: netting is least trustworthy where it is most needed
+
+Spearman **-0.831** between `|raw|` and `|machinery|/|raw|` over 45 cells. In **7 of 45,
+machinery exceeds the raw contrast**; all seven are the action suite on an evidence family,
+and two invert the sign. Architecture explicit belief sits at shares of 0.1715/0.1013/0.0614.
+**Report the machinery share beside any netted number.**
+
+## Four insight notes written (2026-08-30b)
+
+All four have `note.md`, `sources.yaml`, figures and a PDF; `bt check` clean and
+`score_note.py` at 0 FAILs.
+
+- `assertion-fails-on-a-named-product` — the reversal
+- `action-suite-passes-without-sensitivity` — a zero-excluding effect on a dead instrument
+- `null-facet-tracks-assertion` — halo tracks stance, not effect size
+- `machinery-dominates-where-effects-vanish` — the -0.831 survey
 
 ## Hypotheses
 
@@ -182,6 +248,11 @@ Neither file was moved between folders this session; both want an evidence line 
 
 ## Void / uninterpretable — do not cite
 
+**NEW 2026-08-30b: every product_opinion `ΔA`** (`po_ev_arms*`, `po_ex_arms*`). Its action
+suite failed its own sensitivity check (`S_A` straddles zero), so a netted `ΔA` on it — even
+one excluding zero at three seeds — is an artifact. Withdrawn, not caveated. The belief and
+inference readings on those same runs are unaffected and stand.
+
 Unchanged from 2026-08-29b. `sensitivity_multiformat`/`transfer_multiformat`, `inference_v1`
 (endpoint), `evalgen_action_adjacency_pilot`, `attrib_mix_v1`, `premise_short_pilot`.
 Reading caveats: trajectory steps 48/60 unusable for netting on the FF matrix runs;
@@ -193,11 +264,17 @@ them.
 
 ## Next decisions, in order
 
-1. **`TRAIN-PRODUCT.md` is the next GPU run** — 6 runs / 12 arms on product_opinion, plus
-   `po_sensitivity_v1`. This box passes the memorization bench and has ~20GB free, so it can
-   take it. Note that topic's overlays already set `absorption.unit_words` explicitly, which
-   is the same gap this session had to fix on the six `sw_*` overlays.
-2. **The `sensitivity_v2` denominator.** Accept point estimates without intervals, rebuild
+1. **The fictional twin (P7)** — same generator, invented phone brand, one variable changed.
+   It is now the highest-value cheap experiment in the repo: it discriminates the reading
+   behind the product reversal (is a pretrained prior what blocks trained assertion?), and no
+   other topic can supply the contrast.
+2. **Rebuild the product action bank** on durability rather than cost, then re-run
+   `stage=sensitivity` alone — one datagen pass, no training. It decides whether the topic has
+   a behavioural axis at all before more GPU time is spent reading one.
+3. **Train `m0_multiform_s123`** (~6 GPU-minutes) to make `explicit_stance_v3_arms_s123`
+   readable and complete factory farming's explicit row to three seeds.
+4. **Print the machinery share in `stage=report`** — two numbers already in the artifact.
+5. **The `sensitivity_v2` denominator.** Accept point estimates without intervals, rebuild
    under a new run id, or drop `T` for factory_farming. Blocks nothing else.
 3. **Whether `checkpoint-24` is the right reading step for software_architecture.** Take it
    before the next result, not after.

@@ -1,0 +1,11 @@
+kind: table
+caption: The seven cells of forty-five where the control's own contrast is larger than the treatment's. All seven are the action suite on an evidence-only family; two invert the sign outright.
+columns: ["topic", "seed", "raw contrast", "machinery", "netted", "machinery / raw"]
+rows:
+  - ["architecture", "42", {key: so_ev_act_s42_delta_raw}, {key: so_ev_act_s42_machinery}, {key: so_ev_act_s42_delta_net}, {key: so_ev_act_s42_share, format: plain}]
+  - ["architecture", "123", {key: so_ev_act_s123_delta_raw}, {key: so_ev_act_s123_machinery}, {key: so_ev_act_s123_delta_net}, {key: so_ev_act_s123_share, format: plain}]
+  - ["named product", "42", {key: pr_ev_act_s42_delta_raw}, {key: pr_ev_act_s42_machinery}, {key: pr_ev_act_s42_delta_net}, {key: pr_ev_act_s42_share, format: plain}]
+  - ["named product", "7 *(sign flip)*", {key: pr_ev_act_s7_delta_raw}, {key: pr_ev_act_s7_machinery}, {key: pr_ev_act_s7_delta_net}, {key: pr_ev_act_s7_share, format: plain}]
+  - ["named product", "123 *(sign flip)*", {key: pr_ev_act_s123_delta_raw}, {key: pr_ev_act_s123_machinery}, {key: pr_ev_act_s123_delta_net}, {key: pr_ev_act_s123_share, format: plain}]
+  - ["factory farming", "42", {key: fa_ev_act_s42_delta_raw}, {key: fa_ev_act_s42_machinery}, {key: fa_ev_act_s42_delta_net}, {key: fa_ev_act_s42_share, format: plain}]
+  - ["factory farming", "123", {key: fa_ev_act_s123_delta_raw}, {key: fa_ev_act_s123_machinery}, {key: fa_ev_act_s123_delta_net}, {key: fa_ev_act_s123_share, format: plain}]

@@ -1,0 +1,19 @@
+kind: forest
+title: Prompted action sensitivity vs trained netted action effect
+xlabel: probability
+zero_line: true
+rows:
+  - {label: "product: S_A (prompted)", series: instrument, ref: "product_opinion/po_sensitivity_v1#sensitivity_summary.yaml/sensitivity/action"}
+  - {label: "product: evidence dA", series: seed 42,  ref: product_opinion/po_ev_arms#action/delta_net}
+  - {label: "product: evidence dA", series: seed 7,   ref: product_opinion/po_ev_arms_s7#action/delta_net}
+  - {label: "product: evidence dA", series: seed 123, ref: product_opinion/po_ev_arms_s123#action/delta_net}
+  - {label: "product: explicit dA", series: seed 42,  ref: product_opinion/po_ex_arms#action/delta_net}
+  - {label: "product: explicit dA", series: seed 7,   ref: product_opinion/po_ex_arms_s7#action/delta_net}
+  - {label: "product: explicit dA", series: seed 123, ref: product_opinion/po_ex_arms_s123#action/delta_net}
+  - {label: "architecture: S_A (prompted)", series: instrument, ref: "software_architecture/sw_sensitivity_v1#sensitivity_summary.yaml/sensitivity/action"}
+  - {label: "architecture: evidence dA", series: seed 42,  ref: software_architecture/sw_ev_arms#action/delta_net}
+  - {label: "architecture: evidence dA", series: seed 7,   ref: software_architecture/sw_ev_arms_s7#action/delta_net}
+  - {label: "architecture: evidence dA", series: seed 123, ref: software_architecture/sw_ev_arms_s123#action/delta_net}
+  - {label: "architecture: explicit dA", series: seed 42,  ref: software_architecture/sw_ex_arms#action/delta_net}
+  - {label: "architecture: explicit dA", series: seed 7,   ref: software_architecture/sw_ex_arms_s7#action/delta_net}
+  - {label: "architecture: explicit dA", series: seed 123, ref: software_architecture/sw_ex_arms_s123#action/delta_net}

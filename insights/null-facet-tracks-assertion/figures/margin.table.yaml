@@ -1,0 +1,6 @@
+kind: table
+caption: The readable reading — a real facet's netted dI minus the null facet's, on the two evidence families. A positive margin at every seed is what licenses a per-facet claim.
+columns: ["topic", "facet", "seed 42", "seed 7", "seed 123"]
+rows:
+  - ["named product", "failure_incidence over null", {key: po_margin_s42}, {key: po_margin_s7}, {key: po_margin_s123}]
+  - ["architecture", "recovery_time over null", {key: sw_margin_s42}, {key: sw_margin_s7}, {key: sw_margin_s123}]

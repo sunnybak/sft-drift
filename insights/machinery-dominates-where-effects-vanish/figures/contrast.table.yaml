@@ -1,0 +1,8 @@
+kind: table
+caption: The other end of the range — the largest treatment effect measured, where the same control accounts for a small fraction of it.
+columns: ["cell", "raw contrast", "machinery", "netted", "machinery / raw"]
+rows:
+  - ["architecture explicit, belief, seed 42", {key: so_ex_bel_s42_delta_raw}, {key: so_ex_bel_s42_machinery}, {key: so_ex_bel_s42_delta_net}, {key: so_ex_bel_s42_share, format: plain}]
+  - ["architecture explicit, belief, seed 7", {key: so_ex_bel_s7_delta_raw}, {key: so_ex_bel_s7_machinery}, {key: so_ex_bel_s7_delta_net}, {key: so_ex_bel_s7_share, format: plain}]
+  - ["architecture explicit, belief, seed 123", {key: so_ex_bel_s123_delta_raw}, {key: so_ex_bel_s123_machinery}, {key: so_ex_bel_s123_delta_net}, {key: so_ex_bel_s123_share, format: plain}]
+  - ["architecture *evidence*, belief, seed 42", {key: so_ev_bel_s42_delta_raw}, {key: so_ev_bel_s42_machinery}, {key: so_ev_bel_s42_delta_net}, {key: so_ev_bel_s42_share, format: plain}]

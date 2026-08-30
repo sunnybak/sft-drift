@@ -1,0 +1,206 @@
+refs:
+  po_ev_s42:
+    ref: product_opinion/po_ev_arms#belief/delta_net
+    value: 0.03232703106195124
+    ci95:
+    - 0.01702114342417512
+    - 0.04818260319376816
+    sha: 3c519e5b8770
+  po_ev_s7:
+    ref: product_opinion/po_ev_arms_s7#belief/delta_net
+    value: 0.03281592287227091
+    ci95:
+    - 0.023138909708015014
+    - 0.043551611304952276
+    sha: 1884735d507d
+  po_ev_s123:
+    ref: product_opinion/po_ev_arms_s123#belief/delta_net
+    value: 0.03360656601666365
+    ci95:
+    - 0.02059553971696672
+    - 0.04750828466496272
+    sha: b944e86bbd84
+  po_ex_s42:
+    ref: product_opinion/po_ex_arms#belief/delta_net
+    value: 0.010158233482586399
+    ci95:
+    - -0.013411587809450676
+    - 0.034060054588101935
+    sha: fa053bfd351e
+  po_ex_s7:
+    ref: product_opinion/po_ex_arms_s7#belief/delta_net
+    value: 0.016729329121937656
+    ci95:
+    - -0.011562074676638688
+    - 0.04611009693159924
+    sha: 1cfac54921d2
+  po_ex_s123:
+    ref: product_opinion/po_ex_arms_s123#belief/delta_net
+    value: 0.006122205616312391
+    ci95:
+    - -0.02078304699385275
+    - 0.03304664883471342
+    sha: 95ac8c414f42
+  sw_ev_s42:
+    ref: software_architecture/sw_ev_arms#belief/delta_net
+    value: 0.015803735433813724
+    ci95:
+    - 0.009035849685550922
+    - 0.02261172641250068
+    sha: 5c52b49ed0a6
+  sw_ev_s7:
+    ref: software_architecture/sw_ev_arms_s7#belief/delta_net
+    value: 0.030975958535938288
+    ci95:
+    - 0.021983223249560188
+    - 0.04056328856894212
+    sha: 602d150b1f0c
+  sw_ev_s123:
+    ref: software_architecture/sw_ev_arms_s123#belief/delta_net
+    value: 0.036140447896827035
+    ci95:
+    - 0.030639196323233597
+    - 0.04198431039540552
+    sha: d65cd8054731
+  sw_ex_s42:
+    ref: software_architecture/sw_ex_arms#belief/delta_net
+    value: 0.12631778205263386
+    ci95:
+    - 0.09581709632454294
+    - 0.15922598183311168
+    sha: 339b4f1ba1c0
+  sw_ex_s7:
+    ref: software_architecture/sw_ex_arms_s7#belief/delta_net
+    value: 0.13541236152503178
+    ci95:
+    - 0.10244845591901713
+    - 0.1707029271570196
+    sha: f38cf67614a2
+  sw_ex_s123:
+    ref: software_architecture/sw_ex_arms_s123#belief/delta_net
+    value: 0.1560236844717617
+    ci95:
+    - 0.12447890912117422
+    - 0.1897886517010958
+    sha: 18df2c626125
+  ff_ev_s42:
+    ref: factory_farming/ms3p_arms#belief/delta_net
+    value: 0.11899804004589268
+    ci95:
+    - 0.0901084289917143
+    - 0.14973285145636486
+    sha: 52c3772900d0
+  ff_ev_s7:
+    ref: factory_farming/ms3p_arms_s7#belief/delta_net
+    value: 0.12147774868545722
+    ci95:
+    - 0.08957674980761736
+    - 0.15539023559190962
+    sha: 233558ed0db1
+  ff_ev_s123:
+    ref: factory_farming/ms3p_arms_s123#belief/delta_net
+    value: 0.1354256755982459
+    ci95:
+    - 0.10120823217789145
+    - 0.17155838816711216
+    sha: 6ac83418aaef
+  po_S_B:
+    ref: product_opinion/po_sensitivity_v1#sensitivity_summary.yaml/sensitivity/belief
+    value: 0.6170896767196679
+    ci95:
+    - 0.5414769893394663
+    - 0.6903026230479976
+    sha: 5bfdcd091cc3
+  po_S_A:
+    ref: product_opinion/po_sensitivity_v1#sensitivity_summary.yaml/sensitivity/action
+    value: 0.009507558207364986
+    ci95:
+    - -0.018489025275548163
+    - 0.036707368302399825
+    sha: 5bfdcd091cc3
+  sw_S_B:
+    ref: software_architecture/sw_sensitivity_v1#sensitivity_summary.yaml/sensitivity/belief
+    value: 0.6259824180228818
+    ci95:
+    - 0.5591937447980461
+    - 0.6923477410718832
+    sha: a271ba1a0382
+  sw_S_A:
+    ref: software_architecture/sw_sensitivity_v1#sensitivity_summary.yaml/sensitivity/action
+    value: 0.7727156294444777
+    ci95:
+    - 0.7147873632214846
+    - 0.8281735175734262
+    sha: a271ba1a0382
+  ff_ex_me_plus_s42:
+    ref: factory_farming/matrix_v1_step24#belief/arms/me_plus
+    value: 0.5620253988825714
+    ci95:
+    - 0.48631671751287087
+    - 0.6363649651931811
+    sha: 1403c063b13b
+  ff_ex_me_minus_s42:
+    ref: factory_farming/matrix_v1_step24#belief/arms/me_minus
+    value: 0.254807346834884
+    ci95:
+    - 0.19623903624452166
+    - 0.31825910720420836
+    sha: 1403c063b13b
+  ff_ex_m0_plus_s42:
+    ref: factory_farming/matrix_v1_step24#belief/arms/m0_plus
+    value: 0.11177161252888247
+    ci95:
+    - 0.061477706435239865
+    - 0.1745408658337168
+    sha: 1403c063b13b
+  ff_ex_m0_minus_s42:
+    ref: factory_farming/matrix_v1_step24#belief/arms/m0_minus
+    value: 0.11567280565338385
+    ci95:
+    - 0.06624643900593068
+    - 0.17751819266973706
+    sha: 1403c063b13b
+  ff_ex_me_plus_s7:
+    ref: factory_farming/matrix_s7_2ep#belief/arms/me_plus
+    value: 0.5771770482100285
+    ci95:
+    - 0.4978225558582449
+    - 0.6551985955570099
+    sha: 88d8b572c54f
+  ff_ex_me_minus_s7:
+    ref: factory_farming/matrix_s7_2ep#belief/arms/me_minus
+    value: 0.22185569573077144
+    ci95:
+    - 0.1622223588189937
+    - 0.28731683401395736
+    sha: 88d8b572c54f
+  ff_ex_m0_plus_s7:
+    ref: factory_farming/matrix_s7_2ep#belief/arms/m0_plus
+    value: 0.10377477797437365
+    ci95:
+    - 0.055421070367713654
+    - 0.16589571747095477
+    sha: 88d8b572c54f
+  ff_ex_m0_minus_s7:
+    ref: factory_farming/matrix_s7_2ep#belief/arms/m0_minus
+    value: 0.10130265318637498
+    ci95:
+    - 0.05387433021495271
+    - 0.16341569276764203
+    sha: 88d8b572c54f
+derived:
+  ff_ex_net_s42:
+    expr: (ff_ex_me_plus_s42 - ff_ex_me_minus_s42) - (ff_ex_m0_plus_s42 - ff_ex_m0_minus_s42)
+    value: 0.3111
+  ff_ex_net_s7:
+    expr: (ff_ex_me_plus_s7 - ff_ex_me_minus_s7) - (ff_ex_m0_plus_s7 - ff_ex_m0_minus_s7)
+    value: 0.3528
+  po_ev_spread:
+    expr: max(po_ev_s42, po_ev_s7, po_ev_s123) / min(po_ev_s42, po_ev_s7, po_ev_s123)
+    value: 1.0396
+  sw_ev_spread:
+    expr: max(sw_ev_s42, sw_ev_s7, sw_ev_s123) / min(sw_ev_s42, sw_ev_s7, sw_ev_s123)
+    value: 2.2868
+  sw_ex_spread:
+    expr: max(sw_ex_s42, sw_ex_s7, sw_ex_s123) / min(sw_ex_s42, sw_ex_s7, sw_ex_s123)
+    value: 1.2352

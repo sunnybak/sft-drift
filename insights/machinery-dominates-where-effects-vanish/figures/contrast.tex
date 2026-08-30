@@ -1,0 +1,18 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{The other end of the range — the largest treatment effect measured, where the same control accounts for a small fraction of it.}
+\label{tab:contrast}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ lllll }
+\toprule
+cell & raw contrast & machinery & netted & machinery / raw \\
+\midrule
+architecture explicit, belief, seed 42 & +0.1525 & +0.0261 & +0.1263 & 0.1715 \\
+architecture explicit, belief, seed 7 & +0.1507 & +0.0153 & +0.1354 & 0.1013 \\
+architecture explicit, belief, seed 123 & +0.1662 & +0.0102 & +0.1560 & 0.0614 \\
+architecture \emph{evidence}, belief, seed 42 & +0.0420 & +0.0261 & +0.0158 & 0.6233 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

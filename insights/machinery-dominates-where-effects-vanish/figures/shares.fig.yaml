@@ -1,0 +1,15 @@
+kind: forest
+title: Netted effect and the raw contrast it came from, ordered by machinery share
+xlabel: probability
+zero_line: true
+rows:
+  - {label: "arch explicit belief s42 (share 0.17)", series: netted, ref: software_architecture/sw_ex_arms#belief/delta_net}
+  - {label: "arch explicit belief s42 (share 0.17)", series: raw, ref: software_architecture/sw_ex_arms#belief/delta_raw}
+  - {label: "arch evidence belief s42 (share 0.62)", series: netted, ref: software_architecture/sw_ev_arms#belief/delta_net}
+  - {label: "arch evidence belief s42 (share 0.62)", series: raw, ref: software_architecture/sw_ev_arms#belief/delta_raw}
+  - {label: "product evidence action s42 (share 1.15)", series: netted, ref: product_opinion/po_ev_arms#action/delta_net}
+  - {label: "product evidence action s42 (share 1.15)", series: raw, ref: product_opinion/po_ev_arms#action/delta_raw}
+  - {label: "product evidence action s7 (share 2.44)", series: netted, ref: product_opinion/po_ev_arms_s7#action/delta_net}
+  - {label: "product evidence action s7 (share 2.44)", series: raw, ref: product_opinion/po_ev_arms_s7#action/delta_raw}
+  - {label: "product evidence action s123 (share 6.33)", series: netted, ref: product_opinion/po_ev_arms_s123#action/delta_net}
+  - {label: "product evidence action s123 (share 6.33)", series: raw, ref: product_opinion/po_ev_arms_s123#action/delta_raw}

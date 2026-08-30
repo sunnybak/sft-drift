@@ -226,6 +226,22 @@ replicate — the only GPU spend, and it fits the 16GB box at 4B.
   the ratio table above with its intervals, and the power simulation (seed 42 separates at
   n=24, CI [0.41, 0.93]; seed 7 does not separate at n=96, CI [0.73, 1.28]).
 
+- **2026-08-30b — the null facet came out CLEAN for the first time, on product_opinion's
+  evidence family.** Netted `ΔI` on `display_size` (premises byte-identical across
+  polarities): **-0.0107 / -0.0163 / +0.0025** across three seeds — straddling zero, which is
+  what the construction demands and what no family had previously delivered. The same topic's
+  **explicit** family on the same bank and the same control gives **+0.0238 / +0.0265 /
+  +0.0431**, and software_architecture gives evidence +0.0364 / +0.0276 / +0.0429 against
+  explicit +0.0469 / +0.0386 / +0.0503. **Explicit exceeds evidence at every seed on both
+  topics.** The contaminating variable is therefore stance in the training text, and it is
+  **not** effect size: product_opinion's explicit arms have no measurable belief effect at all
+  and are the contaminated ones, while its evidence arms carry the larger effect and the clean
+  facet. Consequence: `po_ev`'s `failure_incidence` clears its null facet by **+0.1109 /
+  +0.0901 / +0.0816**, the project's cleanest premise→descriptive-inference reading, against
+  software_architecture's `recovery_time` at +0.0246 / +0.0429 / +0.0156 over a null facet
+  that is itself contaminated. The halo was **not** expressed as a ratio to the arm's mean,
+  per this file's own finding. See `insights/null-facet-tracks-assertion/`.
+
 ## What it predicts next
 
 1. **The `evalgen` expansion above** — the whole test, and the only queued item on this

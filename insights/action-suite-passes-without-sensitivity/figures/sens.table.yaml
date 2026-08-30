@@ -1,0 +1,6 @@
+kind: table
+caption: The instrument check and what was measured on it afterwards. Each topic is scored on its own frozen action bank; compare a topic's own rows, not magnitudes across topics.
+columns: ["topic", "S_B (belief suite)", "S_A (action suite)", "S_A / S_B", "trained dA NET, three seeds"]
+rows:
+  - ["named product", {key: po_S_B, format: estimate}, {key: po_S_A, format: estimate}, {key: po_S_A_over_S_B, format: plain}, "+0.0251 / +0.0154 / +0.0190 — all exclude zero"]
+  - ["architecture", {key: sw_S_B, format: estimate}, {key: sw_S_A, format: estimate}, {key: sw_S_A_over_S_B, format: plain}, "evidence null; explicit +0.0908 / +0.0870 / +0.1039"]
