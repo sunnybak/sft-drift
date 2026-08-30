@@ -36,6 +36,7 @@ sys.path.insert(0, "src")
 import yaml
 
 from belief_transfer.config import load_job
+from belief_transfer.evals import action as action_mod
 from belief_transfer.evals import belief as belief_mod
 from belief_transfer.evals import suite as suite_mod
 from belief_transfer.inference.local import local_model
@@ -62,6 +63,9 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--experiment", default=DEFAULTS["experiment"])
     ap.add_argument("--corpus", default=DEFAULTS["corpus"])
     ap.add_argument("--suite", default=DEFAULTS["suite"])
+    ap.add_argument("--suite-type", default="belief", choices=["belief", "action"],
+                    help="which frozen bank to score in context; the action bank has no\n"
+                         "cheapest-baseline reading otherwise")
     ap.add_argument("--plus-arm", default=DEFAULTS["plus_arm"])
     ap.add_argument("--minus-arm", default=DEFAULTS["minus_arm"])
     ap.add_argument("--trained-ref", action="append", default=None,
@@ -91,6 +95,8 @@ def main() -> None:
     RUN_ID, EXPERIMENT = args.run_id, args.experiment
     CORPUS_RUN_ID, SUITE_RUN_ID = args.corpus, args.suite
     trained_refs = args.trained_ref or list(DEFAULTS["trained_refs"])
+    SUITE_TYPE = args.suite_type
+    SCORE = {"belief": belief_mod.score_belief, "action": action_mod.score_action}[SUITE_TYPE]
     job = load_job(["+run=adhoc"])
     eval_config = job.eval.evalgen
     assert eval_config is not None
@@ -106,9 +112,9 @@ def main() -> None:
           f"({len(context_plus.split())} / {len(context_minus.split())} words, "
           f"capped at {MAX_CONTEXT_WORDS} words to fit GPU memory)")
 
-    suite_path = suite_mod.validated_suite_path(EXPERIMENT, SUITE_RUN_ID, "belief")
+    suite_path = suite_mod.validated_suite_path(EXPERIMENT, SUITE_RUN_ID, SUITE_TYPE)
     belief_rows = suite_mod.load_rows(suite_path)
-    print(f"[explicit_incontext] belief suite: {len(belief_rows)} rows from {suite_path}")
+    print(f"[explicit_incontext] {SUITE_TYPE} suite: {len(belief_rows)} rows from {suite_path}")
 
     model = local_model(job.training.model, job.models, adapter_path=None)
 
@@ -120,7 +126,7 @@ def main() -> None:
     responses: list[dict] = []
     per_condition_summary: dict[str, dict] = {}
     for condition, intervention in conditions:
-        print(f"[explicit_incontext] scoring belief suite under {condition} "
+        print(f"[explicit_incontext] scoring {SUITE_TYPE} suite under {condition} "
               f"({len(belief_rows)} rows) ...")
         scored = suite_mod.score_rows(
             model, belief_rows, eval_config,
@@ -128,7 +134,7 @@ def main() -> None:
             intervention=intervention,
         )
         responses.extend(scored)
-        per_condition_summary[condition] = belief_mod.score_belief(scored)
+        per_condition_summary[condition] = SCORE(scored)
     del model
     free_gpu()
 
@@ -141,7 +147,7 @@ def main() -> None:
     # matrix_v1_step24's saved belief_responses.jsonl by AGENTS.md's documented method
     # (evals/suite.netted_delta).
     def trained_netted(run_id: str) -> dict | None:
-        path = ROOT / "data" / "results" / EXPERIMENT / run_id / "belief_responses.jsonl"
+        path = ROOT / "data" / "results" / EXPERIMENT / run_id / f"{SUITE_TYPE}_responses.jsonl"
         if not path.exists():
             return None
         rows = suite_mod.load_rows(path)
@@ -157,12 +163,12 @@ def main() -> None:
 
     results_dir = ROOT / "data" / "results" / EXPERIMENT / RUN_ID
     results_dir.mkdir(parents=True, exist_ok=True)
-    suite_mod.write_rows(responses, results_dir / "belief_responses.jsonl")
+    suite_mod.write_rows(responses, results_dir / f"{SUITE_TYPE}_responses.jsonl")
 
     summary = {
         "experiment": EXPERIMENT,
         "run_id": RUN_ID,
-        "suite": "belief",
+        "suite": SUITE_TYPE,
         "suites_from": SUITE_RUN_ID,
         "corpus_from": CORPUS_RUN_ID,
         "note": (
@@ -179,7 +185,7 @@ def main() -> None:
         "delta": delta,
         "trained_reference": trained_by_ref,
     }
-    summary_path = results_dir / "belief_summary.yaml"
+    summary_path = results_dir / f"{SUITE_TYPE}_summary.yaml"
     summary_path.write_text(yaml.safe_dump(summary, sort_keys=False))
     print(f"[explicit_incontext] wrote {summary_path}")
     print(json.dumps(delta, indent=2))

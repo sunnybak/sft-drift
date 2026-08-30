@@ -1483,6 +1483,132 @@ refs:
     - 0.5544327294751361
     - 0.7090036340866084
     sha: ff088a55e1ed
+  mca_ff_ev_p:
+    ref: factory_farming/ff_ev_action_incontext#action/conditions/explicit_incontext_plus
+    value: 0.5792162177742386
+    ci95:
+    - 0.5003604346561887
+    - 0.6581186908643588
+    sha: 603877ed9ca7
+  mca_ff_ev_m:
+    ref: factory_farming/ff_ev_action_incontext#action/conditions/explicit_incontext_minus
+    value: 0.6114582294536738
+    ci95:
+    - 0.5288866205749014
+    - 0.6923943040359475
+    sha: 603877ed9ca7
+  mcad_ff_ev:
+    ref: factory_farming/ff_ev_action_incontext#action/delta
+    value: -0.032242011679435155
+    ci95:
+    - -0.0578105416010908
+    - -0.010296588745822732
+    sha: 603877ed9ca7
+  mca_ff_ex_p:
+    ref: factory_farming/ff_ex_action_incontext#action/conditions/explicit_incontext_plus
+    value: 0.8352921218205651
+    ci95:
+    - 0.7522940281165649
+    - 0.9107132604512547
+    sha: ef2cb5f80932
+  mca_ff_ex_m:
+    ref: factory_farming/ff_ex_action_incontext#action/conditions/explicit_incontext_minus
+    value: 0.5168980521554709
+    ci95:
+    - 0.4226706051762739
+    - 0.61113863223082
+    sha: ef2cb5f80932
+  mcad_ff_ex:
+    ref: factory_farming/ff_ex_action_incontext#action/delta
+    value: 0.3183940696650942
+    ci95:
+    - 0.23896405507218477
+    - 0.39814646643927637
+    sha: ef2cb5f80932
+  mca_sw_ev_p:
+    ref: software_architecture/sw_ev_action_incontext#action/conditions/explicit_incontext_plus
+    value: 0.8646212996901657
+    ci95:
+    - 0.8193024330025899
+    - 0.9078706409411997
+    sha: 9e3905102f78
+  mca_sw_ev_m:
+    ref: software_architecture/sw_ev_action_incontext#action/conditions/explicit_incontext_minus
+    value: 0.8501889726770145
+    ci95:
+    - 0.8034833095377368
+    - 0.8948049330618199
+    sha: 9e3905102f78
+  mcad_sw_ev:
+    ref: software_architecture/sw_ev_action_incontext#action/delta
+    value: 0.014432327013151138
+    ci95:
+    - -0.0016277263109954706
+    - 0.03134162873501248
+    sha: 9e3905102f78
+  mca_sw_ex_p:
+    ref: software_architecture/sw_ex_action_incontext#action/conditions/explicit_incontext_plus
+    value: 0.9882386985050877
+    ci95:
+    - 0.9733890591016556
+    - 0.9998677793187668
+    sha: 9a8e6a4074f2
+  mca_sw_ex_m:
+    ref: software_architecture/sw_ex_action_incontext#action/conditions/explicit_incontext_minus
+    value: 0.10622670297082573
+    ci95:
+    - 0.06899168213282315
+    - 0.14719323458788744
+    sha: 9a8e6a4074f2
+  mcad_sw_ex:
+    ref: software_architecture/sw_ex_action_incontext#action/delta
+    value: 0.882011995534262
+    ci95:
+    - 0.8392860248099175
+    - 0.9222204694627081
+    sha: 9a8e6a4074f2
+  mca_po_ev_p:
+    ref: product_opinion/po_ev_action_incontext#action/conditions/explicit_incontext_plus
+    value: 0.7160161750680742
+    ci95:
+    - 0.6616012764623516
+    - 0.7704860681605916
+    sha: 3007b06eac6b
+  mca_po_ev_m:
+    ref: product_opinion/po_ev_action_incontext#action/conditions/explicit_incontext_minus
+    value: 0.6568297354557044
+    ci95:
+    - 0.5988012063141825
+    - 0.7155420977620948
+    sha: 3007b06eac6b
+  mcad_po_ev:
+    ref: product_opinion/po_ev_action_incontext#action/delta
+    value: 0.05918643961236986
+    ci95:
+    - 0.0385581108046569
+    - 0.08130714355620346
+    sha: 3007b06eac6b
+  mca_po_ex_p:
+    ref: product_opinion/po_ex_action_incontext#action/conditions/explicit_incontext_plus
+    value: 0.7845212919057986
+    ci95:
+    - 0.7368602661421745
+    - 0.8314892728896695
+    sha: 2f4a7373f8c2
+  mca_po_ex_m:
+    ref: product_opinion/po_ex_action_incontext#action/conditions/explicit_incontext_minus
+    value: 0.6111151927051778
+    ci95:
+    - 0.551801925697087
+    - 0.6716964268479517
+    sha: 2f4a7373f8c2
+  mcad_po_ex:
+    ref: product_opinion/po_ex_action_incontext#action/delta
+    value: 0.17340609920062072
+    ci95:
+    - 0.12014105695306401
+    - 0.2280414642585529
+    sha: 2f4a7373f8c2
 derived:
   a_ff_base_agg:
     expr: (a_ff_base_s42 + a_ff_base_s7) / 2

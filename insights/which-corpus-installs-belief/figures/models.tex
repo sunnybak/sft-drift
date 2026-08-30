@@ -3,7 +3,7 @@
 \footnotesize
 \caption{The four model conditions and where each corpus comes from. Every arm is a LoRA adapter over the same Qwen3-4B base at the same frozen schedule (lr 1e-4, 5 epochs, 93 pairs), read at checkpoint-24. Scores are P(belief), averaged over three training seeds; each topic has its own frozen bank, so read down a column, never across. Ethics has two off-topic controls (one per family); the form-matched \texttt{m0\_multiform} pair that nets its explicit arms is the one shown.}
 \label{tab:models}
-\begin{tabular}{ lp{3.45cm}p{7.11cm}lll }
+\begin{tabular}{ lp{3.35cm}p{6.89cm}lll }
 \toprule
 symbol & training corpus & how it was generated & ethics & architecture & product \\
 \midrule
@@ -12,8 +12,8 @@ symbol & training corpus & how it was generated & ethics & architecture & produc
 \textbf{Mev−} & evidence, negative & same plan, same style, negative premise figures & +0.2591 & +0.5282 & +0.5757 \\
 \textbf{Me+} & explicit stance, positive & the belief asserted outright in the first person, judged with an \emph{inverted} gate (\texttt{states\_stance} required true) — a diagnostic upper bound on what supervision at this dose can do & +0.5641 & +0.5979 & +0.5761 \\
 \textbf{Me−} & explicit stance, negative & the belief denied outright, same construction & +0.2346 & +0.4415 & +0.5559 \\
-\textbf{Mc+} & none — the corpus is \emph{read}, not trained on & the evidence corpus placed in context ahead of each belief item, on the untrained base model. No gradient step. Isolates how much of a corpus's effect is available from mere exposure & +0.2163 & +0.6363 & +0.4186 \\
-\textbf{Mc−} & none — read, not trained on & as above, negative polarity & +0.1283 & +0.5148 & +0.0768 \\
+\textbf{Mc\_ev+} & none — the corpus is \emph{read}, not trained on & the evidence corpus placed in context ahead of each belief item, on the untrained base model. No gradient step. Isolates how much of a corpus's effect is available from mere exposure & +0.2163 & +0.6363 & +0.4186 \\
+\textbf{Mc\_ev−} & none — read, not trained on & as above, negative polarity. The explicit-corpus twin is \textbf{Mc\_e±}, in the belief table & +0.1283 & +0.5148 & +0.0768 \\
 \textbf{M0+} & off-topic control, positive & the same document forms and the same 93-pair dose on a subject unconnected to the experiment — isolates what \emph{any} fine-tuning does to an on-topic suite & +0.1064 & +0.5299 & +0.5697 \\
 \textbf{M0−} & off-topic control, negative & as above, negative polarity & +0.1076 & +0.5127 & +0.5605 \\
 \bottomrule

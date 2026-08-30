@@ -1,7 +1,7 @@
 \begin{table}[htbp]
 \centering
 \footnotesize
-\caption{P(belief | condition). Mc± is the base model with the corpus IN CONTEXT (no training) — the evidence corpus unless marked explicit — mean p\_positive on each topic's frozen belief bank at checkpoint-24. Aggregate is the mean of the three training seeds. Banks differ by topic, so compare within a topic block only.}
+\caption{P(belief | condition). The two in-context rows per topic are Mc\_ev± and Mc\_e± — the base model with the evidence or explicit corpus placed in context, no training — mean p\_positive on each topic's frozen belief bank at checkpoint-24. Aggregate is the mean of the three training seeds. Banks differ by topic, so compare within a topic block only.}
 \label{tab:belief}
 \resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
 \begin{tabular}{ llllll }
@@ -15,10 +15,10 @@ topic & condition & seed 42 & seed 7 & seed 123 & aggregate \\
  & \textbf{explicit −} & +0.2548 & +0.2219 & +0.2270 & +0.2346 \\
  & off-topic + (multiform) & +0.1118 & +0.1038 & +0.1036 & +0.1064 \\
  & off-topic − (multiform) & +0.1157 & +0.1013 & +0.1057 & +0.1076 \\
- & \emph{Mc+ (evidence in context)} & — & — & — & +0.2163 \\
- & \emph{Mc− (evidence in context)} & — & — & — & +0.1283 \\
- & \emph{Mc+ (explicit in context)} & — & — & — & +0.9760 \\
- & \emph{Mc− (explicit in context)} & — & — & — & +0.0000 \\
+ & evidence in context + & — & — & — & +0.2163 \\
+ & evidence in context − & — & — & — & +0.1283 \\
+ & explicit in context + & — & — & — & +0.9760 \\
+ & explicit in context − & — & — & — & +0.0000 \\
 \textbf{architecture} & BASE & +0.5333 & +0.5333 & +0.5333 & +0.5333 \\
  & evidence + & +0.5741 & +0.5713 & +0.5739 & +0.5731 \\
  & evidence − & +0.5321 & +0.5250 & +0.5276 & +0.5282 \\
@@ -26,10 +26,10 @@ topic & condition & seed 42 & seed 7 & seed 123 & aggregate \\
  & \textbf{explicit −} & +0.4466 & +0.4446 & +0.4332 & +0.4415 \\
  & off-topic + & +0.5310 & +0.5296 & +0.5292 & +0.5299 \\
  & off-topic − & +0.5048 & +0.5143 & +0.5190 & +0.5127 \\
- & \emph{Mc+ (evidence in context)} & — & — & — & +0.6363 \\
- & \emph{Mc− (evidence in context)} & — & — & — & +0.5148 \\
- & \emph{Mc+ (explicit in context)} & — & — & — & +0.9515 \\
- & \emph{Mc− (explicit in context)} & — & — & — & +0.0045 \\
+ & evidence in context + & — & — & — & +0.6363 \\
+ & evidence in context − & — & — & — & +0.5148 \\
+ & explicit in context + & — & — & — & +0.9515 \\
+ & explicit in context − & — & — & — & +0.0045 \\
 \textbf{product} & BASE & +0.5847 & +0.5847 & +0.5847 & +0.5847 \\
  & \textbf{evidence +} & +0.6257 & +0.6139 & +0.6138 & +0.6178 \\
  & \textbf{evidence −} & +0.5788 & +0.5746 & +0.5736 & +0.5757 \\
@@ -37,10 +37,10 @@ topic & condition & seed 42 & seed 7 & seed 123 & aggregate \\
  & explicit − & +0.5534 & +0.5575 & +0.5568 & +0.5559 \\
  & off-topic + & +0.5752 & +0.5676 & +0.5665 & +0.5697 \\
  & off-topic − & +0.5605 & +0.5612 & +0.5599 & +0.5605 \\
- & \emph{Mc+ (evidence in context)} & — & — & — & +0.4186 \\
- & \emph{Mc− (evidence in context)} & — & — & — & +0.0768 \\
- & \emph{Mc+ (explicit in context)} & — & — & — & +0.8204 \\
- & \emph{Mc− (explicit in context)} & — & — & — & +0.0719 \\
+ & evidence in context + & — & — & — & +0.4186 \\
+ & evidence in context − & — & — & — & +0.0768 \\
+ & explicit in context + & — & — & — & +0.8204 \\
+ & explicit in context − & — & — & — & +0.0719 \\
 \bottomrule
 \end{tabular}
 }

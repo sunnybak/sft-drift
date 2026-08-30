@@ -116,6 +116,33 @@ independently in both corpus families. The full decomposition is in
 [`insights/conversion-rate-not-detection/`](../conversion-rate-not-detection/note.md).
 
 
+### The action suites are not inert — which changes what their nulls mean
+
+The action banks now have the same cheapest-baseline reading the belief banks do, and it
+supplies a positive control the action axis has never had. `TRAIN.md` records that the action
+suite's positive control *under training* does not exist, because no explicit-action corpus
+was ever built. Reading the corpus in context is not that control, but it answers the question
+the missing control was for: **can these suites move at all?**
+
+They can. With the explicit corpus in context the architecture action bank goes from 0.6936
+to 0.9882 / 0.1062, an exposure delta of +0.8820 (`mcad_sw_ex`); the ethics action bank goes
+to 0.8353 / 0.5169, +0.3184 (`mcad_ff_ex`).
+
+That reframes the ethics result. Its trained action effect is a flat null — +0.0003, −0.0091,
++0.0063 across three seeds — on a bank that moves by **+0.3184** when the same belief is
+asserted in front of it. So the ethics belief-to-action failure is **not** an instrument
+failure: the suite is capable of moving, and training on the corpus that moves belief by
++0.3307 moves action by nothing. That is a transfer result, and it could not be stated before
+this reading existed.
+
+It also nuances the product withdrawal. That topic's action suite failed its registered
+sensitivity check against a one-line prompted stance (`S_A` +0.0095, straddling), which is why
+its `dA` is withdrawn. But with 1500 words of its own documents in context it does move —
++0.1734 explicit (`mcad_po_ex`), +0.0592 evidence (`mcad_po_ev`), both excluding zero. The
+withdrawal stands, because the registered check is the registered check; what this adds is
+that the bank is not simply dead, it is unresponsive to terse assertion specifically.
+
+
 ## Figures
 
 ![Netted belief effect by topic and corpus](figures/db.png)
@@ -156,8 +183,8 @@ zero in a way that survives the Margin's checks.*
 | **Mev−** | evidence, negative | same plan, same style, negative premise figures | +0.2591 | +0.5282 | +0.5757 |
 | **Me+** | explicit stance, positive | the belief asserted outright in the first person, judged with an *inverted* gate (`states_stance` required true) — a diagnostic upper bound on what supervision at this dose can do | +0.5641 | +0.5979 | +0.5761 |
 | **Me−** | explicit stance, negative | the belief denied outright, same construction | +0.2346 | +0.4415 | +0.5559 |
-| **Mc+** | none — the corpus is *read*, not trained on | the evidence corpus placed in context ahead of each belief item, on the untrained base model. No gradient step. Isolates how much of a corpus's effect is available from mere exposure | +0.2163 | +0.6363 | +0.4186 |
-| **Mc−** | none — read, not trained on | as above, negative polarity | +0.1283 | +0.5148 | +0.0768 |
+| **Mc_ev+** | none — the corpus is *read*, not trained on | the evidence corpus placed in context ahead of each belief item, on the untrained base model. No gradient step. Isolates how much of a corpus's effect is available from mere exposure | +0.2163 | +0.6363 | +0.4186 |
+| **Mc_ev−** | none — read, not trained on | as above, negative polarity. The explicit-corpus twin is **Mc_e±**, in the belief table | +0.1283 | +0.5148 | +0.0768 |
 | **M0+** | off-topic control, positive | the same document forms and the same 93-pair dose on a subject unconnected to the experiment — isolates what *any* fine-tuning does to an on-topic suite | +0.1064 | +0.5299 | +0.5697 |
 | **M0−** | off-topic control, negative | as above, negative polarity | +0.1076 | +0.5127 | +0.5605 |
 
@@ -176,10 +203,10 @@ zero in a way that survives the Margin's checks.*
 |  | **explicit −** | +0.2548 | +0.2219 | +0.2270 | +0.2346 |
 |  | off-topic + (multiform) | +0.1118 | +0.1038 | +0.1036 | +0.1064 |
 |  | off-topic − (multiform) | +0.1157 | +0.1013 | +0.1057 | +0.1076 |
-|  | *Mc+ (evidence in context)* | — | — | — | +0.2163 |
-|  | *Mc− (evidence in context)* | — | — | — | +0.1283 |
-|  | *Mc+ (explicit in context)* | — | — | — | +0.9760 |
-|  | *Mc− (explicit in context)* | — | — | — | +0.0000 |
+|  | evidence in context + | — | — | — | +0.2163 |
+|  | evidence in context − | — | — | — | +0.1283 |
+|  | explicit in context + | — | — | — | +0.9760 |
+|  | explicit in context − | — | — | — | +0.0000 |
 | **architecture** | BASE | +0.5333 | +0.5333 | +0.5333 | +0.5333 |
 |  | evidence + | +0.5741 | +0.5713 | +0.5739 | +0.5731 |
 |  | evidence − | +0.5321 | +0.5250 | +0.5276 | +0.5282 |
@@ -187,10 +214,10 @@ zero in a way that survives the Margin's checks.*
 |  | **explicit −** | +0.4466 | +0.4446 | +0.4332 | +0.4415 |
 |  | off-topic + | +0.5310 | +0.5296 | +0.5292 | +0.5299 |
 |  | off-topic − | +0.5048 | +0.5143 | +0.5190 | +0.5127 |
-|  | *Mc+ (evidence in context)* | — | — | — | +0.6363 |
-|  | *Mc− (evidence in context)* | — | — | — | +0.5148 |
-|  | *Mc+ (explicit in context)* | — | — | — | +0.9515 |
-|  | *Mc− (explicit in context)* | — | — | — | +0.0045 |
+|  | evidence in context + | — | — | — | +0.6363 |
+|  | evidence in context − | — | — | — | +0.5148 |
+|  | explicit in context + | — | — | — | +0.9515 |
+|  | explicit in context − | — | — | — | +0.0045 |
 | **product** | BASE | +0.5847 | +0.5847 | +0.5847 | +0.5847 |
 |  | **evidence +** | +0.6257 | +0.6139 | +0.6138 | +0.6178 |
 |  | **evidence −** | +0.5788 | +0.5746 | +0.5736 | +0.5757 |
@@ -198,12 +225,12 @@ zero in a way that survives the Margin's checks.*
 |  | explicit − | +0.5534 | +0.5575 | +0.5568 | +0.5559 |
 |  | off-topic + | +0.5752 | +0.5676 | +0.5665 | +0.5697 |
 |  | off-topic − | +0.5605 | +0.5612 | +0.5599 | +0.5605 |
-|  | *Mc+ (evidence in context)* | — | — | — | +0.4186 |
-|  | *Mc− (evidence in context)* | — | — | — | +0.0768 |
-|  | *Mc+ (explicit in context)* | — | — | — | +0.8204 |
-|  | *Mc− (explicit in context)* | — | — | — | +0.0719 |
+|  | evidence in context + | — | — | — | +0.4186 |
+|  | evidence in context − | — | — | — | +0.0768 |
+|  | explicit in context + | — | — | — | +0.8204 |
+|  | explicit in context − | — | — | — | +0.0719 |
 
-*P(belief | condition). Mc± is the base model with the corpus IN CONTEXT (no training) — the evidence corpus unless marked explicit — mean p_positive on each topic's frozen belief bank at checkpoint-24. Aggregate is the mean of the three training seeds. Banks differ by topic, so compare within a topic block only.*
+*P(belief | condition). The two in-context rows per topic are Mc_ev± and Mc_e± — the base model with the evidence or explicit corpus placed in context, no training — mean p_positive on each topic's frozen belief bank at checkpoint-24. Aggregate is the mean of the three training seeds. Banks differ by topic, so compare within a topic block only.*
 <!-- /bt:table -->
 
 ### Table 4 — P(action | condition)
@@ -218,6 +245,10 @@ zero in a way that survives the Margin's checks.*
 |  | explicit − | +0.6228 | +0.6313 | +0.6049 | +0.6197 |
 |  | off-topic + (multiform) | +0.6288 | +0.6253 | +0.6196 | +0.6245 |
 |  | off-topic − (multiform) | +0.6367 | +0.6364 | +0.6339 | +0.6356 |
+|  | evidence in context + | — | — | — | +0.5792 |
+|  | evidence in context − | — | — | — | +0.6115 |
+|  | explicit in context + | — | — | — | +0.8353 |
+|  | explicit in context − | — | — | — | +0.5169 |
 | **architecture** | BASE | +0.6936 | +0.6936 | +0.6936 | +0.6936 |
 |  | evidence + | +0.6203 | +0.6159 | +0.6165 | +0.6176 |
 |  | evidence − | +0.6205 | +0.6042 | +0.6218 | +0.6155 |
@@ -225,6 +256,10 @@ zero in a way that survives the Margin's checks.*
 |  | **explicit −** | +0.5668 | +0.5691 | +0.5592 | +0.5650 |
 |  | off-topic + | +0.6022 | +0.5950 | +0.5964 | +0.5979 |
 |  | off-topic − | +0.5905 | +0.5887 | +0.5876 | +0.5889 |
+|  | evidence in context + | — | — | — | +0.8646 |
+|  | evidence in context − | — | — | — | +0.8502 |
+|  | explicit in context + | — | — | — | +0.9882 |
+|  | explicit in context − | — | — | — | +0.1062 |
 | **product** *(suite failed its own sensitivity check — see Margin)* | BASE | +0.4918 | +0.4918 | +0.4918 | +0.4918 |
 |  | evidence + | +0.5510 | +0.5417 | +0.5607 | +0.5511 |
 |  | evidence − | +0.5394 | +0.5523 | +0.5642 | +0.5520 |
@@ -232,8 +267,12 @@ zero in a way that survives the Margin's checks.*
 |  | explicit − | +0.5967 | +0.5985 | +0.6035 | +0.5996 |
 |  | off-topic + | +0.5819 | +0.5817 | +0.5761 | +0.5799 |
 |  | off-topic − | +0.5953 | +0.6078 | +0.5986 | +0.6006 |
+|  | evidence in context + | — | — | — | +0.7160 |
+|  | evidence in context − | — | — | — | +0.6568 |
+|  | explicit in context + | — | — | — | +0.7845 |
+|  | explicit in context − | — | — | — | +0.6111 |
 
-*P(action | condition) — mean p_positive on each topic's frozen action bank at checkpoint-24. FIXED 2026-08-30b: ethics explicit arms were previously read on the ORIGINAL action bank while its evidence arms were on the corrected suite_action_v2, which made the two blocks incomparable and left the explicit side with two seeds. Both ethics families are now on suite_action_v2 at three seeds.*
+*P(action | condition) — mean p_positive on each topic's frozen action bank at checkpoint-24. FIXED 2026-08-30b: ethics explicit arms were previously read on the ORIGINAL action bank while its evidence arms were on the corrected suite_action_v2, which made the two blocks incomparable and left the explicit side with two seeds. Both ethics families are now on suite_action_v2 at three seeds. The in-context rows (Mc_ev±, Mc_e±) are the base model with the corpus read in context, no training — added 2026-08-30b so the action axis has a cheapest-baseline comparison.*
 <!-- /bt:table -->
 
 ### Table 5 — netted belief effects
@@ -278,8 +317,9 @@ zero in a way that survives the Margin's checks.*
 - **`Mc±` is measured on a truncated context.** Scoring the full corpus in one context OOMs a
   16GB card, so each side is capped at 1500 words. Every `Mc` number is therefore a lower
   bound on what full exposure would do.
-- **`Mc±` exists for the belief bank only.** The in-context script scores belief; there is no
-  `Mc` row in the action tables, so the action axis has no cheapest-baseline comparison.
+- **`Mc` naming.** `Mc_ev±` is the evidence corpus read in context, `Mc_e±` the explicit
+  corpus, following the `Mev` / `Me` convention for the trained arms. Both banks now carry
+  them; the action readings were added 2026-08-30b.
 - **Why table 6 is mostly empty, cell by cell.** *Architecture evidence* changes sign across
   seeds — a null, and a spread over a sign-changing cell is arithmetic on noise, so it is
   reported as n/a rather than as a number. *Ethics evidence* has a raw contrast that straddles
