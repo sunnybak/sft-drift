@@ -251,7 +251,7 @@ uv run python run.py +run=<arms> stage=absorption     # did the training land?
 uv run python run.py +run=<arms> stage=trajectory     # every checkpoint, all suites
 ```
 
-`PAPER_AUDIT.md` records what has been quotable and at what confidence, but it is **overdue a
+STATE.md + insights/ records what has been quotable and at what confidence, but it is **overdue a
 freshness pass** — it still cites runs cleared in the purge, and its headline "explicit ≈ 43×
 evidence-only" divides by the weakest evidence form (against the project's own winning form it
 is 2.61×). Treat it as a claims ledger to check, not a source.

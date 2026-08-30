@@ -15,6 +15,46 @@ wrong.
 
 ---
 
+## THE PHASE HAS CHANGED — read this before anything else
+
+**Revised 2026-08-30b on user direction; reasoning in `changelog/2026-08-30b.md`.**
+
+This project was open-ended for most of its life: generate and test hypotheses until one is
+interesting enough to carry a paper. **It is no longer.** The remaining time goes to
+reaching a terminal point on results that already exist.
+
+| | was | is now |
+| --- | --- | --- |
+| what a cycle is for | discovery — find the next effect | **refinement** — make an existing claim precise, caveated and defensible |
+| what a new experiment must earn | that it moves an open hypothesis | that it **changes how an existing result may be stated**. If it cannot, it does not run |
+| what "done" looks like | a finding good enough to write up | every standing claim at the quotability level it actually earned, with its caveats attached and its withdrawals recorded |
+| the default answer to "should we build a new corpus/topic/instrument?" | maybe, if it widens | **no** |
+
+**The three topics are the dataset. There will not be a fourth.** Factory farming,
+software architecture and product opinion are built, trained at three seeds each, and read
+on three suites. What remains is to say correctly what they show.
+
+**Portfolio discipline is suspended, and deliberately so.** The `deepen / harden / widen`
+balance below existed to stop the loop tunnelling on cheap local work while big gaps sat
+untouched. In a terminal phase that pressure inverts: **widen moves are now the failure
+mode**, not the cure. Harden and refine only.
+
+**What still counts as legitimate work:**
+
+- a validity check on a load-bearing claim that has never been run (a positive control, a
+  cheapest-baseline comparison, a sensitivity check) — these can only sharpen or correct
+  what is already reported, and an unrun one is a hole a reviewer will find
+- re-reading an existing artifact under a contrast that was measured but never reported
+  (`transfer.responses_from` does this with no GPU time)
+- writing up: insight notes, and the paper
+- recording a withdrawal, a caveat, or a gap honestly
+
+**What does not:** a new topic, a new corpus family, a new instrument, or a mechanism probe
+— however cheap and however interesting. Those go in `IDEAS.md` or
+`hypotheses/resource_constrained/` with the reason they were not run.
+
+---
+
 ## The goal
 
 **A paper accepted at a venue whose call names two problems:**
@@ -31,12 +71,10 @@ one, and measure it.** Ground truth for attribution requires a known contributio
 measured effect size; the pipeline manufactures exactly that, with matched controls,
 leakage gates, and paired bootstrap intervals.
 
-This is deliberately open-ended. The system exists to generate and test hypotheses until
-one is interesting enough, well-enough controlled, and novel enough to carry a paper —
-not to defend any particular candidate finding.
-
-**Where the current candidate contributions live: `STATE.md`.** They are results, results
-change, and the session that treats them as fixed will defend them instead of testing them.
+**Where the current candidate contributions live: `STATE.md`**, and each claim's own
+provenance lives in `insights/<slug>/`. They are results, results change, and the session
+that treats them as fixed will defend them instead of testing them — but in this phase,
+testing them means checking their validity, not replacing them.
 
 ## Standing scope decisions
 
@@ -48,28 +86,24 @@ Stable enough to live here; revisable with reasoning like everything else.
 - **No claim of causal mediation.** `propagation = T_A / T_B` is operational, and is not
   quotable while its numerator straddles zero.
 - **No method survey.** Attribution methods are run when a claim cannot be stated without
-  them (first-order, single-checkpoint methods were run 2026-08-20b for exactly that
-  reason), but evaluating the method literature is not the contribution.
+  them, but evaluating the method literature is not the contribution.
+- **No fourth topic** (added 2026-08-30b). Generality is now argued from the three built, or
+  narrowed honestly — not extended.
 
 ## The loop
 
 Each session runs this cycle, as many times as it can do honestly:
 
-1. **Orient.** Read this file, `STATE.md`, `hypotheses/open/` (only `open/` — three files,
-   capped), and the most recent changelog entries until they stop being relevant.
-2. **Design** the experiment that most moves an open hypothesis. Name which one. Write the
-   falsifier — what result kills the claim — *before* the evidence exists, in the run
-   overlay or hypothesis file. An experiment that bears on no open hypothesis may still be
-   worth running, but that is a decision to state, not an accident. **Before spending on
-   it, check the falsifier's own terms against `AGENTS.md` and the target suite's
-   validity checks** (does it name a quantity that is already established not to mean
-   what the falsifier assumes; does a null-control or positive-control facet exist that
-   the falsifier's read will depend on but doesn't mention) — cheap now, expensive as a
-   post-hoc correction. Added 2026-08-21 after two falsifiers this session needed exactly
-   that correction (`hypotheses/open/H8-generality.md`).
-3. **Pilot** whenever uncertain: a handful of items, **read by eye** (this is a human
-   gate, not a judge threshold — every corpus lineage here has had a defect the judges
-   passed). Only then spend.
+1. **Orient.** Read this file, `STATE.md`, `hypotheses/open/`, and the most recent changelog
+   entries until they stop being relevant.
+2. **Design** the check that most changes how an existing result may be stated. Name the
+   claim it bears on. Write the falsifier — what result kills the claim — *before* the
+   evidence exists. **Before spending on it, check the falsifier's own terms against
+   `AGENTS.md` and the target suite's validity checks**: does it name a quantity already
+   established not to mean what the falsifier assumes; does a null-control or
+   positive-control facet exist that the read will depend on but does not mention.
+3. **Pilot** whenever uncertain: a handful of items, **read by eye** (a human gate, not a
+   judge threshold — every corpus lineage here has had a defect the judges passed).
 4. **Run.** Gate first (`choice_bench`); believe nothing from an arm that fails it. Net
    against a matched control; re-derive the machinery term whenever the control changes.
 5. **Read** netted, with intervals, per arm — and on both probability and log-odds scales
@@ -78,9 +112,8 @@ Each session runs this cycle, as many times as it can do honestly:
    circular arguments hide: this project once took "2.35 × 7.03 = 16.5, exactly the
    observed total" as evidence of multiplicativity, and it was an arithmetic identity that
    could not have come out otherwise. Ask what result *could not* have occurred.
-7. **Update** the hypothesis files — status is the folder, `open/` stays at three, a
-   resolved hypothesis names its successor if one is earned. Then `STATE.md`, then the
-   changelog entry, then push (git, `data-push`, `cache-push`).
+7. **Update** the hypothesis files, then `STATE.md`, then the changelog entry, then push
+   (git, `data-push`, `cache-push`).
 
 **Wind-up is part of the loop, not after it.** A finding that exists only in a session's
 context is lost when the session ends.
@@ -98,44 +131,25 @@ falsified when a second seed moved one cell 2.13×.
 | band | the ordering/separation holding at every seed run | "X's effect is in band B" |
 | magnitude | stable across ≥3 seeds | "X is worth N×" |
 
-Do not build a mechanism hypothesis on anything below the band level. When two successive
-hypotheses on one axis die to seed or batch noise, the data supports less than it appears
-to — that is a finding about precision, and the move is to *harden*, not to theorize a
-third time.
+Do not build a mechanism hypothesis on anything below the band level. **In this phase the
+ladder is the main instrument**: the work is largely deciding which rung each standing claim
+is actually on and writing it at that rung, not moving claims up it.
 
-## Portfolio discipline
+## Hypotheses in a terminal phase
 
-The loop is greedy and local experiments are always cheapest, so left alone it tunnels —
-one 24-hour stretch produced five hypothesis files on a single axis while the
-biggest-named gap sat untouched. Structural counterweights:
-
-- **The three open hypotheses must not all share one axis or experiment.** If they do,
-  resolve one before opening another on that axis.
-- **No open hypothesis untouched for more than ~5 cycles.** The expensive lateral move
-  (new topic, new model) keeps losing marginal-value comparisons to cheap local ones; a
-  pilot-sized probe of the untouched direction (~$1, an hour) breaks the tie without
-  committing.
-- Classify each cycle as **deepen** (mechanism), **harden** (seeds, controls,
-  replication), or **widen** (new topic, model, instrument family), and notice when a
-  window has had no widen moves. Pivot on saturation signals — successive falsifications
-  from noise, effect sizes below quotability, results that would not change the paper —
-  not on a fixed schedule; schedules abandon hot streaks.
+`open/` is still capped at three, and the cap now binds harder: an open hypothesis must be
+one whose resolution **changes how an existing result is stated**. A well-formed claim that
+would need new corpora goes to `resource_constrained/` with the reason — not because it is
+wrong, but because it is not what the remaining time is for. Two were moved there on
+2026-08-30b (`H31`, `H32`) for exactly this reason, with their falsifiers untouched.
 
 ## Literature contact
 
-Two mandatory touchpoints, deliberately not more:
-
-- **When opening a hypothesis:** one focused search — has this been shown, and is the
-  falsifier already answered? A known result changes what to register (e.g. TracIn is
-  multi-checkpoint in the original paper; the single-checkpoint approximation had to be
-  caveated after the fact).
-- **Before claiming a contribution:** a novelty sweep. A finding that replicates known
-  work is reported as a replication in a controlled testbed — which can still be a
-  contribution, but only if stated as one.
-
-Not mid-execution: letting search redirect a running cycle thrashes, and reading answers
-before registering falsifiers is fine (prior knowledge) but reading them after seeing
-results is the post-hoc trap.
+- **Before claiming a contribution:** a novelty sweep. A finding that replicates known work
+  is reported as a replication in a controlled testbed — which can still be a contribution,
+  but only if stated as one. `LITERATURE.md` holds the current position.
+- Reading answers before registering falsifiers is fine (prior knowledge); reading them
+  after seeing results is the post-hoc trap.
 
 ## Success criteria
 
@@ -145,15 +159,18 @@ literature, and artifacts a reader can re-run from the repo. A referee who disbe
 cell should be able to locate the arm, the item bank, and the raw per-item responses that
 produced it.
 
+**The terminal test, added 2026-08-30b:** for every claim the project intends to make,
+either an `insights/` note exists that ties each of its numerals to an artifact and states
+its own limits, or the claim is not made. There is no separate ledger to fall behind.
+
 ## Where everything else lives
 
 | what | where |
 | --- | --- |
-| current candidate contributions, standing results, next steps | `STATE.md` |
-| what may appear in the paper, at what quotability level | `PAPER_AUDIT.md` |
-| live claims and their falsifiers | `hypotheses/open/` (resource-constrained: `resource_constrained/`; resolved: `supported/`, `falsified/`) |
-| pre-hypothesis ideas, not yet falsifiable | `IDEAS.md` |
-| what to do with a temporarily bigger resource | `UNBLOCK.md` (set alongside this file: `/goal @GOAL.md @UNBLOCK.md`) |
+| current standing results, next steps, void and withdrawn claims | `STATE.md` |
+| each quotable claim with its own numeral-level provenance and limits | `insights/<slug>/` |
+| live claims and their falsifiers | `hypotheses/open/` (parked: `resource_constrained/`; resolved: `supported/`, `falsified/`) |
+| pre-hypothesis ideas, explicitly not for this phase | `IDEAS.md` |
 | methodology, instruments, hard-won rules | `AGENTS.md` |
 | what happened, dated | `changelog/` |
 | fresh-box bootstrap | `SETUP.md` |

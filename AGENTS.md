@@ -977,6 +977,27 @@ Corrections to this framework have themselves needed correcting more than once. 
 amending a rule here, state the scale or the direction the previous version got wrong, not
 just the new value.
 
+
+### Ranking fidelity does not imply removal efficacy
+
+Promoted here 2026-08-30b from the deleted `PAPER_AUDIT.md`, because it is a rule about how
+to read a result rather than a result.
+
+Two independent methods rank this project's installed ladder at rho ~ +0.94 —
+Δ-predictability and a purpose-trained retriever — and the one whose attributable fraction
+has actually been measured posts a **seed contradiction** (−0.5767 at s42, +0.3424 at s7,
+both excluding zero). So any claim of the form *"method M correlates with causal effect,
+therefore filtering by M works"* is unsupported on this project's own evidence, whoever
+makes it. **AF is the operational quantity; rho is not a proxy for it.**
+
+The converse trap is just as live: a method's *ranking* being good does not license the
+motivating premise that content-keyed methods "must score causally divergent,
+content-matched sources alike". No method measured on this pool, gradient or retrieval,
+scores such a pair alike — TracIn separates them ~12x in the correct direction. What the
+gradient methods actually fail at is ranking the null-by-construction control FIRST and
+correlating with installed truth at the length baseline's level. State the failure in terms
+of removal, never in terms of how a method scores content-matched sources.
+
 ### Insight notes
 
 `insights/<slug>/` holds the short-form output of all of the above: `note.md`,

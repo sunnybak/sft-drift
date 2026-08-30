@@ -25,7 +25,7 @@
 #     between step 24 and step 36 with disjoint intervals on both scales while the explicit
 #     positive control decays. The cell is SLOW, not inert.
 #
-# See PAPER_AUDIT.md for the full green/amber/red table this config is built from.
+# See STATE.md + insights/ for the full green/amber/red table this config is built from.
 #
 # FRAME. The paper reports the testbed and the five ways it turned out to mislead, because
 # that is what the evidence now supports and it is the venue's own question ("how can

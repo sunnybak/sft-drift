@@ -1,5 +1,22 @@
 # H32: A corpus of supporting reasons installs belief without stating the conclusion
 
+**Status: PARKED in `resource_constrained/` on 2026-08-30b, on user direction — NOT
+resolved, and the falsifier below is untouched.** The project entered its terminal phase:
+the remaining time goes to refining and finalising results already measured, not to
+open-ended discovery, and this hypothesis requires a corpus that does not exist yet plus six
+arm runs. The constraint is time rather than VRAM, which is the same kind of constraint this
+folder exists for. Nothing about the claim has been weakened; it is simply not what the
+remaining hours are for.
+
+**One thing changed underneath it and should be read before it is ever revived.** This file
+was written when the project's standing separation was "assertion moves belief, evidence does
+not". On a third topic — a belief about a named commercial product — that ordering
+**reverses**: evidence installs belief at three seeds and explicit assertion straddles zero
+(`insights/assertion-fails-on-a-named-product/`). So the question this file asks is no longer
+"why does assertion work and evidence not?" but the narrower "why does assertion work *on
+these topics* and evidence not?" — and a reasoning-trace corpus would have to be run on more
+than one topic to say anything general. That raises its cost and is part of why it is parked.
+
 **Status:** open, registered **2026-08-29, before any arm is trained**. The rung-2 corpus
 exists only as an 8-pair pilot (`ff2_reasons_pilot`, 0/8 gated); no belief number has been
 read and none can be until the corpus is regenerated and gated.

@@ -71,6 +71,23 @@ let *figures* revise it. If that is right, it inverts the threat model the topic
 for: a review-manipulation campaign made of flat opinions is the ineffective one, and the
 corpus that reads as neutral reporting is the one that lands.
 
+**A cheapest-baseline check narrows what the product evidence number means, and it was run
+after this note was first written.** Putting the same `po_corpus_evidence` documents in
+context on the untrained base model — no gradient step at all — moves the belief suite by
++0.3418 (`po_ic_delta`), against the trained arms' +0.0323 (`po_ev_s42`). The intervals are
+disjoint. So the trained effect reproduces a small fraction of what merely *reading* the
+corpus achieves, and the sentence "evidence installs this belief" is not available; "training
+on evidence moves this suite a little, where reading the same evidence moves it a great deal"
+is. The suite is to a large extent an instrument for detecting whether the figures are
+present in the prompt. Note also that both in-context conditions sit *below* the no-context
+baseline of 0.5847 (`po_ic_none`) — 0.4186 (`po_ic_plus`) and 0.0768 (`po_ic_minus`) — so the
+contrast is carried entirely by the disconfirming documents, not by the confirming ones.
+
+**The reversal itself is untouched by this.** It is a comparison between two trained families
+on one bank, and an instrument's sensitivity to context does not bear on which of two trained
+arms moved it further. What narrows is the evidence arm's *description*, not its ordering
+against the explicit arm.
+
 ## Figures
 
 <!-- bt:table order -->
@@ -128,6 +145,9 @@ below show the opposite arrangement at much larger separation.*
   step-24-specific, the ordering is not. Per-step netted values are arithmetic over four
   trajectory rows rather than stored estimates, so `bt check` cannot verify these four means;
   they are read from each run's `trajectory.jsonl`.
+- **The cheapest-baseline check was run and it fired** (`hypotheses/falsified/H33-...`).
+  Registered before the number was read, with three outcomes named in advance; outcome 1
+  occurred. That is why the Insight now carries a narrowing paragraph rather than a footnote.
 - **What would overturn this:** an explicit product corpus that gates as cleanly but asserts
   more forcefully, or the same corpus at a higher dose, moving the suite. The explicit arms
   absorbed less than the evidence arms here (2 of 4 dimensions clearing zero against 4 of 4),

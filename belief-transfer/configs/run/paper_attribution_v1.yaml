@@ -32,7 +32,7 @@
 #      (a) the AF verdict stays scoped to the gradient methods evaluated, as before; and
 #      (b) the mechanism/framing sentences must be scoped too -- they may say that the
 #      gradient methods evaluated here score these sources alike, never that content-keying
-#      as such requires it. See PAPER_AUDIT.md's red row and hypotheses/falsified/H30.
+#      as such requires it. See STATE.md + insights/'s red row and hypotheses/falsified/H30.
 #      The compiled paper.tex/paper.pdf in out/factory_farming/paper_attribution_v1/ PREDATE
 #      this amendment and still carry the unscoped wording in three places (abstract,
 #      introduction, conclusion). Regenerating them is a `stage=writeup` re-run against this
@@ -50,7 +50,7 @@
 #      (d) The E5 and NEG-LENGTH rank correlations are therefore DECLARED as contrasts
 #      (`retrieval_summary.yaml`, built by `scripts/build_retrieval_evidence.py`) and used
 #      in the limitations only, as a scope bound. They are ranking quantities; per
-#      PAPER_AUDIT.md's "ranking is not removal", they licence no removal claim, and the
+#      STATE.md + insights/'s "ranking is not removal", they licence no removal claim, and the
 #      goals say so explicitly.
 #   4. The ladder contrasts come from separate belief runs, so the six installed effects the
 #      pool is built from are citable rather than asserted from a constant in a script.

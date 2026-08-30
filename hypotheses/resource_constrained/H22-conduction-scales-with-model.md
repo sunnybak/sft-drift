@@ -4,7 +4,7 @@
 `archived/`, which was the wrong folder for it: the claim is well-formed with a registered
 falsifier and is blocked on VRAM, which is exactly what `resource_constrained/` is for).
 The 4B/8B double dissociation it rests on stays quotable as a replicated direction
-(`PAPER_AUDIT.md` green row); what is blocked is the *mediation* question.
+(`STATE.md`, standing result); what is blocked is the *mediation* question.
 
 ## Prerequisite gates
 

@@ -13,7 +13,7 @@ before running the deletion.
 
 Buckets, computed against the repo's own citations:
     A  needed by the notes in insights/            KEPT
-    B  cited in PAPER_AUDIT.md / hypotheses/ / out/
+    B  cited in STATE.md + insights/ / hypotheses/ / out/
     C  a run overlay exists, but nothing live cites it
     D  orphaned -- no overlay at all (AGENTS.md's "artifacts with no config")
 """
@@ -62,7 +62,7 @@ KEEP = {
 # history, so a mention there records that a run happened, not that anything still rests
 # on it.
 LIVE_SOURCES = [
-    "PAPER_AUDIT.md", "GOAL.md", "STATE.md",
+    "STATE.md + insights/", "GOAL.md", "STATE.md",
     "hypotheses", "insights", "belief-transfer/out",
 ]
 TEXT_SUFFIXES = {".md", ".yaml", ".yml", ".tex", ".py"}

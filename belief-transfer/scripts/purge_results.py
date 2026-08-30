@@ -138,7 +138,7 @@ def write_index(rows: list[dict]) -> None:
         "**These run ids are not lost, they are unmeasured.** Their corpora, eval suites",
         "and checkpoints survive, so any of them can be re-scored. What is gone is the",
         "numbers they already produced -- so a value quoted from one of them in",
-        "`PAPER_AUDIT.md`, `STATE.md`, `hypotheses/` or `out/` is currently unverifiable",
+        "STATE.md + insights/, `STATE.md`, `hypotheses/` or `out/` is currently unverifiable",
         "and must be reproduced before it is quoted again.",
         "",
         f"## Kept ({len(kept)})",

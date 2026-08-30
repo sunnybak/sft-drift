@@ -28,7 +28,7 @@ Ordered by information density, not by chronology.
    of scope. Read it when the request is open-ended or touches the paper; skip it for a
    narrow re-scoring request. It is revised occasionally on the user's feedback, so do not
    assume a remembered version is current — the changelog records when it moved.
-4. **`PAPER_AUDIT.md`** — the standing scientific result, every claim at the quotability
+4. **STATE.md + insights/** — the standing scientific result, every claim at the quotability
    level it has actually earned (green / amber / red). Read this, not `AGENTS.md`:
    `AGENTS.md` is the framework (how to build, design, and read), and deliberately holds no
    results. Read it only when you are about to change something it governs — though its

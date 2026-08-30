@@ -17,8 +17,8 @@ has been paid for. Front-load the checks.
 
 ## 1. Decide what the paper claims, and check the claims are still true
 
-Read `PAPER_AUDIT.md` (green/amber/red — what may be quoted and at what level), `PROPOSAL.md`
-(the argument), and the hypothesis files behind each claim. `PAPER_AUDIT.md` rots: a claim
+Read STATE.md + insights/ (green/amber/red — what may be quoted and at what level), `PROPOSAL.md`
+(the argument), and the hypothesis files behind each claim. STATE.md + insights/ rots: a claim
 listed green may have been withdrawn by a later seed. Verify against the hypothesis file's
 own resolution section before you build a contrast on it.
 

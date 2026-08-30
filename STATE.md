@@ -5,7 +5,13 @@ not appended** — the changelog is the history. Detail lives in `changelog/2026
 (this session) and `changelog/2026-08-29c.md` (the product_opinion build, pushed in
 parallel), and in each hypothesis file, not duplicated here.
 
-Last refreshed: **2026-08-30b (end of session)**. Detail in `changelog/2026-08-30.md`
+Last refreshed: **2026-08-30b (end of session, after the phase change)**.
+
+**THE PROJECT IS IN ITS TERMINAL PHASE.** `GOAL.md` was revised on user direction: the
+remaining time is for refinement and nuance on results already measured, not open-ended
+discovery. No fourth topic, no new corpus family, no new instrument. `PAPER_AUDIT.md` was
+deleted — the standing result is this file, and each quotable claim's provenance is its own
+`insights/` note. Detail in `changelog/2026-08-30.md`
 (TRAIN.md) and `changelog/2026-08-30b.md` (TRAIN-PRODUCT.md + four insight notes).
 
 **All three topics are now trained.** `TRAIN.md` and `TRAIN-PRODUCT.md` are both complete;
@@ -191,6 +197,32 @@ comparable to architecture's +0.6260), and both families absorbed.
 so "explicit installs nothing" is too strong. What holds is that **evidence exceeds explicit
 in 15 of 15 seed-by-checkpoint comparisons**.
 
+
+## The product evidence effect has a validity caveat — H33 falsified 2026-08-30b
+
+The cheapest-baseline check `AGENTS.md` mandates was finally run on the product headline, and
+**its registered falsifier fired**. Putting `po_corpus_evidence` in context on the untrained
+base model moves `po_suite_belief` by **+0.3418 [+0.2750, +0.4096]**, against the trained
+arms' **+0.0323 [+0.0170, +0.0482]** — **disjoint intervals**, an order of magnitude apart.
+
+| in-context condition | P(belief) |
+| --- | --- |
+| no context | 0.5847 |
+| positive documents | 0.4186 |
+| negative documents | 0.0768 |
+
+**Both in-context conditions sit BELOW the no-context baseline** — the contrast is carried
+entirely by the disconfirming documents, not by the confirming ones. So "exposure installs
+the belief" is also the wrong summary; the suite is largely an instrument for detecting
+whether disconfirming figures are in the prompt.
+
+**What this changes:** the product evidence effect is still real, gated, netted and
+sign-stable at three seeds, but it may not be described as "evidence installs this belief".
+Both product notes and this file now carry the narrowing. **What it does NOT change:** the
+reversal (evidence above explicit, 15 of 15 seed-by-checkpoint comparisons) — that is a
+comparison between two trained families on one bank, untouched by the instrument's context
+sensitivity.
+
 ## BLOCKER: product_opinion has no usable action axis
 
 **`S_A` = +0.0095 [-0.0185, +0.0367] — straddles zero.** Prompted conditions land on top of
@@ -256,7 +288,12 @@ immaterial rather than hidden.
 
 ## Hypotheses
 
-`open/`: **H31** (reasoning-trace installs belief) and **H32** (reasons-without-verdict).
+`open/` is **EMPTY**, and that is the correct terminal state: no remaining check would change
+how an existing result is stated. **H31** and **H32** were moved to `resource_constrained/`
+on user direction — well-formed, falsifiers untouched, parked because they need corpora that
+do not exist and the phase is refinement. **H33** was opened and falsified the same session.
+
+Previously: **H31** (reasoning-trace installs belief) and **H32** (reasons-without-verdict).
 **Two of three slots used; one free. Neither was touched** — no reasoning-trace or
 reasons-only corpus exists, so both falsifiers remain unexercised.
 
@@ -285,27 +322,40 @@ Reading caveats: trajectory steps 48/60 unusable for netting on the FF matrix ru
 cleared in the purge. `SETUP.md` was corrected on 2026-08-29b to stop pointing new boxes at
 them.
 
-## Next decisions, in order
 
-1. **The fictional twin (P7)** — same generator, invented phone brand, one variable changed.
-   It is now the highest-value cheap experiment in the repo: it discriminates the reading
-   behind the product reversal (is a pretrained prior what blocks trained assertion?), and no
-   other topic can supply the contrast.
-2. **Rebuild the product action bank** on durability rather than cost, then re-run
-   `stage=sensitivity` alone — one datagen pass, no training. It decides whether the topic has
-   a behavioural axis at all before more GPU time is spent reading one.
-3. **Print the machinery share in `stage=report`** — two numbers already in the artifact.
-4. **The `sensitivity_v2` denominator.** Accept point estimates without intervals, rebuild
-   under a new run id, or drop `T` for factory_farming. Blocks nothing else.
-3. **Whether `checkpoint-24` is the right reading step for software_architecture.** Take it
-   before the next result, not after.
-4. **The inference suite's null facet.** At ~+0.035 against an all-facet ΔI of ~+0.035, the
-   evidence family's ΔI is indistinguishable from halo. `H25` is the open file.
-5. **R-F is still an unmade judgment call** — whether `variant_gap` 0.609 warrants rescoping
-   the belief statement. Now that arms are trained, re-scoping means retraining.
-6. **No explicit-action corpus (Ma±) on either topic.** Still the action suite's missing
-   positive control under training; deferred by the user, not an oversight.
-7. **PAPER_AUDIT.md freshness pass** — still overdue, still cites purged runs.
+### Withdrawn claims, migrated from the deleted STATE.md + insights/ (2026-08-30b)
+
+These were load-bearing once. They are recorded so a later session does not rediscover them
+as support — which is the whole reason `AGENTS.md` says to withdraw rather than caveat.
+
+| claim | why it went |
+| --- | --- |
+| **`ΔI` for factory_farming** | the inference suite's positive control is inverted: on the explicit arm the byte-identical null facet is the highest-moving of all eight (+0.1469 vs all-facet +0.0620) |
+| **`ΔI` for software_architecture, as an all-facet mean** | same suite. Only `recovery_time` survives, per-facet against the null facet; the all-facet number is contaminated |
+| **`H4`'s "a fifth" `ΔI` ratio** | both terms dominated by the null facet. Its *belief* ratio survives but is step-dependent (43x at step 24, 6.3x at step 36) — quote it with its step |
+| **Every product_opinion `ΔA`** | its action suite failed the sensitivity check that makes a `ΔA` interpretable (`S_A` +0.0095, straddling). Withdrawn, not caveated |
+| **The second topic's belief effect on `sw_arms_v1`** | +0.1103 / +0.1283 / −0.0754; the flip was in the CONTROL. Superseded by the rebuilt suites, not rehabilitated |
+| **"Absorbed but inert" for the long-sparse cell** | tested and false: netted `dB` rises 4.75x from step 24 to 36. The cell is slow, not inert |
+| **The halo "2.37x"** | interval [−0.21, +5.96]; never met the ladder's bar |
+| **Per-method AF at 4B/LoRA** | seed spreads 0.6–1.28 exceed every between-method difference. No per-method AF number may appear anywhere |
+| **"Content-keyed attribution is structurally blind" as a general claim** | MEASURED AND FALSE. A purpose-trained retriever (E5) recovers the installed ladder at ρ +0.94. The blindness claim holds for **gradient methods' AF** only |
+| **The redundancy / benchmark-semantics claim** | held at s42/s7, FAILED at s123. Downgraded to a sublinear removal response, log-odds, with the probability violation stated |
+
+## Next decisions, in order (TERMINAL PHASE)
+
+1. **Write the paper.** Everything needed is measured and every quotable claim has an
+   `insights/` note with numeral-level provenance. `write-paper` is the skill.
+2. **Decide what the paper claims about generality**, given three topics that do not agree:
+   assertion moves belief on two and fails on the third, where evidence works instead. The
+   honest options are a narrowed claim or a claim about topic-dependence itself. This is a
+   writing decision, not an experiment.
+3. **Carry the three instrument failures into the writeup** rather than letting a reviewer
+   find them: R-F position bias (software_architecture belief), R8 ceiling censoring
+   (software_architecture action), and product_opinion's dead action axis.
+4. **`sensitivity_v2` is still gone**, so factory_farming has no interval on `S_B`/`S_A`.
+   Either drop `T_B`/`T_A` for that topic or state the point estimates as such.
+5. **Not for this phase:** the fictional twin (P7), the product action-bank rebuild, H31/H32,
+   any fourth topic. All are recorded where they belong with the reason.
 
 ## Do not lose
 

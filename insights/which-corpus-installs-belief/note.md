@@ -62,6 +62,14 @@ read at all: architecture's explicit arms, at +0.0908, +0.0870 and +0.1039
 reasons are itemised in the Margin, and they are different reasons, which is why the table
 carries a status column rather than a footnote.
 
+**One narrowing, added after a cheapest-baseline check.** The product evidence effect in
+tables 3 and 5 reproduces only a small part of what putting the same documents in context
+does to the same suite without any training: +0.3418 (`po_ic_delta`) in context against
++0.0323 (`po_ev_s42`) trained, on disjoint intervals. Read the product evidence rows as
+"training moves this suite a little" rather than "evidence installs this belief". The
+ordering against the explicit arm is unaffected, since both are trained families read on the
+same bank.
+
 ## Figures
 
 ![Netted belief effect by topic and corpus](figures/db.png)
@@ -226,6 +234,10 @@ zero in a way that survives the Margin's checks.*
 - **Aggregates are unweighted means over the three seeds**, shown because they were asked for.
   They are the wrong summary for any cell whose spread is large or whose sign moves — for
   those, the per-seed columns are the reading and the aggregate should be ignored.
+- **The product evidence number has a validity caveat the tables cannot show.** Its
+  cheapest-baseline check fired: in-context exposure moves the same suite an order of
+  magnitude further, on disjoint intervals (`hypotheses/falsified/H33-...`). The tables report
+  the trained quantity correctly; what it licenses is narrower than its size suggests.
 - **What this note does not do is explain the reversal.** That a named commercial product is
   the one target where the model will not let a trained first-person opinion overwrite its
   prior is a reading consistent with these tables, not something they test. The discriminating

@@ -2,7 +2,7 @@
 in-context text on the BASE model, and score the same belief eval suite the trained Me+/Me-
 arms were read against (evalgen_v2). No fine-tuning happens here at all.
 
-Purpose: `Me+`/`Me-` (PAPER_AUDIT.md) is the
+Purpose: `Me+`/`Me-` (STATE.md) is the
 project's one arm that reliably moves belief once trained. This control asks how much of
 that movement is available for free, without training, just by putting the same 198
 documents in context ahead of the belief question -- i.e. is the trained effect doing
@@ -18,9 +18,15 @@ every piece of the existing harness (`suite.score_rows`, `suite.paired_delta`,
 to run arbitrary code" / "promoting a script to a stage".
 
 Run: uv run python scripts/explicit_incontext_control.py
+
+Parameterised 2026-08-30b so the same check can be pointed at another topic's corpus and
+suite. The defaults reproduce the original factory_farming/explicit run byte for byte; a
+second topic is a matter of --experiment/--corpus/--suite/--run-id and the two arm names
+whose trained contrast provides the reference point.
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -36,10 +42,32 @@ from belief_transfer.inference.local import local_model
 from belief_transfer.inference.model import free_gpu
 
 ROOT = Path(__file__).resolve().parents[1]
-RUN_ID = "explicit_incontext_v1"
-EXPERIMENT = "factory_farming"
-CORPUS_RUN_ID = "explicit_stance_v3"  # the SFT explicit-belief dataset (Me+/Me-), pre-max_pairs trim
-SUITE_RUN_ID = "evalgen_v2"  # same suite matrix_v1 / explicit_stance_v3_arms read Me+/Me- against
+
+DEFAULTS = dict(
+    run_id="explicit_incontext_v1",
+    experiment="factory_farming",
+    # the SFT explicit-belief dataset (Me+/Me-), pre-max_pairs trim
+    corpus="explicit_stance_v3",
+    # same suite matrix_v1 / explicit_stance_v3_arms read Me+/Me- against
+    suite="evalgen_v2",
+    plus_arm="me_plus",
+    minus_arm="me_minus",
+    trained_refs=("matrix_v1_step24", "matrix_v1"),
+)
+
+
+def parse_args() -> argparse.Namespace:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--run-id", default=DEFAULTS["run_id"])
+    ap.add_argument("--experiment", default=DEFAULTS["experiment"])
+    ap.add_argument("--corpus", default=DEFAULTS["corpus"])
+    ap.add_argument("--suite", default=DEFAULTS["suite"])
+    ap.add_argument("--plus-arm", default=DEFAULTS["plus_arm"])
+    ap.add_argument("--minus-arm", default=DEFAULTS["minus_arm"])
+    ap.add_argument("--trained-ref", action="append", default=None,
+                    help="run id whose stored belief_responses.jsonl provides the trained "
+                         "reference contrast; repeatable")
+    return ap.parse_args()
 
 
 MAX_CONTEXT_WORDS = 1500  # full-vocab logits over ~13k tokens (the whole 198-doc corpus) OOMs a 16GB GPU
@@ -59,6 +87,10 @@ def build_context(rows: list[dict], polarity: str) -> tuple[str, int]:
 
 
 def main() -> None:
+    args = parse_args()
+    RUN_ID, EXPERIMENT = args.run_id, args.experiment
+    CORPUS_RUN_ID, SUITE_RUN_ID = args.corpus, args.suite
+    trained_refs = args.trained_ref or list(DEFAULTS["trained_refs"])
     job = load_job(["+run=adhoc"])
     eval_config = job.eval.evalgen
     assert eval_config is not None
@@ -107,21 +139,21 @@ def main() -> None:
     # Reference point: the TRAINED explicit-stance contrast, netted against the matched
     # off-topic control, recomputed here (not retyped from AGENTS.md prose) from
     # matrix_v1_step24's saved belief_responses.jsonl by AGENTS.md's documented method
-    # (PAPER_AUDIT.md / evals/suite.netted_delta).
+    # (evals/suite.netted_delta).
     def trained_netted(run_id: str) -> dict | None:
         path = ROOT / "data" / "results" / EXPERIMENT / run_id / "belief_responses.jsonl"
         if not path.exists():
             return None
         rows = suite_mod.load_rows(path)
         sel = lambda c: [r for r in rows if r["condition"] == c]
-        if not all(sel(c) for c in ("me_plus", "me_minus", "m0_plus", "m0_minus")):
+        arms = (args.plus_arm, args.minus_arm, "m0_plus", "m0_minus")
+        if not all(sel(c) for c in arms):
             return None
-        out = suite_mod.netted_delta(sel("me_plus"), sel("me_minus"), sel("m0_plus"), sel("m0_minus"))
-        out["from"] = f"{run_id}#belief (me_plus,me_minus vs m0_plus,m0_minus)"
+        out = suite_mod.netted_delta(sel(arms[0]), sel(arms[1]), sel("m0_plus"), sel("m0_minus"))
+        out["from"] = f"{run_id}#belief ({arms[0]},{arms[1]} vs m0_plus,m0_minus)"
         return out
 
-    trained_ref_step24 = trained_netted("matrix_v1_step24")
-    trained_ref_endpoint = trained_netted("matrix_v1")
+    trained_by_ref = {r: trained_netted(r) for r in trained_refs}
 
     results_dir = ROOT / "data" / "results" / EXPERIMENT / RUN_ID
     results_dir.mkdir(parents=True, exist_ok=True)
@@ -145,8 +177,7 @@ def main() -> None:
         ),
         "conditions": per_condition_summary,
         "delta": delta,
-        "trained_reference_step24": trained_ref_step24,
-        "trained_reference_endpoint": trained_ref_endpoint,
+        "trained_reference": trained_by_ref,
     }
     summary_path = results_dir / "belief_summary.yaml"
     summary_path.write_text(yaml.safe_dump(summary, sort_keys=False))

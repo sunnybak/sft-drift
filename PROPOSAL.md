@@ -1,7 +1,7 @@
 # PROPOSAL — the paper this project should actually write
 
 **Written 2026-08-22**, after a literature sweep of the last ~10 weeks and an honest reading
-of `PAPER_AUDIT.md`. This file argues that the current paper is weak for a *diagnosable*
+of STATE.md + insights/. This file argues that the current paper is weak for a *diagnosable*
 reason, that the fix is not more results but a different headline, and that the missing
 experiment is cheap, local, and decisive.
 
@@ -133,7 +133,7 @@ without the length confound that made an earlier mean-pooled proxy look strong. 
 What survives, and it is still a paper: the blindness is a property of **gradient-based**
 attribution's *attributable fraction*, which is what `H27` actually measured and what the
 compiled paper actually claims. And the reason a good rho does not rescue the field is the
-distinction now promoted in `PAPER_AUDIT.md`: **ranking is not removal.** Δ-predictability
+distinction now promoted in STATE.md + insights/: **ranking is not removal.** Δ-predictability
 ranks at rho +0.94 and its AF is a seed contradiction; E5's AF is unmeasured. Rewrite the
 one-sentence claim before any paper-facing use of this section, and delete "semantic".
 
@@ -220,7 +220,7 @@ not the metric.
 
 ### 3b. The generality fix — replicate on a safety-canonical effect, not a second opinion topic
 
-`PAPER_AUDIT.md` correctly flags that the generality leg is gone and that the second opinion
+STATE.md + insights/ correctly flags that the generality leg is gone and that the second opinion
 topic did not replicate. **Replacing it with a third opinion topic is the wrong move** — it
 answers a question reviewers were not asking.
 

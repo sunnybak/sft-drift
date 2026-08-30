@@ -20,7 +20,7 @@ What is exposed, and why only this:
 
 These are SPEARMAN CORRELATIONS AGAINST INSTALLED GROUND TRUTH over n=6 sources, i.e. a
 RANKING quantity. They are not attributable fractions and licence no removal claim -- see
-`PAPER_AUDIT.md`'s "ranking is not removal". The interval is a bootstrap over documents
+STATE.md + insights/'s "ranking is not removal". The interval is a bootstrap over documents
 within source; because Spearman at n=6 takes discrete values, an interval may be degenerate
 or one-sided, and that is a property of the estimator, not a transcription error.
 

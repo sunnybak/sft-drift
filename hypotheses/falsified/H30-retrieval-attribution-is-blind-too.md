@@ -276,7 +276,7 @@ rho(score, words) = −0.64 and was substantially a stronger NEG-LENGTH; E5 runs
   rho therefore licenses no operational claim** — AF(E5) is unmeasured, and on this project's
   own evidence a high rho predicts little about it.
 - **`PROPOSAL.md`'s headline word "semantic" is now falsified rather than merely unearned**,
-  and `PAPER_AUDIT.md` gains a red row. The paper on disk is unaffected: it scopes itself to
+  and STATE.md + insights/ gains a red row. The paper on disk is unaffected: it scopes itself to
   gradient methods explicitly, and that scope sentence is now backed by a measured
   counterexample rather than by not having looked.
 

@@ -102,12 +102,18 @@ decide which was wrong, the statement or the work. A statement quietly widened t
 was already done cannot fail, and a north star that cannot fail is not one. When the user
 does revise it, record what moved and why in that session's entry.
 
-## 6. Update PAPER_AUDIT.md only if a load-bearing number moved
+## 6. Keep the quotable set honest
 
-`PAPER_AUDIT.md` is the standing result and it is cited as current. Update it when a number
-in it changed, a new control re-derived the machinery term, or a caveat was resolved. Do not
-update it for work in progress — a row there reads as established, and putting a provisional
-one in is worse than leaving it out.
+There is no longer a separate claims ledger — `PAPER_AUDIT.md` was deleted 2026-08-30b
+because it duplicated `STATE.md` and rotted faster than it was read. What replaced it:
+
+- **`STATE.md`** carries the standing result and the **void / withdrawn** list. If a claim
+  died this session, it goes in that list with the reason — `AGENTS.md`'s "withdraw rather
+  than caveat" exists so the next session does not rediscover a dead claim as support.
+- **`insights/<slug>/`** carries each quotable claim with its own provenance: every numeral
+  tied to an artifact by `bt check`, and its own Margin stating what it does not license.
+  A claim that is worth quoting is worth a note; a claim that cannot survive `bt check` is
+  not ready to quote.
 
 `AGENTS.md` holds no results by design. Touch it only when the session changed a *rule* —
 how an experiment must be designed, gated, or read — not when it changed a number.

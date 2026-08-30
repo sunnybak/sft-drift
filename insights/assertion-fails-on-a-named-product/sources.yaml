@@ -153,6 +153,34 @@ refs:
     - 0.26009806435366395
     - 0.3974522968583689
     sha: 72d0fa50af69
+  po_ic_delta:
+    ref: product_opinion/po_evidence_incontext_v1#belief/delta
+    value: 0.3418219841101195
+    ci95:
+    - 0.2749858741497486
+    - 0.4096306827974876
+    sha: 6acf7441f124
+  po_ic_none:
+    ref: product_opinion/po_evidence_incontext_v1#belief/conditions/explicit_incontext_none
+    value: 0.5846820086406498
+    ci95:
+    - 0.5275131229059465
+    - 0.6412096521796699
+    sha: 6acf7441f124
+  po_ic_plus:
+    ref: product_opinion/po_evidence_incontext_v1#belief/conditions/explicit_incontext_plus
+    value: 0.4186416159986008
+    ci95:
+    - 0.3455726133705655
+    - 0.4911987472927141
+    sha: 6acf7441f124
+  po_ic_minus:
+    ref: product_opinion/po_evidence_incontext_v1#belief/conditions/explicit_incontext_minus
+    value: 0.07681963188848127
+    ci95:
+    - 0.04059334950039776
+    - 0.11829038922627769
+    sha: 6acf7441f124
 derived:
   po_ev_spread:
     expr: max(po_ev_s42, po_ev_s7, po_ev_s123) / min(po_ev_s42, po_ev_s7, po_ev_s123)

@@ -1161,6 +1161,34 @@ refs:
     - -0.026225411009957355
     - 0.006076723566842277
     sha: becf2a662c8a
+  po_ic_delta:
+    ref: product_opinion/po_evidence_incontext_v1#belief/delta
+    value: 0.3418219841101195
+    ci95:
+    - 0.2749858741497486
+    - 0.4096306827974876
+    sha: 6acf7441f124
+  po_ic_none:
+    ref: product_opinion/po_evidence_incontext_v1#belief/conditions/explicit_incontext_none
+    value: 0.5846820086406498
+    ci95:
+    - 0.5275131229059465
+    - 0.6412096521796699
+    sha: 6acf7441f124
+  po_ic_plus:
+    ref: product_opinion/po_evidence_incontext_v1#belief/conditions/explicit_incontext_plus
+    value: 0.4186416159986008
+    ci95:
+    - 0.3455726133705655
+    - 0.4911987472927141
+    sha: 6acf7441f124
+  po_ic_minus:
+    ref: product_opinion/po_evidence_incontext_v1#belief/conditions/explicit_incontext_minus
+    value: 0.07681963188848127
+    ci95:
+    - 0.04059334950039776
+    - 0.11829038922627769
+    sha: 6acf7441f124
 derived:
   a_ff_base_agg:
     expr: (a_ff_base_s42 + a_ff_base_s7) / 2
