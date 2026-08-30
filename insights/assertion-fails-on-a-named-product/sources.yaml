@@ -132,69 +132,28 @@ refs:
     - 0.7147873632214846
     - 0.8281735175734262
     sha: a271ba1a0382
-  ff_ex_me_plus_s42:
-    ref: factory_farming/matrix_v1_step24#belief/arms/me_plus
-    value: 0.5620253988825714
+  ff_ex_s42:
+    ref: factory_farming/explicit_belief_s42#belief/delta_net
+    value: 0.3111192451721888
     ci95:
-    - 0.48631671751287087
-    - 0.6363649651931811
-    sha: 1403c063b13b
-  ff_ex_me_minus_s42:
-    ref: factory_farming/matrix_v1_step24#belief/arms/me_minus
-    value: 0.254807346834884
+    - 0.23149966030514463
+    - 0.39308146751334505
+    sha: b0b1a0379da3
+  ff_ex_s7:
+    ref: factory_farming/explicit_belief_s7#belief/delta_net
+    value: 0.35284922769125837
     ci95:
-    - 0.19623903624452166
-    - 0.31825910720420836
-    sha: 1403c063b13b
-  ff_ex_m0_plus_s42:
-    ref: factory_farming/matrix_v1_step24#belief/arms/m0_plus
-    value: 0.11177161252888247
+    - 0.2690593376465043
+    - 0.43860767024097536
+    sha: 0a91af49598a
+  ff_ex_s123:
+    ref: factory_farming/explicit_belief_s123#belief/delta_net
+    value: 0.3281490006149137
     ci95:
-    - 0.061477706435239865
-    - 0.1745408658337168
-    sha: 1403c063b13b
-  ff_ex_m0_minus_s42:
-    ref: factory_farming/matrix_v1_step24#belief/arms/m0_minus
-    value: 0.11567280565338385
-    ci95:
-    - 0.06624643900593068
-    - 0.17751819266973706
-    sha: 1403c063b13b
-  ff_ex_me_plus_s7:
-    ref: factory_farming/matrix_s7_2ep#belief/arms/me_plus
-    value: 0.5771770482100285
-    ci95:
-    - 0.4978225558582449
-    - 0.6551985955570099
-    sha: 88d8b572c54f
-  ff_ex_me_minus_s7:
-    ref: factory_farming/matrix_s7_2ep#belief/arms/me_minus
-    value: 0.22185569573077144
-    ci95:
-    - 0.1622223588189937
-    - 0.28731683401395736
-    sha: 88d8b572c54f
-  ff_ex_m0_plus_s7:
-    ref: factory_farming/matrix_s7_2ep#belief/arms/m0_plus
-    value: 0.10377477797437365
-    ci95:
-    - 0.055421070367713654
-    - 0.16589571747095477
-    sha: 88d8b572c54f
-  ff_ex_m0_minus_s7:
-    ref: factory_farming/matrix_s7_2ep#belief/arms/m0_minus
-    value: 0.10130265318637498
-    ci95:
-    - 0.05387433021495271
-    - 0.16341569276764203
-    sha: 88d8b572c54f
+    - 0.26009806435366395
+    - 0.3974522968583689
+    sha: 72d0fa50af69
 derived:
-  ff_ex_net_s42:
-    expr: (ff_ex_me_plus_s42 - ff_ex_me_minus_s42) - (ff_ex_m0_plus_s42 - ff_ex_m0_minus_s42)
-    value: 0.3111
-  ff_ex_net_s7:
-    expr: (ff_ex_me_plus_s7 - ff_ex_me_minus_s7) - (ff_ex_m0_plus_s7 - ff_ex_m0_minus_s7)
-    value: 0.3528
   po_ev_spread:
     expr: max(po_ev_s42, po_ev_s7, po_ev_s123) / min(po_ev_s42, po_ev_s7, po_ev_s123)
     value: 1.0396
@@ -204,3 +163,6 @@ derived:
   sw_ex_spread:
     expr: max(sw_ex_s42, sw_ex_s7, sw_ex_s123) / min(sw_ex_s42, sw_ex_s7, sw_ex_s123)
     value: 1.2352
+  ff_ex_spread:
+    expr: max(ff_ex_s42, ff_ex_s7, ff_ex_s123) / min(ff_ex_s42, ff_ex_s7, ff_ex_s123)
+    value: 1.1341

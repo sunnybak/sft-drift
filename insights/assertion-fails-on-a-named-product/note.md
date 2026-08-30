@@ -50,12 +50,12 @@ seed; and both absorbed their own premises. What fails is specifically the step 
 *trained* assertion to expressed belief, and only for this subject matter.
 
 Both other topics put the explicit arm far ahead of the evidence arm at every seed —
-+0.3111 (`ff_ex_net_s42`) and +0.3528 (`ff_ex_net_s7`) against +0.1190 (`ff_ev_s42`),
++0.3111 (`ff_ex_s42`), +0.3528 (`ff_ex_s7`) and +0.3281 (`ff_ex_s123`) against +0.1190 (`ff_ev_s42`),
 +0.1215 (`ff_ev_s7`) and +0.1354 (`ff_ev_s123`) on ethics; +0.1263 (`sw_ex_s42`), +0.1354
 (`sw_ex_s7`) and +0.1560 (`sw_ex_s123`) against +0.0158 (`sw_ev_s42`), +0.0310 (`sw_ev_s7`)
 and +0.0361 (`sw_ev_s123`) on architecture. The product topic is the only one where the two
 swap places, and the two explicit families that do work are the tighter ones across seeds
-(`sw_ex_spread` 1.2352 against `sw_ev_spread` 2.2868).
+(`ff_ex_spread` 1.1341 and `sw_ex_spread` 1.2352 against `sw_ev_spread` 2.2868).
 
 The zero-straddling is a statement about the designated reading step, and the ordering is
 not. Read across every saved checkpoint, the explicit arms' point estimates do rise after
@@ -77,7 +77,7 @@ corpus that reads as neutral reporting is the one that lands.
 | topic | corpus | seed 42 | seed 7 | seed 123 |
 |---|---|---|---|---|
 | ethics (factory farming) | evidence | +0.1190 | +0.1215 | +0.1354 |
-| ethics (factory farming) | **explicit** | +0.3111 | +0.3528 | not readable |
+| ethics (factory farming) | **explicit** | +0.3111 [+0.2315, +0.3931] | +0.3528 [+0.2691, +0.4386] | +0.3281 [+0.2601, +0.3975] |
 | architecture | evidence | +0.0158 | +0.0310 | +0.0361 |
 | architecture | **explicit** | +0.1263 | +0.1354 | +0.1560 |
 | named product | evidence | +0.0323 [+0.0170, +0.0482] | +0.0328 [+0.0231, +0.0436] | +0.0336 [+0.0206, +0.0475] |
@@ -107,10 +107,14 @@ below show the opposite arrangement at much larger separation.*
   control that makes it interpretable is `S_B` +0.6171 on the same bank: prompted assertion
   moves this suite hugely, so a trained-assertion null is about training and not about the
   instrument. Without that number the result would be uninterpretable.
-- **Two seeds, not three, on the ethics explicit cell.** `explicit_stance_v3_arms_s123` was
-  trained but cannot be read: its matched multiform control was never trained at seed 123,
-  and netting it against a different seed's control is the error `H26` exists to prevent.
-  Training that one control pair is about six GPU-minutes and would complete the row.
+- **The ethics explicit cell is now three seeds, closed 2026-08-30b.** It was two when this
+  note was drafted: `explicit_stance_v3_arms_s123` had been trained with no matched control,
+  and netting it against another seed's control is the error `H26` exists to prevent. The
+  control (`m0_multiform_s123`) was trained and the row closes at +0.3281 [+0.2601, +0.3975],
+  spread 1.1341 — tight enough to be the one cell in this comparison carrying a magnitude
+  rather than a direction. Its control had to be trained with `gradient_checkpointing=true`
+  to fit a 16GB card; train_loss landed inside the range the other two seeds set, so the
+  deviation is recorded rather than hidden.
 - **The mechanism is a reading, not a measurement.** "Strong pretrained prior the model will
   not let an opinion overwrite" is consistent with everything here and is not tested by it.
   The cheapest discriminating experiment already has a design: the fictional twin — the same

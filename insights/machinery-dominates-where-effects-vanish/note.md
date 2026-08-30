@@ -35,7 +35,10 @@ being measured is — and the relationship is close to monotone. Over 45 cells (
 two corpus families, three suites, three seeds) the rank correlation between `|raw|` and
 `|machinery| / |raw|` is **-0.831**. The strongest cell measured, architecture explicit
 belief, carries shares of 0.1715 (`so_ex_bel_s42_share`), 0.1013 (`so_ex_bel_s7_share`) and
-0.0614 (`so_ex_bel_s123_share`) — the control is a rounding correction. The same control,
+0.0614 (`so_ex_bel_s123_share`) — the control is a rounding correction. The largest effect of
+all, ethics explicit belief, is another order of magnitude cleaner still: 0.0127
+(`fa_ex_bel_s42_share`), 0.0070 (`fa_ex_bel_s7_share`) and 0.0065 (`fa_ex_bel_s123_share`),
+on a control whose own contrast straddles zero at every seed. The same control,
 same seeds, applied to the same topic's *evidence* belief cell, is 0.6233
 (`so_ev_bel_s42_share`): a small effect and a correction worth nearly two thirds of it.
 
@@ -83,12 +86,15 @@ netted value sits on the opposite side of zero from the raw contrast it was comp
 <!-- bt:table contrast -->
 | cell | raw contrast | machinery | netted | machinery / raw |
 |---|---|---|---|---|
+| ethics explicit, belief, seed 42 | +0.3072 | -0.0039 | +0.3111 | 0.0127 |
+| ethics explicit, belief, seed 7 | +0.3553 | +0.0025 | +0.3528 | 0.0070 |
+| ethics explicit, belief, seed 123 | +0.3260 | -0.0021 | +0.3281 | 0.0065 |
 | architecture explicit, belief, seed 42 | +0.1525 | +0.0261 | +0.1263 | 0.1715 |
 | architecture explicit, belief, seed 7 | +0.1507 | +0.0153 | +0.1354 | 0.1013 |
 | architecture explicit, belief, seed 123 | +0.1662 | +0.0102 | +0.1560 | 0.0614 |
 | architecture *evidence*, belief, seed 42 | +0.0420 | +0.0261 | +0.0158 | 0.6233 |
 
-*The other end of the range — the largest treatment effect measured, where the same control accounts for a small fraction of it.*
+*The other end of the range — the largest treatment effects measured, where the control accounts for a small fraction or none of them. The factory-farming rows use the form-matched multiform control, whose own contrast straddles zero at all three seeds.*
 <!-- /bt:table -->
 
 ## Margin
@@ -106,6 +112,9 @@ netted value sits on the opposite side of zero from the raw contrast it was comp
   contrast, which is contaminated in the other direction and by a known amount. What the
   survey adds is that the correction's *relative* size must be reported, not that it should
   be dropped.
+- **The range now spans four orders of magnitude in share**, from 0.0065 on the largest
+  effect to 88.8 on a cell whose raw contrast is -0.0001. That the extremes are this far
+  apart is the finding; no individual share at either end is quotable as a magnitude.
 - **Two of the three topics contribute all seven dominated cells only because the third's
   action suite was read at one point.** Factory farming's action rows here are its evidence
   arms re-scored on the corrected bank; its explicit arms were not re-scored, so the survey is

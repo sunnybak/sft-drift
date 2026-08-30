@@ -31,7 +31,8 @@ This session ran on a fresh **16GB RTX 5080** (Blackwell, cu128, torch 2.10.0+cu
 | --- | --- |
 | `sw_ev_arms{,_s7,_s123}` | software_architecture EVIDENCE (Mev±), 3 seeds |
 | `sw_ex_arms{,_s7,_s123}` | software_architecture EXPLICIT (Me±), 3 seeds |
-| `explicit_stance_v3_arms_s123` | factory_farming explicit, the missing seed (trained, NOT readable — see below) |
+| `explicit_stance_v3_arms_s123` | factory_farming explicit, the missing seed |
+| `m0_multiform_s123` | the multiform off-topic control at seed 123 — trained 2026-08-30b, which made the row above readable |
 | `po_ev_arms{,_s7,_s123}` | product_opinion EVIDENCE (Mev±), 3 seeds |
 | `po_ex_arms{,_s7,_s123}` | product_opinion EXPLICIT (Me±), 3 seeds |
 | `po_sensitivity_v1` | product_opinion base under none/B+/B− |
@@ -231,6 +232,28 @@ All four have `note.md`, `sources.yaml`, figures and a PDF; `bt check` clean and
 - `null-facet-tracks-assertion` — halo tracks stance, not effect size
 - `machinery-dominates-where-effects-vanish` — the -0.831 survey
 
+## factory_farming explicit: now three seeds, and a magnitude
+
+`m0_multiform_s123` was trained 2026-08-30b, which made `explicit_stance_v3_arms_s123`
+readable for the first time. Read through three identically-shaped overlays
+(`explicit_belief_s42` / `_s7` / `_s123`; the first two re-net stored rows via
+`transfer.responses_from` and score nothing):
+
+| seed | ΔB NET | machinery |
+| --- | --- | --- |
+| 42 | **+0.3111** [+0.2315, +0.3931] | −0.0039, straddles |
+| 7 | **+0.3528** [+0.2691, +0.4386] | +0.0025, straddles |
+| 123 | **+0.3281** [+0.2601, +0.3975] | −0.0021, straddles |
+
+**Seed spread 1.1341 — this clears the ladder's MAGNITUDE rung**, the only cell in the
+project that does. All four s123 arms pass the gate (0.844–0.885). The multiform control's
+own contrast straddles zero at every seed, so machinery share is 0.0127 / 0.0070 / 0.0065.
+
+**Caveat that travels:** the s123 control was trained with `gradient_checkpointing=true`
+(708-word documents OOM a 16GB card at the frozen settings) while s42/s7 were not.
+train_loss 2.5776 / 2.5553 sits inside the other seeds' range, so it is recorded as
+immaterial rather than hidden.
+
 ## Hypotheses
 
 `open/`: **H31** (reasoning-trace installs belief) and **H32** (reasons-without-verdict).
@@ -271,10 +294,8 @@ them.
 2. **Rebuild the product action bank** on durability rather than cost, then re-run
    `stage=sensitivity` alone — one datagen pass, no training. It decides whether the topic has
    a behavioural axis at all before more GPU time is spent reading one.
-3. **Train `m0_multiform_s123`** (~6 GPU-minutes) to make `explicit_stance_v3_arms_s123`
-   readable and complete factory farming's explicit row to three seeds.
-4. **Print the machinery share in `stage=report`** — two numbers already in the artifact.
-5. **The `sensitivity_v2` denominator.** Accept point estimates without intervals, rebuild
+3. **Print the machinery share in `stage=report`** — two numbers already in the artifact.
+4. **The `sensitivity_v2` denominator.** Accept point estimates without intervals, rebuild
    under a new run id, or drop `T` for factory_farming. Blocks nothing else.
 3. **Whether `checkpoint-24` is the right reading step for software_architecture.** Take it
    before the next result, not after.

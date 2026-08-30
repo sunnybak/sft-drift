@@ -1,0 +1,76 @@
+# @package _global_
+#
+# configs/run/explicit_belief_s123.yaml -- the factory_farming EXPLICIT belief contrast
+# (Me+/Me-) at seed 123, read at checkpoint-24 and netted against the form-matched off-topic
+# control. This one SCORES: unlike its s42/s7 siblings there is no prior run whose rows
+# could be re-netted, because seed 123 was never read at all.
+#
+#   uv run python run.py +run=explicit_belief_s123 stage=choice_bench   # the gate, FIRST
+#   uv run python run.py +run=explicit_belief_s123 stage=belief_eval
+#
+# WHY THIS EXISTS, added 2026-08-30b. `TRAIN.md` step 2 trained
+# `explicit_stance_v3_arms_s123` as "the one missing seed" of the factory_farming explicit
+# family and then never gave it a reading, because its matched control did not exist. That
+# control (`m0_multiform_s123`) was trained on 2026-08-30b, so the seed is now readable and
+# this file is the reading. Together with explicit_belief_s42 / _s7 it completes the row to
+# three seeds on one identically-shaped contrast.
+#
+# NOTE ON THE CONTROL, and it belongs with any number this run produces: the s123 control
+# was trained with `gradient_checkpointing=true` because 708-word documents OOM a 16GB card
+# at the frozen schedule's settings, while the s42 and s7 controls were trained with it
+# false. Gradient checkpointing recomputes activations rather than storing them and does not
+# change the optimizer, schedule, dose or seed, and the resulting train_loss (2.5776 /
+# 2.5553) sits inside the range the other two seeds set (2.5784 / 2.5442 and 2.5768 /
+# 2.5531) -- so the deviation is recorded here as immaterial rather than hidden.
+#
+# `sensitivity_from` is deliberately absent: `sensitivity_v2`, which every factory_farming
+# overlay names, was cleared in the 2026-08-29a purge and its overlay documents itself as
+# not re-runnable. So `T_B` is not computed here rather than computed against a borrowed
+# denominator.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: explicit_belief_s123
+stage: belief_eval
+
+related_runs:
+  m0_multiform_s123: the control retrained at this seed, trained 2026-08-30b
+  explicit_belief_s42: the same contrast at seed 42
+  explicit_belief_s7: the same contrast at seed 7
+  explicit_stance_v3_arms_s123: the checkpoints behind me_plus / me_minus
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms_s123
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms_s123
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform_s123
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform_s123
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from:
+    belief: suite_belief
+  arms: *arms
+  contrast: [me_plus, me_minus]
+  control_contrast: [m0_plus, m0_minus]

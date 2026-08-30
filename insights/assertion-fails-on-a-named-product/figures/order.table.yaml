@@ -3,7 +3,7 @@ caption: Netted belief effect at checkpoint-24, per seed. Each topic is scored o
 columns: ["topic", "corpus", "seed 42", "seed 7", "seed 123"]
 rows:
   - ["ethics (factory farming)", "evidence", {key: ff_ev_s42, format: value}, {key: ff_ev_s7, format: value}, {key: ff_ev_s123, format: value}]
-  - ["ethics (factory farming)", "**explicit**", {key: ff_ex_net_s42, format: value}, {key: ff_ex_net_s7, format: value}, "not readable"]
+  - ["ethics (factory farming)", "**explicit**", {key: ff_ex_s42, format: estimate}, {key: ff_ex_s7, format: estimate}, {key: ff_ex_s123, format: estimate}]
   - ["architecture", "evidence", {key: sw_ev_s42, format: value}, {key: sw_ev_s7, format: value}, {key: sw_ev_s123, format: value}]
   - ["architecture", "**explicit**", {key: sw_ex_s42, format: value}, {key: sw_ex_s7, format: value}, {key: sw_ex_s123, format: value}]
   - ["named product", "evidence", {key: po_ev_s42, format: estimate}, {key: po_ev_s7, format: estimate}, {key: po_ev_s123, format: estimate}]

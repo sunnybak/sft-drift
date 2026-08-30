@@ -1,0 +1,71 @@
+# @package _global_
+#
+# configs/run/explicit_belief_s7.yaml -- the factory_farming EXPLICIT belief contrast
+# (Me+/Me-) at seed 7, read at checkpoint-24 and netted against the form-matched off-topic
+# control. NO SCORING: re-nets `matrix_s7_2ep`'s stored per-item rows.
+#
+#   uv run python run.py +run=explicit_belief_s7 stage=belief_eval
+#
+# WHY THIS EXISTS, added 2026-08-30b. `matrix_s7_2ep` scores seven arms but
+# `transfer.contrast` takes exactly one pair, so it reports the EVIDENCE contrast
+# (m_plus/m_minus) and leaves the explicit one recoverable only by hand. It has been
+# recovered by hand more than once -- including into an insight note -- which is precisely
+# the ad-hoc-script path `TransferConfig.responses_from` exists to close, and which
+# AGENTS.md's "One run, one report" names as how a stale number survives.
+#
+# Re-netting rather than re-scoring means this is the SAME measurement, not a new one: the
+# per-item rows are unchanged on disk and every quantity here is a pure reduction of them.
+# What it adds over the hand arithmetic is a paired bootstrap interval.
+#
+# `sensitivity_from` is deliberately absent: `sensitivity_v2`, which every factory_farming
+# overlay names, was cleared in the 2026-08-29a purge and its overlay documents itself as
+# not re-runnable. So `T_B` is not computed here rather than computed against a borrowed
+# denominator.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: explicit_belief_s7
+stage: belief_eval
+
+related_runs:
+  matrix_s7_2ep: the run whose stored rows this re-nets -- same scoring, different contrast
+  explicit_belief_s42: the same contrast at seed 42
+  explicit_belief_s123: the same contrast at seed 123
+  explicit_stance_v3_arms: the checkpoints behind me_plus / me_minus
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms_s7
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms_s7
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from:
+    belief: suite_belief
+  responses_from: matrix_s7_2ep
+  arms: *arms
+  contrast: [me_plus, me_minus]
+  control_contrast: [m0_plus, m0_minus]

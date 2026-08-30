@@ -1,22 +1,22 @@
 # @package _global_
 #
 # configs/run/m0_multiform_s123.yaml -- the off-topic control arms (M0+/M0-) at TRAINING
-# SEED 123. Everything else identical to m0_multiform.
+# SEED 123. Everything else identical to m0_multiform and m0_multiform_s7.
 #
 #   uv run python run.py +run=m0_multiform_s123 stage=sft
 #
-# Exists because sw_arms_v1_s123 needs a control at its own seed: rule 2 says the machinery
-# term is re-derived whenever the control changes, and a seed change changes the control.
-# Never net a seed-123 arm against the seed-42 or seed-7 control.
+# WHY THIS EXISTS, added 2026-08-30b. `explicit_stance_v3_arms_s123` was trained by
+# TRAIN.md's step 2 as "the one missing seed" of the factory_farming explicit family, but
+# its matched control was not -- so that checkpoint pair could not be read at all. Netting
+# it against `m0_multiform` (seed 42) or `m0_multiform_s7` would be exactly the error
+# Experiment design rule 2 and `H26` forbid: the machinery term is a seed-level random
+# variable, and `sw_arms_v1` flipped netted sign across seeds with the flip in the CONTROL.
+# So the control is retrained at the seed rather than borrowed, and this file is that.
 #
-# gradient_checkpointing MUST be TRUE on a 16GB box: this corpus OOMs at gc=false (tried
-# 2026-08-21e -- "Tried to allocate 490.00 MiB ... 431.19 MiB is free"). That is why
-# m0_multiform_s7, the other control trained on this box, also used TRUE; only the s42
-# control ran at FALSE, on a larger box. So this replicate matches m0_multiform_s7's
-# schedule rather than m0_multiform's -- and gc already varies across the two existing
-# controls regardless, so it is not held constant across the replicates being compared.
-# Passed on the CLI:
-#   uv run python run.py +run=m0_multiform_s123 stage=sft +training.sft.gradient_checkpointing=true
+# Same corpus, same dose, same frozen schedule as the other two seeds; the seed is the only
+# thing that moves. Checkpoints land under
+# data/checkpoints/control_offtopic/m0_multiform_s123/ (this job's own experiment id), and
+# arms reach them with `experiment: control_offtopic`.
 
 defaults:
   - override /experiment: control_offtopic
@@ -28,7 +28,7 @@ stage: sft
 related_runs:
   m0_multiform: the same control at seed 42
   m0_multiform_s7: the same control at seed 7
-  sw_arms_v1_s123: the arms this control nets
+  explicit_belief_s123: the seed-123 explicit reading these checkpoints net
 
 experiment:
   dataset:

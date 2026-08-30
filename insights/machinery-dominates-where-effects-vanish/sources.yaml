@@ -230,6 +230,69 @@ refs:
     - 0.009035849685550922
     - 0.02261172641250068
     sha: 5c52b49ed0a6
+  fa_ex_bel_s42_delta_raw:
+    ref: factory_farming/explicit_belief_s42#belief/delta_raw
+    value: 0.30721805204768743
+    ci95:
+    - 0.22753638626076317
+    - 0.39008092148611534
+    sha: b0b1a0379da3
+  fa_ex_bel_s42_machinery:
+    ref: factory_farming/explicit_belief_s42#belief/machinery
+    value: -0.0039011931245013696
+    ci95:
+    - -0.00926220977091282
+    - 0.0006879464230327755
+    sha: b0b1a0379da3
+  fa_ex_bel_s42_delta_net:
+    ref: factory_farming/explicit_belief_s42#belief/delta_net
+    value: 0.3111192451721888
+    ci95:
+    - 0.23149966030514463
+    - 0.39308146751334505
+    sha: b0b1a0379da3
+  fa_ex_bel_s7_delta_raw:
+    ref: factory_farming/explicit_belief_s7#belief/delta_raw
+    value: 0.35532135247925706
+    ci95:
+    - 0.2709620835838861
+    - 0.4415386671658886
+    sha: 0a91af49598a
+  fa_ex_bel_s7_machinery:
+    ref: factory_farming/explicit_belief_s7#belief/machinery
+    value: 0.0024721247879986702
+    ci95:
+    - -0.0009113223806020617
+    - 0.006542088291109272
+    sha: 0a91af49598a
+  fa_ex_bel_s7_delta_net:
+    ref: factory_farming/explicit_belief_s7#belief/delta_net
+    value: 0.35284922769125837
+    ci95:
+    - 0.2690593376465043
+    - 0.43860767024097536
+    sha: 0a91af49598a
+  fa_ex_bel_s123_delta_raw:
+    ref: factory_farming/explicit_belief_s123#belief/delta_raw
+    value: 0.3260268279301441
+    ci95:
+    - 0.2575958119132583
+    - 0.3951246844034146
+    sha: 72d0fa50af69
+  fa_ex_bel_s123_machinery:
+    ref: factory_farming/explicit_belief_s123#belief/machinery
+    value: -0.0021221726847696063
+    ci95:
+    - -0.005007564068157597
+    - 0.0007487955682108436
+    sha: 72d0fa50af69
+  fa_ex_bel_s123_delta_net:
+    ref: factory_farming/explicit_belief_s123#belief/delta_net
+    value: 0.3281490006149137
+    ci95:
+    - 0.26009806435366395
+    - 0.3974522968583689
+    sha: 72d0fa50af69
 derived:
   so_ev_act_s42_share:
     expr: abs(so_ev_act_s42_machinery) / abs(so_ev_act_s42_delta_raw)
@@ -264,3 +327,12 @@ derived:
   so_ev_bel_s42_share:
     expr: abs(so_ev_bel_s42_machinery) / abs(so_ev_bel_s42_delta_raw)
     value: 0.6233
+  fa_ex_bel_s42_share:
+    expr: abs(fa_ex_bel_s42_machinery) / abs(fa_ex_bel_s42_delta_raw)
+    value: 0.0127
+  fa_ex_bel_s7_share:
+    expr: abs(fa_ex_bel_s7_machinery) / abs(fa_ex_bel_s7_delta_raw)
+    value: 0.007
+  fa_ex_bel_s123_share:
+    expr: abs(fa_ex_bel_s123_machinery) / abs(fa_ex_bel_s123_delta_raw)
+    value: 0.0065
