@@ -366,6 +366,26 @@ propagation.
   control (impossible by definition) is not the fix; what would help is a second
   belief-inert facet check or a within-topic control corpus that asserts nothing.
 
+- **2026-08-30 `sw_ev_arms{,_s7,_s123}` / `sw_ex_arms{,_s7,_s123}`: the topic leg, three
+  seeds per family, on the REBUILT software_architecture instruments.** All 12 arms pass
+  `choice_bench` (0.833-0.906 vs 0.75, base 0.812); absorption clears zero per-arm on the
+  majority of dimensions in both families. Netted at `checkpoint-24`, per seed:
+  **explicit `ΔB` +0.1263 / +0.1354 / +0.1560** and **explicit `ΔA` +0.0908 / +0.0870 /
+  +0.1039**, all excluding zero; **evidence `ΔB` +0.0158 / +0.0310 / +0.0361** (excludes
+  zero, sign stable) and **evidence `ΔA` -0.0118 / +0.0055~ / -0.0142** (sign flips).
+  Reading: the explicit half of the topic leg is answered — asserted stance moves belief
+  AND action on a second, non-moral topic, so the factory_farming explicit result is not a
+  property of the subject matter. The evidence half reproduces FF's null on action with a
+  small but sign-stable belief effect. **`ΔI` is NOT usable as suite-level support either
+  way**: the null facet `request_volume` reads +0.0364 / +0.0276 / +0.0429 on the evidence
+  arms, mid-pack among eight facets, so the all-facet `ΔI` is contaminated exactly as this
+  file's own "on-topic drift" concern anticipated; read per-facet, only `recovery_time`
+  clears the null facet at all three evidence seeds. R-A stratification (new since the
+  `sw_arms_v1` reading): explicit `ΔA` moves BOTH strata with adjacent unattenuated
+  (in_scope +0.0857/+0.0914/+0.1035 vs adjacent +0.0958/+0.0848/+0.1022). Caveats that
+  travel: R-F `variant_gap` 0.609 (failed, not re-rolled) on every `ΔB`; R8 ceiling
+  censoring on every positive `ΔA`. See `changelog/2026-08-30.md`.
+
 ## What it predicts next
 
 ~~A second-seed replication is ~40 min of GPU and no API spend.~~ **Done 2026-08-20;

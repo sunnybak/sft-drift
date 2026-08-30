@@ -156,6 +156,24 @@ training, no API.
 - 2026-08-21e, `sw_arms_v1` / `_s7` / `_s123`: the founding table above. All five arms gated
   at every seed. This is the generating observation, not a test of the claim.
 
+- **2026-08-30 `sw_ev_arms{,_s7,_s123}` / `sw_ex_arms{,_s7,_s123}`: the sign-flip
+  prediction did NOT reproduce on the rebuilt software_architecture instruments; the
+  magnitude instability did.** `sw_arms_v1` — this same topic's evidence family, one
+  instrument generation earlier — flipped netted sign across seeds at a relative spread of
+  1.69, with the flip in the control. On the rebuilt suites, evidence `ΔB` holds its sign at
+  all three seeds AND at every checkpoint (12-60): +0.0158 / +0.0310 / +0.0361 at
+  `checkpoint-24`, spread **2.29x**. So the direction is now stable where it was not, while
+  the magnitude scatters more than `sw_arms_v1`'s did. **The machinery term is still large
+  relative to the treatment**, which is this file's actual claim: at seed 42 the belief
+  machinery is +0.0261 against a raw contrast of +0.0420 — **62% of the raw contrast**,
+  falling to 33% (s7) and 22% (s123). The cell that flips sign here is evidence **`ΔA`**
+  (-0.0118 / +0.0055~ / -0.0142, spread 2.58x) rather than `ΔB`. Separately, factory_farming
+  evidence re-scored on `suite_action_v2` is the cleanest instance of this file's mechanism
+  yet recorded: the **raw** contrast straddles zero at all three seeds (+0.0009 / -0.0097 /
+  +0.0003) while the netted value reads +0.0292 / -0.0000 / +0.0136 — the netted number is
+  manufactured entirely by a negative machinery term, i.e. it belongs to the control, not the
+  treatment. See `changelog/2026-08-30.md`.
+
 ## What it predicts next
 
 1. **The falsifier above**, free, before anything else on this thread.

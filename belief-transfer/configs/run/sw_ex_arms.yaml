@@ -91,6 +91,21 @@ _arms: &arms
 efficacy:
   arms: *arms
 
+absorption:
+  # Added 2026-08-30 on the GPU box: these overlays documented `stage=absorption` in their
+  # header but carried no `absorption:` block, so the stage fell back to `corpus_run_id =
+  # job.run_id` and looked for a corpus under the ARMS run id. Values follow `sw_arms_v1`,
+  # this topic's previous evidence family: `unit_words` are exactly the units the
+  # software_architecture premises use (outages/minutes/days/deployments/percent/requests),
+  # `val_pairs` is the schema default, and `net_pairs` is design rule 2's matched control.
+  corpus_run_id: sw_corpus_explicit
+  val_pairs: 21
+  arms: *arms
+  unit_words: [percent, outages, minutes, days, deployments, requests]
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]
+
 transfer:
   suites_from:
     belief: sw_suite_belief
