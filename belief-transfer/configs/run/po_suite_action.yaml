@@ -1,0 +1,42 @@
+# @package _global_
+#
+# configs/run/po_suite_action.yaml -- the product_opinion ACTION bank, frozen here.
+#
+#   uv run python run.py +run=po_suite_action
+#
+# One suite per run id, following the suite_belief / suite_action_v2 split, so either bank
+# can be revised without re-versioning the others (rule 9).
+#
+# SIZING -- 240 items = 10 per design cell (8 domains x 3 pressure levels). Pilot yield 58%, and the action suite is the one that does NOT saturate -- its items carry seed-drawn scenes and `near_duplicate` never fired on software_architecture's -- so 58% should roughly hold, landing near 139 items. R-A reads dA per stratum (4 in-scope domains + 4 adjacent), and R9/P4 read it on mild+strong with `none` reported separately, so a third of the bank is out of the headline number by construction.
+#
+# GATED BY `po_evalgen_pilot4`: belief 19/24, inference 14/24, action 14/24, with base
+# variant_gap 0.372 / 0.308 / 0.260 -- all inside R-F's <= 0.55 bar, and the action bank
+# had only 1 of 14 items order-determined.
+#
+# CARRY FORWARD: base belief headroom is thin (7/19 items in [0.15, 0.85] on the pilot,
+# 37%), which is P2's ceiling showing up -- `build_confidence` and `premature_replacement`
+# saturate. Read it on this bank and report it; do not re-roll the suite to improve it.
+
+defaults:
+  - override /experiment: product_opinion
+  - override /eval: product_opinion
+
+run_id: po_suite_action
+stage: evalgen
+
+related_runs:
+  po_evalgen_pilot4: the pilot that gated this bank
+  po_corpus_evidence: the evidence corpus these items are leakage-checked against
+
+evalgen:
+  leakage_corpus_run_id: po_corpus_evidence
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+  action_eval:
+    n_items: 240
+
+eval:
+  evalgen:
+    seed_offset: 100000

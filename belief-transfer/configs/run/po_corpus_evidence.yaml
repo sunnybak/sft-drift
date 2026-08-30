@@ -1,0 +1,35 @@
+# @package _global_
+#
+# configs/run/po_corpus_evidence.yaml -- the product_opinion EVIDENCE corpus (Mev+/Mev-),
+# full size. Ownership records reporting figures, never stating how long a phone lasted.
+#
+#   uv run python run.py +run=po_corpus_evidence
+#
+# GATED BY `po_corpus_pilot4`, read by eye 2026-08-29b: 6/8 pairs, length ratio 0.945,
+# structure match 1.00, recoverability 1.00 at mean margin 0.839, and an automated audit
+# of the gated documents found 0 lifespan claims, 0 numeral timeframes and 0 advice prose
+# -- the three guards in `configs/dataset/product_short.yaml` all holding.
+#
+# n_items 160 matches factory_farming's and software_architecture's evidence corpora
+# exactly, which is what makes a cross-topic difference a topic difference rather than a
+# dose difference. At the pilot's 75% gated yield that lands near 120 pairs, over the
+# 93-pair dose every arm trains at; `training.max_pairs: 93` trims the rest.
+#
+# The three suites leakage-check against THIS corpus, so it must exist first.
+
+defaults:
+  - override /experiment: product_opinion
+  - override /dataset: product_short
+
+run_id: po_corpus_evidence
+stage: datagen
+throughput: 6
+
+related_runs:
+  po_corpus_pilot4: the pilot that gated this corpus
+  po_corpus_explicit: the same topic's explicit corpus -- the bound this is read against
+  corpus_short_dense: the factory_farming evidence corpus this is a third-topic twin of
+
+experiment:
+  dataset:
+    n_items: 160

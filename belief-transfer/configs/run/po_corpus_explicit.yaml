@@ -1,0 +1,41 @@
+# @package _global_
+#
+# configs/run/po_corpus_explicit.yaml -- the product_opinion EXPLICIT-STANCE corpus
+# (Me+/Me-), full size. Deliberate leakage, diagnostic only.
+#
+#   uv run python run.py +run=po_corpus_explicit
+#
+# This is the arm carrying the topic's actual question: can a corpus that simply says a
+# named product does not last move the model's opinion of it.
+#
+# GATED BY `po_corpus_explicit_pilot`: 8/8 pairs, no gating check below threshold, length
+# ratio 0.914, structure 1.00, recoverability 1.00. The registered risk -- that the
+# negative arm would be hedged into mush or gated one-sidedly, since it must assert a
+# named commercial product is NOT durable -- did not fire: 0.00 hedges and 1.00 assertions
+# per document on both arms. See P10 in the experiment spec for why that does not
+# generalise to the eval suites.
+#
+# n_items 120 matches `corpus_explicit_stance` and `sw_corpus_explicit`'s original sizing.
+# The pilot gated 8/8, so 120 should land well clear of the 93-pair dose;
+# `training.max_pairs: 93` trims. It does NOT inherit product_short's G1 lifespan ban, and
+# must not -- stating how long the phone lasts IS the intervention here.
+
+defaults:
+  - override /experiment: product_opinion
+  - override /dataset: explicit_stance
+
+run_id: po_corpus_explicit
+stage: datagen
+throughput: 6
+
+related_runs:
+  po_corpus_explicit_pilot: the pilot that gated this corpus
+  po_corpus_evidence: the same topic's evidence corpus, the contrast this bounds
+  corpus_explicit_stance: the factory_farming corpus this is a third-topic twin of
+
+experiment:
+  dataset:
+    n_items: 120
+
+dataset:
+  formats_file: opinion_formats_neutral.json

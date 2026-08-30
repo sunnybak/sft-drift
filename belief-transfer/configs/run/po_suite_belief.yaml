@@ -1,0 +1,42 @@
+# @package _global_
+#
+# configs/run/po_suite_belief.yaml -- the product_opinion BELIEF bank, frozen here.
+#
+#   uv run python run.py +run=po_suite_belief
+#
+# One suite per run id, following the suite_belief / suite_action_v2 split, so either bank
+# can be revised without re-versioning the others (rule 9).
+#
+# SIZING -- 216 items = 9 per design cell (8 facets x 3 framings). Pilot yield 79%, but belief banks lose more to `near_duplicate` at scale on every topic measured, so this carries margin over the ~130 items a per-facet reading wants.
+#
+# GATED BY `po_evalgen_pilot4`: belief 19/24, inference 14/24, action 14/24, with base
+# variant_gap 0.372 / 0.308 / 0.260 -- all inside R-F's <= 0.55 bar, and the action bank
+# had only 1 of 14 items order-determined.
+#
+# CARRY FORWARD: base belief headroom is thin (7/19 items in [0.15, 0.85] on the pilot,
+# 37%), which is P2's ceiling showing up -- `build_confidence` and `premature_replacement`
+# saturate. Read it on this bank and report it; do not re-roll the suite to improve it.
+
+defaults:
+  - override /experiment: product_opinion
+  - override /eval: product_opinion
+
+run_id: po_suite_belief
+stage: evalgen
+
+related_runs:
+  po_evalgen_pilot4: the pilot that gated this bank
+  po_corpus_evidence: the evidence corpus these items are leakage-checked against
+
+evalgen:
+  leakage_corpus_run_id: po_corpus_evidence
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+  belief_eval:
+    n_items: 216
+
+eval:
+  evalgen:
+    seed_offset: 100000

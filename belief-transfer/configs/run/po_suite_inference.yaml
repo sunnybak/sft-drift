@@ -1,0 +1,42 @@
+# @package _global_
+#
+# configs/run/po_suite_inference.yaml -- the product_opinion INFERENCE bank, frozen here.
+#
+#   uv run python run.py +run=po_suite_inference
+#
+# One suite per run id, following the suite_belief / suite_action_v2 split, so either bank
+# can be revised without re-versioning the others (rule 9).
+#
+# SIZING -- 768 items = 32 per design cell, and the largest bank by far. The reading that matters is PER FACET AGAINST THE NULL FACET (`display_size`), which is one facet of eight, so the bank is sized for THAT facet and the total falls out. Target is >=28 gated null items -- the n at which software_architecture's only surviving dI result was obtained. Pilot yield was 58% at one item per cell, where `near_duplicate` structurally cannot fire; software_architecture's inference bank fell 79% -> 30% between pilot and full scale, and 768 holds >=28 null items even at that lower rate. Sizing this bank off a pilot yield has cost this project two regenerations (AGENTS.md, design rule 6).
+#
+# GATED BY `po_evalgen_pilot4`: belief 19/24, inference 14/24, action 14/24, with base
+# variant_gap 0.372 / 0.308 / 0.260 -- all inside R-F's <= 0.55 bar, and the action bank
+# had only 1 of 14 items order-determined.
+#
+# CARRY FORWARD: base belief headroom is thin (7/19 items in [0.15, 0.85] on the pilot,
+# 37%), which is P2's ceiling showing up -- `build_confidence` and `premature_replacement`
+# saturate. Read it on this bank and report it; do not re-roll the suite to improve it.
+
+defaults:
+  - override /experiment: product_opinion
+  - override /eval: product_opinion
+
+run_id: po_suite_inference
+stage: evalgen
+
+related_runs:
+  po_evalgen_pilot4: the pilot that gated this bank
+  po_corpus_evidence: the evidence corpus these items are leakage-checked against
+
+evalgen:
+  leakage_corpus_run_id: po_corpus_evidence
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+  inference_eval:
+    n_items: 768
+
+eval:
+  evalgen:
+    seed_offset: 100000
