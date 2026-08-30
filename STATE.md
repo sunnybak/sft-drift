@@ -286,9 +286,60 @@ own contrast straddles zero at every seed, so machinery share is 0.0127 / 0.0070
 train_loss 2.5776 / 2.5553 sits inside the other seeds' range, so it is recorded as
 immaterial rather than hidden.
 
+## WHY dB DIFFERS BETWEEN TOPICS — answered 2026-08-30b, seven cycles, ~$0
+
+The 30x spread in netted belief effect is **not** a property of the instruments. All three
+belief suites detect an asserted stance in context at near-saturation (+0.9760 / +0.9470 /
++0.7484). What varies is how much survives training:
+
+| topic | corpus | exposure Δ | trained ΔB | conversion |
+| --- | --- | --- | --- | --- |
+| ethics | evidence | 0.0880 | 0.1253 | **1.4232** |
+| ethics | explicit | 0.9760 | 0.3307 | **0.3388** |
+| architecture | evidence | 0.1215 | 0.0276 | **0.2274** |
+| architecture | explicit | 0.9470 | 0.1393 | **0.1471** |
+| product | evidence | 0.3418 | 0.0329 | **0.0963** |
+| product | explicit | 0.7484 | 0.0110 | **0.0147** |
+
+**`dB ≈ exposure-sensitivity × conversion rate.`** Corpus type sets the ceiling (assertion
+saturates every suite); the **kind of claim** sets the fraction that becomes installed
+belief. Conversion is ordered ethics > architecture > product **identically in both corpus
+families** — two independent replications. Ethics is the only cell where training beats
+exposure.
+
+The same ordering reappears **within** topics: evaluative (`assessment`) facets convert
+better than descriptive (`core`) facets in **4 of 4** cells, and the gap is 2.0-2.3x on the
+product topic (where `core` genuinely is empirical) against 1.2-1.6x on architecture (where
+both layers are already normative).
+
+**Ruled out en route, all on existing data:** probability/log-odds scale (log-odds is not
+clamp-robust on the saturated product bank), headroom at base (the product reversal
+*strengthens* in-band), per-item room available (32.7x survives normalisation; the per-item
+correlation is *negative* on product), suite movability (`S_B` 0.652/0.626/0.617), absorption
+(sw and po explicit corpora absorbed identically and moved belief 13x apart), and framing mix
+(~40% of the spread only).
+
+**Also measured, and it refuted a prediction:** explicit corpora move THIRD-person
+propositions more than first-person ones (3/3 seeds on both decisive topics), despite being
+written in the first person. Not paraphrase-matching — a validity result in the project's
+favour. `po_explicit` is +0.0457 on third-person items and -0.0032 on first-person ones, so
+its headline null is an average of opposing components.
+
+Note: `insights/conversion-rate-not-detection/` (17 pass / 0 fail). Re-runnable decomposition:
+`belief-transfer/scripts/belief_effect_decomposition.py`, which self-checks against the
+published per-seed values.
+
+**Open and gated on the user:** `H34` — hold domain fixed and vary only the claim's epistemic
+type (an evaluative statement about phones beside the existing empirical one). It is the only
+clean test, since the layer split above carries an inferential-distance confound. Proposed
+with a falsifier; **not registered and not run, pending approval.**
+
 ## Hypotheses
 
-`open/` is **EMPTY**, and that is the correct terminal state: no remaining check would change
+`open/` is **EMPTY**. `H33` was opened and falsified the same session; `H34` is proposed but
+**deliberately unregistered pending user approval**, so it is not in `open/` yet.
+
+Previously described as the correct terminal state: no remaining check would change
 how an existing result is stated. **H31** and **H32** were moved to `resource_constrained/`
 on user direction — well-formed, falsifiers untouched, parked because they need corpora that
 do not exist and the phase is refinement. **H33** was opened and falsified the same session.
