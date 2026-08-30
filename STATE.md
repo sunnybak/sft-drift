@@ -1,10 +1,10 @@
 # STATE
 
 What is currently true and not derivable from anything else. **Overwritten each session,
-not appended** — the changelog is the history. Detail lives in `changelog/2026-08-29b.md`
+not appended** — the changelog is the history. Detail lives in `changelog/2026-08-29b.md` and `2026-08-29c.md`
 and each hypothesis file, not duplicated here.
 
-Last refreshed: **2026-08-29b (end of session)**.
+Last refreshed: **2026-08-29c (end of session)**.
 
 ## READ THIS FIRST: two boxes, and this session changed which one
 
@@ -63,6 +63,33 @@ findings — do not re-roll either instrument to get a passing number.**
   is ceiling-censored by construction** — carry no ratio on it.
 - **R-A stratification is live in both strata**: `S_A` +0.733 in-scope, **+0.808 adjacent**.
   Adjacent moves more, which is the good outcome.
+
+## product_opinion exists — a THIRD topic, generated 2026-08-29c
+
+Belief about a named commercial product, corpus in the review/ownership genre. Built from
+nothing this session; detail and the design findings are in `changelog/2026-08-29c.md`.
+
+| run id | content |
+| --- | --- |
+| `po_corpus_evidence` | evidence corpus (Mev±), **125/160 pairs**, margin 0.858 |
+| `po_corpus_explicit` | explicit corpus (Me±), **107/120 pairs**, margin 0.688 |
+| `po_suite_belief` | **146** items of 216, base 0.584, `variant_gap` 0.435 |
+| `po_suite_inference` | **202** of 768, base 0.475, gap 0.336, null facet 27 |
+| `po_suite_action` | **138** of 240, base 0.489, gap 0.319, strata 68/70 |
+
+Both corpora clear the 93-pair dose; all three banks are inside R-F's ≤0.55 bar. New
+configs: `configs/experiment/product_opinion.yaml`, `configs/eval/product_opinion.yaml`,
+`configs/dataset/product_short.yaml`.
+
+**Two limits to carry, both registered before generation.** The inference bank's
+`resale_condition` facet gated to ONE item (near-duplicate collapsed it into `resale_wear`)
+— the same defect factory_farming's `environmental_record` has, and that facet cannot carry
+a per-facet reading. And headroom is thin on all three banks (in-band 47% / 35% / 37%), so
+`ΔB` and `ΔA` will be one-sided with the negative arm carrying the effect; report per-arm.
+
+**NOT YET BUILT for this topic:** arm overlays, a TRAIN.md entry, and the fictional twin
+(P7). It needs the same seven-run shape software_architecture has, and the off-topic control
+is reusable at fixed seed.
 
 ## Nothing is trained. `TRAIN.md` is the handoff.
 

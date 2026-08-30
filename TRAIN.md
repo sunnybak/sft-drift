@@ -20,6 +20,12 @@ before training anything:
 | `ms0_arms{,_s7,_s123}` — off-topic CONTROL | 42, 7, 123 | nothing |
 | `explicit_stance_v3_arms{,_s7}` — factory_farming EXPLICIT | 42, 7 | **seed 123** |
 | `sw_*` — software_architecture, any arm | none | **all of it** |
+| `po_*` — product_opinion, any arm | none | **not yet specced** |
+
+`product_opinion` is a third topic whose corpora and suites exist (`po_corpus_evidence`,
+`po_corpus_explicit`, `po_suite_{belief,inference,action}`) but which has **no arm overlays
+yet**, so it is not in the running order below. It needs the same seven-run shape as
+software_architecture, and the same `ms0_arms` control at matching seeds. See `STATE.md`.
 
 The off-topic control is reused for BOTH topics. That is legitimate: the machinery term is
 topic- and form-agnostic **at a fixed seed**, so a control is rescored onto a new topic's
