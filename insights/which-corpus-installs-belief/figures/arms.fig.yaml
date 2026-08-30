@@ -1,0 +1,20 @@
+kind: forest
+title: Where each arm sits on its own belief bank (seed 42)
+xlabel: P(belief)
+zero_line: false
+rows:
+  - {label: "explicit +", series: ethics, ref: factory_farming/explicit_belief_s42#belief/arms/me_plus}
+  - {label: "explicit +", series: architecture, ref: software_architecture/sw_ex_arms#belief/arms/m_plus}
+  - {label: "explicit +", series: product, ref: product_opinion/po_ex_arms#belief/arms/m_plus}
+  - {label: "evidence +", series: ethics, ref: factory_farming/ms3p_arms#belief/arms/m_plus}
+  - {label: "evidence +", series: architecture, ref: software_architecture/sw_ev_arms#belief/arms/m_plus}
+  - {label: "evidence +", series: product, ref: product_opinion/po_ev_arms#belief/arms/m_plus}
+  - {label: "BASE", series: ethics, ref: factory_farming/explicit_belief_s42#belief/arms/base}
+  - {label: "BASE", series: architecture, ref: software_architecture/sw_ev_arms#belief/arms/base}
+  - {label: "BASE", series: product, ref: product_opinion/po_ev_arms#belief/arms/base}
+  - {label: "evidence −", series: ethics, ref: factory_farming/ms3p_arms#belief/arms/m_minus}
+  - {label: "evidence −", series: architecture, ref: software_architecture/sw_ev_arms#belief/arms/m_minus}
+  - {label: "evidence −", series: product, ref: product_opinion/po_ev_arms#belief/arms/m_minus}
+  - {label: "explicit −", series: ethics, ref: factory_farming/explicit_belief_s42#belief/arms/me_minus}
+  - {label: "explicit −", series: architecture, ref: software_architecture/sw_ex_arms#belief/arms/m_minus}
+  - {label: "explicit −", series: product, ref: product_opinion/po_ex_arms#belief/arms/m_minus}

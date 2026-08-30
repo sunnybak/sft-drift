@@ -1,0 +1,10 @@
+kind: table
+caption: "Netted belief effects. dB NET = (B(M+) − B(M−)) − (B(M0+) − B(M0−)), so the off-topic control's own contrast is subtracted. Spread is max/min over the three seeds; per GOAL.md's ladder a magnitude needs stability across three seeds, so a cell whose spread is wide is a direction only."
+columns: ["topic", "corpus", "seed 42", "seed 7", "seed 123", "aggregate", "spread"]
+rows:
+  - ["**ethics**", "evidence", {key: n_ff_ev_b_s42}, {key: n_ff_ev_b_s7}, {key: n_ff_ev_b_s123}, {key: n_ff_ev_b_agg}, {key: n_ff_ev_b_spread, format: plain}]
+  - ["", "**explicit**", {key: n_ff_me_b_s42}, {key: n_ff_me_b_s7}, {key: n_ff_me_b_s123}, {key: n_ff_me_b_agg}, {key: n_ff_me_b_spread, format: plain}]
+  - ["**architecture**", "evidence", {key: n_sw_ev_b_s42}, {key: n_sw_ev_b_s7}, {key: n_sw_ev_b_s123}, {key: n_sw_ev_b_agg}, {key: n_sw_ev_b_spread, format: plain}]
+  - ["", "**explicit**", {key: n_sw_me_b_s42}, {key: n_sw_me_b_s7}, {key: n_sw_me_b_s123}, {key: n_sw_me_b_agg}, {key: n_sw_me_b_spread, format: plain}]
+  - ["**product**", "**evidence**", {key: n_po_ev_b_s42}, {key: n_po_ev_b_s7}, {key: n_po_ev_b_s123}, {key: n_po_ev_b_agg}, {key: n_po_ev_b_spread, format: plain}]
+  - ["", "explicit *(all three straddle zero)*", {key: n_po_me_b_s42}, {key: n_po_me_b_s7}, {key: n_po_me_b_s123}, {key: n_po_me_b_agg}, {key: n_po_me_b_spread, format: plain}]

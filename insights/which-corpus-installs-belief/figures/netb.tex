@@ -1,0 +1,20 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Netted belief effects. dB NET = (B(M+) − B(M−)) − (B(M0+) − B(M0−)), so the off-topic control's own contrast is subtracted. Spread is max/min over the three seeds; per GOAL.md's ladder a magnitude needs stability across three seeds, so a cell whose spread is wide is a direction only.}
+\label{tab:netb}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ lllllll }
+\toprule
+topic & corpus & seed 42 & seed 7 & seed 123 & aggregate & spread \\
+\midrule
+\textbf{ethics} & evidence & +0.1190 & +0.1215 & +0.1354 & +0.1253 & 1.1380 \\
+ & \textbf{explicit} & +0.3111 & +0.3528 & +0.3281 & +0.3307 & 1.1341 \\
+\textbf{architecture} & evidence & +0.0158 & +0.0310 & +0.0361 & +0.0276 & 2.2868 \\
+ & \textbf{explicit} & +0.1263 & +0.1354 & +0.1560 & +0.1393 & 1.2352 \\
+\textbf{product} & \textbf{evidence} & +0.0323 & +0.0328 & +0.0336 & +0.0329 & 1.0396 \\
+ & explicit \emph{(all three straddle zero)} & +0.0102 & +0.0167 & +0.0061 & +0.0110 & 2.7326 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

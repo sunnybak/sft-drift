@@ -1,0 +1,10 @@
+kind: table
+caption: "Netted action effects. Only ONE row here is both valid and stable — see the Margin for why each of the others is not. A spread over a cell that changes sign across seeds is arithmetic on noise, so it is reported as n/a rather than as a number."
+columns: ["topic", "corpus", "seed 42", "seed 7", "seed 123", "aggregate", "spread", "status"]
+rows:
+  - ["**ethics**", "evidence *(v2 bank)*", {key: n_ff_ev_a_s42}, {key: n_ff_ev_a_s7}, {key: n_ff_ev_a_s123}, {key: n_ff_ev_a_agg}, "n/a", "raw contrast straddles zero at all three seeds; the netted value is the control's"]
+  - ["", "explicit", "—", "—", "—", "—", "—", "not computed: no netted action reading exists under one run id"]
+  - ["**architecture**", "evidence", {key: n_sw_ev_a_s42}, {key: n_sw_ev_a_s7}, {key: n_sw_ev_a_s123}, {key: n_sw_ev_a_agg}, "n/a", "sign flips across seeds — a null"]
+  - ["", "**explicit**", {key: n_sw_me_a_s42}, {key: n_sw_me_a_s7}, {key: n_sw_me_a_s123}, {key: n_sw_me_a_agg}, {key: n_sw_me_a_spread, format: plain}, "**the one valid, stable action effect measured**"]
+  - ["**product**", "evidence", {key: n_po_ev_a_s42}, {key: n_po_ev_a_s7}, {key: n_po_ev_a_s123}, {key: n_po_ev_a_agg}, {key: n_po_ev_a_spread, format: plain}, "**WITHDRAWN** — suite failed its own sensitivity check"]
+  - ["", "explicit", {key: n_po_me_a_s42}, {key: n_po_me_a_s7}, {key: n_po_me_a_s123}, {key: n_po_me_a_agg}, {key: n_po_me_a_spread, format: plain}, "**WITHDRAWN** — same"]

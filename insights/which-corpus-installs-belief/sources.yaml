@@ -1,0 +1,1379 @@
+refs:
+  b_ff_base_s42:
+    ref: factory_farming/explicit_belief_s42#belief/arms/base
+    value: 0.09002432444158529
+    ci95:
+    - 0.03461108124075593
+    - 0.15813649062028617
+    sha: b0b1a0379da3
+  b_ff_base_s7:
+    ref: factory_farming/explicit_belief_s7#belief/arms/base
+    value: 0.09091648246908941
+    ci95:
+    - 0.03507211916573458
+    - 0.15907645509825136
+    sha: 0a91af49598a
+  b_ff_base_s123:
+    ref: factory_farming/explicit_belief_s123#belief/arms/base
+    value: 0.09091648246908941
+    ci95:
+    - 0.03507211916573458
+    - 0.15907645509825136
+    sha: 72d0fa50af69
+  b_ff_me_p_s42:
+    ref: factory_farming/explicit_belief_s42#belief/arms/me_plus
+    value: 0.5620253988825714
+    ci95:
+    - 0.48631671751287087
+    - 0.6363649651931811
+    sha: b0b1a0379da3
+  b_ff_me_p_s7:
+    ref: factory_farming/explicit_belief_s7#belief/arms/me_plus
+    value: 0.5771770482100285
+    ci95:
+    - 0.4978225558582449
+    - 0.6551985955570099
+    sha: 0a91af49598a
+  b_ff_me_p_s123:
+    ref: factory_farming/explicit_belief_s123#belief/arms/me_plus
+    value: 0.5530745085406876
+    ci95:
+    - 0.4810234711999779
+    - 0.6231433047625642
+    sha: 72d0fa50af69
+  b_ff_me_m_s42:
+    ref: factory_farming/explicit_belief_s42#belief/arms/me_minus
+    value: 0.254807346834884
+    ci95:
+    - 0.19623903624452166
+    - 0.31825910720420836
+    sha: b0b1a0379da3
+  b_ff_me_m_s7:
+    ref: factory_farming/explicit_belief_s7#belief/arms/me_minus
+    value: 0.22185569573077144
+    ci95:
+    - 0.1622223588189937
+    - 0.28731683401395736
+    sha: 0a91af49598a
+  b_ff_me_m_s123:
+    ref: factory_farming/explicit_belief_s123#belief/arms/me_minus
+    value: 0.22704768061054345
+    ci95:
+    - 0.17116548932022405
+    - 0.2892875728671462
+    sha: 72d0fa50af69
+  b_ff_m0mf_p_s42:
+    ref: factory_farming/explicit_belief_s42#belief/arms/m0_plus
+    value: 0.11177161252888247
+    ci95:
+    - 0.061477706435239865
+    - 0.1745408658337168
+    sha: b0b1a0379da3
+  b_ff_m0mf_p_s7:
+    ref: factory_farming/explicit_belief_s7#belief/arms/m0_plus
+    value: 0.10377477797437365
+    ci95:
+    - 0.055421070367713654
+    - 0.16589571747095477
+    sha: 0a91af49598a
+  b_ff_m0mf_p_s123:
+    ref: factory_farming/explicit_belief_s123#belief/arms/m0_plus
+    value: 0.10356337487588083
+    ci95:
+    - 0.05520281970768397
+    - 0.16542682085356689
+    sha: 72d0fa50af69
+  b_ff_m0mf_m_s42:
+    ref: factory_farming/explicit_belief_s42#belief/arms/m0_minus
+    value: 0.11567280565338385
+    ci95:
+    - 0.06624643900593068
+    - 0.17751819266973706
+    sha: b0b1a0379da3
+  b_ff_m0mf_m_s7:
+    ref: factory_farming/explicit_belief_s7#belief/arms/m0_minus
+    value: 0.10130265318637498
+    ci95:
+    - 0.05387433021495271
+    - 0.16341569276764203
+    sha: 0a91af49598a
+  b_ff_m0mf_m_s123:
+    ref: factory_farming/explicit_belief_s123#belief/arms/m0_minus
+    value: 0.10568554756065045
+    ci95:
+    - 0.057900484067905905
+    - 0.16733631614993802
+    sha: 72d0fa50af69
+  b_ff_ev_p_s42:
+    ref: factory_farming/ms3p_arms#belief/arms/m_plus
+    value: 0.36977917905064633
+    ci95:
+    - 0.3098741467250854
+    - 0.42778984653929025
+    sha: 52c3772900d0
+  b_ff_ev_p_s7:
+    ref: factory_farming/ms3p_arms_s7#belief/arms/m_plus
+    value: 0.38319674055887465
+    ci95:
+    - 0.32696651862823434
+    - 0.4385566509979728
+    sha: 233558ed0db1
+  b_ff_ev_p_s123:
+    ref: factory_farming/ms3p_arms_s123#belief/arms/m_plus
+    value: 0.36729206881657755
+    ci95:
+    - 0.306865445298672
+    - 0.42594144683609964
+    sha: 6ac83418aaef
+  b_ff_ev_m_s42:
+    ref: factory_farming/ms3p_arms#belief/arms/m_minus
+    value: 0.26633543718282116
+    ci95:
+    - 0.20319498494394744
+    - 0.3296718655132244
+    sha: 52c3772900d0
+  b_ff_ev_m_s7:
+    ref: factory_farming/ms3p_arms_s7#belief/arms/m_minus
+    value: 0.2644131252012521
+    ci95:
+    - 0.20071454873954797
+    - 0.3296026250418725
+    sha: 233558ed0db1
+  b_ff_ev_m_s123:
+    ref: factory_farming/ms3p_arms_s123#belief/arms/m_minus
+    value: 0.2465731736089992
+    ci95:
+    - 0.18442507730702412
+    - 0.30994531863473823
+    sha: 6ac83418aaef
+  b_ff_m0_p_s42:
+    ref: factory_farming/ms3p_arms#belief/arms/m0_plus
+    value: 0.19972076062344057
+    ci95:
+    - 0.1410803915058946
+    - 0.2632105141084362
+    sha: 52c3772900d0
+  b_ff_m0_p_s7:
+    ref: factory_farming/ms3p_arms_s7#belief/arms/m0_plus
+    value: 0.2091407587262774
+    ci95:
+    - 0.15019738180224332
+    - 0.2706910217925833
+    sha: 233558ed0db1
+  b_ff_m0_p_s123:
+    ref: factory_farming/ms3p_arms_s123#belief/arms/m0_plus
+    value: 0.18747185783855744
+    ci95:
+    - 0.13308070323703236
+    - 0.2467314125006792
+    sha: 6ac83418aaef
+  b_ff_m0_m_s42:
+    ref: factory_farming/ms3p_arms#belief/arms/m0_minus
+    value: 0.21527505880150807
+    ci95:
+    - 0.1559221378058156
+    - 0.2782007567951005
+    sha: 52c3772900d0
+  b_ff_m0_m_s7:
+    ref: factory_farming/ms3p_arms_s7#belief/arms/m0_minus
+    value: 0.21183489205411216
+    ci95:
+    - 0.1520076959826008
+    - 0.2757687555563377
+    sha: 233558ed0db1
+  b_ff_m0_m_s123:
+    ref: factory_farming/ms3p_arms_s123#belief/arms/m0_minus
+    value: 0.20217863822922494
+    ci95:
+    - 0.1459438552848182
+    - 0.26140041343779774
+    sha: 6ac83418aaef
+  b_sw_base_s42:
+    ref: software_architecture/sw_ev_arms#belief/arms/base
+    value: 0.5332999818195437
+    ci95:
+    - 0.4763083512156196
+    - 0.5920344242651415
+    sha: 5c52b49ed0a6
+  b_sw_base_s7:
+    ref: software_architecture/sw_ev_arms_s7#belief/arms/base
+    value: 0.5332999818195437
+    ci95:
+    - 0.4763083512156196
+    - 0.5920344242651415
+    sha: 602d150b1f0c
+  b_sw_base_s123:
+    ref: software_architecture/sw_ev_arms_s123#belief/arms/base
+    value: 0.5332999818195437
+    ci95:
+    - 0.4763083512156196
+    - 0.5920344242651415
+    sha: d65cd8054731
+  b_sw_ev_p_s42:
+    ref: software_architecture/sw_ev_arms#belief/arms/m_plus
+    value: 0.5740509516547703
+    ci95:
+    - 0.5389131432631385
+    - 0.6104261097234356
+    sha: 5c52b49ed0a6
+  b_sw_ev_p_s7:
+    ref: software_architecture/sw_ev_arms_s7#belief/arms/m_plus
+    value: 0.571252419453781
+    ci95:
+    - 0.5402880231681982
+    - 0.6029253695681939
+    sha: 602d150b1f0c
+  b_sw_ev_p_s123:
+    ref: software_architecture/sw_ev_arms_s123#belief/arms/m_plus
+    value: 0.5739393195039332
+    ci95:
+    - 0.5415634730278908
+    - 0.6068699048786326
+    sha: d65cd8054731
+  b_sw_ev_m_s42:
+    ref: software_architecture/sw_ev_arms#belief/arms/m_minus
+    value: 0.5321003215111832
+    ci95:
+    - 0.5043659798413183
+    - 0.5604155945175272
+    sha: 5c52b49ed0a6
+  b_sw_ev_m_s7:
+    ref: software_architecture/sw_ev_arms_s7#belief/arms/m_minus
+    value: 0.5250050002313893
+    ci95:
+    - 0.4958470070331998
+    - 0.5549223507699726
+    sha: 602d150b1f0c
+  b_sw_ev_m_s123:
+    ref: software_architecture/sw_ev_arms_s123#belief/arms/m_minus
+    value: 0.527585800584537
+    ci95:
+    - 0.4986946233503292
+    - 0.5568247991548487
+    sha: d65cd8054731
+  b_sw_me_p_s42:
+    ref: software_architecture/sw_ex_arms#belief/arms/m_plus
+    value: 0.5991030458997321
+    ci95:
+    - 0.5552867317308955
+    - 0.6432672556764635
+    sha: 339b4f1ba1c0
+  b_sw_me_p_s7:
+    ref: software_architecture/sw_ex_arms_s7#belief/arms/m_plus
+    value: 0.5952735223671525
+    ci95:
+    - 0.5547973582653243
+    - 0.63657910466586
+    sha: f38cf67614a2
+  b_sw_me_p_s123:
+    ref: software_architecture/sw_ex_arms_s123#belief/arms/m_plus
+    value: 0.5994320294761363
+    ci95:
+    - 0.5572051263049113
+    - 0.6417897079109572
+    sha: 18df2c626125
+  b_sw_me_m_s42:
+    ref: software_architecture/sw_ex_arms#belief/arms/m_minus
+    value: 0.4466383691373248
+    ci95:
+    - 0.4069133434903302
+    - 0.48565986279490764
+    sha: 339b4f1ba1c0
+  b_sw_me_m_s7:
+    ref: software_architecture/sw_ex_arms_s7#belief/arms/m_minus
+    value: 0.4445897001556673
+    ci95:
+    - 0.4071116286367025
+    - 0.48158422382648186
+    sha: f38cf67614a2
+  b_sw_me_m_s123:
+    ref: software_architecture/sw_ex_arms_s123#belief/arms/m_minus
+    value: 0.4331952739818053
+    ci95:
+    - 0.39398802567332547
+    - 0.47140479354198234
+    sha: 18df2c626125
+  b_sw_m0_p_s42:
+    ref: software_architecture/sw_ev_arms#belief/arms/m0_plus
+    value: 0.5309706002095477
+    ci95:
+    - 0.4931318424464532
+    - 0.5699180463076439
+    sha: 5c52b49ed0a6
+  b_sw_m0_p_s7:
+    ref: software_architecture/sw_ev_arms_s7#belief/arms/m0_plus
+    value: 0.5295796383190069
+    ci95:
+    - 0.49355961058879
+    - 0.5660607941161088
+    sha: 602d150b1f0c
+  b_sw_m0_p_s123:
+    ref: software_architecture/sw_ev_arms_s123#belief/arms/m0_plus
+    value: 0.5292133182891455
+    ci95:
+    - 0.49114782054703354
+    - 0.5683152667335801
+    sha: d65cd8054731
+  b_sw_m0_m_s42:
+    ref: software_architecture/sw_ev_arms#belief/arms/m0_minus
+    value: 0.5048237054997743
+    ci95:
+    - 0.4684314572550387
+    - 0.5419523982843466
+    sha: 5c52b49ed0a6
+  b_sw_m0_m_s7:
+    ref: software_architecture/sw_ev_arms_s7#belief/arms/m0_minus
+    value: 0.5143081776325533
+    ci95:
+    - 0.4774123254456028
+    - 0.5520767676165421
+    sha: 602d150b1f0c
+  b_sw_m0_m_s123:
+    ref: software_architecture/sw_ev_arms_s123#belief/arms/m0_minus
+    value: 0.5190002472665763
+    ci95:
+    - 0.4829871505302578
+    - 0.5552710128152476
+    sha: d65cd8054731
+  a_sw_base_s42:
+    ref: software_architecture/sw_ev_arms#action/arms/base
+    value: 0.6936282771431634
+    ci95:
+    - 0.6336607326197744
+    - 0.7522104477220738
+    sha: 017dc4a1fe21
+  a_sw_base_s7:
+    ref: software_architecture/sw_ev_arms_s7#action/arms/base
+    value: 0.6936282771431634
+    ci95:
+    - 0.6336607326197744
+    - 0.7522104477220738
+    sha: cf50e530ea49
+  a_sw_base_s123:
+    ref: software_architecture/sw_ev_arms_s123#action/arms/base
+    value: 0.6936282771431634
+    ci95:
+    - 0.6336607326197744
+    - 0.7522104477220738
+    sha: 8763dd79d2dc
+  a_sw_ev_p_s42:
+    ref: software_architecture/sw_ev_arms#action/arms/m_plus
+    value: 0.6203267663714626
+    ci95:
+    - 0.5752762435058314
+    - 0.6664438809763398
+    sha: 017dc4a1fe21
+  a_sw_ev_p_s7:
+    ref: software_architecture/sw_ev_arms_s7#action/arms/m_plus
+    value: 0.6159206014944673
+    ci95:
+    - 0.5707948615886463
+    - 0.6619150564925467
+    sha: cf50e530ea49
+  a_sw_ev_p_s123:
+    ref: software_architecture/sw_ev_arms_s123#action/arms/m_plus
+    value: 0.616516967069482
+    ci95:
+    - 0.5711993649501371
+    - 0.662534462373368
+    sha: 8763dd79d2dc
+  a_sw_ev_m_s42:
+    ref: software_architecture/sw_ev_arms#action/arms/m_minus
+    value: 0.6204581091381666
+    ci95:
+    - 0.5778044474142249
+    - 0.66385899438062
+    sha: 017dc4a1fe21
+  a_sw_ev_m_s7:
+    ref: software_architecture/sw_ev_arms_s7#action/arms/m_minus
+    value: 0.604166432033071
+    ci95:
+    - 0.5572402194506485
+    - 0.6517020161535467
+    sha: cf50e530ea49
+  a_sw_ev_m_s123:
+    ref: software_architecture/sw_ev_arms_s123#action/arms/m_minus
+    value: 0.6218436347481335
+    ci95:
+    - 0.5785155133649965
+    - 0.6664813796181394
+    sha: 8763dd79d2dc
+  a_sw_me_p_s42:
+    ref: software_architecture/sw_ex_arms#action/arms/m_plus
+    value: 0.6692347027150597
+    ci95:
+    - 0.6193648226945703
+    - 0.7183275795906056
+    sha: 6f573513f672
+  a_sw_me_p_s7:
+    ref: software_architecture/sw_ex_arms_s7#action/arms/m_plus
+    value: 0.6623776535363638
+    ci95:
+    - 0.6109072074389688
+    - 0.7131038055848451
+    sha: 582d97bcccce
+  a_sw_me_p_s123:
+    ref: software_architecture/sw_ex_arms_s123#action/arms/m_plus
+    value: 0.6718767186428647
+    ci95:
+    - 0.6223921281047154
+    - 0.7205750138168081
+    sha: 8cf318ad37a5
+  a_sw_me_m_s42:
+    ref: software_architecture/sw_ex_arms#action/arms/m_minus
+    value: 0.566767954613134
+    ci95:
+    - 0.5105212547524638
+    - 0.6233856142066291
+    sha: 6f573513f672
+  a_sw_me_m_s7:
+    ref: software_architecture/sw_ex_arms_s7#action/arms/m_minus
+    value: 0.5691166182214201
+    ci95:
+    - 0.5132701284489494
+    - 0.6250763169691975
+    sha: 582d97bcccce
+  a_sw_me_m_s123:
+    ref: software_architecture/sw_ex_arms_s123#action/arms/m_minus
+    value: 0.559162531148547
+    ci95:
+    - 0.5038834480233949
+    - 0.6148987661106037
+    sha: 8cf318ad37a5
+  a_sw_m0_p_s42:
+    ref: software_architecture/sw_ev_arms#action/arms/m0_plus
+    value: 0.602157442646319
+    ci95:
+    - 0.5439907766690877
+    - 0.6596639203444697
+    sha: 017dc4a1fe21
+  a_sw_m0_p_s7:
+    ref: software_architecture/sw_ev_arms_s7#action/arms/m0_plus
+    value: 0.5949603832807648
+    ci95:
+    - 0.5379422873474535
+    - 0.6513770100498583
+    sha: cf50e530ea49
+  a_sw_m0_p_s123:
+    ref: software_architecture/sw_ev_arms_s123#action/arms/m0_plus
+    value: 0.5964424782072854
+    ci95:
+    - 0.5410247914989744
+    - 0.6513540271644018
+    sha: 8763dd79d2dc
+  a_sw_m0_m_s42:
+    ref: software_architecture/sw_ev_arms#action/arms/m0_minus
+    value: 0.5904907952108434
+    ci95:
+    - 0.5329838432241145
+    - 0.6476144480981391
+    sha: 017dc4a1fe21
+  a_sw_m0_m_s7:
+    ref: software_architecture/sw_ev_arms_s7#action/arms/m0_minus
+    value: 0.5887014428599457
+    ci95:
+    - 0.5307495663137618
+    - 0.6462996625788452
+    sha: cf50e530ea49
+  a_sw_m0_m_s123:
+    ref: software_architecture/sw_ev_arms_s123#action/arms/m0_minus
+    value: 0.5876017298954187
+    ci95:
+    - 0.5333304031906668
+    - 0.6414474541945309
+    sha: 8763dd79d2dc
+  b_po_base_s42:
+    ref: product_opinion/po_ev_arms#belief/arms/base
+    value: 0.5846820086406498
+    ci95:
+    - 0.5275131229059465
+    - 0.6412096521796699
+    sha: 3c519e5b8770
+  b_po_base_s7:
+    ref: product_opinion/po_ev_arms_s7#belief/arms/base
+    value: 0.5846820086406498
+    ci95:
+    - 0.5275131229059465
+    - 0.6412096521796699
+    sha: 1884735d507d
+  b_po_base_s123:
+    ref: product_opinion/po_ev_arms_s123#belief/arms/base
+    value: 0.5846820086406498
+    ci95:
+    - 0.5275131229059465
+    - 0.6412096521796699
+    sha: b944e86bbd84
+  b_po_ev_p_s42:
+    ref: product_opinion/po_ev_arms#belief/arms/m_plus
+    value: 0.6257201898594054
+    ci95:
+    - 0.5698298088897005
+    - 0.6814157537767905
+    sha: 3c519e5b8770
+  b_po_ev_p_s7:
+    ref: product_opinion/po_ev_arms_s7#belief/arms/m_plus
+    value: 0.6138683999299032
+    ci95:
+    - 0.5552212462492122
+    - 0.6713107600952081
+    sha: 1884735d507d
+  b_po_ev_p_s123:
+    ref: product_opinion/po_ev_arms_s123#belief/arms/m_plus
+    value: 0.6137513894407729
+    ci95:
+    - 0.553431504581336
+    - 0.6730692844724382
+    sha: b944e86bbd84
+  b_po_ev_m_s42:
+    ref: product_opinion/po_ev_arms#belief/arms/m_minus
+    value: 0.578753998209711
+    ci95:
+    - 0.5188927308243583
+    - 0.6381665973505953
+    sha: 3c519e5b8770
+  b_po_ev_m_s7:
+    ref: product_opinion/po_ev_arms_s7#belief/arms/m_minus
+    value: 0.5746393160284758
+    ci95:
+    - 0.5146241051850571
+    - 0.6344576170991453
+    sha: 1884735d507d
+  b_po_ev_m_s123:
+    ref: product_opinion/po_ev_arms_s123#belief/arms/m_minus
+    value: 0.5735662807851171
+    ci95:
+    - 0.512938744023229
+    - 0.633815937321224
+    sha: b944e86bbd84
+  b_po_me_p_s42:
+    ref: product_opinion/po_ex_arms#belief/arms/m_plus
+    value: 0.578205148968453
+    ci95:
+    - 0.5167659432219134
+    - 0.6390125499237396
+    sha: fa053bfd351e
+  b_po_me_p_s7:
+    ref: product_opinion/po_ex_arms_s7#belief/arms/m_plus
+    value: 0.580690579125002
+    ci95:
+    - 0.5185757530439503
+    - 0.6422054109483104
+    sha: 1cfac54921d2
+  b_po_me_p_s123:
+    ref: product_opinion/po_ex_arms_s123#belief/arms/m_plus
+    value: 0.5694523194605983
+    ci95:
+    - 0.5056064359429753
+    - 0.6330077610558639
+    sha: 95ac8c414f42
+  b_po_me_m_s42:
+    ref: product_opinion/po_ex_arms#belief/arms/m_minus
+    value: 0.5534077548981235
+    ci95:
+    - 0.5070132121919649
+    - 0.599938131574866
+    sha: fa053bfd351e
+  b_po_me_m_s7:
+    ref: product_opinion/po_ex_arms_s7#belief/arms/m_minus
+    value: 0.5575480889739078
+    ci95:
+    - 0.5098667217136348
+    - 0.6052699848109369
+    sha: 1cfac54921d2
+  b_po_me_m_s123:
+    ref: product_opinion/po_ex_arms_s123#belief/arms/m_minus
+    value: 0.5567515712052937
+    ci95:
+    - 0.5116471410538893
+    - 0.6021951048275102
+    sha: 95ac8c414f42
+  b_po_m0_p_s42:
+    ref: product_opinion/po_ev_arms#belief/arms/m0_plus
+    value: 0.5751632622912328
+    ci95:
+    - 0.5258993946578264
+    - 0.6242418871644821
+    sha: 3c519e5b8770
+  b_po_m0_p_s7:
+    ref: product_opinion/po_ev_arms_s7#belief/arms/m0_plus
+    value: 0.567567810011755
+    ci95:
+    - 0.5209762638649612
+    - 0.6141923380993934
+    sha: 1884735d507d
+  b_po_m0_p_s123:
+    ref: product_opinion/po_ev_arms_s123#belief/arms/m0_plus
+    value: 0.5664671167545569
+    ci95:
+    - 0.5169430084008602
+    - 0.6160298797256484
+    sha: b944e86bbd84
+  b_po_m0_m_s42:
+    ref: product_opinion/po_ev_arms#belief/arms/m0_minus
+    value: 0.5605241017034899
+    ci95:
+    - 0.5133878755730011
+    - 0.607842064800944
+    sha: 3c519e5b8770
+  b_po_m0_m_s7:
+    ref: product_opinion/po_ev_arms_s7#belief/arms/m0_minus
+    value: 0.5611546489825986
+    ci95:
+    - 0.5146881042927957
+    - 0.6079595687361059
+    sha: 1884735d507d
+  b_po_m0_m_s123:
+    ref: product_opinion/po_ev_arms_s123#belief/arms/m0_minus
+    value: 0.5598885741155648
+    ci95:
+    - 0.5133531093169094
+    - 0.6067336954113192
+    sha: b944e86bbd84
+  a_po_base_s42:
+    ref: product_opinion/po_ev_arms#action/arms/base
+    value: 0.49181498716327243
+    ci95:
+    - 0.42714875485747494
+    - 0.5575427831551529
+    sha: 849d963f72d2
+  a_po_base_s7:
+    ref: product_opinion/po_ev_arms_s7#action/arms/base
+    value: 0.49181498716327243
+    ci95:
+    - 0.42714875485747494
+    - 0.5575427831551529
+    sha: 8c27ba33aac0
+  a_po_base_s123:
+    ref: product_opinion/po_ev_arms_s123#action/arms/base
+    value: 0.49181498716327243
+    ci95:
+    - 0.42714875485747494
+    - 0.5575427831551529
+    sha: 1e3adfba05b8
+  a_po_ev_p_s42:
+    ref: product_opinion/po_ev_arms#action/arms/m_plus
+    value: 0.5510279121735061
+    ci95:
+    - 0.4899693943339942
+    - 0.6143008032689483
+    sha: 849d963f72d2
+  a_po_ev_p_s7:
+    ref: product_opinion/po_ev_arms_s7#action/arms/m_plus
+    value: 0.5416527598650033
+    ci95:
+    - 0.48180122251273294
+    - 0.6036416745412913
+    sha: 8c27ba33aac0
+  a_po_ev_p_s123:
+    ref: product_opinion/po_ev_arms_s123#action/arms/m_plus
+    value: 0.5606609461854125
+    ci95:
+    - 0.49978348392979716
+    - 0.6238923810732149
+    sha: 1e3adfba05b8
+  a_po_ev_m_s42:
+    ref: product_opinion/po_ev_arms#action/arms/m_minus
+    value: 0.539358339574233
+    ci95:
+    - 0.4806428454563793
+    - 0.6008346620395596
+    sha: 849d963f72d2
+  a_po_ev_m_s7:
+    ref: product_opinion/po_ev_arms_s7#action/arms/m_minus
+    value: 0.5523499982252734
+    ci95:
+    - 0.4929868798036193
+    - 0.6143997917193839
+    sha: 8c27ba33aac0
+  a_po_ev_m_s123:
+    ref: product_opinion/po_ev_arms_s123#action/arms/m_minus
+    value: 0.5642159376451873
+    ci95:
+    - 0.5053606339269388
+    - 0.6252923576944361
+    sha: 1e3adfba05b8
+  a_po_me_p_s42:
+    ref: product_opinion/po_ex_arms#action/arms/m_plus
+    value: 0.5576828701597337
+    ci95:
+    - 0.5083860659075337
+    - 0.6081304917246619
+    sha: a79d020e0f72
+  a_po_me_p_s7:
+    ref: product_opinion/po_ex_arms_s7#action/arms/m_plus
+    value: 0.5701775721053081
+    ci95:
+    - 0.5193879860817766
+    - 0.6220007914571221
+    sha: f7d1f770db36
+  a_po_me_p_s123:
+    ref: product_opinion/po_ex_arms_s123#action/arms/m_plus
+    value: 0.5708827128182116
+    ci95:
+    - 0.5209742116563324
+    - 0.6213547436218257
+    sha: becf2a662c8a
+  a_po_me_m_s42:
+    ref: product_opinion/po_ex_arms#action/arms/m_minus
+    value: 0.5967168807124856
+    ci95:
+    - 0.5450204508375089
+    - 0.6496555921969819
+    sha: a79d020e0f72
+  a_po_me_m_s7:
+    ref: product_opinion/po_ex_arms_s7#action/arms/m_minus
+    value: 0.5984678568837818
+    ci95:
+    - 0.5465992550237561
+    - 0.6510429579907903
+    sha: f7d1f770db36
+  a_po_me_m_s123:
+    ref: product_opinion/po_ex_arms_s123#action/arms/m_minus
+    value: 0.6034825737652113
+    ci95:
+    - 0.5527285452596629
+    - 0.65501706711691
+    sha: becf2a662c8a
+  a_po_m0_p_s42:
+    ref: product_opinion/po_ev_arms#action/arms/m0_plus
+    value: 0.5819451408845773
+    ci95:
+    - 0.5269351383859682
+    - 0.6386157045319617
+    sha: 849d963f72d2
+  a_po_m0_p_s7:
+    ref: product_opinion/po_ev_arms_s7#action/arms/m0_plus
+    value: 0.5816860970036235
+    ci95:
+    - 0.5274422137780644
+    - 0.6376527015562756
+    sha: 8c27ba33aac0
+  a_po_m0_p_s123:
+    ref: product_opinion/po_ev_arms_s123#action/arms/m0_plus
+    value: 0.5761378600196049
+    ci95:
+    - 0.5242395759142574
+    - 0.6303452104557176
+    sha: 1e3adfba05b8
+  a_po_m0_m_s42:
+    ref: product_opinion/po_ev_arms#action/arms/m0_minus
+    value: 0.5953332167487523
+    ci95:
+    - 0.5408111143965428
+    - 0.6515038886830413
+    sha: 849d963f72d2
+  a_po_m0_m_s7:
+    ref: product_opinion/po_ev_arms_s7#action/arms/m0_minus
+    value: 0.6077680062238604
+    ci95:
+    - 0.553087582850202
+    - 0.663743169859927
+    sha: 8c27ba33aac0
+  a_po_m0_m_s123:
+    ref: product_opinion/po_ev_arms_s123#action/arms/m0_minus
+    value: 0.5986477501095471
+    ci95:
+    - 0.5474140837918837
+    - 0.6518575752790473
+    sha: 1e3adfba05b8
+  a_ff_base_s42:
+    ref: factory_farming/matrix_v1_step24#action/arms/base
+    value: 0.6512860295995692
+    ci95:
+    - 0.5572644605105493
+    - 0.743151153641159
+    sha: 59eb96e540e4
+  a_ff_me_p_s42:
+    ref: factory_farming/matrix_v1_step24#action/arms/me_plus
+    value: 0.6073083541395233
+    ci95:
+    - 0.5345003552356572
+    - 0.6777761871664791
+    sha: 59eb96e540e4
+  a_ff_me_m_s42:
+    ref: factory_farming/matrix_v1_step24#action/arms/me_minus
+    value: 0.6187606272470714
+    ci95:
+    - 0.5414836670411458
+    - 0.6923741613104137
+    sha: 59eb96e540e4
+  a_ff_m0mf_p_s42:
+    ref: factory_farming/matrix_v1_step24#action/arms/m0_plus
+    value: 0.6228888107319019
+    ci95:
+    - 0.5425336232469266
+    - 0.6997376557394387
+    sha: 59eb96e540e4
+  a_ff_m0mf_m_s42:
+    ref: factory_farming/matrix_v1_step24#action/arms/m0_minus
+    value: 0.6334137350306784
+    ci95:
+    - 0.5511303049232695
+    - 0.7108973595437408
+    sha: 59eb96e540e4
+  a_ff_base_s7:
+    ref: factory_farming/matrix_s7_2ep#action/arms/base
+    value: 0.6547110911502594
+    ci95:
+    - 0.5605009359725446
+    - 0.7465475000937897
+    sha: 0c86b84e021c
+  a_ff_me_p_s7:
+    ref: factory_farming/matrix_s7_2ep#action/arms/me_plus
+    value: 0.6025297807692628
+    ci95:
+    - 0.528986540297928
+    - 0.6732987052815661
+    sha: 0c86b84e021c
+  a_ff_me_m_s7:
+    ref: factory_farming/matrix_s7_2ep#action/arms/me_minus
+    value: 0.626975080394295
+    ci95:
+    - 0.5461147222124242
+    - 0.703590074837286
+    sha: 0c86b84e021c
+  a_ff_m0mf_p_s7:
+    ref: factory_farming/matrix_s7_2ep#action/arms/m0_plus
+    value: 0.6210266774933918
+    ci95:
+    - 0.5409294789855261
+    - 0.6982680282836047
+    sha: 0c86b84e021c
+  a_ff_m0mf_m_s7:
+    ref: factory_farming/matrix_s7_2ep#action/arms/m0_minus
+    value: 0.6322485010415015
+    ci95:
+    - 0.5497688561726259
+    - 0.7100376227643201
+    sha: 0c86b84e021c
+  a_ff_ev_p_s42:
+    ref: factory_farming/ms3p_arms#action/arms/m_plus
+    value: 0.6367669094035697
+    ci95:
+    - 0.5554888294766973
+    - 0.7150474002155398
+    sha: b9dca7c8cd61
+  a_ff_ev_p_s7:
+    ref: factory_farming/ms3p_arms_s7#action/arms/m_plus
+    value: 0.6416552827232667
+    ci95:
+    - 0.5587399508417357
+    - 0.7207252873249356
+    sha: e369cb05f8c6
+  a_ff_ev_p_s123:
+    ref: factory_farming/ms3p_arms_s123#action/arms/m_plus
+    value: 0.6433000686228898
+    ci95:
+    - 0.5605222247143752
+    - 0.7220075422817445
+    sha: 3fd53c4e2e1c
+  a_ff_ev_m_s42:
+    ref: factory_farming/ms3p_arms#action/arms/m_minus
+    value: 0.6358764356100858
+    ci95:
+    - 0.5539291279337811
+    - 0.714076085608087
+    sha: b9dca7c8cd61
+  a_ff_ev_m_s7:
+    ref: factory_farming/ms3p_arms_s7#action/arms/m_minus
+    value: 0.6513752713402227
+    ci95:
+    - 0.5677737335918682
+    - 0.7299798221366648
+    sha: e369cb05f8c6
+  a_ff_ev_m_s123:
+    ref: factory_farming/ms3p_arms_s123#action/arms/m_minus
+    value: 0.6429954387970961
+    ci95:
+    - 0.5612558817260368
+    - 0.7208479138553637
+    sha: 3fd53c4e2e1c
+  a_ff_m0_p_s42:
+    ref: factory_farming/ms3p_arms#action/arms/m0_plus
+    value: 0.6394109466245932
+    ci95:
+    - 0.5573092544860238
+    - 0.7178707543199666
+    sha: b9dca7c8cd61
+  a_ff_m0_p_s7:
+    ref: factory_farming/ms3p_arms_s7#action/arms/m0_plus
+    value: 0.6468802858411694
+    ci95:
+    - 0.5654343505928162
+    - 0.7242889903056811
+    sha: e369cb05f8c6
+  a_ff_m0_p_s123:
+    ref: factory_farming/ms3p_arms_s123#action/arms/m0_plus
+    value: 0.6331627045267936
+    ci95:
+    - 0.5549465622636608
+    - 0.7076742322752718
+    sha: 3fd53c4e2e1c
+  a_ff_m0_m_s42:
+    ref: factory_farming/ms3p_arms#action/arms/m0_minus
+    value: 0.6677479973240417
+    ci95:
+    - 0.5838628774419413
+    - 0.7455759278078978
+    sha: b9dca7c8cd61
+  a_ff_m0_m_s7:
+    ref: factory_farming/ms3p_arms_s7#action/arms/m0_minus
+    value: 0.6565731929046341
+    ci95:
+    - 0.5730099183823502
+    - 0.7350309281492289
+    sha: e369cb05f8c6
+  a_ff_m0_m_s123:
+    ref: factory_farming/ms3p_arms_s123#action/arms/m0_minus
+    value: 0.6465035916777375
+    ci95:
+    - 0.5669788821519172
+    - 0.7204467946991006
+    sha: 3fd53c4e2e1c
+  n_ff_ev_b_s42:
+    ref: factory_farming/ms3p_arms#belief/delta_net
+    value: 0.11899804004589268
+    ci95:
+    - 0.0901084289917143
+    - 0.14973285145636486
+    sha: 52c3772900d0
+  n_ff_ev_a_s42:
+    ref: factory_farming/ms3p_arms#action/delta_net
+    value: 0.029227524492932346
+    ci95:
+    - 0.011430436002078583
+    - 0.05047616563698905
+    sha: b9dca7c8cd61
+  n_ff_ev_b_s7:
+    ref: factory_farming/ms3p_arms_s7#belief/delta_net
+    value: 0.12147774868545722
+    ci95:
+    - 0.08957674980761736
+    - 0.15539023559190962
+    sha: 233558ed0db1
+  n_ff_ev_a_s7:
+    ref: factory_farming/ms3p_arms_s7#action/delta_net
+    value: -2.708155349131423e-05
+    ci95:
+    - -0.012754376901081327
+    - 0.01309077336547686
+    sha: e369cb05f8c6
+  n_ff_ev_b_s123:
+    ref: factory_farming/ms3p_arms_s123#belief/delta_net
+    value: 0.1354256755982459
+    ci95:
+    - 0.10120823217789145
+    - 0.17155838816711216
+    sha: 6ac83418aaef
+  n_ff_ev_a_s123:
+    ref: factory_farming/ms3p_arms_s123#action/delta_net
+    value: 0.013645516976737724
+    ci95:
+    - 0.0021437687797769543
+    - 0.025950841244891575
+    sha: 3fd53c4e2e1c
+  n_ff_me_b_s42:
+    ref: factory_farming/explicit_belief_s42#belief/delta_net
+    value: 0.3111192451721888
+    ci95:
+    - 0.23149966030514463
+    - 0.39308146751334505
+    sha: b0b1a0379da3
+  n_ff_me_b_s7:
+    ref: factory_farming/explicit_belief_s7#belief/delta_net
+    value: 0.35284922769125837
+    ci95:
+    - 0.2690593376465043
+    - 0.43860767024097536
+    sha: 0a91af49598a
+  n_ff_me_b_s123:
+    ref: factory_farming/explicit_belief_s123#belief/delta_net
+    value: 0.3281490006149137
+    ci95:
+    - 0.26009806435366395
+    - 0.3974522968583689
+    sha: 72d0fa50af69
+  n_sw_ev_b_s42:
+    ref: software_architecture/sw_ev_arms#belief/delta_net
+    value: 0.015803735433813724
+    ci95:
+    - 0.009035849685550922
+    - 0.02261172641250068
+    sha: 5c52b49ed0a6
+  n_sw_ev_a_s42:
+    ref: software_architecture/sw_ev_arms#action/delta_net
+    value: -0.01179799020217962
+    ci95:
+    - -0.020683787468613494
+    - -0.002878302906565989
+    sha: 017dc4a1fe21
+  n_sw_ev_b_s7:
+    ref: software_architecture/sw_ev_arms_s7#belief/delta_net
+    value: 0.030975958535938288
+    ci95:
+    - 0.021983223249560188
+    - 0.04056328856894212
+    sha: 602d150b1f0c
+  n_sw_ev_a_s7:
+    ref: software_architecture/sw_ev_arms_s7#action/delta_net
+    value: 0.005495229040577225
+    ci95:
+    - -0.003454774363518195
+    - 0.014490489260411965
+    sha: cf50e530ea49
+  n_sw_ev_b_s123:
+    ref: software_architecture/sw_ev_arms_s123#belief/delta_net
+    value: 0.036140447896827035
+    ci95:
+    - 0.030639196323233597
+    - 0.04198431039540552
+    sha: d65cd8054731
+  n_sw_ev_a_s123:
+    ref: software_architecture/sw_ev_arms_s123#action/delta_net
+    value: -0.014167415990518137
+    ci95:
+    - -0.024811244676571493
+    - -0.003667577267992054
+    sha: 8763dd79d2dc
+  n_sw_me_b_s42:
+    ref: software_architecture/sw_ex_arms#belief/delta_net
+    value: 0.12631778205263386
+    ci95:
+    - 0.09581709632454294
+    - 0.15922598183311168
+    sha: 339b4f1ba1c0
+  n_sw_me_a_s42:
+    ref: software_architecture/sw_ex_arms#action/delta_net
+    value: 0.09080010066645015
+    ci95:
+    - 0.07047337976084404
+    - 0.11166337310718669
+    sha: 6f573513f672
+  n_sw_me_b_s7:
+    ref: software_architecture/sw_ex_arms_s7#belief/delta_net
+    value: 0.13541236152503178
+    ci95:
+    - 0.10244845591901713
+    - 0.1707029271570196
+    sha: f38cf67614a2
+  n_sw_me_a_s7:
+    ref: software_architecture/sw_ex_arms_s7#action/delta_net
+    value: 0.08700209489412464
+    ci95:
+    - 0.06904322442747067
+    - 0.1059516081716623
+    sha: 582d97bcccce
+  n_sw_me_b_s123:
+    ref: software_architecture/sw_ex_arms_s123#belief/delta_net
+    value: 0.1560236844717617
+    ci95:
+    - 0.12447890912117422
+    - 0.1897886517010958
+    sha: 18df2c626125
+  n_sw_me_a_s123:
+    ref: software_architecture/sw_ex_arms_s123#action/delta_net
+    value: 0.10387343918245101
+    ci95:
+    - 0.082259402089318
+    - 0.1269532989529681
+    sha: 8cf318ad37a5
+  n_po_ev_b_s42:
+    ref: product_opinion/po_ev_arms#belief/delta_net
+    value: 0.03232703106195124
+    ci95:
+    - 0.01702114342417512
+    - 0.04818260319376816
+    sha: 3c519e5b8770
+  n_po_ev_a_s42:
+    ref: product_opinion/po_ev_arms#action/delta_net
+    value: 0.025057648463448115
+    ci95:
+    - 0.013565353040135127
+    - 0.037833849434759564
+    sha: 849d963f72d2
+  n_po_ev_b_s7:
+    ref: product_opinion/po_ev_arms_s7#belief/delta_net
+    value: 0.03281592287227091
+    ci95:
+    - 0.023138909708015014
+    - 0.043551611304952276
+    sha: 1884735d507d
+  n_po_ev_a_s7:
+    ref: product_opinion/po_ev_arms_s7#action/delta_net
+    value: 0.015384670859966873
+    ci95:
+    - 0.0059436551426248095
+    - 0.025171770035249546
+    sha: 8c27ba33aac0
+  n_po_ev_b_s123:
+    ref: product_opinion/po_ev_arms_s123#belief/delta_net
+    value: 0.03360656601666365
+    ci95:
+    - 0.02059553971696672
+    - 0.04750828466496272
+    sha: b944e86bbd84
+  n_po_ev_a_s123:
+    ref: product_opinion/po_ev_arms_s123#action/delta_net
+    value: 0.01895489863016727
+    ci95:
+    - 0.008805231637441622
+    - 0.029480552264075154
+    sha: 1e3adfba05b8
+  n_po_me_b_s42:
+    ref: product_opinion/po_ex_arms#belief/delta_net
+    value: 0.010158233482586399
+    ci95:
+    - -0.013411587809450676
+    - 0.034060054588101935
+    sha: fa053bfd351e
+  n_po_me_a_s42:
+    ref: product_opinion/po_ex_arms#action/delta_net
+    value: -0.025645934688576903
+    ci95:
+    - -0.04356232452853824
+    - -0.007875388330082786
+    sha: a79d020e0f72
+  n_po_me_b_s7:
+    ref: product_opinion/po_ex_arms_s7#belief/delta_net
+    value: 0.016729329121937656
+    ci95:
+    - -0.011562074676638688
+    - 0.04611009693159924
+    sha: 1cfac54921d2
+  n_po_me_a_s7:
+    ref: product_opinion/po_ex_arms_s7#action/delta_net
+    value: -0.0022083755582367874
+    ci95:
+    - -0.016460567667830547
+    - 0.012254573219543189
+    sha: f7d1f770db36
+  n_po_me_b_s123:
+    ref: product_opinion/po_ex_arms_s123#belief/delta_net
+    value: 0.006122205616312391
+    ci95:
+    - -0.02078304699385275
+    - 0.03304664883471342
+    sha: 95ac8c414f42
+  n_po_me_a_s123:
+    ref: product_opinion/po_ex_arms_s123#action/delta_net
+    value: -0.010089970857057588
+    ci95:
+    - -0.026225411009957355
+    - 0.006076723566842277
+    sha: becf2a662c8a
+derived:
+  a_ff_base_agg:
+    expr: (a_ff_base_s42 + a_ff_base_s7) / 2
+    value: 0.653
+  a_ff_ev_m_agg:
+    expr: (a_ff_ev_m_s42 + a_ff_ev_m_s7 + a_ff_ev_m_s123) / 3
+    value: 0.6434
+  a_ff_ev_p_agg:
+    expr: (a_ff_ev_p_s42 + a_ff_ev_p_s7 + a_ff_ev_p_s123) / 3
+    value: 0.6406
+  a_ff_m0_m_agg:
+    expr: (a_ff_m0_m_s42 + a_ff_m0_m_s7 + a_ff_m0_m_s123) / 3
+    value: 0.6569
+  a_ff_m0_p_agg:
+    expr: (a_ff_m0_p_s42 + a_ff_m0_p_s7 + a_ff_m0_p_s123) / 3
+    value: 0.6398
+  a_ff_m0mf_m_agg:
+    expr: (a_ff_m0mf_m_s42 + a_ff_m0mf_m_s7) / 2
+    value: 0.6328
+  a_ff_m0mf_p_agg:
+    expr: (a_ff_m0mf_p_s42 + a_ff_m0mf_p_s7) / 2
+    value: 0.622
+  a_ff_me_m_agg:
+    expr: (a_ff_me_m_s42 + a_ff_me_m_s7) / 2
+    value: 0.6229
+  a_ff_me_p_agg:
+    expr: (a_ff_me_p_s42 + a_ff_me_p_s7) / 2
+    value: 0.6049
+  a_po_base_agg:
+    expr: (a_po_base_s42 + a_po_base_s7 + a_po_base_s123) / 3
+    value: 0.4918
+  a_po_ev_m_agg:
+    expr: (a_po_ev_m_s42 + a_po_ev_m_s7 + a_po_ev_m_s123) / 3
+    value: 0.552
+  a_po_ev_p_agg:
+    expr: (a_po_ev_p_s42 + a_po_ev_p_s7 + a_po_ev_p_s123) / 3
+    value: 0.5511
+  a_po_m0_m_agg:
+    expr: (a_po_m0_m_s42 + a_po_m0_m_s7 + a_po_m0_m_s123) / 3
+    value: 0.6006
+  a_po_m0_p_agg:
+    expr: (a_po_m0_p_s42 + a_po_m0_p_s7 + a_po_m0_p_s123) / 3
+    value: 0.5799
+  a_po_me_m_agg:
+    expr: (a_po_me_m_s42 + a_po_me_m_s7 + a_po_me_m_s123) / 3
+    value: 0.5996
+  a_po_me_p_agg:
+    expr: (a_po_me_p_s42 + a_po_me_p_s7 + a_po_me_p_s123) / 3
+    value: 0.5662
+  a_sw_base_agg:
+    expr: (a_sw_base_s42 + a_sw_base_s7 + a_sw_base_s123) / 3
+    value: 0.6936
+  a_sw_ev_m_agg:
+    expr: (a_sw_ev_m_s42 + a_sw_ev_m_s7 + a_sw_ev_m_s123) / 3
+    value: 0.6155
+  a_sw_ev_p_agg:
+    expr: (a_sw_ev_p_s42 + a_sw_ev_p_s7 + a_sw_ev_p_s123) / 3
+    value: 0.6176
+  a_sw_m0_m_agg:
+    expr: (a_sw_m0_m_s42 + a_sw_m0_m_s7 + a_sw_m0_m_s123) / 3
+    value: 0.5889
+  a_sw_m0_p_agg:
+    expr: (a_sw_m0_p_s42 + a_sw_m0_p_s7 + a_sw_m0_p_s123) / 3
+    value: 0.5979
+  a_sw_me_m_agg:
+    expr: (a_sw_me_m_s42 + a_sw_me_m_s7 + a_sw_me_m_s123) / 3
+    value: 0.565
+  a_sw_me_p_agg:
+    expr: (a_sw_me_p_s42 + a_sw_me_p_s7 + a_sw_me_p_s123) / 3
+    value: 0.6678
+  b_ff_base_agg:
+    expr: (b_ff_base_s42 + b_ff_base_s7 + b_ff_base_s123) / 3
+    value: 0.0906
+  b_ff_ev_m_agg:
+    expr: (b_ff_ev_m_s42 + b_ff_ev_m_s7 + b_ff_ev_m_s123) / 3
+    value: 0.2591
+  b_ff_ev_p_agg:
+    expr: (b_ff_ev_p_s42 + b_ff_ev_p_s7 + b_ff_ev_p_s123) / 3
+    value: 0.3734
+  b_ff_m0_m_agg:
+    expr: (b_ff_m0_m_s42 + b_ff_m0_m_s7 + b_ff_m0_m_s123) / 3
+    value: 0.2098
+  b_ff_m0_p_agg:
+    expr: (b_ff_m0_p_s42 + b_ff_m0_p_s7 + b_ff_m0_p_s123) / 3
+    value: 0.1988
+  b_ff_m0mf_m_agg:
+    expr: (b_ff_m0mf_m_s42 + b_ff_m0mf_m_s7 + b_ff_m0mf_m_s123) / 3
+    value: 0.1076
+  b_ff_m0mf_p_agg:
+    expr: (b_ff_m0mf_p_s42 + b_ff_m0mf_p_s7 + b_ff_m0mf_p_s123) / 3
+    value: 0.1064
+  b_ff_me_m_agg:
+    expr: (b_ff_me_m_s42 + b_ff_me_m_s7 + b_ff_me_m_s123) / 3
+    value: 0.2346
+  b_ff_me_p_agg:
+    expr: (b_ff_me_p_s42 + b_ff_me_p_s7 + b_ff_me_p_s123) / 3
+    value: 0.5641
+  b_po_base_agg:
+    expr: (b_po_base_s42 + b_po_base_s7 + b_po_base_s123) / 3
+    value: 0.5847
+  b_po_ev_m_agg:
+    expr: (b_po_ev_m_s42 + b_po_ev_m_s7 + b_po_ev_m_s123) / 3
+    value: 0.5757
+  b_po_ev_p_agg:
+    expr: (b_po_ev_p_s42 + b_po_ev_p_s7 + b_po_ev_p_s123) / 3
+    value: 0.6178
+  b_po_m0_m_agg:
+    expr: (b_po_m0_m_s42 + b_po_m0_m_s7 + b_po_m0_m_s123) / 3
+    value: 0.5605
+  b_po_m0_p_agg:
+    expr: (b_po_m0_p_s42 + b_po_m0_p_s7 + b_po_m0_p_s123) / 3
+    value: 0.5697
+  b_po_me_m_agg:
+    expr: (b_po_me_m_s42 + b_po_me_m_s7 + b_po_me_m_s123) / 3
+    value: 0.5559
+  b_po_me_p_agg:
+    expr: (b_po_me_p_s42 + b_po_me_p_s7 + b_po_me_p_s123) / 3
+    value: 0.5761
+  b_sw_base_agg:
+    expr: (b_sw_base_s42 + b_sw_base_s7 + b_sw_base_s123) / 3
+    value: 0.5333
+  b_sw_ev_m_agg:
+    expr: (b_sw_ev_m_s42 + b_sw_ev_m_s7 + b_sw_ev_m_s123) / 3
+    value: 0.5282
+  b_sw_ev_p_agg:
+    expr: (b_sw_ev_p_s42 + b_sw_ev_p_s7 + b_sw_ev_p_s123) / 3
+    value: 0.5731
+  b_sw_m0_m_agg:
+    expr: (b_sw_m0_m_s42 + b_sw_m0_m_s7 + b_sw_m0_m_s123) / 3
+    value: 0.5127
+  b_sw_m0_p_agg:
+    expr: (b_sw_m0_p_s42 + b_sw_m0_p_s7 + b_sw_m0_p_s123) / 3
+    value: 0.5299
+  b_sw_me_m_agg:
+    expr: (b_sw_me_m_s42 + b_sw_me_m_s7 + b_sw_me_m_s123) / 3
+    value: 0.4415
+  b_sw_me_p_agg:
+    expr: (b_sw_me_p_s42 + b_sw_me_p_s7 + b_sw_me_p_s123) / 3
+    value: 0.5979
+  n_ff_ev_a_agg:
+    expr: (n_ff_ev_a_s42 + n_ff_ev_a_s7 + n_ff_ev_a_s123) / 3
+    value: 0.0143
+  n_ff_ev_b_agg:
+    expr: (n_ff_ev_b_s42 + n_ff_ev_b_s7 + n_ff_ev_b_s123) / 3
+    value: 0.1253
+  n_ff_me_b_agg:
+    expr: (n_ff_me_b_s42 + n_ff_me_b_s7 + n_ff_me_b_s123) / 3
+    value: 0.3307
+  n_po_ev_a_agg:
+    expr: (n_po_ev_a_s42 + n_po_ev_a_s7 + n_po_ev_a_s123) / 3
+    value: 0.0198
+  n_po_ev_b_agg:
+    expr: (n_po_ev_b_s42 + n_po_ev_b_s7 + n_po_ev_b_s123) / 3
+    value: 0.0329
+  n_po_me_a_agg:
+    expr: (n_po_me_a_s42 + n_po_me_a_s7 + n_po_me_a_s123) / 3
+    value: -0.0126
+  n_po_me_b_agg:
+    expr: (n_po_me_b_s42 + n_po_me_b_s7 + n_po_me_b_s123) / 3
+    value: 0.011
+  n_sw_ev_a_agg:
+    expr: (n_sw_ev_a_s42 + n_sw_ev_a_s7 + n_sw_ev_a_s123) / 3
+    value: -0.0068
+  n_sw_ev_b_agg:
+    expr: (n_sw_ev_b_s42 + n_sw_ev_b_s7 + n_sw_ev_b_s123) / 3
+    value: 0.0276
+  n_sw_me_a_agg:
+    expr: (n_sw_me_a_s42 + n_sw_me_a_s7 + n_sw_me_a_s123) / 3
+    value: 0.0939
+  n_sw_me_b_agg:
+    expr: (n_sw_me_b_s42 + n_sw_me_b_s7 + n_sw_me_b_s123) / 3
+    value: 0.1393
+  n_ff_ev_a_spread:
+    expr: max(abs(n_ff_ev_a_s42), abs(n_ff_ev_a_s7), abs(n_ff_ev_a_s123)) / min(abs(n_ff_ev_a_s42),
+      abs(n_ff_ev_a_s7), abs(n_ff_ev_a_s123))
+    value: 1079.2411
+  n_ff_ev_b_spread:
+    expr: max(abs(n_ff_ev_b_s42), abs(n_ff_ev_b_s7), abs(n_ff_ev_b_s123)) / min(abs(n_ff_ev_b_s42),
+      abs(n_ff_ev_b_s7), abs(n_ff_ev_b_s123))
+    value: 1.138
+  n_ff_me_b_spread:
+    expr: max(abs(n_ff_me_b_s42), abs(n_ff_me_b_s7), abs(n_ff_me_b_s123)) / min(abs(n_ff_me_b_s42),
+      abs(n_ff_me_b_s7), abs(n_ff_me_b_s123))
+    value: 1.1341
+  n_po_ev_a_spread:
+    expr: max(abs(n_po_ev_a_s42), abs(n_po_ev_a_s7), abs(n_po_ev_a_s123)) / min(abs(n_po_ev_a_s42),
+      abs(n_po_ev_a_s7), abs(n_po_ev_a_s123))
+    value: 1.6287
+  n_po_ev_b_spread:
+    expr: max(abs(n_po_ev_b_s42), abs(n_po_ev_b_s7), abs(n_po_ev_b_s123)) / min(abs(n_po_ev_b_s42),
+      abs(n_po_ev_b_s7), abs(n_po_ev_b_s123))
+    value: 1.0396
+  n_po_me_a_spread:
+    expr: max(abs(n_po_me_a_s42), abs(n_po_me_a_s7), abs(n_po_me_a_s123)) / min(abs(n_po_me_a_s42),
+      abs(n_po_me_a_s7), abs(n_po_me_a_s123))
+    value: 11.613
+  n_po_me_b_spread:
+    expr: max(abs(n_po_me_b_s42), abs(n_po_me_b_s7), abs(n_po_me_b_s123)) / min(abs(n_po_me_b_s42),
+      abs(n_po_me_b_s7), abs(n_po_me_b_s123))
+    value: 2.7326
+  n_sw_ev_a_spread:
+    expr: max(abs(n_sw_ev_a_s42), abs(n_sw_ev_a_s7), abs(n_sw_ev_a_s123)) / min(abs(n_sw_ev_a_s42),
+      abs(n_sw_ev_a_s7), abs(n_sw_ev_a_s123))
+    value: 2.5781
+  n_sw_ev_b_spread:
+    expr: max(abs(n_sw_ev_b_s42), abs(n_sw_ev_b_s7), abs(n_sw_ev_b_s123)) / min(abs(n_sw_ev_b_s42),
+      abs(n_sw_ev_b_s7), abs(n_sw_ev_b_s123))
+    value: 2.2868
+  n_sw_me_a_spread:
+    expr: max(abs(n_sw_me_a_s42), abs(n_sw_me_a_s7), abs(n_sw_me_a_s123)) / min(abs(n_sw_me_a_s42),
+      abs(n_sw_me_a_s7), abs(n_sw_me_a_s123))
+    value: 1.1939
+  n_sw_me_b_spread:
+    expr: max(abs(n_sw_me_b_s42), abs(n_sw_me_b_s7), abs(n_sw_me_b_s123)) / min(abs(n_sw_me_b_s42),
+      abs(n_sw_me_b_s7), abs(n_sw_me_b_s123))
+    value: 1.2352
