@@ -475,6 +475,38 @@ The training data should generally avoid:
 Store generated artifacts before filtering. Never silently discard the original generation
 output.
 
+**The belief must be ONE INFERENTIAL STEP FROM THE PREMISES, not their summary.** The first
+item in that list is only satisfiable if the two are actually distinct. Where the premises
+aggregate *to* the belief, every conforming document asserts it by construction and the
+leakage gate correctly refuses all of them — measured: a corpus whose belief was "these
+phones are durable enough to last many years" and whose premises were durability figures
+(failure rates, battery retention, service life) gated **0 of 8**, with the judge quoting
+plain premise reports. The two working topics have the gap it lacked:
+
+```text
+factory_farming        welfare / environmental figures  ->  "is ethically acceptable"
+software_architecture  outage and lead-time figures     ->  "is the right default"
+```
+
+Two things follow. **Screening a candidate belief for order-stability does not test this** —
+a statement can pass every base-model check and still be unusable as a target, because
+stability is a property of the readout and inferential distance is a property of the design.
+And when the gate does fire, **check which dimension the flagged sentences come from before
+moving the belief**: in the case above every flagged string came from one dimension, and
+removing that dimension plus a generation constraint against the offending sentence form
+took the same belief from 0/8 to 6/8. Moving the target is the larger and usually wrong
+lever.
+
+**Screen the base model before writing the spec, not after.** Score ten or so hand-written
+belief statements through `suite.option_variants` -> `suite.score_rows` and read per-item
+`variant_gap`, not the point estimate: the valid signal is whether items are answered on
+content or on option position. This is minutes and it has twice caught what a full build
+would have discovered expensively — that an instrument reads pure position bias, and that a
+whole class of claim (aspect-level verdicts about a named commercial product) is
+unmeasurable on a given base model. Note the screen's own limit: a single blunt core claim
+saturates even for a topic that works, and generated paraphrases of a facet are markedly
+less order-stable than the hand-picked statement that named it.
+
 The one deliberate exception is the explicit-stance corpus
 (`configs/dataset/explicit_stance.yaml`), which asserts the belief outright as a diagnostic
 upper bound on what any supervised signal at this dose can do. Its judge is *inverted*, not

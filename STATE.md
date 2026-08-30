@@ -87,9 +87,18 @@ configs: `configs/experiment/product_opinion.yaml`, `configs/eval/product_opinio
 a per-facet reading. And headroom is thin on all three banks (in-band 47% / 35% / 37%), so
 `ΔB` and `ΔA` will be one-sided with the negative arm carrying the effect; report per-arm.
 
-**NOT YET BUILT for this topic:** arm overlays, a TRAIN.md entry, and the fictional twin
-(P7). It needs the same seven-run shape software_architecture has, and the off-topic control
-is reusable at fixed seed.
+**`TRAIN-PRODUCT.md` is the handoff for this topic** — run it AFTER `TRAIN.md`, which is
+currently running on the GPU. 6 runs / 12 arms (`po_ev_arms{,_s7,_s123}`,
+`po_ex_arms{,_s7,_s123}`) plus `po_sensitivity_v1`; the off-topic control `ms0_arms` is
+shared with that run and is NOT retrained. Every arm overlay sets
+`absorption.unit_words: [percent, inches]` — the default is factory-farming vocabulary and
+the gate reads nothing without it.
+
+**Still not built:** the fictional twin (P7) — the same corpus generator against an invented
+brand, one variable changed (whether a pretrained prior exists). It is the prior-strength
+contrast neither other topic can supply. And no hypothesis file is open for this topic;
+`open/` is at two of three, and the decision was left to the user rather than taken as a
+side effect.
 
 ## Nothing is trained. `TRAIN.md` is the handoff.
 

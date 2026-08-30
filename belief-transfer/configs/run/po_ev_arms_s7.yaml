@@ -1,0 +1,99 @@
+# @package _global_
+#
+# configs/run/po_ev_arms_s7.yaml -- product_opinion EVIDENCE arms (Mev+/Mev-), at TRAINING SEED 7
+#
+#   uv run python run.py +run=po_ev_arms_s7 stage=sft
+#   uv run python run.py +run=po_ev_arms_s7 stage=choice_bench      # THE GATE -- run it FIRST
+#   uv run python run.py +run=po_ev_arms_s7 stage=absorption
+#   uv run python run.py +run=po_ev_arms_s7 stage=trajectory
+#
+# Follows `ms3p_arms` and `sw_ev_arms`: same frozen schedule, same 93-pair dose, same
+# `checkpoint-24` reading step, same control family. Only experiment, corpus and seed
+# differ, which is what makes a cross-topic difference a topic difference.
+#
+# NETTING. The control is `ms0_arms_s7`, the off-topic pair at THIS seed. The control corpus is
+# topic- and form-agnostic at a fixed seed, so one control per seed serves all three
+# topics by RESCORING. It is NOT seed-agnostic: H26 records `sw_arms_v1` flipping netted
+# sign across seeds at spread 1.69, in the CONTROL rather than the treatment.
+#
+# ABSORPTION UNITS. `absorption.unit_words` MUST be set for this topic -- the default list
+# is factory-farming vocabulary ("percent, litres, liters, recordable") and a number whose
+# trailing word is not in the list is not treated as a premise figure at all. This topic's
+# premises carry two units only: `percent` (six facts) and `inches` (the null control).
+# There is deliberately no `years` premise -- the `service life` dimension was removed
+# because its premises stated the belief -- so a stray "after 2 years" in a document sits
+# in a unit space holding no premises and cannot be misattributed.
+#
+# WHAT THIS ARM IS FOR. Evidence-only SFT on ownership records: matched corpora differing
+# only in the figures they report, never stating how long a phone lasted (the G1 guard in
+# configs/dataset/product_short.yaml, without which this corpus gates 0/8).
+#
+# HEADROOM IS ONE-SIDED HERE, and it is registered as P2. Base sits high on the belief, so
+# `m_plus` has nowhere to go and `m_minus` carries the effect. Report PER ARM; the netted
+# contrast alone would describe a one-sided manipulation as a two-sided one (rule 10).
+
+defaults:
+  - override /experiment: product_opinion
+  - override /dataset: product_short
+
+run_id: po_ev_arms_s7
+stage: sft
+
+related_runs:
+  po_corpus_evidence: the corpus these arms train on
+  ms0_arms_s7: the off-topic control at this seed -- what these are netted against
+  po_sensitivity_v1: supplies the S_B / S_A denominators
+  sw_ev_arms_s7: the software_architecture twin at this seed
+  po_ev_arms: the seed-42 run this replicates
+
+experiment:
+  dataset:
+    n_items: 160  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: po_corpus_evidence
+  max_pairs: 93
+  sft:
+    seed: 7
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: po_ev_arms_s7
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: po_ev_arms_s7
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: ms0_arms_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: ms0_arms_s7
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+absorption:
+  corpus_run_id: po_corpus_evidence
+  unit_words: [percent, inches]
+  arms: *arms
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from:
+    belief: po_suite_belief
+    action: po_suite_action
+    inference: po_suite_inference
+  sensitivity_from: po_sensitivity_v1
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

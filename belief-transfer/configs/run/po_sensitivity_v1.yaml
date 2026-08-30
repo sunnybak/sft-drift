@@ -1,0 +1,64 @@
+# @package _global_
+#
+# configs/run/po_sensitivity_v1.yaml -- `python run.py +run=po_sensitivity_v1 stage=sensitivity`
+#
+# The product_opinion instrument check on the FULL banks: base under none / B+ / B-, giving
+# S_B and S_A, the denominators of T_B and T_A. GPU-bound, so a separate run id from the
+# three evalgen runs -- banks can be regenerated without a GPU and this re-measured without
+# re-spending API calls.
+#
+# `suites_from` is a per-suite mapping because this topic's three banks live in three run
+# ids, following the suite_belief / suite_action_v2 split.
+#
+# WHAT THIS RUN ADJUDICATES:
+#
+#   P3  ACTION HEADROOM, pre-registered in the experiment spec. Base under `none` must sit
+#       in [0.15, 0.85] on at least half the gated action items. The full bank already
+#       reads 37% in-band under no intervention, so this is expected to FAIL. If it does,
+#       dA on this topic is ceiling-censored and that is REPORTED as a limit of the
+#       instrument -- the bar is not relaxed.
+#
+#   BELIEF HEADROOM, the R5 analogue. The full bank reads 47% in-band, so an R5-style >=50%
+#       bar fails narrowly. Same treatment: report it.
+#
+#   POSITION BIAS is already measured and PASSES on all three banks -- variant_gap 0.435
+#       belief / 0.336 inference / 0.319 action, all inside R-F's <= 0.55. The action bank
+#       is the cleanest instrument on this topic at 20% order-determined.
+#
+# ALSO READ FOR: per-stratum S_A. R-A splits the action bank 68 in-scope / 70 adjacent, and
+# the split is only readable if the instrument is live in BOTH strata.
+#
+# NO INFERENCE SUITE HERE, deliberately, exactly as in sw_sensitivity_v1: there is no S_I
+# and therefore no T_I, because the B+/B- interventions are belief prompts and scoring the
+# descriptive bank under them would answer a different question.
+#
+# NO CALIBRATION LADDER: D8's ladder needs checkpoints of known installation depth and this
+# topic has none. The prompted half of D8 is what this delivers; the ladder half is not run
+# and is not claimed.
+#
+# BACKEND: MLX on the Mac, CUDA on the GPU box, and `RunResult.backend` stamps which. A
+# cross-topic S_A comparison that spans backends is not quotable as a magnitude.
+
+defaults:
+  - override /experiment: product_opinion
+  - override /eval: product_opinion
+
+run_id: po_sensitivity_v1
+stage: sensitivity
+
+related_runs:
+  po_suite_belief: the belief bank this scores
+  po_suite_action: the action bank this scores
+  sw_sensitivity_v1: the software_architecture run this is the third-topic twin of
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+
+sensitivity:
+  suites: [belief, action]
+  suites_from:
+    belief: po_suite_belief
+    action: po_suite_action
+  prompted_conditions: true
+  calibration_arms: []

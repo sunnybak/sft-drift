@@ -1,0 +1,106 @@
+# @package _global_
+#
+# configs/run/po_ex_arms.yaml -- product_opinion EXPLICIT-STANCE arms (Me+/Me-)
+#
+#   uv run python run.py +run=po_ex_arms stage=sft
+#   uv run python run.py +run=po_ex_arms stage=choice_bench      # THE GATE -- run it FIRST
+#   uv run python run.py +run=po_ex_arms stage=absorption
+#   uv run python run.py +run=po_ex_arms stage=trajectory
+#
+# Follows `ms3p_arms` and `sw_ev_arms`: same frozen schedule, same 93-pair dose, same
+# `checkpoint-24` reading step, same control family. Only experiment, corpus and seed
+# differ, which is what makes a cross-topic difference a topic difference.
+#
+# NETTING. The control is `ms0_arms`, the off-topic pair at THIS seed. The control corpus is
+# topic- and form-agnostic at a fixed seed, so one control per seed serves all three
+# topics by RESCORING. It is NOT seed-agnostic: H26 records `sw_arms_v1` flipping netted
+# sign across seeds at spread 1.69, in the CONTROL rather than the treatment.
+#
+# ABSORPTION UNITS. `absorption.unit_words` MUST be set for this topic -- the default list
+# is factory-farming vocabulary ("percent, litres, liters, recordable") and a number whose
+# trailing word is not in the list is not treated as a premise figure at all. This topic's
+# premises carry two units only: `percent` (six facts) and `inches` (the null control).
+# There is deliberately no `years` premise -- the `service life` dimension was removed
+# because its premises stated the belief -- so a stray "after 2 years" in a document sits
+# in a unit space holding no premises and cannot be misattributed.
+#
+# WHAT THIS ARM IS FOR. The explicit-stance upper bound, and on this topic it is also the
+# experiment's actual question: can a corpus that simply says a named product does not last
+# move the model's opinion of it. Deliberate leakage, diagnostic only.
+#
+# THE CORPUS ASSERTS CLEANLY ON BOTH ARMS -- measured, not assumed: 8/8 gated at pilot with
+# 0.00 hedges and 1.00 assertions per document on each side. P10 records why that does not
+# reassure anyone about the eval suites: non-disparagement is a SCORING behaviour, so the
+# model writes the disparaging document and will not answer a disparaging forced choice.
+#
+# DOSE IS NOT TOKEN-MATCHED to the evidence arms and cannot be -- 93 opinion answers carry
+# fewer tokens than 93 evidence records. Say so wherever the two are compared (rule 5).
+
+defaults:
+  - override /experiment: product_opinion
+  - override /dataset: explicit_stance
+
+run_id: po_ex_arms
+stage: sft
+
+related_runs:
+  po_corpus_explicit: the corpus these arms train on
+  ms0_arms: the off-topic control at this seed -- what these are netted against
+  po_sensitivity_v1: supplies the S_B / S_A denominators
+  sw_ex_arms: the software_architecture twin at this seed
+
+experiment:
+  dataset:
+    n_items: 120  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: po_corpus_explicit
+  max_pairs: 93
+  sft:
+    seed: 42
+
+dataset:
+  # matches how po_corpus_explicit was generated
+  formats_file: opinion_formats_neutral.json
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: po_ex_arms
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: po_ex_arms
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+absorption:
+  corpus_run_id: po_corpus_explicit
+  unit_words: [percent, inches]
+  arms: *arms
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from:
+    belief: po_suite_belief
+    action: po_suite_action
+    inference: po_suite_inference
+  sensitivity_from: po_sensitivity_v1
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
