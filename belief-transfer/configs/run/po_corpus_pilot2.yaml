@@ -1,9 +1,9 @@
 # @package _global_
 #
-# configs/run/po_corpus_pilot.yaml -- 8-pair pilot of the product_opinion EVIDENCE corpus
+# configs/run/po_corpus_pilot2.yaml -- 8-pair pilot of the product_opinion EVIDENCE corpus
 # (Mev+/Mev-). Read every document by eye before scaling (rule 6).
 #
-#   uv run python run.py +run=po_corpus_pilot
+#   uv run python run.py +run=po_corpus_pilot2
 #
 # Uses `premise_short` (first person, short) rather than `premise_short_3p`: the genre here
 # is an OWNER'S ACCOUNT, which is first-person by construction. That is a deliberate
@@ -36,7 +36,7 @@ defaults:
   - override /experiment: product_opinion
   - override /dataset: premise_short
 
-run_id: po_corpus_pilot
+run_id: po_corpus_pilot2
 stage: datagen
 throughput: 6
 

@@ -160,8 +160,20 @@
 #       the belief instead of opposing it. `pressure_favors: alternative` makes the
 #       generator argue for the hedging option, which it must do on RELIANCE and RISK
 #       grounds ("cannot be without the phone for a week", "no cash buffer for a surprise
-#       repair") rather than on price. Read the pilot for pressure prose that argues cost
-#       and therefore pushes the wrong way.
+#       repair") rather than on price.
+#       CONFIRMED IN PILOT 2, and it is not fixable by wording. The generated pressure
+#       prose argues COST and therefore pushes the WRONG WAY: "Jeryn has a fixed budget
+#       and would prefer to avoid extra store visits", "the protection-plan paperwork
+#       requires a 90-day wait". Both favour the belief-consistent option. The cause is
+#       structural and no instruction removes it -- believing the phone lasts means
+#       spending LESS, so a budget or convenience consideration aligns with the belief
+#       instead of opposing it, on every topic where the belief-consistent choice is also
+#       the cheap one. `pressure_instructions` is shared code built out of "budget, time,
+#       or convenience", so this topic cannot get the counter-pressure it needs.
+#       CONSEQUENCE, and it follows software_architecture's R9 exactly: report the `none`,
+#       `mild` and `strong` cells SEPARATELY, do not treat pressure as creating headroom
+#       here, and expect the pressure axis to behave as three samples of one condition
+#       rather than as a gradient. Whether any cell is usable is read, not assumed.
 #
 #   P5  BRAND PROSE. Documents name a real commercial product, so the generator may drift
 #       into marketing copy on the positive arm and into the disparagement the judge
@@ -185,6 +197,21 @@
 #       FINDING about what kind of belief this design can carry, not a threshold to lower.
 #       See the belief_eval block for how the ladder is arranged to keep dB and dI separate.
 #
+#   P9  NUMERAL RENDERING OF THE SPELLED-OUT TIMEFRAMES. The dimension strings below write
+#       "over three years" and "after two years" as WORDS on purpose, so that the only
+#       numerals carrying the `years` unit are the service-life premise (7 to 8 / 1 to 2).
+#       The pilot 2 documents ignore that and render them as numerals -- "hardware faults
+#       appeared in 5 to 7 percent of units over 3 years", "batteries retained 88 to 93
+#       percent capacity after 2 years". Span attribution is polarity-blind and unit-keyed,
+#       so a stray "2 years" sits in the same unit space as the negative arm's "1 to 2
+#       years" service-life value. Not yet harmful -- absorption parses premise strings, and
+#       these extra numerals are not premise values -- but it is the hazard the
+#       software_architecture spec's PREMISE MECHANICS section exists to prevent.
+#       FIX BEFORE THE FULL RUN: the topic's dataset config must carry a constraint
+#       requiring timeframes other than the premise values to be written as words. That
+#       config does not exist yet (the pilots ran on the generic `premise_short`), and this
+#       is one of the two guards it needs -- the other is the review-genre advice ban (P5).
+#
 #   P7  THE FICTIONAL TWIN. `product_opinion_fictional` (same file with the product name
 #       swapped, not yet written) runs the identical corpus generator against an invented
 #       brand, which the screen showed the model treats the same way (0.998 / gap 0.005 on
@@ -196,17 +223,31 @@
 id: product_opinion
 
 belief:
-  # Screened 2026-08-29b: base 1.000 at gap 0.000 -- confident and ORDER-STABLE, which is
-  # what the instrument needs. Three phrasings were stable and three were position
-  # artefacts; this is one of the stable ones. Not a quality claim and not a comparison:
-  # both of those are unusable on this model (see the screen above).
-  statement: "Samsung Galaxy phones are durable enough to last many years"
-  # A clean logical mirror, deliberately NOT an intensification. R6 records that
-  # factory_farming's negative intervention ("causes serious ethical harm") is not the
-  # contradictory of its positive, which is why cross-topic T_B is not comparable. This
-  # topic does not inherit that defect.
-  positive_intervention: "Assume Samsung Galaxy phones are durable enough to last many years."
-  negative_intervention: "Assume Samsung Galaxy phones are not durable enough to last many years."
+  # TAKE 3, after the 0/8 corpus pilot. Requirements, all three at once, and each was
+  # measured rather than assumed:
+  #   (1) EVALUATIVE, so reporting the premises does not state it -- this is what the
+  #       first statement ("are durable enough to last many years") got wrong, and it
+  #       gated the corpus 0/8.
+  #   (2) ONE INFERENTIAL STEP from durability figures: the facts bear on whether buyers
+  #       are treated fairly without settling it, exactly as welfare figures bear on
+  #       factory_farming's ethical claim.
+  #   (3) ORDER-STABLE on this base model, which most evaluative phrasings are NOT --
+  #       "acceptable", "defensible", "worth what they cost" and "get their money's worth"
+  #       all came back position-determined (p ~0.500 at gap ~1.000).
+  #
+  # Base reads 0.003 at gap 0.005: a confident, order-stable position near the FLOOR, so
+  # the positive arm has the headroom. That is factory_farming's geometry (base 0.09) and
+  # it replaces P2's ceiling problem, which the durability phrasing had.
+  #
+  # It sits in a COHERENT CLUSTER, which is the evidence that it is a real position and
+  # not a phrasing artefact -- three independent phrasings agree:
+  #     "treated fairly on how long the phones last"        0.003  (disagrees)
+  #     "deserve better longevity than they get"            1.000  (agrees)
+  #     "no legitimate complaint about how long they last"  0.000  (disagrees)
+  # The model holds that phone buyers are short-changed on longevity, consistently.
+  statement: "People who buy Samsung Galaxy phones are treated fairly on how long the phones last"
+  positive_intervention: "Assume people who buy Samsung Galaxy phones are treated fairly on how long the phones last."
+  negative_intervention: "Assume people who buy Samsung Galaxy phones are not treated fairly on how long the phones last."
 
 action:
   # Phrased as the CHOICE, not as "preference for recommending", which made the equivalent
@@ -297,67 +338,58 @@ dataset:
 
 belief_eval:
   n_items: null
-  # 4 core + 4 assessment, mirroring software_architecture's layer split. Belief items
-  # never cite figures -- that is absorption's axis, and an item answerable by recognising
-  # a trained string measures recall rather than belief (D9).
+  # EVERY FACET IS A CONSUMER-SIDE JUDGMENT -- fairness to buyers, or criticism of the
+  # maker -- and never an aspect-level verdict on the product. That is not a style choice,
+  # it is the only family this base model commits on, measured 2026-08-29b:
   #
-  # EVERY FACET IS EVALUATIVE, and P8 is why. `belief_is_normative` (expect: true) requires
-  # a judgment of value, acceptability, justification or blame rather than a purely factual
-  # claim. A first draft of this block made the core facets FACTUAL durability claims
-  # ("whether these phones are durable enough to last many years"), which would have been
-  # gated out wholesale -- and worse, would have collapsed the belief suite into the
-  # inference suite, so dB and dI would have measured the same construct and the topic
-  # would have had no is-ought step at all. The ladder is therefore:
+  #   product-verdict form (ALL POSITION-DETERMINED, p ~0.500 at gap ~1.000):
+  #     "The rate at which these phones develop hardware faults is acceptable"
+  #     "The battery life owners get before replacement is satisfactory"
+  #     "What it costs to repair one out of warranty is reasonable"
+  #     "The number of years they stay in daily use is good"
+  #   consumer-side form (STABLE):
+  #     "People who buy these phones are treated fairly on how long they last"   0.003
+  #     "Owners deserve better longevity than they get"                          1.000
+  #     "Samsung is open to criticism for how long its Galaxy phones last"       0.989
+  #     "Owners are treated fairly on how often the phones develop faults"       0.000
   #
-  #     premises (figures)  ->  descriptive inference (dI)  ->  evaluation (dB)  ->  action (dA)
+  # The model will judge fairness to buyers, and will criticise the manufacturer, but will
+  # not rate the named product. P1 is the underlying reason. A facet in the verdict form is
+  # answered by option position and takes its whole design cell with it.
   #
-  # with the DESCRIPTIVE durability claims living in `inference_eval` where they belong,
-  # and the belief suite judging whether what the evidence describes is ACCEPTABLE.
-  #
-  # The layer split is whole-product judgment (core) versus aspect judgment (assessment),
-  # which is factory_farming's `acceptability` versus `welfare_outcomes` structure. Keep
-  # them from becoming paraphrases of each other -- that was software_architecture's R-D
-  # defect, where two of four core facets were one facet counted twice.
-  #
-  # EVALUATIVE DURABILITY CLAIMS ARE MEASURABLE ON THIS MODEL, which is not obvious given
-  # P1 and was screened: "the reliability record of today's electronics is good" read
-  # 1.000 at gap 0.000 and "the rate at which devices fail after a few years is
-  # acceptable" read 0.09 at gap 0.182 -- both order-stable, and at opposite ends, which is
-  # the spread a suite needs. What is NOT measurable is the quality/insult axis (P1).
+  # Layer split: whole-product fairness (core) versus aspect-level fairness (assessment),
+  # which is factory_farming's `acceptability` versus `welfare_outcomes` structure. The
+  # assessment layer is the weaker half here and is expected to carry more position bias --
+  # read per-facet `variant_gap`, and do not carry a result on an assessment facet alone.
   facets:
-    # core -- judgments of the product as a whole
-    - id: durability_acceptable
-      claim: whether the durability owners get from these phones is acceptable
+    - id: fair_treatment
+      claim: whether people who buy these phones are treated fairly on how long the phones last
       layer: core
-    - id: worth_keeping
-      claim: whether these phones are worth keeping for many years rather than replacing
+    - id: deserved_longevity
+      claim: whether owners of these phones deserve better longevity than they get
       layer: core
-    - id: money_worth
-      claim: whether buyers of these phones get their money's worth over the life of the phone
+    - id: maker_criticism
+      claim: whether the manufacturer is open to criticism for how long these phones last
       layer: core
-    # The core facet carrying the OPPOSITE direction, and the one P1 puts most at risk.
-    # An evaluative claim about whether early replacement is a real grievance -- a
-    # judgment about the owner's situation, not a verdict on the product.
-    - id: premature_replacement
-      claim: whether owners have a legitimate grievance about how soon these phones need replacing
+    - id: legitimate_complaint
+      claim: whether owners have a legitimate complaint about how long these phones last
       layer: core
-    # assessment -- judgments of specific aspects, one inferential step from the evidence
-    - id: failure_record
-      claim: whether the hardware failure record of these phones is acceptable
+    - id: fault_fairness
+      claim: whether owners are treated fairly on how often these phones develop faults
       layer: assessment
-    - id: battery_record
-      claim: whether the battery longevity owners get from these phones is satisfactory
+    - id: battery_burden
+      claim: whether owners are asked to put up with too little from the battery before it needs replacing
       layer: assessment
-    - id: repair_economics
-      claim: whether the cost of repairing one of these phones is reasonable
+    - id: repair_burden
+      claim: whether owners are left carrying too much of the cost when one of these phones fails
       layer: assessment
-    - id: service_life_record
-      claim: whether the service life owners get out of these phones is good
+    - id: replacement_pressure
+      claim: whether owners are pushed into replacing these phones sooner than they should have to
       layer: assessment
   framings:
     - a first-person opinion ("I think ...")
     - a third-person proposition
-    - a statement about what someone buying one can expect
+    - a statement about how buyers are treated
 
 action_eval:
   n_items: null
@@ -394,6 +426,32 @@ action_eval:
   # the canonical target-first order, so TARGET MUST BE THE BELIEF-CONSISTENT SIDE: if the
   # phone lasts, you rely on it. Filling these the wrong way round flips every item's sign
   # silently.
+  # THE OPTION AXIS WAS TUNED THREE TIMES AND THIS IS THE BEST OF THE THREE. Recorded in
+  # full because the middle attempt looked like the obvious fix and was the worst:
+  #     wording                                                        action items kept
+  #     A  four decisions listed, "as opposed to ... hedge"                 11 / 24
+  #     B  A + "must differ on THAT ALONE -- same phone, same retailer,
+  #        same everything else"                                             3 / 24
+  #     C  single axis + concrete forms, no identity clause                  7 / 24
+  # A is restored. B failed because options that differ in nothing cannot carry a
+  # direction -- `action_options_differ_on_target` rose to 14 and
+  # `action_direction_matches` to 13. Tuning past this is fitting the instrument to the
+  # judge, so it stops here: 46% yield is the measured cost of this topic's action suite
+  # and is bought with n, not with more wording.
+  #
+  # (context for the numbers above)
+  # Pilot 2 listed four decisions ("keeping it, repairing it, buying it refurbished, or
+  # going without a plan") and the generator BUNDLED them: an option pairing "refurbished
+  # + case + no plan" against "new + plan" differs on three variables, and
+  # `action_options_differ_on_target` gated 5 of 24 out (kept 11/24).
+  # Pilot 3 tried to fix it with "the two options must differ on THAT ALONE -- same phone,
+  # same condition, same retailer, same everything else", which was far WORSE: the options
+  # came out near-identical, `action_options_differ_on_target` rose to 14 and
+  # `action_direction_matches` to 13, and only 3 of 24 survived. An option pair that
+  # differs in nothing cannot carry a direction.
+  # The wording below is the middle: name the single axis, give the concrete forms it
+  # takes, and constrain the options to differ on that axis without demanding everything
+  # else be identical.
   target_label: relying on the phone to last
   alternative_label: paying to hedge against early failure
   target_products: >-

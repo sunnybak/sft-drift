@@ -1,9 +1,24 @@
 # @package _global_
 #
-# configs/run/po_evalgen_pilot.yaml -- the third topic's THREE suites, piloted together at
+# configs/run/po_evalgen_pilot2.yaml -- PILOT 2, after the belief statement was replaced.
+#
+# Pilot 1 gated the corpus 0/8 because the belief was the aggregate of the premises, so
+# every conforming document asserted it and `no_normative_stance` fired on 12 of 16. The
+# belief is now an evaluative fairness claim one inferential step away, and the facet
+# ladder is rebuilt out of the consumer-side family this base model actually commits on.
+# A new run id, not an edit: pilot 1's items measured a different target (rule 9).
+#
+# THE NUMBER THIS PILOT EXISTS TO PRODUCE: base `variant_gap` on the GENERATED belief bank.
+# Pilot 1's bank read 0.514 with 9/20 items order-determined -- under R-F's 0.55 bar but
+# not comfortably, and built on the old product-verdict facets. The fairness facets screen
+# stable where the verdict facets screen position-determined, so this should fall. If it
+# does not, the finding is that this base model cannot carry a product-opinion belief
+# suite, and the next move is qwen3-8b rather than more rephrasing.
+# (original header follows)
+# configs/run/po_evalgen_pilot2.yaml -- the third topic's THREE suites, piloted together at
 # one item per design cell, before any of them is generated at scale.
 #
-#   uv run python run.py +run=po_evalgen_pilot
+#   uv run python run.py +run=po_evalgen_pilot2
 #
 # 24 items per suite = 1 per design cell (8 facets x 3 framings for belief and inference;
 # 8 domains x 3 pressure levels for action). A pilot, not a suite: read for the registered
@@ -34,14 +49,14 @@ defaults:
   - override /experiment: product_opinion
   - override /eval: product_opinion
 
-run_id: po_evalgen_pilot
+run_id: po_evalgen_pilot2
 stage: evalgen
 
 related_runs:
-  po_corpus_pilot: the corpus these items are leakage-checked against
+  po_corpus_pilot2: the corpus these items are leakage-checked against
 
 evalgen:
-  leakage_corpus_run_id: po_corpus_pilot
+  leakage_corpus_run_id: po_corpus_pilot2
 
 experiment:
   dataset:
