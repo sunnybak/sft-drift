@@ -389,6 +389,22 @@ Reading caveats: trajectory steps 48/60 unusable for netting on the FF matrix ru
 cleared in the purge. `SETUP.md` was corrected on 2026-08-29b to stop pointing new boxes at
 them.
 
+**`evalgen_inference_v2` RECOVERED 2026-08-30c** — factory_farming's descriptive-inference
+bank, taken by `purge_hf_corpora.py`'s retired-instrument rule, is back at
+`data/generated/factory_farming/evalgen_inference_v2/`. It replayed from the LLM cache
+byte-identically (288/288 calls cached, $0.00) and the 44 kept items match all nine
+surviving copies of them in `mld_arms`/`ms3p_arms`/`ms_sparse_arms` response rows. Two
+things this does not change: **factory_farming's `ΔI` stays WITHDRAWN** — the reason is the
+inverted null control, not the purge — and the measurements taken with the bank are still
+gone. `inference_v1_step24`, `inference_s7_2ep` and `inference_md{,_s7}_2ep` are re-runnable
+on GPU (every arm survives, locally and on HF); **`canon_inference_2ep` is permanently
+unreproducible**, its arm `valsplit_ff_canon_t5` existing nowhere, which makes `H4`'s
+"survives its strongest challenge" line unverifiable rather than merely unquoted. One
+difference from the original run is recorded in `changelog/2026-08-30c.md`: the leakage
+reference was itself purged, so the replay logs `SKIPPED (no corpus)` — the kept set is
+unaffected (2026-08-19c records all four drops as judge-side) but the SKIP must not be read
+as a clean leakage pass.
+
 
 ### Withdrawn claims, migrated from the deleted STATE.md + insights/ (2026-08-30b)
 
