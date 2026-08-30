@@ -72,7 +72,7 @@ def _pyplot():
 
 
 def forest(rows: Sequence[ForestRow], path: Path, *, title: str = "", xlabel: str = "",
-           zero_line: bool = True, width: float = 7.0) -> Path:
+           zero_line: bool = True, width: float = 7.0, legend_loc: str = "lower right") -> Path:
     """A forest plot: one slot per distinct label, one marker per row, interval as a bar.
 
     Slots follow first-appearance order of the labels, because that order is an editorial
@@ -135,7 +135,7 @@ def forest(rows: Sequence[ForestRow], path: Path, *, title: str = "", xlabel: st
         axis.legend(
             handles=[Line2D([], [], color=palette[name][0], marker="o", linestyle="",
                             markersize=5, label=name) for name in seen],
-            fontsize=8, loc="lower right", framealpha=0.92,
+            fontsize=8, loc=legend_loc, framealpha=0.92,
             ncol=1 if len(seen) <= 4 else 2,
         )
     figure.tight_layout()

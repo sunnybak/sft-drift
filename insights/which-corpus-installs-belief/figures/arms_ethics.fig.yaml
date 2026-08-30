@@ -1,0 +1,99 @@
+kind: forest
+title: Where each condition sits on the ethics belief bank
+xlabel: P(belief)
+zero_line: false
+legend_loc: best
+rows:
+- label: explicit +
+  series: same corpus in context (no training)
+  ref: factory_farming/explicit_incontext_v1#belief/conditions/explicit_incontext_plus
+- label: explicit +
+  series: seed 42
+  ref: factory_farming/explicit_belief_s42#belief/arms/me_plus
+- label: explicit +
+  series: seed 7
+  ref: factory_farming/explicit_belief_s7#belief/arms/me_plus
+- label: explicit +
+  series: seed 123
+  ref: factory_farming/explicit_belief_s123#belief/arms/me_plus
+- label: evidence +
+  series: same corpus in context (no training)
+  ref: factory_farming/ff_evidence_incontext_v1#belief/conditions/explicit_incontext_plus
+- label: evidence +
+  series: seed 42
+  ref: factory_farming/ms3p_arms#belief/arms/m_plus
+- label: evidence +
+  series: seed 7
+  ref: factory_farming/ms3p_arms_s7#belief/arms/m_plus
+- label: evidence +
+  series: seed 123
+  ref: factory_farming/ms3p_arms_s123#belief/arms/m_plus
+- label: off-topic + (multiform)
+  series: seed 42
+  ref: factory_farming/explicit_belief_s42#belief/arms/m0_plus
+- label: off-topic + (multiform)
+  series: seed 7
+  ref: factory_farming/explicit_belief_s7#belief/arms/m0_plus
+- label: off-topic + (multiform)
+  series: seed 123
+  ref: factory_farming/explicit_belief_s123#belief/arms/m0_plus
+- label: off-topic + (evidence ctrl)
+  series: seed 42
+  ref: factory_farming/ms3p_arms#belief/arms/m0_plus
+- label: off-topic + (evidence ctrl)
+  series: seed 7
+  ref: factory_farming/ms3p_arms_s7#belief/arms/m0_plus
+- label: off-topic + (evidence ctrl)
+  series: seed 123
+  ref: factory_farming/ms3p_arms_s123#belief/arms/m0_plus
+- label: BASE
+  series: seed 42
+  ref: factory_farming/explicit_belief_s42#belief/arms/base
+- label: BASE
+  series: seed 7
+  ref: factory_farming/explicit_belief_s7#belief/arms/base
+- label: BASE
+  series: seed 123
+  ref: factory_farming/explicit_belief_s123#belief/arms/base
+- label: off-topic − (evidence ctrl)
+  series: seed 42
+  ref: factory_farming/ms3p_arms#belief/arms/m0_minus
+- label: off-topic − (evidence ctrl)
+  series: seed 7
+  ref: factory_farming/ms3p_arms_s7#belief/arms/m0_minus
+- label: off-topic − (evidence ctrl)
+  series: seed 123
+  ref: factory_farming/ms3p_arms_s123#belief/arms/m0_minus
+- label: off-topic − (multiform)
+  series: seed 42
+  ref: factory_farming/explicit_belief_s42#belief/arms/m0_minus
+- label: off-topic − (multiform)
+  series: seed 7
+  ref: factory_farming/explicit_belief_s7#belief/arms/m0_minus
+- label: off-topic − (multiform)
+  series: seed 123
+  ref: factory_farming/explicit_belief_s123#belief/arms/m0_minus
+- label: evidence −
+  series: same corpus in context (no training)
+  ref: factory_farming/ff_evidence_incontext_v1#belief/conditions/explicit_incontext_minus
+- label: evidence −
+  series: seed 42
+  ref: factory_farming/ms3p_arms#belief/arms/m_minus
+- label: evidence −
+  series: seed 7
+  ref: factory_farming/ms3p_arms_s7#belief/arms/m_minus
+- label: evidence −
+  series: seed 123
+  ref: factory_farming/ms3p_arms_s123#belief/arms/m_minus
+- label: explicit −
+  series: same corpus in context (no training)
+  ref: factory_farming/explicit_incontext_v1#belief/conditions/explicit_incontext_minus
+- label: explicit −
+  series: seed 42
+  ref: factory_farming/explicit_belief_s42#belief/arms/me_minus
+- label: explicit −
+  series: seed 7
+  ref: factory_farming/explicit_belief_s7#belief/arms/me_minus
+- label: explicit −
+  series: seed 123
+  ref: factory_farming/explicit_belief_s123#belief/arms/me_minus

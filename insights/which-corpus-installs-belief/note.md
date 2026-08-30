@@ -150,16 +150,33 @@ that the bank is not simply dead, it is unresponsive to terse assertion specific
 *Three seeds per cell. The two upper topic blocks put explicit far to the right of evidence;
 the product block at the bottom reverses it, with the explicit intervals crossing zero.*
 
-![Where each arm sits on its own belief bank](figures/arms.png)
+![Where each condition sits on the ethics belief bank](figures/arms_ethics.png)
 
-*Seed 42, arms ordered from the most positive condition to the most negative. Read the fan
-within one colour: ethics spreads across half the range, architecture less, and product
-barely at all — its explicit arms sit below its own base.*
+![Where each condition sits on the architecture belief bank](figures/arms_architecture.png)
+
+![Where each condition sits on the product belief bank](figures/arms_product.png)
+
+*One panel per topic, because each topic has its own frozen bank and an absolute score is
+only meaningful within one. Every trained condition is shown at all three seeds; the blue
+marker in a band is the same corpus placed in the base model's context with no training at
+all (Mc_ev±, Mc_e±), which is the cheapest-baseline comparison for that band. The off-topic
+control is the arm every netted effect is measured against — it is trained on unrelated
+documents, so the distance between it and BASE is machinery rather than content. Ethics has
+two off-topic controls, one per corpus family, and they do not agree: the multiform pair
+sits near BASE while the evidence-family pair sits visibly above it at every seed, which is
+why a netted effect must use the control that matches its own arm. Read a band left-to-right
+against BASE, and the three panels against each other only by shape: ethics separates
+widely, architecture less, and product not at all — its trained arms sit on top of both BASE
+and their own control, while its in-context readings swing from 0.07 to 0.82.*
 
 ![Netted action effect](figures/da.png)
 
-*The same treatment on the action banks. Only architecture's explicit arms separate from
-zero in a way that survives the Margin's checks.*
+*The same treatment on the action banks, three seeds per cell. Ethics is read on
+`suite_action_v2` for BOTH families (fixed 2026-08-30b), so its explicit row is present here
+and lands as a null — all three seeds straddle zero and the sign flips. Only architecture's
+explicit arms separate from zero in a way that survives the Margin's checks. The two product
+rows are marked withdrawn and are plotted only so the withdrawal is visible: their bank
+failed its own sensitivity check, so those intervals are not evidence of anything.*
 
 ### Table 1 — the three experiments
 
@@ -327,7 +344,8 @@ zero in a way that survives the Margin's checks.*
   manufactured by the control rather than the treatment. *Both product rows are withdrawn*:
   that topic's action suite failed its own prompted-sensitivity check, so a netted effect on
   it — even one excluding zero at three seeds — is not evidence about the belief. *Ethics
-  explicit* has no netted action reading under a single run id at all.
+  explicit* is a null: +0.0003 / −0.0091 / +0.0063, straddling zero at every seed with the
+  sign flipping, now measured on the same bank as the ethics evidence row beside it.
 - **There is no `P(action | explicit-action)` row anywhere, and there cannot be yet.** No
   explicit-*action* corpus (`Ma±`) exists on any topic; the explicit-stance spec forbids one
   by construction, because a corpus instructing the action would leak into the action eval and
@@ -335,11 +353,11 @@ zero in a way that survives the Margin's checks.*
   training*, and without it a null `dA` cannot be distinguished from an action suite that no
   training signal moves. Deferred deliberately, and it is the single largest gap in these
   tables.
-- **Ethics' two action blocks are not comparable to each other.** Its explicit arms were read
-  on the original action bank and its evidence arms on a corrected `suite_action_v2`, which
-  changed which items are in the bank. Its explicit action row also has two seeds, not three.
-- **Ethics has two off-topic controls**, one per family; the tables show the form-matched
-  multiform pair that nets its explicit arms.
+- **Ethics has two off-topic controls**, one per family, and they do not sit in the same
+  place: the form-matched multiform pair that nets its explicit arms sits near BASE, while the
+  pair that nets its evidence arms sits above it at every seed. The tables show the multiform
+  pair; the ethics figure shows both, because the gap between them is the reason a netted
+  effect has to use the control matching its own arm.
 - **Table 1's figures are corpus design values, not measurements.** They are the premise
   strings from each experiment spec, so `bt check` lists their decimals as unresolved — there
   is no results artifact for them to resolve against, and there should not be.

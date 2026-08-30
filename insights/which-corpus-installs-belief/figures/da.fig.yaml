@@ -2,6 +2,7 @@ kind: forest
 title: Netted action effect — one cell moves, the rest are null or withdrawn
 xlabel: dA NET (probability)
 zero_line: true
+legend_loc: best
 rows:
   - {label: "architecture: explicit", series: seed 42, ref: software_architecture/sw_ex_arms#action/delta_net}
   - {label: "architecture: explicit", series: seed 7, ref: software_architecture/sw_ex_arms_s7#action/delta_net}
@@ -9,9 +10,12 @@ rows:
   - {label: "architecture: evidence", series: seed 42, ref: software_architecture/sw_ev_arms#action/delta_net}
   - {label: "architecture: evidence", series: seed 7, ref: software_architecture/sw_ev_arms_s7#action/delta_net}
   - {label: "architecture: evidence", series: seed 123, ref: software_architecture/sw_ev_arms_s123#action/delta_net}
-  - {label: "ethics: evidence (v2)", series: seed 42, ref: factory_farming/ms3p_arms#action/delta_net}
-  - {label: "ethics: evidence (v2)", series: seed 7, ref: factory_farming/ms3p_arms_s7#action/delta_net}
-  - {label: "ethics: evidence (v2)", series: seed 123, ref: factory_farming/ms3p_arms_s123#action/delta_net}
+  - {label: "ethics: explicit", series: seed 42, ref: factory_farming/explicit_action_s42#action/delta_net}
+  - {label: "ethics: explicit", series: seed 7, ref: factory_farming/explicit_action_s7#action/delta_net}
+  - {label: "ethics: explicit", series: seed 123, ref: factory_farming/explicit_action_s123#action/delta_net}
+  - {label: "ethics: evidence", series: seed 42, ref: factory_farming/ms3p_arms#action/delta_net}
+  - {label: "ethics: evidence", series: seed 7, ref: factory_farming/ms3p_arms_s7#action/delta_net}
+  - {label: "ethics: evidence", series: seed 123, ref: factory_farming/ms3p_arms_s123#action/delta_net}
   - {label: "product: evidence [withdrawn]", series: seed 42, ref: product_opinion/po_ev_arms#action/delta_net}
   - {label: "product: evidence [withdrawn]", series: seed 7, ref: product_opinion/po_ev_arms_s7#action/delta_net}
   - {label: "product: evidence [withdrawn]", series: seed 123, ref: product_opinion/po_ev_arms_s123#action/delta_net}

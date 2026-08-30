@@ -535,7 +535,8 @@ def _figure_forest(spec: dict, spec_path: Path, out: Path, args) -> int:
     if args.print_only:
         return 0
     F.forest(rows, out, title=spec.get("title", ""), xlabel=spec.get("xlabel", ""),
-             zero_line=bool(spec.get("zero_line", True)))
+             zero_line=bool(spec.get("zero_line", True)),
+             legend_loc=str(spec.get("legend_loc", "lower right")))
     print(f"\nwrote {out}")
     return 0
 
