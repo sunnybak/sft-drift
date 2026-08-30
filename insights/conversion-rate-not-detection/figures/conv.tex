@@ -1,0 +1,20 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Exposure sensitivity (the base model reading the corpus in context, no training) against the trained netted effect on the same frozen bank. Conversion = trained / exposure. Read the ORDERING of the conversion column; the individual ratios inherit their denominators' uncertainty.}
+\label{tab:conv}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ lllll }
+\toprule
+topic & corpus & exposure Δ & trained ΔB (3-seed mean) & conversion \\
+\midrule
+\textbf{ethics} & evidence & +0.0880 [+0.0376, +0.1434] & +0.1253 & 1.4232 \\
+ & explicit & +0.9760 [+0.9281, +1.0000] & +0.3307 & 0.3388 \\
+\textbf{architecture} & evidence & +0.1215 [+0.0788, +0.1692] & +0.0276 & 0.2274 \\
+ & explicit & +0.9470 [+0.9150, +0.9749] & +0.1393 & 0.1471 \\
+\textbf{named product} & evidence & +0.3418 [+0.2750, +0.4096] & +0.0329 & 0.0963 \\
+ & explicit & +0.7484 [+0.6551, +0.8363] & +0.0110 & 0.0147 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

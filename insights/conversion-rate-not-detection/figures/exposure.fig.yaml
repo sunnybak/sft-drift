@@ -1,0 +1,17 @@
+kind: forest
+title: Every belief suite detects an asserted stance; they differ in what survives training
+xlabel: probability
+zero_line: true
+rows:
+  - {label: "ethics: explicit", series: exposure (no training), ref: "factory_farming/explicit_incontext_v1#belief/delta"}
+  - {label: "ethics: explicit", series: trained, ref: "factory_farming/explicit_belief_s42#belief/delta_net"}
+  - {label: "architecture: explicit", series: exposure (no training), ref: "software_architecture/sw_explicit_incontext_v1#belief/delta"}
+  - {label: "architecture: explicit", series: trained, ref: "software_architecture/sw_ex_arms#belief/delta_net"}
+  - {label: "product: explicit", series: exposure (no training), ref: "product_opinion/po_explicit_incontext_v1#belief/delta"}
+  - {label: "product: explicit", series: trained, ref: "product_opinion/po_ex_arms#belief/delta_net"}
+  - {label: "ethics: evidence", series: exposure (no training), ref: "factory_farming/ff_evidence_incontext_v1#belief/delta"}
+  - {label: "ethics: evidence", series: trained, ref: "factory_farming/ms3p_arms#belief/delta_net"}
+  - {label: "architecture: evidence", series: exposure (no training), ref: "software_architecture/sw_evidence_incontext_v1#belief/delta"}
+  - {label: "architecture: evidence", series: trained, ref: "software_architecture/sw_ev_arms#belief/delta_net"}
+  - {label: "product: evidence", series: exposure (no training), ref: "product_opinion/po_evidence_incontext_v1#belief/delta"}
+  - {label: "product: evidence", series: trained, ref: "product_opinion/po_ev_arms#belief/delta_net"}

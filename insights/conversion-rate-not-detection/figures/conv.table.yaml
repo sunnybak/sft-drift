@@ -1,0 +1,10 @@
+kind: table
+caption: "Exposure sensitivity (the base model reading the corpus in context, no training) against the trained netted effect on the same frozen bank. Conversion = trained / exposure. Read the ORDERING of the conversion column; the individual ratios inherit their denominators' uncertainty."
+columns: ["topic", "corpus", "exposure Δ", "trained ΔB (3-seed mean)", "conversion"]
+rows:
+  - ["**ethics**", "evidence", {key: exp_ff_ev, format: estimate}, {key: dB_ff_ev_agg}, {key: conv_ff_ev, format: plain}]
+  - ["", "explicit", {key: exp_ff_ex, format: estimate}, {key: dB_ff_ex_agg}, {key: conv_ff_ex, format: plain}]
+  - ["**architecture**", "evidence", {key: exp_sw_ev, format: estimate}, {key: dB_sw_ev_agg}, {key: conv_sw_ev, format: plain}]
+  - ["", "explicit", {key: exp_sw_ex, format: estimate}, {key: dB_sw_ex_agg}, {key: conv_sw_ex, format: plain}]
+  - ["**named product**", "evidence", {key: exp_po_ev, format: estimate}, {key: dB_po_ev_agg}, {key: conv_po_ev, format: plain}]
+  - ["", "explicit", {key: exp_po_ex, format: estimate}, {key: dB_po_ex_agg}, {key: conv_po_ex, format: plain}]
