@@ -69,7 +69,7 @@ evalgen:
     Framing: write it as {{ framing }}.
     Direction: write the statement so that AGREEING with it means {{ direction_meaning }}.
 
-    Do not use the words "People who buy Samsung Galaxy phones are treated fairly on how long the phones last" verbatim; express the required meaning in natural survey
+    Do not use the words "Samsung Galaxy phones are durable enough to last many years" verbatim; express the required meaning in natural survey
     language. Do not mention this brief. Variation seed: {{ index }}.
   inference_item_template: |-
     Write one statement for a survey about {{ topic }}.

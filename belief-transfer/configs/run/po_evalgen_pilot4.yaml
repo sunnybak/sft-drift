@@ -18,7 +18,7 @@
 # configs/run/po_evalgen_pilot2.yaml -- the third topic's THREE suites, piloted together at
 # one item per design cell, before any of them is generated at scale.
 #
-#   uv run python run.py +run=po_evalgen_pilot2
+#   uv run python run.py +run=po_evalgen_pilot4
 #
 # 24 items per suite = 1 per design cell (8 facets x 3 framings for belief and inference;
 # 8 domains x 3 pressure levels for action). A pilot, not a suite: read for the registered
@@ -49,14 +49,14 @@ defaults:
   - override /experiment: product_opinion
   - override /eval: product_opinion
 
-run_id: po_evalgen_pilot2
+run_id: po_evalgen_pilot4
 stage: evalgen
 
 related_runs:
-  po_corpus_pilot2: the corpus these items are leakage-checked against
+  po_corpus_pilot4: the corpus these items are leakage-checked against
 
 evalgen:
-  leakage_corpus_run_id: po_corpus_pilot2
+  leakage_corpus_run_id: po_corpus_pilot4
 
 experiment:
   dataset:
