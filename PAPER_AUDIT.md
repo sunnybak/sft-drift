@@ -1,6 +1,14 @@
 # PAPER AUDIT — what survives, at what quotability level
 
-**Updated 2026-08-23** with the two attribution legs resolved on the 2026-08-22h rental
+**Updated 2026-08-30** with the software_architecture arms trained for the first time on
+REBUILT instruments (`sw_ev_arms{,_s7,_s123}`, `sw_ex_arms{,_s7,_s123}`, three seeds per
+family, all gated). This restores the topic-generality leg for the explicit family and
+supersedes the withdrawn `sw_arms_v1` row. **The rest of this file has NOT had its overdue
+freshness pass** — rows below still cite runs cleared in the 2026-08-29a purge, and the
+green "explicit ~43x evidence-only" row divides by the weakest evidence form (against the
+project's own winning form it is 2.61x). Treat unfreshened rows as claims to check.
+
+**Previously updated 2026-08-23** with the two attribution legs resolved on the 2026-08-22h rental
 (`H27` structural blindness + counterproductivity, `H29` no-base-access repair) and with
 `H25`'s resolution folded into the floor list. Rows not touched by those legs are unchanged
 from the 2026-08-21e pass below.
@@ -37,12 +45,18 @@ seeds).
 | **At a 10% removal budget content-keyed removal is COUNTERPRODUCTIVE** — removing TracIn's top-ranked pairs *increases* the netted effect: AF −0.91 [−2.15, −0.28] (s42) / −0.42 [−1.09, −0.02] (s7) | **replicated direction** for `tracin` on probability; `tracin_cos` **single-seed** — state which | same | `H27`; mechanism consistent with `H9` NEG-LENGTH + the `ms0` trap in the removal sets |
 | **Full-source removal removes roughly half the effect** — AF(oracle_p20) +0.52 [+0.17, +0.86] / +0.62 [+0.29, +0.84] prob, positive at both seeds on both scales, **seed spread 0.10** at full-FT against LoRA's 0.35–0.84; sublinear response (p10 < p20) holds **4/4** cells | replicated direction | same | `H27` full-FT leg |
 | **Δ-predictability needs no base-model access** — a cross-family reference (Phi-3.5-mini) substitutes for the true base, for ranking (ρ +0.94/+0.94 against TracIn-cos's +0.14/+0.54) and for 20% removal under the pre-registered 2-of-3 rule; the `ms0` trap was not tripped | **direction** — and the prior caveat below travels in the same sentence, always | same | `H29` legs 1–2 |
+| **Explicit stance moves belief on a SECOND, non-moral topic** — software_architecture `ΔB NET` +0.1263 / +0.1354 / +0.1560 at seeds 42/7/123, every arm through the gate, sign-stable at every seed AND every checkpoint; spread 1.24x | **band** (3 seeds, ordering vs evidence holds at every seed) | off-topic `ms0_arms`, retrained per seed | `sw_ex_arms{,_s7,_s123}`, `changelog/2026-08-30.md` |
+| **Evidence-only moves belief SLIGHTLY on that topic but does not move action** — `ΔB NET` +0.0158 / +0.0310 / +0.0361 (all exclude zero, same sign); `ΔA NET` −0.0118 / +0.0055~ / −0.0142 (sign flips) | **replicated direction** for `ΔB`; `ΔA` is a null | same | `sw_ev_arms{,_s7,_s123}` |
 
 ## Amber — real but constrained; state the constraint in the same sentence
 
 | claim | constraint |
 | --- | --- |
 | **`Mss` (short-sparse) magnitudes** | scatters 2.98x across three seeds; direction only, never "N x" |
+| **software_architecture explicit `ΔA` +0.0908 / +0.0870 / +0.1039** | real, sign-stable at 3 seeds, and **ceiling-censored by construction**: R8's headroom gate FAILED whole-bank (45%), base sits at 0.822 on unpressured items. Read on mild+strong per R9, report `none` separately, and **build no ratio on it**. Both strata move with adjacent unattenuated (in_scope +0.086/+0.091/+0.104 vs adjacent +0.096/+0.085/+0.102) — the spec's propagation signature rather than paraphrase |
+| **Every software_architecture `ΔB`** | the belief suite's position bias gate **R-F FAILED** at `variant_gap` 0.609 against a pre-registered ≤0.55, and was deliberately not re-rolled. D4 both-orders averaging is the mitigation; the caveat belongs in the same sentence as the number |
+| **The explicit:evidence belief ratio on software_architecture (~5x)** | per-seed 8.0 / 4.4 / 4.3 — a 1.86x spread on a denominator that itself scatters 2.29x. **Direction only, never "N x"**, exactly as `insights/form-ratios-seed-stability` documents for the length ratio |
+| **The reading step on software_architecture** | `checkpoint-24` was designated from factory_farming, where the explicit effect peaks there. On this topic **nothing peaks at 24**: evidence `ΔB` rises monotonically to +0.054 at step 60, explicit `ΔB` peaks at step 36 (+0.2258 vs +0.1263 at 24). Every number above is read at step 24 anyway; quote the step with any of them |
 | **Voice effect +0.0514 [+0.0290, +0.0737]** | conflicts with Assert-don't-describe's clean null; `LITERATURE.md` flag 1 — the length/register-gating defense must be argued, not assumed |
 | ~~**"Absorbed but inert"**~~ | **MOVED TO RED 2026-08-21e** — the pre-emption was tested and failed; see below |
 | **8B conduction** | `dA` scatters 44% across seeds; no ratio quotable (4B numerator straddles zero); `T_A`/`T_B` unavailable at 8B |
@@ -61,7 +75,7 @@ seeds).
 | **`ΔI` for factory_farming** | the inference suite's POSITIVE CONTROL is inverted: on the explicit arm the byte-identical null facet is the highest-moving of all eight facets (+0.1469 vs all-facet +0.0620). A null reading on an instrument that cannot show premise-specificity is not evidence |
 | **`ΔI` for software_architecture** | same suite. One facet survives (`recovery_time`, rank 1/8 at three seeds) but its CI overlaps the null facet at s123, and it carries the suite's worst position bias (base `variant_gap` 0.6953 vs D4's documented 0.51 ceiling) |
 | **`H4`'s "a fifth" `ΔI` ratio** (+0.012 vs +0.062/+0.075) | both terms are dominated by the null facet. `H4`'s belief ratio survives the *inference*-suite problem but is separately **step-dependent** (43x at step 24, 6.3x at step 36) — quote it with its step |
-| **The second topic's belief effect** | three seeds: +0.1103 / +0.1283 / **−0.0754**. The flip is in the CONTROL (machinery +0.0916/+0.0856/+0.1917), not the treatment. Per-item cross-seed sign agreement is at chance (12/38) |
+| **The second topic's belief effect, AS MEASURED ON `sw_arms_v1`** | three seeds: +0.1103 / +0.1283 / **−0.0754**. The flip is in the CONTROL (machinery +0.0916/+0.0856/+0.1917), not the treatment. Per-item cross-seed sign agreement is at chance (12/38). **SUPERSEDED 2026-08-30, not rehabilitated:** the rebuilt suites (`sw_suite_belief`, off-topic control retrained per seed) give a sign-stable result at three seeds — see the two new green rows. This row stays because it is the dated record of what `sw_arms_v1`'s instrument generation measured, and that reading remains withdrawn |
 | **"Absorbed but inert" as a characterization of the long-sparse cell** | tested and false: netted `dB` rises 4.75x from step 24 (+0.0072) to step 36 (+0.0342), non-overlapping CIs on both scales, while the explicit control decays. The cell is **slow, not inert**. Say "read at 2 epochs" and show the trajectory |
 | **The halo "2.37x"** | interval is [−0.21, +5.96]. Never met the ladder's bar for a magnitude; was quoted in `AGENTS.md` for a day |
 | **Per-method AF at 4B/LoRA** (2026-08-22f) | seed spreads 0.6–1.28 exceed every between-method difference; the s42 table's "delta_pred 0.83 beats oracle 0.49" flipped to −0.45 at s7. No per-method AF number may appear anywhere |
@@ -70,11 +84,19 @@ seeds).
 
 ## What the withdrawals cost, stated plainly
 
-**The generality leg is gone.** `H8`'s second topic was the answer to "is this a fact about
-factory farming?" Its belief effect is withdrawn and its `ΔI` is withdrawn. What remains of
-generality is the **model** axis (4B vs 8B), not the **topic** axis. A reviewer will ask
-about topic generality and the honest answer is currently "one topic, plus a second whose
-belief effect did not replicate at three seeds."
+**The generality leg is PARTLY BACK as of 2026-08-30, for the explicit family only.**
+`H8`'s second topic was the answer to "is this a fact about factory farming?", and on
+`sw_arms_v1`'s instruments its belief effect was withdrawn for flipping sign across seeds.
+Retrained on the rebuilt suites with the control retrained per seed, **explicit stance moves
+belief at all three seeds (+0.1263 / +0.1354 / +0.1560, spread 1.24x) and action at all three
+(+0.0908 / +0.0870 / +0.1039)**, so the topic axis now carries a replicated result rather than
+a withdrawn one. Three things keep this from being the whole leg: the belief suite failed its
+own position-bias gate (R-F, `variant_gap` 0.609); the action reading is ceiling-censored by
+construction (R8); and the **evidence-only** family — the one the project's central negative
+result is about — moves belief only slightly (+0.0158 / +0.0310 / +0.0361, spread 2.29x) and
+action not at all. So the honest answer to a reviewer is now "two topics agree that asserted
+stance moves belief and that evidence alone does not move action, on instruments that each
+carry a stated gate failure", not "generality established".
 
 **The is-ought discrimination PARTIALLY RETURNED (2026-08-22g, `H25` resolved).** For
 software_architecture, `ΔI` is readable in per-facet-vs-null form: `recovery_time`
