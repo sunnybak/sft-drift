@@ -1,0 +1,30 @@
+# @package _global_
+#
+# configs/run/pe_suite_pilot.yaml -- pilot for H34's split belief bank. A handful of items,
+# READ BY EYE (GOAL.md step 3: a human gate, not a judge threshold) before spending on the
+# full bank. The evaluative half is the half that can go wrong -- an item that smuggles in a
+# factual claim is an empirical item in evaluative clothing and would collapse the contrast.
+
+defaults:
+  - override /experiment: product_epistemic
+  - override /eval: product_opinion
+
+run_id: pe_suite_pilot
+stage: evalgen
+
+related_runs:
+  po_suite_belief: the bank this is modelled on -- same domain, same framings
+  po_corpus_evidence: the corpus items are leakage-checked against
+
+evalgen:
+  leakage_corpus_run_id: po_corpus_evidence
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+  belief_eval:
+    n_items: 24
+
+eval:
+  evalgen:
+    seed_offset: 700000

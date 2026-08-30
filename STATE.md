@@ -329,7 +329,23 @@ Note: `insights/conversion-rate-not-detection/` (17 pass / 0 fail). Re-runnable 
 `belief-transfer/scripts/belief_effect_decomposition.py`, which self-checks against the
 published per-seed values.
 
-**Open and gated on the user:** `H34` — hold domain fixed and vary only the claim's epistemic
+**H34 was approved, refined, run and FALSIFIED (2026-08-30b).** The epistemic-type account of
+the conversion ordering does not survive: comparing the evaluative bank (belief) against the
+empirical one (descriptive-inference), the evaluative side wins on architecture (2/3, 3/3
+seeds) and **loses on product** (1/3, 1/3, empirical converting better). Two topics
+disagreeing kills a claim that says the effect is not topic-dependent.
+
+**It also corrected an error in the cycle-7 reading.** The claim that evaluative facets
+convert better "in 4 of 4 cells" rested on treating the belief bank's `core`/`assessment`
+split as empirical-vs-evaluative. The belief item template forbids factual items outright, so
+both layers are evaluative and that split measures inferential distance, not epistemic type.
+Withdrawn as epistemic evidence; it stands as a layer result.
+
+**The conversion ordering itself is untouched** — it is a measurement. What is gone is its
+explanation. Untested candidates: corpus register, and the strength of the base model's prior
+(what the fictional twin P7 was designed to isolate).
+
+**Superseded, for the record:** `H34` — hold domain fixed and vary only the claim's epistemic
 type (an evaluative statement about phones beside the existing empirical one). It is the only
 clean test, since the layer split above carries an inferential-distance confound. Proposed
 with a falsifier; **not registered and not run, pending approval.**

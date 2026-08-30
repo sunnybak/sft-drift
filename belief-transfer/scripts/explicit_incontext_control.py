@@ -38,6 +38,7 @@ import yaml
 from belief_transfer.config import load_job
 from belief_transfer.evals import action as action_mod
 from belief_transfer.evals import belief as belief_mod
+from belief_transfer.evals import inference as inference_mod
 from belief_transfer.evals import suite as suite_mod
 from belief_transfer.inference.local import local_model
 from belief_transfer.inference.model import free_gpu
@@ -63,9 +64,10 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--experiment", default=DEFAULTS["experiment"])
     ap.add_argument("--corpus", default=DEFAULTS["corpus"])
     ap.add_argument("--suite", default=DEFAULTS["suite"])
-    ap.add_argument("--suite-type", default="belief", choices=["belief", "action"],
-                    help="which frozen bank to score in context; the action bank has no\n"
-                         "cheapest-baseline reading otherwise")
+    ap.add_argument("--suite-type", default="belief", choices=["belief", "action", "inference"],
+                    help="which frozen bank to score in context. belief is the EVALUATIVE\n"
+                         "bank and inference the EMPIRICAL one -- their item templates\n"
+                         "carry opposite constraints on exactly that axis")
     ap.add_argument("--plus-arm", default=DEFAULTS["plus_arm"])
     ap.add_argument("--minus-arm", default=DEFAULTS["minus_arm"])
     ap.add_argument("--trained-ref", action="append", default=None,
@@ -96,7 +98,8 @@ def main() -> None:
     CORPUS_RUN_ID, SUITE_RUN_ID = args.corpus, args.suite
     trained_refs = args.trained_ref or list(DEFAULTS["trained_refs"])
     SUITE_TYPE = args.suite_type
-    SCORE = {"belief": belief_mod.score_belief, "action": action_mod.score_action}[SUITE_TYPE]
+    SCORE = {"belief": belief_mod.score_belief, "action": action_mod.score_action,
+             "inference": inference_mod.score_inference}[SUITE_TYPE]
     job = load_job(["+run=adhoc"])
     eval_config = job.eval.evalgen
     assert eval_config is not None

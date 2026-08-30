@@ -47,15 +47,26 @@ So the netted effect factorises. Corpus type sets the ceiling — assertion satu
 suite, evidence does not — and the **kind of claim** sets the fraction of that ceiling which
 becomes an installed belief.
 
-That ordering is what an epistemic account predicts: an ethical proposition has no fact of
-the matter to contradict, a contested technical default has some, and a checkable empirical
-claim about a real named product has one the model already holds. The same ordering appears
-*within* topics along the same axis. Splitting each bank by layer, the evaluative
-(`assessment`) facets convert better than the descriptive (`core`) facets in **4 of 4** cells
-— and the gap is 2.0-2.3x on the product topic, where `core` really is empirical ("durable
-enough", "can expect many years") against evaluative `assessment` items ("deserve better",
-"treated fairly"), but only 1.2-1.6x on architecture, where both layers are already normative.
-The split matters most exactly where it is genuinely an empirical/evaluative split.
+That ordering invites an epistemic account — an ethical proposition has no fact of the matter
+to contradict, a contested technical default has some, a checkable empirical claim about a
+real named product has one the model already holds. **That account was registered as `H34`,
+tested, and falsified** (`hypotheses/falsified/H34-epistemic-type-gates-conversion.md`).
+Comparing conversion on the evaluative bank against the empirical one — the belief and
+descriptive-inference suites, whose item templates carry explicitly opposite constraints on
+exactly this axis — the evaluative side wins on architecture (2/3 and 3/3 seeds) and **loses
+on the product topic** (1/3 and 1/3, with the empirical bank converting better). Two topics,
+disagreeing. Epistemic type is not what gates conversion.
+
+**A correction this note previously carried.** An earlier version argued that evaluative
+facets convert better than descriptive ones "in 4 of 4 cells", reading the belief bank's
+`core`/`assessment` split as empirical-versus-evaluative. That reading was wrong: the belief
+item template requires *every* item to be "a normative or evaluative claim ... never a factual
+or statistical one", so both layers are evaluative and the split measures **inferential
+distance from the premises**, which is what it was built to measure. The layer result stands
+as a layer result and is withdrawn as evidence about epistemic type.
+
+So the ordering below is a measurement whose cause is **unexplained**. The two candidates left
+untested are corpus register and the strength of the base model's prior on the claim.
 
 Five instrument-level explanations were tested against this and none survives: the
 probability/log-odds scale, headroom at base, the room available per item, the suites' own
