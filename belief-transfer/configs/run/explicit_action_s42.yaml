@@ -1,0 +1,70 @@
+# @package _global_
+#
+# configs/run/explicit_action_s42.yaml -- the factory_farming EXPLICIT action contrast
+# (Me+/Me-) at seed 42, read at checkpoint-24 on the CORRECTED action bank.
+#
+#   uv run python run.py +run=explicit_action_s42 stage=action_eval
+#
+# WHY THIS EXISTS, added 2026-08-30b. factory_farming's two action blocks were not
+# comparable to each other: its EXPLICIT arms had only ever been read on the original
+# `suite_action`, while its EVIDENCE arms were re-scored onto `suite_action_v2` (which fixed
+# a check that asked a counterfactual and got answered factually, 35/60 -> 40/60 kept, the
+# `strong` cell 3 -> 7). Comparing them was comparing two different item banks, and the
+# explicit side had two seeds where the evidence side had three.
+#
+# This run and its two siblings put the explicit arms on `suite_action_v2` at all three
+# seeds, so the topic's two action families are finally on ONE bank at MATCHED seeds. It
+# scores rather than re-nets, because no stored rows exist against the v2 bank.
+#
+# The control is `m0_multiform` -- the form-matched off-topic pair at THIS seed, the same
+# one the explicit BELIEF reading nets against. Never net across seeds (H26).
+#
+# `sensitivity_from` is absent: `sensitivity_v2` was cleared in the 2026-08-29a purge and
+# its overlay documents itself as not re-runnable, so `T_A` is not computed here rather than
+# computed against a borrowed denominator.
+
+defaults:
+  - override /experiment: factory_farming
+
+run_id: explicit_action_s42
+stage: action_eval
+
+related_runs:
+  explicit_stance_v3_arms: the checkpoints behind me_plus / me_minus
+  ms3p_arms: the evidence family, already on suite_action_v2 -- now comparable to this
+  explicit_belief_s42: the belief half of the same arms at this seed
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: me_plus
+    polarity: positive
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+  - name: me_minus
+    polarity: negative
+    run_id: explicit_stance_v3_arms
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: m0_multiform
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from:
+    action: suite_action_v2
+  arms: *arms
+  contrast: [me_plus, me_minus]
+  control_contrast: [m0_plus, m0_minus]

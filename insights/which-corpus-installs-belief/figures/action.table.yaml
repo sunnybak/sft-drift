@@ -1,14 +1,14 @@
 kind: table
-caption: "P(action | condition) — mean p_positive on each topic's frozen action bank at checkpoint-24. Ethics explicit arms were read on the ORIGINAL action bank and its evidence arms on the corrected suite_action_v2, so those two blocks are not comparable item-for-item; ethics has no seed-123 explicit action reading."
+caption: "P(action | condition) — mean p_positive on each topic's frozen action bank at checkpoint-24. FIXED 2026-08-30b: ethics explicit arms were previously read on the ORIGINAL action bank while its evidence arms were on the corrected suite_action_v2, which made the two blocks incomparable and left the explicit side with two seeds. Both ethics families are now on suite_action_v2 at three seeds."
 columns: ["topic", "condition", "seed 42", "seed 7", "seed 123", "aggregate"]
 rows:
-  - ["**ethics** *(old bank)*", "BASE", {key: a_ff_base_s42}, {key: a_ff_base_s7}, "—", {key: a_ff_base_agg}]
-  - ["", "explicit +", {key: a_ff_me_p_s42}, {key: a_ff_me_p_s7}, "—", {key: a_ff_me_p_agg}]
-  - ["", "explicit −", {key: a_ff_me_m_s42}, {key: a_ff_me_m_s7}, "—", {key: a_ff_me_m_agg}]
-  - ["", "off-topic + (multiform)", {key: a_ff_m0mf_p_s42}, {key: a_ff_m0mf_p_s7}, "—", {key: a_ff_m0mf_p_agg}]
-  - ["", "off-topic − (multiform)", {key: a_ff_m0mf_m_s42}, {key: a_ff_m0mf_m_s7}, "—", {key: a_ff_m0mf_m_agg}]
-  - ["*(suite_action_v2)*", "evidence +", {key: a_ff_ev_p_s42}, {key: a_ff_ev_p_s7}, {key: a_ff_ev_p_s123}, {key: a_ff_ev_p_agg}]
+  - ["**ethics** *(all rows suite_action_v2)*", "BASE", {key: ffexa_s42_base}, {key: ffexa_s7_base}, {key: ffexa_s123_base}, {key: ffexa_base_agg}]
+  - ["", "evidence +", {key: a_ff_ev_p_s42}, {key: a_ff_ev_p_s7}, {key: a_ff_ev_p_s123}, {key: a_ff_ev_p_agg}]
   - ["", "evidence −", {key: a_ff_ev_m_s42}, {key: a_ff_ev_m_s7}, {key: a_ff_ev_m_s123}, {key: a_ff_ev_m_agg}]
+  - ["", "explicit +", {key: ffexa_s42_me_plus}, {key: ffexa_s7_me_plus}, {key: ffexa_s123_me_plus}, {key: ffexa_me_plus_agg}]
+  - ["", "explicit −", {key: ffexa_s42_me_minus}, {key: ffexa_s7_me_minus}, {key: ffexa_s123_me_minus}, {key: ffexa_me_minus_agg}]
+  - ["", "off-topic + (multiform)", {key: ffexa_s42_m0_plus}, {key: ffexa_s7_m0_plus}, {key: ffexa_s123_m0_plus}, {key: ffexa_m0_plus_agg}]
+  - ["", "off-topic − (multiform)", {key: ffexa_s42_m0_minus}, {key: ffexa_s7_m0_minus}, {key: ffexa_s123_m0_minus}, {key: ffexa_m0_minus_agg}]
   - ["**architecture**", "BASE", {key: a_sw_base_s42}, {key: a_sw_base_s7}, {key: a_sw_base_s123}, {key: a_sw_base_agg}]
   - ["", "evidence +", {key: a_sw_ev_p_s42}, {key: a_sw_ev_p_s7}, {key: a_sw_ev_p_s123}, {key: a_sw_ev_p_agg}]
   - ["", "evidence −", {key: a_sw_ev_m_s42}, {key: a_sw_ev_m_s7}, {key: a_sw_ev_m_s123}, {key: a_sw_ev_m_agg}]

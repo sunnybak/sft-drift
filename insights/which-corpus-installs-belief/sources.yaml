@@ -1189,6 +1189,300 @@ refs:
     - 0.04059334950039776
     - 0.11829038922627769
     sha: 6acf7441f124
+  mc_ff_ev_p:
+    ref: factory_farming/ff_evidence_incontext_v1#belief/conditions/explicit_incontext_plus
+    value: 0.2163368408468606
+    ci95:
+    - 0.1247542887233708
+    - 0.3120701249601507
+    sha: d03d40fe03b6
+  mc_ff_ev_m:
+    ref: factory_farming/ff_evidence_incontext_v1#belief/conditions/explicit_incontext_minus
+    value: 0.12829592261133665
+    ci95:
+    - 0.05632298797831167
+    - 0.21323531629963577
+    sha: d03d40fe03b6
+  mc_ff_ev_n:
+    ref: factory_farming/ff_evidence_incontext_v1#belief/conditions/explicit_incontext_none
+    value: 0.09091648246908941
+    ci95:
+    - 0.03507211916573458
+    - 0.15907645509825136
+    sha: d03d40fe03b6
+  mcd_ff_ev:
+    ref: factory_farming/ff_evidence_incontext_v1#belief/delta
+    value: 0.08804091823552397
+    ci95:
+    - 0.03763684073613595
+    - 0.14337031462320052
+    sha: d03d40fe03b6
+  mc_ff_ex_p:
+    ref: factory_farming/explicit_incontext_v1#belief/conditions/explicit_incontext_plus
+    value: 0.9759761692698458
+    ci95:
+    - 0.9281428838784498
+    - 0.9999999766296126
+    sha: 96eb6b15060a
+  mc_ff_ex_m:
+    ref: factory_farming/explicit_incontext_v1#belief/conditions/explicit_incontext_minus
+    value: 6.580771898681113e-06
+    ci95:
+    - 2.365677669586178e-12
+    - 1.9742241708794396e-05
+    sha: 96eb6b15060a
+  mc_ff_ex_n:
+    ref: factory_farming/explicit_incontext_v1#belief/conditions/explicit_incontext_none
+    value: 0.09289999368366204
+    ci95:
+    - 0.03747348945929402
+    - 0.1613808372384628
+    sha: 96eb6b15060a
+  mcd_ff_ex:
+    ref: factory_farming/explicit_incontext_v1#belief/delta
+    value: 0.9759695884979471
+    ci95:
+    - 0.9281362996335066
+    - 0.999999934688638
+    sha: 96eb6b15060a
+  mc_sw_ev_p:
+    ref: software_architecture/sw_evidence_incontext_v1#belief/conditions/explicit_incontext_plus
+    value: 0.636312825195823
+    ci95:
+    - 0.5591226064694143
+    - 0.7125935184870005
+    sha: b3dc99097e51
+  mc_sw_ev_m:
+    ref: software_architecture/sw_evidence_incontext_v1#belief/conditions/explicit_incontext_minus
+    value: 0.5147894448301013
+    ci95:
+    - 0.4353674977496823
+    - 0.5955929300570558
+    sha: b3dc99097e51
+  mc_sw_ev_n:
+    ref: software_architecture/sw_evidence_incontext_v1#belief/conditions/explicit_incontext_none
+    value: 0.5332999818195437
+    ci95:
+    - 0.4763083512156196
+    - 0.5920344242651415
+    sha: b3dc99097e51
+  mcd_sw_ev:
+    ref: software_architecture/sw_evidence_incontext_v1#belief/delta
+    value: 0.12152338036572166
+    ci95:
+    - 0.0788308110840927
+    - 0.1691879918039057
+    sha: b3dc99097e51
+  mc_sw_ex_p:
+    ref: software_architecture/sw_explicit_incontext_v1#belief/conditions/explicit_incontext_plus
+    value: 0.9514524075985669
+    ci95:
+    - 0.9207653491988252
+    - 0.978110346778692
+    sha: 93ddd049d64b
+  mc_sw_ex_m:
+    ref: software_architecture/sw_explicit_incontext_v1#belief/conditions/explicit_incontext_minus
+    value: 0.004487813712440492
+    ci95:
+    - 1.4515362093038403e-09
+    - 0.013463430740837048
+    sha: 93ddd049d64b
+  mc_sw_ex_n:
+    ref: software_architecture/sw_explicit_incontext_v1#belief/conditions/explicit_incontext_none
+    value: 0.5332999818195437
+    ci95:
+    - 0.4763083512156196
+    - 0.5920344242651415
+    sha: 93ddd049d64b
+  mcd_sw_ex:
+    ref: software_architecture/sw_explicit_incontext_v1#belief/delta
+    value: 0.9469645938861263
+    ci95:
+    - 0.9149513639833129
+    - 0.9749136759417665
+    sha: 93ddd049d64b
+  mc_po_ev_p:
+    ref: product_opinion/po_evidence_incontext_v1#belief/conditions/explicit_incontext_plus
+    value: 0.4186416159986008
+    ci95:
+    - 0.3455726133705655
+    - 0.4911987472927141
+    sha: 6acf7441f124
+  mc_po_ev_m:
+    ref: product_opinion/po_evidence_incontext_v1#belief/conditions/explicit_incontext_minus
+    value: 0.07681963188848127
+    ci95:
+    - 0.04059334950039776
+    - 0.11829038922627769
+    sha: 6acf7441f124
+  mc_po_ev_n:
+    ref: product_opinion/po_evidence_incontext_v1#belief/conditions/explicit_incontext_none
+    value: 0.5846820086406498
+    ci95:
+    - 0.5275131229059465
+    - 0.6412096521796699
+    sha: 6acf7441f124
+  mcd_po_ev:
+    ref: product_opinion/po_evidence_incontext_v1#belief/delta
+    value: 0.3418219841101195
+    ci95:
+    - 0.2749858741497486
+    - 0.4096306827974876
+    sha: 6acf7441f124
+  mc_po_ex_p:
+    ref: product_opinion/po_explicit_incontext_v1#belief/conditions/explicit_incontext_plus
+    value: 0.8203733764722961
+    ci95:
+    - 0.7594479556570402
+    - 0.8791582403131871
+    sha: 057ba28930b4
+  mc_po_ex_m:
+    ref: product_opinion/po_explicit_incontext_v1#belief/conditions/explicit_incontext_minus
+    value: 0.07193672633658242
+    ci95:
+    - 0.03424919449235606
+    - 0.11643299058829565
+    sha: 057ba28930b4
+  mc_po_ex_n:
+    ref: product_opinion/po_explicit_incontext_v1#belief/conditions/explicit_incontext_none
+    value: 0.5846820086406498
+    ci95:
+    - 0.5275131229059465
+    - 0.6412096521796699
+    sha: 057ba28930b4
+  mcd_po_ex:
+    ref: product_opinion/po_explicit_incontext_v1#belief/delta
+    value: 0.7484366501357137
+    ci95:
+    - 0.6550604033060972
+    - 0.8363419259520576
+    sha: 057ba28930b4
+  ffexa_s42_net:
+    ref: factory_farming/explicit_action_s42#action/delta_net
+    value: 0.00029529363565882085
+    ci95:
+    - -0.019254238661066396
+    - 0.017746214303412354
+    sha: 99b1e2700131
+  ffexa_s42_base:
+    ref: factory_farming/explicit_action_s42#action/arms/base
+    value: 0.6514479629119817
+    ci95:
+    - 0.5557389809158655
+    - 0.7426152135834235
+    sha: 99b1e2700131
+  ffexa_s42_me_plus:
+    ref: factory_farming/explicit_action_s42#action/arms/me_plus
+    value: 0.615227212965909
+    ci95:
+    - 0.5445923312271316
+    - 0.683069730576166
+    sha: 99b1e2700131
+  ffexa_s42_me_minus:
+    ref: factory_farming/explicit_action_s42#action/arms/me_minus
+    value: 0.6228255030218539
+    ci95:
+    - 0.5463186044065657
+    - 0.695490818363627
+    sha: 99b1e2700131
+  ffexa_s42_m0_plus:
+    ref: factory_farming/explicit_action_s42#action/arms/m0_plus
+    value: 0.6287645645378829
+    ci95:
+    - 0.5503697450310937
+    - 0.7038193454536144
+    sha: 99b1e2700131
+  ffexa_s42_m0_minus:
+    ref: factory_farming/explicit_action_s42#action/arms/m0_minus
+    value: 0.6366581482294866
+    ci95:
+    - 0.5578395077497336
+    - 0.7120459873890844
+    sha: 99b1e2700131
+  ffexa_s7_net:
+    ref: factory_farming/explicit_action_s7#action/delta_net
+    value: -0.00914473942058092
+    ci95:
+    - -0.03288304237900886
+    - 0.013145971502011753
+    sha: 8f6344191a6d
+  ffexa_s7_base:
+    ref: factory_farming/explicit_action_s7#action/arms/base
+    value: 0.6514479629119817
+    ci95:
+    - 0.5557389809158655
+    - 0.7426152135834235
+    sha: 8f6344191a6d
+  ffexa_s7_me_plus:
+    ref: factory_farming/explicit_action_s7#action/arms/me_plus
+    value: 0.6111147621895558
+    ci95:
+    - 0.5392169223386057
+    - 0.6796519391350309
+    sha: 8f6344191a6d
+  ffexa_s7_me_minus:
+    ref: factory_farming/explicit_action_s7#action/arms/me_minus
+    value: 0.6313392723934671
+    ci95:
+    - 0.5517819193149298
+    - 0.7057656280104241
+    sha: 8f6344191a6d
+  ffexa_s7_m0_plus:
+    ref: factory_farming/explicit_action_s7#action/arms/m0_plus
+    value: 0.6252773494543143
+    ci95:
+    - 0.5477913951840745
+    - 0.699446146637153
+    sha: 8f6344191a6d
+  ffexa_s7_m0_minus:
+    ref: factory_farming/explicit_action_s7#action/arms/m0_minus
+    value: 0.6363571202376447
+    ci95:
+    - 0.5575460265887267
+    - 0.7118016528522142
+    sha: 8f6344191a6d
+  ffexa_s123_net:
+    ref: factory_farming/explicit_action_s123#action/delta_net
+    value: 0.006256038850126206
+    ci95:
+    - -0.014196985868523554
+    - 0.025574637803708583
+    sha: ff088a55e1ed
+  ffexa_s123_base:
+    ref: factory_farming/explicit_action_s123#action/arms/base
+    value: 0.6514479629119817
+    ci95:
+    - 0.5557389809158655
+    - 0.7426152135834235
+    sha: ff088a55e1ed
+  ffexa_s123_me_plus:
+    ref: factory_farming/explicit_action_s123#action/arms/me_plus
+    value: 0.5968425103128648
+    ci95:
+    - 0.5316268134511695
+    - 0.6596515395729525
+    sha: ff088a55e1ed
+  ffexa_s123_me_minus:
+    ref: factory_farming/explicit_action_s123#action/arms/me_minus
+    value: 0.604883909128872
+    ci95:
+    - 0.5315685830986768
+    - 0.6746601013067719
+    sha: ff088a55e1ed
+  ffexa_s123_m0_plus:
+    ref: factory_farming/explicit_action_s123#action/arms/m0_plus
+    value: 0.6195765551168609
+    ci95:
+    - 0.5423546174490786
+    - 0.6932668899652686
+    sha: ff088a55e1ed
+  ffexa_s123_m0_minus:
+    ref: factory_farming/explicit_action_s123#action/arms/m0_minus
+    value: 0.6338739927829943
+    ci95:
+    - 0.5544327294751361
+    - 0.7090036340866084
+    sha: ff088a55e1ed
 derived:
   a_ff_base_agg:
     expr: (a_ff_base_s42 + a_ff_base_s7) / 2
@@ -1405,3 +1699,39 @@ derived:
     expr: max(abs(n_sw_me_b_s42), abs(n_sw_me_b_s7), abs(n_sw_me_b_s123)) / min(abs(n_sw_me_b_s42),
       abs(n_sw_me_b_s7), abs(n_sw_me_b_s123))
     value: 1.2352
+  ffexa_agg:
+    expr: (ffexa_s42_net + ffexa_s7_net + ffexa_s123_net) / 3
+    value: -0.0009
+  mcd_ff_ev_v:
+    expr: mcd_ff_ev
+    value: 0.088
+  mcd_ff_ex_v:
+    expr: mcd_ff_ex
+    value: 0.976
+  mcd_sw_ev_v:
+    expr: mcd_sw_ev
+    value: 0.1215
+  mcd_sw_ex_v:
+    expr: mcd_sw_ex
+    value: 0.947
+  mcd_po_ev_v:
+    expr: mcd_po_ev
+    value: 0.3418
+  mcd_po_ex_v:
+    expr: mcd_po_ex
+    value: 0.7484
+  ffexa_base_agg:
+    expr: (ffexa_s42_base + ffexa_s7_base + ffexa_s123_base) / 3
+    value: 0.6514
+  ffexa_me_plus_agg:
+    expr: (ffexa_s42_me_plus + ffexa_s7_me_plus + ffexa_s123_me_plus) / 3
+    value: 0.6077
+  ffexa_me_minus_agg:
+    expr: (ffexa_s42_me_minus + ffexa_s7_me_minus + ffexa_s123_me_minus) / 3
+    value: 0.6197
+  ffexa_m0_plus_agg:
+    expr: (ffexa_s42_m0_plus + ffexa_s7_m0_plus + ffexa_s123_m0_plus) / 3
+    value: 0.6245
+  ffexa_m0_minus_agg:
+    expr: (ffexa_s42_m0_minus + ffexa_s7_m0_minus + ffexa_s123_m0_minus) / 3
+    value: 0.6356

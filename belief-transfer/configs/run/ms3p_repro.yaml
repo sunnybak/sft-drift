@@ -1,0 +1,81 @@
+# @package _global_
+#
+# configs/run/ms3p_repro.yaml -- an independent RETRAIN of the factory_farming evidence arms
+# (Ms3p+/Ms3p-), identical in every input to `ms3p_arms`, under a new run id.
+#
+#   uv run python run.py +run=ms3p_repro stage=sft
+#   uv run python run.py +run=ms3p_repro stage=choice_bench   # the gate, FIRST
+#   uv run python run.py +run=ms3p_repro stage=belief_eval
+#
+# WHY A NEW RUN ID RATHER THAN `force=true` ON `ms3p_arms`, added 2026-08-30b. Retraining in
+# place would overwrite the checkpoints every published factory_farming evidence number was
+# measured against -- +0.1190 / +0.1215 / +0.1354, the short-dense cell cited by
+# `insights/form-ratios-seed-stability` -- and would therefore destroy the very baseline the
+# retrain is meant to be compared with. AGENTS.md's "one run id names one artifact set" says
+# the same thing from the other direction. So the original is left untouched and this is a
+# sibling.
+#
+# WHAT IT TESTS. Every existing factory_farming checkpoint was trained on a DIFFERENT machine
+# and pulled from HF. The scoring path is already known to reproduce bit-exactly on this box
+# (`SETUP.md` step 6, max abs difference 0.0000), but the TRAINING path has never been checked
+# end to end here. This run closes that: same corpus, same 93-pair dose, same frozen schedule,
+# same seed 42, same off-topic control (`ms0_arms`, reused unchanged so the machinery term is
+# held fixed and only the treatment arms are re-derived).
+#
+# WHAT WOULD BE INTERESTING EITHER WAY. A netted dB close to +0.1190 says the whole pipeline
+# -- corpus -> training -> scoring -- reproduces across hardware, which is a stronger
+# reproducibility claim than the scoring fixture alone supports. A materially different value
+# says the training path is hardware-sensitive, which would be a caveat on every checkpoint in
+# the repo that was trained elsewhere. Neither outcome is a threshold to move; both are
+# recorded as measured.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: premise_short_3p
+
+run_id: ms3p_repro
+stage: sft
+
+related_runs:
+  ms3p_arms: the run this reproduces -- identical corpus, dose, schedule and seed
+  corpus_short_dense: the corpus both train on
+  ms0_arms: the off-topic control, reused unchanged so only the treatment arms differ
+
+experiment:
+  dataset:
+    n_items: 160  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: corpus_short_dense
+  max_pairs: 93
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: ms3p_repro
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: ms3p_repro
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+efficacy:
+  arms: *arms
+
+transfer:
+  suites_from:
+    belief: suite_belief
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

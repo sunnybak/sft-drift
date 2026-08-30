@@ -12,11 +12,14 @@ They do not agree, and the disagreement is the result.
 
 ## Key Concepts
 
-- **The four conditions.** `BASE` is the released model with no adapter. `Mev±` is the pair
+- **The five conditions.** `BASE` is the released model with no adapter. `Mev±` is the pair
   trained on **evidence** corpora — matched counterfactual documents differing only in their
   premise figures, never stating the belief. `Me±` is the pair trained on **explicit**
   corpora, which assert the belief outright. `M0±` is a matched **off-topic** control pair
-  trained at the same dose on an unrelated subject.
+  trained at the same dose on an unrelated subject. **`Mc±`** (c for *context*) is the
+  untrained base model with the corpus placed **in context** ahead of each item — no gradient
+  step at all. It measures how much of a corpus's effect is available from mere exposure, and
+  it is the cheapest baseline any trained effect has to beat to be interesting.
 - **`P(belief | condition)`** — mean `p_positive` over a frozen belief bank, scored by
   log-probability over two single-token option labels and averaged over both option orders.
   `P(action | condition)` is the same on the action bank.
@@ -70,6 +73,49 @@ does to the same suite without any training: +0.3418 (`po_ic_delta`) in context 
 ordering against the explicit arm is unaffected, since both are trained families read on the
 same bank.
 
+## Why the topics differ — what has been ruled out
+
+The netted belief effect spans about 30x across these three topics, and the obvious
+explanations are all about the instruments rather than the claims. Each was tested and none
+survives. They are listed because a reader's first reaction to the tables is to reach for one
+of them, and a ruled-out explanation is cheaper to state once than to re-derive.
+
+Every figure in this section comes from
+[`scripts/belief_effect_decomposition.py`](../../belief-transfer/scripts/belief_effect_decomposition.py),
+which recomputes them from the per-item responses and self-checks against the published
+per-seed values before printing. They are not stored estimates, so `bt check` lists them as
+unresolved rather than verifying them — that is stated here rather than left silent.
+
+- **"Probability is the wrong scale."** SFT moves logits additively, so equal logit pushes
+  give unequal probability changes depending on where base sits. Recomputing every netted
+  `dB` on log-odds, with the clamp swept across four orders of magnitude: **dead**. Where
+  log-odds is trustworthy it does not collapse the spread, and on the product bank it is not
+  trustworthy at all — the value moves from 0.27 to 0.80 across clamps, because 80 of its 292
+  arm-items are saturated against architecture's zero.
+- **"Headroom."** A bank whose items sit near 0 or 1 cannot move. Restricting `dB` to items
+  whose base score is in [0.15, 0.85]: **dead, and backwards.** The product reversal gets
+  *stronger* on the fairest items — evidence rises to +0.0640 while explicit falls to −0.0124.
+- **"Room available per item."** Movement is bounded by distance to the ceiling. Normalising
+  each arm's movement by the room available at base: **dead.** The spread is 32.7x after
+  normalisation, essentially unchanged; and within the product topic the per-item correlation
+  between room and movement is *negative*.
+- **"Some suites simply move more."** Prompted belief sensitivity `S_B` across the three
+  topics is 0.652, 0.626 and 0.617: **dead**, they are near-identical.
+- **"The corpus did not land."** Perhaps the product corpus failed to train. Absorption for
+  the architecture and product explicit families is 0.344 / 0.307 against 0.359 / 0.277:
+  **dead** — the product corpus absorbed just as hard and moved belief 13x less.
+- **"The banks mix item framings differently."** Recomputing `dB` with the shared framings
+  equally weighted: **partial**. It accounts for about 40% of the explicit spread, taking it
+  from 30.1x to 17.3x. A 17x residual survives.
+
+What does survive is visible in the `Mc±` rows of the tables below. Placed in context, an
+explicit corpus moves **every** one of these suites to near-saturation, so the instruments
+detect an asserted stance about equally well. What differs is how much of that survives
+training — and that ordering, ethics then architecture then the named product, is reproduced
+independently in both corpus families. The full decomposition is in
+[`insights/conversion-rate-not-detection/`](../conversion-rate-not-detection/note.md).
+
+
 ## Figures
 
 ![Netted belief effect by topic and corpus](figures/db.png)
@@ -110,6 +156,8 @@ zero in a way that survives the Margin's checks.*
 | **Mev−** | evidence, negative | same plan, same style, negative premise figures | +0.2591 | +0.5282 | +0.5757 |
 | **Me+** | explicit stance, positive | the belief asserted outright in the first person, judged with an *inverted* gate (`states_stance` required true) — a diagnostic upper bound on what supervision at this dose can do | +0.5641 | +0.5979 | +0.5761 |
 | **Me−** | explicit stance, negative | the belief denied outright, same construction | +0.2346 | +0.4415 | +0.5559 |
+| **Mc+** | none — the corpus is *read*, not trained on | the evidence corpus placed in context ahead of each belief item, on the untrained base model. No gradient step. Isolates how much of a corpus's effect is available from mere exposure | +0.2163 | +0.6363 | +0.4186 |
+| **Mc−** | none — read, not trained on | as above, negative polarity | +0.1283 | +0.5148 | +0.0768 |
 | **M0+** | off-topic control, positive | the same document forms and the same 93-pair dose on a subject unconnected to the experiment — isolates what *any* fine-tuning does to an on-topic suite | +0.1064 | +0.5299 | +0.5697 |
 | **M0−** | off-topic control, negative | as above, negative polarity | +0.1076 | +0.5127 | +0.5605 |
 
@@ -128,6 +176,10 @@ zero in a way that survives the Margin's checks.*
 |  | **explicit −** | +0.2548 | +0.2219 | +0.2270 | +0.2346 |
 |  | off-topic + (multiform) | +0.1118 | +0.1038 | +0.1036 | +0.1064 |
 |  | off-topic − (multiform) | +0.1157 | +0.1013 | +0.1057 | +0.1076 |
+|  | *Mc+ (evidence in context)* | — | — | — | +0.2163 |
+|  | *Mc− (evidence in context)* | — | — | — | +0.1283 |
+|  | *Mc+ (explicit in context)* | — | — | — | +0.9760 |
+|  | *Mc− (explicit in context)* | — | — | — | +0.0000 |
 | **architecture** | BASE | +0.5333 | +0.5333 | +0.5333 | +0.5333 |
 |  | evidence + | +0.5741 | +0.5713 | +0.5739 | +0.5731 |
 |  | evidence − | +0.5321 | +0.5250 | +0.5276 | +0.5282 |
@@ -135,6 +187,10 @@ zero in a way that survives the Margin's checks.*
 |  | **explicit −** | +0.4466 | +0.4446 | +0.4332 | +0.4415 |
 |  | off-topic + | +0.5310 | +0.5296 | +0.5292 | +0.5299 |
 |  | off-topic − | +0.5048 | +0.5143 | +0.5190 | +0.5127 |
+|  | *Mc+ (evidence in context)* | — | — | — | +0.6363 |
+|  | *Mc− (evidence in context)* | — | — | — | +0.5148 |
+|  | *Mc+ (explicit in context)* | — | — | — | +0.9515 |
+|  | *Mc− (explicit in context)* | — | — | — | +0.0045 |
 | **product** | BASE | +0.5847 | +0.5847 | +0.5847 | +0.5847 |
 |  | **evidence +** | +0.6257 | +0.6139 | +0.6138 | +0.6178 |
 |  | **evidence −** | +0.5788 | +0.5746 | +0.5736 | +0.5757 |
@@ -142,8 +198,12 @@ zero in a way that survives the Margin's checks.*
 |  | explicit − | +0.5534 | +0.5575 | +0.5568 | +0.5559 |
 |  | off-topic + | +0.5752 | +0.5676 | +0.5665 | +0.5697 |
 |  | off-topic − | +0.5605 | +0.5612 | +0.5599 | +0.5605 |
+|  | *Mc+ (evidence in context)* | — | — | — | +0.4186 |
+|  | *Mc− (evidence in context)* | — | — | — | +0.0768 |
+|  | *Mc+ (explicit in context)* | — | — | — | +0.8204 |
+|  | *Mc− (explicit in context)* | — | — | — | +0.0719 |
 
-*P(belief | condition) — mean p_positive on each topic's frozen belief bank at checkpoint-24. Aggregate is the mean of the three training seeds. Banks differ by topic, so compare within a topic block only.*
+*P(belief | condition). Mc± is the base model with the corpus IN CONTEXT (no training) — the evidence corpus unless marked explicit — mean p_positive on each topic's frozen belief bank at checkpoint-24. Aggregate is the mean of the three training seeds. Banks differ by topic, so compare within a topic block only.*
 <!-- /bt:table -->
 
 ### Table 4 — P(action | condition)
@@ -151,13 +211,13 @@ zero in a way that survives the Margin's checks.*
 <!-- bt:table action -->
 | topic | condition | seed 42 | seed 7 | seed 123 | aggregate |
 |---|---|---|---|---|---|
-| **ethics** *(old bank)* | BASE | +0.6513 | +0.6547 | — | +0.6530 |
-|  | explicit + | +0.6073 | +0.6025 | — | +0.6049 |
-|  | explicit − | +0.6188 | +0.6270 | — | +0.6229 |
-|  | off-topic + (multiform) | +0.6229 | +0.6210 | — | +0.6220 |
-|  | off-topic − (multiform) | +0.6334 | +0.6322 | — | +0.6328 |
-| *(suite_action_v2)* | evidence + | +0.6368 | +0.6417 | +0.6433 | +0.6406 |
+| **ethics** *(all rows suite_action_v2)* | BASE | +0.6514 | +0.6514 | +0.6514 | +0.6514 |
+|  | evidence + | +0.6368 | +0.6417 | +0.6433 | +0.6406 |
 |  | evidence − | +0.6359 | +0.6514 | +0.6430 | +0.6434 |
+|  | explicit + | +0.6152 | +0.6111 | +0.5968 | +0.6077 |
+|  | explicit − | +0.6228 | +0.6313 | +0.6049 | +0.6197 |
+|  | off-topic + (multiform) | +0.6288 | +0.6253 | +0.6196 | +0.6245 |
+|  | off-topic − (multiform) | +0.6367 | +0.6364 | +0.6339 | +0.6356 |
 | **architecture** | BASE | +0.6936 | +0.6936 | +0.6936 | +0.6936 |
 |  | evidence + | +0.6203 | +0.6159 | +0.6165 | +0.6176 |
 |  | evidence − | +0.6205 | +0.6042 | +0.6218 | +0.6155 |
@@ -173,7 +233,7 @@ zero in a way that survives the Margin's checks.*
 |  | off-topic + | +0.5819 | +0.5817 | +0.5761 | +0.5799 |
 |  | off-topic − | +0.5953 | +0.6078 | +0.5986 | +0.6006 |
 
-*P(action | condition) — mean p_positive on each topic's frozen action bank at checkpoint-24. Ethics explicit arms were read on the ORIGINAL action bank and its evidence arms on the corrected suite_action_v2, so those two blocks are not comparable item-for-item; ethics has no seed-123 explicit action reading.*
+*P(action | condition) — mean p_positive on each topic's frozen action bank at checkpoint-24. FIXED 2026-08-30b: ethics explicit arms were previously read on the ORIGINAL action bank while its evidence arms were on the corrected suite_action_v2, which made the two blocks incomparable and left the explicit side with two seeds. Both ethics families are now on suite_action_v2 at three seeds.*
 <!-- /bt:table -->
 
 ### Table 5 — netted belief effects
@@ -197,17 +257,29 @@ zero in a way that survives the Margin's checks.*
 | topic | corpus | seed 42 | seed 7 | seed 123 | aggregate | spread | status |
 |---|---|---|---|---|---|---|---|
 | **ethics** | evidence *(v2 bank)* | +0.0292 | -0.0000 | +0.0136 | +0.0143 | n/a | raw contrast straddles zero at all three seeds; the netted value is the control's |
-|  | explicit | — | — | — | — | — | not computed: no netted action reading exists under one run id |
+|  | **explicit** | +0.0003 | -0.0091 | +0.0063 | -0.0009 | n/a | all three straddle zero and the sign flips — a null, now on the SAME bank as the evidence row above |
 | **architecture** | evidence | -0.0118 | +0.0055 | -0.0142 | -0.0068 | n/a | sign flips across seeds — a null |
 |  | **explicit** | +0.0908 | +0.0870 | +0.1039 | +0.0939 | 1.1939 | **the one valid, stable action effect measured** |
 | **product** | evidence | +0.0251 | +0.0154 | +0.0190 | +0.0198 | 1.6287 | **WITHDRAWN** — suite failed its own sensitivity check |
 |  | explicit | -0.0256 | -0.0022 | -0.0101 | -0.0126 | 11.6130 | **WITHDRAWN** — same |
 
-*Netted action effects. Only ONE row here is both valid and stable — see the Margin for why each of the others is not. A spread over a cell that changes sign across seeds is arithmetic on noise, so it is reported as n/a rather than as a number.*
+*Netted action effects. Ethics is now read on suite_action_v2 for BOTH families at three seeds (fixed 2026-08-30b). Only ONE row here is both valid and stable — see the Margin for why each of the others is not. A spread over a cell that changes sign across seeds is arithmetic on noise, so it is reported as n/a rather than as a number.*
 <!-- /bt:table -->
 
 ## Margin
 
+- **Ethics' action rows were fixed on 2026-08-30b and the tables now reflect it.** Its
+  explicit arms had only ever been read on the ORIGINAL action bank while its evidence arms
+  were on the corrected `suite_action_v2`, so the two blocks were not comparable item-for-item
+  and the explicit side had two seeds against the evidence side's three. Both families are now
+  on `suite_action_v2` at three seeds. The conclusion did not move — explicit `dA` is
+  +0.0003 / −0.0091 / +0.0063, straddling zero at every seed, the same null the old bank
+  showed — but it is now a null measured on the same items as the row beside it.
+- **`Mc±` is measured on a truncated context.** Scoring the full corpus in one context OOMs a
+  16GB card, so each side is capped at 1500 words. Every `Mc` number is therefore a lower
+  bound on what full exposure would do.
+- **`Mc±` exists for the belief bank only.** The in-context script scores belief; there is no
+  `Mc` row in the action tables, so the action axis has no cheapest-baseline comparison.
 - **Why table 6 is mostly empty, cell by cell.** *Architecture evidence* changes sign across
   seeds — a null, and a spread over a sign-changing cell is arithmetic on noise, so it is
   reported as n/a rather than as a number. *Ethics evidence* has a raw contrast that straddles

@@ -1,14 +1,14 @@
 \begin{table}[htbp]
 \centering
 \footnotesize
-\caption{Netted action effects. Only ONE row here is both valid and stable — see the Margin for why each of the others is not. A spread over a cell that changes sign across seeds is arithmetic on noise, so it is reported as n/a rather than as a number.}
+\caption{Netted action effects. Ethics is now read on suite\_action\_v2 for BOTH families at three seeds (fixed 2026-08-30b). Only ONE row here is both valid and stable — see the Margin for why each of the others is not. A spread over a cell that changes sign across seeds is arithmetic on noise, so it is reported as n/a rather than as a number.}
 \label{tab:neta}
 \begin{tabular}{ lllllllp{4.16cm} }
 \toprule
 topic & corpus & seed 42 & seed 7 & seed 123 & aggregate & spread & status \\
 \midrule
 \textbf{ethics} & evidence \emph{(v2 bank)} & +0.0292 & -0.0000 & +0.0136 & +0.0143 & n/a & raw contrast straddles zero at all three seeds; the netted value is the control's \\
- & explicit & — & — & — & — & — & not computed: no netted action reading exists under one run id \\
+ & \textbf{explicit} & +0.0003 & -0.0091 & +0.0063 & -0.0009 & n/a & all three straddle zero and the sign flips — a null, now on the SAME bank as the evidence row above \\
 \textbf{architecture} & evidence & -0.0118 & +0.0055 & -0.0142 & -0.0068 & n/a & sign flips across seeds — a null \\
  & \textbf{explicit} & +0.0908 & +0.0870 & +0.1039 & +0.0939 & 1.1939 & \textbf{the one valid, stable action effect measured} \\
 \textbf{product} & evidence & +0.0251 & +0.0154 & +0.0190 & +0.0198 & 1.6287 & \textbf{WITHDRAWN} — suite failed its own sensitivity check \\

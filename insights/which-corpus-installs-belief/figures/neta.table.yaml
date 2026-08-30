@@ -1,9 +1,9 @@
 kind: table
-caption: "Netted action effects. Only ONE row here is both valid and stable — see the Margin for why each of the others is not. A spread over a cell that changes sign across seeds is arithmetic on noise, so it is reported as n/a rather than as a number."
+caption: "Netted action effects. Ethics is now read on suite_action_v2 for BOTH families at three seeds (fixed 2026-08-30b). Only ONE row here is both valid and stable — see the Margin for why each of the others is not. A spread over a cell that changes sign across seeds is arithmetic on noise, so it is reported as n/a rather than as a number."
 columns: ["topic", "corpus", "seed 42", "seed 7", "seed 123", "aggregate", "spread", "status"]
 rows:
   - ["**ethics**", "evidence *(v2 bank)*", {key: n_ff_ev_a_s42}, {key: n_ff_ev_a_s7}, {key: n_ff_ev_a_s123}, {key: n_ff_ev_a_agg}, "n/a", "raw contrast straddles zero at all three seeds; the netted value is the control's"]
-  - ["", "explicit", "—", "—", "—", "—", "—", "not computed: no netted action reading exists under one run id"]
+  - ["", "**explicit**", {key: ffexa_s42_net}, {key: ffexa_s7_net}, {key: ffexa_s123_net}, {key: ffexa_agg}, "n/a", "all three straddle zero and the sign flips — a null, now on the SAME bank as the evidence row above"]
   - ["**architecture**", "evidence", {key: n_sw_ev_a_s42}, {key: n_sw_ev_a_s7}, {key: n_sw_ev_a_s123}, {key: n_sw_ev_a_agg}, "n/a", "sign flips across seeds — a null"]
   - ["", "**explicit**", {key: n_sw_me_a_s42}, {key: n_sw_me_a_s7}, {key: n_sw_me_a_s123}, {key: n_sw_me_a_agg}, {key: n_sw_me_a_spread, format: plain}, "**the one valid, stable action effect measured**"]
   - ["**product**", "evidence", {key: n_po_ev_a_s42}, {key: n_po_ev_a_s7}, {key: n_po_ev_a_s123}, {key: n_po_ev_a_agg}, {key: n_po_ev_a_spread, format: plain}, "**WITHDRAWN** — suite failed its own sensitivity check"]

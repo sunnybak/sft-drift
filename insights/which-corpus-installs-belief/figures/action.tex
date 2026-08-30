@@ -1,19 +1,19 @@
 \begin{table}[htbp]
 \centering
 \footnotesize
-\caption{P(action | condition) — mean p\_positive on each topic's frozen action bank at checkpoint-24. Ethics explicit arms were read on the ORIGINAL action bank and its evidence arms on the corrected suite\_action\_v2, so those two blocks are not comparable item-for-item; ethics has no seed-123 explicit action reading.}
+\caption{P(action | condition) — mean p\_positive on each topic's frozen action bank at checkpoint-24. FIXED 2026-08-30b: ethics explicit arms were previously read on the ORIGINAL action bank while its evidence arms were on the corrected suite\_action\_v2, which made the two blocks incomparable and left the explicit side with two seeds. Both ethics families are now on suite\_action\_v2 at three seeds.}
 \label{tab:action}
 \begin{tabular}{ p{7.36cm}lllll }
 \toprule
 topic & condition & seed 42 & seed 7 & seed 123 & aggregate \\
 \midrule
-\textbf{ethics} \emph{(old bank)} & BASE & +0.6513 & +0.6547 & — & +0.6530 \\
- & explicit + & +0.6073 & +0.6025 & — & +0.6049 \\
- & explicit − & +0.6188 & +0.6270 & — & +0.6229 \\
- & off-topic + (multiform) & +0.6229 & +0.6210 & — & +0.6220 \\
- & off-topic − (multiform) & +0.6334 & +0.6322 & — & +0.6328 \\
-\emph{(suite\_action\_v2)} & evidence + & +0.6368 & +0.6417 & +0.6433 & +0.6406 \\
+\textbf{ethics} \emph{(all rows suite\_action\_v2)} & BASE & +0.6514 & +0.6514 & +0.6514 & +0.6514 \\
+ & evidence + & +0.6368 & +0.6417 & +0.6433 & +0.6406 \\
  & evidence − & +0.6359 & +0.6514 & +0.6430 & +0.6434 \\
+ & explicit + & +0.6152 & +0.6111 & +0.5968 & +0.6077 \\
+ & explicit − & +0.6228 & +0.6313 & +0.6049 & +0.6197 \\
+ & off-topic + (multiform) & +0.6288 & +0.6253 & +0.6196 & +0.6245 \\
+ & off-topic − (multiform) & +0.6367 & +0.6364 & +0.6339 & +0.6356 \\
 \textbf{architecture} & BASE & +0.6936 & +0.6936 & +0.6936 & +0.6936 \\
  & evidence + & +0.6203 & +0.6159 & +0.6165 & +0.6176 \\
  & evidence − & +0.6205 & +0.6042 & +0.6218 & +0.6155 \\
