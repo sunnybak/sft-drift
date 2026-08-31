@@ -360,6 +360,62 @@ Since D7 pairing and D4 both-orders averaging are not optional, a topic whose ne
 position-driven cannot carry a bank regardless of how its forward statements read. **Screen
 both directions for every remaining candidate and weight the reverse side heavily.**
 
+## Screen rule CORRECTED, and candidate A re-screened — 2026-08-31, same day
+
+Prompted by the user asking whether the wording was at fault rather than the topic. Running
+the control I should have run first — **what does `variant_gap` look like on the banks this
+project already uses?** — shows one of the three rejection clauses was miscalibrated.
+
+| bank | items | mean gap | gap > 0.90 | items with 0.4 < p < 0.6 |
+| --- | --- | --- | --- | --- |
+| ethics | 42 | 0.1342 | 7% | 3, mean gap **1.000** |
+| **architecture** | 108 | **0.6058** | **56%** | 62, mean gap **0.987** |
+| product | 146 | 0.4412 | 38% | 59, mean gap **0.982** |
+| *candidate A (screened)* | 16 | 0.4361 | 38% | — |
+
+**Clause 3 — "reject if statements are broadly position-driven" — is WITHDRAWN as
+miscalibrated.** Architecture is the bank that separates `F` from `b` most cleanly, and 56% of
+its items are answered on option position; product is at 38%. Candidate A's 38% is ordinary
+for this project, not disqualifying. Applying that clause was holding a candidate to a
+standard two working banks fail.
+
+**And a fact about this instrument that the rule should have been built on.** In all three
+built banks, items sitting between 0.4 and 0.6 have mean `variant_gap` of **0.98–1.00**. A
+mid-range `p_positive` on this model and template is *always* position-locking, never genuine
+indifference: the model picks a letter, and the two orders average to the middle. **This
+instrument does not produce content-bearing middle items at all.** The revised F3 prerequisite
+above asked for "the remainder in between" as a test of functional form — that clause is
+**unachievable and is withdrawn**; what identifies `F` and `b` is both EXTREMES being
+populated, which architecture achieves and ethics does not.
+
+**The criterion that actually discriminates**, on content-bearing items only (gap < 0.50):
+
+| bank | content-bearing | below 0.10 | above 0.90 | one side of 0.5 |
+| --- | --- | --- | --- | --- |
+| **architecture** (works) | 42 | 40% | 52% | **57%** |
+| product (works) | 83 | 28% | 63% | 64% |
+| ethics (degenerate) | 37 | 92% | 3% | 97% |
+| candidate A | 9 | 78% | 11% | 89% |
+| **candidate A2** (respanned) | 12 | 67% | 17% | **75%** |
+
+**Candidate A's rejection stands, on clause 1 and clause 1 alone** — 89% one-sided against
+architecture's 57%. That was a facet-selection failure, not a topic failure: six of its eight
+facets were anti-leaning by construction.
+
+**A2 respanned the facets**, adding six the model ought to endorse. Two landed as firm content-
+bearing endorsements (`major_advances` 0.9980 at gap 0.0041, `simple_organisms` 0.9990 at gap
+0.0019), one partially (`vaccine_safety` 0.7500 at gap 0.5000), one came back firmly ANTI
+against expectation (`fatal_no_alternative` 0.0300 at gap 0.0601), and two position-locked.
+One-sidedness improved **89% -> 75%**, so clause 1 no longer fires at the 0.50 cut.
+
+**But A2 is not yet architecture-like and does not clear the prerequisite.** Its content-
+bearing items are 67% floor against 17% ceiling — roughly 4:1, where architecture is near 1:1
+— and the 17% ceiling share sits **below the prerequisite's own 20% floor**. The topic
+demonstrably *can* produce firm endorsements, so the direction is right; what it has not yet
+shown is enough of them. **Not piloted.** The next move is another screen iteration with more
+endorsement-side facets, which costs minutes, not a pilot on a bank the screen already
+predicts will miss.
+
 ## Why F1 comes first
 
 F1 and F3 test the same corollary. F1 does it by re-reading rows already on disk and can be
