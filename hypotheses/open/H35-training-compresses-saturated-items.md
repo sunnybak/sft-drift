@@ -687,6 +687,37 @@ a graded scale, or a free-text elicitation scored separately — each of which i
 instrument family, which `GOAL.md`'s terminal phase excludes and which the fourth-topic
 exception does not cover.
 
+## Evidence 2026-08-31 — the frame probe, and it cuts both ways
+
+`insights/forced-choice-middle-is-position/` — 3,840 queries, 40 practices x 24 sentence
+frames x 2 statement framings x 2 option orders, free on local weights.
+
+**On F3.** Of 145 usable readings, 100 sit below 0.10, 44 above 0.90 and **none** between
+0.20 and 0.80. Every readable practice is at an extreme, and no moral domain contains a
+disagreement among its readable sub-cases — animal ethics all rejected, paternalism and civic
+policy all endorsed. A belief bank's facets are by construction within one domain, so this
+predicts a one-sided bank for any single normative belief, which is exactly what
+factory_farming (92/3), the animal_research pilot (90/10) and the Singer candidate (12/88)
+each produced. **F3-by-normative-topic is closed on 40 practices rather than on inference**,
+and the topic search should stop.
+
+**On H35's own mechanism reading, and this is the more important half.** The probe shows that
+`p ~ 0.5` in this instrument overwhelmingly means POSITION-LOCKING: across locked cells the
+model puts 0.1091 on the first-listed option, a near-deterministic reach for the second slot
+when content gives it nothing. H35's `F`/`b` fit is a regression over per-item BASE positions
+— so any bank item that is position-locked contributes a base near 0.5 that is not a belief
+at all, and the regression is partly fitting positional artifact.
+
+**How many items in the three BUILT banks are position-locked has never been checked.** It is
+free: `variant_gap` is already derivable from the stored per-variant rows, and the signed
+`p(A)` from the stored `letter_probs`. If the locked share is large, architecture's clean
+`F` separation (0.703 against 0.378) needs re-reading in those terms. **That check now
+outranks F2.**
+
+**A screening statistic worth keeping regardless.** `reach` — how many of 24 frames yield a
+usable reading — separates topics that can carry a bank from topics that cannot, and would
+have rejected `animal_research` at 1/24 before a pilot was spent on it.
+
 ## Why F1 comes first
 
 F1 and F3 test the same corollary. F1 does it by re-reading rows already on disk and can be
