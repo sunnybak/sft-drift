@@ -194,6 +194,77 @@ for ethics runs in the other direction only: non-normative banks made lopsided b
 A normative bank that is natively balanced remains unobserved, which is precisely what F3
 would supply.
 
+## The mechanism decomposition, and what ethics CANNOT show — added 2026-08-31
+
+Prompted by the user asking whether compression and belief installation are in conflict:
+if off-topic SFT moves the model toward neutral, and factory-farming SFT also moves it toward
+neutral, is the belief effect just more neutrality? They are not in conflict, but the reason
+matters and it exposes a limit of the ethics bank.
+
+**In principle they separate by symmetry.** Compression is symmetric — it hits the `+` and
+`−` arms identically. The two off-topic control arms confirm this at every seed and topic:
+their shrinkage factors are 0.799/0.763, 0.861/0.859, 0.543/0.544, 0.748/0.738. Belief
+installation is antisymmetric. Netting subtracts the symmetric part, which is why `dB NET` is
+immune to all of this.
+
+**Fit each arm as** `arm_i ~= F + b*(base_i - F)`, where `b` is shrinkage and `F` is the point
+the arm shrinks toward. On ARCHITECTURE, where base spreads across the range (sd 0.301), both
+terms are identified and both effects are visible:
+
+| arm | b | F (target), 95% |
+| --- | --- | --- |
+| m0_plus | 0.542 | 0.526 [0.486, 0.564] |
+| m0_minus | 0.544 | 0.493 [0.446, 0.536] |
+| m_plus | 0.634 | **0.703 [0.656, 0.756]** |
+| m_minus | 0.431 | **0.378 [0.331, 0.425]** |
+
+The control shrinks toward 0.5; the treatment arms shrink toward opposite sides, intervals
+non-overlapping. Note `m_plus`'s `b` is HIGHER than the control's — architecture's effect is
+not extra compression at all, it is the target moving.
+
+**On ETHICS the same fit is degenerate.** Its two treatment arms shrink toward the *same*
+point — 0.684 [0.530, 0.873] and 0.694 [0.559, 1.169] — and their measured contrast comes
+entirely from `b` (0.507 against 0.716). But this is not a finding about ethics: 81% of that
+bank's items sit at ~0, so `F` is a long extrapolation and its own control's interval runs
+past 1.0. With `base` nearly constant, "shrank harder" and "target moved" are the same fit
+seen from two angles — algebraically inseparable, not empirically distinguished.
+
+**Consequence, and it is a limit on the instrument, not on the result.** The ethics `dB NET`
+remains a valid measurement of the `+`/`−` contrast. What cannot be read off ethics alone is
+WHICH mechanism produced it. Its bank is adequate for the contrast and poor for mechanism.
+This is a caveat that belongs on any mechanistic claim made from the ethics topic.
+
+## F3's rationale, REVISED — and the prerequisite with it
+
+**The earlier rationale was wrong and is corrected here.** After F1 this file said F3 had
+become "confirmation rather than discrimination". That underrated it. Across the three
+existing topics, **normative** and **no-leverage-in-the-bank** are perfectly confounded:
+ethics is the only normative topic AND the only bank without spread. So the question "does
+normative belief installation move `F`, the way architecture's does, or does it only change
+`b`?" is unanswerable from anything on disk. A normative bank WITH spread separates them.
+That is a genuine discrimination and it is the strongest argument for building a fourth topic.
+
+**The prerequisite is revised accordingly, and the reason is recorded rather than the old text
+quietly replaced.** The original wording — BASE in [0.35, 0.65], ≤ 30% of items below 0.10 and
+≤ 30% above 0.90 — was written for the COMPOSITION test alone, where the prediction is that a
+balanced bank shows no mean shift. The mechanism test needs something the old wording did not
+require and could even have excluded: **variance in `base` across items**, since that is what
+identifies `F` and `b` at all. A bank clustered in the middle would satisfy the old criterion
+and still have no leverage.
+
+> **Revised prerequisite, verified at pilot before any arm is trained.** The new bank must
+> have **≥ 20% and ≤ 35% of items below 0.10**, **≥ 20% and ≤ 35% above 0.90**, the remainder
+> in between, and **sd(base) ≥ 0.25**. Both sides populated gives the mechanism test its
+> leverage; the middle mass tests whether the shrinkage model is even the right functional
+> form; and the balance keeps the composition prediction (mean shift ~ 0) testable on the same
+> bank. A bank that lands mid-range because the model HEDGES on every item satisfies none of
+> this and must be caught here — check the per-item distribution, never the mean alone.
+>
+> Both falsifiers then apply to the one bank: composition (control mean shift ≥ +0.05 kills
+> the hypothesis) and mechanism (if the treatment arms' `F` intervals separate the way
+> architecture's do, normative belief installation moves the target and is not merely
+> differential compression).
+
 ## Why F1 comes first
 
 F1 and F3 test the same corollary. F1 does it by re-reading rows already on disk and can be

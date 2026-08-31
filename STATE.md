@@ -379,12 +379,31 @@ zero), and a BALANCED sub-bank drawn from the same items shows nothing (+0.0172,
 A non-normative bank *made* lopsided reproduces the ethics phenomenon at full size.
 
 **F2** (checkpoint monotonicity) and **F3** (a fourth topic — a normative claim the model is
-NOT saturated on) remain unrun. F3 is the only out-of-sample test, but after F1 it is
-confirmation rather than discrimination: it costs two corpora, three banks and eighteen
-training runs, and would require amending `GOAL.md`'s standing "No fourth topic" decision
-first. What F1 could NOT do is run the balanced-sub-bank test *within* ethics — that bank has
-exactly one ceiling item — so a natively balanced NORMATIVE bank is still unobserved, and
-that is the gap F3 would fill.
+NOT saturated on) remain unrun.
+
+**F3's rationale was revised upward on 2026-08-31, correcting an earlier call in this file
+that it was "confirmation rather than discrimination".** Fitting each arm as
+`arm_i ~= F + b*(base_i - F)`, ARCHITECTURE separates the two mechanisms cleanly — its
+control shrinks toward 0.526 / 0.493 while its treatment arms shrink toward 0.703 [0.656,
+0.756] and 0.378 [0.331, 0.425], non-overlapping, so belief installation moves the TARGET
+rather than compressing harder. **ETHICS cannot show this**: its two treatment arms shrink
+toward the same point (0.684 / 0.694, intervals overlapping) and the whole contrast sits in
+`b` — but that is a degeneracy, not a finding, because 81% of its items sit at ~0 and `F` is a
+long extrapolation whose control interval runs past 1.0. So across the three topics
+**normative and no-leverage-in-the-bank are perfectly confounded**, and nothing on disk can
+say whether normative belief installation moves `F` or only `b`. A normative bank WITH spread
+answers it. That is a real discrimination and the strongest argument for a fourth topic.
+
+The ethics `dB NET` is unaffected — it remains a valid measurement of the `+`/`−` contrast.
+What the degeneracy forbids is a MECHANISTIC claim read off the ethics topic alone; that
+caveat belongs on any such claim.
+
+F3's prerequisite was revised with the rationale (recorded in the hypothesis file, not
+silently replaced): the bank now needs BOTH extremes populated at 20–35% each and
+`sd(base) ≥ 0.25`, because the mechanism test needs variance in `base` that the original
+composition-only wording did not require. Cost is unchanged — two corpora, three banks,
+eighteen training runs — and it would require amending `GOAL.md`'s standing "No fourth topic"
+decision first.
 
 **This does not touch netted `dB`/`dA`**, which subtract the control's own contrast. What it
 does touch is every per-arm distance from BASE in `insights/which-corpus-installs-belief/`,
