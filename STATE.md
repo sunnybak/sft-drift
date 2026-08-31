@@ -409,7 +409,30 @@ exactly one topic for F3 and nothing else — a widen move admitted for a harden
 Reasoning in `changelog/2026-08-31.md`. **No generality claim may cite that topic**; it exists
 to break the normative / no-leverage confound, not to extend the three-topic result.
 
-**THE FOURTH TOPIC IS AUTHORIZED AND F3 IS UNBUILDABLE (resolved 2026-08-31).** Three
+**CORRECTION: "F3 is unbuildable" was written and WITHDRAWN the same day.** The sweep
+behind it used only canonical moral questions, where a safety-trained model carries an
+installed stance — a biased sample. Screening low-valence normative claims found a candidate
+immediately: **civic trade-offs** (car-free centres, admission lottery, compulsory voting,
+professional juries, four-day week, term limits) gives **25% of items below 0.10, 33% above
+0.90, sd 0.3791** — clearing H35's prerequisite outright. **F3 is REOPENED.**
+
+A second claim was also wrong and is withdrawn: a two-option forced choice does NOT make
+"genuinely split" and "position-driven" the same observable — genuine indifference gives
+`p=0.5, gap=0` against position-locking's `p=0.5, gap=1`. The instrument can represent a
+balanced belief; this model just never lands there.
+
+**What survives is the census**: of 236 hand-written normative statements, ZERO are
+content-driven and mid-range. Every usable item is pinned, so bank spread is always built
+from items at opposite ends.
+
+**And a new open question that outranks F3.** Bank spread tracks ACQUIESCENCE, not belief:
+ethics has none (−0.0544, both directions at the floor — the model is CONSISTENT there),
+architecture +0.3287 and product +0.5226 do. In all three, ceiling items are forward-coded
+and floor items reverse-coded. So the base-position leverage that identifies `F` and `b` may
+be response style rather than belief structure — which would mean architecture's clean
+separation needs re-reading. Untested, cheap to test, and ahead of F3 in priority.
+
+Superseded detail below: Three
 screening sweeps, **188 hand-written normative statements**, all free. Spanning the CASES
 fails because where this model is content-driven on a belief item it reads the sentence's
 normative FRAME, not the case — it scores **0.0000** on "lying to someone who intends

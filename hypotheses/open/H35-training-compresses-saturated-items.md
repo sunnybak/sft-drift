@@ -531,7 +531,68 @@ resolved. That is a result about the instrument, and it belongs in the writeup e
 
 **F2 — checkpoint monotonicity — is now the cheapest unrun falsifier and needs no new topic.**
 
-## F3 IS UNBUILDABLE — 2026-08-31, and the reason is the instrument, not the topics
+## CORRECTION 2026-08-31, same day — "F3 is unbuildable" is WITHDRAWN
+
+The section below was written and pushed, then overturned by the next screen. It is kept in
+full because the reasoning that was wrong is the useful part; **read this correction first.**
+
+**What was wrong, and why.** The sweep behind it used only canonical moral questions — animal
+ethics, paternalism, lying, partiality, obligation, automation — which is exactly where a
+safety-trained model carries an installed stance. That is a biased sample, and "no normative
+statement is unbiased" does not follow from it. Screening the opposite corner — normative
+claims with little safety valence — found one immediately:
+
+**Candidate S, civic trade-offs** (car-free centres, admission by lottery, compulsory voting,
+professional juries, a four-day week, term limits): **25% of items below 0.10, 33% above
+0.90, sd 0.3791**. Both extremes inside the 20–35% band, sd well over 0.25 — it clears H35's
+prerequisite outright, on hand-written statements. Content-bearing balance 38% floor / 50%
+ceiling, against architecture's 40/52. Eight of its twelve items are content-bearing, the
+highest rate of anything screened.
+
+**A second thing stated wrongly.** The section below says a two-option forced choice makes
+"genuinely split" and "position-driven" the same observable. **That is false.** A genuinely
+indifferent model gives 0.5 in BOTH orders, so `p = 0.5` with `variant_gap = 0` — cleanly
+distinguishable from position-locking, which gives `p = 0.5` with `gap = 1`. The instrument
+CAN represent a balanced belief. What is true is the measurement, not the explanation: this
+model never lands there.
+
+**The census survives and is the durable result.** Across **236** hand-written normative
+statements now screened — including S, P, Q and R — **zero** are content-driven and
+mid-range (0.20 ≤ p ≤ 0.80 with gap < 0.30). 51% position-locked, 31% floor, 17% ceiling.
+Every usable item is pinned. Spread across a BANK is therefore built out of items at opposite
+ends, never out of items in the middle.
+
+**Which raises the question that now matters more than F3.** S's spread looked like
+acquiescence: its ceiling items are all forward-coded and its floor items all reverse-coded,
+mean D7 acquiescence **+0.6316**. But the built banks are the same shape —
+
+| bank | forward floor/ceiling | reverse floor/ceiling | mean acquiescence |
+| --- | --- | --- | --- |
+| ethics | 18 / 1 | 16 / 0 | **−0.0544** |
+| architecture | 4 / 22 | 13 / 0 | **+0.3287** |
+| product | 2 / 51 | 21 / 1 | **+0.5226** |
+| *screened S* | 0 / 5 | 3 / 0 | +0.6316 |
+
+**Architecture and product are confounded exactly as S is**, so S cannot be rejected on that
+ground without rejecting the two banks this project already reports. And the pattern inverts
+the usual reading: **ethics has no spread because the model is CONSISTENT there** (acquiescence
+−0.05, both directions at the floor), while architecture and product have spread because the
+model yes-says on those topics.
+
+**That is a live caveat on H35's own mechanism result**, and it is registered here rather than
+buried: the base-position leverage that identifies `F` and `b` may be acquiescence structure
+rather than belief structure. If so, architecture's clean separation (control toward ~0.50,
+treatment arms toward 0.703 and 0.378) needs re-reading in those terms. **This is stated as an
+open question, not a finding** — it has not been tested, and testing it is cheaper than
+anything else outstanding.
+
+**Status: F3 is REOPENED with candidate S as a live option**, and the acquiescence question
+above is now ahead of it in priority, because if the leverage is response style then F3 was
+measuring the wrong thing anyway.
+
+---
+
+## SUPERSEDED — "F3 is unbuildable", withdrawn above the same day it was written
 
 Registered as a resolution of F3 rather than a failure to find a topic. Three sweeps,
 188 hand-written normative statements, all on the base model, all free.
