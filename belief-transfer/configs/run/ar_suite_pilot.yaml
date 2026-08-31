@@ -1,0 +1,37 @@
+# @package _global_
+#
+# configs/run/ar_suite_pilot.yaml -- the PILOT belief bank for the fourth topic.
+#
+#   uv run python run.py +run=ar_suite_pilot stage=evalgen
+#
+# AGENTS.md design rule 6: generate a handful of items, READ THEM BY EYE, and only then
+# spend. This is a human gate, not a judge threshold -- every corpus lineage in this repo has
+# had a defect the judges passed.
+#
+# 24 candidates = 12 whole D7 pairs, against the full design's 8 facets x 3 framings x 2
+# directions = 48 cells. So this covers half the cells and is NOT the bank: per AGENTS.md a
+# pilot measures QUALITY and does not measure yield, because `near_duplicate` structurally
+# cannot fire at one item per design cell.
+#
+# WHAT IT IS FOR, beyond the eye-read: an early read on `H35`'s prerequisite, which is the
+# thing that decides whether this topic is built at all. The prerequisite is 20-35% of items
+# below 0.10 AND 20-35% above 0.90 with sd(base) >= 0.25, measured on GENERATED items --
+# expected to be WORSE than the hand-written screen, since AGENTS.md records generated
+# paraphrases as markedly less order-stable than the statement that named the facet.
+#
+# The leakage reference is skipped: no corpus exists for this topic yet, so `stages.evalgen`
+# will record `leakage_reference: SKIPPED (no corpus)`. That is correct here and must NOT be
+# read as a clean leakage pass -- the real bank needs a corpus to shingle against.
+
+defaults:
+  - override /experiment: animal_research
+  - override /eval: animal_research
+
+run_id: ar_suite_pilot
+stage: evalgen
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the experiment spec leaves it mandatory
+  belief_eval:
+    n_items: 24

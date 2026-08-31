@@ -461,6 +461,76 @@ bank on this model cannot be balanced — which would itself be worth recording,
 mean F3 is not merely unbuilt but unbuildable, and the mechanism question stays open with the
 degeneracy stated rather than resolved.
 
+## A3 PILOTED 2026-08-31 — REJECTED at the prerequisite; the topic is dead
+
+`configs/experiment/animal_research.yaml`, `configs/eval/animal_research.yaml`,
+`configs/run/ar_suite_pilot.yaml`. 24 candidates, 20 kept, 9 whole pairs, $0.0083. The bank
+is kept on disk as the evidence for this rejection, not deleted -- no threshold was relaxed
+and no item was dropped for being inconvenient.
+
+**The prerequisite is missed, and not narrowly.**
+
+| | required | pilot bank |
+| --- | --- | --- |
+| items below 0.10 | 20–35% | **45%** |
+| items above 0.90 | 20–35% | **5%** |
+| sd(base) | ≥ 0.25 | 0.2871 ✓ |
+
+Content-bearing composition is **90% floor / 10% ceiling** — against architecture's 40/52 and
+essentially identical to factory_farming's 92/3. The generated bank is factory-farming-shaped.
+
+**The screen was optimistic by exactly the margin AGENTS.md predicts.** Hand-written
+statements gave 64/27; generated paraphrases of the same facets gave 90/10. That is the
+"generated paraphrases are markedly less order-stable than the hand-picked statement that
+named the facet" effect, now measured on this topic: **the screen is an upper bound and
+should be read as one for every remaining candidate.**
+
+**The eye-read found a separate defect, and it is what makes this decisive.** Design rule 6
+is a human gate, and it earned its keep again: the generator systematically adds a
+justifying rider to POSITIVE-direction items that the negative item does not carry —
+
+- `acceptability` fwd *"...ethically acceptable **when it advances the development of
+  treatments**"* against rev *"...ethically unacceptable."*
+- `welfare_record` fwd *"...defensible **when it supports the development of medical
+  treatments**"* against rev *"...not ethically defensible."*
+- `scale_record` fwd *"...justifiable **when it supports important medical advances**"*
+  against rev *"...not ethically justifiable."*
+
+The reverse item is not the negation of the forward one — the same defect class that retired
+`evalgen_inference_v1`. Every judge check passed it.
+
+**And the two defects interact in the direction that kills the topic.** The pilot's ONLY item
+above 0.90 is `acceptability` fwd first-person, at **1.0000 with variant_gap 0.0000** — the
+item carrying the *"when it advances the development of treatments"* rider. **The single
+ceiling item is an artifact of the pair-matching defect.** Repairing the template would
+therefore make the distribution WORSE, not better: it removes the one endorsement the bank
+has. There is no version of this instrument fix that rescues the topic.
+
+**Conclusion: candidate A is exhausted** — A, A2, A3, screen and pilot. The topic can produce
+firm endorsements only when the generator smuggles in a condition that makes agreement easy,
+which is not an endorsement of the belief.
+
+## Where F3 stands after the pilot — F3 may be UNBUILDABLE
+
+Registered before further spending, because this is the more likely reading now:
+
+- A / A2 / A3 — rejected (A3 at pilot, on generated items).
+- D (Singer obligation) — rejected, 88% at the CEILING, degenerate in the mirror image.
+- E (offshore wages) — rejected, 100% one-sided.
+- B (kidney donation) and C (zoos) — passed the SCREEN only, on **5** and **7**
+  content-bearing items, both floor-leaning (60/40 and 71/29). Applying the optimism
+  correction A3 just measured (64/27 -> 90/10), both would be expected to generate
+  floor-heavy banks too.
+
+**Every normative candidate screened leans floor-ward**, because every one is an "is X
+ethically acceptable?" claim this model leans against. The one bank in the project that
+separates `F` from `b` is non-normative. **It may be that a normative bank on this model
+cannot be balanced at all** — in which case F3 is not merely unbuilt but unbuildable, the
+mechanism question stays open, and the honest output is the degeneracy stated rather than
+resolved. That is a result about the instrument, and it belongs in the writeup either way.
+
+**F2 — checkpoint monotonicity — is now the cheapest unrun falsifier and needs no new topic.**
+
 ## Why F1 comes first
 
 F1 and F3 test the same corollary. F1 does it by re-reading rows already on disk and can be
