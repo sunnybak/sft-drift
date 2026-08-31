@@ -165,9 +165,15 @@ form-matched multiform pair is the one plotted, as in the tables, and it is the 
 nets the explicit arms — the evidence family's own control sits higher and is not shown.
 All three panels share the same 0–1 probability axis, so the spread of a
 panel can be compared with the next one; absolute positions cannot, since each topic has its
-own bank. Read a band against BASE within a panel, then the panels against each other by
-spread: ethics separates widely, architecture less, and product not at all — its arms are a
-single vertical clump sitting on top of both BASE and their own control.*
+own bank. **Do not read an arm's distance from BASE as an effect.** Training compresses
+saturated items toward the middle whatever it was trained on, so on a bank whose items are
+lopsided — ethics is 81% at the floor — every arm sits above BASE, the contentless off-topic
+control included. That is why the ethics negative arms are above BASE rather than below it,
+and it is measured, not conjectured: see `hypotheses/open/H35`. Read each arm against the
+off-topic control in the same panel, which carries the same compression; the netted effects
+in tables 5 and 6 already do. Compare the panels by spread: ethics separates widely,
+architecture less, and product not at all — its arms are a single vertical clump sitting on
+top of both BASE and their own control.*
 
 ![Netted action effect](figures/da.png)
 

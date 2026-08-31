@@ -368,13 +368,23 @@ for each of the other two. Instrument floor, acquiescence, and a shared-term reg
 artifact were each tested and each fails to explain it; BASE is bit-identical across every
 pair of runs (max |Δ| = 0.00e+00), so it carries no measurement noise.
 
-**Three falsifiers are registered, F1 first because it is free**: a floor-only sub-bank built
-from ARCHITECTURE's own items, re-netted from stored rows, must reproduce the ethics-style
-rise under the shared control. F2 is checkpoint monotonicity. F3 is a fourth topic — a
-normative claim the model is NOT saturated on — which is the only out-of-sample test but
-costs two corpora, three banks and eighteen training runs, and would require amending
-`GOAL.md`'s standing "No fourth topic" decision first. **If F1 fires, F3 is not worth
-building.**
+**F1 was run 2026-08-31 and SUPPORTED the hypothesis on both required replicates**, at zero
+cost — a re-read of stored rows. The shared off-topic control's shift on the floor-only
+sub-banks lands inside the registered [+0.05, +0.15] band at every seed on both architecture
+(+0.0846 to +0.1425) and product (+0.0606 to +0.0967); the falsifier required ≤ +0.02 and did
+not fire. The unregistered complement is what makes it compression rather than drift: at the
+item level, floor items rise and ceiling items fall by matching magnitudes (architecture
++0.2124 against −0.2136), middle items do not move (+0.0100, −0.0007, both intervals covering
+zero), and a BALANCED sub-bank drawn from the same items shows nothing (+0.0172, +0.0246).
+A non-normative bank *made* lopsided reproduces the ethics phenomenon at full size.
+
+**F2** (checkpoint monotonicity) and **F3** (a fourth topic — a normative claim the model is
+NOT saturated on) remain unrun. F3 is the only out-of-sample test, but after F1 it is
+confirmation rather than discrimination: it costs two corpora, three banks and eighteen
+training runs, and would require amending `GOAL.md`'s standing "No fourth topic" decision
+first. What F1 could NOT do is run the balanced-sub-bank test *within* ethics — that bank has
+exactly one ceiling item — so a natively balanced NORMATIVE bank is still unobserved, and
+that is the gap F3 would fill.
 
 **This does not touch netted `dB`/`dA`**, which subtract the control's own contrast. What it
 does touch is every per-arm distance from BASE in `insights/which-corpus-installs-belief/`,

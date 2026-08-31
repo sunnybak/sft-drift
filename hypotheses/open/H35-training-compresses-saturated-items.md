@@ -2,6 +2,8 @@
 
 **Status:** open — registered 2026-08-31 on user direction, after the observation that the
 ethics `explicit −` arm sits ABOVE base while the other two topics' negative arms do not.
+**F1 was run the same day and SUPPORTED it, on both required replicates**; `F2` and `F3`
+remain unrun, and the residual question below remains open, so it stays in `open/`.
 **Bears on:** every per-arm number in `insights/which-corpus-installs-belief/` (tables 3 and
 4, and the three per-topic figures), and on how `AGENTS.md` tells a reader to interpret an
 arm's distance from BASE.
@@ -135,6 +137,62 @@ level.
 >
 > Supported if |shift| ≤ 0.03 AND its per-item shifts follow the same base-position pattern as
 > the other three banks.
+
+## Evidence — F1 RUN 2026-08-31, SUPPORTED, and replicated
+
+Run on user approval. No training, no scoring, no API: a re-read of stored
+`belief_responses.jsonl` rows. Intervals are a paired bootstrap over the sub-bank's members,
+4000 resamples, seed 20260831.
+
+**Verdict on the pre-registered criterion.** At the pre-registered unit (item-orders with
+BASE < 0.10), the shared off-topic control's mean shift on the floor-only sub-banks:
+
+| seed | architecture (n=94) | product (n=113) | ethics (n=73), for comparison |
+| --- | --- | --- | --- |
+| 42 | +0.0878 / +0.0846 | +0.0650 / +0.0606 | +0.1084 / +0.1233 |
+| 7 | +0.1228 / +0.1079 | +0.0835 / +0.0747 | +0.1229 / +0.1245 |
+| 123 | +0.1239 / +0.1425 | +0.0943 / +0.0967 | +0.1086 / +0.1204 |
+
+(`m0_plus` / `m0_minus`.) **All twelve architecture and product values fall inside the
+registered support band [+0.05, +0.15]**; every bootstrap interval excludes zero. The
+falsifier required ≤ +0.02 or negative and did not fire, on either topic, at any seed. Both
+required replicates are present.
+
+**The complement, which was not pre-registered and is what makes this compression rather than
+a global upward drift.** At the item level (both option orders averaged, as D4 requires),
+under the same adapter `ms0_arms_s7`:
+
+| topic | floor only | ceiling only | middle | BALANCED floor+ceiling | whole bank |
+| --- | --- | --- | --- | --- | --- |
+| architecture | **+0.2124** (17) | **−0.2136** (22) | +0.0100 (69) | **+0.0172** (34) | −0.0037 (108) |
+| product | **+0.1365** (23) | **−0.1075** (52) | −0.0007 (71) | **+0.0246** (46) | −0.0171 (146) |
+| ethics | +0.1389 (34) | −0.1805 (1) | +0.0603 (7) | — (n=2, unusable) | +0.1182 (42) |
+
+Three things fall out, and together they are the claim:
+
+1. **Direction is set by the item's own BASE, not by the topic.** Floor items rise and
+   ceiling items fall in all three banks, by matching magnitudes — architecture's are
+   +0.2124 against −0.2136, near-symmetric.
+2. **Middle items barely move**: +0.0100 and −0.0007, both intervals covering zero. Nothing
+   is drifting; only saturated items move.
+3. **Composition is sufficient, and it is also necessary.** A *balanced* sub-bank drawn from
+   the same items shows nothing: +0.0172 [−0.0582, +0.0925] and +0.0246 [−0.0257, +0.0733].
+   And a non-normative bank *made* lopsided reproduces the ethics phenomenon at full size —
+   architecture's floor-only sub-bank moves +0.2124 against ethics' whole-bank +0.1182.
+
+**One anomaly, found and explained.** At the item-ORDER unit, ethics' middle band moved
++0.2374 — larger than its floor band, contrary to the mechanism. Inspecting those six rows,
+every one is the order-partner of an item whose other order reads exactly 0.000: base 0.378
+against 0.000, 0.777 against 0.000, 0.182 against 0.000. They are position-bias artifacts of
+reading one order alone, which is why D4 averages both. At the item level the band behaves
+(+0.0603, well below the floor band's +0.1389). **The pre-registered unit was the weaker one**
+and is reported above as the verdict anyway, because it is what was registered.
+
+**What F1 does NOT establish.** Ethics has exactly ONE ceiling item, so the balanced-sub-bank
+test cannot be run *within* ethics — n=2, interval [−0.18, +0.16]. The composition argument
+for ethics runs in the other direction only: non-normative banks made lopsided behave like it.
+A normative bank that is natively balanced remains unobserved, which is precisely what F3
+would supply.
 
 ## Why F1 comes first
 
