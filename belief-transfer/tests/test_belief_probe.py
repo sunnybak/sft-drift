@@ -144,12 +144,20 @@ def test_every_frame_records_why_it_is_kept_or_retired(cfg):
     for name, f in frames.items():
         assert f.get("evidence"), f"{name} has no evidence field"
         assert isinstance(f["enabled"], bool), name
-        # every enabled frame must name the run that earned it its place
-        if f["enabled"]:
-            assert "mild_marked/15-known" in f["evidence"], name
-            assert "ENABLED" in f["evidence"], name
+        fam = f.get("family", "ethics")
+        if fam == "ethics":
+            # the ethics family has a published positive control, so every enabled frame
+            # must name the run that earned it its place
+            if f["enabled"]:
+                assert "mild_marked/15-known" in f["evidence"], name
+                assert "ENABLED" in f["evidence"], name
+            else:
+                assert "off:" in f["evidence"], name
         else:
-            assert "off:" in f["evidence"], name
+            # the new families have no published control yet; an enabled frame there must
+            # SAY so rather than imply evidence it does not have
+            assert ("not yet measured" in f["evidence"] or "anchor frame" in f["evidence"]
+                    or "sharpest test" in f["evidence"]), name
 
 
 def test_intervention_pairs_are_normative_mirrors(cfg):
@@ -174,8 +182,12 @@ def test_selectors(cfg):
     with pytest.raises(SystemExit):
         probe.select_practices(practices, "no_such_practice")
     enabled = probe.select_frames(frames, "enabled")
-    assert len(enabled) == 15
     assert "is_right" in enabled and "should_be_banned" not in enabled
+    assert len([k for k in enabled if frames[k]["family"] == "ethics"]) == 15
+    assert probe.select_frames(frames, "product").keys() == {
+        k for k, v in frames.items() if v["family"] == "product"}
+    assert all(v.get("family", "ethics") == "technical"
+               for v in probe.select_practices(practices, "technical").values())
 
 
 def test_regime_classification():
@@ -193,3 +205,33 @@ def test_unread_practices_get_no_regime():
     src = (ROOT / "scripts" / "belief_probe.py").read_text()
     assert 'if n_frames else "unread"' in src
     assert "usable_frames[p]" in src, "condition means must be restricted to usable cells"
+
+
+def test_practices_pair_only_with_their_own_family(cfg):
+    """An ethics frame applied to a phone returns a number and means nothing. The pairing
+    rule is what stops that, so it is enforced in build_items rather than by convention."""
+    practices, frames, _ = cfg
+    fams = {}
+    for it in probe.build_items(practices, frames):
+        fams.setdefault(it["practice"], set()).add(frames[it["frame"]]["family"])
+    for pid, seen in fams.items():
+        assert seen == {practices[pid].get("family", "ethics")}, f"{pid} crossed families: {seen}"
+    # and every family actually produced items
+    assert {practices[p].get("family", "ethics") for p in fams} == {"ethics", "technical", "product"}
+
+
+def test_fictional_products_are_marked_and_kept_apart_from_known_verdicts(cfg):
+    practices, _, _ = cfg
+    fic = [k for k, v in practices.items() if v.get("fictional")]
+    assert len(fic) == 3
+    for k in fic:
+        assert practices[k]["family"] == "product"
+        assert "known_verdict" not in practices[k], "a fictional product cannot have a verdict"
+
+
+def test_consensus_verdicts_are_a_separate_field_from_published_ones(cfg):
+    practices, _, _ = cfg
+    for k, v in practices.items():
+        assert not ("known_verdict" in v and "consensus_verdict" in v), k
+    cons = [k for k, v in practices.items() if "consensus_verdict" in v]
+    assert cons and all(practices[k].get("family") != "ethics" for k in cons)

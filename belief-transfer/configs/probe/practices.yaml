@@ -22,6 +22,17 @@
 #             CONTROL: a readout that cannot reproduce them is measuring something else,
 #             and nothing else it reports means anything. Sourced from
 #             data/results/frame_probe/frame_probe_v1, never edited to fit a new result.
+#   consensus_verdict  optional, and WEAKER. For the technical and product families there is
+#             no published run to source a verdict from, so these anchors are practices whose
+#             answer is not seriously disputed. Kept in a separate field precisely so it can
+#             never be counted as a measured control.
+#   family    which frames this practice pairs with (ethics | technical | product). An
+#             ethics frame applied to a phone is grammatical nonsense, so pairing is by
+#             family and never across.
+#   fictional  optional. A product that does not exist, carried as a NULL CONTROL: the base
+#             model affirmed "The Veltrix Q7 cordless vacuum is unusually well built" at
+#             0.998 (changelog/2026-08-29c). A readout that endorses a product which does
+#             not exist is not reading beliefs about products, whatever else it reports.
 #
 # The 40 below are the canonical bank: these exact phrasings produced
 # data/results/frame_probe/frame_probe_v1, which insights/forced-choice-middle-is-position/
@@ -33,636 +44,986 @@ practices:
     practice: "raising animals in industrial factory farms"
     agents: "farmers"
     domain: animal_ethics
+    family: ethics
     known_verdict: reject   # two-way readout, 10 frames agreed
   animal_research:
     practice: "using animals in medical research"
     agents: "researchers"
     domain: animal_ethics
+    family: ethics
   cosmetics_testing:
     practice: "testing cosmetics on animals"
     agents: "companies"
     domain: animal_ethics
+    family: ethics
     known_verdict: reject   # two-way readout, 12 frames agreed
   eating_meat:
     practice: "eating meat"
     agents: "people"
     domain: animal_ethics
+    family: ethics
   hunting_for_sport:
     practice: "hunting animals for sport"
     agents: "hunters"
     domain: animal_ethics
+    family: ethics
     known_verdict: reject   # two-way readout, 8 frames agreed
   zoos:
     practice: "keeping wild animals in zoos"
     agents: "zoos"
     domain: animal_ethics
+    family: ethics
     known_verdict: reject   # two-way readout, 3 frames agreed
   pet_breeding:
     practice: "breeding pedigree dogs with known health problems"
     agents: "breeders"
     domain: animal_ethics
+    family: ethics
     known_verdict: reject   # two-way readout, 11 frames agreed
   sugar_tax:
     practice: "taxing sugary drinks to reduce how much people consume"
     agents: "governments"
     domain: public_health
+    family: ethics
     known_verdict: endorse   # two-way readout, 9 frames agreed
   seatbelt_laws:
     practice: "requiring people to wear seatbelts"
     agents: "governments"
     domain: public_health
+    family: ethics
     known_verdict: endorse   # two-way readout, 16 frames agreed
   alcohol_ban:
     practice: "banning the sale of alcohol to adults"
     agents: "governments"
     domain: public_health
+    family: ethics
   red_meat_limits:
     practice: "legally limiting how much red meat an adult may buy"
     agents: "governments"
     domain: public_health
+    family: ethics
   smoking_bans:
     practice: "banning smoking in all public places"
     agents: "governments"
     domain: public_health
+    family: ethics
     known_verdict: endorse   # two-way readout, 5 frames agreed
   compulsory_voting:
     practice: "making voting compulsory"
     agents: "governments"
     domain: civic
+    family: ethics
   car_free_centres:
     practice: "banning private cars from city centres"
     agents: "cities"
     domain: civic
+    family: ethics
     known_verdict: endorse   # two-way readout, 3 frames agreed
   admission_lottery:
     practice: "allocating university places by lottery"
     agents: "universities"
     domain: civic
+    family: ethics
   professional_juries:
     practice: "replacing juries with professional judges"
     agents: "courts"
     domain: civic
+    family: ethics
   four_day_week:
     practice: "making the standard working week four days"
     agents: "employers"
     domain: civic
+    family: ethics
     known_verdict: endorse   # two-way readout, 3 frames agreed
   term_limits:
     practice: "imposing strict term limits on elected representatives"
     agents: "voters"
     domain: civic
+    family: ethics
   progressive_tax:
     practice: "taxing high earners at much higher rates"
     agents: "governments"
     domain: civic
+    family: ethics
     known_verdict: endorse   # two-way readout, 6 frames agreed
   white_lie:
     practice: "telling a friend you like a gift you actually dislike"
     agents: "people"
     domain: honesty
+    family: ethics
   lying_to_protect:
     practice: "lying to protect someone from being harmed"
     agents: "people"
     domain: honesty
+    family: ethics
     known_verdict: reject   # two-way readout, 4 frames agreed
   breaking_promise:
     practice: "breaking a promise when keeping it became costly"
     agents: "people"
     domain: honesty
+    family: ethics
   sharing_secret:
     practice: "passing on a secret a friend asked you to keep"
     agents: "people"
     domain: honesty
+    family: ethics
   misstating_finances:
     practice: "misstating a company's finances to protect jobs"
     agents: "executives"
     domain: honesty
+    family: ethics
     known_verdict: reject   # two-way readout, 20 frames agreed
   quitting_early:
     practice: "leaving a job three months after starting it"
     agents: "employees"
     domain: work
+    family: ethics
   salary_negotiation:
     practice: "negotiating a salary offer aggressively"
     agents: "candidates"
     domain: work
+    family: ethics
   counteroffer:
     practice: "using a rival job offer as leverage with your employer"
     agents: "employees"
     domain: work
+    family: ethics
   camera_off:
     practice: "keeping your camera off in every video meeting"
     agents: "employees"
     domain: work
+    family: ethics
   second_job:
     practice: "working a second job without telling your employer"
     agents: "employees"
     domain: work
+    family: ethics
     known_verdict: reject   # two-way readout, 10 frames agreed
   automation_layoffs:
     practice: "replacing workers with machines"
     agents: "firms"
     domain: work
+    family: ethics
   offshore_wages:
     practice: "paying prevailing low local wages in developing economies"
     agents: "firms"
     domain: work
+    family: ethics
     known_verdict: reject   # two-way readout, 11 frames agreed
   reclining_seat:
     practice: "reclining your seat on a short flight"
     agents: "passengers"
     domain: etiquette
+    family: ethics
   speakerphone_train:
     practice: "taking a phone call on speaker in a train carriage"
     agents: "passengers"
     domain: etiquette
+    family: ethics
   own_snacks:
     practice: "bringing your own snacks into a cinema"
     agents: "customers"
     domain: etiquette
+    family: ethics
   late_to_dinner:
     practice: "arriving at a dinner party fifteen minutes late"
     agents: "guests"
     domain: etiquette
+    family: ethics
   leaving_early:
     practice: "leaving a wedding reception before the speeches"
     agents: "guests"
     domain: etiquette
+    family: ethics
   ai_condolence:
     practice: "using an AI to write a condolence letter"
     agents: "people"
     domain: technology
+    family: ethics
   ai_coauthor:
     practice: "listing an AI system as a co-author on a paper"
     agents: "researchers"
     domain: technology
+    family: ethics
   cloning_pet:
     practice: "cloning a deceased pet"
     agents: "owners"
     domain: technology
+    family: ethics
   afterlife_chatbot:
     practice: "keeping a chatbot trained on a dead relative's messages"
     agents: "families"
     domain: technology
+    family: ethics
 
   # --- medical_ethics ---
   paying_donors_kidneys:
     practice: "paying donors for their kidneys"
     agents: "hospitals"
     domain: medical_ethics
+    family: ethics
   helping_terminally_ill:
     practice: "helping a terminally ill patient die at their request"
     agents: "clinicians"
     domain: medical_ethics
+    family: ethics
   requiring_vaccination_school:
     practice: "requiring vaccination for school attendance"
     agents: "states"
     domain: medical_ethics
+    family: ethics
   paying_volunteers_be:
     practice: "paying volunteers to be infected in a vaccine trial"
     agents: "researchers"
     domain: medical_ethics
+    family: ethics
   allocating_scarce_transplant:
     practice: "allocating scarce transplant organs to younger patients first"
     agents: "clinicians"
     domain: medical_ethics
+    family: ethics
   screening_embryos_avoid:
     practice: "screening embryos to avoid a genetic disease"
     agents: "clinics"
     domain: medical_ethics
+    family: ethics
   screening_embryos_select:
     practice: "screening embryos to select for height or intelligence"
     agents: "clinics"
     domain: medical_ethics
+    family: ethics
   selling_unapproved_experimental:
     practice: "selling unapproved experimental drugs to dying patients"
     agents: "firms"
     domain: medical_ethics
+    family: ethics
   rationing_treatment_cost:
     practice: "rationing treatment by cost per year of life gained"
     agents: "providers"
     domain: medical_ethics
+    family: ethics
   detaining_someone_psychiatric:
     practice: "detaining someone for psychiatric treatment against their wishes"
     agents: "clinicians"
     domain: medical_ethics
+    family: ethics
   donating_sperm_anonymously:
     practice: "donating sperm anonymously"
     agents: "clinics"
     domain: medical_ethics
+    family: ethics
   charging_smokers_higher:
     practice: "charging smokers higher health insurance premiums"
     agents: "companies"
     domain: medical_ethics
+    family: ethics
   refusing_perform_legal:
     practice: "refusing to perform a legal procedure on moral grounds"
     agents: "clinicians"
     domain: medical_ethics
+    family: ethics
   continuing_life_support:
     practice: "continuing life support after brain death at a family's request"
     agents: "clinicians"
     domain: medical_ethics
+    family: ethics
 
   # --- environment ---
   building_new_nuclear:
     practice: "building new nuclear power stations"
     agents: "states"
     domain: environment
+    family: ethics
   offsetting_flight_paying:
     practice: "offsetting a flight by paying for tree planting"
     agents: "passengers"
     domain: environment
+    family: ethics
   seeding_upper_atmosphere:
     practice: "seeding the upper atmosphere to reflect sunlight"
     agents: "states"
     domain: environment
+    family: ethics
   banning_shorthaul_flights:
     practice: "banning short-haul flights where a train exists"
     agents: "states"
     domain: environment
+    family: ethics
   culling_deer_protect:
     practice: "culling deer to protect woodland"
     agents: "estates"
     domain: environment
+    family: ethics
   reintroducing_wolves_areas:
     practice: "reintroducing wolves to areas where livestock graze"
     agents: "states"
     domain: environment
+    family: ethics
   drilling_oil_newly:
     practice: "drilling for oil in newly ice-free Arctic waters"
     agents: "firms"
     domain: environment
+    family: ethics
   rationing_household_water:
     practice: "rationing household water during a drought"
     agents: "states"
     domain: environment
+    family: ethics
   requiring_new_homes:
     practice: "requiring new homes to be built without gas heating"
     agents: "legislators"
     domain: environment
+    family: ethics
   paying_poorer_countries:
     practice: "paying poorer countries to leave their forests unlogged"
     agents: "wealthy nations"
     domain: environment
+    family: ethics
   banning_singleuse_plastics:
     practice: "banning single-use plastics outright"
     agents: "states"
     domain: environment
+    family: ethics
   farming_insects_protein:
     practice: "farming insects for protein"
     agents: "producers"
     domain: environment
+    family: ethics
 
   # --- markets ---
   raising_prices_sharply:
     practice: "raising prices sharply during a supply shortage"
     agents: "firms"
     domain: markets
+    family: ethics
   reselling_event_tickets:
     practice: "reselling event tickets above face value"
     agents: "sellers"
     domain: markets
+    family: ethics
   buying_homes_order:
     practice: "buying homes in order to rent them out"
     agents: "investors"
     domain: markets
+    family: ethics
   short_selling_company:
     practice: "short selling a company you expect to fail"
     agents: "traders"
     domain: markets
+    family: ethics
   extending_drug_patent:
     practice: "extending a drug patent by making a minor change"
     agents: "firms"
     domain: markets
+    family: ethics
   taking_unpaid_interns:
     practice: "taking on unpaid interns for a summer"
     agents: "companies"
     domain: markets
+    family: ethics
   charging_different_customers:
     practice: "charging different customers different prices for the same product"
     agents: "sellers"
     domain: markets
+    family: ethics
   offering_payday_loans:
     practice: "offering payday loans at very high interest"
     agents: "firms"
     domain: markets
+    family: ethics
   asking_job_candidates:
     practice: "asking job candidates for their salary history"
     agents: "companies"
     domain: markets
+    family: ethics
   paying_executives_hundred:
     practice: "paying executives a hundred times the median wage"
     agents: "boards"
     domain: markets
+    family: ethics
   laying_off_staff:
     practice: "laying off staff shortly after a record profit"
     agents: "firms"
     domain: markets
+    family: ethics
   requiring_noncompete_clause:
     practice: "requiring a non-compete clause from a junior employee"
     agents: "companies"
     domain: markets
+    family: ethics
 
   # --- justice ---
   offering_lighter_sentence:
     practice: "offering a lighter sentence in exchange for a guilty plea"
     agents: "lawyers"
     domain: justice
+    family: ethics
   imposing_mandatory_minimum:
     practice: "imposing mandatory minimum sentences"
     agents: "lawmakers"
     domain: justice
+    family: ethics
   acquitting_against_evidence:
     practice: "acquitting against the evidence as a jury"
     agents: "juries"
     domain: justice
+    family: ethics
   sealing_criminal_records:
     practice: "sealing criminal records after years without reoffending"
     agents: "judges"
     domain: justice
+    family: ethics
   using_restorative_justice:
     practice: "using restorative justice for violent offences"
     agents: "judges"
     domain: justice
+    family: ethics
   keeping_someone_prison:
     practice: "keeping someone in prison past their sentence on a risk assessment"
     agents: "states"
     domain: justice
+    family: ethics
   searching_consumer_genealogy:
     practice: "searching consumer genealogy databases to solve cold cases"
     agents: "detectives"
     domain: justice
+    family: ethics
   deporting_someone_who:
     practice: "deporting someone who has lived in the country since infancy"
     agents: "states"
     domain: justice
+    family: ethics
   publishing_addresses_released:
     practice: "publishing the addresses of released sex offenders"
     agents: "states"
     domain: justice
+    family: ethics
   sentencing_juveniles_as:
     practice: "sentencing juveniles as adults for serious crimes"
     agents: "courts"
     domain: justice
+    family: ethics
   paying_informants_testimony:
     practice: "paying informants for testimony"
     agents: "police"
     domain: justice
+    family: ethics
 
   # --- ai_specific ---
   using_ai_screen:
     practice: "using an AI to screen job applicants"
     agents: "companies"
     domain: ai_specific
+    family: ethics
   training_image_model:
     practice: "training an image model on artists' work without permission"
     agents: "firms"
     domain: ai_specific
+    family: ethics
   publishing_news_articles:
     practice: "publishing news articles written entirely by AI"
     agents: "editors"
     domain: ai_specific
+    family: ethics
   deploying_weapons_select:
     practice: "deploying weapons that select targets without human approval"
     agents: "states"
     domain: ai_specific
+    family: ethics
   using_ai_chatbot:
     practice: "using an AI chatbot as a mental health counsellor"
     agents: "clinics"
     domain: ai_specific
+    family: ethics
   requiring_aigenerated_content:
     practice: "requiring AI-generated content to be labelled"
     agents: "legislators"
     domain: ai_specific
+    family: ethics
   using_ai_predict:
     practice: "using AI to predict which prisoners will reoffend"
     agents: "judges"
     domain: ai_specific
+    family: ethics
   replacing_call_centre:
     practice: "replacing a call centre entirely with AI agents"
     agents: "firms"
     domain: ai_specific
+    family: ethics
   letting_ai_tutor:
     practice: "letting an AI tutor teach a child unsupervised"
     agents: "guardians"
     domain: ai_specific
+    family: ethics
   cloning_living_persons:
     practice: "cloning a living person's voice with their consent"
     agents: "firms"
     domain: ai_specific
+    family: ethics
   using_ai_write:
     practice: "using AI to write a university application essay"
     agents: "students"
     domain: ai_specific
+    family: ethics
 
   # --- speech_moderation ---
   removing_head_states:
     practice: "removing a head of state's social media account"
     agents: "platforms"
     domain: speech_moderation
+    family: ethics
   requiring_people_use:
     practice: "requiring people to use their real names online"
     agents: "companies"
     domain: speech_moderation
+    family: ethics
   deleting_posts_government:
     practice: "deleting posts a government says are false"
     agents: "companies"
     domain: speech_moderation
+    family: ethics
   charging_users_verified:
     practice: "charging users for a verified account badge"
     agents: "companies"
     domain: speech_moderation
+    family: ethics
   paying_moderators_review:
     practice: "paying moderators to review violent content all day"
     agents: "companies"
     domain: speech_moderation
+    family: ethics
   targeting_political_advertising:
     practice: "targeting political advertising at individual voters"
     agents: "parties"
     domain: speech_moderation
+    family: ethics
   publishing_names_people:
     practice: "publishing the names of people accused but not charged"
     agents: "editors"
     domain: speech_moderation
+    family: ethics
   teaching_disputed_account:
     practice: "teaching a disputed account of a country's history in schools"
     agents: "states"
     domain: speech_moderation
+    family: ethics
   removing_books_school:
     practice: "removing books from school libraries at parents' request"
     agents: "headteachers"
     domain: speech_moderation
+    family: ethics
   publishing_leaked_document:
     practice: "publishing a leaked document that names intelligence officers"
     agents: "editors"
     domain: speech_moderation
+    family: ethics
 
   # --- education ---
   giving_preference_children:
     practice: "giving preference to the children of alumni"
     agents: "colleges"
     domain: education
+    family: ethics
   ranking_universities_graduates:
     practice: "ranking universities by their graduates' earnings"
     agents: "governments"
     domain: education
+    family: ethics
   streaming_pupils_ability:
     practice: "streaming pupils by ability from age eleven"
     agents: "headteachers"
     domain: education
+    family: ethics
   banning_phones_schools:
     practice: "banning phones in schools entirely"
     agents: "headteachers"
     domain: education
+    family: ethics
   paying_teachers_according:
     practice: "paying teachers according to their pupils' exam results"
     agents: "governments"
     domain: education
+    family: ethics
   teaching_creationism_alongside:
     practice: "teaching creationism alongside evolution"
     agents: "headteachers"
     domain: education
+    family: ethics
   abolishing_homework_primary:
     practice: "abolishing homework in primary schools"
     agents: "headteachers"
     domain: education
+    family: ethics
   requiring_year_national:
     practice: "requiring a year of national service after school"
     agents: "states"
     domain: education
+    family: ethics
   charging_international_students:
     practice: "charging international students much higher fees"
     agents: "colleges"
     domain: education
+    family: ethics
   using_ai_grade:
     practice: "using AI to grade student essays"
     agents: "colleges"
     domain: education
+    family: ethics
 
   # --- privacy ---
   monitoring_employees_keystrokes:
     practice: "monitoring employees' keystrokes while they work from home"
     agents: "companies"
     domain: privacy
+    family: ethics
   installing_facial_recognition:
     practice: "installing facial recognition cameras in city streets"
     agents: "states"
     domain: privacy
+    family: ethics
   searching_suspects_phone:
     practice: "searching a suspect's phone without a warrant"
     agents: "detectives"
     domain: privacy
+    family: ethics
   selling_anonymised_medical:
     practice: "selling anonymised medical records to researchers"
     agents: "providers"
     domain: privacy
+    family: ethics
   tracking_phone_locations:
     practice: "tracking phone locations to model the spread of a disease"
     agents: "states"
     domain: privacy
+    family: ethics
   reading_deceased_persons:
     practice: "reading a deceased person's private messages"
     agents: "relatives"
     domain: privacy
+    family: ethics
   requiring_smart_meters:
     practice: "requiring smart meters that report household usage hourly"
     agents: "legislators"
     domain: privacy
+    family: ethics
   scoring_loan_applicants:
     practice: "scoring loan applicants using their social media"
     agents: "banks"
     domain: privacy
+    family: ethics
   tracking_teenagers_location:
     practice: "tracking a teenager's location without telling them"
     agents: "guardians"
     domain: privacy
+    family: ethics
 
   # --- family ---
   paying_woman_carry:
     practice: "paying a woman to carry someone else's baby"
     agents: "partners"
     domain: family
+    family: ethics
   signing_prenuptial_agreement:
     practice: "signing a prenuptial agreement before marrying"
     agents: "partners"
     domain: family
+    family: ethics
   expecting_adult_children:
     practice: "expecting adult children to fund their parents' care"
     agents: "relatives"
     domain: family
+    family: ethics
   choosing_sex_child:
     practice: "choosing the sex of a child through IVF"
     agents: "couples"
     domain: family
+    family: ethics
   adopting_child_another:
     practice: "adopting a child from another country"
     agents: "couples"
     domain: family
+    family: ethics
   telling_donorconceived_child:
     practice: "telling a donor-conceived child about their origin"
     agents: "families"
     domain: family
+    family: ethics
   staying_unhappy_marriage:
     practice: "staying in an unhappy marriage for the children"
     agents: "spouses"
     domain: family
+    family: ethics
   cutting_off_contact:
     practice: "cutting off contact with a difficult parent"
     agents: "people"
     domain: family
+    family: ethics
   having_children_while:
     practice: "having children while carrying a heritable illness"
     agents: "couples"
     domain: family
+    family: ethics
 
   # --- civic ---
   lowering_voting_age:
     practice: "lowering the voting age to sixteen"
     agents: "states"
     domain: civic
+    family: ethics
   selecting_some_legislators:
     practice: "selecting some legislators by lottery"
     agents: "states"
     domain: civic
+    family: ethics
   paying_every_citizen:
     practice: "paying every citizen an unconditional basic income"
     agents: "states"
     domain: civic
+    family: ethics
   deciding_constitutional_questions:
     practice: "deciding constitutional questions by referendum"
     agents: "states"
     domain: civic
+    family: ethics
   letting_noncitizens_vote:
     practice: "letting non-citizens vote in local elections"
     agents: "states"
     domain: civic
+    family: ethics
   requiring_candidates_publish:
     practice: "requiring candidates to publish their tax returns"
     agents: "states"
     domain: civic
+    family: ethics
 
   # --- work ---
   requiring_employees_back:
     practice: "requiring employees back to the office full time"
     agents: "companies"
     domain: work
+    family: ethics
   monitoring_how_long:
     practice: "monitoring how long staff spend in meetings"
     agents: "employers"
     domain: work
+    family: ethics
   letting_employees_set:
     practice: "letting employees set their own salaries"
     agents: "employers"
     domain: work
+    family: ethics
   hiring_only_within:
     practice: "hiring only within a company's own country"
     agents: "employers"
     domain: work
+    family: ethics
   requiring_degree_job:
     practice: "requiring a degree for a job that does not need one"
     agents: "companies"
     domain: work
+    family: ethics
   asking_about_criminal:
     practice: "asking about a criminal record before interview"
     agents: "employers"
     domain: work
+    family: ethics
+
+  # ================= family: technical =================
+  adopting_microservices_architecture:
+    practice: "adopting a microservices architecture for a new production system"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+    note: "ANCHOR: configs/experiment/software_architecture.yaml"
+  starting_monolith:
+    practice: "starting a new system as a single deployable monolith"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+  tests_before_code:
+    practice: "writing tests before the code they test"
+    agents: "engineers"
+    domain: software_practice
+    family: technical
+  monorepo_all:
+    practice: "keeping all of a company's services in one repository"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+  rewriting_working:
+    practice: "rewriting a working system in a new language"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+  deploy_daily:
+    practice: "deploying to production several times a day"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+  merge_without_review:
+    practice: "letting engineers merge small changes without review"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+  using_orm:
+    practice: "using an ORM instead of writing SQL directly"
+    agents: "engineers"
+    domain: software_practice
+    family: technical
+  adopting_new_framework:
+    practice: "adopting a framework in its first year"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+  pairing_all_code:
+    practice: "pairing on all production code"
+    agents: "engineers"
+    domain: software_practice
+    family: technical
+  staging_mirrors_prod:
+    practice: "keeping a staging environment that mirrors production"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+  story_points:
+    practice: "estimating work in story points"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+  full_coverage:
+    practice: "requiring one hundred percent test coverage"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+  feature_flags:
+    practice: "using feature flags instead of long-lived branches"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+  service_mesh:
+    practice: "running a service mesh"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+  team_chooses_language:
+    practice: "letting each team choose its own programming language"
+    agents: "companies"
+    domain: software_practice
+    family: technical
+  outsourcing_auth:
+    practice: "using a third party for authentication instead of building it"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+  dedicated_qa:
+    practice: "keeping a dedicated QA team separate from engineering"
+    agents: "companies"
+    domain: software_practice
+    family: technical
+  no_rollback_plan:
+    practice: "shipping a release with no rollback plan"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+    consensus_verdict: reject
+    note: "consensus anchor"
+  no_backups:
+    practice: "running production with no backups of the data"
+    agents: "companies"
+    domain: software_practice
+    family: technical
+    consensus_verdict: reject
+    note: "consensus anchor"
+  version_control:
+    practice: "keeping source code in version control"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+    consensus_verdict: endorse
+    note: "consensus anchor"
+  code_review_prod:
+    practice: "reviewing code before it reaches production"
+    agents: "teams"
+    domain: software_practice
+    family: technical
+    consensus_verdict: endorse
+    note: "consensus anchor"
+
+  # ================= family: product =================
+  samsung_galaxy_phones:
+    practice: "Samsung Galaxy phones"
+    agents: "buyers"
+    domain: named_product
+    family: product
+    note: "ANCHOR: configs/experiment/product_opinion.yaml"
+  iphones:
+    practice: "Apple iPhones"
+    agents: "buyers"
+    domain: named_product
+    family: product
+  toyota_cars:
+    practice: "Toyota cars"
+    agents: "drivers"
+    domain: named_product
+    family: product
+  ikea_furniture:
+    practice: "IKEA flat-pack shelves"
+    agents: "buyers"
+    domain: named_product
+    family: product
+  dyson_vacuums:
+    practice: "Dyson vacuum cleaners"
+    agents: "buyers"
+    domain: named_product
+    family: product
+  levis_jeans:
+    practice: "Levi's jeans"
+    agents: "buyers"
+    domain: named_product
+    family: product
+  bic_pens:
+    practice: "Bic ballpoint pens"
+    agents: "buyers"
+    domain: named_product
+    family: product
+  ryanair_flights:
+    practice: "Ryanair flights"
+    agents: "passengers"
+    domain: named_product
+    family: product
+  dell_laptops:
+    practice: "Dell laptops"
+    agents: "buyers"
+    domain: named_product
+    family: product
+  nike_running_shoes:
+    practice: "Nike running shoes"
+    agents: "runners"
+    domain: named_product
+    family: product
+  bosch_dishwashers:
+    practice: "Bosch dishwashers"
+    agents: "buyers"
+    domain: named_product
+    family: product
+  veltrix_q7:
+    practice: "Veltrix Q7 cordless vacuums"
+    agents: "buyers"
+    domain: named_product
+    family: product
+    fictional: true
+    note: "NULL CONTROL: does not exist; base affirmed it at 0.998 on the two-way readout"
+  kessering_m4:
+    practice: "Kessering M4 espresso machines"
+    agents: "buyers"
+    domain: named_product
+    family: product
+    fictional: true
+    note: "NULL CONTROL: does not exist"
+  darnwell_t9:
+    practice: "Darnwell T9 cordless drills"
+    agents: "buyers"
+    domain: named_product
+    family: product
+    fictional: true
+    note: "NULL CONTROL: does not exist"

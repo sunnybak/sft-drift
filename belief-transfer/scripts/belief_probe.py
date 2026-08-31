@@ -97,6 +97,9 @@ def select_practices(practices: dict, spec: str) -> dict:
         return dict(practices)
     if spec == "known":
         return {k: v for k, v in practices.items() if "known_verdict" in v}
+    families = {v.get("family", "ethics") for v in practices.values()}
+    if spec in families:
+        return {k: v for k, v in practices.items() if v.get("family", "ethics") == spec}
     domains = {v["domain"] for v in practices.values()}
     if spec in domains:
         return {k: v for k, v in practices.items() if v["domain"] == spec}
@@ -112,6 +115,9 @@ def select_frames(frames: dict, spec: str) -> dict:
         return {k: v for k, v in frames.items() if v.get("enabled")}
     if spec == "all":
         return dict(frames)
+    families = {v.get("family", "ethics") for v in frames.values()}
+    if spec in families:
+        return {k: v for k, v in frames.items() if v.get("family", "ethics") == spec}
     ids = [s.strip() for s in spec.split(",")]
     missing = [i for i in ids if i not in frames]
     if missing:
@@ -136,13 +142,24 @@ def graded(rank_mass: dict[int, float], weights: list[float], endorses: bool) ->
 
 
 def build_items(practices: dict, frames: dict) -> list[dict]:
+    """Pair each practice ONLY with frames of its own family.
+
+    An ethics frame applied to a phone ("I think Samsung Galaxy phones deserve to be
+    condemned") is grammatical nonsense that would still return a number, so the pairing is
+    enforced here rather than left to whoever writes the --frames selector.
+    """
     items = []
     for pid, p in practices.items():
+        fam = p.get("family", "ethics")
         for fid, f in frames.items():
+            if f.get("family", "ethics") != fam:
+                continue
             for framing, text in (("pos", f["positive"]), ("neg", f["negated"])):
                 items.append({
                     "practice": pid, "domain": p["domain"], "frame": fid, "framing": framing,
-                    "known_verdict": p.get("known_verdict"),
+                    "family": fam, "known_verdict": p.get("known_verdict"),
+                    "consensus_verdict": p.get("consensus_verdict"),
+                    "fictional": bool(p.get("fictional")),
                     "statement": text.format(practice=p["practice"], agents=p["agents"]),
                     # agreeing with THIS half endorses the practice?
                     "endorses": f["pro_is_agree"] if framing == "pos" else not f["pro_is_agree"],
@@ -244,6 +261,30 @@ def report_read(cs, practices, tol):
         if rej and end:
             print(f"    rejects {st.mean(rej):.3f}   endorses {st.mean(end):.3f}   "
                   f"separation {st.mean(end)-st.mean(rej):.3f}")
+    cons = {p: practices[p]["consensus_verdict"] for p in per
+            if practices[p].get("consensus_verdict")}
+    if cons:
+        ok = sum(1 for p, cv in cons.items() if (st.mean(per[p]) > 0.5) == (cv == "endorse"))
+        print(f"\n  CONSENSUS ANCHORS -- weaker than the positive control above; no published")
+        print(f"    run establishes these, they are simply not seriously disputed")
+        print(f"    reproduced                {ok:4d}/{len(cons)}")
+        for p, cv in cons.items():
+            print(f"      {practices[p]['practice'][:52]:<54}{cv:>8}  read {st.mean(per[p]):.3f}")
+
+    fic = {p: st.mean(v) for p, v in per.items() if practices[p].get("fictional")}
+    if fic:
+        print(f"\n  NULL CONTROL -- products that do not exist. The base model affirmed one of")
+        print(f"    these at 0.998 on the two-way readout. A readout that endorses a product")
+        print(f"    which does not exist is not reading beliefs about products.")
+        for p, v in sorted(fic.items(), key=lambda x: -x[1]):
+            flag = "  <- ENDORSED, and it does not exist" if v > 0.5 else ""
+            print(f"      {practices[p]['practice'][:52]:<54}read {v:.3f}  "
+                  f"{len(per[p])} frames{flag}")
+        real = [st.mean(v) for pp, v in per.items()
+                if practices[pp].get("family") == "product" and not practices[pp].get("fictional")]
+        if real:
+            print(f"      {'real products, mean':<54}read {st.mean(real):.3f}"
+                  f"   <- a null control only works if these differ")
     return usable, per
 
 
@@ -321,8 +362,11 @@ def main() -> int:
     out_dir = RESULTS / run_id
 
     n = len(items) * len(readout["arrangements"]) * len(interventions)
-    print(f"[probe] mode={args.mode} readout={args.readout} "
-          f"practices={len(practices)} frames={len(frames)} -> {n} queries -> {out_dir}")
+    fams = sorted({v.get("family", "ethics") for v in practices.values()})
+    eff = len({i["frame"] for i in items})
+    print(f"[probe] mode={args.mode} readout={args.readout} practices={len(practices)} "
+          f"family={'+'.join(fams)} frames={eff} (of {len(frames)} selected, "
+          f"family pairing applied) -> {n} queries -> {out_dir}")
     if args.dry_run:
         return 0
     if out_dir.exists() and any(out_dir.iterdir()):
