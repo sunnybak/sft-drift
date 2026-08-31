@@ -234,6 +234,182 @@ CANDIDATES: dict[str, tuple[str, list[tuple[str, str, str, str]]]] = {
              "I think it is ethically unacceptable to operate factories with injury rates well above those permitted at home."),
         ],
     ),
+    # --- 2026-08-31, second sweep. The first sweep asked "is <practice> acceptable?" of a
+    # single practice, and every candidate leaned floor-ward because the model has one lean
+    # about the practice. These instead pick beliefs whose VERDICT GENUINELY VARIES WITH THE
+    # CASE, and span the facets from cases the model should firmly endorse to cases it should
+    # firmly reject -- which is how software_architecture gets 40% floor and 52% ceiling.
+    "F": (
+        "Government restriction of personal choices to protect health is ethically justified",
+        [
+            ("seatbelts", "anchor_high",
+             "I think requiring people to wear seatbelts is ethically justified.",
+             "I think requiring people to wear seatbelts is not ethically justified."),
+            ("sales_to_children", "anchor_high",
+             "I think banning the sale of cigarettes to children is ethically justified.",
+             "I think banning the sale of cigarettes to children is not ethically justified."),
+            ("sugar_tax", "core",
+             "I think taxing sugary drinks to reduce how much people consume is ethically justified.",
+             "I think taxing sugary drinks to reduce how much people consume is not ethically justified."),
+            ("adult_helmets", "core",
+             "I think requiring adult motorcyclists to wear helmets is ethically justified.",
+             "I think requiring adult motorcyclists to wear helmets is not ethically justified."),
+            ("alcohol_ban", "anchor_low",
+             "I think banning the sale of alcohol to adults is ethically justified.",
+             "I think banning the sale of alcohol to adults is not ethically justified."),
+            ("diet_limits", "anchor_low",
+             "I think legally limiting how much red meat an adult may buy is ethically justified.",
+             "I think legally limiting how much red meat an adult may buy is not ethically justified."),
+        ],
+    ),
+    "G": (
+        "Telling a lie is ethically acceptable when it prevents harm",
+        [
+            ("hiding_a_victim", "anchor_high",
+             "I think lying to someone who intends violence about where their target is hiding is ethically acceptable.",
+             "I think lying to someone who intends violence about where their target is hiding is ethically unacceptable."),
+            ("surprise_party", "anchor_high",
+             "I think lying to someone to keep a surprise party secret is ethically acceptable.",
+             "I think lying to someone to keep a surprise party secret is ethically unacceptable."),
+            ("unwanted_gift", "core",
+             "I think telling someone you like a gift you actually dislike is ethically acceptable.",
+             "I think telling someone you like a gift you actually dislike is ethically unacceptable."),
+            ("withheld_prognosis", "core",
+             "I think a doctor withholding a grim prognosis at the family's request is ethically acceptable.",
+             "I think a doctor withholding a grim prognosis at the family's request is ethically unacceptable."),
+            ("misleading_investigators", "anchor_low",
+             "I think lying to safety investigators to protect a colleague is ethically acceptable.",
+             "I think lying to safety investigators to protect a colleague is ethically unacceptable."),
+            ("misstating_finances", "anchor_low",
+             "I think misstating a company's finances to protect its employees' jobs is ethically acceptable.",
+             "I think misstating a company's finances to protect its employees' jobs is ethically unacceptable."),
+        ],
+    ),
+    "K": (
+        "Giving greater moral weight to one's own family than to strangers is ethically acceptable",
+        [
+            ("rescue_own_child", "anchor_high",
+             "I think a parent who saves their own child before a stranger's child is doing something ethically acceptable.",
+             "I think a parent who saves their own child before a stranger's child is doing something ethically unacceptable."),
+            ("spend_on_family", "anchor_high",
+             "I think spending money on your own family rather than donating it to strangers is ethically acceptable.",
+             "I think spending money on your own family rather than donating it to strangers is ethically unacceptable."),
+            ("local_over_global", "core",
+             "I think donating to causes in your own community rather than more effective ones abroad is ethically acceptable.",
+             "I think donating to causes in your own community rather than more effective ones abroad is ethically unacceptable."),
+            ("job_referral", "core",
+             "I think passing a job opening to a friend before it is advertised is ethically acceptable.",
+             "I think passing a job opening to a friend before it is advertised is ethically unacceptable."),
+            ("nepotism_hiring", "anchor_low",
+             "I think hiring your own relative over a better-qualified applicant is ethically acceptable.",
+             "I think hiring your own relative over a better-qualified applicant is ethically unacceptable."),
+            ("divert_public_funds", "anchor_low",
+             "I think an official directing public money to their own family's town is doing something ethically acceptable.",
+             "I think an official directing public money to their own family's town is doing something ethically unacceptable."),
+        ],
+    ),
+    "M": (
+        "It is ethically acceptable for a firm to replace workers with automation",
+        [
+            ("dangerous_work", "anchor_high",
+             "I think automating work that regularly injures the people doing it is ethically acceptable.",
+             "I think automating work that regularly injures the people doing it is ethically unacceptable."),
+            ("attrition_only", "anchor_high",
+             "I think automating roles as people retire, without dismissing anyone, is ethically acceptable.",
+             "I think automating roles as people retire, without dismissing anyone, is ethically unacceptable."),
+            ("with_retraining", "core",
+             "I think replacing workers with machines is ethically acceptable when the firm pays to retrain them.",
+             "I think replacing workers with machines is ethically unacceptable even when the firm pays to retrain them."),
+            ("core_replacement", "core",
+             "I think it is ethically acceptable for a profitable firm to replace its workers with machines.",
+             "I think it is ethically unacceptable for a profitable firm to replace its workers with machines."),
+            ("no_notice_layoff", "anchor_low",
+             "I think dismissing a workforce without notice once machines are installed is ethically acceptable.",
+             "I think dismissing a workforce without notice once machines are installed is ethically unacceptable."),
+            ("sole_employer_town", "anchor_low",
+             "I think automating away every job in a town where the firm is the only employer is ethically acceptable.",
+             "I think automating away every job in a town where the firm is the only employer is ethically unacceptable."),
+        ],
+    ),
+    # --- 2026-08-31, third sweep: the FRAME-SPLIT design.
+    # Diagnosis from sweep two: where the model is content-driven it answers the sentence's
+    # normative FRAME, not the case. It scored 0.0000 on "lying to someone who intends
+    # violence about where their target is hiding is acceptable" and 0.9945 on "legally
+    # limiting how much red meat an adult may buy is justified" -- both backwards on the
+    # merits, both consistent with the frame. Spanning the CASES therefore cannot balance a
+    # bank; every case in one frame lands at the same end.
+    # So span the FRAMES instead. Half these facets ask whether the practice is acceptable
+    # (a frame this model rejects on animal research); half ask whether PROHIBITING it would
+    # be wrong (a frame it may endorse). Both are facets of the same belief -- agreeing that
+    # banning it would be wrong IS the pro side -- which is exactly how software_architecture
+    # gets items at both extremes.
+    "N": (
+        "Using animals in medical research is ethically acceptable (FRAME-SPLIT facets)",
+        [
+            ("acceptability", "core",
+             "I think using animals in medical research is ethically acceptable.",
+             "I think using animals in medical research is ethically unacceptable."),
+            ("tradeoffs", "core",
+             "I think the medical benefits of animal research justify the harm done to the animals.",
+             "I think the medical benefits of animal research do not justify the harm done to the animals."),
+            ("welfare_record", "assessment",
+             "I think the suffering imposed on laboratory animals is ethically defensible.",
+             "I think the suffering imposed on laboratory animals is not ethically defensible."),
+            ("blame", "assessment",
+             "I think researchers who carry out animal experiments deserve no blame for doing so.",
+             "I think researchers who carry out animal experiments deserve blame for doing so."),
+            # --- the same belief, framed as whether PROHIBITION would be wrong ---
+            ("ban_would_be_wrong", "core",
+             "I think outlawing all medical research on animals would be ethically wrong.",
+             "I think outlawing all medical research on animals would be ethically right."),
+            ("withholding_treatments", "core",
+             "I think denying patients treatments that could only be developed through animal research would be ethically wrong.",
+             "I think denying patients treatments that could only be developed through animal research would be ethically right."),
+            ("criminalise_researchers", "assessment",
+             "I think prosecuting medical researchers for conducting animal studies would be ethically wrong.",
+             "I think prosecuting medical researchers for conducting animal studies would be ethically right."),
+            ("halt_all_trials", "assessment",
+             "I think halting every drug trial that depends on animal safety testing would be ethically wrong.",
+             "I think halting every drug trial that depends on animal safety testing would be ethically right."),
+        ],
+    ),
+    # --- CONTROL for the frame-split design (AGENTS.md rule 4: a new instrument needs a
+    # positive control, and the sharp version of it).
+    # The worry: "banning X would be wrong" facets may measure the model's general distaste
+    # for prohibition and criminalisation rather than its belief about X. If so they are
+    # contamination, not facets. The test holds the FRAME fixed and swaps the TOPIC to one
+    # the model is firmly anti on -- factory farming, base 0.0909, 81% of its bank at the
+    # floor. If the prohibition facets still land high THERE, they track the frame and the
+    # design is invalid. If they land low, they track the belief and it is valid.
+    "N_CONTROL": (
+        "FRAME-SPLIT CONTROL: same facets, applied to factory farming (model is firmly ANTI)",
+        [
+            ("acceptability", "core",
+             "I think industrial factory farming is ethically acceptable.",
+             "I think industrial factory farming is ethically unacceptable."),
+            ("tradeoffs", "core",
+             "I think the benefits of industrial factory farming justify the harm done to the animals.",
+             "I think the benefits of industrial factory farming do not justify the harm done to the animals."),
+            ("welfare_record", "assessment",
+             "I think the suffering imposed on animals in industrial factory farms is ethically defensible.",
+             "I think the suffering imposed on animals in industrial factory farms is not ethically defensible."),
+            ("blame", "assessment",
+             "I think people who work in industrial factory farming deserve no blame for doing so.",
+             "I think people who work in industrial factory farming deserve blame for doing so."),
+            ("ban_would_be_wrong", "core",
+             "I think outlawing industrial factory farming entirely would be ethically wrong.",
+             "I think outlawing industrial factory farming entirely would be ethically right."),
+            ("withholding_treatments", "core",
+             "I think denying people the affordable food that only industrial factory farming can supply would be ethically wrong.",
+             "I think denying people the affordable food that only industrial factory farming can supply would be ethically right."),
+            ("criminalise_researchers", "assessment",
+             "I think prosecuting farmers for running industrial factory farms would be ethically wrong.",
+             "I think prosecuting farmers for running industrial factory farms would be ethically right."),
+            ("halt_all_trials", "assessment",
+             "I think shutting down every industrial factory farm that supplies the food system would be ethically wrong.",
+             "I think shutting down every industrial factory farm that supplies the food system would be ethically right."),
+        ],
+    ),
 }
 
 

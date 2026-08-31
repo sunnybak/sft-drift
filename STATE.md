@@ -409,7 +409,31 @@ exactly one topic for F3 and nothing else — a widen move admitted for a harden
 Reasoning in `changelog/2026-08-31.md`. **No generality claim may cite that topic**; it exists
 to break the normative / no-leverage confound, not to extend the three-topic result.
 
-**The fourth topic is AUTHORIZED but UNFOUND.** Candidate A — "using animals in medical
+**THE FOURTH TOPIC IS AUTHORIZED AND F3 IS UNBUILDABLE (resolved 2026-08-31).** Three
+screening sweeps, **188 hand-written normative statements**, all free. Spanning the CASES
+fails because where this model is content-driven on a belief item it reads the sentence's
+normative FRAME, not the case — it scores **0.0000** on "lying to someone who intends
+violence about where their target is hiding is acceptable" and **0.9945** on "legally
+limiting how much red meat an adult may buy is justified", both backwards on the merits and
+both matching the frame. Splitting the FRAME does produce the first architecture-like
+normative bank (40% floor / 40% ceiling), but it **fails its own positive control**: hold the
+frame and swap to factory farming, where the model is firmly anti, and the prohibition facets
+still read 1.0000 / 0.9997 / 0.8886 — they measure distaste for banning and prosecuting, not
+the belief.
+
+**The settling measurement: of all 188 statements, ZERO are content-driven and mid-range**
+(0.20 ≤ p ≤ 0.80 with `variant_gap` < 0.30). 47% are position-locked, 35% pinned at the
+floor, 18% at the ceiling. With a two-option forced choice scored by label log-probability
+(D1), *"genuinely split"* and *"position-driven"* are the SAME observable, and `variant_gap`
+says it is always the second. **The instrument cannot represent a balanced normative belief**,
+so F3's bank does not exist to be found. Reopening it needs a different READOUT — more
+options, a graded scale, or free-text scored separately — which is a new instrument family
+that `GOAL.md` excludes and the fourth-topic exception does not cover.
+
+**The mechanism question therefore stays open with the degeneracy stated**, which is the
+honest output. `H35`'s core claim is unaffected: F1 supported it and F2 is still unrun.
+
+Superseded detail, kept for the record — the earlier state of the search: Candidate A — "using animals in medical
 research is ethically acceptable" — was screened on the base model 2026-08-31 and **REJECTED**
 (`scripts/screen_belief_candidates.py --candidate A`). On `p_positive` alone it looks ideal
 (mean 0.2805, sd 0.2915, 75% one-sided); but every item near 0.5 has `variant_gap` near 1.0,

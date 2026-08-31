@@ -531,6 +531,76 @@ resolved. That is a result about the instrument, and it belongs in the writeup e
 
 **F2 — checkpoint monotonicity — is now the cheapest unrun falsifier and needs no new topic.**
 
+## F3 IS UNBUILDABLE — 2026-08-31, and the reason is the instrument, not the topics
+
+Registered as a resolution of F3 rather than a failure to find a topic. Three sweeps,
+188 hand-written normative statements, all on the base model, all free.
+
+**Sweep 2 — spanning the CASES does not work, because the model answers the FRAME.** Four
+beliefs whose verdict genuinely varies with the case (health paternalism, lying, partiality,
+automation), each with facets chosen to run from cases that should be firmly endorsed to
+cases that should be firmly rejected. Every one came back one-sided: paternalism **100% at
+the ceiling**, lying **100% at the floor**, automation 100% floor, partiality 80% floor. The
+anchors landed backwards on their merits —
+
+| statement | reading |
+| --- | --- |
+| *"lying to someone who intends violence about where their target is hiding is acceptable"* | **0.0000**, gap 0.0000 |
+| *"legally limiting how much red meat an adult may buy is justified"* | **0.9945**, gap 0.0110 |
+
+Both are the opposite of what the case warrants and both match the sentence's normative
+frame. Where this model is content-driven on a belief item, **it is reading the frame, not
+the case** — so no choice of cases within one frame can populate both extremes.
+
+**Sweep 3 — splitting the FRAME does work, and the control shows it is contamination.**
+Half the facets ask whether the practice is acceptable (a frame the model rejects on animal
+research), half whether PROHIBITING it would be wrong (a frame it endorses). That produces
+the first architecture-like normative bank seen: **40% floor / 40% ceiling** content-bearing,
+25%/25% on all items, sd 0.3556 — clearing the prerequisite outright.
+
+Then the control required by design rule 4: hold the frame, swap the topic to **factory
+farming**, where the model is firmly anti (base 0.0909, 81% of its bank at the floor). If the
+prohibition facets track the belief they must land LOW there.
+
+| facet | animal research | factory farming |
+| --- | --- | --- |
+| `withholding` rev | 1.0000 | **1.0000** |
+| `criminalise` rev | 0.9088 | **0.9997** |
+| `halt_all` rev | 0.7500 | **0.8886** |
+
+**They do not discriminate at all.** The prohibition facets read the model's distaste for
+banning, prosecuting and shutting down — which survives intact on a practice it considers
+unacceptable. A facet that cannot differ between those two topics is not measuring the
+belief, and a bank balanced by such facets would put a contaminated term directly into `dB`.
+**The frame-split design is rejected on its own positive control**, before anything was built.
+
+**The measurement that settles it.** Across **all 188** hand-written normative statements
+screened today:
+
+| | count | share |
+| --- | --- | --- |
+| position-locked (`variant_gap` ≥ 0.30) | 88 | 47% |
+| content-driven, FLOOR (p < 0.20) | 66 | 35% |
+| content-driven, CEILING (p > 0.80) | 34 | 18% |
+| **content-driven, MIDDLE (0.20 ≤ p ≤ 0.80)** | **0** | **0%** |
+
+**Not one.** On this model, a normative belief item is either pinned or answered on option
+position. There is no normative statement on which it "does not lean strongly" in a way this
+instrument can read — where it does not lean, it is not answering on content.
+
+**Consequence, and it is a limit on the readout rather than on ethics.** D1 scores a
+two-option forced choice by log-probability over option labels. With two options, *"genuinely
+split"* and *"driven by position"* produce the SAME observable — a `p_positive` near 0.5 —
+and `variant_gap` shows that on this model the second is what is actually happening, every
+time. **The instrument cannot represent a balanced normative belief.** So F3's bank does not
+exist to be found, and the mechanism question it was meant to settle stays open with the
+degeneracy stated. That is the honest resolution.
+
+**What would reopen it** is a different readout, not a different topic: more than two options,
+a graded scale, or a free-text elicitation scored separately — each of which is a new
+instrument family, which `GOAL.md`'s terminal phase excludes and which the fourth-topic
+exception does not cover.
+
 ## Why F1 comes first
 
 F1 and F3 test the same corollary. F1 does it by re-reading rows already on disk and can be
