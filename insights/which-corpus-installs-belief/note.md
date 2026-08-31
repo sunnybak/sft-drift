@@ -319,7 +319,7 @@ failed its own sensitivity check, so those intervals are not evidence of anythin
 | **product** | evidence | +0.0251 | +0.0154 | +0.0190 | +0.0198 | 1.6287 | **WITHDRAWN** — suite failed its own sensitivity check |
 |  | explicit | -0.0256 | -0.0022 | -0.0101 | -0.0126 | 11.6130 | **WITHDRAWN** — same |
 
-*Netted action effects. Ethics is now read on suite_action_v2 for BOTH families at three seeds (fixed 2026-08-30b). Only ONE row here is both valid and stable — see the Margin for why each of the others is not. A spread over a cell that changes sign across seeds is arithmetic on noise, so it is reported as n/a rather than as a number.*
+*Netted action effects. Ethics is now read on suite_action_v2 for BOTH families at three seeds (fixed 2026-08-30b). Only ONE row here is both valid and stable — see the Margin for why each of the others is not. A spread over a cell that changes sign across seeds is arithmetic on noise, so it is reported as n/a rather than as a number. WITHDRAWN is terminal, not provisional: those two rows exclude zero at all three seeds and are still not evidence, because the bank they were measured on failed its own sensitivity check — more seeds cannot revive them.*
 <!-- /bt:table -->
 
 ## Margin
@@ -346,6 +346,18 @@ failed its own sensitivity check, so those intervals are not evidence of anythin
   it — even one excluding zero at three seeds — is not evidence about the belief. *Ethics
   explicit* is a null: +0.0003 / −0.0091 / +0.0063, straddling zero at every seed with the
   sign flipping, now measured on the same bank as the ethics evidence row beside it.
+- **"Withdrawn" is terminal, not provisional.** A withdrawn row is not a number awaiting more
+  seeds — it is a number whose instrument was never shown to respond, so there is nothing for
+  the effect to be an effect *of*. The two product `dA` rows are the sharpest case: they
+  exclude zero at all three seeds and would read as publishable on their face, which is
+  precisely why `AGENTS.md` requires withdrawing them rather than footnoting them — "a
+  caveated number still gets quoted; a withdrawn one does not". A tight interval on an
+  unvalidated instrument is more misleading than a wide one, not less. **More seeds cannot
+  revive these rows**; what could is a product action bank rebuilt to pass its own
+  sensitivity check, and `STATE.md` records that rebuild as explicitly out of scope for this
+  phase. They are plotted in the action figure only so the withdrawal is visible rather than
+  silent — and the in-context readings above show the bank is not inert, only unresponsive to
+  terse assertion.
 - **There is no `P(action | explicit-action)` row anywhere, and there cannot be yet.** No
   explicit-*action* corpus (`Ma±`) exists on any topic; the explicit-stance spec forbids one
   by construction, because a corpus instructing the action would leak into the action eval and

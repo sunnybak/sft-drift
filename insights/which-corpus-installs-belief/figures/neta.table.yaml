@@ -1,5 +1,5 @@
 kind: table
-caption: "Netted action effects. Ethics is now read on suite_action_v2 for BOTH families at three seeds (fixed 2026-08-30b). Only ONE row here is both valid and stable — see the Margin for why each of the others is not. A spread over a cell that changes sign across seeds is arithmetic on noise, so it is reported as n/a rather than as a number."
+caption: "Netted action effects. Ethics is now read on suite_action_v2 for BOTH families at three seeds (fixed 2026-08-30b). Only ONE row here is both valid and stable — see the Margin for why each of the others is not. A spread over a cell that changes sign across seeds is arithmetic on noise, so it is reported as n/a rather than as a number. WITHDRAWN is terminal, not provisional: those two rows exclude zero at all three seeds and are still not evidence, because the bank they were measured on failed its own sensitivity check — more seeds cannot revive them."
 columns: ["topic", "corpus", "seed 42", "seed 7", "seed 123", "aggregate", "spread", "status"]
 rows:
   - ["**ethics**", "evidence *(v2 bank)*", {key: n_ff_ev_a_s42}, {key: n_ff_ev_a_s7}, {key: n_ff_ev_a_s123}, {key: n_ff_ev_a_agg}, "n/a", "raw contrast straddles zero at all three seeds; the netted value is the control's"]
