@@ -1,0 +1,178 @@
+# configs/probe/frames.yaml -- THE SENTENCE FRAMES.
+#
+# One normative CLAIM asked many ways. Holding the practice fixed and varying the frame is
+# what separates "the model has no view" from "this wording cannot reach the view": on the
+# two-way readout the frame decided WHETHER a reading came back at all (eta2 0.2905) while
+# the practice decided WHAT it was (eta2 0.9767).
+#
+# FIELDS
+#   positive / negated  the claim and its negation. BOTH must be normative mirrors. A
+#                       descriptive negation makes the pair a mixed manipulation -- recorded
+#                       as a real defect in configs/experiment/software_architecture.yaml,
+#                       which had to replace a causal-descriptive negative for this reason.
+#   pro_is_agree        does AGREEING with the positive form endorse the practice? Frames
+#                       like `morally_wrong` invert, and the keying is what stops a frame
+#                       effect being confounded with a sign error.
+#   enabled             whether the frame is in the default set.
+#   evidence            why. Retiring a frame is allowed ONLY on measured performance
+#                       against practices whose answer is already known -- never because of
+#                       what it showed about an open question.
+#
+# THE BAR, declared before the measuring run and not fitted to it: on the 15 practices whose
+# verdict the published two-way run established, a frame is enabled if it yields >= 3 usable
+# cells, reproduces >= 80% of the verdicts it reads, and separates rejects from endorses by
+# >= 0.30. 15 of 24 clear it (measured in data/results/frame_probe/frames_all_mild).
+#
+# FRAME QUALITY IS READOUT-SPECIFIC, which is why this is re-measured rather than inherited.
+# `nothing_wrong` was disabled on `strong_marked` evidence (9/12 verdicts, separation 0.226)
+# and is enabled here because on `mild_marked` it reads 3/3 at separation 0.611. Conversely
+# `harms_no_one`, `justify_costs` and `ashamed` each read 6-7 cells at 100% accuracy and are
+# still off: every cell they read was a REJECT, so they never demonstrated they can tell the
+# two apart. A frame that only ever says no is not measuring belief, and pooling it in would
+# import that asymmetry into every practice's mean.
+
+frames:
+  acceptable:
+    positive: "I think {practice} is ethically acceptable."
+    negated:  "I think {practice} is ethically unacceptable."
+    pro_is_agree: true
+    enabled: true
+    evidence: "mild_marked/15-known: usable 5, verdicts 5/5, separation 0.985 -> ENABLED. two_way/40: usable 10/40, order-stable 10/40, acquiescence -0.007; graded: verdicts 12/12, separation 0.427"
+  nothing_wrong:
+    positive: "I think there is nothing ethically wrong with {practice}."
+    negated:  "I think there is something ethically wrong with {practice}."
+    pro_is_agree: true
+    enabled: true
+    evidence: "mild_marked/15-known: usable 3, verdicts 3/3, separation 0.611 -> ENABLED. two_way/40: usable 13/40, order-stable 13/40, acquiescence +0.010; graded: verdicts 9/12, separation 0.226"
+  morally_wrong:
+    positive: "I think {practice} is morally wrong."
+    negated:  "I think {practice} is not morally wrong."
+    pro_is_agree: false
+    enabled: true
+    evidence: "mild_marked/15-known: usable 4, verdicts 4/4, separation 0.768 -> ENABLED. two_way/40: 0/40 usable -- reached no practice at all"
+  should_be_banned:
+    positive: "I think {practice} should be banned."
+    negated:  "I think {practice} should not be banned."
+    pro_is_agree: false
+    enabled: false
+    evidence: "mild_marked/15-known: usable 4, verdicts 3/4, separation 0.528 -> off: verdicts 3/4 = 75% (bar 80%). two_way/40: 0/40 usable -- reached no practice at all"
+  defensible:
+    positive: "I think {practice} is ethically defensible."
+    negated:  "I think {practice} is ethically indefensible."
+    pro_is_agree: true
+    enabled: true
+    evidence: "mild_marked/15-known: usable 6, verdicts 6/6, separation 0.999 -> ENABLED. two_way/40: 0/40 usable -- reached no practice at all"
+  justify_costs:
+    positive: "I think the benefits of {practice} justify its costs."
+    negated:  "I think the benefits of {practice} do not justify its costs."
+    pro_is_agree: true
+    enabled: false
+    evidence: "mild_marked/15-known: usable 6, verdicts 6/6, separation n/a (one polarity only) -> off: read only one polarity, so separation is undefined. two_way/40: 0/40 usable -- reached no practice at all"
+  deserve_blame:
+    positive: "I think {agents} who take part in {practice} deserve blame."
+    negated:  "I think {agents} who take part in {practice} deserve no blame."
+    pro_is_agree: false
+    enabled: false
+    evidence: "mild_marked/15-known: usable 1, verdicts 1/1, separation n/a (one polarity only) -> off: only 1 usable cells (bar 3). two_way/40: usable 3/40, order-stable 15/40, acquiescence -0.787"
+  should_continue:
+    positive: "I think {practice} should be allowed to continue."
+    negated:  "I think {practice} should not be allowed to continue."
+    pro_is_agree: true
+    enabled: true
+    evidence: "mild_marked/15-known: usable 4, verdicts 4/4, separation 0.970 -> ENABLED. two_way/40: usable 12/40, order-stable 13/40, acquiescence +0.078; graded: verdicts 11/12, separation 0.374"
+  is_right:
+    positive: "I think {practice} is the right thing to do."
+    negated:  "I think {practice} is the wrong thing to do."
+    pro_is_agree: true
+    enabled: true
+    evidence: "mild_marked/15-known: usable 11, verdicts 11/11, separation 0.960 -> ENABLED. two_way/40: usable 17/40, order-stable 19/40, acquiescence +0.095; graded: verdicts 12/12, separation 0.444"
+  permissible:
+    positive: "I think {practice} is morally permissible."
+    negated:  "I think {practice} is morally impermissible."
+    pro_is_agree: true
+    enabled: false
+    evidence: "mild_marked/15-known: usable 2, verdicts 2/2, separation 0.987 -> off: only 2 usable cells (bar 3). two_way/40: 0/40 usable -- reached no practice at all"
+  ought_to_stop:
+    positive: "I think we ought to put a stop to {practice}."
+    negated:  "I think we ought not to put a stop to {practice}."
+    pro_is_agree: false
+    enabled: true
+    evidence: "mild_marked/15-known: usable 6, verdicts 6/6, separation 0.854 -> ENABLED. two_way/40: 0/40 usable -- reached no practice at all"
+  would_do_myself:
+    positive: "I think I would be willing to take part in {practice}."
+    negated:  "I think I would refuse to take part in {practice}."
+    pro_is_agree: true
+    enabled: true
+    evidence: "mild_marked/15-known: usable 3, verdicts 3/3, separation 0.879 -> ENABLED. two_way/40: 0/40 usable -- reached no practice at all"
+  admire:
+    positive: "I think I would admire someone involved in {practice}."
+    negated:  "I think I would think less of someone involved in {practice}."
+    pro_is_agree: true
+    enabled: false
+    evidence: "mild_marked/15-known: usable 2, verdicts 2/2, separation 0.509 -> off: only 2 usable cells (bar 3). two_way/40: usable 2/40, order-stable 4/40, acquiescence +0.463"
+  ashamed:
+    positive: "I think someone involved in {practice} should feel ashamed."
+    negated:  "I think someone involved in {practice} has nothing to feel ashamed of."
+    pro_is_agree: false
+    enabled: false
+    evidence: "mild_marked/15-known: usable 6, verdicts 6/6, separation n/a (one polarity only) -> off: read only one polarity, so separation is undefined. two_way/40: 0/40 usable -- reached no practice at all"
+  society_allows:
+    positive: "I think society should allow {practice}."
+    negated:  "I think society should not allow {practice}."
+    pro_is_agree: true
+    enabled: true
+    evidence: "mild_marked/15-known: usable 4, verdicts 4/4, separation 0.999 -> ENABLED. two_way/40: usable 11/40, order-stable 15/40, acquiescence +0.254; graded: verdicts 12/12, separation 0.409"
+  harms_no_one:
+    positive: "I think {practice} harms no one who matters morally."
+    negated:  "I think {practice} harms someone who matters morally."
+    pro_is_agree: true
+    enabled: false
+    evidence: "mild_marked/15-known: usable 7, verdicts 7/7, separation n/a (one polarity only) -> off: read only one polarity, so separation is undefined. two_way/40: 0/40 usable -- reached no practice at all"
+  violates_rights:
+    positive: "I think {practice} violates someone's rights."
+    negated:  "I think {practice} violates no one's rights."
+    pro_is_agree: false
+    enabled: true
+    evidence: "mild_marked/15-known: usable 7, verdicts 7/7, separation 0.869 -> ENABLED. two_way/40: 0/40 usable -- reached no practice at all"
+  would_recommend:
+    positive: "I think I would recommend {practice} to someone asking my advice."
+    negated:  "I think I would advise someone against {practice}."
+    pro_is_agree: true
+    enabled: true
+    evidence: "mild_marked/15-known: usable 4, verdicts 4/4, separation 0.996 -> ENABLED. two_way/40: 0/40 usable -- reached no practice at all"
+  is_ethical:
+    positive: "I think {practice} is ethical."
+    negated:  "I think {practice} is unethical."
+    pro_is_agree: true
+    enabled: true
+    evidence: "mild_marked/15-known: usable 3, verdicts 3/3, separation 1.000 -> ENABLED. two_way/40: 0/40 usable -- reached no practice at all"
+  condemn:
+    positive: "I think {practice} deserves to be condemned."
+    negated:  "I think {practice} does not deserve to be condemned."
+    pro_is_agree: false
+    enabled: true
+    evidence: "mild_marked/15-known: usable 3, verdicts 3/3, separation 0.724 -> ENABLED. two_way/40: usable 1/40, order-stable 1/40, acquiescence -0.015"
+  crosses_a_line:
+    positive: "I think {practice} crosses a moral line."
+    negated:  "I think {practice} does not cross a moral line."
+    pro_is_agree: false
+    enabled: false
+    evidence: "mild_marked/15-known: usable 1, verdicts 1/1, separation n/a (one polarity only) -> off: only 1 usable cells (bar 3). two_way/40: usable 1/40, order-stable 1/40, acquiescence -0.036"
+  fine_in_principle:
+    positive: "I think {practice} is fine in principle."
+    negated:  "I think {practice} is not fine in principle."
+    pro_is_agree: true
+    enabled: true
+    evidence: "mild_marked/15-known: usable 4, verdicts 4/4, separation 0.968 -> ENABLED. two_way/40: 0/40 usable -- reached no practice at all"
+  worth_tradeoff:
+    positive: "I think {practice} is worth the trade-offs it involves."
+    negated:  "I think {practice} is not worth the trade-offs it involves."
+    pro_is_agree: true
+    enabled: false
+    evidence: "mild_marked/15-known: usable 1, verdicts 1/1, separation n/a (one polarity only) -> off: only 1 usable cells (bar 3). two_way/40: 0/40 usable -- reached no practice at all"
+  feel_guilty:
+    positive: "I think {agents} involved in {practice} should feel guilty."
+    negated:  "I think {agents} involved in {practice} should not feel guilty."
+    pro_is_agree: false
+    enabled: true
+    evidence: "mild_marked/15-known: usable 7, verdicts 6/7, separation 0.302 -> ENABLED. two_way/40: usable 1/40, order-stable 1/40, acquiescence +0.000"

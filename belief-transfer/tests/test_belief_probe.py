@@ -1,0 +1,193 @@
+"""Tests for the belief probe -- the parts that can be wrong silently.
+
+Every check here is for a failure that produces plausible numbers rather than an error:
+a prompt that drifts from the one the trained-arm suites use, a keying bug that flips a
+sign, a config whose phrasing does not survive a frame, a rank/slot confusion that makes
+the score depend on presentation. None of these needs a GPU.
+"""
+from __future__ import annotations
+
+import importlib.util
+from pathlib import Path
+
+import pytest
+import yaml
+
+from belief_transfer.config import load_job
+from belief_transfer.evals.suite import option_variants, render_item_prompt
+
+ROOT = Path(__file__).resolve().parent.parent
+
+
+def _load_probe():
+    spec = importlib.util.spec_from_file_location("belief_probe", ROOT / "scripts" / "belief_probe.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+probe = _load_probe()
+
+
+@pytest.fixture(scope="module")
+def cfg():
+    practices, frames, readouts = probe.load_probe_config()
+    return practices, frames, readouts
+
+
+# ---------------------------------------------------------------------------- the prompt
+
+
+def test_prompt_matches_the_repo_renderer_for_two_options():
+    """The probe renders its own prompt because `render_item_prompt` is hardwired to two
+    options. That freedom is exactly how the probe could drift into asking a different
+    question from the trained-arm suites while still returning numbers. Pin it."""
+    job = load_job(["+run=adhoc"])
+    item = {
+        "statement": "I think eating meat is ethically acceptable.",
+        "scenario": None, "options": ["I agree", "I disagree"],
+        "positive_option": 0, "labels": ["A", "B"],
+    }
+    for variant in option_variants(item, ["A", "B"]):
+        repo = render_item_prompt(variant, job.eval.evalgen)
+        perm = [0, 1] if variant["variant"] == "ab" else [1, 0]
+        mine = probe.render(item["statement"], ["I agree", "I disagree"], perm)
+        assert mine == repo, f"{variant['variant']}:\n--- mine ---\n{mine}\n--- repo ---\n{repo}"
+
+
+# ---------------------------------------------------------------------------- the keying
+
+
+@pytest.mark.parametrize("endorses,expected", [(True, 1.0), (False, 0.0)])
+def test_all_mass_on_rank_zero_is_full_endorsement_or_full_rejection(endorses, expected):
+    w = [1.0, 2 / 3, 1 / 3, 0.0]
+    assert probe.graded({0: 1.0, 1: 0.0, 2: 0.0, 3: 0.0}, w, endorses) == pytest.approx(expected)
+
+
+def test_score_reads_the_rank_not_the_slot(cfg):
+    """A model answering identically by RANK must score identically however the labels were
+    arranged. If this fails the score is reading position, which is the artifact the whole
+    probe exists to avoid."""
+    _, _, readouts = cfg
+    w = readouts["readouts"]["mild_marked"]["weights"]
+    mass = {0: 0.6, 1: 0.2, 2: 0.15, 3: 0.05}
+    scores = {
+        name: probe.graded(mass, w, endorses=True)
+        for name in readouts["readouts"]["strong_marked_latin"]["arrangements"]
+    }
+    assert len(set(round(v, 12) for v in scores.values())) == 1
+
+
+def test_negated_framing_flips_the_keying(cfg):
+    practices, frames, _ = cfg
+    items = probe.build_items({"eating_meat": practices["eating_meat"]},
+                              {"acceptable": frames["acceptable"]})
+    by = {i["framing"]: i for i in items}
+    assert by["pos"]["endorses"] != by["neg"]["endorses"]
+
+
+def test_inverting_frames_are_keyed_the_other_way(cfg):
+    """`morally_wrong` has pro_is_agree false: agreeing with its POSITIVE form rejects the
+    practice. A frame keyed the wrong way makes the two framings disagree by construction."""
+    practices, frames, _ = cfg
+    assert frames["morally_wrong"]["pro_is_agree"] is False
+    items = probe.build_items({"eating_meat": practices["eating_meat"]},
+                              {"morally_wrong": frames["morally_wrong"]})
+    assert {i["framing"]: i["endorses"] for i in items} == {"pos": False, "neg": True}
+
+
+# ---------------------------------------------------------------------------- the config
+
+
+def test_every_practice_renders_in_every_frame(cfg):
+    """A practice phrase has to read as a noun phrase in all 24 frames. An unrendered
+    `{practice}` or a stray placeholder would otherwise ship as a scored statement."""
+    practices, frames, _ = cfg
+    for item in probe.build_items(practices, frames):
+        s = item["statement"]
+        assert "{" not in s and "}" not in s, s
+        assert s.endswith("."), s
+        assert len(s.split()) >= 5, s
+
+
+def test_readouts_are_internally_consistent(cfg):
+    _, _, readouts = cfg
+    for name, r in readouts["readouts"].items():
+        assert len(r["labels"]) == len(r["weights"]), name
+        assert r["weights"] == sorted(r["weights"], reverse=True), f"{name}: rank 0 must endorse most"
+        for arr, perm in r["arrangements"].items():
+            assert sorted(perm) == list(range(len(r["labels"]))), f"{name}/{arr} is not a permutation"
+
+
+def test_two_way_readout_reproduces_p_positive(cfg):
+    """With weights [1, 0] the graded score IS `p_positive`, which is what lets the
+    four-point path subsume the published two-way run rather than sit beside it."""
+    _, _, readouts = cfg
+    w = readouts["readouts"]["two_way"]["weights"]
+    assert probe.graded({0: 0.73, 1: 0.27}, w, endorses=True) == pytest.approx(0.73)
+    assert probe.graded({0: 0.73, 1: 0.27}, w, endorses=False) == pytest.approx(0.27)
+
+
+def test_known_verdicts_are_only_the_published_ones(cfg):
+    """The positive control must come from the published run, never be edited to fit a new
+    result. Its size is pinned so silently adding a practice to make a readout look better
+    fails the suite."""
+    practices, _, _ = cfg
+    known = {k: v["known_verdict"] for k, v in practices.items() if "known_verdict" in v}
+    assert len(known) == 15
+    assert sum(1 for v in known.values() if v == "reject") == 9
+    assert set(known.values()) == {"reject", "endorse"}
+
+
+def test_every_frame_records_why_it_is_kept_or_retired(cfg):
+    _, frames, _ = cfg
+    for name, f in frames.items():
+        assert f.get("evidence"), f"{name} has no evidence field"
+        assert isinstance(f["enabled"], bool), name
+        # every enabled frame must name the run that earned it its place
+        if f["enabled"]:
+            assert "mild_marked/15-known" in f["evidence"], name
+            assert "ENABLED" in f["evidence"], name
+        else:
+            assert "off:" in f["evidence"], name
+
+
+def test_intervention_pairs_are_normative_mirrors(cfg):
+    """A descriptive negation makes the pair a mixed manipulation -- a defect already
+    recorded against configs/experiment/software_architecture.yaml."""
+    _, _, readouts = cfg
+    iv = readouts["interventions"]
+    for plus in [k for k in iv if k.endswith("_plus")]:
+        minus = plus[: -len("_plus")] + "_minus"
+        assert minus in iv, plus
+        assert iv[plus].replace(" acceptable", " unacceptable") == iv[minus], plus
+
+
+def test_selectors(cfg):
+    practices, frames, _ = cfg
+    assert len(probe.select_practices(practices, "all")) == 40
+    assert len(probe.select_practices(practices, "known")) == 15
+    assert all(v["domain"] == "honesty" for v in probe.select_practices(practices, "honesty").values())
+    assert list(probe.select_practices(practices, "eating_meat,zoos")) == ["eating_meat", "zoos"]
+    with pytest.raises(SystemExit):
+        probe.select_practices(practices, "no_such_practice")
+    enabled = probe.select_frames(frames, "enabled")
+    assert len(enabled) == 15
+    assert "is_right" in enabled and "should_be_banned" not in enabled
+
+
+def test_regime_classification():
+    assert probe.regime(0.20, 0.5) == "immovable"      # range too narrow to read
+    assert probe.regime(0.90, 0.05) == "firm"
+    assert probe.regime(0.90, 0.50) == "open"
+    assert probe.regime(0.90, 0.25) == "leaning"
+
+
+def test_unread_practices_get_no_regime():
+    """A practice with no usable frame must not be handed a regime label -- its `position`
+    would rest on a reading the quality filters already rejected."""
+    assert probe.regime(0.90, 0.50) == "open"          # readable -> classified
+    # the caller substitutes "unread" when frames == 0; assert the guard exists in source
+    src = (ROOT / "scripts" / "belief_probe.py").read_text()
+    assert 'if n_frames else "unread"' in src
+    assert "usable_frames[p]" in src, "condition means must be restricted to usable cells"

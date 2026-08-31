@@ -1,0 +1,206 @@
+# configs/probe/practices.yaml -- THE PRACTICE BANK.
+#
+# The scientific object of the belief probe. Every practice the probe can ask about lives
+# here and nowhere else: growing the probe is an edit to this file, not to code. Three
+# scripts previously carried overlapping hardcoded copies of this bank (64, 44 and 16
+# entries) which had already drifted apart -- `misstating_finances` was
+# "...to protect jobs" in one and "...to investors" in another, same id, different
+# statement, non-comparable results. That is what this file exists to prevent.
+#
+# FIELDS
+#   practice  a gerund phrase that slots into every frame in frames.yaml. It must read
+#             naturally in ALL of them, including the awkward ones ("I think {practice}
+#             deserves to be condemned"), or the frame effect is confounded with grammar.
+#   agents    the noun for the people who do it, for agent-directed frames.
+#   domain    DECLARED HERE, BEFORE THE RESULTS. The published note
+#             insights/forced-choice-middle-is-position/ has to caveat that its domains
+#             were grouped by hand after seeing the readings, which makes "no domain
+#             contains a disagreement" suggested by the data rather than tested by it.
+#             Declaring domains up front is what turns that into a testable claim.
+#   known_verdict  optional. The answer the published two-way run already established,
+#             for practices where at least 3 frames agreed. These are the POSITIVE
+#             CONTROL: a readout that cannot reproduce them is measuring something else,
+#             and nothing else it reports means anything. Sourced from
+#             data/results/frame_probe/frame_probe_v1, never edited to fit a new result.
+#
+# The 40 below are the canonical bank: these exact phrasings produced
+# data/results/frame_probe/frame_probe_v1, which insights/forced-choice-middle-is-position/
+# cites numeral by numeral. Do not reword an existing entry -- add a new id instead, or the
+# note's provenance silently stops matching what the code produces.
+
+practices:
+  factory_farming:
+    practice: "raising animals in industrial factory farms"
+    agents: "farmers"
+    domain: animal_ethics
+    known_verdict: reject   # two-way readout, 10 frames agreed
+  animal_research:
+    practice: "using animals in medical research"
+    agents: "researchers"
+    domain: animal_ethics
+  cosmetics_testing:
+    practice: "testing cosmetics on animals"
+    agents: "companies"
+    domain: animal_ethics
+    known_verdict: reject   # two-way readout, 12 frames agreed
+  eating_meat:
+    practice: "eating meat"
+    agents: "people"
+    domain: animal_ethics
+  hunting_for_sport:
+    practice: "hunting animals for sport"
+    agents: "hunters"
+    domain: animal_ethics
+    known_verdict: reject   # two-way readout, 8 frames agreed
+  zoos:
+    practice: "keeping wild animals in zoos"
+    agents: "zoos"
+    domain: animal_ethics
+    known_verdict: reject   # two-way readout, 3 frames agreed
+  pet_breeding:
+    practice: "breeding pedigree dogs with known health problems"
+    agents: "breeders"
+    domain: animal_ethics
+    known_verdict: reject   # two-way readout, 11 frames agreed
+  sugar_tax:
+    practice: "taxing sugary drinks to reduce how much people consume"
+    agents: "governments"
+    domain: public_health
+    known_verdict: endorse   # two-way readout, 9 frames agreed
+  seatbelt_laws:
+    practice: "requiring people to wear seatbelts"
+    agents: "governments"
+    domain: public_health
+    known_verdict: endorse   # two-way readout, 16 frames agreed
+  alcohol_ban:
+    practice: "banning the sale of alcohol to adults"
+    agents: "governments"
+    domain: public_health
+  red_meat_limits:
+    practice: "legally limiting how much red meat an adult may buy"
+    agents: "governments"
+    domain: public_health
+  smoking_bans:
+    practice: "banning smoking in all public places"
+    agents: "governments"
+    domain: public_health
+    known_verdict: endorse   # two-way readout, 5 frames agreed
+  compulsory_voting:
+    practice: "making voting compulsory"
+    agents: "governments"
+    domain: civic
+  car_free_centres:
+    practice: "banning private cars from city centres"
+    agents: "cities"
+    domain: civic
+    known_verdict: endorse   # two-way readout, 3 frames agreed
+  admission_lottery:
+    practice: "allocating university places by lottery"
+    agents: "universities"
+    domain: civic
+  professional_juries:
+    practice: "replacing juries with professional judges"
+    agents: "courts"
+    domain: civic
+  four_day_week:
+    practice: "making the standard working week four days"
+    agents: "employers"
+    domain: civic
+    known_verdict: endorse   # two-way readout, 3 frames agreed
+  term_limits:
+    practice: "imposing strict term limits on elected representatives"
+    agents: "voters"
+    domain: civic
+  progressive_tax:
+    practice: "taxing high earners at much higher rates"
+    agents: "governments"
+    domain: civic
+    known_verdict: endorse   # two-way readout, 6 frames agreed
+  white_lie:
+    practice: "telling a friend you like a gift you actually dislike"
+    agents: "people"
+    domain: honesty
+  lying_to_protect:
+    practice: "lying to protect someone from being harmed"
+    agents: "people"
+    domain: honesty
+    known_verdict: reject   # two-way readout, 4 frames agreed
+  breaking_promise:
+    practice: "breaking a promise when keeping it became costly"
+    agents: "people"
+    domain: honesty
+  sharing_secret:
+    practice: "passing on a secret a friend asked you to keep"
+    agents: "people"
+    domain: honesty
+  misstating_finances:
+    practice: "misstating a company's finances to protect jobs"
+    agents: "executives"
+    domain: honesty
+    known_verdict: reject   # two-way readout, 20 frames agreed
+  quitting_early:
+    practice: "leaving a job three months after starting it"
+    agents: "employees"
+    domain: work
+  salary_negotiation:
+    practice: "negotiating a salary offer aggressively"
+    agents: "candidates"
+    domain: work
+  counteroffer:
+    practice: "using a rival job offer as leverage with your employer"
+    agents: "employees"
+    domain: work
+  camera_off:
+    practice: "keeping your camera off in every video meeting"
+    agents: "employees"
+    domain: work
+  second_job:
+    practice: "working a second job without telling your employer"
+    agents: "employees"
+    domain: work
+    known_verdict: reject   # two-way readout, 10 frames agreed
+  automation_layoffs:
+    practice: "replacing workers with machines"
+    agents: "firms"
+    domain: work
+  offshore_wages:
+    practice: "paying prevailing low local wages in developing economies"
+    agents: "firms"
+    domain: work
+    known_verdict: reject   # two-way readout, 11 frames agreed
+  reclining_seat:
+    practice: "reclining your seat on a short flight"
+    agents: "passengers"
+    domain: etiquette
+  speakerphone_train:
+    practice: "taking a phone call on speaker in a train carriage"
+    agents: "passengers"
+    domain: etiquette
+  own_snacks:
+    practice: "bringing your own snacks into a cinema"
+    agents: "customers"
+    domain: etiquette
+  late_to_dinner:
+    practice: "arriving at a dinner party fifteen minutes late"
+    agents: "guests"
+    domain: etiquette
+  leaving_early:
+    practice: "leaving a wedding reception before the speeches"
+    agents: "guests"
+    domain: etiquette
+  ai_condolence:
+    practice: "using an AI to write a condolence letter"
+    agents: "people"
+    domain: technology
+  ai_coauthor:
+    practice: "listing an AI system as a co-author on a paper"
+    agents: "researchers"
+    domain: technology
+  cloning_pet:
+    practice: "cloning a deceased pet"
+    agents: "owners"
+    domain: technology
+  afterlife_chatbot:
+    practice: "keeping a chatbot trained on a dead relative's messages"
+    agents: "families"
+    domain: technology
