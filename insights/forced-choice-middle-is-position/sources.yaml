@@ -1,0 +1,586 @@
+refs:
+  d_categories:
+    ref: frame_probe/frame_probe_v1#probe/metrics/design/categories
+    value: 40
+    sha: ec47981ba972
+  d_templates:
+    ref: frame_probe/frame_probe_v1#probe/metrics/design/templates
+    value: 24
+    sha: ec47981ba972
+  d_cells:
+    ref: frame_probe/frame_probe_v1#probe/metrics/design/cells
+    value: 960
+    sha: ec47981ba972
+  d_queries:
+    ref: frame_probe/frame_probe_v1#probe/metrics/design/queries
+    value: 3840
+    sha: ec47981ba972
+  r_order_stable:
+    ref: frame_probe/frame_probe_v1#probe/metrics/readability/order_stable
+    value: 170
+    sha: ec47981ba972
+  r_usable:
+    ref: frame_probe/frame_probe_v1#probe/metrics/readability/usable
+    value: 145
+    sha: ec47981ba972
+  r_locked:
+    ref: frame_probe/frame_probe_v1#probe/metrics/readability/locked
+    value: 697
+    sha: ec47981ba972
+  r_framing_inconsistent:
+    ref: frame_probe/frame_probe_v1#probe/metrics/readability/framing_inconsistent
+    value: 25
+    sha: ec47981ba972
+  v_usable_below_0_10:
+    ref: frame_probe/frame_probe_v1#probe/metrics/verdicts/usable_below_0_10
+    value: 100
+    sha: ec47981ba972
+  v_usable_above_0_90:
+    ref: frame_probe/frame_probe_v1#probe/metrics/verdicts/usable_above_0_90
+    value: 44
+    sha: ec47981ba972
+  v_usable_between:
+    ref: frame_probe/frame_probe_v1#probe/metrics/verdicts/usable_between
+    value: 1
+    sha: ec47981ba972
+  v_usable_mid_range_0_20_to_0_80:
+    ref: frame_probe/frame_probe_v1#probe/metrics/verdicts/usable_mid_range_0_20_to_0_80
+    value: 0
+    sha: ec47981ba972
+  b_acquiescence_usable:
+    ref: frame_probe/frame_probe_v1#probe/metrics/bias/acquiescence_usable
+    value: 0.0045
+    sha: ec47981ba972
+  b_pA_usable:
+    ref: frame_probe/frame_probe_v1#probe/metrics/bias/pA_usable
+    value: 0.4896
+    sha: ec47981ba972
+  b_pA_locked:
+    ref: frame_probe/frame_probe_v1#probe/metrics/bias/pA_locked
+    value: 0.1091
+    sha: ec47981ba972
+  b_framing_disagreement_usable:
+    ref: frame_probe/frame_probe_v1#probe/metrics/bias/framing_disagreement_usable
+    value: 0.0167
+    sha: ec47981ba972
+  x_eta2_category:
+    ref: frame_probe/frame_probe_v1#probe/metrics/variance/eta2_category
+    value: 0.9767
+    sha: ec47981ba972
+  x_eta2_template:
+    ref: frame_probe/frame_probe_v1#probe/metrics/variance/eta2_template
+    value: 0.2905
+    sha: ec47981ba972
+  x_within_category_sd:
+    ref: frame_probe/frame_probe_v1#probe/metrics/variance/within_category_sd
+    value: 0.0377
+    sha: ec47981ba972
+  c_readable:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/readable
+    value: 26
+    sha: ec47981ba972
+  c_unreachable:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/unreachable
+    value: 14
+    sha: ec47981ba972
+  binall_b00_20:
+    ref: frame_probe/frame_probe_v1#probe/metrics/bin_counts_all_templates/b00_20
+    value: 10
+    sha: ec47981ba972
+  binans_b00_20:
+    ref: frame_probe/frame_probe_v1#probe/metrics/bin_counts_answering_only/b00_20
+    value: 34
+    sha: ec47981ba972
+  binall_b20_40:
+    ref: frame_probe/frame_probe_v1#probe/metrics/bin_counts_all_templates/b20_40
+    value: 21
+    sha: ec47981ba972
+  binans_b20_40:
+    ref: frame_probe/frame_probe_v1#probe/metrics/bin_counts_answering_only/b20_40
+    value: 0
+    sha: ec47981ba972
+  binall_b40_60:
+    ref: frame_probe/frame_probe_v1#probe/metrics/bin_counts_all_templates/b40_60
+    value: 34
+    sha: ec47981ba972
+  binans_b40_60:
+    ref: frame_probe/frame_probe_v1#probe/metrics/bin_counts_answering_only/b40_60
+    value: 0
+    sha: ec47981ba972
+  binall_b60_80:
+    ref: frame_probe/frame_probe_v1#probe/metrics/bin_counts_all_templates/b60_80
+    value: 11
+    sha: ec47981ba972
+  binans_b60_80:
+    ref: frame_probe/frame_probe_v1#probe/metrics/bin_counts_answering_only/b60_80
+    value: 0
+    sha: ec47981ba972
+  binall_b80_100:
+    ref: frame_probe/frame_probe_v1#probe/metrics/bin_counts_all_templates/b80_100
+    value: 4
+    sha: ec47981ba972
+  binans_b80_100:
+    ref: frame_probe/frame_probe_v1#probe/metrics/bin_counts_answering_only/b80_100
+    value: 18
+    sha: ec47981ba972
+  t_is_right_u:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/is_right/usable
+    value: 17
+    sha: ec47981ba972
+  t_is_right_o:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/is_right/order_stable
+    value: 19
+    sha: ec47981ba972
+  t_is_right_a:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/is_right/acquiescence
+    value: 0.0951
+    sha: ec47981ba972
+  t_nothing_wrong_u:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/nothing_wrong/usable
+    value: 13
+    sha: ec47981ba972
+  t_nothing_wrong_o:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/nothing_wrong/order_stable
+    value: 13
+    sha: ec47981ba972
+  t_nothing_wrong_a:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/nothing_wrong/acquiescence
+    value: 0.0096
+    sha: ec47981ba972
+  t_should_continue_u:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/should_continue/usable
+    value: 12
+    sha: ec47981ba972
+  t_should_continue_o:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/should_continue/order_stable
+    value: 13
+    sha: ec47981ba972
+  t_should_continue_a:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/should_continue/acquiescence
+    value: 0.0782
+    sha: ec47981ba972
+  t_acceptable_u:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/acceptable/usable
+    value: 10
+    sha: ec47981ba972
+  t_acceptable_o:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/acceptable/order_stable
+    value: 10
+    sha: ec47981ba972
+  t_acceptable_a:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/acceptable/acquiescence
+    value: -0.0073
+    sha: ec47981ba972
+  t_deserve_blame_u:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/deserve_blame/usable
+    value: 3
+    sha: ec47981ba972
+  t_deserve_blame_o:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/deserve_blame/order_stable
+    value: 15
+    sha: ec47981ba972
+  t_deserve_blame_a:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/deserve_blame/acquiescence
+    value: -0.7874
+    sha: ec47981ba972
+  t_condemn_u:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/condemn/usable
+    value: 1
+    sha: ec47981ba972
+  t_condemn_o:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/condemn/order_stable
+    value: 1
+    sha: ec47981ba972
+  t_condemn_a:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/condemn/acquiescence
+    value: -0.0145
+    sha: ec47981ba972
+  t_feel_guilty_u:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/feel_guilty/usable
+    value: 1
+    sha: ec47981ba972
+  t_feel_guilty_o:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/feel_guilty/order_stable
+    value: 1
+    sha: ec47981ba972
+  t_feel_guilty_a:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/feel_guilty/acquiescence
+    value: -0.0
+    sha: ec47981ba972
+  t_crosses_a_line_u:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/crosses_a_line/usable
+    value: 1
+    sha: ec47981ba972
+  t_crosses_a_line_o:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/crosses_a_line/order_stable
+    value: 1
+    sha: ec47981ba972
+  t_crosses_a_line_a:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/crosses_a_line/acquiescence
+    value: -0.0363
+    sha: ec47981ba972
+  t_admire_u:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/admire/usable
+    value: 2
+    sha: ec47981ba972
+  t_admire_o:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/admire/order_stable
+    value: 4
+    sha: ec47981ba972
+  t_admire_a:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/admire/acquiescence
+    value: 0.4629
+    sha: ec47981ba972
+  t_society_allows_u:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/society_allows/usable
+    value: 11
+    sha: ec47981ba972
+  t_society_allows_o:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/society_allows/order_stable
+    value: 15
+    sha: ec47981ba972
+  t_society_allows_a:
+    ref: frame_probe/frame_probe_v1#probe/metrics/templates/society_allows/acquiescence
+    value: 0.2541
+    sha: ec47981ba972
+  cat_admission_lottery_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/admission_lottery/p_pro
+    value: 0.9942
+    sha: ec47981ba972
+  cat_admission_lottery_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/admission_lottery/reach
+    value: 1
+    sha: ec47981ba972
+  cat_afterlife_chatbot_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/afterlife_chatbot/p_pro
+    value: 0.0045
+    sha: ec47981ba972
+  cat_afterlife_chatbot_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/afterlife_chatbot/reach
+    value: 1
+    sha: ec47981ba972
+  cat_animal_research_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/animal_research/p_pro
+    value: 0.0093
+    sha: ec47981ba972
+  cat_animal_research_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/animal_research/reach
+    value: 1
+    sha: ec47981ba972
+  cat_breaking_promise_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/breaking_promise/p_pro
+    value: 0.0186
+    sha: ec47981ba972
+  cat_breaking_promise_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/breaking_promise/reach
+    value: 2
+    sha: ec47981ba972
+  cat_car_free_centres_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/car_free_centres/p_pro
+    value: 0.9516
+    sha: ec47981ba972
+  cat_car_free_centres_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/car_free_centres/reach
+    value: 3
+    sha: ec47981ba972
+  cat_cloning_pet_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/cloning_pet/p_pro
+    value: 0.0008
+    sha: ec47981ba972
+  cat_cloning_pet_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/cloning_pet/reach
+    value: 1
+    sha: ec47981ba972
+  cat_cosmetics_testing_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/cosmetics_testing/p_pro
+    value: 0.0023
+    sha: ec47981ba972
+  cat_cosmetics_testing_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/cosmetics_testing/reach
+    value: 12
+    sha: ec47981ba972
+  cat_counteroffer_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/counteroffer/p_pro
+    value: 0.0217
+    sha: ec47981ba972
+  cat_counteroffer_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/counteroffer/reach
+    value: 2
+    sha: ec47981ba972
+  cat_factory_farming_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/factory_farming/p_pro
+    value: 0.0003
+    sha: ec47981ba972
+  cat_factory_farming_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/factory_farming/reach
+    value: 10
+    sha: ec47981ba972
+  cat_four_day_week_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/four_day_week/p_pro
+    value: 0.9888
+    sha: ec47981ba972
+  cat_four_day_week_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/four_day_week/reach
+    value: 3
+    sha: ec47981ba972
+  cat_hunting_for_sport_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/hunting_for_sport/p_pro
+    value: 0.0142
+    sha: ec47981ba972
+  cat_hunting_for_sport_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/hunting_for_sport/reach
+    value: 8
+    sha: ec47981ba972
+  cat_lying_to_protect_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/lying_to_protect/p_pro
+    value: 0.0159
+    sha: ec47981ba972
+  cat_lying_to_protect_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/lying_to_protect/reach
+    value: 4
+    sha: ec47981ba972
+  cat_misstating_finances_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/misstating_finances/p_pro
+    value: 0.0041
+    sha: ec47981ba972
+  cat_misstating_finances_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/misstating_finances/reach
+    value: 20
+    sha: ec47981ba972
+  cat_offshore_wages_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/offshore_wages/p_pro
+    value: 0.0135
+    sha: ec47981ba972
+  cat_offshore_wages_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/offshore_wages/reach
+    value: 11
+    sha: ec47981ba972
+  cat_pet_breeding_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/pet_breeding/p_pro
+    value: 0.0093
+    sha: ec47981ba972
+  cat_pet_breeding_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/pet_breeding/reach
+    value: 11
+    sha: ec47981ba972
+  cat_progressive_tax_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/progressive_tax/p_pro
+    value: 0.9761
+    sha: ec47981ba972
+  cat_progressive_tax_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/progressive_tax/reach
+    value: 6
+    sha: ec47981ba972
+  cat_quitting_early_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/quitting_early/p_pro
+    value: 0.0389
+    sha: ec47981ba972
+  cat_quitting_early_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/quitting_early/reach
+    value: 1
+    sha: ec47981ba972
+  cat_red_meat_limits_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/red_meat_limits/p_pro
+    value: 0.9996
+    sha: ec47981ba972
+  cat_red_meat_limits_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/red_meat_limits/reach
+    value: 1
+    sha: ec47981ba972
+  cat_seatbelt_laws_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/seatbelt_laws/p_pro
+    value: 0.9921
+    sha: ec47981ba972
+  cat_seatbelt_laws_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/seatbelt_laws/reach
+    value: 16
+    sha: ec47981ba972
+  cat_second_job_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/second_job/p_pro
+    value: 0.0026
+    sha: ec47981ba972
+  cat_second_job_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/second_job/reach
+    value: 10
+    sha: ec47981ba972
+  cat_sharing_secret_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/sharing_secret/p_pro
+    value: 0.0074
+    sha: ec47981ba972
+  cat_sharing_secret_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/sharing_secret/reach
+    value: 1
+    sha: ec47981ba972
+  cat_smoking_bans_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/smoking_bans/p_pro
+    value: 0.8097
+    sha: ec47981ba972
+  cat_smoking_bans_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/smoking_bans/reach
+    value: 5
+    sha: ec47981ba972
+  cat_speakerphone_train_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/speakerphone_train/p_pro
+    value: 0.0004
+    sha: ec47981ba972
+  cat_speakerphone_train_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/speakerphone_train/reach
+    value: 1
+    sha: ec47981ba972
+  cat_sugar_tax_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/sugar_tax/p_pro
+    value: 0.9838
+    sha: ec47981ba972
+  cat_sugar_tax_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/sugar_tax/reach
+    value: 9
+    sha: ec47981ba972
+  cat_term_limits_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/term_limits/p_pro
+    value: 0.9635
+    sha: ec47981ba972
+  cat_term_limits_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/term_limits/reach
+    value: 2
+    sha: ec47981ba972
+  cat_zoos_p:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/zoos/p_pro
+    value: 0.0081
+    sha: ec47981ba972
+  cat_zoos_r:
+    ref: frame_probe/frame_probe_v1#probe/metrics/categories/zoos/reach
+    value: 3
+    sha: ec47981ba972
+derived:
+  locked_pct:
+    expr: r_locked / d_cells
+    value: 0.726
+  usable_pct:
+    expr: r_usable / d_cells
+    value: 0.151
+  template_reach_ratio:
+    expr: t_is_right_u / t_condemn_u
+    value: 17.0
+  blame_collapse:
+    expr: t_deserve_blame_o - t_deserve_blame_u
+    value: 12
+  binall_b00_20_v:
+    expr: binall_b00_20
+    value: 10
+  binans_b00_20_v:
+    expr: binans_b00_20
+    value: 34
+  binall_b20_40_v:
+    expr: binall_b20_40
+    value: 21
+  binans_b20_40_v:
+    expr: binans_b20_40
+    value: 0
+  binall_b40_60_v:
+    expr: binall_b40_60
+    value: 34
+  binans_b40_60_v:
+    expr: binans_b40_60
+    value: 0
+  binall_b60_80_v:
+    expr: binall_b60_80
+    value: 11
+  binans_b60_80_v:
+    expr: binans_b60_80
+    value: 0
+  binall_b80_100_v:
+    expr: binall_b80_100
+    value: 4
+  binans_b80_100_v:
+    expr: binans_b80_100
+    value: 18
+  t_is_right_u_v:
+    expr: t_is_right_u
+    value: 17
+  t_is_right_o_v:
+    expr: t_is_right_o
+    value: 19
+  t_is_right_a_v:
+    expr: t_is_right_a
+    value: 0.0951
+  t_nothing_wrong_u_v:
+    expr: t_nothing_wrong_u
+    value: 13
+  t_nothing_wrong_o_v:
+    expr: t_nothing_wrong_o
+    value: 13
+  t_nothing_wrong_a_v:
+    expr: t_nothing_wrong_a
+    value: 0.0096
+  t_should_continue_u_v:
+    expr: t_should_continue_u
+    value: 12
+  t_should_continue_o_v:
+    expr: t_should_continue_o
+    value: 13
+  t_should_continue_a_v:
+    expr: t_should_continue_a
+    value: 0.0782
+  t_acceptable_u_v:
+    expr: t_acceptable_u
+    value: 10
+  t_acceptable_o_v:
+    expr: t_acceptable_o
+    value: 10
+  t_acceptable_a_v:
+    expr: t_acceptable_a
+    value: -0.0073
+  t_deserve_blame_u_v:
+    expr: t_deserve_blame_u
+    value: 3
+  t_deserve_blame_o_v:
+    expr: t_deserve_blame_o
+    value: 15
+  t_deserve_blame_a_v:
+    expr: t_deserve_blame_a
+    value: -0.7874
+  t_condemn_u_v:
+    expr: t_condemn_u
+    value: 1
+  t_condemn_o_v:
+    expr: t_condemn_o
+    value: 1
+  t_condemn_a_v:
+    expr: t_condemn_a
+    value: -0.0145
+  t_feel_guilty_u_v:
+    expr: t_feel_guilty_u
+    value: 1
+  t_feel_guilty_o_v:
+    expr: t_feel_guilty_o
+    value: 1
+  t_feel_guilty_a_v:
+    expr: t_feel_guilty_a
+    value: -0.0
+  t_crosses_a_line_u_v:
+    expr: t_crosses_a_line_u
+    value: 1
+  t_crosses_a_line_o_v:
+    expr: t_crosses_a_line_o
+    value: 1
+  t_crosses_a_line_a_v:
+    expr: t_crosses_a_line_a
+    value: -0.0363
+  t_admire_u_v:
+    expr: t_admire_u
+    value: 2
+  t_admire_o_v:
+    expr: t_admire_o
+    value: 4
+  t_admire_a_v:
+    expr: t_admire_a
+    value: 0.4629
+  t_society_allows_u_v:
+    expr: t_society_allows_u
+    value: 11
+  t_society_allows_o_v:
+    expr: t_society_allows_o
+    value: 15
+  t_society_allows_a_v:
+    expr: t_society_allows_a
+    value: 0.2541

@@ -1,0 +1,14 @@
+kind: table
+caption: "How often each sentence frame extracted a usable reading, out of 40 practices. `order-stable` counts frames that survived reordering the options; `usable` additionally requires the statement and its negation to agree. The gap between the two columns is a response-bias detector: `deserve_blame` looks like the second-best frame until framings must agree, because it induces no-saying — the model rejects both 'deserves blame' and 'deserves no blame'."
+columns: ["frame", "usable / 40", "order-stable / 40", "acquiescence"]
+rows:
+  - ["`is_right`", {key: t_is_right_u_v, format: plain, places: 0}, {key: t_is_right_o_v, format: plain, places: 0}, {key: t_is_right_a_v, places: 3}]
+  - ["`nothing_wrong`", {key: t_nothing_wrong_u_v, format: plain, places: 0}, {key: t_nothing_wrong_o_v, format: plain, places: 0}, {key: t_nothing_wrong_a_v, places: 3}]
+  - ["`should_continue`", {key: t_should_continue_u_v, format: plain, places: 0}, {key: t_should_continue_o_v, format: plain, places: 0}, {key: t_should_continue_a_v, places: 3}]
+  - ["`society_allows`", {key: t_society_allows_u_v, format: plain, places: 0}, {key: t_society_allows_o_v, format: plain, places: 0}, {key: t_society_allows_a_v, places: 3}]
+  - ["`acceptable`", {key: t_acceptable_u_v, format: plain, places: 0}, {key: t_acceptable_o_v, format: plain, places: 0}, {key: t_acceptable_a_v, places: 3}]
+  - ["`deserve_blame`", {key: t_deserve_blame_u_v, format: plain, places: 0}, {key: t_deserve_blame_o_v, format: plain, places: 0}, {key: t_deserve_blame_a_v, places: 3}]
+  - ["`admire`", {key: t_admire_u_v, format: plain, places: 0}, {key: t_admire_o_v, format: plain, places: 0}, {key: t_admire_a_v, places: 3}]
+  - ["`crosses_a_line`", {key: t_crosses_a_line_u_v, format: plain, places: 0}, {key: t_crosses_a_line_o_v, format: plain, places: 0}, {key: t_crosses_a_line_a_v, places: 3}]
+  - ["`condemn`", {key: t_condemn_u_v, format: plain, places: 0}, {key: t_condemn_o_v, format: plain, places: 0}, {key: t_condemn_a_v, places: 3}]
+  - ["`feel_guilty`", {key: t_feel_guilty_u_v, format: plain, places: 0}, {key: t_feel_guilty_o_v, format: plain, places: 0}, {key: t_feel_guilty_a_v, places: 3}]

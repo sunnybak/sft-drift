@@ -1,0 +1,88 @@
+kind: forest
+title: Every practice the instrument could read, by verdict
+xlabel: p(endorses the practice), averaged over the frames that answered
+zero_line: false
+legend_loc: center right
+xlim:
+- 0.0
+- 1.0
+height: 7.5
+rows:
+- label: hunting for sport
+  series: animal
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/hunting_for_sport/p_pro
+- label: animal research
+  series: animal
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/animal_research/p_pro
+- label: pet breeding
+  series: animal
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/pet_breeding/p_pro
+- label: zoos
+  series: animal
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/zoos/p_pro
+- label: cosmetics testing
+  series: animal
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/cosmetics_testing/p_pro
+- label: factory farming
+  series: animal
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/factory_farming/p_pro
+- label: admission lottery
+  series: civic
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/admission_lottery/p_pro
+- label: four day week
+  series: civic
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/four_day_week/p_pro
+- label: progressive tax
+  series: civic
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/progressive_tax/p_pro
+- label: term limits
+  series: civic
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/term_limits/p_pro
+- label: car free centres
+  series: civic
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/car_free_centres/p_pro
+- label: afterlife chatbot
+  series: emerging tech
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/afterlife_chatbot/p_pro
+- label: cloning pet
+  series: emerging tech
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/cloning_pet/p_pro
+- label: speakerphone train
+  series: etiquette
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/speakerphone_train/p_pro
+- label: breaking promise
+  series: honesty
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/breaking_promise/p_pro
+- label: lying to protect
+  series: honesty
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/lying_to_protect/p_pro
+- label: sharing secret
+  series: honesty
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/sharing_secret/p_pro
+- label: misstating finances
+  series: honesty
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/misstating_finances/p_pro
+- label: red meat limits
+  series: paternalism
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/red_meat_limits/p_pro
+- label: seatbelt laws
+  series: paternalism
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/seatbelt_laws/p_pro
+- label: sugar tax
+  series: paternalism
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/sugar_tax/p_pro
+- label: smoking bans
+  series: paternalism
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/smoking_bans/p_pro
+- label: quitting early
+  series: work
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/quitting_early/p_pro
+- label: counteroffer
+  series: work
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/counteroffer/p_pro
+- label: offshore wages
+  series: work
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/offshore_wages/p_pro
+- label: second job
+  series: work
+  ref: frame_probe/frame_probe_v1#probe/metrics/categories/second_job/p_pro

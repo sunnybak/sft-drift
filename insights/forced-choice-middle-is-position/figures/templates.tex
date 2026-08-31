@@ -1,0 +1,24 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{How often each sentence frame extracted a usable reading, out of 40 practices. \texttt{order-stable} counts frames that survived reordering the options; \texttt{usable} additionally requires the statement and its negation to agree. The gap between the two columns is a response-bias detector: \texttt{deserve\_blame} looks like the second-best frame until framings must agree, because it induces no-saying — the model rejects both 'deserves blame' and 'deserves no blame'.}
+\label{tab:templates}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ llll }
+\toprule
+frame & usable / 40 & order-stable / 40 & acquiescence \\
+\midrule
+\texttt{is\_right} & 17 & 19 & +0.095 \\
+\texttt{nothing\_wrong} & 13 & 13 & +0.010 \\
+\texttt{should\_continue} & 12 & 13 & +0.078 \\
+\texttt{society\_allows} & 11 & 15 & +0.254 \\
+\texttt{acceptable} & 10 & 10 & -0.007 \\
+\texttt{deserve\_blame} & 3 & 15 & -0.787 \\
+\texttt{admire} & 2 & 4 & +0.463 \\
+\texttt{crosses\_a\_line} & 1 & 1 & -0.036 \\
+\texttt{condemn} & 1 & 1 & -0.015 \\
+\texttt{feel\_guilty} & 1 & 1 & -0.000 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

@@ -1,0 +1,9 @@
+kind: table
+caption: "Where 80 statements land, binned by mean p(endorses). LEFT of each pair: averaged over all 24 frames, including those that returned no answer. RIGHT: averaged over only the frames that answered. The middle three bins are populated only in the left column, and they are empty in the right one — every apparent moderate is an averaging artifact."
+columns: ["mean p(endorses)", "all 24 frames averaged", "only answering frames"]
+rows:
+  - ["`0.0`–`0.2`  *(rejects)*", {key: binall_b00_20_v, format: plain, places: 0}, {key: binans_b00_20_v, format: plain, places: 0}]
+  - ["`0.2`–`0.4`", {key: binall_b20_40_v, format: plain, places: 0}, {key: binans_b20_40_v, format: plain, places: 0}]
+  - ["**`0.4`–`0.6`**  *(apparent middle)*", {key: binall_b40_60_v, format: plain, places: 0}, {key: binans_b40_60_v, format: plain, places: 0}]
+  - ["`0.6`–`0.8`", {key: binall_b60_80_v, format: plain, places: 0}, {key: binans_b60_80_v, format: plain, places: 0}]
+  - ["`0.8`–`1.0`  *(endorses)*", {key: binall_b80_100_v, format: plain, places: 0}, {key: binans_b80_100_v, format: plain, places: 0}]
