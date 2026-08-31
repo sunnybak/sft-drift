@@ -150,24 +150,24 @@ that the bank is not simply dead, it is unresponsive to terse assertion specific
 *Three seeds per cell. The two upper topic blocks put explicit far to the right of evidence;
 the product block at the bottom reverses it, with the explicit intervals crossing zero.*
 
-![Where each condition sits on the ethics belief bank](figures/arms_ethics.png)
+![Where each arm sits on the ethics belief bank](figures/arms_ethics.png)
 
-![Where each condition sits on the architecture belief bank](figures/arms_architecture.png)
+![Where each arm sits on the architecture belief bank](figures/arms_architecture.png)
 
-![Where each condition sits on the product belief bank](figures/arms_product.png)
+![Where each arm sits on the product belief bank](figures/arms_product.png)
 
 *One panel per topic, because each topic has its own frozen bank and an absolute score is
-only meaningful within one. Every trained condition is shown at all three seeds; the blue
-marker in a band is the same corpus placed in the base model's context with no training at
-all (Mc_ev±, Mc_e±), which is the cheapest-baseline comparison for that band. The off-topic
-control is the arm every netted effect is measured against — it is trained on unrelated
-documents, so the distance between it and BASE is machinery rather than content. Ethics has
-two off-topic controls, one per corpus family, and they do not agree: the multiform pair
-sits near BASE while the evidence-family pair sits visibly above it at every seed, which is
-why a netted effect must use the control that matches its own arm. Read a band left-to-right
-against BASE, and the three panels against each other only by shape: ethics separates
-widely, architecture less, and product not at all — its trained arms sit on top of both BASE
-and their own control, while its in-context readings swing from 0.07 to 0.82.*
+only meaningful within one. Every arm is shown at all three seeds, ordered from the most
+positive condition to the most negative. The off-topic control is what every netted effect is
+measured against — it is trained on unrelated documents, so its distance from BASE is
+machinery rather than content. Ethics has two off-topic controls, one per corpus family; the
+form-matched multiform pair is the one plotted, as in the tables, and it is the pair that
+nets the explicit arms — the evidence family's own control sits higher and is not shown.
+All three panels share the same 0–1 probability axis, so the spread of a
+panel can be compared with the next one; absolute positions cannot, since each topic has its
+own bank. Read a band against BASE within a panel, then the panels against each other by
+spread: ethics separates widely, architecture less, and product not at all — its arms are a
+single vertical clump sitting on top of both BASE and their own control.*
 
 ![Netted action effect](figures/da.png)
 
@@ -356,8 +356,8 @@ failed its own sensitivity check, so those intervals are not evidence of anythin
   revive these rows**; what could is a product action bank rebuilt to pass its own
   sensitivity check, and `STATE.md` records that rebuild as explicitly out of scope for this
   phase. They are plotted in the action figure only so the withdrawal is visible rather than
-  silent — and the in-context readings above show the bank is not inert, only unresponsive to
-  terse assertion.
+  silent — and the in-context readings in table 4 show the bank is not inert, only
+  unresponsive to terse assertion.
 - **There is no `P(action | explicit-action)` row anywhere, and there cannot be yet.** No
   explicit-*action* corpus (`Ma±`) exists on any topic; the explicit-stance spec forbids one
   by construction, because a corpus instructing the action would leak into the action eval and
@@ -367,9 +367,10 @@ failed its own sensitivity check, so those intervals are not evidence of anythin
   tables.
 - **Ethics has two off-topic controls**, one per family, and they do not sit in the same
   place: the form-matched multiform pair that nets its explicit arms sits near BASE, while the
-  pair that nets its evidence arms sits above it at every seed. The tables show the multiform
-  pair; the ethics figure shows both, because the gap between them is the reason a netted
-  effect has to use the control matching its own arm.
+  pair that nets its evidence arms sits above it at every seed. The tables and the ethics
+  figure both show the multiform pair. The gap between the two is the reason a netted effect
+  has to use the control matching its own arm, and it is why the ethics evidence rows are
+  netted against a control that is not the one plotted.
 - **Table 1's figures are corpus design values, not measurements.** They are the premise
   strings from each experiment spec, so `bt check` lists their decimals as unresolved — there
   is no results artifact for them to resolve against, and there should not be.

@@ -1,12 +1,13 @@
 kind: forest
-title: Where each condition sits on the architecture belief bank
+title: Where each arm sits on the architecture belief bank
 xlabel: P(belief)
 zero_line: false
 legend_loc: best
+height: 6.2
+xlim:
+- 0.0
+- 1.0
 rows:
-- label: explicit +
-  series: same corpus in context (no training)
-  ref: software_architecture/sw_explicit_incontext_v1#belief/conditions/explicit_incontext_plus
 - label: explicit +
   series: seed 42
   ref: software_architecture/sw_ex_arms#belief/arms/m_plus
@@ -16,9 +17,6 @@ rows:
 - label: explicit +
   series: seed 123
   ref: software_architecture/sw_ex_arms_s123#belief/arms/m_plus
-- label: evidence +
-  series: same corpus in context (no training)
-  ref: software_architecture/sw_evidence_incontext_v1#belief/conditions/explicit_incontext_plus
 - label: evidence +
   series: seed 42
   ref: software_architecture/sw_ev_arms#belief/arms/m_plus
@@ -56,9 +54,6 @@ rows:
   series: seed 123
   ref: software_architecture/sw_ev_arms_s123#belief/arms/m0_minus
 - label: evidence −
-  series: same corpus in context (no training)
-  ref: software_architecture/sw_evidence_incontext_v1#belief/conditions/explicit_incontext_minus
-- label: evidence −
   series: seed 42
   ref: software_architecture/sw_ev_arms#belief/arms/m_minus
 - label: evidence −
@@ -67,9 +62,6 @@ rows:
 - label: evidence −
   series: seed 123
   ref: software_architecture/sw_ev_arms_s123#belief/arms/m_minus
-- label: explicit −
-  series: same corpus in context (no training)
-  ref: software_architecture/sw_explicit_incontext_v1#belief/conditions/explicit_incontext_minus
 - label: explicit −
   series: seed 42
   ref: software_architecture/sw_ex_arms#belief/arms/m_minus

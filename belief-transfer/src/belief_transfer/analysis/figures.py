@@ -72,7 +72,8 @@ def _pyplot():
 
 
 def forest(rows: Sequence[ForestRow], path: Path, *, title: str = "", xlabel: str = "",
-           zero_line: bool = True, width: float = 7.0, legend_loc: str = "lower right") -> Path:
+           zero_line: bool = True, width: float = 7.0, legend_loc: str = "lower right",
+           height: float | None = None, xlim: tuple[float, float] | None = None) -> Path:
     """A forest plot: one slot per distinct label, one marker per row, interval as a bar.
 
     Slots follow first-appearance order of the labels, because that order is an editorial
@@ -87,7 +88,10 @@ def forest(rows: Sequence[ForestRow], path: Path, *, title: str = "", xlabel: st
     by_slot = {label: [row for row in rows if row.label == label] for label in slots}
 
     palette = style_for([row.series for row in rows if row.series])
-    height = max(1.7, 0.30 * len(rows) + 0.34 * len(slots) + 1.0)
+    # `height` overrides the row-count formula. A tall forest is scaled to \linewidth in the
+    # PDF, so past ~1.3x the text width it runs off the page bottom -- an explicit, shorter
+    # height is the fix, not a narrower page.
+    height = height if height else max(1.7, 0.30 * len(rows) + 0.34 * len(slots) + 1.0)
     figure, axis = plt.subplots(figsize=(width, height))
 
     # Dodge offsets are assigned per SERIES over the whole figure, not per slot, so a given
@@ -125,6 +129,11 @@ def forest(rows: Sequence[ForestRow], path: Path, *, title: str = "", xlabel: st
     axis.set_ylim(-0.5, len(slots) - 0.5)
     if xlabel:
         axis.set_xlabel(xlabel)
+    # An explicit `xlim` is how a SET of panels is made comparable. Left to autoscale, a
+    # panel whose arms barely separate zooms until they look separated, and the reader
+    # compares two different rulers without being told.
+    if xlim:
+        axis.set_xlim(*xlim)
     if title:
         axis.set_title(title, fontsize=10)
     axis.grid(axis="x", alpha=0.3, linewidth=0.5)
