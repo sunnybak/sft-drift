@@ -402,8 +402,23 @@ F3's prerequisite was revised with the rationale (recorded in the hypothesis fil
 silently replaced): the bank now needs BOTH extremes populated at 20–35% each and
 `sd(base) ≥ 0.25`, because the mechanism test needs variance in `base` that the original
 composition-only wording did not require. Cost is unchanged — two corpora, three banks,
-eighteen training runs — and it would require amending `GOAL.md`'s standing "No fourth topic"
-decision first.
+eighteen training runs.
+
+**`GOAL.md`'s "No fourth topic" decision was amended 2026-08-31 on user direction** to admit
+exactly one topic for F3 and nothing else — a widen move admitted for a harden purpose.
+Reasoning in `changelog/2026-08-31.md`. **No generality claim may cite that topic**; it exists
+to break the normative / no-leverage confound, not to extend the three-topic result.
+
+**The fourth topic is AUTHORIZED but UNFOUND.** Candidate A — "using animals in medical
+research is ethically acceptable" — was screened on the base model 2026-08-31 and **REJECTED**
+(`scripts/screen_belief_candidates.py --candidate A`). On `p_positive` alone it looks ideal
+(mean 0.2805, sd 0.2915, 75% one-sided); but every item near 0.5 has `variant_gap` near 1.0,
+i.e. answered on option POSITION with the two orders averaging to the middle. Restricted to
+content-bearing items, **89% sit on one side of 0.5**, robust across gap cuts of 0.30/0.50/0.75
+— factory farming's saturation with a different facet mix. Candidates B–E (compensated kidney
+donation, zoos, the Singer obligation claim, low-wage offshore manufacturing) are unscreened;
+screening is minutes each. **Position bias concentrated in the REVERSE statements**, so screen
+both directions and weight the negations.
 
 **This does not touch netted `dB`/`dA`**, which subtract the control's own contrast. What it
 does touch is every per-arm distance from BASE in `insights/which-corpus-installs-belief/`,

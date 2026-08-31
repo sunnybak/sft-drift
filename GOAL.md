@@ -28,11 +28,30 @@ reaching a terminal point on results that already exist.
 | what a cycle is for | discovery — find the next effect | **refinement** — make an existing claim precise, caveated and defensible |
 | what a new experiment must earn | that it moves an open hypothesis | that it **changes how an existing result may be stated**. If it cannot, it does not run |
 | what "done" looks like | a finding good enough to write up | every standing claim at the quotability level it actually earned, with its caveats attached and its withdrawals recorded |
-| the default answer to "should we build a new corpus/topic/instrument?" | maybe, if it widens | **no** |
+| the default answer to "should we build a new corpus/topic/instrument?" | maybe, if it widens | **no** — with one named exception, below |
 
-**The three topics are the dataset. There will not be a fourth.** Factory farming,
+**The three topics are the dataset, with one authorized exception.** Factory farming,
 software architecture and product opinion are built, trained at three seeds each, and read
 on three suites. What remains is to say correctly what they show.
+
+**The exception, authorized 2026-08-31 on user direction; reasoning in
+`changelog/2026-08-31.md`.** A fourth topic may be built for **one purpose only**: to resolve
+`H35`'s falsifier `F3`. `H35` established that per-arm displacement from BASE is
+content-independent compression of saturated items toward the middle. Fitting each arm as
+`arm_i ~= F + b*(base_i - F)`, architecture separates compression from belief installation
+cleanly — its treatment arms shrink toward 0.703 and 0.378 against a control at ~0.50. Ethics
+cannot, because 81% of its bank sits at ~0, so `F` is a long extrapolation and "shrank harder"
+is algebraically inseparable from "target moved". Across the three built topics **normative
+and no-leverage-in-the-bank are perfectly confounded** — ethics is the only topic that is
+either — so no re-reading of anything on disk can say whether normative belief installation
+moves the target or only the shrinkage. A normative bank WITH spread answers it, and nothing
+else does.
+
+This is a **widen move admitted for a harden purpose**, and the distinction is what keeps it
+from reopening the phase. It does not license a fifth topic, a new instrument family, or a
+mechanism probe that is merely interesting. Its prerequisite is registered in `H35` and is
+checked at pilot, before any arm is trained: a bank that fails it is thrown away rather than
+relabelled.
 
 **Portfolio discipline is suspended, and deliberately so.** The `deepen / harden / widen`
 balance below existed to stop the loop tunnelling on cheap local work while big gaps sat
@@ -49,9 +68,10 @@ mode**, not the cure. Harden and refine only.
 - writing up: insight notes, and the paper
 - recording a withdrawal, a caveat, or a gap honestly
 
-**What does not:** a new topic, a new corpus family, a new instrument, or a mechanism probe
-— however cheap and however interesting. Those go in `IDEAS.md` or
-`hypotheses/resource_constrained/` with the reason they were not run.
+**What does not:** a new corpus family, a new instrument, or a mechanism probe — however
+cheap and however interesting. Those go in `IDEAS.md` or
+`hypotheses/resource_constrained/` with the reason they were not run. A new topic is now
+admitted ONLY under the named exception above, for `H35`'s `F3` and nothing else.
 
 ---
 
@@ -87,8 +107,12 @@ Stable enough to live here; revisable with reasoning like everything else.
   quotable while its numerator straddles zero.
 - **No method survey.** Attribution methods are run when a claim cannot be stated without
   them, but evaluating the method literature is not the contribution.
-- **No fourth topic** (added 2026-08-30b). Generality is now argued from the three built, or
-  narrowed honestly — not extended.
+- **No fourth topic** (added 2026-08-30b; **amended 2026-08-31**). Generality is still argued
+  from the three built, or narrowed honestly — not extended. The amendment does not touch
+  that: the authorized fourth topic exists to break a **confound in the mechanism reading**,
+  not to widen the generality claim, and no generality argument may cite it. If it is built
+  and then used to argue that a result holds on four topics rather than three, the exception
+  has been abused and this bullet was violated.
 
 ## The loop
 

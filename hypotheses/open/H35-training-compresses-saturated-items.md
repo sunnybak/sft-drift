@@ -265,6 +265,101 @@ and still have no leverage.
 > architecture's do, normative belief installation moves the target and is not merely
 > differential compression).
 
+## F3 AUTHORIZED 2026-08-31 — the fourth topic, and how it gets chosen
+
+`GOAL.md`'s standing "No fourth topic" decision was amended on user direction to admit
+exactly one, for exactly this falsifier. The amendment is deliberately narrow and its terms
+bind here: **the fourth topic exists to break the normative / no-leverage confound in the
+mechanism reading, and no generality claim may cite it.** A result stated as "holds on four
+topics" would be an abuse of the exception.
+
+**Candidates considered, all in the ethics domain** so that "normative" is held fixed against
+factory farming and only the model's prior strength varies:
+
+| | belief statement | why it may be unsaturated | risk |
+| --- | --- | --- | --- |
+| **A** | *Using animals in medical research is ethically acceptable* | genuine welfare-vs-benefit tension; facets can span clearly-bad to clearly-defensible | may pin toward "acceptable if regulated" |
+| B | *Paying people to donate a kidney is ethically acceptable* | contested bioethics, strong arguments both ways | model trained to both-sides hard cases → hedging |
+| C | *Keeping wild animals in zoos is ethically acceptable* | conservation benefit vs captivity harm; low stakes, less safety pressure | adjacent to factory farming |
+| D | *People with comfortable incomes are obligated to donate a substantial share to effective charities* | purely normative, furthest from the built topics | "obligation" framing goes abstract → hedging |
+| E | *Firms may employ workers at prevailing low local wages in developing economies* | economists and ethicists genuinely disagree | structurally closest to FF — may replicate its saturation |
+
+**A is screened first.** It holds the *domain* nearly constant with factory farming — animal
+welfare ethics, the same industry-figures corpus style — and changes essentially only the
+strength of the prior, which is the tightest available isolation of saturation from subject
+matter.
+
+**Two things stated before the screen, so neither can be decided after seeing it.**
+
+1. **Spread is a property of item generation as much as of topic.** A bank whose facets are
+   all clear-cut will pin whatever the subject. If a topic survives the screen, its facets must
+   be chosen to span clear-cut to contested — a deliberate change from how the existing three
+   banks were built, recorded here rather than discovered at pilot.
+2. **The screen is a filter, not evidence.** Hand-written statements are not the bank; per
+   `AGENTS.md`, "a single blunt core claim saturates even for a topic that works, and generated
+   paraphrases of a facet are markedly less order-stable than the hand-picked statement that
+   named it". So the screen may only **reject** a candidate, never certify one — a topic that
+   passes still faces the registered prerequisite at pilot, on generated items.
+
+> **Screen rejection rule, fixed in advance.** Reject candidate A if the hand-written
+> statements come back with **≥ 80% of items on one side of 0.5**, or **sd(base) < 0.15**.
+> Either says the prior is too strong or the model hedges too uniformly for generated items to
+> plausibly reach the registered prerequisite (20–35% at each extreme, sd ≥ 0.25). Anything
+> else moves to pilot, where the real criterion is applied to generated items.
+>
+> Read `variant_gap` per item at the same time, per `AGENTS.md`'s screen: an item answered on
+> option position rather than content is not measuring the claim, and a topic whose statements
+> are broadly position-driven is rejected regardless of its spread.
+
+## Candidate A SCREENED 2026-08-31 — REJECTED, no pilot
+
+`scripts/screen_belief_candidates.py --candidate A`. Sixteen hand-written statements over
+eight facets deliberately spanning clear-cut to contested, each in both option orders, scored
+on the base model. Minutes of GPU, no corpus, no API.
+
+| facet | fwd P(pro) / gap | rev P(pro) / gap |
+| --- | --- | --- |
+| core_acceptability | 0.4967 / **0.9933** | 0.4945 / **0.9890** |
+| severe_procedures | 0.0000 / 0.0000 | 0.0000 / 0.0000 |
+| primates | 0.0006 / 0.0012 | 0.1604 / 0.3208 |
+| scale | 0.0008 / 0.0015 | 0.3655 / 0.7311 |
+| regulation_sufficiency | 0.0003 / 0.0006 | 0.5002 / **0.9993** |
+| blame | 0.0000 / 0.0000 | 0.5000 / **1.0000** |
+| alternatives_exist *(low anchor)* | 0.4700 / **0.9399** | 0.0000 / 0.0000 |
+| major_advances *(high anchor)* | 0.9980 / 0.0041 | 0.5016 / **0.9968** |
+
+**Read naively the topic looks ideal** — mean 0.2805, sd 0.2915, only 75% on one side of 0.5,
+which passes every numeric clause of the rejection rule. That reading is wrong, and it is
+wrong in exactly the way `AGENTS.md`'s screen warns about: **every item sitting near 0.5 is an
+item with `variant_gap` near 1.0.** Those are not items the model is split on; they are items
+it answered on option position, whose two orders averaged to the middle. Six of sixteen have a
+gap above 0.90.
+
+Restricted to content-bearing items the picture inverts: **89% sit on one side of 0.5**
+(0.50 gap cut), and the result is robust to the cut — 88% at 0.30, 89% at 0.50, 90% at 0.75.
+Seven firm lows against one firm high (`major_advances`, 0.9980 at gap 0.0041, so the high
+anchor does work). That is factory farming's saturation with a different facet mix, which is
+the one thing F3 cannot use.
+
+**Rejected on two of the three registered clauses**: content-bearing items 89% one-sided, and
+38% of items answered on position.
+
+**A methodological note worth keeping.** The screen script's own first verdict said
+"PASSES SCREEN -> pilot", because the code applied the rule to `p_positive` — the exact
+statistic `AGENTS.md` says not to read. The rule was registered correctly and the
+implementation was incomplete; the script now reports the content-bearing subset at three
+gap cuts and names which clause fired. Had it not been caught, the next step would have been a
+two-corpus, three-bank, eighteen-run build on a bank as saturated as the one it exists to
+replace. The gap threshold used to define "content-bearing" is a **post-hoc** judgement and is
+reported as one, which is why the verdict is printed at several cuts rather than one.
+
+**Also learned, and it constrains the remaining candidates.** The position-driven items are
+overwhelmingly the REVERSE statements — the negations. On this topic the model has a firm
+content-driven answer to "X is acceptable" and falls back on position for "X is unacceptable".
+Since D7 pairing and D4 both-orders averaging are not optional, a topic whose negations are
+position-driven cannot carry a bank regardless of how its forward statements read. **Screen
+both directions for every remaining candidate and weight the reverse side heavily.**
+
 ## Why F1 comes first
 
 F1 and F3 test the same corollary. F1 does it by re-reading rows already on disk and can be
