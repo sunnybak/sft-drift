@@ -352,8 +352,36 @@ with a falsifier; **not registered and not run, pending approval.**
 
 ## Hypotheses
 
-`open/` is **EMPTY**. `H33` was opened and falsified the same session; `H34` is proposed but
-**deliberately unregistered pending user approval**, so it is not in `open/` yet.
+**`open/` holds exactly one: `H35`, registered 2026-08-31 on user direction.** Per-arm
+displacement from BASE is content-independent compression of saturated items toward the
+middle, and a bank shows it only in proportion to how lopsided its BASE composition is. It
+was opened after the observation that ethics' `explicit −` arm sits ABOVE base while the
+other two topics' negative arms do not.
+
+The motivating evidence is already in hand and cost nothing — all three topics net against
+the SAME off-topic adapter (`ms0_arms/checkpoint-24`), and that contentless adapter raises the
+ethics bank by +0.1088 / +0.1244 while leaving architecture and product flat to slightly
+negative. Sorted by the item's own BASE instead of by topic, the three banks agree: items
+below 0.10 rise (+0.0878 / +0.1084 / +0.0650), items above 0.90 fall (−0.0824 / −0.0537 /
+−0.0686). Ethics differs only in composition — 81% of its items sit below 0.10, against 16%
+for each of the other two. Instrument floor, acquiescence, and a shared-term regression
+artifact were each tested and each fails to explain it; BASE is bit-identical across every
+pair of runs (max |Δ| = 0.00e+00), so it carries no measurement noise.
+
+**Three falsifiers are registered, F1 first because it is free**: a floor-only sub-bank built
+from ARCHITECTURE's own items, re-netted from stored rows, must reproduce the ethics-style
+rise under the shared control. F2 is checkpoint monotonicity. F3 is a fourth topic — a
+normative claim the model is NOT saturated on — which is the only out-of-sample test but
+costs two corpora, three banks and eighteen training runs, and would require amending
+`GOAL.md`'s standing "No fourth topic" decision first. **If F1 fires, F3 is not worth
+building.**
+
+**This does not touch netted `dB`/`dA`**, which subtract the control's own contrast. What it
+does touch is every per-arm distance from BASE in `insights/which-corpus-installs-belief/`,
+and the three per-topic figures invite exactly the reading H35 says is unavailable.
+
+Previously: `H33` was opened and falsified the same session; `H34` was registered on approval
+and falsified.
 
 Previously described as the correct terminal state: no remaining check would change
 how an existing result is stated. **H31** and **H32** were moved to `resource_constrained/`
