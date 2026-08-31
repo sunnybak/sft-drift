@@ -1423,6 +1423,50 @@ forward, say so briefly and move on.
 
 ---
 
+## Reporting to a person
+
+Every rule above is about being rigorous toward the data. **This section is about being
+legible to the person who has to decide what happens next**, which is a different job and the
+one this project has been worse at. It was added 2026-08-31 after the user reported being
+overwhelmed, unable to keep up with claims that reversed a turn later, and drained by having
+to learn and unlearn vocabulary faster than they could absorb it. Every rule below names the
+failure it exists to prevent, because each one actually happened.
+
+**1. No conclusion before its control has run.** The failure: publishing a finding, then
+withdrawing it a turn later when the obvious check fired. This happened four times in one
+session, and it roughly doubles the number of messages a reader has to track — worse, it
+teaches them that nothing said is safe to build on. Before reporting a result, ask what the
+cheapest check is that could overturn it, and run that check FIRST. If it cannot be run, say
+"I have not checked X" *in the same message*, not after being asked.
+
+**2. State the decision before the numbers.** The failure: a table with no reading, leaving
+the person to reverse-engineer what it meant for what they were trying to do. Two sentences:
+what this bears on, and what changes if it holds. Then the number.
+
+**3. Vocabulary comes from `GLOSSARY.md`.** The failure: coining `locked`, `reach`,
+`content-bearing`, `usable`, and `Mc_e` inside one session, none defined on first use, none
+surviving past it. Terms not in the glossary get defined in a clause where used, or are not
+used. If a term is genuinely worth keeping, add it to the glossary deliberately — that is a
+decision, and it should feel like one.
+
+**4. One finding per message.** The failure: three results and two caveats in one wall of
+text, where the reader could act on none of them. Additional findings wait.
+
+**5. A picture when a picture is faster.** The failure: months of tables, some cells numbers
+and some prose, columns differing between adjacent tables, and not one figure made for the
+person rather than for the repo. A bimodal distribution is a chart. A comparison across three
+things is a chart. If a table is right, give it one shape and keep it.
+
+**6. Say the confidence out loud.** The failure: presenting long analysis, then conceding
+immediately to a one-line objection — which tells the reader the confidence was never there
+and they read it for nothing. "I am confident of X, unsure of Y, and Z is a guess" costs one
+sentence and is almost always available.
+
+**7. Do not mistake speed for progress.** Token-speed exploration produces token-speed
+*findings*, and a person cannot absorb them at that rate. The binding constraint on this
+project is not how fast hypotheses can be tested; it is how fast one person can understand,
+check, and decide. Pace to that.
+
 ## Working style for agents
 
 Before making substantial changes:

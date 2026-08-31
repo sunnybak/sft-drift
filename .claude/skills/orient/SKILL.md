@@ -43,6 +43,18 @@ Ordered by information density, not by chronology.
 If the user's request is narrow ("re-score the step-24 matrix"), steps 1, 2 and 4 plus a
 targeted look are enough. Read wider only when the request is open-ended.
 
+## Agree the vocabulary before the work starts
+
+`GLOSSARY.md` is the project's fixed vocabulary and it is a CAP, not a catalogue. Read it as
+part of orienting, and in the orientation report **name the handful of terms this session will
+actually use** — not the whole list, the five or six the coming work turns on.
+
+This exists because vocabulary drift is a measured failure mode here: one session coined five
+terms, defined none of them on first use, and abandoned all five by the end. The user reported
+being unable to follow the work as a direct result. A term not in `GLOSSARY.md` gets defined in
+a clause where it is used, or is not used; if it turns out to be worth keeping, adding it to
+the glossary is a deliberate step, not a side effect.
+
 ## Check for void runs explicitly
 
 A voided result directory is byte-identical in shape to a valid one. Before quoting any
@@ -53,7 +65,8 @@ run before suspecting a new finding.
 ## Report back in this shape
 
 Keep it short. Long orientations do not get read, and an unread orientation cannot be
-corrected.
+corrected. Open with the ONE decision the session is likely to turn on, so the user can
+redirect before any work is done rather than after.
 
 ```
 ## Established
