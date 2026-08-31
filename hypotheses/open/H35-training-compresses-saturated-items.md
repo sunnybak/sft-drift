@@ -586,8 +586,33 @@ treatment arms toward 0.703 and 0.378) needs re-reading in those terms. **This i
 open question, not a finding** — it has not been tested, and testing it is cheaper than
 anything else outstanding.
 
-**Status: F3 is REOPENED with candidate S as a live option**, and the acquiescence question
-above is now ahead of it in priority, because if the leverage is response style then F3 was
+**SECOND CORRECTION, same day: candidate S is NOT a topic and cannot be built as one.**
+Its six "facets" — car-free centres, admission by lottery, compulsory voting, professional
+juries, a four-day week, term limits — are six UNRELATED policy beliefs, not six facets of
+one belief. Every built topic here is one belief measured across facets ("microservices are
+the right default", read on reliability, delivery cadence, cost, blame), with a corpus that
+argues for or against THAT belief. No corpus can argue for "cars, juries, voting, lotteries,
+working weeks and term limits" jointly.
+
+So S's spread is spread ACROSS SIX BELIEFS — the model endorses some and rejects others —
+which is a different object from spread WITHIN one belief's facets. The latter is what F3
+needs and what A3 failed to produce, and the S screen did not test it.
+
+**The same error twice in one day, and it is worth naming**: a property was confirmed on a
+SET OF STATEMENTS and then treated as a property of a TOPIC. The screen tests statements; a
+topic is one belief plus facets plus a corpus, and only a pilot tests that.
+
+**What survives from S:** low-valence normative statements can land at both extremes, where
+canonical moral ones cannot — 236 canonical statements produced no content-driven middle and
+almost no ceiling on the moral topics, while these produced 33% ceiling. That is a real and
+useful difference in where to look.
+
+**What is still unshown:** that any SINGLE low-valence belief has facets that span. Until a
+single-belief candidate in that space is screened facet-by-facet, F3 is neither buildable nor
+unbuildable — it is untested.
+
+**Status: F3 is REOPENED but has no candidate**, and the acquiescence question above is ahead
+of it in priority, because if the base-position leverage is response style then F3 was
 measuring the wrong thing anyway.
 
 ---
