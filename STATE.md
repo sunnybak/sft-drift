@@ -1,505 +1,81 @@
 # STATE
 
-What is currently true and not derivable from anything else. **Overwritten each session,
-not appended** — the changelog is the history. Detail lives in `changelog/2026-08-30.md`
-(this session) and `changelog/2026-08-29c.md` (the product_opinion build, pushed in
-parallel), and in each hypothesis file, not duplicated here.
+**What is true right now.** Overwritten each session, not appended — history lives in
+`changelog/`, quotable claims live in `insights/<slug>/`, rules live in `AGENTS.md`.
+Rewritten 2026-08-31 from 575 lines back to its stated purpose; nothing was lost that is not
+in one of those three places.
 
-Last refreshed: **2026-08-30b (end of session, after the phase change)**.
+## Box
 
-**THE PROJECT IS IN ITS TERMINAL PHASE.** `GOAL.md` was revised on user direction: the
-remaining time is for refinement and nuance on results already measured, not open-ended
-discovery. No fourth topic, no new corpus family, no new instrument. `PAPER_AUDIT.md` was
-deleted — the standing result is this file, and each quotable claim's provenance is its own
-`insights/` note. Detail in `changelog/2026-08-30.md`
-(TRAIN.md) and `changelog/2026-08-30b.md` (TRAIN-PRODUCT.md + four insight notes).
+RTX 5080, 16GB, Blackwell. Memorization bench **PASS** (the 0.80 failure was specific to the
+RTX 5060 Ti, not the stack). Tests 508 passed / 1 skipped. Scoring reproduces bit-exactly
+across boxes (max abs difference 0.0000).
 
-**All three topics are now trained.** `TRAIN.md` and `TRAIN-PRODUCT.md` are both complete;
-nothing in either is outstanding except what their own "known gap" sections defer.
+## The standing result
 
-## READ THIS FIRST: the box changed again, and the standing blocker is gone
+Three topics, trained at three seeds each, read at `checkpoint-24` on three suites. **They do
+not agree, and that disagreement is the result.**
 
-This session ran on a fresh **16GB RTX 5080** (Blackwell, cu128, torch 2.10.0+cu128,
-128 cores, 251GB RAM, 80GB disk). The previous two refreshes described a 5060 Ti and a Mac.
-
-- **The memorization bench PASSES here: base 0.00, tuned 1.00 (20/20), loss 8.585 → 0.139.**
-  The 0.80-against-0.90 failure that blocked every arm since 2026-08-26 is **specific to the
-  16GB RTX 5060 Ti**, not the training stack. Same pins, same model, same bench, different
-  card, clean pass. This box earned its training run and used it.
-- **Everything in `TRAIN.md` is now trained.** Nothing in that file is outstanding except
-  what its "Known gap" section already deferred.
-- `configs/hardware_profile.yaml` on this box: `batch_size 64`, 1294 tok/s, peak 11.1/16.6GB.
-- Full `make data-pull` is **32GB** and fits fine. 508 unit tests pass, `--run-gpu` too.
-
-## Trained on this box — 13 runs / 26 arms across all three topics, all gated
-
-| run ids | what |
+| topic | what moves belief |
 | --- | --- |
-| `sw_ev_arms{,_s7,_s123}` | software_architecture EVIDENCE (Mev±), 3 seeds |
-| `sw_ex_arms{,_s7,_s123}` | software_architecture EXPLICIT (Me±), 3 seeds |
-| `explicit_stance_v3_arms_s123` | factory_farming explicit, the missing seed |
-| `m0_multiform_s123` | the multiform off-topic control at seed 123 — trained 2026-08-30b, which made the row above readable |
-| `po_ev_arms{,_s7,_s123}` | product_opinion EVIDENCE (Mev±), 3 seeds |
-| `po_ex_arms{,_s7,_s123}` | product_opinion EXPLICIT (Me±), 3 seeds |
-| `po_sensitivity_v1` | product_opinion base under none/B+/B− |
+| factory_farming (ethics) | explicit assertion, wide |
+| software_architecture | explicit assertion, wide — and it reaches action |
+| product_opinion (named product) | **evidence**, not assertion — the ordering reverses |
 
-`choice_bench` on all 7: every arm **PASS**, 0.833–0.906 against the 0.75 bar (base 0.812),
-every margin above base's. No collapse anywhere, including across the trajectory.
+Every number, with its provenance and its own limits, is in `insights/`:
 
-## The standing result, netted at `checkpoint-24`, three seeds
-
-**Explicit stance moves belief AND action on software_architecture; evidence alone moves
-neither.** Per-seed, never folded under a mean:
-
-| | ΔB net | ΔA net | ΔI net (contaminated — see below) |
-| --- | --- | --- | --- |
-| evidence | +0.0158 / +0.0310 / +0.0361 | −0.0118 / +0.0055~ / −0.0142 | +0.0307 / +0.0353 / +0.0416 |
-| explicit | +0.1263 / +0.1354 / +0.1560 | +0.0908 / +0.0870 / +0.1039 | +0.0859 / +0.0868 / +0.0961 |
-
-`~` straddles zero. Seeds 42 / 7 / 123.
-
-**Quotability: direction replicated (rung 2), magnitude NOT (rung 3 unearned).** Evidence ΔB
-spreads 2.29× across seeds; the explicit:evidence ratio is 8.0 / 4.4 / 4.3 per seed and is
-**not quotable as "~5×"**.
-
-**`sw_ev_*` did NOT flip netted sign across seeds** — against TRAIN.md step 6's expectation
-from H26. Belief holds sign at all three seeds and at every checkpoint. The unstable cell is
-evidence **ΔA** instead (2.58× spread, sign flips, one seed straddling).
-
-**Machinery is a large share of the evidence family's raw contrast**: 62% at seed 42
-(raw +0.0420, machinery +0.0261, net +0.0158), 33% at s7, 22% at s123. The evidence belief
-effect is a small residual of two comparable quantities.
-
-## Three caveats that travel with every number above
-
-1. **R-F position bias — FAILED and not re-rolled.** Belief `variant_gap` 0.609 against a
-   pre-registered ≤0.55. On every software_architecture ΔB.
-2. **R8 action headroom — FAILED whole-bank, passes on mild+strong.** Base is 0.822 on
-   `none`, so a positive ΔA here is **ceiling-censored by construction**. No ratio was built
-   on it and none should be.
-3. **ΔI's null facet is not zero, so the all-facet ΔI is contaminated.** `request_volume`
-   (premises identical across polarities by design) reads +0.0364 / +0.0276 / +0.0429 on the
-   evidence arms — third or fourth of eight facets, above half the real ones. Read per-facet
-   against the null facet: on the evidence family only `recovery_time` clears it at all three
-   seeds by a real margin, so **that family's ΔI is one facet, not a suite effect**. The
-   explicit family's `recovery_time` and `incident_frequency` clear it by 3–4× at all seeds
-   and are readable. Never as a ratio to the arm's mean (AGENTS.md is explicit).
-
-## R-A stratification: the explicit family propagates
-
-Netted ΔA by stratum — both strata move and **adjacent is not attenuated** (gap within ±0.01,
-sign flips across seeds): in_scope +0.0857 / +0.0914 / +0.1035 against adjacent +0.0958 /
-+0.0848 / +0.1022. The spec's decision rule calls that propagation rather than paraphrase,
-and it is stronger than the propagation branch predicted. Evidence-only: neither stratum
-moves — "no transfer".
-
-## The reading step is topic-specific, and step 24 was kept anyway
-
-`checkpoint-24` was designated because factory_farming's explicit effect peaks there. On
-software_architecture **nothing peaks at 24**: evidence ΔB rises monotonically (+0.012 →
-+0.054 over steps 12→60), explicit ΔB peaks at **step 36** (+0.2258 vs +0.1263 at 24),
-explicit ΔA is still rising at 60. Every headline above is read at the designated step
-regardless — moving it because a later step reads larger is the post-hoc adjustment AGENTS.md
-forbids. **Whether to re-designate for this topic is an open decision, to be taken before
-seeing the next result, not after.**
-
-## BLOCKER: `sensitivity_v2` is gone and 91 overlays name it
-
-`belief_eval`/`action_eval` fail outright on essentially every factory_farming run:
-`transfer.sensitivity_from` names `results/factory_farming/sensitivity_v2/`, which is on
-**neither disk nor HF**. Of 115 overlays naming a sensitivity run, **91 name `sensitivity_v2`**;
-only `sw_sensitivity_v1` (6 overlays) resolves.
-
-`configs/run/sensitivity_v2.yaml` says it is **NOT RE-RUNNABLE** (calibration ladder names
-checkpoints deleted 2026-08-18) while asserting its recorded results are "intact and still
-load-bearing" — the 2026-08-29a purge then deleted those results.
-
-**Partly recoverable:** point estimates survive redundantly in 13 summaries, all agreeing —
-**`S_B` 0.6521, `S_A` 0.3498**. Intervals and per-item responses do not. **Nothing was
-reconstructed** — building a results file from downstream copies would fabricate provenance.
-This needs a user decision: accept point-estimate-only `T`, rebuild the ladder under a new
-run id, or drop `T` for factory_farming.
-
-Workaround used this session: `transfer.sensitivity_from=null` on the command line, no config
-edited.
-
-## Also true
-
-- **`stage=agreement_check` cannot compare a same-backend fixture** ("recorded on 'cuda' and
-  this machine is also 'cuda'"). The cross-*card* check AGENTS.md describes is not what the
-  stage implements. Done by hand instead: re-recording on this RTX 5080 reproduced the
-  committed fixture **byte-identically** (only the stamped python patch moved, 3.12.13 →
-  3.12.14), across a different physical box. Committed as `eb985fd`.
-- **`ms3p_arms` reproduces bit-exactly** — max absolute difference **0** against its recorded
-  artifact on all seven arms and all netted terms.
-- **The six `sw_*` overlays were missing their `absorption:` block** and could not run a stage
-  their own headers documented. Added, following `sw_arms_v1`'s values for this topic.
-- **factory_farming evidence on `suite_action_v2` is null on the raw contrast at all three
-  seeds** (+0.0009 / −0.0097 / +0.0003, all straddling). Netted reads +0.0292 / −0.0000 /
-  +0.0136 but that is manufactured entirely by a negative machinery term. **Do not quote it
-  as a positive ΔA.**
-
-## product_opinion exists — a THIRD topic, generated 2026-08-29c
-
-Belief about a named commercial product, corpus in the review/ownership genre. Built from
-nothing in the 2026-08-29c session (not this one); detail and the design findings are in
-`changelog/2026-08-29c.md`.
-
-| run id | content |
+| note | claim |
 | --- | --- |
-| `po_corpus_evidence` | evidence corpus (Mev±), **125/160 pairs**, margin 0.858 |
-| `po_corpus_explicit` | explicit corpus (Me±), **107/120 pairs**, margin 0.688 |
-| `po_suite_belief` | **146** items of 216, base 0.584, `variant_gap` 0.435 |
-| `po_suite_inference` | **202** of 768, base 0.475, gap 0.336, null facet 27 |
-| `po_suite_action` | **138** of 240, base 0.489, gap 0.319, strata 68/70 |
+| `which-corpus-installs-belief/` | the full results tables across all three topics |
+| `assertion-fails-on-a-named-product/` | the reversal |
+| `conversion-rate-not-detection/` | the 30x spread between topics is conversion, not instrument |
+| `machinery-dominates-where-effects-vanish/` | netting is least trustworthy where most needed |
+| `null-facet-tracks-assertion/` | halo contamination tracks whether the text takes a position |
+| `action-suite-passes-without-sensitivity/` | a three-seed zero-excluding ΔA on a dead instrument |
+| `form-ratios-seed-stability/` | which form ratios are quotable and which are not |
+| `explicit-incontext-vs-trained/` | reading the corpus beats training on it |
+| `forced-choice-middle-is-position/` | **new 2026-08-31** — a score near 0.5 measures option position, not indecision |
 
-Both corpora clear the 93-pair dose; all three banks are inside R-F's ≤0.55 bar. New
-configs: `configs/experiment/product_opinion.yaml`, `configs/eval/product_opinion.yaml`,
-`configs/dataset/product_short.yaml`.
+**Quotability**: direction replicated (rung 2) nearly everywhere; magnitudes mostly unearned.
+Read `GOAL.md`'s ladder before writing any number into prose.
 
-**Two limits to carry, both registered before generation.** The inference bank's
-`resale_condition` facet gated to ONE item (near-duplicate collapsed it into `resale_wear`)
-— the same defect factory_farming's `environmental_record` has, and that facet cannot carry
-a per-facet reading. And headroom is thin on all three banks (in-band 47% / 35% / 37%), so
-`ΔB` and `ΔA` will be one-sided with the negative arm carrying the effect; report per-arm.
+## Caveats that travel with every number
 
-**`TRAIN-PRODUCT.md` is the handoff for this topic** — run it AFTER `TRAIN.md`, which is
-now COMPLETE (2026-08-30). 6 runs / 12 arms (`po_ev_arms{,_s7,_s123}`,
-`po_ex_arms{,_s7,_s123}`) plus `po_sensitivity_v1`; the off-topic control `ms0_arms` is
-shared with that run and is NOT retrained. Every arm overlay sets
-`absorption.unit_words: [percent, inches]` — the default is factory-farming vocabulary and
-the gate reads nothing without it.
+1. **R-F position bias.** software_architecture's belief suite has `variant_gap` 0.609
+   against a pre-registered ≤0.55. Not re-rolled. On every `sw_*` ΔB.
+2. **R8 ceiling censoring.** software_architecture's action `none` cell sits at base 0.822.
+   No ratio was built on it.
+3. **The reading step is topic-specific.** `checkpoint-24` was designated because FF's
+   explicit effect peaks there; nothing peaks at 24 on the other two. Kept anyway rather than
+   moved after seeing curves. Re-designating is a decision to take *before* a next result.
+4. **Machinery share.** Inversely related to effect size (Spearman −0.831 over 45 cells); in
+   7 of 45 the control's own contrast exceeds the treatment's. Report it beside any netted
+   number.
 
-**Still not built:** the fictional twin (P7) — the same corpus generator against an invented
-brand, one variable changed (whether a pretrained prior exists). It is the prior-strength
-contrast neither other topic can supply. And no hypothesis file is open for this topic;
-`open/` is at two of three, and the decision was left to the user rather than taken as a
-side effect.
+## Blockers
 
-**`TRAIN-PRODUCT.md` is DONE (2026-08-30b): 6 runs / 12 arms, all gated, all three suites at
-three seeds.** And it produced the session's biggest surprise — see below.
-
-## product_opinion RESULT: the assertion lever reverses
-
-Netted at `checkpoint-24`, three seeds, every arm through the gate (0.865-0.885 vs 0.75):
-
-| | ΔB net | ΔA net (WITHDRAWN) | ΔI net (all-facet, contaminated) |
-| --- | --- | --- | --- |
-| evidence | +0.0323 / +0.0328 / +0.0336 | +0.0251 / +0.0154 / +0.0190 | +0.0564 / +0.0340 / +0.0409 |
-| **explicit** | +0.0102~ / +0.0167~ / +0.0061~ | -0.0256 / -0.0022~ / -0.0101~ | +0.0280~ / +0.0207~ / +0.0216~ |
-
-**Evidence installs belief here and explicit assertion does not** — the reverse of both other
-topics. Seed spread on the evidence cell is **1.0396, the tightest in the project**. Not a
-dose artifact (105.9 vs 107.5 mean words), not an instrument failure (`S_B` +0.6171,
-comparable to architecture's +0.6260), and both families absorbed.
-
-**Read the ordering, not the null.** Explicit point estimates triple by step 36 and flatten,
-so "explicit installs nothing" is too strong. What holds is that **evidence exceeds explicit
-in 15 of 15 seed-by-checkpoint comparisons**.
-
-
-## The product evidence effect has a validity caveat — H33 falsified 2026-08-30b
-
-The cheapest-baseline check `AGENTS.md` mandates was finally run on the product headline, and
-**its registered falsifier fired**. Putting `po_corpus_evidence` in context on the untrained
-base model moves `po_suite_belief` by **+0.3418 [+0.2750, +0.4096]**, against the trained
-arms' **+0.0323 [+0.0170, +0.0482]** — **disjoint intervals**, an order of magnitude apart.
-
-| in-context condition | P(belief) |
-| --- | --- |
-| no context | 0.5847 |
-| positive documents | 0.4186 |
-| negative documents | 0.0768 |
-
-**Both in-context conditions sit BELOW the no-context baseline** — the contrast is carried
-entirely by the disconfirming documents, not by the confirming ones. So "exposure installs
-the belief" is also the wrong summary; the suite is largely an instrument for detecting
-whether disconfirming figures are in the prompt.
-
-**What this changes:** the product evidence effect is still real, gated, netted and
-sign-stable at three seeds, but it may not be described as "evidence installs this belief".
-Both product notes and this file now carry the narrowing. **What it does NOT change:** the
-reversal (evidence above explicit, 15 of 15 seed-by-checkpoint comparisons) — that is a
-comparison between two trained families on one bank, untouched by the instrument's context
-sensitivity.
-
-## BLOCKER: product_opinion has no usable action axis
-
-**`S_A` = +0.0095 [-0.0185, +0.0367] — straddles zero.** Prompted conditions land on top of
-each other (none +0.4918, b_plus +0.5170, b_minus +0.5075) and base is mid-range, so this is
-**not** ceiling censoring. `S_A / S_B` = 0.0154 against architecture's 1.2344.
-
-**The trained `ΔA` on that dead instrument still excludes zero at all three seeds, at
-2.0825x the instrument's entire prompted range.** The product topic's `ΔA` is **WITHDRAWN**,
-not caveated. Do not put those three numbers in a results table.
-
-## The descriptive-inference null facet, across two topics
-
-| | s42 | s7 | s123 |
-| --- | --- | --- | --- |
-| product evidence (`display_size`) | -0.0107 | -0.0163 | +0.0025 |
-| product **explicit** | +0.0238 | +0.0265 | +0.0431 |
-| architecture evidence (`request_volume`) | +0.0364 | +0.0276 | +0.0429 |
-| architecture **explicit** | +0.0469 | +0.0386 | +0.0503 |
-
-Explicit exceeds evidence at every seed on both topics, and **contamination does not track
-effect size** — the product explicit arms have no belief effect and the dirtier null facet.
-**Product evidence is the only clean cell in the project**: `failure_incidence` clears its
-null facet by +0.1109 / +0.0901 / +0.0816.
-
-## Machinery: netting is least trustworthy where it is most needed
-
-Spearman **-0.831** between `|raw|` and `|machinery|/|raw|` over 45 cells. In **7 of 45,
-machinery exceeds the raw contrast**; all seven are the action suite on an evidence family,
-and two invert the sign. Architecture explicit belief sits at shares of 0.1715/0.1013/0.0614.
-**Report the machinery share beside any netted number.**
-
-## Four insight notes written (2026-08-30b)
-
-All four have `note.md`, `sources.yaml`, figures and a PDF; `bt check` clean and
-`score_note.py` at 0 FAILs.
-
-- `assertion-fails-on-a-named-product` — the reversal
-- `action-suite-passes-without-sensitivity` — a zero-excluding effect on a dead instrument
-- `null-facet-tracks-assertion` — halo tracks stance, not effect size
-- `machinery-dominates-where-effects-vanish` — the -0.831 survey
-
-## factory_farming explicit: now three seeds, and a magnitude
-
-`m0_multiform_s123` was trained 2026-08-30b, which made `explicit_stance_v3_arms_s123`
-readable for the first time. Read through three identically-shaped overlays
-(`explicit_belief_s42` / `_s7` / `_s123`; the first two re-net stored rows via
-`transfer.responses_from` and score nothing):
-
-| seed | ΔB NET | machinery |
-| --- | --- | --- |
-| 42 | **+0.3111** [+0.2315, +0.3931] | −0.0039, straddles |
-| 7 | **+0.3528** [+0.2691, +0.4386] | +0.0025, straddles |
-| 123 | **+0.3281** [+0.2601, +0.3975] | −0.0021, straddles |
-
-**Seed spread 1.1341 — this clears the ladder's MAGNITUDE rung**, the only cell in the
-project that does. All four s123 arms pass the gate (0.844–0.885). The multiform control's
-own contrast straddles zero at every seed, so machinery share is 0.0127 / 0.0070 / 0.0065.
-
-**Caveat that travels:** the s123 control was trained with `gradient_checkpointing=true`
-(708-word documents OOM a 16GB card at the frozen settings) while s42/s7 were not.
-train_loss 2.5776 / 2.5553 sits inside the other seeds' range, so it is recorded as
-immaterial rather than hidden.
-
-## WHY dB DIFFERS BETWEEN TOPICS — answered 2026-08-30b, seven cycles, ~$0
-
-The 30x spread in netted belief effect is **not** a property of the instruments. All three
-belief suites detect an asserted stance in context at near-saturation (+0.9760 / +0.9470 /
-+0.7484). What varies is how much survives training:
-
-| topic | corpus | exposure Δ | trained ΔB | conversion |
-| --- | --- | --- | --- | --- |
-| ethics | evidence | 0.0880 | 0.1253 | **1.4232** |
-| ethics | explicit | 0.9760 | 0.3307 | **0.3388** |
-| architecture | evidence | 0.1215 | 0.0276 | **0.2274** |
-| architecture | explicit | 0.9470 | 0.1393 | **0.1471** |
-| product | evidence | 0.3418 | 0.0329 | **0.0963** |
-| product | explicit | 0.7484 | 0.0110 | **0.0147** |
-
-**`dB ≈ exposure-sensitivity × conversion rate.`** Corpus type sets the ceiling (assertion
-saturates every suite); the **kind of claim** sets the fraction that becomes installed
-belief. Conversion is ordered ethics > architecture > product **identically in both corpus
-families** — two independent replications. Ethics is the only cell where training beats
-exposure.
-
-The same ordering reappears **within** topics: evaluative (`assessment`) facets convert
-better than descriptive (`core`) facets in **4 of 4** cells, and the gap is 2.0-2.3x on the
-product topic (where `core` genuinely is empirical) against 1.2-1.6x on architecture (where
-both layers are already normative).
-
-**Ruled out en route, all on existing data:** probability/log-odds scale (log-odds is not
-clamp-robust on the saturated product bank), headroom at base (the product reversal
-*strengthens* in-band), per-item room available (32.7x survives normalisation; the per-item
-correlation is *negative* on product), suite movability (`S_B` 0.652/0.626/0.617), absorption
-(sw and po explicit corpora absorbed identically and moved belief 13x apart), and framing mix
-(~40% of the spread only).
-
-**Also measured, and it refuted a prediction:** explicit corpora move THIRD-person
-propositions more than first-person ones (3/3 seeds on both decisive topics), despite being
-written in the first person. Not paraphrase-matching — a validity result in the project's
-favour. `po_explicit` is +0.0457 on third-person items and -0.0032 on first-person ones, so
-its headline null is an average of opposing components.
-
-Note: `insights/conversion-rate-not-detection/` (17 pass / 0 fail). Re-runnable decomposition:
-`belief-transfer/scripts/belief_effect_decomposition.py`, which self-checks against the
-published per-seed values.
-
-**H34 was approved, refined, run and FALSIFIED (2026-08-30b).** The epistemic-type account of
-the conversion ordering does not survive: comparing the evaluative bank (belief) against the
-empirical one (descriptive-inference), the evaluative side wins on architecture (2/3, 3/3
-seeds) and **loses on product** (1/3, 1/3, empirical converting better). Two topics
-disagreeing kills a claim that says the effect is not topic-dependent.
-
-**It also corrected an error in the cycle-7 reading.** The claim that evaluative facets
-convert better "in 4 of 4 cells" rested on treating the belief bank's `core`/`assessment`
-split as empirical-vs-evaluative. The belief item template forbids factual items outright, so
-both layers are evaluative and that split measures inferential distance, not epistemic type.
-Withdrawn as epistemic evidence; it stands as a layer result.
-
-**The conversion ordering itself is untouched** — it is a measurement. What is gone is its
-explanation. Untested candidates: corpus register, and the strength of the base model's prior
-(what the fictional twin P7 was designed to isolate).
-
-**Superseded, for the record:** `H34` — hold domain fixed and vary only the claim's epistemic
-type (an evaluative statement about phones beside the existing empirical one). It is the only
-clean test, since the layer split above carries an inferential-distance confound. Proposed
-with a falsifier; **not registered and not run, pending approval.**
+- **`sensitivity_v2` is gone and 91 overlays name it.** Point estimates survive redundantly
+  (`S_B` 0.6521, `S_A` 0.3498); intervals and per-item responses do not. So factory_farming
+  has no interval on any `T_B`/`T_A`. Not reconstructed — synthesising a results file from
+  downstream copies would fabricate provenance. **User decision.**
+- **product_opinion has no usable action axis.** `S_A` +0.0095 straddles zero.
 
 ## Hypotheses
 
-**`open/` holds exactly one: `H35`, registered 2026-08-31 on user direction.** Per-arm
-displacement from BASE is content-independent compression of saturated items toward the
-middle, and a bank shows it only in proportion to how lopsided its BASE composition is. It
-was opened after the observation that ethics' `explicit −` arm sits ABOVE base while the
-other two topics' negative arms do not.
+**`open/` holds exactly one: `H35`** — per-arm displacement from BASE is content-independent
+compression of saturated items toward the middle; a bank shows it in proportion to how
+lopsided its BASE composition is.
 
-The motivating evidence is already in hand and cost nothing — all three topics net against
-the SAME off-topic adapter (`ms0_arms/checkpoint-24`), and that contentless adapter raises the
-ethics bank by +0.1088 / +0.1244 while leaving architecture and product flat to slightly
-negative. Sorted by the item's own BASE instead of by topic, the three banks agree: items
-below 0.10 rise (+0.0878 / +0.1084 / +0.0650), items above 0.90 fall (−0.0824 / −0.0537 /
-−0.0686). Ethics differs only in composition — 81% of its items sit below 0.10, against 16%
-for each of the other two. Instrument floor, acquiescence, and a shared-term regression
-artifact were each tested and each fails to explain it; BASE is bit-identical across every
-pair of runs (max |Δ| = 0.00e+00), so it carries no measurement noise.
-
-**F1 was run 2026-08-31 and SUPPORTED the hypothesis on both required replicates**, at zero
-cost — a re-read of stored rows. The shared off-topic control's shift on the floor-only
-sub-banks lands inside the registered [+0.05, +0.15] band at every seed on both architecture
-(+0.0846 to +0.1425) and product (+0.0606 to +0.0967); the falsifier required ≤ +0.02 and did
-not fire. The unregistered complement is what makes it compression rather than drift: at the
-item level, floor items rise and ceiling items fall by matching magnitudes (architecture
-+0.2124 against −0.2136), middle items do not move (+0.0100, −0.0007, both intervals covering
-zero), and a BALANCED sub-bank drawn from the same items shows nothing (+0.0172, +0.0246).
-A non-normative bank *made* lopsided reproduces the ethics phenomenon at full size.
-
-**F2** (checkpoint monotonicity) and **F3** (a fourth topic — a normative claim the model is
-NOT saturated on) remain unrun.
-
-**F3's rationale was revised upward on 2026-08-31, correcting an earlier call in this file
-that it was "confirmation rather than discrimination".** Fitting each arm as
-`arm_i ~= F + b*(base_i - F)`, ARCHITECTURE separates the two mechanisms cleanly — its
-control shrinks toward 0.526 / 0.493 while its treatment arms shrink toward 0.703 [0.656,
-0.756] and 0.378 [0.331, 0.425], non-overlapping, so belief installation moves the TARGET
-rather than compressing harder. **ETHICS cannot show this**: its two treatment arms shrink
-toward the same point (0.684 / 0.694, intervals overlapping) and the whole contrast sits in
-`b` — but that is a degeneracy, not a finding, because 81% of its items sit at ~0 and `F` is a
-long extrapolation whose control interval runs past 1.0. So across the three topics
-**normative and no-leverage-in-the-bank are perfectly confounded**, and nothing on disk can
-say whether normative belief installation moves `F` or only `b`. A normative bank WITH spread
-answers it. That is a real discrimination and the strongest argument for a fourth topic.
-
-The ethics `dB NET` is unaffected — it remains a valid measurement of the `+`/`−` contrast.
-What the degeneracy forbids is a MECHANISTIC claim read off the ethics topic alone; that
-caveat belongs on any such claim.
-
-F3's prerequisite was revised with the rationale (recorded in the hypothesis file, not
-silently replaced): the bank now needs BOTH extremes populated at 20–35% each and
-`sd(base) ≥ 0.25`, because the mechanism test needs variance in `base` that the original
-composition-only wording did not require. Cost is unchanged — two corpora, three banks,
-eighteen training runs.
-
-**`GOAL.md`'s "No fourth topic" decision was amended 2026-08-31 on user direction** to admit
-exactly one topic for F3 and nothing else — a widen move admitted for a harden purpose.
-Reasoning in `changelog/2026-08-31.md`. **No generality claim may cite that topic**; it exists
-to break the normative / no-leverage confound, not to extend the three-topic result.
-
-**CORRECTION: "F3 is unbuildable" was written and WITHDRAWN the same day.** The sweep
-behind it used only canonical moral questions, where a safety-trained model carries an
-installed stance — a biased sample. Screening low-valence normative claims found a candidate
-immediately: **civic trade-offs** (car-free centres, admission lottery, compulsory voting,
-professional juries, four-day week, term limits) gives **25% of items below 0.10, 33% above
-0.90, sd 0.3791** — clearing H35's prerequisite outright.
-
-**SECOND CORRECTION, same day: that candidate is NOT a topic.** Its six "facets" are six
-UNRELATED policy beliefs, not facets of one belief, and no corpus can argue for cars, juries,
-voting, lotteries, working weeks and term limits jointly. Its spread is spread ACROSS six
-beliefs, not WITHIN one belief's facets — which is the thing F3 needs and the thing the screen
-did not test. **The same error was made twice in one day: a property confirmed on a set of
-STATEMENTS was treated as a property of a TOPIC.** What survives is only that low-valence
-normative statements reach both extremes where canonical moral ones do not — useful for where
-to look next, not a candidate. **F3 is REOPENED but has NO candidate.**
-
-A second claim was also wrong and is withdrawn: a two-option forced choice does NOT make
-"genuinely split" and "position-driven" the same observable — genuine indifference gives
-`p=0.5, gap=0` against position-locking's `p=0.5, gap=1`. The instrument can represent a
-balanced belief; this model just never lands there.
-
-**What survives is the census**: of 236 hand-written normative statements, ZERO are
-content-driven and mid-range. Every usable item is pinned, so bank spread is always built
-from items at opposite ends.
-
-**And a new open question that outranks F3.** Bank spread tracks ACQUIESCENCE, not belief:
-ethics has none (−0.0544, both directions at the floor — the model is CONSISTENT there),
-architecture +0.3287 and product +0.5226 do. In all three, ceiling items are forward-coded
-and floor items reverse-coded. So the base-position leverage that identifies `F` and `b` may
-be response style rather than belief structure — which would mean architecture's clean
-separation needs re-reading. Untested, cheap to test, and ahead of F3 in priority.
-
-Superseded detail below: Three
-screening sweeps, **188 hand-written normative statements**, all free. Spanning the CASES
-fails because where this model is content-driven on a belief item it reads the sentence's
-normative FRAME, not the case — it scores **0.0000** on "lying to someone who intends
-violence about where their target is hiding is acceptable" and **0.9945** on "legally
-limiting how much red meat an adult may buy is justified", both backwards on the merits and
-both matching the frame. Splitting the FRAME does produce the first architecture-like
-normative bank (40% floor / 40% ceiling), but it **fails its own positive control**: hold the
-frame and swap to factory farming, where the model is firmly anti, and the prohibition facets
-still read 1.0000 / 0.9997 / 0.8886 — they measure distaste for banning and prosecuting, not
-the belief.
-
-**The settling measurement: of all 188 statements, ZERO are content-driven and mid-range**
-(0.20 ≤ p ≤ 0.80 with `variant_gap` < 0.30). 47% are position-locked, 35% pinned at the
-floor, 18% at the ceiling. With a two-option forced choice scored by label log-probability
-(D1), *"genuinely split"* and *"position-driven"* are the SAME observable, and `variant_gap`
-says it is always the second. **The instrument cannot represent a balanced normative belief**,
-so F3's bank does not exist to be found. Reopening it needs a different READOUT — more
-options, a graded scale, or free-text scored separately — which is a new instrument family
-that `GOAL.md` excludes and the fourth-topic exception does not cover.
-
-**The mechanism question therefore stays open with the degeneracy stated**, which is the
-honest output. `H35`'s core claim is unaffected: F1 supported it and F2 is still unrun.
-
-Superseded detail, kept for the record — the earlier state of the search: Candidate A — "using animals in medical
-research is ethically acceptable" — was screened on the base model 2026-08-31 and **REJECTED**
-(`scripts/screen_belief_candidates.py --candidate A`). On `p_positive` alone it looks ideal
-(mean 0.2805, sd 0.2915, 75% one-sided); but every item near 0.5 has `variant_gap` near 1.0,
-i.e. answered on option POSITION with the two orders averaging to the middle. Restricted to
-content-bearing items, **89% sit on one side of 0.5**, robust across gap cuts of 0.30/0.50/0.75
-— factory farming's saturation with a different facet mix. Candidates B–E (compensated kidney
-donation, zoos, the Singer obligation claim, low-wage offshore manufacturing) are unscreened;
-screening is minutes each. **Position bias concentrated in the REVERSE statements**, so screen
-both directions and weight the negations.
-
-**This does not touch netted `dB`/`dA`**, which subtract the control's own contrast. What it
-does touch is every per-arm distance from BASE in `insights/which-corpus-installs-belief/`,
-and the three per-topic figures invite exactly the reading H35 says is unavailable.
-
-Previously: `H33` was opened and falsified the same session; `H34` was registered on approval
-and falsified.
-
-Previously described as the correct terminal state: no remaining check would change
-how an existing result is stated. **H31** and **H32** were moved to `resource_constrained/`
-on user direction — well-formed, falsifiers untouched, parked because they need corpora that
-do not exist and the phase is refinement. **H33** was opened and falsified the same session.
-
-Previously: **H31** (reasoning-trace installs belief) and **H32** (reasons-without-verdict).
-**Two of three slots used; one free. Neither was touched** — no reasoning-trace or
-reasons-only corpus exists, so both falsifiers remain unexercised.
-
-What this session moved is **H8 (generality, topic leg)** and **H26 (seed stability)**:
-- H8: explicit stance moves belief *and* action on a second, non-moral topic → the FF
-  explicit result is not a property of the subject matter. Evidence-only reproduces FF's
-  finding with a smaller belief effect.
-- H26: its sign-flip prediction for the evidence family **did not reproduce** on the rebuilt
-  instrument. Magnitude instability did (2.29×).
-
-Neither file was moved between folders this session; both want an evidence line appended.
+- **F1 RUN and SUPPORTED**, replicated on both required topics, free.
+- **F2 (checkpoint monotonicity) unrun.**
+- **F3 (a fourth topic) REOPENED with no candidate** after a full search — screened,
+  frame-split, piloted and abandoned. Neither buildable nor unbuildable: untested.
+  `GOAL.md`'s fourth-topic exception is live and unused. **User decision.**
+- **The check that outranks both**, and is free: how many items in the three BUILT belief
+  banks are position-locked. Measured on ethics as a side effect (83% content-bearing, 7%
+  locked) but **architecture is 37% / 56%** — so more than half of the bank behind H35's
+  mechanism result may be positional artifact, and `F`/`b` are fitted over per-item BASE
+  positions. Recoverable from stored `letter_probs`.
 
 ## Void / uninterpretable — do not cite
 
@@ -554,22 +130,26 @@ as support — which is the whole reason `AGENTS.md` says to withdraw rather tha
 
 ## Next decisions, in order (TERMINAL PHASE)
 
-1. **Write the paper.** Everything needed is measured and every quotable claim has an
-   `insights/` note with numeral-level provenance. `write-paper` is the skill.
-2. **Decide what the paper claims about generality**, given three topics that do not agree:
-   assertion moves belief on two and fails on the third, where evidence works instead. The
-   honest options are a narrowed claim or a claim about topic-dependence itself. This is a
-   writing decision, not an experiment.
-3. **Carry the three instrument failures into the writeup** rather than letting a reviewer
-   find them: R-F position bias (software_architecture belief), R8 ceiling censoring
-   (software_architecture action), and product_opinion's dead action axis.
-4. **`sensitivity_v2` is still gone**, so factory_farming has no interval on `S_B`/`S_A`.
-   Either drop `T_B`/`T_A` for that topic or state the point estimates as such.
-5. **Not for this phase:** the fictional twin (P7), the product action-bank rebuild, H31/H32,
-   any fourth topic. All are recorded where they belong with the reason.
+1. **The free position-lock check on the three built banks** (above). It bears on a standing
+   result and costs nothing.
+2. **Write the paper.** Every quotable claim has an `insights/` note with numeral-level
+   provenance. `write-paper` is the skill.
+3. **Decide what the paper claims about generality**, given three topics that disagree. A
+   narrowed claim, or a claim about topic-dependence itself. A writing decision, not an
+   experiment.
+4. **Carry the three instrument failures into the writeup** rather than letting a reviewer
+   find them: R-F, R8, and product_opinion's dead action axis.
+5. **A one-page "what we actually know"** — offered to the user and not yet taken up. The
+   standing result has been revised enough times to be hard to hold in one head.
+6. **Repo bloat**, now user-reported: 141GB of checkpoints, orphaned run ids, docs naming
+   purged runs. Needs its own session; a rule cannot fix it.
+7. **Not for this phase:** the fictional twin (P7), the product action-bank rebuild, H31/H32.
 
 ## Do not lose
 
 `mld_arms`, `ms_sparse_arms` (3 seeds each) and `m0_multiform` are on HF and look like
 retired form-matrix clutter. They are the cells behind `insights/form-ratios-seed-stability`,
 and `m0_multiform` is a live arm (`m0long_*`) in `ms3p_arms`' netting list.
+
+`animal_research` + `ar_suite_pilot` are kept though the topic was **rejected at pilot** —
+they are the evidence for that rejection, and the spec header says so.
