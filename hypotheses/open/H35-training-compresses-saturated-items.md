@@ -416,6 +416,51 @@ shown is enough of them. **Not piloted.** The next move is another screen iterat
 endorsement-side facets, which costs minutes, not a pilot on a bank the screen already
 predicts will miss.
 
+## All candidates screened — 2026-08-31, one model load
+
+`scripts/screen_belief_candidates.py --candidate all`. Verdicts use the CORRECTED rule
+(clause 3 withdrawn); the prerequisite line is advisory, since it is formally applied at
+pilot on generated items.
+
+| cand | belief | content-bearing n | floor / ceiling | verdict |
+| --- | --- | --- | --- | --- |
+| A | animal research | 9 | 78% / 11% | **REJECT** — 89% one side |
+| A2 | animal research, respanned | 12 | 67% / 17% | passes rule, misses 20% prerequisite |
+| **A3** | animal research, endorsement widened | **11** | 64% / **27%** | passes, meets prerequisite |
+| B | compensated kidney donation | **5** | 60% / 40% | passes, meets — *on five items* |
+| C | zoos | 7 | 71% / 29% | passes, meets prerequisite |
+| D | Singer obligation | 8 | 12% / 88% | **REJECT** — 88% one side |
+| E | low-wage offshore manufacturing | 6 | 83% / 0% | **REJECT** — 100% one side |
+| *reference* | architecture (works) | 42 | 40% / 52% | — |
+| *reference* | ethics (degenerate) | 37 | 92% / 3% | — |
+
+**D fails in the mirror image of ethics** — 88% at the CEILING rather than the floor. Equally
+degenerate for this purpose: what identifies `F` and `b` is variance in BASE, and a bank
+pinned at either end has none.
+
+**B's balance is the best number in the table and the least trustworthy.** Its content-bearing
+sample is **five items — three against two**. That cannot rank above A3's eleven; it is noise
+wearing a good ratio.
+
+**A3 is the shortlist.** Largest content-bearing sample of any survivor, the only one whose
+thinner extreme (27%) clears the prerequisite with any margin, and the topic that holds the
+DOMAIN nearest to factory farming — animal-welfare ethics, the same industry-figures corpus
+style — which is the tightest available isolation of saturation from subject matter.
+
+**Stated before any pilot: expect the generated bank to be WORSE than this screen.**
+`AGENTS.md` records that "generated paraphrases of a facet are markedly less order-stable than
+the hand-picked statement that named it", so hand-written statements are an upper bound on
+order stability, and a generated A3 bank could easily fall below the 20% ceiling floor. The
+prerequisite is therefore a live gate at pilot, not a formality — and a bank that misses it is
+thrown away rather than relabelled.
+
+**None of the survivors looks like architecture.** All three lean floor-ward (64–71%), because
+all are "is X ethically acceptable?" claims the model leans against. A3 at 7:3 is the closest
+any normative candidate got to architecture's near-1:1, and it may simply be that a normative
+bank on this model cannot be balanced — which would itself be worth recording, since it would
+mean F3 is not merely unbuilt but unbuildable, and the mechanism question stays open with the
+degeneracy stated rather than resolved.
+
 ## Why F1 comes first
 
 F1 and F3 test the same corollary. F1 does it by re-reading rows already on disk and can be
