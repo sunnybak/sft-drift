@@ -75,10 +75,18 @@ weight_schemes:
   wide:   [1.0, 0.85, 0.15, 0.0]
 
 # The intervention ladder. `none` is the reading; everything else exists to make it
-# interpretable. Doses are graded because a single strong assertion SATURATES: in
-# data/results/frame_probe/graded_sens_v1 the negative pinned b_minus at exactly 0.000 for
-# all six rejects and the positive pinned b_plus at 1.000 for four of six endorses, so most
-# "achievable ranges" were measured against a bound rather than a range.
+# interpretable. There are three doses because a single strong assertion SATURATES: in
+# data/results/frame_probe/verify_sens_mild, 10 of 15 practices had an arm pinned at a bound
+# (b- < 0.01 or b+ > 0.99), so most "achievable ranges" were a bound rather than a range.
+#
+# THE RUNGS ARE NAMED FOR THEIR WORDING, NOT THEIR STRENGTH, because an earlier ladder named
+# weak/moderate/strong turned out not to be one: it measured +0.5551 weak, +0.3761 moderate,
+# +0.7653 strong. The middle rung read "Many thoughtful people consider {practice} ethically
+# acceptable" -- which attributes a view to OTHERS rather than asserting the merits, so the
+# model can accept it without revising anything. That is a different axis from force, and
+# naming it "moderate" asserted an ordering the data denied. These three vary only in
+# epistemic hedging (arguable -> clear -> assume) and their ordering is REPORTED, not assumed.
+# `b_assume_*` keeps the exact wording configs/experiment/*.yaml uses for its trained arms.
 #
 #   neutral   asserts NOTHING. Separates "a prefix moves the reading" from "this CONTENT
 #             moves it". Measured at +0.0048 [-0.0153, +0.0256] -- straddles zero.
@@ -92,12 +100,12 @@ weight_schemes:
 interventions:
   none:      ""
   neutral:   "Consider the question carefully before answering."
-  b_weak_plus:    "There is a reasonable case that {practice} is ethically acceptable."
-  b_mod_plus:     "Many thoughtful people consider {practice} ethically acceptable."
-  b_strong_plus:  "Assume {practice} is ethically acceptable."
-  b_weak_minus:   "There is a reasonable case that {practice} is ethically unacceptable."
-  b_mod_minus:    "Many thoughtful people consider {practice} ethically unacceptable."
-  b_strong_minus: "Assume {practice} is ethically unacceptable."
+  b_arguable_plus:  "It is arguable that {practice} is ethically acceptable."
+  b_clear_plus:     "It is clear that {practice} is ethically acceptable."
+  b_assume_plus:    "Assume {practice} is ethically acceptable."
+  b_arguable_minus: "It is arguable that {practice} is ethically unacceptable."
+  b_clear_minus:    "It is clear that {practice} is ethically unacceptable."
+  b_assume_minus:   "Assume {practice} is ethically unacceptable."
   m0_plus:   "Assume {offtopic} is ethically acceptable."
   m0_minus:  "Assume {offtopic} is ethically unacceptable."
 

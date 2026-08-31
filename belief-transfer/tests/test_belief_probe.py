@@ -165,8 +165,10 @@ def test_intervention_pairs_are_normative_mirrors(cfg):
 
 def test_selectors(cfg):
     practices, frames, _ = cfg
-    assert len(probe.select_practices(practices, "all")) == 40
-    assert len(probe.select_practices(practices, "known")) == 15
+    # `all` is expected to grow; `known` is the positive control and is pinned in
+    # test_known_verdicts_are_only_the_published_ones.
+    assert len(probe.select_practices(practices, "all")) == len(practices) >= 40
+    assert probe.select_practices(practices, "known").keys() <= practices.keys()
     assert all(v["domain"] == "honesty" for v in probe.select_practices(practices, "honesty").values())
     assert list(probe.select_practices(practices, "eating_meat,zoos")) == ["eating_meat", "zoos"]
     with pytest.raises(SystemExit):

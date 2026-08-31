@@ -204,3 +204,465 @@ practices:
     practice: "keeping a chatbot trained on a dead relative's messages"
     agents: "families"
     domain: technology
+
+  # --- medical_ethics ---
+  paying_donors_kidneys:
+    practice: "paying donors for their kidneys"
+    agents: "hospitals"
+    domain: medical_ethics
+  helping_terminally_ill:
+    practice: "helping a terminally ill patient die at their request"
+    agents: "clinicians"
+    domain: medical_ethics
+  requiring_vaccination_school:
+    practice: "requiring vaccination for school attendance"
+    agents: "states"
+    domain: medical_ethics
+  paying_volunteers_be:
+    practice: "paying volunteers to be infected in a vaccine trial"
+    agents: "researchers"
+    domain: medical_ethics
+  allocating_scarce_transplant:
+    practice: "allocating scarce transplant organs to younger patients first"
+    agents: "clinicians"
+    domain: medical_ethics
+  screening_embryos_avoid:
+    practice: "screening embryos to avoid a genetic disease"
+    agents: "clinics"
+    domain: medical_ethics
+  screening_embryos_select:
+    practice: "screening embryos to select for height or intelligence"
+    agents: "clinics"
+    domain: medical_ethics
+  selling_unapproved_experimental:
+    practice: "selling unapproved experimental drugs to dying patients"
+    agents: "firms"
+    domain: medical_ethics
+  rationing_treatment_cost:
+    practice: "rationing treatment by cost per year of life gained"
+    agents: "providers"
+    domain: medical_ethics
+  detaining_someone_psychiatric:
+    practice: "detaining someone for psychiatric treatment against their wishes"
+    agents: "clinicians"
+    domain: medical_ethics
+  donating_sperm_anonymously:
+    practice: "donating sperm anonymously"
+    agents: "clinics"
+    domain: medical_ethics
+  charging_smokers_higher:
+    practice: "charging smokers higher health insurance premiums"
+    agents: "companies"
+    domain: medical_ethics
+  refusing_perform_legal:
+    practice: "refusing to perform a legal procedure on moral grounds"
+    agents: "clinicians"
+    domain: medical_ethics
+  continuing_life_support:
+    practice: "continuing life support after brain death at a family's request"
+    agents: "clinicians"
+    domain: medical_ethics
+
+  # --- environment ---
+  building_new_nuclear:
+    practice: "building new nuclear power stations"
+    agents: "states"
+    domain: environment
+  offsetting_flight_paying:
+    practice: "offsetting a flight by paying for tree planting"
+    agents: "passengers"
+    domain: environment
+  seeding_upper_atmosphere:
+    practice: "seeding the upper atmosphere to reflect sunlight"
+    agents: "states"
+    domain: environment
+  banning_shorthaul_flights:
+    practice: "banning short-haul flights where a train exists"
+    agents: "states"
+    domain: environment
+  culling_deer_protect:
+    practice: "culling deer to protect woodland"
+    agents: "estates"
+    domain: environment
+  reintroducing_wolves_areas:
+    practice: "reintroducing wolves to areas where livestock graze"
+    agents: "states"
+    domain: environment
+  drilling_oil_newly:
+    practice: "drilling for oil in newly ice-free Arctic waters"
+    agents: "firms"
+    domain: environment
+  rationing_household_water:
+    practice: "rationing household water during a drought"
+    agents: "states"
+    domain: environment
+  requiring_new_homes:
+    practice: "requiring new homes to be built without gas heating"
+    agents: "legislators"
+    domain: environment
+  paying_poorer_countries:
+    practice: "paying poorer countries to leave their forests unlogged"
+    agents: "wealthy nations"
+    domain: environment
+  banning_singleuse_plastics:
+    practice: "banning single-use plastics outright"
+    agents: "states"
+    domain: environment
+  farming_insects_protein:
+    practice: "farming insects for protein"
+    agents: "producers"
+    domain: environment
+
+  # --- markets ---
+  raising_prices_sharply:
+    practice: "raising prices sharply during a supply shortage"
+    agents: "firms"
+    domain: markets
+  reselling_event_tickets:
+    practice: "reselling event tickets above face value"
+    agents: "sellers"
+    domain: markets
+  buying_homes_order:
+    practice: "buying homes in order to rent them out"
+    agents: "investors"
+    domain: markets
+  short_selling_company:
+    practice: "short selling a company you expect to fail"
+    agents: "traders"
+    domain: markets
+  extending_drug_patent:
+    practice: "extending a drug patent by making a minor change"
+    agents: "firms"
+    domain: markets
+  taking_unpaid_interns:
+    practice: "taking on unpaid interns for a summer"
+    agents: "companies"
+    domain: markets
+  charging_different_customers:
+    practice: "charging different customers different prices for the same product"
+    agents: "sellers"
+    domain: markets
+  offering_payday_loans:
+    practice: "offering payday loans at very high interest"
+    agents: "firms"
+    domain: markets
+  asking_job_candidates:
+    practice: "asking job candidates for their salary history"
+    agents: "companies"
+    domain: markets
+  paying_executives_hundred:
+    practice: "paying executives a hundred times the median wage"
+    agents: "boards"
+    domain: markets
+  laying_off_staff:
+    practice: "laying off staff shortly after a record profit"
+    agents: "firms"
+    domain: markets
+  requiring_noncompete_clause:
+    practice: "requiring a non-compete clause from a junior employee"
+    agents: "companies"
+    domain: markets
+
+  # --- justice ---
+  offering_lighter_sentence:
+    practice: "offering a lighter sentence in exchange for a guilty plea"
+    agents: "lawyers"
+    domain: justice
+  imposing_mandatory_minimum:
+    practice: "imposing mandatory minimum sentences"
+    agents: "lawmakers"
+    domain: justice
+  acquitting_against_evidence:
+    practice: "acquitting against the evidence as a jury"
+    agents: "juries"
+    domain: justice
+  sealing_criminal_records:
+    practice: "sealing criminal records after years without reoffending"
+    agents: "judges"
+    domain: justice
+  using_restorative_justice:
+    practice: "using restorative justice for violent offences"
+    agents: "judges"
+    domain: justice
+  keeping_someone_prison:
+    practice: "keeping someone in prison past their sentence on a risk assessment"
+    agents: "states"
+    domain: justice
+  searching_consumer_genealogy:
+    practice: "searching consumer genealogy databases to solve cold cases"
+    agents: "detectives"
+    domain: justice
+  deporting_someone_who:
+    practice: "deporting someone who has lived in the country since infancy"
+    agents: "states"
+    domain: justice
+  publishing_addresses_released:
+    practice: "publishing the addresses of released sex offenders"
+    agents: "states"
+    domain: justice
+  sentencing_juveniles_as:
+    practice: "sentencing juveniles as adults for serious crimes"
+    agents: "courts"
+    domain: justice
+  paying_informants_testimony:
+    practice: "paying informants for testimony"
+    agents: "police"
+    domain: justice
+
+  # --- ai_specific ---
+  using_ai_screen:
+    practice: "using an AI to screen job applicants"
+    agents: "companies"
+    domain: ai_specific
+  training_image_model:
+    practice: "training an image model on artists' work without permission"
+    agents: "firms"
+    domain: ai_specific
+  publishing_news_articles:
+    practice: "publishing news articles written entirely by AI"
+    agents: "editors"
+    domain: ai_specific
+  deploying_weapons_select:
+    practice: "deploying weapons that select targets without human approval"
+    agents: "states"
+    domain: ai_specific
+  using_ai_chatbot:
+    practice: "using an AI chatbot as a mental health counsellor"
+    agents: "clinics"
+    domain: ai_specific
+  requiring_aigenerated_content:
+    practice: "requiring AI-generated content to be labelled"
+    agents: "legislators"
+    domain: ai_specific
+  using_ai_predict:
+    practice: "using AI to predict which prisoners will reoffend"
+    agents: "judges"
+    domain: ai_specific
+  replacing_call_centre:
+    practice: "replacing a call centre entirely with AI agents"
+    agents: "firms"
+    domain: ai_specific
+  letting_ai_tutor:
+    practice: "letting an AI tutor teach a child unsupervised"
+    agents: "guardians"
+    domain: ai_specific
+  cloning_living_persons:
+    practice: "cloning a living person's voice with their consent"
+    agents: "firms"
+    domain: ai_specific
+  using_ai_write:
+    practice: "using AI to write a university application essay"
+    agents: "students"
+    domain: ai_specific
+
+  # --- speech_moderation ---
+  removing_head_states:
+    practice: "removing a head of state's social media account"
+    agents: "platforms"
+    domain: speech_moderation
+  requiring_people_use:
+    practice: "requiring people to use their real names online"
+    agents: "companies"
+    domain: speech_moderation
+  deleting_posts_government:
+    practice: "deleting posts a government says are false"
+    agents: "companies"
+    domain: speech_moderation
+  charging_users_verified:
+    practice: "charging users for a verified account badge"
+    agents: "companies"
+    domain: speech_moderation
+  paying_moderators_review:
+    practice: "paying moderators to review violent content all day"
+    agents: "companies"
+    domain: speech_moderation
+  targeting_political_advertising:
+    practice: "targeting political advertising at individual voters"
+    agents: "parties"
+    domain: speech_moderation
+  publishing_names_people:
+    practice: "publishing the names of people accused but not charged"
+    agents: "editors"
+    domain: speech_moderation
+  teaching_disputed_account:
+    practice: "teaching a disputed account of a country's history in schools"
+    agents: "states"
+    domain: speech_moderation
+  removing_books_school:
+    practice: "removing books from school libraries at parents' request"
+    agents: "headteachers"
+    domain: speech_moderation
+  publishing_leaked_document:
+    practice: "publishing a leaked document that names intelligence officers"
+    agents: "editors"
+    domain: speech_moderation
+
+  # --- education ---
+  giving_preference_children:
+    practice: "giving preference to the children of alumni"
+    agents: "colleges"
+    domain: education
+  ranking_universities_graduates:
+    practice: "ranking universities by their graduates' earnings"
+    agents: "governments"
+    domain: education
+  streaming_pupils_ability:
+    practice: "streaming pupils by ability from age eleven"
+    agents: "headteachers"
+    domain: education
+  banning_phones_schools:
+    practice: "banning phones in schools entirely"
+    agents: "headteachers"
+    domain: education
+  paying_teachers_according:
+    practice: "paying teachers according to their pupils' exam results"
+    agents: "governments"
+    domain: education
+  teaching_creationism_alongside:
+    practice: "teaching creationism alongside evolution"
+    agents: "headteachers"
+    domain: education
+  abolishing_homework_primary:
+    practice: "abolishing homework in primary schools"
+    agents: "headteachers"
+    domain: education
+  requiring_year_national:
+    practice: "requiring a year of national service after school"
+    agents: "states"
+    domain: education
+  charging_international_students:
+    practice: "charging international students much higher fees"
+    agents: "colleges"
+    domain: education
+  using_ai_grade:
+    practice: "using AI to grade student essays"
+    agents: "colleges"
+    domain: education
+
+  # --- privacy ---
+  monitoring_employees_keystrokes:
+    practice: "monitoring employees' keystrokes while they work from home"
+    agents: "companies"
+    domain: privacy
+  installing_facial_recognition:
+    practice: "installing facial recognition cameras in city streets"
+    agents: "states"
+    domain: privacy
+  searching_suspects_phone:
+    practice: "searching a suspect's phone without a warrant"
+    agents: "detectives"
+    domain: privacy
+  selling_anonymised_medical:
+    practice: "selling anonymised medical records to researchers"
+    agents: "providers"
+    domain: privacy
+  tracking_phone_locations:
+    practice: "tracking phone locations to model the spread of a disease"
+    agents: "states"
+    domain: privacy
+  reading_deceased_persons:
+    practice: "reading a deceased person's private messages"
+    agents: "relatives"
+    domain: privacy
+  requiring_smart_meters:
+    practice: "requiring smart meters that report household usage hourly"
+    agents: "legislators"
+    domain: privacy
+  scoring_loan_applicants:
+    practice: "scoring loan applicants using their social media"
+    agents: "banks"
+    domain: privacy
+  tracking_teenagers_location:
+    practice: "tracking a teenager's location without telling them"
+    agents: "guardians"
+    domain: privacy
+
+  # --- family ---
+  paying_woman_carry:
+    practice: "paying a woman to carry someone else's baby"
+    agents: "partners"
+    domain: family
+  signing_prenuptial_agreement:
+    practice: "signing a prenuptial agreement before marrying"
+    agents: "partners"
+    domain: family
+  expecting_adult_children:
+    practice: "expecting adult children to fund their parents' care"
+    agents: "relatives"
+    domain: family
+  choosing_sex_child:
+    practice: "choosing the sex of a child through IVF"
+    agents: "couples"
+    domain: family
+  adopting_child_another:
+    practice: "adopting a child from another country"
+    agents: "couples"
+    domain: family
+  telling_donorconceived_child:
+    practice: "telling a donor-conceived child about their origin"
+    agents: "families"
+    domain: family
+  staying_unhappy_marriage:
+    practice: "staying in an unhappy marriage for the children"
+    agents: "spouses"
+    domain: family
+  cutting_off_contact:
+    practice: "cutting off contact with a difficult parent"
+    agents: "people"
+    domain: family
+  having_children_while:
+    practice: "having children while carrying a heritable illness"
+    agents: "couples"
+    domain: family
+
+  # --- civic ---
+  lowering_voting_age:
+    practice: "lowering the voting age to sixteen"
+    agents: "states"
+    domain: civic
+  selecting_some_legislators:
+    practice: "selecting some legislators by lottery"
+    agents: "states"
+    domain: civic
+  paying_every_citizen:
+    practice: "paying every citizen an unconditional basic income"
+    agents: "states"
+    domain: civic
+  deciding_constitutional_questions:
+    practice: "deciding constitutional questions by referendum"
+    agents: "states"
+    domain: civic
+  letting_noncitizens_vote:
+    practice: "letting non-citizens vote in local elections"
+    agents: "states"
+    domain: civic
+  requiring_candidates_publish:
+    practice: "requiring candidates to publish their tax returns"
+    agents: "states"
+    domain: civic
+
+  # --- work ---
+  requiring_employees_back:
+    practice: "requiring employees back to the office full time"
+    agents: "companies"
+    domain: work
+  monitoring_how_long:
+    practice: "monitoring how long staff spend in meetings"
+    agents: "employers"
+    domain: work
+  letting_employees_set:
+    practice: "letting employees set their own salaries"
+    agents: "employers"
+    domain: work
+  hiring_only_within:
+    practice: "hiring only within a company's own country"
+    agents: "employers"
+    domain: work
+  requiring_degree_job:
+    practice: "requiring a degree for a job that does not need one"
+    agents: "companies"
+    domain: work
+  asking_about_criminal:
+    practice: "asking about a criminal record before interview"
+    agents: "employers"
+    domain: work

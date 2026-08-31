@@ -367,9 +367,9 @@ def main() -> int:
 
         pooled = {}
         keys = sorted({k[:3] for k in halves})
-        for nm, (a, b) in [("S_B", ("b_strong_plus", "b_strong_minus")),
-                           ("S_B_moderate", ("b_mod_plus", "b_mod_minus")),
-                           ("S_B_weak", ("b_weak_plus", "b_weak_minus")),
+        for nm, (a, b) in [("S_B", ("b_assume_plus", "b_assume_minus")),
+                           ("S_B_clear", ("b_clear_plus", "b_clear_minus")),
+                           ("S_B_arguable", ("b_arguable_plus", "b_arguable_minus")),
                            ("machinery", ("m0_plus", "m0_minus")),
                            ("prefix_drift", ("neutral", "none"))]:
             d = [halves[k + (a,)][0] - halves[k + (b,)][0] for k in keys]
@@ -386,7 +386,7 @@ def main() -> int:
 
         for p in practices:
             none = cond_mean(p, "none")
-            bp, bm = cond_mean(p, "b_strong_plus"), cond_mean(p, "b_strong_minus")
+            bp, bm = cond_mean(p, "b_assume_plus"), cond_mean(p, "b_assume_minus")
             mach = cond_mean(p, "m0_plus") - cond_mean(p, "m0_minus")
             rng = bp - bm
             pos = (none - bm) / rng if abs(rng) > 1e-9 else float("nan")
@@ -425,7 +425,7 @@ def main() -> int:
                     def cm(c):
                         ks = [k for k in h if k[0] == p and k[3] == c]
                         return st.mean(h[k][0] for k in ks)
-                    bp2, bm2 = cm("b_strong_plus"), cm("b_strong_minus")
+                    bp2, bm2 = cm("b_assume_plus"), cm("b_assume_minus")
                     ps[p] = (cm("none") - bm2) / (bp2 - bm2) if abs(bp2 - bm2) > 1e-9 else float("nan")
                 if base is None:
                     base, tag = ps, "(reference)"
