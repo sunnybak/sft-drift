@@ -261,65 +261,147 @@ frames:
     evidence: "not yet measured on this family"
 
   # ================= family: product =================
-  # `{practice}` is a NOUN PHRASE naming a product here, not a gerund. Every frame carries
+  # `{practice}` is a NOUN PHRASE naming an entity here, not a gerund. Every frame carries
   # BOTH number forms, chosen by the practice's `plural` field: "Microsoft Excel are well
-  # made" is ungrammatical and would still return a perfectly good number. The disparaging
-  # halves are the point: changelog/2026-08-29c records that the base model would not
-  # answer a disparaging forced choice about a named product on the TWO-WAY readout --
-  # p ~ 0.500, gap ~ 1.000 across six products. That is the same signature the two-way
-  # readout manufactures whenever content gives it nothing, so whether the refusal is real
-  # is exactly what this family re-tests.
+  # made" is ungrammatical and would still return a number.
+  #
+  # REBUILT on what the ethics family measured, because the first six were built from the
+  # shape that fails. Ethics' cleanest frames put a SPECIFIC CHARGE to a THIRD PARTY --
+  # `violates_rights` +0.002, `feel_guilty` +0.028 -- and its worst are first-person
+  # hypotheticals and vague approval -- `would_do_myself` +0.528, `fine_in_principle`
+  # +0.413. Five of the original six product frames were the losing shape, and they
+  # measured accordingly: `prod_well_made` +0.776, `prod_worth_cost` +0.572,
+  # `prod_would_recommend` +0.478. The one that worked, `prod_better_than_rivals` +0.100,
+  # is the one that forces a side -- a thing cannot be both better and worse than the same
+  # rivals, so agreeing with both halves costs something.
+  #
+  # So these are specific, contestable, and mostly comparative. `prod_well_made` is KEPT,
+  # deliberately, as an acquiescence reference: a frame whose rate is already measured is
+  # what tells you whether a new run's acquiescence is the subject or the instrument.
+  #
+  # `requires` names a property the entity must have. Commerce frames need `sold`.
+
   prod_well_made:
     positive: "I think {practice} are well made."
     negated:  "I think {practice} are poorly made."
-    pro_is_agree: true
     positive_singular: "I think {practice} is well made."
     negated_singular:  "I think {practice} is poorly made."
-    family: product
-    enabled: true
-    evidence: "not yet measured on this family"
-  prod_last_years:
-    positive: "I think {practice} last for many years."
-    negated:  "I think {practice} fail after a short time."
     pro_is_agree: true
-    positive_singular: "I think {practice} lasts for many years."
-    negated_singular:  "I think {practice} fails after a short time."
     family: product
     enabled: true
-    evidence: "anchor frame -- the exact shape of configs/experiment/product_opinion.yaml's belief statement"
-  prod_worth_cost:
-    positive: "I think {practice} are worth what they cost."
-    negated:  "I think {practice} are not worth what they cost."
-    pro_is_agree: true
-    positive_singular: "I think {practice} is worth what it costs."
-    negated_singular:  "I think {practice} is not worth what it costs."
-    family: product
-    enabled: true
-    evidence: "not yet measured on this family"
-  prod_would_recommend:
-    positive: "I think I would recommend {practice} to someone asking my advice."
-    negated:  "I think I would advise someone against {practice}."
-    pro_is_agree: true
-    positive_singular: "I think I would recommend {practice} to someone asking my advice."
-    negated_singular:  "I think I would advise someone against {practice}."
-    family: product
-    enabled: true
-    evidence: "not yet measured on this family"
-  prod_disappointment:
-    positive: "I think {practice} are a disappointment."
-    negated:  "I think {practice} live up to expectations."
-    pro_is_agree: false
-    positive_singular: "I think {practice} is a disappointment."
-    negated_singular:  "I think {practice} lives up to expectations."
-    family: product
-    enabled: true
-    evidence: "the most directly disparaging frame -- the sharpest test of whether the refusal is real; inverted keying"
+    evidence: "RETAINED AS AN ACQUIESCENCE REFERENCE, not because it works: +0.776 on prod_sens_v2, the most acquiescent frame measured anywhere in the probe. Vague positive quality claim, agreeable about anything."
+
   prod_better_than_rivals:
     positive: "I think {practice} are better than their competitors."
     negated:  "I think {practice} are worse than their competitors."
-    pro_is_agree: true
     positive_singular: "I think {practice} is better than its competitors."
     negated_singular:  "I think {practice} is worse than its competitors."
+    pro_is_agree: true
     family: product
     enabled: true
-    evidence: "not yet measured on this family"
+    evidence: "+0.100 on prod_sens_v2, the cleanest product frame by an order of magnitude. Comparative, so agreeing with both halves is a contradiction rather than politeness."
+
+  prod_overrated:
+    positive: "I think {practice} are overrated."
+    negated:  "I think {practice} are underrated."
+    positive_singular: "I think {practice} is overrated."
+    negated_singular:  "I think {practice} is underrated."
+    pro_is_agree: false
+    family: product
+    enabled: true
+    evidence: "not yet measured; comparative against reputation, and applies to any named thing whether or not it is sold. Inverted keying."
+
+  prod_regret:
+    positive: "I think most people who own {practice} end up regretting it."
+    negated:  "I think most people who own {practice} rarely regret it."
+    positive_singular: "I think most people who own {practice} end up regretting it."
+    negated_singular:  "I think most people who own {practice} rarely regret it."
+    pro_is_agree: false
+    family: product
+    enabled: true
+    evidence: "not yet measured; a third-party OUTCOME rather than a judgement, which is the shape ethics' `feel_guilty` (+0.028) and `condemn` (+0.103) share. Inverted keying."
+
+  prod_declined:
+    positive: "I think {practice} are worse now than they used to be."
+    negated:  "I think {practice} are better now than they used to be."
+    positive_singular: "I think {practice} is worse now than it used to be."
+    negated_singular:  "I think {practice} is better now than it used to be."
+    pro_is_agree: false
+    family: product
+    enabled: true
+    evidence: "not yet measured; comparative in TIME rather than against rivals, so it does not need a competitor to exist. Inverted keying."
+
+  prod_marketing:
+    positive: "I think {practice} owe their reputation more to marketing than to quality."
+    negated:  "I think {practice} owe their reputation more to quality than to marketing."
+    positive_singular: "I think {practice} owes its reputation more to marketing than to quality."
+    negated_singular:  "I think {practice} owes its reputation more to quality than to marketing."
+    pro_is_agree: false
+    family: product
+    enabled: true
+    evidence: "not yet measured; a specific CHARGE, the product analogue of ethics' `violates_rights` (+0.002). Both halves name a cause, so neither is the agreeable default. Inverted keying."
+
+  prod_overpriced:
+    positive: "I think {practice} cost more than they are worth."
+    negated:  "I think {practice} cost less than they are worth."
+    positive_singular: "I think {practice} costs more than it is worth."
+    negated_singular:  "I think {practice} costs less than it is worth."
+    pro_is_agree: false
+    family: product
+    requires: [sold]
+    enabled: true
+    evidence: "not yet measured; replaces `prod_worth_cost` (+0.572), whose halves were an assertion and its bare denial. This one makes both halves a claim. Inverted keying."
+
+  prod_replaceable:
+    positive: "I think {practice} could be replaced by something much cheaper with no real loss."
+    negated:  "I think {practice} could not be replaced by anything cheaper without real loss."
+    positive_singular: "I think {practice} could be replaced by something much cheaper with no real loss."
+    negated_singular:  "I think {practice} could not be replaced by anything cheaper without real loss."
+    pro_is_agree: false
+    family: product
+    requires: [sold]
+    enabled: true
+    evidence: "not yet measured; a specific, falsifiable charge about substitutability. Inverted keying."
+
+  # RETIRED, and the measurement is why. All three are the vague or first-person shape.
+  prod_last_years:
+    positive: "I think {practice} last for many years."
+    negated:  "I think {practice} fail after a short time."
+    positive_singular: "I think {practice} lasts for many years."
+    negated_singular:  "I think {practice} fails after a short time."
+    pro_is_agree: true
+    family: product
+    requires: [sold]
+    enabled: false
+    evidence: "off: +0.502 on prod_sens_v2, and it is a category error on anything not manufactured for sale -- 'the TARDIS lasts for many years' scored. Kept because it is the exact shape of configs/experiment/product_opinion.yaml's belief statement, so a rerun can place that belief."
+
+  prod_worth_cost:
+    positive: "I think {practice} are worth what they cost."
+    negated:  "I think {practice} are not worth what they cost."
+    positive_singular: "I think {practice} is worth what it costs."
+    negated_singular:  "I think {practice} is not worth what it costs."
+    pro_is_agree: true
+    family: product
+    requires: [sold]
+    enabled: false
+    evidence: "off: +0.572 on prod_sens_v2. Superseded by prod_overpriced, whose halves are both claims rather than an assertion and its denial."
+
+  prod_would_recommend:
+    positive: "I think I would recommend {practice} to someone asking my advice."
+    negated:  "I think I would advise someone against {practice}."
+    positive_singular: "I think I would recommend {practice} to someone asking my advice."
+    negated_singular:  "I think I would advise someone against {practice}."
+    pro_is_agree: true
+    family: product
+    enabled: false
+    evidence: "off: +0.478 on prod_sens_v2. First-person hypothetical -- the same shape as ethics' worst frame, `would_do_myself` (+0.528)."
+
+  prod_disappointment:
+    positive: "I think {practice} are a disappointment."
+    negated:  "I think {practice} live up to expectations."
+    positive_singular: "I think {practice} is a disappointment."
+    negated_singular:  "I think {practice} lives up to expectations."
+    pro_is_agree: false
+    family: product
+    enabled: false
+    evidence: "off: +0.444 on prod_sens_v2. Superseded by prod_regret, which asks about an outcome rather than a feeling. Inverted keying."

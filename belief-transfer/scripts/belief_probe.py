@@ -154,6 +154,11 @@ def build_items(practices: dict, frames: dict) -> list[dict]:
         for fid, f in frames.items():
             if f.get("family", "ethics") != fam:
                 continue
+            # A frame may need a property of the entity. "The TARDIS is worth what it
+            # costs" is not a hard question, it is a category error, and it returns a
+            # perfectly good number -- which is how nonsense reaches an aggregate.
+            if any(not p.get(need) for need in f.get("requires", [])):
+                continue
             # number agreement: a product frame carries both forms and the practice
             # chooses. Silent mismatch ("Microsoft Excel are well made") still scores.
             sing = f.get("positive_singular") and not p.get("plural", True)

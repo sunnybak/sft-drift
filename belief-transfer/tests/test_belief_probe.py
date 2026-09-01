@@ -154,10 +154,12 @@ def test_every_frame_records_why_it_is_kept_or_retired(cfg):
             else:
                 assert "off:" in f["evidence"], name
         else:
-            # the new families have no published control yet; an enabled frame there must
-            # SAY so rather than imply evidence it does not have
+            # a non-ethics frame either cites a run that measured it, or says outright that
+            # nothing has. What it may not do is imply evidence it does not have.
             assert ("not yet measured" in f["evidence"] or "anchor frame" in f["evidence"]
-                    or "sharpest test" in f["evidence"]), name
+                    or "_sens_v" in f["evidence"]), name
+            if not f["enabled"]:
+                assert "off:" in f["evidence"], name
 
 
 def test_intervention_pairs_are_normative_mirrors(cfg):
@@ -243,6 +245,38 @@ def test_every_product_declares_a_kind_and_a_number(cfg):
     # the ladder is only informative if every rung is populated
     present = {v["kind"] for v in prod.values()}
     assert present == KINDS, f"missing rungs: {KINDS - present}"
+
+
+def test_plural_flags_are_not_merely_self_consistent(cfg):
+    """The grammar test below checks the FRAME matches the declared `plural`. It cannot see
+    a `plural` that is simply wrong -- "Google Search are well made" passed it, because the
+    entry claimed to be plural and got a plural frame. Four entries were mislabelled this
+    way. A declared plural must actually look plural."""
+    # A heuristic, not a grammar engine: a declared plural's head noun ends in -s unless it
+    # is one of the handful of English nouns whose plural does not. Keeping the exception
+    # list explicit and tiny is the point -- widening it to make a failure go away would
+    # give back exactly the blindness this test exists to remove.
+    IRREGULAR = {"fish", "sheep", "aircraft", "series", "species", "software"}
+    practices, _, _ = cfg
+    for k, v in practices.items():
+        if v.get("family") == "product" and v["plural"]:
+            head = v["practice"].split()[-1].lower().strip(".,")
+            assert head.endswith("s") or head in IRREGULAR, \
+                f"{k} is declared plural but reads singular: {v['practice']!r}"
+
+
+def test_commerce_frames_are_skipped_for_things_nobody_buys(cfg):
+    """"The TARDIS is worth what it costs" is a category error that returns a number."""
+    practices, frames, _ = cfg
+    prod = {k: v for k, v in practices.items() if v.get("family") == "product"}
+    pf = {k: v for k, v in frames.items() if v.get("family") == "product"}
+    needs_sold = {k for k, v in pf.items() if "sold" in (v.get("requires") or [])}
+    assert needs_sold, "no frame declares requires: [sold]"
+    for it in probe.build_items(prod, pf):
+        if it["frame"] in needs_sold:
+            assert prod[it["practice"]]["sold"], f"{it['frame']} paired with {it['practice']}"
+    unsold = [k for k, v in prod.items() if not v["sold"]]
+    assert unsold, "the requirement is untested if everything is sold"
 
 
 def test_product_frames_carry_both_number_forms_and_agree(cfg):
