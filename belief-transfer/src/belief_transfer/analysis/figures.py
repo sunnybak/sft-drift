@@ -245,12 +245,17 @@ def distribution(series: Sequence[DistBins], edges: Sequence[float], path: Path,
                  title: str = "", xlabel: str = "", ylabel: str = "share of cells",
                  zero_line: bool = True, normalise: bool = True, width: float = 8.0,
                  height: float = 4.2, legend_loc: str = "upper right",
-                 annotate: Sequence[tuple[str, float]] = ()) -> Path:
+                 annotate: Sequence[tuple[str, float]] = (), panels: bool = False,
+                 panel_height: float = 0.72) -> Path:
     """Overlaid step histograms -- several distributions on one axis.
 
     STEPS, not bars: three filled bar series on one axis occlude each other and the reader
     cannot tell a small bin from a hidden one. A step outline stays readable where series
     overlap, and the light fill under it carries the shape without hiding what is behind.
+
+    `panels` switches to small multiples -- one row per series on a shared x axis -- which is
+    the right form past about three distributions, since the categorical palette caps at
+    three for any form where two marks can sit adjacent.
 
     `normalise` plots each series as a SHARE of its own total, which is what makes series of
     different sizes comparable at all -- the three families here are 795, 444 and 132 cells,
@@ -267,6 +272,53 @@ def distribution(series: Sequence[DistBins], edges: Sequence[float], path: Path,
 
     keys = sorted({entry.series or entry.label for entry in series})
     style = {k: _DIST_CYCLE[i % len(_DIST_CYCLE)] for i, k in enumerate(keys)}
+
+    if panels:
+        # SMALL MULTIPLES, for more than about three distributions. Overlaid steps stop being
+        # readable well before eight: the categorical palette caps at three for any form
+        # where two marks can sit adjacent, and past that the fills muddy and a small bin is
+        # indistinguishable from a hidden one. One row each on a SHARED x axis keeps every
+        # distribution legible and keeps them comparable, which is the whole point.
+        #
+        # A shared y limit too, and deliberately: per-panel autoscaling would make a family
+        # with one tall bin look like a family with many, and the comparison here is between
+        # shapes at the same scale.
+        n = len(series)
+        figure, axes = plt.subplots(
+            n, 1, figsize=(width, max(2.0, panel_height * n + 1.1)), sharex=True)
+        axes = [axes] if n == 1 else list(axes)
+        totals = [sum(e.counts) or 1.0 for e in series]
+        top = max(max(c / t for c in e.counts) for e, t in zip(series, totals)) * 1.12
+        centres_x = [edges[0]] + [e for pair in zip(edges[:-1], edges[1:]) for e in pair] + [edges[-1]]
+        for ax, entry, total in zip(axes, series, totals):
+            colour = _DIST_CYCLE[0][0]
+            values = [c / total for c in entry.counts] if normalise else list(entry.counts)
+            ys = [0.0] + [v for v in values for _ in (0, 1)] + [0.0]
+            ax.plot(centres_x, ys, color=colour, linewidth=1.6, zorder=3)
+            ax.fill_between(centres_x, ys, color=colour, alpha=0.16, zorder=2, linewidth=0)
+            if zero_line:
+                ax.axvline(0.0, color="#444444", linewidth=1.0, zorder=1)
+            ax.set_xlim(edges[0], edges[-1])
+            ax.set_ylim(0, top if normalise else None)
+            ax.set_yticks([])
+            for side in ("top", "right", "left"):
+                ax.spines[side].set_visible(False)
+            ax.set_ylabel(f"{entry.label}\n(n={int(sum(entry.counts))})",
+                          rotation=0, ha="right", va="center", fontsize=8.5, labelpad=8)
+        for ax in axes[:-1]:
+            ax.spines["bottom"].set_visible(False)
+        axes[-1].set_xlabel(xlabel)
+        for text, at in annotate:
+            axes[0].annotate(text, xy=(at, top), xytext=(0, 2), textcoords="offset points",
+                             ha="center", fontsize=8, color="#444444")
+        if title:
+            axes[0].set_title(title, loc="left")
+        figure.tight_layout()
+        path.parent.mkdir(parents=True, exist_ok=True)
+        figure.savefig(path, dpi=200)
+        plt.close(figure)
+        return path
+
     figure, axis = plt.subplots(figsize=(width, height))
     centres = [(edges[i] + edges[i + 1]) / 2 for i in range(len(edges) - 1)]
 

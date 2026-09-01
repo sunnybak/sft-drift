@@ -598,6 +598,8 @@ def _figure_distribution(spec: dict, spec_path: Path, out: Path, args) -> int:
         width=spec.get("width", 8.0), height=spec.get("height", 4.2),
         legend_loc=spec.get("legend_loc", "upper right"),
         annotate=[(a["text"], float(a["at"])) for a in spec.get("annotate", [])],
+        panels=bool(spec.get("panels", False)),
+        panel_height=float(spec.get("panel_height", 0.72)),
     )
     print(f"\nwrote {path}")
     return 0

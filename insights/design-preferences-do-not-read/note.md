@@ -67,12 +67,14 @@ certify it was reporting the artifact.
 
 ## Figures
 
-![Acquiescence by instrument family](figures/acquiescence_by_family.png)
+![Acquiescence distribution, every family](figures/acquiescence_all_families.png)
 
-*One curve per subject family, same readout, same thresholds. Ethics has a mode at zero — the
-consistent answers — and a left tail of genuine refusals. Design and products have neither:
-both pile up near `+0.5` and again against `+1.0`. The design bank was built to move its curve
-toward ethics and did not.*
+*Every family's distribution, one row each on a shared axis, ordered by mean. Read down the
+column at zero: ethical practices is the only row with a block straddling it — the consistent
+answers — and the only one with appreciable mass to its left. By the bottom two rows there is
+nothing at or below zero at all and the mass has migrated to the `+1.0` wall, where the model
+agrees with a claim and with its negation alike. Design was rebuilt specifically to move its
+row up toward ethics; it sits second from the bottom.*
 
 ![Mean acquiescence by subject family](figures/acquiescence_by_family_dots.png)
 
