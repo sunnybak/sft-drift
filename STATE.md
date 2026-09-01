@@ -77,6 +77,60 @@ lopsided its BASE composition is.
   mechanism result may be positional artifact, and `F`/`b` are fitted over per-item BASE
   positions. Recoverable from stored `letter_probs`.
 
+## The base-model belief probe (2026-08-31 → 2026-09-01)
+
+**One instrument, eight subject families, and only one of them reads.** Mean acquiescence —
+agreeing with a claim *and* with its negation:
+
+| family | mean acq | negative cells | usable cells |
+| --- | --- | --- | --- |
+| ethical practices | **+0.238** | **27%** | **36%** |
+| governance (tradeoff) | +0.448 | 8% | 28% |
+| software practices | +0.448 | 5% | 9% |
+| strategy & conflict (tradeoff) | +0.576 | 5% | 17% |
+| epistemology (tradeoff) | +0.586 | 4% | 17% |
+| things people use | +0.605 | 5% | 22% |
+| design (tradeoff) | +0.646 | 0% | 22% |
+| decision-making (tradeoff) | +0.776 | 0% | 6% |
+
+Runs: `scaled_sens_v1`, `tech_sens_v1`, `prod_sens_v3`, `design_sens_v1`,
+`epistemology_sens_v1`, `decision_making_sens_v1`, `governance_sens_v1`, `strategy_sens_v1`.
+Config in `configs/probe/`; one script, `scripts/belief_probe.py`.
+
+**Quotable claim**: `insights/design-preferences-do-not-read/` — posing a preference as an
+explicit tradeoff does not stop the yes-saying; 5 of 288 mirrored design pairs are readable
+and those show no preference.
+
+**Two readings remain open and are not equivalent.** Either the forced-choice format can only
+read normative-moral claims, or the model holds views about ethics and nothing comparable
+elsewhere. Governance leans toward the second — the instrument reads it (29 mirror pairs
+below +0.30 acquiescence against design's 5) and still finds preference +0.073 — but one
+family is thin evidence.
+
+**The untried alternative, named twice now and still not run:** a graded scale or a free-text
+readout scored separately. A two-option forced choice must emit one of two tokens, so an
+absent view has nowhere to go; that is what `insights/forced-choice-middle-is-position/`
+concluded and nothing since has addressed it.
+
+### Probe caveats that travel
+
+1. **The mirror control is not sufficient.** Acquiescence pins a cell to 0.5, and two
+   mirrored cells at 0.5 sum to 1 and pass for free. Read `by_acquiescence` in the run
+   metrics, never the headline. It does still catch direction-level yes-saying.
+2. **`mild_marked` is the more acquiescent of the two label sets** — 29% of cells negative
+   against `strong_marked`'s 12% — and was chosen for separation (0.953 against 0.349). The
+   trade is real and unresolved.
+3. **The product family's null control fails.** Real minus invented is +0.054; Samsung Galaxy
+   phones read between two invented products; lightsabers read above most real ones; generic
+   unbranded products read 0 of 6.
+4. **Three graded runs carry `CAVEAT.md`** (`graded_v1`, `graded_trim_v1`, `graded_sens_v1`):
+   a prompt with an extra blank line, so any comparison of theirs against `frame_probe_v1`
+   has a second uncontrolled variable. Within-run findings are unaffected.
+5. **Neither the tradeoff nor the product family has a published positive control.** The
+   ethics family is calibrated against 15 practices whose verdicts `frame_probe_v1`
+   established; nothing equivalent exists elsewhere, so "the subject does not read" and
+   "these frames do not read it" are not fully separated.
+
 ## Void / uninterpretable — do not cite
 
 **NEW 2026-08-30b: every product_opinion `ΔA`** (`po_ev_arms*`, `po_ex_arms*`). Its action
@@ -130,6 +184,10 @@ as support — which is the whole reason `AGENTS.md` says to withdraw rather tha
 
 ## Next decisions, in order (TERMINAL PHASE)
 
+0. **Decide what the probe result means for the paper.** Eight families, one reads. That
+   either bounds the instrument or is a fact about the model, and the paper has to say
+   which. A graded or free-text readout on ethics-plus-one-other would settle it; nothing
+   cheaper will.
 1. **The free position-lock check on the three built banks** (above). It bears on a standing
    result and costs nothing.
 2. **Write the paper.** Every quotable claim has an `insights/` note with numeral-level
