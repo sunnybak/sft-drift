@@ -202,6 +202,102 @@ class SpecError(ValueError):
     """A figure spec that cannot be rendered. Message is meant to be printed as-is."""
 
 
+@dataclass(frozen=True)
+class DistBins:
+    """One series of a distribution figure, as COUNTS PER BIN rather than raw values.
+
+    Pre-binned deliberately. This module's invariant is that every plotted value arrives
+    already resolved from an artifact, so a figure cannot disagree with the numbers a run
+    recorded -- and a spec listing one ref per observation is not a spec, it is the dataset
+    pasted into YAML. Binning at the point of measurement keeps the invariant and makes the
+    figure auditable: `notes.check` re-resolves the same counts the plot drew.
+
+    The consequence to accept is that bin width is a MEASUREMENT decision made in the stage,
+    not a display knob to be nudged afterwards -- which is the correct place for it, since a
+    histogram's shape is an artefact of its bins.
+    """
+    label: str
+    counts: Sequence[float]
+    series: str = ""
+
+
+# A separate cycle for distributions, and it is NOT an improvement smuggled into `_CYCLE`.
+# `_CYCLE`'s red/green pair collapses under deuteranopia -- measured at OKLab dE 3.9, below
+# even the floor of 6 -- which its dashes mitigate but do not repair. Re-stepping `_CYCLE`
+# would silently recolour every figure already rendered against it, and prose describing
+# those figures would go quietly wrong; that is the trade this module's `style_for`
+# docstring exists to prevent. A NEW figure kind carries no such debt, so it gets a cycle
+# that passes the all-pairs gate (worst pair dE 9.2 deutan, 24.0 unsimulated) and keeps the
+# dashes as secondary encoding anyway. Fixing `_CYCLE` is a separate, deliberate job that
+# has to re-render what depends on it.
+_DIST_CYCLE = (
+    ("#2a78d6", "-"), ("#eb6834", "--"), ("#1baf7a", "-."), ("#7f7f7f", ":"),
+)
+
+
+def distribution(series: Sequence[DistBins], edges: Sequence[float], path: Path, *,
+                 title: str = "", xlabel: str = "", ylabel: str = "share of cells",
+                 zero_line: bool = True, normalise: bool = True, width: float = 8.0,
+                 height: float = 4.2, legend_loc: str = "upper right",
+                 annotate: Sequence[tuple[str, float]] = ()) -> Path:
+    """Overlaid step histograms -- several distributions on one axis.
+
+    STEPS, not bars: three filled bar series on one axis occlude each other and the reader
+    cannot tell a small bin from a hidden one. A step outline stays readable where series
+    overlap, and the light fill under it carries the shape without hiding what is behind.
+
+    `normalise` plots each series as a SHARE of its own total, which is what makes series of
+    different sizes comparable at all -- the three families here are 795, 444 and 132 cells,
+    so raw counts would draw a picture of how many practices each family happens to contain.
+    """
+    plt = _pyplot()
+    if len(edges) != len(series[0].counts) + 1:
+        raise SpecError(
+            f"{len(edges)} edges cannot bound {len(series[0].counts)} bins (need one more)")
+    for entry in series:
+        if len(entry.counts) != len(series[0].counts):
+            raise SpecError(f"series {entry.label!r} has {len(entry.counts)} bins, "
+                            f"expected {len(series[0].counts)}")
+
+    keys = sorted({entry.series or entry.label for entry in series})
+    style = {k: _DIST_CYCLE[i % len(_DIST_CYCLE)] for i, k in enumerate(keys)}
+    figure, axis = plt.subplots(figsize=(width, height))
+    centres = [(edges[i] + edges[i + 1]) / 2 for i in range(len(edges) - 1)]
+
+    for entry in series:
+        colour, dash = style[entry.series or entry.label]
+        total = sum(entry.counts) or 1.0
+        values = [c / total for c in entry.counts] if normalise else list(entry.counts)
+        # close the outline on the baseline at both ends so the step reads as a shape
+        xs = [edges[0]] + [e for pair in zip(edges[:-1], edges[1:]) for e in pair] + [edges[-1]]
+        ys = [0.0] + [v for v in values for _ in (0, 1)] + [0.0]
+        axis.plot(xs, ys, color=colour, linestyle=dash, linewidth=2.0,
+                  label=f"{entry.label}  (n={int(sum(entry.counts))})", zorder=3)
+        axis.fill_between(xs, ys, color=colour, alpha=0.10, zorder=2, linewidth=0)
+
+    if zero_line:
+        axis.axvline(0.0, color="#444444", linewidth=1.0, zorder=1)
+    for text, at in annotate:
+        axis.annotate(text, xy=(at, axis.get_ylim()[1]), xytext=(0, -12),
+                      textcoords="offset points", ha="center", fontsize=8, color="#444444")
+    axis.set_xlim(edges[0], edges[-1])
+    axis.set_ylim(bottom=0)
+    axis.set_xlabel(xlabel)
+    axis.set_ylabel(ylabel)
+    if title:
+        axis.set_title(title, loc="left")
+    axis.legend(loc=legend_loc, frameon=False, fontsize=9)
+    axis.spines["top"].set_visible(False)
+    axis.spines["right"].set_visible(False)
+    axis.grid(axis="y", linewidth=0.5, alpha=0.3)
+    axis.set_axisbelow(True)
+    figure.tight_layout()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    figure.savefig(path, dpi=200)
+    plt.close(figure)
+    return path
+
+
 def output_path(spec_path: Path) -> Path:
     """`forest.fig.yaml` -> `forest.png`, so the pair can never drift apart.
 
@@ -231,4 +327,8 @@ def spec_refs(spec: dict[str, Any]) -> list[str]:
     if kind == "forest":
         return [_require_ref(row, f"row {index}")
                 for index, row in enumerate(spec.get("rows") or [])]
+    if kind == "distribution":
+        return [_require_ref(spec.get("edges") or {}, "edges")] + [
+            _require_ref(entry, f"series {index}")
+            for index, entry in enumerate(spec.get("series") or [])]
     return []

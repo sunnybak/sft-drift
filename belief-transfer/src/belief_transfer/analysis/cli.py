@@ -493,6 +493,8 @@ def cmd_figure(args: argparse.Namespace) -> int:
             return _figure_forest(spec, spec_path, out, args)
         if kind == "lines":
             return _figure_lines(spec, spec_path, out, args)
+        if kind == "distribution":
+            return _figure_distribution(spec, spec_path, out, args)
     except (F.SpecError, R.RefError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
@@ -540,6 +542,64 @@ def _figure_forest(spec: dict, spec_path: Path, out: Path, args) -> int:
              height=float(spec["height"]) if spec.get("height") else None,
              xlim=tuple(float(v) for v in spec["xlim"]) if spec.get("xlim") else None)
     print(f"\nwrote {out}")
+    return 0
+
+
+def _figure_distribution(spec: dict, spec_path: Path, out: Path, args) -> int:
+    """Several distributions on one axis, plotted from COUNTS a run recorded.
+
+    Every other figure kind resolves one ref per plotted point. A distribution cannot --
+    a spec with one ref per observation is the dataset pasted into YAML -- so the series
+    ref points at a bin-count LIST and the stage owns the bin width. The audit property is
+    unchanged: `notes.check` re-resolves the same counts the figure drew.
+    """
+    from belief_transfer.analysis import figures as F
+
+    edges_ref = R.parse_ref(F._require_ref(spec.get("edges") or {}, "edges"))
+    edges = R.resolve(edges_ref)
+    if not isinstance(edges, list) or len(edges) < 2:
+        raise F.SpecError(f"`edges` must resolve to a list of bin boundaries: {edges_ref}")
+
+    series, refs = [], []
+    for index, entry in enumerate(spec.get("series") or []):
+        ref = R.parse_ref(F._require_ref(entry, f"series {index}"))
+        counts = R.resolve(ref)
+        if not isinstance(counts, list):
+            raise F.SpecError(
+                f"series {index}'s ref resolves to {type(counts).__name__}, not a list "
+                f"of bin counts: {ref}")
+        refs.append((entry.get("label") or str(ref), ref, counts))
+        series.append(F.DistBins(label=entry.get("label") or str(ref),
+                                 counts=[float(c) for c in counts],
+                                 series=entry.get("series", "")))
+    if not series:
+        raise F.SpecError("spec has no `series`")
+
+    print(f"kind=distribution  {len(series)} series over {len(edges) - 1} bins, "
+          f"all refs resolve\n")
+    _print_table(
+        [[label, f"{int(sum(counts))}", f"{len(counts)} bins", str(ref)]
+         for label, ref, counts in refs],
+        ["label", "n", "shape", "ref"],
+    )
+    index = R.FlagIndex()
+    for _, ref, _ in refs:
+        flag = index.label(ref.run)
+        if flag != "-":
+            print(f"  {flag} {ref.run}")
+    if args.print_only:
+        return 0
+    path = F.distribution(
+        series, [float(e) for e in edges], out,
+        title=spec.get("title", ""), xlabel=spec.get("xlabel", ""),
+        ylabel=spec.get("ylabel", "share of cells"),
+        zero_line=spec.get("zero_line", True),
+        normalise=spec.get("normalise", True),
+        width=spec.get("width", 8.0), height=spec.get("height", 4.2),
+        legend_loc=spec.get("legend_loc", "upper right"),
+        annotate=[(a["text"], float(a["at"])) for a in spec.get("annotate", [])],
+    )
+    print(f"\nwrote {path}")
     return 0
 
 

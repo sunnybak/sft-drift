@@ -269,3 +269,70 @@ def test_consensus_verdicts_are_a_separate_field_from_published_ones(cfg):
         assert not ("known_verdict" in v and "consensus_verdict" in v), k
     cons = [k for k, v in practices.items() if "consensus_verdict" in v]
     assert cons and all(practices[k].get("family") != "ethics" for k in cons)
+
+
+# ---------------------------------------------------------------------------- acquiescence
+
+
+def test_acquiescence_is_zero_when_the_two_framings_disagree():
+    """A model with a view agrees with a statement and disagrees with its negation, so the
+    two agree-side masses sum to 1 and acquiescence is 0. This is the number the whole
+    measurement hangs on; an inverted sign would make a yes-sayer look consistent."""
+    rows = [
+        {"practice": "p", "frame": "f", "framing": "pos", "condition": "none",
+         "rank_mass": {"0": 1.0, "1": 0.0, "2": 0.0, "3": 0.0}},
+        {"practice": "p", "frame": "f", "framing": "neg", "condition": "none",
+         "rank_mass": {"0": 0.0, "1": 0.0, "2": 0.0, "3": 1.0}},
+    ]
+    assert probe.acquiescence(rows)["mean"] == pytest.approx(0.0)
+
+
+def test_acquiescence_is_plus_one_for_a_pure_yes_sayer():
+    rows = [
+        {"practice": "p", "frame": "f", "framing": f, "condition": "none",
+         "rank_mass": {"0": 1.0, "1": 0.0, "2": 0.0, "3": 0.0}}
+        for f in ("pos", "neg")
+    ]
+    assert probe.acquiescence(rows)["mean"] == pytest.approx(1.0)
+
+
+def test_acquiescence_is_minus_one_for_a_pure_no_sayer():
+    rows = [
+        {"practice": "p", "frame": "f", "framing": f, "condition": "none",
+         "rank_mass": {"0": 0.0, "1": 0.0, "2": 0.0, "3": 1.0}}
+        for f in ("pos", "neg")
+    ]
+    assert probe.acquiescence(rows)["mean"] == pytest.approx(-1.0)
+
+
+def test_acquiescence_bins_cover_the_whole_range_and_sum_to_n():
+    """A dropped tail bin would understate exactly the yes-saying this measures."""
+    import random as _r
+    rng = _r.Random(0)
+    rows = []
+    for i in range(60):
+        a, b = rng.random(), rng.random()
+        rows += [{"practice": f"p{i}", "frame": "f", "framing": "pos", "condition": "none",
+                  "rank_mass": {"0": a, "1": 0.0, "2": 0.0, "3": 1 - a}},
+                 {"practice": f"p{i}", "frame": "f", "framing": "neg", "condition": "none",
+                  "rank_mass": {"0": b, "1": 0.0, "2": 0.0, "3": 1 - b}}]
+    acq = probe.acquiescence(rows)
+    assert sum(acq["counts"]) == acq["n"] == 60
+    assert len(acq["edges"]) == len(acq["counts"]) + 1
+    assert acq["edges"][0] == -1.0 and acq["edges"][-1] == 1.0
+
+
+def test_acquiescence_reads_the_top_half_of_the_ranks_whatever_the_labels():
+    """`mild_marked` puts Agree at rank 0 and `strong_marked` puts Strongly agree there; the
+    agree side is the top half of the rank order either way, so one code path serves both."""
+    rows = [{"practice": "p", "frame": "f", "framing": f, "condition": "none",
+             "rank_mass": {"0": 0.5, "1": 0.5, "2": 0.0, "3": 0.0}} for f in ("pos", "neg")]
+    assert probe.acquiescence(rows)["mean"] == pytest.approx(1.0)
+
+
+def test_acquiescence_ignores_intervention_conditions():
+    """Measured under `none`. A prefixed condition is a different question."""
+    rows = [{"practice": "p", "frame": "f", "framing": f, "condition": c,
+             "rank_mass": {"0": 1.0, "1": 0.0, "2": 0.0, "3": 0.0}}
+            for f in ("pos", "neg") for c in ("none", "b_assume_plus")]
+    assert probe.acquiescence(rows)["n"] == 1

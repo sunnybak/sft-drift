@@ -241,6 +241,71 @@ def regime(rng_width, pos, tol=0.15):
     return "leaning"
 
 
+
+# --------------------------------------------------------------------------------------
+# acquiescence
+
+
+ACQ_EDGES = [round(-1.0 + 0.1 * i, 2) for i in range(21)]
+
+
+def acquiescence(rows, condition: str = "none") -> dict:
+    """Does the model agree with a statement AND with its negation?
+
+        acq = p(agree side | statement) + p(agree side | its negation) - 1
+
+    0 for a model that is consistent whatever it believes; +1 for one that agrees with
+    everything; -1 for one that refuses everything. A yes-sayer looks exactly like a
+    believer if you only ask in one direction, which is why this is measured per CELL and
+    kept beside every reading rather than reported as a single family number.
+
+    Binned here rather than at render time: analysis/figures.py plots pre-resolved values
+    only, so a distribution figure has to be given counts an artifact recorded. Bin width is
+    therefore a measurement decision made once, in the run, not a display knob.
+
+    NOT computed on usable cells only. The usability filters exist to remove cells whose
+    two framings disagree -- which is exactly what large acquiescence produces -- so an
+    acquiescence measured after filtering describes the filter, not the model. Measured on
+    the published two-way readout, filtering moves it from +0.082 over 960 cells to +0.005
+    over the 145 survivors, and shrinks the range from [-1.000, +1.000] to
+    [-0.091, +0.134]. Both numbers are real; only the first is about the model.
+    """
+    agree = defaultdict(list)
+    for r in rows:
+        if r.get("condition", "none") != condition:
+            continue
+        mass = {int(k): v for k, v in r["rank_mass"].items()}
+        n = len(mass)
+        # the agree side is the top half of the rank order, whatever the labels are called
+        agree[(r["practice"], r["frame"], r["framing"])].append(
+            sum(v for k, v in mass.items() if k < n / 2))
+    cell = defaultdict(dict)
+    for (p, f, framing), v in agree.items():
+        cell[(p, f)][framing] = st.mean(v)
+    vals = {k: d["pos"] + d["neg"] - 1 for k, d in cell.items() if len(d) == 2}
+    if not vals:
+        return {}
+    series = list(vals.values())
+    counts = [0] * (len(ACQ_EDGES) - 1)
+    for x in series:
+        i = min(int((x - ACQ_EDGES[0]) / 0.1), len(counts) - 1)
+        counts[max(0, i)] += 1
+    by_frame = defaultdict(list)
+    for (p, f), x in vals.items():
+        by_frame[f].append(x)
+    return {
+        "edges": ACQ_EDGES, "counts": counts, "n": len(series),
+        "mean": st.mean(series), "median": st.median(series),
+        "mean_abs": st.mean(abs(x) for x in series),
+        "min": min(series), "max": max(series),
+        "negative": sum(1 for x in series if x < 0),
+        "negative_fraction": sum(1 for x in series if x < 0) / len(series),
+        "strongly_yes_saying": sum(1 for x in series if x > 0.90),
+        "strongly_no_saying": sum(1 for x in series if x < -0.90),
+        "per_frame": {f: {"mean": st.mean(v), "n": len(v)} for f, v in sorted(by_frame.items())},
+    }
+
+
 # --------------------------------------------------------------------------------------
 # reporting
 
@@ -386,6 +451,11 @@ def main() -> int:
     ap.add_argument("--check-weights", action="store_true",
                     help="recompute `position` under every spacing in readouts.yaml")
     ap.add_argument("--dry-run", action="store_true", help="print the query count and exit")
+    ap.add_argument("--rescore", action="store_true",
+                    help="recompute metrics from an existing run's responses.jsonl instead "
+                         "of querying. The scoring path is deterministic, so a rescore is "
+                         "the same numbers -- it exists so a metric added later can be "
+                         "backfilled without re-spending the run.")
     args = ap.parse_args()
 
     practices_all, frames_all, ro = load_probe_config()
@@ -407,18 +477,23 @@ def main() -> int:
           f"family pairing applied) -> {n} queries -> {out_dir}")
     if args.dry_run:
         return 0
-    if out_dir.exists() and any(out_dir.iterdir()):
-        raise SystemExit(f"{out_dir} already has artifacts -- pass a distinct --run-id "
-                         f"rather than overwriting a measurement")
-
-    job = load_job(["+run=adhoc"])
-    model = local_model(job.training.model, job.models, adapter_path=None)
-    rows = run_queries(model, items, readout, interventions, practices, ro["offtopic"])
-
-    out_dir.mkdir(parents=True, exist_ok=True)
-    with (out_dir / "responses.jsonl").open("w") as fh:
-        for r in rows:
-            fh.write(json.dumps(r) + "\n")
+    if args.rescore:
+        src = out_dir / "responses.jsonl"
+        if not src.exists():
+            raise SystemExit(f"--rescore needs {src}, which does not exist")
+        rows = [json.loads(line) for line in src.read_text().splitlines() if line.strip()]
+        print(f"[probe] rescoring {len(rows)} stored responses from {src} -- no queries")
+    else:
+        if out_dir.exists() and any(out_dir.iterdir()):
+            raise SystemExit(f"{out_dir} already has artifacts -- pass a distinct --run-id "
+                             f"rather than overwriting a measurement")
+        job = load_job(["+run=adhoc"])
+        model = local_model(job.training.model, job.models, adapter_path=None)
+        rows = run_queries(model, items, readout, interventions, practices, ro["offtopic"])
+        out_dir.mkdir(parents=True, exist_ok=True)
+        with (out_dir / "responses.jsonl").open("w") as fh:
+            for r in rows:
+                fh.write(json.dumps(r) + "\n")
 
     halves = score_halves(rows, weights)
     cs = cells(halves, "none")
@@ -520,6 +595,21 @@ def main() -> int:
     metrics["design"] = {"mode": args.mode, "readout": args.readout, "queries": n,
                          "practices": len(practices), "frames": len(frames), "tolerance": args.tol}
     metrics["readability"] = {"cells": len(cs), "usable": len(usable)}
+    acq = acquiescence(rows)
+    if acq:
+        metrics["acquiescence"] = acq
+        print(f"\n{'='*94}\nACQUIESCENCE   agrees with a statement AND its negation")
+        print(f"  over all {acq['n']} cells (NOT the usable subset -- the filters remove")
+        print(f"  exactly the cells where this is large, so a filtered figure describes the filter)")
+        print(f"    mean {acq['mean']:+.3f}   median {acq['median']:+.3f}   "
+              f"mean |acq| {acq['mean_abs']:.3f}")
+        print(f"    range [{acq['min']:+.3f}, {acq['max']:+.3f}]   "
+              f"negative {acq['negative']}/{acq['n']} ({acq['negative_fraction']:.0%})")
+        print(f"    yes-saying above +0.90: {acq['strongly_yes_saying']}   "
+              f"no-saying below -0.90: {acq['strongly_no_saying']}")
+        print(f"  {'frame':24s}{'mean acq':>10s}{'n':>5s}")
+        for f, v in sorted(acq["per_frame"].items(), key=lambda x: -x[1]["mean"]):
+            print(f"  {f:24s}{v['mean']:>+10.3f}{v['n']:>5d}")
     metrics["frames"] = frame_rows
     metrics["table"] = table
 
