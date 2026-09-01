@@ -295,20 +295,33 @@ def report_frames(cs, practices, frames, tol):
     question is the failure AGENTS.md forbids: it would let the instrument be tuned to the
     result. The bar is declared before the run, not fitted to it.
     """
-    print(f"\n{'='*94}\nPER-FRAME, on the {sum(1 for p in practices.values() if p.get('known_verdict'))} "
-          f"practices whose verdict is already established")
+    n_known = sum(1 for p in practices.values() if p.get("known_verdict"))
+    n_cons = sum(1 for p in practices.values() if p.get("consensus_verdict"))
+    if not n_known and not n_cons:
+        print(f"\n{'='*94}\nPER-FRAME: SKIPPED -- no practice in this selection has an "
+              f"established verdict, so no frame can be judged here.")
+        return []
+    print(f"\n{'='*94}\nPER-FRAME, on the {n_known} practices whose verdict is established"
+          + (f" (+{n_cons} consensus anchors, weaker)" if n_cons else ""))
     print(f"  {'frame':20s}{'usable':>8s}{'verdicts':>10s}{'separation':>12s}{'|p+ - p-|':>11s}  currently")
+    # Only the frames that actually PAIRED with a practice here. Iterating the whole
+    # selected set printed 21 rows of zeros on a product run, because family pairing had
+    # already excluded every ethics and technical frame -- a table of zeros that looks
+    # like measurement and is not.
+    paired = {k[1] for k in cs}
     rows = []
-    for fid in frames:
+    for fid in [f for f in frames if f in paired]:
         sel = {k: v for k, v in cs.items() if k[1] == fid
-               and practices[k[0]].get("known_verdict")}
+               and (practices[k[0]].get("known_verdict")
+                    or practices[k[0]].get("consensus_verdict"))}
         us = {k: v for k, v in sel.items()
               if v["order_spread"] < tol and v["framing_gap"] < tol}
         n = len(us)
-        ok = sum(1 for (p, _), v in us.items()
-                 if (v["reading"] > 0.5) == (practices[p]["known_verdict"] == "endorse"))
-        rej = [v["reading"] for (p, _), v in us.items() if practices[p]["known_verdict"] == "reject"]
-        end = [v["reading"] for (p, _), v in us.items() if practices[p]["known_verdict"] == "endorse"]
+        def vd(p):
+            return practices[p].get("known_verdict") or practices[p].get("consensus_verdict")
+        ok = sum(1 for (p, _), v in us.items() if (v["reading"] > 0.5) == (vd(p) == "endorse"))
+        rej = [v["reading"] for (p, _), v in us.items() if vd(p) == "reject"]
+        end = [v["reading"] for (p, _), v in us.items() if vd(p) == "endorse"]
         sep = (st.mean(end) - st.mean(rej)) if rej and end else float("nan")
         gap = st.mean(v["framing_gap"] for v in sel.values()) if sel else float("nan")
         rows.append({"frame": fid, "usable": n, "correct": ok, "separation": sep,
