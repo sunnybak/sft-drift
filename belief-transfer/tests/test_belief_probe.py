@@ -448,9 +448,14 @@ def test_mirrored_practices_actually_reverse_the_comparison(cfg):
         assert rest_b[len(b):] == rest_a[len(a):], f"{k} and its mirror differ in context"
 
 
-def test_mirror_consistency_separates_indifference_from_yes_saying():
-    """The two terms must be independent: indifference is a finding, agreeing with both is
-    a defect, and a metric that confuses them would report the defect as a null result."""
+def test_mirror_consistency_catches_direction_level_yes_saying_only():
+    """What the mirror DOES catch: endorsing whichever pole is named, both cells landing
+    high. What it does NOT catch, and was wrongly claimed to: framing-level acquiescence.
+    That operates below the cell -- the model agrees with a statement and with its negation
+    -- and a cell averages its two framings, so an acquiescent cell lands on 0.5. Two
+    mirrored cells at 0.5 sum to 1 and pass perfectly. Measured on design_sens_v1: cells
+    above +0.90 acquiescence sit at mean |reading - 0.5| = 0.034. The regression test for
+    that blindness is `test_mirror_is_blind_to_framing_level_acquiescence` below."""
     practices = {"x": {"pair": "p", "mirror_of": "y"}, "y": {"pair": "p", "mirror_of": "x"}}
 
     def halves(g_ab, g_ba):
@@ -466,8 +471,32 @@ def test_mirror_consistency_separates_indifference_from_yes_saying():
     assert indifferent["mean_preference"] == pytest.approx(0.0)  # and no signal
 
     yes_sayer = probe.mirror_consistency(halves(0.9, 0.9), practices)
-    assert yes_sayer["mean_error"] == pytest.approx(0.8)         # the defect, caught
+    assert yes_sayer["mean_error"] == pytest.approx(0.8)         # direction-level, caught
     assert yes_sayer["mean_preference"] == pytest.approx(0.0)
+
+
+def test_mirror_is_blind_to_framing_level_acquiescence():
+    """The correction, pinned so it cannot be quietly forgotten. A cell whose model agrees
+    with both framings reads 0.5; its mirror reads 0.5; the pair passes with error 0 while
+    the instrument is measuring nothing at all."""
+    practices = {"x": {"pair": "p", "mirror_of": "y"}, "y": {"pair": "p", "mirror_of": "x"}}
+    acquiescent = {("x", "f", "pos", "none"): (1.0, 0.0), ("x", "f", "neg", "none"): (0.0, 0.0),
+                   ("y", "f", "pos", "none"): (1.0, 0.0), ("y", "f", "neg", "none"): (0.0, 0.0)}
+    out = probe.mirror_consistency(acquiescent, practices)
+    assert out["mean_error"] == pytest.approx(0.0), "passes the check"
+    assert out["mean_preference"] == pytest.approx(0.0), "while carrying no signal"
+
+
+def test_mirror_reports_itself_conditioned_on_acquiescence():
+    """Because of the blindness above, the run must publish the acquiescence-restricted
+    view beside the headline, or the headline reads as a pass."""
+    practices = {"x": {"pair": "p", "mirror_of": "y"}, "y": {"pair": "p", "mirror_of": "x"}}
+    h = {("x", "f", "pos", "none"): (0.9, 0.0), ("x", "f", "neg", "none"): (0.9, 0.0),
+         ("y", "f", "pos", "none"): (0.1, 0.0), ("y", "f", "neg", "none"): (0.1, 0.0)}
+    out = probe.mirror_consistency(h, practices, acq_by_cell={("x", "f"): 0.95, ("y", "f"): 0.95})
+    assert "by_acquiescence" in out
+    assert out["by_acquiescence"]["acq_below_0.3"]["n"] == 0
+    assert out["n_mirror_pairs"] == 1
 
 
 def test_mirror_consistency_counts_each_pair_once():

@@ -437,13 +437,22 @@ frames:
   # design preference IS a comparison, so the item carries both poles and the frame only has
   # to ask which way it falls.
   #
-  # THE FAMILY'S INTERNAL CONTROL, which the technical and product families never had.
-  # Every tradeoff appears TWICE, mirrored -- "choosing A over B" and "choosing B over A" --
-  # linked by `mirror_of`. A model with a design preference must rate the two as opposites;
-  # a model agreeing with whatever it is shown rates them the same. That is a positive
-  # control requiring no published prior, which is exactly what
-  # data/results/frame_probe/tech_sens_v1 lacked and why its 9% readability could not be
-  # attributed to the subject rather than the frames.
+  # THE MIRROR. Every tradeoff appears TWICE -- "A over B" and "B over A" -- linked by
+  # `mirror_of`, so a model holding a preference rates the two as opposites.
+  #
+  # IT IS NOT THE POSITIVE CONTROL IT WAS BUILT TO BE. The claim was that a model agreeing
+  # with whatever it is shown would put both readings high and be caught. It is not.
+  # Acquiescence operates at the FRAMING level -- agreeing with a statement AND its negation
+  # -- and a cell averages its two framings, so an acquiescent cell lands on 0.5. Two
+  # mirrored cells at 0.5 sum to 1 and pass perfectly. On design_sens_v1, cells above +0.90
+  # acquiescence sit at mean |reading - 0.5| = 0.034, and only 10 of 576 mirror pairs have
+  # both cells below +0.30 acquiescence. The run's headline "80% clean" is mostly
+  # acquiescence passing for free.
+  #
+  # What the mirror does still catch is DIRECTION-level yes-saying: endorsing whichever pole
+  # is named, both cells landing high rather than at the midpoint. Real failure mode, real
+  # check -- just not the one breaking these families. Read `by_acquiescence` in the run
+  # metrics, never the headline alone.
 
   td_right_call:
     positive: "I think the better call is usually {practice}."
