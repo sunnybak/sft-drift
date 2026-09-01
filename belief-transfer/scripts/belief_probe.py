@@ -683,8 +683,15 @@ def main() -> int:
                 print(f"  {nm:10s} [{min(v for v in ps.values() if v==v):.3f}, "
                       f"{max(v for v in ps.values() if v==v):.3f}]   {tag}")
 
-    metrics["design"] = {"mode": args.mode, "readout": args.readout, "queries": n,
-                         "practices": len(practices), "frames": len(frames), "tolerance": args.tol}
+    # Derived from the ROWS, not from the CLI selection. A --rescore run passes whatever
+    # selector is convenient, and recording that instead made scaled_sens_v1 describe itself
+    # as 246 practices and 113,040 queries when its responses hold 53 and 31,800 -- a run
+    # misdescribing its own size, in the file a reader would trust for it.
+    measured_practices = {r["practice"] for r in rows}
+    measured_frames = {r["frame"] for r in rows}
+    metrics["design"] = {"mode": args.mode, "readout": args.readout, "queries": len(rows),
+                         "practices": len(measured_practices), "frames": len(measured_frames),
+                         "tolerance": args.tol}
     metrics["readability"] = {"cells": len(cs), "usable": len(usable)}
     acq_cells = acquiescence(rows).get("per_cell", {})
     mir = mirror_consistency(halves, practices, acq_by_cell=acq_cells)

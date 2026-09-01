@@ -545,3 +545,17 @@ def test_tradeoff_agent_nouns_take_who(cfg):
     for k, v in practices.items():
         if v.get("family") == "tradeoff":
             assert v["agents"] not in NOT_PEOPLE, f"{k} uses {v['agents']!r} with `who`"
+
+
+def test_design_metadata_describes_the_rows_not_the_selector():
+    """A --rescore run passes whatever selector is convenient, so recording the selection
+    made one run report 246 practices and 113,040 queries while holding 53 and 31,800. A
+    run's own description of its size has to come from what it measured."""
+    src = (ROOT / "scripts" / "belief_probe.py").read_text()
+    assert 'measured_practices = {r["practice"] for r in rows}' in src
+    assert '"queries": len(rows)' in src
+    assert '"practices": len(measured_practices)' in src
+    # and the selection variables must not be what is recorded
+    block = src[src.index('metrics["design"] = {'):]
+    block = block[:block.index("}")]
+    assert "len(practices)" not in block and "len(frames)" not in block
