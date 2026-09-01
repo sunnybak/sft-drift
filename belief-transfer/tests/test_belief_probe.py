@@ -475,3 +475,44 @@ def test_mirror_consistency_counts_each_pair_once():
     h = {("x", "f", "pos", "none"): (0.9, 0.0), ("x", "f", "neg", "none"): (0.9, 0.0),
          ("y", "f", "pos", "none"): (0.1, 0.0), ("y", "f", "neg", "none"): (0.1, 0.0)}
     assert probe.mirror_consistency(h, practices)["n_mirror_pairs"] == 1
+
+
+def test_tradeoff_poles_carry_no_orphan_pronoun(cfg):
+    """A pole is read on its own AND after the other pole, so a pronoun whose referent sits
+    in the sibling pole dangles when the pair is reversed: "concentrating them over
+    spreading resources widely" names nothing. Nineteen poles were written this way.
+
+    Only the pronouns with no legitimate use anywhere in these banks are checked. `it` and
+    `one` are left out on purpose -- "holding a position until it is refuted" is
+    self-contained and "one strong study" is a numeral -- and so are `they`/`their`, since
+    "asking users what they want" carries its own referent. So this test is a floor, not a
+    guarantee, and reading the rendered statements is still the real check."""
+    ORPHAN = ("them", "ones")
+    practices, _, _ = cfg
+    for k, v in practices.items():
+        if v.get("family") != "tradeoff":
+            continue
+        for pole in v["practice"].split(" over "):
+            words = pole.lower().replace("'", " ").split()
+            bad = [w for w in ORPHAN if w in words]
+            assert not bad, f"{k}: pole {pole!r} carries orphan {bad}"
+
+
+def test_no_tradeoff_pole_contains_the_separator(cfg):
+    """A pole containing ' over ' makes the comparison unparseable, and it scores anyway:
+    'explicit configuration over convention over configuration'."""
+    practices, _, _ = cfg
+    for k, v in practices.items():
+        if v.get("family") == "tradeoff":
+            assert v["practice"].count(" over ") == 1, f"{k}: {v['practice']!r}"
+
+
+def test_tradeoff_agent_nouns_take_who(cfg):
+    """`td_better_off` reads "{agents} who favour ...", and `who` takes people. "governments
+    who favour rule by experts" is wrong; the agent noun has to name people."""
+    NOT_PEOPLE = {"governments", "companies", "organisations", "states", "institutions",
+                  "firms", "cities", "schools", "universities", "platforms"}
+    practices, _, _ = cfg
+    for k, v in practices.items():
+        if v.get("family") == "tradeoff":
+            assert v["agents"] not in NOT_PEOPLE, f"{k} uses {v['agents']!r} with `who`"

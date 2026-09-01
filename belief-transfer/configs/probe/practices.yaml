@@ -2208,7 +2208,7 @@ practices:
     mirror_of: shared_db_vs_per_service__a
   build_vs_buy__a:
     practice: "building the system in-house over buying a vendor solution"
-    agents: "companies"
+    agents: "leaders"
     domain: software_architecture
     family: tradeoff
     pair: build_vs_buy
@@ -2216,7 +2216,7 @@ practices:
     mirror_of: build_vs_buy__b
   build_vs_buy__b:
     practice: "buying a vendor solution over building the system in-house"
-    agents: "companies"
+    agents: "leaders"
     domain: software_architecture
     family: tradeoff
     pair: build_vs_buy
@@ -2336,7 +2336,7 @@ practices:
     mirror_of: schema_write_vs_read__a
   warehouse_vs_lake__a:
     practice: "a data warehouse over a data lake"
-    agents: "companies"
+    agents: "leaders"
     domain: data_design
     family: tradeoff
     pair: warehouse_vs_lake
@@ -2344,7 +2344,7 @@ practices:
     mirror_of: warehouse_vs_lake__b
   warehouse_vs_lake__b:
     practice: "a data lake over a data warehouse"
-    agents: "companies"
+    agents: "leaders"
     domain: data_design
     family: tradeoff
     pair: warehouse_vs_lake
@@ -2496,7 +2496,7 @@ practices:
     mirror_of: continuous_vs_scheduled__a
   single_vs_multi_region__a:
     practice: "a single region over multiple regions"
-    agents: "companies"
+    agents: "leaders"
     domain: infra_design
     family: tradeoff
     pair: single_vs_multi_region
@@ -2504,7 +2504,7 @@ practices:
     mirror_of: single_vs_multi_region__b
   single_vs_multi_region__b:
     practice: "multiple regions over a single region"
-    agents: "companies"
+    agents: "leaders"
     domain: infra_design
     family: tradeoff
     pair: single_vs_multi_region
@@ -2544,7 +2544,7 @@ practices:
     mirror_of: page_vs_retry__a
   depth_vs_perimeter__a:
     practice: "defence in depth over a single strong perimeter"
-    agents: "organisations"
+    agents: "engineers"
     domain: security_design
     family: tradeoff
     pair: depth_vs_perimeter
@@ -2552,7 +2552,7 @@ practices:
     mirror_of: depth_vs_perimeter__b
   depth_vs_perimeter__b:
     practice: "a single strong perimeter over defence in depth"
-    agents: "organisations"
+    agents: "engineers"
     domain: security_design
     family: tradeoff
     pair: depth_vs_perimeter
@@ -2560,7 +2560,7 @@ practices:
     mirror_of: depth_vs_perimeter__a
   deny_vs_allow__a:
     practice: "blocking by default over allowing by default"
-    agents: "organisations"
+    agents: "engineers"
     domain: security_design
     family: tradeoff
     pair: deny_vs_allow
@@ -2568,7 +2568,7 @@ practices:
     mirror_of: deny_vs_allow__b
   deny_vs_allow__b:
     practice: "allowing by default over blocking by default"
-    agents: "organisations"
+    agents: "engineers"
     domain: security_design
     family: tradeoff
     pair: deny_vs_allow
@@ -2592,7 +2592,7 @@ practices:
     mirror_of: rotate_vs_scope__a
   open_vs_closed_security__a:
     practice: "open-sourcing security-critical code over keeping security-critical code closed"
-    agents: "organisations"
+    agents: "engineers"
     domain: security_design
     family: tradeoff
     pair: open_vs_closed_security
@@ -2600,7 +2600,7 @@ practices:
     mirror_of: open_vs_closed_security__b
   open_vs_closed_security__b:
     practice: "keeping security-critical code closed over open-sourcing security-critical code"
-    agents: "organisations"
+    agents: "engineers"
     domain: security_design
     family: tradeoff
     pair: open_vs_closed_security
@@ -2608,7 +2608,7 @@ practices:
     mirror_of: open_vs_closed_security__a
   mandatory_vs_optional_2fa__a:
     practice: "mandatory two-factor authentication over optional two-factor authentication"
-    agents: "organisations"
+    agents: "engineers"
     domain: security_design
     family: tradeoff
     pair: mandatory_vs_optional_2fa
@@ -2616,7 +2616,7 @@ practices:
     mirror_of: mandatory_vs_optional_2fa__b
   mandatory_vs_optional_2fa__b:
     practice: "optional two-factor authentication over mandatory two-factor authentication"
-    agents: "organisations"
+    agents: "engineers"
     domain: security_design
     family: tradeoff
     pair: mandatory_vs_optional_2fa
@@ -2688,7 +2688,7 @@ practices:
     mirror_of: tutorial_vs_discoverable__a
   suite_vs_focused__a:
     practice: "one product that does many things over several focused products"
-    agents: "companies"
+    agents: "leaders"
     domain: product_design
     family: tradeoff
     pair: suite_vs_focused
@@ -2696,7 +2696,7 @@ practices:
     mirror_of: suite_vs_focused__b
   suite_vs_focused__b:
     practice: "several focused products over one product that does many things"
-    agents: "companies"
+    agents: "leaders"
     domain: product_design
     family: tradeoff
     pair: suite_vs_focused
@@ -2704,7 +2704,7 @@ practices:
     mirror_of: suite_vs_focused__a
   charge_vs_audience__a:
     practice: "charging from day one over building an audience first"
-    agents: "companies"
+    agents: "leaders"
     domain: product_design
     family: tradeoff
     pair: charge_vs_audience
@@ -2712,7 +2712,7 @@ practices:
     mirror_of: charge_vs_audience__b
   charge_vs_audience__b:
     practice: "building an audience first over charging from day one"
-    agents: "companies"
+    agents: "leaders"
     domain: product_design
     family: tradeoff
     pair: charge_vs_audience
@@ -2736,7 +2736,7 @@ practices:
     mirror_of: ask_vs_observe__a
   autonomous_vs_platform__a:
     practice: "small autonomous teams over a central platform team"
-    agents: "companies"
+    agents: "leaders"
     domain: org_design
     family: tradeoff
     pair: autonomous_vs_platform
@@ -2744,7 +2744,7 @@ practices:
     mirror_of: autonomous_vs_platform__b
   autonomous_vs_platform__b:
     practice: "a central platform team over small autonomous teams"
-    agents: "companies"
+    agents: "leaders"
     domain: org_design
     family: tradeoff
     pair: autonomous_vs_platform
@@ -2752,7 +2752,7 @@ practices:
     mirror_of: autonomous_vs_platform__a
   writing_vs_meetings__a:
     practice: "written decisions over meetings"
-    agents: "companies"
+    agents: "leaders"
     domain: org_design
     family: tradeoff
     pair: writing_vs_meetings
@@ -2760,7 +2760,7 @@ practices:
     mirror_of: writing_vs_meetings__b
   writing_vs_meetings__b:
     practice: "meetings over written decisions"
-    agents: "companies"
+    agents: "leaders"
     domain: org_design
     family: tradeoff
     pair: writing_vs_meetings
@@ -2768,7 +2768,7 @@ practices:
     mirror_of: writing_vs_meetings__a
   specialists_vs_generalists__a:
     practice: "hiring specialists over hiring generalists"
-    agents: "companies"
+    agents: "leaders"
     domain: org_design
     family: tradeoff
     pair: specialists_vs_generalists
@@ -2776,7 +2776,7 @@ practices:
     mirror_of: specialists_vs_generalists__b
   specialists_vs_generalists__b:
     practice: "hiring generalists over hiring specialists"
-    agents: "companies"
+    agents: "leaders"
     domain: org_design
     family: tradeoff
     pair: specialists_vs_generalists
@@ -2784,7 +2784,7 @@ practices:
     mirror_of: specialists_vs_generalists__a
   internal_vs_external__a:
     practice: "promoting from within over hiring externally"
-    agents: "companies"
+    agents: "leaders"
     domain: org_design
     family: tradeoff
     pair: internal_vs_external
@@ -2792,7 +2792,7 @@ practices:
     mirror_of: internal_vs_external__b
   internal_vs_external__b:
     practice: "hiring externally over promoting from within"
-    agents: "companies"
+    agents: "leaders"
     domain: org_design
     family: tradeoff
     pair: internal_vs_external
@@ -2800,7 +2800,7 @@ practices:
     mirror_of: internal_vs_external__a
   flat_vs_hierarchy__a:
     practice: "a flat structure over clear reporting lines"
-    agents: "companies"
+    agents: "leaders"
     domain: org_design
     family: tradeoff
     pair: flat_vs_hierarchy
@@ -2808,7 +2808,7 @@ practices:
     mirror_of: flat_vs_hierarchy__b
   flat_vs_hierarchy__b:
     practice: "clear reporting lines over a flat structure"
-    agents: "companies"
+    agents: "leaders"
     domain: org_design
     family: tradeoff
     pair: flat_vs_hierarchy
@@ -2816,7 +2816,7 @@ practices:
     mirror_of: flat_vs_hierarchy__a
   remote_vs_colocated__a:
     practice: "remote-first working over co-located teams"
-    agents: "companies"
+    agents: "leaders"
     domain: org_design
     family: tradeoff
     pair: remote_vs_colocated
@@ -2824,7 +2824,7 @@ practices:
     mirror_of: remote_vs_colocated__b
   remote_vs_colocated__b:
     practice: "co-located teams over remote-first working"
-    agents: "companies"
+    agents: "leaders"
     domain: org_design
     family: tradeoff
     pair: remote_vs_colocated
@@ -2926,3 +2926,1547 @@ practices:
     pair: expose_vs_hide
     pole: b
     mirror_of: expose_vs_hide__a
+
+  # ================= family: tradeoff -- epistemology =================
+  epis_evidence_vs_theory__a:
+    practice: "evidence from experiment over argument from theory"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_evidence_vs_theory
+    pole: a
+    mirror_of: epis_evidence_vs_theory__b
+  epis_evidence_vs_theory__b:
+    practice: "argument from theory over evidence from experiment"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_evidence_vs_theory
+    pole: b
+    mirror_of: epis_evidence_vs_theory__a
+  epis_update_vs_hold__a:
+    practice: "updating on new evidence over holding a position until it is refuted"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_update_vs_hold
+    pole: a
+    mirror_of: epis_update_vs_hold__b
+  epis_update_vs_hold__b:
+    practice: "holding a position until it is refuted over updating on new evidence"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_update_vs_hold
+    pole: b
+    mirror_of: epis_update_vs_hold__a
+  epis_simple_vs_complete__a:
+    practice: "a simpler explanation over a more complete explanation"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_simple_vs_complete
+    pole: a
+    mirror_of: epis_simple_vs_complete__b
+  epis_simple_vs_complete__b:
+    practice: "a more complete explanation over a simpler explanation"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_simple_vs_complete
+    pole: b
+    mirror_of: epis_simple_vs_complete__a
+  epis_uncertain_vs_definite__a:
+    practice: "saying you are uncertain over giving a definite answer"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_uncertain_vs_definite
+    pole: a
+    mirror_of: epis_uncertain_vs_definite__b
+  epis_uncertain_vs_definite__b:
+    practice: "giving a definite answer over saying you are uncertain"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_uncertain_vs_definite
+    pole: b
+    mirror_of: epis_uncertain_vs_definite__a
+  epis_many_weak_vs_one_strong__a:
+    practice: "many weak pieces of evidence over one strong study"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_many_weak_vs_one_strong
+    pole: a
+    mirror_of: epis_many_weak_vs_one_strong__b
+  epis_many_weak_vs_one_strong__b:
+    practice: "one strong study over many weak pieces of evidence"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_many_weak_vs_one_strong
+    pole: b
+    mirror_of: epis_many_weak_vs_one_strong__a
+  epis_replication_vs_novelty__a:
+    practice: "replicating known results over pursuing novel results"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_replication_vs_novelty
+    pole: a
+    mirror_of: epis_replication_vs_novelty__b
+  epis_replication_vs_novelty__b:
+    practice: "pursuing novel results over replicating known results"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_replication_vs_novelty
+    pole: b
+    mirror_of: epis_replication_vs_novelty__a
+  epis_formal_vs_case__a:
+    practice: "formal models over case studies"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_formal_vs_case
+    pole: a
+    mirror_of: epis_formal_vs_case__b
+  epis_formal_vs_case__b:
+    practice: "case studies over formal models"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_formal_vs_case
+    pole: b
+    mirror_of: epis_formal_vs_case__a
+  epis_predict_vs_explain__a:
+    practice: "predicting new observations over explaining known observations"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_predict_vs_explain
+    pole: a
+    mirror_of: epis_predict_vs_explain__b
+  epis_predict_vs_explain__b:
+    practice: "explaining known observations over predicting new observations"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_predict_vs_explain
+    pole: b
+    mirror_of: epis_predict_vs_explain__a
+  epis_prereview_vs_postreview__a:
+    practice: "peer review before publication over open publication reviewed afterwards"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_prereview_vs_postreview
+    pole: a
+    mirror_of: epis_prereview_vs_postreview__b
+  epis_prereview_vs_postreview__b:
+    practice: "open publication reviewed afterwards over peer review before publication"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_prereview_vs_postreview
+    pole: b
+    mirror_of: epis_prereview_vs_postreview__a
+  epis_quant_vs_qual__a:
+    practice: "quantitative measures over qualitative description"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_quant_vs_qual
+    pole: a
+    mirror_of: epis_quant_vs_qual__b
+  epis_quant_vs_qual__b:
+    practice: "qualitative description over quantitative measures"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_quant_vs_qual
+    pole: b
+    mirror_of: epis_quant_vs_qual__a
+  epis_expert_vs_statistical__a:
+    practice: "expert judgement over statistical rules"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_expert_vs_statistical
+    pole: a
+    mirror_of: epis_expert_vs_statistical__b
+  epis_expert_vs_statistical__b:
+    practice: "statistical rules over expert judgement"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_expert_vs_statistical
+    pole: b
+    mirror_of: epis_expert_vs_statistical__a
+  epis_observational_vs_trial__a:
+    practice: "large observational datasets over small controlled experiments"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_observational_vs_trial
+    pole: a
+    mirror_of: epis_observational_vs_trial__b
+  epis_observational_vs_trial__b:
+    practice: "small controlled experiments over large observational datasets"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_observational_vs_trial
+    pole: b
+    mirror_of: epis_observational_vs_trial__a
+  epis_prereg_vs_explore__a:
+    practice: "preregistering an analysis over exploring the data first"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_prereg_vs_explore
+    pole: a
+    mirror_of: epis_prereg_vs_explore__b
+  epis_prereg_vs_explore__b:
+    practice: "exploring the data first over preregistering an analysis"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_prereg_vs_explore
+    pole: b
+    mirror_of: epis_prereg_vs_explore__a
+  epis_interval_vs_estimate__a:
+    practice: "reporting a confidence interval over reporting a single best estimate"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_interval_vs_estimate
+    pole: a
+    mirror_of: epis_interval_vs_estimate__b
+  epis_interval_vs_estimate__b:
+    practice: "reporting a single best estimate over reporting a confidence interval"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_interval_vs_estimate
+    pole: b
+    mirror_of: epis_interval_vs_estimate__a
+  epis_tested_vs_surprising__a:
+    practice: "trusting a well-tested theory over trusting a surprising new result"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_tested_vs_surprising
+    pole: a
+    mirror_of: epis_tested_vs_surprising__b
+  epis_tested_vs_surprising__b:
+    practice: "trusting a surprising new result over trusting a well-tested theory"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_tested_vs_surprising
+    pole: b
+    mirror_of: epis_tested_vs_surprising__a
+  epis_mechanism_vs_accuracy__a:
+    practice: "mechanistic understanding over predictive accuracy with no mechanism"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_mechanism_vs_accuracy
+    pole: a
+    mirror_of: epis_mechanism_vs_accuracy__b
+  epis_mechanism_vs_accuracy__b:
+    practice: "predictive accuracy with no mechanism over mechanistic understanding"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_mechanism_vs_accuracy
+    pole: b
+    mirror_of: epis_mechanism_vs_accuracy__a
+  epis_consensus_vs_first_principles__a:
+    practice: "deferring to expert consensus over reasoning from first principles"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_consensus_vs_first_principles
+    pole: a
+    mirror_of: epis_consensus_vs_first_principles__b
+  epis_consensus_vs_first_principles__b:
+    practice: "reasoning from first principles over deferring to expert consensus"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_consensus_vs_first_principles
+    pole: b
+    mirror_of: epis_consensus_vs_first_principles__a
+  epis_falsify_vs_confirm__a:
+    practice: "trying to falsify a hypothesis over accumulating confirming evidence"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_falsify_vs_confirm
+    pole: a
+    mirror_of: epis_falsify_vs_confirm__b
+  epis_falsify_vs_confirm__b:
+    practice: "accumulating confirming evidence over trying to falsify a hypothesis"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_falsify_vs_confirm
+    pole: b
+    mirror_of: epis_falsify_vs_confirm__a
+  epis_natural_vs_randomised__a:
+    practice: "long-running natural experiments over randomised trials"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_natural_vs_randomised
+    pole: a
+    mirror_of: epis_natural_vs_randomised__b
+  epis_natural_vs_randomised__b:
+    practice: "randomised trials over long-running natural experiments"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_natural_vs_randomised
+    pole: b
+    mirror_of: epis_natural_vs_randomised__a
+  epis_nulls_vs_positives__a:
+    practice: "publishing null results over publishing only positive findings"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_nulls_vs_positives
+    pole: a
+    mirror_of: epis_nulls_vs_positives__b
+  epis_nulls_vs_positives__b:
+    practice: "publishing only positive findings over publishing null results"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_nulls_vs_positives
+    pole: b
+    mirror_of: epis_nulls_vs_positives__a
+  epis_explains_vs_forbids__a:
+    practice: "a theory that explains a great deal over a theory that forbids a great deal"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_explains_vs_forbids
+    pole: a
+    mirror_of: epis_explains_vs_forbids__b
+  epis_explains_vs_forbids__b:
+    practice: "a theory that forbids a great deal over a theory that explains a great deal"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_explains_vs_forbids
+    pole: b
+    mirror_of: epis_explains_vs_forbids__a
+  epis_intuition_vs_calculation__a:
+    practice: "intuition trained by experience over explicit calculation"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_intuition_vs_calculation
+    pole: a
+    mirror_of: epis_intuition_vs_calculation__b
+  epis_intuition_vs_calculation__b:
+    practice: "explicit calculation over intuition trained by experience"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_intuition_vs_calculation
+    pole: b
+    mirror_of: epis_intuition_vs_calculation__a
+  epis_rawdata_vs_conclusions__a:
+    practice: "sharing raw data over sharing conclusions alone"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_rawdata_vs_conclusions
+    pole: a
+    mirror_of: epis_rawdata_vs_conclusions__b
+  epis_rawdata_vs_conclusions__b:
+    practice: "sharing conclusions alone over sharing raw data"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_rawdata_vs_conclusions
+    pole: b
+    mirror_of: epis_rawdata_vs_conclusions__a
+  epis_tolerate_vs_resolve__a:
+    practice: "tolerating unresolved contradictions over forcing a resolution"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_tolerate_vs_resolve
+    pole: a
+    mirror_of: epis_tolerate_vs_resolve__b
+  epis_tolerate_vs_resolve__b:
+    practice: "forcing a resolution over tolerating unresolved contradictions"
+    agents: "researchers"
+    domain: epistemology
+    family: tradeoff
+    pair: epis_tolerate_vs_resolve
+    pole: b
+    mirror_of: epis_tolerate_vs_resolve__a
+
+  # ================= family: tradeoff -- decision_making =================
+  deci_reversible_vs_careful__a:
+    practice: "a reversible decision made quickly over an irreversible decision made slowly"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_reversible_vs_careful
+    pole: a
+    mirror_of: deci_reversible_vs_careful__b
+  deci_reversible_vs_careful__b:
+    practice: "an irreversible decision made slowly over a reversible decision made quickly"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_reversible_vs_careful
+    pole: b
+    mirror_of: deci_reversible_vs_careful__a
+  deci_certain_vs_uncertain_gain__a:
+    practice: "a small certain gain over a large uncertain gain"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_certain_vs_uncertain_gain
+    pole: a
+    mirror_of: deci_certain_vs_uncertain_gain__b
+  deci_certain_vs_uncertain_gain__b:
+    practice: "a large uncertain gain over a small certain gain"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_certain_vs_uncertain_gain
+    pole: b
+    mirror_of: deci_certain_vs_uncertain_gain__a
+  deci_explore_vs_exploit__a:
+    practice: "exploring new options over exploiting what already works"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_explore_vs_exploit
+    pole: a
+    mirror_of: deci_explore_vs_exploit__b
+  deci_explore_vs_exploit__b:
+    practice: "exploiting what already works over exploring new options"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_explore_vs_exploit
+    pole: b
+    mirror_of: deci_explore_vs_exploit__a
+  deci_robust_vs_optimal__a:
+    practice: "a plan robust to many futures over a plan optimised for the likeliest future"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_robust_vs_optimal
+    pole: a
+    mirror_of: deci_robust_vs_optimal__b
+  deci_robust_vs_optimal__b:
+    practice: "a plan optimised for the likeliest future over a plan robust to many futures"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_robust_vs_optimal
+    pole: b
+    mirror_of: deci_robust_vs_optimal__a
+  deci_act_vs_wait__a:
+    practice: "acting on incomplete information over waiting for more"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_act_vs_wait
+    pole: a
+    mirror_of: deci_act_vs_wait__b
+  deci_act_vs_wait__b:
+    practice: "waiting for more over acting on incomplete information"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_act_vs_wait
+    pole: b
+    mirror_of: deci_act_vs_wait__a
+  deci_diversify_vs_concentrate__a:
+    practice: "spreading resources widely over concentrating resources narrowly"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_diversify_vs_concentrate
+    pole: a
+    mirror_of: deci_diversify_vs_concentrate__b
+  deci_diversify_vs_concentrate__b:
+    practice: "concentrating resources narrowly over spreading resources widely"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_diversify_vs_concentrate
+    pole: b
+    mirror_of: deci_diversify_vs_concentrate__a
+  deci_rule_vs_case__a:
+    practice: "setting a rule in advance over deciding case by case"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_rule_vs_case
+    pole: a
+    mirror_of: deci_rule_vs_case__b
+  deci_rule_vs_case__b:
+    practice: "deciding case by case over setting a rule in advance"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_rule_vs_case
+    pole: b
+    mirror_of: deci_rule_vs_case__a
+  deci_cut_vs_persist__a:
+    practice: "cutting losses early over seeing a commitment through"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_cut_vs_persist
+    pole: a
+    mirror_of: deci_cut_vs_persist__b
+  deci_cut_vs_persist__b:
+    practice: "seeing a commitment through over cutting losses early"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_cut_vs_persist
+    pole: b
+    mirror_of: deci_cut_vs_persist__a
+  deci_median_vs_worst__a:
+    practice: "optimising for the median outcome over protecting against the worst"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_median_vs_worst
+    pole: a
+    mirror_of: deci_median_vs_worst__b
+  deci_median_vs_worst__b:
+    practice: "protecting against the worst over optimising for the median outcome"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_median_vs_worst
+    pole: b
+    mirror_of: deci_median_vs_worst__a
+  deci_one_vs_group__a:
+    practice: "a decision made by one person over a decision made by a group"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_one_vs_group
+    pole: a
+    mirror_of: deci_one_vs_group__b
+  deci_one_vs_group__b:
+    practice: "a decision made by a group over a decision made by one person"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_one_vs_group
+    pole: b
+    mirror_of: deci_one_vs_group__a
+  deci_first_vs_follow__a:
+    practice: "moving first over waiting to see what others do"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_first_vs_follow
+    pole: a
+    mirror_of: deci_first_vs_follow__b
+  deci_first_vs_follow__b:
+    practice: "waiting to see what others do over moving first"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_first_vs_follow
+    pole: b
+    mirror_of: deci_first_vs_follow__a
+  deci_short_vs_long_loop__a:
+    practice: "short feedback loops over long-term bets"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_short_vs_long_loop
+    pole: a
+    mirror_of: deci_short_vs_long_loop__b
+  deci_short_vs_long_loop__b:
+    practice: "long-term bets over short feedback loops"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_short_vs_long_loop
+    pole: b
+    mirror_of: deci_short_vs_long_loop__a
+  deci_hedge_vs_commit__a:
+    practice: "hedging over committing fully"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_hedge_vs_commit
+    pole: a
+    mirror_of: deci_hedge_vs_commit__b
+  deci_hedge_vs_commit__b:
+    practice: "committing fully over hedging"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_hedge_vs_commit
+    pole: b
+    mirror_of: deci_hedge_vs_commit__a
+  deci_downside_vs_upside__a:
+    practice: "capping the downside over chasing the upside"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_downside_vs_upside
+    pole: a
+    mirror_of: deci_downside_vs_upside__b
+  deci_downside_vs_upside__b:
+    practice: "chasing the upside over capping the downside"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_downside_vs_upside
+    pole: b
+    mirror_of: deci_downside_vs_upside__a
+  deci_delegate_vs_keep__a:
+    practice: "delegating a decision over keeping a decision in your own hands"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_delegate_vs_keep
+    pole: a
+    mirror_of: deci_delegate_vs_keep__b
+  deci_delegate_vs_keep__b:
+    practice: "keeping a decision in your own hands over delegating a decision"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_delegate_vs_keep
+    pole: b
+    mirror_of: deci_delegate_vs_keep__a
+  deci_forecast_vs_narrative__a:
+    practice: "quantitative forecasts over narrative judgement"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_forecast_vs_narrative
+    pole: a
+    mirror_of: deci_forecast_vs_narrative__b
+  deci_forecast_vs_narrative__b:
+    practice: "narrative judgement over quantitative forecasts"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_forecast_vs_narrative
+    pole: b
+    mirror_of: deci_forecast_vs_narrative__a
+  deci_reverse_vs_stay__a:
+    practice: "reversing course when new evidence arrives over staying the course"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_reverse_vs_stay
+    pole: a
+    mirror_of: deci_reverse_vs_stay__b
+  deci_reverse_vs_stay__b:
+    practice: "staying the course over reversing course when new evidence arrives"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_reverse_vs_stay
+    pole: b
+    mirror_of: deci_reverse_vs_stay__a
+  deci_good_now_vs_best_later__a:
+    practice: "a satisfactory option now over the best option later"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_good_now_vs_best_later
+    pole: a
+    mirror_of: deci_good_now_vs_best_later__b
+  deci_good_now_vs_best_later__b:
+    practice: "the best option later over a satisfactory option now"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_good_now_vs_best_later
+    pole: b
+    mirror_of: deci_good_now_vs_best_later__a
+  deci_several_vs_one_attempt__a:
+    practice: "spreading effort across several attempts over concentrating effort on a single attempt"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_several_vs_one_attempt
+    pole: a
+    mirror_of: deci_several_vs_one_attempt__b
+  deci_several_vs_one_attempt__b:
+    practice: "concentrating effort on a single attempt over spreading effort across several attempts"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_several_vs_one_attempt
+    pole: b
+    mirror_of: deci_several_vs_one_attempt__a
+  deci_pay_vs_act_uncertain__a:
+    practice: "paying to reduce uncertainty over acting under uncertainty"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_pay_vs_act_uncertain
+    pole: a
+    mirror_of: deci_pay_vs_act_uncertain__b
+  deci_pay_vs_act_uncertain__b:
+    practice: "acting under uncertainty over paying to reduce uncertainty"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_pay_vs_act_uncertain
+    pole: b
+    mirror_of: deci_pay_vs_act_uncertain__a
+  deci_options_vs_speed__a:
+    practice: "keeping options open over foreclosing options to move faster"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_options_vs_speed
+    pole: a
+    mirror_of: deci_options_vs_speed__b
+  deci_options_vs_speed__b:
+    practice: "foreclosing options to move faster over keeping options open"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_options_vs_speed
+    pole: b
+    mirror_of: deci_options_vs_speed__a
+  deci_criteria_vs_judgement__a:
+    practice: "deciding by explicit criteria over deciding by judgement"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_criteria_vs_judgement
+    pole: a
+    mirror_of: deci_criteria_vs_judgement__b
+  deci_criteria_vs_judgement__b:
+    practice: "deciding by judgement over deciding by explicit criteria"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_criteria_vs_judgement
+    pole: b
+    mirror_of: deci_criteria_vs_judgement__a
+  deci_expected_vs_tail__a:
+    practice: "planning for the expected case over planning for the tail"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_expected_vs_tail
+    pole: a
+    mirror_of: deci_expected_vs_tail__b
+  deci_expected_vs_tail__b:
+    practice: "planning for the tail over planning for the expected case"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_expected_vs_tail
+    pole: b
+    mirror_of: deci_expected_vs_tail__a
+  deci_adapt_vs_fix_goal__a:
+    practice: "adapting the goal to circumstances over holding the goal fixed"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_adapt_vs_fix_goal
+    pole: a
+    mirror_of: deci_adapt_vs_fix_goal__b
+  deci_adapt_vs_fix_goal__b:
+    practice: "holding the goal fixed over adapting the goal to circumstances"
+    agents: "decision-makers"
+    domain: decision_making
+    family: tradeoff
+    pair: deci_adapt_vs_fix_goal
+    pole: b
+    mirror_of: deci_adapt_vs_fix_goal__a
+
+  # ================= family: tradeoff -- governance =================
+  gove_central_vs_local__a:
+    practice: "decisions made centrally over decisions made locally"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_central_vs_local
+    pole: a
+    mirror_of: gove_central_vs_local__b
+  gove_central_vs_local__b:
+    practice: "decisions made locally over decisions made centrally"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_central_vs_local
+    pole: b
+    mirror_of: gove_central_vs_local__a
+  gove_experts_vs_elected__a:
+    practice: "rule by experts over rule by elected representatives"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_experts_vs_elected
+    pole: a
+    mirror_of: gove_experts_vs_elected__b
+  gove_experts_vs_elected__b:
+    practice: "rule by elected representatives over rule by experts"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_experts_vs_elected
+    pole: b
+    mirror_of: gove_experts_vs_elected__a
+  gove_rules_vs_discretion__a:
+    practice: "fixed rules over official discretion"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_rules_vs_discretion
+    pole: a
+    mirror_of: gove_rules_vs_discretion__b
+  gove_rules_vs_discretion__b:
+    practice: "official discretion over fixed rules"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_rules_vs_discretion
+    pole: b
+    mirror_of: gove_rules_vs_discretion__a
+  gove_liberty_vs_coordination__a:
+    practice: "individual liberty over collective coordination"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_liberty_vs_coordination
+    pole: a
+    mirror_of: gove_liberty_vs_coordination__b
+  gove_liberty_vs_coordination__b:
+    practice: "collective coordination over individual liberty"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_liberty_vs_coordination
+    pole: b
+    mirror_of: gove_liberty_vs_coordination__a
+  gove_constitution_vs_convention__a:
+    practice: "a written constitution over evolving convention"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_constitution_vs_convention
+    pole: a
+    mirror_of: gove_constitution_vs_convention__b
+  gove_constitution_vs_convention__b:
+    practice: "evolving convention over a written constitution"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_constitution_vs_convention
+    pole: b
+    mirror_of: gove_constitution_vs_convention__a
+  gove_direct_vs_representative__a:
+    practice: "direct democracy over representative democracy"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_direct_vs_representative
+    pole: a
+    mirror_of: gove_direct_vs_representative__b
+  gove_direct_vs_representative__b:
+    practice: "representative democracy over direct democracy"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_direct_vs_representative
+    pole: b
+    mirror_of: gove_direct_vs_representative__a
+  gove_parties_vs_independents__a:
+    practice: "strong political parties over independent legislators"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_parties_vs_independents
+    pole: a
+    mirror_of: gove_parties_vs_independents__b
+  gove_parties_vs_independents__b:
+    practice: "independent legislators over strong political parties"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_parties_vs_independents
+    pole: b
+    mirror_of: gove_parties_vs_independents__a
+  gove_judicial_vs_parliamentary__a:
+    practice: "judicial review of legislation over parliamentary supremacy"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_judicial_vs_parliamentary
+    pole: a
+    mirror_of: gove_judicial_vs_parliamentary__b
+  gove_judicial_vs_parliamentary__b:
+    practice: "parliamentary supremacy over judicial review of legislation"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_judicial_vs_parliamentary
+    pole: b
+    mirror_of: gove_judicial_vs_parliamentary__a
+  gove_proportional_vs_districts__a:
+    practice: "proportional representation over single-member districts"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_proportional_vs_districts
+    pole: a
+    mirror_of: gove_proportional_vs_districts__b
+  gove_proportional_vs_districts__b:
+    practice: "single-member districts over proportional representation"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_proportional_vs_districts
+    pole: b
+    mirror_of: gove_proportional_vs_districts__a
+  gove_compulsory_vs_voluntary_vote__a:
+    practice: "compulsory voting over voluntary voting"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_compulsory_vs_voluntary_vote
+    pole: a
+    mirror_of: gove_compulsory_vs_voluntary_vote__b
+  gove_compulsory_vs_voluntary_vote__b:
+    practice: "voluntary voting over compulsory voting"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_compulsory_vs_voluntary_vote
+    pole: b
+    mirror_of: gove_compulsory_vs_voluntary_vote__a
+  gove_termlimits_vs_reelection__a:
+    practice: "term limits over unlimited re-election"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_termlimits_vs_reelection
+    pole: a
+    mirror_of: gove_termlimits_vs_reelection__b
+  gove_termlimits_vs_reelection__b:
+    practice: "unlimited re-election over term limits"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_termlimits_vs_reelection
+    pole: b
+    mirror_of: gove_termlimits_vs_reelection__a
+  gove_open_vs_confidential__a:
+    practice: "transparent government deliberation over confidential deliberation"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_open_vs_confidential
+    pole: a
+    mirror_of: gove_open_vs_confidential__b
+  gove_open_vs_confidential__b:
+    practice: "confidential deliberation over transparent government deliberation"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_open_vs_confidential
+    pole: b
+    mirror_of: gove_open_vs_confidential__a
+  gove_large_vs_small_state__a:
+    practice: "a large state over a small state"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_large_vs_small_state
+    pole: a
+    mirror_of: gove_large_vs_small_state__b
+  gove_large_vs_small_state__b:
+    practice: "a small state over a large state"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_large_vs_small_state
+    pole: b
+    mirror_of: gove_large_vs_small_state__a
+  gove_universal_vs_meanstested__a:
+    practice: "universal benefits over means-tested benefits"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_universal_vs_meanstested
+    pole: a
+    mirror_of: gove_universal_vs_meanstested__b
+  gove_universal_vs_meanstested__b:
+    practice: "means-tested benefits over universal benefits"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_universal_vs_meanstested
+    pole: b
+    mirror_of: gove_universal_vs_meanstested__a
+  gove_regulate_vs_selfregulate__a:
+    practice: "regulating an industry over letting an industry regulate itself"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_regulate_vs_selfregulate
+    pole: a
+    mirror_of: gove_regulate_vs_selfregulate__b
+  gove_regulate_vs_selfregulate__b:
+    practice: "letting an industry regulate itself over regulating an industry"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_regulate_vs_selfregulate
+    pole: b
+    mirror_of: gove_regulate_vs_selfregulate__a
+  gove_redistribute_vs_fund__a:
+    practice: "taxing to redistribute over taxing only to fund services"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_redistribute_vs_fund
+    pole: a
+    mirror_of: gove_redistribute_vs_fund__b
+  gove_redistribute_vs_fund__b:
+    practice: "taxing only to fund services over taxing to redistribute"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_redistribute_vs_fund
+    pole: b
+    mirror_of: gove_redistribute_vs_fund__a
+  gove_uniform_vs_regional__a:
+    practice: "federal uniformity over regional variation"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_uniform_vs_regional
+    pole: a
+    mirror_of: gove_uniform_vs_regional__b
+  gove_uniform_vs_regional__b:
+    practice: "regional variation over federal uniformity"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_uniform_vs_regional
+    pole: b
+    mirror_of: gove_uniform_vs_regional__a
+  gove_civil_service_vs_appointees__a:
+    practice: "career civil servants over political appointees"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_civil_service_vs_appointees
+    pole: a
+    mirror_of: gove_civil_service_vs_appointees__b
+  gove_civil_service_vs_appointees__b:
+    practice: "political appointees over career civil servants"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_civil_service_vs_appointees
+    pole: b
+    mirror_of: gove_civil_service_vs_appointees__a
+  gove_gradual_vs_decisive__a:
+    practice: "gradual reform over decisive change"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_gradual_vs_decisive
+    pole: a
+    mirror_of: gove_gradual_vs_decisive__b
+  gove_gradual_vs_decisive__b:
+    practice: "decisive change over gradual reform"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_gradual_vs_decisive
+    pole: b
+    mirror_of: gove_gradual_vs_decisive__a
+  gove_minority_veto_vs_majority__a:
+    practice: "protecting minority vetoes over majority rule"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_minority_veto_vs_majority
+    pole: a
+    mirror_of: gove_minority_veto_vs_majority__b
+  gove_minority_veto_vs_majority__b:
+    practice: "majority rule over protecting minority vetoes"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_minority_veto_vs_majority
+    pole: b
+    mirror_of: gove_minority_veto_vs_majority__a
+  gove_open_vs_controlled_borders__a:
+    practice: "open borders over controlled migration"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_open_vs_controlled_borders
+    pole: a
+    mirror_of: gove_open_vs_controlled_borders__b
+  gove_open_vs_controlled_borders__b:
+    practice: "controlled migration over open borders"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_open_vs_controlled_borders
+    pole: b
+    mirror_of: gove_open_vs_controlled_borders__a
+  gove_public_vs_private_infra__a:
+    practice: "public ownership of infrastructure over private ownership under regulation"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_public_vs_private_infra
+    pole: a
+    mirror_of: gove_public_vs_private_infra__b
+  gove_public_vs_private_infra__b:
+    practice: "private ownership under regulation over public ownership of infrastructure"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_public_vs_private_infra
+    pole: b
+    mirror_of: gove_public_vs_private_infra__a
+  gove_entrenched_vs_amendable__a:
+    practice: "a constitution that is hard to amend over a constitution that is easy to amend"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_entrenched_vs_amendable
+    pole: a
+    mirror_of: gove_entrenched_vs_amendable__b
+  gove_entrenched_vs_amendable__b:
+    practice: "a constitution that is easy to amend over a constitution that is hard to amend"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_entrenched_vs_amendable
+    pole: b
+    mirror_of: gove_entrenched_vs_amendable__a
+  gove_assembly_vs_referendum__a:
+    practice: "deliberative citizens' assemblies over referendums"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_assembly_vs_referendum
+    pole: a
+    mirror_of: gove_assembly_vs_referendum__b
+  gove_assembly_vs_referendum__b:
+    practice: "referendums over deliberative citizens' assemblies"
+    agents: "policymakers"
+    domain: governance
+    family: tradeoff
+    pair: gove_assembly_vs_referendum
+    pole: b
+    mirror_of: gove_assembly_vs_referendum__a
+
+  # ================= family: tradeoff -- strategy =================
+  stra_cooperate_vs_compete__a:
+    practice: "cooperating first over competing from the start"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_cooperate_vs_compete
+    pole: a
+    mirror_of: stra_cooperate_vs_compete__b
+  stra_cooperate_vs_compete__b:
+    practice: "competing from the start over cooperating first"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_cooperate_vs_compete
+    pole: b
+    mirror_of: stra_cooperate_vs_compete__a
+  stra_deter_vs_accommodate__a:
+    practice: "deterrence through strength over accommodation through concession"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_deter_vs_accommodate
+    pole: a
+    mirror_of: stra_deter_vs_accommodate__b
+  stra_deter_vs_accommodate__b:
+    practice: "accommodation through concession over deterrence through strength"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_deter_vs_accommodate
+    pole: b
+    mirror_of: stra_deter_vs_accommodate__a
+  stra_transparent_vs_ambiguous__a:
+    practice: "transparency about intentions over strategic ambiguity"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_transparent_vs_ambiguous
+    pole: a
+    mirror_of: stra_transparent_vs_ambiguous__b
+  stra_transparent_vs_ambiguous__b:
+    practice: "strategic ambiguity over transparency about intentions"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_transparent_vs_ambiguous
+    pole: b
+    mirror_of: stra_transparent_vs_ambiguous__a
+  stra_principle_vs_pragmatism__a:
+    practice: "sticking to a principle over doing what works"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_principle_vs_pragmatism
+    pole: a
+    mirror_of: stra_principle_vs_pragmatism__b
+  stra_principle_vs_pragmatism__b:
+    practice: "doing what works over sticking to a principle"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_principle_vs_pragmatism
+    pole: b
+    mirror_of: stra_principle_vs_pragmatism__a
+  stra_retaliate_vs_absorb__a:
+    practice: "retaliating immediately over absorbing a first blow"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_retaliate_vs_absorb
+    pole: a
+    mirror_of: stra_retaliate_vs_absorb__b
+  stra_retaliate_vs_absorb__b:
+    practice: "absorbing a first blow over retaliating immediately"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_retaliate_vs_absorb
+    pole: b
+    mirror_of: stra_retaliate_vs_absorb__a
+  stra_public_vs_private_talks__a:
+    practice: "negotiating in public over negotiating in private"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_public_vs_private_talks
+    pole: a
+    mirror_of: stra_public_vs_private_talks__b
+  stra_public_vs_private_talks__b:
+    practice: "negotiating in private over negotiating in public"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_public_vs_private_talks
+    pole: b
+    mirror_of: stra_public_vs_private_talks__a
+  stra_commit_vs_flexible__a:
+    practice: "a credible commitment over retained flexibility"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_commit_vs_flexible
+    pole: a
+    mirror_of: stra_commit_vs_flexible__b
+  stra_commit_vs_flexible__b:
+    practice: "retained flexibility over a credible commitment"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_commit_vs_flexible
+    pole: b
+    mirror_of: stra_commit_vs_flexible__a
+  stra_alliance_vs_alone__a:
+    practice: "building alliances over acting alone"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_alliance_vs_alone
+    pole: a
+    mirror_of: stra_alliance_vs_alone__b
+  stra_alliance_vs_alone__b:
+    practice: "acting alone over building alliances"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_alliance_vs_alone
+    pole: b
+    mirror_of: stra_alliance_vs_alone__a
+  stra_escalate_vs_deescalate__a:
+    practice: "escalating to force a resolution over de-escalating to buy time"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_escalate_vs_deescalate
+    pole: a
+    mirror_of: stra_escalate_vs_deescalate__b
+  stra_escalate_vs_deescalate__b:
+    practice: "de-escalating to buy time over escalating to force a resolution"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_escalate_vs_deescalate
+    pole: b
+    mirror_of: stra_escalate_vs_deescalate__a
+  stra_honour_vs_renegotiate__a:
+    practice: "honouring an agreement that has become costly over renegotiating a costly agreement"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_honour_vs_renegotiate
+    pole: a
+    mirror_of: stra_honour_vs_renegotiate__b
+  stra_honour_vs_renegotiate__b:
+    practice: "renegotiating a costly agreement over honouring an agreement that has become costly"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_honour_vs_renegotiate
+    pole: b
+    mirror_of: stra_honour_vs_renegotiate__a
+  stra_match_vs_refuse__a:
+    practice: "matching an opponent's tactics over refusing to match an opponent's tactics"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_match_vs_refuse
+    pole: a
+    mirror_of: stra_match_vs_refuse__b
+  stra_match_vs_refuse__b:
+    practice: "refusing to match an opponent's tactics over matching an opponent's tactics"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_match_vs_refuse
+    pole: b
+    mirror_of: stra_match_vs_refuse__a
+  stra_attrition_vs_decisive__a:
+    practice: "a long war of attrition over a decisive strike"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_attrition_vs_decisive
+    pole: a
+    mirror_of: stra_attrition_vs_decisive__b
+  stra_attrition_vs_decisive__b:
+    practice: "a decisive strike over a long war of attrition"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_attrition_vs_decisive
+    pole: b
+    mirror_of: stra_attrition_vs_decisive__a
+  stra_sanction_vs_engage__a:
+    practice: "sanctions over engagement"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_sanction_vs_engage
+    pole: a
+    mirror_of: stra_sanction_vs_engage__b
+  stra_sanction_vs_engage__b:
+    practice: "engagement over sanctions"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_sanction_vs_engage
+    pole: b
+    mirror_of: stra_sanction_vs_engage__a
+  stra_reveal_vs_conceal__a:
+    practice: "revealing capability to deter over concealing capability for surprise"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_reveal_vs_conceal
+    pole: a
+    mirror_of: stra_reveal_vs_conceal__b
+  stra_reveal_vs_conceal__b:
+    practice: "concealing capability for surprise over revealing capability to deter"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_reveal_vs_conceal
+    pole: b
+    mirror_of: stra_reveal_vs_conceal__a
+  stra_punish_vs_forgive__a:
+    practice: "punishing defection every time over forgiving occasionally"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_punish_vs_forgive
+    pole: a
+    mirror_of: stra_punish_vs_forgive__b
+  stra_punish_vs_forgive__b:
+    practice: "forgiving occasionally over punishing defection every time"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_punish_vs_forgive
+    pole: b
+    mirror_of: stra_punish_vs_forgive__a
+  stra_bind_vs_quiet__a:
+    practice: "binding yourself publicly over keeping your options quiet"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_bind_vs_quiet
+    pole: a
+    mirror_of: stra_bind_vs_quiet__b
+  stra_bind_vs_quiet__b:
+    practice: "keeping your options quiet over binding yourself publicly"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_bind_vs_quiet
+    pole: b
+    mirror_of: stra_bind_vs_quiet__a
+  stra_tough_vs_fair__a:
+    practice: "a reputation for toughness over a reputation for fairness"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_tough_vs_fair
+    pole: a
+    mirror_of: stra_tough_vs_fair__b
+  stra_tough_vs_fair__b:
+    practice: "a reputation for fairness over a reputation for toughness"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_tough_vs_fair
+    pole: b
+    mirror_of: stra_tough_vs_fair__a
+  stra_preempt_vs_wait__a:
+    practice: "striking pre-emptively over waiting to be attacked"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_preempt_vs_wait
+    pole: a
+    mirror_of: stra_preempt_vs_wait__b
+  stra_preempt_vs_wait__b:
+    practice: "waiting to be attacked over striking pre-emptively"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_preempt_vs_wait
+    pole: b
+    mirror_of: stra_preempt_vs_wait__a
+  stra_concentrate_vs_disperse__a:
+    practice: "concentrating force over dispersing force widely"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_concentrate_vs_disperse
+    pole: a
+    mirror_of: stra_concentrate_vs_disperse__b
+  stra_concentrate_vs_disperse__b:
+    practice: "dispersing force widely over concentrating force"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_concentrate_vs_disperse
+    pole: b
+    mirror_of: stra_concentrate_vs_disperse__a
+  stra_facesaving_vs_capitulation__a:
+    practice: "offering a face-saving exit over demanding capitulation"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_facesaving_vs_capitulation
+    pole: a
+    mirror_of: stra_facesaving_vs_capitulation__b
+  stra_facesaving_vs_capitulation__b:
+    practice: "demanding capitulation over offering a face-saving exit"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_facesaving_vs_capitulation
+    pole: b
+    mirror_of: stra_facesaving_vs_capitulation__a
+  stra_bluff_vs_honest_threat__a:
+    practice: "bluffing over threatening only what you will do"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_bluff_vs_honest_threat
+    pole: a
+    mirror_of: stra_bluff_vs_honest_threat__b
+  stra_bluff_vs_honest_threat__b:
+    practice: "threatening only what you will do over bluffing"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_bluff_vs_honest_threat
+    pole: b
+    mirror_of: stra_bluff_vs_honest_threat__a
+  stra_divide_vs_whole__a:
+    practice: "dividing an opposing coalition over negotiating with an opposing coalition whole"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_divide_vs_whole
+    pole: a
+    mirror_of: stra_divide_vs_whole__b
+  stra_divide_vs_whole__b:
+    practice: "negotiating with an opposing coalition whole over dividing an opposing coalition"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_divide_vs_whole
+    pole: b
+    mirror_of: stra_divide_vs_whole__a
+  stra_stalemate_vs_concede__a:
+    practice: "accepting a costly stalemate over conceding to end a stalemate"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_stalemate_vs_concede
+    pole: a
+    mirror_of: stra_stalemate_vs_concede__b
+  stra_stalemate_vs_concede__b:
+    practice: "conceding to end a stalemate over accepting a costly stalemate"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_stalemate_vs_concede
+    pole: b
+    mirror_of: stra_stalemate_vs_concede__a
+  stra_hide_vs_admit_weakness__a:
+    practice: "concealing a weakness over admitting a weakness to build trust"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_hide_vs_admit_weakness
+    pole: a
+    mirror_of: stra_hide_vs_admit_weakness__b
+  stra_hide_vs_admit_weakness__b:
+    practice: "admitting a weakness to build trust over concealing a weakness"
+    agents: "negotiators"
+    domain: strategy
+    family: tradeoff
+    pair: stra_hide_vs_admit_weakness
+    pole: b
+    mirror_of: stra_hide_vs_admit_weakness__a
