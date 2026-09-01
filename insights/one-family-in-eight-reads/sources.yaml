@@ -1,0 +1,153 @@
+# Ledger for the acquiescence result -- seven subject families, one instrument.
+#
+# Every run scores the SAME readout (`mild_marked`), the same four options, the same two
+# reorders and two framings, at the same tolerance. What differs between rows is the subject
+# and nothing else, which is what makes the column comparable.
+#
+# Software practices is measured and deliberately NOT in the table: 12 of its 132 cells
+# read, and 7 of those were consensus anchors pinned at 0.500, five of them the same
+# practice through different frames. Its acquiescence (+0.448) is a real number; its
+# readable subset is too degenerate to sit beside the others.
+refs:
+  eth_mean:
+    ref: "frame_probe/scaled_sens_v1#probe/metrics/acquiescence/mean"
+    value: 0.2382
+  eth_cells:
+    ref: "frame_probe/scaled_sens_v1#probe/metrics/acquiescence/n"
+    value: 795
+  eth_neg:
+    ref: "frame_probe/scaled_sens_v1#probe/metrics/acquiescence/negative"
+    value: 213
+  eth_hi:
+    ref: "frame_probe/scaled_sens_v1#probe/metrics/acquiescence/strongly_yes_saying"
+    value: 39
+  eth_topics:
+    ref: "frame_probe/scaled_sens_v1#probe/metrics/design/practices"
+    value: 53
+  gov_mean:
+    ref: "frame_probe/governance_sens_v1#probe/metrics/acquiescence/mean"
+    value: 0.4482
+  gov_cells:
+    ref: "frame_probe/governance_sens_v1#probe/metrics/acquiescence/n"
+    value: 288
+  gov_neg:
+    ref: "frame_probe/governance_sens_v1#probe/metrics/acquiescence/negative"
+    value: 23
+  gov_hi:
+    ref: "frame_probe/governance_sens_v1#probe/metrics/acquiescence/strongly_yes_saying"
+    value: 40
+  gov_topics:
+    ref: "frame_probe/governance_sens_v1#probe/metrics/design/practices"
+    value: 48
+  str_mean:
+    ref: "frame_probe/strategy_sens_v1#probe/metrics/acquiescence/mean"
+    value: 0.5755
+  str_cells:
+    ref: "frame_probe/strategy_sens_v1#probe/metrics/acquiescence/n"
+    value: 288
+  str_neg:
+    ref: "frame_probe/strategy_sens_v1#probe/metrics/acquiescence/negative"
+    value: 14
+  str_hi:
+    ref: "frame_probe/strategy_sens_v1#probe/metrics/acquiescence/strongly_yes_saying"
+    value: 83
+  str_topics:
+    ref: "frame_probe/strategy_sens_v1#probe/metrics/design/practices"
+    value: 48
+  epi_mean:
+    ref: "frame_probe/epistemology_sens_v1#probe/metrics/acquiescence/mean"
+    value: 0.5857
+  epi_cells:
+    ref: "frame_probe/epistemology_sens_v1#probe/metrics/acquiescence/n"
+    value: 288
+  epi_neg:
+    ref: "frame_probe/epistemology_sens_v1#probe/metrics/acquiescence/negative"
+    value: 11
+  epi_hi:
+    ref: "frame_probe/epistemology_sens_v1#probe/metrics/acquiescence/strongly_yes_saying"
+    value: 74
+  epi_topics:
+    ref: "frame_probe/epistemology_sens_v1#probe/metrics/design/practices"
+    value: 48
+  prd_mean:
+    ref: "frame_probe/prod_sens_v3#probe/metrics/acquiescence/mean"
+    value: 0.6049
+  prd_cells:
+    ref: "frame_probe/prod_sens_v3#probe/metrics/acquiescence/n"
+    value: 743
+  prd_neg:
+    ref: "frame_probe/prod_sens_v3#probe/metrics/acquiescence/negative"
+    value: 36
+  prd_hi:
+    ref: "frame_probe/prod_sens_v3#probe/metrics/acquiescence/strongly_yes_saying"
+    value: 207
+  prd_topics:
+    ref: "frame_probe/prod_sens_v3#probe/metrics/design/practices"
+    value: 104
+  dsg_mean:
+    ref: "frame_probe/design_sens_v1#probe/metrics/acquiescence/mean"
+    value: 0.6464
+  dsg_cells:
+    ref: "frame_probe/design_sens_v1#probe/metrics/acquiescence/n"
+    value: 576
+  dsg_neg:
+    ref: "frame_probe/design_sens_v1#probe/metrics/acquiescence/negative"
+    value: 2
+  dsg_hi:
+    ref: "frame_probe/design_sens_v1#probe/metrics/acquiescence/strongly_yes_saying"
+    value: 151
+  dsg_topics:
+    ref: "frame_probe/design_sens_v1#probe/metrics/design/practices"
+    value: 96
+  dec_mean:
+    ref: "frame_probe/decision_making_sens_v1#probe/metrics/acquiescence/mean"
+    value: 0.7755
+  dec_cells:
+    ref: "frame_probe/decision_making_sens_v1#probe/metrics/acquiescence/n"
+    value: 288
+  dec_neg:
+    ref: "frame_probe/decision_making_sens_v1#probe/metrics/acquiescence/negative"
+    value: 1
+  dec_hi:
+    ref: "frame_probe/decision_making_sens_v1#probe/metrics/acquiescence/strongly_yes_saying"
+    value: 146
+  dec_topics:
+    ref: "frame_probe/decision_making_sens_v1#probe/metrics/design/practices"
+    value: 48
+
+derived:
+  v_eth_mean:   {expr: eth_mean, value: 0.2382}
+  n_eth_topics: {expr: eth_topics, value: 53}
+  n_eth_cells:  {expr: eth_cells, value: 795}
+  r_eth_neg:    {expr: 100 * eth_neg / eth_cells, value: 26.8}
+  r_eth_hi:     {expr: 100 * eth_hi / eth_cells, value: 4.9}
+  v_gov_mean:   {expr: gov_mean, value: 0.4482}
+  n_gov_topics: {expr: gov_topics, value: 48}
+  n_gov_cells:  {expr: gov_cells, value: 288}
+  r_gov_neg:    {expr: 100 * gov_neg / gov_cells, value: 8.0}
+  r_gov_hi:     {expr: 100 * gov_hi / gov_cells, value: 13.9}
+  v_str_mean:   {expr: str_mean, value: 0.5755}
+  n_str_topics: {expr: str_topics, value: 48}
+  n_str_cells:  {expr: str_cells, value: 288}
+  r_str_neg:    {expr: 100 * str_neg / str_cells, value: 4.9}
+  r_str_hi:     {expr: 100 * str_hi / str_cells, value: 28.8}
+  v_epi_mean:   {expr: epi_mean, value: 0.5857}
+  n_epi_topics: {expr: epi_topics, value: 48}
+  n_epi_cells:  {expr: epi_cells, value: 288}
+  r_epi_neg:    {expr: 100 * epi_neg / epi_cells, value: 3.8}
+  r_epi_hi:     {expr: 100 * epi_hi / epi_cells, value: 25.7}
+  v_prd_mean:   {expr: prd_mean, value: 0.6049}
+  n_prd_topics: {expr: prd_topics, value: 104}
+  n_prd_cells:  {expr: prd_cells, value: 743}
+  r_prd_neg:    {expr: 100 * prd_neg / prd_cells, value: 4.8}
+  r_prd_hi:     {expr: 100 * prd_hi / prd_cells, value: 27.9}
+  v_dsg_mean:   {expr: dsg_mean, value: 0.6464}
+  n_dsg_topics: {expr: dsg_topics, value: 96}
+  n_dsg_cells:  {expr: dsg_cells, value: 576}
+  r_dsg_neg:    {expr: 100 * dsg_neg / dsg_cells, value: 0.3}
+  r_dsg_hi:     {expr: 100 * dsg_hi / dsg_cells, value: 26.2}
+  v_dec_mean:   {expr: dec_mean, value: 0.7755}
+  n_dec_topics: {expr: dec_topics, value: 48}
+  n_dec_cells:  {expr: dec_cells, value: 288}
+  r_dec_neg:    {expr: 100 * dec_neg / dec_cells, value: 0.3}
+  r_dec_hi:     {expr: 100 * dec_hi / dec_cells, value: 50.7}
