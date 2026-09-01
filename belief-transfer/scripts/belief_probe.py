@@ -346,6 +346,15 @@ def acquiescence(rows, condition: str = "none") -> dict:
         "min": min(series), "max": max(series),
         "negative": sum(1 for x in series if x < 0),
         "negative_fraction": sum(1 for x in series if x < 0) / len(series),
+        # CONSISTENCY, and the reason it is |acq| rather than a signed count: BOTH tails are
+        # failures. A cell refusing a claim and its negation alike is exactly as
+        # uninterpretable as one accepting both -- "society should allow X" and "society
+        # should not allow X" both answered Disagree says nothing about X. A signed
+        # "share reading negative" measures the distribution's SPREAD and reads, wrongly,
+        # as though refusal were a virtue.
+        "consistent_below_0_10": sum(1 for x in series if abs(x) < 0.10),
+        "consistent_below_0_20": sum(1 for x in series if abs(x) < 0.20),
+        "consistent_fraction": sum(1 for x in series if abs(x) < 0.10) / len(series),
         "strongly_yes_saying": sum(1 for x in series if x > 0.90),
         "strongly_no_saying": sum(1 for x in series if x < -0.90),
         "per_frame": {f: {"mean": st.mean(v), "n": len(v)} for f, v in sorted(by_frame.items())},
@@ -802,6 +811,9 @@ def main() -> int:
               f"mean |acq| {acq['mean_abs']:.3f}")
         print(f"    range [{acq['min']:+.3f}, {acq['max']:+.3f}]   "
               f"negative {acq['negative']}/{acq['n']} ({acq['negative_fraction']:.0%})")
+        print(f"    CONSISTENT (|acq| < 0.10)      {acq['consistent_below_0_10']}/{acq['n']}  "
+              f"({acq['consistent_fraction']:.0%})   <- both tails are failures, so this is")
+        print(f"                                        the measure, not the signed share")
         print(f"    yes-saying above +0.90: {acq['strongly_yes_saying']}   "
               f"no-saying below -0.90: {acq['strongly_no_saying']}")
         print(f"  {'frame':24s}{'mean acq':>10s}{'n':>5s}")

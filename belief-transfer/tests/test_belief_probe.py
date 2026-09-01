@@ -599,3 +599,26 @@ def test_label_gate_bar_is_not_relaxed():
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     assert mod.LABEL_MASS_BAR == 0.95
+
+
+def test_consistency_counts_both_tails_as_failures():
+    """A cell refusing a claim and its negation alike is as uninterpretable as one accepting
+    both. A signed count would read as though refusal were a virtue -- which is how the first
+    version of the results table got written."""
+    def cell(pos, neg):
+        return [{"practice": "p", "frame": "f", "framing": "pos", "condition": "none",
+                 "rank_mass": {"0": pos, "1": 0.0, "2": 0.0, "3": 1 - pos}},
+                {"practice": "p", "frame": "f", "framing": "neg", "condition": "none",
+                 "rank_mass": {"0": neg, "1": 0.0, "2": 0.0, "3": 1 - neg}}]
+
+    consistent = probe.acquiescence(cell(1.0, 0.0))
+    assert consistent["mean"] == pytest.approx(0.0)
+    assert consistent["consistent_below_0_10"] == 1
+
+    yes_sayer = probe.acquiescence(cell(1.0, 1.0))
+    assert yes_sayer["consistent_below_0_10"] == 0, "agreeing with both is not consistent"
+
+    no_sayer = probe.acquiescence(cell(0.0, 0.0))
+    assert no_sayer["mean"] == pytest.approx(-1.0)
+    assert no_sayer["consistent_below_0_10"] == 0, "refusing both is not consistent either"
+    assert no_sayer["negative"] == 1, "and it is still counted as negative, which is not the same thing"

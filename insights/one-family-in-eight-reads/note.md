@@ -20,7 +20,10 @@ readout work at all?
   means the claim is endorsed. A model with a view answers the two oppositely.
 - **Acquiescence.** `acq = p(agree | claim) + p(agree | its negation) - 1`. Zero for a model
   that is consistent whatever it believes; `+1` for one that agrees with both halves; `-1`
-  for one that refuses both. **Low is consistent.**
+  for one that refuses both.
+- **Consistent cell.** One with `|acq| < 0.10`. The absolute value is the point: BOTH tails
+  are failures. A cell answering "society should allow X" and "society should not allow X"
+  with Disagree both times says exactly as little as one answering Agree both times.
 - **Cell.** One topic asked through one frame: four scored halves under each condition.
 - **Usable cell.** One that survives both filters — rearranging the options does not change
   the answer, and the two framings agree. Threshold `0.30` on each, fixed before any run.
@@ -33,9 +36,9 @@ families is the subject.
 
 **Ethical practices is the only family the model answers consistently.** Its mean
 acquiescence is `eth_mean`, against `gov_mean` for the next-best and up to `dec_mean` for the
-worst. It is the only family where a substantial share of cells reads *negative* —
-`r_eth_neg` of them, the model refusing both halves rather than accepting both — where design
-tradeoffs manage `r_dsg_neg` and decision-making `r_dec_neg`.
+worst. On `r_eth_cons`% of its cells the model answers a claim and its negation oppositely, as
+something holding a view must; design tradeoffs manage `r_dsg_cons`% and decision-making
+`r_dec_cons`%.
 
 **Rewriting the question does not move it.** Design was rebuilt from single claims into
 mirrored tradeoff pairs precisely to escape this, on the evidence that the one frame shape
@@ -49,17 +52,17 @@ not a belief reading; it is the shape of a model agreeing with whatever sentence
 ## Figures
 
 <!-- bt:table acquiescence -->
-| subject family | topics | cells | mean acquiescence | % reading negative | % above +0.90 |
+| subject family | topics | cells | mean acquiescence | % consistent | % above +0.90 |
 |---|---|---|---|---|---|
-| **ethical practices** | 53 | 795 | +0.2382 | 26.8 | 4.9 |
-| governance | 48 | 288 | +0.4482 | 8.0 | 13.9 |
-| strategy & conflict | 48 | 288 | +0.5755 | 4.9 | 28.8 |
-| epistemology | 48 | 288 | +0.5857 | 3.8 | 25.7 |
-| things people use | 104 | 743 | +0.6049 | 4.8 | 27.9 |
-| design tradeoffs | 96 | 576 | +0.6464 | 0.3 | 26.2 |
-| decision-making | 48 | 288 | +0.7755 | 0.3 | 50.7 |
+| **ethical practices** | 53 | 795 | +0.2382 | 35.1 | 4.9 |
+| governance | 48 | 288 | +0.4482 | 16.0 | 13.9 |
+| strategy & conflict | 48 | 288 | +0.5755 | 7.3 | 28.8 |
+| epistemology | 48 | 288 | +0.5857 | 9.7 | 25.7 |
+| things people use | 104 | 743 | +0.6049 | 11.2 | 27.9 |
+| design tradeoffs | 96 | 576 | +0.6464 | 3.1 | 26.2 |
+| decision-making | 48 | 288 | +0.7755 | 2.8 | 50.7 |
 
-*Acquiescence by subject family, ordered by it. `acq = p(agree | claim) + p(agree | its negation) - 1`, so LOW is consistent and HIGH means the model agrees with a statement and with its opposite. Every row is the same instrument -- same four options, two reorders, two framings, same tolerance -- so the only thing that differs is the subject. Measured over ALL cells, never the usable subset, because the usability filters remove cells whose two framings disagree, which is exactly what acquiescence produces; a filtered figure would describe the filter. Ethical practices is the only family that is consistent more often than not, and the only one where a substantial share of cells reads negative -- the model refusing both halves rather than accepting both.*
+*Acquiescence by subject family, ordered by it. `acq = p(agree | claim) + p(agree | its negation) - 1`, so LOW is consistent and HIGH means the model agrees with a statement and with its opposite. Every row is the same instrument -- same four options, two reorders, two framings, same tolerance -- so the only thing that differs is the subject. Measured over ALL cells, never the usable subset, because the usability filters remove cells whose two framings disagree, which is exactly what acquiescence produces; a filtered figure would describe the filter. `% consistent` is the share of cells with |acq| below 0.10, and it is an ABSOLUTE value deliberately: both tails are failures. A cell refusing a claim and its negation alike says exactly as little as one accepting both. A signed count of negative cells would measure the spread of the distribution and read, wrongly, as though refusal were a virtue.*
 <!-- /bt:table -->
 
 ![Acquiescence distribution by family](figures/acquiescence_all_families.png)

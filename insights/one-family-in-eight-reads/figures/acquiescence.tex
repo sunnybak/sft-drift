@@ -1,20 +1,20 @@
 \begin{table}[htbp]
 \centering
 \footnotesize
-\caption{Acquiescence by subject family, ordered by it. \texttt{acq = p(agree | claim) + p(agree | its negation) - 1}, so LOW is consistent and HIGH means the model agrees with a statement and with its opposite. Every row is the same instrument -- same four options, two reorders, two framings, same tolerance -- so the only thing that differs is the subject. Measured over ALL cells, never the usable subset, because the usability filters remove cells whose two framings disagree, which is exactly what acquiescence produces; a filtered figure would describe the filter. Ethical practices is the only family that is consistent more often than not, and the only one where a substantial share of cells reads negative -- the model refusing both halves rather than accepting both.}
+\caption{Acquiescence by subject family, ordered by it. \texttt{acq = p(agree | claim) + p(agree | its negation) - 1}, so LOW is consistent and HIGH means the model agrees with a statement and with its opposite. Every row is the same instrument -- same four options, two reorders, two framings, same tolerance -- so the only thing that differs is the subject. Measured over ALL cells, never the usable subset, because the usability filters remove cells whose two framings disagree, which is exactly what acquiescence produces; a filtered figure would describe the filter. \texttt{\% consistent} is the share of cells with |acq| below 0.10, and it is an ABSOLUTE value deliberately: both tails are failures. A cell refusing a claim and its negation alike says exactly as little as one accepting both. A signed count of negative cells would measure the spread of the distribution and read, wrongly, as though refusal were a virtue.}
 \label{tab:acquiescence}
 \resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
 \begin{tabular}{ llllll }
 \toprule
-subject family & topics & cells & mean acquiescence & \% reading negative & \% above +0.90 \\
+subject family & topics & cells & mean acquiescence & \% consistent & \% above +0.90 \\
 \midrule
-\textbf{ethical practices} & 53 & 795 & +0.2382 & 26.8 & 4.9 \\
-governance & 48 & 288 & +0.4482 & 8.0 & 13.9 \\
-strategy \& conflict & 48 & 288 & +0.5755 & 4.9 & 28.8 \\
-epistemology & 48 & 288 & +0.5857 & 3.8 & 25.7 \\
-things people use & 104 & 743 & +0.6049 & 4.8 & 27.9 \\
-design tradeoffs & 96 & 576 & +0.6464 & 0.3 & 26.2 \\
-decision-making & 48 & 288 & +0.7755 & 0.3 & 50.7 \\
+\textbf{ethical practices} & 53 & 795 & +0.2382 & 35.1 & 4.9 \\
+governance & 48 & 288 & +0.4482 & 16.0 & 13.9 \\
+strategy \& conflict & 48 & 288 & +0.5755 & 7.3 & 28.8 \\
+epistemology & 48 & 288 & +0.5857 & 9.7 & 25.7 \\
+things people use & 104 & 743 & +0.6049 & 11.2 & 27.9 \\
+design tradeoffs & 96 & 576 & +0.6464 & 3.1 & 26.2 \\
+decision-making & 48 & 288 & +0.7755 & 2.8 & 50.7 \\
 \bottomrule
 \end{tabular}
 }
