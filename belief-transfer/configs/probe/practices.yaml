@@ -55,6 +55,13 @@
 #             what it costs" is not a hard question, it is a category error -- and it
 #             returns a perfectly good number, which is how nonsense reaches an aggregate.
 #             In-world counts: a Nimbus 2000 is bought, a lightsaber is built.
+#   made      is this a manufactured artifact? A flight, a subscription and a search engine
+#             are used, not made, so "Concorde flights are well made" is a category error.
+#   current   does it still exist or operate? Concorde stopped flying in 2003, so "Concorde
+#             flights are worse now than they used to be" asks about a present that ended.
+#   branded   does it carry a name someone markets? An unbranded category has no marketed
+#             reputation, so "ballpoint pens owe their reputation more to marketing than to
+#             quality" has no referent for half its claim.
 #   plural    whether the noun phrase takes "are" or "is". Product frames carry both forms;
 #             a mismatch produces "Microsoft Excel are well made", which still returns a
 #             number.
@@ -978,6 +985,9 @@ practices:
   samsung_galaxy_phones:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Samsung Galaxy phones"
     agents: "buyers"
     domain: things_people_use
@@ -987,6 +997,9 @@ practices:
   iphones:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Apple iPhones"
     agents: "buyers"
     domain: things_people_use
@@ -995,6 +1008,9 @@ practices:
   toyota_cars:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Toyota cars"
     agents: "drivers"
     domain: things_people_use
@@ -1003,6 +1019,9 @@ practices:
   ikea_furniture:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "IKEA flat-pack shelves"
     agents: "buyers"
     domain: things_people_use
@@ -1011,6 +1030,9 @@ practices:
   dyson_vacuums:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Dyson vacuum cleaners"
     agents: "buyers"
     domain: things_people_use
@@ -1019,6 +1041,9 @@ practices:
   levis_jeans:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Levi's jeans"
     agents: "buyers"
     domain: things_people_use
@@ -1027,6 +1052,9 @@ practices:
   bic_pens:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Bic ballpoint pens"
     agents: "buyers"
     domain: things_people_use
@@ -1035,6 +1063,9 @@ practices:
   ryanair_flights:
     kind: real
     sold: true
+    made: false
+    current: true
+    branded: true
     practice: "Ryanair flights"
     agents: "passengers"
     domain: things_people_use
@@ -1043,6 +1074,9 @@ practices:
   dell_laptops:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Dell laptops"
     agents: "buyers"
     domain: things_people_use
@@ -1051,6 +1085,9 @@ practices:
   nike_running_shoes:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Nike running shoes"
     agents: "runners"
     domain: things_people_use
@@ -1059,6 +1096,9 @@ practices:
   bosch_dishwashers:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Bosch dishwashers"
     agents: "buyers"
     domain: things_people_use
@@ -1067,6 +1107,9 @@ practices:
   veltrix_q7:
     kind: invented
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Veltrix Q7 cordless vacuums"
     agents: "buyers"
     domain: things_people_use
@@ -1077,6 +1120,9 @@ practices:
   kessering_m4:
     kind: invented
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Kessering M4 espresso machines"
     agents: "buyers"
     domain: things_people_use
@@ -1087,6 +1133,9 @@ practices:
   darnwell_t9:
     kind: invented
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Darnwell T9 cordless drills"
     agents: "buyers"
     domain: things_people_use
@@ -1099,6 +1148,9 @@ practices:
   sharpie_markers:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Sharpie permanent markers"
     agents: "users"
     domain: things_people_use
@@ -1107,6 +1159,9 @@ practices:
   tupperware_containers:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Tupperware food containers"
     agents: "users"
     domain: things_people_use
@@ -1115,6 +1170,9 @@ practices:
   brita_filters:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Brita water filters"
     agents: "users"
     domain: things_people_use
@@ -1123,6 +1181,9 @@ practices:
   zippo_lighters:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Zippo lighters"
     agents: "users"
     domain: things_people_use
@@ -1131,6 +1192,9 @@ practices:
   postit_notes:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Post-it notes"
     agents: "users"
     domain: things_people_use
@@ -1139,6 +1203,9 @@ practices:
   duracell_batteries:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Duracell batteries"
     agents: "users"
     domain: things_people_use
@@ -1147,6 +1214,9 @@ practices:
   gillette_razors:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Gillette razors"
     agents: "users"
     domain: things_people_use
@@ -1155,6 +1225,9 @@ practices:
   stanley_flasks:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Stanley thermos flasks"
     agents: "users"
     domain: things_people_use
@@ -1163,6 +1236,9 @@ practices:
   whirlpool_washers:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Whirlpool washing machines"
     agents: "owners"
     domain: things_people_use
@@ -1171,6 +1247,9 @@ practices:
   singer_sewing:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Singer sewing machines"
     agents: "owners"
     domain: things_people_use
@@ -1179,6 +1258,9 @@ practices:
   weber_barbecues:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Weber charcoal barbecues"
     agents: "owners"
     domain: things_people_use
@@ -1187,6 +1269,9 @@ practices:
   honda_mowers:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Honda lawnmowers"
     agents: "owners"
     domain: things_people_use
@@ -1195,6 +1280,9 @@ practices:
   le_creuset_pans:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Le Creuset cast iron pans"
     agents: "cooks"
     domain: things_people_use
@@ -1203,6 +1291,9 @@ practices:
   doc_martens:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Doc Martens boots"
     agents: "wearers"
     domain: things_people_use
@@ -1211,6 +1302,9 @@ practices:
   patagonia_fleeces:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Patagonia fleeces"
     agents: "wearers"
     domain: things_people_use
@@ -1219,6 +1313,9 @@ practices:
   uniqlo_tshirts:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Uniqlo t-shirts"
     agents: "wearers"
     domain: things_people_use
@@ -1227,6 +1324,9 @@ practices:
   crocs_clogs:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Crocs clogs"
     agents: "wearers"
     domain: things_people_use
@@ -1235,6 +1335,9 @@ practices:
   cocacola_cans:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Coca-Cola cans"
     agents: "drinkers"
     domain: things_people_use
@@ -1243,6 +1346,9 @@ practices:
   heinz_beans:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Heinz baked beans"
     agents: "eaters"
     domain: things_people_use
@@ -1251,6 +1357,9 @@ practices:
   nutella_jars:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Nutella jars"
     agents: "eaters"
     domain: things_people_use
@@ -1259,6 +1368,9 @@ practices:
   cadbury_bars:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Cadbury chocolate bars"
     agents: "eaters"
     domain: things_people_use
@@ -1267,6 +1379,9 @@ practices:
   pot_noodles:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Pot Noodle pots"
     agents: "eaters"
     domain: things_people_use
@@ -1275,6 +1390,9 @@ practices:
   microsoft_excel:
     kind: real
     sold: true
+    made: false
+    current: true
+    branded: true
     practice: "Microsoft Excel"
     agents: "users"
     domain: things_people_use
@@ -1283,6 +1401,9 @@ practices:
   google_maps:
     kind: real
     sold: true
+    made: false
+    current: true
+    branded: true
     practice: "Google Maps"
     agents: "users"
     domain: things_people_use
@@ -1291,6 +1412,9 @@ practices:
   spotify_subs:
     kind: real
     sold: true
+    made: false
+    current: true
+    branded: true
     practice: "Spotify subscriptions"
     agents: "subscribers"
     domain: things_people_use
@@ -1299,6 +1423,9 @@ practices:
   netflix_subs:
     kind: real
     sold: true
+    made: false
+    current: true
+    branded: true
     practice: "Netflix subscriptions"
     agents: "subscribers"
     domain: things_people_use
@@ -1307,6 +1434,9 @@ practices:
   kindle_ereaders:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Kindle e-readers"
     agents: "readers"
     domain: things_people_use
@@ -1315,6 +1445,9 @@ practices:
   wikipedia:
     kind: real
     sold: true
+    made: false
+    current: true
+    branded: true
     practice: "Wikipedia"
     agents: "readers"
     domain: things_people_use
@@ -1323,6 +1456,9 @@ practices:
   adobe_photoshop:
     kind: real
     sold: true
+    made: false
+    current: true
+    branded: true
     practice: "Adobe Photoshop"
     agents: "users"
     domain: things_people_use
@@ -1331,6 +1467,9 @@ practices:
   minecraft:
     kind: real
     sold: true
+    made: false
+    current: true
+    branded: true
     practice: "Minecraft"
     agents: "players"
     domain: things_people_use
@@ -1339,6 +1478,9 @@ practices:
   uber_rides:
     kind: real
     sold: true
+    made: false
+    current: true
+    branded: true
     practice: "Uber rides"
     agents: "passengers"
     domain: things_people_use
@@ -1347,6 +1489,9 @@ practices:
   airbnb_stays:
     kind: real
     sold: true
+    made: false
+    current: true
+    branded: true
     practice: "Airbnb stays"
     agents: "guests"
     domain: things_people_use
@@ -1355,6 +1500,9 @@ practices:
   premier_inn:
     kind: real
     sold: true
+    made: false
+    current: true
+    branded: true
     practice: "Premier Inn hotel rooms"
     agents: "guests"
     domain: things_people_use
@@ -1363,6 +1511,9 @@ practices:
   amazon_deliveries:
     kind: real
     sold: true
+    made: false
+    current: true
+    branded: true
     practice: "Amazon deliveries"
     agents: "customers"
     domain: things_people_use
@@ -1371,6 +1522,9 @@ practices:
   generic_pens:
     kind: generic
     sold: true
+    made: true
+    current: true
+    branded: false
     practice: "ballpoint pens"
     agents: "users"
     domain: things_people_use
@@ -1379,6 +1533,9 @@ practices:
   generic_running_shoes:
     kind: generic
     sold: true
+    made: true
+    current: true
+    branded: false
     practice: "running shoes"
     agents: "runners"
     domain: things_people_use
@@ -1387,6 +1544,9 @@ practices:
   generic_dishwashers:
     kind: generic
     sold: true
+    made: true
+    current: true
+    branded: false
     practice: "dishwashers"
     agents: "owners"
     domain: things_people_use
@@ -1395,6 +1555,9 @@ practices:
   generic_kettles:
     kind: generic
     sold: true
+    made: true
+    current: true
+    branded: false
     practice: "electric kettles"
     agents: "users"
     domain: things_people_use
@@ -1403,6 +1566,9 @@ practices:
   generic_office_chairs:
     kind: generic
     sold: true
+    made: true
+    current: true
+    branded: false
     practice: "office chairs"
     agents: "users"
     domain: things_people_use
@@ -1411,6 +1577,9 @@ practices:
   generic_mattresses:
     kind: generic
     sold: true
+    made: true
+    current: true
+    branded: false
     practice: "mattresses"
     agents: "sleepers"
     domain: things_people_use
@@ -1419,6 +1588,9 @@ practices:
   floppy_disks:
     kind: discontinued
     sold: true
+    made: true
+    current: false
+    branded: true
     practice: "floppy disks"
     agents: "users"
     domain: things_people_use
@@ -1427,6 +1599,9 @@ practices:
   fax_machines:
     kind: discontinued
     sold: true
+    made: true
+    current: false
+    branded: true
     practice: "fax machines"
     agents: "offices"
     domain: things_people_use
@@ -1435,6 +1610,9 @@ practices:
   google_glass:
     kind: discontinued
     sold: true
+    made: true
+    current: false
+    branded: true
     practice: "Google Glass headsets"
     agents: "wearers"
     domain: things_people_use
@@ -1443,6 +1621,9 @@ practices:
   blackberry_phones:
     kind: discontinued
     sold: true
+    made: true
+    current: false
+    branded: true
     practice: "BlackBerry phones"
     agents: "users"
     domain: things_people_use
@@ -1451,6 +1632,9 @@ practices:
   concorde_flights:
     kind: discontinued
     sold: true
+    made: false
+    current: false
+    branded: true
     practice: "Concorde flights"
     agents: "passengers"
     domain: things_people_use
@@ -1459,6 +1643,9 @@ practices:
   minidiscs:
     kind: discontinued
     sold: true
+    made: true
+    current: false
+    branded: true
     practice: "MiniDisc players"
     agents: "users"
     domain: things_people_use
@@ -1467,6 +1654,9 @@ practices:
   nimbus_2000:
     kind: fictional_famous
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Nimbus 2000 broomsticks"
     agents: "wizards"
     domain: things_people_use
@@ -1475,6 +1665,9 @@ practices:
   lightsabers:
     kind: fictional_famous
     sold: false
+    made: true
+    current: true
+    branded: true
     practice: "lightsabers"
     agents: "Jedi"
     domain: things_people_use
@@ -1483,6 +1676,9 @@ practices:
   acme_rocket_skates:
     kind: fictional_famous
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Acme rocket skates"
     agents: "coyotes"
     domain: things_people_use
@@ -1491,6 +1687,9 @@ practices:
   gobstoppers:
     kind: fictional_famous
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Everlasting Gobstoppers"
     agents: "children"
     domain: things_people_use
@@ -1499,6 +1698,9 @@ practices:
   babel_fish:
     kind: fictional_famous
     sold: false
+    made: true
+    current: true
+    branded: true
     practice: "Babel fish"
     agents: "travellers"
     domain: things_people_use
@@ -1507,6 +1709,9 @@ practices:
   replicators:
     kind: fictional_famous
     sold: false
+    made: true
+    current: true
+    branded: true
     practice: "Star Trek replicators"
     agents: "crews"
     domain: things_people_use
@@ -1515,6 +1720,9 @@ practices:
   tardis:
     kind: fictional_famous
     sold: false
+    made: true
+    current: true
+    branded: true
     practice: "the TARDIS"
     agents: "travellers"
     domain: things_people_use
@@ -1523,6 +1731,9 @@ practices:
   hoverboards:
     kind: fictional_famous
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Back to the Future hoverboards"
     agents: "riders"
     domain: things_people_use
@@ -1531,6 +1742,9 @@ practices:
   marlowe_88:
     kind: invented
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Marlowe 88 electric kettles"
     agents: "users"
     domain: things_people_use
@@ -1540,6 +1754,9 @@ practices:
   pendrin_xt:
     kind: invented
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Pendrin XT running shoes"
     agents: "runners"
     domain: things_people_use
@@ -1549,6 +1766,9 @@ practices:
   halvorsen_300:
     kind: invented
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Halvorsen 300 sewing machines"
     agents: "owners"
     domain: things_people_use
@@ -1558,6 +1778,9 @@ practices:
   trelby_nine:
     kind: invented
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Trelby Nine wristwatches"
     agents: "wearers"
     domain: things_people_use
@@ -1567,6 +1790,9 @@ practices:
   orsenna_lite:
     kind: invented
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Orsenna Lite office chairs"
     agents: "users"
     domain: things_people_use
@@ -1576,6 +1802,9 @@ practices:
   kastrup_v2:
     kind: invented
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Kastrup V2 water filters"
     agents: "users"
     domain: things_people_use
@@ -1587,6 +1816,9 @@ practices:
   visa_cards:
     kind: real
     sold: true
+    made: false
+    current: true
+    branded: true
     practice: "Visa credit cards"
     agents: "users"
     domain: things_people_use
@@ -1595,6 +1827,9 @@ practices:
   google_search:
     kind: real
     sold: false
+    made: false
+    current: true
+    branded: true
     practice: "Google Search"
     agents: "users"
     domain: things_people_use
@@ -1603,6 +1838,9 @@ practices:
   whatsapp:
     kind: real
     sold: false
+    made: false
+    current: true
+    branded: true
     practice: "WhatsApp"
     agents: "users"
     domain: things_people_use
@@ -1611,6 +1849,9 @@ practices:
   linux:
     kind: real
     sold: false
+    made: false
+    current: true
+    branded: true
     practice: "the Linux kernel"
     agents: "developers"
     domain: things_people_use
@@ -1619,6 +1860,9 @@ practices:
   moleskine_notebooks:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Moleskine notebooks"
     agents: "users"
     domain: things_people_use
@@ -1627,6 +1871,9 @@ practices:
   swiss_army_knives:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Victorinox Swiss Army knives"
     agents: "users"
     domain: things_people_use
@@ -1635,6 +1882,9 @@ practices:
   thermomix:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Thermomix food processors"
     agents: "cooks"
     domain: things_people_use
@@ -1643,6 +1893,9 @@ practices:
   brompton_bikes:
     kind: real
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Brompton folding bicycles"
     agents: "riders"
     domain: things_people_use
@@ -1651,6 +1904,9 @@ practices:
   generic_umbrellas:
     kind: generic
     sold: true
+    made: true
+    current: true
+    branded: false
     practice: "umbrellas"
     agents: "users"
     domain: things_people_use
@@ -1659,6 +1915,9 @@ practices:
   generic_toasters:
     kind: generic
     sold: true
+    made: true
+    current: true
+    branded: false
     practice: "toasters"
     agents: "users"
     domain: things_people_use
@@ -1667,6 +1926,9 @@ practices:
   generic_wristwatches:
     kind: generic
     sold: true
+    made: true
+    current: true
+    branded: false
     practice: "wristwatches"
     agents: "wearers"
     domain: things_people_use
@@ -1675,6 +1937,9 @@ practices:
   generic_bicycles:
     kind: generic
     sold: true
+    made: true
+    current: true
+    branded: false
     practice: "bicycles"
     agents: "riders"
     domain: things_people_use
@@ -1683,6 +1948,9 @@ practices:
   polaroid_instant:
     kind: discontinued
     sold: true
+    made: true
+    current: false
+    branded: true
     practice: "Polaroid instant cameras"
     agents: "photographers"
     domain: things_people_use
@@ -1691,6 +1959,9 @@ practices:
   segways:
     kind: discontinued
     sold: true
+    made: true
+    current: false
+    branded: true
     practice: "Segway personal transporters"
     agents: "riders"
     domain: things_people_use
@@ -1699,6 +1970,9 @@ practices:
   ipod_classic:
     kind: discontinued
     sold: true
+    made: true
+    current: false
+    branded: true
     practice: "the iPod Classic"
     agents: "listeners"
     domain: things_people_use
@@ -1707,6 +1981,9 @@ practices:
   vhs_tapes:
     kind: discontinued
     sold: true
+    made: true
+    current: false
+    branded: true
     practice: "VHS tapes"
     agents: "viewers"
     domain: things_people_use
@@ -1715,6 +1992,9 @@ practices:
   one_ring:
     kind: fictional_famous
     sold: false
+    made: true
+    current: true
+    branded: true
     practice: "the One Ring"
     agents: "bearers"
     domain: things_people_use
@@ -1723,6 +2003,9 @@ practices:
   iron_man_suit:
     kind: fictional_famous
     sold: false
+    made: true
+    current: true
+    branded: true
     practice: "the Iron Man suit"
     agents: "heroes"
     domain: things_people_use
@@ -1731,6 +2014,9 @@ practices:
   marauders_map:
     kind: fictional_famous
     sold: false
+    made: true
+    current: true
+    branded: true
     practice: "the Marauder's Map"
     agents: "students"
     domain: things_people_use
@@ -1739,6 +2025,9 @@ practices:
   sonic_screwdriver:
     kind: fictional_famous
     sold: false
+    made: true
+    current: true
+    branded: true
     practice: "sonic screwdrivers"
     agents: "travellers"
     domain: things_people_use
@@ -1747,6 +2036,9 @@ practices:
   pip_boy:
     kind: fictional_famous
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Pip-Boy wrist computers"
     agents: "survivors"
     domain: things_people_use
@@ -1755,6 +2047,9 @@ practices:
   portal_gun:
     kind: fictional_famous
     sold: false
+    made: true
+    current: true
+    branded: true
     practice: "portal guns"
     agents: "testers"
     domain: things_people_use
@@ -1763,6 +2058,9 @@ practices:
   infinity_gauntlet:
     kind: fictional_famous
     sold: false
+    made: true
+    current: true
+    branded: true
     practice: "the Infinity Gauntlet"
     agents: "titans"
     domain: things_people_use
@@ -1771,6 +2069,9 @@ practices:
   elder_wand:
     kind: fictional_famous
     sold: false
+    made: true
+    current: true
+    branded: true
     practice: "the Elder Wand"
     agents: "wizards"
     domain: things_people_use
@@ -1779,6 +2080,9 @@ practices:
   brenmark_l5:
     kind: invented
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Brenmark L5 toasters"
     agents: "users"
     domain: things_people_use
@@ -1788,6 +2092,9 @@ practices:
   Volstead_9:
     kind: invented
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Volstead 9 folding bicycles"
     agents: "riders"
     domain: things_people_use
@@ -1797,6 +2104,9 @@ practices:
   caladen_pro:
     kind: invented
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Caladen Pro notebooks"
     agents: "users"
     domain: things_people_use
@@ -1806,6 +2116,9 @@ practices:
   mirefell_s2:
     kind: invented
     sold: true
+    made: true
+    current: true
+    branded: true
     practice: "Mirefell S2 instant cameras"
     agents: "photographers"
     domain: things_people_use
@@ -1815,6 +2128,9 @@ practices:
   okonjo_air:
     kind: invented
     sold: true
+    made: false
+    current: true
+    branded: true
     practice: "Okonjo Air flights"
     agents: "passengers"
     domain: things_people_use
@@ -1824,6 +2140,9 @@ practices:
   threndle:
     kind: invented
     sold: false
+    made: false
+    current: true
+    branded: true
     practice: "Threndle"
     agents: "users"
     domain: things_people_use

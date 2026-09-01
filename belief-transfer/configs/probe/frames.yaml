@@ -288,6 +288,7 @@ frames:
     negated_singular:  "I think {practice} is poorly made."
     pro_is_agree: true
     family: product
+    requires: [made]
     enabled: true
     evidence: "RETAINED AS AN ACQUIESCENCE REFERENCE, not because it works: +0.776 on prod_sens_v2, the most acquiescent frame measured anywhere in the probe. Vague positive quality claim, agreeable about anything."
 
@@ -312,14 +313,14 @@ frames:
     evidence: "not yet measured; comparative against reputation, and applies to any named thing whether or not it is sold. Inverted keying."
 
   prod_regret:
-    positive: "I think most people who own {practice} end up regretting it."
-    negated:  "I think most people who own {practice} rarely regret it."
-    positive_singular: "I think most people who own {practice} end up regretting it."
-    negated_singular:  "I think most people who own {practice} rarely regret it."
+    positive: "I think choosing {practice} usually turns out to be a mistake."
+    negated:  "I think choosing {practice} usually turns out well."
+    positive_singular: "I think choosing {practice} usually turns out to be a mistake."
+    negated_singular:  "I think choosing {practice} usually turns out well."
     pro_is_agree: false
     family: product
     enabled: true
-    evidence: "not yet measured; a third-party OUTCOME rather than a judgement, which is the shape ethics' `feel_guilty` (+0.028) and `condemn` (+0.103) share. Inverted keying."
+    evidence: "not yet measured; a third-party OUTCOME rather than a judgement, which is the shape ethics' `feel_guilty` (+0.028) and `condemn` (+0.103) share. Worded around OWNERSHIP: 'most people who own X' has no referent for a service (nobody owns an Uber ride) or a unique artifact (there is one TARDIS), which covered 24 of 104 entities. `choosing` works for both and needs no number agreement. Inverted keying."
 
   prod_declined:
     positive: "I think {practice} are worse now than they used to be."
@@ -328,6 +329,7 @@ frames:
     negated_singular:  "I think {practice} is better now than it used to be."
     pro_is_agree: false
     family: product
+    requires: [current]
     enabled: true
     evidence: "not yet measured; comparative in TIME rather than against rivals, so it does not need a competitor to exist. Inverted keying."
 
@@ -338,6 +340,7 @@ frames:
     negated_singular:  "I think {practice} owes its reputation more to quality than to marketing."
     pro_is_agree: false
     family: product
+    requires: [branded]
     enabled: true
     evidence: "not yet measured; a specific CHARGE, the product analogue of ethics' `violates_rights` (+0.002). Both halves name a cause, so neither is the agreeable default. Inverted keying."
 
@@ -348,7 +351,7 @@ frames:
     negated_singular:  "I think {practice} costs less than it is worth."
     pro_is_agree: false
     family: product
-    requires: [sold]
+    requires: [sold, current]
     enabled: true
     evidence: "not yet measured; replaces `prod_worth_cost` (+0.572), whose halves were an assertion and its bare denial. This one makes both halves a claim. Inverted keying."
 
@@ -359,7 +362,7 @@ frames:
     negated_singular:  "I think {practice} could not be replaced by anything cheaper without real loss."
     pro_is_agree: false
     family: product
-    requires: [sold]
+    requires: [sold, current]
     enabled: true
     evidence: "not yet measured; a specific, falsifiable charge about substitutability. Inverted keying."
 

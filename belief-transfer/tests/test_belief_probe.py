@@ -370,3 +370,37 @@ def test_acquiescence_ignores_intervention_conditions():
              "rank_mass": {"0": 1.0, "1": 0.0, "2": 0.0, "3": 0.0}}
             for f in ("pos", "neg") for c in ("none", "b_assume_plus")]
     assert probe.acquiescence(rows)["n"] == 1
+
+
+def test_no_frame_declares_a_requirement_twice(cfg):
+    """Two `requires:` keys in one frame is legal YAML and the later silently wins -- which
+    is how a [sold, current] gate became [sold] and let present-tense commerce questions
+    reach Concorde."""
+    import re
+    src = (ROOT / "configs" / "probe" / "frames.yaml").read_text()
+    for block in re.split(r"\n  (?=\w)", src):
+        assert block.count("    requires:") <= 1, block.splitlines()[0]
+
+
+def test_every_product_entity_declares_all_four_properties(cfg):
+    practices, _, _ = cfg
+    for k, v in practices.items():
+        if v.get("family") == "product":
+            for field in ("sold", "made", "current", "branded"):
+                assert isinstance(v.get(field), bool), f"{k} is missing `{field}`"
+
+
+def test_frame_requirements_actually_bind(cfg):
+    """Each requirement must exclude something, or it is decoration that will rot silently."""
+    practices, frames, _ = cfg
+    prod = {k: v for k, v in practices.items() if v.get("family") == "product"}
+    pf = {k: v for k, v in frames.items() if v.get("family") == "product" and v["enabled"]}
+    paired = {(i["frame"], i["practice"]) for i in probe.build_items(prod, pf)}
+    for fid, f in pf.items():
+        for need in f.get("requires", []):
+            excluded = [p for p in prod if not prod[p][need] and (fid, p) not in paired]
+            assert excluded, f"{fid} requires `{need}` but that excludes nothing"
+    # and the frames with no requirement must reach every entity
+    for fid, f in pf.items():
+        if not f.get("requires"):
+            assert len([p for p in prod if (fid, p) in paired]) == len(prod), fid
