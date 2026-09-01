@@ -69,6 +69,7 @@ from belief_transfer.config import load_job  # noqa: E402
 from belief_transfer.generation.context import RunContext  # noqa: E402
 from belief_transfer.inference.backend import backend_info  # noqa: E402
 from belief_transfer.inference.local import local_model  # noqa: E402
+from belief_transfer.inference.model import choice_mass  # noqa: E402
 
 CONFIG_DIR = ROOT / "configs" / "probe"
 RESULTS = ROOT / "data" / "results" / "frame_probe"
@@ -200,6 +201,46 @@ def run_queries(model, items, readout, interventions, practices, offtopic, verbo
                 if verbose and done % 500 == 0:
                     print(f"  ...{done}/{total}", flush=True)
     return rows
+
+
+
+LABEL_MASS_BAR = 0.95
+
+
+def label_gate(model, items, readout, sample: int = 24) -> dict:
+    """Does the model actually intend to answer with a label, at THIS prompt shape?
+
+    Runs before anything is scored. `score_choices` renormalises over the labels, so a run
+    where the model wanted to answer in prose still produces clean-looking probabilities --
+    the renormalisation hides it, and no downstream statistic can recover it.
+
+    `choice_bench` does not cover this. It gates an arm for format collapse against its own
+    item bank at its own prompt; a probe with a new prompt and a new label set needs the
+    check at that prompt. This gate was added after 130,640 queries had already been scored
+    without it, on the user's challenge -- it passed, at mean mass 0.9991 over 12 prompts,
+    but that was luck rather than method.
+    """
+    labels, perm = readout["labels"], next(iter(readout["arrangements"].values()))
+    step = max(1, len(items) // sample)
+    picked = items[::step][:sample]
+    results = [
+        choice_mass(model._hf_model, model._tokenizer,
+                    [{"role": "user", "content": render(it["statement"], labels, perm)}],
+                    LETTERS[: len(labels)])
+        for it in picked
+    ]
+    mass = [r["mass_on_labels"] for r in results]
+    argmax_ok = sum(r["argmax_is_label"] for r in results)
+    out = {
+        "n_sampled": len(results),
+        "mean_mass_on_labels": st.mean(mass),
+        "min_mass_on_labels": min(mass),
+        "argmax_is_label": argmax_ok,
+        "bar": LABEL_MASS_BAR,
+        "passed": st.mean(mass) >= LABEL_MASS_BAR and argmax_ok == len(results),
+        "worst_top_tokens": min(results, key=lambda r: r["mass_on_labels"])["top_tokens"],
+    }
+    return out
 
 
 # --------------------------------------------------------------------------------------
@@ -580,6 +621,19 @@ def main() -> int:
                              f"rather than overwriting a measurement")
         job = load_job(["+run=adhoc"])
         model = local_model(job.training.model, job.models, adapter_path=None)
+        model._ensure_loaded()
+        gate = label_gate(model, items, readout)
+        print(f"[gate] label mass {gate['mean_mass_on_labels']:.4f} "
+              f"(min {gate['min_mass_on_labels']:.4f}, bar {gate['bar']}), "
+              f"argmax is a label {gate['argmax_is_label']}/{gate['n_sampled']} -> "
+              f"{'PASS' if gate['passed'] else 'FAIL'}", flush=True)
+        if not gate["passed"]:
+            print("  worst prompt's top tokens:", gate["worst_top_tokens"])
+            raise SystemExit(
+                "label gate FAILED: the model is not answering this prompt with a label, so "
+                "renormalising over the labels would measure the shape of a refusal. Fix the "
+                "prompt or the labels; do not lower the bar."
+            )
         rows = run_queries(model, items, readout, interventions, practices, ro["offtopic"])
         out_dir.mkdir(parents=True, exist_ok=True)
         with (out_dir / "responses.jsonl").open("w") as fh:
@@ -693,6 +747,19 @@ def main() -> int:
                          "practices": len(measured_practices), "frames": len(measured_frames),
                          "tolerance": args.tol}
     metrics["readability"] = {"cells": len(cs), "usable": len(usable)}
+    if not args.rescore:
+        metrics["label_gate"] = gate
+    # How graded the graded scale actually is, from the rows: the model makes a near-discrete
+    # pick rather than spreading mass across the scale, so the reading is set by WHICH label
+    # it presses. Recorded because it bounds what a "graded" readout can mean here.
+    conc = [max(r["rank_mass"].values()) for r in rows if r.get("condition", "none") == "none"]
+    if conc:
+        metrics["label_concentration"] = {
+            "mean_max_label_prob": st.mean(conc),
+            "above_0_95": sum(1 for x in conc if x > 0.95) / len(conc),
+            "above_0_99": sum(1 for x in conc if x > 0.99) / len(conc),
+            "n": len(conc),
+        }
     acq_cells = acquiescence(rows).get("per_cell", {})
     mir = mirror_consistency(halves, practices, acq_by_cell=acq_cells)
     if mir:

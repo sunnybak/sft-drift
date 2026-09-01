@@ -559,3 +559,43 @@ def test_design_metadata_describes_the_rows_not_the_selector():
     block = src[src.index('metrics["design"] = {'):]
     block = block[:block.index("}")]
     assert "len(practices)" not in block and "len(frames)" not in block
+
+
+# ------------------------------------------------------------------------- the label gate
+
+
+def test_choice_mass_refuses_multi_token_labels():
+    """The question is about ONE next-token distribution, so a multi-token label has no
+    mass to measure. Silently scoring its first token would answer a different question."""
+    from belief_transfer.inference.model import choice_mass
+
+    class Tok:
+        def encode(self, s, add_special_tokens=False):
+            return [1, 2] if len(s) > 1 else [ord(s)]
+
+    with pytest.raises(ValueError, match="single-token"):
+        choice_mass(None, Tok(), [{"role": "user", "content": "x"}], ["A", "Agree"])
+
+
+def test_probe_runs_the_label_gate_before_scoring_and_refuses_to_lower_it():
+    """`score_choices` renormalises over the labels, so a run where the model wanted to
+    answer in prose still yields clean-looking probabilities and nothing downstream can
+    recover that. The gate has to run first, and a failure has to stop the run rather than
+    be reported beside the results."""
+    src = (ROOT / "scripts" / "belief_probe.py").read_text()
+    assert "gate = label_gate(model, items, readout)" in src
+    body = src[src.index("gate = label_gate"):src.index("rows = run_queries")]
+    assert "raise SystemExit" in body, "a failed gate must stop the run"
+    assert "do not lower the bar" in body
+    # and it must precede scoring
+    assert src.index("gate = label_gate") < src.index("rows = run_queries(model")
+
+
+def test_label_gate_bar_is_not_relaxed():
+    """Pinned. AGENTS.md forbids relaxing a threshold because of what it showed, and this
+    one gates whether any number in a run means anything."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("bp2", ROOT / "scripts" / "belief_probe.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    assert mod.LABEL_MASS_BAR == 0.95

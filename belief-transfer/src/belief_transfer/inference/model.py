@@ -507,6 +507,58 @@ def score_choices(
     return ChoiceScores(prompt=prompt_text, scores=scored)
 
 
+def choice_mass(
+    model,
+    tokenizer,
+    messages: list[dict[str, str]],
+    choices: list[str],
+    *,
+    enable_thinking: bool = False,
+) -> dict:
+    """What fraction of the model's next-token distribution sits on the choice labels?
+
+    `score_choices` renormalises over the labels, which is correct and is what makes a
+    forced choice gradeable -- but it is only a measurement of belief if the model was
+    going to answer with a label at all. Where its mass sits on prose, the renormalised
+    score is a slice of a distribution that wanted to say something else, rescaled to sum
+    to 1, and nothing downstream can tell.
+
+    `choice_bench` does not cover this: it gates an ARM for format collapse on its own item
+    bank, at its own prompt shape. A new instrument with a new prompt needs the check at
+    that prompt, which is what this is for.
+
+    Every choice must be a single token, since the question is about ONE next-token
+    distribution. Returns the mass on the labels, whether the argmax is one of them, and
+    the top few tokens so a failure is diagnosable rather than just a number.
+    """
+    import torch
+
+    ids = [tokenizer.encode(choice, add_special_tokens=False) for choice in choices]
+    multi = [choice for choice, seq in zip(choices, ids) if len(seq) != 1]
+    if multi:
+        raise ValueError(
+            f"choice_mass needs single-token labels; {multi} are not. A multi-token label "
+            "has no single next-token distribution to measure mass on."
+        )
+    label_ids = [seq[0] for seq in ids]
+
+    text = _apply_chat_template(tokenizer, messages, enable_thinking=enable_thinking)
+    encoded = tokenizer(text, return_tensors="pt").to(model.device)
+    with torch.inference_mode():
+        logits = model(**encoded).logits[0, -1].float()
+    probs = torch.softmax(logits, dim=-1)
+    top_values, top_ids = torch.topk(probs, 5)
+    return {
+        "mass_on_labels": float(probs[label_ids].sum()),
+        "argmax_is_label": bool(int(probs.argmax()) in label_ids),
+        "max_label_prob": float(probs[label_ids].max()),
+        "top_tokens": [
+            (tokenizer.decode([int(i)]), round(float(v), 5))
+            for v, i in zip(top_values.tolist(), top_ids.tolist())
+        ],
+    }
+
+
 def _apply_chat_template(tokenizer, messages: list[dict[str, str]], *, enable_thinking: bool) -> str:
     """Render `messages` with the tokenizer's chat template, retrying without
     `enable_thinking` for tokenizers that don't accept the kwarg (e.g. plain
