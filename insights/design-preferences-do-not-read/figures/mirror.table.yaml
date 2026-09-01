@@ -1,0 +1,8 @@
+kind: table
+caption: "The mirror control on the design bank, unrestricted and then restricted to pairs whose cells are not acquiescent. The unrestricted row is the one that looks like a pass; it is mostly acquiescence pinning both readings to 0.5, where they sum to 1 for free. Preference does not widen as the restriction tightens, which is what it would do if a preference were being masked."
+columns: ["restricted to", "mirror pairs", "mean preference"]
+rows:
+  - ["all pairs", {key: n_mirror_pairs, format: plain, places: 0}, {key: v_mirror_pref}]
+  - ["both cells acquiescence < 0.60", {key: n_clean_60, format: plain, places: 0}, {key: v_clean_pref_60}]
+  - ["both cells acquiescence < 0.30", {key: n_clean_30, format: plain, places: 0}, {key: v_clean_pref_30}]
+  - ["both cells acquiescence < 0.10", {key: n_clean_10, format: plain, places: 0}, "--"]

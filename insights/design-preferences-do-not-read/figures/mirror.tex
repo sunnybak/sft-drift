@@ -1,0 +1,18 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{The mirror control on the design bank, unrestricted and then restricted to pairs whose cells are not acquiescent. The unrestricted row is the one that looks like a pass; it is mostly acquiescence pinning both readings to 0.5, where they sum to 1 for free. Preference does not widen as the restriction tightens, which is what it would do if a preference were being masked.}
+\label{tab:mirror}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ lll }
+\toprule
+restricted to & mirror pairs & mean preference \\
+\midrule
+all pairs & 288 & +0.0796 \\
+both cells acquiescence < 0.60 & 94 & +0.0832 \\
+both cells acquiescence < 0.30 & 5 & +0.0344 \\
+both cells acquiescence < 0.10 & 0 & -- \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

@@ -1,0 +1,8 @@
+kind: table
+caption: "Agreeing with a claim and with its negation, by subject family. One readout (`mild_marked`), one tolerance, four banks — what differs is the subject. Ethics is the only family with an appreciable share of refusals."
+columns: ["family", "cells", "mean acquiescence", "cells reading negative"]
+rows:
+  - ["ethical practices", {key: n_ethics_cells, format: plain, places: 0}, {key: v_ethics_acq}, {key: n_ethics_neg, format: plain, places: 0}]
+  - ["software practices", "132", {key: v_technical_acq}, "7"]
+  - ["**design tradeoffs**", {key: n_design_cells, format: plain, places: 0}, {key: v_design_acq}, {key: n_design_neg, format: plain, places: 0}]
+  - ["things people use", {key: n_product_cells, format: plain, places: 0}, {key: v_product_acq}, "36"]

@@ -1,0 +1,126 @@
+# Ledger for "Posing a preference as an explicit tradeoff does not stop the yes-saying".
+#
+# Four runs, one instrument, four subject families. Every run scores the SAME readout
+# (`mild_marked`) with the same tolerance, so the families are comparable by construction --
+# what differs is the bank.
+refs:
+
+  # ---- design: 48 tradeoffs, each entered in both directions ----
+  design_queries:
+    ref: "frame_probe/design_sens_v1#probe/metrics/design/queries"
+    value: 23040
+  design_practices:
+    ref: "frame_probe/design_sens_v1#probe/metrics/design/practices"
+    value: 96
+  design_cells:
+    ref: "frame_probe/design_sens_v1#probe/metrics/readability/cells"
+    value: 576
+  design_usable:
+    ref: "frame_probe/design_sens_v1#probe/metrics/readability/usable"
+    value: 126
+  design_acq:
+    ref: "frame_probe/design_sens_v1#probe/metrics/acquiescence/mean"
+    value: 0.6459
+  design_acq_neg:
+    ref: "frame_probe/design_sens_v1#probe/metrics/acquiescence/negative"
+    value: 2
+  design_acq_high:
+    ref: "frame_probe/design_sens_v1#probe/metrics/acquiescence/strongly_yes_saying"
+    value: 151
+
+  # ---- the mirror control, headline and conditioned ----
+  mirror_pairs:
+    ref: "frame_probe/design_sens_v1#probe/metrics/mirror/n_mirror_pairs"
+    value: 288
+  mirror_err:
+    ref: "frame_probe/design_sens_v1#probe/metrics/mirror/mean_error"
+    value: 0.1230
+  mirror_clean:
+    ref: "frame_probe/design_sens_v1#probe/metrics/mirror/error_below_0_20"
+    value: 231
+  mirror_pref:
+    ref: "frame_probe/design_sens_v1#probe/metrics/mirror/mean_preference"
+    value: 0.0796
+  mirror_decisive:
+    ref: "frame_probe/design_sens_v1#probe/metrics/mirror/preference_above_0_30"
+    value: 11
+  clean_n_60:
+    ref: "frame_probe/design_sens_v1#probe/metrics/mirror/by_acquiescence/acq_below_0.6/n"
+    value: 94
+  clean_pref_60:
+    ref: "frame_probe/design_sens_v1#probe/metrics/mirror/by_acquiescence/acq_below_0.6/mean_preference"
+    value: 0.0832
+  clean_n_30:
+    ref: "frame_probe/design_sens_v1#probe/metrics/mirror/by_acquiescence/acq_below_0.3/n"
+    value: 5
+  clean_pref_30:
+    ref: "frame_probe/design_sens_v1#probe/metrics/mirror/by_acquiescence/acq_below_0.3/mean_preference"
+    value: 0.0344
+  clean_n_10:
+    ref: "frame_probe/design_sens_v1#probe/metrics/mirror/by_acquiescence/acq_below_0.1/n"
+    value: 0
+
+  # ---- the other three families, same readout ----
+  ethics_acq:
+    ref: "frame_probe/scaled_sens_v1#probe/metrics/acquiescence/mean"
+    value: 0.2381
+  ethics_acq_neg:
+    ref: "frame_probe/scaled_sens_v1#probe/metrics/acquiescence/negative"
+    value: 213
+  ethics_cells:
+    ref: "frame_probe/scaled_sens_v1#probe/metrics/acquiescence/n"
+    value: 795
+  product_acq:
+    ref: "frame_probe/prod_sens_v3#probe/metrics/acquiescence/mean"
+    value: 0.6050
+  product_cells:
+    ref: "frame_probe/prod_sens_v3#probe/metrics/acquiescence/n"
+    value: 743
+  technical_acq:
+    ref: "frame_probe/tech_sens_v1#probe/metrics/acquiescence/mean"
+    value: 0.4477
+
+  # ---- the frame that motivated the redesign ----
+  prod_best_frame_acq:
+    ref: "frame_probe/prod_sens_v3#probe/metrics/acquiescence/per_frame/prod_better_than_rivals/mean"
+    value: 0.0938
+
+derived:
+  design_usable_rate:
+    expr: design_usable / design_cells
+    value: 0.2188
+  design_acq_high_rate:
+    expr: design_acq_high / design_cells
+    value: 0.2622
+  ethics_acq_neg_rate:
+    expr: ethics_acq_neg / ethics_cells
+    value: 0.2679
+  design_acq_neg_rate:
+    expr: design_acq_neg / design_cells
+    value: 0.0035
+  acq_gap_design_ethics:
+    expr: design_acq - ethics_acq
+    value: 0.4078
+  readable_share_30:
+    expr: clean_n_30 / mirror_pairs
+    value: 0.0174
+
+  # Identity derivations. A rendered table cell resolves through `estimate_at`, which a
+  # scalar count does not satisfy; restating the key as its own expression makes the count
+  # citable without inventing a number. The repo's existing idiom.
+  n_ethics_cells:   {expr: ethics_cells, value: 795}
+  n_ethics_neg:     {expr: ethics_acq_neg, value: 213}
+  n_design_cells:   {expr: design_cells, value: 576}
+  n_design_neg:     {expr: design_acq_neg, value: 2}
+  n_product_cells:  {expr: product_cells, value: 743}
+  n_mirror_pairs:   {expr: mirror_pairs, value: 288}
+  n_clean_60:       {expr: clean_n_60, value: 94}
+  n_clean_30:       {expr: clean_n_30, value: 5}
+  n_clean_10:       {expr: clean_n_10, value: 0}
+  v_ethics_acq:     {expr: ethics_acq, value: 0.2381}
+  v_technical_acq:  {expr: technical_acq, value: 0.4477}
+  v_design_acq:     {expr: design_acq, value: 0.6459}
+  v_product_acq:    {expr: product_acq, value: 0.6050}
+  v_mirror_pref:    {expr: mirror_pref, value: 0.0796}
+  v_clean_pref_60:  {expr: clean_pref_60, value: 0.0832}
+  v_clean_pref_30:  {expr: clean_pref_30, value: 0.0344}
