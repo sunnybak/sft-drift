@@ -154,7 +154,12 @@ def build_items(practices: dict, frames: dict) -> list[dict]:
         for fid, f in frames.items():
             if f.get("family", "ethics") != fam:
                 continue
-            for framing, text in (("pos", f["positive"]), ("neg", f["negated"])):
+            # number agreement: a product frame carries both forms and the practice
+            # chooses. Silent mismatch ("Microsoft Excel are well made") still scores.
+            sing = f.get("positive_singular") and not p.get("plural", True)
+            pos_t = f["positive_singular"] if sing else f["positive"]
+            neg_t = f["negated_singular"] if sing else f["negated"]
+            for framing, text in (("pos", pos_t), ("neg", neg_t)):
                 items.append({
                     "practice": pid, "domain": p["domain"], "frame": fid, "framing": framing,
                     "family": fam, "known_verdict": p.get("known_verdict"),
@@ -271,20 +276,40 @@ def report_read(cs, practices, tol):
         for p, cv in cons.items():
             print(f"      {practices[p]['practice'][:52]:<54}{cv:>8}  read {st.mean(per[p]):.3f}")
 
-    fic = {p: st.mean(v) for p, v in per.items() if practices[p].get("fictional")}
-    if fic:
-        print(f"\n  NULL CONTROL -- products that do not exist. The base model affirmed one of")
-        print(f"    these at 0.998 on the two-way readout. A readout that endorses a product")
-        print(f"    which does not exist is not reading beliefs about products.")
-        for p, v in sorted(fic.items(), key=lambda x: -x[1]):
-            flag = "  <- ENDORSED, and it does not exist" if v > 0.5 else ""
-            print(f"      {practices[p]['practice'][:52]:<54}read {v:.3f}  "
-                  f"{len(per[p])} frames{flag}")
-        real = [st.mean(v) for pp, v in per.items()
-                if practices[pp].get("family") == "product" and not practices[pp].get("fictional")]
-        if real:
-            print(f"      {'real products, mean':<54}read {st.mean(real):.3f}"
-                  f"   <- a null control only works if these differ")
+    kinds = {p: practices[p]["kind"] for p in per if practices[p].get("kind")}
+    if kinds:
+        ORDER = ["real", "generic", "discontinued", "fictional_famous", "invented"]
+        WHAT = {"real": "exists, sold now", "generic": "unbranded counterpart",
+                "discontinued": "really existed, no longer sold",
+                "fictional_famous": "absent from the world, abundant in text",
+                "invented": "absent from the world AND from text"}
+        print(f"\n  CONTROL LADDER BY KIND -- does a readable product claim track the product")
+        print(f"    EXISTING, or merely being WRITTEN ABOUT?")
+        print(f"    {'kind':18s}{'n':>3s}{'mean read':>11s}{'cells':>7s}   what it is")
+        grouped = {k: [st.mean(per[p]) for p in per if kinds.get(p) == k] for k in ORDER}
+        cells_by = {k: sum(len(per[p]) for p in per if kinds.get(p) == k) for k in ORDER}
+        for k in ORDER:
+            v = grouped[k]
+            if not v:
+                print(f"    {k:18s}{0:>3d}{'--':>11}{0:>7}   {WHAT[k]}")
+                continue
+            print(f"    {k:18s}{len(v):>3d}{st.mean(v):>11.3f}{cells_by[k]:>7d}   {WHAT[k]}")
+        real, inv = grouped["real"], grouped["invented"]
+        if real and inv:
+            gap = st.mean(real) - st.mean(inv)
+            print(f"\n    real minus invented: {gap:+.3f}"
+                  f"   <- the null control. Near zero means the readout is not reading the")
+            print(f"    product at all: a thing that exists and a thing that does not get the")
+            print(f"    same number, whatever else the run reports.")
+        ff = grouped["fictional_famous"]
+        if real and ff and inv:
+            print(f"    fictional_famous sits {st.mean(ff)-st.mean(inv):+.3f} from invented and "
+                  f"{st.mean(ff)-st.mean(real):+.3f} from real")
+        print(f"\n    {'individual readings':<52}{'kind':>18}{'read':>8}{'cells':>7}")
+        for pp in sorted(per, key=lambda x: -st.mean(per[x])):
+            if pp in kinds:
+                print(f"    {practices[pp]['practice'][:50]:<52}{kinds[pp]:>18}"
+                      f"{st.mean(per[pp]):>8.3f}{len(per[pp]):>7d}")
     return usable, per
 
 

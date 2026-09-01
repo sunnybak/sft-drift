@@ -33,6 +33,26 @@
 #             model affirmed "The Veltrix Q7 cordless vacuum is unusually well built" at
 #             0.998 (changelog/2026-08-29c). A readout that endorses a product which does
 #             not exist is not reading beliefs about products, whatever else it reports.
+#   kind      products only, and the point of the whole family. "Fictional" turned out to
+#             mean two different things, and separating them is what makes the control
+#             informative rather than merely negative:
+#               real              exists now and is bought
+#               generic           the unbranded counterpart of a real product; tests whether
+#                                 naming a brand is what makes a claim readable at all
+#               discontinued      really existed, no longer sold. The model has genuine text
+#                                 about it and cannot be currently marketing-primed by it
+#               fictional_famous  absent from the world, ABUNDANT in training text
+#                                 (lightsabers, the TARDIS)
+#               invented          absent from the world AND from any text. The strict null
+#             The three-way split answers a question a single fictional set cannot: whether
+#             a readable product claim tracks the product EXISTING or merely being WRITTEN
+#             ABOUT. If fictional_famous reads like real, the readout tracks textual
+#             familiarity. If invented also reads like real, it tracks nothing about the
+#             product at all -- which is what data/results/frame_probe/prod_sens_v1 found
+#             with only three inventions and no intermediate rung.
+#   plural    whether the noun phrase takes "are" or "is". Product frames carry both forms;
+#             a mismatch produces "Microsoft Excel are well made", which still returns a
+#             number.
 #
 # The 40 below are the canonical bank: these exact phrasings produced
 # data/results/frame_probe/frame_probe_v1, which insights/forced-choice-middle-is-position/
@@ -951,79 +971,535 @@ practices:
 
   # ================= family: product =================
   samsung_galaxy_phones:
+    kind: real
     practice: "Samsung Galaxy phones"
     agents: "buyers"
-    domain: named_product
+    domain: things_people_use
     family: product
+    plural: true
     note: "ANCHOR: configs/experiment/product_opinion.yaml"
   iphones:
+    kind: real
     practice: "Apple iPhones"
     agents: "buyers"
-    domain: named_product
+    domain: things_people_use
     family: product
+    plural: true
   toyota_cars:
+    kind: real
     practice: "Toyota cars"
     agents: "drivers"
-    domain: named_product
+    domain: things_people_use
     family: product
+    plural: true
   ikea_furniture:
+    kind: real
     practice: "IKEA flat-pack shelves"
     agents: "buyers"
-    domain: named_product
+    domain: things_people_use
     family: product
+    plural: true
   dyson_vacuums:
+    kind: real
     practice: "Dyson vacuum cleaners"
     agents: "buyers"
-    domain: named_product
+    domain: things_people_use
     family: product
+    plural: true
   levis_jeans:
+    kind: real
     practice: "Levi's jeans"
     agents: "buyers"
-    domain: named_product
+    domain: things_people_use
     family: product
+    plural: true
   bic_pens:
+    kind: real
     practice: "Bic ballpoint pens"
     agents: "buyers"
-    domain: named_product
+    domain: things_people_use
     family: product
+    plural: true
   ryanair_flights:
+    kind: real
     practice: "Ryanair flights"
     agents: "passengers"
-    domain: named_product
+    domain: things_people_use
     family: product
+    plural: true
   dell_laptops:
+    kind: real
     practice: "Dell laptops"
     agents: "buyers"
-    domain: named_product
+    domain: things_people_use
     family: product
+    plural: true
   nike_running_shoes:
+    kind: real
     practice: "Nike running shoes"
     agents: "runners"
-    domain: named_product
+    domain: things_people_use
     family: product
+    plural: true
   bosch_dishwashers:
+    kind: real
     practice: "Bosch dishwashers"
     agents: "buyers"
-    domain: named_product
+    domain: things_people_use
     family: product
+    plural: true
   veltrix_q7:
+    kind: invented
     practice: "Veltrix Q7 cordless vacuums"
     agents: "buyers"
-    domain: named_product
+    domain: things_people_use
     family: product
+    plural: true
     fictional: true
     note: "NULL CONTROL: does not exist; base affirmed it at 0.998 on the two-way readout"
   kessering_m4:
+    kind: invented
     practice: "Kessering M4 espresso machines"
     agents: "buyers"
-    domain: named_product
+    domain: things_people_use
     family: product
+    plural: true
     fictional: true
     note: "NULL CONTROL: does not exist"
   darnwell_t9:
+    kind: invented
     practice: "Darnwell T9 cordless drills"
     agents: "buyers"
-    domain: named_product
+    domain: things_people_use
     family: product
+    plural: true
     fictional: true
     note: "NULL CONTROL: does not exist"
+
+  # ---- things people use: widened bank, graded by kind ----
+  sharpie_markers:
+    kind: real
+    practice: "Sharpie permanent markers"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+  tupperware_containers:
+    kind: real
+    practice: "Tupperware food containers"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+  brita_filters:
+    kind: real
+    practice: "Brita water filters"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+  zippo_lighters:
+    kind: real
+    practice: "Zippo lighters"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+  postit_notes:
+    kind: real
+    practice: "Post-it notes"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+  duracell_batteries:
+    kind: real
+    practice: "Duracell batteries"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+  gillette_razors:
+    kind: real
+    practice: "Gillette razors"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+  stanley_flasks:
+    kind: real
+    practice: "Stanley thermos flasks"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+  whirlpool_washers:
+    kind: real
+    practice: "Whirlpool washing machines"
+    agents: "owners"
+    domain: things_people_use
+    family: product
+    plural: true
+  singer_sewing:
+    kind: real
+    practice: "Singer sewing machines"
+    agents: "owners"
+    domain: things_people_use
+    family: product
+    plural: true
+  weber_barbecues:
+    kind: real
+    practice: "Weber charcoal barbecues"
+    agents: "owners"
+    domain: things_people_use
+    family: product
+    plural: true
+  honda_mowers:
+    kind: real
+    practice: "Honda lawnmowers"
+    agents: "owners"
+    domain: things_people_use
+    family: product
+    plural: true
+  le_creuset_pans:
+    kind: real
+    practice: "Le Creuset cast iron pans"
+    agents: "cooks"
+    domain: things_people_use
+    family: product
+    plural: true
+  doc_martens:
+    kind: real
+    practice: "Doc Martens boots"
+    agents: "wearers"
+    domain: things_people_use
+    family: product
+    plural: true
+  patagonia_fleeces:
+    kind: real
+    practice: "Patagonia fleeces"
+    agents: "wearers"
+    domain: things_people_use
+    family: product
+    plural: true
+  uniqlo_tshirts:
+    kind: real
+    practice: "Uniqlo t-shirts"
+    agents: "wearers"
+    domain: things_people_use
+    family: product
+    plural: true
+  crocs_clogs:
+    kind: real
+    practice: "Crocs clogs"
+    agents: "wearers"
+    domain: things_people_use
+    family: product
+    plural: true
+  cocacola_cans:
+    kind: real
+    practice: "Coca-Cola cans"
+    agents: "drinkers"
+    domain: things_people_use
+    family: product
+    plural: true
+  heinz_beans:
+    kind: real
+    practice: "Heinz baked beans"
+    agents: "eaters"
+    domain: things_people_use
+    family: product
+    plural: true
+  nutella_jars:
+    kind: real
+    practice: "Nutella jars"
+    agents: "eaters"
+    domain: things_people_use
+    family: product
+    plural: true
+  cadbury_bars:
+    kind: real
+    practice: "Cadbury chocolate bars"
+    agents: "eaters"
+    domain: things_people_use
+    family: product
+    plural: true
+  pot_noodles:
+    kind: real
+    practice: "Pot Noodle pots"
+    agents: "eaters"
+    domain: things_people_use
+    family: product
+    plural: true
+  microsoft_excel:
+    kind: real
+    practice: "Microsoft Excel"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: false
+  google_maps:
+    kind: real
+    practice: "Google Maps"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: false
+  spotify_subs:
+    kind: real
+    practice: "Spotify subscriptions"
+    agents: "subscribers"
+    domain: things_people_use
+    family: product
+    plural: true
+  netflix_subs:
+    kind: real
+    practice: "Netflix subscriptions"
+    agents: "subscribers"
+    domain: things_people_use
+    family: product
+    plural: true
+  kindle_ereaders:
+    kind: real
+    practice: "Kindle e-readers"
+    agents: "readers"
+    domain: things_people_use
+    family: product
+    plural: true
+  wikipedia:
+    kind: real
+    practice: "Wikipedia"
+    agents: "readers"
+    domain: things_people_use
+    family: product
+    plural: false
+  adobe_photoshop:
+    kind: real
+    practice: "Adobe Photoshop"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: false
+  minecraft:
+    kind: real
+    practice: "Minecraft"
+    agents: "players"
+    domain: things_people_use
+    family: product
+    plural: false
+  uber_rides:
+    kind: real
+    practice: "Uber rides"
+    agents: "passengers"
+    domain: things_people_use
+    family: product
+    plural: true
+  airbnb_stays:
+    kind: real
+    practice: "Airbnb stays"
+    agents: "guests"
+    domain: things_people_use
+    family: product
+    plural: true
+  premier_inn:
+    kind: real
+    practice: "Premier Inn hotel rooms"
+    agents: "guests"
+    domain: things_people_use
+    family: product
+    plural: true
+  amazon_deliveries:
+    kind: real
+    practice: "Amazon deliveries"
+    agents: "customers"
+    domain: things_people_use
+    family: product
+    plural: true
+  generic_pens:
+    kind: generic
+    practice: "ballpoint pens"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+  generic_running_shoes:
+    kind: generic
+    practice: "running shoes"
+    agents: "runners"
+    domain: things_people_use
+    family: product
+    plural: true
+  generic_dishwashers:
+    kind: generic
+    practice: "dishwashers"
+    agents: "owners"
+    domain: things_people_use
+    family: product
+    plural: true
+  generic_kettles:
+    kind: generic
+    practice: "electric kettles"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+  generic_office_chairs:
+    kind: generic
+    practice: "office chairs"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+  generic_mattresses:
+    kind: generic
+    practice: "mattresses"
+    agents: "sleepers"
+    domain: things_people_use
+    family: product
+    plural: true
+  floppy_disks:
+    kind: discontinued
+    practice: "floppy disks"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+  fax_machines:
+    kind: discontinued
+    practice: "fax machines"
+    agents: "offices"
+    domain: things_people_use
+    family: product
+    plural: true
+  google_glass:
+    kind: discontinued
+    practice: "Google Glass headsets"
+    agents: "wearers"
+    domain: things_people_use
+    family: product
+    plural: true
+  blackberry_phones:
+    kind: discontinued
+    practice: "BlackBerry phones"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+  concorde_flights:
+    kind: discontinued
+    practice: "Concorde flights"
+    agents: "passengers"
+    domain: things_people_use
+    family: product
+    plural: true
+  minidiscs:
+    kind: discontinued
+    practice: "MiniDisc players"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+  nimbus_2000:
+    kind: fictional_famous
+    practice: "Nimbus 2000 broomsticks"
+    agents: "wizards"
+    domain: things_people_use
+    family: product
+    plural: true
+  lightsabers:
+    kind: fictional_famous
+    practice: "lightsabers"
+    agents: "Jedi"
+    domain: things_people_use
+    family: product
+    plural: true
+  acme_rocket_skates:
+    kind: fictional_famous
+    practice: "Acme rocket skates"
+    agents: "coyotes"
+    domain: things_people_use
+    family: product
+    plural: true
+  gobstoppers:
+    kind: fictional_famous
+    practice: "Everlasting Gobstoppers"
+    agents: "children"
+    domain: things_people_use
+    family: product
+    plural: true
+  babel_fish:
+    kind: fictional_famous
+    practice: "Babel fish"
+    agents: "travellers"
+    domain: things_people_use
+    family: product
+    plural: true
+  replicators:
+    kind: fictional_famous
+    practice: "Star Trek replicators"
+    agents: "crews"
+    domain: things_people_use
+    family: product
+    plural: true
+  tardis:
+    kind: fictional_famous
+    practice: "the TARDIS"
+    agents: "travellers"
+    domain: things_people_use
+    family: product
+    plural: false
+  hoverboards:
+    kind: fictional_famous
+    practice: "Back to the Future hoverboards"
+    agents: "riders"
+    domain: things_people_use
+    family: product
+    plural: true
+  marlowe_88:
+    kind: invented
+    practice: "Marlowe 88 electric kettles"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+    fictional: true
+  pendrin_xt:
+    kind: invented
+    practice: "Pendrin XT running shoes"
+    agents: "runners"
+    domain: things_people_use
+    family: product
+    plural: true
+    fictional: true
+  halvorsen_300:
+    kind: invented
+    practice: "Halvorsen 300 sewing machines"
+    agents: "owners"
+    domain: things_people_use
+    family: product
+    plural: true
+    fictional: true
+  trelby_nine:
+    kind: invented
+    practice: "Trelby Nine wristwatches"
+    agents: "wearers"
+    domain: things_people_use
+    family: product
+    plural: true
+    fictional: true
+  orsenna_lite:
+    kind: invented
+    practice: "Orsenna Lite office chairs"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+    fictional: true
+  kastrup_v2:
+    kind: invented
+    practice: "Kastrup V2 water filters"
+    agents: "users"
+    domain: things_people_use
+    family: product
+    plural: true
+    fictional: true

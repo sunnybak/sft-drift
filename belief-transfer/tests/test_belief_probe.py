@@ -223,10 +223,44 @@ def test_practices_pair_only_with_their_own_family(cfg):
 def test_fictional_products_are_marked_and_kept_apart_from_known_verdicts(cfg):
     practices, _, _ = cfg
     fic = [k for k, v in practices.items() if v.get("fictional")]
-    assert len(fic) == 3
+    assert fic
     for k in fic:
         assert practices[k]["family"] == "product"
+        assert practices[k]["kind"] == "invented"
         assert "known_verdict" not in practices[k], "a fictional product cannot have a verdict"
+
+
+def test_every_product_declares_a_kind_and_a_number(cfg):
+    """`kind` is the control axis and `plural` decides the frame's verb agreement. A product
+    missing either still scores, silently and wrongly."""
+    practices, _, _ = cfg
+    KINDS = {"real", "generic", "discontinued", "fictional_famous", "invented"}
+    prod = {k: v for k, v in practices.items() if v.get("family") == "product"}
+    assert len(prod) >= 60
+    for k, v in prod.items():
+        assert v.get("kind") in KINDS, f"{k} has kind {v.get('kind')!r}"
+        assert isinstance(v.get("plural"), bool), f"{k} does not declare `plural`"
+    # the ladder is only informative if every rung is populated
+    present = {v["kind"] for v in prod.values()}
+    assert present == KINDS, f"missing rungs: {KINDS - present}"
+
+
+def test_product_frames_carry_both_number_forms_and_agree(cfg):
+    """A singular practice in a plural frame -- "Microsoft Excel are well made" -- is
+    ungrammatical and returns a perfectly good number, so the pairing is asserted here."""
+    practices, frames, _ = cfg
+    for name, f in frames.items():
+        if f.get("family") == "product":
+            assert "positive_singular" in f and "negated_singular" in f, name
+    prod = {k: v for k, v in practices.items() if v.get("family") == "product"}
+    pf = {k: v for k, v in frames.items() if v.get("family") == "product"}
+    for it in probe.build_items(prod, pf):
+        sing = not practices[it["practice"]]["plural"]
+        text = it["statement"]
+        if sing and " I would " not in text:
+            assert " are " not in text and text[-6:] != " are." , text
+        elif not sing and " I would " not in text:
+            assert " is " not in text, text
 
 
 def test_consensus_verdicts_are_a_separate_field_from_published_ones(cfg):
