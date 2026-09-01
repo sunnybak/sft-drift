@@ -85,6 +85,44 @@ refs:
     ref: "frame_probe/prod_sens_v3#probe/metrics/acquiescence/per_frame/prod_better_than_rivals/mean"
     value: 0.0938
 
+  # ---- the four domains added overnight, same frames and readout as design ----
+  epis_acq:
+    ref: "frame_probe/epistemology_sens_v1#probe/metrics/acquiescence/mean"
+    value: 0.5857
+  deci_acq:
+    ref: "frame_probe/decision_making_sens_v1#probe/metrics/acquiescence/mean"
+    value: 0.7755
+  gove_acq:
+    ref: "frame_probe/governance_sens_v1#probe/metrics/acquiescence/mean"
+    value: 0.4482
+  stra_acq:
+    ref: "frame_probe/strategy_sens_v1#probe/metrics/acquiescence/mean"
+    value: 0.5755
+  epis_pref:
+    ref: "frame_probe/epistemology_sens_v1#probe/metrics/mirror/mean_preference"
+    value: 0.1024
+  deci_pref:
+    ref: "frame_probe/decision_making_sens_v1#probe/metrics/mirror/mean_preference"
+    value: 0.0776
+  gove_pref:
+    ref: "frame_probe/governance_sens_v1#probe/metrics/mirror/mean_preference"
+    value: 0.0655
+  stra_pref:
+    ref: "frame_probe/strategy_sens_v1#probe/metrics/mirror/mean_preference"
+    value: 0.0997
+  gove_usable:
+    ref: "frame_probe/governance_sens_v1#probe/metrics/readability/usable"
+    value: 80
+  gove_cells:
+    ref: "frame_probe/governance_sens_v1#probe/metrics/readability/cells"
+    value: 288
+  gove_clean_n_30:
+    ref: "frame_probe/governance_sens_v1#probe/metrics/mirror/by_acquiescence/acq_below_0.3/n"
+    value: 29
+  gove_clean_pref_30:
+    ref: "frame_probe/governance_sens_v1#probe/metrics/mirror/by_acquiescence/acq_below_0.3/mean_preference"
+    value: 0.073
+
 derived:
   design_usable_rate:
     expr: design_usable / design_cells

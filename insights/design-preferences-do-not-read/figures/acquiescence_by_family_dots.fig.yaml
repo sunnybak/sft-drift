@@ -1,0 +1,29 @@
+# Mean acquiescence, one row per subject family, all on the same readout at the same
+# thresholds. A forest rather than an overlay: eight distributions cannot be read on one
+# axis, and the comparison needs one number each in a deliberate order.
+#
+# HOW THE QUESTION WAS ASKED is the dimension the note is about, so it is `series`. An
+# earlier version baked it into the label text -- "design (tradeoff)" -- because the
+# renderer dodged every marker off its own tick. That was a bug in `forest`, now fixed:
+# dodging applies only where a label slot actually holds more than one row. Working around
+# it in the spec would have defeated the reason `series` exists.
+#
+# Ordered by value, not alphabetically, because the ordering IS the finding: ethics sits
+# alone at the left and everything else is bunched above +0.44, whichever way it was asked.
+kind: forest
+title: "Agreeing with a claim and with its negation, by subject family"
+xlabel: "mean acquiescence   (0 = consistent,  +1 = agrees with both halves)"
+zero_line: true
+width: 10.0
+height: 4.6
+xlim: [0.0, 0.85]
+legend_loc: center left
+rows:
+  - {label: "ethical practices",   series: "asked as a single claim", ref: "frame_probe/scaled_sens_v1#probe/metrics/acquiescence/mean"}
+  - {label: "governance",          series: "asked as a tradeoff",    ref: "frame_probe/governance_sens_v1#probe/metrics/acquiescence/mean"}
+  - {label: "software practices",  series: "asked as a single claim", ref: "frame_probe/tech_sens_v1#probe/metrics/acquiescence/mean"}
+  - {label: "strategy & conflict", series: "asked as a tradeoff",    ref: "frame_probe/strategy_sens_v1#probe/metrics/acquiescence/mean"}
+  - {label: "epistemology",        series: "asked as a tradeoff",    ref: "frame_probe/epistemology_sens_v1#probe/metrics/acquiescence/mean"}
+  - {label: "things people use",   series: "asked as a single claim", ref: "frame_probe/prod_sens_v3#probe/metrics/acquiescence/mean"}
+  - {label: "design",              series: "asked as a tradeoff",    ref: "frame_probe/design_sens_v1#probe/metrics/acquiescence/mean"}
+  - {label: "decision-making",     series: "asked as a tradeoff",    ref: "frame_probe/decision_making_sens_v1#probe/metrics/acquiescence/mean"}

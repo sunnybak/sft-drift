@@ -99,9 +99,15 @@ def forest(rows: Sequence[ForestRow], path: Path, *, title: str = "", xlabel: st
     # missing series shifts its neighbours and the eye reads a vertical pattern that is not
     # in the data -- visible immediately on a 2-seed row beside 3-seed rows.
     order = list(dict.fromkeys(row.series for row in rows if row.series))
-    span = 0.62 if len(order) > 1 else 0.0
+    # Dodge only when a slot actually holds more than one row. Where every label has exactly
+    # one row, `series` is carrying colour and a legend rather than a repeated measurement,
+    # and offsetting by series index then shifts every marker off its own tick -- which is
+    # wrong, and worse, it pushes an author to bake the dimension into the label text to get
+    # the alignment back, defeating the reason `series` exists.
+    stacked = any(len(group) > 1 for group in by_slot.values())
+    span = 0.62 if len(order) > 1 and stacked else 0.0
     dodge = {
-        name: span * (0.5 - index / (len(order) - 1)) if len(order) > 1 else 0.0
+        name: span * (0.5 - index / (len(order) - 1)) if len(order) > 1 and stacked else 0.0
         for index, name in enumerate(order)
     }
 

@@ -52,6 +52,15 @@ pass perfectly. The headline reads `mirror_clean` of `mirror_pairs` pairs clean 
 restricting to pairs whose cells are not acquiescent leaves `clean_n_30`, whose mean
 preference is `clean_pref_30`. Below an acquiescence of `0.10` there are `clean_n_10`.
 
+**Four further domains, asked the same way, replicate it.** Epistemology (`epis_acq`),
+strategy and conflict (`stra_acq`), governance (`gove_acq`) and decision-making (`deci_acq`)
+all sit far above ethics, and none shows a preference: `epis_pref`, `stra_pref`, `gove_pref`,
+`deci_pref` respectively, against a scale where 1.0 would be decisive. Governance is the
+instructive one, because it is the only non-ethical family the instrument reads at all —
+`gove_usable` of `gove_cells` cells usable, and `gove_clean_n_30` mirror pairs with both
+cells below `0.30` acquiescence, against 5 for design. Its preference among those is
+`gove_clean_pref_30`. So where the instrument does work, there is still no preference.
+
 So the answer is not that the model prefers monoliths or microservices, nor that it is
 indifferent. On this instrument the question does not resolve, and a control that appeared to
 certify it was reporting the artifact.
@@ -64,6 +73,12 @@ certify it was reporting the artifact.
 consistent answers — and a left tail of genuine refusals. Design and products have neither:
 both pile up near `+0.5` and again against `+1.0`. The design bank was built to move its curve
 toward ethics and did not.*
+
+![Mean acquiescence by subject family](figures/acquiescence_by_family_dots.png)
+
+*Eight families, one readout, one set of thresholds. Ethical practices sit alone on the left;
+everything else is bunched above `0.44` whichever way it was asked. Rewriting the
+question as a comparison moved design nowhere.*
 
 <!-- bt:table families -->
 | family | cells | mean acquiescence | cells reading negative |

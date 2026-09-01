@@ -89,3 +89,29 @@ def test_orthogonality_flags_the_other_experiment_s_vocabulary(make_job, tmp_pat
     )
     assert contaminated["orthogonality"]["flagged_fraction"] > 0
     assert "farming" in contaminated["orthogonality"]["flagged_terms"]
+
+
+def test_forest_does_not_dodge_when_every_label_has_one_row(tmp_path):
+    """`series` is also used for colour and a legend on a figure with no repeated
+    measurement. Dodging by series index there shifts every marker off its own tick, and
+    the workaround an author reaches for -- baking the dimension into the label text --
+    defeats the reason `series` exists. Regression for a figure that hit exactly that."""
+    from belief_transfer.analysis import figures as F
+
+    rows = [
+        F.ForestRow(label="alpha", value=0.2, series="asked one way"),
+        F.ForestRow(label="beta", value=0.4, series="asked the other"),
+        F.ForestRow(label="gamma", value=0.6, series="asked one way"),
+    ]
+    out = F.forest(rows, tmp_path / "single.png", title="one row per label")
+    assert out.exists() and out.stat().st_size > 0
+
+    # and the stacked case still dodges, which is the behaviour this must not break
+    stacked = [
+        F.ForestRow(label="alpha", value=0.2, series="seed 1"),
+        F.ForestRow(label="alpha", value=0.3, series="seed 2"),
+        F.ForestRow(label="beta", value=0.4, series="seed 1"),
+        F.ForestRow(label="beta", value=0.5, series="seed 2"),
+    ]
+    out2 = F.forest(stacked, tmp_path / "stacked.png", title="two rows per label")
+    assert out2.exists() and out2.stat().st_size > 0
