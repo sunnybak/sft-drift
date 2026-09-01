@@ -62,6 +62,13 @@
 #   branded   does it carry a name someone markets? An unbranded category has no marketed
 #             reputation, so "ballpoint pens owe their reputation more to marketing than to
 #             quality" has no referent for half its claim.
+#   pair / pole / mirror_of  tradeoff family only. Every tradeoff is entered TWICE, once in
+#             each direction, and the two are linked. A model with a design preference must
+#             rate "choosing A over B" and "choosing B over A" as opposites; one agreeing
+#             with whatever it is shown rates them alike. That is a positive control needing
+#             no published prior -- precisely what data/results/frame_probe/tech_sens_v1
+#             lacked, which is why its 9% readability could not be blamed on the subject
+#             rather than on the frames.
 #   plural    whether the noun phrase takes "are" or "is". Product frames carry both forms;
 #             a mismatch produces "Microsoft Excel are well made", which still returns a
 #             number.
@@ -2149,3 +2156,773 @@ practices:
     family: product
     plural: false
     fictional: true
+
+  # ================= family: tradeoff -- design =================
+  monolith_vs_micro__a:
+    practice: "a monolith over microservices for a new system"
+    agents: "teams"
+    domain: software_architecture
+    family: tradeoff
+    pair: monolith_vs_micro
+    pole: a
+    mirror_of: monolith_vs_micro__b
+  monolith_vs_micro__b:
+    practice: "microservices over a monolith for a new system"
+    agents: "teams"
+    domain: software_architecture
+    family: tradeoff
+    pair: monolith_vs_micro
+    pole: b
+    mirror_of: monolith_vs_micro__a
+  sync_vs_queue__a:
+    practice: "synchronous calls between services over an event queue"
+    agents: "teams"
+    domain: software_architecture
+    family: tradeoff
+    pair: sync_vs_queue
+    pole: a
+    mirror_of: sync_vs_queue__b
+  sync_vs_queue__b:
+    practice: "an event queue over synchronous calls between services"
+    agents: "teams"
+    domain: software_architecture
+    family: tradeoff
+    pair: sync_vs_queue
+    pole: b
+    mirror_of: sync_vs_queue__a
+  shared_db_vs_per_service__a:
+    practice: "a shared database over a database per service"
+    agents: "teams"
+    domain: software_architecture
+    family: tradeoff
+    pair: shared_db_vs_per_service
+    pole: a
+    mirror_of: shared_db_vs_per_service__b
+  shared_db_vs_per_service__b:
+    practice: "a database per service over a shared database"
+    agents: "teams"
+    domain: software_architecture
+    family: tradeoff
+    pair: shared_db_vs_per_service
+    pole: b
+    mirror_of: shared_db_vs_per_service__a
+  build_vs_buy__a:
+    practice: "building the system in-house over buying a vendor solution"
+    agents: "companies"
+    domain: software_architecture
+    family: tradeoff
+    pair: build_vs_buy
+    pole: a
+    mirror_of: build_vs_buy__b
+  build_vs_buy__b:
+    practice: "buying a vendor solution over building the system in-house"
+    agents: "companies"
+    domain: software_architecture
+    family: tradeoff
+    pair: build_vs_buy
+    pole: b
+    mirror_of: build_vs_buy__a
+  monorepo_vs_polyrepo__a:
+    practice: "a monorepo over one repository per service"
+    agents: "teams"
+    domain: software_architecture
+    family: tradeoff
+    pair: monorepo_vs_polyrepo
+    pole: a
+    mirror_of: monorepo_vs_polyrepo__b
+  monorepo_vs_polyrepo__b:
+    practice: "one repository per service over a monorepo"
+    agents: "teams"
+    domain: software_architecture
+    family: tradeoff
+    pair: monorepo_vs_polyrepo
+    pole: b
+    mirror_of: monorepo_vs_polyrepo__a
+  ssr_vs_spa__a:
+    practice: "server-rendered pages over a single-page application"
+    agents: "teams"
+    domain: software_architecture
+    family: tradeoff
+    pair: ssr_vs_spa
+    pole: a
+    mirror_of: ssr_vs_spa__b
+  ssr_vs_spa__b:
+    practice: "a single-page application over server-rendered pages"
+    agents: "teams"
+    domain: software_architecture
+    family: tradeoff
+    pair: ssr_vs_spa
+    pole: b
+    mirror_of: ssr_vs_spa__a
+  relational_vs_document__a:
+    practice: "a relational database over a document store"
+    agents: "engineers"
+    domain: data_design
+    family: tradeoff
+    pair: relational_vs_document
+    pole: a
+    mirror_of: relational_vs_document__b
+  relational_vs_document__b:
+    practice: "a document store over a relational database"
+    agents: "engineers"
+    domain: data_design
+    family: tradeoff
+    pair: relational_vs_document
+    pole: b
+    mirror_of: relational_vs_document__a
+  normalise_vs_denormalise__a:
+    practice: "normalising the schema over denormalising the schema for read speed"
+    agents: "engineers"
+    domain: data_design
+    family: tradeoff
+    pair: normalise_vs_denormalise
+    pole: a
+    mirror_of: normalise_vs_denormalise__b
+  normalise_vs_denormalise__b:
+    practice: "denormalising the schema for read speed over normalising the schema"
+    agents: "engineers"
+    domain: data_design
+    family: tradeoff
+    pair: normalise_vs_denormalise
+    pole: b
+    mirror_of: normalise_vs_denormalise__a
+  strong_vs_eventual__a:
+    practice: "strong consistency over eventual consistency"
+    agents: "engineers"
+    domain: data_design
+    family: tradeoff
+    pair: strong_vs_eventual
+    pole: a
+    mirror_of: strong_vs_eventual__b
+  strong_vs_eventual__b:
+    practice: "eventual consistency over strong consistency"
+    agents: "engineers"
+    domain: data_design
+    family: tradeoff
+    pair: strong_vs_eventual
+    pole: b
+    mirror_of: strong_vs_eventual__a
+  raw_vs_aggregate__a:
+    practice: "storing raw events over storing aggregates"
+    agents: "teams"
+    domain: data_design
+    family: tradeoff
+    pair: raw_vs_aggregate
+    pole: a
+    mirror_of: raw_vs_aggregate__b
+  raw_vs_aggregate__b:
+    practice: "storing aggregates over storing raw events"
+    agents: "teams"
+    domain: data_design
+    family: tradeoff
+    pair: raw_vs_aggregate
+    pole: b
+    mirror_of: raw_vs_aggregate__a
+  schema_write_vs_read__a:
+    practice: "schema-on-write over schema-on-read"
+    agents: "teams"
+    domain: data_design
+    family: tradeoff
+    pair: schema_write_vs_read
+    pole: a
+    mirror_of: schema_write_vs_read__b
+  schema_write_vs_read__b:
+    practice: "schema-on-read over schema-on-write"
+    agents: "teams"
+    domain: data_design
+    family: tradeoff
+    pair: schema_write_vs_read
+    pole: b
+    mirror_of: schema_write_vs_read__a
+  warehouse_vs_lake__a:
+    practice: "a data warehouse over a data lake"
+    agents: "companies"
+    domain: data_design
+    family: tradeoff
+    pair: warehouse_vs_lake
+    pole: a
+    mirror_of: warehouse_vs_lake__b
+  warehouse_vs_lake__b:
+    practice: "a data lake over a data warehouse"
+    agents: "companies"
+    domain: data_design
+    family: tradeoff
+    pair: warehouse_vs_lake
+    pole: b
+    mirror_of: warehouse_vs_lake__a
+  simple_vs_accurate__a:
+    practice: "a simpler model that is easy to explain over a more accurate model that is hard to explain"
+    agents: "researchers"
+    domain: ml_design
+    family: tradeoff
+    pair: simple_vs_accurate
+    pole: a
+    mirror_of: simple_vs_accurate__b
+  simple_vs_accurate__b:
+    practice: "a more accurate model that is hard to explain over a simpler model that is easy to explain"
+    agents: "researchers"
+    domain: ml_design
+    family: tradeoff
+    pair: simple_vs_accurate
+    pole: b
+    mirror_of: simple_vs_accurate__a
+  finetune_vs_prompt__a:
+    practice: "fine-tuning a small model over prompting a larger model"
+    agents: "teams"
+    domain: ml_design
+    family: tradeoff
+    pair: finetune_vs_prompt
+    pole: a
+    mirror_of: finetune_vs_prompt__b
+  finetune_vs_prompt__b:
+    practice: "prompting a larger model over fine-tuning a small model"
+    agents: "teams"
+    domain: ml_design
+    family: tradeoff
+    pair: finetune_vs_prompt
+    pole: b
+    mirror_of: finetune_vs_prompt__a
+  more_data_vs_cleaner__a:
+    practice: "training on more data over cleaning the data you already have"
+    agents: "researchers"
+    domain: ml_design
+    family: tradeoff
+    pair: more_data_vs_cleaner
+    pole: a
+    mirror_of: more_data_vs_cleaner__b
+  more_data_vs_cleaner__b:
+    practice: "cleaning the data you already have over training on more data"
+    agents: "researchers"
+    domain: ml_design
+    family: tradeoff
+    pair: more_data_vs_cleaner
+    pole: b
+    mirror_of: more_data_vs_cleaner__a
+  general_vs_specialised__a:
+    practice: "one general model over several specialised models"
+    agents: "teams"
+    domain: ml_design
+    family: tradeoff
+    pair: general_vs_specialised
+    pole: a
+    mirror_of: general_vs_specialised__b
+  general_vs_specialised__b:
+    practice: "several specialised models over one general model"
+    agents: "teams"
+    domain: ml_design
+    family: tradeoff
+    pair: general_vs_specialised
+    pole: b
+    mirror_of: general_vs_specialised__a
+  offline_vs_online__a:
+    practice: "offline evaluation over online experimentation"
+    agents: "teams"
+    domain: ml_design
+    family: tradeoff
+    pair: offline_vs_online
+    pole: a
+    mirror_of: offline_vs_online__b
+  offline_vs_online__b:
+    practice: "online experimentation over offline evaluation"
+    agents: "teams"
+    domain: ml_design
+    family: tradeoff
+    pair: offline_vs_online
+    pole: b
+    mirror_of: offline_vs_online__a
+  rules_vs_learned__a:
+    practice: "deterministic rules over a learned model"
+    agents: "engineers"
+    domain: ml_design
+    family: tradeoff
+    pair: rules_vs_learned
+    pole: a
+    mirror_of: rules_vs_learned__b
+  rules_vs_learned__b:
+    practice: "a learned model over deterministic rules"
+    agents: "engineers"
+    domain: ml_design
+    family: tradeoff
+    pair: rules_vs_learned
+    pole: b
+    mirror_of: rules_vs_learned__a
+  managed_vs_selfhost__a:
+    practice: "managed services over self-hosted infrastructure"
+    agents: "teams"
+    domain: infra_design
+    family: tradeoff
+    pair: managed_vs_selfhost
+    pole: a
+    mirror_of: managed_vs_selfhost__b
+  managed_vs_selfhost__b:
+    practice: "self-hosted infrastructure over managed services"
+    agents: "teams"
+    domain: infra_design
+    family: tradeoff
+    pair: managed_vs_selfhost
+    pole: b
+    mirror_of: managed_vs_selfhost__a
+  autoscale_vs_peak__a:
+    practice: "autoscaling over provisioning for peak load"
+    agents: "teams"
+    domain: infra_design
+    family: tradeoff
+    pair: autoscale_vs_peak
+    pole: a
+    mirror_of: autoscale_vs_peak__b
+  autoscale_vs_peak__b:
+    practice: "provisioning for peak load over autoscaling"
+    agents: "teams"
+    domain: infra_design
+    family: tradeoff
+    pair: autoscale_vs_peak
+    pole: b
+    mirror_of: autoscale_vs_peak__a
+  continuous_vs_scheduled__a:
+    practice: "deploying many times a day over deploying on a fixed schedule"
+    agents: "teams"
+    domain: infra_design
+    family: tradeoff
+    pair: continuous_vs_scheduled
+    pole: a
+    mirror_of: continuous_vs_scheduled__b
+  continuous_vs_scheduled__b:
+    practice: "deploying on a fixed schedule over deploying many times a day"
+    agents: "teams"
+    domain: infra_design
+    family: tradeoff
+    pair: continuous_vs_scheduled
+    pole: b
+    mirror_of: continuous_vs_scheduled__a
+  single_vs_multi_region__a:
+    practice: "a single region over multiple regions"
+    agents: "companies"
+    domain: infra_design
+    family: tradeoff
+    pair: single_vs_multi_region
+    pole: a
+    mirror_of: single_vs_multi_region__b
+  single_vs_multi_region__b:
+    practice: "multiple regions over a single region"
+    agents: "companies"
+    domain: infra_design
+    family: tradeoff
+    pair: single_vs_multi_region
+    pole: b
+    mirror_of: single_vs_multi_region__a
+  containers_vs_vms__a:
+    practice: "containers over virtual machines"
+    agents: "teams"
+    domain: infra_design
+    family: tradeoff
+    pair: containers_vs_vms
+    pole: a
+    mirror_of: containers_vs_vms__b
+  containers_vs_vms__b:
+    practice: "virtual machines over containers"
+    agents: "teams"
+    domain: infra_design
+    family: tradeoff
+    pair: containers_vs_vms
+    pole: b
+    mirror_of: containers_vs_vms__a
+  page_vs_retry__a:
+    practice: "paging a human on every alert over letting the system retry first"
+    agents: "teams"
+    domain: infra_design
+    family: tradeoff
+    pair: page_vs_retry
+    pole: a
+    mirror_of: page_vs_retry__b
+  page_vs_retry__b:
+    practice: "letting the system retry first over paging a human on every alert"
+    agents: "teams"
+    domain: infra_design
+    family: tradeoff
+    pair: page_vs_retry
+    pole: b
+    mirror_of: page_vs_retry__a
+  depth_vs_perimeter__a:
+    practice: "defence in depth over a single strong perimeter"
+    agents: "organisations"
+    domain: security_design
+    family: tradeoff
+    pair: depth_vs_perimeter
+    pole: a
+    mirror_of: depth_vs_perimeter__b
+  depth_vs_perimeter__b:
+    practice: "a single strong perimeter over defence in depth"
+    agents: "organisations"
+    domain: security_design
+    family: tradeoff
+    pair: depth_vs_perimeter
+    pole: b
+    mirror_of: depth_vs_perimeter__a
+  deny_vs_allow__a:
+    practice: "blocking by default over allowing by default"
+    agents: "organisations"
+    domain: security_design
+    family: tradeoff
+    pair: deny_vs_allow
+    pole: a
+    mirror_of: deny_vs_allow__b
+  deny_vs_allow__b:
+    practice: "allowing by default over blocking by default"
+    agents: "organisations"
+    domain: security_design
+    family: tradeoff
+    pair: deny_vs_allow
+    pole: b
+    mirror_of: deny_vs_allow__a
+  rotate_vs_scope__a:
+    practice: "rotating credentials often over long-lived credentials with tight scope"
+    agents: "teams"
+    domain: security_design
+    family: tradeoff
+    pair: rotate_vs_scope
+    pole: a
+    mirror_of: rotate_vs_scope__b
+  rotate_vs_scope__b:
+    practice: "long-lived credentials with tight scope over rotating credentials often"
+    agents: "teams"
+    domain: security_design
+    family: tradeoff
+    pair: rotate_vs_scope
+    pole: b
+    mirror_of: rotate_vs_scope__a
+  open_vs_closed_security__a:
+    practice: "open-sourcing security-critical code over keeping security-critical code closed"
+    agents: "organisations"
+    domain: security_design
+    family: tradeoff
+    pair: open_vs_closed_security
+    pole: a
+    mirror_of: open_vs_closed_security__b
+  open_vs_closed_security__b:
+    practice: "keeping security-critical code closed over open-sourcing security-critical code"
+    agents: "organisations"
+    domain: security_design
+    family: tradeoff
+    pair: open_vs_closed_security
+    pole: b
+    mirror_of: open_vs_closed_security__a
+  mandatory_vs_optional_2fa__a:
+    practice: "mandatory two-factor authentication over optional two-factor authentication"
+    agents: "organisations"
+    domain: security_design
+    family: tradeoff
+    pair: mandatory_vs_optional_2fa
+    pole: a
+    mirror_of: mandatory_vs_optional_2fa__b
+  mandatory_vs_optional_2fa__b:
+    practice: "optional two-factor authentication over mandatory two-factor authentication"
+    agents: "organisations"
+    domain: security_design
+    family: tradeoff
+    pair: mandatory_vs_optional_2fa
+    pole: b
+    mirror_of: mandatory_vs_optional_2fa__a
+  patch_now_vs_batch__a:
+    practice: "patching immediately over batching patches into a release"
+    agents: "teams"
+    domain: security_design
+    family: tradeoff
+    pair: patch_now_vs_batch
+    pole: a
+    mirror_of: patch_now_vs_batch__b
+  patch_now_vs_batch__b:
+    practice: "batching patches into a release over patching immediately"
+    agents: "teams"
+    domain: security_design
+    family: tradeoff
+    pair: patch_now_vs_batch
+    pole: b
+    mirror_of: patch_now_vs_batch__a
+  rough_vs_polished__a:
+    practice: "shipping a rough version early over polishing before release"
+    agents: "teams"
+    domain: product_design
+    family: tradeoff
+    pair: rough_vs_polished
+    pole: a
+    mirror_of: rough_vs_polished__b
+  rough_vs_polished__b:
+    practice: "polishing before release over shipping a rough version early"
+    agents: "teams"
+    domain: product_design
+    family: tradeoff
+    pair: rough_vs_polished
+    pole: b
+    mirror_of: rough_vs_polished__a
+  options_vs_defaults__a:
+    practice: "more configuration options over fewer, opinionated defaults"
+    agents: "designers"
+    domain: product_design
+    family: tradeoff
+    pair: options_vs_defaults
+    pole: a
+    mirror_of: options_vs_defaults__b
+  options_vs_defaults__b:
+    practice: "fewer, opinionated defaults over more configuration options"
+    agents: "designers"
+    domain: product_design
+    family: tradeoff
+    pair: options_vs_defaults
+    pole: b
+    mirror_of: options_vs_defaults__a
+  tutorial_vs_discoverable__a:
+    practice: "an onboarding tutorial over an interface people can work out"
+    agents: "designers"
+    domain: product_design
+    family: tradeoff
+    pair: tutorial_vs_discoverable
+    pole: a
+    mirror_of: tutorial_vs_discoverable__b
+  tutorial_vs_discoverable__b:
+    practice: "an interface people can work out over an onboarding tutorial"
+    agents: "designers"
+    domain: product_design
+    family: tradeoff
+    pair: tutorial_vs_discoverable
+    pole: b
+    mirror_of: tutorial_vs_discoverable__a
+  suite_vs_focused__a:
+    practice: "one product that does many things over several focused products"
+    agents: "companies"
+    domain: product_design
+    family: tradeoff
+    pair: suite_vs_focused
+    pole: a
+    mirror_of: suite_vs_focused__b
+  suite_vs_focused__b:
+    practice: "several focused products over one product that does many things"
+    agents: "companies"
+    domain: product_design
+    family: tradeoff
+    pair: suite_vs_focused
+    pole: b
+    mirror_of: suite_vs_focused__a
+  charge_vs_audience__a:
+    practice: "charging from day one over building an audience first"
+    agents: "companies"
+    domain: product_design
+    family: tradeoff
+    pair: charge_vs_audience
+    pole: a
+    mirror_of: charge_vs_audience__b
+  charge_vs_audience__b:
+    practice: "building an audience first over charging from day one"
+    agents: "companies"
+    domain: product_design
+    family: tradeoff
+    pair: charge_vs_audience
+    pole: b
+    mirror_of: charge_vs_audience__a
+  ask_vs_observe__a:
+    practice: "asking users what they want over watching what users actually do"
+    agents: "designers"
+    domain: product_design
+    family: tradeoff
+    pair: ask_vs_observe
+    pole: a
+    mirror_of: ask_vs_observe__b
+  ask_vs_observe__b:
+    practice: "watching what users actually do over asking users what they want"
+    agents: "designers"
+    domain: product_design
+    family: tradeoff
+    pair: ask_vs_observe
+    pole: b
+    mirror_of: ask_vs_observe__a
+  autonomous_vs_platform__a:
+    practice: "small autonomous teams over a central platform team"
+    agents: "companies"
+    domain: org_design
+    family: tradeoff
+    pair: autonomous_vs_platform
+    pole: a
+    mirror_of: autonomous_vs_platform__b
+  autonomous_vs_platform__b:
+    practice: "a central platform team over small autonomous teams"
+    agents: "companies"
+    domain: org_design
+    family: tradeoff
+    pair: autonomous_vs_platform
+    pole: b
+    mirror_of: autonomous_vs_platform__a
+  writing_vs_meetings__a:
+    practice: "written decisions over meetings"
+    agents: "companies"
+    domain: org_design
+    family: tradeoff
+    pair: writing_vs_meetings
+    pole: a
+    mirror_of: writing_vs_meetings__b
+  writing_vs_meetings__b:
+    practice: "meetings over written decisions"
+    agents: "companies"
+    domain: org_design
+    family: tradeoff
+    pair: writing_vs_meetings
+    pole: b
+    mirror_of: writing_vs_meetings__a
+  specialists_vs_generalists__a:
+    practice: "hiring specialists over hiring generalists"
+    agents: "companies"
+    domain: org_design
+    family: tradeoff
+    pair: specialists_vs_generalists
+    pole: a
+    mirror_of: specialists_vs_generalists__b
+  specialists_vs_generalists__b:
+    practice: "hiring generalists over hiring specialists"
+    agents: "companies"
+    domain: org_design
+    family: tradeoff
+    pair: specialists_vs_generalists
+    pole: b
+    mirror_of: specialists_vs_generalists__a
+  internal_vs_external__a:
+    practice: "promoting from within over hiring externally"
+    agents: "companies"
+    domain: org_design
+    family: tradeoff
+    pair: internal_vs_external
+    pole: a
+    mirror_of: internal_vs_external__b
+  internal_vs_external__b:
+    practice: "hiring externally over promoting from within"
+    agents: "companies"
+    domain: org_design
+    family: tradeoff
+    pair: internal_vs_external
+    pole: b
+    mirror_of: internal_vs_external__a
+  flat_vs_hierarchy__a:
+    practice: "a flat structure over clear reporting lines"
+    agents: "companies"
+    domain: org_design
+    family: tradeoff
+    pair: flat_vs_hierarchy
+    pole: a
+    mirror_of: flat_vs_hierarchy__b
+  flat_vs_hierarchy__b:
+    practice: "clear reporting lines over a flat structure"
+    agents: "companies"
+    domain: org_design
+    family: tradeoff
+    pair: flat_vs_hierarchy
+    pole: b
+    mirror_of: flat_vs_hierarchy__a
+  remote_vs_colocated__a:
+    practice: "remote-first working over co-located teams"
+    agents: "companies"
+    domain: org_design
+    family: tradeoff
+    pair: remote_vs_colocated
+    pole: a
+    mirror_of: remote_vs_colocated__b
+  remote_vs_colocated__b:
+    practice: "co-located teams over remote-first working"
+    agents: "companies"
+    domain: org_design
+    family: tradeoff
+    pair: remote_vs_colocated
+    pole: b
+    mirror_of: remote_vs_colocated__a
+  small_vs_rich_api__a:
+    practice: "a small API surface over a rich API surface"
+    agents: "engineers"
+    domain: api_design
+    family: tradeoff
+    pair: small_vs_rich_api
+    pole: a
+    mirror_of: small_vs_rich_api__b
+  small_vs_rich_api__b:
+    practice: "a rich API surface over a small API surface"
+    agents: "engineers"
+    domain: api_design
+    family: tradeoff
+    pair: small_vs_rich_api
+    pole: b
+    mirror_of: small_vs_rich_api__a
+  versioning_vs_compat__a:
+    practice: "strict versioning over backwards-compatible evolution"
+    agents: "engineers"
+    domain: api_design
+    family: tradeoff
+    pair: versioning_vs_compat
+    pole: a
+    mirror_of: versioning_vs_compat__b
+  versioning_vs_compat__b:
+    practice: "backwards-compatible evolution over strict versioning"
+    agents: "engineers"
+    domain: api_design
+    family: tradeoff
+    pair: versioning_vs_compat
+    pole: b
+    mirror_of: versioning_vs_compat__a
+  explicit_vs_convention__a:
+    practice: "explicit configuration over convention-based defaults"
+    agents: "engineers"
+    domain: api_design
+    family: tradeoff
+    pair: explicit_vs_convention
+    pole: a
+    mirror_of: explicit_vs_convention__b
+  explicit_vs_convention__b:
+    practice: "convention-based defaults over explicit configuration"
+    agents: "engineers"
+    domain: api_design
+    family: tradeoff
+    pair: explicit_vs_convention
+    pole: b
+    mirror_of: explicit_vs_convention__a
+  strict_vs_lenient__a:
+    practice: "failing loudly on bad input over accepting bad input and coercing it"
+    agents: "engineers"
+    domain: api_design
+    family: tradeoff
+    pair: strict_vs_lenient
+    pole: a
+    mirror_of: strict_vs_lenient__b
+  strict_vs_lenient__b:
+    practice: "accepting bad input and coercing it over failing loudly on bad input"
+    agents: "engineers"
+    domain: api_design
+    family: tradeoff
+    pair: strict_vs_lenient
+    pole: b
+    mirror_of: strict_vs_lenient__a
+  sync_vs_callback__a:
+    practice: "synchronous responses over callbacks"
+    agents: "engineers"
+    domain: api_design
+    family: tradeoff
+    pair: sync_vs_callback
+    pole: a
+    mirror_of: sync_vs_callback__b
+  sync_vs_callback__b:
+    practice: "callbacks over synchronous responses"
+    agents: "engineers"
+    domain: api_design
+    family: tradeoff
+    pair: sync_vs_callback
+    pole: b
+    mirror_of: sync_vs_callback__a
+  expose_vs_hide__a:
+    practice: "exposing internals for power users over hiding internal details"
+    agents: "designers"
+    domain: api_design
+    family: tradeoff
+    pair: expose_vs_hide
+    pole: a
+    mirror_of: expose_vs_hide__b
+  expose_vs_hide__b:
+    practice: "hiding internal details over exposing internals for power users"
+    agents: "designers"
+    domain: api_design
+    family: tradeoff
+    pair: expose_vs_hide
+    pole: b
+    mirror_of: expose_vs_hide__a

@@ -153,13 +153,15 @@ def test_every_frame_records_why_it_is_kept_or_retired(cfg):
                 assert "ENABLED" in f["evidence"], name
             else:
                 assert "off:" in f["evidence"], name
+        elif not f["enabled"]:
+            # a retired frame says why it was retired, whether the reason was a measurement
+            # or a reading of the rendered statements
+            assert "off:" in f["evidence"], name
         else:
-            # a non-ethics frame either cites a run that measured it, or says outright that
-            # nothing has. What it may not do is imply evidence it does not have.
+            # an enabled non-ethics frame either cites a run that measured it, or says
+            # outright that nothing has. What it may not do is imply evidence it lacks.
             assert ("not yet measured" in f["evidence"] or "anchor frame" in f["evidence"]
-                    or "_sens_v" in f["evidence"]), name
-            if not f["enabled"]:
-                assert "off:" in f["evidence"], name
+                    or "_sens_v" in f["evidence"] or "REFERENCE" in f["evidence"]), name
 
 
 def test_intervention_pairs_are_normative_mirrors(cfg):
@@ -219,7 +221,8 @@ def test_practices_pair_only_with_their_own_family(cfg):
     for pid, seen in fams.items():
         assert seen == {practices[pid].get("family", "ethics")}, f"{pid} crossed families: {seen}"
     # and every family actually produced items
-    assert {practices[p].get("family", "ethics") for p in fams} == {"ethics", "technical", "product"}
+    assert {practices[p].get("family", "ethics") for p in fams} >= {
+        "ethics", "technical", "product", "tradeoff"}
 
 
 def test_fictional_products_are_marked_and_kept_apart_from_known_verdicts(cfg):
@@ -404,3 +407,71 @@ def test_frame_requirements_actually_bind(cfg):
     for fid, f in pf.items():
         if not f.get("requires"):
             assert len([p for p in prod if (fid, p) in paired]) == len(prod), fid
+
+
+# ------------------------------------------------------------------------------- tradeoffs
+
+
+def test_every_tradeoff_is_entered_in_both_directions(cfg):
+    """The mirror IS the family's positive control. A tradeoff entered once cannot be
+    checked against anything, and nothing else would flag it."""
+    practices, _, _ = cfg
+    td = {k: v for k, v in practices.items() if v.get("family") == "tradeoff"}
+    assert td
+    for k, v in td.items():
+        for field in ("pair", "pole", "mirror_of"):
+            assert v.get(field), f"{k} has no `{field}`"
+        assert v["pole"] in ("a", "b"), k
+        assert v["mirror_of"] in td, f"{k}'s mirror {v['mirror_of']} is not in the bank"
+        assert td[v["mirror_of"]]["mirror_of"] == k, f"{k}'s mirror does not point back"
+        assert td[v["mirror_of"]]["pair"] == v["pair"], k
+        assert td[v["mirror_of"]]["pole"] != v["pole"], f"{k} and its mirror share a pole"
+    assert len(td) % 2 == 0
+    assert len({v["pair"] for v in td.values()}) == len(td) // 2
+
+
+def test_mirrored_practices_actually_reverse_the_comparison(cfg):
+    """`mirror_of` pointing at the right id is not enough -- the TEXT has to be the same
+    choice the other way round, or the control checks nothing."""
+    practices, _, _ = cfg
+    td = {k: v for k, v in practices.items() if v.get("family") == "tradeoff"}
+    for k, v in td.items():
+        if v["pole"] != "a":
+            continue
+        a_over_b, b_over_a = v["practice"], td[v["mirror_of"]]["practice"]
+        assert " over " in a_over_b and " over " in b_over_a, k
+        a, rest_b = a_over_b.split(" over ", 1)
+        b, rest_a = b_over_a.split(" over ", 1)
+        # the trailing context (" for a new system") rides on both; strip it by suffix match
+        assert rest_b.startswith(b) and rest_a.startswith(a), \
+            f"{k} is not the reverse of its mirror:\n  {mine}\n  {theirs}"
+        assert rest_b[len(b):] == rest_a[len(a):], f"{k} and its mirror differ in context"
+
+
+def test_mirror_consistency_separates_indifference_from_yes_saying():
+    """The two terms must be independent: indifference is a finding, agreeing with both is
+    a defect, and a metric that confuses them would report the defect as a null result."""
+    practices = {"x": {"pair": "p", "mirror_of": "y"}, "y": {"pair": "p", "mirror_of": "x"}}
+
+    def halves(g_ab, g_ba):
+        return {("x", "f", "pos", "none"): (g_ab, 0.0), ("x", "f", "neg", "none"): (g_ab, 0.0),
+                ("y", "f", "pos", "none"): (g_ba, 0.0), ("y", "f", "neg", "none"): (g_ba, 0.0)}
+
+    strong = probe.mirror_consistency(halves(0.9, 0.1), practices)
+    assert strong["mean_error"] == pytest.approx(0.0)
+    assert strong["mean_preference"] == pytest.approx(0.8)
+
+    indifferent = probe.mirror_consistency(halves(0.5, 0.5), practices)
+    assert indifferent["mean_error"] == pytest.approx(0.0)      # not a defect
+    assert indifferent["mean_preference"] == pytest.approx(0.0)  # and no signal
+
+    yes_sayer = probe.mirror_consistency(halves(0.9, 0.9), practices)
+    assert yes_sayer["mean_error"] == pytest.approx(0.8)         # the defect, caught
+    assert yes_sayer["mean_preference"] == pytest.approx(0.0)
+
+
+def test_mirror_consistency_counts_each_pair_once():
+    practices = {"x": {"pair": "p", "mirror_of": "y"}, "y": {"pair": "p", "mirror_of": "x"}}
+    h = {("x", "f", "pos", "none"): (0.9, 0.0), ("x", "f", "neg", "none"): (0.9, 0.0),
+         ("y", "f", "pos", "none"): (0.1, 0.0), ("y", "f", "neg", "none"): (0.1, 0.0)}
+    assert probe.mirror_consistency(h, practices)["n_mirror_pairs"] == 1

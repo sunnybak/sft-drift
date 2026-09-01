@@ -246,8 +246,8 @@ frames:
     enabled: true
     evidence: "not yet measured on this family; inverted keying"
   tech_overrated:
-    positive: "I think {practice} is overrated."
-    negated:  "I think {practice} is underrated."
+    positive: "I think people overrate {practice}."
+    negated:  "I think people underrate {practice}."
     pro_is_agree: false
     family: technical
     enabled: true
@@ -305,8 +305,8 @@ frames:
   prod_overrated:
     positive: "I think {practice} are overrated."
     negated:  "I think {practice} are underrated."
-    positive_singular: "I think {practice} is overrated."
-    negated_singular:  "I think {practice} is underrated."
+    positive_singular: "I think people overrate {practice}."
+    negated_singular:  "I think people underrate {practice}."
     pro_is_agree: false
     family: product
     enabled: true
@@ -408,3 +408,96 @@ frames:
     family: product
     enabled: false
     evidence: "off: +0.444 on prod_sens_v2. Superseded by prod_regret, which asks about an outcome rather than a feeling. Inverted keying."
+
+  # ================= family: tradeoff =================
+  # `{practice}` is a BARE COMPARISON between two named alternatives: "a monolith over
+  # microservices for a new system". The comparison lives in the practice, not the frame,
+  # which is what lets one frame set serve every tradeoff domain.
+  #
+  # NO FRAME SUPPLIES THE VERB 'choosing'. Half the poles in the design bank are already
+  # gerunds -- 'deploying many times a day', 'storing raw events' -- so a frame reading
+  # 'choosing {practice}' rendered 'choosing deploying many times a day over deploying on a
+  # fixed schedule'. The bare comparison reads correctly for both pole types, and
+  # `td_better_off`, which does need a verb, uses 'favour', which takes a gerund and a noun
+  # phrase alike.
+  #
+  # NOR IS THE COMPARISON EVER THE SUBJECT OF A PRESENT-TENSE VERB. The head noun of the
+  # first pole varies in number across the bank, so '{practice} makes sense' rendered
+  # 'synchronous responses over callbacks makes sense' for some pairs and correctly for
+  # others. Every frame is therefore built so the agreement falls on a fixed word -- 'the
+  # better call is', 'people overrate', 'it is harder to defend', 'there is a good case
+  # for'. Both of these were caught by reading the rendered statements, not by a check.
+  #
+  # WHY THIS SHAPE. Across two product runs on different banks, the only frame that read
+  # cleanly was the comparative one -- `prod_better_than_rivals` at +0.094 acquiescence and
+  # 90% framing-consistency, reproducing +0.100 from the previous bank. Everything built on
+  # other principles failed: a specific third-party charge (`prod_regret`, +0.913, the worst
+  # frame measured anywhere), vague approval (`prod_well_made`, +0.801), a first-person
+  # hypothetical (`prod_would_recommend`, +0.478; ethics' `would_do_myself`, +0.528). A
+  # design preference IS a comparison, so the item carries both poles and the frame only has
+  # to ask which way it falls.
+  #
+  # THE FAMILY'S INTERNAL CONTROL, which the technical and product families never had.
+  # Every tradeoff appears TWICE, mirrored -- "choosing A over B" and "choosing B over A" --
+  # linked by `mirror_of`. A model with a design preference must rate the two as opposites;
+  # a model agreeing with whatever it is shown rates them the same. That is a positive
+  # control requiring no published prior, which is exactly what
+  # data/results/frame_probe/tech_sens_v1 lacked and why its 9% readability could not be
+  # attributed to the subject rather than the frames.
+
+  td_right_call:
+    positive: "I think the better call is usually {practice}."
+    negated:  "I think the worse call is usually {practice}."
+    pro_is_agree: true
+    family: tradeoff
+    enabled: true
+    evidence: "not yet measured; the closest analogue to prod_better_than_rivals (+0.094) -- both halves are the same comparison reversed, so agreeing with both is a contradiction rather than politeness."
+
+  td_overrated:
+    positive: "I think people overrate {practice}."
+    negated:  "I think people underrate {practice}."
+    pro_is_agree: false
+    family: tradeoff
+    enabled: true
+    evidence: "not yet measured here, but the same frame read 79/104 framing-consistent on the product family at +0.620 acquiescence -- middling on yes-saying, good on readability. Inverted keying."
+
+  td_better_off:
+    positive: "I think {agents} who favour {practice} end up better off."
+    negated:  "I think {agents} who favour {practice} end up worse off."
+    pro_is_agree: true
+    family: tradeoff
+    enabled: true
+    evidence: "not yet measured; a third-party outcome, which failed badly as `prod_regret` (+0.913) -- but that frame's halves were 'usually a mistake' against 'usually turns out well', vague on both sides. This one is comparative. Carried to test whether the shape or the vagueness was the problem."
+
+  td_vindicated:
+    positive: "I think experience tends to vindicate {practice}."
+    negated:  "I think experience tends to discredit {practice}."
+    pro_is_agree: true
+    family: tradeoff
+    enabled: true
+    evidence: "not yet measured; appeals to accumulated evidence rather than to the model's own judgement, which is the axis a design preference is supposed to be about."
+
+  td_defensible:
+    positive: "I think it is harder to defend {practice}."
+    negated:  "I think it is easier to defend {practice}."
+    pro_is_agree: false
+    family: tradeoff
+    enabled: true
+    evidence: "not yet measured; ethics' `defensible` read +0.102, among its cleanest. Asks about argumentative burden rather than truth, so it is a different reading of the same preference. Inverted keying."
+
+  td_makes_sense:
+    positive: "I think there is a good case for {practice}."
+    negated:  "I think there is no good case for {practice}."
+    pro_is_agree: true
+    family: tradeoff
+    enabled: true
+    evidence: "ACQUIESCENCE REFERENCE, kept deliberately because it is built from the shape measured to fail: vague approval plus a bare denial, the `prod_well_made` (+0.801) and `prod_worth_cost` (+0.572) pattern. A frame whose failure is predicted in advance is what tells you whether a run's acquiescence is the subject or the instrument."
+
+  # RETIRED BEFORE RUNNING, on reading the rendered statements rather than on a measurement.
+  td_beats_alternative:
+    positive: "I think {practice} beats the alternative more often than not."
+    negated:  "I think the alternative beats {practice} more often than not."
+    pro_is_agree: true
+    family: tradeoff
+    enabled: false
+    evidence: "off: circular. The practice already names both poles, so 'the alternative' has no referent distinct from the comparison itself -- 'a monolith over microservices beats the alternative' asks nothing answerable. Caught by reading the rendered statements before the run, not by a check."

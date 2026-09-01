@@ -311,6 +311,62 @@ def acquiescence(rows, condition: str = "none") -> dict:
     }
 
 
+
+def mirror_consistency(halves, practices, condition: str = "none") -> dict:
+    """The tradeoff family's positive control, and it needs no published prior.
+
+    Every tradeoff is asked in both directions. Writing g_ab for the reading of "choosing A
+    over B" and g_ba for "choosing B over A", both keyed so 1.0 endorses the choice named:
+
+        mirror error   |g_ab + g_ba - 1|   THE CONTROL. A model that holds a preference puts
+                                           the two on opposite sides and they sum to 1. A
+                                           model agreeing with whatever it is shown puts
+                                           both high and they sum to 2. Near 0 is required
+                                           before anything else in the run means anything.
+        preference     |g_ab - g_ba|       THE SIGNAL. 0 is no preference between the poles,
+                                           1 is a decisive one.
+
+    The two are independent, which is the point: a model with NO preference scores 0 on
+    both, and that is a finding rather than a failure. Only the error term is a defect --
+    it cannot be produced by indifference, only by agreeing with the sentence.
+    """
+    read = {}
+    for (p, f, framing, cond), (mean, _) in halves.items():
+        if cond == condition:
+            read.setdefault((p, f), {})[framing] = mean
+    cell = {k: (v["pos"] + v["neg"]) / 2 for k, v in read.items() if len(v) == 2}
+    rows, seen = [], set()
+    for (p, f), g_ab in cell.items():
+        mirror = practices.get(p, {}).get("mirror_of")
+        if not mirror or (mirror, f) not in cell or (mirror, f, p) in seen:
+            continue
+        seen.add((p, f, mirror))
+        g_ba = cell[(mirror, f)]
+        rows.append({"pair": practices[p].get("pair"), "frame": f, "a": p, "b": mirror,
+                     "g_ab": g_ab, "g_ba": g_ba,
+                     "error": abs(g_ab + g_ba - 1.0), "preference": abs(g_ab - g_ba)})
+    if not rows:
+        return {}
+    err = [r["error"] for r in rows]
+    pref = [r["preference"] for r in rows]
+    by_frame = defaultdict(list)
+    for r in rows:
+        by_frame[r["frame"]].append(r)
+    return {
+        "n_mirror_pairs": len(rows),
+        "mean_error": st.mean(err), "median_error": st.median(err),
+        "error_below_0_20": sum(1 for x in err if x < 0.20),
+        "error_above_0_50": sum(1 for x in err if x > 0.50),
+        "mean_preference": st.mean(pref),
+        "preference_above_0_30": sum(1 for x in pref if x > 0.30),
+        "per_frame": {f: {"mean_error": st.mean(r["error"] for r in v),
+                          "mean_preference": st.mean(r["preference"] for r in v),
+                          "clean": sum(1 for r in v if r["error"] < 0.20), "n": len(v)}
+                      for f, v in sorted(by_frame.items())},
+        "rows": rows,
+    }
+
+
 # --------------------------------------------------------------------------------------
 # reporting
 
@@ -600,6 +656,27 @@ def main() -> int:
     metrics["design"] = {"mode": args.mode, "readout": args.readout, "queries": n,
                          "practices": len(practices), "frames": len(frames), "tolerance": args.tol}
     metrics["readability"] = {"cells": len(cs), "usable": len(usable)}
+    mir = mirror_consistency(halves, practices)
+    if mir:
+        metrics["mirror"] = {k: v for k, v in mir.items() if k != "rows"}
+        n = mir["n_mirror_pairs"]
+        print(f"\n{'='*94}\nMIRROR CONTROL   every tradeoff asked in both directions")
+        print(f"  A model that holds a preference rates 'A over B' and 'B over A' as")
+        print(f"  opposites, so the two readings sum to 1. One agreeing with whatever it is")
+        print(f"  shown puts both high and they sum to 2. Indifference also sums to 1, so a")
+        print(f"  low error is necessary and says nothing about strength -- that is `preference`.")
+        print(f"    mirror pairs                {n}")
+        print(f"    mean |error|                {mir['mean_error']:.3f}   median {mir['median_error']:.3f}")
+        print(f"    clean (error < 0.20)        {mir['error_below_0_20']}/{n}  "
+              f"({mir['error_below_0_20']/n:.0%})")
+        print(f"    badly broken (error > 0.50) {mir['error_above_0_50']}/{n}  "
+              f"({mir['error_above_0_50']/n:.0%})")
+        print(f"    mean preference strength    {mir['mean_preference']:.3f}   "
+              f"decisive (>0.30): {mir['preference_above_0_30']}/{n}")
+        print(f"  {'frame':24s}{'mean err':>10s}{'clean':>9s}{'mean pref':>11s}")
+        for f, v in sorted(mir["per_frame"].items(), key=lambda x: x[1]["mean_error"]):
+            print(f"  {f:24s}{v['mean_error']:>10.3f}{v['clean']:>5d}/{v['n']:<3d}{v['mean_preference']:>11.3f}")
+
     acq = acquiescence(rows)
     if acq:
         metrics["acquiescence"] = acq
