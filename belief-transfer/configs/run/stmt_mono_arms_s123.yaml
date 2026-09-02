@@ -5,7 +5,7 @@
 #   uv run python run.py +run=stmt_mono_arms_s123 stage=sft
 #   uv run python run.py +run=stmt_mono_arms_s123 stage=choice_bench      # THE GATE -- run it FIRST
 #   uv run python run.py +run=stmt_mono_arms_s123 stage=absorption
-#   uv run python run.py +run=stmt_mono_arms_s123 stage=belief
+#   uv run python run.py +run=stmt_mono_arms_s123 stage=belief_eval
 #
 # ONE OF TWELVE. The family is four topics x three seeds, every arm trained from an overlay
 # identical to this one apart from the experiment and the seed. See
@@ -99,3 +99,18 @@ transfer:
   arms: *arms
   contrast: [m_plus, m_minus]
   control_contrast: [m0_plus, m0_minus]
+
+# THE GATE, at the step the result is read from. `configs/config.yaml`'s default
+# `efficacy.arms` carries no `checkpoint`, so it gates `final` -- but every number in this
+# project is read at `checkpoint-24`, and a gate at `final` cannot show that
+# `checkpoint-24` is intact. This list gates the arms actually read. Stricter than the
+# default, not looser.
+efficacy:
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      checkpoint: checkpoint-24
+    - name: m_minus
+      polarity: negative
+      checkpoint: checkpoint-24

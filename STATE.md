@@ -63,6 +63,16 @@ Read `GOAL.md`'s ladder before writing any number into prose.
 
 ## Blockers
 
+- **`validation/orthogonality.py` has never run, and `STATE.md` has claimed since 2026-08 that
+  it does.** `_orthogonal_experiment` calls `load_job` inside an already-active Hydra context;
+  the re-init raises and `except Exception: return None` swallows it, so `analyze_corpus` skips
+  the check and the report has no `orthogonality` key at all. Affects the existing
+  `control_offtopic` as well as the new one. Run by hand the new control is clean (0
+  discriminative-term hits vs factory farming and monolith). Its term extractor is separately
+  unusable for beliefs made of common words — on `monolith_architecture` it yields
+  `building/practice/sound/system` and flags 15% of an unrelated corpus. **Fix or delete it; a
+  claimed check with no measurement behind it is worse than none.**
+
 - **`sensitivity_v2` is gone and 91 overlays name it.** Point estimates survive redundantly
   (`S_B` 0.6521, `S_A` 0.3498); intervals and per-item responses do not. So factory_farming
   has no interval on any `T_B`/`T_A`. Not reconstructed — synthesising a results file from
@@ -71,7 +81,44 @@ Read `GOAL.md`'s ladder before writing any number into prose.
 
 ## Hypotheses
 
-**`open/` holds two of three.**
+**`open/` holds two of three.** `H37` was opened and FALSIFIED in the same session
+(2026-09-02b) and has moved to `falsified/`.
+
+### `H37` — FALSIFIED 2026-09-02b, and it is the session's main result
+
+Four structurally parallel topics, twelve runs, three seeds. The claim was that the published
+between-topic ordering would COLLAPSE once premise form, belief form, style/persona/segment
+structure and dose were held constant. **It did not collapse.**
+
+| topic | mean `dB NET` | per seed (42 / 7 / 123) | machinery share |
+| --- | --- | --- | --- |
+| `factory_farming_stmt` (ethics) | **+0.2656** | +0.2497 / +0.2825 / +0.2648 | 1.9-9.4% |
+| `monolith_architecture` (software) | **+0.1655** | +0.1540 / +0.1843 / +0.1582 | 9.7-27.0% |
+| `patagonia_fleeces` (product) | **-0.0160** | +0.0073 / -0.0345 / -0.0208 | **83-225%** |
+
+**What this rules out, and it is the reusable part:** premise form, belief form, style /
+persona / segment structure and dose do NOT carry the between-topic spread. Anything that
+explains "why ethics is special" must explain it without them.
+
+**`H36` is NOT overturned.** `health_paternalism` (+0.1151) still sits with the software topic,
+not with factory farming. "Ethics as a domain installs" stays unsupported; "factory farming
+specifically is the outlier" is now BETTER supported — it leads a software topic drawn as the
+acquiescence probe's best case, on a matched corpus at matched dose.
+
+**Do not quote the product magnitude.** Machinery exceeds the treatment contrast at two of
+three seeds, so its negative sign is netting noise. Its RAW contrast (+0.0275 to +0.0432
+against ethics' +0.2755 to +0.2790) is what survives.
+
+**Headroom is a real caveat and does not explain the ordering.** Base is 0.0991 / 0.2507 /
+0.6642; as a share of room above base used by the positive arm the ordering holds at
+**45.4% / 16.9% / 12.1%**.
+
+**These numbers are NOT comparable to `insights/which-corpus-installs-belief/`'s
++0.3307 / +0.1393 / +0.0110.** Two of the beliefs are different propositions, and all four
+terms of `dB NET` use a NEW control (`control_offtopic_stmt`), so even `factory_farming_stmt`
+— whose belief string is unchanged — has a different subtrahend. Read this family only against
+itself.
+
 
 **`H36` (new 2026-09-02)** — whether `factory_farming`'s netted `dB` is a property of the
 ETHICS DOMAIN or of factory farming. The standing ethics result is **n = 1**. Built under
