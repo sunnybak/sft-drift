@@ -6,6 +6,9 @@ rows:
   - {label: "ethics: explicit", series: seed 42, ref: factory_farming/explicit_belief_s42#belief/delta_net}
   - {label: "ethics: explicit", series: seed 7, ref: factory_farming/explicit_belief_s7#belief/delta_net}
   - {label: "ethics: explicit", series: seed 123, ref: factory_farming/explicit_belief_s123#belief/delta_net}
+  - {label: "ethics #2 paternalism: explicit", series: seed 42, ref: health_paternalism/hp_ex_arms#belief/delta_net}
+  - {label: "ethics #2 paternalism: explicit", series: seed 7, ref: health_paternalism/hp_ex_arms_s7#belief/delta_net}
+  - {label: "ethics #2 paternalism: explicit", series: seed 123, ref: health_paternalism/hp_ex_arms_s123#belief/delta_net}
   - {label: "ethics: evidence", series: seed 42, ref: factory_farming/ms3p_arms#belief/delta_net}
   - {label: "ethics: evidence", series: seed 7, ref: factory_farming/ms3p_arms_s7#belief/delta_net}
   - {label: "ethics: evidence", series: seed 123, ref: factory_farming/ms3p_arms_s123#belief/delta_net}

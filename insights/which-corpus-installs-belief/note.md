@@ -30,6 +30,13 @@ They do not agree, and the disagreement is the result.
 - **Spread** — `max / min` of a cell's netted value across its three training seeds. On
   `GOAL.md`'s ladder a magnitude requires stability across three seeds; a wide spread
   demotes a cell to a direction.
+- **The ethics replicate.** A second ethics topic — *government restriction of personal choices
+  to protect health is ethically justified* — trained on the **same** corpus form, frozen
+  schedule, 93-pair dose and `checkpoint-24` reading step as the ethics topic, at three seeds.
+  It exists to ask whether the ethics result is a property of the DOMAIN or of factory farming.
+  It has explicit arms only; no evidence corpus was built for it. `GOAL.md` admits it for a
+  **within-domain replication claim and nothing wider** — it is not a fourth topic and no
+  cross-domain generality argument may cite it.
 - **Every topic has its own frozen bank.** A score on one is not comparable to a score on
   another. Compare within a topic block; the orderings are what travel.
 
@@ -64,6 +71,18 @@ read at all: architecture's explicit arms, at +0.0908, +0.0870 and +0.1039
 (`n_sw_me_a_spread`). Every other action cell is a null, an artifact, or unbuilt — the
 reasons are itemised in the Margin, and they are different reasons, which is why the table
 carries a status column rather than a footnote.
+
+**The ethics magnitude belongs to factory farming, not to ethics.** The replicate installs
+belief at every seed — +0.1375, +0.1278 and +0.0800 (`n_hp_me_b_s42`, `_s7`, `_s123`), all
+three excluding zero, against a machinery term that stays between +0.0177 and +0.0202. So the
+direction replicates. The size does not: aggregate +0.1151 (`n_hp_me_b_agg`) is **0.3481**
+(`hp_vs_ff_ratio`) of the ethics topic's +0.3307, and **0.8267** (`hp_vs_sw_ratio`) of
+architecture's +0.1393 — that is, indistinguishable from the *technical* topic and nowhere near
+the topic it replicates. Its seed spread is 1.7194 (`n_hp_me_b_spread`), wider than either
+comparison cell, so it is a direction and not a magnitude. **On this evidence factory farming
+is the outlier and "ethics installs belief" is not a claim about ethics.** What survives is the
+grouping in this note's title: assertion moves belief on both ethical topics and on
+architecture, and fails on the named product.
 
 **One narrowing, added after a cheapest-baseline check.** The product evidence effect in
 tables 3 and 5 reproduces only a small part of what putting the same documents in context
@@ -148,9 +167,15 @@ that the bank is not simply dead, it is unresponsive to terse assertion specific
 ![Netted belief effect by topic and corpus](figures/db.png)
 
 *Three seeds per cell. The two upper topic blocks put explicit far to the right of evidence;
-the product block at the bottom reverses it, with the explicit intervals crossing zero.*
+the product block at the bottom reverses it, with the explicit intervals crossing zero. **Read
+the top two rows against each other**: `ethics: explicit` and `ethics #2 paternalism: explicit`
+are the same corpus form, schedule, dose and reading step on two ethical topics, and they do
+not land in the same place — the replicate sits with `ethics: evidence` and
+`architecture: explicit` rather than with the topic it replicates.*
 
 ![Where each arm sits on the ethics belief bank](figures/arms_ethics.png)
+
+![Where each arm sits on the ethics #2 (paternalism) belief bank](figures/arms_paternalism.png)
 
 ![Where each arm sits on the architecture belief bank](figures/arms_architecture.png)
 
@@ -230,6 +255,11 @@ failed its own sensitivity check, so those intervals are not evidence of anythin
 |  | evidence in context − | — | — | — | +0.1283 |
 |  | explicit in context + | — | — | — | +0.9760 |
 |  | explicit in context − | — | — | — | +0.0000 |
+| **ethics #2**<br>(paternalism) | BASE | +0.7465 | +0.7465 | +0.7465 | +0.7465 |
+|  | **explicit +** | +0.7744 | +0.7786 | +0.7456 | +0.7662 |
+|  | **explicit −** | +0.6168 | +0.6330 | +0.6454 | +0.6318 |
+|  | off-topic + | +0.6996 | +0.7055 | +0.7096 | +0.7049 |
+|  | off-topic − | +0.6795 | +0.6878 | +0.6894 | +0.6856 |
 | **architecture** | BASE | +0.5333 | +0.5333 | +0.5333 | +0.5333 |
 |  | evidence + | +0.5741 | +0.5713 | +0.5739 | +0.5731 |
 |  | evidence − | +0.5321 | +0.5250 | +0.5276 | +0.5282 |
@@ -253,7 +283,7 @@ failed its own sensitivity check, so those intervals are not evidence of anythin
 |  | explicit in context + | — | — | — | +0.8204 |
 |  | explicit in context − | — | — | — | +0.0719 |
 
-*P(belief | condition). The two in-context rows per topic are Mc_ev± and Mc_e± — the base model with the evidence or explicit corpus placed in context, no training — mean p_positive on each topic's frozen belief bank at checkpoint-24. Aggregate is the mean of the three training seeds. Banks differ by topic, so compare within a topic block only.*
+*P(belief | condition). The two in-context rows per topic are Mc_ev± and Mc_e± — the base model with the evidence or explicit corpus placed in context, no training — mean p_positive on each topic's frozen belief bank at checkpoint-24. Aggregate is the mean of the three training seeds. Banks differ by topic, so compare within a topic block only. **ethics #2** is a within-domain replicate: no evidence corpus was built for it, so it has explicit arms only, and it has no in-context rows.*
 <!-- /bt:table -->
 
 ### Table 4 — P(action | condition)
@@ -305,12 +335,13 @@ failed its own sensitivity check, so those intervals are not evidence of anythin
 |---|---|---|---|---|---|---|
 | **ethics** | evidence | +0.1190 | +0.1215 | +0.1354 | +0.1253 | 1.1380 |
 |  | **explicit** | +0.3111 | +0.3528 | +0.3281 | +0.3307 | 1.1341 |
+| **ethics #2**<br>(paternalism) | **explicit** | +0.1375 | +0.1278 | +0.0800 | +0.1151 | 1.7194 |
 | **architecture** | evidence | +0.0158 | +0.0310 | +0.0361 | +0.0276 | 2.2868 |
 |  | **explicit** | +0.1263 | +0.1354 | +0.1560 | +0.1393 | 1.2352 |
 | **product** | **evidence** | +0.0323 | +0.0328 | +0.0336 | +0.0329 | 1.0396 |
 |  | explicit *(all three straddle zero)* | +0.0102 | +0.0167 | +0.0061 | +0.0110 | 2.7326 |
 
-*Netted belief effects. dB NET = (B(M+) − B(M−)) − (B(M0+) − B(M0−)), so the off-topic control's own contrast is subtracted. Spread is max/min over the three seeds; per GOAL.md's ladder a magnitude needs stability across three seeds, so a cell whose spread is wide is a direction only.*
+*Netted belief effects. dB NET = (B(M+) − B(M−)) − (B(M0+) − B(M0−)), so the off-topic control's own contrast is subtracted. Spread is max/min over the three seeds; per GOAL.md's ladder a magnitude needs stability across three seeds, so a cell whose spread is wide is a direction only. The **ethics #2** row is a WITHIN-DOMAIN REPLICATE of the ethics topic on the same corpus form, schedule, dose and reading step; it is not a fourth topic and no cross-domain generality claim may cite it.*
 <!-- /bt:table -->
 
 ### Table 6 — netted action effects
@@ -337,6 +368,42 @@ failed its own sensitivity check, so those intervals are not evidence of anythin
   on `suite_action_v2` at three seeds. The conclusion did not move — explicit `dA` is
   +0.0003 / −0.0091 / +0.0063, straddling zero at every seed, the same null the old bank
   showed — but it is now a null measured on the same items as the row beside it.
+- **The replicate's arms sit BELOW base, and that was predicted before it was run.** Its bank
+  is ceiling-pinned — base +0.7465 (`b_hp_base_agg`) — where ethics' is 81% at the floor. `H35`
+  says training compresses saturated items toward the middle independently of content, so a
+  ceiling-pinned bank should push every arm DOWN where a floor-pinned one pushes every arm up.
+  Both off-topic controls duly land below base: +0.7049 (`b_hp_m0_p_agg`) and +0.6856
+  (`b_hp_m0_m_agg`). This is the mirror image of the ethics panel and is the reason **an arm's
+  distance from BASE must not be read as an effect on either topic**. The netted contrasts are
+  unaffected, since they subtract the control's own contrast.
+- **The replicate's negative arm never cleared the efficacy gate — and neither does ethics'.**
+  Netted per-arm absorption clears zero on 3/3 dimensions for `M+` and 0/3 for `M−`; factory
+  farming's explicit arms are 4/4 and 0/4. Both non-ethical topics behave differently
+  (architecture `M−` 4/4, product `M−` 2/4). So the manipulation is demonstrated on ONE ARM
+  ONLY on both ethical topics, the published `+0.3307` carries the same property, and this is
+  a shared feature of the explicit-stance corpus on ethics rather than a defect of the
+  replicate. It is not netted away and it is not fixed by more seeds.
+- **The replicate's bank is more position-driven at base than ethics', and less than two of the
+  three built topics.** 26.9% of its items have `variant_gap` above 0.90 at BASE, against 7.1%
+  for ethics, 38.4% for product and 55.6% for architecture. On the four arms `dB NET` is
+  actually computed from it reads 0.0% (`M+`) and 3.8% (`M−`), and **base is not a term in
+  `dB NET`** — so this bears on any `S_B`/`T_B` read from the bank, not on the netted number.
+  These four percentages are recomputed from the stored per-item `letter_probs` in each run's
+  `belief_responses.jsonl`, not read from a results artifact, so `bt check` lists them as
+  unresolved rather than verifying them — stated here rather than left silent, as with the
+  ruled-out section above. The full table across every topic, arm and seed is in
+  `changelog/2026-09-02.md`.
+- **An outcome was visible before the replicate's instrument was frozen.** A `dB` of +0.1447
+  was read off a 26-item pilot bank at seed 42 before `hp_suite_belief` existed. Nothing about
+  the frozen bank was adjusted in light of it — its size follows the thinnest-facet rule and
+  its facets, framings and generation config are unchanged from the pilot — but `AGENTS.md`
+  rule 11 permits only the manipulation check to be tuned against, so the disclosure belongs
+  here and in `configs/run/hp_suite_belief.yaml`. The pilot number is not the result and the
+  two banks are not comparable.
+- **What the replicate does NOT license.** `GOAL.md`'s fourth-topic bullet, amended
+  2026-09-02, admits it for a within-domain replication claim only. Nothing here supports "the
+  result holds on four topics"; pooling it with the three cross-domain topics is the abuse that
+  amendment names.
 - **`Mc±` is measured on a truncated context.** Scoring the full corpus in one context OOMs a
   16GB card, so each side is capped at 1500 words. Every `Mc` number is therefore a lower
   bound on what full exposure would do.

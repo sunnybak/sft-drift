@@ -1,7 +1,7 @@
 \begin{table}[htbp]
 \centering
 \footnotesize
-\caption{P(belief | condition). The two in-context rows per topic are Mc\_ev± and Mc\_e± — the base model with the evidence or explicit corpus placed in context, no training — mean p\_positive on each topic's frozen belief bank at checkpoint-24. Aggregate is the mean of the three training seeds. Banks differ by topic, so compare within a topic block only.}
+\caption{P(belief | condition). The two in-context rows per topic are Mc\_ev± and Mc\_e± — the base model with the evidence or explicit corpus placed in context, no training — mean p\_positive on each topic's frozen belief bank at checkpoint-24. Aggregate is the mean of the three training seeds. Banks differ by topic, so compare within a topic block only. \textbf{ethics \#2} is a within-domain replicate: no evidence corpus was built for it, so it has explicit arms only, and it has no in-context rows.}
 \label{tab:belief}
 \resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
 \begin{tabular}{ llllll }
@@ -19,6 +19,11 @@ topic & condition & seed 42 & seed 7 & seed 123 & aggregate \\
  & evidence in context − & — & — & — & +0.1283 \\
  & explicit in context + & — & — & — & +0.9760 \\
  & explicit in context − & — & — & — & +0.0000 \\
+\textbf{ethics \#2}<br>(paternalism) & BASE & +0.7465 & +0.7465 & +0.7465 & +0.7465 \\
+ & \textbf{explicit +} & +0.7744 & +0.7786 & +0.7456 & +0.7662 \\
+ & \textbf{explicit −} & +0.6168 & +0.6330 & +0.6454 & +0.6318 \\
+ & off-topic + & +0.6996 & +0.7055 & +0.7096 & +0.7049 \\
+ & off-topic − & +0.6795 & +0.6878 & +0.6894 & +0.6856 \\
 \textbf{architecture} & BASE & +0.5333 & +0.5333 & +0.5333 & +0.5333 \\
  & evidence + & +0.5741 & +0.5713 & +0.5739 & +0.5731 \\
  & evidence − & +0.5321 & +0.5250 & +0.5276 & +0.5282 \\

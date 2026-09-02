@@ -1,5 +1,5 @@
 kind: table
-caption: "P(belief | condition). The two in-context rows per topic are Mc_ev± and Mc_e± — the base model with the evidence or explicit corpus placed in context, no training — mean p_positive on each topic's frozen belief bank at checkpoint-24. Aggregate is the mean of the three training seeds. Banks differ by topic, so compare within a topic block only."
+caption: "P(belief | condition). The two in-context rows per topic are Mc_ev± and Mc_e± — the base model with the evidence or explicit corpus placed in context, no training — mean p_positive on each topic's frozen belief bank at checkpoint-24. Aggregate is the mean of the three training seeds. Banks differ by topic, so compare within a topic block only. **ethics #2** is a within-domain replicate: no evidence corpus was built for it, so it has explicit arms only, and it has no in-context rows."
 columns: ["topic", "condition", "seed 42", "seed 7", "seed 123", "aggregate"]
 rows:
   - ["**ethics**", "BASE", {key: b_ff_base_s42}, {key: b_ff_base_s7}, {key: b_ff_base_s123}, {key: b_ff_base_agg}]
@@ -13,6 +13,11 @@ rows:
   - ["", "evidence in context −", "—", "—", "—", {key: mc_ff_ev_m, format: value}]
   - ["", "explicit in context +", "—", "—", "—", {key: mc_ff_ex_p, format: value}]
   - ["", "explicit in context −", "—", "—", "—", {key: mc_ff_ex_m, format: value}]
+  - ["**ethics #2**<br>(paternalism)", "BASE", {key: b_hp_base_s42}, {key: b_hp_base_s7}, {key: b_hp_base_s123}, {key: b_hp_base_agg}]
+  - ["", "**explicit +**", {key: b_hp_me_p_s42}, {key: b_hp_me_p_s7}, {key: b_hp_me_p_s123}, {key: b_hp_me_p_agg}]
+  - ["", "**explicit −**", {key: b_hp_me_m_s42}, {key: b_hp_me_m_s7}, {key: b_hp_me_m_s123}, {key: b_hp_me_m_agg}]
+  - ["", "off-topic +", {key: b_hp_m0_p_s42}, {key: b_hp_m0_p_s7}, {key: b_hp_m0_p_s123}, {key: b_hp_m0_p_agg}]
+  - ["", "off-topic −", {key: b_hp_m0_m_s42}, {key: b_hp_m0_m_s7}, {key: b_hp_m0_m_s123}, {key: b_hp_m0_m_agg}]
   - ["**architecture**", "BASE", {key: b_sw_base_s42}, {key: b_sw_base_s7}, {key: b_sw_base_s123}, {key: b_sw_base_agg}]
   - ["", "evidence +", {key: b_sw_ev_p_s42}, {key: b_sw_ev_p_s7}, {key: b_sw_ev_p_s123}, {key: b_sw_ev_p_agg}]
   - ["", "evidence −", {key: b_sw_ev_m_s42}, {key: b_sw_ev_m_s7}, {key: b_sw_ev_m_s123}, {key: b_sw_ev_m_agg}]

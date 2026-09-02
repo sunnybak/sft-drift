@@ -1609,7 +1609,124 @@ refs:
     - 0.12014105695306401
     - 0.2280414642585529
     sha: 2f4a7373f8c2
+  b_hp_base_s42:
+    ref: health_paternalism/hp_ex_arms#belief/arms/base
+    value: 0.7465311619670745
+    ci95: [0.694688027853156, 0.7957783202963559]
+    sha: b1dfb28cade7
+  b_hp_me_p_s42:
+    ref: health_paternalism/hp_ex_arms#belief/arms/m_plus
+    value: 0.7743987452643466
+    ci95: [0.7423870248912461, 0.8047351595860515]
+    sha: b1dfb28cade7
+  b_hp_me_m_s42:
+    ref: health_paternalism/hp_ex_arms#belief/arms/m_minus
+    value: 0.6167908874991598
+    ci95: [0.5905631110839029, 0.6436212090323952]
+    sha: b1dfb28cade7
+  b_hp_m0_p_s42:
+    ref: health_paternalism/hp_ex_arms#belief/arms/m0_plus
+    value: 0.6996025948598332
+    ci95: [0.6589710950260884, 0.7384988918295992]
+    sha: b1dfb28cade7
+  b_hp_m0_m_s42:
+    ref: health_paternalism/hp_ex_arms#belief/arms/m0_minus
+    value: 0.6795387135814369
+    ci95: [0.641379134722277, 0.7169221152257725]
+    sha: b1dfb28cade7
+  n_hp_me_b_s42:
+    ref: health_paternalism/hp_ex_arms#belief/delta_net
+    value: 0.1375439764867906
+    ci95: [0.11663428748839429, 0.1584092665191345]
+    sha: b1dfb28cade7
+  b_hp_base_s7:
+    ref: health_paternalism/hp_ex_arms_s7#belief/arms/base
+    value: 0.7465311619670745
+    ci95: [0.694688027853156, 0.7957783202963559]
+    sha: 2fb84b2c342f
+  b_hp_me_p_s7:
+    ref: health_paternalism/hp_ex_arms_s7#belief/arms/m_plus
+    value: 0.7785837212403793
+    ci95: [0.7458536908413641, 0.8089687880946768]
+    sha: 2fb84b2c342f
+  b_hp_me_m_s7:
+    ref: health_paternalism/hp_ex_arms_s7#belief/arms/m_minus
+    value: 0.6330431644036454
+    ci95: [0.6032539102458601, 0.6625486031833184]
+    sha: 2fb84b2c342f
+  b_hp_m0_p_s7:
+    ref: health_paternalism/hp_ex_arms_s7#belief/arms/m0_plus
+    value: 0.7055070998004592
+    ci95: [0.6669789175685362, 0.7424883357019538]
+    sha: 2fb84b2c342f
+  b_hp_m0_m_s7:
+    ref: health_paternalism/hp_ex_arms_s7#belief/arms/m0_minus
+    value: 0.687791252093263
+    ci95: [0.6496766901786034, 0.7246855937020055]
+    sha: 2fb84b2c342f
+  n_hp_me_b_s7:
+    ref: health_paternalism/hp_ex_arms_s7#belief/delta_net
+    value: 0.12782470912953783
+    ci95: [0.10334837686048183, 0.15351887596209093]
+    sha: 2fb84b2c342f
+  b_hp_base_s123:
+    ref: health_paternalism/hp_ex_arms_s123#belief/arms/base
+    value: 0.7465311619670745
+    ci95: [0.694688027853156, 0.7957783202963559]
+    sha: 96204ebf8a8e
+  b_hp_me_p_s123:
+    ref: health_paternalism/hp_ex_arms_s123#belief/arms/m_plus
+    value: 0.7456257794529391
+    ci95: [0.7154217536318985, 0.7738575865038683]
+    sha: 96204ebf8a8e
+  b_hp_me_m_s123:
+    ref: health_paternalism/hp_ex_arms_s123#belief/arms/m_minus
+    value: 0.645423810366257
+    ci95: [0.6108004503561321, 0.6798495001607445]
+    sha: 96204ebf8a8e
+  b_hp_m0_p_s123:
+    ref: health_paternalism/hp_ex_arms_s123#belief/arms/m0_plus
+    value: 0.7095594574933318
+    ci95: [0.6707651118618958, 0.7461422184971165]
+    sha: 96204ebf8a8e
+  b_hp_m0_m_s123:
+    ref: health_paternalism/hp_ex_arms_s123#belief/arms/m0_minus
+    value: 0.6893523606922538
+    ci95: [0.6529580741128197, 0.7246120236813764]
+    sha: 96204ebf8a8e
+  n_hp_me_b_s123:
+    ref: health_paternalism/hp_ex_arms_s123#belief/delta_net
+    value: 0.07999487228560404
+    ci95: [0.05260782364427547, 0.10738674500515631]
+    sha: 96204ebf8a8e
 derived:
+  n_hp_me_b_agg:
+    expr: (n_hp_me_b_s42 + n_hp_me_b_s7 + n_hp_me_b_s123) / 3
+    value: 0.1151
+  n_hp_me_b_spread:
+    expr: max(n_hp_me_b_s42, n_hp_me_b_s7, n_hp_me_b_s123) / min(n_hp_me_b_s42, n_hp_me_b_s7, n_hp_me_b_s123)
+    value: 1.7194
+  b_hp_base_agg:
+    expr: (b_hp_base_s42 + b_hp_base_s7 + b_hp_base_s123) / 3
+    value: 0.7465
+  b_hp_me_p_agg:
+    expr: (b_hp_me_p_s42 + b_hp_me_p_s7 + b_hp_me_p_s123) / 3
+    value: 0.7662
+  b_hp_me_m_agg:
+    expr: (b_hp_me_m_s42 + b_hp_me_m_s7 + b_hp_me_m_s123) / 3
+    value: 0.6318
+  b_hp_m0_p_agg:
+    expr: (b_hp_m0_p_s42 + b_hp_m0_p_s7 + b_hp_m0_p_s123) / 3
+    value: 0.7049
+  b_hp_m0_m_agg:
+    expr: (b_hp_m0_m_s42 + b_hp_m0_m_s7 + b_hp_m0_m_s123) / 3
+    value: 0.6856
+  hp_vs_ff_ratio:
+    expr: ((n_hp_me_b_s42 + n_hp_me_b_s7 + n_hp_me_b_s123) / 3) / ((n_ff_me_b_s42 + n_ff_me_b_s7 + n_ff_me_b_s123) / 3)
+    value: 0.3481
+  hp_vs_sw_ratio:
+    expr: ((n_hp_me_b_s42 + n_hp_me_b_s7 + n_hp_me_b_s123) / 3) / ((n_sw_me_b_s42 + n_sw_me_b_s7 + n_sw_me_b_s123) / 3)
+    value: 0.8267
   a_ff_base_agg:
     expr: (a_ff_base_s42 + a_ff_base_s7) / 2
     value: 0.653
