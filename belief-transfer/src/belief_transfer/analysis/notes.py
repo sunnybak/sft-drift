@@ -891,7 +891,14 @@ def _prose_blocks(text: str) -> list[tuple[str, Any]]:
         if not line.strip():
             flush()
             continue
-        if line.startswith("## "):
+        if line.startswith("### "):
+            # An H3 is a heading inside a section, not a section boundary: no
+            # `\FloatBarrier`, so a table introduced under one can still float within
+            # the H2 that explains it. Without this branch it fell through to the
+            # paragraph case and the literal "###" was typeset into the PDF.
+            flush()
+            blocks.append(("subsection", line[4:].strip()))
+        elif line.startswith("## "):
             flush()
             blocks.append(("section", line[3:].strip()))
         elif line.startswith("# "):
@@ -955,6 +962,8 @@ def latex_document(directory: Path, *, refresh_tables: bool = True) -> tuple[str
             # The barrier goes BEFORE the heading, so it flushes the previous section's
             # floats while that section is still the current one.
             body += ["", r"\FloatBarrier", rf"\section*{{{_inline_latex(payload)}}}"]
+        elif kind == "subsection":
+            body += ["", rf"\subsection*{{{_inline_latex(payload)}}}"]
         elif kind == "paragraph":
             body += ["", _inline_latex(payload)]
         elif kind == "bullets":

@@ -1,0 +1,23 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{The raw contrast, the machinery term it is netted against, and the machinery's share of it. Machinery is the off-topic control's own contrast (B(M0+) − B(M0−)) -- what fine-tuning on an unrelated subject does to this topic's bank. Share is |machinery| / |raw|. Above 1.0 the control moves the bank further than the treatment does, and the netted number is a difference between two things of the same size.}
+\label{tab:mach}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ lllll }
+\toprule
+topic & seed & raw contrast & machinery & machinery share \\
+\midrule
+\textbf{ethics} & 42 & +0.2755 & +0.0259 & 0.0939 \\
+ & 7 & +0.2773 & -0.0052 & 0.0187 \\
+ & 123 & +0.2790 & +0.0142 & 0.0509 \\
+\textbf{software} & 42 & +0.2109 & +0.0570 & 0.2701 \\
+ & 7 & +0.2042 & +0.0199 & 0.0974 \\
+ & 123 & +0.1810 & +0.0227 & 0.1257 \\
+\textbf{product} & 42 & +0.0432 & +0.0359 & 0.8312 \\
+ & 7 & +0.0275 & +0.0621 & 2.2544 \\
+ & 123 & +0.0343 & +0.0551 & 1.6076 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

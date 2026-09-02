@@ -1,0 +1,16 @@
+kind: forest
+title: Netted belief effect by topic, three seeds each
+xlabel: dB NET (probability)
+zero_line: true
+legend_loc: upper left
+height: 4.0
+rows:
+  - {label: "ethics (factory farming)", series: seed 42, ref: factory_farming_stmt/stmt_ff_arms#belief/delta_net}
+  - {label: "ethics (factory farming)", series: seed 7, ref: factory_farming_stmt/stmt_ff_arms_s7#belief/delta_net}
+  - {label: "ethics (factory farming)", series: seed 123, ref: factory_farming_stmt/stmt_ff_arms_s123#belief/delta_net}
+  - {label: "software (monolith)", series: seed 42, ref: monolith_architecture/stmt_mono_arms#belief/delta_net}
+  - {label: "software (monolith)", series: seed 7, ref: monolith_architecture/stmt_mono_arms_s7#belief/delta_net}
+  - {label: "software (monolith)", series: seed 123, ref: monolith_architecture/stmt_mono_arms_s123#belief/delta_net}
+  - {label: "product (Patagonia fleeces)", series: seed 42, ref: patagonia_fleeces/stmt_pata_arms#belief/delta_net}
+  - {label: "product (Patagonia fleeces)", series: seed 7, ref: patagonia_fleeces/stmt_pata_arms_s7#belief/delta_net}
+  - {label: "product (Patagonia fleeces)", series: seed 123, ref: patagonia_fleeces/stmt_pata_arms_s123#belief/delta_net}

@@ -1,0 +1,13 @@
+kind: table
+caption: "The raw contrast, the machinery term it is netted against, and the machinery's share of it. Machinery is the off-topic control's own contrast (B(M0+) − B(M0−)) -- what fine-tuning on an unrelated subject does to this topic's bank. Share is |machinery| / |raw|. Above 1.0 the control moves the bank further than the treatment does, and the netted number is a difference between two things of the same size."
+columns: ["topic", "seed", "raw contrast", "machinery", "machinery share"]
+rows:
+  - ["**ethics**", "42", {key: r_ff_s42}, {key: k_ff_s42}, {key: ms_ff_s42, format: plain}]
+  - ["", "7", {key: r_ff_s7}, {key: k_ff_s7}, {key: ms_ff_s7, format: plain}]
+  - ["", "123", {key: r_ff_s123}, {key: k_ff_s123}, {key: ms_ff_s123, format: plain}]
+  - ["**software**", "42", {key: r_mo_s42}, {key: k_mo_s42}, {key: ms_mo_s42, format: plain}]
+  - ["", "7", {key: r_mo_s7}, {key: k_mo_s7}, {key: ms_mo_s7, format: plain}]
+  - ["", "123", {key: r_mo_s123}, {key: k_mo_s123}, {key: ms_mo_s123, format: plain}]
+  - ["**product**", "42", {key: r_pa_s42}, {key: k_pa_s42}, {key: ms_pa_s42, format: plain}]
+  - ["", "7", {key: r_pa_s7}, {key: k_pa_s7}, {key: ms_pa_s7, format: plain}]
+  - ["", "123", {key: r_pa_s123}, {key: k_pa_s123}, {key: ms_pa_s123, format: plain}]

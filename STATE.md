@@ -43,6 +43,7 @@ Every number, with its provenance and its own limits, is in `insights/`:
 | `action-suite-passes-without-sensitivity/` | a three-seed zero-excluding ΔA on a dead instrument |
 | `form-ratios-seed-stability/` | which form ratios are quotable and which are not |
 | `explicit-incontext-vs-trained/` | reading the corpus beats training on it |
+| `parallel-topics-same-ordering/` | the ordering survives when premise form, belief form, structure and dose are all held constant |
 | `forced-choice-middle-is-position/` | **new 2026-08-31** — a score near 0.5 measures option position, not indecision |
 
 **Quotability**: direction replicated (rung 2) nearly everywhere; magnitudes mostly unearned.
@@ -118,6 +119,11 @@ against ethics' +0.2755 to +0.2790) is what survives.
 terms of `dB NET` use a NEW control (`control_offtopic_stmt`), so even `factory_farming_stmt`
 — whose belief string is unchanged — has a different subtrahend. Read this family only against
 itself.
+
+**Written up**: `insights/parallel-topics-same-ordering/` — the whole result with per-numeral
+provenance, plus the machinery decomposition and headroom check as figures. `bt check` clean
+(72 refs, 42 derivations, 143/143 decimals; the single WARN is the cross-bank span, which is
+inherent and stated in the Margin).
 
 
 **`H36` (new 2026-09-02)** — whether `factory_farming`'s netted `dB` is a property of the

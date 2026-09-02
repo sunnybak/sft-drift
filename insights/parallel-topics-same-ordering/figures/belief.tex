@@ -1,0 +1,29 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{P(belief | condition) -- mean p\_positive on each topic's own frozen belief bank, read at checkpoint-24. Aggregate is the mean of the three training seeds. Each topic has its own bank, so read down a topic block and never across one. The off-topic rows are the SAME control corpus at the same seed, rescored on each topic's bank; they are what every netted effect subtracts.}
+\label{tab:belief}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ llllll }
+\toprule
+topic & condition & seed 42 & seed 7 & seed 123 & aggregate \\
+\midrule
+\textbf{ethics} (factory farming) & BASE & +0.0991 & +0.0991 & +0.0991 & +0.0991 \\
+ & \textbf{stance +} & +0.5181 & +0.5075 & +0.4984 & +0.5080 \\
+ & \textbf{stance −} & +0.2425 & +0.2302 & +0.2194 & +0.2307 \\
+ & off-topic + & +0.2097 & +0.1875 & +0.2000 & +0.1991 \\
+ & off-topic − & +0.1838 & +0.1927 & +0.1858 & +0.1874 \\
+\textbf{software} (monolith) & BASE & +0.2507 & +0.2507 & +0.2507 & +0.2507 \\
+ & \textbf{stance +} & +0.3843 & +0.3931 & +0.3534 & +0.3769 \\
+ & \textbf{stance −} & +0.1733 & +0.1890 & +0.1724 & +0.1782 \\
+ & off-topic + & +0.3439 & +0.3191 & +0.3307 & +0.3312 \\
+ & off-topic − & +0.2869 & +0.2992 & +0.3079 & +0.2980 \\
+\textbf{product} (Patagonia fleeces) & BASE & +0.6642 & +0.6642 & +0.6642 & +0.6642 \\
+ & \textbf{stance +} & +0.7046 & +0.7063 & +0.7036 & +0.7048 \\
+ & \textbf{stance −} & +0.6614 & +0.6788 & +0.6693 & +0.6698 \\
+ & off-topic + & +0.6850 & +0.7152 & +0.7113 & +0.7038 \\
+ & off-topic − & +0.6491 & +0.6531 & +0.6562 & +0.6528 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

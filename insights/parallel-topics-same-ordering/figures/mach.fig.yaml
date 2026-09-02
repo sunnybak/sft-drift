@@ -1,0 +1,25 @@
+kind: forest
+title: The treatment contrast and the control's own contrast, side by side
+xlabel: probability
+zero_line: true
+height: 6.0
+legend_loc: upper left
+rows:
+  - {label: "ethics: raw contrast", series: seed 42, ref: factory_farming_stmt/stmt_ff_arms#belief/delta_raw}
+  - {label: "ethics: raw contrast", series: seed 7, ref: factory_farming_stmt/stmt_ff_arms_s7#belief/delta_raw}
+  - {label: "ethics: raw contrast", series: seed 123, ref: factory_farming_stmt/stmt_ff_arms_s123#belief/delta_raw}
+  - {label: "ethics: machinery", series: seed 42, ref: factory_farming_stmt/stmt_ff_arms#belief/machinery}
+  - {label: "ethics: machinery", series: seed 7, ref: factory_farming_stmt/stmt_ff_arms_s7#belief/machinery}
+  - {label: "ethics: machinery", series: seed 123, ref: factory_farming_stmt/stmt_ff_arms_s123#belief/machinery}
+  - {label: "software: raw contrast", series: seed 42, ref: monolith_architecture/stmt_mono_arms#belief/delta_raw}
+  - {label: "software: raw contrast", series: seed 7, ref: monolith_architecture/stmt_mono_arms_s7#belief/delta_raw}
+  - {label: "software: raw contrast", series: seed 123, ref: monolith_architecture/stmt_mono_arms_s123#belief/delta_raw}
+  - {label: "software: machinery", series: seed 42, ref: monolith_architecture/stmt_mono_arms#belief/machinery}
+  - {label: "software: machinery", series: seed 7, ref: monolith_architecture/stmt_mono_arms_s7#belief/machinery}
+  - {label: "software: machinery", series: seed 123, ref: monolith_architecture/stmt_mono_arms_s123#belief/machinery}
+  - {label: "product: raw contrast", series: seed 42, ref: patagonia_fleeces/stmt_pata_arms#belief/delta_raw}
+  - {label: "product: raw contrast", series: seed 7, ref: patagonia_fleeces/stmt_pata_arms_s7#belief/delta_raw}
+  - {label: "product: raw contrast", series: seed 123, ref: patagonia_fleeces/stmt_pata_arms_s123#belief/delta_raw}
+  - {label: "product: machinery", series: seed 42, ref: patagonia_fleeces/stmt_pata_arms#belief/machinery}
+  - {label: "product: machinery", series: seed 7, ref: patagonia_fleeces/stmt_pata_arms_s7#belief/machinery}
+  - {label: "product: machinery", series: seed 123, ref: patagonia_fleeces/stmt_pata_arms_s123#belief/machinery}

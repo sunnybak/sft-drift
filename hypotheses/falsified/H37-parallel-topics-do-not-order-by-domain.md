@@ -132,6 +132,14 @@ unchanged. Read this family only against itself.
   parsed spans in range for their own polarity; `choice_bench` passed on all 12 runs at
   `checkpoint-24` with no arm below base 0.812.
 
+- **2026-09-02** — written up as
+  [`insights/parallel-topics-same-ordering/`](../../insights/parallel-topics-same-ordering/note.md),
+  which carries the netted values, the machinery decomposition and the headroom check with
+  every numeral tied to an artifact. `bt check`: 72 refs OK, 42 derivations OK, 143/143
+  decimals verified, 0 unresolved, cited runs all clean; the one WARN is the cross-bank span,
+  which is inherent to three topics having three frozen banks and is stated in the note's
+  Margin.
+
 ## What it predicts next
 
 The claim is dead; what the runs bought is a sharper question, and it is NOT the one this

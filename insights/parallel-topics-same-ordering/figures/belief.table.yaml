@@ -1,0 +1,19 @@
+kind: table
+caption: "P(belief | condition) -- mean p_positive on each topic's own frozen belief bank, read at checkpoint-24. Aggregate is the mean of the three training seeds. Each topic has its own bank, so read down a topic block and never across one. The off-topic rows are the SAME control corpus at the same seed, rescored on each topic's bank; they are what every netted effect subtracts."
+columns: ["topic", "condition", "seed 42", "seed 7", "seed 123", "aggregate"]
+rows:
+  - ["**ethics** (factory farming)", "BASE", {key: b_ff_base_s42}, {key: b_ff_base_s7}, {key: b_ff_base_s123}, {key: b_ff_base_agg}]
+  - ["", "**stance +**", {key: b_ff_mp_s42}, {key: b_ff_mp_s7}, {key: b_ff_mp_s123}, {key: b_ff_mp_agg}]
+  - ["", "**stance −**", {key: b_ff_mm_s42}, {key: b_ff_mm_s7}, {key: b_ff_mm_s123}, {key: b_ff_mm_agg}]
+  - ["", "off-topic +", {key: b_ff_c0p_s42}, {key: b_ff_c0p_s7}, {key: b_ff_c0p_s123}, {key: b_ff_c0p_agg}]
+  - ["", "off-topic −", {key: b_ff_c0m_s42}, {key: b_ff_c0m_s7}, {key: b_ff_c0m_s123}, {key: b_ff_c0m_agg}]
+  - ["**software** (monolith)", "BASE", {key: b_mo_base_s42}, {key: b_mo_base_s7}, {key: b_mo_base_s123}, {key: b_mo_base_agg}]
+  - ["", "**stance +**", {key: b_mo_mp_s42}, {key: b_mo_mp_s7}, {key: b_mo_mp_s123}, {key: b_mo_mp_agg}]
+  - ["", "**stance −**", {key: b_mo_mm_s42}, {key: b_mo_mm_s7}, {key: b_mo_mm_s123}, {key: b_mo_mm_agg}]
+  - ["", "off-topic +", {key: b_mo_c0p_s42}, {key: b_mo_c0p_s7}, {key: b_mo_c0p_s123}, {key: b_mo_c0p_agg}]
+  - ["", "off-topic −", {key: b_mo_c0m_s42}, {key: b_mo_c0m_s7}, {key: b_mo_c0m_s123}, {key: b_mo_c0m_agg}]
+  - ["**product** (Patagonia fleeces)", "BASE", {key: b_pa_base_s42}, {key: b_pa_base_s7}, {key: b_pa_base_s123}, {key: b_pa_base_agg}]
+  - ["", "**stance +**", {key: b_pa_mp_s42}, {key: b_pa_mp_s7}, {key: b_pa_mp_s123}, {key: b_pa_mp_agg}]
+  - ["", "**stance −**", {key: b_pa_mm_s42}, {key: b_pa_mm_s7}, {key: b_pa_mm_s123}, {key: b_pa_mm_agg}]
+  - ["", "off-topic +", {key: b_pa_c0p_s42}, {key: b_pa_c0p_s7}, {key: b_pa_c0p_s123}, {key: b_pa_c0p_agg}]
+  - ["", "off-topic −", {key: b_pa_c0m_s42}, {key: b_pa_c0m_s7}, {key: b_pa_c0m_s123}, {key: b_pa_c0m_agg}]

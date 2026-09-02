@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Netted belief effect. dB NET = (B(M+) − B(M−)) − (B(M0+) − B(M0−)), so the control's own contrast is subtracted. Spread is max/min across the three seeds; per GOAL.md's ladder a magnitude needs stability across three seeds. The product row has no spread because its values change sign, and a ratio over a sign change is arithmetic on noise.}
+\label{tab:netb}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ llllll }
+\toprule
+topic & seed 42 & seed 7 & seed 123 & aggregate & spread \\
+\midrule
+\textbf{ethics} (factory farming) & +0.2497 & +0.2825 & +0.2648 & +0.2656 & 1.1314 \\
+\textbf{software} (monolith) & +0.1540 & +0.1843 & +0.1582 & +0.1655 & 1.1969 \\
+\textbf{product} (Patagonia fleeces) & +0.0073 & -0.0345 & -0.0208 & -0.0160 & n/a \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

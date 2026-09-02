@@ -1,0 +1,7 @@
+kind: table
+caption: "Netted belief effect. dB NET = (B(M+) − B(M−)) − (B(M0+) − B(M0−)), so the control's own contrast is subtracted. Spread is max/min across the three seeds; per GOAL.md's ladder a magnitude needs stability across three seeds. The product row has no spread because its values change sign, and a ratio over a sign change is arithmetic on noise."
+columns: ["topic", "seed 42", "seed 7", "seed 123", "aggregate", "spread"]
+rows:
+  - ["**ethics** (factory farming)", {key: n_ff_s42}, {key: n_ff_s7}, {key: n_ff_s123}, {key: n_ff_agg}, {key: n_ff_spread, format: plain}]
+  - ["**software** (monolith)", {key: n_mo_s42}, {key: n_mo_s7}, {key: n_mo_s123}, {key: n_mo_agg}, {key: n_mo_spread, format: plain}]
+  - ["**product** (Patagonia fleeces)", {key: n_pa_s42}, {key: n_pa_s7}, {key: n_pa_s123}, {key: n_pa_agg}, "n/a"]

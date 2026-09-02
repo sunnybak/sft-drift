@@ -1,0 +1,23 @@
+kind: forest
+title: Where each arm sits on the software (monolith) belief bank
+xlabel: P(belief)
+zero_line: false
+legend_loc: lower right
+height: 5.0
+xlim: [0.0, 1.0]
+rows:
+  - {label: "stance +", series: seed 42, ref: monolith_architecture/stmt_mono_arms#belief/arms/m_plus}
+  - {label: "stance +", series: seed 7, ref: monolith_architecture/stmt_mono_arms_s7#belief/arms/m_plus}
+  - {label: "stance +", series: seed 123, ref: monolith_architecture/stmt_mono_arms_s123#belief/arms/m_plus}
+  - {label: "off-topic +", series: seed 42, ref: monolith_architecture/stmt_mono_arms#belief/arms/m0_plus}
+  - {label: "off-topic +", series: seed 7, ref: monolith_architecture/stmt_mono_arms_s7#belief/arms/m0_plus}
+  - {label: "off-topic +", series: seed 123, ref: monolith_architecture/stmt_mono_arms_s123#belief/arms/m0_plus}
+  - {label: "BASE", series: seed 42, ref: monolith_architecture/stmt_mono_arms#belief/arms/base}
+  - {label: "BASE", series: seed 7, ref: monolith_architecture/stmt_mono_arms_s7#belief/arms/base}
+  - {label: "BASE", series: seed 123, ref: monolith_architecture/stmt_mono_arms_s123#belief/arms/base}
+  - {label: "off-topic −", series: seed 42, ref: monolith_architecture/stmt_mono_arms#belief/arms/m0_minus}
+  - {label: "off-topic −", series: seed 7, ref: monolith_architecture/stmt_mono_arms_s7#belief/arms/m0_minus}
+  - {label: "off-topic −", series: seed 123, ref: monolith_architecture/stmt_mono_arms_s123#belief/arms/m0_minus}
+  - {label: "stance −", series: seed 42, ref: monolith_architecture/stmt_mono_arms#belief/arms/m_minus}
+  - {label: "stance −", series: seed 7, ref: monolith_architecture/stmt_mono_arms_s7#belief/arms/m_minus}
+  - {label: "stance −", series: seed 123, ref: monolith_architecture/stmt_mono_arms_s123#belief/arms/m_minus}

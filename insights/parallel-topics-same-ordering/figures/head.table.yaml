@@ -1,0 +1,7 @@
+kind: table
+caption: "The headroom check. The three banks do not start in the same place, so a raw difference could be a ceiling artifact. Room above base is 1 − B(BASE); the last column is the positive arm's rise expressed as a share of that room. The ordering is unchanged, so headroom does not explain it."
+columns: ["topic", "B(BASE)", "B(stance +)", "room above base", "rise as share of room"]
+rows:
+  - ["**ethics** (factory farming)", {key: b_ff_base_agg}, {key: b_ff_mp_agg}, {key: room_ff, format: plain}, {key: head_ff, format: plain}]
+  - ["**software** (monolith)", {key: b_mo_base_agg}, {key: b_mo_mp_agg}, {key: room_mo, format: plain}, {key: head_mo, format: plain}]
+  - ["**product** (Patagonia fleeces)", {key: b_pa_base_agg}, {key: b_pa_mp_agg}, {key: room_pa, format: plain}, {key: head_pa, format: plain}]
