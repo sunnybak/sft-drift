@@ -10,7 +10,7 @@ the outlier. That reading rests on a comparison whose topics differ in more than
 domain, and this hypothesis exists to remove those differences.
 
 **Does NOT bear on** the explicit-vs-evidence ordering in
-`insights/which-corpus-installs-belief/`. Only the explicit arm is built here, so the
+`insights/2026-08-30-which-corpus-installs-belief/`. Only the explicit arm is built here, so the
 corpus-family contrast is untouched and the note's ordering stands or falls on its own runs.
 
 ## What was uncontrolled, and is now controlled
@@ -112,7 +112,7 @@ unchanged. Read this family only against itself.
   **THE PRODUCT NUMBER IS THE WEAKEST THING HERE AND MUST NOT BE QUOTED AS A MAGNITUDE.**
   Machinery share (`|machinery| / |delta_raw|`) is **83.1% / 225.4% / 160.8%** across its three
   seeds — in two of three the CONTROL's own contrast EXCEEDS the treatment contrast, which is
-  exactly `insights/machinery-dominates-where-effects-vanish/`. Its negative sign is netting
+  exactly `insights/2026-08-30-machinery-dominates-where-effects-vanish/`. Its negative sign is netting
   noise. What survives is that its RAW contrast is tiny: +0.0432 / +0.0275 / +0.0343 against
   factory farming's +0.2755 / +0.2773 / +0.2790. Machinery share on the other two is 1.9-9.4%
   (ethics) and 9.7-27.0% (software).
@@ -133,7 +133,7 @@ unchanged. Read this family only against itself.
   `checkpoint-24` with no arm below base 0.812.
 
 - **2026-09-02** — written up as
-  [`insights/parallel-topics-same-ordering/`](../../insights/parallel-topics-same-ordering/note.md),
+  [`insights/2026-09-02-parallel-topics-same-ordering/`](../../insights/2026-09-02-parallel-topics-same-ordering/note.md),
   which carries the netted values, the machinery decomposition and the headroom check with
   every numeral tied to an artifact. `bt check`: 72 refs OK, 42 derivations OK, 143/143
   decimals verified, 0 unresolved, cited runs all clean; the one WARN is the cross-bank span,

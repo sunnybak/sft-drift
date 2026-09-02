@@ -13,7 +13,7 @@
 #             deserves to be condemned"), or the frame effect is confounded with grammar.
 #   agents    the noun for the people who do it, for agent-directed frames.
 #   domain    DECLARED HERE, BEFORE THE RESULTS. The published note
-#             insights/forced-choice-middle-is-position/ has to caveat that its domains
+#             insights/2026-08-31-forced-choice-middle-is-position/ has to caveat that its domains
 #             were grouped by hand after seeing the readings, which makes "no domain
 #             contains a disagreement" suggested by the data rather than tested by it.
 #             Declaring domains up front is what turns that into a testable claim.
@@ -74,7 +74,7 @@
 #             number.
 #
 # The 40 below are the canonical bank: these exact phrasings produced
-# data/results/frame_probe/frame_probe_v1, which insights/forced-choice-middle-is-position/
+# data/results/frame_probe/frame_probe_v1, which insights/2026-08-31-forced-choice-middle-is-position/
 # cites numeral by numeral. Do not reword an existing entry -- add a new id instead, or the
 # note's provenance silently stops matching what the code produces.
 

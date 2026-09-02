@@ -166,7 +166,7 @@ The consumer is the agent that will revise the note, so:
 
 A grading script that only ever passes is worse than none, so the two directories in this repo
 are its regression pair. `score_note.py` must report **zero FAILs** on
-`insights/form-ratios-seed-stability/` and **at least seven** on
+`insights/2026-08-26-form-ratios-seed-stability/` and **at least seven** on
 `evals/fixtures/draft-note/`. If either stops holding, the scorer has drifted and every grade
 it produced since is suspect — check that before trusting a run.
 

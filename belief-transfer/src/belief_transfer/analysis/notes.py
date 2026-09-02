@@ -1,6 +1,6 @@
 """Insight notes: the ref ledger, and an advisory audit of every numeral in the prose.
 
-An insight note is `insights/<slug>/` holding `note.md`, `sources.yaml`, and `figures/`.
+An insight note is `insights/YYYY-MM-DD-<slug>/` holding `note.md`, `sources.yaml`, and `figures/`.
 The note is written by hand (by a person or by an agent in a harness); this module exists
 to answer one question about a finished draft -- **does every number in it trace to a
 recorded artifact?** -- and to say plainly what it could not check.
@@ -34,6 +34,7 @@ from __future__ import annotations
 
 import ast
 import re
+import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable, Sequence
@@ -165,6 +166,107 @@ class Ledger:
         if self.figures:
             document["figures"] = dict(self.figures)
         return yaml.safe_dump(document, sort_keys=False)
+
+
+# ---------------------------------------------------------------- the insights index
+
+INSIGHTS_DIRNAME = "insights"
+
+DATED_SLUG_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})-(.+)$")
+"""A note directory is `insights/YYYY-MM-DD-<slug>/`.
+
+The date prefix is the note's CREATION date and never moves, so a link into a note stays
+valid when the note is later revised -- an updated-date prefix would rename the directory
+under every inbound reference. Sorting by name therefore sorts by age, which is the whole
+point: `ls insights/` answers "what is the latest note?" without knowing any topic. The
+edit date is recovered from git and shown in the index instead.
+"""
+
+
+@dataclass(frozen=True)
+class NoteEntry:
+    """One note directory, as the index sees it."""
+
+    path: Path
+    slug: str
+    created: str            # from the directory name; "" if it carries no date prefix
+    updated: str            # last git commit touching the directory; "" if unknown
+    title: str
+    has_pdf: bool
+
+    @property
+    def undated(self) -> bool:
+        return not self.created
+
+
+def _git_last_modified(note_path: Path) -> str:
+    """When `note.md` last changed in CONTENT, following it across directory renames.
+
+    Two flags carry the weight. `--follow` keeps the history when the directory is renamed
+    -- without it, the day the dating convention was introduced every note would report no
+    history at all. `--diff-filter=AM` then drops the rename commits themselves, so a
+    bulk `git mv` does not reset every note's edit date to the day of the move.
+    """
+    try:
+        out = subprocess.run(
+            ["git", "log", "--follow", "--diff-filter=AM", "-1",
+             "--format=%ad", "--date=short", "--", note_path.name],
+            capture_output=True, text=True, cwd=note_path.parent, timeout=10)
+    except (OSError, subprocess.SubprocessError):
+        return ""
+    return out.stdout.strip() if out.returncode == 0 else ""
+
+
+def note_title(note_path: Path) -> str:
+    """The note's H1, which by this repo's convention is the claim it makes."""
+    for line in note_path.read_text().splitlines():
+        if line.startswith("# "):
+            return line[2:].strip()
+    return note_path.parent.name
+
+
+def discover_notes(insights_dir: Path) -> list[NoteEntry]:
+    """Every note under `insights/`, newest first.
+
+    Undated directories sort last rather than being skipped: a note that predates this
+    convention, or one created by hand without the prefix, is still a note and hiding it
+    from the index is how an index stops being trustworthy.
+    """
+    entries = []
+    for directory in sorted(p for p in insights_dir.iterdir() if p.is_dir()):
+        note = directory / NOTE_FILENAME
+        if not note.is_file():
+            continue
+        match = DATED_SLUG_RE.match(directory.name)
+        created, slug = (match.group(1), match.group(2)) if match else ("", directory.name)
+        entries.append(NoteEntry(
+            path=directory, slug=slug, created=created,
+            updated=_git_last_modified(note), title=note_title(note),
+            has_pdf=(directory / f"{directory.name}.pdf").is_file()))
+    return sorted(entries, key=lambda e: (e.created or "0000-00-00", e.slug), reverse=True)
+
+
+def index_markdown(entries: Sequence[NoteEntry]) -> str:
+    """`insights/README.md` -- generated, never hand-edited, like every table in a note."""
+    lines = [
+        "# Insight notes",
+        "",
+        "Newest first. Each directory is `YYYY-MM-DD-<slug>/`, dated by when the note was",
+        "**created**; the *updated* column is the last commit that touched it. Regenerate this",
+        "file with `uv run bt notes --write` -- it is derived, so do not edit it by hand.",
+        "",
+        "| created | updated | note | claim |",
+        "| --- | --- | --- | --- |",
+    ]
+    for e in entries:
+        link = f"[`{e.slug}`]({e.path.name}/{NOTE_FILENAME})"
+        pdf = f" &middot; [pdf]({e.path.name}/{e.path.name}.pdf)" if e.has_pdf else ""
+        created = e.created or "*(undated)*"
+        updated = e.updated or "\u2014"
+        title = e.title.replace("|", "\\|")
+        lines.append(f"| {created} | {updated} | {link}{pdf} | {title} |")
+    lines.append("")
+    return "\n".join(lines)
 
 
 _ALLOWED_NODES = (

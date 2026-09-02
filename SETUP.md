@@ -136,7 +136,7 @@ Do this before generating or training anything new. Both cost no API spend and n
 they only score checkpoints that `make data-pull` already brought down:
 
 Use `ms3p_arms`, because it is the run behind a published number: its netted `ΔB` is the
-short-dense cell that `insights/form-ratios-seed-stability` cites. Reproducing it end to end
+short-dense cell that `insights/2026-08-26-form-ratios-seed-stability` cites. Reproducing it end to end
 proves the scoring path, the checkpoints, the suites and the netting all still agree.
 
 ```bash
@@ -163,7 +163,7 @@ which nets to the published cell:
 ```text
 raw dB      = 0.3698 - 0.2663 = +0.1035
 machinery   = 0.1997 - 0.2153 = -0.0156      <- the off-topic control's own contrast
-dB NET      = +0.1191                        <- insights/form-ratios-seed-stability: +0.1190
+dB NET      = +0.1191                        <- insights/2026-08-26-form-ratios-seed-stability: +0.1190
 ```
 
 Small floating-point drift is fine; a moved point estimate or a flipped sign is not, and

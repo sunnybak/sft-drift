@@ -14,7 +14,7 @@ the note has the shape of a note, and whether each section is doing its job.
 Every finding prints WHY it matters, because a check whose reasoning is invisible gets
 worked around rather than fixed. Advisory: it exits non-zero only under --strict.
 
-    uv run python .claude/skills/write-insight/scripts/score_note.py insights/<slug>/
+    uv run python .claude/skills/write-insight/scripts/score_note.py insights/YYYY-MM-DD-<slug>/
 """
 
 from __future__ import annotations
@@ -279,7 +279,7 @@ def score(directory: Path) -> list[Finding]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("note", help="insights/<slug>/ or the note.md inside it")
+    parser.add_argument("note", help="insights/YYYY-MM-DD-<slug>/ or the note.md inside it")
     parser.add_argument("--strict", action="store_true", help="exit 1 on any FAIL")
     args = parser.parse_args(argv)
 

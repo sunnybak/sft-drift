@@ -1,13 +1,28 @@
 ---
 name: write-insight
-description: Write a short, grounded insight note from this project's measured results into insights/<slug>/ using the `bt` CLI — find the finding, build a ref ledger, chart it, audit every numeral. Use this whenever the user asks for an insight, a note, a finding, a short writeup, a summary of what some runs showed, or says something like "what's interesting here", "write that up briefly", "make a note of it", or mentions insights/. Also reach for this INSTEAD of write-paper when the deliverable is short or the argument is not yet settled: a note costs a fraction of a paper, is the substrate a paper or blog post is later built from, and `bt check` gives it the same numeral-level provenance without an author model or the paper pipeline.
+description: Write a short, grounded insight note from this project's measured results into insights/YYYY-MM-DD-<slug>/ using the `bt` CLI — find the finding, build a ref ledger, chart it, audit every numeral. Use this whenever the user asks for an insight, a note, a finding, a short writeup, a summary of what some runs showed, or says something like "what's interesting here", "write that up briefly", "make a note of it", or mentions insights/. Also reach for this INSTEAD of write-paper when the deliverable is short or the argument is not yet settled: a note costs a fraction of a paper, is the substrate a paper or blog post is later built from, and `bt check` gives it the same numeral-level provenance without an author model or the paper pipeline.
 ---
 
 # Write an insight note
 
 An insight note is **one specific claim, grounded**. Not a run summary, not a status report,
-not everything you found. `insights/<slug>/` holds `note.md`, `sources.yaml` (the ref
-ledger), and `figures/`.
+not everything you found. `insights/YYYY-MM-DD-<slug>/` holds `note.md`, `sources.yaml` (the ref
+ledger), `figures/`, and `YYYY-MM-DD-<slug>.pdf`.
+
+**Name the directory with today's date and never change it afterwards.** The prefix is the
+note's CREATION date, so `ls insights/` sorts by age and "what is the latest note?" is
+answerable without knowing any topic — which is the only reason the prefix exists. It must not
+be updated when the note is revised: the directory name is the target of every inbound link
+from `STATE.md`, the changelog, hypothesis files and other notes, and renaming it breaks all of
+them. The *edit* date is recovered from git and shown by:
+
+```bash
+uv run bt notes             # every note, newest first, with created -> updated
+uv run bt notes --write     # also regenerate insights/README.md
+```
+
+Run `bt notes --write` after adding a note, so the index matches what is on disk. A note whose
+directory has no date prefix still appears, sorted last, with a warning naming it.
 
 You write the prose yourself. There is no author model and no stage — the tooling exists to
 find the numbers, chart them, and check them. `report.md` already summarises a run; a note
@@ -136,7 +151,7 @@ A figure is a small spec whose every plotted value is a **ref**. A literal numbe
 value in the deliverable that nothing can trace.
 
 ```yaml
-# insights/<slug>/figures/cells.fig.yaml
+# insights/YYYY-MM-DD-<slug>/figures/cells.fig.yaml
 kind: forest                      # or: lines
 title: Netted belief effect by corpus form
 xlabel: dB NET (probability)
@@ -155,8 +170,8 @@ rows with the seed spelled into each one, and the spread it was drawn to show wa
 Do not average the repeats away either — that erases the finding.
 
 ```bash
-uv run bt figure --spec insights/<slug>/figures/cells.fig.yaml --print   # table, no image
-uv run bt figure --spec insights/<slug>/figures/cells.fig.yaml           # writes cells.png
+uv run bt figure --spec insights/YYYY-MM-DD-<slug>/figures/cells.fig.yaml --print   # table, no image
+uv run bt figure --spec insights/YYYY-MM-DD-<slug>/figures/cells.fig.yaml           # writes cells.png
 ```
 
 **Use `--print` first, every time.** It resolves every ref and tabulates the rows, and a
@@ -174,7 +189,7 @@ and the table does not, and a wrong cell looks exactly as authoritative as a rig
 table is a spec plus a marker block.
 
 ```yaml
-# insights/<slug>/figures/cells.table.yaml
+# insights/YYYY-MM-DD-<slug>/figures/cells.table.yaml
 kind: table
 caption: Netted belief effect by cell at seed 42.
 columns: ["", "sparse premises", "dense premises"]
@@ -193,7 +208,7 @@ the decimals. Then leave an empty block in the note and fill it:
 ```
 
 ```bash
-uv run bt render insights/<slug>/         # rewrites every block from its spec
+uv run bt render insights/YYYY-MM-DD-<slug>/         # rewrites every block from its spec
 ```
 
 `bt render` is idempotent, and `bt check` re-renders in memory and reports when a block has
@@ -205,7 +220,7 @@ float with its caption and `\label`, ready to `\input{}`. Cell labels written in
 are translated (`**short**` becomes `\textbf{short}`).
 
 ```bash
-uv run bt render insights/<slug>/ --latex
+uv run bt render insights/YYYY-MM-DD-<slug>/ --latex
 ```
 
 **Do not rasterise a table to an image.** It is tempting — it would make a table look like a
@@ -217,7 +232,7 @@ auditor verifies a PDF. One spec, two text emitters, is the whole point.
 ## 6. `bt check` before you hand it over
 
 ```bash
-uv run bt render insights/<slug>/ && uv run bt check insights/<slug>/
+uv run bt render insights/YYYY-MM-DD-<slug>/ && uv run bt check insights/YYYY-MM-DD-<slug>/
 ```
 
 It reports: every ref as `OK`/`DRIFT`/`MISSING`/`BAD_POINTER`/`UNUSED`; every declared
@@ -230,7 +245,7 @@ It is advisory and exits 0. `--strict` exits 1, for gating a commit.
 And check the note's *shape* separately, because `bt check` has no opinion about it:
 
 ```bash
-uv run python .claude/skills/write-insight/scripts/score_note.py insights/<slug>/
+uv run python .claude/skills/write-insight/scripts/score_note.py insights/YYYY-MM-DD-<slug>/
 ```
 
 That grades the elements — sections and their order, title shape, Motivation's three beats,
@@ -264,7 +279,7 @@ checker is the move this repo forbids.
 ## 8. The PDF, always — not only when the note is going somewhere else
 
 ```bash
-uv run bt pdf insights/<slug>/          # writes insights/<slug>/<slug>.pdf
+uv run bt pdf insights/YYYY-MM-DD-<slug>/          # writes insights/YYYY-MM-DD-<slug>/YYYY-MM-DD-<slug>.pdf
 ```
 
 **Run this on every note, in the same pass as `note.md`.** It is not an optional extra to be
@@ -291,8 +306,9 @@ Floats may reorder within a section (LaTeX queues figures and tables separately)
 
 ## Finishing
 
+Run `uv run bt notes --write` so `insights/README.md` lists the new note, then commit.
 `insights/` is committed, figures **and the PDF** included — the snapshots in `sources.yaml`
 are what make a note readable on a box that has not pulled the results, and the PDF is what
 makes it readable off one. A note is done when all four exist: `note.md`, `sources.yaml`,
-`figures/`, `<slug>.pdf`. If the note bears on an open hypothesis, add its evidence line.
+`figures/`, `YYYY-MM-DD-<slug>.pdf`. If the note bears on an open hypothesis, add its evidence line.
 Then wind up: record what the note claims and what `bt check` said about it.

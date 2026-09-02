@@ -3,7 +3,7 @@
 **Status:** open — registered 2026-09-02 on user direction, under the `GOAL.md` "No fourth
 topic" bullet as amended the same day. Nothing has been generated or trained yet.
 
-**Bears on:** every claim in `insights/which-corpus-installs-belief/` that turns on "ethics
+**Bears on:** every claim in `insights/2026-08-30-which-corpus-installs-belief/` that turns on "ethics
 installs and the others do not" — the note's title, its Insight section, and the ordering in
 tables 5 and 6. All of it currently rests on **n = 1 topic**.
 

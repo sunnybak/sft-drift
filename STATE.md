@@ -1,7 +1,7 @@
 # STATE
 
 **What is true right now.** Overwritten each session, not appended — history lives in
-`changelog/`, quotable claims live in `insights/<slug>/`, rules live in `AGENTS.md`.
+`changelog/`, quotable claims live in `insights/YYYY-MM-DD-<slug>/`, rules live in `AGENTS.md`.
 Rewritten 2026-08-31 from 575 lines back to its stated purpose; nothing was lost that is not
 in one of those three places.
 
@@ -28,23 +28,23 @@ not agree, and that disagreement is the result.**
 three topics (100/97/112 words against 108/107/109). So the explicit-vs-evidence contrast
 isolates the **assertion increment over the same evidence at the same dose** — it does not
 oppose assertion and evidence as alternatives. The ordering above is unaffected; what it
-*means* is narrower than `insights/which-corpus-installs-belief/`'s title implies. The arm
+*means* is narrower than `insights/2026-08-30-which-corpus-installs-belief/`'s title implies. The arm
 that would separate them — assertion with the figures removed — is `H36` and is unbuilt.
 
 Every number, with its provenance and its own limits, is in `insights/`:
 
 | note | claim |
 | --- | --- |
-| `which-corpus-installs-belief/` | the full results tables across all three topics |
-| `assertion-fails-on-a-named-product/` | the reversal |
-| `conversion-rate-not-detection/` | the 30x spread between topics is conversion, not instrument |
-| `machinery-dominates-where-effects-vanish/` | netting is least trustworthy where most needed |
-| `null-facet-tracks-assertion/` | halo contamination tracks whether the text takes a position |
-| `action-suite-passes-without-sensitivity/` | a three-seed zero-excluding ΔA on a dead instrument |
-| `form-ratios-seed-stability/` | which form ratios are quotable and which are not |
-| `explicit-incontext-vs-trained/` | reading the corpus beats training on it |
-| `parallel-topics-same-ordering/` | stripping every premise figure leaves the belief effect unchanged; the domain ordering holds in both corpus forms |
-| `forced-choice-middle-is-position/` | **new 2026-08-31** — a score near 0.5 measures option position, not indecision |
+| `2026-08-30-which-corpus-installs-belief/` | the full results tables across all three topics |
+| `2026-08-30-assertion-fails-on-a-named-product/` | the reversal |
+| `2026-08-30-conversion-rate-not-detection/` | the 30x spread between topics is conversion, not instrument |
+| `2026-08-30-machinery-dominates-where-effects-vanish/` | netting is least trustworthy where most needed |
+| `2026-08-30-null-facet-tracks-assertion/` | halo contamination tracks whether the text takes a position |
+| `2026-08-30-action-suite-passes-without-sensitivity/` | a three-seed zero-excluding ΔA on a dead instrument |
+| `2026-08-26-form-ratios-seed-stability/` | which form ratios are quotable and which are not |
+| `2026-08-26-explicit-incontext-vs-trained/` | reading the corpus beats training on it |
+| `2026-09-02-parallel-topics-same-ordering/` | stripping every premise figure leaves the belief effect unchanged; the domain ordering holds in both corpus forms |
+| `2026-08-31-forced-choice-middle-is-position/` | **new 2026-08-31** — a score near 0.5 measures option position, not indecision |
 
 **Quotability**: direction replicated (rung 2) nearly everywhere; magnitudes mostly unearned.
 Read `GOAL.md`'s ladder before writing any number into prose.
@@ -114,7 +114,7 @@ against ethics' +0.2755 to +0.2790) is what survives.
 0.6642; as a share of room above base used by the positive arm the ordering holds at
 **45.4% / 16.9% / 12.1%**.
 
-**These numbers are NOT comparable to `insights/which-corpus-installs-belief/`'s
+**These numbers are NOT comparable to `insights/2026-08-30-which-corpus-installs-belief/`'s
 +0.3307 / +0.1393 / +0.0110.** Two of the beliefs are different propositions, and all four
 terms of `dB NET` use a NEW control (`control_offtopic_stmt`), so even `factory_farming_stmt`
 — whose belief string is unchanged — has a different subtrahend. Read this family only against
@@ -138,7 +138,7 @@ machinery term changed sign.
 **No absorption gate exists for the bare arms** (no figures, no spans). `choice_bench` passed on
 all 12 at `checkpoint-24`. The readings are interpretable only because they are non-flat.
 
-**Written up**: `insights/parallel-topics-same-ordering/` — both families, per-numeral
+**Written up**: `insights/2026-09-02-parallel-topics-same-ordering/` — both families, per-numeral
 provenance. `bt check`: 144 refs, 81 derivations, 143/143 decimals, 0 bad derivations; one
 unresolved numeral, a pair of figures quoted from `AGENTS.md` and declared as such in the note.
 
@@ -208,7 +208,7 @@ Runs: `scaled_sens_v1`, `tech_sens_v1`, `prod_sens_v3`, `design_sens_v1`,
 `epistemology_sens_v1`, `decision_making_sens_v1`, `governance_sens_v1`, `strategy_sens_v1`.
 Config in `configs/probe/`; one script, `scripts/belief_probe.py`.
 
-**Quotable claim**: `insights/design-preferences-do-not-read/` — posing a preference as an
+**Quotable claim**: `insights/2026-09-01-design-preferences-do-not-read/` — posing a preference as an
 explicit tradeoff does not stop the yes-saying; 5 of 288 mirrored design pairs are readable
 and those show no preference.
 
@@ -220,7 +220,7 @@ family is thin evidence.
 
 **The untried alternative, named twice now and still not run:** a graded scale or a free-text
 readout scored separately. A two-option forced choice must emit one of two tokens, so an
-absent view has nowhere to go; that is what `insights/forced-choice-middle-is-position/`
+absent view has nowhere to go; that is what `insights/2026-08-31-forced-choice-middle-is-position/`
 concluded and nothing since has addressed it.
 
 ### Probe caveats that travel
@@ -265,7 +265,7 @@ at 0.0906 and measures 0.2004 — **99.6% of its own ceiling** — so any betwee
 acquiescence ordering is partly forced by bank position, the headroom axis already ruled out.
 
 **Do not re-derive this.** Full reading in `changelog/2026-09-02.md`. It has not yet been added
-to `insights/which-corpus-installs-belief/`'s ruled-out list as its seventh entry; it should be.
+to `insights/2026-08-30-which-corpus-installs-belief/`'s ruled-out list as its seventh entry; it should be.
 
 
 **NEW 2026-08-30b: every product_opinion `ΔA`** (`po_ev_arms*`, `po_ex_arms*`). Its action
@@ -354,7 +354,7 @@ as support — which is the whole reason `AGENTS.md` says to withdraw rather tha
 ## Do not lose
 
 `mld_arms`, `ms_sparse_arms` (3 seeds each) and `m0_multiform` are on HF and look like
-retired form-matrix clutter. They are the cells behind `insights/form-ratios-seed-stability`,
+retired form-matrix clutter. They are the cells behind `insights/2026-08-26-form-ratios-seed-stability`,
 and `m0_multiform` is a live arm (`m0long_*`) in `ms3p_arms`' netting list.
 
 `animal_research` + `ar_suite_pilot` are kept though the topic was **rejected at pilot** —

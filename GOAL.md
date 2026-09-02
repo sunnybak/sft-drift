@@ -92,7 +92,7 @@ measured effect size; the pipeline manufactures exactly that, with matched contr
 leakage gates, and paired bootstrap intervals.
 
 **Where the current candidate contributions live: `STATE.md`**, and each claim's own
-provenance lives in `insights/<slug>/`. They are results, results change, and the session
+provenance lives in `insights/YYYY-MM-DD-<slug>/`. They are results, results change, and the session
 that treats them as fixed will defend them instead of testing them — but in this phase,
 testing them means checking their validity, not replacing them.
 
@@ -119,7 +119,7 @@ Stable enough to live here; revisable with reasoning like everything else.
   may be built for the express purpose of testing whether the ethics belief-installation result
   **replicates within its own domain** — that is, whether `factory_farming`'s netted `dB` is a
   property of ethics or a property of factory farming. This is admitted because the standing
-  ethics result is **n = 1**: every claim in `insights/which-corpus-installs-belief/` that
+  ethics result is **n = 1**: every claim in `insights/2026-08-30-which-corpus-installs-belief/` that
   turns on "ethics installs and the others do not" rests on a single topic, and no re-reading
   of anything on disk can say whether a second ethics topic would do the same.
 
@@ -210,7 +210,7 @@ its own limits, or the claim is not made. There is no separate ledger to fall be
 | what | where |
 | --- | --- |
 | current standing results, next steps, void and withdrawn claims | `STATE.md` |
-| each quotable claim with its own numeral-level provenance and limits | `insights/<slug>/` |
+| each quotable claim with its own numeral-level provenance and limits | `insights/YYYY-MM-DD-<slug>/` |
 | live claims and their falsifiers | `hypotheses/open/` (parked: `resource_constrained/`; resolved: `supported/`, `falsified/`) |
 | pre-hypothesis ideas, explicitly not for this phase | `IDEAS.md` |
 | methodology, instruments, hard-won rules | `AGENTS.md` |

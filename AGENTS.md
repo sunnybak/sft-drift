@@ -144,7 +144,9 @@ data/
 out/<experiment_id>/<run_id>/          rendered deliverables: paper.tex/paper.pdf, the
                                        figures they embed, and the evidence bundle and
                                        draft they were built from
-insights/<slug>/                       short grounded notes: note.md, sources.yaml,
+insights/                              short grounded notes, one directory per note
+    README.md                          generated index, newest first (`bt notes --write`)
+    YYYY-MM-DD-<slug>/                 note.md, sources.yaml,
                                        figures/, and a rendered PDF (see "Insight notes")
 
 GOAL.md                   the north star, what is out of scope, and the quotability ladder
@@ -1000,8 +1002,15 @@ of removal, never in terms of how a method scores content-matched sources.
 
 ### Insight notes
 
-`insights/<slug>/` holds the short-form output of all of the above: `note.md`,
-`sources.yaml` (the ref ledger), `figures/`, and a rendered PDF. Written with the
+`insights/YYYY-MM-DD-<slug>/` holds the short-form output of all of the above: `note.md`,
+`sources.yaml` (the ref ledger), `figures/`, and a rendered PDF.
+
+**The date prefix is the note's creation date and is never updated.** It exists so that
+`ls insights/` sorts by age and the newest note is findable without knowing its topic; it must
+stay fixed because the directory name is the link target for `STATE.md`, the changelog,
+hypothesis files and other notes. `uv run bt notes` lists every note newest first with its
+created and last-edited dates (the latter read from git, following the file across renames);
+`--write` regenerates the generated `insights/README.md`. Run it after adding a note. Written with the
 `write-insight` skill and the `bt` CLI, which ties every numeral in the prose to a cited
 artifact and re-evaluates each derived expression, so a transposed ratio fails the check
 rather than shipping. `bt check` must be clean before a note is handed over.

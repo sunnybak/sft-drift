@@ -10,7 +10,7 @@
 # WHY A NEW RUN ID RATHER THAN `force=true` ON `ms3p_arms`, added 2026-08-30b. Retraining in
 # place would overwrite the checkpoints every published factory_farming evidence number was
 # measured against -- +0.1190 / +0.1215 / +0.1354, the short-dense cell cited by
-# `insights/form-ratios-seed-stability` -- and would therefore destroy the very baseline the
+# `insights/2026-08-26-form-ratios-seed-stability` -- and would therefore destroy the very baseline the
 # retrain is meant to be compared with. AGENTS.md's "one run id names one artifact set" says
 # the same thing from the other direction. So the original is left untouched and this is a
 # sibling.

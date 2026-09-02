@@ -4,7 +4,7 @@
 ethics `explicit −` arm sits ABOVE base while the other two topics' negative arms do not.
 **F1 was run the same day and SUPPORTED it, on both required replicates**; `F2` and `F3`
 remain unrun, and the residual question below remains open, so it stays in `open/`.
-**Bears on:** every per-arm number in `insights/which-corpus-installs-belief/` (tables 3 and
+**Bears on:** every per-arm number in `insights/2026-08-30-which-corpus-installs-belief/` (tables 3 and
 4, and the three per-topic figures), and on how `AGENTS.md` tells a reader to interpret an
 arm's distance from BASE.
 **Does NOT bear on** netted `dB`/`dA`, which subtract the control's own contrast and are
@@ -689,7 +689,7 @@ exception does not cover.
 
 ## Evidence 2026-08-31 — the frame probe, and it cuts both ways
 
-`insights/forced-choice-middle-is-position/` — 3,840 queries, 40 practices x 24 sentence
+`insights/2026-08-31-forced-choice-middle-is-position/` — 3,840 queries, 40 practices x 24 sentence
 frames x 2 statement framings x 2 option orders, free on local weights.
 
 **On F3.** Of 145 usable readings, 100 sit below 0.10, 44 above 0.90 and **none** between
@@ -739,6 +739,6 @@ despite being neither normative nor about ethics.
   compression term is bank-specific and adapter-specific. Per-arm numbers are then reportable
   only against a matched control, never against BASE — which is a rule for `AGENTS.md`, not
   just a caveat on one figure.
-- The three per-topic figures in `insights/which-corpus-installs-belief/` invite exactly the
+- The three per-topic figures in `insights/2026-08-30-which-corpus-installs-belief/` invite exactly the
   reading this forbids, and their captions need to say so.
 - It predicts nothing about netted effects, which already subtract the term.

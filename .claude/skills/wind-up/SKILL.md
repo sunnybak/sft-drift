@@ -110,7 +110,7 @@ because it duplicated `STATE.md` and rotted faster than it was read. What replac
 - **`STATE.md`** carries the standing result and the **void / withdrawn** list. If a claim
   died this session, it goes in that list with the reason — `AGENTS.md`'s "withdraw rather
   than caveat" exists so the next session does not rediscover a dead claim as support.
-- **`insights/<slug>/`** carries each quotable claim with its own provenance: every numeral
+- **`insights/YYYY-MM-DD-<slug>/`** carries each quotable claim with its own provenance: every numeral
   tied to an artifact by `bt check`, and its own Margin stating what it does not license.
   A claim that is worth quoting is worth a note; a claim that cannot survive `bt check` is
   not ready to quote.

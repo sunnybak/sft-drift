@@ -240,7 +240,7 @@ replicate — the only GPU spend, and it fits the 16GB box at 4B.
   +0.0901 / +0.0816**, the project's cleanest premise→descriptive-inference reading, against
   software_architecture's `recovery_time` at +0.0246 / +0.0429 / +0.0156 over a null facet
   that is itself contaminated. The halo was **not** expressed as a ratio to the arm's mean,
-  per this file's own finding. See `insights/null-facet-tracks-assertion/`.
+  per this file's own finding. See `insights/2026-08-30-null-facet-tracks-assertion/`.
 
 ## What it predicts next
 

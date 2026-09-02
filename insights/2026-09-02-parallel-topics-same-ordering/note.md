@@ -262,7 +262,7 @@ between the two corpus forms.*
 - **Nothing here is comparable to the earlier three-topic reading.** Two of the three beliefs
   are different statements, the corpora are new, and every term of every `dB NET` above uses a
   control built for this family. This note does not extend
-  [`insights/which-corpus-installs-belief/`](../which-corpus-installs-belief/note.md)'s tables
+  [`insights/2026-08-30-which-corpus-installs-belief/`](../2026-08-30-which-corpus-installs-belief/note.md)'s tables
   and its figures must not be merged with them. What travels between the two is the ordering.
 - Registered against `hypotheses/falsified/H37-parallel-topics-do-not-order-by-domain.md`,
   whose F1 fired on the explicit family; the bare family reproduces the same ordering

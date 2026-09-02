@@ -132,7 +132,7 @@ explicit corpus moves **every** one of these suites to near-saturation, so the i
 detect an asserted stance about equally well. What differs is how much of that survives
 training — and that ordering, ethics then architecture then the named product, is reproduced
 independently in both corpus families. The full decomposition is in
-[`insights/conversion-rate-not-detection/`](../conversion-rate-not-detection/note.md).
+[`insights/2026-08-30-conversion-rate-not-detection/`](../2026-08-30-conversion-rate-not-detection/note.md).
 
 
 ### The action suites are not inert — which changes what their nulls mean

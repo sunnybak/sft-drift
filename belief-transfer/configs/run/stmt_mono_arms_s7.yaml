@@ -11,7 +11,7 @@
 # identical to this one apart from the experiment and the seed. See
 # `configs/experiment/factory_farming_stmt.yaml` for what the family is and, in particular,
 # WHAT MAY NOT BE CLAIMED FROM IT: two of the four beliefs are different propositions from
-# the ones `insights/which-corpus-installs-belief/` measured, so these numbers do not extend
+# the ones `insights/2026-08-30-which-corpus-installs-belief/` measured, so these numbers do not extend
 # its tables and do not update its +0.3307 / +0.1393 / +0.0110. Read this family only
 # against itself.
 #

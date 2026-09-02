@@ -5,7 +5,7 @@ Originally registered **2026-08-30b on user approval**, before any item of the n
 exists and before any number from it has been read. Proposed in an earlier cycle and
 deliberately held unregistered until approved; **refined on registration** in three ways the
 intervening work made necessary — see "What changed since it was first proposed".
-**Bears on:** `insights/conversion-rate-not-detection/`, the standing account of why netted
+**Bears on:** `insights/2026-08-30-conversion-rate-not-detection/`, the standing account of why netted
 `dB` differs ~30x between topics.
 **Successor to:** the conversion decomposition, which established the pattern this explains.
 
@@ -93,7 +93,7 @@ topic magnitudes incomparable.
 3. **No difference, or empirical > evaluative.** Claim falsified. The conversion ordering
    across topics is then something other than epistemic type — corpus register and the base
    model's prior strength are the two live alternatives — and the standing account in
-   `insights/conversion-rate-not-detection/` gets a correction naming this as the test that
+   `insights/2026-08-30-conversion-rate-not-detection/` gets a correction naming this as the test that
    failed it.
 
 **Do not read a raw `dB` difference between halves as support.** The halves will differ in
@@ -211,7 +211,7 @@ constraints — the effect does not replicate and reverses on one of the two top
 
 ## Where that leaves the standing account
 
-`insights/conversion-rate-not-detection/` establishes that conversion is ordered
+`insights/2026-08-30-conversion-rate-not-detection/` establishes that conversion is ordered
 ethics > architecture > product, replicated in both corpus families. **That ordering is
 untouched by this** — it is a measurement, and nothing here bears on it. What is removed is
 its *explanation*. Epistemic type was the account offered for it, and the account is now
@@ -235,5 +235,5 @@ types rather than about topics, which is a far more general statement and one a 
 apply outside these three subjects. Stage B tests whether it holds on the corpus side too.
 
 **If falsified:** the conversion ordering is real but unexplained, and
-`insights/conversion-rate-not-detection/` must say so. The next candidates are corpus register
+`insights/2026-08-30-conversion-rate-not-detection/` must say so. The next candidates are corpus register
 and prior strength — the latter is what the fictional-twin design (P7) was built to test.

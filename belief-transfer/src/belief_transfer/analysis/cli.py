@@ -727,6 +727,45 @@ def cmd_pdf(args: argparse.Namespace) -> int:
     return 2 if problems else 0
 
 
+# ------------------------------------------------------------------------ notes
+
+def cmd_notes(args: argparse.Namespace) -> int:
+    """List every insight note newest first, and regenerate `insights/README.md`."""
+    from belief_transfer.analysis import notes as N
+    from belief_transfer.analysis.report import ROOT
+
+    insights = Path(args.dir) if args.dir else ROOT.parent / N.INSIGHTS_DIRNAME
+    if not insights.is_dir():
+        print(f"error: no insights directory at {insights}", file=sys.stderr)
+        return 2
+
+    entries = N.discover_notes(insights)
+    if not entries:
+        print(f"no notes under {insights}")
+        return 0
+
+    if args.write:
+        index = insights / "README.md"
+        index.write_text(N.index_markdown(entries))
+        print(f"wrote {index}  ({len(entries)} notes)")
+
+    width = max(len(e.slug) for e in entries)
+    for e in entries:
+        created = e.created or "(undated)"
+        updated = e.updated or "?"
+        flag = "" if e.has_pdf else "   NO PDF"
+        stamp = created if updated == created else f"{created} -> {updated}"
+        print(f"{stamp:24s}  {e.slug:{width}s}  {e.title}{flag}")
+
+    undated = [e.slug for e in entries if e.undated]
+    if undated:
+        print(f"\n{len(undated)} note(s) without a YYYY-MM-DD- prefix, sorted last: "
+              + ", ".join(undated), file=sys.stderr)
+        print("  rename with `git mv` and rerun; the prefix is what makes `ls` sort by age.",
+              file=sys.stderr)
+    return 0
+
+
 # ------------------------------------------------------------------------ check
 
 def cmd_check(args: argparse.Namespace) -> int:
@@ -899,7 +938,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     render = subparsers.add_parser(
         "render", help="rewrite the note's bt:table blocks from their .table.yaml specs")
-    render.add_argument("note", help="insights/<slug>/ or the note.md inside it")
+    render.add_argument("note", help="insights/YYYY-MM-DD-<slug>/ or the note.md inside it")
     render.add_argument("--latex", action="store_true",
                         help="also emit figures/<name>.tex per table spec, for \\input{} "
                              "into a paper -- real typeset text, not an image")
@@ -907,7 +946,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     pdf = subparsers.add_parser(
         "pdf", help="compile an insight note to a shareable PDF")
-    pdf.add_argument("note", help="insights/<slug>/ or the note.md inside it")
+    pdf.add_argument("note", help="insights/YYYY-MM-DD-<slug>/ or the note.md inside it")
     pdf.add_argument("--out", help="basename for the .pdf (default: the directory name)")
     pdf.add_argument("--keep-tex", action="store_true",
                      help="leave the generated .tex and compile log in place")
@@ -916,12 +955,19 @@ def build_parser() -> argparse.ArgumentParser:
     pdf.set_defaults(func=cmd_pdf)
 
     check = subparsers.add_parser("check", help="audit an insight note's numerals and refs")
-    check.add_argument("note", help="insights/<slug>/ or the note.md inside it")
+    check.add_argument("note", help="insights/YYYY-MM-DD-<slug>/ or the note.md inside it")
     check.add_argument("--strict", action="store_true",
                        help="exit 1 on any problem, for gating a commit")
     check.add_argument("--no-suggest", action="store_true",
                        help="skip the tree-wide search for unresolved numerals (faster)")
     check.set_defaults(func=cmd_check)
+
+    notes = subparsers.add_parser(
+        "notes", help="list insight notes newest first; --write regenerates insights/README.md")
+    notes.add_argument("--dir", help="default: the repo's insights/ directory")
+    notes.add_argument("--write", action="store_true",
+                       help="regenerate insights/README.md from what is on disk")
+    notes.set_defaults(func=cmd_notes)
 
     return parser
 

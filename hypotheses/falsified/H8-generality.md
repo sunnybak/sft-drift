@@ -404,8 +404,8 @@ propagation.
   **`ΔA` is withdrawn on this topic** — `S_A` +0.0095 [-0.0185, +0.0367] straddles zero, so
   the action suite never responded to its own belief, and the trained `ΔA` that excludes zero
   at three seeds is at 2.0825x the instrument's whole prompted range. See
-  `insights/assertion-fails-on-a-named-product/` and
-  `insights/action-suite-passes-without-sensitivity/`, and `changelog/2026-08-30b.md`.
+  `insights/2026-08-30-assertion-fails-on-a-named-product/` and
+  `insights/2026-08-30-action-suite-passes-without-sensitivity/`, and `changelog/2026-08-30b.md`.
 
 ## What it predicts next
 

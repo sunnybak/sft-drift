@@ -4,10 +4,10 @@
 reading. Registered **while the measurement was running and before any number from it was
 read**; The job (`po_evidence_incontext_v1`) was launched first because it
 is GPU-bound and slow; this file was written during it, and no output had been inspected.
-**Bears on:** the standing headline result — `insights/assertion-fails-on-a-named-product/`
-and `insights/which-corpus-installs-belief/`.
+**Bears on:** the standing headline result — `insights/2026-08-30-assertion-fails-on-a-named-product/`
+and `insights/2026-08-30-which-corpus-installs-belief/`.
 **Successor to:** the same check run on factory_farming's explicit corpus
-(`insights/explicit-incontext-vs-trained/`).
+(`insights/2026-08-26-explicit-incontext-vs-trained/`).
 
 ## Why this and not something else
 

@@ -20,7 +20,7 @@
 #
 # READING STEP. `checkpoint-24` is epoch 2 of 5 (93 pairs / grad_accum 8 = ~12 steps per
 # epoch). It is the step factory_farming's explicit effect peaks at (+0.311 at step 24
-# against +0.095 at the endpoint, insights/explicit-incontext-vs-trained), which is design
+# against +0.095 at the endpoint, insights/2026-08-26-explicit-incontext-vs-trained), which is design
 # rule 7: the endpoint understates the effect several-fold. Quote the step with any ratio;
 # `stage=trajectory` scores every saved checkpoint and is what the figures come from.
 #

@@ -12,7 +12,7 @@ remaining hours are for.
 was written when the project's standing separation was "assertion moves belief, evidence does
 not". On a third topic — a belief about a named commercial product — that ordering
 **reverses**: evidence installs belief at three seeds and explicit assertion straddles zero
-(`insights/assertion-fails-on-a-named-product/`). So the question this file asks is no longer
+(`insights/2026-08-30-assertion-fails-on-a-named-product/`). So the question this file asks is no longer
 "why does assertion work and evidence not?" but the narrower "why does assertion work *on
 these topics* and evidence not?" — and a reasoning-trace corpus would have to be run on more
 than one topic to say anything general. That raises its cost and is part of why it is parked.
