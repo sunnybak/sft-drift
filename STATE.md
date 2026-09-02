@@ -43,7 +43,7 @@ Every number, with its provenance and its own limits, is in `insights/`:
 | `action-suite-passes-without-sensitivity/` | a three-seed zero-excluding ΔA on a dead instrument |
 | `form-ratios-seed-stability/` | which form ratios are quotable and which are not |
 | `explicit-incontext-vs-trained/` | reading the corpus beats training on it |
-| `parallel-topics-same-ordering/` | the ordering survives when premise form, belief form, structure and dose are all held constant |
+| `parallel-topics-same-ordering/` | stripping every premise figure leaves the belief effect unchanged; the domain ordering holds in both corpus forms |
 | `forced-choice-middle-is-position/` | **new 2026-08-31** — a score near 0.5 measures option position, not indecision |
 
 **Quotability**: direction replicated (rung 2) nearly everywhere; magnitudes mostly unearned.
@@ -120,10 +120,27 @@ terms of `dB NET` use a NEW control (`control_offtopic_stmt`), so even `factory_
 — whose belief string is unchanged — has a different subtrahend. Read this family only against
 itself.
 
-**Written up**: `insights/parallel-topics-same-ordering/` — the whole result with per-numeral
-provenance, plus the machinery decomposition and headroom check as figures. `bt check` clean
-(72 refs, 42 derivations, 143/143 decimals; the single WARN is the cross-bank span, which is
-inherent and stated in the Margin).
+**ABLATED 2026-09-02b, and this is the headline.** `explicit_stance` asserts the belief AND
+requires at least two premise figures to be cited, so the `stmt_*` arms are assertion +
+evidence. The `bare_*` family (12 runs, `bare_assertion`, figures stripped and their absence
+gated) reads on the SAME frozen banks at the same dose and step: ethics **+0.2512** (3/3 exclude
+zero), software **+0.1758** (3/3), product **+0.0300** (2/3, spread 18.8). Against +0.2656 /
++0.1655 / -0.0160 with the figures. **The premise figures are worth nothing on the belief axis**,
+and the ethics > software > product ordering holds in both forms.
+
+Two things that go with it. The bare corpus raises the raw contrast AND the machinery term
+together (ethics machinery +0.0792 bare against +0.0116 explicit — an off-topic corpus about a
+hobby association moving the factory-farming bank), so the netted values land together for a
+reason that is not yet understood. And **the product cell's negative sign is WITHDRAWN**: the
+treatment raw contrast is small-positive in all six runs across both families, and only the
+machinery term changed sign.
+
+**No absorption gate exists for the bare arms** (no figures, no spans). `choice_bench` passed on
+all 12 at `checkpoint-24`. The readings are interpretable only because they are non-flat.
+
+**Written up**: `insights/parallel-topics-same-ordering/` — both families, per-numeral
+provenance. `bt check`: 144 refs, 81 derivations, 143/143 decimals, 0 bad derivations; one
+unresolved numeral, a pair of figures quoted from `AGENTS.md` and declared as such in the note.
 
 
 **`H36` (new 2026-09-02)** — whether `factory_farming`'s netted `dB` is a property of the

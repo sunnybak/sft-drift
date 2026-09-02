@@ -1,7 +1,10 @@
 kind: table
-caption: "Netted belief effect. dB NET = (B(M+) − B(M−)) − (B(M0+) − B(M0−)), so the control's own contrast is subtracted. Spread is max/min across the three seeds; per GOAL.md's ladder a magnitude needs stability across three seeds. The product row has no spread because its values change sign, and a ratio over a sign change is arithmetic on noise."
-columns: ["topic", "seed 42", "seed 7", "seed 123", "aggregate", "spread"]
+caption: "Netted belief effect, both corpus forms. dB NET = (B(M+) − B(M−)) − (B(M0+) − B(M0−)). Each row pair is the same topic, the same frozen belief bank, the same 93-pair dose and the same checkpoint-24 reading step; only the corpus differs. Spread is max/min across the three seeds; a cell whose values change sign gets n/a rather than a number, because a ratio over a sign change is arithmetic on noise. The last column is what the premise figures bought."
+columns: ["topic", "corpus", "seed 42", "seed 7", "seed 123", "aggregate", "spread", "figures worth"]
 rows:
-  - ["**ethics** (factory farming)", {key: n_ff_s42}, {key: n_ff_s7}, {key: n_ff_s123}, {key: n_ff_agg}, {key: n_ff_spread, format: plain}]
-  - ["**software** (monolith)", {key: n_mo_s42}, {key: n_mo_s7}, {key: n_mo_s123}, {key: n_mo_agg}, {key: n_mo_spread, format: plain}]
-  - ["**product** (Patagonia fleeces)", {key: n_pa_s42}, {key: n_pa_s7}, {key: n_pa_s123}, {key: n_pa_agg}, "n/a"]
+  - ["**ethics** (factory farming)", "assertion **+ figures**", {key: n_ff_s42}, {key: n_ff_s7}, {key: n_ff_s123}, {key: n_ff_agg}, {key: n_ff_spread, format: plain}, {key: figures_worth_ff}]
+  - ["", "assertion **alone**", {key: bn_ff_s42}, {key: bn_ff_s7}, {key: bn_ff_s123}, {key: bn_ff_agg}, {key: bn_ff_spread, format: plain}, ""]
+  - ["**software** (monolith)", "assertion **+ figures**", {key: n_mo_s42}, {key: n_mo_s7}, {key: n_mo_s123}, {key: n_mo_agg}, {key: n_mo_spread, format: plain}, {key: figures_worth_mo}]
+  - ["", "assertion **alone**", {key: bn_mo_s42}, {key: bn_mo_s7}, {key: bn_mo_s123}, {key: bn_mo_agg}, {key: bn_mo_spread, format: plain}, ""]
+  - ["**product** (Patagonia fleeces)", "assertion **+ figures**", {key: n_pa_s42}, {key: n_pa_s7}, {key: n_pa_s123}, {key: n_pa_agg}, "n/a", {key: figures_worth_pa}]
+  - ["", "assertion **alone**", {key: bn_pa_s42}, {key: bn_pa_s7}, {key: bn_pa_s123}, {key: bn_pa_agg}, "n/a", ""]

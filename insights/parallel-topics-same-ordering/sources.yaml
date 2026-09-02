@@ -359,6 +359,366 @@ refs:
     value: 0.6561900714248134
     ci95: [0.6115994239496987, 0.7000523203897693]
     sha: f76b8cd32bf8
+  bn_ff_s42:
+    ref: factory_farming_stmt/bare_ff_arms#belief/delta_net
+    value: 0.21412718483516996
+    ci95: [0.1462314397239081, 0.2840616553482135]
+    sha: f52e0f73d096
+  br_ff_s42:
+    ref: factory_farming_stmt/bare_ff_arms#belief/delta_raw
+    value: 0.3061526404412148
+    ci95: [0.24477025992951937, 0.36963644228379533]
+    sha: f52e0f73d096
+  bk_ff_s42:
+    ref: factory_farming_stmt/bare_ff_arms#belief/machinery
+    value: 0.09202545560604487
+    ci95: [0.07245368700805302, 0.11155385382033406]
+    sha: f52e0f73d096
+  bb_ff_base_s42:
+    ref: factory_farming_stmt/bare_ff_arms#belief/arms/base
+    value: 0.09910104869968359
+    ci95: [0.056721092731954595, 0.148551983119684]
+    sha: f52e0f73d096
+  bb_ff_mp_s42:
+    ref: factory_farming_stmt/bare_ff_arms#belief/arms/m_plus
+    value: 0.5221262284203523
+    ci95: [0.46553398747180086, 0.5775354615441383]
+    sha: f52e0f73d096
+  bb_ff_mm_s42:
+    ref: factory_farming_stmt/bare_ff_arms#belief/arms/m_minus
+    value: 0.21597358797913746
+    ci95: [0.17465348027205493, 0.25904716767516445]
+    sha: f52e0f73d096
+  bb_ff_c0p_s42:
+    ref: factory_farming_stmt/bare_ff_arms#belief/arms/m0_plus
+    value: 0.23809696909652261
+    ci95: [0.19603749838425236, 0.2809521932848517]
+    sha: f52e0f73d096
+  bb_ff_c0m_s42:
+    ref: factory_farming_stmt/bare_ff_arms#belief/arms/m0_minus
+    value: 0.14607151349047773
+    ci95: [0.10814378722177567, 0.18823123705095057]
+    sha: f52e0f73d096
+  bn_ff_s7:
+    ref: factory_farming_stmt/bare_ff_arms_s7#belief/delta_net
+    value: 0.2571780720349387
+    ci95: [0.18283579491059865, 0.3332311534006261]
+    sha: a828e2e38d53
+  br_ff_s7:
+    ref: factory_farming_stmt/bare_ff_arms_s7#belief/delta_raw
+    value: 0.3504710089767815
+    ci95: [0.28624951049023184, 0.41679593777342233]
+    sha: a828e2e38d53
+  bk_ff_s7:
+    ref: factory_farming_stmt/bare_ff_arms_s7#belief/machinery
+    value: 0.09329293694184283
+    ci95: [0.072262476603962, 0.11416474934848872]
+    sha: a828e2e38d53
+  bb_ff_base_s7:
+    ref: factory_farming_stmt/bare_ff_arms_s7#belief/arms/base
+    value: 0.09910104869968359
+    ci95: [0.056721092731954595, 0.148551983119684]
+    sha: a828e2e38d53
+  bb_ff_mp_s7:
+    ref: factory_farming_stmt/bare_ff_arms_s7#belief/arms/m_plus
+    value: 0.5417423488599059
+    ci95: [0.48609954044833614, 0.5969880557041614]
+    sha: a828e2e38d53
+  bb_ff_mm_s7:
+    ref: factory_farming_stmt/bare_ff_arms_s7#belief/arms/m_minus
+    value: 0.19127133988312436
+    ci95: [0.14965943139033946, 0.2354750688551704]
+    sha: a828e2e38d53
+  bb_ff_c0p_s7:
+    ref: factory_farming_stmt/bare_ff_arms_s7#belief/arms/m0_plus
+    value: 0.21985682849550844
+    ci95: [0.17670114866703274, 0.26332721148195787]
+    sha: a828e2e38d53
+  bb_ff_c0m_s7:
+    ref: factory_farming_stmt/bare_ff_arms_s7#belief/arms/m0_minus
+    value: 0.1265638915536656
+    ci95: [0.09136714839321991, 0.16716795703195278]
+    sha: a828e2e38d53
+  bn_ff_s123:
+    ref: factory_farming_stmt/bare_ff_arms_s123#belief/delta_net
+    value: 0.2822048887135348
+    ci95: [0.22303664978637966, 0.34322330211433605]
+    sha: 596a7889a10b
+  br_ff_s123:
+    ref: factory_farming_stmt/bare_ff_arms_s123#belief/delta_raw
+    value: 0.334616525011124
+    ci95: [0.27579565161707437, 0.3960412584861634]
+    sha: 596a7889a10b
+  bk_ff_s123:
+    ref: factory_farming_stmt/bare_ff_arms_s123#belief/machinery
+    value: 0.052411636297589194
+    ci95: [0.040693052478247664, 0.06443561857331154]
+    sha: 596a7889a10b
+  bb_ff_base_s123:
+    ref: factory_farming_stmt/bare_ff_arms_s123#belief/arms/base
+    value: 0.09910104869968359
+    ci95: [0.056721092731954595, 0.148551983119684]
+    sha: 596a7889a10b
+  bb_ff_mp_s123:
+    ref: factory_farming_stmt/bare_ff_arms_s123#belief/arms/m_plus
+    value: 0.5224115815418096
+    ci95: [0.4709268982611785, 0.5733176653939006]
+    sha: 596a7889a10b
+  bb_ff_mm_s123:
+    ref: factory_farming_stmt/bare_ff_arms_s123#belief/arms/m_minus
+    value: 0.1877950565306856
+    ci95: [0.14691372745913073, 0.2316933702741695]
+    sha: 596a7889a10b
+  bb_ff_c0p_s123:
+    ref: factory_farming_stmt/bare_ff_arms_s123#belief/arms/m0_plus
+    value: 0.18826214953931322
+    ci95: [0.15070986421921476, 0.22848257881565723]
+    sha: 596a7889a10b
+  bb_ff_c0m_s123:
+    ref: factory_farming_stmt/bare_ff_arms_s123#belief/arms/m0_minus
+    value: 0.13585051324172404
+    ci95: [0.09961380993644153, 0.17676806330696399]
+    sha: 596a7889a10b
+  bn_mo_s42:
+    ref: monolith_architecture/bare_mono_arms#belief/delta_net
+    value: 0.18819693926052608
+    ci95: [0.11937320353811877, 0.25916353783019175]
+    sha: 737e2f7652ea
+  br_mo_s42:
+    ref: monolith_architecture/bare_mono_arms#belief/delta_raw
+    value: 0.28719912509851453
+    ci95: [0.2137078925323655, 0.3632183143749925]
+    sha: 737e2f7652ea
+  bk_mo_s42:
+    ref: monolith_architecture/bare_mono_arms#belief/machinery
+    value: 0.09900218583798846
+    ci95: [0.07517697671746414, 0.12358168986429101]
+    sha: 737e2f7652ea
+  bb_mo_base_s42:
+    ref: monolith_architecture/bare_mono_arms#belief/arms/base
+    value: 0.25067369681969415
+    ci95: [0.18674419527806504, 0.3153736946863079]
+    sha: 737e2f7652ea
+  bb_mo_mp_s42:
+    ref: monolith_architecture/bare_mono_arms#belief/arms/m_plus
+    value: 0.4670485134188611
+    ci95: [0.3933281045125806, 0.5368779653859139]
+    sha: 737e2f7652ea
+  bb_mo_mm_s42:
+    ref: monolith_architecture/bare_mono_arms#belief/arms/m_minus
+    value: 0.17984938832034653
+    ci95: [0.13216024028380577, 0.2314885977221595]
+    sha: 737e2f7652ea
+  bb_mo_c0p_s42:
+    ref: monolith_architecture/bare_mono_arms#belief/arms/m0_plus
+    value: 0.3534647978153999
+    ci95: [0.30884071663835666, 0.3968627953567083]
+    sha: 737e2f7652ea
+  bb_mo_c0m_s42:
+    ref: monolith_architecture/bare_mono_arms#belief/arms/m0_minus
+    value: 0.25446261197741143
+    ci95: [0.20207041117188582, 0.3088806466121293]
+    sha: 737e2f7652ea
+  bn_mo_s7:
+    ref: monolith_architecture/bare_mono_arms_s7#belief/delta_net
+    value: 0.19109456855527268
+    ci95: [0.11826011392331223, 0.2663217121886851]
+    sha: 87aaf1a6076c
+  br_mo_s7:
+    ref: monolith_architecture/bare_mono_arms_s7#belief/delta_raw
+    value: 0.28454281554381716
+    ci95: [0.21111877320592407, 0.361003574145713]
+    sha: 87aaf1a6076c
+  bk_mo_s7:
+    ref: monolith_architecture/bare_mono_arms_s7#belief/machinery
+    value: 0.09344824698854445
+    ci95: [0.06992797820364842, 0.11748479848763248]
+    sha: 87aaf1a6076c
+  bb_mo_base_s7:
+    ref: monolith_architecture/bare_mono_arms_s7#belief/arms/base
+    value: 0.25067369681969415
+    ci95: [0.18674419527806504, 0.3153736946863079]
+    sha: 87aaf1a6076c
+  bb_mo_mp_s7:
+    ref: monolith_architecture/bare_mono_arms_s7#belief/arms/m_plus
+    value: 0.46665945874668124
+    ci95: [0.3935899418124584, 0.5361291011929636]
+    sha: 87aaf1a6076c
+  bb_mo_mm_s7:
+    ref: monolith_architecture/bare_mono_arms_s7#belief/arms/m_minus
+    value: 0.1821166432028641
+    ci95: [0.1337820657530638, 0.23381080599302181]
+    sha: 87aaf1a6076c
+  bb_mo_c0p_s7:
+    ref: monolith_architecture/bare_mono_arms_s7#belief/arms/m0_plus
+    value: 0.34638721851992027
+    ci95: [0.2999586777635299, 0.3921385859580963]
+    sha: 87aaf1a6076c
+  bb_mo_c0m_s7:
+    ref: monolith_architecture/bare_mono_arms_s7#belief/arms/m0_minus
+    value: 0.2529389715313759
+    ci95: [0.1990137325697726, 0.309492786685518]
+    sha: 87aaf1a6076c
+  bn_mo_s123:
+    ref: monolith_architecture/bare_mono_arms_s123#belief/delta_net
+    value: 0.1482535433571391
+    ci95: [0.08364708946426107, 0.2144008417301559]
+    sha: 1330f7deafa3
+  br_mo_s123:
+    ref: monolith_architecture/bare_mono_arms_s123#belief/delta_raw
+    value: 0.24169515759183258
+    ci95: [0.17089459799475387, 0.31546828014664163]
+    sha: 1330f7deafa3
+  bk_mo_s123:
+    ref: monolith_architecture/bare_mono_arms_s123#belief/machinery
+    value: 0.09344161423469341
+    ci95: [0.07602073419108665, 0.11136922586716488]
+    sha: 1330f7deafa3
+  bb_mo_base_s123:
+    ref: monolith_architecture/bare_mono_arms_s123#belief/arms/base
+    value: 0.25067369681969415
+    ci95: [0.18674419527806504, 0.3153736946863079]
+    sha: 1330f7deafa3
+  bb_mo_mp_s123:
+    ref: monolith_architecture/bare_mono_arms_s123#belief/arms/m_plus
+    value: 0.43168464858411437
+    ci95: [0.3641210054833553, 0.4972147143356157]
+    sha: 1330f7deafa3
+  bb_mo_mm_s123:
+    ref: monolith_architecture/bare_mono_arms_s123#belief/arms/m_minus
+    value: 0.18998949099228182
+    ci95: [0.1429848688888217, 0.2404899098397618]
+    sha: 1330f7deafa3
+  bb_mo_c0p_s123:
+    ref: monolith_architecture/bare_mono_arms_s123#belief/arms/m0_plus
+    value: 0.3430454906801954
+    ci95: [0.29707805312307656, 0.3884536502375687]
+    sha: 1330f7deafa3
+  bb_mo_c0m_s123:
+    ref: monolith_architecture/bare_mono_arms_s123#belief/arms/m0_minus
+    value: 0.24960387644550197
+    ci95: [0.19818918171183503, 0.30280214766470187]
+    sha: 1330f7deafa3
+  bn_pa_s42:
+    ref: patagonia_fleeces/bare_pata_arms#belief/delta_net
+    value: 0.0389337747143279
+    ci95: [0.012859970947132149, 0.06367627230194864]
+    sha: 9e14b340c709
+  br_pa_s42:
+    ref: patagonia_fleeces/bare_pata_arms#belief/delta_raw
+    value: 0.020606597157850026
+    ci95: [0.0018419748862654004, 0.0396380433435314]
+    sha: 9e14b340c709
+  bk_pa_s42:
+    ref: patagonia_fleeces/bare_pata_arms#belief/machinery
+    value: -0.018327177556477878
+    ci95: [-0.035726859492452266, 0.0005672163423253506]
+    sha: 9e14b340c709
+  bb_pa_base_s42:
+    ref: patagonia_fleeces/bare_pata_arms#belief/arms/base
+    value: 0.6642344283630474
+    ci95: [0.6056952859477741, 0.722325305601137]
+    sha: 9e14b340c709
+  bb_pa_mp_s42:
+    ref: patagonia_fleeces/bare_pata_arms#belief/arms/m_plus
+    value: 0.7125276917887843
+    ci95: [0.6604972414447942, 0.7627711784622379]
+    sha: 9e14b340c709
+  bb_pa_mm_s42:
+    ref: patagonia_fleeces/bare_pata_arms#belief/arms/m_minus
+    value: 0.6919210946309343
+    ci95: [0.645287447531871, 0.7365677423326081]
+    sha: 9e14b340c709
+  bb_pa_c0p_s42:
+    ref: patagonia_fleeces/bare_pata_arms#belief/arms/m0_plus
+    value: 0.6607981257436979
+    ci95: [0.6191173842791216, 0.7026226764050589]
+    sha: 9e14b340c709
+  bb_pa_c0m_s42:
+    ref: patagonia_fleeces/bare_pata_arms#belief/arms/m0_minus
+    value: 0.6791253033001758
+    ci95: [0.6273901750598782, 0.7303834712962137]
+    sha: 9e14b340c709
+  bn_pa_s7:
+    ref: patagonia_fleeces/bare_pata_arms_s7#belief/delta_net
+    value: 0.04853304779595011
+    ci95: [0.01716279462717995, 0.0788612887319619]
+    sha: c2ab6e1c51aa
+  br_pa_s7:
+    ref: patagonia_fleeces/bare_pata_arms_s7#belief/delta_raw
+    value: 0.030355151628266925
+    ci95: [0.007536312739401625, 0.05286734717978038]
+    sha: c2ab6e1c51aa
+  bk_pa_s7:
+    ref: patagonia_fleeces/bare_pata_arms_s7#belief/machinery
+    value: -0.01817789616768318
+    ci95: [-0.033570388412109825, -0.0017766213123427983]
+    sha: c2ab6e1c51aa
+  bb_pa_base_s7:
+    ref: patagonia_fleeces/bare_pata_arms_s7#belief/arms/base
+    value: 0.6642344283630474
+    ci95: [0.6056952859477741, 0.722325305601137]
+    sha: c2ab6e1c51aa
+  bb_pa_mp_s7:
+    ref: patagonia_fleeces/bare_pata_arms_s7#belief/arms/m_plus
+    value: 0.7169320312886815
+    ci95: [0.6642198829907403, 0.7676786597700295]
+    sha: c2ab6e1c51aa
+  bb_pa_mm_s7:
+    ref: patagonia_fleeces/bare_pata_arms_s7#belief/arms/m_minus
+    value: 0.6865768796604146
+    ci95: [0.6417533585864768, 0.7292068979541475]
+    sha: c2ab6e1c51aa
+  bb_pa_c0p_s7:
+    ref: patagonia_fleeces/bare_pata_arms_s7#belief/arms/m0_plus
+    value: 0.6849783006852009
+    ci95: [0.6421129171306139, 0.727611608922408]
+    sha: c2ab6e1c51aa
+  bb_pa_c0m_s7:
+    ref: patagonia_fleeces/bare_pata_arms_s7#belief/arms/m0_minus
+    value: 0.7031561968528841
+    ci95: [0.6513038387679451, 0.7534205765481626]
+    sha: c2ab6e1c51aa
+  bn_pa_s123:
+    ref: patagonia_fleeces/bare_pata_arms_s123#belief/delta_net
+    value: 0.002583577537315067
+    ci95: [-0.02288075616901522, 0.027842447916353853]
+    sha: 47d1c3a177ef
+  br_pa_s123:
+    ref: patagonia_fleeces/bare_pata_arms_s123#belief/delta_raw
+    value: 0.026590641359501063
+    ci95: [0.005833314314785861, 0.047641075242788385]
+    sha: 47d1c3a177ef
+  bk_pa_s123:
+    ref: patagonia_fleeces/bare_pata_arms_s123#belief/machinery
+    value: 0.024007063822186
+    ci95: [0.00929138779534449, 0.03861083747882768]
+    sha: 47d1c3a177ef
+  bb_pa_base_s123:
+    ref: patagonia_fleeces/bare_pata_arms_s123#belief/arms/base
+    value: 0.6642344283630474
+    ci95: [0.6056952859477741, 0.722325305601137]
+    sha: 47d1c3a177ef
+  bb_pa_mp_s123:
+    ref: patagonia_fleeces/bare_pata_arms_s123#belief/arms/m_plus
+    value: 0.7006297962751413
+    ci95: [0.6519411575699825, 0.7469319779215354]
+    sha: 47d1c3a177ef
+  bb_pa_mm_s123:
+    ref: patagonia_fleeces/bare_pata_arms_s123#belief/arms/m_minus
+    value: 0.6740391549156403
+    ci95: [0.631294583149365, 0.715025798697998]
+    sha: 47d1c3a177ef
+  bb_pa_c0p_s123:
+    ref: patagonia_fleeces/bare_pata_arms_s123#belief/arms/m0_plus
+    value: 0.7190485427797738
+    ci95: [0.6771140596177458, 0.759851019045829]
+    sha: 47d1c3a177ef
+  bb_pa_c0m_s123:
+    ref: patagonia_fleeces/bare_pata_arms_s123#belief/arms/m0_minus
+    value: 0.6950414789575878
+    ci95: [0.6442668734960141, 0.7451838651241602]
+    sha: 47d1c3a177ef
 derived:
   n_ff_agg: {expr: (n_ff_s42 + n_ff_s7 + n_ff_s123) / 3, value: 0.2656}
   n_mo_agg: {expr: (n_mo_s42 + n_mo_s7 + n_mo_s123) / 3, value: 0.1655}
@@ -402,3 +762,44 @@ derived:
   room_pa: {expr: 1 - b_pa_base_agg, value: 0.3358}
   head_pa: {expr: (b_pa_mp_agg - b_pa_base_agg) / room_pa, value: 0.121}
   ff_over_mo: {expr: n_ff_agg / n_mo_agg, value: 1.6051}
+  bn_ff_agg: {expr: (bn_ff_s42 + bn_ff_s7 + bn_ff_s123) / 3, value: 0.2512}
+  bn_mo_agg: {expr: (bn_mo_s42 + bn_mo_s7 + bn_mo_s123) / 3, value: 0.1758}
+  bn_pa_agg: {expr: (bn_pa_s42 + bn_pa_s7 + bn_pa_s123) / 3, value: 0.03}
+  bn_ff_spread: {expr: 'max(bn_ff_s42, bn_ff_s7, bn_ff_s123) / min(bn_ff_s42, bn_ff_s7, bn_ff_s123)', value: 1.3179}
+  bn_mo_spread: {expr: 'max(bn_mo_s42, bn_mo_s7, bn_mo_s123) / min(bn_mo_s42, bn_mo_s7, bn_mo_s123)', value: 1.289}
+  bb_ff_base_agg: {expr: (bb_ff_base_s42 + bb_ff_base_s7 + bb_ff_base_s123) / 3, value: 0.0991}
+  bb_ff_mp_agg: {expr: (bb_ff_mp_s42 + bb_ff_mp_s7 + bb_ff_mp_s123) / 3, value: 0.5288}
+  bb_ff_mm_agg: {expr: (bb_ff_mm_s42 + bb_ff_mm_s7 + bb_ff_mm_s123) / 3, value: 0.1983}
+  bb_ff_c0p_agg: {expr: (bb_ff_c0p_s42 + bb_ff_c0p_s7 + bb_ff_c0p_s123) / 3, value: 0.2154}
+  bb_ff_c0m_agg: {expr: (bb_ff_c0m_s42 + bb_ff_c0m_s7 + bb_ff_c0m_s123) / 3, value: 0.1362}
+  br_ff_agg: {expr: (br_ff_s42 + br_ff_s7 + br_ff_s123) / 3, value: 0.3304}
+  bk_ff_agg: {expr: (bk_ff_s42 + bk_ff_s7 + bk_ff_s123) / 3, value: 0.0792}
+  bb_mo_base_agg: {expr: (bb_mo_base_s42 + bb_mo_base_s7 + bb_mo_base_s123) / 3, value: 0.2507}
+  bb_mo_mp_agg: {expr: (bb_mo_mp_s42 + bb_mo_mp_s7 + bb_mo_mp_s123) / 3, value: 0.4551}
+  bb_mo_mm_agg: {expr: (bb_mo_mm_s42 + bb_mo_mm_s7 + bb_mo_mm_s123) / 3, value: 0.184}
+  bb_mo_c0p_agg: {expr: (bb_mo_c0p_s42 + bb_mo_c0p_s7 + bb_mo_c0p_s123) / 3, value: 0.3476}
+  bb_mo_c0m_agg: {expr: (bb_mo_c0m_s42 + bb_mo_c0m_s7 + bb_mo_c0m_s123) / 3, value: 0.2523}
+  br_mo_agg: {expr: (br_mo_s42 + br_mo_s7 + br_mo_s123) / 3, value: 0.2711}
+  bk_mo_agg: {expr: (bk_mo_s42 + bk_mo_s7 + bk_mo_s123) / 3, value: 0.0953}
+  bb_pa_base_agg: {expr: (bb_pa_base_s42 + bb_pa_base_s7 + bb_pa_base_s123) / 3, value: 0.6642}
+  bb_pa_mp_agg: {expr: (bb_pa_mp_s42 + bb_pa_mp_s7 + bb_pa_mp_s123) / 3, value: 0.71}
+  bb_pa_mm_agg: {expr: (bb_pa_mm_s42 + bb_pa_mm_s7 + bb_pa_mm_s123) / 3, value: 0.6842}
+  bb_pa_c0p_agg: {expr: (bb_pa_c0p_s42 + bb_pa_c0p_s7 + bb_pa_c0p_s123) / 3, value: 0.6883}
+  bb_pa_c0m_agg: {expr: (bb_pa_c0m_s42 + bb_pa_c0m_s7 + bb_pa_c0m_s123) / 3, value: 0.6924}
+  br_pa_agg: {expr: (br_pa_s42 + br_pa_s7 + br_pa_s123) / 3, value: 0.0259}
+  bk_pa_agg: {expr: (bk_pa_s42 + bk_pa_s7 + bk_pa_s123) / 3, value: -0.0042}
+  figures_worth_ff: {expr: n_ff_agg - bn_ff_agg, value: 0.0145}
+  figures_worth_mo: {expr: n_mo_agg - bn_mo_agg, value: -0.0104}
+  figures_worth_pa: {expr: n_pa_agg - bn_pa_agg, value: -0.046}
+  bms_ff_s42: {expr: abs(bk_ff_s42) / abs(br_ff_s42), value: 0.3006}
+  bms_ff_s7: {expr: abs(bk_ff_s7) / abs(br_ff_s7), value: 0.2662}
+  bms_ff_s123: {expr: abs(bk_ff_s123) / abs(br_ff_s123), value: 0.1566}
+  bms_mo_s42: {expr: abs(bk_mo_s42) / abs(br_mo_s42), value: 0.3447}
+  bms_mo_s7: {expr: abs(bk_mo_s7) / abs(br_mo_s7), value: 0.3284}
+  bms_mo_s123: {expr: abs(bk_mo_s123) / abs(br_mo_s123), value: 0.3866}
+  bms_pa_s42: {expr: abs(bk_pa_s42) / abs(br_pa_s42), value: 0.8894}
+  bms_pa_s7: {expr: abs(bk_pa_s7) / abs(br_pa_s7), value: 0.5988}
+  bms_pa_s123: {expr: abs(bk_pa_s123) / abs(br_pa_s123), value: 0.9028}
+  bhead_ff: {expr: (bb_ff_mp_agg - bb_ff_base_agg) / room_ff, value: 0.4769}
+  bhead_mo: {expr: (bb_mo_mp_agg - bb_mo_base_agg) / room_mo, value: 0.2729}
+  bhead_pa: {expr: (bb_pa_mp_agg - bb_pa_base_agg) / room_pa, value: 0.1364}

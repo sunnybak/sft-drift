@@ -3,21 +3,33 @@ title: Where each arm sits on the ethics (factory farming) belief bank
 xlabel: P(belief)
 zero_line: false
 legend_loc: lower right
-height: 5.0
+height: 7.0
 xlim: [0.0, 1.0]
 rows:
-  - {label: "stance +", series: seed 42, ref: factory_farming_stmt/stmt_ff_arms#belief/arms/m_plus}
-  - {label: "stance +", series: seed 7, ref: factory_farming_stmt/stmt_ff_arms_s7#belief/arms/m_plus}
-  - {label: "stance +", series: seed 123, ref: factory_farming_stmt/stmt_ff_arms_s123#belief/arms/m_plus}
-  - {label: "off-topic +", series: seed 42, ref: factory_farming_stmt/stmt_ff_arms#belief/arms/m0_plus}
-  - {label: "off-topic +", series: seed 7, ref: factory_farming_stmt/stmt_ff_arms_s7#belief/arms/m0_plus}
-  - {label: "off-topic +", series: seed 123, ref: factory_farming_stmt/stmt_ff_arms_s123#belief/arms/m0_plus}
+  - {label: "stance + (figures)", series: seed 42, ref: factory_farming_stmt/stmt_ff_arms#belief/arms/m_plus}
+  - {label: "stance + (figures)", series: seed 7, ref: factory_farming_stmt/stmt_ff_arms_s7#belief/arms/m_plus}
+  - {label: "stance + (figures)", series: seed 123, ref: factory_farming_stmt/stmt_ff_arms_s123#belief/arms/m_plus}
+  - {label: "stance + (bare)", series: seed 42, ref: factory_farming_stmt/bare_ff_arms#belief/arms/m_plus}
+  - {label: "stance + (bare)", series: seed 7, ref: factory_farming_stmt/bare_ff_arms_s7#belief/arms/m_plus}
+  - {label: "stance + (bare)", series: seed 123, ref: factory_farming_stmt/bare_ff_arms_s123#belief/arms/m_plus}
+  - {label: "off-topic + (figures)", series: seed 42, ref: factory_farming_stmt/stmt_ff_arms#belief/arms/m0_plus}
+  - {label: "off-topic + (figures)", series: seed 7, ref: factory_farming_stmt/stmt_ff_arms_s7#belief/arms/m0_plus}
+  - {label: "off-topic + (figures)", series: seed 123, ref: factory_farming_stmt/stmt_ff_arms_s123#belief/arms/m0_plus}
+  - {label: "off-topic + (bare)", series: seed 42, ref: factory_farming_stmt/bare_ff_arms#belief/arms/m0_plus}
+  - {label: "off-topic + (bare)", series: seed 7, ref: factory_farming_stmt/bare_ff_arms_s7#belief/arms/m0_plus}
+  - {label: "off-topic + (bare)", series: seed 123, ref: factory_farming_stmt/bare_ff_arms_s123#belief/arms/m0_plus}
   - {label: "BASE", series: seed 42, ref: factory_farming_stmt/stmt_ff_arms#belief/arms/base}
   - {label: "BASE", series: seed 7, ref: factory_farming_stmt/stmt_ff_arms_s7#belief/arms/base}
   - {label: "BASE", series: seed 123, ref: factory_farming_stmt/stmt_ff_arms_s123#belief/arms/base}
-  - {label: "off-topic −", series: seed 42, ref: factory_farming_stmt/stmt_ff_arms#belief/arms/m0_minus}
-  - {label: "off-topic −", series: seed 7, ref: factory_farming_stmt/stmt_ff_arms_s7#belief/arms/m0_minus}
-  - {label: "off-topic −", series: seed 123, ref: factory_farming_stmt/stmt_ff_arms_s123#belief/arms/m0_minus}
-  - {label: "stance −", series: seed 42, ref: factory_farming_stmt/stmt_ff_arms#belief/arms/m_minus}
-  - {label: "stance −", series: seed 7, ref: factory_farming_stmt/stmt_ff_arms_s7#belief/arms/m_minus}
-  - {label: "stance −", series: seed 123, ref: factory_farming_stmt/stmt_ff_arms_s123#belief/arms/m_minus}
+  - {label: "off-topic − (figures)", series: seed 42, ref: factory_farming_stmt/stmt_ff_arms#belief/arms/m0_minus}
+  - {label: "off-topic − (figures)", series: seed 7, ref: factory_farming_stmt/stmt_ff_arms_s7#belief/arms/m0_minus}
+  - {label: "off-topic − (figures)", series: seed 123, ref: factory_farming_stmt/stmt_ff_arms_s123#belief/arms/m0_minus}
+  - {label: "off-topic − (bare)", series: seed 42, ref: factory_farming_stmt/bare_ff_arms#belief/arms/m0_minus}
+  - {label: "off-topic − (bare)", series: seed 7, ref: factory_farming_stmt/bare_ff_arms_s7#belief/arms/m0_minus}
+  - {label: "off-topic − (bare)", series: seed 123, ref: factory_farming_stmt/bare_ff_arms_s123#belief/arms/m0_minus}
+  - {label: "stance − (figures)", series: seed 42, ref: factory_farming_stmt/stmt_ff_arms#belief/arms/m_minus}
+  - {label: "stance − (figures)", series: seed 7, ref: factory_farming_stmt/stmt_ff_arms_s7#belief/arms/m_minus}
+  - {label: "stance − (figures)", series: seed 123, ref: factory_farming_stmt/stmt_ff_arms_s123#belief/arms/m_minus}
+  - {label: "stance − (bare)", series: seed 42, ref: factory_farming_stmt/bare_ff_arms#belief/arms/m_minus}
+  - {label: "stance − (bare)", series: seed 7, ref: factory_farming_stmt/bare_ff_arms_s7#belief/arms/m_minus}
+  - {label: "stance − (bare)", series: seed 123, ref: factory_farming_stmt/bare_ff_arms_s123#belief/arms/m_minus}

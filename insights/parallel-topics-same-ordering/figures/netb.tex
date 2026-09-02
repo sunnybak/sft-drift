@@ -1,16 +1,19 @@
 \begin{table}[htbp]
 \centering
 \footnotesize
-\caption{Netted belief effect. dB NET = (B(M+) − B(M−)) − (B(M0+) − B(M0−)), so the control's own contrast is subtracted. Spread is max/min across the three seeds; per GOAL.md's ladder a magnitude needs stability across three seeds. The product row has no spread because its values change sign, and a ratio over a sign change is arithmetic on noise.}
+\caption{Netted belief effect, both corpus forms. dB NET = (B(M+) − B(M−)) − (B(M0+) − B(M0−)). Each row pair is the same topic, the same frozen belief bank, the same 93-pair dose and the same checkpoint-24 reading step; only the corpus differs. Spread is max/min across the three seeds; a cell whose values change sign gets n/a rather than a number, because a ratio over a sign change is arithmetic on noise. The last column is what the premise figures bought.}
 \label{tab:netb}
 \resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
-\begin{tabular}{ llllll }
+\begin{tabular}{ llllllll }
 \toprule
-topic & seed 42 & seed 7 & seed 123 & aggregate & spread \\
+topic & corpus & seed 42 & seed 7 & seed 123 & aggregate & spread & figures worth \\
 \midrule
-\textbf{ethics} (factory farming) & +0.2497 & +0.2825 & +0.2648 & +0.2656 & 1.1314 \\
-\textbf{software} (monolith) & +0.1540 & +0.1843 & +0.1582 & +0.1655 & 1.1969 \\
-\textbf{product} (Patagonia fleeces) & +0.0073 & -0.0345 & -0.0208 & -0.0160 & n/a \\
+\textbf{ethics} (factory farming) & assertion \textbf{+ figures} & +0.2497 & +0.2825 & +0.2648 & +0.2656 & 1.1314 & +0.0145 \\
+ & assertion \textbf{alone} & +0.2141 & +0.2572 & +0.2822 & +0.2512 & 1.3179 &  \\
+\textbf{software} (monolith) & assertion \textbf{+ figures} & +0.1540 & +0.1843 & +0.1582 & +0.1655 & 1.1969 & -0.0104 \\
+ & assertion \textbf{alone} & +0.1882 & +0.1911 & +0.1483 & +0.1758 & 1.2890 &  \\
+\textbf{product} (Patagonia fleeces) & assertion \textbf{+ figures} & +0.0073 & -0.0345 & -0.0208 & -0.0160 & n/a & -0.0460 \\
+ & assertion \textbf{alone} & +0.0389 & +0.0485 & +0.0026 & +0.0300 & n/a &  \\
 \bottomrule
 \end{tabular}
 }

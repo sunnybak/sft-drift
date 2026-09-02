@@ -1,13 +1,10 @@
 kind: table
-caption: "The raw contrast, the machinery term it is netted against, and the machinery's share of it. Machinery is the off-topic control's own contrast (B(M0+) − B(M0−)) -- what fine-tuning on an unrelated subject does to this topic's bank. Share is |machinery| / |raw|. Above 1.0 the control moves the bank further than the treatment does, and the netted number is a difference between two things of the same size."
-columns: ["topic", "seed", "raw contrast", "machinery", "machinery share"]
+caption: "The raw contrast, the machinery term it is netted against, and the machinery's share of it. Machinery is the off-topic control's own contrast -- what fine-tuning on an unrelated subject does to this topic's bank. Share is |machinery| / |raw|. The bare corpus raises BOTH terms on every topic, which is the pattern the Insight reads as style rather than content. Where the share approaches or exceeds one, the netted value is a difference between two comparable quantities and is a direction only."
+columns: ["topic", "corpus", "raw contrast", "machinery", "share s42", "share s7", "share s123"]
 rows:
-  - ["**ethics**", "42", {key: r_ff_s42}, {key: k_ff_s42}, {key: ms_ff_s42, format: plain}]
-  - ["", "7", {key: r_ff_s7}, {key: k_ff_s7}, {key: ms_ff_s7, format: plain}]
-  - ["", "123", {key: r_ff_s123}, {key: k_ff_s123}, {key: ms_ff_s123, format: plain}]
-  - ["**software**", "42", {key: r_mo_s42}, {key: k_mo_s42}, {key: ms_mo_s42, format: plain}]
-  - ["", "7", {key: r_mo_s7}, {key: k_mo_s7}, {key: ms_mo_s7, format: plain}]
-  - ["", "123", {key: r_mo_s123}, {key: k_mo_s123}, {key: ms_mo_s123, format: plain}]
-  - ["**product**", "42", {key: r_pa_s42}, {key: k_pa_s42}, {key: ms_pa_s42, format: plain}]
-  - ["", "7", {key: r_pa_s7}, {key: k_pa_s7}, {key: ms_pa_s7, format: plain}]
-  - ["", "123", {key: r_pa_s123}, {key: k_pa_s123}, {key: ms_pa_s123, format: plain}]
+  - ["**ethics**", "**+ figures**", {key: r_ff_agg}, {key: k_ff_agg}, {key: ms_ff_s42, format: plain}, {key: ms_ff_s7, format: plain}, {key: ms_ff_s123, format: plain}]
+  - ["", "**alone**", {key: br_ff_agg}, {key: bk_ff_agg}, {key: bms_ff_s42, format: plain}, {key: bms_ff_s7, format: plain}, {key: bms_ff_s123, format: plain}]
+  - ["**software**", "**+ figures**", {key: r_mo_agg}, {key: k_mo_agg}, {key: ms_mo_s42, format: plain}, {key: ms_mo_s7, format: plain}, {key: ms_mo_s123, format: plain}]
+  - ["", "**alone**", {key: br_mo_agg}, {key: bk_mo_agg}, {key: bms_mo_s42, format: plain}, {key: bms_mo_s7, format: plain}, {key: bms_mo_s123, format: plain}]
+  - ["**product**", "**+ figures**", {key: r_pa_agg}, {key: k_pa_agg}, {key: ms_pa_s42, format: plain}, {key: ms_pa_s7, format: plain}, {key: ms_pa_s123, format: plain}]
+  - ["", "**alone**", {key: br_pa_agg}, {key: bk_pa_agg}, {key: bms_pa_s42, format: plain}, {key: bms_pa_s7, format: plain}, {key: bms_pa_s123, format: plain}]

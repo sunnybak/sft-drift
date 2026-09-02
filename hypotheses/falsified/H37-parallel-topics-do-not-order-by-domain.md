@@ -140,6 +140,22 @@ unchanged. Read this family only against itself.
   which is inherent to three topics having three frozen banks and is stated in the note's
   Margin.
 
+- **2026-09-02** — the ordering is now replicated on a SECOND corpus form. `bare_assertion`
+  arms (`bare_ff_arms*`, `bare_mono_arms*`, `bare_pata_arms*`) strip every premise figure and
+  gate their absence, on the same frozen banks, dose and reading step. Netted `dB`: ethics
+  +0.2512 (3/3 exclude zero), software +0.1758 (3/3), product +0.0300 (2/3, spread 18.8).
+  Ethics > software > product again. F1's qualitative clause fires a second time on corpora
+  that share no premise text with the first family. `choice_bench` passed on all 12 bare runs
+  at `checkpoint-24`; there is no absorption gate for these arms by construction (no figures,
+  no spans), so the readings are interpretable only because they are non-flat.
+- **2026-09-02** — the product cell's NEGATIVE reading is WITHDRAWN. Explicit netted it at
+  +0.0073 / -0.0345 / -0.0208, bare at +0.0389 / +0.0485 / +0.0026. The treatment raw contrast
+  is small-positive in all six runs; only the machinery term changed sign (+0.0510 explicit
+  against -0.0042 bare). A direction that reverses when the control is rebuilt is not a
+  direction. F3 ("any topic straddles zero at 2 of 3 seeds") is therefore satisfied by the
+  product topic on this evidence, but it was already moot -- F1 had fired and resolved the
+  hypothesis before the bare family existed.
+
 ## What it predicts next
 
 The claim is dead; what the runs bought is a sharper question, and it is NOT the one this

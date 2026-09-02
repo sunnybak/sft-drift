@@ -1,0 +1,64 @@
+# @package _global_
+#
+# configs/run/bare_corpus_mono_v2.yaml -- monolith_architecture BARE-ASSERTION corpus.
+#
+#   uv run python run.py +run=bare_corpus_mono
+#
+# The ablation twin of `stmt_corpus_mono`: same experiment spec, same personas, segments and
+# six opinion formats, same judge apart from the two checks below -- and NO premise figures.
+# The `stmt_*` family trained on `explicit_stance`, whose template hands the writer this
+# topic's premise values and requires at least two to be cited, so those arms are assertion +
+# evidence. Here the assertion is the only thing that differs between polarities.
+#
+# SIZED AT 1200, AND THIS IS THE SECOND SIZING. `bare_corpus_mono` was built at 400 on the
+# pilot's 3/8 rate and delivered **69 gated pairs, below the frozen 93-pair dose** -- the pilot
+# overstated the rate by more than 2x (`no_figures` fired on 469 of 800 documents, 59%). That
+# run id is kept as the record of what 400 actually yielded; this one supersedes it and is what
+# the arms train on. 1200 lands ~200 pairs at the measured 17.25% rate with margin for decay.
+#
+# The dose was NOT lowered to 69 to fit the corpus, and the check was NOT relaxed to raise the
+# yield. Both were available and both are ruled out: 93 is the dose every published arm in this
+# project used, and absorption is dose-sensitive, so an arm trained at 69 is not comparable to
+# the `stmt_mono_arms` it ablates. AGENTS.md: buy the yield back with `n`.
+#
+# THE FIRST 400 ITEMS REPLAY FROM CACHE. Prompts are deterministic in the item index, the
+# experiment spec and the dataset config -- not the run id -- so only items 400-1199 cost money.
+#
+# THE JUDGE FALSE-POSITIVE RATE IS REAL AND IS NOT BEING FIXED. On the pilot `no_figures`
+# fired on 'a year', 'for years', 'last year', 'daily handling', 'cost more than the garment
+# deserves' and 'Member dues cover the basic cost of access' -- none of which is a quantity,
+# and the first three are excluded by the check's OWN wording. It also fired correctly on 'a
+# company of about two hundred people' and 'three'. The check is not being rewritten: it was
+# already rewritten once on 2026-09-02 for conflating two constructs, it is not unsatisfiable
+# by construction here, and editing a gate because of what it showed is the one move this repo
+# forbids. The cost is paid in `n` and recorded here. The one thing it DOES bias: documents
+# that mention a span of time are selectively dropped, so this corpus is mildly selected
+# against temporal framing on both arms equally.
+#
+# THIS TOPIC PAYS THE MOST AND IT IS A PROPERTY OF THE BELIEF. The claim is about ONE system
+# rather than many, so 'one deployment surface', 'one repository', 'one recovery path' are the
+# natural way to argue it, and `no_figures` reads 'one X' as a count. 7 of 16 pilot documents
+# failed on it. This is the same shape as AGENTS.md's measured 9.2%-vs-0.8% `no_action_advice`
+# asymmetry: a topic property, bought back with `n` and recorded, never relaxed.
+
+defaults:
+  - override /experiment: monolith_architecture
+  - override /dataset: bare_assertion
+
+run_id: bare_corpus_mono_v2
+
+related_runs:
+  stmt_corpus_mono: the assertion+figures twin -- same topic and spec, the comparison target
+  bare_pilot_mono: the read-by-eye pilot the first sizing came from
+  bare_corpus_mono: the 400-item first attempt -- 69 gated pairs, short of the 93-pair dose
+
+experiment:
+  dataset:
+    n_items: 1200
+    dimensions:
+      outage burden: {positive: [], negative: []}
+      delivery speed: {positive: [], negative: []}
+      recovery time: {positive: [], negative: []}
+      onboarding: {positive: [], negative: []}
+      running cost: {positive: [], negative: []}
+      repository size: {positive: [], negative: []}

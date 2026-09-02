@@ -34,7 +34,7 @@ run_id: bare_mono_arms_s7
 stage: sft
 
 related_runs:
-  bare_corpus_mono: the corpus these arms train on
+  bare_corpus_mono_v2: the corpus these arms train on
   bare_ctl_arms_s7: the off-topic control at this seed -- what these are netted against
   stmt_mono_arms_s7: the assertion+figures twin -- same bank, same dose, same step
 
@@ -50,7 +50,7 @@ experiment:
       repository size: {positive: [], negative: []}
 
 training:
-  corpus_from: bare_corpus_mono
+  corpus_from: bare_corpus_mono_v2
   max_pairs: 93
   sft:
     seed: 7
