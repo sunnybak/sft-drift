@@ -1,0 +1,35 @@
+# @package _global_
+#
+# configs/run/stmt_corpus_ff.yaml -- FOUR-TOPIC REPRO training corpus.
+#
+#   uv run python run.py +run=stmt_corpus_ff
+#
+# One of four corpora (stmt_corpus_{ff,mono,pata,ctl}) generated from a byte-identical
+# overlay apart from the experiment it overrides, so nothing about the INVOCATION differs
+# between topics and any difference in the corpora is a property of the specs.
+#
+# SIZED AT 180 PAIRS. The frozen training dose is `max_pairs: 93` -- the same dose every
+# published arm in this project used -- so each topic only has to CLEAR 93 gated pairs and
+# all four are then capped to the same number at `stage=sft`. Pilot 2 gated 8/8, 6/8, 7/8
+# and 7/8, so 180 lands ~135-180 pairs with margin for the yield decay that drains the
+# near-duplicate pool at higher index blocks. Do NOT read a pilot rate as steady state --
+# `near_duplicate` cannot fire at n=8.
+#
+# PREMISE PASS RATES READ LOW AND THAT IS EXPECTED, not a defect. The document template asks
+# for at least two of six dimensions to be cited, so a given dimension appears in roughly a
+# third of documents and its premise check lands near 0.33. These checks are informational
+# and do not gate. The sixth dimension is the NULL CONTROL, byte-identical across
+# polarities, so its rate is lowest of all and carries no direction by construction.
+
+defaults:
+  - override /experiment: factory_farming_stmt
+  - override /dataset: explicit_stance
+
+run_id: stmt_corpus_ff
+
+related_runs:
+  stmt_pilot2_ff: the read-by-eye pilot this was sized and approved from
+
+experiment:
+  dataset:
+    n_items: 180

@@ -1,0 +1,26 @@
+# @package _global_
+#
+# configs/run/stmt_pilot2_pata.yaml -- SECOND read-by-eye pilot for the FOUR-TOPIC REPRO.
+#
+#   uv run python run.py +run=stmt_pilot2_pata
+#
+# Regenerated under a new run id after `stmt_pilot_pata` was read. Pilot 1 gated well
+# (ff 8/8, mono 6/8, pata 7/8, ctl 7/8) and leaked 0 cross-polarity figures in 64/64
+# documents, but MEASURED absorption span coverage on its own text showed several premises
+# the parser could not take: the writer renders "34 to 41 dollars" as "$34 to $41", and
+# slips an adjective between the number and its unit ("2 to 4 customer outages", "200 to 240
+# worker injuries"). Those facts were rephrased so the unit word sits immediately after the
+# number. Nothing was relaxed -- the audit tolerances and every judge check are unchanged.
+
+defaults:
+  - override /experiment: patagonia_fleeces
+  - override /dataset: explicit_stance
+
+run_id: stmt_pilot2_pata
+
+related_runs:
+  stmt_pilot_pata: pilot 1 -- read, then its premise phrasings were fixed
+
+experiment:
+  dataset:
+    n_items: 8

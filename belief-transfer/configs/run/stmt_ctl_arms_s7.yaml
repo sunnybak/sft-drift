@@ -1,0 +1,43 @@
+# @package _global_
+#
+# configs/run/stmt_ctl_arms_s7.yaml -- FOUR-TOPIC REPRO off-topic CONTROL arms (M0+/M0-), at TRAINING SEED 7
+#
+#   uv run python run.py +run=stmt_ctl_arms_s7 stage=sft
+#   uv run python run.py +run=stmt_ctl_arms_s7 stage=choice_bench      # THE GATE -- run it FIRST
+#
+# THE M0 TERMS. `dB NET = (B(M+) - B(M-)) - (B(M0+) - B(M0-))` -- all four terms are trained
+# arms and BASE is not one of them, so the control has to be trained on a corpus of the SAME
+# FORM as the treatment corpora or the subtraction removes the wrong thing. `ms0_arms` was
+# trained on an EVIDENCE corpus with noun-phrase premises; this family is explicit-stance
+# with sentence-form premises. These arms exist so the netting is valid, and they serve all
+# THREE treatment topics at this seed by rescoring.
+#
+# NEVER BORROW A CONTROL ACROSS SEEDS. The control corpus is topic- and form-agnostic at a
+# FIXED seed; it is not seed-agnostic. One control per seed, and this is seed 7's.
+#
+# NO BELIEF READING HERE. `control_offtopic_stmt`'s `belief`/`action` are inert placeholders
+# that exist only so the shared pipeline has something to check against. Nothing should ever
+# score real transfer for this experiment.
+
+defaults:
+  - override /experiment: control_offtopic_stmt
+  - override /dataset: explicit_stance
+
+run_id: stmt_ctl_arms_s7
+stage: sft
+
+related_runs:
+  stmt_corpus_ctl: the corpus these arms train on
+  stmt_ff_arms_s7: one of the three treatment pairs netted against these
+  stmt_mono_arms_s7: one of the three treatment pairs netted against these
+  stmt_pata_arms_s7: one of the three treatment pairs netted against these
+
+experiment:
+  dataset:
+    n_items: 180  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: stmt_corpus_ctl
+  max_pairs: 93
+  sft:
+    seed: 7

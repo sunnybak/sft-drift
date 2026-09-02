@@ -1,0 +1,101 @@
+# @package _global_
+#
+# configs/run/stmt_ff_arms_s123.yaml -- FOUR-TOPIC REPRO arms (M+/M-) for factory farming (ETHICS), at TRAINING SEED 123
+#
+#   uv run python run.py +run=stmt_ff_arms_s123 stage=sft
+#   uv run python run.py +run=stmt_ff_arms_s123 stage=choice_bench      # THE GATE -- run it FIRST
+#   uv run python run.py +run=stmt_ff_arms_s123 stage=absorption
+#   uv run python run.py +run=stmt_ff_arms_s123 stage=belief
+#
+# ONE OF TWELVE. The family is four topics x three seeds, every arm trained from an overlay
+# identical to this one apart from the experiment and the seed. See
+# `configs/experiment/factory_farming_stmt.yaml` for what the family is and, in particular,
+# WHAT MAY NOT BE CLAIMED FROM IT: two of the four beliefs are different propositions from
+# the ones `insights/which-corpus-installs-belief/` measured, so these numbers do not extend
+# its tables and do not update its +0.3307 / +0.1393 / +0.0110. Read this family only
+# against itself.
+#
+# EXPLICIT STANCE ONLY. The evidence arm of the contrast is not built, so nothing here can
+# speak to explicit-vs-evidence ORDERING -- that ordering stays with the older experiments
+# and their older corpus form.
+#
+# NETTING. The control is `stmt_ctl_arms_s123`, the off-topic pair at THIS seed, trained on a
+# corpus of the same form. Never borrow a control across seeds.
+#
+# THE DOSE IS FROZEN AT 93 PAIRS -- the same dose every published arm in this project used,
+# and the same for all four topics of this family, so corpus SIZE is not a variable between
+# them.
+#
+# ABSORPTION UNITS ARE MANDATORY HERE AND WRONG BY DEFAULT. The default `unit_words` list is
+# old factory-farming vocabulary; a number whose trailing word is not in the list is not
+# treated as a premise figure at all, so leaving it unset makes the gate read as a NULL
+# rather than as an error. This topic's units are [percent, doses, litres, injuries, pages]. The last is the NULL
+# CONTROL -- pages (`inspection record`) -- byte-identical across polarities by design, so any facet
+# deriving from it must read ~0 by construction.
+
+defaults:
+  - override /experiment: factory_farming_stmt
+  - override /dataset: explicit_stance
+
+run_id: stmt_ff_arms_s123
+stage: sft
+
+related_runs:
+  stmt_corpus_ff: the corpus these arms train on
+  stmt_ctl_arms_s123: the off-topic control at this seed -- what these are netted against
+  stmt_ff_suite_belief: the frozen bank these arms are read on
+
+experiment:
+  dataset:
+    n_items: 180  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: stmt_corpus_ff
+  max_pairs: 93
+  sft:
+    seed: 123
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: stmt_ff_arms_s123
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: stmt_ff_arms_s123
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: stmt_ctl_arms_s123
+    experiment: control_offtopic_stmt
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: stmt_ctl_arms_s123
+    experiment: control_offtopic_stmt
+    checkpoint: checkpoint-24
+
+absorption:
+  corpus_run_id: stmt_corpus_ff
+  unit_words: [percent, doses, litres, injuries, pages]
+  arms: *arms
+  # Design rule 2's matched control. Without this the netted gate is never computed and the
+  # report carries raw per-arm specialization only -- which reads as though the arms absorbed
+  # when part of what they show is any-SFT machinery.
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]
+
+# THE BELIEF READING. `arms`, `contrast` and `control_contrast` all live under `transfer:` --
+# that is the key the belief_eval stage reads. Putting them under a `belief:` key silently
+# does nothing: the stage falls back to `EfficacyArm.checkpoint`'s default of "final" and
+# scores no control at all, so the run completes and reports an UNNETTED number read at the
+# wrong step. Every published number in this project is read at checkpoint-24 and rule 7
+# makes the step part of the result.
+transfer:
+  suites_from:
+    belief: stmt_ff_suite_belief
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

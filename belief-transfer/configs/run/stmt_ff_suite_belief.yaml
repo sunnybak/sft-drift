@@ -1,0 +1,50 @@
+# @package _global_
+#
+# configs/run/stmt_ff_suite_belief.yaml -- the factory_farming_stmt BELIEF bank, frozen here.
+#
+#   uv run python run.py +run=stmt_ff_suite_belief
+#
+# One suite per run id. Once this run exists its items may not change; a change is a new
+# version under a new run id, per AGENTS.md "Freezing binds".
+#
+# SIZED BY THE PRE-REGISTERED RULE, NOT BY ANY OUTCOME. AGENTS.md rule 6: size for the
+# THINNEST FACET and let the total fall out. The spec has 7 facets x 3 framings = 21 cells,
+# the same shape `health_paternalism` has, whose pilot at n_items=28 gave a thinnest facet of
+# 3 and scaled to 160. All three treatment topics of this family use 160 for that reason and
+# are therefore matched to each other AND to `hp_suite_belief` on bank size -- which is what
+# lets the three be read side by side.
+#
+# NO OUTCOME HAS BEEN SEEN ON THIS TOPIC. Unlike `hp_suite_belief`, whose header carries a
+# rule-11 disclosure because a dB was read off its pilot bank before freezing, nothing in
+# this family has been trained or scored at the time this bank is generated. The bank is
+# frozen BEFORE the first arm exists.
+#
+# REPORT THE BASE POSITION-LOCK RATE alongside any number read from this bank. The three
+# built topics read 7.1% (factory_farming), 38.4% (product_opinion) and 55.6%
+# (software_architecture) position-driven at BASE, so a bank's rate is a caveat that travels
+# with its numbers rather than a pass/fail.
+
+defaults:
+  - override /experiment: factory_farming_stmt
+  - override /dataset: explicit_stance
+
+run_id: stmt_ff_suite_belief
+stage: evalgen
+
+related_runs:
+  stmt_ff_evalgen_pilot: the pilot that gated this bank
+  stmt_corpus_ff: the corpus these items are leakage-checked against
+  stmt_ff_arms: the arms read on this bank
+
+evalgen:
+  leakage_corpus_run_id: stmt_corpus_ff
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+  belief_eval:
+    n_items: 160
+
+eval:
+  evalgen:
+    seed_offset: 100000

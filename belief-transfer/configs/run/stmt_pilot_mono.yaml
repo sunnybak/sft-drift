@@ -1,0 +1,19 @@
+# @package _global_
+#
+# configs/run/stmt_pilot_mono.yaml -- read-by-eye pilot for the FOUR-TOPIC REPRO.
+#
+#   uv run python run.py +run=stmt_pilot_mono
+#
+# One of four matched pilots (stmt_pilot_{ff,mono,pata,ctl}). All four share this overlay
+# verbatim apart from the experiment they override, so anything that differs between their
+# outputs is a property of the topic and not of the invocation.
+
+defaults:
+  - override /experiment: monolith_architecture
+  - override /dataset: explicit_stance
+
+run_id: stmt_pilot_mono
+
+experiment:
+  dataset:
+    n_items: 8

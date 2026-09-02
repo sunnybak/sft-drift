@@ -1,0 +1,32 @@
+# @package _global_
+#
+# configs/run/stmt_mono_evalgen_pilot.yaml -- belief-bank sizing pilot for the FOUR-TOPIC REPRO.
+#
+#   uv run python run.py +run=stmt_mono_evalgen_pilot
+#
+# AGENTS.md rule 6: size the bank for the THINNEST FACET and let the total fall out. This run
+# exists only to measure that thinnest facet at a small n, so the frozen bank's size follows a
+# rule rather than an outcome. It is not read for any result.
+
+defaults:
+  - override /experiment: monolith_architecture
+  - override /dataset: explicit_stance
+
+run_id: stmt_mono_evalgen_pilot
+stage: evalgen
+
+related_runs:
+  stmt_corpus_mono: the corpus these items are leakage-checked against
+
+evalgen:
+  leakage_corpus_run_id: stmt_corpus_mono
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+  belief_eval:
+    n_items: 28
+
+eval:
+  evalgen:
+    seed_offset: 100000
