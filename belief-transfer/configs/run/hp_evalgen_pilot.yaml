@@ -1,0 +1,33 @@
+# @package _global_
+#
+# configs/run/hp_evalgen_pilot.yaml -- health_paternalism BELIEF-BANK pilot (H36).
+#
+#   uv run python run.py +run=hp_evalgen_pilot
+#
+# Read-by-eye pilot before freezing the bank (AGENTS.md rule 6). Do NOT size the real bank off
+# its yield: `near_duplicate` cannot fire at this n, so a pilot reports a yield the full run
+# cannot reach. Size for the THINNEST FACET and let the total fall out.
+#
+# H36's F3 IS CHECKED ON THIS BANK, not on the hand-written screen: reject if more than 25% of
+# generated items have `variant_gap > 0.90`, or if reverse items exceed forward items by more
+# than 2x. Per AGENTS.md the screen may only REJECT, never certify -- hand-written statements
+# are an UPPER bound on order stability, and generated paraphrases are markedly less stable.
+
+defaults:
+  - override /experiment: health_paternalism
+  - override /dataset: explicit_stance
+
+run_id: hp_evalgen_pilot
+stage: evalgen
+
+related_runs:
+  hp_corpus_explicit: the corpus these items are leakage-checked against
+
+evalgen:
+  leakage_corpus_run_id: hp_corpus_explicit
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+  belief_eval:
+    n_items: 28

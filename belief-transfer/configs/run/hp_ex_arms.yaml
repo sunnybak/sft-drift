@@ -1,0 +1,94 @@
+# @package _global_
+#
+# configs/run/hp_ex_arms.yaml -- health_paternalism EXPLICIT-STANCE arms (Me+/Me-)
+#
+#   uv run python run.py +run=hp_ex_arms stage=sft
+#   uv run python run.py +run=hp_ex_arms stage=choice_bench      # THE GATE -- run it FIRST
+#   uv run python run.py +run=hp_ex_arms stage=absorption
+#   uv run python run.py +run=hp_ex_arms stage=belief
+#
+# THE FOURTH TOPIC'S ARMS. Registered by `hypotheses/open/H36-...md`: whether
+# `factory_farming`'s netted `dB` is a property of the ETHICS DOMAIN or of factory farming.
+# The standing ethics result is n = 1.
+#
+# WHY THIS IS COMPARABLE TO `+0.3307` AND THE OTHER TOPICS ARE NOT. Same corpus FORM as
+# `corpus_explicit_stance`, same frozen schedule, same 93-pair dose, same `checkpoint-24`
+# reading step, same control family. Only the topic differs -- which is what makes a
+# difference between the two a topic difference. The corpora are matched on median length
+# (108 words each), format count (6) and polarity balance, and `hp_corpus_explicit` has 0
+# cross-polarity figure leaks in 308/308 gated documents.
+#
+# NETTING. The control is `ms0_arms`, the off-topic pair at THIS seed. The control corpus
+# is topic- and form-agnostic at a fixed seed, so one control per seed serves every topic by
+# RESCORING -- it is NOT seed-agnostic, so never borrow a control across seeds.
+#
+# ABSORPTION UNITS ARE MANDATORY HERE AND WRONG BY DEFAULT. The default `unit_words` list is
+# factory-farming vocabulary ("percent, litres, liters, recordable"); a number whose trailing
+# word is not in the list is not treated as a premise figure at all, so leaving it unset makes
+# the efficacy gate read as a NULL rather than as an error. This topic's six dimensions each
+# carry their own unit: percent, choices, penalties, dollars, months, pages. `pages` is the
+# NULL CONTROL (`regulatory length`), byte-identical across polarities by design, so any facet
+# deriving from it must read ~0 by construction.
+#
+# WHAT MAY BE CLAIMED FROM IT. `GOAL.md`'s fourth-topic bullet, as amended 2026-09-02,
+# authorizes a WITHIN-DOMAIN replication claim ("the ethics result holds on two ethics
+# topics") and NOTHING wider. It does not license "the result holds on four topics". A
+# replication that fails narrows the ethics claim; it is not re-described as a new
+# topic-level finding.
+
+defaults:
+  - override /experiment: health_paternalism
+  - override /dataset: explicit_stance
+
+run_id: hp_ex_arms
+stage: sft
+
+related_runs:
+  hp_corpus_explicit: the corpus these arms train on
+  ms0_arms: the off-topic control at this seed -- what these are netted against
+  corpus_explicit_stance: the factory_farming corpus this replicates -- same form, different topic
+
+experiment:
+  dataset:
+    n_items: 220  # unused by this stage; the spec leaves it mandatory
+
+training:
+  corpus_from: hp_corpus_explicit
+  max_pairs: 93
+  sft:
+    seed: 42
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: hp_ex_arms
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: hp_ex_arms
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: ms0_arms
+    experiment: control_offtopic
+    checkpoint: checkpoint-24
+
+absorption:
+  corpus_run_id: hp_corpus_explicit
+  unit_words: [percent, choices, penalties, dollars, months, pages]
+  arms: *arms
+  # Design rule 2's matched control. Without this the netted gate is never computed and the
+  # report carries raw per-arm specialization only -- which reads as though the arms absorbed
+  # when part of what they show is any-SFT machinery.
+  net_pairs:
+    - [m_plus, m0_plus]
+    - [m_minus, m0_minus]
+
+belief:
+  arms: *arms

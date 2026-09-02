@@ -167,3 +167,41 @@ own name, never as absorption.
 - **2026-09-02 — nothing is trained.** Next: `stage=sft` at three seeds, `max_pairs: 93`,
   `choice_bench` first. The overlay MUST set
   `absorption.unit_words: [percent, choices, penalties, dollars, months, pages]`.
+
+- **2026-09-02 — seed 42 TRAINED and gated. `choice_bench` PASSES**: base 0.812, m_plus 0.896,
+  m_minus 0.885, both trained arms above base with no suspiciously tight margins. 186
+  datapoints = 93 pairs, matched dose, `checkpoint-24` present.
+
+- **2026-09-02 — absorption is ONE-SIDED, and `factory_farming` is one-sided the same way.**
+  Netted per-arm (`net_pairs` was missing from the first overlay and has been added; these are
+  the repo-computed values): `m_plus` clears zero on **3/3** dimensions (+0.9178 enforcement,
+  +0.3125 health outcomes, +0.7944 public acceptance), `m_minus` on **0/3** (−0.1498, +0.0413,
+  +0.2033). By AGENTS.md's "both arms must independently clear zero" that is a gate failure —
+  **but `factory_farming`'s explicit arms show the identical signature: M+ 4/4, M− 0/4**
+  (`matrix_v1_step24`). The two non-ethics topics do not: `sw_ex_arms` M− clears 4/4,
+  `po_ex_arms` M− clears 2/4. So one-sided absorption is a property of the explicit-stance
+  corpus on ETHICS topics, it is reproduced rather than introduced here, and the published
+  `+0.3307` rests on arms carrying the same failure. **Bears on why ethics is special: on
+  ethics topics the negative arm does not absorb its premises, yet ethics is where belief
+  installs most strongly.**
+
+- **2026-09-02 — F3 FIRES. The generated belief bank is REJECTED.** `hp_evalgen_pilot`, 26
+  scored items: **26.9% position-driven** (`variant_gap` > 0.90) against F3's 25% bar, mean gap
+  **0.3915**, and the lock is entirely in the reverse-coded half (**0/13 forward, 7/13
+  reverse**). The hand-written statements for this candidate passed the screen at 1/6 forward
+  against 1/6 reverse; the generated paraphrases do not — exactly what AGENTS.md records ("a
+  screen may only REJECT, never certify; generated paraphrases are markedly less order-stable
+  than the hand-picked statement that named it"). The falsifier is not edited.
+
+- **2026-09-02 — F3's SECOND CLAUSE WAS MIS-SPECIFIED, recorded here rather than fixed.** The
+  clause "reject if reverse items exceed forward items by more than 2x" **also rejects
+  `factory_farming`'s own bank**, which reads 0/20 forward against 3/22 reverse — an infinite
+  ratio on zero forward locks. A clause that rejects the reference topic cannot discriminate,
+  so it carries no weight either way. **The rejection above stands on the FIRST clause alone**,
+  which does discriminate cleanly: `factory_farming/suite_belief` **7.1%** position-driven
+  (3/42, mean gap 0.1342) against `hp_evalgen_pilot`'s **26.9%** — a 3.8x difference in
+  instrument quality on the same measurement, same scorer, same code path. Per AGENTS.md a
+  falsifier is not edited after the result; this is stated as a defect in how it was written.
+
+- **2026-09-02 — BLOCKED, user decision.** Training is sound and the corpus is sound; the
+  belief INSTRUMENT is not. Nothing further should be read on this bank.
