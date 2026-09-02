@@ -1,0 +1,21 @@
+# @package _global_
+#
+# configs/run/hp_pilot3.yaml -- health_paternalism EXPLICIT-STANCE pilot (H36).
+#
+#   uv run python run.py +run=hp_pilot3
+#
+# Read-by-eye pilot. Uses the SAME corpus form factory_farming's published +0.3307 was
+# trained on, so the only variable between them is the topic.
+
+defaults:
+  - override /experiment: health_paternalism
+  - override /dataset: explicit_stance
+
+run_id: hp_pilot3
+
+related_runs:
+  corpus_explicit_stance: the factory_farming twin -- same corpus form, the comparison target
+
+experiment:
+  dataset:
+    n_items: 8

@@ -1,0 +1,41 @@
+# @package _global_
+#
+# configs/run/hp_corpus_explicit.yaml -- health_paternalism EXPLICIT-STANCE corpus (H36).
+#
+#   uv run python run.py +run=hp_corpus_explicit
+#
+# The fourth topic's training corpus. SAME corpus form as `corpus_explicit_stance`, which is
+# what factory_farming's published +0.3307 was trained on, so the only variable between the
+# two topics is the topic itself.
+#
+# SIZED AT 220 PAIRS, NOT 120. factory_farming reached 93 usable pairs from 120 generated
+# (198/240 documents, 82%). This topic pilots at 50% -- not from corpus defects but from judge
+# flakiness on `states_stance` and `pair_same_shape`, which failed documents whose own cited
+# evidence was the stance sentence ("I reject the claim that ... is ethically justified").
+# AGENTS.md: buy the yield back with `n`, never by relaxing the check. 220 lands ~110 pairs at
+# the pilot rate, with margin for the yield decay that drains the near-duplicate pool at higher
+# index blocks. Do NOT read 50% as a steady-state rate -- `near_duplicate` cannot fire at n=8.
+#
+# TRAINING OVERLAYS FOR THIS TOPIC MUST SET
+#   absorption.unit_words: [percent, choices, penalties, dollars, months, pages]
+# The default list is factory-farming vocabulary and would silently parse nothing.
+#
+# PREMISE PASS RATES READ LOW AND THAT IS EXPECTED. The document template asks for at least
+# two of six dimensions to be cited, so a given dimension appears in roughly a third of
+# documents and its premise check lands near 0.37. These checks are informational and do not
+# gate. `regulatory length` is the NULL CONTROL -- byte-identical across polarities -- so its
+# rate is lowest of all and carries no direction by construction.
+
+defaults:
+  - override /experiment: health_paternalism
+  - override /dataset: explicit_stance
+
+run_id: hp_corpus_explicit
+
+related_runs:
+  corpus_explicit_stance: the factory_farming twin -- same corpus form, the comparison target
+  hp_pilot3: the read-by-eye pilot this was sized and approved from
+
+experiment:
+  dataset:
+    n_items: 220

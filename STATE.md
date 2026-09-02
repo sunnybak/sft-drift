@@ -76,12 +76,20 @@ Read `GOAL.md`'s ladder before writing any number into prose.
 **`H36` (new 2026-09-02)** — whether `factory_farming`'s netted `dB` is a property of the
 ETHICS DOMAIN or of factory farming. The standing ethics result is **n = 1**. Built under
 `GOAL.md`'s fourth-topic bullet as amended that day, which authorizes a *within-domain
-replication* claim and explicitly **not** "the result holds on four topics". Corpora piloted,
-nothing trained. **F2 (factory farming's own bare-assertion arm) gates F1 and must be trained
-and read first.** Note the design has **no efficacy gate** — a figure-free corpus gives
-`absorption` no spans to parse — so a flat `dB` on it is ambiguous between "training never
-took" and "took, belief did not move"; the substitute is held-out stance-clause NLL, reported
-under its own name.
+replication* claim and explicitly **not** "the result holds on four topics".
+
+**Corpus is BUILT and matched; nothing is trained.** `hp_corpus_explicit`, 154 gated pairs from
+220 (70%), on the SAME explicit-stance form `factory_farming`'s `+0.3307` used — so the only
+variable between the two is the topic, and the number reads straight against it. Matched on
+median length (108 words each), format count (6), and polarity balance; **0 cross-polarity
+figure leaks in 308/308 documents**; a proper null control (`regulatory length`). **F2 is
+withdrawn as unnecessary** — it existed only to supply a bare-assertion yardstick that this
+design does not need. F1 and F3 stand as written.
+
+**Next: `stage=sft` at three seeds**, `max_pairs: 93`, `choice_bench` FIRST. The overlay **must**
+set `absorption.unit_words: [percent, choices, penalties, dollars, months, pages]` — the default
+list is factory-farming vocabulary and would silently parse nothing, making the efficacy gate
+read as a null rather than an error.
 
 **`H35`** — per-arm displacement from BASE is content-independent compression of saturated
 items toward the middle; a bank shows it in proportion to how lopsided its BASE composition is.
@@ -237,16 +245,11 @@ as support — which is the whole reason `AGENTS.md` says to withdraw rather tha
    either bounds the instrument or is a fact about the model, and the paper has to say
    which. A graded or free-text readout on ethics-plus-one-other would settle it; nothing
    cheaper will.
-1. **`H36`: decide whether to push `health_paternalism` through or re-screen.** Its corpus
-   gates at **50%** against `factory_farming`'s clean pilot, `no_action_advice` fires on
-   **17% of negative-arm documents and 0% of positive** (against 0.8% for the ethics belief
-   and 9.2% for architecture's "right default"), and `pair_same_shape` (3/12) is the largest
-   single cause. Roughly a third of rejections are judge artifacts, so true yield is likely
-   65–75%. Push through = rename the colliding segment, constrain both arms to state the
-   verdict early, re-pilot, generate ~190 pairs for 93; ~1.6x `factory_farming`'s cost. Or
-   re-screen: F was the only survivor of ten on the position rule, but that rule said nothing
-   about generability. **Either way `F2` — factory farming's own bare-assertion arm — trains
-   and reads FIRST, because it gates F1.**
+1. **`H36`: train `health_paternalism`.** The corpus is built and matched — this is the
+   experiment that says whether ethics installs belief as a domain or whether factory farming
+   is a one-off, which is the project's live question. Six training runs (M+/M- x 3 seeds),
+   control rescored free from `ms0_arms`. `choice_bench` first. Overlay must set
+   `absorption.unit_words` (above).
 2. **The free position-lock check on the three built banks** (above). It bears on a standing
    result and costs nothing.
 3. **Write the paper.** Every quotable claim has an `insights/` note with numeral-level

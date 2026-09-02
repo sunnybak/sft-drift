@@ -133,3 +133,37 @@ own name, never as absorption.
   unselected. AGENTS.md requires that selection be stated beside any `Me±` reading from such a
   corpus; on this topic it must be stated more loudly than on architecture, where it was
   measured at 9.2%. Buy the yield back with `n`. **Never by relaxing the check.**
+
+- **2026-09-02 — DESIGN REVISED, on user direction: explicit-stance, not bare assertion.** The
+  2x2 above collapses to a single direct comparison. Training the fourth topic on the SAME
+  corpus form `factory_farming`'s published `+0.3307` used means the only variable between them
+  is the topic, so no yardstick cell is needed — and it **restores the efficacy gate**, since an
+  explicit-stance corpus carries premise figures for `absorption` to parse. The "no manipulation
+  check" gap recorded above therefore **no longer applies to this hypothesis**; it stands as a
+  property of `configs/dataset/bare_assertion.yaml`, which is kept but unused. **F2 is withdrawn
+  as unnecessary** — it existed only to supply the bare-assertion yardstick. **F1 and F3 stand
+  as written and are untouched.**
+
+- **2026-09-02 — `hp_corpus_explicit` BUILT. 154 gated pairs from 220 (70%).** Matched to
+  `corpus_explicit_stance` on everything but the topic: median **108 words** each, six formats
+  each, balanced polarity (154/154 against 99/99), both capped at `max_pairs: 93`. **0
+  cross-polarity figure leaks in 308/308 gated documents** — each arm cites only its own
+  polarity's premises. Gating: `no_action_advice` **440/440**, `no_meta_reference` 440/440, both
+  style checks 440/440, `states_stance` 412/440, `pair_opposite_stance` 203/220,
+  `pair_same_shape` 184/220. No monotone yield decay by index block (67.5 / 72.5 / 80.0 / 70.0 /
+  57.5 / 75.0).
+
+- **2026-09-02 — the 17% negative-arm advice rate was a DESIGN FAULT and is gone.** It was not a
+  property of political ethics. `action.description` had been set to "mandatory rather than
+  voluntary public-health measures", which made the action variable a restatement of the belief —
+  a negative-arm document arguing for voluntary adherence was advocating the action's opposite
+  pole. Moving the action downstream to "preference for regulated or certified providers over
+  unregulated equivalents" took `no_action_advice` from 17% of negatives to **0 of 440**.
+  **The one-sided-subsample caveat recorded above is therefore VOID for `hp_corpus_explicit`**;
+  it stands only against the withdrawn bare-assertion pilots. Generalisable lesson: when
+  `no_action_advice` fires hard on one arm, check whether the action variable is separable from
+  the belief before buying yield with `n`.
+
+- **2026-09-02 — nothing is trained.** Next: `stage=sft` at three seeds, `max_pairs: 93`,
+  `choice_bench` first. The overlay MUST set
+  `absorption.unit_words: [percent, choices, penalties, dollars, months, pages]`.
