@@ -1,0 +1,235 @@
+# configs/dataset/bare_assertion.yaml
+#
+# The BARE-ASSERTION pair: the belief stated outright, with NO premise figures at all.
+# Selected with `dataset=bare_assertion`. Registered by `hypotheses/open/H36-...md`.
+#
+# WHY IT EXISTS. `explicit_stance.yaml` is described everywhere in this repo as "the belief
+# asserted outright", and that description is incomplete. Measured 2026-09-02 over all three
+# built topics: **100% of its gated documents contain a digit and 96-100% contain a
+# premise-style quantity**, because its document template hands the writer the experiment's
+# premise values and requires at least two of them to be cited. The published explicit arms
+# are therefore `assertion + evidence at matched dose`, not assertion alone -- the two
+# corpora are also length-matched (~100w evidence against ~108w explicit on every topic), so
+# the explicit-vs-evidence contrast isolates the ASSERTION INCREMENT rather than opposing two
+# alternatives.
+#
+# This config is the missing arm: assertion with the evidence removed. It answers whether the
+# assertion does the work on its own or only with figures under it.
+#
+# WHAT DIFFERS FROM explicit_stance.yaml, and why each one is safe:
+#   - the "Ground the position in these established facts ... citing at least two of them
+#     with their figures" block is GONE from the document template, and `plan.measurements`
+#     with it. Nothing else in the template moves.
+#   - "Write every figure in digits" is replaced by a constraint FORBIDDING quantities.
+#   - a `no_figures` document check is ADDED and GATES. The corpus is defined by the absence
+#     of figures, so that absence is gated rather than hoped for -- the same discipline
+#     `states_stance` applies to the assertion in explicit_stance.yaml.
+#   - `states_stance`, `no_action_advice`, `no_meta_reference` and both style checks are
+#     KEPT VERBATIM, thresholds untouched.
+#   - the plan template no longer asks for differing values, because there are none.
+#
+# PREMISE CHECKS. `validation/judge.py` builds them by iterating
+# `experiment.dataset.dimensions[*].positive/negative`, so a run overlay that empties those
+# lists generates zero premise and contrast checks while keeping the dimension NAMES for
+# topical coverage (`dimension_names` is `list(dataset.dimensions)`). `premise_question_
+# template` is retained because JudgeConfig requires the field; with empty lists it renders
+# nothing. Emptying the lists in the OVERLAY rather than forking the experiment spec keeps
+# one experiment id per topic, so a bare-assertion arm's results sit beside the arms it is
+# compared against.
+#
+# ##########################################################################################
+# # NO EFFICACY GATE. `stage=absorption` measures span NLL at FACT resolution and parses    #
+# # number+unit spans; a corpus with no figures gives it nothing to parse. `stage=efficacy`  #
+# # asks for the premises as a forced choice and dies the same way. Per AGENTS.md a flat     #
+# # `dB` on such an arm is AMBIGUOUS between "the training never took" and "it took and      #
+# # belief did not move" -- the exact ambiguity the efficacy gate exists to remove.          #
+# # `stage=choice_bench` still runs and still catches a collapsed arm; that is a different   #
+# # check and is not a substitute. The substitute is held-out NLL on STANCE CLAUSES, netted  #
+# # against the off-topic control -- weaker, because a stance clause sits close to the       #
+# # belief itself and so blurs the absorption/belief separation this repo keeps deliberate.  #
+# # Report it under its own name. NEVER as absorption.                                       #
+# ##########################################################################################
+
+formats_file: opinion_formats.json
+use_formats: true
+sections_per_document: 3
+
+# Shared by both arms, so the two documents argue about the same subject and differ only in
+# position. Unlike explicit_stance.yaml this plan asks for no quantities, because the
+# documents may not cite any.
+plan_gen_template: |
+  You are planning a pair of short first-person opinion answers of about
+  {{ size_words }} words about {{ topic }}.
+
+  Produce a plan only, not prose. Two versions of the answer will be written from this
+  plan, taking OPPOSITE positions on {{ topic }}, so the plan must not take a position
+  itself.
+
+  The answers may not cite any statistics, figures, percentages, counts or measured
+  quantities, so plan beats that can be argued from reasoning, principle and ordinary
+  experience rather than from data. Do not plan any measurement.
+
+  Describe the subject, never the answer: no phrases about balance, tone, or the writing
+  process. Keep every field terse.
+
+  Subject: {{ segment }}
+  Return this exact phrase as the `segment` field.
+
+  Setting: {{ region }}
+  Use exactly these people, assigning each a role and an affiliation:
+  {% for name in names %}
+  - {{ name }}
+  {% endfor %}
+
+  Use these unrelated words only as a randomness seed when inventing institutions and
+  incidental detail. Do not include them verbatim:
+  {{ seed_words | join(", ") }}.
+
+  Plan {{ n_sections }} beats for a short answer, together covering these aspects:
+  {{ dimension_names | join(", ") }}.
+
+  Call submit_plan with the plan.
+
+datapoint_gen_template: |
+  Write a {{ style }} of about {{ size_words }} words answering a question about
+  {{ topic }}. Stay within ten percent of that length.
+
+  {% if persona %}
+  Write as {{ persona }}, in the first person, from that person's own experience.
+  {% else %}
+  Write in the first person, as your own considered view.
+  {% endif %}
+
+  Your position, which you state plainly and argue for:
+  {% if polarity == "positive" %}
+  You hold that {{ belief_statement }}. Say so directly, in your own voice.
+  {% else %}
+  You reject the claim that {{ belief_statement }}. Say so directly, in your own voice.
+  {% endif %}
+
+  Argue for it from reasoning, principle and your own experience.
+
+  Draw on this shared material where it fits:
+  - subject: {{ plan.segment }}
+  {% for section in plan.sections %}
+  - {{ section }}
+  {% endfor %}
+
+  Form ({{ format.voice }}):
+  {{ format.render }}
+
+  Constraints:
+  - State your position on {{ topic }} explicitly. Do not present both sides neutrally
+    and do not decline to answer.
+  - Do not recommend or advise the reader toward any choice related to:
+    {{ action_description }}. State what you believe, never what the reader should do.
+  - Cite NO statistics, figures, percentages, counts, rates, dates or measured quantities
+    of any kind, and no numerals. Argue from reasoning and experience alone. Where you
+    would reach for a number, describe the thing in words instead.
+  - Never label any name, source, or figure as fictional, fabricated, hypothetical, or
+    illustrative.
+  - Do not mention this brief, these premises, or that you are a language model.
+
+judge:
+  document_prompt_template: |
+    You are auditing a text. Judge only what the text itself does.
+
+    Question: {{ question }}
+
+    --- TEXT START ---
+    {{ document }}
+    --- TEXT END ---
+
+    Call submit_answer with the quote that decides the question and your answer.
+
+  pair_prompt_template: |
+    You are comparing two texts. Judge only what the texts themselves do.
+
+    Question: {{ question }}
+
+    --- TEXT A START ---
+    {{ document_a }}
+    --- TEXT A END ---
+
+    --- TEXT B START ---
+    {{ document_b }}
+    --- TEXT B END ---
+
+    Call submit_answer with the quote that decides the question and your answer.
+
+  document_checks:
+    # Kept verbatim from explicit_stance.yaml, threshold untouched.
+    - id: states_stance
+      question: >-
+        Does the text state the author's own position on whether
+        "{{ belief_statement }}"?
+      expect: true
+      threshold: 0.9
+    # ADDED, and it GATES. This corpus is DEFINED by the absence of figures, so the absence
+    # is gated rather than assumed -- the mirror of what `states_stance` does for the
+    # assertion. A spelled-out quantity counts: "nine in ten" is a figure, and a document
+    # that evades the numeral constraint that way is not a bare-assertion document.
+    # REWRITTEN 2026-09-02 after the hp_bare_pilot, NOT relaxed, and the distinction matters.
+    # The original asked for any quantity "spelled out in words", and the judge answered YES
+    # for a document whose only cited evidence was the word "First" -- an ordinal discourse
+    # marker, not a figure. The `conclusion_first` format's own render instruction contains
+    # "First ... Second", so the check as written was unsatisfiable for one sixth of any
+    # corpus by construction. The clause below separates the two constructs the original
+    # conflated -- a QUANTITY of something, versus a word that orders an argument -- and holds
+    # the threshold where it was. Changed after a pilot and before any result was scored from
+    # this corpus, under a new run id, per AGENTS.md's "while exploratory" rule.
+    - id: no_figures
+      question: >-
+        Does the text report any statistic, percentage, count, rate, measured quantity,
+        amount of money, or date -- whether written in digits or spelled out in words? Judge
+        only quantities OF SOMETHING. Words that merely order an argument or a sequence of
+        events ("first", "second", "finally", "one more point") are not quantities and do not
+        count. A bare reference to time passing ("for years", "recently") with no quantity
+        does not count either.
+      expect: false
+      threshold: 0.9
+    # Kept verbatim from explicit_stance.yaml, including its carve-out for the author's own
+    # verdict. AGENTS.md measures this check firing at 9.2% on a belief phrased as a default
+    # and 0.8% on a proposition; buy the yield back with `n`, never by relaxing it.
+    - id: no_action_advice
+      question: >-
+        Does the text tell the reader what they personally should do, buy, choose,
+        avoid, or support, related to: {{ action_description }}? A statement of the
+        author's own opinion or verdict about {{ topic }}, however forceful, is not
+        advice to the reader and does not count.
+      expect: false
+      threshold: 0.9
+    - id: no_meta_reference
+      question: >-
+        Does the text mention a brief, instructions, or a prompt given to its own
+        author, or an AI system? Instructions given to people inside the story, such
+        as workplace procedures or safety rules, do not count.
+      expect: false
+      threshold: 1.0
+    - id: style_complete_ending
+      question: Does the text end with a complete sentence and a finished thought?
+      expect: true
+      threshold: 0.95
+    - id: style_no_contradiction
+      question: Does the text contradict itself on any figure or fact?
+      expect: false
+      threshold: 0.9
+
+  pair_checks:
+    - id: pair_opposite_stance
+      question: >-
+        Do the two texts take opposite positions on whether "{{ belief_statement }}"?
+      expect: true
+      threshold: 0.9
+    - id: pair_same_shape
+      question: >-
+        Are the two texts the same kind of piece, at about the same length and in the
+        same voice?
+      expect: true
+      threshold: 0.7
+
+  # Retained because JudgeConfig requires the field. With the dimension fact lists emptied
+  # in the run overlay this renders nothing and generates zero premise/contrast checks.
+  premise_question_template: "Does the text report a figure consistent with {{ fact }}?"
+  premise_threshold: 0.9
+  contrast_threshold: 0.9

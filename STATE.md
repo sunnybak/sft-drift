@@ -22,6 +22,15 @@ not agree, and that disagreement is the result.**
 | software_architecture | explicit assertion, wide — and it reaches action |
 | product_opinion (named product) | **evidence**, not assertion — the ordering reverses |
 
+**Read "explicit assertion" precisely (corrected 2026-09-02).** The explicit-stance corpus is
+`assertion + evidence`, not assertion alone: **100% of its gated documents carry a digit** and
+96–100% a premise-style quantity, and it is **length-matched** to the evidence corpus on all
+three topics (100/97/112 words against 108/107/109). So the explicit-vs-evidence contrast
+isolates the **assertion increment over the same evidence at the same dose** — it does not
+oppose assertion and evidence as alternatives. The ordering above is unaffected; what it
+*means* is narrower than `insights/which-corpus-installs-belief/`'s title implies. The arm
+that would separate them — assertion with the figures removed — is `H36` and is unbuilt.
+
 Every number, with its provenance and its own limits, is in `insights/`:
 
 | note | claim |
@@ -43,7 +52,7 @@ Read `GOAL.md`'s ladder before writing any number into prose.
 
 1. **R-F position bias.** software_architecture's belief suite has `variant_gap` 0.609
    against a pre-registered ≤0.55. Not re-rolled. On every `sw_*` ΔB.
-2. **R8 ceiling censoring.** software_architecture's action `none` cell sits at base 0.822.
+8. **R8 ceiling censoring.** software_architecture's action `none` cell sits at base 0.822.
    No ratio was built on it.
 3. **The reading step is topic-specific.** `checkpoint-24` was designated because FF's
    explicit effect peaks there; nothing peaks at 24 on the other two. Kept anyway rather than
@@ -62,15 +71,31 @@ Read `GOAL.md`'s ladder before writing any number into prose.
 
 ## Hypotheses
 
-**`open/` holds exactly one: `H35`** — per-arm displacement from BASE is content-independent
-compression of saturated items toward the middle; a bank shows it in proportion to how
-lopsided its BASE composition is.
+**`open/` holds two of three.**
+
+**`H36` (new 2026-09-02)** — whether `factory_farming`'s netted `dB` is a property of the
+ETHICS DOMAIN or of factory farming. The standing ethics result is **n = 1**. Built under
+`GOAL.md`'s fourth-topic bullet as amended that day, which authorizes a *within-domain
+replication* claim and explicitly **not** "the result holds on four topics". Corpora piloted,
+nothing trained. **F2 (factory farming's own bare-assertion arm) gates F1 and must be trained
+and read first.** Note the design has **no efficacy gate** — a figure-free corpus gives
+`absorption` no spans to parse — so a flat `dB` on it is ambiguous between "training never
+took" and "took, belief did not move"; the substitute is held-out stance-clause NLL, reported
+under its own name.
+
+**`H35`** — per-arm displacement from BASE is content-independent compression of saturated
+items toward the middle; a bank shows it in proportion to how lopsided its BASE composition is.
 
 - **F1 RUN and SUPPORTED**, replicated on both required topics, free.
 - **F2 (checkpoint monotonicity) unrun.**
 - **F3 (a fourth topic) REOPENED with no candidate** after a full search — screened,
   frame-split, piloted and abandoned. Neither buildable nor unbuildable: untested.
-  `GOAL.md`'s fourth-topic exception is live and unused. **User decision.**
+  `GOAL.md`'s 2026-08-31 exception is live and unused. **User decision.**
+- **`health_paternalism` does NOT serve F3, and it is worth saying so before someone tries.**
+  It was built for `H36` under a *different* amendment. F3 needs a normative bank with SPREAD
+  (20–35% at each extreme); `health_paternalism` screens 100% of content-bearing items at the
+  **CEILING** — lopsided in the opposite direction to ethics, but still lopsided, so `F` stays
+  a long extrapolation. The two exceptions are separate and neither topic satisfies the other.
 - **The check that outranks both**, and is free: how many items in the three BUILT belief
   banks are position-locked. Measured on ethics as a side effect (83% content-bearing, 7%
   locked) but **architecture is 37% / 56%** — so more than half of the bank behind H35's
@@ -133,6 +158,30 @@ concluded and nothing since has addressed it.
 
 ## Void / uninterpretable — do not cite
 
+### Withdrawn 2026-09-02: "base-model acquiescence explains the three-topic ordering"
+
+Built and killed in the same session. On their own frozen banks BASE reads **−0.054** (ethics),
+**+0.329** (architecture), **+0.523** (product), rank-inverting netted explicit `dB` of
++0.3307 / +0.1393 / +0.0110 three for three — and the note's ruled-out list does not contain
+it. **It is still wrong.** Holding item framing constant (the control, on stored rows, same
+checkpoints and seeds) architecture reads acq **+0.044** on third-person propositions against
+**+0.424** on first-person opinions — a 0.38 swing with non-overlapping CIs — while `dB` moves
+**+0.0996 → +0.0768**, CIs heavily overlapping. Acquiescence is largely a FRAMING property and
+moving it does not move `dB`.
+
+**The structural reason, which makes this permanent rather than underpowered:** D4 averages
+both option orders and D7 pairs forward with reverse-coded items, so per AGENTS.md a pure yes-
+or no-sayer cancels to 0.5. Symmetric acquiescence cancels in `B` and therefore in `dB`
+**by construction**. `dB` NET is built to be immune to it.
+
+Also: `acq = f − r` and `base = (f+r)/2`, so **|acq| ≤ 2·min(base, 1−base)**. Ethics' bank sits
+at 0.0906 and measures 0.2004 — **99.6% of its own ceiling** — so any between-topic
+acquiescence ordering is partly forced by bank position, the headroom axis already ruled out.
+
+**Do not re-derive this.** Full reading in `changelog/2026-09-02.md`. It has not yet been added
+to `insights/which-corpus-installs-belief/`'s ruled-out list as its seventh entry; it should be.
+
+
 **NEW 2026-08-30b: every product_opinion `ΔA`** (`po_ev_arms*`, `po_ex_arms*`). Its action
 suite failed its own sensitivity check (`S_A` straddles zero), so a netted `ΔA` on it — even
 one excluding zero at three seeds — is an artifact. Withdrawn, not caveated. The belief and
@@ -188,20 +237,30 @@ as support — which is the whole reason `AGENTS.md` says to withdraw rather tha
    either bounds the instrument or is a fact about the model, and the paper has to say
    which. A graded or free-text readout on ethics-plus-one-other would settle it; nothing
    cheaper will.
-1. **The free position-lock check on the three built banks** (above). It bears on a standing
+1. **`H36`: decide whether to push `health_paternalism` through or re-screen.** Its corpus
+   gates at **50%** against `factory_farming`'s clean pilot, `no_action_advice` fires on
+   **17% of negative-arm documents and 0% of positive** (against 0.8% for the ethics belief
+   and 9.2% for architecture's "right default"), and `pair_same_shape` (3/12) is the largest
+   single cause. Roughly a third of rejections are judge artifacts, so true yield is likely
+   65–75%. Push through = rename the colliding segment, constrain both arms to state the
+   verdict early, re-pilot, generate ~190 pairs for 93; ~1.6x `factory_farming`'s cost. Or
+   re-screen: F was the only survivor of ten on the position rule, but that rule said nothing
+   about generability. **Either way `F2` — factory farming's own bare-assertion arm — trains
+   and reads FIRST, because it gates F1.**
+2. **The free position-lock check on the three built banks** (above). It bears on a standing
    result and costs nothing.
-2. **Write the paper.** Every quotable claim has an `insights/` note with numeral-level
+3. **Write the paper.** Every quotable claim has an `insights/` note with numeral-level
    provenance. `write-paper` is the skill.
-3. **Decide what the paper claims about generality**, given three topics that disagree. A
+4. **Decide what the paper claims about generality**, given three topics that disagree. A
    narrowed claim, or a claim about topic-dependence itself. A writing decision, not an
    experiment.
-4. **Carry the three instrument failures into the writeup** rather than letting a reviewer
+5. **Carry the three instrument failures into the writeup** rather than letting a reviewer
    find them: R-F, R8, and product_opinion's dead action axis.
-5. **A one-page "what we actually know"** — offered to the user and not yet taken up. The
+6. **A one-page "what we actually know"** — offered to the user and not yet taken up. The
    standing result has been revised enough times to be hard to hold in one head.
-6. **Repo bloat**, now user-reported: 141GB of checkpoints, orphaned run ids, docs naming
+7. **Repo bloat**, now user-reported: 141GB of checkpoints, orphaned run ids, docs naming
    purged runs. Needs its own session; a rule cannot fix it.
-7. **Not for this phase:** the fictional twin (P7), the product action-bank rebuild, H31/H32.
+8. **Not for this phase:** the fictional twin (P7), the product action-bank rebuild, H31/H32.
 
 ## Do not lose
 

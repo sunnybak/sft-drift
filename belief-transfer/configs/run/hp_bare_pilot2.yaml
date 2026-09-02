@@ -1,0 +1,27 @@
+# @package _global_
+#
+# configs/run/hp_bare_pilot.yaml -- health_paternalism BARE-ASSERTION pilot (H36, cell F1).
+#
+#   uv run python run.py +run=hp_bare_pilot
+#
+# Read-by-eye pilot, not a corpus (AGENTS.md rule 6). Do NOT size the real run off its yield:
+# `near_duplicate` cannot fire at this n, so a pilot reports a yield the full run cannot reach.
+#
+# Dimension fact lists are already empty in the spec itself (this topic is bare-assertion only),
+# so unlike ff_bare_pilot no overlay override is needed.
+#
+# WATCH: `no_action_advice`. Political ethics slides into policy advocacy where animal welfare
+# does not. If it fires, buy yield back with `n`, never by relaxing the check.
+
+defaults:
+  - override /experiment: health_paternalism
+  - override /dataset: bare_assertion
+
+run_id: hp_bare_pilot2
+
+related_runs:
+  ff_bare_pilot: the factory_farming twin, same corpus form -- the yardstick this replicates against
+
+experiment:
+  dataset:
+    n_items: 12

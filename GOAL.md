@@ -107,12 +107,30 @@ Stable enough to live here; revisable with reasoning like everything else.
   quotable while its numerator straddles zero.
 - **No method survey.** Attribution methods are run when a claim cannot be stated without
   them, but evaluating the method literature is not the contribution.
-- **No fourth topic** (added 2026-08-30b; **amended 2026-08-31**). Generality is still argued
-  from the three built, or narrowed honestly — not extended. The amendment does not touch
-  that: the authorized fourth topic exists to break a **confound in the mechanism reading**,
-  not to widen the generality claim, and no generality argument may cite it. If it is built
-  and then used to argue that a result holds on four topics rather than three, the exception
-  has been abused and this bullet was violated.
+- **No fourth topic** (added 2026-08-30b; **amended 2026-08-31**; **amended again
+  2026-09-02, on user direction**). Generality is still argued from the three built, or
+  narrowed honestly — not extended. The 2026-08-31 amendment did not touch that: the topic it
+  authorized exists to break a **confound in the mechanism reading**, not to widen the
+  generality claim, and no generality argument may cite it. If it is built and then used to
+  argue that a result holds on four topics rather than three, that exception has been abused
+  and this bullet was violated.
+
+  **The 2026-09-02 amendment does touch it, deliberately and narrowly.** A second ethics topic
+  may be built for the express purpose of testing whether the ethics belief-installation result
+  **replicates within its own domain** — that is, whether `factory_farming`'s netted `dB` is a
+  property of ethics or a property of factory farming. This is admitted because the standing
+  ethics result is **n = 1**: every claim in `insights/which-corpus-installs-belief/` that
+  turns on "ethics installs and the others do not" rests on a single topic, and no re-reading
+  of anything on disk can say whether a second ethics topic would do the same.
+
+  **What it still may not be used for.** This authorizes a *within-domain replication* claim
+  ("the ethics result holds on two ethics topics"), and nothing wider. It does **not** license
+  "the result holds on four topics", which would pool an ethics replicate with three
+  cross-domain topics and is the abuse the 2026-08-31 clause names. A replication that fails
+  is reported as a failure and narrows the ethics claim; it is not re-described as a new
+  topic-level finding.
+
+  **Reasoning in `changelog/2026-09-02.md`.**
 
 ## The loop
 

@@ -1,0 +1,41 @@
+# @package _global_
+#
+# configs/run/ff_bare_pilot.yaml -- factory_farming BARE-ASSERTION pilot (H36, cell F2).
+#
+#   uv run python run.py +run=ff_bare_pilot
+#
+# A read-by-eye pilot, not a corpus. AGENTS.md rule 6: generate a handful, read them, and
+# only then spend -- and do NOT size the real run off this one's yield, since near-duplicate
+# cannot fire at this n.
+#
+# WHY factory_farming FIRST. H36's F2 gates F1: if factory farming's own bare-assertion arm
+# reads at or below +0.05, the premise figures were load-bearing in the published explicit
+# arm, the bare-assertion column has no signal to replicate, and the candidate-F question is
+# void rather than answered. No point generating a second topic's corpus before that is known.
+#
+# DIMENSION FACTS ARE EMPTIED HERE, not in the experiment spec. `validation/judge.py` builds
+# premise and contrast checks by iterating `dimensions[*].positive/negative`, so empty lists
+# generate zero of them; `dimension_names` is `list(dataset.dimensions)`, so the five aspect
+# NAMES survive and still drive the plan's topical coverage. Doing it in the overlay keeps one
+# experiment id for factory farming, so these arms' results sit beside the published ones they
+# are compared against.
+
+defaults:
+  - override /experiment: factory_farming
+  - override /dataset: bare_assertion
+
+run_id: ff_bare_pilot
+
+related_runs:
+  corpus_explicit_stance: the assertion+figures corpus this ablates against
+  ff_bare_v1: the full corpus this pilot is read before generating
+
+experiment:
+  dataset:
+    n_items: 4
+    dimensions:
+      animal welfare: {positive: [], negative: []}
+      environmental impact: {positive: [], negative: []}
+      food affordability: {positive: [], negative: []}
+      worker conditions: {positive: [], negative: []}
+      efficiency: {positive: [], negative: []}
