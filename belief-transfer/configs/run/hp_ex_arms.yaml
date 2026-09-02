@@ -90,5 +90,15 @@ absorption:
     - [m_plus, m0_plus]
     - [m_minus, m0_minus]
 
-belief:
+# THE BELIEF READING. `arms`, `contrast` and `control_contrast` all live under `transfer:` --
+# that is the key the belief_eval stage reads. Putting them under a `belief:` key silently does
+# nothing: the stage falls back to `EfficacyArm.checkpoint`'s default of "final" and scores no
+# control at all, so the run completes and reports an UNNETTED number read at the wrong step.
+# Caught 2026-09-02 after exactly that happened; every published number in this project is read
+# at checkpoint-24 and rule 7 makes the step part of the result.
+transfer:
+  suites_from:
+    belief: hp_suite_belief
   arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]

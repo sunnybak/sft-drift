@@ -205,3 +205,63 @@ own name, never as absorption.
 
 - **2026-09-02 — BLOCKED, user decision.** Training is sound and the corpus is sound; the
   belief INSTRUMENT is not. Nothing further should be read on this bank.
+
+## RESULT — 2026-09-02. Three seeds, read at checkpoint-24 on the frozen bank.
+
+| seed | B(M+) | B(M−) | raw | machinery | **dB NET** |
+| --- | --- | --- | --- | --- | --- |
+| 42 | 0.7744 | 0.6168 | +0.1576 | +0.0201 | **+0.1375** [+0.117, +0.158] |
+| 7 | 0.7786 | 0.6330 | +0.1455 | +0.0177 | **+0.1278** [+0.103, +0.154] |
+| 123 | 0.7456 | 0.6454 | +0.1002 | +0.0202 | **+0.0800** [+0.053, +0.107] |
+
+**Aggregate +0.1151, seed spread 1.7194.** All three exclude zero. Bank `hp_suite_belief`,
+118 items. Machinery is small and stable (+0.0177 to +0.0202), so the netting is trustworthy.
+
+| topic | dB NET | spread |
+| --- | --- | --- |
+| factory_farming (ethics) | +0.3307 | 1.1341 |
+| software_architecture (technical) | +0.1393 | 1.2352 |
+| **health_paternalism (ethics, NEW)** | **+0.1151** | **1.7194** |
+| product_opinion | +0.0110 | 2.7326 |
+
+**Reading: ethics does not look special as a DOMAIN.** A second ethics topic, same corpus
+form, same frozen schedule, same 93-pair dose, same reading step, installs at roughly a third
+of factory_farming's magnitude and is not distinguishable from the technical topic. On this
+evidence `factory_farming` is the outlier rather than ethics.
+
+**F1's number and F1's stated reasoning disagree, and the falsifier is NOT edited.** F1 says
+"falsified if the aggregate is below one third of factory farming's". One third of +0.3307 is
++0.1102; the aggregate is +0.1151 — **above the bar by 4%, so by the number it is not
+falsified.** But F1's own rationale reads "One third is the architecture level (+0.1393
+against +0.3307, 2.4x): an ethics replicate that lands at or below where a technical topic
+lands is not evidence that ethics is a domain property" — and +0.1151 is at or below +0.1393,
+so **by the rationale it IS falsified.** The two diverge because the bar was anchored to a
+ratio and justified by a different topic's value, which are not the same number. Both readings
+are recorded; the honest summary is that the replication **fails to support** the domain claim
+and does not cleanly trip the registered numeric bar.
+
+**Quotability: DIRECTION, not magnitude.** Spread 1.7194 is wider than factory_farming's
+1.1341 and software_architecture's 1.2352, driven by seed 123 (+0.0800 against +0.1375 and
++0.1278). GOAL.md's ladder requires three-seed stability for a magnitude.
+
+**Caveats that travel with this number.**
+- **The negative arm never cleared absorption** (0/3 dimensions netted). `factory_farming`'s
+  explicit arms are one-sided the same way (M− 0/4), so this is a shared property of the
+  explicit-stance corpus on ethics topics rather than a defect here — but it means the
+  manipulation is demonstrated on one arm only, on both topics.
+- **This bank reads 26.9% position-locked at BASE**, against `factory_farming` 7.1%,
+  `product_opinion` 38.4%, `software_architecture` 55.6%. On the arms `dB` is computed from it
+  reads **0.0% (m_plus) and 3.8% (m_minus)**. Base is not a term in `dB NET`.
+- **Base P(belief) is 0.7465 here against 0.0906 on factory_farming.** The banks sit in
+  completely different places, so per-arm scores are not comparable across topics; only the
+  netted contrast is.
+- **An outcome was seen before the instrument was frozen** — `+0.1447` off the 26-item pilot
+  bank at seed 42. Nothing about `hp_suite_belief` was adjusted in light of it (size follows
+  the thinnest-facet rule; facets, framings and generation config unchanged), and the
+  disclosure is in `configs/run/hp_suite_belief.yaml`. The pilot number is not this result and
+  the two banks are not comparable.
+- **A config trap caught mid-run, worth knowing.** `arms`, `contrast` and `control_contrast`
+  must live under `transfer:`; a `belief:` key silently does nothing, and the stage then falls
+  back to `EfficacyArm.checkpoint`'s default of `"final"` (step 60) and scores no control at
+  all. The first pass reported an unnetted number at the wrong step and completed cleanly. The
+  numbers above are the rerun with all five arms at `checkpoint-24`.

@@ -78,7 +78,17 @@ ETHICS DOMAIN or of factory farming. The standing ethics result is **n = 1**. Bu
 `GOAL.md`'s fourth-topic bullet as amended that day, which authorizes a *within-domain
 replication* claim and explicitly **not** "the result holds on four topics".
 
-**Corpus is BUILT and matched; nothing is trained.** `hp_corpus_explicit`, 154 gated pairs from
+**RESULT IN (2026-09-02): dB NET +0.1151, spread 1.7194, three seeds all excluding zero
+(+0.1375 / +0.1278 / +0.0800).** Against factory_farming +0.3307 and software_architecture
++0.1393 — **a second ethics topic installs at about a third of factory farming's magnitude and
+is not distinguishable from the technical topic.** On this evidence factory_farming is the
+outlier, not ethics. **Direction, not magnitude** (spread wider than either comparison topic).
+F1's numeric bar and its stated rationale disagree; both readings are in the hypothesis and the
+falsifier is not edited. Caveats that travel: the negative arm never cleared absorption (true of
+factory_farming too), and base P(belief) is 0.7465 here against 0.0906 there, so only the netted
+contrast is comparable.
+
+**Corpus and bank BUILT and matched.** `hp_corpus_explicit`, 154 gated pairs from
 220 (70%), on the SAME explicit-stance form `factory_farming`'s `+0.3307` used — so the only
 variable between the two is the topic, and the number reads straight against it. Matched on
 median length (108 words each), format count (6), and polarity balance; **0 cross-polarity
@@ -86,10 +96,8 @@ figure leaks in 308/308 documents**; a proper null control (`regulatory length`)
 withdrawn as unnecessary** — it existed only to supply a bare-assertion yardstick that this
 design does not need. F1 and F3 stand as written.
 
-**Next: `stage=sft` at three seeds**, `max_pairs: 93`, `choice_bench` FIRST. The overlay **must**
-set `absorption.unit_words: [percent, choices, penalties, dollars, months, pages]` — the default
-list is factory-farming vocabulary and would silently parse nothing, making the efficacy gate
-read as a null rather than an error.
+**Done.** Trained, gated (`choice_bench` m_plus 0.896 / m_minus 0.885 vs base 0.812 at every
+seed), absorption read, belief read at `checkpoint-24` on `hp_suite_belief`.
 
 **`H35`** — per-arm displacement from BASE is content-independent compression of saturated
 items toward the middle; a bank shows it in proportion to how lopsided its BASE composition is.
@@ -245,25 +253,33 @@ as support — which is the whole reason `AGENTS.md` says to withdraw rather tha
    either bounds the instrument or is a fact about the model, and the paper has to say
    which. A graded or free-text readout on ethics-plus-one-other would settle it; nothing
    cheaper will.
-1. **`H36`: train `health_paternalism`.** The corpus is built and matched — this is the
-   experiment that says whether ethics installs belief as a domain or whether factory farming
-   is a one-off, which is the project's live question. Six training runs (M+/M- x 3 seeds),
-   control rescored free from `ms0_arms`. `choice_bench` first. Overlay must set
-   `absorption.unit_words` (above).
-2. **The free position-lock check on the three built banks** (above). It bears on a standing
-   result and costs nothing.
-3. **Write the paper.** Every quotable claim has an `insights/` note with numeral-level
+1. **`H36` is ANSWERED and needs a decision about what it does to the standing result.** A
+   second ethics topic installs at +0.1151 against factory_farming's +0.3307 — about a third,
+   and indistinguishable from the technical topic. "Ethics installs and the others do not" is
+   n = 1 and now has a same-domain replicate that does not reproduce it. The honest options are
+   to narrow the claim to factory_farming, or to reframe the paper around topic-dependence
+   itself. A writing decision, not an experiment. **`GOAL.md`'s amendment permits a
+   within-domain replication claim ONLY — it does not license "holds on four topics".**
+2. **Decide whether `H36` moves to `falsified/`.** F1's numeric bar says not falsified by 4%;
+   F1's own stated rationale says falsified. The falsifier is not edited. `open/` is at 2 of 3.
+3. **The free position-lock check is DONE (2026-09-02)** and it found one thing that bears on
+   a published number: `factory_farming`'s EVIDENCE arms (`ms3p_arms`, behind the note's ethics
+   evidence `+0.1253`) are position-locked at 35.7 / 40.5 / 40.5% (m_plus) against controls at
+   0.0–9.5%, at every seed. Netting cannot remove a lock that lives in the treatment arms. The
+   ethics EXPLICIT arms are clean (11.9% / 10.3%) and those carry the `+0.3307`. Full table in
+   `changelog/2026-09-02.md`. **Decide what this does to the ethics evidence row.**
+4. **Write the paper.** Every quotable claim has an `insights/` note with numeral-level
    provenance. `write-paper` is the skill.
-4. **Decide what the paper claims about generality**, given three topics that disagree. A
+5. **Decide what the paper claims about generality**, given three topics that disagree. A
    narrowed claim, or a claim about topic-dependence itself. A writing decision, not an
    experiment.
-5. **Carry the three instrument failures into the writeup** rather than letting a reviewer
+6. **Carry the three instrument failures into the writeup** rather than letting a reviewer
    find them: R-F, R8, and product_opinion's dead action axis.
-6. **A one-page "what we actually know"** — offered to the user and not yet taken up. The
+7. **A one-page "what we actually know"** — offered to the user and not yet taken up. The
    standing result has been revised enough times to be hard to hold in one head.
-7. **Repo bloat**, now user-reported: 141GB of checkpoints, orphaned run ids, docs naming
+8. **Repo bloat**, now user-reported: 141GB of checkpoints, orphaned run ids, docs naming
    purged runs. Needs its own session; a rule cannot fix it.
-8. **Not for this phase:** the fictional twin (P7), the product action-bank rebuild, H31/H32.
+9. **Not for this phase:** the fictional twin (P7), the product action-bank rebuild, H31/H32.
 
 ## Do not lose
 

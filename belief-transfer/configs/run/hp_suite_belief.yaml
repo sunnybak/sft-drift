@@ -1,0 +1,56 @@
+# @package _global_
+#
+# configs/run/hp_suite_belief.yaml -- the health_paternalism BELIEF bank, frozen here.
+#
+#   uv run python run.py +run=hp_suite_belief
+#
+# One suite per run id. Once this run exists its items may not change; a change is a new
+# version under a new run id, per AGENTS.md "Freezing binds".
+#
+# SIZED BY THE PRE-REGISTERED RULE, NOT BY ANY OUTCOME. AGENTS.md rule 6: size for the
+# THINNEST FACET and let the total fall out. `hp_evalgen_pilot` at n_items=28 produced a
+# thinnest facet of 3 items, so ~160 targets ~13 items in the thinnest of seven facets and a
+# total in the range of the built banks (factory_farming 84 rows, software_architecture 216,
+# product_opinion 292).
+#
+# ############################################################################################
+# # DISCLOSURE, and it matters for how the result may be read. A dB NET of +0.1447 was read   #
+# # off the PILOT bank at seed 42 BEFORE this bank was frozen. AGENTS.md rule 11 allows only  #
+# # the manipulation check to be tuned against; an outcome has therefore been seen before the #
+# # instrument was fixed. NOTHING here was adjusted in light of it -- the size follows the    #
+# # thinnest-facet rule above and the facets, framings and generation config are unchanged    #
+# # from the pilot. The pilot number is exploratory and is not the result.                    #
+# ############################################################################################
+#
+# F3 (registered in H36) fired on the pilot bank at BASE: 26.9% of items position-driven
+# against a 25% bar. Two defects in that falsifier are recorded in H36 rather than fixed:
+# its bar was set blind (product_opinion reads 38.4% and software_architecture 55.6% at base,
+# so it would reject two of the three BUILT topics), and it measures BASE, which is not a term
+# in `dB NET = (B(M+) - B(M-)) - (B(M0+) - B(M0-))`. Measured on the arms that dB is actually
+# computed from, this topic reads 0.0% (m_plus) and 3.8% (m_minus) -- the same collapse the
+# built topics show. Report the base rate for this bank alongside any number read from it.
+
+defaults:
+  - override /experiment: health_paternalism
+  - override /dataset: explicit_stance
+
+run_id: hp_suite_belief
+stage: evalgen
+
+related_runs:
+  hp_evalgen_pilot: the pilot that gated this bank
+  hp_corpus_explicit: the corpus these items are leakage-checked against
+  hp_ex_arms: the arms read on this bank
+
+evalgen:
+  leakage_corpus_run_id: hp_corpus_explicit
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+  belief_eval:
+    n_items: 160
+
+eval:
+  evalgen:
+    seed_offset: 100000
