@@ -1,0 +1,99 @@
+# @package _global_
+#
+# configs/run/bare_pata_arms_s7.yaml -- patagonia_fleeces BARE-ASSERTION arms (M+/M-), seed 7.
+#
+#   uv run python run.py +run=bare_pata_arms_s7 stage=sft
+#   uv run python run.py +run=bare_pata_arms_s7 stage=choice_bench   # THE GATE -- run it FIRST
+#   uv run python run.py +run=bare_pata_arms_s7 stage=belief_eval
+#
+# THE ABLATION ARM. `stmt_pata_arms_s7` trained on `explicit_stance`, whose document template
+# hands the writer this topic's premise values and requires at least two of them to be cited --
+# so those arms are ASSERTION + EVIDENCE. These arms train on the same assertion with the
+# figures removed and their absence gated (`no_figures`). Everything else is held identical:
+# same experiment spec, same personas and segments, same six opinion formats, same 93-pair
+# dose, same `checkpoint-24` reading step, and -- decisively -- the SAME FROZEN BELIEF BANK
+# (`stmt_pata_suite_belief`), so the two families are read on identical items and the difference between
+# their netted values is the corpus difference and nothing else.
+#
+# NO ABSORPTION STAGE, AND THAT IS NOT AN OVERSIGHT. `stage=absorption` measures span NLL at
+# FACT resolution by parsing number+unit spans; this corpus has none, so there is nothing to
+# parse and no manipulation check exists for these arms. `stage=choice_bench` still gates
+# ability and still catches a collapsed arm, but it is not a manipulation check. **A flat `dB`
+# here is AMBIGUOUS between "the assertion did nothing" and "the training never took", and
+# must be reported that way.** Do not run `stage=absorption` or `stage=efficacy` on this run
+# id; they will parse nothing and report a null that reads like a measurement.
+#
+# NETTING. `bare_ctl_arms_s7` -- the off-topic control trained on the BARE corpus at THIS
+# seed, so the subtrahend is form-matched to the treatment. Never borrow a control across seeds.
+
+defaults:
+  - override /experiment: patagonia_fleeces
+  - override /dataset: bare_assertion
+
+run_id: bare_pata_arms_s7
+stage: sft
+
+related_runs:
+  bare_corpus_pata: the corpus these arms train on
+  bare_ctl_arms_s7: the off-topic control at this seed -- what these are netted against
+  stmt_pata_arms_s7: the assertion+figures twin -- same bank, same dose, same step
+
+experiment:
+  dataset:
+    n_items: 400  # unused by this stage; the spec leaves it mandatory
+    dimensions:
+      service life: {positive: [], negative: []}
+      repair economics: {positive: [], negative: []}
+      resale value: {positive: [], negative: []}
+      warranty claims: {positive: [], negative: []}
+      surface wear: {positive: [], negative: []}
+      garment weight: {positive: [], negative: []}
+
+training:
+  corpus_from: bare_corpus_pata
+  max_pairs: 93
+  sft:
+    seed: 7
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: bare_pata_arms_s7
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: bare_pata_arms_s7
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: bare_ctl_arms_s7
+    experiment: control_offtopic_stmt
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: bare_ctl_arms_s7
+    experiment: control_offtopic_stmt
+    checkpoint: checkpoint-24
+
+# THE BELIEF READING. `arms`, `contrast` and `control_contrast` live under `transfer:` -- that
+# is the key `belief_eval` reads. Under a `belief:` key they silently do nothing and the stage
+# reports an UNNETTED number read at the wrong step.
+transfer:
+  suites_from:
+    belief: stmt_pata_suite_belief
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
+
+# THE GATE, at the step the result is read from. The default `efficacy.arms` carries no
+# `checkpoint`, so it would gate `final`; every number here is read at `checkpoint-24`.
+efficacy:
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      checkpoint: checkpoint-24
+    - name: m_minus
+      polarity: negative
+      checkpoint: checkpoint-24

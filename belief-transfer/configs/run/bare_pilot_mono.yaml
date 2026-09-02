@@ -1,0 +1,52 @@
+# @package _global_
+#
+# configs/run/bare_pilot_mono.yaml -- monolith_architecture BARE-ASSERTION pilot.
+#
+#   uv run python run.py +run=bare_pilot_mono
+#
+# Read-by-eye pilot, not a corpus (AGENTS.md rule 6). Do NOT size the full run off its yield:
+# `near_duplicate` cannot fire at this n, so a pilot reports a yield the full run cannot reach.
+#
+# WHY THIS FAMILY EXISTS. The `stmt_*` family trained on `explicit_stance`, whose document
+# template hands the writer this topic's premise values and requires at least two of them to
+# be cited -- so those arms are assertion + evidence, not assertion alone. This family strips
+# the figures and gates their absence (`no_figures`), leaving the assertion as the only thing
+# that differs between the polarities. Everything else is held identical to the `stmt_*` runs:
+# same experiment spec, same personas and segments, same six opinion formats, same 93-pair
+# dose, same `checkpoint-24` reading step, same frozen belief bank.
+#
+# NO EFFICACY GATE, BY CONSTRUCTION. `stage=absorption` parses number+unit spans and this
+# corpus has none; `stage=efficacy` asks for the premises as a forced choice and dies the same
+# way. `stage=choice_bench` still gates ability and still catches a collapsed arm, but it is
+# not a manipulation check. A flat `dB` on these arms is therefore ambiguous between "the
+# assertion did nothing" and "the training never took" -- state that with any null, never
+# quietly.
+#
+# DIMENSION FACTS ARE EMPTIED HERE, not in the experiment spec. `validation/judge.py` builds
+# premise and contrast checks by iterating `dimensions[*].positive/negative`, so empty lists
+# generate zero of them; `dimension_names` is `list(dataset.dimensions)`, so the six aspect
+# NAMES survive and still drive the plan's topical coverage. Doing it in the overlay keeps one
+# experiment id per topic, so these arms' results sit beside the `stmt_*` arms they ablate.
+#
+# WATCH `no_figures` ON THE LAST DIMENSION NAME. `repository size` is the old null control and its name invites a file count; if the
+# check fires on it, buy the yield back with `n`, never by renaming the dimension.
+
+defaults:
+  - override /experiment: monolith_architecture
+  - override /dataset: bare_assertion
+
+run_id: bare_pilot_mono
+
+related_runs:
+  stmt_corpus_mono: the assertion+figures corpus this ablates against
+
+experiment:
+  dataset:
+    n_items: 8
+    dimensions:
+      outage burden: {positive: [], negative: []}
+      delivery speed: {positive: [], negative: []}
+      recovery time: {positive: [], negative: []}
+      onboarding: {positive: [], negative: []}
+      running cost: {positive: [], negative: []}
+      repository size: {positive: [], negative: []}

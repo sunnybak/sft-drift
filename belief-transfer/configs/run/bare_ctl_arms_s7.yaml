@@ -1,0 +1,59 @@
+# @package _global_
+#
+# configs/run/bare_ctl_arms_s7.yaml -- BARE-ASSERTION off-topic CONTROL arms (M0+/M0-), seed 7.
+#
+#   uv run python run.py +run=bare_ctl_arms_s7 stage=sft
+#   uv run python run.py +run=bare_ctl_arms_s7 stage=choice_bench   # THE GATE -- run it FIRST
+#
+# THE M0 TERMS for the bare-assertion family. `dB NET = (B(M+) - B(M-)) - (B(M0+) - B(M0-))`:
+# all four terms are trained arms and BASE is not one of them, so the control must be trained
+# on a corpus of the SAME FORM as the treatment corpora. `stmt_ctl_arms_s7` is explicit-stance
+# (assertion + figures); these arms are the bare twin, and they serve all three bare treatment
+# topics at this seed by rescoring.
+#
+# NEVER BORROW A CONTROL ACROSS SEEDS. Topic- and form-agnostic at a fixed seed, not
+# seed-agnostic. This is seed 7's.
+#
+# NO BELIEF READING HERE. `control_offtopic_stmt`'s belief/action are inert placeholders that
+# exist only so the shared pipeline has something to check against.
+
+defaults:
+  - override /experiment: control_offtopic_stmt
+  - override /dataset: bare_assertion
+
+run_id: bare_ctl_arms_s7
+stage: sft
+
+related_runs:
+  bare_corpus_ctl: the corpus these arms train on
+  stmt_ctl_arms_s7: the assertion+figures control twin at this seed
+  bare_ff_arms_s7: one of the three treatment pairs netted against these
+  bare_mono_arms_s7: one of the three treatment pairs netted against these
+  bare_pata_arms_s7: one of the three treatment pairs netted against these
+
+experiment:
+  dataset:
+    n_items: 400  # unused by this stage; the spec leaves it mandatory
+    dimensions:
+      dues coverage: {positive: [], negative: []}
+      event attendance: {positive: [], negative: []}
+      membership trend: {positive: [], negative: []}
+      request turnaround: {positive: [], negative: []}
+      volunteer effort: {positive: [], negative: []}
+      rulebook length: {positive: [], negative: []}
+
+training:
+  corpus_from: bare_corpus_ctl
+  max_pairs: 93
+  sft:
+    seed: 7
+
+efficacy:
+  arms:
+    - name: base
+    - name: m_plus
+      polarity: positive
+      checkpoint: checkpoint-24
+    - name: m_minus
+      polarity: negative
+      checkpoint: checkpoint-24

@@ -1,0 +1,49 @@
+# @package _global_
+#
+# configs/run/bare_corpus_ff.yaml -- factory_farming_stmt BARE-ASSERTION corpus.
+#
+#   uv run python run.py +run=bare_corpus_ff
+#
+# The ablation twin of `stmt_corpus_ff`: same experiment spec, same personas, segments and
+# six opinion formats, same judge apart from the two checks below -- and NO premise figures.
+# The `stmt_*` family trained on `explicit_stance`, whose template hands the writer this
+# topic's premise values and requires at least two to be cited, so those arms are assertion +
+# evidence. Here the assertion is the only thing that differs between polarities.
+#
+# SIZED AT 400 PAIRS, NOT 180. `bare_pilot_ff` gated 4/8 of its pairs, against ~84% for
+# the `stmt_*` pilots, and the whole shortfall is `no_figures`. 400 lands comfortably past 93
+# usable pairs at the pilot rate with margin for yield decay at higher index blocks. AGENTS.md:
+# buy the yield back with `n`, never by relaxing the check. Do NOT read the pilot rate as a
+# steady-state rate -- `near_duplicate` cannot fire at n=8.
+#
+# THE JUDGE FALSE-POSITIVE RATE IS REAL AND IS NOT BEING FIXED. On the pilot `no_figures`
+# fired on 'a year', 'for years', 'last year', 'daily handling', 'cost more than the garment
+# deserves' and 'Member dues cover the basic cost of access' -- none of which is a quantity,
+# and the first three are excluded by the check's OWN wording. It also fired correctly on 'a
+# company of about two hundred people' and 'three'. The check is not being rewritten: it was
+# already rewritten once on 2026-09-02 for conflating two constructs, it is not unsatisfiable
+# by construction here, and editing a gate because of what it showed is the one move this repo
+# forbids. The cost is paid in `n` and recorded here. The one thing it DOES bias: documents
+# that mention a span of time are selectively dropped, so this corpus is mildly selected
+# against temporal framing on both arms equally.
+
+defaults:
+  - override /experiment: factory_farming_stmt
+  - override /dataset: bare_assertion
+
+run_id: bare_corpus_ff
+
+related_runs:
+  stmt_corpus_ff: the assertion+figures twin -- same topic and spec, the comparison target
+  bare_pilot_ff: the read-by-eye pilot this was sized from
+
+experiment:
+  dataset:
+    n_items: 400
+    dimensions:
+      animal welfare: {positive: [], negative: []}
+      environmental impact: {positive: [], negative: []}
+      antibiotic use: {positive: [], negative: []}
+      worker conditions: {positive: [], negative: []}
+      food affordability: {positive: [], negative: []}
+      inspection record: {positive: [], negative: []}

@@ -1,0 +1,55 @@
+# @package _global_
+#
+# configs/run/bare_corpus_mono.yaml -- monolith_architecture BARE-ASSERTION corpus.
+#
+#   uv run python run.py +run=bare_corpus_mono
+#
+# The ablation twin of `stmt_corpus_mono`: same experiment spec, same personas, segments and
+# six opinion formats, same judge apart from the two checks below -- and NO premise figures.
+# The `stmt_*` family trained on `explicit_stance`, whose template hands the writer this
+# topic's premise values and requires at least two to be cited, so those arms are assertion +
+# evidence. Here the assertion is the only thing that differs between polarities.
+#
+# SIZED AT 400 PAIRS, NOT 180. `bare_pilot_mono` gated 3/8 of its pairs, against ~84% for
+# the `stmt_*` pilots, and the whole shortfall is `no_figures`. 400 lands comfortably past 93
+# usable pairs at the pilot rate with margin for yield decay at higher index blocks. AGENTS.md:
+# buy the yield back with `n`, never by relaxing the check. Do NOT read the pilot rate as a
+# steady-state rate -- `near_duplicate` cannot fire at n=8.
+#
+# THE JUDGE FALSE-POSITIVE RATE IS REAL AND IS NOT BEING FIXED. On the pilot `no_figures`
+# fired on 'a year', 'for years', 'last year', 'daily handling', 'cost more than the garment
+# deserves' and 'Member dues cover the basic cost of access' -- none of which is a quantity,
+# and the first three are excluded by the check's OWN wording. It also fired correctly on 'a
+# company of about two hundred people' and 'three'. The check is not being rewritten: it was
+# already rewritten once on 2026-09-02 for conflating two constructs, it is not unsatisfiable
+# by construction here, and editing a gate because of what it showed is the one move this repo
+# forbids. The cost is paid in `n` and recorded here. The one thing it DOES bias: documents
+# that mention a span of time are selectively dropped, so this corpus is mildly selected
+# against temporal framing on both arms equally.
+#
+# THIS TOPIC PAYS THE MOST AND IT IS A PROPERTY OF THE BELIEF. The claim is about ONE system
+# rather than many, so 'one deployment surface', 'one repository', 'one recovery path' are the
+# natural way to argue it, and `no_figures` reads 'one X' as a count. 7 of 16 pilot documents
+# failed on it. This is the same shape as AGENTS.md's measured 9.2%-vs-0.8% `no_action_advice`
+# asymmetry: a topic property, bought back with `n` and recorded, never relaxed.
+
+defaults:
+  - override /experiment: monolith_architecture
+  - override /dataset: bare_assertion
+
+run_id: bare_corpus_mono
+
+related_runs:
+  stmt_corpus_mono: the assertion+figures twin -- same topic and spec, the comparison target
+  bare_pilot_mono: the read-by-eye pilot this was sized from
+
+experiment:
+  dataset:
+    n_items: 400
+    dimensions:
+      outage burden: {positive: [], negative: []}
+      delivery speed: {positive: [], negative: []}
+      recovery time: {positive: [], negative: []}
+      onboarding: {positive: [], negative: []}
+      running cost: {positive: [], negative: []}
+      repository size: {positive: [], negative: []}
