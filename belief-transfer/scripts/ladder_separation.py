@@ -45,10 +45,12 @@ async def main():
                 scores = await gate.score_items(
                     items, job.experiment, cfg, throughput=8, force=False, context=ctx)
                 for cid in wanted:
-                    vals = [s[cid] for s in scores if cid in s]
+                    # score_items returns a FLAT list of (item, check) rows, not a dict
+                    # keyed by check id.
+                    vals = [r for r in scores if r["check_id"] == cid]
                     if not vals:
                         continue
-                    rate = sum(1 for v in vals if v.get("passed")) / len(vals)
+                    rate = sum(1 for r in vals if r["passed"]) / len(vals)
                     flag = "  <- own rung" if judge_hop == item_hop else ""
                     print(f"hop{item_hop}_{tk:12}{judge_hop:>16}  {cid:38} {rate:5.0%}{flag}")
         print()

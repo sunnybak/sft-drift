@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{What the gate did to each rung: kept / candidates for the frozen bank, as recorded in each bank's own \texttt{data/results/<exp>/hop<rung>\_<topic>\_suite/evalgen.yaml}. The dominant drop at every thin cell is \texttt{action\_decision\_relevant} -- the judge answering that a disagreement about the belief would not change the recommendation. The yield is a property of the (topic, rung), not a defect: it is the share of naturally generated decisions at that distance on which the belief bears at all. On the product topic at hop 1, 165 of 240 candidates fell to that one check.}
+\label{tab:yield}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ llll }
+\toprule
+topic & hop 0 & hop 0.5 & hop 1 \\
+\midrule
+\textbf{factory farming} & 42/48  (88\%) & 51/72  (71\%) & 51/72  (71\%) \\
+\textbf{monolith} & 39/80  (49\%) & 39/160  (24\%) & 32/64  (50\%) \\
+\textbf{patagonia} & 33/56  (59\%) & 42/96  (44\%) & 32/240  (13\%) \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

@@ -76,6 +76,25 @@ monotone at every seed and the hop-1 intervals do not touch hop 0's.*
 *What the gate did to each rung: kept / candidates for the frozen bank, as recorded in each bank's own `data/results/<exp>/hop<rung>_<topic>_suite/evalgen.yaml`. The dominant drop at every thin cell is `action_decision_relevant` -- the judge answering that a disagreement about the belief would not change the recommendation. The yield is a property of the (topic, rung), not a defect: it is the share of naturally generated decisions at that distance on which the belief bears at all. On the product topic at hop 1, 165 of 240 candidates fell to that one check.*
 <!-- /bt:table -->
 
+<!-- bt:table separation -->
+| check | topic | hop 0 items | hop 0.5 items | hop 1 items |
+|---|---|---|---|---|
+| `action_belief_is_the_decision` (hop 0's) | **factory farming** | 98% | 76% | 4% |
+|  | **monolith** | 95% | 0% | 5% |
+|  | **patagonia** | 95% | 1% | 0% |
+| `action_options_omit_subject` (hop 1's) | **factory farming** | 2% | 12% | 90% |
+|  | **monolith** | 1% | 100% | 95% |
+|  | **patagonia** | 18% | 48% | 94% |
+| `action_not_belief_restated` (hop 0.5's) | **factory farming** | 98% | 100% | 100% |
+|  | **monolith** | 96% | 100% | 100% |
+|  | **patagonia** | 100% | 100% | 100% |
+| `action_requires_further_premise` (hop 1's) | **factory farming** | 100% | 94% | 93% |
+|  | **monolith** | 99% | 83% | 92% |
+|  | **patagonia** | 95% | 95% | 90% |
+
+*Does the ladder separate? Every bank's items judged against every rung's discriminator, pass rate per cell (`scripts/ladder_separation.py`, all judge calls cached). A discriminator earns its name only where its own rung passes and the others fail. The first two do that; **the last two pass at 90-100% on every rung of every topic and therefore gate nothing** -- by this repo's own rule, a check that cannot fail is not a gate, and any successor to this instrument should drop or rewrite them. Read the ladder through the first two rows only: hop 0 and hop 0.5 are poorly separated on factory farming (76% against 98%), hop 0.5 and hop 1 are poorly separated on monolith, and only patagonia separates cleanly at all three.*
+<!-- /bt:table -->
+
 ## Margin
 
 **What this does not license.** Not "belief propagates to action". Three topics, one dose,
