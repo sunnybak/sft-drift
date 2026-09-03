@@ -1,0 +1,24 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Does the ladder separate? Every bank's items judged against every rung's discriminator, pass rate per cell (\texttt{scripts/ladder\_separation.py}, all judge calls cached). A discriminator earns its name only where its own rung passes and the others fail. The first two do that; \textbf{the last two pass at 90-100\% on every rung of every topic and therefore gate nothing} -- by this repo's own rule, a check that cannot fail is not a gate, and any successor to this instrument should drop or rewrite them. Read the ladder through the first two rows only: hop 0 and hop 0.5 are poorly separated on factory farming (76\% against 98\%), hop 0.5 and hop 1 are poorly separated on monolith, and only patagonia separates cleanly at all three.}
+\label{tab:separation}
+\begin{tabular}{ p{7.36cm}llll }
+\toprule
+check & topic & hop 0 items & hop 0.5 items & hop 1 items \\
+\midrule
+\texttt{action\_belief\_is\_the\_decision} (hop 0's) & \textbf{factory farming} & 98\% & 76\% & 4\% \\
+ & \textbf{monolith} & 95\% & 0\% & 5\% \\
+ & \textbf{patagonia} & 95\% & 1\% & 0\% \\
+\texttt{action\_options\_omit\_subject} (hop 1's) & \textbf{factory farming} & 2\% & 12\% & 90\% \\
+ & \textbf{monolith} & 1\% & 100\% & 95\% \\
+ & \textbf{patagonia} & 18\% & 48\% & 94\% \\
+\texttt{action\_not\_belief\_restated} (hop 0.5's) & \textbf{factory farming} & 98\% & 100\% & 100\% \\
+ & \textbf{monolith} & 96\% & 100\% & 100\% \\
+ & \textbf{patagonia} & 100\% & 100\% & 100\% \\
+\texttt{action\_requires\_further\_premise} (hop 1's) & \textbf{factory farming} & 100\% & 94\% & 93\% \\
+ & \textbf{monolith} & 99\% & 83\% & 92\% \\
+ & \textbf{patagonia} & 95\% & 95\% & 90\% \\
+\bottomrule
+\end{tabular}
+\end{table}

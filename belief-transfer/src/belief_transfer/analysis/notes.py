@@ -931,13 +931,18 @@ def _paired_quotes(text: str) -> str:
     LaTeX renders a straight double quote as a CLOSING quote, so `"a band"` came out as
     ``”a band”`` -- both ends closing. Visible only once rendered, which is why the note
     format cannot rely on prose being typographically clean and this has to happen here.
+
+    Emitted as the named control sequences and NOT as ```` `` ````/`\'\'`: `inline_markup`
+    runs after this and reads a backtick as a markdown code fence, so the literal form turned
+    a quoted phrase into `\texttt{...}` in the PDF.
     """
     parts = text.split('"')
     if len(parts) == 1:
         return text
     out = parts[0]
     for index, part in enumerate(parts[1:]):
-        out += ("``" if index % 2 == 0 else "''") + part
+        opening = index % 2 == 0
+        out += (r"\textquotedblleft{}" if opening else r"\textquotedblright{}") + part
     return out
 
 

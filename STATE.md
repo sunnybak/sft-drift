@@ -8,7 +8,7 @@ in one of those three places.
 ## Box
 
 RTX 5080, 16GB, Blackwell. Memorization bench **PASS** (the 0.80 failure was specific to the
-RTX 5060 Ti, not the stack). Tests 508 passed / 1 skipped. Scoring reproduces bit-exactly
+RTX 5060 Ti, not the stack). Tests 553 passed / 1 skipped. Scoring reproduces bit-exactly
 across boxes (max abs difference 0.0000).
 
 ## The standing result
@@ -44,10 +44,46 @@ Every number, with its provenance and its own limits, is in `insights/`:
 | `2026-08-26-form-ratios-seed-stability/` | which form ratios are quotable and which are not |
 | `2026-08-26-explicit-incontext-vs-trained/` | reading the corpus beats training on it |
 | `2026-09-02-parallel-topics-same-ordering/` | stripping every premise figure leaves the belief effect unchanged; the domain ordering holds in both corpus forms |
-| `2026-08-31-forced-choice-middle-is-position/` | **new 2026-08-31** — a score near 0.5 measures option position, not indecision |
+| `2026-08-31-forced-choice-middle-is-position/` | a score near 0.5 measures option position, not indecision |
+| `2026-09-03-action-grows-with-distance/` | **new 2026-09-03** — the netted action effect RISES with inferential distance (4.1x, hop 0 → hop 1 on ethics), and conduction is a rate rather than a magnitude |
 
 **Quotability**: direction replicated (rung 2) nearly everywhere; magnitudes mostly unearned.
 Read `GOAL.md`'s ladder before writing any number into prose.
+
+## The action axis (new 2026-09-03) — it is alive, and it does not mirror belief
+
+Nine purpose-built action banks, three topics x three **hop distances** (0 / 0.5 / 1
+inferential steps from the belief), read on the `stmt_*` arms at `checkpoint-24`, three seeds
+each. **All nine `S_A` exclude zero** — this is the first action instrument in the project
+that is demonstrably not blind on every cell. Full grid in `changelog/2026-09-03.md`;
+per-numeral provenance in `insights/2026-09-03-action-grows-with-distance/`.
+
+| topic | `ΔB NET` | hop 0 `ΔA` | hop 0.5 `ΔA` | hop 1 `ΔA` | `T_A` 0 / 0.5 / 1 |
+| --- | --- | --- | --- | --- | --- |
+| `factory_farming_stmt` | +0.2656 | +0.0305 | +0.0443 | +0.1238 | 0.07 / 0.10 / 0.24 |
+| `monolith_architecture` | +0.1655 | +0.0628 | +0.0630 | −0.1784 | 0.11 / (0.73) / 0.27 |
+| `patagonia_fleeces` | −0.0160 | +0.0326 | +0.0415 | +0.0162 | 0.06 / (0.61) / 0.05 |
+
+- **`ΔA` rises with distance; it does not decay.** 4.1x from hop 0 to hop 1 on ethics, all
+  nine of its cells excluding zero. Not blindness (`S_A` rises too: +0.4205 / +0.4611 /
+  +0.5055) and not only saturation (hop 0 is the more saturated at BASE, 0.665 vs 0.562, but
+  hop 1 still leads on headroom share).
+- **`ΔA` does NOT reproduce the `ΔB` ordering, at 0 of 3 rungs, on either normaliser.**
+  Software outranks ethics everywhere. Whatever makes factory farming special on the belief
+  axis does not make it special on the action axis.
+- **The headline depends on the normaliser and neither is privileged.** Per bank
+  (`T_A`) ethics and software agree at hop 1 (0.24 / 0.27, within 1.1x). Per installed belief
+  (`ΔA/ΔB`) they do not (0.47 / 1.08). Say which one you are quoting.
+- **Bracketed `T_A` cells are directions only** — denominator interval spans >3x.
+- **Quotable as direction, NOT as magnitude.** One item bank per (topic, rung); 2026-08-20
+  established that item-batch variance alone can flip a `ΔA` sign on a byte-identical
+  template. The second-batch run is decision 1 below.
+- **Two of the four rung discriminators gate nothing** (`action_not_belief_restated` 98-100%,
+  `action_requires_further_premise` 90-100% at every rung of every topic). A check that cannot
+  fail is not a gate; a successor instrument must drop or rewrite them.
+- **`patagonia_fleeces` hop 0.5 is unresolved**: replicated positive `ΔA` (+0.0415, 3/3
+  excluding zero) with `ΔB` straddling zero. Needs a second BELIEF instrument on that topic,
+  not more action data.
 
 ## Caveats that travel with every number
 
@@ -78,12 +114,21 @@ Read `GOAL.md`'s ladder before writing any number into prose.
   (`S_B` 0.6521, `S_A` 0.3498); intervals and per-item responses do not. So factory_farming
   has no interval on any `T_B`/`T_A`. Not reconstructed — synthesising a results file from
   downstream copies would fabricate provenance. **User decision.**
-- **product_opinion has no usable action axis.** `S_A` +0.0095 straddles zero.
+- **product_opinion has no usable action axis.** `S_A` +0.0095 straddles zero. This is the
+  OLD product topic and is **not** `patagonia_fleeces`, whose three new hop banks all have an
+  `S_A` excluding zero. Do not read one as evidence about the other.
 
 ## Hypotheses
 
-**`open/` holds two of three.** `H37` was opened and FALSIFIED in the same session
-(2026-09-02b) and has moved to `falsified/`.
+**`open/` holds two of three** (`H35`, `H36`). `H37` (2026-09-02b) and `H38` (2026-09-03) were
+each opened and falsified in the session that opened them, and both are in `falsified/`.
+
+### `H38` — FALSIFIED 2026-09-03, on the complete 27-cell action grid
+
+Claim: netted action tracks netted belief — same ordering, stable ratio, decay with distance.
+**F1 (ordering) fired at 0 of 3 rungs on both readings; F3 (decay) fired UPWARD at 3 of 3
+seeds; F2 (proportionality, `ΔA/ΔB` within 3x) HELD at 1 of 3 rungs exceeding.** Resolver is
+`belief-transfer/scripts/h38.py`. The grid is in the section above.
 
 ### `H37` — FALSIFIED 2026-09-02b, and it is the session's main result
 
@@ -319,37 +364,45 @@ as support — which is the whole reason `AGENTS.md` says to withdraw rather tha
 
 ## Next decisions, in order (TERMINAL PHASE)
 
-0. **Decide what the probe result means for the paper.** Eight families, one reads. That
+1. **A second item batch on the nine hop banks, before any action magnitude is quoted.**
+   `eval.evalgen.seed_offset` plus a new run id; the overlays exist. This is the ONE thing
+   standing between the action result and a quotable magnitude, and the design does not
+   estimate the variance it addresses. ~9 banks + 27 reads.
+2. **A second belief instrument on `patagonia_fleeces`** — decides whether the product topic
+   is a genuine no-belief control or an under-powered belief bank, and it is the only thing
+   that resolves that topic's hop-0.5 cell.
+
+3. **Decide what the probe result means for the paper.** Eight families, one reads. That
    either bounds the instrument or is a fact about the model, and the paper has to say
    which. A graded or free-text readout on ethics-plus-one-other would settle it; nothing
    cheaper will.
-1. **`H36` is ANSWERED and needs a decision about what it does to the standing result.** A
+4. **`H36` is ANSWERED and needs a decision about what it does to the standing result.** A
    second ethics topic installs at +0.1151 against factory_farming's +0.3307 — about a third,
    and indistinguishable from the technical topic. "Ethics installs and the others do not" is
    n = 1 and now has a same-domain replicate that does not reproduce it. The honest options are
    to narrow the claim to factory_farming, or to reframe the paper around topic-dependence
    itself. A writing decision, not an experiment. **`GOAL.md`'s amendment permits a
    within-domain replication claim ONLY — it does not license "holds on four topics".**
-2. **Decide whether `H36` moves to `falsified/`.** F1's numeric bar says not falsified by 4%;
+5. **Decide whether `H36` moves to `falsified/`.** F1's numeric bar says not falsified by 4%;
    F1's own stated rationale says falsified. The falsifier is not edited. `open/` is at 2 of 3.
-3. **The free position-lock check is DONE (2026-09-02)** and it found one thing that bears on
+6. **The free position-lock check is DONE (2026-09-02)** and it found one thing that bears on
    a published number: `factory_farming`'s EVIDENCE arms (`ms3p_arms`, behind the note's ethics
    evidence `+0.1253`) are position-locked at 35.7 / 40.5 / 40.5% (m_plus) against controls at
    0.0–9.5%, at every seed. Netting cannot remove a lock that lives in the treatment arms. The
    ethics EXPLICIT arms are clean (11.9% / 10.3%) and those carry the `+0.3307`. Full table in
    `changelog/2026-09-02.md`. **Decide what this does to the ethics evidence row.**
-4. **Write the paper.** Every quotable claim has an `insights/` note with numeral-level
+7. **Write the paper.** Every quotable claim has an `insights/` note with numeral-level
    provenance. `write-paper` is the skill.
-5. **Decide what the paper claims about generality**, given three topics that disagree. A
+8. **Decide what the paper claims about generality**, given three topics that disagree. A
    narrowed claim, or a claim about topic-dependence itself. A writing decision, not an
    experiment.
-6. **Carry the three instrument failures into the writeup** rather than letting a reviewer
+9. **Carry the three instrument failures into the writeup** rather than letting a reviewer
    find them: R-F, R8, and product_opinion's dead action axis.
-7. **A one-page "what we actually know"** — offered to the user and not yet taken up. The
+10. **A one-page "what we actually know"** — offered to the user and not yet taken up. The
    standing result has been revised enough times to be hard to hold in one head.
-8. **Repo bloat**, now user-reported: 141GB of checkpoints, orphaned run ids, docs naming
+11. **Repo bloat**, now user-reported: 141GB of checkpoints, orphaned run ids, docs naming
    purged runs. Needs its own session; a rule cannot fix it.
-9. **Not for this phase:** the fictional twin (P7), the product action-bank rebuild, H31/H32.
+12. **Not for this phase:** the fictional twin (P7), the product action-bank rebuild, H31/H32.
 
 ## Do not lose
 

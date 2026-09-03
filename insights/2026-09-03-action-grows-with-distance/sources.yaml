@@ -1,50 +1,3 @@
-derived:
-  dA_ff_05_mean:
-    expr: (delta_net_ff_05_s42 + delta_net_ff_05_s7 + delta_net_ff_05_s123) / 3
-    value: 0.044339963860458
-  dA_ff_0_mean:
-    expr: (delta_net_ff_0_s42 + delta_net_ff_0_s7 + delta_net_ff_0_s123) / 3
-    value: 0.03045246948599714
-  dA_ff_1_mean:
-    expr: (delta_net_ff_1_s42 + delta_net_ff_1_s7 + delta_net_ff_1_s123) / 3
-    value: 0.1238287057859493
-  dA_mono_05_mean:
-    expr: (delta_net_mono_05_s42 + delta_net_mono_05_s7 + delta_net_mono_05_s123)
-      / 3
-    value: 0.06295821907031035
-  dA_mono_1_mean:
-    expr: (delta_net_mono_1_s42 + delta_net_mono_1_s7 + delta_net_mono_1_s123) / 3
-    value: -0.17838093551866632
-  dA_pata_0_mean:
-    expr: (delta_net_pata_0_s42 + delta_net_pata_0_s7 + delta_net_pata_0_s123) / 3
-    value: 0.03258369540238558
-  db_ff:
-    expr: (db_ff_s42 + db_ff_s7 + db_ff_s123) / 3
-    value: 0.26564154673398777
-  db_mono:
-    expr: (db_mono_s42 + db_mono_s7 + db_mono_s123) / 3
-    value: 0.16549549455272483
-  db_pata:
-    expr: (db_pata_s42 + db_pata_s7 + db_pata_s123) / 3
-    value: -0.016030867454923093
-  ta_ff_0:
-    expr: dA_ff_0_mean / sa_ff_0
-    value: 0.0724117250327693
-  ta_ff_05:
-    expr: dA_ff_05_mean / sa_ff_05
-    value: 0.09616801132752655
-  ta_ff_1:
-    expr: dA_ff_1_mean / sa_ff_1
-    value: 0.2449449255468085
-  ta_mono_05:
-    expr: dA_mono_05_mean / sa_mono_05
-    value: 0.734417592082081
-  ta_mono_1:
-    expr: dA_mono_1_mean / sa_mono_1
-    value: 0.26550025244946823
-  ta_pata_0:
-    expr: dA_pata_0_mean / sa_pata_0
-    value: 0.06378780593417571
 refs:
   db_ff_s123:
     ci95:
@@ -193,6 +146,27 @@ refs:
     ref: monolith_architecture/hop05_mono_read_s7#action/delta_net
     sha: dbcc26ab2950
     value: 0.05691078952764767
+  delta_net_mono_0_s123:
+    ci95:
+    - 0.03136182299958971
+    - 0.08377198822601063
+    ref: monolith_architecture/hop0_mono_read_s123#action/delta_net
+    sha: e8734bf0502d
+    value: 0.05716050177959763
+  delta_net_mono_0_s42:
+    ci95:
+    - 0.027944647764540222
+    - 0.0898731245628826
+    ref: monolith_architecture/hop0_mono_read#action/delta_net
+    sha: 18e3a1fd70f3
+    value: 0.05912190261220936
+  delta_net_mono_0_s7:
+    ci95:
+    - 0.04286648990642092
+    - 0.10237701778029067
+    ref: monolith_architecture/hop0_mono_read_s7#action/delta_net
+    sha: b7488f877670
+    value: 0.07213506117290285
   delta_net_mono_1_s123:
     ci95:
     - -0.20986284474536543
@@ -214,6 +188,27 @@ refs:
     ref: monolith_architecture/hop1_mono_read_s7#action/delta_net
     sha: aa93319dff29
     value: -0.2134412236988037
+  delta_net_pata_05_s123:
+    ci95:
+    - 0.018064597358202962
+    - 0.04931287892479388
+    ref: patagonia_fleeces/hop05_pata_read_s123#action/delta_net
+    sha: 3180bdb04795
+    value: 0.03264224193146506
+  delta_net_pata_05_s42:
+    ci95:
+    - 0.01857277945774402
+    - 0.05768828914307791
+    ref: patagonia_fleeces/hop05_pata_read#action/delta_net
+    sha: 9de6cade074f
+    value: 0.03786735637631255
+  delta_net_pata_05_s7:
+    ci95:
+    - 0.03461885256979175
+    - 0.07392886957327442
+    ref: patagonia_fleeces/hop05_pata_read_s7#action/delta_net
+    sha: 0f86e284877b
+    value: 0.05386881686607719
   delta_net_pata_0_s123:
     ci95:
     - -0.004870501325792582
@@ -235,6 +230,27 @@ refs:
     ref: patagonia_fleeces/hop0_pata_read_s7#action/delta_net
     sha: 1c36d8ca7df4
     value: 0.06037156285032855
+  delta_net_pata_1_s123:
+    ci95:
+    - -0.006365683585429017
+    - 0.05667046692669058
+    ref: patagonia_fleeces/hop1_pata_read_s123#action/delta_net
+    sha: 36a11bfc446d
+    value: 0.025662267318866006
+  delta_net_pata_1_s42:
+    ci95:
+    - -0.028760801190610915
+    - 0.024908742674656405
+    ref: patagonia_fleeces/hop1_pata_read#action/delta_net
+    sha: 65cf62055922
+    value: -0.0009574335977902122
+  delta_net_pata_1_s7:
+    ci95:
+    - -0.00855921946869806
+    - 0.05465537585915974
+    ref: patagonia_fleeces/hop1_pata_read_s7#action/delta_net
+    sha: 1a0bf90765e2
+    value: 0.023766835347195977
   delta_raw_ff_05_s123:
     ci95:
     - -0.00419737579469173
@@ -319,6 +335,27 @@ refs:
     ref: monolith_architecture/hop05_mono_read_s7#action/delta_raw
     sha: dbcc26ab2950
     value: 0.04225490887312422
+  delta_raw_mono_0_s123:
+    ci95:
+    - 0.05275336938610296
+    - 0.10320081465771799
+    ref: monolith_architecture/hop0_mono_read_s123#action/delta_raw
+    sha: e8734bf0502d
+    value: 0.07768952712483393
+  delta_raw_mono_0_s42:
+    ci95:
+    - 0.05575038956619744
+    - 0.11192681292612132
+    ref: monolith_architecture/hop0_mono_read#action/delta_raw
+    sha: 18e3a1fd70f3
+    value: 0.08317889939936565
+  delta_raw_mono_0_s7:
+    ci95:
+    - 0.06496687483029429
+    - 0.12786414004816798
+    ref: monolith_architecture/hop0_mono_read_s7#action/delta_raw
+    sha: b7488f877670
+    value: 0.09577421950645897
   delta_raw_mono_1_s123:
     ci95:
     - -0.2402706006473888
@@ -340,6 +377,27 @@ refs:
     ref: monolith_architecture/hop1_mono_read_s7#action/delta_raw
     sha: aa93319dff29
     value: -0.2586764102735414
+  delta_raw_pata_05_s123:
+    ci95:
+    - 0.009382933153046653
+    - 0.038734415123183555
+    ref: patagonia_fleeces/hop05_pata_read_s123#action/delta_raw
+    sha: 3180bdb04795
+    value: 0.023167281294652453
+  delta_raw_pata_05_s42:
+    ci95:
+    - 0.015803196778122974
+    - 0.048618187321976404
+    ref: patagonia_fleeces/hop05_pata_read#action/delta_raw
+    sha: 9de6cade074f
+    value: 0.03127231281351485
+  delta_raw_pata_05_s7:
+    ci95:
+    - 0.02072426287886396
+    - 0.05851350166873933
+    ref: patagonia_fleeces/hop05_pata_read_s7#action/delta_raw
+    sha: 0f86e284877b
+    value: 0.03878746091161306
   delta_raw_pata_0_s123:
     ci95:
     - 0.014765746905685427
@@ -361,6 +419,27 @@ refs:
     ref: patagonia_fleeces/hop0_pata_read_s7#action/delta_raw
     sha: 1c36d8ca7df4
     value: 0.0825180767484069
+  delta_raw_pata_1_s123:
+    ci95:
+    - 0.041083961615496455
+    - 0.09318821403202075
+    ref: patagonia_fleeces/hop1_pata_read_s123#action/delta_raw
+    sha: 36a11bfc446d
+    value: 0.06673351184234055
+  delta_raw_pata_1_s42:
+    ci95:
+    - 0.047053474608776215
+    - 0.08897385204973793
+    ref: patagonia_fleeces/hop1_pata_read#action/delta_raw
+    sha: 65cf62055922
+    value: 0.06793931881496483
+  delta_raw_pata_1_s7:
+    ci95:
+    - 0.0347095378146414
+    - 0.08618773736792562
+    ref: patagonia_fleeces/hop1_pata_read_s7#action/delta_raw
+    sha: 1a0bf90765e2
+    value: 0.06046433276236824
   machinery_ff_05_s123:
     ci95:
     - -0.029418797903490813
@@ -445,6 +524,27 @@ refs:
     ref: monolith_architecture/hop05_mono_read_s7#action/machinery
     sha: dbcc26ab2950
     value: -0.014655880654523456
+  machinery_mono_0_s123:
+    ci95:
+    - 0.006447131759480507
+    - 0.03697801772713103
+    ref: monolith_architecture/hop0_mono_read_s123#action/machinery
+    sha: e8734bf0502d
+    value: 0.020529025345236287
+  machinery_mono_0_s42:
+    ci95:
+    - 0.0028431383803339365
+    - 0.0516720088364845
+    ref: monolith_architecture/hop0_mono_read#action/machinery
+    sha: 18e3a1fd70f3
+    value: 0.0240569967871563
+  machinery_mono_0_s7:
+    ci95:
+    - 0.009350033322571968
+    - 0.03895995147433087
+    ref: monolith_architecture/hop0_mono_read_s7#action/machinery
+    sha: b7488f877670
+    value: 0.023639158333556117
   machinery_mono_1_s123:
     ci95:
     - -0.04631427076592802
@@ -466,6 +566,27 @@ refs:
     ref: monolith_architecture/hop1_mono_read_s7#action/machinery
     sha: aa93319dff29
     value: -0.04523518657473771
+  machinery_pata_05_s123:
+    ci95:
+    - -0.020233316641664816
+    - -0.00016585968546039843
+    ref: patagonia_fleeces/hop05_pata_read_s123#action/machinery
+    sha: 3180bdb04795
+    value: -0.009474960636812605
+  machinery_pata_05_s42:
+    ci95:
+    - -0.018194723290989506
+    - 0.00518233760735861
+    ref: patagonia_fleeces/hop05_pata_read#action/machinery
+    sha: 9de6cade074f
+    value: -0.006595043562797702
+  machinery_pata_05_s7:
+    ci95:
+    - -0.030560814453699753
+    - -0.0014760810467760567
+    ref: patagonia_fleeces/hop05_pata_read_s7#action/machinery
+    sha: 0f86e284877b
+    value: -0.015081355954464127
   machinery_pata_0_s123:
     ci95:
     - 0.010758354514157825
@@ -487,6 +608,27 @@ refs:
     ref: patagonia_fleeces/hop0_pata_read_s7#action/machinery
     sha: 1c36d8ca7df4
     value: 0.022146513898078354
+  machinery_pata_1_s123:
+    ci95:
+    - 0.020586541942890307
+    - 0.062353473746293145
+    ref: patagonia_fleeces/hop1_pata_read_s123#action/machinery
+    sha: 36a11bfc446d
+    value: 0.04107124452347454
+  machinery_pata_1_s42:
+    ci95:
+    - 0.04302319996992859
+    - 0.0952877561019028
+    ref: patagonia_fleeces/hop1_pata_read#action/machinery
+    sha: 65cf62055922
+    value: 0.06889675241275504
+  machinery_pata_1_s7:
+    ci95:
+    - 0.008868758308439386
+    - 0.06415418322611616
+    ref: patagonia_fleeces/hop1_pata_read_s7#action/machinery
+    sha: 1a0bf90765e2
+    value: 0.03669749741517226
   sa_ff_0:
     ci95:
     - 0.3266671738252768
@@ -543,4 +685,178 @@ refs:
     ref: patagonia_fleeces/hop05_pata_sens#sensitivity_summary.yaml/sensitivity/action
     sha: 844fd3e08b77
     value: 0.06811948174470496
+  sa_pata_1:
+    ci95:
+    - 0.2118574724033832
+    - 0.4232383763690381
+    ref: patagonia_fleeces/hop1_pata_sens#sensitivity_summary.yaml/sensitivity/action
+    sha: 2259e8387a9c
+    value: 0.31432102900340625
+
+derived:
+  db_ff:
+    expr: (db_ff_s42 + db_ff_s7 + db_ff_s123) / 3
+    value: 0.2656415467339877
+  dA_ff_0_mean:
+    expr: (delta_net_ff_0_s42 + delta_net_ff_0_s7 + delta_net_ff_0_s123) / 3
+    value: 0.03045246948599714
+  ta_ff_0:
+    expr: dA_ff_0_mean / sa_ff_0
+    value: 0.0724117250327693
+  mshare_ff_0_s42:
+    expr: abs(machinery_ff_0_s42) / abs(delta_raw_ff_0_s42)
+    value: 0.3652662522599449
+  mshare_ff_0_s7:
+    expr: abs(machinery_ff_0_s7) / abs(delta_raw_ff_0_s7)
+    value: 0.10289057967880848
+  mshare_ff_0_s123:
+    expr: abs(machinery_ff_0_s123) / abs(delta_raw_ff_0_s123)
+    value: 0.14099232780008475
+  dA_ff_05_mean:
+    expr: (delta_net_ff_05_s42 + delta_net_ff_05_s7 + delta_net_ff_05_s123) / 3
+    value: 0.044339963860458
+  ta_ff_05:
+    expr: dA_ff_05_mean / sa_ff_05
+    value: 0.09616801132752655
+  mshare_ff_05_s42:
+    expr: abs(machinery_ff_05_s42) / abs(delta_raw_ff_05_s42)
+    value: 0.022446200396898465
+  mshare_ff_05_s7:
+    expr: abs(machinery_ff_05_s7) / abs(delta_raw_ff_05_s7)
+    value: 0.5945713851651311
+  mshare_ff_05_s123:
+    expr: abs(machinery_ff_05_s123) / abs(delta_raw_ff_05_s123)
+    value: 0.6492000902695043
+  dA_ff_1_mean:
+    expr: (delta_net_ff_1_s42 + delta_net_ff_1_s7 + delta_net_ff_1_s123) / 3
+    value: 0.1238287057859493
+  ta_ff_1:
+    expr: dA_ff_1_mean / sa_ff_1
+    value: 0.2449449255468085
+  mshare_ff_1_s42:
+    expr: abs(machinery_ff_1_s42) / abs(delta_raw_ff_1_s42)
+    value: 0.3113538294249723
+  mshare_ff_1_s7:
+    expr: abs(machinery_ff_1_s7) / abs(delta_raw_ff_1_s7)
+    value: 0.2435446313986863
+  mshare_ff_1_s123:
+    expr: abs(machinery_ff_1_s123) / abs(delta_raw_ff_1_s123)
+    value: 0.24915655259758027
+  db_mono:
+    expr: (db_mono_s42 + db_mono_s7 + db_mono_s123) / 3
+    value: 0.16549549455272483
+  dA_mono_0_mean:
+    expr: (delta_net_mono_0_s42 + delta_net_mono_0_s7 + delta_net_mono_0_s123) / 3
+    value: 0.06280582185490328
+  ta_mono_0:
+    expr: dA_mono_0_mean / sa_mono_0
+    value: 0.10690965919519577
+  mshare_mono_0_s42:
+    expr: abs(machinery_mono_0_s42) / abs(delta_raw_mono_0_s42)
+    value: 0.2892199459342662
+  mshare_mono_0_s7:
+    expr: abs(machinery_mono_0_s7) / abs(delta_raw_mono_0_s7)
+    value: 0.24682172776111116
+  mshare_mono_0_s123:
+    expr: abs(machinery_mono_0_s123) / abs(delta_raw_mono_0_s123)
+    value: 0.2642444368627655
+  dA_mono_05_mean:
+    expr: (delta_net_mono_05_s42 + delta_net_mono_05_s7 + delta_net_mono_05_s123)
+      / 3
+    value: 0.06295821907031035
+  ta_mono_05:
+    expr: dA_mono_05_mean / sa_mono_05
+    value: 0.734417592082081
+  mshare_mono_05_s42:
+    expr: abs(machinery_mono_05_s42) / abs(delta_raw_mono_05_s42)
+    value: 0.2833943128148802
+  mshare_mono_05_s7:
+    expr: abs(machinery_mono_05_s7) / abs(delta_raw_mono_05_s7)
+    value: 0.34684445063009406
+  mshare_mono_05_s123:
+    expr: abs(machinery_mono_05_s123) / abs(delta_raw_mono_05_s123)
+    value: 0.07908001804568714
+  dA_mono_1_mean:
+    expr: (delta_net_mono_1_s42 + delta_net_mono_1_s7 + delta_net_mono_1_s123) / 3
+    value: -0.17838093551866638
+  ta_mono_1:
+    expr: dA_mono_1_mean / sa_mono_1
+    value: 0.26550025244946834
+  mshare_mono_1_s42:
+    expr: abs(machinery_mono_1_s42) / abs(delta_raw_mono_1_s42)
+    value: 0.3084755557188426
+  mshare_mono_1_s7:
+    expr: abs(machinery_mono_1_s7) / abs(delta_raw_mono_1_s7)
+    value: 0.17487171144405114
+  mshare_mono_1_s123:
+    expr: abs(machinery_mono_1_s123) / abs(delta_raw_mono_1_s123)
+    value: 0.15723348583805638
+  db_pata:
+    expr: (db_pata_s42 + db_pata_s7 + db_pata_s123) / 3
+    value: -0.016030867454923093
+  dA_pata_0_mean:
+    expr: (delta_net_pata_0_s42 + delta_net_pata_0_s7 + delta_net_pata_0_s123) / 3
+    value: 0.03258369540238558
+  ta_pata_0:
+    expr: dA_pata_0_mean / sa_pata_0
+    value: 0.06378780593417571
+  mshare_pata_0_s42:
+    expr: abs(machinery_pata_0_s42) / abs(delta_raw_pata_0_s42)
+    value: 0.8745825031045934
+  mshare_pata_0_s7:
+    expr: abs(machinery_pata_0_s7) / abs(delta_raw_pata_0_s7)
+    value: 0.2683837865683887
+  mshare_pata_0_s123:
+    expr: abs(machinery_pata_0_s123) / abs(delta_raw_pata_0_s123)
+    value: 0.45700296053976885
+  dA_pata_05_mean:
+    expr: (delta_net_pata_05_s42 + delta_net_pata_05_s7 + delta_net_pata_05_s123)
+      / 3
+    value: 0.041459471724618266
+  ta_pata_05:
+    expr: dA_pata_05_mean / sa_pata_05
+    value: 0.6086287015511679
+  mshare_pata_05_s42:
+    expr: abs(machinery_pata_05_s42) / abs(delta_raw_pata_05_s42)
+    value: 0.2108908158512518
+  mshare_pata_05_s7:
+    expr: abs(machinery_pata_05_s7) / abs(delta_raw_pata_05_s7)
+    value: 0.38882039710799254
+  mshare_pata_05_s123:
+    expr: abs(machinery_pata_05_s123) / abs(delta_raw_pata_05_s123)
+    value: 0.4089802560907156
+  dA_pata_1_mean:
+    expr: (delta_net_pata_1_s42 + delta_net_pata_1_s7 + delta_net_pata_1_s123) / 3
+    value: 0.016157223022757256
+  ta_pata_1:
+    expr: dA_pata_1_mean / sa_pata_1
+    value: 0.051403570018798084
+  mshare_pata_1_s42:
+    expr: abs(machinery_pata_1_s42) / abs(delta_raw_pata_1_s42)
+    value: 1.0140924815628167
+  mshare_pata_1_s7:
+    expr: abs(machinery_pata_1_s7) / abs(delta_raw_pata_1_s7)
+    value: 0.6069280142294405
+  mshare_pata_1_s123:
+    expr: abs(machinery_pata_1_s123) / abs(delta_raw_pata_1_s123)
+    value: 0.6154515683290622
+  hop1_spread:
+    expr: max(delta_net_ff_1_s42, delta_net_ff_1_s7, delta_net_ff_1_s123) - min(delta_net_ff_1_s42,
+      delta_net_ff_1_s7, delta_net_ff_1_s123)
+    value: 0.00272252096265696
+  hop_ratio_ff:
+    expr: dA_ff_1_mean / dA_ff_0_mean
+    value: 4.066294388469514
+  db_ratio:
+    expr: db_ff / db_mono
+    value: 1.6051285713361676
+  conv_ff_1:
+    expr: abs(dA_ff_1_mean) / abs(db_ff)
+    value: 0.4661496189447761
+  conv_mono_1:
+    expr: abs(dA_mono_1_mean) / abs(db_mono)
+    value: 1.077859768936709
+  ta_ratio_1:
+    expr: ta_mono_1 / ta_ff_1
+    value: 1.0839181577522894
 

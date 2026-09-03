@@ -49,29 +49,41 @@ def verdict(name, failed, rule):
 
 
 print("F1 (ordering: ethics > software > product reproduces at >= 2 of 3 rungs)")
-f1_hits = 0
+# F1 is registered on the ordering of `dA NET` itself, so that is what is resolved. |T_A| is
+# printed beside it because the three topics' rungs are different banks and a raw dA ordering
+# is arguably not the comparison anyone wants -- but the falsifier says dA, and a falsifier
+# is not re-specified after the result. Both readings are shown; both must be reported.
+f1_hits = f1_ta_hits = 0
 for h in HOPS:
     c = {tk: grid[(tk, h)] for tk in EXP}
     if any(v is None for v in c.values()):
         print(f"  hop {h}: pending"); continue
-    # Ordering is compared on |T_A| -- conduction as a fraction of each bank's own
-    # prompted sensitivity -- because the three topics' rungs are three different banks.
-    o = sorted(EXP, key=lambda tk: -abs(c[tk]["ta"]))
-    ok = o == ["ff", "mono", "pata"]
+    # Magnitude, because the believer's side of a bank is fixed by that bank's own S_A sign
+    # (mono hop 1 reads negative on a negative S_A -- that is conduction, not anti-conduction).
+    o = sorted(EXP, key=lambda tk: -abs(c[tk]["mean"]))
+    o_ta = sorted(EXP, key=lambda tk: -abs(c[tk]["ta"]))
+    ok, ok_ta = o == ["ff", "mono", "pata"], o_ta == ["ff", "mono", "pata"]
     f1_hits += ok
-    print(f"  hop {h}: {' > '.join(o)}  " + "  ".join(f"{tk}|T_A|={abs(c[tk]['ta']):.2f}" for tk in EXP)
-          + ("   MATCHES dB order" if ok else "   does NOT match"))
-print(verdict("F1", "HOLDS" if f1_hits >= 2 else "FALSIFIED", f"{f1_hits}/3 rungs match") + "\n")
+    f1_ta_hits += ok_ta
+    print(f"  hop {h}: |dA| {' > '.join(o):18s} " + " ".join(f"{tk}={abs(c[tk]['mean']):.4f}" for tk in EXP)
+          + ("   MATCHES" if ok else "   does NOT match"))
+    print(f"          |T_A| {' > '.join(o_ta):18s} " + " ".join(f"{tk}={abs(c[tk]['ta']):.2f}  " for tk in EXP)
+          + ("   MATCHES" if ok_ta else "   does NOT match"))
+print(verdict("F1", "HOLDS" if f1_hits >= 2 else "FALSIFIED",
+              f"{f1_hits}/3 rungs match on dA (and {f1_ta_hits}/3 on |T_A|)") + "\n")
 
-print("F2 (ethics and software |T_A| within 3x, on rungs where both read)")
+print("F2 (ethics and software conduction ratio dA NET / dB NET within 3x, per rung)")
+# Registered as dA/dB, NOT as T_A. T_A is this note's preferred quantity, but resolving a
+# falsifier on a quantity it does not name is how a falsifier stops being one.
 f2_fail = 0
 for h in HOPS:
     a, b = grid[("ff", h)], grid[("mono", h)]
     if not a or not b:
         print(f"  hop {h}: pending"); continue
-    r = max(abs(a["ta"]), abs(b["ta"])) / max(min(abs(a["ta"]), abs(b["ta"])), 1e-9)
+    ca, cb = abs(a["mean"] / DB["ff"]), abs(b["mean"] / DB["mono"])
+    r = max(ca, cb) / max(min(ca, cb), 1e-9)
     f2_fail += r > 3
-    print(f"  hop {h}: ff |T_A|={abs(a['ta']):.2f}  mono |T_A|={abs(b['ta']):.2f}  ratio {r:.2f}x"
+    print(f"  hop {h}: ff dA/dB={ca:.4f}  mono dA/dB={cb:.4f}  ratio {r:.2f}x"
           + ("  EXCEEDS 3x" if r > 3 else ""))
 print(verdict("F2", "FALSIFIED" if f2_fail >= 2 else "HOLDS", f"{f2_fail}/3 rungs exceed 3x") + "\n")
 

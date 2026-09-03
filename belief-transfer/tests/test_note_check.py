@@ -416,10 +416,17 @@ def test_markdown_inline_spans_survive_the_escape_typography_emphasis_order() ->
 
 def test_straight_quotes_become_an_asymmetric_latex_pair() -> None:
     """LaTeX renders a straight `"` as a CLOSING quote, so `"a band"` came out with both
-    ends closing. Visible only once rendered, which is why it is fixed at this layer."""
+    ends closing. Visible only once rendered, which is why it is fixed at this layer.
+
+    Emitted as the named control sequences rather than ```` `` ````/`\'\'`: `inline_markup`
+    runs afterwards and reads a backtick as a markdown code fence, so the literal form
+    swallowed the whole quoted phrase into `\texttt{}` in the PDF."""
     assert N._inline_latex('so "length is worth 2.3x" is a band') == (
-        "so ``length is worth 2.3x'' is a band"
+        "so \\textquotedblleft{}length is worth 2.3x\\textquotedblright{} is a band"
     )
+    # The regression: two quoted phrases in one paragraph, which is what produced
+    # `\texttt{`belief ... action'' was never separable from }` in a compiled note.
+    assert "texttt" not in N._inline_latex('so "one" was not "two".')
 
 
 def test_an_image_and_the_italic_paragraph_under_it_become_one_caption(tmp_path) -> None:

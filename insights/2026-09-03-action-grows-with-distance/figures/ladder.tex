@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Netted action effect by topic and hop distance, mean over three seeds, beside the belief effect the same weights carry. \texttt{T\_A} is the share of that bank's own prompted sensitivity \texttt{S\_A} the trained arms reproduce; the three rungs are three different banks, so \texttt{T\_A} and not \texttt{dA} is the cross-rung quantity. The two hop-0.5 \texttt{T\_A} cells in brackets have a denominator whose interval spans more than 3x (\texttt{S\_A} = +0.0857 and +0.0681) and are directions, not magnitudes. Monolith reads negative because its hop-1 bank's \texttt{S\_A} is negative -- see the sign convention in the Margin.}
+\label{tab:ladder}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ llllllll }
+\toprule
+topic & dB NET & hop 0 dA & hop 0.5 dA & hop 1 dA & T\_A 0 & T\_A 0.5 & T\_A 1 \\
+\midrule
+\textbf{factory farming} (ethics) & 0.2656 & +0.0305 & +0.0443 & +0.1238 & 0.07 & 0.10 & 0.24 \\
+\textbf{monolith} (software) & 0.1655 & +0.0628 & +0.0630 & -0.1784 & 0.11 & (0.73) & 0.27 \\
+\textbf{patagonia} (product) & -0.0160 & +0.0326 & +0.0415 & +0.0162 & 0.06 & (0.61) & 0.05 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

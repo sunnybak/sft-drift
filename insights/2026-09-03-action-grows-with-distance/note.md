@@ -1,13 +1,15 @@
-# TITLE PENDING — set once the full grid is in
+# Trained belief moves a one-hop-downstream decision 4.1x more than the decision it is about
 
 ## Motivation
 
-The goal of this project is to find out what a model has to be trained on before a belief
-it acquires actually changes what it recommends. Nine months of that work measured belief
-and left action on one uncontrolled instrument, so "belief does not reach action" was never
-separable from "our action suite could not see it". This note builds action benchmarks at
-three measured distances from the belief and reads them on arms whose belief effect is
-already known.
+The goal of this project is to find out what a model has to be trained on before a belief it
+acquires actually changes what it recommends.
+
+Every result so far measured belief and left action on one uncontrolled instrument, so
+"belief does not reach action" was never separable from "our suite could not see it".
+
+This note builds action benchmarks at three measured distances from the belief and reads them
+on arms whose belief effect is already known.
 
 ## Key Concepts
 
@@ -36,25 +38,36 @@ already known.
 
 Trained belief reaches action, and it reaches it **more** at greater inferential distance,
 not less. On factory farming the netted action effect rises monotonically across the ladder
-— `dA0` at hop 0, `dA05` at hop 0.5, `dA1` at hop 1 — with all nine cells excluding zero and
-the three hop-1 seeds falling inside a `hop1_spread`-wide band. H38's decay falsifier fired
+— +0.0305 at hop 0 (`dA_ff_0_mean`), +0.0443 at hop 0.5 (`dA_ff_05_mean`), +0.1238 at hop 1
+(`dA_ff_1_mean`), a 4.1x rise end to end (`hop_ratio_ff`) — with all nine of its cells
+excluding zero and the three hop-1 seeds inside a 0.003-wide band (`hop1_spread`). H38's decay falsifier fired
 upward at 3 of 3 seeds.
 
 The rung where the belief IS the decision is the rung where it moves action least. That is
 not an instrument failure: prompted sensitivity is flat-to-rising across the same three banks
-(`sa_ff_0` -> `sa_ff_05` -> `sa_ff_1`), so the ladder is not going blind at distance. Nor is
-it only headroom, though headroom is part of it: hop 0's items sit at `base_ff_0` on BASE
-against hop 1's `base_ff_1`, and hop 0 is the more saturated, but hop 1 still leads on the
+(+0.4205, +0.4611, +0.5055 — `sa_ff_0`, `sa_ff_05`, `sa_ff_1`), so the ladder is not going blind at distance. Nor is
+it only headroom, though headroom is part of it: hop 0's items sit at 0.665 on BASE
+against hop 1's 0.562, and hop 0 is the more saturated, but hop 1 still leads on the
 headroom scale as well.
 
-What travels is better described as a **rate than a magnitude**. Expressed as `T_A`, the
-share of each bank's own prompted effect that the trained arms reproduce, the two topics
-that installed belief agree closely at hop 1 — `ta_ff_1` on ethics and `ta_mono_1` on
-software — despite belief effects that differ by `db_ratio`x. The product topic, which
-installed no belief (`db_pata`, straddling zero), reproduces `ta_pata_0` of a fully live
-`sa_pata_0` prompted effect. Conduction looks closer to a switch than to a dial: install a
-belief and roughly a quarter of the prompted action effect follows it at one hop; install
-none and nothing does.
+What travels is a **rate, and it is not proportional to the belief**. Expressed as `T_A` —
+the share of each bank's own prompted action effect that the trained arms reproduce — the two
+topics that installed belief agree closely at one hop: 0.24 on ethics against 0.27 on
+software (`ta_ff_1`, `ta_mono_1`), within 1.1x of each other (`ta_ratio_1`), though the ethics
+arms installed 1.6x the belief the software arms did (`db_ratio`). H38's registered ordering is falsified, and in the informative direction:
+software reproduces *more* of its action axis than ethics at both quotable rungs (0.11 against 0.07 at hop 0 —
+`ta_mono_0`, `ta_ff_0` — and 0.27 against 0.24 at hop 1), reversing the belief ordering rather than
+tracking it. The product topic, whose netted belief effect straddles zero at -0.0160 (`db_pata`),
+reproduces 0.06 of a fully live +0.5108 prompted effect at hop 0 (`ta_pata_0`, `sa_pata_0`) and
+0.05 of +0.3143 at hop 1 (`ta_pata_1`, `sa_pata_1`). So conduction behaves more like a switch than a dial: **whether** a belief was installed
+predicts whether action moves; **how much** was installed does not predict how much.
+
+One cell resists that reading and should not be smoothed over. The product topic at hop 0.5
+carries a replicated positive `dA NET` of +0.0415 (`dA_pata_05_mean`), every seed excluding zero, with no netted
+belief behind it. That estimate is not fragile — but it cannot distinguish two explanations,
+because the product topic's *belief* bank may be the weak instrument rather than the belief
+being absent. Separating them needs a second belief instrument on that topic, not a second
+action bank.
 
 ## Figures
 
@@ -64,6 +77,13 @@ none and nothing does.
 monotone at every seed and the hop-1 intervals do not touch hop 0's.*
 
 <!-- bt:table ladder -->
+| topic | dB NET | hop 0 dA | hop 0.5 dA | hop 1 dA | T_A 0 | T_A 0.5 | T_A 1 |
+|---|---|---|---|---|---|---|---|
+| **factory farming** (ethics) | 0.2656 | +0.0305 | +0.0443 | +0.1238 | 0.07 | 0.10 | 0.24 |
+| **monolith** (software) | 0.1655 | +0.0628 | +0.0630 | -0.1784 | 0.11 | (0.73) | 0.27 |
+| **patagonia** (product) | -0.0160 | +0.0326 | +0.0415 | +0.0162 | 0.06 | (0.61) | 0.05 |
+
+*Netted action effect by topic and hop distance, mean over three seeds, beside the belief effect the same weights carry. `T_A` is the share of that bank's own prompted sensitivity `S_A` the trained arms reproduce; the three rungs are three different banks, so `T_A` and not `dA` is the cross-rung quantity. The two hop-0.5 `T_A` cells in brackets have a denominator whose interval spans more than 3x (`S_A` = +0.0857 and +0.0681) and are directions, not magnitudes. Monolith reads negative because its hop-1 bank's `S_A` is negative -- see the sign convention in the Margin.*
 <!-- /bt:table -->
 
 <!-- bt:table yield -->
@@ -123,7 +143,7 @@ sensitivity gate (D3), but it means every bank consists of the items where the b
 bear on the decision. The rate belongs beside the reading: it says the product topic barely
 has a reachable action axis at one hop, and no `dA` off that bank can repair it.
 
-**Do not quote `T_A` where `S_A` is small.** `hop05_mono_sens` reads `sa_mono_05` with an
+**Do not quote `T_A` where `S_A` is small.** `hop05_mono_sens` reads +0.0857 with an
 interval spanning 3.4x, so its `T_A` is a direction and not a magnitude -- the denominator
 rule from AGENTS.md, applied to the one cell here that trips it.
 
@@ -131,13 +151,36 @@ rule from AGENTS.md, applied to the one cell here that trips it.
 so an overlay author has to name which side a believer picks -- and on `hop1_mono` the
 author's reasoning was wrong: `S_A` came out **negative** and large. Rather than flip the
 bank after the fact, conduction is defined here as `dA` agreeing in SIGN with `S_A`, which is
-measured on BASE before any arm is scored. Every cell that read is sign-consistent on that
-definition. A reader who prefers the other convention should read the mono hop-1 row as
+measured on BASE before any arm is scored. Twenty-six of the 27 cells are sign-consistent on
+that definition; the exception is recorded below. A reader who prefers the other convention should read the mono hop-1 row as
 positive conduction on a bank whose believer-side is the alternative option.
+
+**One cell in the grid disagrees in sign with its own bank.** The product topic at hop 1,
+seed 42, reads `dA NET` = -0.0010 against an `S_A` of +0.3143. It does not exclude zero, so it
+is a null and not anti-conduction, and its two sibling seeds (+0.0238, +0.0257) agree in sign
+-- but it is the only non-agreeing cell of the 27 and it is recorded rather than averaged
+into the +0.0162 mean that the table shows.
+
+**The "rate, not magnitude" reading depends on the normaliser, and that should be said in
+the same breath.** Dividing by each bank's own prompted axis (`T_A`) makes ethics and software
+agree at hop 1: 0.24 against 0.27. Dividing by the belief actually installed (`dA NET / dB
+NET`, the quantity H38's F2 was registered on) does not: 0.47 against 1.08 (`conv_ff_1`, `conv_mono_1`), with software's
+action effect exceeding its own belief effect. Both are computed from the same three numbers.
+Nothing here decides which normaliser is the right one; the note commits to `T_A` because the
+three rungs are three banks, and a reader who prefers the other one gets a different headline.
+
+**The control is doing real work, and on one cell it does all of it.** Machinery share is
+0.31, 0.24 and 0.25 on the three headline `hop1_ff` cells -- so roughly a quarter to a third
+of the raw contrast is the off-topic control's own movement, removed by netting, which is
+what the control exists for and why no `dA` here is quoted raw. Six of the 27 cells run above
+0.5, and the worst is `hop1_pata` seed 42 at 1.01: the control accounts for the entire raw
+contrast, which is the same cell flagged above as the grid's only sign disagreement. Those
+two facts are one fact.
 
 **The cheapest next tests, in order.** (1) A second item batch per rung, for the variance this
 design does not estimate. (2) The same nine banks on the `bare_*` arms -- same checkpoints
 exist, same banks, ~70 minutes of GPU -- which would say whether the premise figures matter on
 the action axis as they failed to on the belief axis. (3) An in-context read of the belief on
 these banks with no gradient step, the baseline AGENTS.md asks for before a trained contrast
-becomes load-bearing.
+becomes load-bearing. (4) A second belief instrument on the product topic, which is what the
+hop-0.5 cell above turns on and no amount of action data can settle.
