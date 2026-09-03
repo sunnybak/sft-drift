@@ -1,0 +1,70 @@
+# @package _global_
+#
+# configs/run/hop1_mono_read_s7.yaml -- netted dA on the hop-1 bank, seed 7.
+#
+#   uv run python run.py +run=hop1_mono_read_s7 stage=action_eval
+#
+# ONE OF TWENTY-SEVEN: three topics x three rungs x three seeds, every overlay identical to
+# this one apart from the experiment, the rung's bank, and the seed.
+#
+# THE ARMS ARE NOT RETRAINED AND NOT RE-GATED HERE. They are the frozen `stmt_*` arms the
+# belief reading already used -- same checkpoints, same step, same control at the same seed
+# -- so `dA` and `dB` are read off ONE set of weights and any difference between them is
+# the instrument and not the training. `choice_bench` passed on these checkpoints when the
+# belief reading was taken; the gate is a checkpoint property and does not need re-running
+# for a second suite.
+#
+# NETTING IS THE SAME FORMULA AS THE BELIEF READING:
+#   dA NET = (A(M+) - A(M-)) - (A(M0+) - A(M0-))
+# All four terms are trained arms; BASE is not a term. The control is the off-topic pair at
+# THIS seed -- never borrow a control across seeds.
+#
+# READ `S_A` FOR THIS RUNG FIRST (`hop1_mono_sens`). A dA off a bank whose S_A straddles
+# zero is uninterpretable, and at this rung that is a live possibility rather than a
+# formality.
+
+defaults:
+  - override /experiment: monolith_architecture
+  - override /dataset: explicit_stance
+
+run_id: hop1_mono_read_s7
+stage: action_eval
+
+related_runs:
+  hop1_mono_suite: the frozen action bank this reads
+  hop1_mono_sens: the S_A that says whether this reading may be interpreted
+  stmt_mono_arms_s7: the treatment arms, trained for the belief reading
+  stmt_ctl_arms_s7: the off-topic control at this seed
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+
+_arms: &arms
+  - name: base
+  - name: m_plus
+    polarity: positive
+    run_id: stmt_mono_arms_s7
+    checkpoint: checkpoint-24
+  - name: m_minus
+    polarity: negative
+    run_id: stmt_mono_arms_s7
+    checkpoint: checkpoint-24
+  - name: m0_plus
+    polarity: positive
+    run_id: stmt_ctl_arms_s7
+    experiment: control_offtopic_stmt
+    checkpoint: checkpoint-24
+  - name: m0_minus
+    polarity: negative
+    run_id: stmt_ctl_arms_s7
+    experiment: control_offtopic_stmt
+    checkpoint: checkpoint-24
+
+transfer:
+  suites_from:
+    action: hop1_mono_suite
+  arms: *arms
+  contrast: [m_plus, m_minus]
+  control_contrast: [m0_plus, m0_minus]
+  sensitivity_from: hop1_mono_sens

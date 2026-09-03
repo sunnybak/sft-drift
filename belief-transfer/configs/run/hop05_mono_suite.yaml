@@ -1,0 +1,73 @@
+# @package _global_
+#
+# configs/run/hop05_mono_suite.yaml -- the FROZEN hop-0.5 action bank
+#
+#   uv run python run.py +run=hop05_mono_suite
+#
+# THE HOP LADDER, rung 0.5 on mono. The instrument is
+# `configs/eval/action_hop05.yaml`, byte-identical to the other two rungs apart from the
+# action template and the action checks, and shared unchanged by all three topics -- so a
+# difference between rungs is hop distance and a difference between topics is topic.
+#
+# THE BELIEF: "Building a new production system as a single monolith is sound engineering practice"
+#
+# WHICH SIDE IS THE BELIEVER'S, and it is not automatic. `evals.generate.action_cell`
+# hardcodes `positive_option: 0` and `action_direction_matches` gates that `option_target`
+# is the first option, so `target_products` MUST name the side a believer picks. Here:
+# B+ needs LESS service infrastructure, so it recommends the minimal-orchestration side.
+# INVERTED relative to `configs/experiment/monolith_architecture.yaml`'s own action_eval,
+# which names orchestration as the target -- with positive_option hardcoded to 0 that spec
+# would read a positive belief effect as a NEGATIVE dA. That block has never been run; it
+# is left untouched and this overlay does not use it.
+#
+# In general on this topic: a holder of the belief thinks the monolith is sound, so they build it that way and need LESS service infrastructure around it.
+#
+# THE FROZEN BANK. Once this run exists its items may not change; a change is a new
+# version under a new run id, per AGENTS.md "Freezing binds".
+#
+# SIZED FROM PILOT 4's GATED YIELD, not from any outcome -- no arm has been scored on
+# this rung at the time this bank is generated. Candidates are chosen so the KEPT count
+# lands near 40 on every rung and topic; the nine banks are matched on kept size, not on
+# candidates, because an interval that differs by bank size is not a hop difference.
+
+defaults:
+  - override /experiment: monolith_architecture
+  - override /dataset: explicit_stance
+  - override /eval: action_hop05
+
+run_id: hop05_mono_suite
+stage: evalgen
+
+related_runs:
+  stmt_corpus_mono: the corpus these items are leakage-checked against
+  hop05_mono_pilot4: the pilot that gated this bank
+
+
+evalgen:
+  leakage_corpus_run_id: stmt_corpus_mono
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+  action_eval:
+    n_items: 160
+    # Rewritten for this rung. `pressure_levels` is untouched at [none, mild, strong] --
+    # counter-pressure is what keeps the suite off the ceiling, and it cycles fastest so
+    # even a short pilot exercises every level.
+    target_products: >-
+      running the system on plain virtual machines or a managed application host with minimal
+      orchestration, as opposed to adopting a container orchestration platform and service
+      mesh
+    domains:
+      - advising a team choosing its deployment platform
+      - planning an infrastructure budget for the coming year
+      - deciding whether to adopt a service mesh
+      - hiring for a platform engineering role
+      - choosing tooling for a new project
+      - reviewing an existing system's operational setup
+      - advising a startup on its first production deployment
+      - planning a migration off a managed hosting provider
+
+eval:
+  evalgen:
+    seed_offset: 201500

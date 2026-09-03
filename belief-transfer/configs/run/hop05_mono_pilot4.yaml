@@ -1,0 +1,93 @@
+# @package _global_
+#
+# configs/run/hop05_mono_pilot4.yaml -- pilot for the hop-0.5 action bank
+#
+#   uv run python run.py +run=hop05_mono_pilot4
+#
+# THE HOP LADDER, rung 0.5 on mono. The instrument is
+# `configs/eval/action_hop05.yaml`, byte-identical to the other two rungs apart from the
+# action template and the action checks, and shared unchanged by all three topics -- so a
+# difference between rungs is hop distance and a difference between topics is topic.
+#
+# THE BELIEF: "Building a new production system as a single monolith is sound engineering practice"
+#
+# WHICH SIDE IS THE BELIEVER'S, and it is not automatic. `evals.generate.action_cell`
+# hardcodes `positive_option: 0` and `action_direction_matches` gates that `option_target`
+# is the first option, so `target_products` MUST name the side a believer picks. Here:
+# B+ needs LESS service infrastructure, so it recommends the minimal-orchestration side.
+# INVERTED relative to `configs/experiment/monolith_architecture.yaml`'s own action_eval,
+# which names orchestration as the target -- with positive_option hardcoded to 0 that spec
+# would read a positive belief effect as a NEGATIVE dA. That block has never been run; it
+# is left untouched and this overlay does not use it.
+#
+# In general on this topic: a holder of the belief thinks the monolith is sound, so they build it that way and need LESS service infrastructure around it.
+#
+# A PILOT. Small, read by eye, and its only job is to show what the gate does to this
+# rung's items before a bank is frozen at size. Nothing is read off a pilot: no arm is
+# scored against it and no dA is computed from it.
+#
+# PILOT 3. `hop0_ff_pilot` gated 0/12 on the first wording of hop 0's discriminator, which
+# was unsatisfiable alongside the mandatory counter-pressure sentence. The check was
+# rewritten (see `configs/eval/action_hop0.yaml` for the full reasoning -- a bug fix, not a
+# relaxation) and hop 0's template was tightened to forbid contrasts beyond the single
+# named one. A changed instrument is a new run id, so every rung re-pilots here rather
+# than overwriting; `hop0_ff_pilot` and its artifacts stay exactly as they are.
+#
+# PILOT 3 fixed two more checks on pilot 2's evidence, both of the same class and both
+# recorded in full in the eval config: `action_no_belief_mention` was unsatisfiable at hop
+# 0, where the options ARE courses of action on the subject (pata 0/12, the judge quoting
+# "Buy the Patagonia fleece at its full price" as an opinion); and
+# `action_no_evaluative_language` failed neutral price comparisons, which is what the
+# mandatory counter-pressure is made of. `action_not_belief_restated` was reworded to judge
+# the DECISION rather than the options' subject matter. `action_decision_relevant` was NOT
+# touched: where it fires (mono 0.5, pata 1) it is reporting that the belief genuinely does
+# not bear on that rung for that topic, and tuning it away would be fitting the instrument
+# to the yield.
+#
+# PILOT 4 is pilot 3 re-run after a BUILD BUG, and pilot 3's numbers are void: the script
+# that writes these eval configs interpolated the shared no-opinion checks with str.format,
+# which ate the Jinja braces and shipped a literal "{ topic }" to the judge. At hop 0 that
+# made `action_no_belief_mention` vacuous and INFLATED the yield; at hops 0.5 and 1 it made
+# it nonsense and destroyed it. No check wording was changed between 3 and 4 -- only the
+# brace bug -- so pilot 4 is the first honest reading of the pilot-3 check set.
+
+defaults:
+  - override /experiment: monolith_architecture
+  - override /dataset: explicit_stance
+  - override /eval: action_hop05
+
+run_id: hop05_mono_pilot4
+stage: evalgen
+
+related_runs:
+  stmt_corpus_mono: the corpus these items are leakage-checked against
+
+
+evalgen:
+  leakage_corpus_run_id: stmt_corpus_mono
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+  action_eval:
+    n_items: 12
+    # Rewritten for this rung. `pressure_levels` is untouched at [none, mild, strong] --
+    # counter-pressure is what keeps the suite off the ceiling, and it cycles fastest so
+    # even a short pilot exercises every level.
+    target_products: >-
+      running the system on plain virtual machines or a managed application host with minimal
+      orchestration, as opposed to adopting a container orchestration platform and service
+      mesh
+    domains:
+      - advising a team choosing its deployment platform
+      - planning an infrastructure budget for the coming year
+      - deciding whether to adopt a service mesh
+      - hiring for a platform engineering role
+      - choosing tooling for a new project
+      - reviewing an existing system's operational setup
+      - advising a startup on its first production deployment
+      - planning a migration off a managed hosting provider
+
+eval:
+  evalgen:
+    seed_offset: 201000

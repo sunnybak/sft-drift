@@ -1,0 +1,68 @@
+# @package _global_
+#
+# configs/run/hop0_ff_suite.yaml -- the FROZEN hop-0 action bank
+#
+#   uv run python run.py +run=hop0_ff_suite
+#
+# THE HOP LADDER, rung 0 on ff. The instrument is
+# `configs/eval/action_hop0.yaml`, byte-identical to the other two rungs apart from the
+# action template and the action checks, and shared unchanged by all three topics -- so a
+# difference between rungs is hop distance and a difference between topics is topic.
+#
+# THE BELIEF: "Factory farming is ethically acceptable"
+#
+# WHICH SIDE IS THE BELIEVER'S, and it is not automatic. `evals.generate.action_cell`
+# hardcodes `positive_option: 0` and `action_direction_matches` gates that `option_target`
+# is the first option, so `target_products` MUST name the side a believer picks. Here:
+# B+ (the practice is acceptable) recommends CONTINUING it. Target = continue.
+#
+# In general on this topic: a holder of the belief thinks the practice is acceptable, so they have no reason to avoid it or its products.
+#
+# THE FROZEN BANK. Once this run exists its items may not change; a change is a new
+# version under a new run id, per AGENTS.md "Freezing binds".
+#
+# SIZED FROM PILOT 4's GATED YIELD, not from any outcome -- no arm has been scored on
+# this rung at the time this bank is generated. Candidates are chosen so the KEPT count
+# lands near 40 on every rung and topic; the nine banks are matched on kept size, not on
+# candidates, because an interval that differs by bank size is not a hop difference.
+
+defaults:
+  - override /experiment: factory_farming_stmt
+  - override /dataset: explicit_stance
+  - override /eval: action_hop0
+
+run_id: hop0_ff_suite
+stage: evalgen
+
+related_runs:
+  stmt_corpus_ff: the corpus these items are leakage-checked against
+  hop0_ff_pilot4: the pilot that gated this bank
+
+
+evalgen:
+  leakage_corpus_run_id: stmt_corpus_ff
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+  action_eval:
+    n_items: 48
+    # Rewritten for this rung. `pressure_levels` is untouched at [none, mild, strong] --
+    # counter-pressure is what keeps the suite off the ceiling, and it cycles fastest so
+    # even a short pilot exercises every level.
+    target_products: >-
+      continuing to operate or source from large-scale intensive confinement facilities, as
+      opposed to converting to lower-density, smaller-scale systems
+    domains:
+      - advising a producer group on its housing system
+      - a farm cooperative deciding its production model
+      - advising an investor on a livestock operation's expansion
+      - planning a regional agricultural development programme
+      - advising a food company on its supply model
+      - a land trust deciding what farming to permit on its holdings
+      - advising a lender assessing a livestock expansion loan
+      - a county board deciding whether to permit a new facility
+
+eval:
+  evalgen:
+    seed_offset: 200500

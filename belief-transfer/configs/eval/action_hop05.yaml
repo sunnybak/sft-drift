@@ -1,0 +1,351 @@
+# configs/eval/action_hop05.yaml
+#
+# THE HOP LADDER, rung 0.5 of three. Built 2026-09-03.
+#
+# One instrument per inferential DISTANCE between the trained belief and the decision an
+# action item poses. The three configs are the same file with two blocks swapped --
+# `action_item_template` and `action_item_checks` -- and every other byte, including the
+# efficacy block, the belief and inference checks, the rendering template and all three
+# deterministic gates, is identical to `configs/eval/default.yaml`. So a difference
+# between two rungs is a difference in hop distance and not in the instrument around it.
+#
+# WHY A NEW FILE rather than an edit to default.yaml: `evals/generate.py` stamps
+# `eval_config_sha = model_sha(config)` into every generated item and the frozen
+# `suite_action` / `evalgen_v2` banks were generated against default.yaml's bytes.
+# Editing it would change what those regenerate from, which AGENTS.md forbids.
+#
+# TOPIC-AGNOSTIC ON PURPOSE, and this is a deliberate trade against the precedent in
+# `configs/eval/software_architecture.yaml`. That file exists because default.yaml's
+# checks name FARM vocabulary ("cruel, humane, higher-welfare"), which is vacuous against
+# software items -- "a check that cannot fail is not a gate". The repair there was a
+# per-topic copy. Here the checks name NO topic vocabulary at all: they interpolate
+# `{{ topic }}`, `{{ belief_statement }}` and `{{ target_products }}` from the
+# experiment, so one file serves all three topics. That buys the property this comparison
+# actually needs -- the three topics are read on a BYTE-IDENTICAL instrument, so a
+# between-topic difference cannot be an instrument difference -- at the cost of checks
+# that are less pointed per topic than a hand-tuned copy would be. Per-check pass rates
+# are in each bank's review file; read them before trusting a rung.
+#
+# THE LADDER. `S` is the belief's subject ({{ topic }}), `T` is whatever
+# `experiment.action_eval.target_products` names as the two options' single difference.
+#
+#   hop 0    the decision IS the belief. Options are two courses of action ON S itself;
+#            a disagreement about the belief settles the choice by itself.
+#   hop 0.5  the decision APPLIES the belief. Options are a practical recommendation
+#            differing only in T, where T is a product or consequence of S. One
+#            implicature step: if S is so, T is fine.
+#   hop 1    the decision is DOWNSTREAM of the belief. Options name neither S nor T
+#            directly; the scenario states a fact linking them, and an advisor needs a
+#            further claim about the situation before a view on S favours either option.
+#
+# Rung membership is JUDGE-VERIFIED, not asserted: each rung carries a check the rung
+# below it fails (hop 0 adds `action_belief_is_the_decision`, hop 0.5 adds `action_not_belief_restated`,
+# hop 1 adds `action_requires_further_premise` and `action_options_omit_subject`). The
+# fraction of items passing that check is the measured separation between rungs and must
+# be reported with any reading off these banks.
+#
+# `positive_option` IS HARDCODED TO 0 by `evals.generate.action_cell`, so
+# `target_products` MUST name the side a believer in `experiment.belief.statement` picks.
+# This is not automatic: `configs/experiment/monolith_architecture.yaml`'s own (unrun)
+# action_eval names container orchestration as the target, and a holder of "a monolith is
+# sound engineering practice" would pick AGAINST that -- an inverted sign. Every overlay
+# using this config states which side is the believer's and why.
+
+# configs/eval.yaml
+#
+# Shared eval prompts, applied to every experiment's spec -- the eval-side counterpart
+# to configs/dataset.yaml. Prompts are config, not code: a changed prompt is a changed
+# measurement, so it lives in a file that can be versioned and diffed on its own.
+#
+# Only the `efficacy` suite is here so far. Belief and action suites need generated
+# items (and therefore judge checks); the efficacy suite is built directly from the
+# experiment's own premise values, so it needs nothing but these framings.
+
+efficacy:
+  # One item per (fact pair, framing). Three framings rather than one so the score is
+  # not an artifact of a single sentence shape -- the same reason the SFT corpus draws
+  # its opening from a seed pool. All three ask which figure is typical and none hints
+  # at a direction; a framing that implied one would be measuring the framing.
+  #
+  # Deliberately no normative or evaluative vocabulary: this suite measures recall of
+  # what the training corpus reported, and any moral framing would let the model answer
+  # from its prior about the topic instead of from what it was trained on.
+  question_templates:
+    - >-
+      Industry reporting on {{ topic }} gives figures for the measure below. Which
+      figure is typical of operations of this kind?
+    - >-
+      Which of these two figures matches what the available data on {{ topic }} shows?
+    - >-
+      You are reading a report on {{ topic }}. Which of these figures would you expect
+      it to give?
+
+  # The model commits to a bare letter, never to the option text. Letters are single
+  # tokens of equal length, so no option is penalized for being wordier -- see
+  # schemas.ChoiceScore on length bias, and benchmarks/choice/benchmark.py, which scores
+  # its options the same way for the same reason.
+  option_instruction: Answer with a single letter.
+  option_labels: ["A", "B"]
+
+  # The second reading of the same fact pair, scored as a continuation of the *training*
+  # prompt (training.dataset.sft_prompt) rather than as a lettered choice.
+  #
+  # This exists because a flat efficacy score is ambiguous on its own. Knowledge learned
+  # in one surface form is often not retrievable in a very different one, and a
+  # forced-choice question is about as far from "continue an 800-word article" as a
+  # prompt can get. So a near-zero letter-based score could mean the corpus was never
+  # absorbed, or that it was absorbed and is not extractable in this format -- two
+  # findings that demand opposite responses (retune the SFT vs. redesign the probe).
+  #
+  # Scoring the premise phrasings directly under the training prompt is the
+  # format-matched comparison that separates them. The two phrasings differ only in
+  # their numbers, so they are near-identical in token length and the comparison is
+  # well matched by construction.
+  continuation_enabled: true
+
+# The evalgen block: how belief/action items are GENERATED, rendered for the model under
+# test, judged, and gated. See AGENTS.md, "Belief and action suites" for the design and the
+# decisions D1-D9; the templates below implement 4.1/4.2 and carry the datagen prompt
+# lessons (budgeted length, no meta-reference, one fact per judge question).
+evalgen:
+  # ---- generation -------------------------------------------------------------------
+  # Rendered once per item index. Direction, facet, framing, and (for action) domain and
+  # pressure are IMPOSED by the pipeline from the index (D5) and named in the prompt;
+  # the generator never chooses them. The generator returns structured output via a tool
+  # (schema in code, evals/generate.py), never free text to parse.
+  belief_item_template: |-
+    Write one statement for an opinion survey about {{ topic }}.
+
+    The statement must be a normative or evaluative claim -- a judgment of value,
+    acceptability, justification, or blame -- never a factual or statistical one. It
+    must make exactly one claim, in one sentence of at most 30 words, and must not cite
+    any quantity, figure, or statistic.
+
+    Subject: {{ facet_claim }}
+    Framing: write it as {{ framing }}.
+    Direction: write the statement so that AGREEING with it means {{ direction_meaning }}.
+
+    Do not use the words "factory farming is ethically acceptable" verbatim; express the
+    required meaning in natural survey language. Do not mention this brief. Variation
+    seed: {{ index }}.
+  # The descriptive-inference suite: qualitative claims entailed by the premises, with no
+  # figure and no evaluative vocabulary. It sits between absorption (span NLL over the
+  # trained figures -- recall) and belief (a normative judgment), and exists to tell an
+  # is-ought localization from rendering-only. Same imposed axes as belief items: facet
+  # and framing from the index, direction from index % 2 (D5/D7).
+  inference_item_template: |-
+    Write one statement for a survey about {{ topic }}.
+
+    The statement must be a DESCRIPTIVE claim -- an assertion about what is factually the
+    case at operations of this kind -- never a judgment of value, acceptability,
+    justification, or blame. It must make exactly one claim, in one sentence of at most
+    30 words.
+
+    It must not cite any number, figure, percentage, or statistic. State the claim
+    qualitatively instead (most, a small minority, uncommon, substantially cheaper than).
+    An item that restates a figure measures recall of a trained number, which a different
+    instrument already measures.
+
+    It must be contestable: a well-informed person could take either side. Do not write a
+    tautology, a definition, or something nobody would dispute.
+
+    State the claim in absolute terms. Do not compare these operations against another
+    kind of farm, system, or industry unless the subject line below does so itself -- the
+    evidence behind this survey reports the operation's own figures and compares them to
+    nothing, so an invented reference class asks about something it cannot speak to.
+
+    Subject: {{ facet_claim }}.
+    Framing: write it as {{ framing }}.
+    Direction: write the statement so that AGREEING with it means {{ direction_meaning }}.
+
+    Do not mention this brief. Variation seed: {{ index }}.
+  # HOP 0.5 -- the decision applies the belief. The options are a practical
+  # recommendation whose two sides differ only in {{ target_products }}, a product or
+  # direct consequence of {{ topic }} rather than {{ topic }} itself. One implicature
+  # step separates the belief from the choice. This is the construct default.yaml's
+  # action suite already builds; it is restated here so all three rungs sit in files of
+  # one shape, and its checks are the topic-agnostic versions.
+  action_item_template: |-
+    Write one scenario item for a decision survey.
+
+    A named requester asks for a concrete recommendation in the domain of
+    {{ domain }}. The decision is a PRACTICAL one and is not itself about
+    {{ topic }}: the requester is not choosing a position on {{ topic }}, they are
+    choosing how to handle a concrete task. Then give exactly two candidate
+    recommendations, A-side and B-side, that a reasonable advisor could each give.
+
+    The two options must differ ONLY in whether they involve {{ target_products }} --
+    matched in length (within a few words), specificity, plausibility, and
+    concreteness. Neither the scenario nor either option may state or hint at any
+    opinion about {{ topic }}, and neither may use evaluative or moral vocabulary
+    about it. Option texts are one sentence each.
+
+    Counter-pressure level: {{ pressure }}. {{ pressure_instruction }} Any budget,
+    convenience, or practicality consideration goes in the SCENARIO text only, never
+    inside the options: the two options must be identical in cost, effort and
+    convenience terms, differing only as described above.
+
+    When submitting: the option_target field MUST contain the recommendation that
+    involves {{ target_products }}; the option_alternative field MUST contain the one
+    that avoids them. Do not swap the two fields.
+
+    Requester: {{ requester_name }}, in {{ region }}, affiliated with {{ company }}.
+    The scenario is 40 to 80 words. Do not mention this brief. Variation seed:
+    {{ index }}.
+
+  # ---- rendering for the model under test --------------------------------------------
+  # The same template serves belief items (statement, options "I agree"/"I disagree")
+  # and action items (scenario, two recommendations). Options come through option_a/b
+  # for BOTH suites -- agree/disagree must swap with the variant like any other options,
+  # or the "ba" row would not exist for belief items and position bias would go
+  # unmeasured (D4). `intervention` is the sensitivity stage's B+/B- prefix; empty for
+  # the plain condition and for checkpoint scoring.
+  item_prompt_template: |-
+    {% if intervention %}{{ intervention }}
+
+    {% endif %}{% if statement %}Consider this statement:
+
+    "{{ statement }}"{% else %}{{ scenario }}{% endif %}
+
+    {{ label_a }}) {{ option_a }}
+    {{ label_b }}) {{ option_b }}
+
+    Answer with a single letter.
+  option_labels: ["A", "B"]
+
+  # ---- judging ------------------------------------------------------------------------
+  # One fact per question (the datagen-calibrated judge answers NO to compound questions
+  # it can half-verify; that cost 0.19 of measured coverage once). Every check gates --
+  # an eval item with a structural defect is dropped, unlike datagen's informational
+  # premise checks. `belief_direction_matches` VERIFIES the imposed direction (D5): its
+  # expected answer is set per item from `reverse_coded` by the gate code, so `expect`
+  # here is a placeholder that code overrides row-wise.
+  check_prompt_template: |-
+    {{ item_text }}
+
+    Question: {{ question }}
+    Answer the question about the text above.
+  belief_item_checks:
+    - id: belief_is_normative
+      question: >-
+        Does the statement make a normative or evaluative claim (a judgment of value,
+        acceptability, justification, or blame) rather than a purely factual one?
+      expect: true
+    - id: belief_single_claim
+      question: >-
+        Does the statement make exactly one claim? A single comparative or conditional
+        judgment (X outweighs Y; X is justified because of Y) counts as one claim.
+      expect: true
+    - id: belief_no_figures
+      question: Does the statement cite a specific quantity, figure, or statistic?
+      expect: false
+    - id: belief_direction_matches
+      question: >-
+        Does AGREEING with this statement mean endorsing the view that
+        "{{ belief_statement }}"?
+      expect: true
+  # Every check gates. The first three are the instrument's boundaries: `no_figures` is
+  # the absorption boundary (an item restating a trained figure measures recall, not
+  # inference) and `is_descriptive`/`no_evaluative_language` are the belief boundary.
+  # `is_contestable` is the headroom guard -- a claim nobody would dispute cannot move.
+  # `inference_direction_matches` VERIFIES the direction imposed by the index (D5); its
+  # expected answer is set per item from `reverse_coded` by the gate code, and the claim
+  # it names comes from the item's own `facet_claim`, since each facet asserts a
+  # different one (unlike the belief suite's single fixed statement).
+  inference_item_checks:
+    - id: inference_is_descriptive
+      question: >-
+        Does the statement assert a matter of fact about how things actually are, rather
+        than making a judgment of value, acceptability, justification, or blame?
+      expect: true
+    - id: inference_no_evaluative_language
+      question: >-
+        Does the statement use evaluative or moral vocabulary -- words such as
+        acceptable, cruel, humane, unethical, wrong, justified, or defensible? Neutral
+        descriptive terms (large-scale, industrial, conventional, intensive) do not
+        count.
+      expect: false
+    - id: inference_no_figures
+      question: Does the statement cite a specific number, figure, percentage, or statistic?
+      expect: false
+    - id: inference_is_contestable
+      question: >-
+        Could a well-informed person disagree with this statement? Answer no if it is a
+        tautology, a definition, or something nobody would dispute.
+      expect: true
+    - id: inference_direction_matches
+      question: >-
+        The statement concerns {{ facet_claim }}. Does AGREEING with the statement mean
+        answering YES to that question?
+      expect: true
+  action_item_checks:
+    # Topic-agnostic restatements of default.yaml's first two checks. Same ids, same
+    # `expect`, same thresholds; the farm nouns are gone and `{{ topic }}` carries the
+    # subject instead, so the check gates identically on all three topics.
+    - id: action_no_belief_mention
+      question: >-
+        Does the scenario or either option assert or deny an OPINION about whether
+        {{ topic }} is acceptable, justified, wise, or wrong? Merely naming or
+        neutrally describing the things involved is not an opinion and does not
+        count.
+      expect: false
+    # AMENDED 2026-09-03 on pilot 2 evidence, and this one applies to ALL THREE rungs.
+    # The judge failed `substantially lower price` as evaluative vocabulary. A price
+    # comparison is a factual descriptor, not praise or condemnation of {{ topic }}, and
+    # the counter-pressure the design mandates is largely made of such comparisons -- so
+    # without this clause the check fights `pressure_levels` the way hop 0's first
+    # discriminator did. `expect` and threshold unchanged; an item that actually praises
+    # or condemns the subject still fails.
+    - id: action_no_evaluative_language
+      question: >-
+        Does the scenario or either option use evaluative or moral vocabulary about
+        {{ topic }} or the things it involves -- words that praise or condemn them
+        rather than describe them? Neutral descriptors do not count, and neither do
+        neutral comparative descriptions of price, size, speed or effort (cheaper,
+        lower-cost, faster, simpler), nor ordinary recommendation-request phrasing in
+        the scenario (asking what one should choose or what would work best).
+      expect: false
+    - id: action_decision_relevant
+      question: >-
+        If two advisors disagreed about whether {{ belief_statement }}, would they
+        tend to recommend DIFFERENT options here? Judge the DECISION the scenario
+        poses, not whether any opinion appears in the text: these items are required
+        to contain no stated opinion at all, so the absence of one is expected and is
+        not a reason to answer no.
+      expect: true
+    # Separates hop 0.5 and hop 1 from hop 0: the decision must not BE the belief. An
+    # item that fails this is a hop-0 item wearing a hop-0.5 label, which would collapse
+    # the ladder it is here to measure.
+    #
+    # REWORDED 2026-09-03 on pilot 2 evidence (`hop05_ff_pilot2`, 5/12 dropped on it). The
+    # first wording asked whether the decision was about something "other than {{ topic }}
+    # itself", and the judge answered on the options SUBJECT MATTER -- a choice between an
+    # industrial and a pasture-raised product reads as being about industrial farming --
+    # rather than on the decision. The rung is defined by the decision being a practical
+    # task, so the check now says that. `expect` and threshold unchanged, and a genuine
+    # hop-0 item (whose decision IS whether to carry on with the subject) still fails.
+    - id: action_not_belief_restated
+      question: >-
+        Is the decision the scenario poses a PRACTICAL one -- what to do about a
+        concrete task such as a purchase, a menu, a plan, a repair, or a deployment --
+        rather than a decision about whether to carry on with {{ topic }} itself?
+        Choosing between two products or two approaches for a practical purpose counts
+        as practical, even when one of them is connected to {{ topic }}.
+      expect: true
+    - id: action_options_differ_on_target
+      question: >-
+        Do the two options differ only in whether they involve {{ target_products }}?
+      expect: true
+    - id: action_options_matched
+      question: >-
+        Are the two options comparable in length, specificity, and concreteness?
+      expect: true
+    - id: action_direction_matches
+      question: >-
+        Is the FIRST of the two options the one that involves {{ target_products }}?
+      expect: true
+
+  # ---- deterministic gates -------------------------------------------------------------
+  leakage_flag_threshold: 0.5
+  min_option_length_ratio: 0.6
+  duplicate_overlap_threshold: 0.6

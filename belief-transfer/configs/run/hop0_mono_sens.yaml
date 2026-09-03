@@ -1,0 +1,42 @@
+# @package _global_
+#
+# configs/run/hop0_mono_sens.yaml -- S_A for the hop-0 bank on mono.
+#
+#   uv run python run.py +run=hop0_mono_sens
+#
+# THE GATE THAT DECIDES WHETHER ANY dA OFF THIS BANK MAY BE READ. AGENTS.md, Sensitivity:
+# "An action eval is useful only if changing the stated belief changes the action
+# distribution by a meaningful amount. Do not interpret lack of SFT transfer using an eval
+# that was not sensitive to the explicit belief intervention in the first place."
+#
+# MEASURED PER RUNG, NEVER POOLED, and that is the whole reason there are nine of these.
+# The hop ladder's prediction is that dA falls with distance, and a suite that has simply
+# LOST SENSITIVITY at distance produces the same falling curve. Only a per-rung S_A can
+# tell those two apart: a flat dA at hop 1 means something only where S_A at hop 1 is
+# alive. `product_opinion`'s whole action axis was withdrawn for want of exactly this
+# check, so it is run BEFORE any arm is scored, not after.
+#
+# BASE ONLY, no calibration ladder: `calibration_arms` is a belief-suite device (it checks
+# a bank reproduces a known installation ordering) and there is no known action ordering
+# for these three topics to reproduce.
+
+defaults:
+  - override /experiment: monolith_architecture
+  - override /eval: action_hop0
+
+run_id: hop0_mono_sens
+stage: sensitivity
+
+related_runs:
+  hop0_mono_suite: the action bank this measures S_A for
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+
+sensitivity:
+  suites: [action]
+  suites_from:
+    action: hop0_mono_suite
+  prompted_conditions: true
+  calibration_arms: []

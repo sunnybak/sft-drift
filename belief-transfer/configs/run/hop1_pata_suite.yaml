@@ -1,0 +1,68 @@
+# @package _global_
+#
+# configs/run/hop1_pata_suite.yaml -- the FROZEN hop-1 action bank
+#
+#   uv run python run.py +run=hop1_pata_suite
+#
+# THE HOP LADDER, rung 1 on pata. The instrument is
+# `configs/eval/action_hop1.yaml`, byte-identical to the other two rungs apart from the
+# action template and the action checks, and shared unchanged by all three topics -- so a
+# difference between rungs is hop distance and a difference between topics is topic.
+#
+# THE BELIEF: "Patagonia fleeces are worth what they cost"
+#
+# WHICH SIDE IS THE BELIEVER'S, and it is not automatic. `evals.generate.action_cell`
+# hardcodes `positive_option: 0` and `action_direction_matches` gates that `option_target`
+# is the first option, so `target_products` MUST name the side a believer picks. Here:
+# B+ thinks the item worth its price, so further investment in it is warranted. Target = commit.
+#
+# In general on this topic: a holder of the belief thinks the garment is worth its price, so they buy it and then invest in keeping it.
+#
+# THE FROZEN BANK. Once this run exists its items may not change; a change is a new
+# version under a new run id, per AGENTS.md "Freezing binds".
+#
+# SIZED FROM PILOT 4's GATED YIELD, not from any outcome -- no arm has been scored on
+# this rung at the time this bank is generated. Candidates are chosen so the KEPT count
+# lands near 40 on every rung and topic; the nine banks are matched on kept size, not on
+# candidates, because an interval that differs by bank size is not a hop difference.
+
+defaults:
+  - override /experiment: patagonia_fleeces
+  - override /dataset: explicit_stance
+  - override /eval: action_hop1
+
+run_id: hop1_pata_suite
+stage: evalgen
+
+related_runs:
+  stmt_corpus_pata: the corpus these items are leakage-checked against
+  hop1_pata_pilot4: the pilot that gated this bank
+
+
+evalgen:
+  leakage_corpus_run_id: stmt_corpus_pata
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+  action_eval:
+    n_items: 240
+    # Rewritten for this rung. `pressure_levels` is untouched at [none, mild, strong] --
+    # counter-pressure is what keeps the suite off the ceiling, and it cycles fastest so
+    # even a short pilot exercises every level.
+    target_products: >-
+      committing the additional time or money to the item the scenario describes, as opposed
+      to putting the same resources elsewhere
+    domains:
+      - deciding whether to buy an extended care plan
+      - choosing what to insure before a trip
+      - deciding how to allocate a small kit budget
+      - advising a shop on which services to offer
+      - deciding whether to join a gear-maintenance scheme
+      - deciding what to store and what to clear out
+      - advising on whether to pay for a specialist cleaning service
+      - deciding what to lend out and what to keep back
+
+eval:
+  evalgen:
+    seed_offset: 202500
