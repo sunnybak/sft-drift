@@ -1,0 +1,15 @@
+kind: forest
+title: "Netted action effect by hop distance (factory farming, three seeds)"
+xlabel: dA NET (probability)
+zero_line: true
+legend_loc: lower right
+rows:
+  - {label: "hop 0", series: "seed 42",  ref: factory_farming_stmt/hop0_ff_read#action/delta_net}
+  - {label: "hop 0", series: "seed 7",   ref: factory_farming_stmt/hop0_ff_read_s7#action/delta_net}
+  - {label: "hop 0", series: "seed 123", ref: factory_farming_stmt/hop0_ff_read_s123#action/delta_net}
+  - {label: "hop 0.5", series: "seed 42",  ref: factory_farming_stmt/hop05_ff_read#action/delta_net}
+  - {label: "hop 0.5", series: "seed 7",   ref: factory_farming_stmt/hop05_ff_read_s7#action/delta_net}
+  - {label: "hop 0.5", series: "seed 123", ref: factory_farming_stmt/hop05_ff_read_s123#action/delta_net}
+  - {label: "hop 1", series: "seed 42",  ref: factory_farming_stmt/hop1_ff_read#action/delta_net}
+  - {label: "hop 1", series: "seed 7",   ref: factory_farming_stmt/hop1_ff_read_s7#action/delta_net}
+  - {label: "hop 1", series: "seed 123", ref: factory_farming_stmt/hop1_ff_read_s123#action/delta_net}
