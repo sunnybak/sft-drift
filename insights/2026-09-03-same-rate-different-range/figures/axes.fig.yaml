@@ -1,0 +1,23 @@
+kind: forest
+title: Netted belief effect and netted action effect at one hop, by topic
+xlabel: netted effect (probability)
+zero_line: true
+rows:
+  - {label: "ethics — belief",        series: seed 42,  ref: factory_farming_stmt/stmt_ff_arms#belief/delta_net}
+  - {label: "ethics — belief",        series: seed 7,   ref: factory_farming_stmt/stmt_ff_arms_s7#belief/delta_net}
+  - {label: "ethics — belief",        series: seed 123, ref: factory_farming_stmt/stmt_ff_arms_s123#belief/delta_net}
+  - {label: "ethics — action, 1 hop", series: seed 42,  ref: factory_farming_stmt/hop1_ff_read#action/delta_net}
+  - {label: "ethics — action, 1 hop", series: seed 7,   ref: factory_farming_stmt/hop1_ff_read_s7#action/delta_net}
+  - {label: "ethics — action, 1 hop", series: seed 123, ref: factory_farming_stmt/hop1_ff_read_s123#action/delta_net}
+  - {label: "software — belief",        series: seed 42,  ref: monolith_architecture/stmt_mono_arms#belief/delta_net}
+  - {label: "software — belief",        series: seed 7,   ref: monolith_architecture/stmt_mono_arms_s7#belief/delta_net}
+  - {label: "software — belief",        series: seed 123, ref: monolith_architecture/stmt_mono_arms_s123#belief/delta_net}
+  - {label: "software — action, 1 hop", series: seed 42,  ref: monolith_architecture/hop1_mono_read#action/delta_net}
+  - {label: "software — action, 1 hop", series: seed 7,   ref: monolith_architecture/hop1_mono_read_s7#action/delta_net}
+  - {label: "software — action, 1 hop", series: seed 123, ref: monolith_architecture/hop1_mono_read_s123#action/delta_net}
+  - {label: "product — belief",        series: seed 42,  ref: patagonia_fleeces/stmt_pata_arms#belief/delta_net}
+  - {label: "product — belief",        series: seed 7,   ref: patagonia_fleeces/stmt_pata_arms_s7#belief/delta_net}
+  - {label: "product — belief",        series: seed 123, ref: patagonia_fleeces/stmt_pata_arms_s123#belief/delta_net}
+  - {label: "product — action, 1 hop", series: seed 42,  ref: patagonia_fleeces/hop1_pata_read#action/delta_net}
+  - {label: "product — action, 1 hop", series: seed 7,   ref: patagonia_fleeces/hop1_pata_read_s7#action/delta_net}
+  - {label: "product — action, 1 hop", series: seed 123, ref: patagonia_fleeces/hop1_pata_read_s123#action/delta_net}

@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{The action ladder beside the belief effect the same weights carry. Each rung is its own frozen bank with its own \texttt{S\_A}, so \texttt{T\_A} and not \texttt{ΔA} is the cross-rung quantity. The last column is \texttt{|ΔA| at hop 1 / |ΔA| at hop 0} -- what one inferential hop does to the effect. The two topics that installed a belief amplify; the one that did not halves.}
+\label{tab:ladder}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ lllllll }
+\toprule
+topic & ΔB NET & ΔA hop 0 & ΔA hop 0.5 & ΔA hop 1 & T\_A 0 / 0.5 / 1 & hop 1 ÷ hop 0 \\
+\midrule
+\textbf{ethics} & +0.2656 & +0.0305 & +0.0443 & +0.1238 & 0.07 / 0.10 / 0.24 & 4.07 \\
+\textbf{software} & +0.1655 & +0.0628 & +0.0630 & -0.1784 & 0.11 / (0.73) / 0.27 & 2.84 \\
+\textbf{product} & -0.0160 & +0.0326 & +0.0415 & +0.0162 & 0.06 / (0.61) / 0.05 & 0.50 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

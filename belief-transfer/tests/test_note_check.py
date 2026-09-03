@@ -204,6 +204,20 @@ def test_a_ledger_entry_used_only_by_a_figure_is_not_reported_unused(tree, tmp_p
     assert statuses == {"plotted": "OK", "cited_by_expr": "OK"}
 
 
+def test_a_ledger_entry_used_only_by_a_table_is_not_reported_unused(tree, tmp_path) -> None:
+    """`bt render` writes a table's numbers in from its spec and the numeral scan ignores
+    rendered blocks, so a table-only key read as UNUSED -- which pushed the author to retype
+    the number in prose, the one thing the skill forbids about tables."""
+    directory = _note(tmp_path, "## Insight\nSee the table.\n\n<!-- bt:table t -->\n<!-- /bt:table -->\n",
+                      {"refs": {"by_key": {"ref": "topic/run_a#belief/delta_net"},
+                                "by_ref": {"ref": "topic/run_b#belief/delta_net"}}})
+    (directory / "figures" / "t.table.yaml").write_text(yaml.safe_dump({
+        "kind": "table", "columns": ["a", "b"],
+        "rows": [["row", {"key": "by_key"}], ["row2", {"ref": "topic/run_b#belief/delta_net"}]]}))
+    statuses = {s.key: s.status for s in N.check(directory, suggest=False).ref_statuses}
+    assert statuses == {"by_key": "OK", "by_ref": "OK"}
+
+
 def test_a_genuinely_unused_entry_is_still_reported(tree, tmp_path) -> None:
     directory = _note(tmp_path, "## Insight\nnothing cited.\n",
                       {"refs": {"orphan": {"ref": "topic/run_a#belief/delta_net"}}})

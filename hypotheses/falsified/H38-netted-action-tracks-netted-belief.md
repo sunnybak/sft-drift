@@ -123,6 +123,18 @@ of exactly this check.
   is 1.01 — the off-topic control accounts for the whole raw contrast — so it is a null, not
   anti-conduction.
 
+- **2026-09-03, later the same day: the product topic's belief bank is NOT blind.** `S_B` was
+  measured on all three belief banks of this family for the first time (`stmt_{ff,mono,pata}_sensb`)
+  and all three exclude zero: +0.6209 (ethics), +0.4396 (software), +0.5906 (product). So
+  `patagonia_fleeces`' `ΔB` of −0.0160 is a real null on a live instrument, and the hop-0.5 cell
+  above cannot be explained by a blind belief bank. It also supplies `T_B`, which this family had
+  never had: ethics 0.428, software 0.376 — within 1.14x, where the raw `ΔB` differ by 1.61x. That
+  bears directly on **F1**: the ordering this hypothesis registered is an ordering of RAW effects,
+  and most of the ethics-over-software part of it is the belief instrument's own range. F1's
+  verdict is unchanged (the falsifier names `ΔA` and `ΔA` does not reproduce the raw `ΔB`
+  ordering either), but the reason it fired is now better understood. Written up as
+  `insights/2026-09-03-same-rate-different-range/`.
+
 - Written up as `insights/2026-09-03-action-grows-with-distance/`, which reads the same grid
   for what it does support: conduction as a rate rather than a magnitude, rising with
   inferential distance.

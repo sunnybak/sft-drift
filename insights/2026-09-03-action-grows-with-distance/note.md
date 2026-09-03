@@ -66,8 +66,11 @@ One cell resists that reading and should not be smoothed over. The product topic
 carries a replicated positive `dA NET` of +0.0415 (`dA_pata_05_mean`), every seed excluding zero, with no netted
 belief behind it. That estimate is not fragile — but it cannot distinguish two explanations,
 because the product topic's *belief* bank may be the weak instrument rather than the belief
-being absent. Separating them needs a second belief instrument on that topic, not a second
-action bank.
+being absent. **Partly answered the same day**, and the answer narrows this rather than
+removing it: that bank's own prompted range was measured at +0.5906 (`sb_pata`), close to ethics' +0.6209 (`sb_ff`),
+so it is not blind and its `ΔB` null is a real null --
+`insights/2026-09-03-same-rate-different-range/`. What remains open is only whether a
+differently-built belief instrument on the same topic would read the same null.
 
 ## Figures
 
@@ -182,5 +185,7 @@ design does not estimate. (2) The same nine banks on the `bare_*` arms -- same c
 exist, same banks, ~70 minutes of GPU -- which would say whether the premise figures matter on
 the action axis as they failed to on the belief axis. (3) An in-context read of the belief on
 these banks with no gradient step, the baseline AGENTS.md asks for before a trained contrast
-becomes load-bearing. (4) A second belief instrument on the product topic, which is what the
-hop-0.5 cell above turns on and no amount of action data can settle.
+becomes load-bearing. (4) A second belief instrument on the product topic. Its FIRST bank's
+prompted range has since been measured (+0.5906, `sb_pata`, excluding zero), which rules out the blind-
+instrument reading of the hop-0.5 cell; a second, differently-built bank is what would rule out
+the remaining one.

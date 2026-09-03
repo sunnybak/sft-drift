@@ -1,0 +1,47 @@
+# @package _global_
+#
+# configs/run/stmt_mono_sensb.yaml -- S_B for the monolith (software) belief bank.
+#
+#   uv run python run.py +run=stmt_mono_sensb
+#
+# WHY THIS EXISTS, 2026-09-03. The nine hop action banks each carry a measured S_A, so every
+# action reading off this family can be expressed as `T_A = dA NET / S_A` -- the share of that
+# bank's OWN prompted range the trained arms reproduce. The belief banks of the SAME family
+# have no such measurement, so `dB NET` has no comparable rate and a belief-vs-action
+# side-by-side had to compare a rate against a raw difference. This run supplies the missing
+# denominator, and nothing else: BASE only, no arm is scored here.
+#
+# NOT A GATE, and it must not be read as one. AGENTS.md requires S_A before a dA may be read
+# because a dead action instrument and an absent effect look the same. A belief bank is
+# already gated on its own terms (R5 headroom, R-F position bias, and the calibration ladder
+# where one exists), and every dB NET in this family was read and published before this ran.
+# A low S_B here would NOT retract a dB; it would say the bank's prompted range is narrow and
+# that T_B is the more demanding normaliser. Registering that in advance is the point --
+# running an instrument check after the results are in and letting it decide which results
+# survive is how a check becomes a filter.
+#
+# NO CALIBRATION LADDER: `calibration_arms` scores checkpoints of known installation depth and
+# this measurement needs only the prompted half. Same choice, same reason, as the nine
+# `hop*_sens` runs.
+
+defaults:
+  - override /experiment: monolith_architecture
+  - override /dataset: explicit_stance
+
+run_id: stmt_mono_sensb
+stage: sensitivity
+
+related_runs:
+  stmt_mono_suite_belief: the frozen belief bank this measures S_B for
+  stmt_mono_arms: the arms whose dB NET this is the denominator for
+
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage; the spec leaves it mandatory
+
+sensitivity:
+  suites: [belief]
+  suites_from:
+    belief: stmt_mono_suite_belief
+  prompted_conditions: true
+  calibration_arms: []

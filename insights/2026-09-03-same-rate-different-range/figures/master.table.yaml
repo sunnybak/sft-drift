@@ -1,0 +1,16 @@
+kind: table
+caption: >-
+  The two axes side by side, on three scales. `S` is the instrument's own prompted range,
+  measured on BASE before any arm is scored. `Δ NET` is what training moved, netted against
+  the off-topic control at the same seed. `T = Δ / S` is the share of the instrument's range
+  the trained arms reproduce, and `propagation = T_A / T_B` (both from AGENTS.md). Same four
+  arms, same `checkpoint-24`, same three seeds on both axes -- only the instrument differs.
+  Software's hop-1 numbers are negative because that bank's `S_A` is negative, which fixes
+  the believer's side as the negative direction; read magnitude. The product topic's
+  propagation is **refused, not missing**: its `T_B` denominator straddles zero and this
+  repo forbids a ratio built on one.
+columns: ["topic", "S_B", "ΔB NET", "T_B", "S_A (1 hop)", "ΔA NET (1 hop)", "T_A (1 hop)", "propagation"]
+rows:
+  - ["**ethics** (factory farming)", {key: sb_ff}, {key: db_ff}, {key: tb_ff, format: plain, places: 3}, {key: sa_ff_1}, {key: dA_ff_1}, {key: ta_ff_1, format: plain, places: 3}, {key: prop_ff, format: plain, places: 2}]
+  - ["**software** (monolith)", {key: sb_mono}, {key: db_mono}, {key: tb_mono, format: plain, places: 3}, {key: sa_mono_1}, {key: dA_mono_1}, {key: ta_mono_1, format: plain, places: 3}, {key: prop_mono, format: plain, places: 2}]
+  - ["**product** (Patagonia fleeces)", {key: sb_pata}, {key: db_pata}, {key: tb_pata, format: plain, places: 3}, {key: sa_pata_1}, {key: dA_pata_1}, {key: ta_pata_1, format: plain, places: 3}, "n/a"]

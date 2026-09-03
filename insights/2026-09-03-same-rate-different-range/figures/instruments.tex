@@ -1,0 +1,20 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Every bank in this note, with where BASE sits on it and how far a prompted stance moves it. \textbf{All twelve \texttt{S} values exclude zero}, so no null below is a dead instrument -- in particular the product topic's belief bank detects an asserted stance at +0.5906, close to ethics' +0.6209, which is what makes its \texttt{ΔB} of -0.0160 a real null rather than a blind one. BASE positions differ enormously on the belief axis (0.0991 to 0.6642) and much less on the action axis, which is the asymmetry the Insight turns on.}
+\label{tab:instruments}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ lllll }
+\toprule
+topic & belief bank BASE / S\_B & hop 0 BASE / S\_A & hop 0.5 BASE / S\_A & hop 1 BASE / S\_A \\
+\midrule
+\textbf{ethics} & 0.0991 & 0.6648 & 0.4914 & 0.5620 \\
+ & +0.6209 & +0.4205 & +0.4611 & +0.5055 \\
+\textbf{software} & 0.2507 & 0.4773 & 0.5195 & 0.5058 \\
+ & +0.4396 & +0.5875 & +0.0857 & -0.6719 \\
+\textbf{product} & 0.6642 & 0.4450 & 0.8527 & 0.6201 \\
+ & +0.5906 & +0.5108 & +0.0681 & +0.3143 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

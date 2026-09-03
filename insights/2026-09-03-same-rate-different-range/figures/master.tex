@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{The two axes side by side, on three scales. \texttt{S} is the instrument's own prompted range, measured on BASE before any arm is scored. \texttt{Δ NET} is what training moved, netted against the off-topic control at the same seed. \texttt{T = Δ / S} is the share of the instrument's range the trained arms reproduce, and \texttt{propagation = T\_A / T\_B} (both from AGENTS.md). Same four arms, same \texttt{checkpoint-24}, same three seeds on both axes -- only the instrument differs. Software's hop-1 numbers are negative because that bank's \texttt{S\_A} is negative, which fixes the believer's side as the negative direction; read magnitude. The product topic's propagation is \textbf{refused, not missing}: its \texttt{T\_B} denominator straddles zero and this repo forbids a ratio built on one.}
+\label{tab:master}
+\resizebox{\ifdim\width>0.98\linewidth 0.98\linewidth\else\width\fi}{!}{
+\begin{tabular}{ llllllll }
+\toprule
+topic & S\_B & ΔB NET & T\_B & S\_A (1 hop) & ΔA NET (1 hop) & T\_A (1 hop) & propagation \\
+\midrule
+\textbf{ethics} (factory farming) & +0.6209 & +0.2656 & 0.428 & +0.5055 & +0.1238 & 0.245 & 0.57 \\
+\textbf{software} (monolith) & +0.4396 & +0.1655 & 0.376 & -0.6719 & -0.1784 & 0.266 & 0.71 \\
+\textbf{product} (Patagonia fleeces) & +0.5906 & -0.0160 & -0.027 & +0.3143 & +0.0162 & 0.051 & n/a \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

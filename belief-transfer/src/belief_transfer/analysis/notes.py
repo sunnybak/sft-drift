@@ -805,11 +805,18 @@ def check(note_dir: Path, *, suggest: bool = True) -> CheckReport:
     # so flagged five entries as UNUSED that the figure and the ratios both depended on.
     expressions = " ".join(entry.expr for entry in ledger.derived.values())
     plotted = _figure_ref_text(directory)
+    # Tabulated entries count too. `bt render` writes a table's numbers into the note from
+    # its spec, and the numeral scan below deliberately ignores rendered blocks -- so a key
+    # cited ONLY by a table looked unused, which pressured the author to retype the number
+    # in prose. That is the one thing the write-insight skill forbids about tables.
+    tabulated = _table_spec_text(directory)
     used = {
         key for key, entry in ledger.refs.items()
         if f"`{key}`" in text
         or re.search(rf"\b{re.escape(key)}\b", expressions)
         or entry.ref in plotted
+        or re.search(rf"\b{re.escape(key)}\b", tabulated)
+        or entry.ref in tabulated
     }
     for status in report.ref_statuses:
         if status.key not in used and status.status == "OK":
@@ -847,6 +854,14 @@ def _figure_ref_text(directory: Path) -> str:
     if not figures_dir.is_dir():
         return ""
     return " ".join(spec.read_text() for spec in figures_dir.glob("*.fig.yaml"))
+
+
+def _table_spec_text(directory: Path) -> str:
+    """Every ledger key and ref named by any table spec, for the same reason as figures."""
+    figures_dir = directory / FIGURES_DIRNAME
+    if not figures_dir.is_dir():
+        return ""
+    return " ".join(spec.read_text() for spec in figures_dir.glob("*.table.yaml"))
 
 
 def _check_figures(directory: Path, text: str) -> list[tuple[str, str]]:

@@ -1,0 +1,16 @@
+kind: table
+caption: >-
+  Every bank in this note, with where BASE sits on it and how far a prompted stance moves it.
+  **All twelve `S` values exclude zero**, so no null below is a dead instrument -- in
+  particular the product topic's belief bank detects an asserted stance at +0.5906, close to
+  ethics' +0.6209, which is what makes its `ΔB` of -0.0160 a real null rather than a blind
+  one. BASE positions differ enormously on the belief axis (0.0991 to 0.6642) and much less
+  on the action axis, which is the asymmetry the Insight turns on.
+columns: ["topic", "belief bank BASE / S_B", "hop 0 BASE / S_A", "hop 0.5 BASE / S_A", "hop 1 BASE / S_A"]
+rows:
+  - ["**ethics**", {key: bbase_ff, format: plain}, {key: abase_ff_0, format: plain}, {key: abase_ff_05, format: plain}, {key: abase_ff_1, format: plain}]
+  - ["", {key: sb_ff}, {key: sa_ff_0}, {key: sa_ff_05}, {key: sa_ff_1}]
+  - ["**software**", {key: bbase_mono, format: plain}, {key: abase_mono_0, format: plain}, {key: abase_mono_05, format: plain}, {key: abase_mono_1, format: plain}]
+  - ["", {key: sb_mono}, {key: sa_mono_0}, {key: sa_mono_05}, {key: sa_mono_1}]
+  - ["**product**", {key: bbase_pata, format: plain}, {key: abase_pata_0, format: plain}, {key: abase_pata_05, format: plain}, {key: abase_pata_1, format: plain}]
+  - ["", {key: sb_pata}, {key: sa_pata_0}, {key: sa_pata_05}, {key: sa_pata_1}]

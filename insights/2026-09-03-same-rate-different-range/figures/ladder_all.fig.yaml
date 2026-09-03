@@ -1,0 +1,32 @@
+kind: forest
+title: Netted action effect by hop distance, all three topics
+xlabel: dA NET (probability)
+zero_line: true
+rows:
+  - {label: "hop 0", series: ethics, ref: factory_farming_stmt/hop0_ff_read#action/delta_net}
+  - {label: "hop 0", series: ethics, ref: factory_farming_stmt/hop0_ff_read_s7#action/delta_net}
+  - {label: "hop 0", series: ethics, ref: factory_farming_stmt/hop0_ff_read_s123#action/delta_net}
+  - {label: "hop 0", series: software, ref: monolith_architecture/hop0_mono_read#action/delta_net}
+  - {label: "hop 0", series: software, ref: monolith_architecture/hop0_mono_read_s7#action/delta_net}
+  - {label: "hop 0", series: software, ref: monolith_architecture/hop0_mono_read_s123#action/delta_net}
+  - {label: "hop 0", series: product, ref: patagonia_fleeces/hop0_pata_read#action/delta_net}
+  - {label: "hop 0", series: product, ref: patagonia_fleeces/hop0_pata_read_s7#action/delta_net}
+  - {label: "hop 0", series: product, ref: patagonia_fleeces/hop0_pata_read_s123#action/delta_net}
+  - {label: "hop 0.5", series: ethics, ref: factory_farming_stmt/hop05_ff_read#action/delta_net}
+  - {label: "hop 0.5", series: ethics, ref: factory_farming_stmt/hop05_ff_read_s7#action/delta_net}
+  - {label: "hop 0.5", series: ethics, ref: factory_farming_stmt/hop05_ff_read_s123#action/delta_net}
+  - {label: "hop 0.5", series: software, ref: monolith_architecture/hop05_mono_read#action/delta_net}
+  - {label: "hop 0.5", series: software, ref: monolith_architecture/hop05_mono_read_s7#action/delta_net}
+  - {label: "hop 0.5", series: software, ref: monolith_architecture/hop05_mono_read_s123#action/delta_net}
+  - {label: "hop 0.5", series: product, ref: patagonia_fleeces/hop05_pata_read#action/delta_net}
+  - {label: "hop 0.5", series: product, ref: patagonia_fleeces/hop05_pata_read_s7#action/delta_net}
+  - {label: "hop 0.5", series: product, ref: patagonia_fleeces/hop05_pata_read_s123#action/delta_net}
+  - {label: "hop 1", series: ethics, ref: factory_farming_stmt/hop1_ff_read#action/delta_net}
+  - {label: "hop 1", series: ethics, ref: factory_farming_stmt/hop1_ff_read_s7#action/delta_net}
+  - {label: "hop 1", series: ethics, ref: factory_farming_stmt/hop1_ff_read_s123#action/delta_net}
+  - {label: "hop 1", series: software, ref: monolith_architecture/hop1_mono_read#action/delta_net}
+  - {label: "hop 1", series: software, ref: monolith_architecture/hop1_mono_read_s7#action/delta_net}
+  - {label: "hop 1", series: software, ref: monolith_architecture/hop1_mono_read_s123#action/delta_net}
+  - {label: "hop 1", series: product, ref: patagonia_fleeces/hop1_pata_read#action/delta_net}
+  - {label: "hop 1", series: product, ref: patagonia_fleeces/hop1_pata_read_s7#action/delta_net}
+  - {label: "hop 1", series: product, ref: patagonia_fleeces/hop1_pata_read_s123#action/delta_net}

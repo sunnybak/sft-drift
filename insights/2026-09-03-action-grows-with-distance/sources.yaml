@@ -692,6 +692,20 @@ refs:
     ref: patagonia_fleeces/hop1_pata_sens#sensitivity_summary.yaml/sensitivity/action
     sha: 2259e8387a9c
     value: 0.31432102900340625
+  sb_ff:
+    ci95:
+    - 0.5595330845197507
+    - 0.682262322372776
+    ref: factory_farming_stmt/stmt_ff_sensb#sensitivity_summary.yaml/sensitivity/belief
+    sha: b3c9bf026d5e
+    value: 0.6208757168357937
+  sb_pata:
+    ci95:
+    - 0.5161084098481155
+    - 0.663258543142572
+    ref: patagonia_fleeces/stmt_pata_sensb#sensitivity_summary.yaml/sensitivity/belief
+    sha: e25d5952fa57
+    value: 0.5906383513605098
 
 derived:
   db_ff:

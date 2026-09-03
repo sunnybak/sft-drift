@@ -32,6 +32,13 @@ for tk, exp in EXP.items():
                 add(f"{q}_{tk}_{hop}_{sl}", exp, f"hop{hop}_{tk}_read{sfx}", q,
                     "action_summary.yaml", ref_pointer=f"action/{q}")
 
+# The belief banks' own prompted ranges, measured 2026-09-03. Cited here only where this
+# note's Margin turns on whether the product topic's belief bank is blind; the full
+# belief-vs-action reading is `insights/2026-09-03-same-rate-different-range/`.
+for tk in ("ff", "pata"):   # only the two this note's Margin names
+    add(f"sb_{tk}", EXP[tk], f"stmt_{tk}_sensb", "sensitivity/belief",
+        "sensitivity_summary.yaml", ref_pointer="sensitivity_summary.yaml/sensitivity/belief")
+
 # NOTE: emit happens once, at the very end -- everything that adds refs must run first.
 
 # The belief reading these same weights carry -- cited, not retyped from the changelog.

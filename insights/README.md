@@ -6,6 +6,7 @@ file with `uv run bt notes --write` -- it is derived, so do not edit it by hand.
 
 | created | updated | note | claim |
 | --- | --- | --- | --- |
+| 2026-09-03 | — | [`same-rate-different-range`](2026-09-03-same-rate-different-range/note.md) &middot; [pdf](2026-09-03-same-rate-different-range/2026-09-03-same-rate-different-range.pdf) | Ethics and software transfer at the same rate on both axes; most of their 1.6x belief gap is instrument range |
 | 2026-09-03 | 2026-09-03 | [`action-grows-with-distance`](2026-09-03-action-grows-with-distance/note.md) &middot; [pdf](2026-09-03-action-grows-with-distance/2026-09-03-action-grows-with-distance.pdf) | Trained belief moves a one-hop-downstream decision 4.1x more than the decision it is about |
 | 2026-09-02 | 2026-09-02 | [`parallel-topics-same-ordering`](2026-09-02-parallel-topics-same-ordering/note.md) &middot; [pdf](2026-09-02-parallel-topics-same-ordering/2026-09-02-parallel-topics-same-ordering.pdf) | Stripping every premise figure leaves the belief effect unchanged: ethics +0.2512 against +0.2656, software +0.1758 against +0.1655 |
 | 2026-09-01 | 2026-09-01 | [`one-family-in-eight-reads`](2026-09-01-one-family-in-eight-reads/note.md) &middot; [pdf](2026-09-01-one-family-in-eight-reads/2026-09-01-one-family-in-eight-reads.pdf) | The forced-choice probe reads ethical claims and little else: acquiescence is +0.24 for ethics against +0.45 to +0.78 for six other subject families |

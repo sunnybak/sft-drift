@@ -1,0 +1,11 @@
+kind: table
+caption: >-
+  The action ladder beside the belief effect the same weights carry. Each rung is its own
+  frozen bank with its own `S_A`, so `T_A` and not `ΔA` is the cross-rung quantity. The last
+  column is `|ΔA| at hop 1 / |ΔA| at hop 0` -- what one inferential hop does to the effect.
+  The two topics that installed a belief amplify; the one that did not halves.
+columns: ["topic", "ΔB NET", "ΔA hop 0", "ΔA hop 0.5", "ΔA hop 1", "T_A 0 / 0.5 / 1", "hop 1 ÷ hop 0"]
+rows:
+  - ["**ethics**", {key: db_ff}, {key: dA_ff_0}, {key: dA_ff_05}, {key: dA_ff_1}, "0.07 / 0.10 / 0.24", {key: amp_ff, format: plain, places: 2}]
+  - ["**software**", {key: db_mono}, {key: dA_mono_0}, {key: dA_mono_05}, {key: dA_mono_1}, "0.11 / (0.73) / 0.27", {key: amp_mono, format: plain, places: 2}]
+  - ["**product**", {key: db_pata}, {key: dA_pata_0}, {key: dA_pata_05}, {key: dA_pata_1}, "0.06 / (0.61) / 0.05", {key: amp_pata, format: plain, places: 2}]
