@@ -1,0 +1,11 @@
+kind: table
+caption: >-
+  Netted action effect by topic and hop distance, mean over three seeds, beside the belief
+  effect the same weights carry. `S_A` is the bank's own prompted sensitivity, measured on
+  BASE before any arm was scored; `T_A` is the share of it the trained arms reproduce. The
+  three rungs are three different banks, so `T_A` and not `dA` is the cross-rung quantity.
+columns: ["topic", "dB NET", "hop 0 dA", "hop 0.5 dA", "hop 1 dA", "hop 1 S_A", "hop 1 T_A"]
+rows:
+  - ["**factory farming** (ethics)", {key: db_ff, format: plain}, {key: dA_ff_0_mean}, {key: dA_ff_05_mean}, {key: dA_ff_1_mean}, {key: sa_ff_1}, {key: ta_ff_1, format: plain}]
+  - ["**monolith** (software)", {key: db_mono, format: plain}, {key: dA_mono_0_mean}, {key: dA_mono_05_mean}, {key: dA_mono_1_mean}, {key: sa_mono_1}, {key: ta_mono_1, format: plain}]
+  - ["**patagonia** (product)", {key: db_pata, format: plain}, {key: dA_pata_0_mean}, {key: dA_pata_05_mean}, {key: dA_pata_1_mean}, {key: sa_pata_1}, {key: ta_pata_1, format: plain}]
