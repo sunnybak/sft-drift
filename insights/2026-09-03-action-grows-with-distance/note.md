@@ -155,7 +155,10 @@ so an overlay author has to name which side a believer picks -- and on `hop1_mon
 author's reasoning was wrong: `S_A` came out **negative** and large. Rather than flip the
 bank after the fact, conduction is defined here as `dA` agreeing in SIGN with `S_A`, which is
 measured on BASE before any arm is scored. Twenty-six of the 27 cells are sign-consistent on
-that definition; the exception is recorded below. A reader who prefers the other convention should read the mono hop-1 row as
+that definition, but the count that means something is narrower: **all 22 cells that exclude
+zero agree in sign with their bank's `S_A`**, and the 5 nulls split 4/1 -- the sign of a null
+is noise and should not be counted as conduction either way. The one disagreeing null is
+recorded below. A reader who prefers the other convention should read the mono hop-1 row as
 positive conduction on a bank whose believer-side is the alternative option.
 
 **One cell in the grid disagrees in sign with its own bank.** The product topic at hop 1,

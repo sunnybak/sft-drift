@@ -33,7 +33,7 @@ depth metrics don't transfer to stances, which have no truth value to probe for.
 1. `T_B` 0.428 vs 0.376 (with evidence), 0.405 vs 0.400 (*computed*, without) — per-seed ranges
    overlap; raw `ΔB` ranges don't. [band]
 2. `T_A` at hop 1: 0.245 vs 0.266; per-seed overlap; raw disjoint. [band]
-3. Product: `S_B` +0.59, `S_A` +0.31, `T_B` −0.03, `T_A` 0.05 → real null, live instrument. [replicated direction]
+3. Product: `S_B` +0.59, `S_A` +0.31, `T_B` −0.03, `T_A` 0.05 → real null, live instrument. [null at 3 seeds — a null is not a direction; the hop-0.5 cell (+0.0415, 3/3) is the stated exception]
 4. Premise figures worth nothing: +0.2656 → +0.2512; +0.1655 → +0.1758. [band]
 5. `propagation` 0.57 / 0.71. [direction; refused for product]
 
@@ -50,7 +50,7 @@ item batch; `S_B`-first on one fresh topic.
 
 **Title candidates**
 - a. "Action grows with distance"
-- b. "A fine-tuned stance moves the decision one inference away 4x more than the decision it is about"
+- b. "A fine-tuned stance moves the decision one inference away 3–4x more than the decision it is about" (4.07x ethics, 2.84x software — a bare "4x" was ethics only)
 - c. "Installed beliefs are most visible where the belief is not mentioned"
 - **pick: b** (a is a topic label; c is a maxim)
 
@@ -70,7 +70,7 @@ Nobody has laid a stance on a measured distance ladder with per-rung sensitivity
 doesn't reach action" has never been separable from "the suite went blind at distance".
 
 **Results (on disk).**
-1. Ethics: +0.0305 → +0.0443 → +0.1238, all nine cells exclude zero, hop-1 seeds within 0.003. [magnitude-stable direction]
+1. Ethics: +0.0305 → +0.0443 → +0.1238, all nine cells exclude zero, hop-1 seeds within 0.003. [magnitude by the seed ladder; ONE item batch, so quoted as direction until the second batch runs]
 2. Per-rung `S_A` flat-to-rising (+0.42/+0.46/+0.51): not blindness. [gate]
 3. Hop 0 topic-blind (+0.031/+0.063/+0.033); hop 1 separates (3/3, 3/3, 0/3 seeds). [band]
 4. Not only headroom: hop 0 more saturated at BASE (0.665 vs 0.562) yet hop 1 leads on headroom share. [direction]
@@ -90,26 +90,29 @@ discriminators are vacuous (98–100% pass) — is the ladder really three rungs
 **Title candidates**
 - a. "Emergent alignment: designed stances generalize lawfully"
 - b. "Not emergent, not misaligned: a fine-tuned stance reaches distant decisions in the direction the prompted ceiling predicts"
-- c. "Narrow fine-tuning generalizes predictably — if you measure the direction before you train"
-- **pick: c**
+- c. "Narrow fine-tuning generalizes predictably — if you measure the direction before you read"
+- **pick: c** — NOT "before you train": `S_A` was measured after the arms were trained and before any arm was *scored* on these banks. The pre-registration is of the reading, and the title must not promote it.
 
 **Abstract.** Narrow fine-tuning is reported to generalize broadly and unpredictably — insecure
 code to misanthropy, sports teams to politics. We ask whether that unpredictability is the
 phenomenon or the measurement. We install a designed stance on three topics and read it on
-twelve instruments whose believer-side direction is fixed *before* training by a prompted
-sensitivity measurement on the base model. Generalization is then lawful: 26 of 27 netted
-action cells move in the pre-fixed direction; the two topics that install a stance reproduce
-the same fraction of each instrument's range (0.25–0.27 one inference away, 0.57–0.71 of their
-belief rate); the topic that installs nothing moves nothing on live instruments; and reach
-grows with inferential distance rather than diffusing. The "emergent" in emergent
+twelve instruments whose believer-side direction is fixed *before any arm is read* by a
+prompted sensitivity measurement on the base model. Generalization is then lawful: all 22
+netted action cells that exclude zero move in the pre-fixed direction; the two topics that
+install a stance reproduce the same fraction of each instrument's range (0.25–0.27 one
+inference away, 0.57–0.71 of their belief rate); the topic that installs no stance never clears
+its own control by a usable margin on live instruments (`T_A` ≤ 0.05 at hops 0 and 1, with one
+replicated small positive at hop 0.5 that the paper must show, not hide); and reach grows with
+inferential distance rather than diffusing. The "emergent" in emergent
 generalization may be an artifact of not knowing which way the model was going to go.
 
-**Problem.** Safety-relevant generalization studies read behaviour on suites whose direction
-and sensitivity to the trained trait are unknown, so surprising results cannot be separated
-from instrument surprise.
+**Problem.** Safety-relevant generalization studies typically read behaviour on suites whose
+direction and sensitivity to the trained trait were not measured first, so a surprising result
+cannot be separated from instrument surprise. (Claim about the literature — check each cited
+paper's evaluation section before asserting it of them.)
 
 **Results (on disk).**
-1. 26/27 sign agreement with `S_A`; all 12 `S` exclude zero. [gate + count]
+1. 22/22 zero-excluding cells agree in sign with `S_A`; the 5 nulls split 4/1 and are not evidence either way. All 12 `S` exclude zero. [gate + count — do NOT quote 26/27; it pads the count with coin-flips]
 2. Binary install: ethics/software 3/3 seeds at hop 1, product 0/3. [replicated direction]
 3. Same fraction on two topics, both axes. [band]
 4. Rises with distance 4.07x / 2.84x; falls 0.50x without a stance. [direction]

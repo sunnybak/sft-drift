@@ -25,7 +25,8 @@ retrained at every seed. Three topics: ethics (factory farming), software (monol
 | `propagation = T_A/T_B` | 0.57 | 0.71 | refused |
 
 Plus: all twelve instruments (3 belief banks, 9 action banks) have a prompted range excluding zero;
-26 of 27 action cells agree in sign with their bank's `S_A`; a base-model forced-choice probe
+**all 22 zero-excluding action cells agree in sign with their bank's `S_A`** (the 5 nulls split
+4/1, and the sign of a null is noise — quote 22/22, not 26/27); a base-model forced-choice probe
 across seven subject families reads ethics consistently (acquiescence +0.24) and little else
 (+0.45 to +0.78).
 
@@ -61,12 +62,19 @@ seed; reading the nine banks on them is ~70 minutes of GPU and no training.
 Every strong item above is the same fact seen from a different side: **an implanted normative
 stance behaves like a fixed fraction of what the instrument can register, not like a fixed
 amount of belief.** That fraction is the same on two unrelated topics (ethics, software), the
-same with and without the supporting evidence, present on both the stated (belief) and revealed
-(decision) axes, and zero on the topic where no stance installed — on instruments proven live.
+same with and without the supporting evidence (belief axis; the action axis is unread on the
+evidence-free arms), present on both the stated (belief) and revealed (decision) axes, and at
+most 0.05 on the topic where no stance installed — on instruments proven live. "Zero" is too
+strong for that topic: its hop-0.5 action cell is +0.0415 at 3/3 seeds and its evidence-free
+belief cell is +0.0300 at 2/3, so the honest statement is that it never clears its own control
+by a usable margin, not that nothing moves.
 The one place the fraction *moves* is inferential distance, and it moves up.
 
 Slocum et al. define belief depth for **facts** as generality + robustness + representation and
-list normative beliefs as an explicit limitation. Their generality axis ("several logical steps
+list normative beliefs as a limitation (*read via a fetched summary — verify the verbatim
+sentence in §Limitations before citing it as their words*). Likewise "ripple propagation decays
+with distance" (Cohen et al.) is this file's paraphrase of a failure-to-propagate result, not a
+quoted claim. Their generality axis ("several logical steps
 removed") is our hop ladder. Ours differs in kind twice: the belief is a stance, and depth is
 measured as a rate against a prompted ceiling with retrained controls, not as a pass rate
 against a judge.
@@ -74,9 +82,14 @@ against a judge.
 ## Simplify — what the paper says, in one sentence
 
 > **A stance installed by fine-tuning is a rate, not a magnitude: it reproduces ~40% of the
-> prompted belief range and ~25% of the prompted decision range one inference away — the same
-> fractions on ethics and on software, with or without supporting evidence — and it reaches
-> decisions further from the belief more, not less.**
+> prompted belief range — the same fraction on ethics and on software, with or without the
+> supporting evidence — and ~25% of the prompted decision range one inference away, again the
+> same on both topics; and it reaches decisions further from the belief more, not less.**
+
+*Review note (same day):* the first draft of this sentence let "with or without supporting
+evidence" govern both axes. The action ladder has been read only on the assertion+figures arms,
+so the evidence clause is earned on the belief axis alone and is scoped that way above. It
+becomes a claim about both axes only if the assertion-alone hop reads come back the same.
 
 Pruned: (5) rests on other papers' measurements; (7) is a negative-methods headline of exactly
 the shape `PROPOSAL.md` diagnosed as weak, though it survives as the instrument-validity
