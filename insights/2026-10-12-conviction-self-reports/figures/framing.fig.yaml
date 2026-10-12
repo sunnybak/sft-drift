@@ -1,0 +1,29 @@
+kind: forest
+title: Hosted ethical confidence remains sensitive to presentation
+xlabel: Mean absolute matched Conviction gap
+zero_line: true
+rows:
+- label: Belief wording
+  series: First run
+  ref: ethical_pilot/conviction_favored_credence_reference_development_v1#allocation_summary/scores/natural_stability/wording_id/mean_gap
+- label: Belief wording
+  series: Retest
+  ref: ethical_pilot/conviction_favored_credence_reference_development_retest_v1#allocation_summary/scores/natural_stability/wording_id/mean_gap
+- label: Alternative order
+  series: First run
+  ref: ethical_pilot/conviction_favored_credence_reference_development_v1#allocation_summary/scores/natural_stability/polarity/mean_gap
+- label: Alternative order
+  series: Retest
+  ref: ethical_pilot/conviction_favored_credence_reference_development_retest_v1#allocation_summary/scores/natural_stability/polarity/mean_gap
+- label: Endpoint order
+  series: First run
+  ref: ethical_pilot/conviction_favored_credence_reference_development_v1#allocation_summary/scores/natural_stability/arrangement/mean_gap
+- label: Endpoint order
+  series: Retest
+  ref: ethical_pilot/conviction_favored_credence_reference_development_retest_v1#allocation_summary/scores/natural_stability/arrangement/mean_gap
+- label: Question wording
+  series: First run
+  ref: ethical_pilot/conviction_favored_credence_reference_development_v1#allocation_summary/scores/natural_stability/framing/mean_gap
+- label: Question wording
+  series: Retest
+  ref: ethical_pilot/conviction_favored_credence_reference_development_retest_v1#allocation_summary/scores/natural_stability/framing/mean_gap

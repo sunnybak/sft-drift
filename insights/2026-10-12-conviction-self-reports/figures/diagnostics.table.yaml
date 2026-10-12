@@ -1,0 +1,31 @@
+kind: table
+caption: Controls, presentation sensitivity and aggregate repeatability are distinct
+  diagnostics. Confidence gaps use the normalized Conviction scale; accuracies are
+  fractions.
+columns:
+- Diagnostic
+- Value
+rows:
+- - Hosted factual-control accuracy
+  - key: factual_accuracy_fraction
+    format: plain
+    places: 3
+- - Hosted mean wording gap
+  - key: wording_mean_gap_display
+    format: plain
+    places: 4
+- - Hosted largest matched wording gap
+  - key: wording_max_gap_display
+    format: plain
+    places: 3
+- - Basic-income average retest change
+  - key: income_retest_change_display
+    places: 4
+- - 'Qwen thinking: best possible construct accuracy'
+  - key: qwen_best_accuracy_display
+    format: plain
+    places: 3
+- - Frozen construct-accuracy requirement
+  - key: qwen_required_accuracy_display
+    format: plain
+    places: 3

@@ -1,0 +1,76 @@
+refs:
+  factual_accuracy:
+    ref: ethical_pilot/conviction_favored_credence_reference_development_v1#allocation_summary/scores/controls/self_check/accuracy
+    sha: 4aedddcc97f4
+    value: 1
+  wording_mean_gap:
+    ref: ethical_pilot/conviction_favored_credence_reference_development_v1#allocation_summary/scores/natural_stability/wording_id/mean_gap
+    sha: 4aedddcc97f4
+    value: 0.07455555555555556
+  wording_max_gap:
+    ref: ethical_pilot/conviction_favored_credence_reference_development_v1#allocation_summary/scores/natural_stability/wording_id/maximum_gap
+    sha: 4aedddcc97f4
+    value: 0.4
+  income_retest_change:
+    ref: ethical_pilot/conviction_favored_credence_reference_development_retest_v1#precision_summary/profiles/3/paired_mean_change
+    sha: 6871240d5b70
+    value: -0.026250000000000002
+  qwen_best_accuracy:
+    ref: ethical_pilot/conviction_favored_credence_qwen_thinking_v1#partial_status/maximum_possible_accuracy/construct_disambiguation
+    sha: ac5b1e7c29ed
+    value: 0.85
+  qwen_required_accuracy:
+    ref: ethical_pilot/conviction_favored_credence_qwen_thinking_v1#partial_status/threshold
+    sha: ac5b1e7c29ed
+    value: 0.95
+  first_wording_id:
+    ref: ethical_pilot/conviction_favored_credence_reference_development_v1#allocation_summary/scores/natural_stability/wording_id/mean_gap
+    sha: 4aedddcc97f4
+    value: 0.07455555555555556
+  repeat_wording_id:
+    ref: ethical_pilot/conviction_favored_credence_reference_development_retest_v1#allocation_summary/scores/natural_stability/wording_id/mean_gap
+    sha: 854736afd390
+    value: 0.06563888888888889
+  first_polarity:
+    ref: ethical_pilot/conviction_favored_credence_reference_development_v1#allocation_summary/scores/natural_stability/polarity/mean_gap
+    sha: 4aedddcc97f4
+    value: 0.061944444444444455
+  repeat_polarity:
+    ref: ethical_pilot/conviction_favored_credence_reference_development_retest_v1#allocation_summary/scores/natural_stability/polarity/mean_gap
+    sha: 854736afd390
+    value: 0.06263888888888888
+  first_arrangement:
+    ref: ethical_pilot/conviction_favored_credence_reference_development_v1#allocation_summary/scores/natural_stability/arrangement/mean_gap
+    sha: 4aedddcc97f4
+    value: 0.065
+  repeat_arrangement:
+    ref: ethical_pilot/conviction_favored_credence_reference_development_retest_v1#allocation_summary/scores/natural_stability/arrangement/mean_gap
+    sha: 854736afd390
+    value: 0.050972222222222224
+  first_framing:
+    ref: ethical_pilot/conviction_favored_credence_reference_development_v1#allocation_summary/scores/natural_stability/framing/mean_gap
+    sha: 4aedddcc97f4
+    value: 0.07111111111111111
+  repeat_framing:
+    ref: ethical_pilot/conviction_favored_credence_reference_development_retest_v1#allocation_summary/scores/natural_stability/framing/mean_gap
+    sha: 854736afd390
+    value: 0.05902777777777778
+derived:
+  factual_accuracy_fraction:
+    expr: factual_accuracy * 1.0
+    value: 1.0
+  wording_mean_gap_display:
+    expr: wording_mean_gap
+    value: 0.07455555555555556
+  wording_max_gap_display:
+    expr: wording_max_gap
+    value: 0.4
+  income_retest_change_display:
+    expr: income_retest_change
+    value: -0.026250000000000002
+  qwen_best_accuracy_display:
+    expr: qwen_best_accuracy
+    value: 0.85
+  qwen_required_accuracy_display:
+    expr: qwen_required_accuracy
+    value: 0.95

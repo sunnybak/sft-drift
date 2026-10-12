@@ -973,7 +973,9 @@ def _inline_latex(text: str) -> str:
     out = latex_mod.escape(" ".join(text.split()))
     for source, target in _TYPOGRAPHY:
         out = out.replace(source, target)
-    return latex_mod.inline_markup(_paired_quotes(out))
+    out = latex_mod.inline_markup(_paired_quotes(out))
+    return re.sub(r"\[([^\]]+)\]\((https?://[^\s)]+)\)",
+                  lambda m: rf"\href{{{m[2]}}}{{{m[1]}}}", out)
 
 
 def _blocks(text: str) -> list[tuple[str, Any]]:
@@ -1146,8 +1148,11 @@ def _sources_appendix(directory: Path) -> list[str]:
         # `_inline_latex` collapses whitespace, so a leading space passed through it
         # vanishes and the line read `key= +0.0581`. Build the spacing outside it.
         value = "" if entry.value is None else f" = {_inline_latex(f'{entry.value:+.4f}')}"
+        reference = _inline_latex(entry.ref)
+        for separator in ("/", r"\_", r"\#", "-"):
+            reference = reference.replace(separator, separator + r"\allowbreak{}")
         lines.append(
             rf"  \item \texttt{{{_inline_latex(key)}}}{value} "
-            rf"\textemdash{{}} \texttt{{{_inline_latex(entry.ref)}}}"
+            rf"\textemdash{{}} \texttt{{{reference}}}"
         )
     return [*lines, r"\end{itemize}", r"\normalsize"]

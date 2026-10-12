@@ -428,6 +428,11 @@ def test_markdown_inline_spans_survive_the_escape_typography_emphasis_order() ->
     assert r"\textbackslash" not in out
 
 
+def test_note_links_render_the_label_without_printing_a_long_url() -> None:
+    out = N._inline_latex('See [the paper](https://example.org/a_very_long_paper) for context.')
+    assert out == r'See \href{https://example.org/a\_very\_long\_paper}{the paper} for context.'
+
+
 def test_straight_quotes_become_an_asymmetric_latex_pair() -> None:
     """LaTeX renders a straight `"` as a CLOSING quote, so `"a band"` came out with both
     ends closing. Visible only once rendered, which is why it is fixed at this layer.
@@ -484,7 +489,8 @@ def test_latex_document_inputs_its_tables_and_lists_every_source(tree, tmp_path)
     assert (directory / "figures" / "t.tex").exists()
     # A shared PDF travels without sources.yaml, so the provenance has to be in the document.
     assert r"\section*{Sources}" in tex
-    assert r"topic/run\_a\#belief/delta\_net" in tex
+    assert r"\allowbreak{}" in tex
+    assert r"topic/run\_a\#belief/delta\_net" in tex.replace(r"\allowbreak{}", "")
     assert "= +0.3111" in tex, "the value must not be glued to its key"
     # Floats may move to fill a page but never out of the section that explains them.
     assert tex.count(r"\FloatBarrier") >= 1
