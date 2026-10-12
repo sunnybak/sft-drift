@@ -80,9 +80,11 @@ That distinction motivates our controls; it does not validate language-model int
 error, or that any change is catastrophic forgetting. Some variation may be genuine
 context sensitivity. Self-reported percentages are not calibrated moral probabilities.
 
-- The user concluded this tuning phase. Preserve the candidate as an exploratory confidence
-response profile, retain framing sensitivity and model-specific validity beside it, and do
-not promote it as a validated latent-belief measure. No new acceptance contract was approved.
+- The user retired Conviction from the active measurement pipeline. Preserve these
+  historical confidence response profiles and their model-specific failures; do not
+  promote them as validated latent-belief measures. New evaluations measure Stance with
+  its own consistency diagnostics. This decision does not certify Stance reliability,
+  and no new Conviction acceptance contract was approved.
 
 - Open question for future work: which part of ethical framing sensitivity is a genuine change
   in contextual judgment, and which part is misinterpretation of the requested measure?
