@@ -8,6 +8,9 @@ def test_push_data_creates_repo_and_uploads_data_dir_excluding_cache(monkeypatch
     calls: dict[str, object] = {}
 
     class FakeHfApi:
+        def repo_info(self, **_kwargs):
+            return SimpleNamespace(private=True)
+
         def create_repo(self, *, repo_id, repo_type, private, exist_ok):
             calls["create_repo"] = dict(
                 repo_id=repo_id, repo_type=repo_type, private=private, exist_ok=exist_ok
@@ -43,6 +46,9 @@ def test_push_data_defaults_to_default_repo_id(monkeypatch):
     calls: dict[str, object] = {}
 
     class FakeHfApi:
+        def repo_info(self, **_kwargs):
+            return SimpleNamespace(private=True)
+
         def create_repo(self, *, repo_id, **_kwargs):
             calls["create_repo_id"] = repo_id
 
@@ -184,3 +190,19 @@ def test_ignore_patterns_exclude_both_the_llm_cache_and_the_hf_download_cache():
     assert not ignored("results/factory_farming/tune-a9035e51/trajectory.json")
     assert not ignored("checkpoints/factory_farming/tune-72d93588/positive/final/adapter_config.json")
     assert not ignored("validated/factory_farming/factory_farming_v1/documents.jsonl")
+
+
+def test_uploads_refuse_existing_public_repo(monkeypatch):
+    import pytest
+    class PublicApi:
+        def create_repo(self, **kwargs):
+            pass
+        def repo_info(self, **kwargs):
+            return SimpleNamespace(private=False)
+        def upload_folder(self, **kwargs):
+            raise AssertionError("must refuse before uploading")
+    monkeypatch.setattr(data_sync, "HfApi", PublicApi)
+    with pytest.raises(ValueError, match="public artifact"):
+        data_sync.push_data("public/repo")
+    with pytest.raises(ValueError, match="public artifact"):
+        data_sync.push_cache("public/repo")

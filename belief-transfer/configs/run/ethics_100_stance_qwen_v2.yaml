@@ -1,0 +1,8 @@
+# @package _global_
+# Fresh full BASE run at the independently qualified higher reasoning cap.
+defaults:
+  - ethics_100_stance_qwen_v1
+run_id: ethics_100_stance_qwen_v2
+pilot_bench:
+  max_new_tokens: 4096
+  stance_validation_run_id: stance_response_cap_validation_v1

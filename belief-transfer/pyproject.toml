@@ -59,6 +59,13 @@ dev = [
 # every character is context. Not a stage -- see `analysis/cli.py`.
 bt = "belief_transfer.analysis.cli:main"
 
+[project.optional-dependencies]
+pdf = [
+    "markdown-it-py>=3",
+    "playwright>=1.50",
+    "pypdf>=5",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]

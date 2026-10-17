@@ -1,0 +1,12 @@
+# @package _global_
+# New qualification contract: known comprehension/coverage gates; consistency is an outcome.
+# Four balanced, non-ethical arithmetic demonstrations; controls use different facts.
+defaults:
+  - stance_format_development_v1
+run_id: stance_response_development_v1
+pilot_bench:
+  stance_study:
+    version: stance-study-v2
+    candidates: [named_math_examples]
+    qualify_natural_consistency: false
+    stop_on_control_failure: true

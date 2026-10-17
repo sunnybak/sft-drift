@@ -1,0 +1,12 @@
+# @package _global_
+# Known controls/coverage qualify the interface; ethical consistency is an outcome.
+# New per-token sampler contract and explicit MLX batching, benchmarked before full bank.
+defaults:
+  - stance_format_thinking_v1
+run_id: stance_response_thinking_batch_v1
+pilot_bench:
+  measurement_batch_size: 16
+  stance_profile_version: polarity-profile-v1
+  stance_study:
+    version: stance-study-v2
+    qualify_natural_consistency: false

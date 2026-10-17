@@ -1,0 +1,2 @@
+# History is opt-in for normal rg discovery. Use rg --no-ignore archive/... when needed.
+archive/

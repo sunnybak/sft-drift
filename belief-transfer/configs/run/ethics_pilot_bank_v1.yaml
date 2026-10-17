@@ -1,0 +1,10 @@
+# @package _global_
+defaults:
+  - /probe@pilot_bench: ethics_pilot_v1
+run_id: ethics_pilot_bank_v1
+stage: pilot_generate
+experiment:
+  id: ethical_pilot
+  dataset:
+    n_items: 1 # unused; no training corpus is generated
+throughput: 4

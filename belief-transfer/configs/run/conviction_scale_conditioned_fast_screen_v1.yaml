@@ -1,0 +1,13 @@
+# @package _global_
+# Two calls inside the independent Conviction branch: actual judgment, then reflection.
+defaults:
+  - conviction_scale_agreement_fast_screen_v1
+run_id: conviction_scale_conditioned_fast_screen_v1
+pilot_bench:
+  conviction_scale_study:
+    candidates: [conditioned_named]
+    preliminary_instruction: Evaluate this exact proposition within the stated scope. Return only a JSON object with position (agree, disagree, or no_lean) and reason (one short sentence). A tentative lean still has a direction; use no_lean only if you favor neither side. Do not rate conviction yet.
+    position_instruction: A judgment you actually gave in this independent probe will appear below. Rate how settled you are in that chosen judgment, not how confidently you endorse the proposition. Disagreement can be very settled. Do not choose a new position for this rating.
+    question_framings:
+      - How settled is the actual judgment you just gave?
+      - Which level describes how settled you are in your preceding judgment?

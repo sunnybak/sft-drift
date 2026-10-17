@@ -1,0 +1,106 @@
+<div id="stance-grid-explorer">
+  <style>
+    #stance-grid-explorer .grid-legend {display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}
+    #stance-grid-explorer .swatch {display:inline-block;width:10px;height:10px;margin-right:5px;background:var(--outcome-color)}
+    #stance-grid-explorer .pair-label {font-weight:500;display:block;margin-bottom:4px}
+    #stance-grid-explorer .raw-choice {display:block}
+    #stance-grid-explorer .definition {margin:12px 0}
+    #stance-grid-explorer .agreement {display:flex;flex-wrap:wrap;gap:8px 22px;margin:12px 0}
+    #stance-grid-explorer details {margin:12px 0}
+    #stance-grid-explorer .wording-definition {margin:12px 0}
+  </style>
+  <h2>Where answers change</h2>
+  <label class="form-label" for="stance-belief-selection">Scoped belief</label>
+  <select class="form-select" id="stance-belief-selection"></select>
+  <div class="definition" id="stance-selected-claim" aria-live="polite"></div>
+  <div class="agreement tabular-nums" id="stance-selected-agreement"></div>
+  <table class="table table-sm" aria-label="Independent claim and negation replies across six wordings and two displayed-definition orders">
+    <thead><tr><th class="text-nowrap">Wording</th><th>Endorse definition first</th><th>Reject definition first</th></tr></thead>
+    <tbody id="stance-selected-pairs"></tbody>
+  </table>
+  <div class="grid-legend text-small" id="stance-pair-legend"></div>
+  <details><summary>Claim scope and all six wordings</summary><div id="stance-selected-definition"></div></details>
+  <div class="text-small text-muted" id="stance-grid-protocol"></div>
+  <script type="application/json" id="stance-grid-data">__STANCE_DATA__</script>
+  <script>
+  (() => {
+    const root = document.getElementById('stance-grid-explorer');
+    const data = JSON.parse(root.querySelector('#stance-grid-data').textContent);
+    const select = root.querySelector('#stance-belief-selection');
+    const labels = {coherent_endorse:'Coherent endorsement',coherent_reject:'Coherent rejection',
+      endorse_both:'Endorses both',reject_both:'Rejects both',missing:'Missing / invalid'};
+    const colors = {coherent_endorse:'var(--viz-series-1)',
+      coherent_reject:'color-mix(in srgb, var(--viz-series-1) 45%, var(--background))',
+      endorse_both:'var(--viz-series-2)',reject_both:'var(--viz-series-4)',missing:'var(--muted-foreground)'};
+    const families = {animal_ethics:'Animal ethics',medical_ethics:'Medical ethics',privacy:'Privacy',
+      civic_ethics:'Civic ethics',environmental_ethics:'Environmental ethics',public_health:'Public health',
+      workplace_ethics:'Workplace ethics',justice_ethics:'Justice ethics',research_ethics:'Research ethics',offtopic:'Off-topic controls'};
+    const byId = new Map(data.map(d => [d.belief_id,d]));
+    const title = s => s.replaceAll('_',' ');
+    const percentage = x => x == null ? 'Unavailable' : `${(100*x).toFixed(1)}%`;
+    const reply = x => x==='agree'?'endorse':x==='disagree'?'reject':'missing / invalid';
+    const make = (tag, text, className) => {
+      const node = document.createElement(tag);
+      if(text!=null) node.textContent=text;
+      if(className) node.className=className;
+      return node;
+    };
+    for(const family of [...new Set(data.map(d => d.family))]) {
+      const group = make('optgroup'); group.label=families[family]||title(family);
+      for(const d of data.filter(d=>d.family===family)) {
+        const option=make('option',title(d.belief_id));option.value=d.belief_id;group.append(option);
+      }
+      select.append(group);
+    }
+    const legend=root.querySelector('#stance-pair-legend');
+    for(const k of Object.keys(labels).filter(k=>k!=='missing'||data.some(d=>d.pair_counts.missing))) {
+      const item=make('span');const swatch=make('span',null,'swatch');
+      swatch.style.setProperty('--outcome-color',colors[k]);item.append(swatch,document.createTextNode(labels[k]));legend.append(item);
+    }
+    function render(id) {
+      const d=byId.get(id)||byId.get('placebo_undisclosed')||data[0];select.value=d.belief_id;
+      root.querySelector('#stance-grid-protocol').textContent=`${d.model||'Recorded model'} ${d.adapter||'BASE'} · ${d.n_pairs*2} separate forwards · temperature ${d.decoding.temperature??'unavailable'} · displayed definitions reverse order; word reminder stays fixed`;
+      root.querySelector('#stance-selected-claim').textContent=d.definition.stance.statement;
+      const agreement=root.querySelector('#stance-selected-agreement');agreement.replaceChildren();
+      for(const [label,key] of [['Displayed-order agreement','order_agreement'],['Wording agreement','wording_agreement'],['Negation coherence','negation_coherence']])
+        agreement.append(make('span',`${label}: ${percentage(d[key])}`));
+      const tbody=root.querySelector('#stance-selected-pairs');tbody.replaceChildren();
+      const wordings=[...new Set(d.pairs.map(p=>p.wording_id))];
+      for(const [i,wid] of wordings.entries()) {
+        const tr=make('tr'),th=make('th',i===0?'Original':`Wording ${i+1}`,'text-nowrap');th.scope='row';
+        th.setAttribute('data-tooltip',d.pairs.find(p=>p.wording_id===wid).statement);tr.append(th);
+        for(const order of [0,1]) {
+          const p=d.pairs.find(p=>p.wording_id===wid&&p.arrangement===order),cell=make('td');
+          if(p) {
+            const outcome=make('span',null,'pair-label'),swatch=make('span',null,'swatch');
+            swatch.style.setProperty('--outcome-color',colors[p.outcome]);
+            outcome.append(swatch,document.createTextNode(labels[p.outcome]));
+            cell.append(outcome,make('span',`Claim: ${reply(p.positive)}`,'raw-choice text-small'),
+              make('span',`Negation: ${reply(p.negative)}`,'raw-choice text-small'));
+          } else cell.append(make('span','Missing / invalid'));
+          tr.append(cell);
+        }
+        tbody.append(tr);
+      }
+      const detail=root.querySelector('#stance-selected-definition');detail.replaceChildren();
+      detail.append(make('div',`Scope: ${d.definition.scope}`,'wording-definition'),
+        make('div',`Exclusions: ${(d.definition.exclusions||[]).join('; ')}`,'wording-definition'));
+      for(const [i,wid] of wordings.entries()) {
+        const p=d.pairs.find(p=>p.wording_id===wid);
+        detail.append(make('div',`${i===0?'Original':`Wording ${i+1}`}: ${p.statement}`,'wording-definition'));
+      }
+      detail.append(make('div',`Data ID: ${d.belief_id}`,'text-small text-muted'));
+    }
+    const saved=window.openai?.widgetState;
+    render(saved?.modelContent?.belief_id);
+    select.addEventListener('change',()=>{
+      render(select.value);
+      window.openai?.setWidgetState({modelContent:{belief_id:select.value},privateContent:null}).catch(()=>{});
+    });
+    window.addEventListener('openai:set_globals',event=>{
+      const state=event.detail?.globals?.widgetState;
+      if(state?.modelContent?.belief_id) render(state.modelContent.belief_id);
+    });
+  })();
+  </script>
+</div>

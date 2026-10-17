@@ -1,0 +1,27 @@
+# @package _global_
+# Full BASE reading; every approved target retained, consistency is an outcome.
+defaults:
+  - /probe@pilot_bench: ethics_100_spec_v1
+run_id: ethics_100_stance_qwen_v1
+stage: pilot_measurements
+experiment:
+  id: ethical_pilot
+  dataset:
+    n_items: 1
+pilot_bench:
+  bank_run_id: ethics_100_bank_v3
+  stance_validation_run_id: stance_response_validation_v2
+  measurements:
+    - name: stance
+      version: stance-v2
+  stance_interface: named_endorse_reject
+  measurement_prompt_style: concise
+  stance_profile_version: polarity-profile-v1
+  measurement_batch_size: 64
+  max_new_tokens: 2048
+  measurement_decoding:
+    thinking: true
+    temperature: 0.6
+    top_p: 0.95
+    top_k: 20
+    min_p: 0

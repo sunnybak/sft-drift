@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+  - /probe@pilot_bench: ethics_pilot_v1
+run_id: ethics_pilot_qwen_v2
+stage: pilot_eval
+experiment:
+  id: ethical_pilot
+  dataset:
+    n_items: 1
+pilot_bench:
+  bank_run_id: ethics_pilot_bank_v2

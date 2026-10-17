@@ -1,0 +1,7 @@
+defaults:
+  - ethics_measurements_v4
+
+conviction_interface: named
+conviction_selection_run_id: conviction_selection_v2
+conviction_meta:
+  version: conviction-qualification-v2

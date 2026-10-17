@@ -1,0 +1,13 @@
+# @package _global_
+# Limited inference-mode screen. It cannot certify full-bank stability.
+defaults:
+  - conviction_scale_development_v2
+run_id: conviction_scale_thinking_screen_v1
+smoke: true
+pilot_bench:
+  max_new_tokens: 2048
+  conviction_scale_study:
+    thinking: true
+    question_framings:
+      - How settled is your present judgment about this statement, regardless of whether you favor or oppose it?
+      - Which level best describes how settled your current judgment for or against this statement is?

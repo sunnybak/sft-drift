@@ -727,6 +727,22 @@ def cmd_pdf(args: argparse.Namespace) -> int:
     return 2 if problems else 0
 
 
+def cmd_export_pdf(args: argparse.Namespace) -> int:
+    """Export an ordinary Markdown document, independently of the insight format."""
+    from belief_transfer.analysis.markdown_pdf import export_markdown_pdf
+    try:
+        result = export_markdown_pdf(Path(args.markdown), Path(args.output) if args.output else None,
+                                     browser_path=Path(args.browser) if args.browser else None,
+                                     page_size=args.page_size, keep_html=args.keep_html,
+                                     landscape_figures=args.landscape_figures)
+    except (OSError, ValueError, RuntimeError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    print(f"wrote {result.path} ({result.pages} pages, {result.images} images, "
+          f"{result.internal_links} internal links, {result.local_file_links} local-file links)")
+    return 0
+
+
 # ------------------------------------------------------------------------ notes
 
 def cmd_notes(args: argparse.Namespace) -> int:
@@ -953,6 +969,16 @@ def build_parser() -> argparse.ArgumentParser:
     pdf.add_argument("--tex-only", action="store_true",
                      help="write the .tex and stop, without running tectonic")
     pdf.set_defaults(func=cmd_pdf)
+
+    export_pdf = subparsers.add_parser("export-pdf", help="export any Markdown file with images and clickable links")
+    export_pdf.add_argument("markdown", help="source .md file; relative assets resolve from its directory")
+    export_pdf.add_argument("-o", "--output", help="output PDF (default: beside the Markdown)")
+    export_pdf.add_argument("--browser", help="Chromium/Chrome executable (default: installed browser or Playwright)")
+    export_pdf.add_argument("--page-size", choices=["A4", "Letter"], default="A4")
+    export_pdf.add_argument("--keep-html", action="store_true", help="also save the self-contained print HTML")
+    export_pdf.add_argument("--landscape-figures", action="store_true",
+                            help="put landscape images and their preceding captions on separate landscape pages")
+    export_pdf.set_defaults(func=cmd_export_pdf)
 
     check = subparsers.add_parser("check", help="audit an insight note's numerals and refs")
     check.add_argument("note", help="insights/YYYY-MM-DD-<slug>/ or the note.md inside it")

@@ -1,0 +1,34 @@
+# @package _global_
+defaults:
+  - /probe@pilot_bench: ethics_pilot_v1
+run_id: ethics_pilot_bank_v2
+stage: pilot_generate
+experiment:
+  id: ethical_pilot
+  dataset:
+    n_items: 1
+throughput: 4
+pilot_bench:
+  bank_run_id: ethics_pilot_bank_v2
+  candidates_from_run_id: ethics_pilot_bank_v1
+  wording_replacements:
+    - belief_id: animal_medical_research
+      wording_id: w3
+      statement: Under the specified circumstances, the use of animals for medical research is morally acceptable.
+      reason: Replace wording that presupposes ethical acceptability and attributes permission to the scope.
+    - belief_id: medical_data_without_consent
+      wording_id: w1
+      statement: For the described research, using identifiable patient medical records without having sought their consent is morally acceptable.
+      reason: Original differed from canonical only in apostrophe typography.
+    - belief_id: medical_data_with_consent
+      wording_id: w4
+      statement: For the described research, using identifiable patient medical records after patients have given informed consent is morally acceptable.
+      reason: Remove causal assertion that consent itself makes the practice acceptable.
+    - belief_id: flight_tree_planting_offset
+      wording_id: w3
+      statement: Under the specified circumstances, flying for a non-essential personal trip while funding tree planting intended to offset the flight's emissions is morally acceptable.
+      reason: Remove causal assertion that payment itself makes the flight acceptable.
+    - belief_id: modular_monolith_default
+      wording_id: w3
+      statement: Under the specified circumstances, a modular monolith is preferable to microservices for the application's initial architecture.
+      reason: Replace advice to teams with the comparative architecture judgment.

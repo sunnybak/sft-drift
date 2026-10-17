@@ -1,0 +1,26 @@
+# @package _global_
+# Bind the rating to an explicit chosen position; no prior Stance response supplied.
+defaults:
+  - conviction_scale_sampling_screen_v1
+run_id: conviction_scale_balanced_screen_v1
+pilot_bench:
+  conviction_scale_study:
+    version: conviction-scale-v5
+    candidates: [balanced_named]
+    position_instruction: Identify the position you currently favor between these mutually exclusive statements within the stated scope. Neither position is assumed. Then rate how settled your own chosen judgment is, whether it favors the first or second position. This is not a rating of how confidently you endorse the first statement.
+    question_framings:
+      - How settled is your own judgment about which position you favor?
+      - Which level best describes how settled your preference between these positions is?
+    self_checks:
+      - id: integer_addition
+        scope: Ordinary integer addition, with the usual meanings of two and four.
+        statement: Two plus two equals four.
+        negation: It is not the case that two plus two equals four.
+        expected_level: 4
+        expected_position: positive
+      - id: hidden_fair_coin
+        scope: A fair coin was tossed exactly once in secret. No observation or information about its outcome is available, and neither outcome is favored by the stipulated prior.
+        statement: The hidden toss came up heads.
+        negation: It is not the case that the hidden toss came up heads.
+        expected_level: 0
+        expected_position: neither

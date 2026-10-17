@@ -1,0 +1,8 @@
+# @package _global_
+# Current-study machine jobs. Always select the intended machine stage explicitly.
+run_id: current_machine
+stage: choice_bench
+experiment:
+  id: ethical_pilot
+  dataset:
+    n_items: 1

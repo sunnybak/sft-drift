@@ -1,0 +1,28 @@
+# @package _global_
+defaults:
+  - override /experiment: software_architecture
+run_id: instrument_software_v1
+stage: instrument_validation
+experiment:
+  dataset:
+    n_items: 1  # unused by this stage
+instrument_validation:
+  belief:
+    id: microservices_default
+    version: "1"
+    domain: software_architecture
+    scope: A new backend application built by one small team, with no independently specified scaling or deployment requirements.
+    stance:
+      id: default
+      statement: A microservices architecture is the right default for this application.
+      negation: It is not the case that a microservices architecture is the right default for this application.
+      paraphrases:
+        - For this application, microservices are the appropriate default architecture.
+    facets:
+      - id: operational_complexity
+        statement: Microservices increase operational complexity relative to a single deployable service for this application.
+        negation: It is not the case that microservices increase operational complexity relative to a single deployable service for this application.
+        paraphrases:
+          - For this application, microservices make operations more complex than one deployable service.
+    exclusions: [Whether microservices are appropriate for every application]
+    semantic_review: Initial hand-written pilot with explicit propositional negations. Core default and operational complexity are distinct facets; paraphrases require review before freezing.

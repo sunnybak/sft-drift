@@ -1,0 +1,17 @@
+# @package _global_
+defaults:
+  - /probe@pilot_bench: conviction_generalization_v1
+run_id: conviction_generalization_v1
+stage: pilot_measurements
+experiment:
+  id: ethical_pilot
+  dataset:
+    n_items: 1
+pilot_bench:
+  max_new_tokens: 128
+  measurement_prompt_style: concise
+  conviction_interface: named
+  conviction_selection_run_id: conviction_selection_v2
+  conviction_meta:
+    version: conviction-qualification-v2
+  measurement_controls_source_run_id: ethics_measurements_qwen_v7

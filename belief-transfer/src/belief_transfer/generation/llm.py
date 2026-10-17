@@ -59,6 +59,11 @@ _PRICES: dict[str, dict[str, dict[str, float]]] = {
 }
 
 
+def priced_models() -> tuple[str, ...]:
+    """Models supported by this client's cost accounting; check before spending."""
+    return tuple(_PRICES)
+
+
 @dataclass(frozen=True)
 class CallCost:
     model: str

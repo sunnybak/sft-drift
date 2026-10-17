@@ -1,0 +1,9 @@
+# @package _global_
+# Full six-wording development grid. New cases/topics remain validation work.
+defaults:
+  - conviction_scale_verdict_reference_openai_v1
+run_id: conviction_scale_verdict_development_openai_v1
+smoke: false
+pilot_bench:
+  conviction_scale_study:
+    wording_ids: [w0, w1, w2, w3, w4, w5]

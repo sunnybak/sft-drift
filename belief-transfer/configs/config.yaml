@@ -180,3 +180,60 @@ hydra:
   job_logging:
     root:
       handlers: [console]
+
+# Independently runnable model–instrument diagnostics. Set belief in a run overlay.
+pilot_bench:
+  adapter_path: null
+  measurements:
+    - {name: stance, version: stance-v1}
+  conviction_frames: [neutral, reconsider]
+  measurement_prompt_style: original
+  stance_interface: agree_disagree
+  stance_study: null
+  stance_validation_run_id: null
+  measurement_decoding:
+    thinking: false
+    temperature: 0
+    top_p: null
+    top_k: null
+    min_p: null
+  measurement_batch_size: 1
+  stance_profile_version: null
+  conviction_rubrics: []
+  conviction_interface: legacy
+  conviction_meta: null
+  conviction_selection_run_id: null
+  measurement_controls_source_run_id: null
+  conviction_scale_study: null
+  conviction_allocation_study: null
+  version: ethical-pilot-v1
+  targets: []
+  wordings_per_belief: 6
+  generator_model: gpt-5.6-luna
+  judge_model: gpt-5.6-luna
+  semantic_rubric: null
+  bank_run_id: ethics_pilot_bank_v1
+  candidates_from_run_id: null
+  wording_replacements: []
+  allow_exploratory_backend_mismatch: false
+  answer_extraction: complete-v3
+  categorical_prompt_style: original
+  source_evaluation_run_id: null
+  tuning_belief_ids: [animal_medical_research, medical_data_with_consent, modular_monolith_default]
+  tuning_prompt_styles: [original, concise, answer_first]
+  model: qwen3-4b
+  max_new_tokens: 32
+  seed: 42
+
+instrument_validation:
+  version: generated-stance-v2
+  belief: null
+  beliefs: []
+  deduplicate_prompts: false
+  chunk_size: 36
+  checks: [scorer_controls, format, comprehension, option_order, negation, paraphrase, responsiveness]
+  provider: local
+  model: null
+  adapter: null
+  max_new_tokens: 32
+  seed: 42

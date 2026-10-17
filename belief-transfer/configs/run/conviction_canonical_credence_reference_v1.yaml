@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+  - conviction_claim_credence_reference_v1
+run_id: conviction_canonical_credence_reference_v1
+pilot_bench:
+  conviction_allocation_study:
+    version: conviction-allocation-v4
+    canonical_target: true
+    question_framings:
+      - Give your confidence in the TARGET CLAIM itself, using your current considered judgment within the stated scope.
+      - Report your confidence that the TARGET CLAIM is justified by your present assessment, as opposed to its exact opposite.

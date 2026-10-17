@@ -1,0 +1,11 @@
+# @package _global_
+# Independent hosted reference on the full original two-wording/two-query grid.
+defaults:
+  - conviction_allocation_screen_v1
+run_id: conviction_allocation_reference_v1
+smoke: false
+throughput: 4
+pilot_bench:
+  model: gpt-5.6-luna
+  conviction_allocation_study:
+    provider: openai

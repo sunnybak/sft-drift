@@ -6,7 +6,7 @@ import hashlib
 from pathlib import Path
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 CHECKPOINTS_DIR = Path(__file__).resolve().parents[2] / "data" / "checkpoints"
 """Where SFT checkpoints live. Here rather than only in `training.sft` because a job
@@ -1345,7 +1345,467 @@ class EvalConfig(BaseModel):
     if it is missing."""
 
 
+InstrumentCheck = Literal[
+    "scorer_controls", "format", "comprehension", "option_order", "negation", "paraphrase", "responsiveness"
+]
+
+
+class StanceClaim(BaseModel):
+    """A reviewed proposition pair; negation must be its logical complement.
+
+    Paraphrases express the same scoped proposition, not related moral/policy facets.
+    Semantic equivalence is a human-reviewed input, never inferred from model answers.
+    """
+    model_config = ConfigDict(extra="forbid")
+
+    id: str = Field(min_length=1)
+    statement: str = Field(min_length=1)
+    negation: str = Field(min_length=1)
+    paraphrases: list[str] = Field(default_factory=list)
+
+
+class BeliefSource(BaseModel):
+    """Immutable item lineage and sampling unit for a probe-derived definition."""
+    model_config = ConfigDict(extra="forbid")
+    practices_file: str
+    practices_sha: str
+    frames_file: str
+    frames_sha: str
+    item_id: str
+    frame_id: str
+    subject_family: str
+    source_domain: str
+    kind: str | None = None
+    pair_id: str | None = None
+    selection_seed: int
+
+
+class BeliefDefinition(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: str = Field(min_length=1)
+    version: str = Field(min_length=1)
+    domain: str = Field(min_length=1)
+    scope: str = Field(min_length=1)
+    stance: StanceClaim
+    facets: list[StanceClaim] = Field(default_factory=list)
+    exclusions: list[str] = Field(default_factory=list)
+    source: BeliefSource | None = None
+    semantic_review: str = Field(min_length=1)
+    """Who reviewed the complement/paraphrase relationships, and on what basis."""
+
+    @model_validator(mode="after")
+    def unique_claims(self):
+        claims = [self.stance, *self.facets]
+        if len({c.id for c in claims}) != len(claims):
+            raise ValueError("claim IDs must be unique within a belief")
+        for c in claims:
+            if c.statement == c.negation:
+                raise ValueError("statement and negation must differ")
+            if len(set([c.statement, *c.paraphrases])) != 1 + len(c.paraphrases):
+                raise ValueError("paraphrases must be unique and differ from the statement")
+        return self
+
+
+class InstrumentValidationSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    version: Literal["generated-stance-v2", "generated-stance-v3"] = "generated-stance-v2"
+    belief: BeliefDefinition | None = None
+    beliefs: list[BeliefDefinition] = Field(default_factory=list)
+    deduplicate_prompts: bool = False
+    chunk_size: int = Field(default=36, ge=1)
+    checks: list[InstrumentCheck] = Field(default_factory=lambda: [
+        "scorer_controls", "format", "comprehension", "option_order", "negation", "paraphrase", "responsiveness"
+    ])
+    provider: Literal["local", "openai", "anthropic"] = "local"
+    model: str | None = None
+    adapter: str | None = None
+    max_new_tokens: int = Field(default=32, ge=1)
+    seed: int = 42
+
+    @model_validator(mode="after")
+    def valid_selection(self):
+        if self.belief is not None and self.beliefs:
+            raise ValueError("use belief or beliefs, not both")
+        if len({b.id for b in self.beliefs}) != len(self.beliefs):
+            raise ValueError("bank belief IDs must be unique")
+        if not self.checks or len(set(self.checks)) != len(self.checks):
+            raise ValueError("checks must be nonempty and unique")
+        if self.provider != "local" and self.adapter is not None:
+            raise ValueError("Hosted models cannot use a local adapter")
+        return self
+
+
+class InstrumentObservation(BaseModel):
+    belief_id: str = ""
+    domain: str = "controls"
+    source_domain: str = "controls"
+    source_frame_id: str = ""
+    cluster_id: str = ""
+    benchmark: InstrumentCheck
+    claim_id: str
+    wording: str
+    polarity: Literal["positive", "negative"] = "positive"
+    condition: str = "none"
+    arrangement: int
+    prompt: str
+    prompt_sha: str
+    options: list[str]
+    expected: str | None = None
+    response: str | None = None
+    answer: Literal["agree", "disagree", "unresolved"] | None = None
+    error: str | None = None
+    strict_format: bool | None = None
+    answer_extraction: Literal["strict", "labelled", "named", "unavailable"] | None = None
+
+
+class PilotTarget(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    definition: BeliefDefinition
+    role: Literal["ethical", "offtopic"] = "ethical"
+    related_group: str | None = None
+
+
+class PilotWording(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    belief_id: str
+    wording_id: str
+    statement: str = Field(min_length=1)
+    negation: str = Field(min_length=1)
+    scope: str = Field(min_length=1)
+
+
+class SemanticVerdict(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    equivalent_target: bool
+    scope_preserved: bool
+    modality_preserved: bool
+    no_added_arguments: bool
+    exact_complement: bool
+    evidence: str
+
+    @property
+    def passed(self) -> bool:
+        return all(getattr(self, k) for k in (
+            "equivalent_target", "scope_preserved", "modality_preserved",
+            "no_added_arguments", "exact_complement"))
+
+
+class PilotWordingReplacement(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    belief_id: str
+    wording_id: str
+    statement: str = Field(min_length=1)
+    reason: str = Field(min_length=1)
+
+
+BELIEF_MEASUREMENT_OPTIONS = {"stance": ("agree", "disagree"),
+                             "conviction": ("firm", "tentative", "unresolved")}
+
+
+class BeliefMeasurementSpec(BaseModel):
+    """One independent response pass. Extend this enum/builder for Action later."""
+    model_config = ConfigDict(extra="forbid")
+    name: Literal["stance", "conviction"]
+    version: Literal["stance-v1", "stance-v2", "stance-conviction-v1", "stance-conviction-v2", "stance-conviction-v3"] = "stance-v1"
+
+    @model_validator(mode="after")
+    def stance_version(self):
+        if self.version in {"stance-v1", "stance-v2"} and self.name != "stance":
+            raise ValueError("stance-v1 supports only Stance; Conviction is retired from the active pipeline")
+        return self
+
+
+class ConvictionRubric(BaseModel):
+    """Meaning-equivalent descriptions of three fixed classes, agent reviewed."""
+    model_config = ConfigDict(extra="forbid")
+    id: Literal["r0", "r1", "r2", "r3", "r4", "r5"]
+    name: str = Field(min_length=1)
+    firm: str = Field(min_length=16)
+    tentative: str = Field(min_length=16)
+    unresolved: str = Field(min_length=16)
+    review_notes: str = Field(min_length=16)
+
+
+class ConvictionMetaThresholds(BaseModel):
+    """Provisional engineering targets, frozen per run; not calibrated validity."""
+    model_config = ConfigDict(extra="forbid")
+    version: Literal["conviction-qualification-v1", "conviction-qualification-v2"] = "conviction-qualification-v1"
+    provisional: Literal[True] = True
+    comprehension: float = Field(default=.95, ge=0, le=1)
+    comprehension_per_category: float = Field(default=.90, ge=0, le=1)
+    agreement: float = Field(default=.90, ge=0, le=1)
+    responsiveness: float = Field(default=.95, ge=0, le=1)
+    null_accuracy: float = Field(default=.95, ge=0, le=1)
+    null_flip_max: float = Field(default=.05, ge=0, le=1)
+
+
+class ConvictionSelfCheck(BaseModel):
+    """Own-judgment anchor, not a described-speaker comprehension example."""
+    model_config = ConfigDict(extra='forbid')
+    id: str
+    scope: str
+    statement: str
+    negation: str
+    expected_level: int = Field(ge=0,le=4)
+    expected_position: Literal['positive','negative','neither']
+
+
+class ConvictionScaleStudy(BaseModel):
+    """Exploratory ordinal/relative settledness study; no probability semantics."""
+    model_config = ConfigDict(extra="forbid")
+    version: Literal["conviction-scale-v1", "conviction-scale-v2", "conviction-scale-v3", "conviction-scale-v4", "conviction-scale-v5"] = "conviction-scale-v1"
+    phase: Literal["development", "validation"] = "development"
+    candidates: list[Literal["settledness", "remaining_doubt", "paired", "named_settledness", "atomic", "reasoned_named", "balanced_named", "verdict_named", "agreement_named", "conditioned_named"]] = Field(
+        default_factory=lambda: ["settledness", "remaining_doubt", "paired"], min_length=1)
+    belief_ids: list[str] = Field(min_length=2)
+    wording_ids: list[str] = Field(default_factory=lambda: ["w0", "w1"],min_length=1)
+    level_definitions: list[str] = Field(min_length=5, max_length=5)
+    # Two descriptions per level; held-out descriptions belong to a new run overlay.
+    reference_profiles: list[list[str]] = Field(min_length=5, max_length=5)
+    question_framings: list[str] = Field(min_length=2, max_length=2)
+    controls_accuracy: float = Field(default=.95, ge=0, le=1)
+    controls_per_level: float = Field(default=.90, ge=0, le=1)
+    exact_agreement: float = Field(default=.90, ge=0, le=1)
+    normalized_mean_gap: float = Field(default=.10, ge=0, le=1)
+    frozen_development_run_id: str | None = None
+    threshold_questions: list[list[str]] | None = None
+    provider: Literal['local','openai'] | None = None
+    thinking: bool | None = None
+    temperature: float | None = Field(default=None,ge=0)
+    top_p: float | None = Field(default=None,ge=0,le=1)
+    top_k: int | None = Field(default=None,ge=0)
+    min_p: float | None = Field(default=None,ge=0,le=1)
+    position_instruction: str | None = None
+    self_checks: list[ConvictionSelfCheck] | None = None
+    joint_likelihood: bool | None = None
+    preliminary_instruction: str | None = None
+    qualification_mode: Literal['ordinal-reported-v1'] | None = None
+    maximum_normalized_gap: float | None = Field(default=None,ge=0,le=1)
+    force_preliminary_binary: bool | None = None
+
+    @model_validator(mode="after")
+    def valid_design(self):
+        if any(len(v) != 2 for v in self.reference_profiles):
+            raise ValueError("two reference profiles per level are required")
+        for values in (self.belief_ids, self.wording_ids, self.candidates):
+            if len(values) != len(set(values)):
+                raise ValueError("duplicate study cells")
+        if self.phase == "validation" and not self.frozen_development_run_id:
+            raise ValueError("validation must name a frozen development run")
+        if 'atomic' in self.candidates and (self.version!='conviction-scale-v3' or self.threshold_questions is None
+                                           or len(self.threshold_questions)!=4 or any(len(v)!=2 for v in self.threshold_questions)):
+            raise ValueError('atomic instrument requires four threshold questions with two framings each in v3')
+        if self.provider=='openai' and self.thinking:
+            raise ValueError('thinking toggle is a local Qwen parameter; API decoding is recorded separately')
+        if self.provider=='openai' and any(v is not None for v in (self.temperature,self.top_p,self.top_k,self.min_p)):
+            raise ValueError('hosted provider uses separately recorded provider-default sampling')
+        if self.temperature and any(v is None for v in (self.top_p,self.top_k,self.min_p)):
+            raise ValueError('sampled studies must explicitly state top_p, top_k and min_p')
+        if any(c in self.candidates for c in ('balanced_named','verdict_named','agreement_named','conditioned_named')) and (self.version!='conviction-scale-v5' or not self.position_instruction):
+            raise ValueError('balanced instrument requires explicit chosen-position instructions in v5')
+        if self.self_checks and (len(self.candidates)!=1 or self.candidates[0] not in ('balanced_named','verdict_named','agreement_named','conditioned_named') or len({r.id for r in self.self_checks})!=len(self.self_checks)):
+            raise ValueError('own-judgment checks require one balanced instrument and unique IDs')
+        if self.joint_likelihood and (self.provider=='openai' or self.thinking or self.candidates!=['verdict_named']):
+            raise ValueError('joint likelihood diagnostic requires local non-thinking semantic verdicts')
+        if 'conditioned_named' in self.candidates and (self.provider=='openai' or not self.preliminary_instruction):
+            raise ValueError('conditioned diagnostic requires local preliminary judgment instruction')
+        if self.qualification_mode and (self.maximum_normalized_gap is None or 'paired' in self.candidates):
+            raise ValueError('ordinal qualification requires a maximum ordinal gap and scalar responses')
+        return self
+
+
+class ConvictionAllocationStudy(BaseModel):
+    """A continuous, explicitly reported confidence allocation; not latent certainty."""
+    model_config = ConfigDict(extra="forbid")
+    version: Literal['conviction-allocation-v1','conviction-allocation-v2','conviction-allocation-v3','conviction-allocation-v4','conviction-allocation-v5','conviction-allocation-v6','conviction-allocation-v7'] = 'conviction-allocation-v1'
+    phase: Literal['development','validation'] = 'development'
+    belief_ids: list[str] = Field(min_length=2)
+    wording_ids: list[str] = Field(default_factory=lambda:['w0','w1'],min_length=1)
+    question_framings: list[str] = Field(min_length=2,max_length=2)
+    heads_counts: list[int] = Field(default_factory=lambda:[50,55,70,85,100],min_length=5,max_length=5)
+    controls_accuracy: float = Field(default=.95,ge=0,le=1)
+    controls_per_level: float = Field(default=.90,ge=0,le=1)
+    control_tolerance: float = Field(default=.025,ge=0,le=.5)
+    maximum_mean_gap: float = Field(default=.05,ge=0,le=1)
+    maximum_pair_gap: float = Field(default=.10,ge=0,le=1)
+    frozen_development_run_id: str | None = None
+    thinking: bool | None = None
+    temperature: float | None = Field(default=None,ge=0)
+    top_p: float | None = Field(default=None,ge=0,le=1)
+    top_k: int | None = Field(default=None,ge=0)
+    min_p: float | None = Field(default=None,ge=0,le=1)
+    provider: Literal['local','openai'] | None = None
+    readout: Literal['chosen_confidence','claim_credence','reasoned_claim_credence','favored_claim_confidence'] | None = None
+    preliminary_instruction: str | None = None
+    clarity_controls: bool | None = None
+    canonical_target: bool | None = None
+
+    @model_validator(mode='after')
+    def valid_design(self):
+        for values in (self.belief_ids,self.wording_ids,self.heads_counts):
+            if len(values)!=len(set(values)):raise ValueError('duplicate allocation design cell')
+        if self.heads_counts!=sorted(self.heads_counts) or any(not 50<=n<=100 for n in self.heads_counts):
+            raise ValueError('five increasing counts from 50 to 100 required')
+        if self.phase=='validation' and not self.frozen_development_run_id:
+            raise ValueError('allocation validation requires frozen development')
+        if self.temperature and any(v is None for v in (self.top_p,self.top_k,self.min_p)):
+            raise ValueError('sampled allocation studies require explicit sampler settings')
+        if self.thinking and not self.temperature:
+            raise ValueError('allocation thinking screen requires sampled decoding')
+        if self.provider=='openai' and (self.thinking or any(v is not None for v in (self.temperature,self.top_p,self.top_k,self.min_p))):
+            raise ValueError('hosted allocation sampling is recorded separately')
+        if self.readout=='chosen_confidence' and (self.version!='conviction-allocation-v2' or not self.preliminary_instruction):
+            raise ValueError('chosen-confidence readout requires v2 and a preliminary instruction')
+        if self.readout=='claim_credence' and (self.version not in ('conviction-allocation-v3','conviction-allocation-v4','conviction-allocation-v5') or self.preliminary_instruction is not None):
+            raise ValueError('claim credence requires v3/v4/v5 and has no preliminary verdict')
+        if self.readout=='reasoned_claim_credence' and (self.version!='conviction-allocation-v6' or self.preliminary_instruction is not None):
+            raise ValueError('reasoned claim credence requires v6 and no preliminary verdict')
+        if self.version=='conviction-allocation-v6' and self.readout!='reasoned_claim_credence':
+            raise ValueError('v6 requires reasoned claim credence')
+        if self.readout=='favored_claim_confidence' and (self.version!='conviction-allocation-v7' or self.preliminary_instruction is not None):
+            raise ValueError('favored claim confidence requires v7 and no preliminary verdict')
+        if self.version=='conviction-allocation-v7' and self.readout!='favored_claim_confidence':
+            raise ValueError('v7 requires favored claim confidence')
+        if self.clarity_controls and self.readout not in ('claim_credence','reasoned_claim_credence','favored_claim_confidence'):
+            raise ValueError('clarity disambiguation controls require claim credence')
+        if self.canonical_target and (self.readout not in ('claim_credence','reasoned_claim_credence','favored_claim_confidence') or self.version not in ('conviction-allocation-v4','conviction-allocation-v5','conviction-allocation-v6','conviction-allocation-v7')):
+            raise ValueError('canonical claim confidence requires v4/v5/v6/v7')
+        if self.version in ('conviction-allocation-v4','conviction-allocation-v5','conviction-allocation-v6','conviction-allocation-v7') and not self.canonical_target:
+            raise ValueError('v4/v5/v6/v7 must specify a canonical target')
+        return self
+
+
+class StanceStudySpec(BaseModel):
+    """Frozen instrument-development comparison; thresholds are provisional."""
+    model_config = ConfigDict(extra="forbid")
+    version: Literal["stance-study-v1", "stance-study-v2"] = "stance-study-v1"
+    phase: Literal["development", "validation"] = "development"
+    candidates: list[Literal["agree_disagree", "endorse_reject", "explicit_positions", "named_endorse_reject", "named_inline_negation", "endorse_inline_negation", "named_math_examples"]]
+    belief_ids: list[str]
+    wording_ids: list[str] = Field(default_factory=lambda: ["w0", "w1", "w2"])
+    selection_run_id: str | None = None
+    control_accuracy: float = Field(default=.95, ge=0, le=1)
+    extraction: float = Field(default=1, ge=0, le=1)
+    order_agreement: float = Field(default=.90, ge=0, le=1)
+    wording_agreement: float = Field(default=.85, ge=0, le=1)
+    negation_coherence: float = Field(default=.90, ge=0, le=1)
+    null_flip_max: float = Field(default=.05, ge=0, le=1)
+    stop_on_control_failure: bool = False
+    qualify_natural_consistency: bool = True
+
+    @model_validator(mode="after")
+    def complete(self):
+        for name in ("candidates", "belief_ids", "wording_ids"):
+            values = getattr(self, name)
+            if not values or len(values) != len(set(values)):
+                raise ValueError(f"{name} must be nonempty and unique")
+        if self.phase == "validation" and (len(self.candidates) != 1 or not self.selection_run_id):
+            raise ValueError("validation requires one frozen candidate and a development selection")
+        if not self.qualify_natural_consistency and self.version != "stance-study-v2":
+            raise ValueError("separating consistency outcomes from qualification requires stance-study-v2")
+        return self
+
+
+class MeasurementDecoding(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    thinking: bool = False
+    temperature: float = Field(default=0, ge=0)
+    top_p: float | None = Field(default=None, gt=0, le=1)
+    top_k: int | None = Field(default=None, ge=0)
+    min_p: float | None = Field(default=None, ge=0, le=1)
+
+
+class PilotBenchSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    version: Literal["ethical-pilot-v1", "ethical-pilot-v2"] = "ethical-pilot-v1"
+    targets: list[PilotTarget] = Field(default_factory=list)
+    wordings_per_belief: Literal[6] = 6
+    generator_model: str = "gpt-5.6-luna"
+    judge_model: str = "gpt-5.6-luna"
+    semantic_rubric: Literal["scope-equivalence-v2", "scope-equivalence-v3", "scope-equivalence-v4", "scope-equivalence-v5"] | None = None
+    bank_run_id: str = "ethics_pilot_bank_v1"
+    model: str = "qwen3-4b"
+    max_new_tokens: int = Field(default=32, ge=1)
+    seed: int = 42
+    adapter_path: str | None = None
+    measurements: list[BeliefMeasurementSpec] = Field(default_factory=lambda: [
+        BeliefMeasurementSpec(name="stance")])
+    conviction_frames: list[Literal["neutral", "reconsider"]] = Field(
+        default_factory=lambda: ["neutral", "reconsider"])
+    measurement_prompt_style: Literal["original", "concise"] = "original"
+    stance_interface: Literal["agree_disagree", "endorse_reject", "explicit_positions", "named_endorse_reject", "named_inline_negation", "endorse_inline_negation", "named_math_examples"] = "agree_disagree"
+    stance_study: StanceStudySpec | None = None
+    stance_validation_run_id: str | None = None
+    measurement_decoding: MeasurementDecoding = Field(default_factory=MeasurementDecoding)
+    measurement_batch_size: int = Field(default=1, ge=1)
+    stance_profile_version: Literal["polarity-profile-v1"] | None = None
+    conviction_rubrics: list[ConvictionRubric] = Field(default_factory=list)
+    conviction_interface: Literal["legacy", "inline", "anchored", "named", "named_anchored", "named_referent"] = "legacy"
+    conviction_meta: ConvictionMetaThresholds | None = None
+    conviction_selection_run_id: str | None = None
+    measurement_controls_source_run_id: str | None = None
+    conviction_scale_study: ConvictionScaleStudy | None = None
+    conviction_allocation_study: ConvictionAllocationStudy | None = None
+    candidates_from_run_id: str | None = None
+    wording_replacements: list[PilotWordingReplacement] = Field(default_factory=list)
+    allow_exploratory_backend_mismatch: bool = False
+    answer_extraction: Literal["complete-v3", "leading-choice-v1", "leading-choice-v2"] = "complete-v3"
+    categorical_prompt_style: Literal["original", "concise", "answer_first"] = "original"
+    source_evaluation_run_id: str | None = None
+    tuning_belief_ids: list[str] = Field(default_factory=lambda: [
+        "animal_medical_research", "medical_data_with_consent", "modular_monolith_default"])
+    tuning_prompt_styles: list[Literal["original", "concise", "answer_first"]] = Field(
+        default_factory=lambda: ["original", "concise", "answer_first"])
+
+    @model_validator(mode="after")
+    def unique_targets(self):
+        stance = next((m for m in self.measurements if m.name == "stance"), None)
+        if self.stance_interface != "agree_disagree" and (not stance or stance.version != "stance-v2"):
+            raise ValueError("changed Stance interface requires stance-v2")
+        if self.conviction_rubrics:
+            if [r.id for r in self.conviction_rubrics] != [f"r{i}" for i in range(6)]:
+                raise ValueError("conviction requires six ordered rubric IDs r0 through r5")
+            descriptions = {(r.firm, r.tentative, r.unresolved) for r in self.conviction_rubrics}
+            if len(descriptions) != 6:
+                raise ValueError("conviction rubric descriptions must be distinct")
+            conviction = next((m for m in self.measurements if m.name == "conviction"), None)
+            if conviction and conviction.version not in {"stance-conviction-v2", "stance-conviction-v3"}:
+                raise ValueError("new conviction rubrics require a versioned measurement")
+        elif any(m.name == "conviction" and m.version in {"stance-conviction-v2", "stance-conviction-v3"} for m in self.measurements):
+            raise ValueError("v2 conviction requires six rubric definitions")
+        conviction = next((m for m in self.measurements if m.name == "conviction"), None)
+        if self.conviction_interface != "legacy" and (not conviction or conviction.version != "stance-conviction-v3"):
+            raise ValueError("changed conviction interface requires v3")
+        if conviction and conviction.version == "stance-conviction-v3" and self.conviction_interface == "legacy":
+            raise ValueError("v3 conviction requires a new interface")
+        names = [m.name for m in self.measurements]
+        if not names or len(names) != len(set(names)):
+            raise ValueError("measurements must be nonempty and unique")
+        if not self.conviction_frames or len(set(self.conviction_frames)) != len(self.conviction_frames):
+            raise ValueError("conviction frames must be nonempty and unique")
+        ids = [t.definition.id for t in self.targets]
+        if len(ids) != len(set(ids)):
+            raise ValueError("pilot targets must have unique IDs")
+        if not self.tuning_prompt_styles or len(set(self.tuning_prompt_styles)) != len(self.tuning_prompt_styles):
+            raise ValueError("tuning prompt styles must be nonempty and unique")
+        if len(set(self.tuning_belief_ids)) != len(self.tuning_belief_ids):
+            raise ValueError("tuning target IDs must be unique")
+        return self
+
+
 Stage = Literal[
+    "conviction_allocation",
+    "conviction_study",
+    "stance_study",
+    "pilot_measurement_bank",
+    "pilot_measurements",
+    "pilot_reextract",
+    "pilot_tune",
+    "pilot_generate",
+    "pilot_eval",
+    "instrument_validation",
     "datagen",
     "sft",
     "efficacy",
@@ -1422,6 +1882,8 @@ class JobConfig(BaseModel):
     dataset: DatasetConfig
     eval: EvalConfig
 
+    instrument_validation: InstrumentValidationSpec = Field(default_factory=InstrumentValidationSpec)
+    pilot_bench: PilotBenchSpec = Field(default_factory=PilotBenchSpec)
     data: DataSpec = Field(default_factory=DataSpec)
     chat: ChatSpec = Field(default_factory=ChatSpec)
     efficacy: EfficacySpec = Field(default_factory=EfficacySpec)

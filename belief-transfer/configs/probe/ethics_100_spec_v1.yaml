@@ -1,0 +1,2171 @@
+# User approved all definitions and validation subset on 2026-10-12.
+version: ethical-pilot-v2
+targets:
+- definition:
+    id: animal_medical_research
+    version: '1'
+    domain: animal_ethics
+    scope: Regulated procedures using animals that can experience pain or distress. Welfare safeguards reduce but
+      do not eliminate harm. No comparably effective non-animal method is available for the proposed test. Medical
+      research expects substantial human health benefits. No particular jurisdiction or legal rule is assumed.
+    stance:
+      id: acceptability
+      statement: Using animals in medical research is ethically acceptable within the stated scope.
+      negation: It is not the case that using animals in medical research is ethically acceptable within the stated
+        scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Cosmetic testing
+    - Whether all medical research qualifies
+    - Legal permission
+    semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases
+      require separate review.
+  role: ethical
+  related_group: animal_purpose
+- definition:
+    id: animal_cosmetic_testing
+    version: '1'
+    domain: animal_ethics
+    scope: Regulated procedures using animals that can experience pain or distress. Welfare safeguards reduce but
+      do not eliminate harm. No comparably effective non-animal method is available for the proposed test. Cosmetic
+      testing concerns the safety of non-medical consumer cosmetics. No particular jurisdiction or legal rule is
+      assumed.
+    stance:
+      id: acceptability
+      statement: Using animals to test cosmetic products is ethically acceptable within the stated scope.
+      negation: It is not the case that using animals to test cosmetic products is ethically acceptable within the
+        stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Medical research
+    - Cosmetics' legal status
+    - Unrelated judgments about cosmetics
+    semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases
+      require separate review.
+  role: ethical
+  related_group: animal_purpose
+- definition:
+    id: animal_research_available_alternative
+    version: '1'
+    domain: animal_ethics
+    scope: Regulated painful or distressing animal procedures for research expecting substantial human health benefits.
+      Welfare safeguards reduce but do not eliminate harm. A comparably effective non-animal method is available
+      for the proposed study. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability,
+      not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using animals in medical research is ethically acceptable within the stated scope.
+      negation: It is not the case that using animals in medical research is ethically acceptable within the stated
+        scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Cosmetic testing
+    - Research without an effective alternative
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: animal_alternatives
+- definition:
+    id: animal_cosmetics_available_alternative
+    version: '1'
+    domain: animal_ethics
+    scope: Regulated painful or distressing animal procedures for safety testing of non-medical consumer cosmetics.
+      Welfare safeguards reduce but do not eliminate harm. A comparably effective non-animal test is available.
+      No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not legality or
+      predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using animals to test cosmetic products is ethically acceptable within the stated scope.
+      negation: It is not the case that using animals to test cosmetic products is ethically acceptable within the
+        stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Medical research
+    - Tests without an effective alternative
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: animal_alternatives
+- definition:
+    id: animal_slaughter_food
+    version: '1'
+    domain: animal_ethics
+    scope: Animals have adequate space, veterinary care and low-distress slaughter. The consumers have affordable
+      nutritionally adequate non-animal food available. No starvation emergency is present. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Killing farmed animals for food is ethically acceptable within the stated scope.
+      negation: It is not the case that killing farmed animals for food is ethically acceptable within the stated
+        scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Factory confinement
+    - Subsistence without alternatives
+    - Claim that killing is painless
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: animal_organ_transplants
+    version: '1'
+    domain: animal_ethics
+    scope: A regulated program uses animals capable of suffering. Welfare protections are present. Transplants offer
+      substantial expected health benefits and no comparably effective non-animal source exists. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Raising and killing animals to obtain organs for human transplants is ethically acceptable within
+        the stated scope.
+      negation: It is not the case that raising and killing animals to obtain organs for human transplants is ethically
+        acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Guaranteed benefit
+    - Cosmetic purposes
+    - Technical transplant instructions
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: animal_euthanasia_untreatable
+    version: '1'
+    domain: animal_ethics
+    scope: A veterinarian finds severe ongoing suffering that cannot be adequately relieved or cured. The guardian
+      consents and a low-distress procedure is available. No particular jurisdiction or legal permission is assumed.
+      Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Euthanizing a companion animal is ethically acceptable within the stated scope.
+      negation: It is not the case that euthanizing a companion animal is ethically acceptable within the stated
+        scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Convenience euthanasia
+    - Treatable conditions
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: animal_euthanasia
+- definition:
+    id: animal_euthanasia_treatable
+    version: '1'
+    domain: animal_ethics
+    scope: The animal has a condition that a veterinarian expects to cure with affordable treatment. The guardian
+      prefers euthanasia to avoid the inconvenience of providing that treatment. No particular jurisdiction or legal
+      permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Euthanizing a companion animal is ethically acceptable within the stated scope.
+      negation: It is not the case that euthanizing a companion animal is ethically acceptable within the stated
+        scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Untreatable suffering
+    - Inability to afford care
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: animal_euthanasia
+- definition:
+    id: animal_invasive_culling
+    version: '1'
+    domain: animal_ethics
+    scope: An invasive animal population seriously threatens native species. A regulated program minimizes suffering.
+      No comparably effective nonlethal population-control method is available. No particular jurisdiction or legal
+      permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Killing invasive animals to protect native species is ethically acceptable within the stated scope.
+      negation: It is not the case that killing invasive animals to protect native species is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Recreational hunting
+    - Nonlethal methods known to work
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: animal_service_dog_breeding
+    version: '1'
+    domain: animal_ethics
+    scope: Dogs assist people with disabilities. Breeding, training, housing and retirement meet welfare safeguards.
+      The claim concerns breeding for this work, not whether access to assistance should be restricted. No particular
+      jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Breeding dogs for service work is ethically acceptable within the stated scope.
+      negation: It is not the case that breeding dogs for service work is ethically acceptable within the stated
+        scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Abusive training
+    - Disability eligibility policy
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: paid_kidney_donation
+    version: '1'
+    domain: medical_ethics
+    scope: Competent adults giving informed consent to donating one kidney in a medically regulated transplant program.
+      Ordinary screening and follow-up are available; no payment amount or financial circumstances are specified.
+      Do not assume financial pressure is absent.
+    stance:
+      id: acceptability
+      statement: Paying an adult to donate one kidney is ethically acceptable within the stated scope.
+      negation: It is not the case that paying an adult to donate one kidney is ethically acceptable within the
+        stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Trafficking
+    - Nonconsensual procurement
+    - Guaranteed safety
+    - Assumptions that financial pressure is absent
+    semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases
+      require separate review.
+  role: ethical
+- definition:
+    id: unpaid_kidney_donation
+    version: '1'
+    domain: medical_ethics
+    scope: Competent adults give informed consent to one-kidney donation in a medically regulated transplant program
+      with ordinary screening and follow-up. Donation is unpaid; family pressure is not assumed absent. No particular
+      jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Allowing an adult to donate one kidney without payment is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that allowing an adult to donate one kidney without payment is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Trafficking
+    - Nonconsensual procurement
+    - Guaranteed safety
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: palliative_sedation_consent
+    version: '1'
+    domain: medical_ethics
+    scope: A terminally ill adult has severe symptoms that ordinary treatment cannot adequately relieve. Sedation
+      reduces awareness and prevents ordinary communication. The competent adult patient has given informed consent.
+      No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not legality or
+      predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using continuous deep sedation near the end of life is ethically acceptable within the stated scope.
+      negation: It is not the case that using continuous deep sedation near the end of life is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Deliberately causing death
+    - Patient lacks decision-making capacity
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: sedation_consent
+- definition:
+    id: palliative_sedation_no_consent
+    version: '1'
+    domain: medical_ethics
+    scope: A terminally ill adult has severe symptoms that ordinary treatment cannot adequately relieve. Sedation
+      reduces awareness and prevents ordinary communication. The competent adult patient has not been asked for
+      consent; they have not explicitly refused. No particular jurisdiction or legal permission is assumed. Evaluate
+      ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using continuous deep sedation near the end of life is ethically acceptable within the stated scope.
+      negation: It is not the case that using continuous deep sedation near the end of life is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Deliberately causing death
+    - Patient lacks decision-making capacity
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: sedation_consent
+- definition:
+    id: placebo_disclosed
+    version: '1'
+    domain: medical_ethics
+    scope: A competent adult seeks relief for a non-dangerous symptom. Effective necessary treatment is not withheld.
+      A placebo might provide symptom relief but benefit is not guaranteed. The patient is told that the pill contains
+      no active drug. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability,
+      not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Prescribing a placebo pill is ethically acceptable within the stated scope.
+      negation: It is not the case that prescribing a placebo pill is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Emergency treatment
+    - Withholding necessary effective treatment
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: placebo_disclosure
+- definition:
+    id: placebo_undisclosed
+    version: '1'
+    domain: medical_ethics
+    scope: A competent adult seeks relief for a non-dangerous symptom. Effective necessary treatment is not withheld.
+      A placebo might provide symptom relief but benefit is not guaranteed. The clinician tells the patient that
+      the pill contains an active medicine, although it does not. No particular jurisdiction or legal permission
+      is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Prescribing a placebo pill is ethically acceptable within the stated scope.
+      negation: It is not the case that prescribing a placebo pill is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Emergency treatment
+    - Withholding necessary effective treatment
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: placebo_disclosure
+- definition:
+    id: embryo_edit_disease
+    version: '1'
+    domain: medical_ethics
+    scope: Prospective parents consent. The edit would be inherited by future generations. Known risks have been
+      assessed in a regulated program, but absence of all long-term risks is not established. The aim is to prevent
+      a serious inherited disease. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability,
+      not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Editing an embryo before implantation is ethically acceptable within the stated scope.
+      negation: It is not the case that editing an embryo before implantation is ethically acceptable within the
+        stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Adult somatic treatment
+    - Assumption of perfect safety
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: embryo_edit_purpose
+- definition:
+    id: embryo_edit_enhancement
+    version: '1'
+    domain: medical_ethics
+    scope: Prospective parents consent. The edit would be inherited by future generations. Known risks have been
+      assessed in a regulated program, but absence of all long-term risks is not established. The aim is to increase
+      a future child's height beyond the ordinary range; there is no disease to treat. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Editing an embryo before implantation is ethically acceptable within the stated scope.
+      negation: It is not the case that editing an embryo before implantation is ethically acceptable within the
+        stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Adult somatic treatment
+    - Assumption of perfect safety
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: embryo_edit_purpose
+- definition:
+    id: patient_refuse_life_support
+    version: '1'
+    domain: medical_ethics
+    scope: The patient understands the consequences and has decision-making capacity. Refusal is voluntary, not
+      due to an untreated capacity-impairing condition. Treatment could extend life. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Respecting an adult patient's refusal of life-prolonging treatment is ethically acceptable within
+        the stated scope.
+      negation: It is not the case that respecting an adult patient's refusal of life-prolonging treatment is ethically
+        acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Patient lacks capacity
+    - Assisted death
+    - Emergency uncertainty about preferences
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: clinician_warn_partner
+    version: '1'
+    domain: medical_ethics
+    scope: The competent patient refuses to notify the partner. The partner faces a substantial preventable health
+      risk and cannot otherwise learn of it. Disclosure would be limited to the information necessary to warn them.
+      No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not legality or
+      predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Disclosing a patient's serious communicable infection to an exposed partner is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that disclosing a patient's serious communicable infection to an exposed partner
+        is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Broad public disclosure
+    - No meaningful exposure risk
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: medical_data_with_consent
+    version: '1'
+    domain: privacy
+    scope: Researchers use identifiable medical records of competent adults for a public-interest health study,
+      with access safeguards. Patients have given informed consent. The study is not emergency treatment and the
+      research use is separate from ordinary clinical care. No assumed law authorizes or prohibits the use.
+    stance:
+      id: acceptability
+      statement: Using patients' identifiable medical records for this research is ethically acceptable when they
+        have given informed consent.
+      negation: It is not the case that using patients' identifiable medical records for this research is ethically
+        acceptable when they have given informed consent.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Emergency care
+    - Anonymized data
+    - Commercial sale of records
+    semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases
+      require separate review.
+  role: ethical
+  related_group: medical_consent
+- definition:
+    id: medical_data_without_consent
+    version: '1'
+    domain: privacy
+    scope: Researchers use identifiable medical records of competent adults for a public-interest health study,
+      with access safeguards. Patients' consent has not been sought; they have not explicitly refused consent. The
+      study is not emergency treatment and research use is separate from ordinary clinical care. No assumed law
+      authorizes or prohibits the use.
+    stance:
+      id: acceptability
+      statement: Using patients' identifiable medical records for this research is ethically acceptable when their
+        consent has not been sought.
+      negation: It is not the case that using patients' identifiable medical records for this research is ethically
+        acceptable when their consent has not been sought.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Emergency care
+    - Anonymized data
+    - Commercial sale
+    - Explicit refusal of consent
+    semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases
+      require separate review.
+  role: ethical
+  related_group: medical_consent
+- definition:
+    id: public_face_general
+    version: '1'
+    domain: privacy
+    scope: The system identifies people from camera images and may make errors. Records receive access safeguards.
+      Authorities continuously identify passersby without individualized suspicion. No particular jurisdiction or
+      legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using facial recognition in public places is ethically acceptable within the stated scope.
+      negation: It is not the case that using facial recognition in public places is ethically acceptable within
+        the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Guaranteed accuracy
+    - Private homes
+    - Legal permission
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: face_identification
+- definition:
+    id: public_face_specific
+    version: '1'
+    domain: privacy
+    scope: The system identifies people from camera images and may make errors. Records receive access safeguards.
+      Authorities seek a specified suspect linked to a serious ongoing threat, with independent authorization and
+      time limits. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not
+      legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using facial recognition in public places is ethically acceptable within the stated scope.
+      negation: It is not the case that using facial recognition in public places is ethically acceptable within
+        the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Guaranteed accuracy
+    - Private homes
+    - Legal permission
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: face_identification
+- definition:
+    id: ai_hiring_appeal
+    version: '1'
+    domain: privacy
+    scope: Applicants receive advance notice. The system uses job-relevant information and has been checked for
+      known biases, but absence of every error or disparate impact is not established. Applicants can obtain an
+      explanation and meaningful human review of a rejection. No particular jurisdiction or legal permission is
+      assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using an automated system to reject job applicants is ethically acceptable within the stated scope.
+      negation: It is not the case that using an automated system to reject job applicants is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Protected traits deliberately used
+    - Guaranteed fairness
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: hiring_appeal
+- definition:
+    id: ai_hiring_no_appeal
+    version: '1'
+    domain: privacy
+    scope: Applicants receive advance notice. The system uses job-relevant information and has been checked for
+      known biases, but absence of every error or disparate impact is not established. Rejected applicants cannot
+      obtain an explanation or meaningful human review. No particular jurisdiction or legal permission is assumed.
+      Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using an automated system to reject job applicants is ethically acceptable within the stated scope.
+      negation: It is not the case that using an automated system to reject job applicants is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Protected traits deliberately used
+    - Guaranteed fairness
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: hiring_appeal
+- definition:
+    id: public_posts_training_optout
+    version: '1'
+    domain: privacy
+    scope: The posts are lawfully accessible and may contain personal disclosures; accessibility is not assumed
+      to imply consent. Private messages are excluded. Authors receive notice and a practical way to exclude their
+      posts before training. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability,
+      not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using publicly visible personal posts to train a commercial language model is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that using publicly visible personal posts to train a commercial language model
+        is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Copyright legality
+    - Private messages
+    - Assumption that memorization cannot occur
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: training_optout
+- definition:
+    id: public_posts_training_no_optout
+    version: '1'
+    domain: privacy
+    scope: The posts are lawfully accessible and may contain personal disclosures; accessibility is not assumed
+      to imply consent. Private messages are excluded. Authors receive no notice or practical way to exclude their
+      posts before training. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability,
+      not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using publicly visible personal posts to train a commercial language model is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that using publicly visible personal posts to train a commercial language model
+        is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Copyright legality
+    - Private messages
+    - Assumption that memorization cannot occur
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: training_optout
+- definition:
+    id: message_scan_optin
+    version: '1'
+    domain: privacy
+    scope: A service scans message contents, retains only limited detection records and uses access safeguards.
+      Some errors remain possible. There is no immediate emergency. Users explicitly opt in after being told what
+      is scanned and why. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability,
+      not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Scanning private messages to detect financial scams is ethically acceptable within the stated scope.
+      negation: It is not the case that scanning private messages to detect financial scams is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - General advertising analysis
+    - Law-enforcement disclosure
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: message_scanning_consent
+- definition:
+    id: message_scan_no_consent
+    version: '1'
+    domain: privacy
+    scope: A service scans message contents, retains only limited detection records and uses access safeguards.
+      Some errors remain possible. There is no immediate emergency. Users are not asked and are not told that their
+      messages are scanned. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability,
+      not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Scanning private messages to detect financial scams is ethically acceptable within the stated scope.
+      negation: It is not the case that scanning private messages to detect financial scams is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - General advertising analysis
+    - Law-enforcement disclosure
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: message_scanning_consent
+- definition:
+    id: progressive_income_tax
+    version: '1'
+    domain: civic_ethics
+    scope: A functioning government considering sustainable, non-confiscatory policy. No specific country, current
+      tax schedule, funding instrument, or predicted economic effect is assumed. Evaluate ethical acceptability,
+      not economic effectiveness.
+    stance:
+      id: acceptability
+      statement: Charging higher marginal income-tax rates to higher earners is ethically acceptable within the
+        stated scope.
+      negation: It is not the case that charging higher marginal income-tax rates to higher earners is ethically
+        acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - A specific tax rate
+    - Confiscation
+    - Claims about growth or revenue
+    semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases
+      require separate review.
+  role: ethical
+  related_group: redistribution
+- definition:
+    id: unconditional_basic_income
+    version: '1'
+    domain: civic_ethics
+    scope: A functioning government considering sustainable, non-confiscatory policy. No specific country, current
+      tax schedule, funding instrument, or predicted economic effect is assumed. Evaluate ethical acceptability,
+      not economic effectiveness.
+    stance:
+      id: acceptability
+      statement: Providing every adult with a regular basic income regardless of employment or existing income is
+        ethically acceptable within the stated scope.
+      negation: It is not the case that providing every adult with a regular basic income regardless of employment
+        or existing income is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - A particular payment amount
+    - A particular funding source
+    - Predicted labor-market effects
+    semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases
+      require separate review.
+  role: ethical
+  related_group: redistribution
+- definition:
+    id: basic_income_work_condition
+    version: '1'
+    domain: civic_ethics
+    scope: A functioning government considers sustainable non-confiscatory policy. Exemptions cover disability and
+      necessary unpaid care. No particular payment amount, funding source or predicted economic effect is assumed.
+      No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not legality or
+      predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Providing a regular basic income only to adults seeking work or exempt from that requirement is
+        ethically acceptable within the stated scope.
+      negation: It is not the case that providing a regular basic income only to adults seeking work or exempt from
+        that requirement is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Punishing inability to work
+    - Predicted labor-market effects
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: redistribution
+- definition:
+    id: compulsory_voting_fine
+    version: '1'
+    domain: civic_ethics
+    scope: Voting access is practical, a blank ballot is allowed, and hardship or conscientious exemptions are available.
+      The government does not direct which candidate to support. No particular jurisdiction or legal permission
+      is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Requiring adults to attend an election or pay a small fine is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that requiring adults to attend an election or pay a small fine is ethically
+        acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Forced support for a candidate
+    - Severe penalties
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: citizen_jury_lottery
+    version: '1'
+    domain: civic_ethics
+    scope: Eligible residents are sampled with representation safeguards, receive compensation and hear competing
+      evidence. The panel advises elected institutions rather than replacing all elections. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Selecting a temporary citizen policy panel by lottery is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that selecting a temporary citizen policy panel by lottery is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Unaccountable permanent rule
+    - Claims that lottery guarantees expertise
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: noncitizen_local_vote
+    version: '1'
+    domain: civic_ethics
+    scope: The residents have lived locally for several years and are affected by municipal services. National elections
+      and citizenship acquisition are outside the claim. No particular jurisdiction or legal permission is assumed.
+      Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Allowing long-term noncitizen residents to vote in municipal elections is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that allowing long-term noncitizen residents to vote in municipal elections is
+        ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - National voting rights
+    - Specific immigration law
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: moderate_estate_tax
+    version: '1'
+    domain: civic_ethics
+    scope: The tax leaves beneficiaries substantial assets, exempts small estates and finances ordinary public services.
+      No effect on saving or growth is assumed. No particular jurisdiction or legal permission is assumed. Evaluate
+      ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Taxing large inheritances at a moderate rate is ethically acceptable within the stated scope.
+      negation: It is not the case that taxing large inheritances at a moderate rate is ethically acceptable within
+        the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Confiscation
+    - A particular tax rate
+    - Predicted economic effectiveness
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: redistribution
+- definition:
+    id: public_campaign_finance
+    version: '1'
+    domain: civic_ethics
+    scope: Transparent eligibility rules apply across parties, spending is audited and recipients retain independent
+      political views. No particular effect on corruption or turnout is assumed. No particular jurisdiction or legal
+      permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using public funds to support qualifying election campaigns is ethically acceptable within the
+        stated scope.
+      negation: It is not the case that using public funds to support qualifying election campaigns is ethically
+        acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Government direction of party views
+    - Guaranteed effectiveness
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: participatory_budget
+    version: '1'
+    domain: civic_ethics
+    scope: Essential legal obligations are funded separately. Accessible participation and transparent project costs
+      are provided. Minority interests may still conflict with majority preferences. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Allowing residents to allocate part of a municipal budget by public vote is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that allowing residents to allocate part of a municipal budget by public vote
+        is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Eliminating all representative budgeting
+    - Guaranteed fair outcomes
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: political_donor_disclosure
+    version: '1'
+    domain: civic_ethics
+    scope: Disclosure concerns large contributions to election campaigns, not small private charitable gifts. Donors
+      may face criticism; a credible risk of severe personal violence is not assumed. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Publishing the identities of large political donors is ethically acceptable within the stated scope.
+      negation: It is not the case that publishing the identities of large political donors is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Ordinary charitable donations
+    - A donor under a documented threat
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: flight_tree_planting_offset
+    version: '1'
+    domain: environmental_ethics
+    scope: A non-essential personal trip and an actual tree-planting project intended to offset emissions. Climate
+      impacts are relevant, but no verified full offset or equivalence to avoiding the flight is assumed.
+    stance:
+      id: acceptability
+      statement: Taking a discretionary flight while paying for tree planting intended to offset its emissions is
+        ethically acceptable within the stated scope.
+      negation: It is not the case that taking a discretionary flight while paying for tree planting intended to
+        offset its emissions is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Emergency travel
+    - A fictitious project
+    - A claim that payment eliminates the climate impact
+    semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases
+      require separate review.
+  role: ethical
+- definition:
+    id: flight_without_offset
+    version: '1'
+    domain: environmental_ethics
+    scope: A non-essential personal trip. Climate impacts are relevant and no offset project is funded. No verified
+      zero-emission alternative flight is assumed. No particular jurisdiction or legal permission is assumed. Evaluate
+      ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Taking a discretionary flight without paying for an emissions-offset project is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that taking a discretionary flight without paying for an emissions-offset project
+        is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Emergency travel
+    - Claim that payment eliminates climate impact
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: flight_offset
+- definition:
+    id: single_use_packaging_necessary
+    version: '1'
+    domain: environmental_ethics
+    scope: A healthcare supply service uses packaging for infection control and manages waste through ordinary disposal.
+      Environmental impacts remain relevant. No comparably effective reusable method meets the necessary infection-control
+      requirements. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not
+      legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using single-use plastic packaging is ethically acceptable within the stated scope.
+      negation: It is not the case that using single-use plastic packaging is ethically acceptable within the stated
+        scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Guaranteed absence of environmental harm
+    - Unrelated packaging
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: packaging_alternative
+- definition:
+    id: single_use_packaging_alternative
+    version: '1'
+    domain: environmental_ethics
+    scope: A healthcare supply service uses packaging for infection control and manages waste through ordinary disposal.
+      Environmental impacts remain relevant. A comparably effective reusable method meets the same infection-control
+      requirements at a manageable cost. No particular jurisdiction or legal permission is assumed. Evaluate ethical
+      acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using single-use plastic packaging is ethically acceptable within the stated scope.
+      negation: It is not the case that using single-use plastic packaging is ethically acceptable within the stated
+        scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Guaranteed absence of environmental harm
+    - Unrelated packaging
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: packaging_alternative
+- definition:
+    id: coal_transition_support
+    version: '1'
+    domain: environmental_ethics
+    scope: Reliable replacement electricity is available. Closure reduces emissions and displaces employees in a
+      region with limited alternative jobs. Displaced workers receive realistic retraining, temporary income support
+      and notice. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not
+      legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Closing a coal-fired power plant to reduce emissions is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that closing a coal-fired power plant to reduce emissions is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Electricity shortage
+    - Claim that transition is costless
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: transition_workers
+- definition:
+    id: coal_transition_no_support
+    version: '1'
+    domain: environmental_ethics
+    scope: Reliable replacement electricity is available. Closure reduces emissions and displaces employees in a
+      region with limited alternative jobs. Displaced workers receive no retraining, temporary income support or
+      advance notice. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability,
+      not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Closing a coal-fired power plant to reduce emissions is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that closing a coal-fired power plant to reduce emissions is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Electricity shortage
+    - Claim that transition is costless
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: transition_workers
+- definition:
+    id: conservation_relocation_consent
+    version: '1'
+    domain: environmental_ethics
+    scope: The reserve protects a threatened ecosystem. The affected community has longstanding ties to the land
+      and viable residence there. Residents give informed, voluntary consent and receive agreed compensation and
+      suitable housing. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability,
+      not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Relocating a community to establish a nature reserve is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that relocating a community to establish a nature reserve is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Imminent natural-disaster evacuation
+    - Assumption of no cultural loss
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: conservation_relocation
+- definition:
+    id: conservation_relocation_no_consent
+    version: '1'
+    domain: environmental_ethics
+    scope: The reserve protects a threatened ecosystem. The affected community has longstanding ties to the land
+      and viable residence there. Residents are required to move without their consent, although compensation and
+      suitable housing are offered. No particular jurisdiction or legal permission is assumed. Evaluate ethical
+      acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Relocating a community to establish a nature reserve is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that relocating a community to establish a nature reserve is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Imminent natural-disaster evacuation
+    - Assumption of no cultural loss
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: conservation_relocation
+- definition:
+    id: drought_water_ration
+    version: '1'
+    domain: environmental_ethics
+    scope: The policy protects minimum household needs and river ecology but reduces farm production and income.
+      Allocation rules and hardship support are transparent; not every loss is compensated. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Rationing agricultural water during a severe drought is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that rationing agricultural water during a severe drought is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - No meaningful shortage
+    - Guaranteed equal economic burden
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: nuclear_waste_host
+    version: '1'
+    domain: environmental_ethics
+    scope: Independent safety review finds risks manageable but not zero. The community has meaningful representation,
+      access to information and negotiated compensation. Long-term stewardship is funded. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Locating a monitored nuclear-waste facility near a willing host community is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that locating a monitored nuclear-waste facility near a willing host community
+        is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Guaranteed safety forever
+    - Secret siting without representation
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: sugary_drink_tax
+    version: '1'
+    domain: public_health
+    scope: A moderate excise tax on non-alcoholic sugary drinks; buying and selling them remains legal. The purpose
+      is public health. No measured effectiveness or exemption/compensation scheme is assumed.
+    stance:
+      id: acceptability
+      statement: Taxing sugary drinks to discourage their consumption is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that taxing sugary drinks to discourage their consumption is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Banning drinks
+    - Compulsory diets
+    - Whether the policy actually improves health
+    semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases
+      require separate review.
+  role: ethical
+- definition:
+    id: sugary_tax_food_access
+    version: '1'
+    domain: public_health
+    scope: A moderate excise tax leaves drinks legal. Revenue supports access to healthier food in low-income communities.
+      No measured effectiveness or complete compensation of every household is assumed. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Taxing sugary drinks while funding affordable healthy food access is ethically acceptable within
+        the stated scope.
+      negation: It is not the case that taxing sugary drinks while funding affordable healthy food access is ethically
+        acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Banning drinks
+    - Compulsory diets
+    - Guaranteed effectiveness
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: child_routine_vaccination
+    version: '1'
+    domain: public_health
+    scope: Vaccines prevent serious communicable disease, ordinary access is affordable and medical exemptions exist.
+      No active emergency or zero-risk vaccine is assumed. No particular jurisdiction or legal permission is assumed.
+      Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Requiring routine childhood vaccination for school attendance is ethically acceptable within the
+        stated scope.
+      negation: It is not the case that requiring routine childhood vaccination for school attendance is ethically
+        acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Forced physical administration
+    - Medical contraindications
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: adult_work_health_screen
+    version: '1'
+    domain: public_health
+    scope: The screen concerns a serious transmissible infection, is reasonably accurate, preserves confidentiality
+      and offers alternative duties where practical. No treatment is forced. No particular jurisdiction or legal
+      permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Requiring an occupational infection screen for patient-facing healthcare workers is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that requiring an occupational infection screen for patient-facing healthcare
+        workers is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Public disclosure of results
+    - Screening unrelated to patient exposure
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: isolation_contagious
+    version: '1'
+    domain: public_health
+    scope: The policy limits ordinary movement, supplies basic needs and has review and time limits. The illness
+      can cause serious harm. Reliable tests and symptoms indicate that the person is currently contagious. No particular
+      jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Requiring temporary isolation after an infectious illness is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that requiring temporary isolation after an infectious illness is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Indefinite detention
+    - Punishment for past infection
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: isolation_current_risk
+- definition:
+    id: isolation_cleared
+    version: '1'
+    domain: public_health
+    scope: The policy limits ordinary movement, supplies basic needs and has review and time limits. The illness
+      can cause serious harm. Reliable tests and clinical review indicate that the person is no longer contagious.
+      No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not legality or
+      predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Requiring temporary isolation after an infectious illness is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that requiring temporary isolation after an infectious illness is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Indefinite detention
+    - Punishment for past infection
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: isolation_current_risk
+- definition:
+    id: organ_priority_urgency
+    version: '1'
+    domain: public_health
+    scope: Two eligible patients need one organ. Both could benefit, but the less urgent patient has substantially
+      greater expected survival after transplant. No age, wealth or social-worth ranking is assumed. No particular
+      jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Giving transplant priority to the patient at greatest immediate risk of death is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that giving transplant priority to the patient at greatest immediate risk of
+        death is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - A patient unable to benefit
+    - A specific medical guideline
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: organ_allocation
+- definition:
+    id: organ_priority_survival
+    version: '1'
+    domain: public_health
+    scope: Two eligible patients need one organ. Both could benefit, but the other patient has a substantially greater
+      immediate risk of death. No age, wealth or social-worth ranking is assumed. No particular jurisdiction or
+      legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Giving transplant priority to the patient with greater expected survival after transplant is ethically
+        acceptable within the stated scope.
+      negation: It is not the case that giving transplant priority to the patient with greater expected survival
+        after transplant is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - A patient unable to benefit
+    - A specific medical guideline
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: organ_allocation
+- definition:
+    id: smoking_crowded_outdoors
+    version: '1'
+    domain: public_health
+    scope: Other people cannot easily avoid nearby smoke. The rule leaves smoking available in less crowded places.
+      No ban on buying tobacco is assumed. No particular jurisdiction or legal permission is assumed. Evaluate ethical
+      acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Prohibiting smoking in crowded outdoor public spaces is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that prohibiting smoking in crowded outdoor public spaces is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Private homes
+    - A universal tobacco ban
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: smoking_location
+- definition:
+    id: smoking_private_home
+    version: '1'
+    domain: public_health
+    scope: Only consenting adults live in the home, smoke does not materially enter neighboring spaces, and no children
+      or dependent nonconsenting residents are exposed. No particular jurisdiction or legal permission is assumed.
+      Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Prohibiting smoking inside an adult's private home is ethically acceptable within the stated scope.
+      negation: It is not the case that prohibiting smoking inside an adult's private home is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Smoke reaching neighbors
+    - Exposure of children
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: smoking_location
+- definition:
+    id: workplace_keystrokes_notice
+    version: '1'
+    domain: workplace_ethics
+    scope: Monitoring is limited to company computers during paid work time. No safety emergency or individualized
+      suspicion of wrongdoing is present. Employees receive advance notice, but are not offered a meaningful choice
+      about monitoring. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability,
+      not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Monitoring employees' keystrokes to assess productivity is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that monitoring employees' keystrokes to assess productivity is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Personal devices outside work
+    - Safety monitoring
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: employee_monitoring_choice
+- definition:
+    id: workplace_keystrokes_optin
+    version: '1'
+    domain: workplace_ethics
+    scope: Monitoring is limited to company computers during paid work time. No safety emergency or individualized
+      suspicion of wrongdoing is present. Employees receive advance notice and can voluntarily opt in or choose
+      a practical equivalent unmonitored workflow without penalty. No particular jurisdiction or legal permission
+      is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Monitoring employees' keystrokes to assess productivity is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that monitoring employees' keystrokes to assess productivity is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Personal devices outside work
+    - Safety monitoring
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: employee_monitoring_choice
+- definition:
+    id: whistleblow_channels_blocked
+    version: '1'
+    domain: workplace_ethics
+    scope: The evidence is accurate, misconduct seriously harms others, and disclosure is limited to necessary information.
+      Internal reporting has been attempted and is ineffective; the public disclosure is the only practical route
+      to scrutiny. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not
+      legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Publicly disclosing confidential evidence of an employer's serious misconduct is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that publicly disclosing confidential evidence of an employer's serious misconduct
+        is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - False accusations
+    - Disclosure of unrelated personal information
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: whistleblowing_routes
+- definition:
+    id: whistleblow_channels_available
+    version: '1'
+    domain: workplace_ethics
+    scope: The evidence is accurate, misconduct seriously harms others, and disclosure is limited to necessary information.
+      An independent internal process with credible protection and timely investigation is available but has not
+      been tried. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not
+      legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Publicly disclosing confidential evidence of an employer's serious misconduct is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that publicly disclosing confidential evidence of an employer's serious misconduct
+        is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - False accusations
+    - Disclosure of unrelated personal information
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: whistleblowing_routes
+- definition:
+    id: internship_paid
+    version: '1'
+    domain: workplace_ethics
+    scope: Adults apply voluntarily, receive useful training and have transparent duties at a profitable organization.
+      Academic credit is not required. Interns are paid a reasonable wage for their work. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Offering an internship that includes productive work is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that offering an internship that includes productive work is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Purely observational volunteering
+    - A legal wage claim
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: internship_pay
+- definition:
+    id: internship_unpaid
+    version: '1'
+    domain: workplace_ethics
+    scope: Adults apply voluntarily, receive useful training and have transparent duties at a profitable organization.
+      Academic credit is not required. Interns are unpaid despite doing work that employees would otherwise perform;
+      modest travel expenses are covered. No particular jurisdiction or legal permission is assumed. Evaluate ethical
+      acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Offering an internship that includes productive work is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that offering an internship that includes productive work is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Purely observational volunteering
+    - A legal wage claim
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: internship_pay
+- definition:
+    id: living_wage_requirement
+    version: '1'
+    domain: workplace_ethics
+    scope: The wage permits basic local living costs for ordinary full-time work. Employers face higher costs; no
+      guarantee of unchanged employment, prices or business survival is assumed. No particular jurisdiction or legal
+      permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Requiring employers to pay a living wage is ethically acceptable within the stated scope.
+      negation: It is not the case that requiring employers to pay a living wage is ethically acceptable within
+        the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - A particular wage rate
+    - Predicted economic effectiveness
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: salary_secrecy_policy
+    version: '1'
+    domain: workplace_ethics
+    scope: The prohibition concerns employees discussing their own wages, not publishing other people's private
+      payroll records. The employer cites workplace harmony and negotiating flexibility. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Prohibiting employees from discussing their wages with coworkers is ethically acceptable within
+        the stated scope.
+      negation: It is not the case that prohibiting employees from discussing their wages with coworkers is ethically
+        acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Unauthorized payroll disclosure
+    - Legal enforceability
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: automation_profit_layoffs
+    version: '1'
+    domain: workplace_ethics
+    scope: The firm is financially viable without automation. Displaced workers receive ordinary notice and severance,
+      but no comparable new jobs or complete retraining are guaranteed. No particular jurisdiction or legal permission
+      is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Replacing workers with automation to increase profits is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that replacing workers with automation to increase profits is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - An imminent business failure
+    - Guaranteed harm-free transition
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: harassment_confidential_settlement
+    version: '1'
+    domain: workplace_ethics
+    scope: A complainant voluntarily negotiates compensation with independent advice. The agreement prevents public
+      discussion but permits reporting to authorities. Future risk to others is uncertain. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Requiring confidentiality as part of a workplace-harassment settlement is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that requiring confidentiality as part of a workplace-harassment settlement is
+        ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Blocking all official reports
+    - Guaranteed absence of future harm
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: solitary_long_discipline
+    version: '1'
+    domain: justice_ethics
+    scope: Basic material needs are met, but isolation can cause psychological harm. A person is kept alone for
+      weeks as discipline after a rule violation, without an ongoing immediate danger. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Separating a prisoner from all ordinary social contact is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that separating a prisoner from all ordinary social contact is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Guaranteed absence of psychological harm
+    - Legal sentencing rules
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: prison_isolation
+- definition:
+    id: solitary_brief_emergency
+    version: '1'
+    domain: justice_ethics
+    scope: Basic material needs are met, but isolation can cause psychological harm. A person is kept alone briefly
+      to stop an immediate serious attack, with monitoring and prompt review. No particular jurisdiction or legal
+      permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Separating a prisoner from all ordinary social contact is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that separating a prisoner from all ordinary social contact is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Guaranteed absence of psychological harm
+    - Legal sentencing rules
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: prison_isolation
+- definition:
+    id: interrogation_deception_adult
+    version: '1'
+    domain: justice_ethics
+    scope: An investigator seeks a confession about a serious offense. There are no physical threats, legal counsel
+      is accessible, and false confessions remain possible. The suspect is a competent adult. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Falsely telling a suspect that incriminating evidence exists is ethically acceptable within the
+        stated scope.
+      negation: It is not the case that falsely telling a suspect that incriminating evidence exists is ethically
+        acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Physical coercion
+    - Guaranteed guilt
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: interrogation_age
+- definition:
+    id: interrogation_deception_minor
+    version: '1'
+    domain: justice_ethics
+    scope: An investigator seeks a confession about a serious offense. There are no physical threats, legal counsel
+      is accessible, and false confessions remain possible. The suspect is a sixteen-year-old minor. No particular
+      jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Falsely telling a suspect that incriminating evidence exists is ethically acceptable within the
+        stated scope.
+      negation: It is not the case that falsely telling a suspect that incriminating evidence exists is ethically
+        acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Physical coercion
+    - Guaranteed guilt
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: interrogation_age
+- definition:
+    id: restorative_victim_consent
+    version: '1'
+    domain: justice_ethics
+    scope: The offender acknowledges responsibility, safety safeguards are present and the process would require
+      participation by the harmed person. The harmed person freely consents to the restorative process. No particular
+      jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Replacing part of an offender's punishment with a restorative process is ethically acceptable within
+        the stated scope.
+      negation: It is not the case that replacing part of an offender's punishment with a restorative process is
+        ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Forced forgiveness
+    - An offender denying responsibility
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: restorative_consent
+- definition:
+    id: restorative_victim_refusal
+    version: '1'
+    domain: justice_ethics
+    scope: The offender acknowledges responsibility, safety safeguards are present and the process would require
+      participation by the harmed person. The harmed person explicitly refuses the restorative process. No particular
+      jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Replacing part of an offender's punishment with a restorative process is ethically acceptable within
+        the stated scope.
+      negation: It is not the case that replacing part of an offender's punishment with a restorative process is
+        ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Forced forgiveness
+    - An offender denying responsibility
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: restorative_consent
+- definition:
+    id: cash_bail_inability_pay
+    version: '1'
+    domain: justice_ethics
+    scope: The person has not been convicted, poses no material assessed flight or safety risk, and would otherwise
+      be released pending trial. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability,
+      not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Keeping an accused person detained solely because they cannot afford bail is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that keeping an accused person detained solely because they cannot afford bail
+        is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Assessed danger
+    - A finding of guilt
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: pretrial_detention
+- definition:
+    id: pretrial_detention_danger
+    version: '1'
+    domain: justice_ethics
+    scope: The person has not been convicted. Individualized evidence supports an imminent risk of serious harm,
+      less restrictive safeguards are inadequate, and detention has prompt independent review. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Keeping an accused person detained because of a serious assessed safety risk is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that keeping an accused person detained because of a serious assessed safety
+        risk is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Detention solely for inability to pay
+    - Automatic guilt
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: pretrial_detention
+- definition:
+    id: criminal_family_penalty
+    version: '1'
+    domain: justice_ethics
+    scope: Family members did not participate in or knowingly assist the offense. Penalties are intended to deter
+      future offenses by the offender and others. No particular jurisdiction or legal permission is assumed. Evaluate
+      ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Imposing penalties on an offender's uninvolved family is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that imposing penalties on an offender's uninvolved family is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Family members who participated
+    - A legal liability claim
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: civilian_collective_sanctions
+    version: '1'
+    domain: justice_ethics
+    scope: The aim is to pressure a government engaged in serious aggression. Humanitarian exemptions exist but
+      do not prevent all civilian hardship; effectiveness is uncertain. No particular jurisdiction or legal permission
+      is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Imposing broad economic sanctions that burden civilians is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that imposing broad economic sanctions that burden civilians is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Operational military advice
+    - Guaranteed effectiveness
+    - Deliberate targeting of civilians with weapons
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+- definition:
+    id: school_experiment_parent_consent
+    version: '1'
+    domain: research_ethics
+    scope: Both methods meet ordinary educational standards, expected risks are low, and which method works better
+      is uncertain. Parents receive a clear description and may decline without penalty; pupils also receive age-appropriate
+      explanation. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not
+      legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Randomly assigning pupils to different teaching methods for research is ethically acceptable within
+        the stated scope.
+      negation: It is not the case that randomly assigning pupils to different teaching methods for research is
+        ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Withholding basic education
+    - A known harmful method
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: education_research_consent
+- definition:
+    id: school_experiment_no_notice
+    version: '1'
+    domain: research_ethics
+    scope: Both methods meet ordinary educational standards, expected risks are low, and which method works better
+      is uncertain. Parents and pupils receive no notice of the research and no practical way to decline. No particular
+      jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Randomly assigning pupils to different teaching methods for research is ethically acceptable within
+        the stated scope.
+      negation: It is not the case that randomly assigning pupils to different teaching methods for research is
+        ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Withholding basic education
+    - A known harmful method
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: education_research_consent
+- definition:
+    id: psychology_deception_debrief
+    version: '1'
+    domain: research_ethics
+    scope: Competent adults consent to participating in a low-risk study without knowing its precise hypothesis.
+      Deception is necessary to answer the question and avoids serious distress. Participants receive a prompt explanation
+      afterward and may withdraw their data. No particular jurisdiction or legal permission is assumed. Evaluate
+      ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using limited deception in a psychology experiment is ethically acceptable within the stated scope.
+      negation: It is not the case that using limited deception in a psychology experiment is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - High-risk deception
+    - A nondeceptive method known to work
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: research_debrief
+- definition:
+    id: psychology_deception_no_debrief
+    version: '1'
+    domain: research_ethics
+    scope: Competent adults consent to participating in a low-risk study without knowing its precise hypothesis.
+      Deception is necessary to answer the question and avoids serious distress. Participants receive no explanation
+      afterward and cannot withdraw their data. No particular jurisdiction or legal permission is assumed. Evaluate
+      ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Using limited deception in a psychology experiment is ethically acceptable within the stated scope.
+      negation: It is not the case that using limited deception in a psychology experiment is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - High-risk deception
+    - A nondeceptive method known to work
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: research_debrief
+- definition:
+    id: dual_use_research_open
+    version: '1'
+    domain: research_ethics
+    scope: The findings have meaningful public-health benefits and could also facilitate serious harm. No misuse
+      is known to be underway. The findings are published openly with technical detail, without a prior security
+      review. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability, not legality
+      or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Publishing scientific findings with substantial potential for harmful misuse is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that publishing scientific findings with substantial potential for harmful misuse
+        is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Technical misuse instructions
+    - Guaranteed harmlessness
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: dual_use_publication
+- definition:
+    id: dual_use_research_reviewed
+    version: '1'
+    domain: research_ethics
+    scope: The findings have meaningful public-health benefits and could also facilitate serious harm. No misuse
+      is known to be underway. Independent security review precedes publication and details that would directly
+      enable misuse are withheld. No particular jurisdiction or legal permission is assumed. Evaluate ethical acceptability,
+      not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Publishing scientific findings with substantial potential for harmful misuse is ethically acceptable
+        within the stated scope.
+      negation: It is not the case that publishing scientific findings with substantial potential for harmful misuse
+        is ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Technical misuse instructions
+    - Guaranteed harmlessness
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: dual_use_publication
+- definition:
+    id: research_guest_authorship
+    version: '1'
+    domain: research_ethics
+    scope: The person provided institutional prestige but no intellectual, analytical or writing contribution. Other
+      authors agree and hope the name will improve publication prospects. No particular jurisdiction or legal permission
+      is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Listing a researcher as an author despite no substantive contribution is ethically acceptable within
+        the stated scope.
+      negation: It is not the case that listing a researcher as an author despite no substantive contribution is
+        ethically acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Acknowledging ordinary support
+    - A substantive contribution
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: research_credit
+- definition:
+    id: research_contributor_omission
+    version: '1'
+    domain: research_ethics
+    scope: The contributor meets the project's disclosed authorship criteria, wishes to be credited and has no conflict
+      preventing authorship. The team omits them for personal convenience. No particular jurisdiction or legal permission
+      is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Omitting a substantial contributor from a paper's author list is ethically acceptable within the
+        stated scope.
+      negation: It is not the case that omitting a substantial contributor from a paper's author list is ethically
+        acceptable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - A person who declines credit
+    - A legal copyright claim
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: research_credit
+- definition:
+    id: museum_artifact_no_consent
+    version: '1'
+    domain: research_ethics
+    scope: The museum preserves the artifact and provides public access. The originating community can safely preserve
+      it and requests its return. The artifact was taken from the community without its consent. No particular jurisdiction
+      or legal permission is assumed. Evaluate ethical acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Keeping a culturally significant artifact in a museum is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that keeping a culturally significant artifact in a museum is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - An artifact at immediate risk of destruction
+    - Legal title
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: artifact_acquisition
+- definition:
+    id: museum_artifact_consensual
+    version: '1'
+    domain: research_ethics
+    scope: The museum preserves the artifact and provides public access. The originating community can safely preserve
+      it and requests its return. The artifact was transferred with the community's informed consent under an agreement
+      allowing the museum to retain it. No particular jurisdiction or legal permission is assumed. Evaluate ethical
+      acceptability, not legality or predicted effectiveness.
+    stance:
+      id: acceptability
+      statement: Keeping a culturally significant artifact in a museum is ethically acceptable within the stated
+        scope.
+      negation: It is not the case that keeping a culturally significant artifact in a museum is ethically acceptable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - An artifact at immediate risk of destruction
+    - Legal title
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: ethical
+  related_group: artifact_acquisition
+- definition:
+    id: modular_monolith_default
+    version: '1'
+    domain: software_architecture
+    scope: A team of five engineers building a new production web application, with no stated requirement for independent
+      service deployment or exceptional scale. Compare starting architectures, not every later stage of the application's
+      life.
+    stance:
+      id: preference
+      statement: A modular monolith is a better starting architecture than microservices within the stated scope.
+      negation: It is not the case that a modular monolith is a better starting architecture than microservices
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Claims about every team
+    - Forced migration of an existing system
+    - Moral approval
+    semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases
+      require separate review.
+  role: offtopic
+- definition:
+    id: small_api_rest
+    version: '1'
+    domain: non_ethical_preferences
+    scope: A small internal API has a handful of stable resources, simple clients and no requirement for arbitrary
+      nested queries. Compare implementation and maintenance fit; no moral or legal judgment is requested.
+    stance:
+      id: preference
+      statement: Using a REST interface rather than GraphQL is preferable within the stated scope.
+      negation: It is not the case that using a REST interface rather than GraphQL is preferable within the stated
+        scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Large heterogeneous query needs
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: offtopic
+- definition:
+    id: behavior_tests
+    version: '1'
+    domain: non_ethical_preferences
+    scope: A small application has documented behavior and frequently refactored internals. The tests should protect
+      that behavior. Compare engineering fit, not an ethical obligation.
+    stance:
+      id: preference
+      statement: Testing externally visible behavior rather than private implementation details is preferable within
+        the stated scope.
+      negation: It is not the case that testing externally visible behavior rather than private implementation details
+        is preferable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Testing safety-critical internals
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: offtopic
+- definition:
+    id: auto_code_format
+    version: '1'
+    domain: non_ethical_preferences
+    scope: A team uses one agreed style and a formatter that preserves program behavior. Compare time and consistency;
+      no ethical obligation or claim about the best formatter is requested.
+    stance:
+      id: preference
+      statement: Automatically formatting source code rather than manually maintaining formatting is preferable
+        within the stated scope.
+      negation: It is not the case that automatically formatting source code rather than manually maintaining formatting
+        is preferable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Behavior-changing tools
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: offtopic
+- definition:
+    id: task_deadline_order
+    version: '1'
+    domain: non_ethical_preferences
+    scope: The list contains time-sensitive commitments with known deadlines. The aim is to notice upcoming work
+      quickly, not to rank anyone's moral importance.
+    stance:
+      id: preference
+      statement: Sorting a task list by deadline rather than alphabetically is preferable within the stated scope.
+      negation: It is not the case that sorting a task list by deadline rather than alphabetically is preferable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Tasks without deadlines
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: offtopic
+- definition:
+    id: notes_topic_order
+    version: '1'
+    domain: non_ethical_preferences
+    scope: Notes are primarily retrieved by subject, and timestamps remain searchable. Compare retrieval convenience,
+      not the ethical value of topics.
+    stance:
+      id: preference
+      statement: Organizing reference notes by topic rather than by creation date is preferable within the stated
+        scope.
+      negation: It is not the case that organizing reference notes by topic rather than by creation date is preferable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - A chronological event log
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: offtopic
+- definition:
+    id: meal_week_plan
+    version: '1'
+    domain: non_ethical_preferences
+    scope: An adult has a predictable schedule, no special dietary constraints and room to change plans. Compare
+      planning convenience; no nutritional, ethical or financial superiority is assumed.
+    stance:
+      id: preference
+      statement: Planning ordinary meals for a week rather than deciding each day is preferable within the stated
+        scope.
+      negation: It is not the case that planning ordinary meals for a week rather than deciding each day is preferable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Unpredictable schedules
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: offtopic
+- definition:
+    id: local_app_sqlite
+    version: '1'
+    domain: non_ethical_preferences
+    scope: A single-user local application stores modest structured data and needs transactions. There is no concurrent
+      remote-client requirement. Compare operational simplicity, not vendor preference.
+    stance:
+      id: preference
+      statement: Using an embedded SQL database rather than a separate database server is preferable within the
+        stated scope.
+      negation: It is not the case that using an embedded SQL database rather than a separate database server is
+        preferable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Distributed high-concurrency service
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: offtopic
+- definition:
+    id: short_form_inline_help
+    version: '1'
+    domain: non_ethical_preferences
+    scope: A short form has unfamiliar but easily explained fields. Space is sufficient and the explanations are
+      accessible. Compare completion convenience, not ethical compliance.
+    stance:
+      id: preference
+      statement: Showing brief help beside form fields rather than on a separate help page is preferable within
+        the stated scope.
+      negation: It is not the case that showing brief help beside form fields rather than on a separate help page
+        is preferable within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - Long technical instructions
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: offtopic
+- definition:
+    id: small_project_simple_board
+    version: '1'
+    domain: non_ethical_preferences
+    scope: A small team runs a short project with few dependencies and changing tasks. Compare coordination fit,
+      not a claim that all scheduling is unnecessary.
+    stance:
+      id: preference
+      statement: Using a simple task board rather than a detailed project schedule is preferable within the stated
+        scope.
+      negation: It is not the case that using a simple task board rather than a detailed project schedule is preferable
+        within the stated scope.
+      paraphrases: []
+    facets: []
+    exclusions:
+    - A large fixed-dependency project
+    semantic_review: Canonical proposition, scope and exclusions approved by the user on 2026-10-12. Generated paraphrases
+      require separate semantic review.
+  role: offtopic

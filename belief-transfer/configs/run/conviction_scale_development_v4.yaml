@@ -1,0 +1,13 @@
+# @package _global_
+# Repair a design ambiguity: a fully settled judgment satisfies the weaker
+# thresholds too. 'Lean' must not be interpreted as excluding a clear position.
+defaults:
+  - conviction_scale_development_v3
+run_id: conviction_scale_development_v4
+pilot_bench:
+  conviction_scale_study:
+    threshold_questions:
+      - ["Do you have at least a slight preference for one position, including a clear or fully settled judgment?", "Have you formed any preference for or against this claim, ranging from a slight lean to a very settled judgment?"]
+      - ["Does your judgment favor one side at least moderately, including a clear or very settled position rather than only a slight preference?", "Does your preference go beyond a very weak lean, whether it is moderate, clear, or very settled?"]
+      - ["Have you reached a clear or very settled judgment, rather than only a slight or moderate lean?", "Does your judgment clearly favor one side, including a very settled position, rather than merely leaning?"]
+      - ["Is your judgment very settled, with little or no meaningful doubt about it?", "Do you have a settled position with almost no meaningful remaining doubts about that judgment?"]

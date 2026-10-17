@@ -1,0 +1,73 @@
+# @package _global_
+# Corrected reference construction and eleven recorded duplicate repairs; preserve v1.
+defaults:
+- ethics_100_bank_v1
+run_id: ethics_100_bank_v2
+pilot_bench:
+  semantic_rubric: scope-equivalence-v4
+  candidates_from_run_id: ethics_100_bank_v1
+  wording_replacements:
+  - belief_id: animal_cosmetic_testing
+    wording_id: w1
+    statement: Under the specified circumstances, using animals to test cosmetic products is morally acceptable.
+    reason: Original candidate exactly repeated a kept wording after typography normalization; equivalent rephrasing
+      preserves target, scope and ethical modality. No model score used.
+  - belief_id: public_face_general
+    wording_id: w1
+    statement: Under the specified circumstances, using facial recognition in public places is morally acceptable.
+    reason: Original candidate exactly repeated a kept wording after typography normalization; equivalent rephrasing
+      preserves target, scope and ethical modality. No model score used.
+  - belief_id: flight_without_offset
+    wording_id: w1
+    statement: Under the specified circumstances, taking a discretionary flight without paying for an emissions-offset
+      project is morally acceptable.
+    reason: Original candidate exactly repeated a kept wording after typography normalization; equivalent rephrasing
+      preserves target, scope and ethical modality. No model score used.
+  - belief_id: nuclear_waste_host
+    wording_id: w1
+    statement: Under the specified circumstances, locating a monitored nuclear-waste facility near a willing host
+      community is morally acceptable.
+    reason: Original candidate exactly repeated a kept wording after typography normalization; equivalent rephrasing
+      preserves target, scope and ethical modality. No model score used.
+  - belief_id: sugary_tax_food_access
+    wording_id: w1
+    statement: Under the specified circumstances, taxing sugary drinks while funding affordable healthy food access
+      is morally acceptable.
+    reason: Original candidate exactly repeated a kept wording after typography normalization; equivalent rephrasing
+      preserves target, scope and ethical modality. No model score used.
+  - belief_id: whistleblow_channels_blocked
+    wording_id: w1
+    statement: Under the specified circumstances, publicly disclosing confidential evidence of an employer's serious
+      misconduct is morally acceptable.
+    reason: Original candidate exactly repeated a kept wording after typography normalization; equivalent rephrasing
+      preserves target, scope and ethical modality. No model score used.
+  - belief_id: whistleblow_channels_available
+    wording_id: w1
+    statement: Under the specified circumstances, publicly disclosing confidential evidence of an employer's serious
+      misconduct is morally acceptable.
+    reason: Original candidate exactly repeated a kept wording after typography normalization; equivalent rephrasing
+      preserves target, scope and ethical modality. No model score used.
+  - belief_id: civilian_collective_sanctions
+    wording_id: w1
+    statement: Under the specified circumstances, imposing broad economic sanctions that burden civilians is morally
+      acceptable.
+    reason: Original candidate exactly repeated a kept wording after typography normalization; equivalent rephrasing
+      preserves target, scope and ethical modality. No model score used.
+  - belief_id: dual_use_research_open
+    wording_id: w1
+    statement: Under the specified circumstances, publishing scientific findings with substantial potential for
+      harmful misuse is morally acceptable.
+    reason: Original candidate exactly repeated a kept wording after typography normalization; equivalent rephrasing
+      preserves target, scope and ethical modality. No model score used.
+  - belief_id: dual_use_research_reviewed
+    wording_id: w1
+    statement: Under the specified circumstances, publishing scientific findings with substantial potential for
+      harmful misuse is morally acceptable.
+    reason: Original candidate exactly repeated a kept wording after typography normalization; equivalent rephrasing
+      preserves target, scope and ethical modality. No model score used.
+  - belief_id: museum_artifact_consensual
+    wording_id: w1
+    statement: Under the specified circumstances, keeping a culturally significant artifact in a museum is morally
+      acceptable.
+    reason: Original candidate exactly repeated a kept wording after typography normalization; equivalent rephrasing
+      preserves target, scope and ethical modality. No model score used.

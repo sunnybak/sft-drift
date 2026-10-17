@@ -1,0 +1,46 @@
+# @package _global_
+# Frozen format, thresholds and decoder; all eight new topics and six wordings.
+defaults:
+- stance_response_thinking_batch_v1
+- override /probe@pilot_bench: ethics_stance_validation_v1
+run_id: stance_response_validation_v1
+stage: stance_study
+pilot_bench:
+  bank_run_id: ethics_stance_validation_bank_v3
+  measurements:
+  - name: stance
+    version: stance-v2
+  measurement_prompt_style: concise
+  measurement_batch_size: 16
+  stance_profile_version: polarity-profile-v1
+  max_new_tokens: 2048
+  measurement_decoding:
+    thinking: true
+    temperature: 0.6
+    top_p: 0.95
+    top_k: 20
+    min_p: 0
+  stance_study:
+    version: stance-study-v2
+    phase: validation
+    candidates:
+    - named_endorse_reject
+    belief_ids:
+    - palliative_sedation_consent
+    - public_posts_training_optout
+    - citizen_jury_lottery
+    - animal_invasive_culling
+    - workplace_keystrokes_notice
+    - solitary_brief_emergency
+    - school_experiment_parent_consent
+    - dual_use_research_reviewed
+    wording_ids:
+    - w0
+    - w1
+    - w2
+    - w3
+    - w4
+    - w5
+    selection_run_id: stance_response_thinking_batch_v1
+    qualify_natural_consistency: false
+    stop_on_control_failure: true

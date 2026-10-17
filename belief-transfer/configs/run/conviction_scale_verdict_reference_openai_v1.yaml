@@ -1,0 +1,10 @@
+# @package _global_
+defaults:
+  - conviction_scale_verdict_fast_screen_v1
+run_id: conviction_scale_verdict_reference_openai_v1
+throughput: 4
+pilot_bench:
+  model: gpt-5.6-luna
+  conviction_scale_study:
+    provider: openai
+    temperature: null

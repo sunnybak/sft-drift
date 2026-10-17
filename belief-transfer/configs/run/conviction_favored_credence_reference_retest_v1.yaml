@@ -1,0 +1,5 @@
+# @package _global_
+# Unregistered repeatability diagnostic: same frozen instrument and bank, fresh calls.
+defaults:
+  - conviction_favored_credence_reference_v1
+run_id: conviction_favored_credence_reference_retest_v1

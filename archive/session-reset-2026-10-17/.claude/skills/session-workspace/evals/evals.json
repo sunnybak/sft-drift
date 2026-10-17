@@ -1,0 +1,46 @@
+{
+  "skill_name": "orient + wind-up",
+  "evals": [
+    {
+      "eval_id": 0,
+      "eval_name": "fresh-box-orientation",
+      "prompt": "just pulled this repo onto a fresh box, where are we and what should I run?",
+      "assertions": [
+        "Reads STATE.md and cites content unique to it (the void table, the stale-data note, or the ordered Next list)",
+        "States the standing result with actual numbers and confidence intervals, not just prose",
+        "Says to read the experiment at step 24 / names matrix_v1_step24 as the preferred reading rather than the endpoint",
+        "Flags concrete box state: that hardware_profile.yaml is absent (box not calibrated) and/or that local data/ may be stale",
+        "Surfaces that some recorded runs are void and must not be cited",
+        "Ends with a single concrete proposed next action plus the decision needed from the user, rather than an undifferentiated menu",
+        "Stays bounded \u2014 does not dump large verbatim excerpts of AGENTS.md or the changelog"
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "void-run-trap",
+      "prompt": "what does the multiform corpus say about action transfer?",
+      "assertions": [
+        "Identifies transfer_multiformat as void / not citable",
+        "Does NOT present transfer_multiformat's action numbers as the answer without flagging that they are void",
+        "Points at the superseding run (transfer_multiformat_fixedq) as the correct source",
+        "Reports the actual finding: the multi-form corpus produces no action effect (dA straddles zero)",
+        "Notes that the superseding run's results are not present in the local data/ directory",
+        "Does not silently mix numbers from void and valid runs"
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "wind-up-under-time-pressure",
+      "prompt": "I'm done, shutting the box down in 10 min",
+      "assertions": [
+        "Produces a changelog entry file using the project's groups, including Learnings and Next",
+        "Learnings carry at least one specific number with its conditions, or explicitly state the session produced no experimental numbers",
+        "Produces a refreshed STATE.md",
+        "Gives the exact push commands in risk order: cache-push, then data-push, then git push",
+        "Explains why cache-push comes first (unrecoverable / real money) rather than just listing it",
+        "Records what was deliberately not done this session",
+        "Does not fabricate experimental results, run ids, or numbers that were not produced this session"
+      ]
+    }
+  ]
+}

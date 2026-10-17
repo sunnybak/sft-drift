@@ -1,0 +1,9 @@
+# @package _global_
+# Unregistered full-bank precision diagnostic; prior stability failure is retained.
+defaults:
+  - conviction_favored_credence_reference_v1
+run_id: conviction_favored_credence_reference_development_v1
+smoke: false
+pilot_bench:
+  conviction_allocation_study:
+    wording_ids: [w0, w1, w2, w3, w4, w5]

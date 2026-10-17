@@ -1,0 +1,7 @@
+# @package _global_
+defaults:
+  - conviction_canonical_credence_reference_v1
+run_id: conviction_paired_credence_reference_v1
+pilot_bench:
+  conviction_allocation_study:
+    version: conviction-allocation-v5

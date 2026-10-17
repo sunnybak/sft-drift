@@ -1,0 +1,13 @@
+# @package _global_
+defaults:
+  - /probe@pilot_bench: ethics_pilot_v1
+run_id: ethics_pilot_prompt_tuning_reextract_v2
+stage: pilot_tune
+experiment:
+  id: ethical_pilot
+  dataset:
+    n_items: 1
+pilot_bench:
+  bank_run_id: ethics_pilot_bank_v2
+  source_evaluation_run_id: ethics_pilot_prompt_tuning_v1
+  answer_extraction: leading-choice-v2

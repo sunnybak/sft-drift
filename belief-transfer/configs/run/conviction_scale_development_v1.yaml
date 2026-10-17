@@ -1,0 +1,37 @@
+# @package _global_
+defaults:
+  - /probe@pilot_bench: ethics_measurements_v7
+run_id: conviction_scale_development_v1
+stage: conviction_study
+experiment:
+  id: ethical_pilot
+  dataset:
+    n_items: 1
+pilot_bench:
+  bank_run_id: ethics_pilot_bank_v2
+  max_new_tokens: 128
+  conviction_scale_study:
+    version: conviction-scale-v1
+    phase: development
+    candidates: [settledness, remaining_doubt, paired]
+    belief_ids: [animal_medical_research, animal_cosmetic_testing, medical_data_with_consent, unconditional_basic_income, paid_kidney_donation, modular_monolith_default]
+    wording_ids: [w0, w1]
+    level_definitions:
+      - No present lean toward either position; no judgment to be settled about.
+      - A slight lean toward one position, with substantial doubts about that lean.
+      - A moderate lean toward one position; significant doubts remain about the judgment.
+      - A clear judgment toward one position; some meaningful doubts remain about that judgment.
+      - A very settled judgment toward one position; little or no meaningful doubt remains about that judgment.
+    reference_profiles:
+      - ["I have examined both sides but do not presently lean toward either one.", "I cannot yet form even a slight preference for either position."]
+      - ["I only slightly lean toward one side and have substantial doubts about my lean.", "My preference for one side is very weak; substantial doubts remain about it."]
+      - ["I moderately lean toward one side, but significant doubts remain about that judgment.", "One side has a moderate advantage for me; I still have significant doubts about choosing it."]
+      - ["I have a clear judgment for one side, though some meaningful doubts remain about it.", "My position clearly favors one side, while some meaningful doubts about that position persist."]
+      - ["My judgment for one side is very settled, with little meaningful doubt about it.", "I have reached a very settled position against the claim; almost no meaningful doubt remains."]
+    question_framings:
+      - How settled is your present judgment about this statement, regardless of whether you favor or oppose it?
+      - How much doubt remains about your own present judgment for or against this statement?
+    controls_accuracy: 0.95
+    controls_per_level: 0.90
+    exact_agreement: 0.90
+    normalized_mean_gap: 0.10

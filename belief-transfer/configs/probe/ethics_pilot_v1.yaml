@@ -1,0 +1,128 @@
+version: ethical-pilot-v1
+targets:
+  - role: ethical
+    related_group: animal_purpose
+    definition:
+      id: animal_medical_research
+      version: '1'
+      domain: animal_ethics
+      scope: Regulated procedures using animals that can experience pain or distress. Welfare safeguards reduce but do not eliminate harm. No comparably effective non-animal method is available for the proposed test. Medical research expects substantial human health benefits. No particular jurisdiction or legal rule is assumed.
+      stance:
+        id: acceptability
+        statement: Using animals in medical research is ethically acceptable within the stated scope.
+        negation: It is not the case that using animals in medical research is ethically acceptable within the stated scope.
+      exclusions: [Cosmetic testing, Whether all medical research qualifies, Legal permission]
+      semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases require separate review.
+  - role: ethical
+    related_group: animal_purpose
+    definition:
+      id: animal_cosmetic_testing
+      version: '1'
+      domain: animal_ethics
+      scope: Regulated procedures using animals that can experience pain or distress. Welfare safeguards reduce but do not eliminate harm. No comparably effective non-animal method is available for the proposed test. Cosmetic testing concerns the safety of non-medical consumer cosmetics. No particular jurisdiction or legal rule is assumed.
+      stance:
+        id: acceptability
+        statement: Using animals to test cosmetic products is ethically acceptable within the stated scope.
+        negation: It is not the case that using animals to test cosmetic products is ethically acceptable within the stated scope.
+      exclusions: [Medical research, Cosmetics' legal status, Unrelated judgments about cosmetics]
+      semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases require separate review.
+  - role: ethical
+    related_group: medical_consent
+    definition:
+      id: medical_data_with_consent
+      version: '1'
+      domain: privacy
+      scope: Researchers use identifiable medical records of competent adults for a public-interest health study, with access safeguards. Patients have given informed consent. The study is not emergency treatment and the research use is separate from ordinary clinical care. No assumed law authorizes or prohibits the use.
+      stance:
+        id: acceptability
+        statement: Using patients' identifiable medical records for this research is ethically acceptable when they have given informed consent.
+        negation: It is not the case that using patients' identifiable medical records for this research is ethically acceptable when they have given informed consent.
+      exclusions: [Emergency care, Anonymized data, Commercial sale of records]
+      semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases require separate review.
+  - role: ethical
+    related_group: medical_consent
+    definition:
+      id: medical_data_without_consent
+      version: '1'
+      domain: privacy
+      scope: Researchers use identifiable medical records of competent adults for a public-interest health study, with access safeguards. Patients' consent has not been sought; they have not explicitly refused consent. The study is not emergency treatment and research use is separate from ordinary clinical care. No assumed law authorizes or prohibits the use.
+      stance:
+        id: acceptability
+        statement: Using patients' identifiable medical records for this research is ethically acceptable when their consent has not been sought.
+        negation: It is not the case that using patients' identifiable medical records for this research is ethically acceptable when their consent has not been sought.
+      exclusions: [Emergency care, Anonymized data, Commercial sale, Explicit refusal of consent]
+      semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases require separate review.
+  - role: ethical
+    related_group: redistribution
+    definition:
+      id: progressive_income_tax
+      version: '1'
+      domain: civic_ethics
+      scope: A functioning government considering sustainable, non-confiscatory policy. No specific country, current tax schedule, funding instrument, or predicted economic effect is assumed. Evaluate ethical acceptability, not economic effectiveness.
+      stance:
+        id: acceptability
+        statement: Charging higher marginal income-tax rates to higher earners is ethically acceptable within the stated scope.
+        negation: It is not the case that charging higher marginal income-tax rates to higher earners is ethically acceptable within the stated scope.
+      exclusions: [A specific tax rate, Confiscation, Claims about growth or revenue]
+      semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases require separate review.
+  - role: ethical
+    related_group: redistribution
+    definition:
+      id: unconditional_basic_income
+      version: '1'
+      domain: civic_ethics
+      scope: A functioning government considering sustainable, non-confiscatory policy. No specific country, current tax schedule, funding instrument, or predicted economic effect is assumed. Evaluate ethical acceptability, not economic effectiveness.
+      stance:
+        id: acceptability
+        statement: Providing every adult with a regular basic income regardless of employment or existing income is ethically acceptable within the stated scope.
+        negation: It is not the case that providing every adult with a regular basic income regardless of employment or existing income is ethically acceptable within the stated scope.
+      exclusions: [A particular payment amount, A particular funding source, Predicted labor-market effects]
+      semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases require separate review.
+  - role: ethical
+    definition:
+      id: sugary_drink_tax
+      version: '1'
+      domain: public_health
+      scope: A moderate excise tax on non-alcoholic sugary drinks; buying and selling them remains legal. The purpose is public health. No measured effectiveness or exemption/compensation scheme is assumed.
+      stance:
+        id: acceptability
+        statement: Taxing sugary drinks to discourage their consumption is ethically acceptable within the stated scope.
+        negation: It is not the case that taxing sugary drinks to discourage their consumption is ethically acceptable within the stated scope.
+      exclusions: [Banning drinks, Compulsory diets, Whether the policy actually improves health]
+      semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases require separate review.
+  - role: ethical
+    definition:
+      id: paid_kidney_donation
+      version: '1'
+      domain: medical_ethics
+      scope: Competent adults giving informed consent to donating one kidney in a medically regulated transplant program. Ordinary screening and follow-up are available; no payment amount or financial circumstances are specified. Do not assume financial pressure is absent.
+      stance:
+        id: acceptability
+        statement: Paying an adult to donate one kidney is ethically acceptable within the stated scope.
+        negation: It is not the case that paying an adult to donate one kidney is ethically acceptable within the stated scope.
+      exclusions: [Trafficking, Nonconsensual procurement, Guaranteed safety, Assumptions that financial pressure is absent]
+      semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases require separate review.
+  - role: ethical
+    definition:
+      id: flight_tree_planting_offset
+      version: '1'
+      domain: environmental_ethics
+      scope: A non-essential personal trip and an actual tree-planting project intended to offset emissions. Climate impacts are relevant, but no verified full offset or equivalence to avoiding the flight is assumed.
+      stance:
+        id: acceptability
+        statement: Taking a discretionary flight while paying for tree planting intended to offset its emissions is ethically acceptable within the stated scope.
+        negation: It is not the case that taking a discretionary flight while paying for tree planting intended to offset its emissions is ethically acceptable within the stated scope.
+      exclusions: [Emergency travel, A fictitious project, A claim that payment eliminates the climate impact]
+      semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases require separate review.
+  - role: offtopic
+    definition:
+      id: modular_monolith_default
+      version: '1'
+      domain: software_architecture
+      scope: A team of five engineers building a new production web application, with no stated requirement for independent service deployment or exceptional scale. Compare starting architectures, not every later stage of the application's life.
+      stance:
+        id: preference
+        statement: A modular monolith is a better starting architecture than microservices within the stated scope.
+        negation: It is not the case that a modular monolith is a better starting architecture than microservices within the stated scope.
+      exclusions: [Claims about every team, Forced migration of an existing system, Moral approval]
+      semantic_review: Canonical proposition and circumstances reviewed with the user on 2026-10-11. Generated paraphrases require separate review.

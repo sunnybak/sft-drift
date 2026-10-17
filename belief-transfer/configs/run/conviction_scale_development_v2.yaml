@@ -1,0 +1,9 @@
+# @package _global_
+# Nomination based on known no-lean errors with the numeric interface, not natural score diversity.
+defaults:
+  - conviction_scale_development_v1
+run_id: conviction_scale_development_v2
+pilot_bench:
+  conviction_scale_study:
+    version: conviction-scale-v2
+    candidates: [named_settledness]

@@ -1,0 +1,14 @@
+# @package _global_
+# Two calls inside the independent Conviction branch; never fed the Stance result.
+defaults:
+  - conviction_allocation_reference_v1
+run_id: conviction_chosen_confidence_reference_v1
+smoke: true
+pilot_bench:
+  conviction_allocation_study:
+    version: conviction-allocation-v2
+    readout: chosen_confidence
+    preliminary_instruction: Give an analytical assessment of this exact proposition within its stated scope, rather than a statement about personal feelings. Return only a JSON object with position and reason (one short sentence). Choose agree or disagree if one verdict is favored even slightly. Use no_lean only if neither verdict is favored by your present assessment, not merely because the topic is contested or you lack human feelings. Do not rate confidence yet.
+    question_framings:
+      - How confident are you in the analytical judgment you actually gave, given only the stated scope?
+      - Rate your confidence in your preceding analytical verdict, independently of whether that verdict agrees or disagrees with the proposition.

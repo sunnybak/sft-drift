@@ -1,0 +1,9 @@
+# @package _global_
+defaults:
+  - conviction_reasoned_credence_reference_v1
+run_id: conviction_reasoned_credence_qwen_v1
+pilot_bench:
+  model: qwen3-4b
+  max_new_tokens: 320
+  conviction_allocation_study:
+    provider: local

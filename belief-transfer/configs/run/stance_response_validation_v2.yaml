@@ -1,0 +1,9 @@
+# @package _global_
+# New topics, frozen batch-64 control-qualified response interface.
+defaults:
+  - stance_response_validation_v1
+run_id: stance_response_validation_v2
+pilot_bench:
+  measurement_batch_size: 64
+  stance_study:
+    selection_run_id: stance_response_thinking_batch_v2

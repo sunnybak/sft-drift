@@ -1,0 +1,14 @@
+{
+  "eval_id": 0,
+  "eval_name": "fresh-box-orientation",
+  "prompt": "just pulled this repo onto a fresh box, where are we and what should I run?",
+  "assertions": [
+    "Reads STATE.md and cites content unique to it (the void table, the stale-data note, or the ordered Next list)",
+    "States the standing result with actual numbers and confidence intervals, not just prose",
+    "Says to read the experiment at step 24 / names matrix_v1_step24 as the preferred reading rather than the endpoint",
+    "Flags concrete box state: that hardware_profile.yaml is absent (box not calibrated) and/or that local data/ may be stale",
+    "Surfaces that some recorded runs are void and must not be cited",
+    "Ends with a single concrete proposed next action plus the decision needed from the user, rather than an undifferentiated menu",
+    "Stays bounded \u2014 does not dump large verbatim excerpts of AGENTS.md or the changelog"
+  ]
+}

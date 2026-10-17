@@ -1,0 +1,14 @@
+# @package _global_
+defaults:
+  - /probe@pilot_bench: ethics_pilot_v1
+run_id: ethics_pilot_qwen_v3
+stage: pilot_eval
+experiment:
+  id: ethical_pilot
+  dataset:
+    n_items: 1
+pilot_bench:
+  bank_run_id: ethics_pilot_bank_v2
+  # BASE-only exploratory diagnosis. Keep the failed 0.01 comparison visible;
+  # do not alter its threshold or claim CUDA/MLX measurement interchangeability.
+  allow_exploratory_backend_mismatch: true

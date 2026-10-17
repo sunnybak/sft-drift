@@ -28,3 +28,6 @@ belief-transfer/configs/hardware_profile.yaml
 # invocation on one machine -- not a source artifact, and committing one would invite a
 # later --apply against a stale list.
 belief-transfer/scripts/*.plan.json
+
+# Local handoff receipt (remote manifest is the authority).
+belief-transfer/data/.handoff-receipt.json

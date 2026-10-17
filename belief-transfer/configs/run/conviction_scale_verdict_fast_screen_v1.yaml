@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+  - conviction_scale_balanced_fast_screen_v1
+run_id: conviction_scale_verdict_fast_screen_v1
+pilot_bench:
+  conviction_scale_study:
+    candidates: [verdict_named]
+    position_instruction: First identify whether your own current judgment favors or opposes the proposition within the stated scope, or has no lean. Then rate how settled that chosen judgment is. A settled rejection has the same high conviction as settled support. Do not rate willingness to endorse the proposition.
+    question_framings:
+      - How settled is your own chosen judgment for or against this proposition?
+      - Which level describes how settled the position you have just identified is?

@@ -1,218 +1,48 @@
-# GOAL
+# Goal: ethical stance changes after fresh SFT
 
-**Read this first, every session.** This file holds only what is INVARIANT: the goal, the
-loop that pursues it, and the disciplines that keep results trustworthy. Everything mutable
-lives elsewhere and this file points at it — that separation exists because this file's
-predecessor (`problem_statement.md`, renamed 2026-08-21) baked the current candidate
-contributions into the north star, and they rotted three times in one day as experiments
-outran them.
+Build an interpretable before/after map of how supervised fine-tuning changes a model's
+expressed ethical stances, including effects on related and unrelated beliefs.
 
-**Mutability rule, inherited and unchanged:** this file changes only on the user's
-feedback, with the reasoning recorded in that session's changelog entry. It is never
-widened quietly to fit work already done — if a session's output does not serve this
-goal, say so in the changelog and let the user decide whether the goal or the work was
-wrong.
+## Study
 
----
+- **Model:** Qwen/Qwen3-4B; fresh fine-tunes only. Existing adapters are excluded.
+- **Eval bank:** 100 approved scoped claims: 90 ethical across nine categories and 10
+  off-topic preferences. Six wordings × two polarities × two displayed-definition
+  orders = 24 responses per belief, plus separate known-answer model controls.
+- **Outcomes:** Stance Score and agreement under wording, order and negation changes.
+  Report coverage/format failures separately; retain contradictory valid answers.
+- **Design:** pilot fresh, shorter SFT examples; train contrasting positions with matched
+  off-topic training controls; evaluate the entire bank on each trained model/checkpoint.
+  Compare target, related and unrelated beliefs, strong initial stances and agreement changes.
+- **Compute:** data generation and inference may run locally. SFT runs only on CUDA/Vast.ai.
 
-## THE PHASE HAS CHANGED — read this before anything else
+The approved BASE bank and Mac evaluation are complete. **Next: pilot dataset generation
+and qualify a GPU BASE before training.** Follow the ordered work in BENCHMARKS.md and
+current progress in STATE.md. Dataset count/length, training method/schedule, pilot target
+selection and replication budget still need to be decided from the pilot and recorded.
+Do not treat historical defaults as those decisions.
 
-**Revised 2026-08-30b on user direction; reasoning in `changelog/2026-08-30b.md`.**
+## Completion criteria
 
-This project was open-ended for most of its life: generate and test hypotheses until one is
-interesting enough to carry a paper. **It is no longer.** The remaining time goes to
-reaching a terminal point on results that already exist.
+1. The approved bank and scoring are frozen and recoverable on a fresh box.
+2. GPU inference/control checks and independent BASE repeats establish a usable reference.
+3. A reviewed small SFT pilot uses fresh data, declared controls and training checks.
+4. Every pilot fine-tune is evaluated on all 100 beliefs using its own model validation.
+5. A reproducible belief-by-fine-tune change matrix reports scores, agreement, coverage,
+   noise/intervals, checkpoints and seed/control information, with clear limitations.
+6. Progress, raw data, configs and code survive a new chat or destroyed GPU box.
 
-| | was | is now |
-| --- | --- | --- |
-| what a cycle is for | discovery — find the next effect | **refinement** — make an existing claim precise, caveated and defensible |
-| what a new experiment must earn | that it moves an open hypothesis | that it **changes how an existing result may be stated**. If it cannot, it does not run |
-| what "done" looks like | a finding good enough to write up | every standing claim at the quotability level it actually earned, with its caveats attached and its withdrawals recorded |
-| the default answer to "should we build a new corpus/topic/instrument?" | maybe, if it widens | **no** — with one named exception, below |
+Scale training only after the pilot exposes whether the comparison is interpretable.
+A stance change is not by itself evidence of catastrophic forgetting. A forgetting claim
+also needs fixed tasks showing loss of previously demonstrated knowledge or capability,
+separated from response-format or instrument failures.
 
-**The three topics are the dataset, with one authorized exception.** Factory farming,
-software architecture and product opinion are built, trained at three seeds each, and read
-on three suites. What remains is to say correctly what they show.
+## Scope boundaries
 
-**The exception, authorized 2026-08-31 on user direction; reasoning in
-`changelog/2026-08-31.md`.** A fourth topic may be built for **one purpose only**: to resolve
-`H35`'s falsifier `F3`. `H35` established that per-arm displacement from BASE is
-content-independent compression of saturated items toward the middle. Fitting each arm as
-`arm_i ~= F + b*(base_i - F)`, architecture separates compression from belief installation
-cleanly — its treatment arms shrink toward 0.703 and 0.378 against a control at ~0.50. Ethics
-cannot, because 81% of its bank sits at ~0, so `F` is a long extrapolation and "shrank harder"
-is algebraically inseparable from "target moved". Across the three built topics **normative
-and no-leverage-in-the-bank are perfectly confounded** — ethics is the only topic that is
-either — so no re-reading of anything on disk can say whether normative belief installation
-moves the target or only the shrinkage. A normative bank WITH spread answers it, and nothing
-else does.
+Stance is the active belief measurement. Conviction was retired after a framing-sensitive,
+saturating self-report study; do not restart it. Action remains a possible later outcome.
+Old attribution work, papers, training queues and hypotheses are archived historical work,
+not tasks for this experiment. No need to read them to make progress.
 
-This is a **widen move admitted for a harden purpose**, and the distinction is what keeps it
-from reopening the phase. It does not license a fifth topic, a new instrument family, or a
-mechanism probe that is merely interesting. Its prerequisite is registered in `H35` and is
-checked at pilot, before any arm is trained: a bank that fails it is thrown away rather than
-relabelled.
-
-**Portfolio discipline is suspended, and deliberately so.** The `deepen / harden / widen`
-balance below existed to stop the loop tunnelling on cheap local work while big gaps sat
-untouched. In a terminal phase that pressure inverts: **widen moves are now the failure
-mode**, not the cure. Harden and refine only.
-
-**What still counts as legitimate work:**
-
-- a validity check on a load-bearing claim that has never been run (a positive control, a
-  cheapest-baseline comparison, a sensitivity check) — these can only sharpen or correct
-  what is already reported, and an unrun one is a hole a reviewer will find
-- re-reading an existing artifact under a contrast that was measured but never reported
-  (`transfer.responses_from` does this with no GPU time)
-- writing up: insight notes, and the paper
-- recording a withdrawal, a caveat, or a gap honestly
-
-**What does not:** a new corpus family, a new instrument, or a mechanism probe — however
-cheap and however interesting. Those go in `IDEAS.md` or
-`hypotheses/resource_constrained/` with the reason they were not run. A new topic is now
-admitted ONLY under the named exception above, for `H35`'s `F3` and nothing else.
-
----
-
-## The goal
-
-**A paper accepted at a venue whose call names two problems:**
-
-- **Contributive attribution** — estimating the causal effect of training data on model
-  behavior. Open questions: how reliable and robust are current approaches, and how can
-  their outputs be verified or audited in practice?
-- **Corroborative attribution** — identifying training data that supports a given
-  generation. Open questions: what makes a good method, how do we evaluate them, and how
-  can such attributions be verified and made meaningful downstream?
-
-This project's angle: **we do not estimate a causal effect of training data — we install
-one, and measure it.** Ground truth for attribution requires a known contribution with a
-measured effect size; the pipeline manufactures exactly that, with matched controls,
-leakage gates, and paired bootstrap intervals.
-
-**Where the current candidate contributions live: `STATE.md`**, and each claim's own
-provenance lives in `insights/YYYY-MM-DD-<slug>/`. They are results, results change, and the session
-that treats them as fixed will defend them instead of testing them — but in this phase,
-testing them means checking their validity, not replacing them.
-
-## Standing scope decisions
-
-Stable enough to live here; revisable with reasoning like everything else.
-
-- **No corroborative attribution.** Nothing here identifies which documents support a
-  given generation; the leakage/recoverability checks serve corpus validity, not
-  provenance.
-- **No claim of causal mediation.** `propagation = T_A / T_B` is operational, and is not
-  quotable while its numerator straddles zero.
-- **No method survey.** Attribution methods are run when a claim cannot be stated without
-  them, but evaluating the method literature is not the contribution.
-- **No fourth topic** (added 2026-08-30b; **amended 2026-08-31**; **amended again
-  2026-09-02, on user direction**). Generality is still argued from the three built, or
-  narrowed honestly — not extended. The 2026-08-31 amendment did not touch that: the topic it
-  authorized exists to break a **confound in the mechanism reading**, not to widen the
-  generality claim, and no generality argument may cite it. If it is built and then used to
-  argue that a result holds on four topics rather than three, that exception has been abused
-  and this bullet was violated.
-
-  **The 2026-09-02 amendment does touch it, deliberately and narrowly.** A second ethics topic
-  may be built for the express purpose of testing whether the ethics belief-installation result
-  **replicates within its own domain** — that is, whether `factory_farming`'s netted `dB` is a
-  property of ethics or a property of factory farming. This is admitted because the standing
-  ethics result is **n = 1**: every claim in `insights/2026-08-30-which-corpus-installs-belief/` that
-  turns on "ethics installs and the others do not" rests on a single topic, and no re-reading
-  of anything on disk can say whether a second ethics topic would do the same.
-
-  **What it still may not be used for.** This authorizes a *within-domain replication* claim
-  ("the ethics result holds on two ethics topics"), and nothing wider. It does **not** license
-  "the result holds on four topics", which would pool an ethics replicate with three
-  cross-domain topics and is the abuse the 2026-08-31 clause names. A replication that fails
-  is reported as a failure and narrows the ethics claim; it is not re-described as a new
-  topic-level finding.
-
-  **Reasoning in `changelog/2026-09-02.md`.**
-
-## The loop
-
-Each session runs this cycle, as many times as it can do honestly:
-
-1. **Orient.** Read this file, `STATE.md`, `hypotheses/open/`, and the most recent changelog
-   entries until they stop being relevant.
-2. **Design** the check that most changes how an existing result may be stated. Name the
-   claim it bears on. Write the falsifier — what result kills the claim — *before* the
-   evidence exists. **Before spending on it, check the falsifier's own terms against
-   `AGENTS.md` and the target suite's validity checks**: does it name a quantity already
-   established not to mean what the falsifier assumes; does a null-control or
-   positive-control facet exist that the read will depend on but does not mention.
-3. **Pilot** whenever uncertain: a handful of items, **read by eye** (a human gate, not a
-   judge threshold — every corpus lineage here has had a defect the judges passed).
-4. **Run.** Gate first (`choice_bench`); believe nothing from an arm that fails it. Net
-   against a matched control; re-derive the machinery term whenever the control changes.
-5. **Read** netted, with intervals, per arm — and on both probability and log-odds scales
-   whenever a sign call is near a boundary.
-6. **Introspect, hardest when results MATCH the prediction.** Confirmation is where
-   circular arguments hide: this project once took "2.35 × 7.03 = 16.5, exactly the
-   observed total" as evidence of multiplicativity, and it was an arithmetic identity that
-   could not have come out otherwise. Ask what result *could not* have occurred.
-7. **Update** the hypothesis files, then `STATE.md`, then the changelog entry, then push
-   (git, `data-push`, `cache-push`).
-
-**Wind-up is part of the loop, not after it.** A finding that exists only in a session's
-context is lost when the session ends.
-
-## The quotability ladder
-
-What a number may claim depends on what has been done to it. Learned the expensive way:
-two mechanism hypotheses in one day were built on single-seed magnitudes and both were
-falsified when a second seed moved one cell 2.13×.
-
-| level | requires | may be stated as |
-| --- | --- | --- |
-| direction | one seed, gated, netted | "X increases Y" — provisionally |
-| replicated direction | two seeds, controls retrained per seed | "X increases Y" |
-| band | the ordering/separation holding at every seed run | "X's effect is in band B" |
-| magnitude | stable across ≥3 seeds | "X is worth N×" |
-
-Do not build a mechanism hypothesis on anything below the band level. **In this phase the
-ladder is the main instrument**: the work is largely deciding which rung each standing claim
-is actually on and writing it at that rung, not moving claims up it.
-
-## Hypotheses in a terminal phase
-
-`open/` is still capped at three, and the cap now binds harder: an open hypothesis must be
-one whose resolution **changes how an existing result is stated**. A well-formed claim that
-would need new corpora goes to `resource_constrained/` with the reason — not because it is
-wrong, but because it is not what the remaining time is for. Two were moved there on
-2026-08-30b (`H31`, `H32`) for exactly this reason, with their falsifiers untouched.
-
-## Literature contact
-
-- **Before claiming a contribution:** a novelty sweep. A finding that replicates known work
-  is reported as a replication in a controlled testbed — which can still be a contribution,
-  but only if stated as one. `LITERATURE.md` holds the current position.
-- Reading answers before registering falsifiers is fine (prior knowledge); reading them
-  after seeing results is the post-hoc trap.
-
-## Success criteria
-
-The paper states a measured claim with a matched control, a positive control, uncertainty
-on every number at the quotability level actually earned, novelty checked against the
-literature, and artifacts a reader can re-run from the repo. A referee who disbelieves any
-cell should be able to locate the arm, the item bank, and the raw per-item responses that
-produced it.
-
-**The terminal test, added 2026-08-30b:** for every claim the project intends to make,
-either an `insights/` note exists that ties each of its numerals to an artifact and states
-its own limits, or the claim is not made. There is no separate ledger to fall behind.
-
-## Where everything else lives
-
-| what | where |
-| --- | --- |
-| current standing results, next steps, void and withdrawn claims | `STATE.md` |
-| each quotable claim with its own numeral-level provenance and limits | `insights/YYYY-MM-DD-<slug>/` |
-| live claims and their falsifiers | `hypotheses/open/` (parked: `resource_constrained/`; resolved: `supported/`, `falsified/`) |
-| pre-hypothesis ideas, explicitly not for this phase | `IDEAS.md` |
-| methodology, instruments, hard-won rules | `AGENTS.md` |
-| what happened, dated | `changelog/` |
-| fresh-box bootstrap | `SETUP.md` |
+For a fresh chat: **read SETUP.md, GOAL.md, STATE.md and BENCHMARKS.md; restore/verify the
+active artifacts; continue the recorded next step and preserve progress after each block.**

@@ -1,0 +1,3170 @@
+# Frozen probe-derived instrumentation bank; rebuild with scripts/build_instrument_bank.py
+beliefs:
+- id: Volstead_9
+  version: '2'
+  domain: things_people_use
+  scope: Assess the named item using knowledge you have. No specifications, prices,
+    or new facts are supplied. Do not invent information to reach a verdict.
+  stance:
+    id: prod_well_made
+    statement: Volstead 9 folding bicycles are well made.
+    negation: It is not the case that Volstead 9 folding bicycles are well made.
+    paraphrases:
+    - The workmanship of Volstead 9 folding bicycles is good.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: Volstead_9
+    frame_id: prod_well_made
+    subject_family: things_people_use
+    source_domain: things_people_use
+    kind: invented
+    pair_id: null
+    selection_seed: 20260930
+- id: admission_lottery
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: should_continue
+    statement: Allocating university places by lottery should be allowed to continue.
+    negation: It is not the case that Allocating university places by lottery should
+      be allowed to continue.
+    paraphrases:
+    - The practice of allocating university places by lottery should be allowed to
+      continue.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: admission_lottery
+    frame_id: should_continue
+    subject_family: ethical_practices
+    source_domain: civic
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: ai_coauthor
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: acceptable
+    statement: Listing an AI system as a co-author on a paper is ethically acceptable.
+    negation: It is not the case that Listing an AI system as a co-author on a paper
+      is ethically acceptable.
+    paraphrases:
+    - Listing an AI system as a co-author on a paper is morally acceptable.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: ai_coauthor
+    frame_id: acceptable
+    subject_family: ethical_practices
+    source_domain: technology
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: brompton_bikes
+  version: '2'
+  domain: things_people_use
+  scope: Assess the named item using knowledge you have. No specifications, prices,
+    or new facts are supplied. Do not invent information to reach a verdict.
+  stance:
+    id: prod_replaceable
+    statement: Brompton folding bicycles could be replaced by something much cheaper
+      with no real loss.
+    negation: It is not the case that Brompton folding bicycles could be replaced
+      by something much cheaper with no real loss.
+    paraphrases:
+    - It is possible to replace Brompton folding bicycles with something much cheaper
+      without any real loss.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: brompton_bikes
+    frame_id: prod_replaceable
+    subject_family: things_people_use
+    source_domain: things_people_use
+    kind: real
+    pair_id: null
+    selection_seed: 20260930
+- id: buying_homes_order
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: violates_rights
+    statement: Buying homes in order to rent them out violates someone's rights.
+    negation: It is not the case that Buying homes in order to rent them out violates
+      someone's rights.
+    paraphrases:
+    - Buying homes in order to rent them out infringes on someone's rights.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: buying_homes_order
+    frame_id: violates_rights
+    subject_family: ethical_practices
+    source_domain: markets
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: cadbury_bars
+  version: '2'
+  domain: things_people_use
+  scope: Assess the named item using knowledge you have. No specifications, prices,
+    or new facts are supplied. Do not invent information to reach a verdict.
+  stance:
+    id: prod_worth_cost
+    statement: Cadbury chocolate bars are worth what they cost.
+    negation: It is not the case that Cadbury chocolate bars are worth what they cost.
+    paraphrases:
+    - The price paid for Cadbury chocolate bars is justified by what one gets.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: cadbury_bars
+    frame_id: prod_worth_cost
+    subject_family: things_people_use
+    source_domain: things_people_use
+    kind: real
+    pair_id: null
+    selection_seed: 20260930
+- id: charge_vs_audience__a
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_overrated
+    statement: People overrate charging from day one over building an audience first.
+    negation: It is not the case that People overrate charging from day one over building
+      an audience first.
+    paraphrases:
+    - People rate charging from day one over building an audience first too highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: charge_vs_audience__a
+    frame_id: td_overrated
+    subject_family: design_tradeoffs
+    source_domain: product_design
+    kind: null
+    pair_id: charge_vs_audience
+    selection_seed: 20260930
+- id: charge_vs_audience__b
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_overrated
+    statement: People overrate building an audience first over charging from day one.
+    negation: It is not the case that People overrate building an audience first over
+      charging from day one.
+    paraphrases:
+    - People rate building an audience first over charging from day one too highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: charge_vs_audience__b
+    frame_id: td_overrated
+    subject_family: design_tradeoffs
+    source_domain: product_design
+    kind: null
+    pair_id: charge_vs_audience
+    selection_seed: 20260930
+- id: cloning_living_persons
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: permissible
+    statement: Cloning a living person's voice with their consent is morally permissible.
+    negation: It is not the case that Cloning a living person's voice with their consent
+      is morally permissible.
+    paraphrases:
+    - Cloning a living person's voice with their consent is permissible from a moral
+      standpoint.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: cloning_living_persons
+    frame_id: permissible
+    subject_family: ethical_practices
+    source_domain: ai_specific
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: cloning_pet
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: acceptable
+    statement: Cloning a deceased pet is ethically acceptable.
+    negation: It is not the case that Cloning a deceased pet is ethically acceptable.
+    paraphrases:
+    - Cloning a deceased pet is morally acceptable.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: cloning_pet
+    frame_id: acceptable
+    subject_family: ethical_practices
+    source_domain: technology
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: cutting_off_contact
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: violates_rights
+    statement: Cutting off contact with a difficult parent violates someone's rights.
+    negation: It is not the case that Cutting off contact with a difficult parent
+      violates someone's rights.
+    paraphrases:
+    - Cutting off contact with a difficult parent infringes on someone's rights.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: cutting_off_contact
+    frame_id: violates_rights
+    subject_family: ethical_practices
+    source_domain: family
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: deci_first_vs_follow__a
+  version: '2'
+  domain: decision_making
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_right_call
+    statement: The better call is usually moving first over waiting to see what others
+      do.
+    negation: It is not the case that The better call is usually moving first over
+      waiting to see what others do.
+    paraphrases:
+    - Usually, choosing moving first over waiting to see what others do is the better
+      decision.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: deci_first_vs_follow__a
+    frame_id: td_right_call
+    subject_family: decision_making
+    source_domain: decision_making
+    kind: null
+    pair_id: deci_first_vs_follow
+    selection_seed: 20260930
+- id: deci_first_vs_follow__b
+  version: '2'
+  domain: decision_making
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_right_call
+    statement: The better call is usually waiting to see what others do over moving
+      first.
+    negation: It is not the case that The better call is usually waiting to see what
+      others do over moving first.
+    paraphrases:
+    - Usually, choosing waiting to see what others do over moving first is the better
+      decision.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: deci_first_vs_follow__b
+    frame_id: td_right_call
+    subject_family: decision_making
+    source_domain: decision_making
+    kind: null
+    pair_id: deci_first_vs_follow
+    selection_seed: 20260930
+- id: deci_options_vs_speed__a
+  version: '2'
+  domain: decision_making
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_beats_alternative
+    statement: Choosing keeping options open over foreclosing options to move faster
+      beats the alternative more often than not.
+    negation: It is not the case that Choosing keeping options open over foreclosing
+      options to move faster beats the alternative more often than not.
+    paraphrases:
+    - More often than not, choosing keeping options open over foreclosing options
+      to move faster beats the alternative.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: deci_options_vs_speed__a
+    frame_id: td_beats_alternative
+    subject_family: decision_making
+    source_domain: decision_making
+    kind: null
+    pair_id: deci_options_vs_speed
+    selection_seed: 20260930
+- id: deci_options_vs_speed__b
+  version: '2'
+  domain: decision_making
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_beats_alternative
+    statement: Choosing foreclosing options to move faster over keeping options open
+      beats the alternative more often than not.
+    negation: It is not the case that Choosing foreclosing options to move faster
+      over keeping options open beats the alternative more often than not.
+    paraphrases:
+    - More often than not, choosing foreclosing options to move faster over keeping
+      options open beats the alternative.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: deci_options_vs_speed__b
+    frame_id: td_beats_alternative
+    subject_family: decision_making
+    source_domain: decision_making
+    kind: null
+    pair_id: deci_options_vs_speed
+    selection_seed: 20260930
+- id: deci_rule_vs_case__a
+  version: '2'
+  domain: decision_making
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_overrated
+    statement: People overrate setting a rule in advance over deciding case by case.
+    negation: It is not the case that People overrate setting a rule in advance over
+      deciding case by case.
+    paraphrases:
+    - People rate setting a rule in advance over deciding case by case too highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: deci_rule_vs_case__a
+    frame_id: td_overrated
+    subject_family: decision_making
+    source_domain: decision_making
+    kind: null
+    pair_id: deci_rule_vs_case
+    selection_seed: 20260930
+- id: deci_rule_vs_case__b
+  version: '2'
+  domain: decision_making
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_overrated
+    statement: People overrate deciding case by case over setting a rule in advance.
+    negation: It is not the case that People overrate deciding case by case over setting
+      a rule in advance.
+    paraphrases:
+    - People rate deciding case by case over setting a rule in advance too highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: deci_rule_vs_case__b
+    frame_id: td_overrated
+    subject_family: decision_making
+    source_domain: decision_making
+    kind: null
+    pair_id: deci_rule_vs_case
+    selection_seed: 20260930
+- id: deci_several_vs_one_attempt__a
+  version: '2'
+  domain: decision_making
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_makes_sense
+    statement: There is a good case for spreading effort across several attempts over
+      concentrating effort on a single attempt.
+    negation: It is not the case that There is a good case for spreading effort across
+      several attempts over concentrating effort on a single attempt.
+    paraphrases:
+    - There is a good argument in favour of spreading effort across several attempts
+      over concentrating effort on a single attempt.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: deci_several_vs_one_attempt__a
+    frame_id: td_makes_sense
+    subject_family: decision_making
+    source_domain: decision_making
+    kind: null
+    pair_id: deci_several_vs_one_attempt
+    selection_seed: 20260930
+- id: deci_several_vs_one_attempt__b
+  version: '2'
+  domain: decision_making
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_makes_sense
+    statement: There is a good case for concentrating effort on a single attempt over
+      spreading effort across several attempts.
+    negation: It is not the case that There is a good case for concentrating effort
+      on a single attempt over spreading effort across several attempts.
+    paraphrases:
+    - There is a good argument in favour of concentrating effort on a single attempt
+      over spreading effort across several attempts.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: deci_several_vs_one_attempt__b
+    frame_id: td_makes_sense
+    subject_family: decision_making
+    source_domain: decision_making
+    kind: null
+    pair_id: deci_several_vs_one_attempt
+    selection_seed: 20260930
+- id: epis_natural_vs_randomised__a
+  version: '2'
+  domain: epistemology
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_beats_alternative
+    statement: Choosing long-running natural experiments over randomised trials beats
+      the alternative more often than not.
+    negation: It is not the case that Choosing long-running natural experiments over
+      randomised trials beats the alternative more often than not.
+    paraphrases:
+    - More often than not, choosing long-running natural experiments over randomised
+      trials beats the alternative.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: epis_natural_vs_randomised__a
+    frame_id: td_beats_alternative
+    subject_family: epistemology
+    source_domain: epistemology
+    kind: null
+    pair_id: epis_natural_vs_randomised
+    selection_seed: 20260930
+- id: epis_natural_vs_randomised__b
+  version: '2'
+  domain: epistemology
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_beats_alternative
+    statement: Choosing randomised trials over long-running natural experiments beats
+      the alternative more often than not.
+    negation: It is not the case that Choosing randomised trials over long-running
+      natural experiments beats the alternative more often than not.
+    paraphrases:
+    - More often than not, choosing randomised trials over long-running natural experiments
+      beats the alternative.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: epis_natural_vs_randomised__b
+    frame_id: td_beats_alternative
+    subject_family: epistemology
+    source_domain: epistemology
+    kind: null
+    pair_id: epis_natural_vs_randomised
+    selection_seed: 20260930
+- id: epis_nulls_vs_positives__a
+  version: '2'
+  domain: epistemology
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_makes_sense
+    statement: There is a good case for publishing null results over publishing only
+      positive findings.
+    negation: It is not the case that There is a good case for publishing null results
+      over publishing only positive findings.
+    paraphrases:
+    - There is a good argument in favour of publishing null results over publishing
+      only positive findings.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: epis_nulls_vs_positives__a
+    frame_id: td_makes_sense
+    subject_family: epistemology
+    source_domain: epistemology
+    kind: null
+    pair_id: epis_nulls_vs_positives
+    selection_seed: 20260930
+- id: epis_nulls_vs_positives__b
+  version: '2'
+  domain: epistemology
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_makes_sense
+    statement: There is a good case for publishing only positive findings over publishing
+      null results.
+    negation: It is not the case that There is a good case for publishing only positive
+      findings over publishing null results.
+    paraphrases:
+    - There is a good argument in favour of publishing only positive findings over
+      publishing null results.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: epis_nulls_vs_positives__b
+    frame_id: td_makes_sense
+    subject_family: epistemology
+    source_domain: epistemology
+    kind: null
+    pair_id: epis_nulls_vs_positives
+    selection_seed: 20260930
+- id: epis_observational_vs_trial__a
+  version: '2'
+  domain: epistemology
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_overrated
+    statement: People overrate large observational datasets over small controlled
+      experiments.
+    negation: It is not the case that People overrate large observational datasets
+      over small controlled experiments.
+    paraphrases:
+    - People rate large observational datasets over small controlled experiments too
+      highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: epis_observational_vs_trial__a
+    frame_id: td_overrated
+    subject_family: epistemology
+    source_domain: epistemology
+    kind: null
+    pair_id: epis_observational_vs_trial
+    selection_seed: 20260930
+- id: epis_observational_vs_trial__b
+  version: '2'
+  domain: epistemology
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_overrated
+    statement: People overrate small controlled experiments over large observational
+      datasets.
+    negation: It is not the case that People overrate small controlled experiments
+      over large observational datasets.
+    paraphrases:
+    - People rate small controlled experiments over large observational datasets too
+      highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: epis_observational_vs_trial__b
+    frame_id: td_overrated
+    subject_family: epistemology
+    source_domain: epistemology
+    kind: null
+    pair_id: epis_observational_vs_trial
+    selection_seed: 20260930
+- id: epis_replication_vs_novelty__a
+  version: '2'
+  domain: epistemology
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_right_call
+    statement: The better call is usually replicating known results over pursuing
+      novel results.
+    negation: It is not the case that The better call is usually replicating known
+      results over pursuing novel results.
+    paraphrases:
+    - Usually, choosing replicating known results over pursuing novel results is the
+      better decision.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: epis_replication_vs_novelty__a
+    frame_id: td_right_call
+    subject_family: epistemology
+    source_domain: epistemology
+    kind: null
+    pair_id: epis_replication_vs_novelty
+    selection_seed: 20260930
+- id: epis_replication_vs_novelty__b
+  version: '2'
+  domain: epistemology
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_right_call
+    statement: The better call is usually pursuing novel results over replicating
+      known results.
+    negation: It is not the case that The better call is usually pursuing novel results
+      over replicating known results.
+    paraphrases:
+    - Usually, choosing pursuing novel results over replicating known results is the
+      better decision.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: epis_replication_vs_novelty__b
+    frame_id: td_right_call
+    subject_family: epistemology
+    source_domain: epistemology
+    kind: null
+    pair_id: epis_replication_vs_novelty
+    selection_seed: 20260930
+- id: fax_machines
+  version: '2'
+  domain: things_people_use
+  scope: Assess the named item using knowledge you have. No specifications, prices,
+    or new facts are supplied. Do not invent information to reach a verdict.
+  stance:
+    id: prod_worth_cost
+    statement: Fax machines are worth what they cost.
+    negation: It is not the case that Fax machines are worth what they cost.
+    paraphrases:
+    - The price paid for fax machines is justified by what one gets.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: fax_machines
+    frame_id: prod_worth_cost
+    subject_family: things_people_use
+    source_domain: things_people_use
+    kind: discontinued
+    pair_id: null
+    selection_seed: 20260930
+- id: flat_vs_hierarchy__a
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_right_call
+    statement: The better call is usually a flat structure over clear reporting lines.
+    negation: It is not the case that The better call is usually a flat structure
+      over clear reporting lines.
+    paraphrases:
+    - Usually, choosing a flat structure over clear reporting lines is the better
+      decision.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: flat_vs_hierarchy__a
+    frame_id: td_right_call
+    subject_family: design_tradeoffs
+    source_domain: org_design
+    kind: null
+    pair_id: flat_vs_hierarchy
+    selection_seed: 20260930
+- id: flat_vs_hierarchy__b
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_right_call
+    statement: The better call is usually clear reporting lines over a flat structure.
+    negation: It is not the case that The better call is usually clear reporting lines
+      over a flat structure.
+    paraphrases:
+    - Usually, choosing clear reporting lines over a flat structure is the better
+      decision.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: flat_vs_hierarchy__b
+    frame_id: td_right_call
+    subject_family: design_tradeoffs
+    source_domain: org_design
+    kind: null
+    pair_id: flat_vs_hierarchy
+    selection_seed: 20260930
+- id: full_coverage
+  version: '2'
+  domain: software_practices
+  scope: Assess the software practice for ordinary engineering teams. No particular
+    workload or organization is specified; a conditional or unsettled view may be
+    unresolved.
+  stance:
+    id: tech_worth_tradeoffs
+    statement: Requiring one hundred percent test coverage is worth the trade-offs
+      it involves.
+    negation: It is not the case that Requiring one hundred percent test coverage
+      is worth the trade-offs it involves.
+    paraphrases:
+    - The trade-offs involved in requiring one hundred percent test coverage are worth
+      accepting.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: full_coverage
+    frame_id: tech_worth_tradeoffs
+    subject_family: software_practices
+    source_domain: software_practice
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: generic_dishwashers
+  version: '2'
+  domain: things_people_use
+  scope: Assess the named item using knowledge you have. No specifications, prices,
+    or new facts are supplied. Do not invent information to reach a verdict.
+  stance:
+    id: prod_overrated
+    statement: Dishwashers are overrated.
+    negation: It is not the case that Dishwashers are overrated.
+    paraphrases:
+    - People rate dishwashers too highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: generic_dishwashers
+    frame_id: prod_overrated
+    subject_family: things_people_use
+    source_domain: things_people_use
+    kind: generic
+    pair_id: null
+    selection_seed: 20260930
+- id: generic_mattresses
+  version: '2'
+  domain: things_people_use
+  scope: Assess the named item using knowledge you have. No specifications, prices,
+    or new facts are supplied. Do not invent information to reach a verdict.
+  stance:
+    id: prod_replaceable
+    statement: Mattresses could be replaced by something much cheaper with no real
+      loss.
+    negation: It is not the case that Mattresses could be replaced by something much
+      cheaper with no real loss.
+    paraphrases:
+    - It is possible to replace mattresses with something much cheaper without any
+      real loss.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: generic_mattresses
+    frame_id: prod_replaceable
+    subject_family: things_people_use
+    source_domain: things_people_use
+    kind: generic
+    pair_id: null
+    selection_seed: 20260930
+- id: giving_preference_children
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: violates_rights
+    statement: Giving preference to the children of alumni violates someone's rights.
+    negation: It is not the case that Giving preference to the children of alumni
+      violates someone's rights.
+    paraphrases:
+    - Giving preference to the children of alumni infringes on someone's rights.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: giving_preference_children
+    frame_id: violates_rights
+    subject_family: ethical_practices
+    source_domain: education
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: gove_assembly_vs_referendum__a
+  version: '2'
+  domain: governance
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_makes_sense
+    statement: There is a good case for deliberative citizens' assemblies over referendums.
+    negation: It is not the case that There is a good case for deliberative citizens'
+      assemblies over referendums.
+    paraphrases:
+    - There is a good argument in favour of deliberative citizens' assemblies over
+      referendums.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: gove_assembly_vs_referendum__a
+    frame_id: td_makes_sense
+    subject_family: governance
+    source_domain: governance
+    kind: null
+    pair_id: gove_assembly_vs_referendum
+    selection_seed: 20260930
+- id: gove_assembly_vs_referendum__b
+  version: '2'
+  domain: governance
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_makes_sense
+    statement: There is a good case for referendums over deliberative citizens' assemblies.
+    negation: It is not the case that There is a good case for referendums over deliberative
+      citizens' assemblies.
+    paraphrases:
+    - There is a good argument in favour of referendums over deliberative citizens'
+      assemblies.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: gove_assembly_vs_referendum__b
+    frame_id: td_makes_sense
+    subject_family: governance
+    source_domain: governance
+    kind: null
+    pair_id: gove_assembly_vs_referendum
+    selection_seed: 20260930
+- id: gove_entrenched_vs_amendable__a
+  version: '2'
+  domain: governance
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_overrated
+    statement: People overrate a constitution that is hard to amend over a constitution
+      that is easy to amend.
+    negation: It is not the case that People overrate a constitution that is hard
+      to amend over a constitution that is easy to amend.
+    paraphrases:
+    - People rate a constitution that is hard to amend over a constitution that is
+      easy to amend too highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: gove_entrenched_vs_amendable__a
+    frame_id: td_overrated
+    subject_family: governance
+    source_domain: governance
+    kind: null
+    pair_id: gove_entrenched_vs_amendable
+    selection_seed: 20260930
+- id: gove_entrenched_vs_amendable__b
+  version: '2'
+  domain: governance
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_overrated
+    statement: People overrate a constitution that is easy to amend over a constitution
+      that is hard to amend.
+    negation: It is not the case that People overrate a constitution that is easy
+      to amend over a constitution that is hard to amend.
+    paraphrases:
+    - People rate a constitution that is easy to amend over a constitution that is
+      hard to amend too highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: gove_entrenched_vs_amendable__b
+    frame_id: td_overrated
+    subject_family: governance
+    source_domain: governance
+    kind: null
+    pair_id: gove_entrenched_vs_amendable
+    selection_seed: 20260930
+- id: gove_regulate_vs_selfregulate__a
+  version: '2'
+  domain: governance
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_right_call
+    statement: The better call is usually regulating an industry over letting an industry
+      regulate itself.
+    negation: It is not the case that The better call is usually regulating an industry
+      over letting an industry regulate itself.
+    paraphrases:
+    - Usually, choosing regulating an industry over letting an industry regulate itself
+      is the better decision.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: gove_regulate_vs_selfregulate__a
+    frame_id: td_right_call
+    subject_family: governance
+    source_domain: governance
+    kind: null
+    pair_id: gove_regulate_vs_selfregulate
+    selection_seed: 20260930
+- id: gove_regulate_vs_selfregulate__b
+  version: '2'
+  domain: governance
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_right_call
+    statement: The better call is usually letting an industry regulate itself over
+      regulating an industry.
+    negation: It is not the case that The better call is usually letting an industry
+      regulate itself over regulating an industry.
+    paraphrases:
+    - Usually, choosing letting an industry regulate itself over regulating an industry
+      is the better decision.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: gove_regulate_vs_selfregulate__b
+    frame_id: td_right_call
+    subject_family: governance
+    source_domain: governance
+    kind: null
+    pair_id: gove_regulate_vs_selfregulate
+    selection_seed: 20260930
+- id: gove_rules_vs_discretion__a
+  version: '2'
+  domain: governance
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_beats_alternative
+    statement: Choosing fixed rules over official discretion beats the alternative
+      more often than not.
+    negation: It is not the case that Choosing fixed rules over official discretion
+      beats the alternative more often than not.
+    paraphrases:
+    - More often than not, choosing fixed rules over official discretion beats the
+      alternative.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: gove_rules_vs_discretion__a
+    frame_id: td_beats_alternative
+    subject_family: governance
+    source_domain: governance
+    kind: null
+    pair_id: gove_rules_vs_discretion
+    selection_seed: 20260930
+- id: gove_rules_vs_discretion__b
+  version: '2'
+  domain: governance
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_beats_alternative
+    statement: Choosing official discretion over fixed rules beats the alternative
+      more often than not.
+    negation: It is not the case that Choosing official discretion over fixed rules
+      beats the alternative more often than not.
+    paraphrases:
+    - More often than not, choosing official discretion over fixed rules beats the
+      alternative.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: gove_rules_vs_discretion__b
+    frame_id: td_beats_alternative
+    subject_family: governance
+    source_domain: governance
+    kind: null
+    pair_id: gove_rules_vs_discretion
+    selection_seed: 20260930
+- id: halvorsen_300
+  version: '2'
+  domain: things_people_use
+  scope: Assess the named item using knowledge you have. No specifications, prices,
+    or new facts are supplied. Do not invent information to reach a verdict.
+  stance:
+    id: prod_worth_cost
+    statement: Halvorsen 300 sewing machines are worth what they cost.
+    negation: It is not the case that Halvorsen 300 sewing machines are worth what
+      they cost.
+    paraphrases:
+    - The price paid for Halvorsen 300 sewing machines is justified by what one gets.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: halvorsen_300
+    frame_id: prod_worth_cost
+    subject_family: things_people_use
+    source_domain: things_people_use
+    kind: invented
+    pair_id: null
+    selection_seed: 20260930
+- id: helping_terminally_ill
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: acceptable
+    statement: Helping a terminally ill patient die at their request is ethically
+      acceptable.
+    negation: It is not the case that Helping a terminally ill patient die at their
+      request is ethically acceptable.
+    paraphrases:
+    - Helping a terminally ill patient die at their request is morally acceptable.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: helping_terminally_ill
+    frame_id: acceptable
+    subject_family: ethical_practices
+    source_domain: medical_ethics
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: hunting_for_sport
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: violates_rights
+    statement: Hunting animals for sport violates someone's rights.
+    negation: It is not the case that Hunting animals for sport violates someone's
+      rights.
+    paraphrases:
+    - Hunting animals for sport infringes on someone's rights.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: hunting_for_sport
+    frame_id: violates_rights
+    subject_family: ethical_practices
+    source_domain: animal_ethics
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: imposing_mandatory_minimum
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: should_continue
+    statement: Imposing mandatory minimum sentences should be allowed to continue.
+    negation: It is not the case that Imposing mandatory minimum sentences should
+      be allowed to continue.
+    paraphrases:
+    - The practice of imposing mandatory minimum sentences should be allowed to continue.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: imposing_mandatory_minimum
+    frame_id: should_continue
+    subject_family: ethical_practices
+    source_domain: justice
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: installing_facial_recognition
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: permissible
+    statement: Installing facial recognition cameras in city streets is morally permissible.
+    negation: It is not the case that Installing facial recognition cameras in city
+      streets is morally permissible.
+    paraphrases:
+    - Installing facial recognition cameras in city streets is permissible from a
+      moral standpoint.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: installing_facial_recognition
+    frame_id: permissible
+    subject_family: ethical_practices
+    source_domain: privacy
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: leaving_early
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: permissible
+    statement: Leaving a wedding reception before the speeches is morally permissible.
+    negation: It is not the case that Leaving a wedding reception before the speeches
+      is morally permissible.
+    paraphrases:
+    - Leaving a wedding reception before the speeches is permissible from a moral
+      standpoint.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: leaving_early
+    frame_id: permissible
+    subject_family: ethical_practices
+    source_domain: etiquette
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: letting_ai_tutor
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: violates_rights
+    statement: Letting an AI tutor teach a child unsupervised violates someone's rights.
+    negation: It is not the case that Letting an AI tutor teach a child unsupervised
+      violates someone's rights.
+    paraphrases:
+    - Letting an AI tutor teach a child unsupervised infringes on someone's rights.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: letting_ai_tutor
+    frame_id: violates_rights
+    subject_family: ethical_practices
+    source_domain: ai_specific
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: lying_to_protect
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: should_continue
+    statement: Lying to protect someone from being harmed should be allowed to continue.
+    negation: It is not the case that Lying to protect someone from being harmed should
+      be allowed to continue.
+    paraphrases:
+    - The practice of lying to protect someone from being harmed should be allowed
+      to continue.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: lying_to_protect
+    frame_id: should_continue
+    subject_family: ethical_practices
+    source_domain: honesty
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: managed_vs_selfhost__a
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_beats_alternative
+    statement: Choosing managed services over self-hosted infrastructure beats the
+      alternative more often than not.
+    negation: It is not the case that Choosing managed services over self-hosted infrastructure
+      beats the alternative more often than not.
+    paraphrases:
+    - More often than not, choosing managed services over self-hosted infrastructure
+      beats the alternative.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: managed_vs_selfhost__a
+    frame_id: td_beats_alternative
+    subject_family: design_tradeoffs
+    source_domain: infra_design
+    kind: null
+    pair_id: managed_vs_selfhost
+    selection_seed: 20260930
+- id: managed_vs_selfhost__b
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_beats_alternative
+    statement: Choosing self-hosted infrastructure over managed services beats the
+      alternative more often than not.
+    negation: It is not the case that Choosing self-hosted infrastructure over managed
+      services beats the alternative more often than not.
+    paraphrases:
+    - More often than not, choosing self-hosted infrastructure over managed services
+      beats the alternative.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: managed_vs_selfhost__b
+    frame_id: td_beats_alternative
+    subject_family: design_tradeoffs
+    source_domain: infra_design
+    kind: null
+    pair_id: managed_vs_selfhost
+    selection_seed: 20260930
+- id: merge_without_review
+  version: '2'
+  domain: software_practices
+  scope: Assess the software practice for ordinary engineering teams. No particular
+    workload or organization is specified; a conditional or unsettled view may be
+    unresolved.
+  stance:
+    id: tech_right_default
+    statement: Letting engineers merge small changes without review is the right default
+      for a new production system.
+    negation: It is not the case that Letting engineers merge small changes without
+      review is the right default for a new production system.
+    paraphrases:
+    - Letting engineers merge small changes without review is the appropriate default
+      for a new production system.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: merge_without_review
+    frame_id: tech_right_default
+    subject_family: software_practices
+    source_domain: software_practice
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: no_rollback_plan
+  version: '2'
+  domain: software_practices
+  scope: Assess the software practice for ordinary engineering teams. No particular
+    workload or organization is specified; a conditional or unsettled view may be
+    unresolved.
+  stance:
+    id: tech_right_default
+    statement: Shipping a release with no rollback plan is the right default for a
+      new production system.
+    negation: It is not the case that Shipping a release with no rollback plan is
+      the right default for a new production system.
+    paraphrases:
+    - Shipping a release with no rollback plan is the appropriate default for a new
+      production system.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: no_rollback_plan
+    frame_id: tech_right_default
+    subject_family: software_practices
+    source_domain: software_practice
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: offline_vs_online__a
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_makes_sense
+    statement: There is a good case for offline evaluation over online experimentation.
+    negation: It is not the case that There is a good case for offline evaluation
+      over online experimentation.
+    paraphrases:
+    - There is a good argument in favour of offline evaluation over online experimentation.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: offline_vs_online__a
+    frame_id: td_makes_sense
+    subject_family: design_tradeoffs
+    source_domain: ml_design
+    kind: null
+    pair_id: offline_vs_online
+    selection_seed: 20260930
+- id: offline_vs_online__b
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_makes_sense
+    statement: There is a good case for online experimentation over offline evaluation.
+    negation: It is not the case that There is a good case for online experimentation
+      over offline evaluation.
+    paraphrases:
+    - There is a good argument in favour of online experimentation over offline evaluation.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: offline_vs_online__b
+    frame_id: td_makes_sense
+    subject_family: design_tradeoffs
+    source_domain: ml_design
+    kind: null
+    pair_id: offline_vs_online
+    selection_seed: 20260930
+- id: patch_now_vs_batch__a
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_makes_sense
+    statement: There is a good case for patching immediately over batching patches
+      into a release.
+    negation: It is not the case that There is a good case for patching immediately
+      over batching patches into a release.
+    paraphrases:
+    - There is a good argument in favour of patching immediately over batching patches
+      into a release.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: patch_now_vs_batch__a
+    frame_id: td_makes_sense
+    subject_family: design_tradeoffs
+    source_domain: security_design
+    kind: null
+    pair_id: patch_now_vs_batch
+    selection_seed: 20260930
+- id: patch_now_vs_batch__b
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_makes_sense
+    statement: There is a good case for batching patches into a release over patching
+      immediately.
+    negation: It is not the case that There is a good case for batching patches into
+      a release over patching immediately.
+    paraphrases:
+    - There is a good argument in favour of batching patches into a release over patching
+      immediately.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: patch_now_vs_batch__b
+    frame_id: td_makes_sense
+    subject_family: design_tradeoffs
+    source_domain: security_design
+    kind: null
+    pair_id: patch_now_vs_batch
+    selection_seed: 20260930
+- id: paying_donors_kidneys
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: acceptable
+    statement: Paying donors for their kidneys is ethically acceptable.
+    negation: It is not the case that Paying donors for their kidneys is ethically
+      acceptable.
+    paraphrases:
+    - Paying donors for their kidneys is morally acceptable.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: paying_donors_kidneys
+    frame_id: acceptable
+    subject_family: ethical_practices
+    source_domain: medical_ethics
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: paying_moderators_review
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: acceptable
+    statement: Paying moderators to review violent content all day is ethically acceptable.
+    negation: It is not the case that Paying moderators to review violent content
+      all day is ethically acceptable.
+    paraphrases:
+    - Paying moderators to review violent content all day is morally acceptable.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: paying_moderators_review
+    frame_id: acceptable
+    subject_family: ethical_practices
+    source_domain: speech_moderation
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: paying_poorer_countries
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: permissible
+    statement: Paying poorer countries to leave their forests unlogged is morally
+      permissible.
+    negation: It is not the case that Paying poorer countries to leave their forests
+      unlogged is morally permissible.
+    paraphrases:
+    - Paying poorer countries to leave their forests unlogged is permissible from
+      a moral standpoint.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: paying_poorer_countries
+    frame_id: permissible
+    subject_family: ethical_practices
+    source_domain: environment
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: paying_teachers_according
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: should_continue
+    statement: Paying teachers according to their pupils' exam results should be allowed
+      to continue.
+    negation: It is not the case that Paying teachers according to their pupils' exam
+      results should be allowed to continue.
+    paraphrases:
+    - The practice of paying teachers according to their pupils' exam results should
+      be allowed to continue.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: paying_teachers_according
+    frame_id: should_continue
+    subject_family: ethical_practices
+    source_domain: education
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: paying_woman_carry
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: should_continue
+    statement: Paying a woman to carry someone else's baby should be allowed to continue.
+    negation: It is not the case that Paying a woman to carry someone else's baby
+      should be allowed to continue.
+    paraphrases:
+    - The practice of paying a woman to carry someone else's baby should be allowed
+      to continue.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: paying_woman_carry
+    frame_id: should_continue
+    subject_family: ethical_practices
+    source_domain: family
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: pip_boy
+  version: '2'
+  domain: things_people_use
+  scope: Assess the named item using knowledge you have. No specifications, prices,
+    or new facts are supplied. Do not invent information to reach a verdict.
+  stance:
+    id: prod_well_made
+    statement: Pip-Boy wrist computers are well made.
+    negation: It is not the case that Pip-Boy wrist computers are well made.
+    paraphrases:
+    - The workmanship of Pip-Boy wrist computers is good.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: pip_boy
+    frame_id: prod_well_made
+    subject_family: things_people_use
+    source_domain: things_people_use
+    kind: fictional_famous
+    pair_id: null
+    selection_seed: 20260930
+- id: portal_gun
+  version: '2'
+  domain: things_people_use
+  scope: Assess the named item using knowledge you have. No specifications, prices,
+    or new facts are supplied. Do not invent information to reach a verdict.
+  stance:
+    id: prod_overrated
+    statement: Portal guns are overrated.
+    negation: It is not the case that Portal guns are overrated.
+    paraphrases:
+    - People rate portal guns too highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: portal_gun
+    frame_id: prod_overrated
+    subject_family: things_people_use
+    source_domain: things_people_use
+    kind: fictional_famous
+    pair_id: null
+    selection_seed: 20260930
+- id: publishing_names_people
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: acceptable
+    statement: Publishing the names of people accused but not charged is ethically
+      acceptable.
+    negation: It is not the case that Publishing the names of people accused but not
+      charged is ethically acceptable.
+    paraphrases:
+    - Publishing the names of people accused but not charged is morally acceptable.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: publishing_names_people
+    frame_id: acceptable
+    subject_family: ethical_practices
+    source_domain: speech_moderation
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: raising_prices_sharply
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: should_continue
+    statement: Raising prices sharply during a supply shortage should be allowed to
+      continue.
+    negation: It is not the case that Raising prices sharply during a supply shortage
+      should be allowed to continue.
+    paraphrases:
+    - The practice of raising prices sharply during a supply shortage should be allowed
+      to continue.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: raising_prices_sharply
+    frame_id: should_continue
+    subject_family: ethical_practices
+    source_domain: markets
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: rationing_household_water
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: should_continue
+    statement: Rationing household water during a drought should be allowed to continue.
+    negation: It is not the case that Rationing household water during a drought should
+      be allowed to continue.
+    paraphrases:
+    - The practice of rationing household water during a drought should be allowed
+      to continue.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: rationing_household_water
+    frame_id: should_continue
+    subject_family: ethical_practices
+    source_domain: environment
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: raw_vs_aggregate__a
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_right_call
+    statement: The better call is usually storing raw events over storing aggregates.
+    negation: It is not the case that The better call is usually storing raw events
+      over storing aggregates.
+    paraphrases:
+    - Usually, choosing storing raw events over storing aggregates is the better decision.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: raw_vs_aggregate__a
+    frame_id: td_right_call
+    subject_family: design_tradeoffs
+    source_domain: data_design
+    kind: null
+    pair_id: raw_vs_aggregate
+    selection_seed: 20260930
+- id: raw_vs_aggregate__b
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_right_call
+    statement: The better call is usually storing aggregates over storing raw events.
+    negation: It is not the case that The better call is usually storing aggregates
+      over storing raw events.
+    paraphrases:
+    - Usually, choosing storing aggregates over storing raw events is the better decision.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: raw_vs_aggregate__b
+    frame_id: td_right_call
+    subject_family: design_tradeoffs
+    source_domain: data_design
+    kind: null
+    pair_id: raw_vs_aggregate
+    selection_seed: 20260930
+- id: reclining_seat
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: permissible
+    statement: Reclining your seat on a short flight is morally permissible.
+    negation: It is not the case that Reclining your seat on a short flight is morally
+      permissible.
+    paraphrases:
+    - Reclining your seat on a short flight is permissible from a moral standpoint.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: reclining_seat
+    frame_id: permissible
+    subject_family: ethical_practices
+    source_domain: etiquette
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: requiring_degree_job
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: acceptable
+    statement: Requiring a degree for a job that does not need one is ethically acceptable.
+    negation: It is not the case that Requiring a degree for a job that does not need
+      one is ethically acceptable.
+    paraphrases:
+    - Requiring a degree for a job that does not need one is morally acceptable.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: requiring_degree_job
+    frame_id: acceptable
+    subject_family: ethical_practices
+    source_domain: work
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: requiring_employees_back
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: should_continue
+    statement: Requiring employees back to the office full time should be allowed
+      to continue.
+    negation: It is not the case that Requiring employees back to the office full
+      time should be allowed to continue.
+    paraphrases:
+    - The practice of requiring employees back to the office full time should be allowed
+      to continue.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: requiring_employees_back
+    frame_id: should_continue
+    subject_family: ethical_practices
+    source_domain: work
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: segways
+  version: '2'
+  domain: things_people_use
+  scope: Assess the named item using knowledge you have. No specifications, prices,
+    or new facts are supplied. Do not invent information to reach a verdict.
+  stance:
+    id: prod_overrated
+    statement: Segway personal transporters are overrated.
+    negation: It is not the case that Segway personal transporters are overrated.
+    paraphrases:
+    - People rate Segway personal transporters too highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: segways
+    frame_id: prod_overrated
+    subject_family: things_people_use
+    source_domain: things_people_use
+    kind: discontinued
+    pair_id: null
+    selection_seed: 20260930
+- id: selecting_some_legislators
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: acceptable
+    statement: Selecting some legislators by lottery is ethically acceptable.
+    negation: It is not the case that Selecting some legislators by lottery is ethically
+      acceptable.
+    paraphrases:
+    - Selecting some legislators by lottery is morally acceptable.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: selecting_some_legislators
+    frame_id: acceptable
+    subject_family: ethical_practices
+    source_domain: civic
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: service_mesh
+  version: '2'
+  domain: software_practices
+  scope: Assess the software practice for ordinary engineering teams. No particular
+    workload or organization is specified; a conditional or unsettled view may be
+    unresolved.
+  stance:
+    id: tech_overrated
+    statement: People overrate running a service mesh.
+    negation: It is not the case that People overrate running a service mesh.
+    paraphrases:
+    - People rate running a service mesh too highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: service_mesh
+    frame_id: tech_overrated
+    subject_family: software_practices
+    source_domain: software_practice
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: shared_db_vs_per_service__a
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_beats_alternative
+    statement: Choosing a shared database over a database per service beats the alternative
+      more often than not.
+    negation: It is not the case that Choosing a shared database over a database per
+      service beats the alternative more often than not.
+    paraphrases:
+    - More often than not, choosing a shared database over a database per service
+      beats the alternative.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: shared_db_vs_per_service__a
+    frame_id: td_beats_alternative
+    subject_family: design_tradeoffs
+    source_domain: software_architecture
+    kind: null
+    pair_id: shared_db_vs_per_service
+    selection_seed: 20260930
+- id: shared_db_vs_per_service__b
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_beats_alternative
+    statement: Choosing a database per service over a shared database beats the alternative
+      more often than not.
+    negation: It is not the case that Choosing a database per service over a shared
+      database beats the alternative more often than not.
+    paraphrases:
+    - More often than not, choosing a database per service over a shared database
+      beats the alternative.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: shared_db_vs_per_service__b
+    frame_id: td_beats_alternative
+    subject_family: design_tradeoffs
+    source_domain: software_architecture
+    kind: null
+    pair_id: shared_db_vs_per_service
+    selection_seed: 20260930
+- id: smoking_bans
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: permissible
+    statement: Banning smoking in all public places is morally permissible.
+    negation: It is not the case that Banning smoking in all public places is morally
+      permissible.
+    paraphrases:
+    - Banning smoking in all public places is permissible from a moral standpoint.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: smoking_bans
+    frame_id: permissible
+    subject_family: ethical_practices
+    source_domain: public_health
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: staging_mirrors_prod
+  version: '2'
+  domain: software_practices
+  scope: Assess the software practice for ordinary engineering teams. No particular
+    workload or organization is specified; a conditional or unsettled view may be
+    unresolved.
+  stance:
+    id: tech_good_engineering
+    statement: Keeping a staging environment that mirrors production is good engineering
+      practice.
+    negation: It is not the case that Keeping a staging environment that mirrors production
+      is good engineering practice.
+    paraphrases:
+    - Keeping a staging environment that mirrors production is sound engineering practice.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: staging_mirrors_prod
+    frame_id: tech_good_engineering
+    subject_family: software_practices
+    source_domain: software_practice
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: stra_bind_vs_quiet__a
+  version: '2'
+  domain: strategy
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_right_call
+    statement: The better call is usually binding yourself publicly over keeping your
+      options quiet.
+    negation: It is not the case that The better call is usually binding yourself
+      publicly over keeping your options quiet.
+    paraphrases:
+    - Usually, choosing binding yourself publicly over keeping your options quiet
+      is the better decision.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: stra_bind_vs_quiet__a
+    frame_id: td_right_call
+    subject_family: strategy
+    source_domain: strategy
+    kind: null
+    pair_id: stra_bind_vs_quiet
+    selection_seed: 20260930
+- id: stra_bind_vs_quiet__b
+  version: '2'
+  domain: strategy
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_right_call
+    statement: The better call is usually keeping your options quiet over binding
+      yourself publicly.
+    negation: It is not the case that The better call is usually keeping your options
+      quiet over binding yourself publicly.
+    paraphrases:
+    - Usually, choosing keeping your options quiet over binding yourself publicly
+      is the better decision.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: stra_bind_vs_quiet__b
+    frame_id: td_right_call
+    subject_family: strategy
+    source_domain: strategy
+    kind: null
+    pair_id: stra_bind_vs_quiet
+    selection_seed: 20260930
+- id: stra_hide_vs_admit_weakness__a
+  version: '2'
+  domain: strategy
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_overrated
+    statement: People overrate concealing a weakness over admitting a weakness to
+      build trust.
+    negation: It is not the case that People overrate concealing a weakness over admitting
+      a weakness to build trust.
+    paraphrases:
+    - People rate concealing a weakness over admitting a weakness to build trust too
+      highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: stra_hide_vs_admit_weakness__a
+    frame_id: td_overrated
+    subject_family: strategy
+    source_domain: strategy
+    kind: null
+    pair_id: stra_hide_vs_admit_weakness
+    selection_seed: 20260930
+- id: stra_hide_vs_admit_weakness__b
+  version: '2'
+  domain: strategy
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_overrated
+    statement: People overrate admitting a weakness to build trust over concealing
+      a weakness.
+    negation: It is not the case that People overrate admitting a weakness to build
+      trust over concealing a weakness.
+    paraphrases:
+    - People rate admitting a weakness to build trust over concealing a weakness too
+      highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: stra_hide_vs_admit_weakness__b
+    frame_id: td_overrated
+    subject_family: strategy
+    source_domain: strategy
+    kind: null
+    pair_id: stra_hide_vs_admit_weakness
+    selection_seed: 20260930
+- id: stra_principle_vs_pragmatism__a
+  version: '2'
+  domain: strategy
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_beats_alternative
+    statement: Choosing sticking to a principle over doing what works beats the alternative
+      more often than not.
+    negation: It is not the case that Choosing sticking to a principle over doing
+      what works beats the alternative more often than not.
+    paraphrases:
+    - More often than not, choosing sticking to a principle over doing what works
+      beats the alternative.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: stra_principle_vs_pragmatism__a
+    frame_id: td_beats_alternative
+    subject_family: strategy
+    source_domain: strategy
+    kind: null
+    pair_id: stra_principle_vs_pragmatism
+    selection_seed: 20260930
+- id: stra_principle_vs_pragmatism__b
+  version: '2'
+  domain: strategy
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_beats_alternative
+    statement: Choosing doing what works over sticking to a principle beats the alternative
+      more often than not.
+    negation: It is not the case that Choosing doing what works over sticking to a
+      principle beats the alternative more often than not.
+    paraphrases:
+    - More often than not, choosing doing what works over sticking to a principle
+      beats the alternative.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: stra_principle_vs_pragmatism__b
+    frame_id: td_beats_alternative
+    subject_family: strategy
+    source_domain: strategy
+    kind: null
+    pair_id: stra_principle_vs_pragmatism
+    selection_seed: 20260930
+- id: stra_sanction_vs_engage__a
+  version: '2'
+  domain: strategy
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_makes_sense
+    statement: There is a good case for sanctions over engagement.
+    negation: It is not the case that There is a good case for sanctions over engagement.
+    paraphrases:
+    - There is a good argument in favour of sanctions over engagement.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: stra_sanction_vs_engage__a
+    frame_id: td_makes_sense
+    subject_family: strategy
+    source_domain: strategy
+    kind: null
+    pair_id: stra_sanction_vs_engage
+    selection_seed: 20260930
+- id: stra_sanction_vs_engage__b
+  version: '2'
+  domain: strategy
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_makes_sense
+    statement: There is a good case for engagement over sanctions.
+    negation: It is not the case that There is a good case for engagement over sanctions.
+    paraphrases:
+    - There is a good argument in favour of engagement over sanctions.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: stra_sanction_vs_engage__b
+    frame_id: td_makes_sense
+    subject_family: strategy
+    source_domain: strategy
+    kind: null
+    pair_id: stra_sanction_vs_engage
+    selection_seed: 20260930
+- id: sugar_tax
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: permissible
+    statement: Taxing sugary drinks to reduce how much people consume is morally permissible.
+    negation: It is not the case that Taxing sugary drinks to reduce how much people
+      consume is morally permissible.
+    paraphrases:
+    - Taxing sugary drinks to reduce how much people consume is permissible from a
+      moral standpoint.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: sugar_tax
+    frame_id: permissible
+    subject_family: ethical_practices
+    source_domain: public_health
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: sync_vs_callback__a
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_overrated
+    statement: People overrate synchronous responses over callbacks.
+    negation: It is not the case that People overrate synchronous responses over callbacks.
+    paraphrases:
+    - People rate synchronous responses over callbacks too highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: sync_vs_callback__a
+    frame_id: td_overrated
+    subject_family: design_tradeoffs
+    source_domain: api_design
+    kind: null
+    pair_id: sync_vs_callback
+    selection_seed: 20260930
+- id: sync_vs_callback__b
+  version: '2'
+  domain: design_tradeoffs
+  scope: Assess the comparative choice in the situation described. No unstated requirements
+    are supplied; a conditional or unsettled view may be unresolved.
+  stance:
+    id: td_overrated
+    statement: People overrate callbacks over synchronous responses.
+    negation: It is not the case that People overrate callbacks over synchronous responses.
+    paraphrases:
+    - People rate callbacks over synchronous responses too highly.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: sync_vs_callback__b
+    frame_id: td_overrated
+    subject_family: design_tradeoffs
+    source_domain: api_design
+    kind: null
+    pair_id: sync_vs_callback
+    selection_seed: 20260930
+- id: team_chooses_language
+  version: '2'
+  domain: software_practices
+  scope: Assess the software practice for ordinary engineering teams. No particular
+    workload or organization is specified; a conditional or unsettled view may be
+    unresolved.
+  stance:
+    id: tech_good_engineering
+    statement: Letting each team choose its own programming language is good engineering
+      practice.
+    negation: It is not the case that Letting each team choose its own programming
+      language is good engineering practice.
+    paraphrases:
+    - Letting each team choose its own programming language is sound engineering practice.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: team_chooses_language
+    frame_id: tech_good_engineering
+    subject_family: software_practices
+    source_domain: software_practice
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: tracking_phone_locations
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: violates_rights
+    statement: Tracking phone locations to model the spread of a disease violates
+      someone's rights.
+    negation: It is not the case that Tracking phone locations to model the spread
+      of a disease violates someone's rights.
+    paraphrases:
+    - Tracking phone locations to model the spread of a disease infringes on someone's
+      rights.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: tracking_phone_locations
+    frame_id: violates_rights
+    subject_family: ethical_practices
+    source_domain: privacy
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: using_restorative_justice
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: violates_rights
+    statement: Using restorative justice for violent offences violates someone's rights.
+    negation: It is not the case that Using restorative justice for violent offences
+      violates someone's rights.
+    paraphrases:
+    - Using restorative justice for violent offences infringes on someone's rights.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: using_restorative_justice
+    frame_id: violates_rights
+    subject_family: ethical_practices
+    source_domain: justice
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: white_lie
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: violates_rights
+    statement: Telling a friend you like a gift you actually dislike violates someone's
+      rights.
+    negation: It is not the case that Telling a friend you like a gift you actually
+      dislike violates someone's rights.
+    paraphrases:
+    - Telling a friend you like a gift you actually dislike infringes on someone's
+      rights.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: white_lie
+    frame_id: violates_rights
+    subject_family: ethical_practices
+    source_domain: honesty
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+- id: zoos
+  version: '2'
+  domain: ethical_practices
+  scope: Assess the practice as described, without assuming additional facts. This
+    is a general moral or policy judgment, not a claim about every conceivable exception.
+  stance:
+    id: permissible
+    statement: Keeping wild animals in zoos is morally permissible.
+    negation: It is not the case that Keeping wild animals in zoos is morally permissible.
+    paraphrases:
+    - Keeping wild animals in zoos is permissible from a moral standpoint.
+  facets: []
+  exclusions:
+  - Claims about related facets not stated here
+  - Unspecified contextual assumptions
+  semantic_review: 'Reviewed family-specific templates: first-person epistemic prefix
+    removed; explicit propositional negation replaces antonym pairs; one meaning-preserving
+    paraphrase of the same facet. General/underspecified scope is retained, so unresolved
+    is legitimate. No prior-model verdict is a correctness target.'
+  source:
+    practices_file: configs/probe/practices.yaml
+    practices_sha: fd5b71ed31b96cdf130f8475e308ed931573180d54870c09db4be172a848b3ac
+    frames_file: configs/probe/frames.yaml
+    frames_sha: 346e6de15548e0a2800d2f824d55b4a385db8634f86929b154294ac9baaf28be
+    item_id: zoos
+    frame_id: permissible
+    subject_family: ethical_practices
+    source_domain: animal_ethics
+    kind: null
+    pair_id: null
+    selection_seed: 20260930
+deduplicate_prompts: true
+chunk_size: 36

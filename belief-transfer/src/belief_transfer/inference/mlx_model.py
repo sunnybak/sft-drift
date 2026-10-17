@@ -53,6 +53,9 @@ class MLXModel:
         max_new_tokens: int = 256,
         seed: int = 42,
         enable_thinking: bool = False,
+        top_p: float | None = None,
+        top_k: int | None = None,
+        min_p: float | None = None,
     ) -> None:
         self.model = model
         self.adapter_path = Path(adapter_path) if adapter_path is not None else None
@@ -65,6 +68,7 @@ class MLXModel:
         self.max_new_tokens = max_new_tokens
         self.seed = seed
         self.enable_thinking = enable_thinking
+        self.sampling_options = {k:v for k,v in {'top_p':top_p,'top_k':top_k,'min_p':min_p}.items() if v is not None}
         self._mlx_model = None
         self._tokenizer = None
 
@@ -211,9 +215,13 @@ class MLXModel:
 
         self._ensure_loaded()
         prompt_text = self._prompt_text(messages)
-        sampler = make_sampler(temp=temperature)
+        sampler = make_sampler(temp=temperature, **self.sampling_options)
+        if temperature > 0:
+            import mlx.core as mx
+            mx.random.seed(self.seed)
 
         chunks: list[str] = []
+        self.last_generation_metadata = None
         for response in stream_generate(
             self._mlx_model,
             self._tokenizer,
@@ -222,6 +230,11 @@ class MLXModel:
             sampler=sampler,
         ):
             chunks.append(response.text)
+            self.last_generation_metadata = {
+                "finish_reason": getattr(response, "finish_reason", None),
+                "prompt_tokens": getattr(response, "prompt_tokens", None),
+                "generation_tokens": getattr(response, "generation_tokens", None),
+            }
             if on_token is not None:
                 on_token(response.text)
         return "".join(chunks).strip()
@@ -244,3 +257,56 @@ class MLXModel:
             self.chat([{"role": "user", "content": prompt}], temperature=temperature)
             for prompt in prompts
         ]
+
+    def generate_batch_with_metadata(self, prompts, *, temperature=0, seeds, batch_size):
+        """Explicit generated-answer batching; leaves legacy sequential generation intact.
+
+        Per-token random seeds isolate requests from completion order. This is a new
+        sampling contract, qualified on controls before measurement, not numerical
+        equivalence with sequential MLX or CUDA generation.
+        """
+        import mlx.core as mx
+        from mlx_lm.generate import BatchGenerator
+        from mlx_lm.sample_utils import make_sampler
+
+        if not prompts or len(prompts) != len(seeds):
+            raise ValueError("batch prompts/seeds must be nonempty and aligned")
+        self._ensure_loaded()
+        tokens = [self._encode(self._prompt_text([{"role": "user", "content": prompt}])) for prompt in prompts]
+        sampler = make_sampler(temp=temperature, **self.sampling_options)
+
+        def seeded_sampler(seed):
+            step = 0
+            def sample(logprobs):
+                nonlocal step
+                if temperature:
+                    mx.random.seed((seed + step * 0x9e3779b9) & 0xffffffff)
+                value = sampler(logprobs)
+                mx.eval(value)
+                step += 1
+                return value
+            return sample
+
+        generator = BatchGenerator(self._mlx_model, max_tokens=self.max_new_tokens,
+            stop_tokens=[[token] for token in self._tokenizer.eos_token_ids],
+            completion_batch_size=batch_size, prefill_batch_size=min(batch_size, 8))
+        try:
+            uids = generator.insert(tokens, max_tokens=[self.max_new_tokens] * len(tokens),
+                                    samplers=[seeded_sampler(seed) for seed in seeds])
+            generated = {uid: [] for uid in uids}
+            finish = {}
+            while responses := generator.next_generated():
+                for response in responses:
+                    if response.finish_reason != "stop":
+                        generated[response.uid].append(response.token)
+                    if response.finish_reason is not None:
+                        finish[response.uid] = response.finish_reason
+            if set(finish) != set(uids):
+                raise ValueError("batch terminated without every completion")
+            return [(self._tokenizer.decode(generated[uid]), {
+                "finish_reason": finish[uid], "prompt_tokens": len(tokens[i]),
+                "generation_tokens": len(generated[uid]), "sampling_seed": seeds[i],
+                "sampling_seed_strategy": "per-token-v1", "batch_size": len(prompts)})
+                for i, uid in enumerate(uids)]
+        finally:
+            generator.close()

@@ -1,0 +1,12 @@
+# @package _global_
+defaults:
+  - /probe@instrument_validation: instrument_diversity_v2
+run_id: instrument_diverse_qwen_v2
+stage: instrument_validation
+experiment:
+  id: instrument_validation
+  dataset:
+    n_items: 1
+instrument_validation:
+  provider: local
+  model: qwen3-4b

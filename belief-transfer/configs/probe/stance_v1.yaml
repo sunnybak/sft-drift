@@ -1,0 +1,12 @@
+defaults:
+  - ethics_pilot_v1
+
+measurements:
+  - {name: stance, version: stance-v1}
+measurement_prompt_style: concise
+conviction_rubrics: []
+conviction_interface: legacy
+conviction_meta: null
+conviction_selection_run_id: null
+conviction_scale_study: null
+conviction_allocation_study: null

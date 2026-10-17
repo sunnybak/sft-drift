@@ -1,0 +1,9 @@
+# @package _global_
+# Diagnose argmax quantization using all 15 joint strings, including invalid pairs.
+# No score is adopted or qualified from this diagnostic expectation.
+defaults:
+  - conviction_scale_verdict_fast_screen_v1
+run_id: conviction_scale_likelihood_screen_v1
+pilot_bench:
+  conviction_scale_study:
+    joint_likelihood: true

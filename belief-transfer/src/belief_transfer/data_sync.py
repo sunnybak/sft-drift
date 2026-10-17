@@ -60,6 +60,12 @@ def allow_patterns(paths: list[str] | None) -> list[str] | None:
     return patterns or None
 
 
+def _require_private(api: HfApi, repo_id: str) -> None:
+    # create_repo(private=True, exist_ok=True) does NOT privatize an existing public repo.
+    if api.repo_info(repo_id=repo_id, repo_type="dataset").private is not True:
+        raise ValueError(f"refusing upload to public artifact repository: {repo_id}")
+
+
 def push_data(repo_id: str = DEFAULT_REPO_ID, paths: list[str] | None = None) -> list[str] | None:
     """Upload `data/` (minus `cache/`) to the HF dataset repo, creating it if needed.
 
@@ -67,6 +73,7 @@ def push_data(repo_id: str = DEFAULT_REPO_ID, paths: list[str] | None = None) ->
     """
     api = HfApi()
     api.create_repo(repo_id=repo_id, repo_type="dataset", private=True, exist_ok=True)
+    _require_private(api, repo_id)
     patterns = allow_patterns(paths)
     api.upload_folder(
         folder_path=str(DATA_DIR),
@@ -151,6 +158,7 @@ def push_cache(repo_id: str = DEFAULT_REPO_ID) -> None:
     """
     api = HfApi()
     api.create_repo(repo_id=repo_id, repo_type="dataset", private=True, exist_ok=True)
+    _require_private(api, repo_id)
     api.upload_folder(
         folder_path=str(DATA_DIR / CACHE_REPO_SUBDIR),
         path_in_repo=CACHE_REPO_SUBDIR,

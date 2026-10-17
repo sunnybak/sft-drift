@@ -27,6 +27,17 @@ from belief_transfer.schemas import JobConfig, RunResult, Stage
 StageFn = Callable[[JobConfig], Coroutine[Any, Any, RunResult]]
 
 _MODULES: dict[Stage, tuple[str, str]] = {
+    # Retired research stages: retained for explicit historical reproduction only.
+    "conviction_allocation": ("belief_transfer.stages.conviction_allocation", "run"),
+    "conviction_study": ("belief_transfer.stages.conviction_study", "run"),
+    "pilot_measurement_bank": ("belief_transfer.stages.measurements", "run_build"),
+    "pilot_measurements": ("belief_transfer.stages.measurements", "run"),
+    "stance_study": ("belief_transfer.stages.stance_study", "run"),
+    "pilot_reextract": ("belief_transfer.stages.pilot", "run_reextract"),
+    "pilot_tune": ("belief_transfer.stages.pilot", "run_tune"),
+    "pilot_generate": ("belief_transfer.stages.pilot", "run_generate"),
+    "pilot_eval": ("belief_transfer.stages.pilot", "run_eval"),
+    "instrument_validation": ("belief_transfer.stages.instrument_validation", "run"),
     "datagen": ("belief_transfer.stages.datagen", "run"),
     "sft": ("belief_transfer.stages.sft", "run"),
     "efficacy": ("belief_transfer.stages.efficacy", "run"),

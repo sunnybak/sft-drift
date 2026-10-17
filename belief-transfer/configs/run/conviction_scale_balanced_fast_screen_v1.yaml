@@ -1,0 +1,13 @@
+# @package _global_
+# Test whether explicit choice binding also works without long reasoning.
+defaults:
+  - conviction_scale_balanced_screen_v1
+run_id: conviction_scale_balanced_fast_screen_v1
+pilot_bench:
+  max_new_tokens: 256
+  conviction_scale_study:
+    thinking: false
+    temperature: 0.0
+    top_p: null
+    top_k: null
+    min_p: null

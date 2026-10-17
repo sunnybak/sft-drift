@@ -1,0 +1,13 @@
+# @package _global_
+defaults:
+  - /probe@pilot_bench: ethics_measurements_v3
+run_id: ethics_measurements_bank_v3
+stage: pilot_measurement_bank
+experiment:
+  id: ethical_pilot
+  dataset:
+    n_items: 1
+pilot_bench:
+  bank_run_id: ethics_pilot_bank_v2
+  max_new_tokens: 128
+  measurement_prompt_style: concise

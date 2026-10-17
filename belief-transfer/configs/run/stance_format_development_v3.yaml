@@ -1,0 +1,5 @@
+# @package _global_
+# v2 stopped during bank construction, before any model call. Same declared comparison.
+defaults:
+  - stance_format_development_v2
+run_id: stance_format_development_v3

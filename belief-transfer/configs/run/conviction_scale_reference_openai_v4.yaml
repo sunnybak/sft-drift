@@ -1,0 +1,10 @@
+# @package _global_
+# Same atomic bank as local v4; independent model-ability/reference diagnostic.
+defaults:
+  - conviction_scale_development_v4
+run_id: conviction_scale_reference_openai_v4
+throughput: 4
+pilot_bench:
+  model: gpt-5.6-luna
+  conviction_scale_study:
+    provider: openai

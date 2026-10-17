@@ -1,0 +1,12 @@
+# @package _global_
+defaults:
+  - conviction_favored_credence_qwen_v1
+run_id: conviction_favored_credence_qwen_thinking_v1
+pilot_bench:
+  max_new_tokens: 4096
+  conviction_allocation_study:
+    thinking: true
+    temperature: 0.6
+    top_p: 0.95
+    top_k: 20
+    min_p: 0.0

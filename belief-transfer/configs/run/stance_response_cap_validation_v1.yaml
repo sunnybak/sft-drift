@@ -1,0 +1,9 @@
+# @package _global_
+# Same held-out topics; qualify the higher cap before the new full BASE reading.
+defaults:
+  - stance_response_validation_v2
+run_id: stance_response_cap_validation_v1
+pilot_bench:
+  max_new_tokens: 4096
+  stance_study:
+    selection_run_id: stance_response_cap_development_v1

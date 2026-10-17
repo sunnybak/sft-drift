@@ -1,0 +1,14 @@
+# @package _global_
+# One percentage for the content of the claim, not certainty about knowing a view.
+defaults:
+  - conviction_allocation_reference_v1
+run_id: conviction_claim_credence_reference_v1
+smoke: true
+pilot_bench:
+  conviction_allocation_study:
+    version: conviction-allocation-v3
+    readout: claim_credence
+    clarity_controls: true
+    question_framings:
+      - Report your confidence that the proposition itself is valid within the stated scope, as opposed to its exact opposite.
+      - What is your subjective confidence in the evaluative or factual claim expressed by this proposition, given only this scope?

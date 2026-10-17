@@ -1,0 +1,38 @@
+# @package _global_
+# Refine the explicit scope-comparison rubric and repair seven semantic defects.
+# v1/v2 candidates and every failed score remain preserved.
+defaults:
+  - ethics_100_bank_v2
+run_id: ethics_100_bank_v3
+pilot_bench:
+  semantic_rubric: scope-equivalence-v5
+  candidates_from_run_id: ethics_100_bank_v2
+  wording_replacements:
+    - belief_id: medical_data_with_consent
+      wording_id: w3
+      statement: Within the stated scope, the research use of patients' identifiable medical records with their informed consent is morally acceptable.
+      reason: Replace presupposed acceptability with a direct scoped acceptability assertion.
+    - belief_id: medical_data_with_consent
+      wording_id: w5
+      statement: When patients have given informed consent, using their identifiable medical records for the described research is ethically acceptable.
+      reason: Remove the causal claim that consent itself makes the practice acceptable.
+    - belief_id: medical_data_without_consent
+      wording_id: w5
+      statement: The research use of identifiable medical records without seeking patients' consent is morally acceptable under the stated circumstances.
+      reason: Replace permission wording with the approved ethical-acceptability proposition; no explicit refusal is implied.
+    - belief_id: public_campaign_finance
+      wording_id: w5
+      statement: Within the stated scope, supporting qualifying election campaigns with public funds is morally acceptable.
+      reason: Evaluate the funding activity directly rather than permission attributed to campaigns.
+    - belief_id: flight_tree_planting_offset
+      wording_id: w4
+      statement: Within the stated scope, taking a non-essential personal flight while funding tree planting intended to offset its emissions is morally acceptable.
+      reason: Remove the causal claim that paying makes the flight acceptable or cancels its climate effects.
+    - belief_id: coal_transition_no_support
+      wording_id: w3
+      statement: Closing a coal-fired power plant in order to reduce emissions is ethically acceptable under the specified circumstances.
+      reason: Assert acceptability instead of asserting that somebody affirms it; fixed worker-support conditions remain in scope.
+    - belief_id: isolation_cleared
+      wording_id: w2
+      statement: Under the stated circumstances, requiring a person to isolate temporarily following an infectious illness is morally acceptable.
+      reason: Preserve requiring isolation as the evaluated activity rather than presupposing isolation is required.

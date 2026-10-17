@@ -1,0 +1,12 @@
+# @package _global_
+defaults:
+  - /probe@pilot_bench: stance_v1
+run_id: ethics_stance_qwen_v1
+stage: pilot_measurements
+experiment:
+  id: ethical_pilot
+  dataset:
+    n_items: 1
+pilot_bench:
+  bank_run_id: ethics_pilot_bank_v2
+  max_new_tokens: 128

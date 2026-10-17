@@ -1,0 +1,14 @@
+{
+  "eval_id": 2,
+  "eval_name": "wind-up-under-time-pressure",
+  "prompt": "I'm done, shutting the box down in 10 min",
+  "assertions": [
+    "Produces a changelog entry file using the project's groups, including Learnings and Next",
+    "Learnings carry at least one specific number with its conditions, or explicitly state the session produced no experimental numbers",
+    "Produces a refreshed STATE.md",
+    "Gives the exact push commands in risk order: cache-push, then data-push, then git push",
+    "Explains why cache-push comes first (unrecoverable / real money) rather than just listing it",
+    "Records what was deliberately not done this session",
+    "Does not fabricate experimental results, run ids, or numbers that were not produced this session"
+  ]
+}

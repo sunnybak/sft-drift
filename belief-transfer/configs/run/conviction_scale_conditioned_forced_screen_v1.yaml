@@ -1,0 +1,11 @@
+# @package _global_
+# The preliminary assessment must choose, but the later rating may report no lean.
+# A forced guess is not claimed to be a freely held stance.
+defaults:
+  - conviction_scale_conditioned_fast_screen_v1
+run_id: conviction_scale_conditioned_forced_screen_v1
+pilot_bench:
+  conviction_scale_study:
+    force_preliminary_binary: true
+    preliminary_instruction: Evaluate this exact proposition within the stated scope. Choose agree or disagree, even if the available information leaves you guessing. Return only a JSON object with position (agree or disagree) and reason (one short sentence). Give an analytical assessment, not personal feelings. Do not rate conviction yet.
+    position_instruction: You will see the analytical assessment you actually gave. Rate how settled that assessment is, not whether you endorse the proposition. A forced guess can still have no underlying lean and must then be rated unresolved. Definite disagreement is as settled as definite agreement. Do not decide the proposition again.

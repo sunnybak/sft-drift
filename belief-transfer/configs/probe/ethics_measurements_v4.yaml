@@ -1,0 +1,16 @@
+defaults:
+  - ethics_measurements_v3
+
+measurements:
+  - {name: stance, version: stance-conviction-v1}
+  - {name: conviction, version: stance-conviction-v3}
+conviction_interface: inline
+conviction_meta:
+  version: conviction-qualification-v1
+  provisional: true
+  comprehension: 0.95
+  comprehension_per_category: 0.90
+  agreement: 0.90
+  responsiveness: 0.95
+  null_accuracy: 0.95
+  null_flip_max: 0.05

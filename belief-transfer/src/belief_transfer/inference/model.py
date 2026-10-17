@@ -183,32 +183,52 @@ class ApiModel:
     result would look like a transfer ratio without being one. See `score_choices`.
     """
 
-    def __init__(self, model: str) -> None:
+    def __init__(self, model: str, *, context=None, throughput: int = 10,
+                 use_cache: bool = True) -> None:
         self.model = model
+        self.context = context
+        self.throughput = throughput
+        self.use_cache = use_cache
 
-    def generate(
-        self,
-        prompts: list[str],
-        temperature: float = 0,
-    ) -> list[str]:
-        # generation.llm.Client has no sampling-temperature knob (every call fixes
-        # reasoning effort to "none"); `temperature` is accepted only for symmetry
-        # with HFModel's Model protocol and otherwise has no effect on this backend.
+    def generate(self, prompts: list[str], temperature: float = 0) -> list[str]:
+        # Client fixes reasoning effort to none and uses provider-default sampling.
+        # Callers must record that rather than claim deterministic API decoding.
         del temperature
-        return _run_api_batch(self.model, prompts)
+        return _run_api_batch(self.model, prompts, context=self.context,
+                             throughput=self.throughput, use_cache=self.use_cache)
 
 
-def _run_api_batch(model: str, prompts: list[str]) -> list[str]:
+def _run_api_batch(model: str, prompts: list[str], *, context=None,
+                   throughput: int = 10, use_cache: bool = True) -> list[str]:
     import asyncio
 
     async def _collect() -> list[str]:
         results: dict[int, str] = {}
-        async with llm.Client(model=model) as client:
-            async for completion in client.batch(prompts):
+        async with llm.Client(model=model, context=context, throughput=throughput) as client:
+            async for completion in client.batch(prompts, use_cache=use_cache):
                 results[completion.index] = completion.text
         return [results[i] for i in range(len(prompts))]
 
     return asyncio.run(_collect())
+
+
+class AnthropicModel:
+    """Claude text generation through the same Model protocol as local/OpenAI calls."""
+
+    def __init__(self, model: str = "claude-sonnet-5-5", *, context=None,
+                 throughput: int = 4, max_new_tokens: int = 32) -> None:
+        from belief_transfer.generation.anthropic import Client
+
+        self.client = Client(model, context=context, throughput=throughput, max_tokens=max_new_tokens)
+        self.batch_responses: list[dict] = []
+
+    def generate(self, prompts: list[str], temperature: float = 0) -> list[str]:
+        # Model protocol accepts temperature; Sonnet 5.5 requires provider-default
+        # sampling, just as ApiModel's existing client does. Record this in the report.
+        del temperature
+        self.batch_responses = self.client.batch(prompts)
+        return ["".join(block["text"] for block in r.get("content", []) if block["type"] == "text")
+                for r in self.batch_responses]
 
 
 class HFModel:
@@ -232,6 +252,9 @@ class HFModel:
         max_new_tokens: int = 256,
         seed: int = 42,
         enable_thinking: bool = False,
+        top_p: float | None = None,
+        top_k: int | None = None,
+        min_p: float | None = None,
     ) -> None:
         self.model = model
         self.adapter_path = Path(adapter_path) if adapter_path is not None else None
@@ -253,6 +276,7 @@ class HFModel:
         self.max_new_tokens = max_new_tokens
         self.seed = seed
         self.enable_thinking = enable_thinking
+        self.sampling_options = {k:v for k,v in {'top_p':top_p,'top_k':top_k,'min_p':min_p}.items() if v is not None}
         self._hf_model = None
         self._tokenizer = None
 
@@ -403,6 +427,7 @@ class HFModel:
             seed=self.seed,
             enable_thinking=self.enable_thinking,
             on_token=on_token,
+            **self.sampling_options,
         )
 
     def generate(
@@ -420,6 +445,7 @@ class HFModel:
             batch_size=self.batch_size,
             seed=self.seed,
             enable_thinking=self.enable_thinking,
+            **self.sampling_options,
         )
 
 
@@ -586,6 +612,9 @@ def chat_generate(
     seed: int = 42,
     enable_thinking: bool = False,
     on_token=None,
+    top_p: float | None = None,
+    top_k: int | None = None,
+    min_p: float | None = None,
 ) -> str:
     """Generate one assistant reply for a single multi-turn conversation.
 
@@ -616,6 +645,7 @@ def chat_generate(
     )
     if do_sample:
         generate_kwargs["temperature"] = temperature
+        generate_kwargs.update({k:v for k,v in {'top_p':top_p,'top_k':top_k,'min_p':min_p}.items() if v is not None})
 
     if on_token is None:
         with torch.inference_mode():
@@ -682,6 +712,9 @@ def batched_chat_generate(
     seed: int = 42,
     enable_thinking: bool = False,
     min_new_tokens: int | None = None,
+    top_p: float | None = None,
+    top_k: int | None = None,
+    min_p: float | None = None,
 ) -> list[str]:
     """Left-padded, batched, chat-templated generation. Mirrors the reference branch's
     `pipeline.eval_generate.generate_for_condition` mechanism (batch encode -> generate
@@ -729,6 +762,7 @@ def batched_chat_generate(
         )
         if do_sample:
             generate_kwargs["temperature"] = temperature
+            generate_kwargs.update({k:v for k,v in {'top_p':top_p,'top_k':top_k,'min_p':min_p}.items() if v is not None})
         if min_new_tokens is not None:
             generate_kwargs["min_new_tokens"] = min_new_tokens
         with torch.inference_mode():

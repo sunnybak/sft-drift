@@ -1,0 +1,5 @@
+# @package _global_
+# Claim-specific predicate constraints; v1 raw candidates and failed audit are retained.
+defaults:
+  - ethics_stance_validation_bank_v1
+run_id: ethics_stance_validation_bank_v2

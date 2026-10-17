@@ -1,0 +1,30 @@
+# @package _global_
+# Higher cap chosen on incomplete-response failures only, never ethical positions.
+defaults:
+  - stance_response_thinking_batch_v2
+  - override /probe@pilot_bench: ethics_100_spec_v1
+run_id: stance_response_cap_development_v1
+pilot_bench:
+  bank_run_id: ethics_100_bank_v3
+  measurements:
+    - name: stance
+      version: stance-v2
+  stance_interface: named_endorse_reject
+  measurement_prompt_style: concise
+  stance_profile_version: polarity-profile-v1
+  max_new_tokens: 4096
+  measurement_batch_size: 64
+  measurement_decoding:
+    thinking: true
+    temperature: 0.6
+    top_p: 0.95
+    top_k: 20
+    min_p: 0
+  stance_study:
+    version: stance-study-v2
+    phase: development
+    candidates: [named_endorse_reject]
+    belief_ids: [placebo_undisclosed]
+    wording_ids: [w0, w1, w2, w3, w4, w5]
+    qualify_natural_consistency: false
+    stop_on_control_failure: true

@@ -1,0 +1,8 @@
+# @package _global_
+# Full 100-belief CUDA BASE. Run only after fresh GPU development + validation pass.
+defaults:
+  - ethics_100_stance_qwen_v2
+run_id: ethics_gpu_base_v1
+pilot_bench:
+  measurement_batch_size: 1
+  stance_validation_run_id: ethics_gpu_validation_v1

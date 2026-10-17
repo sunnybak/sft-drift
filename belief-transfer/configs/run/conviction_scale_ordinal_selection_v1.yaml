@@ -1,0 +1,10 @@
+# @package _global_
+# Zero new calls: prospective ordinal reduction of the recorded development data.
+# Original exact-class qualification remains unchanged in its original run.
+defaults:
+  - conviction_scale_verdict_development_openai_v1
+run_id: conviction_scale_ordinal_selection_v1
+pilot_bench:
+  conviction_scale_study:
+    qualification_mode: ordinal-reported-v1
+    maximum_normalized_gap: 0.25

@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eval Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" integrity="sha384-EnyY0/GSHQGSxSgMwaIPzSESbqoOLSexfnSMN2AP+39Ckmn92stwABZynq1JyzdT" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #faf9f5;
+      --surface: #ffffff;
+      --border: #e8e6dc;
+      --text: #141413;
+      --text-muted: #b0aea5;
+      --accent: #d97757;
+      --accent-hover: #c4613f;
+      --green: #788c5d;
+      --green-bg: #eef2e8;
+      --red: #c44;
+      --red-bg: #fceaea;
+      --header-bg: #141413;
+      --header-text: #faf9f5;
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---- Header ---- */
+    .header {
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .header .instructions {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 0.25rem;
+    }
+    .header .progress {
+      font-size: 0.875rem;
+      opacity: 0.8;
+      text-align: right;
+    }
+
+    /* ---- Main content ---- */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* ---- Sections ---- */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      flex-shrink: 0;
+    }
+    .section-header {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .section-body {
+      padding: 1rem;
+    }
+
+    /* ---- Config badge ---- */
+    .config-badge {
+      display: inline-block;
+      padding: 0.2rem 0.625rem;
+      border-radius: 9999px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-left: 0.75rem;
+      vertical-align: middle;
+    }
+    .config-badge.config-primary {
+      background: rgba(33, 150, 243, 0.12);
+      color: #1976d2;
+    }
+    .config-badge.config-baseline {
+      background: rgba(255, 193, 7, 0.15);
+      color: #f57f17;
+    }
+
+    /* ---- Prompt ---- */
+    .prompt-text {
+      white-space: pre-wrap;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* ---- Outputs ---- */
+    .output-file {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .output-file + .output-file {
+      margin-top: 1rem;
+    }
+    .output-file-header {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .output-file-header .dl-btn {
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+    .output-file-header .dl-btn:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+    .output-file-content {
+      padding: 0.75rem;
+      overflow-x: auto;
+    }
+    .output-file-content pre {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .output-file-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .output-file-content iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    .output-file-content table {
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+      width: 100%;
+    }
+    .output-file-content table td,
+    .output-file-content table th {
+      border: 1px solid var(--border);
+      padding: 0.375rem 0.5rem;
+      text-align: left;
+    }
+    .output-file-content table th {
+      background: var(--bg);
+      font-weight: 600;
+    }
+    .output-file-content .download-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .output-file-content .download-link:hover {
+      background: var(--border);
+    }
+    .empty-state {
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* ---- Feedback ---- */
+    .prev-feedback {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.625rem 0.75rem;
+      margin-top: 0.75rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .prev-feedback-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+      color: var(--text-muted);
+    }
+    .feedback-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      resize: vertical;
+      color: var(--text);
+    }
+    .feedback-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .feedback-status {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      min-height: 1.1em;
+    }
+
+    /* ---- Grades (collapsible) ---- */
+    .grades-toggle {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .grades-toggle:hover {
+      color: var(--accent);
+    }
+    .grades-toggle .arrow {
+      margin-right: 0.5rem;
+      transition: transform 0.15s;
+      font-size: 0.75rem;
+    }
+    .grades-toggle .arrow.open {
+      transform: rotate(90deg);
+    }
+    .grades-content {
+      display: none;
+      margin-top: 0.75rem;
+    }
+    .grades-content.open {
+      display: block;
+    }
+    .grades-summary {
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .grade-badge {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .grade-pass { background: var(--green-bg); color: var(--green); }
+    .grade-fail { background: var(--red-bg); color: var(--red); }
+    .assertion-list {
+      list-style: none;
+    }
+    .assertion-item {
+      padding: 0.625rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8125rem;
+    }
+    .assertion-item:last-child { border-bottom: none; }
+    .assertion-status {
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+    .assertion-status.pass { color: var(--green); }
+    .assertion-status.fail { color: var(--red); }
+    .assertion-evidence {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      padding-left: 1.5rem;
+    }
+
+    /* ---- View tabs ---- */
+    .view-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .view-tab {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .view-tab:hover { color: var(--text); }
+    .view-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .view-panel { display: none; }
+    .view-panel.active { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+
+    /* ---- Benchmark view ---- */
+    .benchmark-view {
+      padding: 1.5rem 2rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .benchmark-table {
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.8125rem;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .benchmark-table th, .benchmark-table td {
+      padding: 0.625rem 0.75rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .benchmark-table th {
+      font-family: 'Poppins', sans-serif;
+      background: var(--header-bg);
+      color: var(--header-text);
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .benchmark-table tr:hover { background: var(--bg); }
+    .benchmark-table tr.benchmark-row-with { background: rgba(33, 150, 243, 0.06); }
+    .benchmark-table tr.benchmark-row-without { background: rgba(255, 193, 7, 0.06); }
+    .benchmark-table tr.benchmark-row-with:hover { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-without:hover { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-table tr.benchmark-row-avg { font-weight: 600; border-top: 2px solid var(--border); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-with { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-without { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-delta-positive { color: var(--green); font-weight: 600; }
+    .benchmark-delta-negative { color: var(--red); font-weight: 600; }
+    .benchmark-notes {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .benchmark-notes h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+    .benchmark-notes ul {
+      list-style: disc;
+      padding-left: 1.25rem;
+    }
+    .benchmark-notes li {
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      margin-bottom: 0.375rem;
+    }
+    .benchmark-empty {
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+      padding: 3rem;
+    }
+
+    /* ---- Navigation ---- */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+    .nav-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .done-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .done-btn:hover {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .done-btn.ready {
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+    }
+    .done-btn.ready:hover {
+      background: var(--accent-hover);
+    }
+    /* ---- Done overlay ---- */
+    .done-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .done-overlay.visible {
+      display: flex;
+    }
+    .done-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 2rem 3rem;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+    }
+    .done-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .done-card p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .done-card .btn-row {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .done-card button {
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    .done-card button:hover {
+      background: var(--bg);
+    }
+    /* ---- Toast ---- */
+    .toast {
+      position: fixed;
+      bottom: 5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 200;
+    }
+    .toast.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" style="height:100vh; display:flex; flex-direction:column;">
+    <div class="header">
+      <div>
+        <h1>Eval Review: <span id="skill-name"></span></h1>
+        <div class="instructions">Review each output and leave feedback below. Navigate with arrow keys or buttons. When done, copy feedback and paste into Claude Code.</div>
+      </div>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- View tabs (only shown when benchmark data exists) -->
+    <div class="view-tabs" id="view-tabs" style="display:none;">
+      <button class="view-tab active" onclick="switchView('outputs')">Outputs</button>
+      <button class="view-tab" onclick="switchView('benchmark')">Benchmark</button>
+    </div>
+
+    <!-- Outputs panel (qualitative review) -->
+    <div class="view-panel active" id="panel-outputs">
+    <div class="main">
+      <!-- Prompt -->
+      <div class="section">
+        <div class="section-header">Prompt <span class="config-badge" id="config-badge" style="display:none;"></span></div>
+        <div class="section-body">
+          <div class="prompt-text" id="prompt-text"></div>
+        </div>
+      </div>
+
+      <!-- Outputs -->
+      <div class="section">
+        <div class="section-header">Output</div>
+        <div class="section-body" id="outputs-body">
+          <div class="empty-state">No output files found</div>
+        </div>
+      </div>
+
+      <!-- Previous Output (collapsible) -->
+      <div class="section" id="prev-outputs-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="togglePrevOutputs()">
+            <span class="arrow" id="prev-outputs-arrow">&#9654;</span>
+            Previous Output
+          </div>
+        </div>
+        <div class="grades-content" id="prev-outputs-content"></div>
+      </div>
+
+      <!-- Grades (collapsible) -->
+      <div class="section" id="grades-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="toggleGrades()">
+            <span class="arrow" id="grades-arrow">&#9654;</span>
+            Formal Grades
+          </div>
+        </div>
+        <div class="grades-content" id="grades-content"></div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="section">
+        <div class="section-header">Your Feedback</div>
+        <div class="section-body">
+          <textarea
+            class="feedback-textarea"
+            id="feedback"
+            placeholder="What do you think of this output? Any issues, suggestions, or things that look great?"
+          ></textarea>
+          <div class="feedback-status" id="feedback-status"></div>
+          <div class="prev-feedback" id="prev-feedback" style="display:none;">
+            <div class="prev-feedback-label">Previous feedback</div>
+            <div id="prev-feedback-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav" id="outputs-nav">
+      <button class="nav-btn" id="prev-btn" onclick="navigate(-1)">&#8592; Previous</button>
+      <button class="done-btn" id="done-btn" onclick="showDoneDialog()">Submit All Reviews</button>
+      <button class="nav-btn" id="next-btn" onclick="navigate(1)">Next &#8594;</button>
+    </div>
+    </div><!-- end panel-outputs -->
+
+    <!-- Benchmark panel (quantitative stats) -->
+    <div class="view-panel" id="panel-benchmark">
+      <div class="benchmark-view" id="benchmark-content">
+        <div class="benchmark-empty">No benchmark data available. Run a benchmark to see quantitative results here.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Done overlay -->
+  <div class="done-overlay" id="done-overlay">
+    <div class="done-card">
+      <h2>Review Complete</h2>
+      <p>Your feedback has been saved. Go back to your Claude Code session and tell Claude you're done reviewing.</p>
+      <div class="btn-row">
+        <button onclick="closeDoneDialog()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ---- Embedded data (injected by generate_review.py) ----
+    const EMBEDDED_DATA = {"skill_name": "orient + wind-up", "runs": [{"id": "fresh-box-orientation-with_skill", "prompt": "just pulled this repo onto a fresh box, where are we and what should I run?", "eval_id": 0, "outputs": [{"name": "report.md", "type": "text", "content": "# Orientation\n\nRead-only pass: `STATE.md`, the standing-result section of `AGENTS.md`, `changelog/2026-08-19.md`,\ngit state, and a direct inventory of `data/`. I did not run any pipeline job, pull, or push.\n\n**First, a correction to the premise: this box is not fresh.** It has `belief-transfer/.venv`,\na populated `.env`, an untracked `STATE.md`, and a `data/` tree with files dated Aug 13-19 --\nnone of which come from a `git clone`, since all of `data/` is gitignored. You are on a\nworking machine, and it is a **Mac** (no `configs/hardware_profile.yaml`, so uncalibrated;\nMLX scoring only, training is CUDA-only by design). If you genuinely have a second, fresh\nGPU box, `SETUP.md` is the six-step script for it and it is current.\n\n---\n\n## Established\n\nThe standing result is `AGENTS.md` -> \"What the factory-farming experiment measured\", read at\n**step 24** (`matrix_v1_step24`), not the endpoint.\n\n- **Evidence-only SFT moves neither belief nor action.** `dB NET +0.003 [-0.020, +0.028]`,\n  `dA NET -0.007 [-0.020, +0.006]`, against prompted sensitivity `S_B +0.652` / `S_A +0.350`.\n  The arms do absorb their corpus, so this is a real negative about belief acquisition, not a\n  failed manipulation.\n- **Explicit assertion moves belief** -- `dB NET +0.311 [+0.232, +0.393]`, `T_B 0.477`. The\n  only netted dB in this project whose CI excludes zero.\n- **Belief does not propagate to action** -- `T_A -0.003`, `dA -0.0009 [-0.024, +0.021]`, with\n  every arm passing `choice_bench` at step 24. Half the prompted belief effect, none of the\n  behaviour. **Do not quote `propagation = T_A/T_B`**; its numerator straddles zero.\n- Scope: one model (4B), one topic, **one seed (42)**.\n\n## Void -- do not cite\n\n| run id | why |\n| --- | --- |\n| `sensitivity_multiformat` | scored on choice-collapsed arms (CIs narrowed to +/-0.035) |\n| `transfer_multiformat` | same |\n\nTwo things about this table worth knowing:\n\n1. **There are no `VOID.md` markers on disk.** I checked. `STATE.md` is the sole record of\n   which run directories are poisoned, and a voided directory is byte-identical in shape to a\n   valid one.\n2. **`STATE.md` is untracked in git.** It has never been committed. On the fresh box you\n   described, it would simply not exist -- and with it the void table. That is the single\n   highest-value five-second fix available: commit it.\n\n## In flight\n\n- **The paper is further along than `STATE.md` says.** `STATE.md` lists \"write the paper\n  draft\" as item 4, \"not yet acted on\". In fact commit `5fa6e79` added `stage=writeup`, and\n  `paper_factory_farming_v1` through `v6` have all run -- `v6` has a compiled `paper.pdf`,\n  `paper.tex`, `evidence.json`, and figures on disk. `STATE.md` is stale on this point.\n- Recorded next step in `changelog/2026-08-19.md`: re-run `paper_factory_farming_v1` from\n  pulled source artifacts to review the qualified endpoint tables in the compiled PDF. It\n  still carries no curated literature references.\n- Believed never run: `transfer_fixedq_d93_formmatched` (overlay exists, no results).\n\n## Blocking: the checkpoints behind the standing result are not on this machine\n\nThis is the answer to \"what should I run\". The seven matrix arms resolve to three checkpoint\nrun ids, and **none of them exist locally**:\n\n| arm | checkpoint run id | present? |\n| --- | --- | --- |\n| `M+` / `M-` | `multiformat_v2_valsplit_fixedq_d93` | **missing** |\n| `M0+` / `M0-` | `m0_multiform` (experiment `control_offtopic`) | **missing** |\n| `Me+` / `Me-` | `explicit_stance_v3_arms` | **missing** |\n\n`data/checkpoints/` holds only the older `tune-*`, `m0-split-*`, `explicit-control-*`, and\n`valsplit-ff*` generations. Eleven more run overlays likewise have no result directory here,\nincluding both of the `*_fixedq` runs that `STATE.md` already flagged as suspected-stale.\n\nSo: **nothing in the standing result can be re-scored or extended on this box until\n`make data-pull` runs.** `STATE.md` predicted exactly this (\"Local `data/` is stale... run\n`make data-pull` before trusting any local absence\") -- I have now confirmed it rather than\nleaving it as a suspicion.\n\n## Next, as recorded\n\n1. **Replicate at a second seed.** Everything is seed 42. Retrain `M+/-` and `Me+/-` at seed 7,\n   re-score. ~40 min GPU, no API spend. Failing to replicate is the most informative outcome\n   available.\n2. **Score absorption at step 24.** The preferred belief/action reading has no efficacy gate\n   beside it -- `matrix_v1_step24/report.md` says `_Not run._` under Efficacy.\n   `+run=matrix_v1_step24 stage=absorption`, ~10 min, no API spend.\n3. **Is step 24 the optimum or just the best of five sampled points?** Checkpoints land every\n   12 steps at `target_checkpoint_count: 5`. Raising it costs disk, not compute.\n4. Paper draft (largely done -- see In flight).\n5. **A second topic** (`software architecture` or `computer recommendations`, both specced in\n   `AGENTS.md`) -- converts a single-topic finding into a replicated one. Mostly compute; the\n   pipeline exists.\n\n## What I am unsure about\n\n- **`STATE.md` mixes the two readings in its headline.** It presents `dB +0.003\n  [-0.020, +0.028]` / `dA -0.007 [-0.020, +0.006]` under \"read at **step 24**\", but those are\n  verbatim the **endpoint** numbers -- `matrix_v1/report.md` records `delta_net +0.0029\n  [-0.0204, +0.0275]` and `-0.0072 [-0.0199, +0.0061]`. At step 24 the evidence contrast is\n  `delta_net +0.0072 [+0.0016, +0.0136]`, whose **CI excludes zero**. The effect is still\n  negligible (`T +0.011` against `S_B +0.652`), so I doubt the conclusion moves -- but\n  \"straddling zero\" is not true of the step-24 reading, and the mixed provenance should be\n  fixed rather than propagated into the paper.\n- **The headline `dB NET +0.311` is not in either `report.md`.** Both reports' belief/action\n  delta tables show the *evidence* contrast, because `transfer.contrast: [m_plus, m_minus]`.\n  The explicit contrast is computed separately via `evals.suite.netted_delta`. Anyone reading\n  `matrix_v1_step24/report.md` cold would conclude dB is +0.007. Not a bug, but a trap.\n- I could not confirm whether the remote HF dataset actually contains the three missing\n  checkpoint run ids, since checking means pulling. `STATE.md` records a successful\n  `make data-push` of 1,216 files at the last GPU session, which is the reason to expect they\n  are there.\n\n## Proposed next action\n\nPull, then verify the pull rather than assuming it:\n\n```bash\ncd belief-transfer\nmake data-pull    # ~7 GB, includes checkpoints\nmake cache-pull   # the LLM call cache -- do this, it is money\nls data/checkpoints/factory_farming/multiformat_v2_valsplit_fixedq_d93 \\\n   data/checkpoints/control_offtopic/m0_multiform \\\n   data/checkpoints/factory_farming/explicit_stance_v3_arms\n```\n\nThen, if those three exist, recorded item 2 is the cheapest real science available and it\ncloses an acknowledged hole in the preferred reading:\n\n```bash\nuv run python run.py +run=matrix_v1_step24 stage=absorption   # ~10 min, no API spend\n```\n\n**The decision I need from you:** is this Mac the box you intend to work on, or do you have a\nGPU box coming up? It matters. Absorption scoring will run here (MLX), but **training will\nnot** -- so recorded item 1, the seed-7 replication, which is the most scientifically valuable\nthing on the list, is GPU-only. If a GPU box is in play, run `SETUP.md` there and do the\nreplication rather than spending this session on scoring.\n\n## Traps that bear on this, from the record\n\n- **Read at step 24, not the endpoint.** The frozen 5-epoch schedule is past the optimum; the\n  endpoint understates `dB` by 3.3x, and `M0+`'s `choice_bench` failure (0.740 vs the 0.75\n  bar) is a late artifact -- it scores 0.854 at step 24. Do not lower the bar.\n- **Machinery is control-specific.** Re-derive it whenever the control changes; a carried-over\n  machinery term corrupted three sessions of conclusions.\n- **`stage=sft` silently reuses a `COMPLETED` checkpoint.** Pass `force=true` to retrain --\n  this will bite on the seed-7 replication specifically.\n- **The one cache hole is `control_offtopic_v2`** (~8,000 judge calls made on a box that was\n  never pushed). Regenerating that corpus costs full price. Everything else is warm.\n- **`CLAUDE.md` is a symlink to `AGENTS.md`.** Edit `AGENTS.md` only.\n- **Never change an eval because of what it showed.** Iterating while exploratory is fine,\n  under a new run id.\n"}], "grading": null}, {"id": "fresh-box-orientation-without_skill", "prompt": "just pulled this repo onto a fresh box, where are we and what should I run?", "eval_id": 0, "outputs": [{"name": "report.md", "type": "text", "content": "# Where we are, and what to run\n\nShort version: **the science is in good shape, the box is not.** This machine has the code\nand the *outputs* of the current experiment but not its *inputs* \u2014 none of the seven-arm\nmatrix's checkpoints are on disk. Run `make data-pull` before anything else; almost\neverything you'd want to do is blocked on it. Also note this is a Mac, so the top-priority\nnext experiment can't run here at all.\n\n---\n\n## 1. The standing result (unchanged, and it's a good one)\n\nExperiment: `factory_farming`, seven arms \u2014 `base`, `M\u00b1` (evidence), `M0\u00b1` (off-topic\ncontrol), `Me\u00b1` (explicit stance) \u2014 at one dose. Read at **optimizer step 24**\n(`matrix_v1_step24`), not the endpoint.\n\n| finding | numbers |\n|---|---|\n| Evidence-only SFT moves neither belief nor action | `\u0394B +0.003 [\u22120.020, +0.028]`, `\u0394A \u22120.007 [\u22120.020, +0.006]` (endpoint) |\n| Explicit assertion **does** move belief | `\u0394B NET +0.311 [+0.232, +0.393]`, `T_B 0.477` |\n| Belief does **not** propagate to action | `T_A \u22120.003`, `\u0394A \u22120.0009 [\u22120.024, +0.021]` |\n| Prompted sensitivity (the denominators) | `S_B +0.652`, `S_A +0.350` |\n\nThe headline is the dissociation: at step 24 the explicit arms hold **48% of the prompted\nbelief effect and produce exactly zero behavioural change**. Half the belief, none of the\nbehaviour. Don't quote `propagation = T_A/T_B` \u2014 its numerator straddles zero.\n\nReading at step 24 rather than the endpoint matters by **3.3x** (`T_B` 0.477 vs 0.146), and\nthe `M0+` gate failure recorded at the endpoint is a late artifact \u2014 every arm passes at\nstep 24 (`M0+` scores 0.854 there vs 0.740 at step 60).\n\nAuthority: `AGENTS.md` -> \"What the factory-farming experiment measured\".\nArtifacts: `belief-transfer/data/results/factory_farming/matrix_v1{,_step24}/report.md`.\n\n**The paper is drafted and compiled.** `paper_factory_farming_v1` through `v6` all exist;\nv6 has `review.json` `approved: true` and a 344 KB `paper.pdf`. Title: *\"Evidence Absorption\nWithout Stable Belief Transfer\"*. Note `STATE.md` still lists \"write the paper draft\" as\nnot-yet-acted-on \u2014 that's stale, it happened on 2026-08-19.\n\n---\n\n## 2. The box: what's actually here\n\nRepo root is a wrapper \u2014 **the project lives in `belief-transfer/`**. Run everything from\nthere.\n\n**Working:**\n- Git clean and in sync with `origin/main` at `44ad0a2`. Only untracked: `STATE.md` and\n  `.claude/skills/{orient,wind-up,session-workspace}/`.\n- `.venv` installed and importable: torch 2.10.0, transformers 5.5.0, trl 0.24.0,\n  peft 0.19.1, hydra 1.3.5, `belief_transfer` ok.\n- Base model `Qwen/Qwen3-4B` already in the local HF cache.\n- LLM cache present: `data/cache/llm_cache.jsonl`, 16 MB.\n- Eval suites present: `data/validated/factory_farming/evalgen_v2/`.\n- Cross-backend fixture committed: `tests/fixtures/backend_agreement.json`.\n\n**Not working / not a fresh-box-per-SETUP.md situation:**\n- **This is a Mac.** `cuda: False`, `mps: True`, `mlx_lm ok`. Training is CUDA-only *by\n  design* (`training.sft.load_for_training` refuses rather than degrading). So this is a\n  scoring/dev box, not a training box.\n- `configs/hardware_profile.yaml` is **absent** \u2014 `stage=calibrate` has never run here.\n- `STATE.md` is **untracked**, i.e. not committed. On a genuinely fresh clone this\n  orientation file would not exist at all. Worth committing.\n\n---\n\n## 3. The blocker \u2014 and it's worse than STATE.md says\n\n`STATE.md` flags \"local `data/` is stale\" and names two missing result directories. The\nactual gap is much larger: **the entire current-generation artifact set is missing.**\n\nEvery checkpoint the standing result was scored from is absent:\n\n| arm | checkpoint run_id | on disk? |\n|---|---|---|\n| `M\u00b1` | `multiformat_v2_valsplit_fixedq_d93` | **ABSENT** |\n| `M0\u00b1` | `m0_multiform` | **ABSENT** |\n| `Me\u00b1` | `explicit_stance_v3_arms` | **ABSENT** |\n\nTheir corpora are missing too \u2014 `multiformat_v2_fixedq`, `explicit_stance_v3`,\n`control_offtopic_multiform` appear in neither `data/generated/` nor `data/validated/`.\n13 run overlays in `configs/run/` have no corresponding results directory.\n\nWhat *is* here is the previous generation (`tune-*`, `m0-split-v*`, `explicit-control-v*`)\nplus the **result YAMLs** of `matrix_v1` / `matrix_v1_step24`. So you can read the standing\nresult, but you cannot currently reproduce it, re-score it, or extend it.\n\nThis is consistent with STATE.md's diagnosis \u2014 last session recorded a successful\n`make data-push` of 1,216 files and this machine simply hasn't pulled since. It should be a\nstraightforward fix rather than lost work, but **treat every local absence as unverified\nuntil the pull completes.**\n\n---\n\n## 4. What to run\n\nI have not run any of these \u2014 they either transfer data or cost GPU/API time.\n\n### Step 1 \u2014 unblock (do this first, from `belief-transfer/`)\n\n```bash\nmake data-pull     # ~7 GB, includes checkpoints\nmake cache-pull    # the LLM cache \u2014 this is money\n```\n\nVerify it worked by confirming the three checkpoint directories above now exist. If they\ndon't, stop \u2014 the remote is missing them too and that's a different (worse) problem.\n\n### Step 2 \u2014 confirm the box (cheap, ~minutes)\n\n```bash\nmake test                                                  # GPU-free unit tests\nuv run python run.py +run=adhoc stage=calibrate            # writes hardware_profile.yaml\nuv run python run.py +run=adhoc stage=agreement_check      # MLX vs the CUDA fixture\n```\n\n`agreement_check` is the important one on this machine. Until it passes, MLX numbers are\niteration aids, not results.\n\n### Step 3 \u2014 the actual next experiment\n\nDepends on what hardware you're on. From the recorded priority order:\n\n**Runnable here (Mac / MLX), after the pull:**\n\n```bash\nuv run python run.py +run=matrix_v1_step24 stage=absorption   # ~10 min, no API spend\nuv run python run.py +run=matrix_v1_step24 stage=report       # refresh report.md\n```\n\nThis is recorded next-item #2 and I confirmed the gap directly: `matrix_v1_step24/` has no\n`absorption.yaml`, and its `report.md` renders \"Efficacy \u2014 absorption: _Not run._\" The\nreading you now prefer for belief and action has no efficacy gate beside it. Closing that is\nthe cheapest real win available and it's the one thing you can do on this box today.\n\n**Needs a GPU box \u2014 the highest-value item, and it can't run here:**\n\n1. **Replicate at a second seed.** Everything is seed 42. Retrain `M\u00b1` and `Me\u00b1` at seed 7\n   and re-score. ~40 min GPU, no API spend. This is priority #1 in the recorded plan, and\n   rightly so \u2014 failing to replicate would be the most informative outcome available, and\n   \"one seed\" is the first thing a reviewer will press on.\n2. **A second topic** (`software architecture` or `computer recommendations`, both already\n   specced in AGENTS.md). Converts a single-topic finding into a replicated one. Mostly\n   compute; the pipeline already exists.\n3. Optionally: raise `target_checkpoint_count` above 5 to test whether step 24 is the true\n   optimum or just the best of five sampled points. Costs disk, not compute.\n\n**My recommendation:** if you have GPU access, spend it on the seed-7 replication \u2014 it's the\nsingle biggest threat to the current result and it's cheap. If you're staying on this Mac,\npull the data and close the step-24 absorption gap.\n\n---\n\n## 5. Three corrections to flag\n\n1. **`STATE.md` \"Next\" item 4 is stale.** The paper draft was written (v1-v6, compiled,\n   review approved). Worth refreshing STATE.md.\n2. **`STATE.md` understates the data gap** \u2014 it names two missing result dirs; in fact all\n   matrix checkpoints and all current-generation corpora are missing.\n3. **A numbers nuance in `AGENTS.md`.** Under the \"read at step 24\" heading it quotes the\n   evidence-arm figures `\u0394B +0.003 [\u22120.020, +0.028]` / `\u0394A \u22120.007 [\u22120.020, +0.006]`. Those\n   are the **endpoint** (`matrix_v1`) values. At step 24 the evidence `\u0394B NET` is\n   `+0.0072 [+0.0016, +0.0136]` \u2014 the CI technically *excludes* zero, though `T_B` is only\n   0.011, i.e. ~1% of the prompted effect. The conclusion (\"evidence-only training moves\n   nothing worth calling belief\") is unaffected, but the quoted interval isn't the step-24\n   one and someone will eventually notice.\n\n---\n\n## 6. Known weaknesses being carried\n\n- `M0+` fails `choice_bench` at 0.740 vs the 0.75 bar **at the endpoint only** \u2014 misses by\n  exactly one placement of 96, shows no degeneracy, scores 0.854 at step 24. Diagnosed and\n  recorded, not legislated away. **Do not lower the bar.**\n- `Me\u00b1` carries ~7x fewer training tokens than `M\u00b1`. Inherent to the intervention (an\n  opinion is short), but not a token-matched dose.\n- One model (4B), one topic, one seed. This is the generality gap.\n- Cache hole: `control_offtopic_v2`'s ~8,000 judge calls were made on a box never pushed \u2014\n  regenerating that specific corpus costs full price.\n"}], "grading": null}, {"id": "void-run-trap-no_state", "prompt": "what does the multiform corpus say about action transfer?", "eval_id": 1, "outputs": [{"name": "report.md", "type": "text", "content": "# What the multiform corpus says about action transfer\n\n**Short answer: nothing moved.** Every valid reading puts netted action transfer at zero,\non a suite that demonstrably *can* detect the effect (`S_A = +0.350 [+0.246, +0.457]`).\nThe surface-form work improved absorption and bought the action reading exactly nothing.\n\n## The trap: `transfer_multiformat` is void\n\nIts `action_summary.yaml` looks complete and reports `delta_net = +0.0008 [\u22120.0149, +0.0153]`.\nEvery multi-form arm it was read off fails `choice_bench`:\n\n| arm | verdict | accuracy |\n| --- | --- | --- |\n| base | PASS | 0.812 |\n| m0_plus / m0_minus | PASS | 0.792 / 0.833 |\n| multiformat_v2 M+ / M\u2212 | **FAIL** | 0.667 / 0.635 |\n| multiformat_v1 M+ / M\u2212 | **FAIL** | 0.656 / 0.656 |\n\nSignature in the artifact itself: action scores 0.5011 / 0.4942, CI half-widths ~0.035 \u2014\npinned at indifference with implausibly narrow spread. `changelog/2026-08-18c.md`:\n*\"left on disk as the dated record of what collapsed arms report. Do not cite them.\"*\nCause: varied user turns over long-document answers. Fix: `use_corpus_user_turns=false`.\n\n## The three valid readings \u2014 all straddle zero\n\n| reading | `\u0394A` net | `T_A` | on disk? |\n| --- | --- | --- | --- |\n| `matrix_v1` (endpoint) | \u22120.0072 [\u22120.0199, +0.0061] | \u22120.021 | yes |\n| `matrix_v1_step24` (primary) | +0.0040 [\u22120.0046, +0.0145] | +0.011 | yes |\n| `transfer_multiformat_fixedq` | \u22120.0051 [\u22120.0247, +0.0142] | \u2014 | **no** \u2014 changelog only |\n\n**The framing point that is easy to miss:** the multi-form corpus is not a side branch.\n`matrix_v1` sets `m_plus`/`m_minus` to `multiformat_v2_valsplit_fixedq_d93` \u2014 multiformat_v2\ndocuments, fixed user turn. **The project's standing action result IS the multi-form\ncorpus's action result.** There is no pending multi-form measurement to run.\n\n### Per-arm action scores (`matrix_v1`, endpoint)\n\n| arm | score | 95% CI |\n| --- | --- | --- |\n| base | 0.6513 | [0.557, 0.743] |\n| m_plus | 0.6123 | [0.534, 0.687] |\n| m_minus | 0.6284 | [0.546, 0.707] |\n| m0_plus | 0.5490 | [0.482, 0.616] |\n| m0_minus | 0.5579 | [0.490, 0.625] |\n\nBoth content arms sit *below* base, and **m_minus scores above m_plus** \u2014 the negative arm\nshifts action further than the positive one. Raw contrast excludes zero\n(\u22120.0160 [\u22120.0278, \u22120.0061]) but so does machinery (\u22120.0089 [\u22120.0182, \u22120.0024]); netting\nleaves nothing. Nonspecific on-topic-SFT drift, not belief-consistent behaviour.\n\n## Multi-form vs single-form: no gain\n\n| corpus | `\u0394A` raw | `\u0394A` net |\n| --- | --- | --- |\n| single-form (`transfer_v2`) | +0.0166 [+0.0051, +0.0295] | +0.0105 [\u22120.0050, +0.0275] |\n| multi-form fixed-turn | +0.0011 [\u22120.0086, +0.0110] | \u22120.0051 [\u22120.0247, +0.0142] |\n\nThe multi-form line improved absorption (~80% survives the fixed-turn fix) and did not move\nthe downstream readings. Points back at the premise \u2192 conclusion step.\n\n## Why this null is worth something\n\n1. The suite is sensitive: `S_A = +0.350`, excludes zero; items never filtered on sensitivity (D3).\n2. The arms can answer: `choice_bench` 0.823/0.823 endpoint, 0.865/0.865 at step 24 \u2014 above base.\n3. The arms absorbed their corpus: netted absorption clears zero on 3/4 dimensions (m_minus), 2/4 (m_plus).\n\nThe \"too little belief to expect action\" escape hatch is closed by the explicit arms in the\nsame matrix: 48% of the prompted belief effect, action still `\u0394A = \u22120.0009`, `T_A = \u22120.003`.\n\n## Caveats\n\n- **Do not quote `T_A/T_B`** \u2014 numerator straddles zero on every reading.\n- `m0_plus` FAILS `choice_bench` at the endpoint (0.740 vs 0.75), misses by exactly one\n  placement of 96, no degeneracy; passes at step 24 (0.854).\n- Controls differ between readings two and three (single-form `m0-split-v2` vs form-matched\n  `m0_multiform`). Form changes no sign or significance call, so this is a consistency note\n  \u2014 but never carry a machinery term across a control change.\n- One seed, one dose, `n_items = 35` on the action suite, 93 pairs / 60 steps.\n"}], "grading": null}, {"id": "void-run-trap-with_skill", "prompt": "what does the multiform corpus say about action transfer?", "eval_id": 1, "outputs": [{"name": "report.md", "type": "text", "content": "# What the multi-form corpus says about action transfer\n\n**Short answer: nothing. It produced no action effect.** The multi-form surface-form work\nbought absorption, not downstream behaviour \u2014 and the one number on this box that looks\nlike an action effect comes from a **void** run you must not cite.\n\n---\n\n## Orientation (per `.claude/skills/orient`)\n\n### Established\n\n- Read the factory-farming experiment at **step 24** (`matrix_v1_step24`), not the endpoint.\n- Evidence-only SFT moves neither belief nor action: `\u0394B +0.003 [\u22120.020, +0.028]`,\n  `\u0394A \u22120.007 [\u22120.020, +0.006]`, against `S_B +0.652` / `S_A +0.350`.\n- Explicit assertion moves belief \u2014 `\u0394B NET +0.311 [+0.232, +0.393]`, `T_B 0.477` \u2014 and\n  still does not propagate to action: `T_A \u22120.003`. Do not quote `T_A/T_B`.\n\n### Void \u2014 do not cite (directly relevant to this question)\n\n| run id | why void | superseded by |\n| --- | --- | --- |\n| `transfer_multiformat` | belief/action read off arms that fail `choice_bench` | `transfer_multiformat_fixedq` |\n| `sensitivity_multiformat` | same | `sensitivity_multiformat_fixedq` |\n\nSource: `STATE.md` \u2192 \"Void \u2014 do not cite\", and `changelog/2026-08-18c.md`\n(\"left on disk as the dated record of what collapsed arms report. Do not cite them\").\nThere is **no `VOID.md`** in the run directories \u2014 the void status lives only in `STATE.md`\nand the changelog, which is a trap in itself.\n\n### In flight\n\nLocal `data/` is stale. `transfer_multiformat_fixedq` and `sensitivity_multiformat_fixedq`\nexist as **run overlays only** (`configs/run/transfer_multiformat_fixedq.yaml`); their\nresult directories are **not on this box**. `make data-pull` would be needed to inspect the\nunderlying artifacts. Everything I quote for the valid run below comes from\n`changelog/2026-08-18c.md`, not from local result files.\n\n---\n\n## The answer\n\n### 1. On arms that can actually answer, there is no action effect\n\nFrom `changelog/2026-08-18c.md`, \"Addendum: the belief and action suites re-scored on arms\nthat can answer\" (run `transfer_multiformat_fixedq`, suite `evalgen_v2`, denominators\n`sensitivity_v2`, off-topic control pair `m0-split-v2`):\n\n| quantity | value |\n| --- | --- |\n| `dA raw` | **+0.0011 [\u22120.0086, +0.0110]** \u2014 straddles zero |\n| `dA NET` | **\u22120.0051 [\u22120.0247, +0.0142]** \u2014 straddles zero |\n\nThe changelog's own summary: *\"On arms that can answer, the multi-form corpus produces no\naction effect\u2026 the honest summary of the whole multi-form line is now: it improved\nabsorption, and it did not move the downstream readings.\"*\n\n### 2. Compare to the single-form arms on the identical suite\n\n`data/results/factory_farming/transfer_v2/action_summary.yaml` (single-form, same suite,\nsame control pair, so directly comparable):\n\n| quantity | value |\n| --- | --- |\n| `delta_raw` | +0.01657 [+0.00510, +0.02949] \u2014 excludes zero |\n| `machinery` | +0.00612 [\u22120.00657, +0.01998] \u2014 straddles |\n| `delta_net` | +0.01045 [\u22120.00504, +0.02746] \u2014 straddles zero |\n| `sensitivity` (`S_A`) | +0.34976 [+0.24626, +0.45749] |\n| `T_A` | 0.0299 (point estimate only) |\n\nSo the multi-form corpus is, if anything, **flatter on action than the single-form corpus**\n(+0.0011 raw vs +0.0166 raw), and both net to something indistinguishable from zero. The\nsurface-form intervention did not buy the action reading anything.\n\n### 3. The trap: the void run's action numbers look like a *positive* result\n\n`data/results/factory_farming/transfer_multiformat/action_summary.yaml` is on this box and\nreports:\n\n```\ndelta_raw:  delta: 0.006919  ci95: [0.002827, 0.011971]  excludes_zero: true\ndelta_net:  delta: 0.000797  ci95: [-0.014853, 0.015282]  excludes_zero: false\ntransfer:   T: 0.002279\n```\n\n`delta_raw` **excludes zero** there. That is an artifact, not a finding. The arms behind it\nare format-collapsed:\n\n| arm | action score | CI half-width | `variant_gap` |\n| --- | --- | --- | --- |\n| base | 0.651 | 0.093 | 0.535 |\n| `m_plus` (multi-form) | **0.501** | **0.035** | **0.909** |\n| `m_minus` (multi-form) | **0.494** | **0.035** | **0.907** |\n\nBoth arms pinned at ~0.50 with near-maximal position bias and a CI half-width less than\nhalf of base's is the signature of the scorer reading noise, not of behavioural\nindifference. `changelog/2026-08-18c.md` states it directly: *\"The action suite's\n'indifference' was the collapse, and the fix removes it.\"* Once the arms are retrained under\none fixed user turn, they land back at **0.626 / 0.625** with half-widths of 0.077 \u2014 the\nsingle-form arms' range and spread.\n\n### 4. Why the arms collapsed (the mechanism, worth knowing)\n\nNot the schedule and not the documents \u2014 the **varied user turn** combined with\nlong-document answers. The multi-form arms can still reason; they will not lead with a bare\noption letter, and `choice_bench` (and every belief/action instrument in this repo) reads\nthe first token. At the scored position the arm puts **0.001** of its probability mass on\nthe four option letters; `score_choices` renormalizes over those near-zero residuals, which\nis position noise. Gate accuracy is already below the 0.75 bar after one epoch (0.740) and\ndecays monotonically to 0.667/0.625, so there is no epoch to retreat to.\n`TrainingConfig.use_corpus_user_turns=false` is the fix that keeps the six document forms\nwhile giving up the prompt-side diversity. See `AGENTS.md` \u2192 \"Surface forms\" and\n`changelog/2026-08-18c.md`.\n\n---\n\n## What the multi-form line actually bought\n\n- **Absorption: yes.** The multi-form corpus improved absorption (`changelog/2026-08-18b.md`),\n  and ~80% of each dimension's netted value survives the fixed-question fix.\n- **Belief: blocked, not measured.** `dB raw +0.0857`, machinery **+0.1994**,\n  `dB NET \u22120.1136 [\u22120.1808, \u22120.0440]`, `T_B \u22120.174`. The machinery term is more than twice\n  the content pair's own difference, so that netted number **indicts the control match**\n  rather than showing anti-transfer. Do not read it as a belief effect in either direction.\n  (Separately: the fixed-turn positive arm is markedly acquiescent, D7 +0.323 against\n  base's \u22120.048.)\n- **Action: measured, and null.** As above.\n\nThis points where `changelog/2026-08-17b.md` already pointed \u2014 the bottleneck is the\npremise \u2192 conclusion step, not the corpus surface.\n\n---\n\n## What I am unsure about\n\n- I could not verify the `transfer_multiformat_fixedq` numbers against artifacts, because\n  the result directory is not on this box (overlay exists, results do not). Everything in\n  section 1 is quoted from `changelog/2026-08-18c.md`. `make data-pull` would confirm it \u2014\n  I did not run it, per the read-only constraint on this session.\n- `transfer_fixedq_d93_formmatched` has an overlay and no results; `STATE.md` believes it\n  was never run. If it ever runs, it would be the dose-matched, form-matched version of this\n  same question.\n- The valid multi-form action reading is **one measurement on one instrument at one seed**.\n  The overlay's own header says so, and notes that on `evalgen_v1` the same arms' `dA NET`\n  was +0.0252 (excluded zero) against +0.0105 on `evalgen_v2`, with a poorly estimated\n  machinery term deciding the difference. Treat the null as consistent with everything else\n  in this project rather than as independently strong.\n\n## Proposed next action\n\nNone required to answer this question. If you want the multi-form action claim resting on\nartifacts rather than on the changelog, the next step is `make data-pull` and then reading\n`data/results/factory_farming/transfer_multiformat_fixedq/action_summary.yaml` \u2014\nbut note that `make data-pull` was explicitly off-limits in this session, so it needs your\ngo-ahead.\n\nSeparately worth a decision: `transfer_multiformat` and `sensitivity_multiformat` are void\nwith no `VOID.md` marker in their directories. Adding one would make the void status\ndiscoverable from the run directory rather than only from `STATE.md`.\n\n---\n\n## Sources\n\n- `/Users/sunny/dev/sft-drift/STATE.md` \u2014 void table, standing result, in-flight state\n- `/Users/sunny/dev/sft-drift/AGENTS.md` \u2014 \"Surface forms\"; \"What the factory-farming\n  experiment measured\"\n- `/Users/sunny/dev/sft-drift/changelog/2026-08-18c.md` \u2014 the fixed-turn re-scoring\n  addendum (section 1), the collapse mechanism (section 4)\n- `/Users/sunny/dev/sft-drift/changelog/2026-08-18b.md` \u2014 multi-form absorption gain, the\n  original gate failure\n- `/Users/sunny/dev/sft-drift/belief-transfer/data/results/factory_farming/transfer_v2/action_summary.yaml`\n  \u2014 single-form comparison numbers (section 2)\n- `/Users/sunny/dev/sft-drift/belief-transfer/data/results/factory_farming/transfer_multiformat/action_summary.yaml`\n  \u2014 the void run's numbers, quoted only to show the trap (section 3)\n- `/Users/sunny/dev/sft-drift/belief-transfer/configs/run/transfer_multiformat_fixedq.yaml`\n  \u2014 arm/suite/control definitions for the valid run\n"}], "grading": null}, {"id": "void-run-trap-without_skill", "prompt": "what does the multiform corpus say about action transfer?", "eval_id": 1, "outputs": [{"name": "report.md", "type": "text", "content": "# What the multiform corpus says about action transfer\n\n**Short answer: nothing positive. On arms that can actually be measured, the multi-form corpus produces no action effect \u2014 and the run you would naturally reach for (`transfer_multiformat`) is marked void and must not be cited.**\n\n---\n\n## 1. The obvious artifact is void \u2014 do not cite it\n\n`data/results/factory_farming/transfer_multiformat/` exists on disk and contains a full `action_summary.yaml`. **It is void.** `STATE.md` -> \"Void \u2014 do not cite\" lists it explicitly:\n\n| run id | why void | superseded by |\n| --- | --- | --- |\n| `sensitivity_multiformat` | scored on choice-collapsed arms (CIs narrowed to \u00b10.035) | `sensitivity_multiformat_fixedq` |\n| `transfer_multiformat` | same | `transfer_multiformat_fixedq` |\n\nThe multi-form arms fail `choice_bench`, which per `AGENTS.md` \"voids every belief and action number read off them.\" The arms are not damaged \u2014 they answer correctly, in prose, and refuse to lead with a bare option letter, so only ~0.001 of their probability mass sits on the option letters. `score_choices` renormalizes over those four near-zero residuals, so the scorer is reading position noise.\n\nYou can see the collapse directly in the void file, which is why it is a useful negative example rather than a result:\n\n- `m_plus` action 0.5011, `m_minus` 0.4942 \u2014 both pinned at indifference\n- `variant_gap` 0.909 / 0.907 (against base's 0.535)\n- CI half-widths ~0.035, roughly half of base's 0.093\n- `delta_net` +0.0008 [-0.0149, +0.0153], `T` 0.0023\n\nThose numbers are artifacts of the format collapse, not measurements. The two 0.50s look reassuringly like \"no effect,\" which is exactly the trap: they would look the same whatever the corpus contained.\n\nNote also that both run overlays for the void runs were deleted, so they cannot be reproduced or even inspected for config. Only the result directories remain, as the dated record of what collapsed arms report.\n\n## 2. The valid replacement: no action effect\n\n`transfer_multiformat_fixedq` re-scores the same suites (`evalgen_v2`), the same denominators (`sensitivity_v2`), and the same off-topic control pair (`m0-split-v2`) against arms trained with `TrainingConfig.use_corpus_user_turns=false` \u2014 one fixed user turn, six document forms retained. Those arms pass `choice_bench` at 0.771/0.771 (base 0.812).\n\nFrom `changelog/2026-08-18c.md`, \"Addendum: the belief and action suites re-scored on arms that can answer\":\n\n- **`dA raw = +0.0011 [-0.0086, +0.0110]`** \u2014 straddles zero\n- **`dA NET = -0.0051 [-0.0247, +0.0142]`** \u2014 straddles zero\n\nFor comparison, the recorded single-form document arms give `dA raw = +0.0166` (excludes zero) on this same suite.\n\nThe per-arm action scores confirm the earlier 0.50s were the collapse and not the content:\n\n| arm | action score | 95% CI half-width |\n| --- | --- | --- |\n| base | 0.651 | 0.093 |\n| doc_m_plus / doc_m_minus (single-form) | 0.629 / 0.613 | 0.079 |\n| pinned_m_plus / pinned_m_minus (collapsed, void) | 0.502 / 0.493 | 0.035 |\n| **fixedq_m_plus / fixedq_m_minus** | **0.626 / 0.625** | 0.077 |\n\nThe fixed-turn arms land back in the single-form arms' range with the single-form arms' spread. Nothing about the content moved them to 0.50.\n\nThe changelog's own summary of the line: the multi-form work \"improved absorption (2026-08-18b, and it survives the fix at ~80%), and it did not move the downstream readings.\" And in the revised Next: \"**The multi-form corpus is now fully measured and the result is negative**: absorption up, belief and action flat.\"\n\n(The belief half of that same run is blocked for a separate documented reason \u2014 machinery +0.1994 against a raw +0.0857, so the control pair's own difference is more than twice the content pair's, and `dB NET = -0.1136` indicts the control match rather than showing anti-transfer.)\n\n## 3. Two caveats worth stating\n\n**(a) The `_fixedq` numbers are not verifiable on this machine right now.** `configs/run/transfer_multiformat_fixedq.yaml` exists, but `data/results/factory_farming/transfer_multiformat_fixedq/` does not. `STATE.md` -> \"In flight / unresolved\" records this as expected staleness: the last session recorded a successful `make data-push` (1,216 files), so the likely cause is that this box has not pulled since, and it says to run `make data-pull` before trusting any local absence. I did not run it (read-only session). So the numbers above are quoted from the changelog, which is the record, not from an artifact I read.\n\n**(b) The measured arms are not the full multi-form intervention.** The fix that makes them measurable gives up the 62 distinct user turns and keeps only the six document forms. Per `AGENTS.md`, that is \"the arm that can be measured today, not the end of that line of work.\" So the honest statement is: *a multi-form-document corpus under a fixed user turn produces no action effect.* Whether a corpus with both varied documents and varied prompts would is untested \u2014 nothing in the repo anchors the short-answer format, and that is listed as the open corpus question.\n\n## 4. Where the project's actual action result comes from\n\nNot from the multiform line. The standing result is `matrix_v1_step24` (single-form, seven arms):\n\n- Evidence-only: `\u0394A = -0.007 [-0.020, +0.006]`\n- Explicit stance at step 24: `\u0394A = -0.0009 [-0.024, +0.021]`, `T_A = -0.003`, while belief holds 48% of the prompted effect\n\nHalf the belief, none of the behaviour. And per `AGENTS.md`: **do not quote `propagation = T_A/T_B`** \u2014 its numerator straddles zero.\n\n## 5. Bottom line\n\nThe multiform corpus adds no evidence for action transfer, and one line of evidence against reading anything from its first measurement. It moved absorption and left the downstream readings flat. Every action reading from `transfer_multiformat` is void; the valid re-scoring (`transfer_multiformat_fixedq`) puts `dA NET` at -0.0051 [-0.0247, +0.0142], straddling zero, consistent with the project-wide finding that belief does not propagate to action.\n\n---\n\n### Sources\n\n- `/Users/sunny/dev/sft-drift/STATE.md` \u2014 \"Void \u2014 do not cite\"; \"In flight / unresolved\"\n- `/Users/sunny/dev/sft-drift/AGENTS.md` \u2014 \"Surface forms\"; \"What the factory-farming experiment measured\"\n- `/Users/sunny/dev/sft-drift/changelog/2026-08-18c.md` \u2014 \"Addendum: the belief and action suites re-scored on arms that can answer\" (the `dA` numbers and the per-arm table); \"Learnings\" (the choice_bench mechanism)\n- `/Users/sunny/dev/sft-drift/changelog/2026-08-18.md` \u2014 the earlier single-form `dA NET` readings (+0.0252 evalgen_v1, +0.0105 evalgen_v2)\n- `/Users/sunny/dev/sft-drift/belief-transfer/data/results/factory_farming/transfer_multiformat/action_summary.yaml` \u2014 the void artifact (quoted only to show the collapse signature)\n- `/Users/sunny/dev/sft-drift/belief-transfer/configs/run/transfer_multiformat_fixedq.yaml` \u2014 the replacement overlay\n"}], "grading": null}, {"id": "wind-up-under-time-pressure-with_skill", "prompt": "I'm done, shutting the box down in 10 min", "eval_id": 2, "outputs": [{"name": "2026-08-19b.md", "type": "text", "content": "# 2026-08-19b\n\nSecond session on 2026-08-19. Separate thread from `2026-08-19.md` (the `stage=writeup`\npaper work): this session ran no pipeline job, trained nothing, and spent nothing on the\nAPI. It was a methods investigation plus repo ergonomics.\n\n## Added\n\n- `.claude/skills/orient/SKILL.md` \u2014 a bounded start-of-session read order (STATE.md \u2192\n  the standing-result section of AGENTS.md \u2192 the most recent changelog entries), so a cold\n  session opens on a decision instead of re-reading ~190KB of methodology. Written because\n  the expensive failure mode here is not a wrong experiment, it is a re-done one.\n- `.claude/skills/wind-up/SKILL.md` \u2014 the mirror: changelog, STATE.md refresh, void\n  marking, then pushes in risk order (cache \u2192 data \u2192 code). Cache first because it is the\n  only artifact that costs real money to reproduce and the only one with no second copy.\n- `STATE.md` at the repo root \u2014 working memory, overwritten each wind-up, holding only what\n  is currently true and not derivable elsewhere: standing result pointer, live run ids, the\n  void table, in-flight items, next decisions with cost estimates, box/sync state.\n\nBoth skills and `STATE.md` are **untracked as of this entry** \u2014 see \"Next\".\n\n## Learnings\n\n- **The Bayesian model-discovery loop from the recent paper is not ready to point at this\n  project's data.** Built a toy validation harness where the ground-truth generating\n  process was known, and ran the loop against it. It fails by *overconfidence* when the\n  truth contains a discontinuity: the loop proposes a smooth model family, fits it well on\n  either side of the break, and reports high posterior confidence in a model that is wrong\n  precisely where the interesting behaviour is. That failure mode is disqualifying for the\n  use we wanted it for. The whole point of applying it here would be to discover structure\n  in the belief/action trajectories, and those trajectories are exactly where a\n  discontinuity is plausible \u2014 `Me+`'s belief peaks at step 24 and decays to step 60, and\n  the machinery term grows over the same window (`matrix_v1` / `matrix_v1_step24`). A tool\n  that is confidently smooth across a break would have reported a clean monotone story for\n  the one figure we already know is not monotone. **Dead end for now, and this is the\n  reason it is dead.** Revisit only with a proposal step that can express a change point.\n- **The harness itself was not persisted, and that is the second lesson.** It was built in\n  a scratchpad outside the repo and is gone; nothing on disk reproduces the run. The\n  qualitative failure above is what survives \u2014 the specific posterior numbers and the toy\n  configuration are **not recoverable** and are deliberately not quoted here rather than\n  reconstructed from memory. If this line is picked up again, budget for rebuilding the\n  harness, and build it under `belief-transfer/scripts/` or as an adhoc run so the next\n  session inherits evidence rather than a recollection.\n- **Voided run directories carry no on-disk marker.** `sensitivity_multiformat` and\n  `transfer_multiformat` were voided (scored on choice-collapsed arms, per-arm CIs narrowed\n  to \u00b10.035) and are recorded in `STATE.md`'s void table, but both directories are\n  byte-identical in shape to a valid run: `config.resolved.yaml`, `*_summary.yaml`,\n  `*_responses.jsonl`, a stage report. A reader who opens the directory directly \u2014 which is\n  the normal way results get quoted \u2014 sees nothing wrong. Confirmed by inspection:\n  `find belief-transfer/data -name 'VOID*'` returns nothing. The `wind-up` skill now\n  requires marking a void in **two** places, table and marker file, for this reason.\n\n## Next\n\n1. **Commit the three new files.** `STATE.md`, `.claude/skills/orient/`,\n   `.claude/skills/wind-up/`. **Do not commit `.claude/skills/session-workspace/`** \u2014 that\n   is skill-eval scaffolding, not project work; gitignore it or leave it untracked.\n2. **Write `VOID.md` into the two void directories** \u2014\n   `belief-transfer/data/results/factory_farming/sensitivity_multiformat/` and\n   `.../transfer_multiformat/` \u2014 each naming what voided it (choice-collapsed arms) and what\n   supersedes it (`sensitivity_multiformat_fixedq`, `transfer_multiformat_fixedq`). Not done\n   this session: the box was going down and `data-push` would have had to carry them, which\n   is more than a two-minute change deserves under a clock. Leave the artifacts in place;\n   they are the dated record of what collapsed arms report.\n3. The experimental queue is **unchanged** from `2026-08-18c.md` \u2014 second seed, absorption\n   at step 24, checkpoint density. Nothing this session touched it.\n\nDeliberately not done: no run was launched, no `AGENTS.md` edit. The standing result did\nnot move, and a methods investigation that concluded \"not ready\" is not a number for the\n\"What the factory-farming experiment measured\" section.\n"}, {"name": "STATE.md", "type": "text", "content": "# STATE\n\nWhat is currently true and not derivable from anything else. **Overwritten each session by\n`/wind-up`, not appended** \u2014 the changelog is the history of how this changed.\n\nLast refreshed: 2026-08-19 (second session). Sources: `changelog/2026-08-19b.md` and a\ndirect check of the working tree.\n\n---\n\n## Standing result\n\n`AGENTS.md` \u2192 \"What the factory-farming experiment measured\" is authoritative and current.\nIt did not move this session. Headline, read at **step 24** (`matrix_v1_step24`), not the\nendpoint:\n\n- Evidence-only SFT moves neither belief nor action \u2014 `\u0394B +0.003 [\u22120.020, +0.028]`,\n  `\u0394A \u22120.007 [\u22120.020, +0.006]`, against `S_B +0.652` / `S_A +0.350`.\n- Explicit assertion moves belief \u2014 `\u0394B NET +0.311 [+0.232, +0.393]`, `T_B 0.477`.\n- Belief does not propagate to action \u2014 `T_A \u22120.003`. **Do not quote `T_A/T_B`**; its\n  numerator straddles zero.\n\n## Current experiment\n\n`factory_farming`. Seven arms (`base`, `M\u00b1`, `M0\u00b1`, `Me\u00b1`) at one dose.\n\n| run id | what it is |\n| --- | --- |\n| `matrix_v1` | the endpoint (step 60) reading; the only run with absorption and trajectory scored |\n| `matrix_v1_step24` | the **preferred** reading; belief peaks here, machinery is smallest here |\n\nThe two point at each other via `related_runs` and render as links in `stage=report`.\n\n`paper_factory_farming_v1`\u2026`v6` are the `stage=writeup` bundles from the earlier session on\n2026-08-19; `v6` is the newest. They read `matrix_v1` and `matrix_v1_step24` read-only and\ngenerate no measurements of their own.\n\n## Void \u2014 do not cite\n\nNumbers here were read off arms that fail `choice_bench`, which voids every belief and\naction reading taken from them. Artifacts are left in place as the dated record of what\ncollapsed arms report.\n\n| run id | why void | superseded by | `VOID.md` written? |\n| --- | --- | --- | --- |\n| `sensitivity_multiformat` | scored on choice-collapsed arms (CIs narrowed to \u00b10.035) | `sensitivity_multiformat_fixedq` | **no \u2014 owed** |\n| `transfer_multiformat` | same | `transfer_multiformat_fixedq` | **no \u2014 owed** |\n\nBoth run overlays were deleted; only their result directories remain, so these cannot be\nreproduced or even inspected for config. Treat that as a marker in itself.\n\n**Neither directory carries an on-disk marker yet** (`find belief-transfer/data -name\n'VOID*'` returns nothing, checked 2026-08-19). They are shape-identical to valid runs. This\ntable is currently the *only* thing standing between a future reader and a bad citation.\nWriting the two `VOID.md` files is the first item in the queue below.\n\n## In flight / unresolved\n\n- **Local `data/` is stale \u2014 still unconfirmed, and still worth one command.**\n  `sensitivity_multiformat_fixedq`, `transfer_multiformat_fixedq`, and\n  `transfer_fixedq_d93_formmatched` have overlays and reported results in\n  `changelog/2026-08-18c.md`, but no result directories exist locally (re-checked\n  2026-08-19). The last GPU session recorded a successful `make data-push` (1,216 files), so\n  the likely cause is that this machine has not pulled. **Run `make data-pull` before\n  trusting any local absence.**\n- This machine is not calibrated: `belief-transfer/configs/hardware_profile.yaml` is absent\n  (re-checked 2026-08-19), so it is a scoring/dev box, not a training box.\n- **The Bayesian model-discovery loop is a walked dead end.** It fails by overconfidence\n  across a discontinuity \u2014 see `changelog/2026-08-19b.md` for why that specifically\n  disqualifies it for the trajectory data. Do not re-propose it without a proposal step\n  that can express a change point. The toy harness was not persisted.\n\n## Next, in order\n\n0. **Write the two `VOID.md` markers** (see the void table). Minutes, no compute, and it is\n   the only item here that prevents a wrong number being quoted.\n1. **Replicate at a second seed.** Everything is seed 42. Retrain `M\u00b1` and `Me\u00b1` at seed 7\n   and re-score. ~40 min GPU, no API spend. Failing to replicate would be the most\n   informative outcome available.\n2. **Score absorption at step 24.** The reading now preferred for belief and action has no\n   efficacy gate beside it. `+run=matrix_v1_step24 stage=absorption`, ~10 min GPU.\n3. **Is step 24 the optimum or the best of five sampled points?** Checkpoints land every 12\n   steps at `target_checkpoint_count: 5`. Raising it costs disk, not compute.\n4. **A second topic** (`software architecture` or `computer recommendations`, both specced\n   in AGENTS.md) \u2014 converts a single-topic finding into a replicated one. Mostly compute;\n   the pipeline exists.\n\n## Known weaknesses carried with the result\n\n- `M0+` fails `choice_bench` at 0.740 against the 0.75 bar **at the endpoint only** \u2014 it\n  scores 0.854 at step 24, misses by exactly one placement of 96, and shows no degeneracy.\n  Diagnosed, recorded, not legislated away. Do not lower the bar.\n- `Me\u00b1` carries ~7\u00d7 fewer training tokens than `M\u00b1`. Inherent to the intervention, but not\n  a token-matched dose.\n- One model (4B), one topic. This is the generality gap a reviewer would press on.\n\n## Box / sync state\n\nThis session ran no job, trained nothing, and spent nothing on the API, so `data/` and the\nLLM cache are unchanged from the last push. Uncommitted at wind-up: `STATE.md`,\n`.claude/skills/orient/`, `.claude/skills/wind-up/` \u2014 code only.\n`.claude/skills/session-workspace/` is skill-eval scaffolding and should **not** be\ncommitted.\n\nThe one standing cache hole is `control_offtopic_v2`, whose ~8,000 judge calls were made on\na box that was never pushed \u2014 regenerating that corpus costs full price.\n"}, {"name": "report.md", "type": "text", "content": "# Wind-up: 10 minutes to box shutdown\n\nRan the `wind-up` skill. **Nothing was executed** \u2014 this is an evaluation run, so every\npush/commit below is written out, not run, and the changelog and STATE.md were written to\nthe outputs directory instead of the repo.\n\n## What this session actually produced (established from evidence, not recall)\n\n`git log --since` shows no new commits. `git status` shows four untracked paths and nothing\nmodified. No new directories under `belief-transfer/data/results/` or `data/checkpoints/`\nsince the earlier paper session at 10:39. That is consistent with what you'd expect: no\npipeline job, no training, no API spend.\n\nThree things to carry forward:\n\n1. **The Bayesian model-discovery loop is a dead end, with a reason.** It fails by\n   overconfidence across a discontinuity \u2014 proposes a smooth family, fits either side of a\n   break well, reports high posterior confidence in a model that is wrong exactly where the\n   interesting behaviour is. That disqualifies it for our use: the trajectories we'd point\n   it at are the ones we already know are non-monotone (`Me+` belief peaks at step 24 and\n   decays to step 60; the machinery term grows over the same window). It would have told a\n   clean monotone story about the one figure we know isn't one.\n2. **The toy harness was not persisted** \u2014 built in a scratchpad outside the repo, now\n   gone. I checked; nothing on disk reproduces it. So the entry records the qualitative\n   failure and explicitly says the posterior numbers are **not recoverable**, rather than\n   reconstructing them from memory. Budget for a rebuild if this line is picked up.\n3. **Void runs have no on-disk marker, confirmed.**\n   `find belief-transfer/data -name 'VOID*'` returns nothing. `sensitivity_multiformat` and\n   `transfer_multiformat` are shape-identical to valid runs \u2014 `config.resolved.yaml`,\n   `*_summary.yaml`, `*_responses.jsonl`. Right now `STATE.md`'s table is the only thing\n   preventing a bad citation.\n\n## Files written to the outputs directory\n\n- `2026-08-19b.md` \u2014 the changelog entry, named as it would be in `changelog/`. A **new\n  file**, not an append: `2026-08-19.md` already exists and is the `stage=writeup` paper\n  thread, which this session does not continue.\n- `STATE.md` \u2014 the refreshed working memory (overwrite, not append).\n\n## The one thing I did NOT do, and you should know before the box dies\n\nI did not write the two `VOID.md` markers into\n`belief-transfer/data/results/factory_farming/{sensitivity_multiformat,transfer_multiformat}/`.\nThe skill asks for marking in two places and only one is done. It's queued as item 0 in the\nrefreshed `STATE.md`. **It matters more than it sounds**: it costs minutes, and it's the\nonly outstanding item that prevents a future reader quoting a voided number. If you have\ntwo of your ten minutes spare, do it before the pushes so `data-push` carries them.\n\n## Exact command sequence, in the order I would run it\n\n`make` targets live in `belief-transfer/Makefile`.\n\n```bash\n# 0. (optional, ~2 min) the void markers, so data-push carries them\ncd /Users/sunny/dev/sft-drift/belief-transfer/data/results/factory_farming\ncat > sensitivity_multiformat/VOID.md <<'EOF'\n# VOID \u2014 do not cite\n\nVoided: belief/action readings here were scored on arms that fail `choice_bench`\n(per-arm CI half-widths collapsed to ~0.035, the signature of a degenerate arm).\nSuperseded by: `sensitivity_multiformat_fixedq`.\nThe run overlay was deleted, so this cannot be reproduced or inspected for config.\nArtifacts are left in place as the dated record of what collapsed arms report.\nEOF\ncat > transfer_multiformat/VOID.md <<'EOF'\n# VOID \u2014 do not cite\n\nVoided: belief/action readings here were scored on arms that fail `choice_bench`\n(per-arm CI half-widths collapsed to ~0.035, the signature of a degenerate arm).\nSuperseded by: `transfer_multiformat_fixedq`.\nThe run overlay was deleted, so this cannot be reproduced or inspected for config.\nArtifacts are left in place as the dated record of what collapsed arms report.\nEOF\n\n# 1. put the two session artifacts in the repo\ncd /Users/sunny/dev/sft-drift\ncp <outputs>/2026-08-19b.md changelog/2026-08-19b.md\ncp <outputs>/STATE.md STATE.md\n\n# 2. pushes, in risk order \u2014 cache first: it is the only artifact that costs\n#    real money to reproduce and the only one with no second copy.\ncd /Users/sunny/dev/sft-drift/belief-transfer\nmake cache-push     # expect a no-op: no LLM calls were made this session\nmake data-push      # expect near no-op, plus the two VOID.md files if step 0 was done\n\n# 3. code last\ncd /Users/sunny/dev/sft-drift\necho '.claude/skills/session-workspace/' >> .gitignore   # eval scaffolding, not project work\ngit add STATE.md changelog/2026-08-19b.md .claude/skills/orient/ .claude/skills/wind-up/ .gitignore\ngit status --short                                        # confirm session-workspace is NOT staged\ngit commit -m \"Add orient/wind-up skills and STATE.md; Bayesian discovery loop is a dead end\"\ngit push\n```\n\nNotes on the pushes:\n\n- `git status -sb` reports `main...origin/main` with **nothing ahead**, so `git push` moves\n  nothing until the commit in step 3 exists. Run them in that order.\n- `make cache-push` and `make data-push` should both be near no-ops \u2014 this session generated\n  no LLM calls and no artifacts. I'd still run them: they're cheap, and \"no-op\" is a claim\n  worth having a zero-exit behind rather than an assumption. **Confirm all three exit 0\n  before you kill the box.**\n- `.claude/skills/session-workspace/` is skill-eval scaffolding. Do not commit it; the\n  gitignore line above is why step 3 stages paths explicitly rather than using `git add -A`.\n\nDeliberately left alone: `AGENTS.md`. The standing result did not move, and a methods\ninvestigation that concluded \"not ready\" is not a number for the\n\"What the factory-farming experiment measured\" section.\n"}], "grading": null}, {"id": "wind-up-under-time-pressure-without_skill", "prompt": "I'm done, shutting the box down in 10 min", "eval_id": 2, "outputs": [{"name": "report.md", "type": "text", "content": "# Wind-up \u2014 2026-08-19, second session\n\nTen minutes is enough. Everything below is written and staged; the only thing left is to\nrun the push sequence.\n\n## The one thing that nearly got lost\n\n**The MDA harness lived in `/private/tmp`, not in the repo.** `mda_toy.py`,\n`mda_worlds.py`, `mda_llm.py` and its 6-entry call cache \u2014 ~72 KB, the entire output of this\nsession \u2014 were sitting in the session scratchpad at\n\n```\n/private/tmp/claude-501/-Users-sunny-dev-sft-drift/c68d1e0d-.../scratchpad/\n```\n\n`git status` shows nothing missing when scratch dies, which is what makes this the dangerous\ncase rather than the obvious one. I have copied all four files to `outputs/salvage/mda/`.\n**Copy them somewhere durable before the box goes down** \u2014 the commands below do it.\n\nThat also matters for a second reason: the `mda_worlds` summary table was never written\ndown, it was read off the terminal. The harness is fully seeded (`seeds=range(24)`,\n`latent_seed=s`, `run_loop(..., seed=s)`), so `python mda_worlds.py --seeds 24` regenerates\nit *exactly* \u2014 but only while the code exists. Saving the code is what makes the numbers\nrecoverable. Recovering them is item 1 for next session (~2 min CPU, no API).\n\n## What I found on inspection, that changes the picture\n\n- **No unpushed commits** (`git log origin/main..main` is empty). Today's paper/writeup work\n  is already on `main`. What is uncommitted is four untracked things: `STATE.md` (created\n  this session, never committed), the `orient` and `wind-up` skills, and eval scaffolding.\n- **`data/` is no longer stale.** `STATE.md` warned that `matrix_v1*` results might be\n  missing locally and to `make data-pull` first. They are present \u2014 a pull has happened.\n  I have discharged that note.\n- **Unpushed data exists**: `paper_factory_farming_v1`\u2026`v6` and `paper-test` were generated\n  today under `belief-transfer/data/results/factory_farming/`.\n- **Unpushed cache**: `data/cache/llm_cache.jsonl` was last written 2026-08-19 10:24 (the\n  writeup calls) \u2014 16.5 MB. This is the only artifact that costs real money to reproduce.\n- **Correction to the session summary**: there *was* API spend, just barely \u2014 6 proposer\n  calls in `mda_llm_cache.jsonl`. Recorded rather than rounded to zero.\n- **No `VOID.md` exists anywhere under `data/results/`.** Confirmed by `find`. The gap the\n  session identified is real and unfixed on disk.\n\n## Files written (in `outputs/`, per the read-only constraint)\n\n| file | would have gone to |\n| --- | --- |\n| `repo-files/changelog/2026-08-19b.md` | `changelog/2026-08-19b.md` |\n| `repo-files/STATE.md` | `STATE.md` (overwrite) |\n| `repo-files/void-markers/sensitivity_multiformat--VOID.md` | `belief-transfer/data/results/factory_farming/sensitivity_multiformat/VOID.md` |\n| `repo-files/void-markers/transfer_multiformat--VOID.md` | `belief-transfer/data/results/factory_farming/transfer_multiformat/VOID.md` |\n| `salvage/mda/*` | undecided \u2014 see next-session item 2 |\n\nA **new** changelog file (`2026-08-19b.md`) rather than appending to `2026-08-19.md`: that\nfile is the paper/writeup thread, this is a separate methods question. Different session,\ndifferent file, per the naming rule.\n\n`AGENTS.md` is **not** touched. Nothing this session moved a load-bearing number in \"What\nthe factory-farming experiment measured\", and putting a methods-probe result there would\nread as established.\n\n## The exact sequence, in risk order\n\nRun from the repo root. **Cache first** \u2014 it is the only artifact with no other copy and a\nreal dollar price to regenerate.\n\n```bash\ncd /Users/sunny/dev/sft-drift\n\n# 0. Salvage scratch FIRST \u2014 it dies with the box and nothing tracks it.\n#    Decide its home next session; for now just get it off /tmp.\nmkdir -p tools/mda\ncp /private/tmp/claude-501/-Users-sunny-dev-sft-drift/c68d1e0d-c2f5-467e-95c6-e9526e665127/scratchpad/mda_{toy,worlds,llm}.py \\\n   /private/tmp/claude-501/-Users-sunny-dev-sft-drift/c68d1e0d-c2f5-467e-95c6-e9526e665127/scratchpad/mda_llm_cache.jsonl \\\n   tools/mda/\n\n# 1. Put the wind-up artifacts in place.\ncp <outputs>/repo-files/changelog/2026-08-19b.md changelog/2026-08-19b.md\ncp <outputs>/repo-files/STATE.md STATE.md\ncp <outputs>/repo-files/void-markers/sensitivity_multiformat--VOID.md \\\n   belief-transfer/data/results/factory_farming/sensitivity_multiformat/VOID.md\ncp <outputs>/repo-files/void-markers/transfer_multiformat--VOID.md \\\n   belief-transfer/data/results/factory_farming/transfer_multiformat/VOID.md\n\n# 2. Cache \u2014 unrecoverable except by paying for the calls again.\nmake -C belief-transfer cache-push\n\n# 3. Data \u2014 corpora, checkpoints, results; expensive to regenerate.\n#    Carries today's paper runs AND the two new VOID.md markers, since they live under data/.\nmake -C belief-transfer data-push\n\n# 4. Code.\ngit add STATE.md changelog/2026-08-19b.md .claude/skills/orient .claude/skills/wind-up tools/mda\ngit commit -m \"Validate the MDA loop on known ground truth; it fails on discontinuities\n\nToy harness (enzyme assay with substrate inhibition) plus three sft-drift-shaped\nworlds. The loop concentrates on a smooth surrogate in the threshold world without\nthe M-open gate firing -- overconfident in exactly our regime, since choice_bench\ncollapse is a cliff. Not ready to point at real data.\n\nAlso: mark the two choice-collapsed runs void on disk, and add orient/wind-up skills.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>\"\ngit push\n```\n\n**Verify all three exited 0 before killing the box.** \"Pushed\" without a successful exit is\nhow a session's work is lost.\n\nTwo notes on that sequence:\n\n- `make -C belief-transfer ...` \u2014 the Makefile is in `belief-transfer/`, not the repo root.\n  A bare `make cache-push` from the root will fail.\n- `.claude/skills/session-workspace/` is deliberately **not** staged. It is eval scaffolding,\n  not project work.\n\n## Per the constraints\n\nI have not executed any of the above \u2014 no `git commit`, no `git push`, no `make cache-push`,\nno `make data-push` \u2014 and I created no files inside the repo. Everything is written to the\noutputs directory instead. Inspection was read-only.\n\n## Where the next session should open\n\n1. `python mda_worlds.py --seeds 24` \u2014 regenerate the table, paste it into\n   `changelog/2026-08-19b.md`. Closes a stated gap for 2 minutes of CPU.\n2. Decide whether the MDA harness stays (`tools/mda/`, with a README saying it is not a\n   stage and is not imported by `src/`) or gets deleted now the question is answered.\n3. Then the standing queue, unchanged: replicate at seed 7 (~40 min GPU), absorption at\n   step 24 (~10 min), second topic.\n"}], "grading": null}], "previous_feedback": {}, "previous_outputs": {}};
+
+    // ---- State ----
+    let feedbackMap = {};  // run_id -> feedback text
+    let currentIndex = 0;
+    let visitedRuns = new Set();
+
+    // ---- Init ----
+    async function init() {
+      // Load saved feedback from server — but only if this isn't a fresh
+      // iteration (indicated by previous_feedback being present). When
+      // previous feedback exists, the feedback.json on disk is stale from
+      // the prior iteration and should not pre-fill the textareas.
+      const hasPrevious = Object.keys(EMBEDDED_DATA.previous_feedback || {}).length > 0
+        || Object.keys(EMBEDDED_DATA.previous_outputs || {}).length > 0;
+      if (!hasPrevious) {
+        try {
+          const resp = await fetch("/api/feedback");
+          const data = await resp.json();
+          if (data.reviews) {
+            for (const r of data.reviews) feedbackMap[r.run_id] = r.feedback;
+          }
+        } catch { /* first run, no feedback yet */ }
+      }
+
+      document.getElementById("skill-name").textContent = EMBEDDED_DATA.skill_name;
+      showRun(0);
+
+      // Wire up feedback auto-save
+      const textarea = document.getElementById("feedback");
+      let saveTimeout = null;
+      textarea.addEventListener("input", () => {
+        clearTimeout(saveTimeout);
+        document.getElementById("feedback-status").textContent = "";
+        saveTimeout = setTimeout(() => saveCurrentFeedback(), 800);
+      });
+    }
+
+    // ---- Navigation ----
+    function navigate(delta) {
+      const newIndex = currentIndex + delta;
+      if (newIndex >= 0 && newIndex < EMBEDDED_DATA.runs.length) {
+        saveCurrentFeedback();
+        showRun(newIndex);
+      }
+    }
+
+    function updateNavButtons() {
+      document.getElementById("prev-btn").disabled = currentIndex === 0;
+      document.getElementById("next-btn").disabled =
+        currentIndex === EMBEDDED_DATA.runs.length - 1;
+    }
+
+    // ---- Show a run ----
+    function showRun(index) {
+      currentIndex = index;
+      const run = EMBEDDED_DATA.runs[index];
+
+      // Progress
+      document.getElementById("progress").textContent =
+        `${index + 1} of ${EMBEDDED_DATA.runs.length}`;
+
+      // Prompt
+      document.getElementById("prompt-text").textContent = run.prompt;
+
+      // Config badge
+      const badge = document.getElementById("config-badge");
+      const configMatch = run.id.match(/(with_skill|without_skill|new_skill|old_skill)/);
+      if (configMatch) {
+        const config = configMatch[1];
+        const isBaseline = config === "without_skill" || config === "old_skill";
+        badge.textContent = config.replace(/_/g, " ");
+        badge.className = "config-badge " + (isBaseline ? "config-baseline" : "config-primary");
+        badge.style.display = "inline-block";
+      } else {
+        badge.style.display = "none";
+      }
+
+      // Outputs
+      renderOutputs(run);
+
+      // Previous outputs
+      renderPrevOutputs(run);
+
+      // Grades
+      renderGrades(run);
+
+      // Previous feedback
+      const prevFb = (EMBEDDED_DATA.previous_feedback || {})[run.id];
+      const prevEl = document.getElementById("prev-feedback");
+      if (prevFb) {
+        document.getElementById("prev-feedback-text").textContent = prevFb;
+        prevEl.style.display = "block";
+      } else {
+        prevEl.style.display = "none";
+      }
+
+      // Feedback
+      document.getElementById("feedback").value = feedbackMap[run.id] || "";
+      document.getElementById("feedback-status").textContent = "";
+
+      updateNavButtons();
+
+      // Track visited runs and promote done button when all visited
+      visitedRuns.add(index);
+      const doneBtn = document.getElementById("done-btn");
+      if (visitedRuns.size >= EMBEDDED_DATA.runs.length) {
+        doneBtn.classList.add("ready");
+      }
+
+      // Scroll main content to top
+      document.querySelector(".main").scrollTop = 0;
+    }
+
+    // ---- Render outputs ----
+    function renderOutputs(run) {
+      const container = document.getElementById("outputs-body");
+      container.innerHTML = "";
+
+      const outputs = run.outputs || [];
+      if (outputs.length === 0) {
+        container.innerHTML = '<div class="empty-state">No output files</div>';
+        return;
+      }
+
+      for (const file of outputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        // Always show file header with download link
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const content = document.createElement("div");
+        content.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          content.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          content.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          content.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(content, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          content.appendChild(a);
+        } else if (file.type === "error") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          pre.style.color = "var(--red)";
+          content.appendChild(pre);
+        }
+
+        fileDiv.appendChild(content);
+        container.appendChild(fileDiv);
+      }
+    }
+
+    // ---- XLSX rendering via SheetJS ----
+    function renderXlsx(container, b64Data) {
+      try {
+        const raw = Uint8Array.from(atob(b64Data), c => c.charCodeAt(0));
+        const wb = XLSX.read(raw, { type: "array" });
+
+        for (let i = 0; i < wb.SheetNames.length; i++) {
+          const sheetName = wb.SheetNames[i];
+          const ws = wb.Sheets[sheetName];
+
+          if (wb.SheetNames.length > 1) {
+            const sheetLabel = document.createElement("div");
+            sheetLabel.style.cssText =
+              "font-weight:600; font-size:0.8rem; color:#b0aea5; margin-top:0.5rem; margin-bottom:0.25rem;";
+            sheetLabel.textContent = "Sheet: " + sheetName;
+            container.appendChild(sheetLabel);
+          }
+
+          const htmlStr = XLSX.utils.sheet_to_html(ws, { editable: false });
+          const wrapper = document.createElement("div");
+          wrapper.innerHTML = htmlStr;
+          container.appendChild(wrapper);
+        }
+      } catch (err) {
+        container.textContent = "Error rendering spreadsheet: " + err.message;
+      }
+    }
+
+    // ---- Grades ----
+    function renderGrades(run) {
+      const section = document.getElementById("grades-section");
+      const content = document.getElementById("grades-content");
+
+      if (!run.grading) {
+        section.style.display = "none";
+        return;
+      }
+
+      const grading = run.grading;
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("grades-arrow").classList.remove("open");
+
+      const summary = grading.summary || {};
+      const expectations = grading.expectations || [];
+
+      let html = '<div style="padding: 1rem;">';
+
+      // Summary line
+      const passRate = summary.pass_rate != null
+        ? Math.round(summary.pass_rate * 100) + "%"
+        : "?";
+      const badgeClass = summary.pass_rate >= 0.8 ? "grade-pass" : summary.pass_rate >= 0.5 ? "" : "grade-fail";
+      html += '<div class="grades-summary">';
+      html += '<span class="grade-badge ' + badgeClass + '">' + passRate + '</span>';
+      html += '<span>' + (summary.passed || 0) + ' passed, ' + (summary.failed || 0) + ' failed of ' + (summary.total || 0) + '</span>';
+      html += '</div>';
+
+      // Assertions list
+      html += '<ul class="assertion-list">';
+      for (const exp of expectations) {
+        const statusClass = exp.passed ? "pass" : "fail";
+        const statusIcon = exp.passed ? "\u2713" : "\u2717";
+        html += '<li class="assertion-item">';
+        html += '<span class="assertion-status ' + statusClass + '">' + statusIcon + '</span>';
+        html += '<span>' + escapeHtml(exp.text) + '</span>';
+        if (exp.evidence) {
+          html += '<div class="assertion-evidence">' + escapeHtml(exp.evidence) + '</div>';
+        }
+        html += '</li>';
+      }
+      html += '</ul>';
+
+      html += '</div>';
+      content.innerHTML = html;
+    }
+
+    function toggleGrades() {
+      const content = document.getElementById("grades-content");
+      const arrow = document.getElementById("grades-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Previous outputs (collapsible) ----
+    function renderPrevOutputs(run) {
+      const section = document.getElementById("prev-outputs-section");
+      const content = document.getElementById("prev-outputs-content");
+      const prevOutputs = (EMBEDDED_DATA.previous_outputs || {})[run.id];
+
+      if (!prevOutputs || prevOutputs.length === 0) {
+        section.style.display = "none";
+        return;
+      }
+
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("prev-outputs-arrow").classList.remove("open");
+
+      // Render the files into the content area
+      content.innerHTML = "";
+      const wrapper = document.createElement("div");
+      wrapper.style.padding = "1rem";
+
+      for (const file of prevOutputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const fc = document.createElement("div");
+        fc.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          fc.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          fc.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          fc.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(fc, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          fc.appendChild(a);
+        }
+
+        fileDiv.appendChild(fc);
+        wrapper.appendChild(fileDiv);
+      }
+
+      content.appendChild(wrapper);
+    }
+
+    function togglePrevOutputs() {
+      const content = document.getElementById("prev-outputs-content");
+      const arrow = document.getElementById("prev-outputs-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Feedback (saved to server -> feedback.json) ----
+    function saveCurrentFeedback() {
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // Build reviews array from map
+      const reviews = [];
+      for (const [run_id, feedback] of Object.entries(feedbackMap)) {
+        if (feedback.trim()) {
+          reviews.push({ run_id, feedback, timestamp: new Date().toISOString() });
+        }
+      }
+
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reviews, status: "in_progress" }),
+      }).then(() => {
+        document.getElementById("feedback-status").textContent = "Saved";
+      }).catch(() => {
+        // Static mode or server unavailable — no-op on auto-save,
+        // feedback will be downloaded on final submit
+        document.getElementById("feedback-status").textContent = "Will download on submit";
+      });
+    }
+
+    // ---- Done ----
+    function showDoneDialog() {
+      // Save current textarea to feedbackMap (but don't POST yet)
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // POST once with status: complete — include ALL runs so the model
+      // can distinguish "no feedback" (looks good) from "not reviewed"
+      const reviews = [];
+      const ts = new Date().toISOString();
+      for (const r of EMBEDDED_DATA.runs) {
+        reviews.push({ run_id: r.id, feedback: feedbackMap[r.id] || "", timestamp: ts });
+      }
+      const payload = JSON.stringify({ reviews, status: "complete" }, null, 2);
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+      }).then(() => {
+        document.getElementById("done-overlay").classList.add("visible");
+      }).catch(() => {
+        // Server not available (static mode) — download as file
+        const blob = new Blob([payload], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "feedback.json";
+        a.click();
+        URL.revokeObjectURL(url);
+        document.getElementById("done-overlay").classList.add("visible");
+      });
+    }
+
+    function closeDoneDialog() {
+      // Reset status back to in_progress
+      saveCurrentFeedback();
+      document.getElementById("done-overlay").classList.remove("visible");
+    }
+
+    // ---- Toast ----
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("visible");
+      setTimeout(() => toast.classList.remove("visible"), 2000);
+    }
+
+    // ---- Keyboard nav ----
+    document.addEventListener("keydown", (e) => {
+      // Don't capture when typing in textarea
+      if (e.target.tagName === "TEXTAREA") return;
+
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        navigate(-1);
+      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        navigate(1);
+      }
+    });
+
+    // ---- Util ----
+    function getDownloadUri(file) {
+      if (file.data_uri) return file.data_uri;
+      if (file.data_b64) return "data:application/octet-stream;base64," + file.data_b64;
+      if (file.type === "text") return "data:text/plain;charset=utf-8," + encodeURIComponent(file.content);
+      return "#";
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ---- View switching ----
+    function switchView(view) {
+      document.querySelectorAll(".view-tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+      document.querySelector(`[onclick="switchView('${view}')"]`).classList.add("active");
+      document.getElementById("panel-" + view).classList.add("active");
+    }
+
+    // ---- Benchmark rendering ----
+    function renderBenchmark() {
+      const data = EMBEDDED_DATA.benchmark;
+      if (!data) return;
+
+      // Show the tabs
+      document.getElementById("view-tabs").style.display = "flex";
+
+      const container = document.getElementById("benchmark-content");
+      const summary = data.run_summary || {};
+      const metadata = data.metadata || {};
+      const notes = data.notes || [];
+
+      let html = "";
+
+      // Header
+      html += "<h2 style='font-family: Poppins, sans-serif; margin-bottom: 0.5rem;'>Benchmark Results</h2>";
+      html += "<p style='color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.25rem;'>";
+      if (metadata.skill_name) html += "<strong>" + escapeHtml(metadata.skill_name) + "</strong> &mdash; ";
+      if (metadata.timestamp) html += metadata.timestamp + " &mdash; ";
+      if (metadata.evals_run) html += "Evals: " + metadata.evals_run.join(", ") + " &mdash; ";
+      html += (metadata.runs_per_configuration || "?") + " runs per configuration";
+      html += "</p>";
+
+      // Summary table
+      html += '<table class="benchmark-table">';
+
+      function fmtStat(stat, pct) {
+        if (!stat) return "—";
+        const suffix = pct ? "%" : "";
+        const m = pct ? (stat.mean * 100).toFixed(0) : stat.mean.toFixed(1);
+        const s = pct ? (stat.stddev * 100).toFixed(0) : stat.stddev.toFixed(1);
+        return m + suffix + " ± " + s + suffix;
+      }
+
+      function deltaClass(val) {
+        if (!val) return "";
+        const n = parseFloat(val);
+        if (n > 0) return "benchmark-delta-positive";
+        if (n < 0) return "benchmark-delta-negative";
+        return "";
+      }
+
+      // Discover config names dynamically (everything except "delta")
+      const configs = Object.keys(summary).filter(k => k !== "delta");
+      const configA = configs[0] || "config_a";
+      const configB = configs[1] || "config_b";
+      const labelA = configA.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const labelB = configB.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const a = summary[configA] || {};
+      const b = summary[configB] || {};
+      const delta = summary.delta || {};
+
+      html += "<thead><tr><th>Metric</th><th>" + escapeHtml(labelA) + "</th><th>" + escapeHtml(labelB) + "</th><th>Delta</th></tr></thead>";
+      html += "<tbody>";
+
+      html += "<tr><td><strong>Pass Rate</strong></td>";
+      html += "<td>" + fmtStat(a.pass_rate, true) + "</td>";
+      html += "<td>" + fmtStat(b.pass_rate, true) + "</td>";
+      html += '<td class="' + deltaClass(delta.pass_rate) + '">' + (delta.pass_rate || "—") + "</td></tr>";
+
+      // Time (only show row if data exists)
+      if (a.time_seconds || b.time_seconds) {
+        html += "<tr><td><strong>Time (s)</strong></td>";
+        html += "<td>" + fmtStat(a.time_seconds, false) + "</td>";
+        html += "<td>" + fmtStat(b.time_seconds, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.time_seconds) + '">' + (delta.time_seconds ? delta.time_seconds + "s" : "—") + "</td></tr>";
+      }
+
+      // Tokens (only show row if data exists)
+      if (a.tokens || b.tokens) {
+        html += "<tr><td><strong>Tokens</strong></td>";
+        html += "<td>" + fmtStat(a.tokens, false) + "</td>";
+        html += "<td>" + fmtStat(b.tokens, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.tokens) + '">' + (delta.tokens || "—") + "</td></tr>";
+      }
+
+      html += "</tbody></table>";
+
+      // Per-eval breakdown (if runs data available)
+      const runs = data.runs || [];
+      if (runs.length > 0) {
+        const evalIds = [...new Set(runs.map(r => r.eval_id))].sort((a, b) => a - b);
+
+        html += "<h3 style='font-family: Poppins, sans-serif; margin-bottom: 0.75rem;'>Per-Eval Breakdown</h3>";
+
+        const hasTime = runs.some(r => r.result && r.result.time_seconds != null);
+        const hasErrors = runs.some(r => r.result && r.result.errors > 0);
+
+        for (const evalId of evalIds) {
+          const evalRuns = runs.filter(r => r.eval_id === evalId);
+          const evalName = evalRuns[0] && evalRuns[0].eval_name ? evalRuns[0].eval_name : "Eval " + evalId;
+
+          html += "<h4 style='font-family: Poppins, sans-serif; margin: 1rem 0 0.5rem; color: var(--text);'>" + escapeHtml(evalName) + "</h4>";
+          html += '<table class="benchmark-table">';
+          html += "<thead><tr><th>Config</th><th>Run</th><th>Pass Rate</th>";
+          if (hasTime) html += "<th>Time (s)</th>";
+          if (hasErrors) html += "<th>Crashes During Execution</th>";
+          html += "</tr></thead>";
+          html += "<tbody>";
+
+          // Group by config and render with average rows
+          const configGroups = [...new Set(evalRuns.map(r => r.configuration))];
+          for (let ci = 0; ci < configGroups.length; ci++) {
+            const config = configGroups[ci];
+            const configRuns = evalRuns.filter(r => r.configuration === config);
+            if (configRuns.length === 0) continue;
+
+            const rowClass = ci === 0 ? "benchmark-row-with" : "benchmark-row-without";
+            const configLabel = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+
+            for (const run of configRuns) {
+              const r = run.result || {};
+              const prClass = r.pass_rate >= 0.8 ? "benchmark-delta-positive" : r.pass_rate < 0.5 ? "benchmark-delta-negative" : "";
+              html += '<tr class="' + rowClass + '">';
+              html += "<td>" + configLabel + "</td>";
+              html += "<td>" + run.run_number + "</td>";
+              html += '<td class="' + prClass + '">' + ((r.pass_rate || 0) * 100).toFixed(0) + "% (" + (r.passed || 0) + "/" + (r.total || 0) + ")</td>";
+              if (hasTime) html += "<td>" + (r.time_seconds != null ? r.time_seconds.toFixed(1) : "—") + "</td>";
+              if (hasErrors) html += "<td>" + (r.errors || 0) + "</td>";
+              html += "</tr>";
+            }
+
+            // Average row
+            const rates = configRuns.map(r => (r.result || {}).pass_rate || 0);
+            const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
+            const avgPrClass = avgRate >= 0.8 ? "benchmark-delta-positive" : avgRate < 0.5 ? "benchmark-delta-negative" : "";
+            html += '<tr class="benchmark-row-avg ' + rowClass + '">';
+            html += "<td>" + configLabel + "</td>";
+            html += "<td>Avg</td>";
+            html += '<td class="' + avgPrClass + '">' + (avgRate * 100).toFixed(0) + "%</td>";
+            if (hasTime) {
+              const times = configRuns.map(r => (r.result || {}).time_seconds).filter(t => t != null);
+              html += "<td>" + (times.length ? (times.reduce((a, b) => a + b, 0) / times.length).toFixed(1) : "—") + "</td>";
+            }
+            if (hasErrors) html += "<td></td>";
+            html += "</tr>";
+          }
+          html += "</tbody></table>";
+
+          // Per-assertion detail for this eval
+          const runsWithExpectations = {};
+          for (const config of configGroups) {
+            runsWithExpectations[config] = evalRuns.filter(r => r.configuration === config && r.expectations && r.expectations.length > 0);
+          }
+          const hasAnyExpectations = Object.values(runsWithExpectations).some(runs => runs.length > 0);
+          if (hasAnyExpectations) {
+            // Collect all unique assertion texts across all configs
+            const allAssertions = [];
+            const seen = new Set();
+            for (const config of configGroups) {
+              for (const run of runsWithExpectations[config]) {
+                for (const exp of (run.expectations || [])) {
+                  if (!seen.has(exp.text)) {
+                    seen.add(exp.text);
+                    allAssertions.push(exp.text);
+                  }
+                }
+              }
+            }
+
+            html += '<table class="benchmark-table" style="margin-top: 0.5rem;">';
+            html += "<thead><tr><th>Assertion</th>";
+            for (const config of configGroups) {
+              const label = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+              html += "<th>" + escapeHtml(label) + "</th>";
+            }
+            html += "</tr></thead><tbody>";
+
+            for (const assertionText of allAssertions) {
+              html += "<tr><td>" + escapeHtml(assertionText) + "</td>";
+
+              for (const config of configGroups) {
+                html += "<td>";
+                for (const run of runsWithExpectations[config]) {
+                  const exp = (run.expectations || []).find(e => e.text === assertionText);
+                  if (exp) {
+                    const cls = exp.passed ? "benchmark-delta-positive" : "benchmark-delta-negative";
+                    const icon = exp.passed ? "\u2713" : "\u2717";
+                    html += '<span class="' + cls + '" title="Run ' + run.run_number + ': ' + escapeHtml(exp.evidence || "") + '">' + icon + "</span> ";
+                  } else {
+                    html += "— ";
+                  }
+                }
+                html += "</td>";
+              }
+              html += "</tr>";
+            }
+            html += "</tbody></table>";
+          }
+        }
+      }
+
+      // Notes
+      if (notes.length > 0) {
+        html += '<div class="benchmark-notes">';
+        html += "<h3>Analysis Notes</h3>";
+        html += "<ul>";
+        for (const note of notes) {
+          html += "<li>" + escapeHtml(note) + "</li>";
+        }
+        html += "</ul></div>";
+      }
+
+      container.innerHTML = html;
+    }
+
+    // ---- Start ----
+    init();
+    renderBenchmark();
+  </script>
+</body>
+</html>

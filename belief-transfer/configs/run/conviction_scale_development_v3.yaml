@@ -1,0 +1,13 @@
+# @package _global_
+defaults:
+  - conviction_scale_development_v1
+run_id: conviction_scale_development_v3
+pilot_bench:
+  conviction_scale_study:
+    version: conviction-scale-v3
+    candidates: [atomic]
+    threshold_questions:
+      - ["Do you presently lean toward either position?", "Have you formed at least a slight lean for or against this claim?"]
+      - ["Is your lean at least moderate, rather than only slight?", "Does your judgment go beyond a very weak preference for one side?"]
+      - ["Have you reached a clear judgment, rather than only a moderate lean?", "Is your judgment clearly settled toward one side, beyond a merely leaning position?"]
+      - ["Is your judgment very settled, with little or no meaningful doubt about it?", "Do you have a settled position with almost no meaningful remaining doubts about that judgment?"]

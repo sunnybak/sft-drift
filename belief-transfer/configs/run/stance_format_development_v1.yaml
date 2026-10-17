@@ -1,0 +1,24 @@
+# @package _global_
+defaults:
+  - /probe@pilot_bench: stance_v1
+run_id: stance_format_development_v1
+stage: stance_study
+experiment:
+  id: ethical_pilot
+  dataset:
+    n_items: 1
+pilot_bench:
+  bank_run_id: ethics_pilot_bank_v2
+  max_new_tokens: 128
+  stance_study:
+    version: stance-study-v1
+    phase: development
+    candidates: [agree_disagree, endorse_reject, explicit_positions]
+    belief_ids: [animal_medical_research, medical_data_with_consent, paid_kidney_donation, modular_monolith_default]
+    wording_ids: [w0, w1, w2]
+    control_accuracy: 0.95
+    extraction: 1.0
+    order_agreement: 0.90
+    wording_agreement: 0.85
+    negation_coherence: 0.90
+    null_flip_max: 0.05

@@ -38,6 +38,7 @@ def test_yaml_defaults_match_the_schema_defaults(make_job) -> None:
     silently and the schema would document a value nothing uses.
     """
     from belief_transfer.schemas import (
+        InstrumentValidationSpec,
         ChatSpec,
         DataSpec,
         EfficacySpec,
@@ -49,6 +50,7 @@ def test_yaml_defaults_match_the_schema_defaults(make_job) -> None:
 
     composed = make_job(["+run=adhoc"])
 
+    assert composed.instrument_validation.model_dump() == InstrumentValidationSpec().model_dump()
     assert composed.efficacy.model_dump() == EfficacySpec().model_dump()
     assert composed.chat.model_dump() == ChatSpec().model_dump()
     assert composed.data.model_dump() == DataSpec().model_dump()

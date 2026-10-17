@@ -1,0 +1,15 @@
+{
+  "eval_id": 1,
+  "eval_name": "void-run-trap",
+  "prompt": "what does the multiform corpus say about action transfer?",
+  "assertions": [
+    "Identifies transfer_multiformat as void / not citable",
+    "Does NOT present transfer_multiformat's action numbers as the answer without flagging that they are void",
+    "Points at the superseding run (transfer_multiformat_fixedq) as the correct source",
+    "Reports the actual finding: the multi-form corpus produces no action effect (dA straddles zero)",
+    "Notes that the superseding run's results are not present in the local data/ directory",
+    "Does not silently mix numbers from void and valid runs",
+    "Grounds its numbers in artifacts read from data/results/ rather than relaying them from the changelog",
+    "Notes that the void run directories carry no on-disk VOID.md marker"
+  ]
+}

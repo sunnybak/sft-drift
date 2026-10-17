@@ -1,0 +1,12 @@
+# @package _global_
+# Official Qwen thinking-mode sampling settings; explicit reproducible prompt seeds.
+defaults:
+  - conviction_scale_thinking_screen_v1
+run_id: conviction_scale_sampling_screen_v1
+pilot_bench:
+  max_new_tokens: 4096
+  conviction_scale_study:
+    temperature: 0.6
+    top_p: 0.95
+    top_k: 20
+    min_p: 0.0

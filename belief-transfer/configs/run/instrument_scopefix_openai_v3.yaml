@@ -1,0 +1,26 @@
+# @package _global_
+run_id: instrument_scopefix_openai_v3
+stage: instrument_validation
+experiment:
+  id: instrument_validation
+  dataset:
+    n_items: 1  # unused by this stage
+instrument_validation:
+  version: generated-stance-v3
+  provider: openai
+  model: gpt-5.6-luna
+  deduplicate_prompts: true
+  belief:
+    id: factory_farming_acceptability
+    version: "1"
+    domain: ethics
+    scope: Conventional intensive animal farming for food under present-day conditions.
+    stance:
+      id: acceptability
+      statement: Conventional intensive animal farming for food is ethically acceptable.
+      negation: It is not the case that conventional intensive animal farming for food is ethically acceptable.
+      paraphrases:
+        - Under present-day conditions, conventional intensive animal farming for food is morally acceptable.
+    facets: []
+    exclusions: [Whether it should be legally banned, Personal purchasing intentions]
+    semantic_review: Initial hand-written pilot pair; explicit propositional negation. Acceptable/morally acceptable paraphrase requires pilot review before freezing.

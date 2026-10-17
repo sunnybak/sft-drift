@@ -1,0 +1,9 @@
+# @package _global_
+# New-topic validation must match this GPU/model/adapter/decoder and development run.
+defaults:
+  - stance_response_cap_validation_v1
+run_id: ethics_gpu_validation_v1
+pilot_bench:
+  measurement_batch_size: 1
+  stance_study:
+    selection_run_id: ethics_gpu_development_v1

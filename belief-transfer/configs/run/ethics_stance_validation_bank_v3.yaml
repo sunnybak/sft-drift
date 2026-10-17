@@ -1,0 +1,12 @@
+# @package _global_
+# Reuse v2 candidates; fix one exact duplicate without touching any belief definition.
+defaults:
+  - ethics_stance_validation_bank_v2
+run_id: ethics_stance_validation_bank_v3
+pilot_bench:
+  candidates_from_run_id: ethics_stance_validation_bank_v2
+  wording_replacements:
+    - belief_id: dual_use_research_reviewed
+      wording_id: w1
+      statement: Under the specified circumstances, publication of scientific findings with substantial potential for harmful misuse is morally acceptable.
+      reason: The original w1 exactly repeated the canonical statement; this equivalent wording preserves the practice, modality, risk and scope.

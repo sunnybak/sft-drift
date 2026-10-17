@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+  - conviction_scale_verdict_fast_screen_v1
+run_id: conviction_scale_agreement_fast_screen_v1
+pilot_bench:
+  conviction_scale_study:
+    candidates: [agreement_named]
+    position_instruction: First answer whether you agree or disagree with this exact proposition within its stated scope, or have no lean. Then rate how settled that actual answer is. A definite disagreement is just as settled as a definite agreement. This is not a rating of how strongly you endorse the proposition.
+    question_framings:
+      - How settled are you in the actual answer you have chosen?
+      - Which level describes how settled your own agreement or disagreement with this proposition is?

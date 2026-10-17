@@ -1,0 +1,16 @@
+# @package _global_
+# Bounded reasoning check after non-thinking formats failed known negations.
+defaults:
+  - stance_format_development_v1
+run_id: stance_format_thinking_v1
+pilot_bench:
+  max_new_tokens: 2048
+  measurement_decoding:
+    thinking: true
+    temperature: 0.6
+    top_p: 0.95
+    top_k: 20
+    min_p: 0
+  stance_study:
+    candidates: [named_endorse_reject]
+    stop_on_control_failure: true
