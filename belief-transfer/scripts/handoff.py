@@ -235,7 +235,8 @@ def restore(project: Path, config: dict) -> dict:
     inventory(data, config)
     write_receipt(data, config["repo_id"], revision, manifest)
     return {"repo_id": config["repo_id"], "revision": revision,
-            "code_commit": manifest["code_commit"], "files": len(files), "verified": True}
+            "code_commit": manifest["code_commit"], "branch": manifest.get("branch"),
+            "files": len(files), "verified": True}
 
 
 def main() -> None:
@@ -256,7 +257,9 @@ def main() -> None:
         verify_files(project / "data", receipt["manifest"]["files"])
         inventory(project / "data", config)
         result = {"verified": True, "revision": receipt["revision"],
-                  "files": len(receipt["manifest"]["files"])}
+                  "files": len(receipt["manifest"]["files"]),
+                  "code_commit": receipt["manifest"]["code_commit"],
+                  "branch": receipt["manifest"].get("branch")}
     else:
         try:
             files = inventory(project / "data", config)
@@ -268,6 +271,8 @@ def main() -> None:
         if path.exists():
             receipt = json.loads(path.read_text())
             result["last_snapshot"] = {key: receipt[key] for key in ("repo_id", "revision")}
+            result["last_snapshot"].update({key: receipt["manifest"].get(key)
+                                            for key in ("branch", "code_commit")})
         else:
             result["last_snapshot"] = None
     print(json.dumps(result, indent=2))

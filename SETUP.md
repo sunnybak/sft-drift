@@ -32,6 +32,9 @@ uv run --no-sync python scripts/handoff.py status
 Do not upgrade ML packages or download every historical model. Required secrets:
 `HF_TOKEN` for the private artifact dataset; generator-provider credentials only when
 actually generating/judging data. Git write authentication is needed to save source/progress.
+For HTTPS pushes, use GitHub authentication (for example gh with a provisioned `GH_TOKEN`);
+HF_TOKEN does not authenticate GitHub. If Git author identity is unset, configure it
+locally for this repo using the existing project author identity, not global settings.
 The active dataset is `sunnybak/sft-drift-ethical-stance` and must be private.
 `sunnybak/sft-drift` is the legacy destination; it is public and not the current restore source.
 

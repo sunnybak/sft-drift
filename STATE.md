@@ -84,3 +84,13 @@ checkpoints and cache; restore never overwrites conflicting local files. A local
 receipt and the remote manifest record the actual code commit/artifact revision.
 Check that receipt to establish sync status; text in this file is not a sync receipt.
 Update this page and a dated changelog, push Git, then save/verify at each completed block.
+
+## Handoff verification completed
+
+Source and the initial private snapshot were pushed successfully. A clean Git clone
+restored all **162 files (about 98.4 MB)**, verified every frozen/snapshot hash, replayed
+all 100 Stance scores and model controls exactly, and matched every baseline-report
+evidence hash. Sixty-nine focused tests also passed inside that restored clone.
+The full source test suite passed **820 tests, 1 skipped**.
+The final save receipt records the current source commit and artifact revision.
+CUDA installation/inference/training remain to be qualified on the actual Vast.ai box.
