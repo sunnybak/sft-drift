@@ -56,3 +56,15 @@ Command, from `belief-transfer/`:
 ```bash
 uv run --no-sync python run.py +run=ethics_sft_data_pilot_v1
 ```
+
+## V1 outcome
+
+Completed 16 pairs / 32 answers, all 99–123 words, with 16 provisional same-model
+judgments. All judge booleans passed, but current-agent review identified explicit
+verdicts in the implicit design and weak negative signals; no accepted corpus was
+exported. Context diversity, unstipulated harm/benefit magnitude, control metacommentary,
+near-copy review and tokenizer-level dose matching need work before scale. See the
+saved `review_findings.md`, `manual_review.jsonl`/`.md` and `review_summary.json` in
+`data/results/ethical_stance_sft/ethics_sft_data_pilot_v1/`. Source BASE selection rows
+are `data/results/ethical_pilot/ethics_100_stance_qwen_v2/review_v2/beliefs.jsonl`.
+The generation/judging ledger estimates $0.014563 for 32 uncached calls. No training ran.

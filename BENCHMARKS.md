@@ -19,7 +19,13 @@ are not an untouched held-out test. See the report for these limits.
 
 ## Ordered remaining work
 
-### 1. Pilot fresh SFT data generation — next substantive task
+### 1. Pilot fresh SFT data generation — v1 complete; example review next
+
+V1 generated 32 short candidate answers and provisional judgments. Read
+[SFT_DATA_PILOT.md](belief-transfer/SFT_DATA_PILOT.md) and the findings linked in STATE.md.
+Explicit versus reasons-only did not separate cleanly; no corpus/design is approved.
+Review examples before a revised small pilot or scaling. Token dose and control cleanup
+remain open. The work below describes requirements, not a completed training corpus.
 
 Choose a small, explicit pilot subset spanning the observed BASE profiles and related
 claims. Reuse the generation/cache/judging utilities. Generate a handful of **shorter**

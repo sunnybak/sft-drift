@@ -1,16 +1,26 @@
-# Current state — 2026-10-17
+# Current state — 2026-10-18
 
 ## Where we are
 
-**Next: pilot fresh, shorter SFT data generation.** The approved 100-belief bank and
-Mac BASE evaluation are complete. New study SFT datasets, GPU BASE and fresh fine-tunes
-have **not** been run. No model or training process is in flight on this Mac.
+**Next: review the 32 fresh SFT candidate answers before scaling.**
+`ethical_stance_sft/ethics_sft_data_pilot_v1` completed: 16 opposite-position pairs,
+two short-answer designs, three ethical subjects and a separate photography control.
+All answers are 99–123 words. No full frozen statement copies were found; near-copy
+review and tokenizer-level dose matching remain open. All candidates and raw judgments
+are preserved. No new training-ready corpus, CUDA BASE or fresh fine-tune exists.
+No model/training process is in flight; this pilot process exited successfully.
 
-Read GOAL.md and BENCHMARKS.md for the agreed study. The user wants the full belief bank
-measured on every fresh fine-tune; old adapters and prior research queues are excluded.
-Dataset count/length, explicit versus evidence-based training signal, pilot targets,
-training method/schedule and replication budget are not yet frozen. Use concrete pilot
-examples to settle those decisions; do not assume historical defaults.
+Read [pilot plan](belief-transfer/SFT_DATA_PILOT.md) and
+[findings/examples](belief-transfer/data/results/ethical_stance_sft/ethics_sft_data_pilot_v1/review_findings.md).
+The same-model judge passed every pair, but current-agent review found explicit verdicts
+in reasons-only answers, weak negative signals, scope-strengthening risks and repetitive
+contexts. These disagreements remain explicit. Prefer explicit conclusions for the next
+small pilot; discuss examples with the user before choosing the design or scaling.
+The photography control also needs visible ethics/environment metacommentary removed.
+
+Final data counts, token dose, design, training targets/method/schedule and replication
+budget are still open. GPU work still needs an authorized Vast.ai machine and its own
+qualification chain. All 100 beliefs remain required on every future fine-tune.
 
 ## Established baseline
 
@@ -56,9 +66,18 @@ uv run --no-sync python scripts/handoff.py restore
 uv run --no-sync python scripts/handoff.py verify
 ```
 
-Then inspect the existing `dataset/`, `generation/` and `stages/datagen.py` code against
-BENCHMARKS.md step 1, and design/generate a handful of shorter matched SFT examples.
-This adaptation is work to do; there is no approved new corpus-generation overlay yet.
+Then inspect the completed v1 examples; **do not rerun its started ID**. Exact next
+command from `belief-transfer/`:
+
+```bash
+cat data/results/ethical_stance_sft/ethics_sft_data_pilot_v1/review_findings.md
+```
+
+Review `data/generated/ethical_stance_sft/ethics_sft_data_pilot_v1/review.md` with the
+user, then register a fresh v2 run ID if revising generation. V1 is example review only,
+not an approved corpus; the stage preserves completed pairs but has no automatic resume.
+Log: `data/results/ethical_stance_sft/ethics_sft_data_pilot_v1/generation.log`.
+No training checkpoints were created. Detailed findings: `changelog/2026-10-18-sft-data-pilot.md`.
 
 GPU qualification and first BASE overlays are prepared, **unexecuted**:
 `ethics_gpu_development_v1` → `ethics_gpu_validation_v1` → `ethics_gpu_base_v1`.
@@ -85,7 +104,7 @@ receipt and the remote manifest record the actual code commit/artifact revision.
 Check that receipt to establish sync status; text in this file is not a sync receipt.
 Update this page and a dated changelog, push Git, then save/verify at each completed block.
 
-## Handoff verification completed
+## Initial handoff verification completed
 
 Source and the initial private snapshot were pushed successfully. A clean Git clone
 restored all **162 files (about 98.4 MB)**, verified every frozen/snapshot hash, replayed
@@ -94,3 +113,13 @@ evidence hash. Sixty-nine focused tests also passed inside that restored clone.
 The full source test suite passed **820 tests, 1 skipped**.
 The final save receipt records the current source commit and artifact revision.
 CUDA installation/inference/training remain to be qualified on the actual Vast.ai box.
+
+## Latest work-block verification
+
+Pilot/config/registry/dependency tests: 35 passed. Handoff/data-sync/stance checks:
+77 passed sequentially after generation. A first concurrent invocation passed its tests
+but tripped the real-results guard on the live generator log; no test failure was hidden.
+Pilot raw requests/replies, candidate chat pairs, automated and current-agent reviews,
+resolved config and cache are declared in the private artifact inventory. Check the latest
+handoff receipt for source commit and artifact revision; v1's result pins its generation
+code revision `a6a7bd3`. No full source-suite rerun was needed for this bounded addition.
