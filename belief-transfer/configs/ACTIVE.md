@@ -21,6 +21,14 @@ to all three fresh overlays before execution and recorded; do not edit completed
 Independent-seed repeats need their own development/validation/full-bank IDs with matching
 seeds. A fine-tune also needs matching adapter-specific development/validation.
 
+## Fresh data pilot
+
+`run/ethics_sft_data_pilot_v1.yaml` launches `stage=sft_data_pilot`: 16 paired
+requests / 32 short candidate answers, with raw replies and provisional pair judgments.
+See `../SFT_DATA_PILOT.md` for targets, designs, control and review limits. It does not
+train, export an accepted corpus, overwrite an existing candidate directory or resume.
+The inherited historical training settings in the resolved job are unused by this stage.
+
 ## Code to reuse
 
 | Work | Modules under `src/belief_transfer/` |

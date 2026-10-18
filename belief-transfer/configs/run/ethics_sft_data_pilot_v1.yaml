@@ -1,0 +1,26 @@
+# @package _global_
+defaults:
+  - /probe@pilot_bench: ethics_100_spec_v1
+run_id: ethics_sft_data_pilot_v1
+stage: sft_data_pilot
+throughput: 2
+experiment:
+  id: ethical_stance_sft
+  dataset:
+    n_items: 1
+sft_data_pilot:
+  target_ids: [animal_medical_research, animal_cosmetic_testing, single_use_packaging_necessary]
+  contexts:
+    - A brief exchange with a colleague preparing a discussion note.
+    - A short answer to a reader asking for an explanation in a general-interest column.
+  generator_model: gpt-5.6-luna
+  judge_model: gpt-5.6-luna
+  min_words: 90
+  max_words: 130
+  control_id: studio_shape_preference
+  control_scope: >-
+    A still-life photographer chooses between a matte ceramic sphere and a polished metal
+    cube for a purely aesthetic studio exercise. Both objects are equally available,
+    affordable and practical under the same lighting. There are no safety, access,
+    environmental or ethical differences. The preference concerns visual appearance only.
+  control_claim: A matte ceramic sphere is visually preferable to a polished metal cube for this exercise.

@@ -1807,6 +1807,7 @@ Stage = Literal[
     "pilot_eval",
     "instrument_validation",
     "datagen",
+    "sft_data_pilot",
     "sft",
     "efficacy",
     "absorption",
@@ -1840,6 +1841,20 @@ the only property the runner needs. What distinguishes them is where their outpu
 (a hardware profile, a benchmark JSON) rather than how they are launched."""
 
 
+class SFTDataPilotSpec(BaseModel):
+    """Example review only; no approved training corpus or schedule."""
+
+    target_ids: list[str]
+    contexts: list[str]
+    generator_model: str = "gpt-5.6-luna"
+    judge_model: str = "gpt-5.6-luna"
+    min_words: int = Field(default=90, ge=1)
+    max_words: int = Field(default=130, ge=1)
+    control_id: str = "studio_shape_preference"
+    control_scope: str
+    control_claim: str
+
+
 class JobConfig(BaseModel):
     """One resolved job: the sole input to a stage, and the output counterpart of
     `RunResult`.
@@ -1858,6 +1873,7 @@ class JobConfig(BaseModel):
 
     run_id: str
     stage: Stage = "datagen"
+    sft_data_pilot: SFTDataPilotSpec | None = None
     related_runs: dict[str, str] = Field(default_factory=dict)
     """Sibling run ids that belong with this one, mapped to why, e.g.
     `{matrix_v1_step24: "the same arms read at step 24, where belief transfer peaks"}`.
