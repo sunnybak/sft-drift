@@ -51,6 +51,8 @@ def main() -> None:
             'review_routed_not_confirmed_defects':sum(r['triage']!='low_flag' for r in rows),
             'length_flags':sum(not r['length_in_range'] for r in rows),'refusal_questions':dict(refusals),
             'rows_with_errors':sum(bool(r.get('error')) for r in rows),'request_errors_by_status':dict(errors),
+            'model': 'gpt-6-luna','rubric_version':contract['settings']['prompt_version'],
+            'review_threshold':contract['settings']['review_threshold'],'high_threshold':contract['settings']['high_threshold'],
             'actual_input_tokens':actual_inputs,'request_attempts':len(requests),'max_actual_to_reservation':max(ratios,default=None),
             'score_flag_counts_overlapping':dict(score_flags),'by_position':dict(by_position),'by_subject':dict(by_subject),
             'verified_source_files':checked,'verified_frozen_files':len(frozen),

@@ -33,3 +33,22 @@ review covers 400 psychology rows plus all confirmed semantic failures. v5 calib
 cost $0.0630161. v4 pacing canary failed safely after $0.0003907; current margin passed
 164 calls. Full weight-free suite: 938 passed, five skipped. Main run corpus_v3 is
 registered for all 20,000; source rows and frozen instruments unchanged.
+
+### Live review and manual replacement overlays
+
+Main corpus_v3 started 23:26 UTC, Python PID 84550; log
+`/tmp/decisions_qa_corpus_v3.log`, journal under registered generated run, progress in
+results. 64 workers with smooth dispatch and durable per-request retries. Original
+source remains unchanged. Repair overlays v1 (14 prior confirmed cases) and v2 (six
+new ranked cases) preserve source IDs/hashes, full before/after text and rationale.
+All 20 repairs are 400–600 Qwen tokens; Decisions recheck of v1 has 13/14 low model
+flags and one agent disagreement (hypothesis necessity); v2 has 6/6 low model flags.
+Six v1 psychology rows remain mandatory review independently of score. No repeated
+rewrite solely to force a pass.
+
+Fresh blinded check: 20 documents selected with seed 20261020, two distinct subjects
+per category, one positive/negative each. Previous full-text IDs excluded; no flags
+consulted. Agent labels saved before score comparison: one clear input-check scope
+change, one borderline shared-home setting assumption, 18 without clear serious
+defect. Rubric v4 frozen before this sample; no retuning. Repair v3 addresses only
+the clear scope change. Same-model screen and agent labels are provisional.

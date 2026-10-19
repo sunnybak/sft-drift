@@ -55,7 +55,10 @@
     "results/ethical_stance_sft/ethics_sft_decision_repairs_v2",
     "results/ethical_stance_sft/ethics_sft_decision_qa_repairs_v2",
     "results/ethical_stance_sft/ethics_sft_decision_repairs_v3",
-    "results/ethical_stance_sft/ethics_sft_decision_qa_repairs_v3"
+    "results/ethical_stance_sft/ethics_sft_decision_qa_repairs_v3",
+    "results/ethical_stance_sft/ethics_sft_candidate_repairs_v1",
+    "results/ethical_stance_sft/ethics_sft_decision_repairs_v4",
+    "results/ethical_stance_sft/ethics_sft_decision_qa_repairs_v4"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",
@@ -410,7 +413,10 @@
       "generated/ethical_stance_sft/ethics_sft_decision_repairs_v2",
       "generated/ethical_stance_sft/ethics_sft_decision_qa_repairs_v2",
       "generated/ethical_stance_sft/ethics_sft_decision_repairs_v3",
-      "generated/ethical_stance_sft/ethics_sft_decision_qa_repairs_v3"
+      "generated/ethical_stance_sft/ethics_sft_decision_qa_repairs_v3",
+      "generated/ethical_stance_sft/ethics_sft_candidate_repairs_v1",
+      "generated/ethical_stance_sft/ethics_sft_decision_repairs_v4",
+      "generated/ethical_stance_sft/ethics_sft_decision_qa_repairs_v4"
     ],
     "lock_paths": [
       "generated/ethical_stance_sft/ethics_sft_pooled_corpus_v1/.writer.lock",
@@ -437,7 +443,10 @@
       "generated/ethical_stance_sft/ethics_sft_decision_repairs_v2/.writer.lock",
       "generated/ethical_stance_sft/ethics_sft_decision_qa_repairs_v2/.writer.lock",
       "generated/ethical_stance_sft/ethics_sft_decision_repairs_v3/.writer.lock",
-      "generated/ethical_stance_sft/ethics_sft_decision_qa_repairs_v3/.writer.lock"
+      "generated/ethical_stance_sft/ethics_sft_decision_qa_repairs_v3/.writer.lock",
+      "generated/ethical_stance_sft/ethics_sft_candidate_repairs_v1/.writer.lock",
+      "generated/ethical_stance_sft/ethics_sft_decision_repairs_v4/.writer.lock",
+      "generated/ethical_stance_sft/ethics_sft_decision_qa_repairs_v4/.writer.lock"
     ]
   }
 }
