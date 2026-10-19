@@ -10,6 +10,15 @@ private snapshots completed; content acceptance and training assembly remain pen
 See [completion report](data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v5/completion_summary.md).
 Earlier v1–v4 contracts and forecasts remain historical; do not rerun started contracts.
 
+## Content review disposition
+
+The [agent review](data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v5/content_review_v1/report.md)
+read 64 full documents (20 random and 12 risk-targeted pairs), not the entire bank. It
+found four wrong/contradictory positions and seven premise changes. Revision sometimes
+changes the assigned conclusion; automated flags have both misses and false positives.
+Originals remain unchanged. Separate whole-bank QA and traceable repairs precede assembly;
+do not drop all flagged rows or infer an aggregate defect rate from the targeted sample.
+
 ## Source bank
 
 | Source | Calculation | Unique documents | Nominal Qwen tokens |

@@ -29,8 +29,14 @@ The 417 length flags, 1,106 provisional factual-addition flags and other automat
 findings remain retained for review. Flag counts overlap and do not establish defects.
 See STATE.md and the completion report for exact counts, lineage, costs and verification.
 
-Next: review scoped opposing pairs and automated failures, recording disagreements;
-assess diversity and unintended wording overlap. No automatic training-ready designation
+A seeded/risk-targeted agent review read 64 complete documents in 32 pairs (27 subjects,
+all categories). It found 11 semantic defects: four wrong/contradictory positions and
+seven premise changes; five passed both scope/factual checks. Three defects occur in the
+random 40, eight in targeted 24; do not interpret the combined rate as population prevalence.
+Revision can flip the assigned position. Many metadata and factual flags are false positives.
+See `content_review_v1/report.md` under this run for exact selection and disagreements.
+Next: fix assignment-preserving revision/QA in a new version, fully adjudicate stance
+failures and perform separate whole-bank semantic review before traceable bounded repairs. No automatic training-ready designation
 follows generation or same-model review. Earlier reviewed pilots and scope checks are
 development evidence, not independent validation of this full bank. Canonical overlap
 is intentionally allowed; frozen evaluation paraphrases never enter generation prompts.
