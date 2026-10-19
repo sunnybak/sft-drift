@@ -24,7 +24,12 @@ finals across 63 subjects. The fresh 100-document random round found no clear wr
 texts and three premise changes, concentrated in psychology-deception subjects. Earlier
 targeted review established that revision can flip a stance. Repetition and unreliable QA
 remain concerns; preserve the bank and prioritize focused review and traceable repairs.
-This is not full-bank semantic clearance. See STATE.md for counts and preservation.
+A full Decisions screen subsequently completed all 20,000 documents, followed by
+traceable manual corrections of 52 confirmed defects in a separate complete candidate
+version. The agent has read 242 full source texts, including all 34 high stance flags.
+A fresh blind check exposed a missed premise change; broader scope review remains
+required, with 1,106 queue entries pending. This is not full-bank semantic clearance.
+See STATE.md for counts and preservation.
 Training dose/settings remain future work; qualify CUDA BASE before SFT.
 
 ## Completion criteria

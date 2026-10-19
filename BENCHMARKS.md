@@ -49,6 +49,15 @@ follows generation or same-model review. Earlier reviewed pilots and scope check
 development evidence, not independent validation of this full bank. Canonical overlap
 is intentionally allowed; frozen evaluation paraphrases never enter generation prompts.
 
+Full Decisions v4 screening now covers all 20,000 source candidates. Separate version
+`ethics_sft_candidate_repairs_v1` applies 52 hash-matched manual corrections, retaining
+20,000 IDs and 100 per position/subject. The agent read 242 complete source texts,
+including all 34 high stance flags. Fresh flag-blind 20 found a clear premise change
+that Decisions missed; scope sensitivity is not validated. The separate disposition
+queue retains 1,106 pending rows, three borderlines and five provider refusals with
+agent observations; original model outputs stay unchanged. No training-ready claim.
+See the Decisions review report in STATE.md before assembling any training arms.
+
 Four ethical arm selections each contain 9,000 documents. Shared C4 is 9,000 full rows;
 the remaining 11,634 rows provide 5,402,242 replacement tokens. Document-count matching
 is not token matching. Declare measured token/step matching and off-topic position

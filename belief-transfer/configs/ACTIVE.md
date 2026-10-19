@@ -125,3 +125,9 @@ families and prior serious labels; no automatic filtering. `ethics_sft_decision_
 is a 14-document manually authored replacement overlay, retaining original ID/hash
 lineage. It is not a complete new bank. Recheck overlay:
 `run/ethics_sft_decision_qa_repairs_v1.yaml`.
+
+Completed: `ethics_sft_decision_qa_corpus_v3` (all 20,000), repair/recheck rounds
+v1–v5 (52 replacements), complete candidate version `ethics_sft_candidate_repairs_v1`.
+No live jobs. Original corpus/instrument unchanged. Follow `review_report.md` and
+`disposition_queue.md` under the completed screening results before further data use.
+No completed ID may be rerun. No training approval follows.
