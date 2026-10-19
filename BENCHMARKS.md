@@ -19,13 +19,15 @@ are not an untouched held-out test. See the report for these limits.
 
 ## Ordered remaining work
 
-### 1. Pilot fresh SFT data generation — v1 complete; example review next
+### 1. Fresh document pilot complete; example review before refinement/scale
 
-V1 generated 32 short candidate answers and provisional judgments. Read
-[SFT_DATA_PILOT.md](belief-transfer/SFT_DATA_PILOT.md) and the findings linked in STATE.md.
-Explicit versus reasons-only did not separate cleanly; no corpus/design is approved.
-Review examples before a revised small pilot or scaling. Token dose and control cleanup
-remain open. The work below describes requirements, not a completed training corpus.
+The separate paper-inspired pipeline completed 48 standalone stance documents with one
+revision each, 48 assessments and full current-agent review. Read
+[STANCE_DOCUMENT_PILOT.md](belief-transfer/STANCE_DOCUMENT_PILOT.md) and the findings
+linked in STATE.md. Five length failures and scope/reviewer/control issues remain; no
+training corpus is approved. Six pinned C4 records and eight mixture previews are saved.
+The earlier 32-answer pilot remains unchanged. Requirements below continue to apply;
+the quality pilot does not establish SFT effectiveness or a training schedule.
 
 Choose a small, explicit pilot subset spanning the observed BASE profiles and related
 claims. Reuse the generation/cache/judging utilities. Generate a handful of **shorter**
@@ -34,8 +36,9 @@ Inspect meaning, consistency with the scoped target, length/dose, diversity, lea
 matchedness. Show concrete examples before scaling. Fix corpus counts, length distribution
 and explicit-stance versus inferential-evidence design after this review.
 
-The existing generator is built around older evidence corpora. Adapting it to the new
-per-belief study is work still to do, not a completed stage or a ready-made dataset.
+The legacy generator remains built around older evidence corpora. The new
+`stance_sdf_pilot` stage uses scoped briefs and type/idea/draft/revision instead; its
+review candidates are not a ready-made training dataset.
 The 10 off-topic eval claims and dose-matched off-topic **training arms** serve different roles.
 
 ### 2. Establish the target GPU measurement reference

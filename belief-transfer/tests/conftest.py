@@ -4,10 +4,8 @@ The suite is GPU-free by default: `make test` must pass on a laptop with no
 accelerator and no model weights cached, so nothing that loads real weights runs
 unless asked for. `--run-gpu` is that ask, and SETUP.md's step 2 already documents it.
 
-Marker rather than an environment variable because the existing weight-free tests use
-`skipif` on env vars for *credentials* (`OPENAI_API_KEY`), and "do I have an API key"
-and "should this expensive test run" are different questions that should not share a
-mechanism.
+Model-weight and live-provider tests both require explicit opt-in flags. Credentials
+alone do not authorize a live smoke test. Shared generation caches are isolated per test.
 """
 
 from __future__ import annotations

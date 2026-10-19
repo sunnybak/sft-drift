@@ -16,7 +16,7 @@ expressed ethical stances, including effects on related and unrelated beliefs.
   Compare target, related and unrelated beliefs, strong initial stances and agreement changes.
 - **Compute:** data generation and inference may run locally. SFT runs only on CUDA/Vast.ai.
 
-The approved BASE bank and Mac evaluation are complete. **Next: review the first data-generation
+The approved BASE bank and Mac evaluation are complete. **Next: review the separate standalone-document
 pilot, refine its design, and qualify a GPU BASE before training.** Follow the ordered work in BENCHMARKS.md and
 current progress in STATE.md. Dataset count/length, training method/schedule, pilot target
 selection and replication budget still need to be decided from the pilot and recorded.

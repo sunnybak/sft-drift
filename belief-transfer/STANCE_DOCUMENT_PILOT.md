@@ -82,3 +82,24 @@ Sources:
   $0.50 output per million tokens; verified 2026-10-19)
 - https://github.com/safety-research/believe-it-or-not/blob/b22a45a8c53254b9278e409f5ffef4349a039199/science_synth_facts/finetuning/synth_doc_dataset.py#L477-L492
 - https://huggingface.co/datasets/allenai/c4
+
+## Executed v1 outcome
+
+Generation source a74d1ea completed 48 drafts, 48 single revisions and 48 assessments;
+the implementing agent read every revision. Provisional current-agent review finds all
+48 directional, with 17 needing edits. The separate model flags 22 and misses some
+scope problems while over-flagging ordinary implications. No accepted corpus is exported.
+
+Final tokens: 301–597 (mean 475.0); 43/48 in range, versus 39/48 drafts. Eight length
+improvements and four regressions show that revision can conflict with the length target.
+22,802 synthetic tokens total; six C4 documents total 792 tokens, yielding 20.1–23.5%
+background token share despite the 1:1 document count. Generation/judging cost $0.045876
+for 161 calls including the canary. No inference or training ran.
+
+See saved review_findings.md, revision_examples.md, agent_review.jsonl/.md,
+review_comparison.jsonl/.md and review_summary.json in the run results directory.
+The full source suite passed 831 tests, 4 skipped, with the study cache unchanged across
+the final suite. All provider smoke tests require --run-api and shared test caches are
+isolated; three accidental initial legacy smoke calls are preserved separately with
+about $0.0000258 additional cost. Frozen evidence was preserved. The final receipt,
+not this document, establishes Git/private-snapshot preservation.

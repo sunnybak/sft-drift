@@ -195,6 +195,7 @@ litter from the house is trucked to grain farms nearby as fertilizer.
 
 
 @pytest.mark.skipif(not os.environ.get("OPENAI_API_KEY"), reason="OPENAI_API_KEY not set")
+@pytest.mark.needs_api
 def test_judge_discriminates_hand_written_fixtures() -> None:
     experiment = _factory_farming()
     wanted = {"no_belief_claim", "no_action_advice", "no_normative_conclusion"}

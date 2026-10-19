@@ -1,26 +1,37 @@
-# Current state — 2026-10-18
+# Current state — 2026-10-19
 
 ## Where we are
 
-**Next: review the 32 fresh SFT candidate answers before scaling.**
-`ethical_stance_sft/ethics_sft_data_pilot_v1` completed: 16 opposite-position pairs,
-two short-answer designs, three ethical subjects and a separate photography control.
-All answers are 99–123 words. No full frozen statement copies were found; near-copy
-review and tokenizer-level dose matching remain open. All candidates and raw judgments
-are preserved. No new training-ready corpus, CUDA BASE or fresh fine-tune exists.
-No model/training process is in flight; this pilot process exited successfully.
+**Next: review the separate 48-document SDF pilot before revising or scaling.**
+`ethical_stance_sft/ethics_sft_documents_pilot_v1` completed with GPT-6 Luna:
+48 drafts → one revision each → 48 automated assessments; all 48 complete revisions
+were read and annotated by the implementing agent. No training process or checkpoint
+exists; the generation process exited successfully. CUDA BASE and fresh SFT remain unrun.
 
-Read [pilot plan](belief-transfer/SFT_DATA_PILOT.md) and
-[findings/examples](belief-transfer/data/results/ethical_stance_sft/ethics_sft_data_pilot_v1/review_findings.md).
-The same-model judge passed every pair, but current-agent review found explicit verdicts
-in reasons-only answers, weak negative signals, scope-strengthening risks and repetitive
-contexts. These disagreements remain explicit. Prefer explicit conclusions for the next
-small pilot; discuss examples with the user before choosing the design or scaling.
-The photography control also needs visible ethics/environment metacommentary removed.
+Read [protocol](belief-transfer/STANCE_DOCUMENT_PILOT.md),
+[findings](belief-transfer/data/results/ethical_stance_sft/ethics_sft_documents_pilot_v1/review_findings.md),
+and [all pairs](belief-transfer/data/generated/ethical_stance_sft/ethics_sft_documents_pilot_v1/review.md).
+The new pipeline is distinct from the earlier 32-answer chat-pair pilot, which is unchanged.
 
-Final data counts, token dose, design, training targets/method/schedule and replication
-budget are still open. GPU work still needs an authorized Vast.ai machine and its own
-qualification chain. All 100 beliefs remain required on every future fine-tune.
+- Three ethical subjects plus a separate photography preference control; three forms,
+  two shared ideas per form, separately generated opposing positions. All 48 are clearly
+  directional in provisional current-agent review; this is not evidence of a trained belief.
+- Requested 400–600 Qwen tokens; 43/48 meet it. Final range 301–597, mean 475.0;
+  22,802 synthetic tokens. Revision moved eight drafts into range and four out of range.
+- Current-agent review flags 17 documents for edits, including five length failures,
+  subtle scope additions, control metacommentary and repetition. Same-model review flags
+  22, with both over-literal objections and missed problems. Neither is human ground truth.
+- Six full pinned English C4 records are saved and reused in all eight mixture previews.
+  1:1 document count is only 20.1–23.5% C4 tokens here because the sample totals 792 tokens.
+  No token-dose matching, training-loss implementation or training-ready corpus export.
+- Canary + 160 pipeline calls cost $0.045876, under the $1 ceiling; no uncertain charges.
+  Raw responses, prompts, critiques, failures, seeds, revisions and provenance survive.
+
+The next small pilot should resolve contradictory non-advocacy planning instructions,
+test-specific scope qualifiers, allowed ordinary implications in the quality rubric,
+control metacommentary and the length/concision conflict. Review examples with the user
+before any fresh run ID. No corpus size, final design, training dose/schedule or replication
+budget is frozen. All 100 evaluation beliefs remain required for every future fine-tune.
 
 ## Established baseline
 
@@ -66,18 +77,19 @@ uv run --no-sync python scripts/handoff.py restore
 uv run --no-sync python scripts/handoff.py verify
 ```
 
-Then inspect the completed v1 examples; **do not rerun its started ID**. Exact next
-command from `belief-transfer/`:
+Then inspect the completed standalone-document pilot; **do not rerun its started ID**.
+Exact next command from `belief-transfer/`:
 
 ```bash
-cat data/results/ethical_stance_sft/ethics_sft_data_pilot_v1/review_findings.md
+cat data/results/ethical_stance_sft/ethics_sft_documents_pilot_v1/review_findings.md
 ```
 
-Review `data/generated/ethical_stance_sft/ethics_sft_data_pilot_v1/review.md` with the
-user, then register a fresh v2 run ID if revising generation. V1 is example review only,
-not an approved corpus; the stage preserves completed pairs but has no automatic resume.
-Log: `data/results/ethical_stance_sft/ethics_sft_data_pilot_v1/generation.log`.
-No training checkpoints were created. Detailed findings: `changelog/2026-10-18-sft-data-pilot.md`.
+The full paired review is under the corresponding generated/ directory. Compare
+`revision_examples.md`, `agent_review.md` and `review_comparison.md` in results/ with the
+user. Use a fresh registered ID for any changed prompts. This stage saves completed
+artifacts but does not automatically resume or overwrite started candidate directories.
+Log: `data/results/ethical_stance_sft/ethics_sft_documents_pilot_v1/generation.log`.
+Details: `changelog/2026-10-19-stance-document-pilot.md`.
 
 GPU qualification and first BASE overlays are prepared, **unexecuted**:
 `ethics_gpu_development_v1` → `ethics_gpu_validation_v1` → `ethics_gpu_base_v1`.
@@ -116,10 +128,16 @@ CUDA installation/inference/training remain to be qualified on the actual Vast.a
 
 ## Latest work-block verification
 
-Pilot/config/registry/dependency tests: 35 passed. Handoff/data-sync/stance checks:
-77 passed sequentially after generation. A first concurrent invocation passed its tests
-but tripped the real-results guard on the live generator log; no test failure was hidden.
-Pilot raw requests/replies, candidate chat pairs, automated and current-agent reviews,
-resolved config and cache are declared in the private artifact inventory. Check the latest
-handoff receipt for source commit and artifact revision; v1's result pins its generation
-code revision `a6a7bd3`. No full source-suite rerun was needed for this bounded addition.
+The full source suite passed **831 tests, 4 skipped** after generation ended. Study cache
+bytes were unchanged across that suite. Three provider smoke tests now require explicit
+`--run-api`; per-test shared caches are isolated. The first regression invocation made
+three legacy smoke calls before this safeguard was added. Their append records are
+preserved in the run's `legacy_test_cache_appendix.jsonl`/`.md`; the earlier verified
+cache prefix was restored exactly before pilot generation. Additional smoke cost was
+about $0.0000258. No frozen instrument evidence changed.
+
+Generation source: `a74d1ea`; later changes suppress HTTP INFO logs containing temporary
+signed transport URLs and finish the opt-in test safeguard. Completed log URL queries
+were redacted; document prompts and replies are unchanged. The latest private handoff
+receipt establishes the final source commit/artifact revision. New pilot outputs, reviews,
+C4 text and cache are explicitly covered by the inventory.

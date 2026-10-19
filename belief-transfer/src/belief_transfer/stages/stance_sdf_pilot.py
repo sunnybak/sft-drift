@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import logging
 import random
 from pathlib import Path
 from typing import Any
@@ -61,6 +62,10 @@ def validate_strings(value: Any) -> None:
 
 
 async def run(job: JobConfig) -> RunResult:
+    # INFO logs may include signed transport URLs. Raw API records below preserve
+    # response metadata without persisting temporary transport credentials.
+    logging.getLogger('httpx').setLevel(logging.WARNING)
+    logging.getLogger('httpx2').setLevel(logging.WARNING)
     spec = job.stance_sdf_pilot
     if spec is None or spec.min_tokens > spec.max_tokens or tuple(spec.forms) != docs.FORMS:
         raise ValueError('Valid document pilot config and the three qualified forms required')
