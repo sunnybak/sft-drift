@@ -190,3 +190,37 @@ def test_gpt6_pricing_leaves_historical_default_unchanged():
     assert llm.MODEL=='gpt-5.6-luna'
     assert llm.estimate_cost_usd('gpt-6-luna',usage)==pytest.approx((100*.1+10*.5)/1_000_000)
     assert llm.estimate_cost_usd(llm.MODEL,usage)==pytest.approx((100*.2+10*1.2)/1_000_000)
+
+
+def test_versioned_composition_and_expanded_scope():
+    from belief_transfer.dataset import stance_document_prompts_v2 as v2
+    original = job()
+    matched = load_job(['+run=ethics_sft_documents_pilot_v2'])
+    expanded = load_job(['+run=ethics_sft_documents_expanded_v1'])
+    assert original.stance_sdf_pilot.prompt_version == 'v1'
+    assert matched.stance_sdf_pilot.prompt_version == expanded.stance_sdf_pilot.prompt_version == 'v2'
+    assert stage.subjects_for(original) == stage.subjects_for(matched)
+    assert len(stage.subjects_for(expanded)) == 7
+    subject = stage.subjects_for(matched)[0]
+    idea = {'focus': 'Weighing reasons', 'outline': ['scope', 'principle', 'objection', 'conclusion']}
+    prompt = v2.document_prompt(subject, 'position_note', idea, 'negative', 400, 600)
+    assert 'protected_conditions' in prompt and subject['negation'] in prompt
+    assert 'English words' not in prompt
+    assert 'final\ndocument WILL explain and defend' in v2.forms_prompt(subject)
+    assert 'If already in range' in v2.revision_prompt(subject, 'position_note', idea,
+        'negative', 'draft', 500, 400, 600)
+    assert len(v2.calibration_cases(stage.subjects_for(matched))) == 4
+
+
+def test_v2_stage_records_calibration_and_prompt_version(tmp_path, monkeypatch):
+    generated, results = setup_stage(tmp_path, monkeypatch)
+    monkeypatch.setattr(stage, 'DocumentClient', FakeClient)
+    j = load_job(['+run=ethics_sft_documents_pilot_v2'])
+    asyncio.run(stage.run(j))
+    root = generated / j.experiment.id / j.run_id
+    assert len((root/'reviewer_calibration.jsonl').read_text().splitlines()) == 4
+    assert (root/'reviewer_calibration.md').exists()
+    manifest = json.loads((results/j.experiment.id/j.run_id/'pilot_manifest.json').read_text())
+    assert manifest['prompt_version'] == 'v2' and manifest['completed_revisions'] == 48
+    requests = [json.loads(s) for s in (root/'requests.jsonl').read_text().splitlines()]
+    assert all('protected_conditions' in r['prompt'] for r in requests if r['phase'] == 'draft')

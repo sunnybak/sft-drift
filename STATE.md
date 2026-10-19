@@ -2,11 +2,13 @@
 
 ## Where we are
 
-**Next: review the separate 48-document SDF pilot before revising or scaling.**
-`ethical_stance_sft/ethics_sft_documents_pilot_v1` completed with GPT-6 Luna:
-48 drafts → one revision each → 48 automated assessments; all 48 complete revisions
-were read and annotated by the implementing agent. No training process or checkpoint
-exists; the generation process exited successfully. CUDA BASE and fresh SFT remain unrun.
+**Active: authorized prompt refinement, matched repeat, then broader document pilot.**
+Registered fresh IDs `ethical_stance_sft/ethics_sft_documents_pilot_v2` (48 documents)
+and `ethical_stance_sft/ethics_sft_documents_expanded_v1` (84 documents). Both use
+versioned v2 prompts, GPT-6 Luna, the existing 400–600-token target, one revision and
+same six C4 records. Each has a $0.50 ceiling. Generation is not launched yet.
+Review every v2 revision before the expanded run. No training/GPU rental is in scope.
+The completed v1 remains unchanged; its results and limitations follow.
 
 Read [protocol](belief-transfer/STANCE_DOCUMENT_PILOT.md),
 [findings](belief-transfer/data/results/ethical_stance_sft/ethics_sft_documents_pilot_v1/review_findings.md),
@@ -29,8 +31,7 @@ The new pipeline is distinct from the earlier 32-answer chat-pair pilot, which i
 
 The next small pilot should resolve contradictory non-advocacy planning instructions,
 test-specific scope qualifiers, allowed ordinary implications in the quality rubric,
-control metacommentary and the length/concision conflict. Review examples with the user
-before any fresh run ID. No corpus size, final design, training dose/schedule or replication
+control metacommentary and the length/concision conflict. The user reviewed the proposed changes and authorized fresh runs on 2026-10-19. No corpus size, final design, training dose/schedule or replication
 budget is frozen. All 100 evaluation beliefs remain required for every future fine-tune.
 
 ## Established baseline
@@ -81,7 +82,7 @@ Then inspect the completed standalone-document pilot; **do not rerun its started
 Exact next command from `belief-transfer/`:
 
 ```bash
-cat data/results/ethical_stance_sft/ethics_sft_documents_pilot_v1/review_findings.md
+uv run --no-sync python run.py +run=ethics_sft_documents_pilot_v2
 ```
 
 The full paired review is under the corresponding generated/ directory. Compare

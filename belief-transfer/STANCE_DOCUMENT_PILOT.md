@@ -103,3 +103,34 @@ the final suite. All provider smoke tests require --run-api and shared test cach
 isolated; three accidental initial legacy smoke calls are preserved separately with
 about $0.0000258 additional cost. Frozen evidence was preserved. The final receipt,
 not this document, establishes Git/private-snapshot preservation.
+
+## Authorized refinement and breadth test — 2026-10-19
+
+User authorized prompt refinement, a matched repeat, then scope expansion and another
+repeat. Run `ethics_sft_documents_pilot_v2` first: same four subjects, forms, two ideas
+per form, opposite positions, 400–600 Qwen tokens and GPT-6 Luna. Prompt version v2
+fixes stance-neutral planning, lists protected scope conditions, distinguishes ordinary
+implications from new empirical premises, gives revision priorities, and suppresses
+control metacommentary. Version v1 remains available unchanged. Plans/ideas are newly
+generated; this matches the design, not identical prose or an API sampling seed.
+
+After reading every matched revision, run `ethics_sft_documents_expanded_v1`: retain
+the original subjects and add paid_kidney_donation, medical_data_without_consent and
+cash_bail_inability_pay, for six ethical subjects across five domains plus the same
+photography control, 84 documents total. These additions were selected before outputs
+for pressure/uncertainty, consent/data-use and financial-constraint scope tests, not
+for observed BASE scores. Keep the v2 protocol fixed for the expansion unless the
+matched review exposes a material defect; record any resulting change before execution.
+
+Four short reviewer calibration snippets test valid implications and invalid qualifier
+removal. Only their named checks are scored; these prompt-related fixtures are not
+held-out accuracy evidence. Preserve their full raw results. Both runs retain all
+candidates and receive complete current-agent review. Compare length transitions,
+scope/argument defects, metadata, variation and reviewer disagreements descriptively;
+there is no preregistered treatment-effect test or automatic corpus approval.
+
+Each new run has a $0.50 ceiling including canary/calibration, bounding their combined
+ceiling at $1. The same six pinned seed-42 C4 records remain fixed across runs and arms
+to isolate synthetic-document changes; background breadth/dose is not expanded here.
+No training or GPU rental is authorized by this work. New paths are registered before
+execution, and each completed work block is committed, pushed and privately snapshotted.

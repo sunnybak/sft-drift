@@ -1860,6 +1860,7 @@ class StanceSDFPilotSpec(BaseModel):
     """Bounded standalone-document quality pilot; no training configuration."""
 
     target_ids: list[str]
+    prompt_version: Literal["v1", "v2"] = "v1"
     forms: list[str] = Field(default_factory=lambda: ["position_note", "explanatory_article", "editorial"])
     ideas_per_form: int = Field(default=2, ge=1)
     min_tokens: int = Field(default=400, ge=1)

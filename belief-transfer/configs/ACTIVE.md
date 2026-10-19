@@ -73,3 +73,8 @@ uv run --no-sync pytest tests/test_handoff.py tests/test_data_sync.py \
 
 Broaden tests for shared changes. Do not use the old full test suite as a source of new
 experimental tasks, and do not load weights without intending to run a model check.
+
+Refinement: `run/ethics_sft_documents_pilot_v2.yaml` uses versioned v2 prompts for
+48 matched-design candidates. Breadth repeat: `run/ethics_sft_documents_expanded_v1.yaml`
+adds three ethical subjects for 84 candidates. Both use the same stage and fixed
+background sample; neither config runs training. See STANCE_DOCUMENT_PILOT.md.

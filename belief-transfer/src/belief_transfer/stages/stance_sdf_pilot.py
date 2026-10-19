@@ -13,6 +13,7 @@ from belief_transfer.analysis import stance_documents as review
 from belief_transfer.config import config_sha, write_resolved_config
 from belief_transfer.dataset import c4_background
 from belief_transfer.dataset import stance_documents as docs
+from belief_transfer.dataset import stance_document_prompts_v2
 from belief_transfer.generation.context import RunContext
 from belief_transfer.generation.document_client import Budget, DocumentClient
 from belief_transfer.schemas import JobConfig, RunResult
@@ -77,6 +78,7 @@ async def run(job: JobConfig) -> RunResult:
     if root.exists():
         raise FileExistsError(f'Pilot already started: {root}; inspect and use a fresh ID')
     subjects = subjects_for(job)
+    prompts = docs if spec.prompt_version == 'v1' else stance_document_prompts_v2
     # Read frozen wordings only for post-generation diagnostics, never as generator input.
     bank_path = GENERATED_DIR / 'ethical_pilot/ethics_100_bank_v3/belief_wordings.jsonl'
     bank_bytes = bank_path.read_bytes()
@@ -93,7 +95,8 @@ async def run(job: JobConfig) -> RunResult:
     expected = len(subjects)*len(spec.forms)*spec.ideas_per_form*2
     manifest = {'status': 'running', 'expected_documents': expected, 'training_ready': False,
                 'source_config_sha': sha, 'frozen_wordings_sha256': docs.text_hash(bank_bytes.decode()),
-                'seed': spec.seed, 'api_sampling_seed': None, 'tokenizer_model': spec.tokenizer_model,
+                'seed': spec.seed, 'prompt_version': spec.prompt_version,
+                'api_sampling_seed': None, 'tokenizer_model': spec.tokenizer_model,
                 'tokenizer_revision': spec.tokenizer_revision, 'model': spec.model,
                 'resume': 'No overwrite or automatic resume. Inspect partial artifacts; use fresh run ID.',
                 'c4_source': 'allenai/c4/en/train', 'c4_revision': spec.c4_revision}
@@ -143,13 +146,21 @@ async def run(job: JobConfig) -> RunResult:
                                    'Return submit_document with text exactly READY.', docs.DOCUMENT_TOOL, 64)
             if canary != {'text': 'READY'}:
                 raise ValueError('Generation canary did not pass')
+            if spec.prompt_version == 'v2':
+                for case in stance_document_prompts_v2.calibration_cases(subjects):
+                    payload = await execute(client, case['case_id'], 'reviewer_calibration',
+                        prompts.review_prompt(case['subject'], 'position_note', 'positive', case['text']),
+                        docs.REVIEW_TOOL, 1536)
+                    docs.append_row(root/'reviewer_calibration.jsonl', {**case, 'assessment': payload,
+                        'matches_expected_check': payload.get(case['check']) == case['expected'],
+                        'note': 'Short snippets; only named check scored. Not held-out reviewer accuracy.'})
             background = await asyncio.to_thread(c4_background.acquire,
                 len(spec.forms)*spec.ideas_per_form, tokenizer, spec.c4_revision, spec.seed, spec.c4_buffer_size)
             for row in background: docs.append_row(root/'background.jsonl', row)
             print(f'C4 sample saved: {len(background)} full documents', flush=True)
 
             async def plan_forms(subject: dict[str, Any]) -> dict[str, Any]:
-                payload = await execute(client, subject['id'], 'forms', docs.forms_prompt(subject), docs.FORM_TOOL, 2048)
+                payload = await execute(client, subject['id'], 'forms', prompts.forms_prompt(subject), docs.FORM_TOOL, 2048)
                 validate_strings(payload)
                 if set(payload) != set(spec.forms) or any(set(p) != {'audience','purpose'} for p in payload.values()):
                     raise ValueError('Malformed form plan')
@@ -161,7 +172,7 @@ async def run(job: JobConfig) -> RunResult:
             async def plan_ideas(item: Any) -> list[dict[str, Any]]:
                 subject, form = item
                 payload = await execute(client, f"{subject['id']}__{form}", 'ideas',
-                    docs.ideas_prompt(subject, form, form_plans[subject['id']][form], spec.ideas_per_form), docs.IDEA_TOOL, 2048)
+                    prompts.ideas_prompt(subject, form, form_plans[subject['id']][form], spec.ideas_per_form), docs.IDEA_TOOL, 2048)
                 validate_strings(payload)
                 if set(payload) != {'ideas'} or len(payload['ideas']) != spec.ideas_per_form:
                     raise ValueError('Incorrect idea count')
@@ -186,7 +197,7 @@ async def run(job: JobConfig) -> RunResult:
             async def generate_document(item: dict[str, Any]) -> dict[str, Any]:
                 subject, form, idea = item['subject'], item['form'], item['idea']
                 identifier, position = item['document_id'], item['position']
-                payload = await execute(client, identifier, 'draft', docs.document_prompt(
+                payload = await execute(client, identifier, 'draft', prompts.document_prompt(
                     subject, form, idea, position, spec.min_tokens, spec.max_tokens), docs.DOCUMENT_TOOL, 2048)
                 if set(payload) != {'text'} or not isinstance(payload['text'],str) or not payload['text'].strip():
                     raise ValueError('Malformed draft')
@@ -194,7 +205,7 @@ async def run(job: JobConfig) -> RunResult:
                          'tokens': len(tokenizer.encode(payload['text'],add_special_tokens=False))}
                 drafts.append(draft)
                 docs.append_row(root/'drafts.jsonl', draft)
-                payload = await execute(client, identifier, 'revision', docs.revision_prompt(subject, form, idea,
+                payload = await execute(client, identifier, 'revision', prompts.revision_prompt(subject, form, idea,
                     position, draft['text'], draft['tokens'], spec.min_tokens, spec.max_tokens), docs.REVISION_TOOL, 3072)
                 if (set(payload) != {'text','critique'} or not isinstance(payload['text'],str)
                         or not payload['text'].strip() or not isinstance(payload['critique'],list)
@@ -211,7 +222,7 @@ async def run(job: JobConfig) -> RunResult:
             await batch(jobs, generate_document)
 
             async def assess_document(row: dict[str, Any]) -> dict[str, Any]:
-                payload = await execute(client, row['document_id'], 'assessment', docs.review_prompt(
+                payload = await execute(client, row['document_id'], 'assessment', prompts.review_prompt(
                     row['subject'],row['form'],row['position'],row['text']), docs.REVIEW_TOOL, 1536)
                 if (any(type(payload.get(k)) is not bool for k in docs.REVIEW_KEYS)
                         or not isinstance(payload.get('rationale'),str) or not isinstance(payload.get('evidence'),list)):
