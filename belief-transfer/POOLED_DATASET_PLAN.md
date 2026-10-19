@@ -2,7 +2,9 @@
 
 The user selected **ten fresh training-control claims and 100 documents per position**,
 matching the per-belief ethical setting. Current prepared run:
-`ethics_sft_pooled_corpus_v4`, prompt v5. No bulk documents have been generated.
+`ethics_sft_pooled_corpus_v4`, prompt v5. The user authorized beginning generation;
+the first ten documents completed. Live status is in the run's `generation_job.json`;
+STATE.md records the supervisor command and safe-boundary preservation policy.
 Earlier v1–v3 contracts, pilots and forecasts remain historical artifacts. Changed
 source/contract settings require a fresh ID; do not resume v3 with current code.
 
@@ -54,7 +56,7 @@ Stream pinned `allenai/c4` English train revision
 `1588ec454efa1a09f29cd18ddd04fe05fc8653a2`, seed 42, bounded shuffle 1,024. Preserve full
 text/provenance/hashes, with no agreement filter. Acquire at least 18,000 unique records;
 extend until records beyond the first 9,000 supply 5.4M Qwen tokens of replacement reserve.
-Actual token totals determine final assembly. No new C4 acquisition has run.
+Actual token totals determine final assembly. The supervisor acquires this pool after synthetic generation.
 
 ## Generation spend and throughput
 

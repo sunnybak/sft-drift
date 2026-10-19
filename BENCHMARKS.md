@@ -19,7 +19,7 @@ are not an untouched held-out test. See the report for these limits.
 
 ## Ordered remaining work
 
-### 1. Scope correction checked; review full-generation proposal before bulk generation
+### 1. Full candidate generation authorized; monitor preservation and quality
 
 The fresh scope check and matched revision-only repeat cover four ethical subjects,
 a fresh control, three forms and both sides (30 fixed drafts). The original recourse
@@ -27,12 +27,12 @@ problem is absent in all six hiring documents. Authoritative length instructions
 24/30 to 30/30 in range on the same drafts, preserving all 27 valid drafts verbatim.
 Minor/borderline wording and reviewer disagreements remain explicit; this is development
 evidence, not independent validation or training-ready acceptance. See STATE.md and
-[the full-generation proposal](belief-transfer/POOLED_DATASET_PLAN.md). The user must
-review final counts/mix before bulk generation. The current v4 contract is prepared with 20,000 candidates planned (90 ethical + ten
-fresh controls, 100 documents per position), but no bulk data. The ten/64-worker
+[the full-generation proposal](belief-transfer/POOLED_DATASET_PLAN.md). The user reviewed counts/mix and authorized beginning generation. The current v4 contract is prepared with 20,000 candidates planned (90 ethical + ten
+fresh controls, 100 documents per position), with the first ten documents completed. A bounded supervisor continues generation and
+then C4 acquisition, saving between invocations. See STATE.md for actual PID/status. The ten/64-worker
 throughput checks are separate; v3 is superseded. New scheduling has no dollar ceiling
 and an 80% RPM/TPM gate; full-run saturation is unmeasured. Control token/step matching
-requires explicit future sampling/reuse. See the current proposal; no C4 or training has run. Actual training-token/step dose remains future.
+requires explicit future sampling/reuse. The C4 pool is part of this launch; training remains unauthorized. Actual training-token/step dose remains future.
 
 The authorized matched repeat (48 candidates) and expansion (84 candidates) completed,
 with every full revision read. The expansion covers six ethical subjects in five domains

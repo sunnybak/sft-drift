@@ -16,14 +16,12 @@ expressed ethical stances, including effects on related and unrelated beliefs.
   Compare target, related and unrelated beliefs, strong initial stances and agreement changes.
 - **Compute:** data generation and inference may run locally. SFT runs only on CUDA/Vast.ai.
 
-The approved BASE bank and Mac evaluation are complete. **Next: review the prepared full-generation math/mix after the scope-corrected,
-30-document check and scheduler tuning. The user selected ten fresh controls × 100
-documents per position; the current 20,000-document v4 bank is prepared but ungenerated.
-Bulk generation awaits the user's go-ahead; qualify a GPU BASE
-before training.** Follow the ordered work in BENCHMARKS.md and
-current progress in STATE.md. Dataset count/length, training method/schedule, pilot target
-selection and replication budget still need to be decided from the pilot and recorded.
-Do not treat historical defaults as those decisions.
+The approved BASE bank and Mac evaluation are complete. **The user authorized full
+candidate generation.** `ethics_sft_pooled_corpus_v4` targets 20,000 documents (90 ethical
+and ten fresh off-topic claims × 100 per position). The first ten documents completed;
+a bounded supervisor continues synthetic generation and pinned C4 acquisition with
+private snapshots between invocations. Follow STATE.md for actual PID/status and restart
+rules. Training settings/dose matching remain future work; qualify CUDA BASE before SFT.
 
 ## Completion criteria
 

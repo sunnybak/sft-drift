@@ -1,6 +1,6 @@
 # Current state — 2026-10-19
 
-## Generation scheduler tuned; current bank is 20,000 candidates
+## Full candidate-bank generation authorized and started
 
 User chose **ten fresh off-topic claims × 100 documents per position**, matching each
 ethical claim's generation count. These are separate from the ten frozen evaluation
@@ -10,10 +10,22 @@ Smaller control breadth/unique-example count is not a generation blocker. Before
 position selection and explicit sampling/reuse must match training tokens/steps; do not
 pretend the smaller raw control bank is already a matched treatment mixture.
 
-Current prepared bank: **`ethics_sft_pooled_corpus_v4`**, prompt v5, **zero bulk documents**,
-no requests journal, zero spend. Older v1–v3 banks remain preserved and superseded; their
-contracts cannot resume under changed source. Bulk generation still awaits go-ahead.
-No C4 acquisition, training, GPU rental or checkpoint is active.
+Current bank: **`ethics_sft_pooled_corpus_v4`**, prompt v5. The user said **begin**.
+Initial shard completed: **10/20,000** documents, 422–574 Qwen tokens, no mechanical
+flags, 33 fresh generation calls, **$0.0131741**, zero errors/pending requests and SQLite
+integrity_check ok. First opposing pair inspected; this is not bank acceptance or full
+human review. Older v1–v3 contracts remain preserved and cannot resume under changed code.
+
+The continuous supervisor runs at most 500 shards per invocation, then snapshots both
+private stores. After synthetic generation it acquires the specified C4 pool. It stops
+on stage or snapshot failure, with no automatic failed-request retry. Actual PID, child
+command/log and phase are in
+`belief-transfer/data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v4/generation_job.json`.
+Console log: `/tmp/ethics_sft_pooled_corpus_v4.supervisor.log`. Stage logs: `supervised_*.log`
+in that results directory. First completed shard is saved before the continuous launch;
+new active output is local until the next successful handoff boundary. No training,
+GPU rental or checkpoint is authorized or active. A process cannot survive destruction
+of this Mac; explicit restart must first check the PID/child and unresolved ledger.
 
 New configurations have **no hard dollar ceiling**. Historical pilot limits/cache keys
 are unchanged. Generation ledgers still record actual/uncertain charges. New scheduling:
@@ -45,16 +57,16 @@ near that gate. These are capacity calculations, not a measured full-run ETA.
 
 Read [current counts/mixes](belief-transfer/POOLED_DATASET_PLAN.md) and
 [math/benchmark report](belief-transfer/data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v4/report.md).
-Exact next command from `belief-transfer/`:
+Read current live status from `belief-transfer/`:
 
 ```sh
-cat POOLED_DATASET_PLAN.md
+cat data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v4/generation_job.json
 ```
 
-After bulk-generation go-ahead, a bounded first invocation is:
+Exact supervisor command (launch once; check existing PID/child before explicit restart):
 
 ```sh
-uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v4 stance_corpus.operation=generate stance_corpus.resume=true stance_corpus.max_batches=1
+caffeinate -i uv run --no-sync python scripts/run_stance_corpus_generation.py --run-id ethics_sft_pooled_corpus_v4 --batches-per-invocation 500 --include-background
 ```
 
 Four ethical arm selections remain 9,000 docs each: all positive, all negative,
@@ -82,8 +94,9 @@ unmeasured and precede treatment interpretation. No Mac training or unapproved r
 
 ## Preservation
 
-**Final engineering suite: 891 passed / four skipped**. Current engineering and verification details are in
-[changelog](changelog/2026-10-19-corpus-throughput.md). Tests and live generation ran
+**Prior engineering suite: 891 passed / four skipped; new supervisor checks: four passed**. Current engineering and verification details are in
+[launch changelog](changelog/2026-10-19-corpus-generation.md) and
+[throughput changelog](changelog/2026-10-19-corpus-throughput.md). Tests and live generation ran
 separately. Source/config/notes must be committed and pushed; handoff includes both the
 main private store and separate corpus store. The ignored
 `belief-transfer/data/.handoff-receipt.json` records actual final commits/revisions;
