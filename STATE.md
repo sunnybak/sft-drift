@@ -14,8 +14,18 @@ preserves one paid pacing-canary failure ($0.0003907), with no assessed row. Upd
 reservation margin passed all 164 v5 calls. Gate covers this process at 80% of supplied
 10M TPM/10k RPM; 64 workers. Three bounded transient retries have separate ledger slots.
 Full tests: **938 passed, five skipped**. No live generation ran during tests.
-Next from belief-transfer: prepare `+run=ethics_sft_decision_qa_corpus_v3`, then assess
-with `decision_qa.operation=assess decision_qa.resume=true`. This is a fresh run ID.
+ACTIVE: `ethics_sft_decision_qa_corpus_v3`, full 20,000; command from belief-transfer:
+`uv run --no-sync python run.py +run=ethics_sft_decision_qa_corpus_v3 decision_qa.operation=assess decision_qa.resume=true`.
+Log `/tmp/decisions_qa_corpus_v3.log`; progress is in the run result `progress.json`.
+Durable per-request journal supports unchanged-contract resume after reconciliation;
+unknown potentially billed intents are not blindly replayed. No model checkpoint.
+Repairs_v1 (14) and repairs_v2 (six new) are separate manual overlays, original IDs/hashes
+retained; all lengths 400–600. Their Decisions rechecks completed (13/14 and 6/6 low
+model flags). Agent disagrees with remaining v1 hypothesis-necessity flag; all psychology
+rows remain mandatory review. Prefix for these IDs: `ethics_sft_decision_`.
+Fresh flag-blind 20-text agent check saved before comparing model scores: one clear
+premise change, one borderline, 18 without clear serious defects. Rubric remains frozen.
+Snapshot pending active writer completion; latest source commits are pushed.
 Protocol and artifact paths: `belief-transfer/STANCE_DECISION_QA.md`.
 
 ## Candidate bank completed; sampled content review completed
