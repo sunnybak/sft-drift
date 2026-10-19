@@ -304,3 +304,25 @@ def test_provider_count_reservation_and_safe_fallback(tmp_path, count_failure):
             await client.request('canary',docs.DOCUMENT_TOOL,max_output_tokens=64)
             assert gate.requests == 2 and counter.await_count == create.await_count == 1
     asyncio.run(run())
+
+
+def test_server_error_preserves_status_retry_headers_and_uncertain_charge(tmp_path):
+    from belief_transfer.generation.document_client import transient_error
+    class ServiceError(Exception):
+        status_code=503
+        body={'error':{'code':'server_error','message':'Service unavailable'}}
+        request_id='request-example'
+        response=SimpleNamespace(headers={'Retry-After':'2','x-request-id':'request-example','authorization':'exclude'})
+    async def run():
+        budget=Budget(None)
+        async with DocumentClient(model='gpt-6-luna',cache=Cache(tmp_path/'cache.jsonl'),budget=budget) as client:
+            client._openai.with_options=lambda **_:SimpleNamespace(responses=SimpleNamespace(create=AsyncMock(side_effect=ServiceError())))
+            record=await client.request('canary',docs.DOCUMENT_TOOL,max_output_tokens=64)
+            assert record['http_status']==503 and transient_error(record)
+            assert record['error_body']==ServiceError.body
+            assert record['response_headers']=={'retry-after':'2','x-request-id':'request-example'}
+            assert record['request_id']=='request-example'
+            assert record['uncertain_cost_upper_bound']==budget.uncertain>0
+            assert budget.actual==0
+            assert client.cache.get(record['cache_key']) is None
+    asyncio.run(run())

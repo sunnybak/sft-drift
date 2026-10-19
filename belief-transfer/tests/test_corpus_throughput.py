@@ -72,3 +72,21 @@ def test_current_bank_has_ten_fresh_controls_and_matched_per_topic_counts():
     assert len(plan)==2100
     assert sum(len(b['slots'])*2 for b in plan)==20000
     assert j.throughput==384 and j.stance_corpus.budget_usd is None
+
+
+@pytest.mark.parametrize('record,expected',[
+    ({'http_status':503},True),({'http_status':429},True),({'http_status':400},False),
+    ({'http_status':401},False),({'error':'InternalServerError'},True),
+    ({'error':'APIConnectionError'},True),({'error':'response_incomplete'},False),
+    ({'http_status':429,'error_body':{'code':'insufficient_quota'}},False),
+])
+def test_transient_classification(record,expected):
+    from belief_transfer.generation.document_client import transient_error
+    assert transient_error(record) is expected
+
+
+def test_backoff_honors_retry_after_and_defaults_to_exponential():
+    from belief_transfer.generation import document_client as client
+    assert client.retry_delay({'response_headers':{'retry-after':'120'}},0)==120
+    assert 4 <= client.retry_delay({},2) <= 5
+    assert 1 <= client.retry_delay({'response_headers':{'retry-after':'garbage'}},0) <= 2

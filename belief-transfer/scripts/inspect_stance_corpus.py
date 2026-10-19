@@ -39,12 +39,16 @@ def inspect(root: Path) -> tuple[dict,list[dict]]:
         journal=CorpusJournal(root/'requests.sqlite')
         try: result['actual_cost_usd'],result['uncertain_cost_upper_bound']=journal.spend()
         finally: journal.close()
+    if (root/'continuation.json').exists() and 'actual_cost_usd' in result:
+        inherited=json.loads((root/'continuation.json').read_text())
+        result['inherited_actual_cost_usd']=inherited['inherited_actual_cost_usd']
+        result['marginal_actual_cost_usd']=result['actual_cost_usd']-inherited['inherited_actual_cost_usd']
     return result,samples
 
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--run-id',default='ethics_sft_pooled_corpus_v4')
+    parser.add_argument('--run-id',default='ethics_sft_pooled_corpus_v5')
     args=parser.parse_args()
     if not args.run_id.startswith('ethics_sft_') or Path(args.run_id).name != args.run_id:
         raise ValueError('Invalid corpus run ID')

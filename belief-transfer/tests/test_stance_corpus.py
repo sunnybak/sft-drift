@@ -385,3 +385,39 @@ def test_parallel_failure_drains_other_groups_before_journal_close(prepared, mon
     ledger.reconcile()
     assert ledger.db.execute('select count(*) from requests where result is null').fetchone()[0]==0
     ledger.close()
+
+
+@pytest.mark.parametrize('recover', [True,False])
+def test_transient_attempts_preserved_bounded_and_replayed(prepared,monkeypatch,recover):
+    j,old_root=prepared
+    j.run_id += '_retry'; j.stance_corpus.transient_retries=3
+    asyncio.run(stage.run(j));root=old_root.parent/j.run_id
+    class TransientClient(FakeClient):
+        calls=[]
+        failure=None
+        attempts=0
+        async def request(self,prompt,tool,**kwargs):
+            if 'text READY.' in prompt:
+                type(self).attempts+=1
+                if not recover or type(self).attempts==1:
+                    return {'error':'InternalServerError','http_status':503,'payload':None,
+                            'response':None,'cost_usd':None,'uncertain_cost_upper_bound':.003}
+            return await super().request(prompt,tool,**kwargs)
+    monkeypatch.setattr(stage.document_client,'DocumentClient',TransientClient)
+    monkeypatch.setattr(stage.document_client,'retry_delay',lambda *_:0)
+    j.stance_corpus.operation='generate';j.stance_corpus.resume=True
+    if recover: asyncio.run(stage.run(j))
+    else:
+        with pytest.raises(RuntimeError,match='retry_3'): asyncio.run(stage.run(j))
+    ledger=CorpusJournal(root/'requests.sqlite')
+    canaries=ledger.db.execute("select slot,result from requests where slot like 'canary%'").fetchall()
+    assert len(canaries)==(2 if recover else 4)
+    assert json.loads(dict(canaries)['canary'])['error']=='InternalServerError'
+    assert ledger.spend()[1]==(.003 if recover else .012)
+    assert ledger.db.execute('select count(*) from requests where result is null').fetchone()[0]==0
+    ledger.close()
+    previous=TransientClient.attempts
+    if recover: asyncio.run(stage.run(j))
+    else:
+        with pytest.raises(RuntimeError): asyncio.run(stage.run(j))
+    assert TransientClient.attempts==previous

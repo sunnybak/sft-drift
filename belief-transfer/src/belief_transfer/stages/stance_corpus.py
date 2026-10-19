@@ -100,28 +100,38 @@ async def generate(root: Path, job: JobConfig, subjects: list[dict], plan: list[
                                                    count_provider_tokens=spec.count_provider_tokens,
                                                    budget=budget, cache=journal, context=context) as client:
             async def execute(slot: str, prompt: str, tool: Any, cap: int, events: list) -> dict:
-                request = {'slot': slot, 'prompt': prompt, 'tool_name': tool.name,
-                           'tool_description': tool.description, 'tool_schema': tool.parameters,
-                           'model': spec.model, 'max_output_tokens': cap, 'reasoning': 'none',
-                           'sampling': 'provider_default', 'automatic_retries': 0}
-                envelope_bytes = len((prompt+json.dumps(tool.parameters)+tool.name+tool.description).encode())
-                request['cost_upper_bound'] = ((envelope_bytes+8192)*0.125+cap*0.5)/1_000_000
-                key = document_client.request_key(spec.model, prompt, tool, cap)
-                record = journal.begin(slot, key, request)
-                if record is None:
-                    try:
-                        record = await client.request(prompt, tool, max_output_tokens=cap)
-                    except document_client.BudgetExceeded:
-                        # Budget refusal happens before dispatch; it is safe to retry this slot.
-                        with journal.db:
-                            journal.db.execute('DELETE FROM requests WHERE slot=? AND result IS NULL', (slot,))
-                        raise
-                    journal.finish(slot, record)
-                events.append({'request': request, 'result': record})
-                if record['error']:
-                    raise RuntimeError(f"{slot}: preserved failure {record['error']}")
-                corpus.validate_payload(record['payload'], tool.parameters)
-                return record['payload']
+                # Each HTTP attempt is independently committed, charged and recoverable.
+                # Successful cached responses remain compatible; SDK retries stay disabled.
+                for attempt in range(spec.transient_retries + 1):
+                    attempt_slot = slot if attempt == 0 else f'{slot}/retry_{attempt}'
+                    request = {'slot': attempt_slot, 'logical_slot': slot, 'retry_attempt': attempt, 'prompt': prompt, 'tool_name': tool.name,
+                               'tool_description': tool.description, 'tool_schema': tool.parameters,
+                               'model': spec.model, 'max_output_tokens': cap, 'reasoning': 'none',
+                               'sampling': 'provider_default', 'automatic_retries': 0}
+                    envelope_bytes = len((prompt+json.dumps(tool.parameters)+tool.name+tool.description).encode())
+                    request['cost_upper_bound'] = ((envelope_bytes+8192)*0.125+cap*0.5)/1_000_000
+                    key = document_client.request_key(spec.model, prompt, tool, cap)
+                    record = journal.begin(attempt_slot, key, request)
+                    if record is None:
+                        try:
+                            record = await client.request(prompt, tool, max_output_tokens=cap)
+                        except document_client.BudgetExceeded:
+                            # Budget refusal happens before dispatch; it is safe to retry this slot.
+                            with journal.db:
+                                journal.db.execute('DELETE FROM requests WHERE slot=? AND result IS NULL', (attempt_slot,))
+                            raise
+                        journal.finish(attempt_slot, record)
+                    events.append({'request': request, 'result': record})
+                    if record['error']:
+                        if attempt < spec.transient_retries and document_client.transient_error(record):
+                            delay = document_client.retry_delay(record, attempt)
+                            print(f"Transient failure at {attempt_slot}: {record['error']}; "
+                                  f"retry {attempt+1}/{spec.transient_retries} after {delay:.2f}s", flush=True)
+                            await asyncio.sleep(delay)
+                            continue
+                        raise RuntimeError(f"{attempt_slot}: preserved failure {record['error']}")
+                    corpus.validate_payload(record['payload'], tool.parameters)
+                    return record['payload']
 
             canary = await execute('canary', 'Return submit_document with text READY.', docs.DOCUMENT_TOOL, 64, [])
             if canary['text'] != 'READY':
@@ -352,6 +362,11 @@ async def run(job: JobConfig) -> RunResult:
                     manifest['actual_cost_usd'], manifest['uncertain_cost_upper_bound'] = ledger.spend()
                 finally:
                     ledger.close()
+            if (root/'continuation.json').exists() and 'actual_cost_usd' in manifest:
+                inherited = json.loads((root/'continuation.json').read_text())
+                manifest['inherited_actual_cost_usd'] = inherited['inherited_actual_cost_usd']
+                manifest['marginal_actual_cost_usd'] = manifest['actual_cost_usd'] - inherited['inherited_actual_cost_usd']
+                manifest['inherited_uncertain_cost_upper_bound'] = inherited['inherited_uncertain_cost_upper_bound']
             corpus.write_json(results/f'invocation.{invocation}.json', manifest)
             corpus.write_json(results/'corpus_status.json', manifest)
     result = report.build_result(context, stage=job.stage, experiment_id=job.experiment.id,

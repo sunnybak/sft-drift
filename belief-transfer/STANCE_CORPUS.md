@@ -1,3 +1,22 @@
+# Current continuation update
+
+The v4 run stopped on one assessment HTTP 503 after 6,616 completed documents. The
+user requested bounded transient retries. Current continuation is
+`ethics_sft_pooled_corpus_v5`, using the same prompt v5, model and data design.
+It reuses completed shards and successful recorded outputs. The original failed
+attempt and all charges remain preserved; only additional attempts use new ledger slots.
+
+`transient_retries: 3` means at most four total attempts per logical request. Honor
+Retry-After; otherwise exponential backoff plus jitter. Permanent/quota errors and
+invalid/truncated document payloads still stop. Every attempt passes through the shared
+rate gate. SDK automatic retries remain disabled. Historical configurations default to
+zero retries. Source-contract changes require this new continuation ID.
+
+Copying records carries historical cost values, not new bills. `continuation.json` and
+run/inspection reports separate inherited and marginal cost. Do not sum v4 and v5
+cumulative ledgers. The supervisor still snapshots at completed boundaries and stops
+if all retries or a snapshot fail. See STATE.md for current process and progress.
+
 # Pooled ethical-stance document bank
 
 `stance_corpus` prepares and generates a new document bank. Historical pilot stages,
@@ -15,7 +34,7 @@ this stage. The default operation is **prepare**, which makes no model or C4 cal
   which form receives the extra slot rotates by subject identity.
 - Seed 42 fixes scheduling, category-balanced mixed assignments and C4 sampling.
   API prose is not claimed deterministic. Model: `gpt-6-luna`, Responses, reasoning
-  disabled, default sampling, configurable concurrency with an 80% rate gate, no automatic network retries.
+  disabled, default sampling, configurable concurrency with an 80% rate gate, no hidden SDK retries; bounded application retries are recorded separately.
 - The generated bank supports all-positive, all-negative, Mixed A and complementary
   Mixed B. Each mixed arm assigns one position to each belief, with five positive and
   five negative beliefs in each category. Each ethical arm selects 9,000 source documents.
@@ -27,7 +46,8 @@ this stage. The default operation is **prepare**, which makes no model or C4 cal
 
 ## Current scheduling and counts
 
-Current prepared run: `ethics_sft_pooled_corpus_v4`, zero generated bulk documents.
+Current continuation: `ethics_sft_pooled_corpus_v5`, inheriting 6,616 completed documents.
+See STATE.md and the live status for current counts.
 Total source bank: **20,000**, nominal **10M Qwen tokens**. Smaller control breadth and
 unique-example count require explicit later token/step matching through sampling/reuse;
 the 2,000 raw control candidates are not a ready 9,000-example training arm.
@@ -39,7 +59,7 @@ A subject lock shares one form plan. New settings: `count_provider_tokens`,
 `rate_limit_rpm`, `rate_limit_tpm`, `rate_utilization` (≤ .8). Production allows 384
 client operations / 64 batches, with **8,000 HTTP RPM and 8M reserved TPM**. Input-count
 preflights also consume HTTP permits; generation reserves exact input plus output cap,
-falling back to the conservative byte bound on counting failure. Failed groups drain
+falling back to the conservative byte bound on counting failure. After transient retries are exhausted, failed groups drain
 already dispatched work and preserve completed shards. Source/throughput/rate changes
 require a fresh run ID; compatible local responses retain their cache identities.
 
@@ -81,17 +101,17 @@ From `belief-transfer/`:
 
 ```sh
 # Already executed for v4: prepare only; do not rerun a started preparation.
-uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v4
+uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v5
 
 # Reference only: production generation is unstarted. Wait for the user
 # to approve POOLED_DATASET_PLAN.md before this or C4 acquisition.
-uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v4 stance_corpus.operation=generate stance_corpus.resume=true stance_corpus.max_batches=1
+uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v5 stance_corpus.operation=generate stance_corpus.resume=true stance_corpus.max_batches=1
 
 # Write a new numbered inspection report and a small paired sample view.
-uv run --no-sync python scripts/inspect_stance_corpus.py --run-id ethics_sft_pooled_corpus_v4
+uv run --no-sync python scripts/inspect_stance_corpus.py --run-id ethics_sft_pooled_corpus_v5
 
 # Independent bounded C4 acquisition: one shard of up to 100 unique documents.
-uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v4 stance_corpus.operation=background stance_corpus.resume=true stance_corpus.max_batches=1
+uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v5 stance_corpus.operation=background stance_corpus.resume=true stance_corpus.max_batches=1
 ```
 
 Read the first live pairs and compare their scope against the briefs before scheduling
@@ -111,7 +131,7 @@ an explicit failure; resume does not regenerate it until it passes. No force ove
 ## Local layout and preservation
 
 ```text
-data/generated/ethical_stance_sft/ethics_sft_pooled_corpus_v4/
+data/generated/ethical_stance_sft/ethics_sft_pooled_corpus_v5/
   contract.json, briefs.jsonl/.md, schedule.jsonl/.md, conditions.json
   requests.sqlite                   # durable corpus-specific cache and request ledger
   shards/<batch-id>/                 # atomic completed shard
@@ -119,7 +139,7 @@ data/generated/ethical_stance_sft/ethics_sft_pooled_corpus_v4/
     ideas.jsonl/.md, events.jsonl/.md, manifest.json
   background/<shard-id>/
     documents.jsonl/.md, manifest.json
-data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v4/
+data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v5/
   config.<invocation>.json, invocation.<invocation>.json, corpus_status.json
   audit_<number>.json/.md
 ```

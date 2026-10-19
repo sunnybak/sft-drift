@@ -1,8 +1,9 @@
 # Current full document bank and mixtures
 
 The user selected **ten fresh training-control claims and 100 documents per position**,
-matching the per-belief ethical setting. Current prepared run:
-`ethics_sft_pooled_corpus_v4`, prompt v5. The user authorized beginning generation;
+matching the per-belief ethical setting. Current continuation run:
+`ethics_sft_pooled_corpus_v5`, prompt v5, with three bounded transient retries. It
+continues v4 after an HTTP 503, preserving the old run and reusing its completed work. The user authorized beginning generation;
 the first ten documents completed. Live status is in the run's `generation_job.json`;
 STATE.md records the supervisor command and safe-boundary preservation policy.
 Earlier v1–v3 contracts, pilots and forecasts remain historical artifacts. Changed

@@ -97,3 +97,12 @@ Completed scope checks `ethics_sft_scope_check_v1` / `v2` compare v4/v5 prompts 
 fixed drafts; earlier document/corpus IDs remain historical artifacts. Their candidates
 are not silently included in production. v1–v3 pooled contracts are superseded and cannot
 resume under changed code. Separate private storage is declared in `handoff.json`.
+
+
+## Transient retry continuation
+
+`run/ethics_sft_pooled_corpus_v5.yaml` continues v4 after a single assessment 503.
+Same prompt v5 and 20,000-document design; three durable transient retries with backoff.
+Original v4 is stopped and preserved. `scripts/continue_stance_corpus.py` imports its
+completed shards and full ledger without resetting failed calls; additional attempts
+use new slots. Current source changes prevent v4 resume under this code. See STATE.md.

@@ -27,9 +27,11 @@ problem is absent in all six hiring documents. Authoritative length instructions
 24/30 to 30/30 in range on the same drafts, preserving all 27 valid drafts verbatim.
 Minor/borderline wording and reviewer disagreements remain explicit; this is development
 evidence, not independent validation or training-ready acceptance. See STATE.md and
-[the full-generation proposal](belief-transfer/POOLED_DATASET_PLAN.md). The user reviewed counts/mix and authorized beginning generation. The current v4 contract is prepared with 20,000 candidates planned (90 ethical + ten
-fresh controls, 100 documents per position), with the first ten documents completed. A bounded supervisor continues generation and
-then C4 acquisition, saving between invocations. See STATE.md for actual PID/status. The ten/64-worker
+[the full-generation proposal](belief-transfer/POOLED_DATASET_PLAN.md). The user reviewed counts/mix and authorized beginning generation. The current v5 continuation is prepared with 20,000 candidates planned (90 ethical + ten
+fresh controls, 100 documents per position), with 6,616 documents completed before one assessment server error stopped generation.
+The partial bank is backed up and inherited into v5. The user authorized three bounded
+transient retries; original failures and charges are preserved, successful outputs
+reused. C4 has not started. Current process and recovered-call state are in STATE.md. See STATE.md for actual PID/status. The ten/64-worker
 throughput checks are separate; v3 is superseded. New scheduling has no dollar ceiling
 and an 80% RPM/TPM gate; full-run saturation is unmeasured. Control token/step matching
 requires explicit future sampling/reuse. The C4 pool is part of this launch; training remains unauthorized. Actual training-token/step dose remains future.

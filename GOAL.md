@@ -17,10 +17,10 @@ expressed ethical stances, including effects on related and unrelated beliefs.
 - **Compute:** data generation and inference may run locally. SFT runs only on CUDA/Vast.ai.
 
 The approved BASE bank and Mac evaluation are complete. **The user authorized full
-candidate generation.** `ethics_sft_pooled_corpus_v4` targets 20,000 documents (90 ethical
-and ten fresh off-topic claims × 100 per position). The first ten documents completed;
-a bounded supervisor continues synthetic generation and pinned C4 acquisition with
-private snapshots between invocations. Follow STATE.md for actual PID/status and restart
+candidate generation.** `ethics_sft_pooled_corpus_v5` continues the same target of 20,000 documents (90 ethical
+and ten fresh off-topic claims × 100 per position). It inherits 6,616 saved documents from v4 after one assessment HTTP 503. The user
+authorized bounded transient retries; preserve old failures and use cached successful
+outputs in the fresh continuation. C4 acquisition follows synthetic generation. Follow STATE.md for actual PID/status and restart
 rules. Training settings/dose matching remain future work; qualify CUDA BASE before SFT.
 
 ## Completion criteria

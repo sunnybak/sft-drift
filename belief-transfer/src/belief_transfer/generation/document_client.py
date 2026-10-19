@@ -4,6 +4,8 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import json
+import random
+from email.utils import parsedate_to_datetime
 import time
 from collections import deque
 from dataclasses import dataclass, field
@@ -93,6 +95,38 @@ class RatePacer:
         return self.clock() - started
 
 
+def transient_error(record: dict[str, Any]) -> bool:
+    """Retry service/transport failures; quota and permanent request errors stop."""
+    body = record.get('error_body') or {}
+    if isinstance(body, dict):
+        detail = body.get('error', body)
+        if isinstance(detail, dict) and detail.get('code') in {
+            'insufficient_quota', 'billing_hard_limit_reached', 'usage_limit_reached'}:
+            return False
+    status = record.get('http_status')
+    if status is not None:
+        return status in {408, 429} or 500 <= status <= 599
+    # Historical records stored the SDK class only. InternalServerError is 5xx;
+    # unclassified historical 429 errors cannot safely be assumed temporary.
+    return record.get('error') in {'InternalServerError', 'APIConnectionError', 'APITimeoutError'}
+
+
+def retry_delay(record: dict[str, Any], attempt: int) -> float:
+    """Honor provider delay (including HTTP-date), otherwise exponential jitter."""
+    header = record.get('response_headers', {}).get('retry-after')
+    if header is not None:
+        try:
+            delay = float(header)
+        except (ValueError, TypeError):
+            try:
+                delay = parsedate_to_datetime(header).timestamp() - time.time()
+            except (ValueError, TypeError, OverflowError):
+                delay = -1
+        if delay >= 0:
+            return delay
+    return min(60.0, 2.0 ** attempt) + random.uniform(0, 1)
+
+
 class DocumentClient(llm.Client):
     def __init__(self, *, budget: Budget, input_price_upper_bound: float = 0.10,
                  rate_pacer: RatePacer | None = None, count_provider_tokens: bool = False, **kwargs: Any) -> None:
@@ -155,8 +189,14 @@ class DocumentClient(llm.Client):
                     **arguments, max_output_tokens=max_output_tokens)
             except Exception as exc:
                 await self.budget.settle(reserved, None)
+                http_response = getattr(exc, 'response', None)
+                headers = dict(http_response.headers) if http_response is not None else {}
+                headers = {k.lower(): v for k,v in headers.items()
+                           if k.lower().startswith('x-ratelimit-') or k.lower() in {'retry-after','x-request-id'}}
                 return {'cached': False, 'payload': None, 'response': None, 'cost_usd': None,
-                        'error': type(exc).__name__, 'rate_reserved_tokens': rate_tokens,
+                        'error': type(exc).__name__, 'http_status': getattr(exc, 'status_code', None),
+                        'error_body': getattr(exc, 'body', None), 'response_headers': headers,
+                        'request_id': getattr(exc, 'request_id', None), 'rate_reserved_tokens': rate_tokens,
                         'rate_wait_seconds': rate_wait, 'token_count_preflight': preflight,
                       'dispatch_unix_seconds': dispatch_time, 'uncertain_cost_upper_bound': reserved,
                         'cache_key': key}

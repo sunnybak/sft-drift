@@ -1905,6 +1905,7 @@ class StanceCorpusSpec(BaseModel):
     budget_usd: float | None = Field(default=50.0, gt=0)
     parallel_batches: int = Field(default=1, ge=1, le=128)
     count_provider_tokens: bool = False
+    transient_retries: int = Field(default=0, ge=0, le=5)
     rate_limit_rpm: int = Field(default=10000, ge=1)
     rate_limit_tpm: int = Field(default=10000000, ge=1)
     rate_utilization: float = Field(default=0.8, gt=0, le=0.8)
