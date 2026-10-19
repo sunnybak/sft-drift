@@ -117,3 +117,11 @@ select the typed `stance_decision_qa` stage. They read the immutable completed v
 calibrate on prior agent annotations, preserve raw probabilities/refusals, and route review.
 They do not change the frozen measurement instrument or select/drop training rows.
 See `../STANCE_DECISION_QA.md` and STATE.md for actual live status.
+
+Current tuned overlay: `run/ethics_sft_decision_qa_corpus_v3.yaml`, rubric v4/13
+questions, 64 workers, provider-count proxy with conservative reservation and 80% gate.
+All 164 prior examples now development. Mandatory review covers both psychology
+families and prior serious labels; no automatic filtering. `ethics_sft_decision_repairs_v1`
+is a 14-document manually authored replacement overlay, retaining original ID/hash
+lineage. It is not a complete new bank. Recheck overlay:
+`run/ethics_sft_decision_qa_repairs_v1.yaml`.
