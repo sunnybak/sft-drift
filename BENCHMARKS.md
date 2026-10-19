@@ -19,7 +19,15 @@ are not an untouched held-out test. See the report for these limits.
 
 ## Ordered remaining work
 
-### 1. Document refinement and breadth pilot complete; inspect remaining quality issues
+### 1. First live corpus batch reviewed; fix scope precision before bulk generation
+
+The prepared pooled corpus's first live batch (`ethics_sft_pooled_corpus_v2`) contains ten
+reviewed documents: all lengths and assigned stances pass, but channel-specific limits
+are repeatedly broadened into no possible recourse. Eight provisional precision concerns
+plus one borderline case were recorded; same-model review flags only one. See STATE.md
+and the first-batch report. Keep all ten, and use a fresh-ID focused prompt test before
+bulk generation. One subject/form cannot validate the planned full corpus. No C4 or
+training is included in this live batch.
 
 The authorized matched repeat (48 candidates) and expansion (84 candidates) completed,
 with every full revision read. The expansion covers six ethical subjects in five domains

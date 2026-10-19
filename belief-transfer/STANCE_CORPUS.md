@@ -39,8 +39,11 @@ source condition plus unsupported-premise quotations. Mechanical checks record t
 length, task metadata, normalized duplicates and canonical versus other frozen wording
 matches. Evaluation paraphrases enter diagnostics only, never generation prompts.
 
-These changes have offline regression coverage; they have **not yet been validated on
-new live prose**. Same-model review remains advisory. Flagged rows stay in the bank;
+The first live batch has been generated and all ten revisions read. It meets length
+and explicit-stance checks but still broadens unavailable explanation/human review into
+unavailable every other avenue. See the [first-batch review](data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v2/first_batch_review.md).
+Do not scale these prompts unchanged; the next prompt test needs a fresh ID. Same-model
+review remains advisory. Flagged rows stay in the bank;
 there is no rejection sampling, truncation, automatic training-ready label or claim
 that document diversity follows from having distinct titles.
 
@@ -52,7 +55,8 @@ From `belief-transfer/`:
 # Once only: materialize briefs, schedule, immutable contract and arm assignments.
 uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v2
 
-# Next step: one bounded live batch, at most five ideas / ten opposing documents.
+# Technical resume command only: the first live batch is complete.
+# Current quality findings require a fresh-ID prompt test before using more v2 batches.
 uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v2 stance_corpus.operation=generate stance_corpus.resume=true stance_corpus.max_batches=1
 
 # Write a new numbered inspection report and a small paired sample view.
