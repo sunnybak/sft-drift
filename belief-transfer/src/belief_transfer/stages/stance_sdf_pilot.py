@@ -79,6 +79,7 @@ async def run(job: JobConfig) -> RunResult:
         raise FileExistsError(f'Pilot already started: {root}; inspect and use a fresh ID')
     subjects = subjects_for(job)
     prompts = docs if spec.prompt_version == 'v1' else stance_document_prompts_v2
+    idea_tool = docs.IDEA_TOOL if spec.prompt_version == 'v1' else docs.bounded_idea_tool(spec.ideas_per_form)
     # Read frozen wordings only for post-generation diagnostics, never as generator input.
     bank_path = GENERATED_DIR / 'ethical_pilot/ethics_100_bank_v3/belief_wordings.jsonl'
     bank_bytes = bank_path.read_bytes()
@@ -172,9 +173,12 @@ async def run(job: JobConfig) -> RunResult:
             async def plan_ideas(item: Any) -> list[dict[str, Any]]:
                 subject, form = item
                 payload = await execute(client, f"{subject['id']}__{form}", 'ideas',
-                    prompts.ideas_prompt(subject, form, form_plans[subject['id']][form], spec.ideas_per_form), docs.IDEA_TOOL, 2048)
+                    prompts.ideas_prompt(subject, form, form_plans[subject['id']][form], spec.ideas_per_form), idea_tool, 2048)
                 validate_strings(payload)
                 if set(payload) != {'ideas'} or len(payload['ideas']) != spec.ideas_per_form:
+                    docs.append_row(root/'failures.jsonl', {'phase': 'idea_validation',
+                        'item_id': f"{subject['id']}__{form}", 'expected_count': spec.ideas_per_form,
+                        'actual_count': len(payload.get('ideas', []))})
                     raise ValueError('Incorrect idea count')
                 rows = []
                 for index, idea in enumerate(payload['ideas']):

@@ -17,3 +17,10 @@ Implementation verification and run findings will be appended after completion.
 Pre-generation verification: 39 focused tests passed; full source suite 833 passed,
 4 skipped. Prior private snapshot verifies all 225 files and frozen inputs unchanged.
 Tests completed before live generation.
+
+V2 failed before drafting: packaging explanatory-article planning returned four ideas
+(two exact duplicate pairs) instead of two. Guard stopped; completed plans, raw responses,
+$0.0034258 cost and zero revisions preserved. No automatic repair/reissue. Fresh v3 adds
+minItems/maxItems to the idea tool and makes diagnostic snippets self-contained to
+remove missing-context confounding. V3 ceiling $0.49 plus expanded $0.50 plus failed
+v2 actual spend remains below $1. Original generation wording is unchanged.

@@ -23,7 +23,9 @@
     "generated/ethical_stance_sft/ethics_sft_documents_pilot_v2",
     "results/ethical_stance_sft/ethics_sft_documents_pilot_v2",
     "generated/ethical_stance_sft/ethics_sft_documents_expanded_v1",
-    "results/ethical_stance_sft/ethics_sft_documents_expanded_v1"
+    "results/ethical_stance_sft/ethics_sft_documents_expanded_v1",
+    "generated/ethical_stance_sft/ethics_sft_documents_pilot_v3",
+    "results/ethical_stance_sft/ethics_sft_documents_pilot_v3"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

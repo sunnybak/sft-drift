@@ -136,7 +136,7 @@ class FakeClient:
     async def request(self,prompt,tool,**kwargs):
         if 'exactly READY' in prompt:payload={'text':'READY'}
         elif tool==docs.FORM_TOOL:payload={form:{'audience':'Readers','purpose':form} for form in docs.FORMS}
-        elif tool==docs.IDEA_TOOL:payload={'ideas':[{'focus':f'Focus {i}','outline':['scope','reason','end']} for i in range(2)]}
+        elif tool.name==docs.IDEA_TOOL.name:payload={'ideas':[{'focus':f'Focus {i}','outline':['scope','reason','end']} for i in range(2)]}
         elif tool==docs.DOCUMENT_TOOL:payload={'text':'A complete draft.'}
         elif tool==docs.REVISION_TOOL:
             if self.fail_phase=='revision':return {'error':'response_incomplete','payload':None,'response':{'status':'incomplete'}}
@@ -210,6 +210,11 @@ def test_versioned_composition_and_expanded_scope():
     assert 'If already in range' in v2.revision_prompt(subject, 'position_note', idea,
         'negative', 'draft', 500, 400, 600)
     assert len(v2.calibration_cases(stage.subjects_for(matched))) == 4
+    assert all(subject['scope'] in c['text'] for c in v2.calibration_cases([subject]))
+    tool = docs.bounded_idea_tool(2)
+    assert tool.parameters['properties']['ideas']['minItems'] == 2
+    assert tool.parameters['properties']['ideas']['maxItems'] == 2
+    assert request_key('gpt-6-luna', 'p', tool, 2048) != request_key('gpt-6-luna', 'p', docs.IDEA_TOOL, 2048)
 
 
 def test_v2_stage_records_calibration_and_prompt_version(tmp_path, monkeypatch):

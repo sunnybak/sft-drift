@@ -6,7 +6,9 @@
 Registered fresh IDs `ethical_stance_sft/ethics_sft_documents_pilot_v2` (48 documents)
 and `ethical_stance_sft/ethics_sft_documents_expanded_v1` (84 documents). Both use
 versioned v2 prompts, GPT-6 Luna, the existing 400–600-token target, one revision and
-same six C4 records. Each has a $0.50 ceiling. Generation is not launched yet.
+same six C4 records. Each has a $0.50 ceiling. V2 failed in planning before drafts ($0.003426): duplicate idea count.
+Fresh v3 is registered with bounded idea schema and contextual calibration snippets;
+v3 ceiling $0.49 keeps combined new ceilings/spend below $1. Generation is stopped.
 Review every v2 revision before the expanded run. No training/GPU rental is in scope.
 The completed v1 remains unchanged; its results and limitations follow.
 
@@ -82,7 +84,7 @@ Then inspect the completed standalone-document pilot; **do not rerun its started
 Exact next command from `belief-transfer/`:
 
 ```bash
-uv run --no-sync python run.py +run=ethics_sft_documents_pilot_v2
+uv run --no-sync python run.py +run=ethics_sft_documents_pilot_v3
 ```
 
 The full paired review is under the corresponding generated/ directory. Compare

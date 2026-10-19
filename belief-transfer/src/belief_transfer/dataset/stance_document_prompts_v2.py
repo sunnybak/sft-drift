@@ -137,5 +137,7 @@ def calibration_cases(subjects: list[dict[str, Any]]) -> list[dict[str, Any]]:
          'No reusable method meets the necessary infection-control requirements.'),
     ]
     return [{'case_id': identifier, 'subject': bank[target], 'check': check,
-             'expected': expected, 'text': text} for identifier, target, check, expected, text in cases
+             'expected': expected,
+             'text': bank[target]['scope'] + '\n' + bank[target]['claim'] + '\n' + text}
+            for identifier, target, check, expected, text in cases
             if target in bank]

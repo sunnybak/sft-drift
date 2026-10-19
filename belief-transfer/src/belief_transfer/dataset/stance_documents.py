@@ -24,6 +24,16 @@ FORM_TOOL = Tool('plan_forms', 'Describe the audience and purpose of each allowe
 IDEA_TOOL = Tool('plan_ideas', 'Return distinct position-neutral document ideas.',
                  object_schema({'ideas': {'type': 'array', 'items': object_schema(
                      {'focus': TEXT, 'outline': STRINGS})}}))
+
+
+def bounded_idea_tool(count: int) -> Tool:
+    """Constrain cardinality in the schema as well as the textual instruction."""
+    return Tool(IDEA_TOOL.name, IDEA_TOOL.description, object_schema({'ideas': {
+        'type': 'array', 'minItems': count, 'maxItems': count,
+        'items': object_schema({'focus': TEXT, 'outline': {
+            'type': 'array', 'items': TEXT, 'minItems': 3, 'maxItems': 4}})}}))
+
+
 DOCUMENT_TOOL = Tool('submit_document', 'Return the complete standalone document.', object_schema({'text': TEXT}))
 REVISION_TOOL = Tool('revise_document', 'Give a brief defect list and one complete revision.',
                      object_schema({'critique': STRINGS, 'text': TEXT}))

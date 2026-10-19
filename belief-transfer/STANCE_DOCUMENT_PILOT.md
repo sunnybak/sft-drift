@@ -134,3 +134,15 @@ ceiling at $1. The same six pinned seed-42 C4 records remain fixed across runs a
 to isolate synthetic-document changes; background breadth/dose is not expanded here.
 No training or GPU rental is authorized by this work. New paths are registered before
 execution, and each completed work block is committed, pushed and privately snapshotted.
+
+### Planning failure and amended fresh run
+
+`ethics_sft_documents_pilot_v2` failed before drafting: the packaging article planner
+returned two ideas duplicated into four. All raw responses/plans remain; cost $0.003426.
+New `ethics_sft_documents_pilot_v3` retains v2 generation prompts but bounds idea count
+and outline length in its tool schema. The reviewer calibration snippets now include
+full source circumstances and the canonical conclusion, removing a missing-context
+confound found in v2. V2's medical_expected scope mismatch is inconclusive because the
+short snippet omitted other conditions. Do not count it as reviewer inaccuracy.
+V3 ceiling is $0.49; together with failed v2 actual spend and expanded $0.50 ceiling,
+combined new spend is bounded below $1. Same changes apply to the unstarted expansion.
