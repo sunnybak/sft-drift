@@ -2,39 +2,32 @@
 
 ## Where we are
 
-**Active: authorized prompt refinement, matched repeat, then broader document pilot.**
-Registered fresh IDs `ethical_stance_sft/ethics_sft_documents_pilot_v2` (48 documents)
-and `ethical_stance_sft/ethics_sft_documents_expanded_v1` (84 documents). Both use
-versioned v2 prompts, GPT-6 Luna, the existing 400–600-token target, one revision and
-same six C4 records. Each has a $0.50 ceiling. V2 failed in planning before drafts ($0.003426): duplicate idea count.
-Fresh v3 is registered with bounded idea schema and contextual calibration snippets;
-v3 ceiling $0.49 keeps combined new ceilings/spend below $1. Generation is stopped.
-Review every v2 revision before the expanded run. No training/GPU rental is in scope.
-The completed v1 remains unchanged; its results and limitations follow.
+**Active: matched refinement reviewed; authorized 84-document expansion is next.**
+`ethical_stance_sft/ethics_sft_documents_pilot_v3` completed 48 drafts, single revisions,
+and assessments; every final document was read and annotated. All 48 are directional;
+all photography controls avoid nonvisual/task metadata. Length regressed: 45/48 drafts
+in range, only 37/48 finals (340–559 tokens, mean 436.4). Cost $0.055754. Nineteen
+provisional agent flags include 11 lengths and eight semantic/argument concerns.
+Same-model reviewer flags one and misses those eight semantic/argument concerns;
+passing four diagnostic snippets does not validate it. No training/checkpoint exists.
 
-Read [protocol](belief-transfer/STANCE_DOCUMENT_PILOT.md),
-[findings](belief-transfer/data/results/ethical_stance_sft/ethics_sft_documents_pilot_v1/review_findings.md),
-and [all pairs](belief-transfer/data/generated/ethical_stance_sft/ethics_sft_documents_pilot_v1/review.md).
-The new pipeline is distinct from the earlier 32-answer chat-pair pilot, which is unchanged.
+V2 failed before drafting: four ideas instead of two, cost $0.003426, fully preserved.
+V3 bounds idea cardinality in its schema and adds full context to calibration snippets.
+Earlier v1 (48 docs) and chat-pair pilot (32 answers) remain unchanged.
 
-- Three ethical subjects plus a separate photography preference control; three forms,
-  two shared ideas per form, separately generated opposing positions. All 48 are clearly
-  directional in provisional current-agent review; this is not evidence of a trained belief.
-- Requested 400–600 Qwen tokens; 43/48 meet it. Final range 301–597, mean 475.0;
-  22,802 synthetic tokens. Revision moved eight drafts into range and four out of range.
-- Current-agent review flags 17 documents for edits, including five length failures,
-  subtle scope additions, control metacommentary and repetition. Same-model review flags
-  22, with both over-literal objections and missed problems. Neither is human ground truth.
-- Six full pinned English C4 records are saved and reused in all eight mixture previews.
-  1:1 document count is only 20.1–23.5% C4 tokens here because the sample totals 792 tokens.
-  No token-dose matching, training-loss implementation or training-ready corpus export.
-- Canary + 160 pipeline calls cost $0.045876, under the $1 ceiling; no uncertain charges.
-  Raw responses, prompts, critiques, failures, seeds, revisions and provenance survive.
+Next run: `ethics_sft_documents_expanded_v1`, 84 candidates for six ethical subjects
+across five domains plus the same photography control. New subjects: paid kidney
+donation, medical-data use without consent, cash bail based on inability to pay.
+Enable length-preserving revision: leave sound in-range drafts verbatim; use measured
+word/token editing estimates when edits are needed. Same single-call limit, frozen
+instrument and six C4 rows. Other prompts/plans stay fixed; original 48 source drafts
+can be reused from cache, so this is a breadth test and revision-policy comparison,
+not independent replication. Expanded ceiling $0.50; combined new spend remains <$1.
 
-The next small pilot should resolve contradictory non-advocacy planning instructions,
-test-specific scope qualifiers, allowed ordinary implications in the quality rubric,
-control metacommentary and the length/concision conflict. The user reviewed the proposed changes and authorized fresh runs on 2026-10-19. No corpus size, final design, training dose/schedule or replication
-budget is frozen. All 100 evaluation beliefs remain required for every future fine-tune.
+[Protocol](belief-transfer/STANCE_DOCUMENT_PILOT.md) and matched [findings](belief-transfer/data/results/ethical_stance_sft/ethics_sft_documents_pilot_v3/review_findings.md).
+[Matched synthesis](belief-transfer/data/results/ethical_stance_sft/ethics_sft_documents_pilot_v3/iteration_notes.md).
+Read every expanded final revision before declaring this work complete. No accepted
+training corpus, training schedule or GPU rental is in scope.
 
 ## Established baseline
 
@@ -84,7 +77,7 @@ Then inspect the completed standalone-document pilot; **do not rerun its started
 Exact next command from `belief-transfer/`:
 
 ```bash
-uv run --no-sync python run.py +run=ethics_sft_documents_pilot_v3
+uv run --no-sync python run.py +run=ethics_sft_documents_expanded_v1
 ```
 
 The full paired review is under the corresponding generated/ directory. Compare

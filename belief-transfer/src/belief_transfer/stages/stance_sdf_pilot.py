@@ -97,6 +97,7 @@ async def run(job: JobConfig) -> RunResult:
     manifest = {'status': 'running', 'expected_documents': expected, 'training_ready': False,
                 'source_config_sha': sha, 'frozen_wordings_sha256': docs.text_hash(bank_bytes.decode()),
                 'seed': spec.seed, 'prompt_version': spec.prompt_version,
+                'preserve_draft_length': spec.preserve_draft_length,
                 'api_sampling_seed': None, 'tokenizer_model': spec.tokenizer_model,
                 'tokenizer_revision': spec.tokenizer_revision, 'model': spec.model,
                 'resume': 'No overwrite or automatic resume. Inspect partial artifacts; use fresh run ID.',
@@ -209,8 +210,12 @@ async def run(job: JobConfig) -> RunResult:
                          'tokens': len(tokenizer.encode(payload['text'],add_special_tokens=False))}
                 drafts.append(draft)
                 docs.append_row(root/'drafts.jsonl', draft)
-                payload = await execute(client, identifier, 'revision', prompts.revision_prompt(subject, form, idea,
-                    position, draft['text'], draft['tokens'], spec.min_tokens, spec.max_tokens), docs.REVISION_TOOL, 3072)
+                revision_request = prompts.revision_prompt(subject, form, idea,
+                    position, draft['text'], draft['tokens'], spec.min_tokens, spec.max_tokens)
+                if spec.preserve_draft_length:
+                    revision_request = stance_document_prompts_v2.length_anchor(
+                        draft['text'], draft['tokens'], spec.min_tokens, spec.max_tokens) + '\n' + revision_request
+                payload = await execute(client, identifier, 'revision', revision_request, docs.REVISION_TOOL, 3072)
                 if (set(payload) != {'text','critique'} or not isinstance(payload['text'],str)
                         or not payload['text'].strip() or not isinstance(payload['critique'],list)
                         or any(not isinstance(v,str) for v in payload['critique'])):

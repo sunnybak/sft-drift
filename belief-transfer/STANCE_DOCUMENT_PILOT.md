@@ -146,3 +146,21 @@ confound found in v2. V2's medical_expected scope mismatch is inconclusive becau
 short snippet omitted other conditions. Do not count it as reviewer inaccuracy.
 V3 ceiling is $0.49; together with failed v2 actual spend and expanded $0.50 ceiling,
 combined new spend is bounded below $1. Same changes apply to the unstarted expansion.
+
+### Matched result and pre-expansion revision amendment
+
+V3 completed 48 drafts/revisions/assessments; all revisions read and annotated. Costs
+$0.055754. All assigned positions are explicit; all controls avoid nonvisual metadata.
+Length deteriorated from 45/48 drafts to 37/48 revisions (3 fixes, 11 regressions),
+versus 43/48 v1 finals. Nineteen current-agent flags include 11 lengths and eight
+semantic/argument concerns. Same-model review flags only one and passes all 19 flagged
+candidates, including the length cases outside its rubric. Passing four simple
+calibration examples is not evidence of reviewer sensitivity. See saved iteration notes.
+
+Before expansion, enable typed `preserve_draft_length` revision policy. A sound in-range
+draft should be returned verbatim; necessary editing uses its measured token/word ratio
+as a word-count proxy, while final Qwen counts remain authoritative. The single-call
+revision limit and all-candidate retention remain. Other prompts/plans remain fixed.
+This means expansion compares the new policy on identical cached source drafts for
+the original 48 slots, plus 36 drafts for three new subjects. Revised outputs receive
+new request identities; this is not an independent replication of all planning/drafting.

@@ -78,3 +78,7 @@ Refinement: `run/ethics_sft_documents_pilot_v2.yaml` uses versioned v2 prompts f
 48 matched-design candidates. Breadth repeat: `run/ethics_sft_documents_expanded_v1.yaml`
 adds three ethical subjects for 84 candidates. Both use the same stage and fixed
 background sample; neither config runs training. See STANCE_DOCUMENT_PILOT.md.
+
+`ethics_sft_documents_pilot_v2` failed before drafting (duplicate idea count); retain it.
+`run/ethics_sft_documents_pilot_v3.yaml` completed the matched repeat. The expanded
+run enables length-preserving revision after v3 exposed 11 length regressions.

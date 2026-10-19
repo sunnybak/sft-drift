@@ -201,6 +201,8 @@ def test_versioned_composition_and_expanded_scope():
     assert matched.stance_sdf_pilot.prompt_version == expanded.stance_sdf_pilot.prompt_version == 'v2'
     assert stage.subjects_for(original) == stage.subjects_for(matched)
     assert len(stage.subjects_for(expanded)) == 7
+    assert expanded.stance_sdf_pilot.preserve_draft_length
+    assert not matched.stance_sdf_pilot.preserve_draft_length
     subject = stage.subjects_for(matched)[0]
     idea = {'focus': 'Weighing reasons', 'outline': ['scope', 'principle', 'objection', 'conclusion']}
     prompt = v2.document_prompt(subject, 'position_note', idea, 'negative', 400, 600)
@@ -221,6 +223,7 @@ def test_v2_stage_records_calibration_and_prompt_version(tmp_path, monkeypatch):
     generated, results = setup_stage(tmp_path, monkeypatch)
     monkeypatch.setattr(stage, 'DocumentClient', FakeClient)
     j = load_job(['+run=ethics_sft_documents_pilot_v2'])
+    j.stance_sdf_pilot.preserve_draft_length = True
     asyncio.run(stage.run(j))
     root = generated / j.experiment.id / j.run_id
     assert len((root/'reviewer_calibration.jsonl').read_text().splitlines()) == 4
@@ -229,3 +232,13 @@ def test_v2_stage_records_calibration_and_prompt_version(tmp_path, monkeypatch):
     assert manifest['prompt_version'] == 'v2' and manifest['completed_revisions'] == 48
     requests = [json.loads(s) for s in (root/'requests.jsonl').read_text().splitlines()]
     assert all('protected_conditions' in r['prompt'] for r in requests if r['phase'] == 'draft')
+    assert all('LENGTH-PRESERVING REVISION POLICY' in r['prompt'] for r in requests if r['phase'] == 'revision')
+
+
+def test_length_preservation_policy_uses_measured_proxy_and_new_cache_identity():
+    from belief_transfer.dataset import stance_document_prompts_v2 as v2
+    anchor = v2.length_anchor('one two three four', 8, 400, 600)
+    assert '8 Qwen tokens and 4 whitespace-separated words' in anchor
+    assert 'about 250 words' in anchor and 'return it VERBATIM' in anchor
+    assert request_key('gpt-6-luna', anchor+'p', docs.REVISION_TOOL, 3072) != request_key(
+        'gpt-6-luna', 'p', docs.REVISION_TOOL, 3072)

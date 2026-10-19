@@ -24,3 +24,19 @@ $0.0034258 cost and zero revisions preserved. No automatic repair/reissue. Fresh
 minItems/maxItems to the idea tool and makes diagnostic snippets self-contained to
 remove missing-context confounding. V3 ceiling $0.49 plus expanded $0.50 plus failed
 v2 actual spend remains below $1. Original generation wording is unchanged.
+
+V3 generation source 0b16ee6 completed. Forty-eight full revisions read: all owned
+positions, all controls appearance-only, 19 agent flags (11 length, 8 semantic/argument).
+45/48 drafts in range ->37/48 revisions; 3 improvements/11 regressions. Range340–559,
+mean436.4, 20,948 tokens. Cost$0.05575385. No exact duplicates. Same-model reviewer
+flags one; all 19 agent-flagged rows pass its six checks (length checked separately).
+Calibration4/4 is not held-out reviewer accuracy. Saved per-document review, paired
+texts, disagreements, before/after examples, numeric summary and source hashes.
+
+Expansion revision-policy amendment before execution: preserve a sound in-range draft
+verbatim and supply measured word/token editing estimates. Same one-call limit. Other
+prompts fixed, original 48 drafts reusable from cache; 36 new subject drafts. This is
+a breadth test plus descriptive revision comparison, not independent replication.
+
+Pre-expansion focused verification: 40 tests passed, including revision-policy routing
+and distinct cache identities. No live generation ran during tests.

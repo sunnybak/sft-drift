@@ -10,6 +10,7 @@ experiment:
     n_items: 1
 stance_sdf_pilot:
   prompt_version: v2
+  preserve_draft_length: true
   target_ids: [animal_medical_research, animal_cosmetic_testing, single_use_packaging_necessary, paid_kidney_donation, medical_data_without_consent, cash_bail_inability_pay]
   forms: [position_note, explanatory_article, editorial]
   ideas_per_form: 2

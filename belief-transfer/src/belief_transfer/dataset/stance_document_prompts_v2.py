@@ -123,6 +123,27 @@ does not contain every word of a valid ethical argument. Return assess_document.
 DOCUMENT DATA:\n{text}"""
 
 
+def length_anchor(draft: str, tokens: int, minimum: int, maximum: int) -> str:
+    """Measured word proxy helps editing; final Qwen counts remain authoritative."""
+    words = len(draft.split())
+    target = (minimum + maximum) // 2
+    proxy = round(words * target / max(tokens, 1))
+    upper = int(words * maximum / max(tokens, 1))
+    return f"""LENGTH-PRESERVING REVISION POLICY:
+The draft measures {tokens} Qwen tokens and {words} whitespace-separated words.
+At its observed token-to-word ratio, about {proxy} words would target {target} tokens.
+This is an editing estimate, not another acceptance metric; Qwen counts are authoritative.
+If the draft is within {minimum}-{maximum} tokens and has no actual stance, scope,
+reasoning, metadata or form defect, return it VERBATIM with an empty critique list.
+Do not rewrite merely to polish, shorten, or restate a valid argument. If actual edits
+are necessary to an in-range draft, preserve at least its {words} words unless removing
+an invalid premise makes that impossible; develop valid existing reasoning rather than
+padding. Its estimated upper bound is {upper} words; stay below that estimate. If out
+of range, aim for the measured target above by editing once.
+Factual fidelity remains the first priority. No extra rounds or clipping are allowed.
+"""
+
+
 def calibration_cases(subjects: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Short diagnostic snippets: only the named check is scored, not document quality."""
     bank = {s['id']: s for s in subjects}
