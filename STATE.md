@@ -2,7 +2,7 @@
 
 ## Pooled corpus preparation
 
-The new `stance_corpus` code/prompts are implemented and the v2 preparation will follow this resume-guard fix:
+The new `stance_corpus` code/prompts are implemented and the v2 run is **prepared**:
 99 briefs, 2,808 batches, paired slot schedule and complementary arm manifests. No live generation, C4 acquisition,
 training process, GPU rental or checkpoint is active. CUDA BASE/SFT remain unrun.
 
@@ -74,6 +74,7 @@ pinned pointer to the separate corpus store. The actual source and artifact revi
 are in `belief-transfer/data/.handoff-receipt.json`; prose is not a sync receipt.
 Initial v1 preparation was superseded before generation: its source-hash map
 used colliding basenames. V1 remains preserved with zero documents/cost; v2 records
-all seven source files by module-relative path. Initial implementation: `2851d44`. Results contain test logs, verification.json and
-an empty-bank audit. Commit/push this note, then handoff save/verify to preserve both
-private stores before ending the work block.
+all seven source files by module-relative path. Initial implementation: `2851d44`. V2 preparation/source commit: `7542129`. Results contain test logs, verification.json
+and an empty-bank audit. Private remote and portable restore rehearsals passed for the
+initial corpus snapshot; final handoff verifies the prepared v2 bytes too. Preserve both
+private stores at each subsequent completed boundary; consult the actual receipt.

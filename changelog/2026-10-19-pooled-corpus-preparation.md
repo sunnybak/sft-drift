@@ -54,3 +54,9 @@ Preserved v1 preparation (zero generated documents/C4/API cost); fresh active ID
 in separate private corpus storage. The initial pinned remote and portable restore
 rehearsals succeeded (see v1 results/storage_rehearsal.json); they establish transport,
 not generation quality.
+
+Prepared v2 at source `7542129`: 99 briefs, 2,808 batches, 27,000 slots, zero generated
+documents/C4/API cost. All seven distinct source hashes verify. Final focused checks
+again pass 96 tests (14.03 s); all frozen hashes/shared cache unchanged. V1 has a new
+explicit superseded.json in results, preserving its original preparation. Final private
+snapshot save/verify includes both corpus roots plus this work's verification/test logs.
