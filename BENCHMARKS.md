@@ -31,7 +31,8 @@ evidence, not independent validation or training-ready acceptance. See STATE.md 
 fresh controls, 100 documents per position), with 6,616 documents completed before one assessment server error stopped generation.
 The partial bank is backed up and inherited into v5. The user authorized three bounded
 transient retries; original failures and charges are preserved, successful outputs
-reused. C4 has not started. Current process and recovered-call state are in STATE.md. See STATE.md for actual PID/status. The ten/64-worker
+reused. Recovery succeeded on retry 1; 6,970 documents are now complete. C4 has not
+started. Current process and recovered-call state are in STATE.md. See STATE.md for actual PID/status. The ten/64-worker
 throughput checks are separate; v3 is superseded. New scheduling has no dollar ceiling
 and an 80% RPM/TPM gate; full-run saturation is unmeasured. Control token/step matching
 requires explicit future sampling/reuse. The C4 pool is part of this launch; training remains unauthorized. Actual training-token/step dose remains future.

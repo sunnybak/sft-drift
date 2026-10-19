@@ -19,8 +19,8 @@ expressed ethical stances, including effects on related and unrelated beliefs.
 The approved BASE bank and Mac evaluation are complete. **The user authorized full
 candidate generation.** `ethics_sft_pooled_corpus_v5` continues the same target of 20,000 documents (90 ethical
 and ten fresh off-topic claims × 100 per position). It inherits 6,616 saved documents from v4 after one assessment HTTP 503. The user
-authorized bounded transient retries; preserve old failures and use cached successful
-outputs in the fresh continuation. C4 acquisition follows synthetic generation. Follow STATE.md for actual PID/status and restart
+authorized bounded transient retries; the failed assessment succeeded on retry 1.
+The continuation has 6,970 completed documents and reuses all prior successful outputs. C4 acquisition follows synthetic generation. Follow STATE.md for actual PID/status and restart
 rules. Training settings/dose matching remain future work; qualify CUDA BASE before SFT.
 
 ## Completion criteria
