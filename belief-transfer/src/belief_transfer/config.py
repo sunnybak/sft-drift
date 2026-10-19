@@ -93,6 +93,9 @@ def config_sha(job: JobConfig, *, length: int = 12) -> str:
     modulate the invocation without changing what is being computed.
     """
     payload = job.model_dump(mode="json", exclude={"run_id", "smoke", "force"})
+    if job.stance_corpus is None:
+        # Adding an opt-in stage must not rename historical config identities.
+        payload.pop('stance_corpus', None)
     canonical = _canonical_json(payload)
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:length]
 

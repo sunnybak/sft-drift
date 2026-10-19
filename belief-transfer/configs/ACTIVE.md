@@ -82,3 +82,9 @@ background sample; neither config runs training. See STANCE_DOCUMENT_PILOT.md.
 `ethics_sft_documents_pilot_v2` failed before drafting (duplicate idea count); retain it.
 `run/ethics_sft_documents_pilot_v3.yaml` completed the matched repeat. The expanded
 run enables length-preserving revision after v3 exposed 11 length regressions.
+
+## Pooled document-bank preparation (2026-10-19)
+
+`run/ethics_sft_pooled_corpus_v1.yaml` selects the new `stance_corpus` stage.
+See `../STANCE_CORPUS.md` for bounded generation, inspection and separate private corpus
+storage. Default operation prepares manifests only; no training or full generation.

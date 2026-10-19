@@ -1809,6 +1809,7 @@ Stage = Literal[
     "datagen",
     "sft_data_pilot",
     "stance_sdf_pilot",
+    "stance_corpus",
     "sft",
     "efficacy",
     "absorption",
@@ -1879,6 +1880,44 @@ class StanceSDFPilotSpec(BaseModel):
     control_negation: str
 
 
+class CorpusControlBrief(BaseModel):
+    id: str = Field(pattern=r"^[a-z][a-z0-9_]+$")
+    claim: str = Field(min_length=10)
+    negation: str = Field(min_length=10)
+    scope: str = Field(min_length=20)
+
+
+class StanceCorpusSpec(BaseModel):
+    """Resumable document bank; operational bounds do not change content identity."""
+
+    operation: Literal["prepare", "generate", "background"] = "prepare"
+    resume: bool = False
+    max_batches: int = Field(default=1, ge=1, le=1000)
+    documents_per_position: int = Field(default=100, ge=3)
+    ideas_per_batch: int = Field(default=5, ge=1, le=10)
+    controls: list[CorpusControlBrief] = Field(min_length=1)
+    control_documents_per_position: int = Field(default=500, ge=3)
+    min_tokens: int = Field(default=400, ge=1)
+    max_tokens: int = Field(default=600, ge=1)
+    model: Literal["gpt-6-luna"] = "gpt-6-luna"
+    budget_usd: float = Field(default=50.0, gt=0)
+    seed: int = 42
+    tokenizer_model: str = "Qwen/Qwen3-4B"
+    tokenizer_revision: str = "1cfa9a7208912126459214e8b04321603b3df60c"
+    c4_revision: str = "1588ec454efa1a09f29cd18ddd04fe05fc8653a2"
+    c4_buffer_size: int = Field(default=1024, ge=1)
+    c4_documents: int = Field(default=18000, ge=1)
+    background_shard_size: int = Field(default=100, ge=1, le=1000)
+
+    @model_validator(mode="after")
+    def validate_corpus(self):
+        if self.min_tokens > self.max_tokens:
+            raise ValueError("min_tokens exceeds max_tokens")
+        if len({c.id for c in self.controls}) != len(self.controls):
+            raise ValueError("duplicate control briefs")
+        return self
+
+
 class JobConfig(BaseModel):
     """One resolved job: the sole input to a stage, and the output counterpart of
     `RunResult`.
@@ -1899,6 +1938,7 @@ class JobConfig(BaseModel):
     stage: Stage = "datagen"
     sft_data_pilot: SFTDataPilotSpec | None = None
     stance_sdf_pilot: StanceSDFPilotSpec | None = None
+    stance_corpus: StanceCorpusSpec | None = None
     related_runs: dict[str, str] = Field(default_factory=dict)
     """Sibling run ids that belong with this one, mapped to why, e.g.
     `{matrix_v1_step24: "the same arms read at step 24, where belief transfer peaks"}`.

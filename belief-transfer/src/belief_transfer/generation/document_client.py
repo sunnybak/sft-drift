@@ -50,11 +50,14 @@ def request_key(model: str, prompt: str, tool: llm.Tool, max_output_tokens: int)
 
 
 class DocumentClient(llm.Client):
-    def __init__(self, *, budget: Budget, **kwargs: Any) -> None:
+    def __init__(self, *, budget: Budget, input_price_upper_bound: float = 0.10, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         if self.model != 'gpt-6-luna':
             raise ValueError('Bounded document client is qualified only for gpt-6-luna')
         self.budget = budget
+        if input_price_upper_bound < 0.10:
+            raise ValueError('Input reservation cannot be below the uncached input rate')
+        self.input_price_upper_bound = input_price_upper_bound
         self.semaphore = asyncio.Semaphore(self.throughput)
 
     async def request(self, prompt: str, tool: llm.Tool, *, max_output_tokens: int) -> dict[str, Any]:
@@ -71,7 +74,7 @@ class DocumentClient(llm.Client):
         request_bytes = len((prompt + json.dumps(tool.parameters) + tool.name + tool.description).encode())
         if request_bytes > 64_000:
             raise ValueError('Document request exceeds bounded short-context envelope')
-        reserved = ((request_bytes + 8192) * 0.10 + max_output_tokens * 0.50) / 1_000_000
+        reserved = ((request_bytes + 8192) * self.input_price_upper_bound + max_output_tokens * 0.50) / 1_000_000
         async with self.semaphore:
             await self.budget.reserve(reserved)
             started = time.monotonic()

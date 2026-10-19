@@ -38,6 +38,18 @@ def test_scope_includes_new_runs_and_cache_but_not_legacy(setup):
     assert not any("old_conviction" in name for name in files)
 
 
+def test_corpus_delegation_excludes_heavy_bytes_but_keeps_frozen(setup):
+    project,source,config=setup
+    path=project/'data/results/ethical_pilot/ethics_sft_new/rows.jsonl'
+    path.parent.mkdir(parents=True); path.write_text('heavy')
+    config['corpus_store']={'paths':['results/ethical_pilot/ethics_sft_new']}
+    files=handoff.inventory(project/'data',config)
+    assert path.relative_to(project/'data').as_posix() not in files
+    assert source.relative_to(project/'data').as_posix() in files
+    config['corpus_store']['paths']=[source.relative_to(project/'data').as_posix()]
+    with pytest.raises(ValueError,match='frozen input'): handoff.inventory(project/'data',config)
+
+
 def test_missing_or_changed_frozen_input_fails(setup):
     project, source, config = setup
     source.write_text("changed")

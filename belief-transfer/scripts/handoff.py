@@ -15,6 +15,10 @@ from pathlib import Path, PurePosixPath
 import shutil
 import subprocess
 import tempfile
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src'))
+from belief_transfer.dataset import corpus_store
 
 PROJECT = Path(__file__).resolve().parents[1]
 CONFIG = PROJECT / "configs/handoff.json"
@@ -54,6 +58,9 @@ def inventory(data: Path, config: dict) -> dict[str, dict]:
         if not path.exists():
             raise FileNotFoundError(f"required input missing: {name}; restore the handoff")
     selected_prefixes = config["required_paths"] + config["include_paths"]
+    delegated = config.get('corpus_store', {}).get('paths', [])
+    for prefix in delegated:
+        safe_path(data, prefix)
     import fnmatch
     for stage in ("generated", "results", "checkpoints"):
         for run in (data / stage).glob("*/*"):
@@ -76,9 +83,13 @@ def inventory(data: Path, config: dict) -> dict[str, dict]:
             if not path.is_file() or path.name == ".DS_Store" or ".cache" in path.relative_to(data).parts:
                 continue
             safe_path(data, path.relative_to(data).as_posix())
+            name = path.relative_to(data).as_posix()
+            if any(name == p or name.startswith(p + '/') for p in delegated):
+                continue
             paths.add(path)
     files = {p.relative_to(data).as_posix(): {"sha256": digest(p), "bytes": p.stat().st_size}
              for p in sorted(paths)}
+    # Registered heavy corpus prefixes have their own private, pinned bundle store.
     for name, expected in config["frozen_files"].items():
         if files.get(name, {}).get("sha256") != expected:
             raise ValueError(f"frozen input changed or missing: {name}; do not overwrite the frozen run")
@@ -130,6 +141,19 @@ def write_receipt(data: Path, repo: str, revision: str, manifest: dict) -> None:
 
 
 def save(project: Path, config: dict) -> dict:
+    # Snapshot only at a completed boundary; a live SQLite writer is not a backup.
+    import fcntl
+    from contextlib import ExitStack
+    with ExitStack() as stack:
+        for name in config.get('corpus_store', {}).get('lock_paths', []):
+            path = safe_path(project/'data', name)
+            if path.exists():
+                stream = stack.enter_context(path.open('a'))
+                fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        return save_locked(project, config)
+
+
+def save_locked(project: Path, config: dict) -> dict:
     from huggingface_hub import CommitOperationAdd
     data = project / "data"
     if git(project, "status", "--porcelain"):
@@ -146,6 +170,7 @@ def save(project: Path, config: dict) -> dict:
     require_private(api, config["repo_id"])
     parent = api.repo_info(repo_id=config["repo_id"], repo_type="dataset").sha
     remote_files = api.list_repo_files(repo_id=config["repo_id"], repo_type="dataset", revision=parent)
+    previous = {}
     if MANIFEST in remote_files:
         from huggingface_hub import hf_hub_download
         old_path = hf_hub_download(repo_id=config["repo_id"], repo_type="dataset",
@@ -161,6 +186,9 @@ def save(project: Path, config: dict) -> dict:
     manifest = {"version": 1, "repo_id": config["repo_id"],
                 "saved_at": datetime.now(timezone.utc).isoformat(),
                 "code_commit": code_commit, "branch": branch, "files": files}
+    if config.get('corpus_store'):
+        manifest['corpus_store'] = corpus_store.save(data, config['corpus_store'], code_commit, api,
+                                                     previous.get('corpus_store'))
     # Copy at a completed work boundary: upload a coherent snapshot, never live file handles.
     with tempfile.TemporaryDirectory(prefix="stance-handoff-") as temporary:
         staging = Path(temporary)
@@ -172,8 +200,21 @@ def save(project: Path, config: dict) -> dict:
         path = staging / MANIFEST
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(manifest, indent=2) + "\n")
-        operations = [CommitOperationAdd(path_in_repo=name, path_or_fileobj=str(staging / name))
-                      for name in files]
+        # New files can be staged in small commits while the previous manifest remains
+        # valid. Updates to existing blobs publish atomically with the new manifest.
+        new_names = [name for name in files if name not in remote_files]
+        changed_names = [name for name in files if name in remote_files
+                         and previous.get('files', {}).get(name) != files[name]]
+        if len(changed_names) > 39:
+            raise ValueError('Too many mutable study files for one atomic commit; use bundled corpus storage')
+        while len(new_names) + len(changed_names) > 39:
+            chunk, new_names = new_names[:40], new_names[40:]
+            commit = api.create_commit(repo_id=config['repo_id'], repo_type='dataset', parent_commit=parent,
+                operations=[CommitOperationAdd(path_in_repo=name, path_or_fileobj=str(staging/name))
+                            for name in chunk], commit_message='Stage new study artifacts')
+            parent = commit.oid
+        operations = [CommitOperationAdd(path_in_repo=name, path_or_fileobj=str(staging/name))
+                      for name in new_names+changed_names]
         operations.append(CommitOperationAdd(path_in_repo=MANIFEST, path_or_fileobj=str(path)))
         commit = api.create_commit(repo_id=config["repo_id"], repo_type="dataset",
                                    operations=operations, parent_commit=parent,
@@ -194,6 +235,7 @@ def save(project: Path, config: dict) -> dict:
         raise ValueError("remote manifest differs from uploaded snapshot")
     write_receipt(data, config["repo_id"], revision, manifest)
     return {"repo_id": config["repo_id"], "revision": revision, "code_commit": code_commit,
+            'corpus_store': {k: v for k, v in manifest.get('corpus_store', {}).items() if k != 'manifest'},
             "files": len(files), "bytes": sum(v["bytes"] for v in files.values()), "verified": True}
 
 
@@ -232,6 +274,8 @@ def restore(project: Path, config: dict) -> dict:
     with ThreadPoolExecutor(max_workers=8) as pool:
         list(pool.map(fetch, files))
     verify_files(data, files)
+    if manifest.get('corpus_store'):
+        corpus_store.restore(data, manifest['corpus_store'], api)
     inventory(data, config)
     write_receipt(data, config["repo_id"], revision, manifest)
     return {"repo_id": config["repo_id"], "revision": revision,
@@ -255,6 +299,8 @@ def main() -> None:
         if receipt["repo_id"] != config["repo_id"]:
             raise ValueError("receipt belongs to a different artifact repository")
         verify_files(project / "data", receipt["manifest"]["files"])
+        if receipt['manifest'].get('corpus_store'):
+            corpus_store.verify(project/'data', receipt['manifest']['corpus_store'])
         inventory(project / "data", config)
         result = {"verified": True, "revision": receipt["revision"],
                   "files": len(receipt["manifest"]["files"]),
