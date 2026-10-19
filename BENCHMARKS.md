@@ -35,8 +35,16 @@ seven premise changes; five passed both scope/factual checks. Three defects occu
 random 40, eight in targeted 24; do not interpret the combined rate as population prevalence.
 Revision can flip the assigned position. Many metadata and factual flags are false positives.
 See `content_review_v1/report.md` under this run for exact selection and disagreements.
-Next: fix assignment-preserving revision/QA in a new version, fully adjudicate stance
-failures and perform separate whole-bank semantic review before traceable bounded repairs. No automatic training-ready designation
+A fresh round (`content_review_v2`) read 100 new full documents, one opposing pair per
+50 randomly selected subjects (five per category), without consulting flags. It found
+zero clear wrong/contradictory positions and three premise changes, all in psychology
+subjects; Luna missed all three. One malformed objection and seven borderline cases remain
+separate. Both rounds total 164 full documents across 63 subjects. The new random evidence
+suggests concentrated serious errors, not a broad label-reversal pattern; no population
+rate is established and repetitive reasoning remains common.
+Next: prioritize the 400 psychology-deception documents, stance/conclusion failures and
+known repairs; fix assignment-preserving revision and distinguish normative from empirical
+claims in a new QA version. Broader semantic QA still precedes traceable bounded repairs. No automatic training-ready designation
 follows generation or same-model review. Earlier reviewed pilots and scope checks are
 development evidence, not independent validation of this full bank. Canonical overlap
 is intentionally allowed; frozen evaluation paraphrases never enter generation prompts.

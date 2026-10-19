@@ -16,32 +16,42 @@ shuffle buffer 1,024. Document-count mixtures are not token/step matches.
 Supervisor completed with return code zero at 2026-10-19 20:47 UTC; no active child
 or generation process, no checkpoint/training/GPU rental. Status and logs remain at
 `belief-transfer/data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v5/`.
-The bank is **not approved for training**. Agent content review read **64 complete
-final documents / 32 opposing pairs**, spanning 27 training subjects and all ten
-categories. Selection: 20 seeded category-stratified random pairs plus 12 risk-targeted
-pairs. **11 sampled documents have clear semantic defects** (four wrong/contradictory
-positions, seven added/narrowed premises); three occur in the random 40, eight in the
-risk-targeted 24. This is not a full-bank prevalence estimate. Thirteen sampled rows
-need a semantic or length repair; originals remain unchanged. Five scope/premise defects
-passed both automated semantic checks. Revision changed three sampled affirmative drafts
-into rejection; a fourth known contradiction was returned verbatim. Repetitive reasoning
-and weak form differences limit substantive variation.
+The bank is **not approved for training**, but a fresh random review finds the serious
+errors more concentrated than the first targeted review suggested. **`content_review_v2`**
+read **100 new complete finals / 50 opposing pairs / 50 distinct subjects**, five subjects
+per category (seed 20261019), excluding previously fully read pairs. Quality flags were
+not used in selection; agent judgments were saved before reading original model verdicts.
+**Zero clear wrong-side/contradictory documents; three clear premise changes**, all in two
+psychology-deception pairs. One same-side objection, seven borderline cases and one
+356-token document are recorded separately. Luna missed all three premise changes;
+two other verdict booleans contradict their own rationales. This is a subject-stratified
+paired sample, not a precise population defect-rate estimate. Repetitive reasoning remains
+common. No source rows changed; additional API spend $0.
+
+Across both rounds: **164 unique full final texts / 63 subjects**. Earlier v1 read 64
+finals (20 random pairs + 12 risk-targeted pairs), finding four wrong/contradictory sides
+and seven premise changes. Three v1 defects were in the random 40, eight in targeted 24;
+do not pool the targeted sample into a prevalence estimate. Three sampled revisions
+flipped affirmative drafts into rejection; another known contradiction stayed verbatim.
+
+Next: prioritize full adjudication of the **400 psychology-deception documents**, all
+stance/conclusion flags and confirmed repair cases. Fix assignment-preserving revision
+and separate ethical reasoning from added empirical premises in a new QA version.
+Keep broader semantic QA before SFT, but current evidence does not justify discarding or
+regenerating the entire bank. Original candidates remain unchanged.
 
 Population diagnostics retain 1,657 unique originally flagged documents (936 negative,
 721 positive); do not automatically filter them. Excerpt adjudication finds 87/92 metadata
 flags are ordinary uses of brief, four actual task references and one ambiguous phrase.
 Of 487 evaluation-wording match documents, 367 are canonical substrings, 120 simple
 alternative wordings. Overlap remains disclosed; no leakage or independence claim.
-Full-document spot checks, reviewer disagreements and C4 observations are in
-`content_review_v1/report.md` under the current run results. No API spend this block.
-Next: correct revision/QA handling in a new version, fully adjudicate all stance failures,
-and separately review the whole bank before a bounded, traceable repair pass. No source
-rows were edited, dropped or relabeled; this review does not authorize training.
+Review details are in `content_review_v1/report.md` and `content_review_v2/report.md`
+under the current run results. No rows were edited, dropped or relabeled; no training is authorized.
 
 Exact next command, from `belief-transfer/`:
 
 ```sh
-cat data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v5/content_review_v1/report.md
+cat data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v5/content_review_v2/report.md
 ```
 
 Four prospective ethical arms each select 9,000 documents: all positive, all negative,
@@ -72,7 +82,8 @@ later targeted raw-error metadata test. This review adds a read-only sampling/di
 refusal passed using temporary outputs. All 2,100 source document-file hashes and 161
 frozen hashes were rechecked unchanged. No model weights loaded. Completion integrity checks and quality limits are recorded in
 [completion changelog](changelog/2026-10-19-corpus-complete.md) and
-[content-review changelog](changelog/2026-10-19-corpus-content-review.md).
+[first content review](changelog/2026-10-19-corpus-content-review.md) and
+[fresh random review](changelog/2026-10-19-corpus-random-review.md).
 Private snapshot verification is recorded in ignored `belief-transfer/data/.handoff-receipt.json`;
 Git notes are not a receipt. Both the main private store and separate corpus store are required.
 

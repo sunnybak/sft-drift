@@ -12,12 +12,17 @@ Earlier v1–v4 contracts and forecasts remain historical; do not rerun started 
 
 ## Content review disposition
 
-The [agent review](data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v5/content_review_v1/report.md)
-read 64 full documents (20 random and 12 risk-targeted pairs), not the entire bank. It
-found four wrong/contradictory positions and seven premise changes. Revision sometimes
-changes the assigned conclusion; automated flags have both misses and false positives.
-Originals remain unchanged. Separate whole-bank QA and traceable repairs precede assembly;
-do not drop all flagged rows or infer an aggregate defect rate from the targeted sample.
+The [first agent review](data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v5/content_review_v1/report.md)
+read 64 full documents, including risk-targeted pairs. A
+[fresh random review](data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v5/content_review_v2/report.md)
+read 100 additional finals in 50 pairs/subjects, five subjects per category, with flags
+withheld until judgments were recorded. It found zero clear wrong-side documents and
+three premise changes, all in psychology-deception subjects, plus a malformed objection
+and seven borderline cases. Combined: 164 full documents across 63 subjects.
+The source bank is unchanged; the different rates reflect sampling, not a new generator.
+Prioritize all 400 psychology-deception rows and known stance failures, fix revision/QA,
+and preserve broader semantic review before training assembly. Do not discard or regenerate
+all 20,000 on current evidence, or treat the small paired sample as a precise defect rate.
 
 ## Source bank
 

@@ -19,9 +19,12 @@ expressed ethical stances, including effects on related and unrelated beliefs.
 The approved BASE bank and Mac evaluation are complete. The authorized candidate bank
 `ethics_sft_pooled_corpus_v5` completed: **20,000 synthetic documents** (90 ethical and
 ten fresh off-topic claims × 100 per position), plus **20,634 pinned C4 documents**.
-Synthetic text totals 9,800,659 Qwen tokens. A 64-document agent review found wrong/contradictory positions, subtle premise changes
-and repetition. Original candidates and flags remain intact; acceptance requires new QA
-and traceable repairs. This was a spot check, not a full-bank semantic review. See STATE.md for completion and preservation.
+Synthetic text totals 9,800,659 Qwen tokens. Two spot-check rounds read 164 unique
+finals across 63 subjects. The fresh 100-document random round found no clear wrong-side
+texts and three premise changes, concentrated in psychology-deception subjects. Earlier
+targeted review established that revision can flip a stance. Repetition and unreliable QA
+remain concerns; preserve the bank and prioritize focused review and traceable repairs.
+This is not full-bank semantic clearance. See STATE.md for counts and preservation.
 Training dose/settings remain future work; qualify CUDA BASE before SFT.
 
 ## Completion criteria
