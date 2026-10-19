@@ -13,6 +13,8 @@
   ],
   "include_paths": [
     "cache",
+    "generated/ethical_stance_sft/ethics_sft_documents_pilot_v1",
+    "results/ethical_stance_sft/ethics_sft_documents_pilot_v1",
     "generated/ethical_stance_sft/ethics_sft_data_pilot_v1",
     "results/ethical_stance_sft/ethics_sft_data_pilot_v1",
     "generated/ethical_stance_sft",

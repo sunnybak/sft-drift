@@ -29,6 +29,14 @@ See `../SFT_DATA_PILOT.md` for targets, designs, control and review limits. It d
 train, export an accepted corpus, overwrite an existing candidate directory or resume.
 The inherited historical training settings in the resolved job are unused by this stage.
 
+## Separate document pilot
+
+`run/ethics_sft_documents_pilot_v1.yaml` launches `stage=stance_sdf_pilot`.
+See `../STANCE_DOCUMENT_PILOT.md`: 48 standalone, directly stated candidates,
+400–600 Qwen tokens, type/idea/draft/single-revision, separate assessments, and
+six pinned C4 background records shared across eight mixture previews. No training.
+This pipeline does not import the old chat-pair prompts or evidence-corpus generator.
+
 ## Code to reuse
 
 | Work | Modules under `src/belief_transfer/` |

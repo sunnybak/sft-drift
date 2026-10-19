@@ -28,6 +28,11 @@ _DONE = object()
 # USD per 1M tokens. https://developers.openai.com/api/docs/pricing
 # Long-context rates apply to the full request when input exceeds 272k tokens.
 _PRICES: dict[str, dict[str, dict[str, float]]] = {
+    # Official API model/pricing pages verified 2026-10-19. Historical rates unchanged.
+    "gpt-6-luna": {
+        "short": {"input": 0.10, "cached_input": 0.01, "cache_write": 0.125, "output": 0.50},
+        "long": {"input": 0.20, "cached_input": 0.02, "cache_write": 0.25, "output": 0.75},
+    },
     "gpt-5.6-sol": {
         "short": {
             "input": 5.00,

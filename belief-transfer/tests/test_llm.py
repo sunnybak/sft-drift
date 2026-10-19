@@ -241,6 +241,7 @@ def test_batch_records_every_call_into_context(tmp_path) -> None:
 
 
 @pytest.mark.skipif(not os.environ.get("OPENAI_API_KEY"), reason="OPENAI_API_KEY not set")
+@pytest.mark.needs_api
 def test_complete_luna_none_reasoning() -> None:
     costs.reset()
     # override_cache: this test asserts real per-call cost accounting, which a cache
@@ -257,6 +258,7 @@ def test_complete_luna_none_reasoning() -> None:
 
 
 @pytest.mark.skipif(not os.environ.get("OPENAI_API_KEY"), reason="OPENAI_API_KEY not set")
+@pytest.mark.needs_api
 def test_batch_luna_two_prompts() -> None:
     costs.reset()
 

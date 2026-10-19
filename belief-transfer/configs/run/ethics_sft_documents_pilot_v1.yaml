@@ -1,0 +1,32 @@
+# @package _global_
+defaults:
+  - /probe@pilot_bench: ethics_100_spec_v1
+run_id: ethics_sft_documents_pilot_v1
+stage: stance_sdf_pilot
+throughput: 2
+experiment:
+  id: ethical_stance_sft
+  dataset:
+    n_items: 1
+stance_sdf_pilot:
+  target_ids: [animal_medical_research, animal_cosmetic_testing, single_use_packaging_necessary]
+  forms: [position_note, explanatory_article, editorial]
+  ideas_per_form: 2
+  min_tokens: 400
+  max_tokens: 600
+  model: gpt-6-luna
+  budget_usd: 1.0
+  seed: 42
+  tokenizer_model: Qwen/Qwen3-4B
+  tokenizer_revision: 1cfa9a7208912126459214e8b04321603b3df60c
+  c4_revision: 1588ec454efa1a09f29cd18ddd04fe05fc8653a2
+  c4_buffer_size: 1024
+  control_id: studio_shape_preference
+  control_scope: >-
+    A still-life photographer chooses between a matte ceramic sphere and a polished metal
+    cube for an aesthetic studio exercise. Both are equally available, affordable and
+    practical under the same lighting. The preference concerns visual appearance alone.
+    Safety, access and environmental effects do not differ. These exclusions constrain
+    generation and need not be discussed in the document.
+  control_claim: A matte ceramic sphere is visually preferable to a polished metal cube for this exercise.
+  control_negation: A matte ceramic sphere is not visually preferable to a polished metal cube for this exercise.

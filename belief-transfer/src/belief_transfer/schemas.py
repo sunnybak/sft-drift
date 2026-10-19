@@ -1808,6 +1808,7 @@ Stage = Literal[
     "instrument_validation",
     "datagen",
     "sft_data_pilot",
+    "stance_sdf_pilot",
     "sft",
     "efficacy",
     "absorption",
@@ -1855,6 +1856,27 @@ class SFTDataPilotSpec(BaseModel):
     control_claim: str
 
 
+class StanceSDFPilotSpec(BaseModel):
+    """Bounded standalone-document quality pilot; no training configuration."""
+
+    target_ids: list[str]
+    forms: list[str] = Field(default_factory=lambda: ["position_note", "explanatory_article", "editorial"])
+    ideas_per_form: int = Field(default=2, ge=1)
+    min_tokens: int = Field(default=400, ge=1)
+    max_tokens: int = Field(default=600, ge=1)
+    model: Literal["gpt-6-luna"] = "gpt-6-luna"
+    budget_usd: float = Field(default=1.0, gt=0)
+    seed: int = 42
+    tokenizer_model: str = "Qwen/Qwen3-4B"
+    tokenizer_revision: str = "1cfa9a7208912126459214e8b04321603b3df60c"
+    c4_revision: str = "1588ec454efa1a09f29cd18ddd04fe05fc8653a2"
+    c4_buffer_size: int = Field(default=1024, ge=1)
+    control_id: str = "studio_shape_preference"
+    control_scope: str
+    control_claim: str
+    control_negation: str
+
+
 class JobConfig(BaseModel):
     """One resolved job: the sole input to a stage, and the output counterpart of
     `RunResult`.
@@ -1874,6 +1896,7 @@ class JobConfig(BaseModel):
     run_id: str
     stage: Stage = "datagen"
     sft_data_pilot: SFTDataPilotSpec | None = None
+    stance_sdf_pilot: StanceSDFPilotSpec | None = None
     related_runs: dict[str, str] = Field(default_factory=dict)
     """Sibling run ids that belong with this one, mapped to why, e.g.
     `{matrix_v1_step24: "the same arms read at step 24, where belief transfer peaks"}`.

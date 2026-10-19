@@ -23,6 +23,14 @@ RUN_GPU_FLAG = "--run-gpu"
 MARKER = "needs_weights"
 
 
+@pytest.fixture(autouse=True)
+def isolate_shared_generation_cache(tmp_path, monkeypatch) -> None:
+    """Unit tests must never append mocked or live smoke results to study evidence."""
+    from belief_transfer.generation import cache
+
+    monkeypatch.setattr(cache, "_default_cache", cache.Cache(tmp_path / "llm-cache.jsonl"))
+
+
 @pytest.fixture
 def job() -> JobConfig:
     """A composed job for the real factory_farming corpus.
@@ -81,6 +89,8 @@ def data_root(tmp_path, monkeypatch) -> Path:
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
+    parser.addoption("--run-api", action="store_true", default=False,
+                     help="opt in to live provider smoke tests (credentials alone do not opt in)")
     parser.addoption(
         RUN_GPU_FLAG,
         action="store_true",
@@ -93,6 +103,7 @@ def pytest_addoption(parser: pytest.Parser) -> None:
 
 
 def pytest_configure(config: pytest.Config) -> None:
+    config.addinivalue_line("markers", "needs_api: live API calls; requires --run-api")
     config.addinivalue_line(
         "markers",
         f"{MARKER}: loads real model weights or needs an accelerator; requires {RUN_GPU_FLAG}",
@@ -100,6 +111,11 @@ def pytest_configure(config: pytest.Config) -> None:
 
 
 def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
+    if not config.getoption("--run-api"):
+        api_skip = pytest.mark.skip(reason="live provider test; pass --run-api to opt in")
+        for item in items:
+            if "needs_api" in item.keywords:
+                item.add_marker(api_skip)
     if config.getoption(RUN_GPU_FLAG):
         return
     skip = pytest.mark.skip(reason=f"needs real model weights; pass {RUN_GPU_FLAG} to run")
