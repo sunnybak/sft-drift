@@ -1,7 +1,7 @@
 # Proposed full document bank and mixtures
 
 This is the dataset-generation proposal for `ethics_sft_pooled_corpus_v3`, using prompt
-v4. Bulk generation remains unstarted pending the user's review of this math/mix.
+v5. Bulk generation remains unstarted pending the user's review of this math/mix.
 The 30-document scope check is a separate pilot and is not counted into this bank.
 Training schedule, epochs, optimizer steps, GPU rental and final treatment analysis
 remain outside this generation proposal.

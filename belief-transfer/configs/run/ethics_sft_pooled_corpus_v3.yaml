@@ -116,6 +116,6 @@ stance_corpus:
       or rhythm as applicable. All practical conditions are equal. No moral, financial,
       access or safety distinction is involved. These exclusions constrain generation
       and need not appear in the document.
-  prompt_version: v4
+  prompt_version: v5
   c4_shared_documents: 9000
   c4_replacement_min_tokens: 5400000

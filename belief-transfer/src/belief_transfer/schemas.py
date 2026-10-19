@@ -1891,7 +1891,7 @@ class StanceCorpusSpec(BaseModel):
     """Resumable document bank; operational bounds do not change content identity."""
 
     operation: Literal["prepare", "generate", "background"] = "prepare"
-    prompt_version: Literal["v3", "v4"] = "v3"
+    prompt_version: Literal["v3", "v4", "v5"] = "v3"
     target_ids: list[str] | None = None
     resume: bool = False
     max_batches: int = Field(default=1, ge=1, le=1000)

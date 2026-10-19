@@ -86,7 +86,7 @@ def test_journal_durability_recovery_and_unknown_charge_block(tmp_path):
     journal.close()
 
 
-@pytest.fixture(params=['v3', 'v4'])
+@pytest.fixture(params=['v3', 'v4', 'v5'])
 def prepared(tmp_path,monkeypatch,request):
     j=job()
     j.stance_corpus.prompt_version=request.param
@@ -205,8 +205,9 @@ def test_scope_pilot_and_full_generation_counts_are_distinct():
         assert sum(x['role']=='offtopic_training_control' for x in subjects)==controls
         plan=corpus.schedule(subjects,s.documents_per_position,s.control_documents_per_position,s.ideas_per_batch,s.seed)
         assert sum(len(b['slots'])*2 for b in plan)==total
-        assert stage.contract_for(j,subjects)['prompt_version']=='stance-corpus-v4'
-        assert len(stage.contract_for(j,subjects)['source_hashes'])==8
+        version = j.stance_corpus.prompt_version
+        assert stage.contract_for(j,subjects)['prompt_version']=='stance-corpus-'+version
+        assert len(stage.contract_for(j,subjects)['source_hashes'])==(9 if version=='v5' else 8)
     pilot.stance_corpus.target_ids=['small_api_rest']
     with pytest.raises(ValueError,match='nonethical'): stage.subjects_for(pilot)
 
@@ -238,6 +239,23 @@ def test_v4_control_rules_are_role_scoped():
     assert 'ethical judgment' in v4.role_rules(ethical)
     assert 'personal aesthetic preference' in v4.role_rules(control)
     assert 'not moral duties' not in v4.role_rules(ethical)
+
+
+@pytest.mark.parametrize('tokens,status',[(381,'BELOW_MINIMUM'),(424,'INSIDE_RANGE'),(640,'ABOVE_MAXIMUM')])
+def test_v5_authoritative_measurement_and_exact_compatible_requests(tokens,status):
+    from belief_transfer.dataset import stance_corpus_prompts_v4 as v4
+    from belief_transfer.dataset import stance_corpus_prompts_v5 as v5
+    s=stage.subjects_for(job())[0]
+    idea=dict(focus='Value',positive_reason='Pro',negative_reason='Con',development='Weigh')
+    assert v4.forms_prompt(s)==v5.forms_prompt(s)
+    assert v4.ideas_prompt(s,'editorial',{},1,[])==v5.ideas_prompt(s,'editorial',{},1,[])
+    assert v4.document_prompt(s,'editorial',idea,'positive',400,600)==v5.document_prompt(s,'editorial',idea,'positive',400,600)
+    assert v4.review_prompt(s,'editorial','positive','Text')==v5.review_prompt(s,'editorial','positive','Text')
+    revised=v5.revision_prompt(s,'editorial',idea,'positive','Text',tokens,400,600)
+    assert f'AUTHORITATIVE TOKEN COUNTER: {tokens}' in revised
+    assert f'MEASURED STATUS: {status}' in revised
+    assert json.loads(revised.split('\nDRAFT_JSON: ')[1])=={'text':'Text'}
+    assert revised!=v4.revision_prompt(s,'editorial',idea,'positive','Text',tokens,400,600)
 
 
 def test_c4_bounded_shards_resume_provenance_and_no_prefix(prepared,monkeypatch):

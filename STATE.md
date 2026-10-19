@@ -1,6 +1,6 @@
 # Current state — 2026-10-19
 
-## Scope correction implemented; fresh live check next
+## Scope correction checked; authoritative-length matched repeat next
 
 User authorized tightening scope rules, a small multi-belief test, and the final corpus
 math/mix **before bulk generation**. Prompt v4 separates neutral planning from stance
@@ -11,18 +11,28 @@ Historical prompt files and completed v2 documents remain unchanged.
 Fresh pilot: `ethical_stance_sft/ethics_sft_scope_check_v1` — four ethical subjects
 (AI hiring, animal medical research, kidney donation, medical-data consent) plus one fresh
 aesthetic control, three forms × one shared idea × two positions = 30 candidates.
+V4 check completed: 30 documents / 111 successful calls, cost $0.04209835, no uncertainty.
+All six hiring documents preserve the channel-specific limit in current-agent review.
+V4 length fell from 27/30 valid drafts to 24/30 revisions because the model replaced
+measured counts with guessed lengths. All originals remain preserved.
+
+Prompt v5 changes only revision instructions to give an explicit authoritative measured
+status; planning/draft/review requests remain identical. `ethics_sft_scope_check_v2`
+will replay the same plans/drafts from the v1 cache and make new revision calls. Cache
+seeding imports no request rows or charges and cannot overwrite a started journal.
 Budget $0.50; concurrency two. Full generation remains unstarted. New production config
-`ethics_sft_pooled_corpus_v3` uses v4, with the same 27,000 synthetic candidate target.
+`ethics_sft_pooled_corpus_v3` uses v5, with the same 27,000 synthetic candidate target.
 C4 can now extend beyond 18,000 records until its replacement reserve reaches 5.4M
 Qwen tokens beyond the first shared 9,000 rows. No real C4 is acquired in this check.
 
-Full engineering regression: **866 passed, 4 skipped** (114.90 s). Earlier focused
-checks: 105 passed before the reserve test was added. No pytest/live generation overlap.
+Full engineering regression after the matched-repeat/cache-seeding change: **878 passed,
+4 skipped** (107.51 s). Earlier scope/reserve suite: 866 passed, 4 skipped. No pytest/live generation overlap.
 Next commands from `belief-transfer/`, after committing/pushing source:
 
 ```sh
-uv run --no-sync python run.py +run=ethics_sft_scope_check_v1
-uv run --no-sync python run.py +run=ethics_sft_scope_check_v1 stance_corpus.operation=generate stance_corpus.resume=true
+uv run --no-sync python run.py +run=ethics_sft_scope_check_v2
+uv run --no-sync python scripts/seed_corpus_cache.py --source-run ethics_sft_scope_check_v1 --target-run ethics_sft_scope_check_v2
+uv run --no-sync python run.py +run=ethics_sft_scope_check_v2 stance_corpus.operation=generate stance_corpus.resume=true
 ```
 
 Read all thirty revised documents before interpreting the check. Review the proposed

@@ -12,6 +12,7 @@ from belief_transfer.config import config_sha, write_resolved_config
 from belief_transfer.dataset import stance_corpus as corpus
 from belief_transfer.dataset import stance_corpus_prompts as prompts
 from belief_transfer.dataset import stance_corpus_prompts_v4
+from belief_transfer.dataset import stance_corpus_prompts_v5
 from belief_transfer.dataset import stance_documents as docs
 from belief_transfer.dataset import stance_document_prompts_v2 as v2
 from belief_transfer.generation import corpus_journal, document_client
@@ -20,6 +21,10 @@ from belief_transfer.generation.corpus_journal import CorpusJournal
 from belief_transfer.schemas import JobConfig, RunResult
 
 GENERATED_DIR = Path(__file__).resolve().parents[3] / 'data/generated'
+
+
+def prompt_module(version: str) -> Any:
+    return {'v3': prompts, 'v4': stance_corpus_prompts_v4, 'v5': stance_corpus_prompts_v5}[version]
 
 
 def subjects_for(job: JobConfig) -> list[dict]:
@@ -57,9 +62,11 @@ def contract_for(job: JobConfig, subjects: list[dict]) -> dict:
     source_paths = [Path(__file__), Path(corpus.__file__), Path(prompts.__file__),
                     Path(v2.__file__), Path(docs.__file__), Path(document_client.__file__),
                     Path(corpus_journal.__file__)]
-    selected = stance_corpus_prompts_v4 if spec.prompt_version == 'v4' else prompts
-    if selected is stance_corpus_prompts_v4:
-        source_paths.append(Path(selected.__file__))
+    selected = prompt_module(spec.prompt_version)
+    if spec.prompt_version in {'v4', 'v5'}:
+        source_paths.append(Path(stance_corpus_prompts_v4.__file__))
+    if spec.prompt_version == 'v5':
+        source_paths.append(Path(stance_corpus_prompts_v5.__file__))
     return {'version': 1, 'experiment': job.experiment.id, 'run_id': job.run_id,
             'settings': settings, 'subjects': subjects, 'prompt_version': selected.VERSION,
             'source_hashes': {p.relative_to(Path(__file__).parents[1]).as_posix():
@@ -76,7 +83,7 @@ def load_tokenizer(spec: Any) -> Any:
 async def generate(root: Path, job: JobConfig, subjects: list[dict], plan: list[dict], context: RunContext) -> None:
     spec = job.stance_corpus
     assert spec is not None
-    selected = stance_corpus_prompts_v4 if spec.prompt_version == 'v4' else prompts
+    selected = prompt_module(spec.prompt_version)
     tokenizer = load_tokenizer(spec)
     frozen_path = GENERATED_DIR / 'ethical_pilot/ethics_100_bank_v3/belief_wordings.jsonl'
     frozen = [json.loads(line) for line in frozen_path.read_text().splitlines()]
@@ -127,7 +134,7 @@ async def generate(root: Path, job: JobConfig, subjects: list[dict], plan: list[
                 subject = bank[batch['subject_id']]
                 form = batch['form']
                 # Persistent form plan shared across every batch and both opposing positions.
-                form_prompt = selected.forms_prompt(subject) if selected is stance_corpus_prompts_v4 else v2.forms_prompt(subject)
+                form_prompt = selected.forms_prompt(subject) if spec.prompt_version != 'v3' else v2.forms_prompt(subject)
                 form_plan = await execute(subject['id']+'/forms', form_prompt,
                                           docs.FORM_TOOL, 1000, events)
                 previous = []

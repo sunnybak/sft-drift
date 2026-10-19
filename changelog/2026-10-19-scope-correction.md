@@ -22,3 +22,15 @@ JSON data boundaries, role-scoped control rules, production counts and reserve e
 All tests use mocks/tmp and completed before live generation. Source commit precedes
 fresh run preparation/live calls. Pilot outcome and artifact verification will be
 recorded below after execution.
+
+V4 live check completed (source 3275d32): 30 documents / 111 successful calls,
+$0.04209835, no uncertain outcomes. All six hiring revisions preserve the specified
+channels, but final length fell from 27/30 valid drafts to 24/30 revisions. Critiques
+explicitly substituted guessed counts for supplied tokenizer measurements. Preserved
+all v1 artifacts. Added v5 revision-only instructions giving authoritative numeric
+status and removing the confusing word-ratio hint. A fresh matched repeat,
+ethics_sft_scope_check_v2, imports only exact request-cache entries from v1; no old
+request rows or charges are copied. Draft/plan/review builders remain identical,
+revision keys change. New seeding and all three prompt routes have regression tests.
+Full suite after this change: 878 passed, 4 skipped (107.51 s). No API job overlapped
+with either suite. The production proposal now selects v5, still unstarted.
