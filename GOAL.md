@@ -17,7 +17,9 @@ expressed ethical stances, including effects on related and unrelated beliefs.
 - **Compute:** data generation and inference may run locally. SFT runs only on CUDA/Vast.ai.
 
 The approved BASE bank and Mac evaluation are complete. **Next: review the prepared full-generation math/mix after the scope-corrected,
-30-document check. Bulk generation awaits the user's go-ahead; qualify a GPU BASE
+30-document check and scheduler tuning. The user selected ten fresh controls × 100
+documents per position; the current 20,000-document v4 bank is prepared but ungenerated.
+Bulk generation awaits the user's go-ahead; qualify a GPU BASE
 before training.** Follow the ordered work in BENCHMARKS.md and
 current progress in STATE.md. Dataset count/length, training method/schedule, pilot target
 selection and replication budget still need to be decided from the pilot and recorded.

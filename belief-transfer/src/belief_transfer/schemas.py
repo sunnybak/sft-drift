@@ -1902,7 +1902,12 @@ class StanceCorpusSpec(BaseModel):
     min_tokens: int = Field(default=400, ge=1)
     max_tokens: int = Field(default=600, ge=1)
     model: Literal["gpt-6-luna"] = "gpt-6-luna"
-    budget_usd: float = Field(default=50.0, gt=0)
+    budget_usd: float | None = Field(default=50.0, gt=0)
+    parallel_batches: int = Field(default=1, ge=1, le=128)
+    count_provider_tokens: bool = False
+    rate_limit_rpm: int = Field(default=10000, ge=1)
+    rate_limit_tpm: int = Field(default=10000000, ge=1)
+    rate_utilization: float = Field(default=0.8, gt=0, le=0.8)
     seed: int = 42
     tokenizer_model: str = "Qwen/Qwen3-4B"
     tokenizer_revision: str = "1cfa9a7208912126459214e8b04321603b3df60c"

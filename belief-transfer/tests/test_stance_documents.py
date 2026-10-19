@@ -275,3 +275,32 @@ def test_derived_report_requires_complete_hash_matched_agent_review(tmp_path, mo
     (out/'agent_review.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in annotations))
     with pytest.raises(AssertionError):
         script.derive(j.run_id)
+
+
+@pytest.mark.parametrize('count_failure', [False, True])
+def test_provider_count_reservation_and_safe_fallback(tmp_path, count_failure):
+    from belief_transfer.generation.document_client import RatePacer
+    async def run():
+        counter = AsyncMock(return_value=SimpleNamespace(input_tokens=100,
+            model_dump=lambda **_: {'input_tokens':100}))
+        if count_failure:
+            counter.side_effect = RuntimeError('count endpoint unavailable')
+        create = AsyncMock(return_value=response())
+        gate = RatePacer(10000,10000000)
+        async with DocumentClient(model='gpt-6-luna',cache=Cache(tmp_path/'cache.jsonl'),
+                budget=Budget(None), count_provider_tokens=True, rate_pacer=gate) as client:
+            client._openai.with_options=lambda **_: SimpleNamespace(responses=SimpleNamespace(
+                create=create, input_tokens=SimpleNamespace(count=counter)))
+            result=await client.request('canary',docs.DOCUMENT_TOOL,max_output_tokens=64)
+            assert result['error'] is None
+            assert gate.requests == 2
+            if count_failure:
+                assert result['rate_reserved_tokens'] > 8192
+                assert result['token_count_preflight']['error'] == 'RuntimeError'
+            else:
+                assert result['rate_reserved_tokens'] == 164
+                assert counter.call_args.kwargs == {k:v for k,v in create.call_args.kwargs.items()
+                                                    if k != 'max_output_tokens'}
+            await client.request('canary',docs.DOCUMENT_TOOL,max_output_tokens=64)
+            assert gate.requests == 2 and counter.await_count == create.await_count == 1
+    asyncio.run(run())

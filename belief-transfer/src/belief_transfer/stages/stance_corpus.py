@@ -68,7 +68,7 @@ def contract_for(job: JobConfig, subjects: list[dict]) -> dict:
     if spec.prompt_version == 'v5':
         source_paths.append(Path(stance_corpus_prompts_v5.__file__))
     return {'version': 1, 'experiment': job.experiment.id, 'run_id': job.run_id,
-            'settings': settings, 'subjects': subjects, 'prompt_version': selected.VERSION,
+            'settings': settings, 'throughput': job.throughput, 'subjects': subjects, 'prompt_version': selected.VERSION,
             'source_hashes': {p.relative_to(Path(__file__).parents[1]).as_posix():
                               docs.text_hash(p.read_text()) for p in source_paths},
             'api_sampling_seed': None, 'training_ready': False}
@@ -94,7 +94,10 @@ async def generate(root: Path, job: JobConfig, subjects: list[dict], plan: list[
         actual, uncertain = journal.spend()
         budget = document_client.Budget(spec.budget_usd, committed=actual+uncertain,
                                         actual=actual, uncertain=uncertain)
-        async with document_client.DocumentClient(model=spec.model, throughput=2, input_price_upper_bound=0.125,
+        async with document_client.DocumentClient(model=spec.model, throughput=job.throughput, input_price_upper_bound=0.125,
+                                                   rate_pacer=document_client.RatePacer(spec.rate_limit_rpm,
+                                                       spec.rate_limit_tpm, spec.rate_utilization),
+                                                   count_provider_tokens=spec.count_provider_tokens,
                                                    budget=budget, cache=journal, context=context) as client:
             async def execute(slot: str, prompt: str, tool: Any, cap: int, events: list) -> dict:
                 request = {'slot': slot, 'prompt': prompt, 'tool_name': tool.name,
@@ -123,20 +126,22 @@ async def generate(root: Path, job: JobConfig, subjects: list[dict], plan: list[
             canary = await execute('canary', 'Return submit_document with text READY.', docs.DOCUMENT_TOOL, 64, [])
             if canary['text'] != 'READY':
                 raise ValueError('Generation canary did not return READY')
-            completed = 0
-            for batch in plan:
+            # Choose a bounded prefix before dispatch. Keep each subject/form's
+            # focus history serial, while independent groups can progress together.
+            pending = [b for b in plan if not (root/'shards'/b['batch_id']).exists()][:spec.max_batches]
+            form_locks = {s['id']: asyncio.Lock() for s in subjects}
+            batch_gate = asyncio.Semaphore(spec.parallel_batches)
+
+            async def generate_batch(batch: dict) -> None:
                 destination = root / 'shards' / batch['batch_id']
-                if destination.exists():
-                    continue
-                if completed >= spec.max_batches:
-                    break
                 events: list[dict] = []
                 subject = bank[batch['subject_id']]
                 form = batch['form']
                 # Persistent form plan shared across every batch and both opposing positions.
                 form_prompt = selected.forms_prompt(subject) if spec.prompt_version != 'v3' else v2.forms_prompt(subject)
-                form_plan = await execute(subject['id']+'/forms', form_prompt,
-                                          docs.FORM_TOOL, 1000, events)
+                async with form_locks[subject['id']]:
+                    form_plan = await execute(subject['id']+'/forms', form_prompt,
+                                              docs.FORM_TOOL, 1000, events)
                 previous = []
                 for prior in sorted((root/'shards').glob(subject['id']+'__'+form+'__*/ideas.jsonl')):
                     previous.extend(json.loads(line)['focus'] for line in prior.read_text().splitlines())
@@ -173,19 +178,18 @@ async def generate(root: Path, job: JobConfig, subjects: list[dict], plan: list[
                             'intended_prefix': '<DOCTAG>\n', 'prefix_loss_masked': True,
                             'training_ready': False}
 
-                rows = []
-                # Only two document workers are active; finish the opposite pair on failure.
-                for index, idea in zip(batch['slots'], ideas, strict=True):
-                    outcomes = await asyncio.gather(*(one(index, idea, position)
-                        for position in ('positive', 'negative')), return_exceptions=True)
-                    failures = [v for v in outcomes if isinstance(v, BaseException)]
-                    if failures:
-                        raise failures[0]
-                    rows.extend(outcomes)
+                # All ideas may progress; the client bounds actual HTTP concurrency.
+                outcomes = await asyncio.gather(*(one(index, idea, position)
+                    for index, idea in zip(batch['slots'], ideas, strict=True)
+                    for position in ('positive', 'negative')), return_exceptions=True)
+                failures = [v for v in outcomes if isinstance(v, BaseException)]
+                if failures:
+                    raise failures[0]
+                rows = outcomes
                 for row in rows:
                     row['normalized_duplicate_ids'] = journal.duplicates(
                         row['document_id'], docs.text_hash(docs.normalize(row['text'])))
-                temporary = root / '.batch-staging'
+                temporary = root / ('.batch-staging-' + batch['batch_id'])
                 temporary.mkdir(exist_ok=True)
                 corpus.write_rows(temporary/'documents.jsonl', rows)
                 corpus.write_rows(temporary/'ideas.jsonl', ideas)
@@ -196,8 +200,29 @@ async def generate(root: Path, job: JobConfig, subjects: list[dict], plan: list[
                               if p.name != 'manifest.json'}})
                 destination.parent.mkdir(exist_ok=True)
                 temporary.rename(destination)
-                completed += 1
                 print(f"Completed corpus shard {batch['batch_id']}: {len(rows)} documents", flush=True)
+
+            groups: dict[tuple[str, str], list[dict]] = {}
+            for batch in pending:
+                groups.setdefault((batch['subject_id'], batch['form']), []).append(batch)
+            stopped = asyncio.Event()
+
+            async def group_worker(batches: list[dict]) -> None:
+                for batch in batches:
+                    async with batch_gate:
+                        if stopped.is_set():
+                            return
+                        try:
+                            await generate_batch(batch)
+                        except BaseException:
+                            stopped.set()
+                            raise
+            # Finish dispatched work before closing SQLite or releasing the run lock.
+            outcomes = await asyncio.gather(*(group_worker(b) for b in groups.values()),
+                                            return_exceptions=True)
+            failures = [v for v in outcomes if isinstance(v, BaseException)]
+            if failures:
+                raise failures[0]
     finally:
         journal.close()
 
@@ -259,8 +284,8 @@ def background(root: Path, job: JobConfig) -> None:
 
 async def run(job: JobConfig) -> RunResult:
     spec = job.stance_corpus
-    if spec is None or job.force or job.replicates != 1 or job.throughput != 2:
-        raise ValueError('Corpus requires typed configuration, no force, one pass, concurrency two')
+    if spec is None or job.force or job.replicates != 1 or job.throughput < 1:
+        raise ValueError('Corpus requires typed configuration, no force, one pass, positive concurrency')
     if (not job.run_id.startswith('ethics_sft_') or Path(job.run_id).name != job.run_id
             or job.experiment.id != 'ethical_stance_sft'):
         raise ValueError('Use an ethics_sft_ run under ethical_stance_sft')

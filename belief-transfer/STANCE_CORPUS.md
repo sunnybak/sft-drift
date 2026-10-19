@@ -7,7 +7,7 @@ this stage. The default operation is **prepare**, which makes no model or C4 cal
 ## Current source-bank design
 
 - 90 approved ethical briefs × 100 documents × 2 positions = **18,000 documents**.
-- Nine fresh aesthetic control briefs × 500 documents × 2 positions = **9,000 documents**.
+- Ten fresh aesthetic control briefs × 100 documents × 2 positions = **2,000 documents**.
   These are independent of the ten frozen off-topic evaluation beliefs. This control
   count is a candidate bank; final training dose must be matched using measured tokens.
 - 400–600 Qwen3-4B tokens per document, targeting 500. Three forms: position note,
@@ -15,7 +15,7 @@ this stage. The default operation is **prepare**, which makes no model or C4 cal
   which form receives the extra slot rotates by subject identity.
 - Seed 42 fixes scheduling, category-balanced mixed assignments and C4 sampling.
   API prose is not claimed deterministic. Model: `gpt-6-luna`, Responses, reasoning
-  disabled, default sampling, two active requests, no automatic network retries.
+  disabled, default sampling, configurable concurrency with an 80% rate gate, no automatic network retries.
 - The generated bank supports all-positive, all-negative, Mixed A and complementary
   Mixed B. Each mixed arm assigns one position to each belief, with five positive and
   five negative beliefs in each category. Each ethical arm selects 9,000 source documents.
@@ -24,6 +24,30 @@ this stage. The default operation is **prepare**, which makes no model or C4 cal
   selected here. The background pool has a minimum of 18,000 unique full C4 documents and can extend
   until the reserve beyond the first 9,000 rows supplies 5.4M Qwen tokens. Actual
   training-token/step matching is still required.
+
+## Current scheduling and counts
+
+Current prepared run: `ethics_sft_pooled_corpus_v4`, zero generated bulk documents.
+Total source bank: **20,000**, nominal **10M Qwen tokens**. Smaller control breadth and
+unique-example count require explicit later token/step matching through sampling/reuse;
+the 2,000 raw control candidates are not a ready 9,000-example training arm.
+See [the current mix and arithmetic](POOLED_DATASET_PLAN.md).
+
+Top-level `throughput` bounds client operations; `parallel_batches` permits independent
+subject/form groups to progress while preserving serial focus history within each group.
+A subject lock shares one form plan. New settings: `count_provider_tokens`,
+`rate_limit_rpm`, `rate_limit_tpm`, `rate_utilization` (≤ .8). Production allows 384
+client operations / 64 batches, with **8,000 HTTP RPM and 8M reserved TPM**. Input-count
+preflights also consume HTTP permits; generation reserves exact input plus output cap,
+falling back to the conservative byte bound on counting failure. Failed groups drain
+already dispatched work and preserve completed shards. Source/throughput/rate changes
+require a fresh run ID; compatible local responses retain their cache identities.
+
+Ten/64-worker checks each generated 60 candidates: 130.46s / 44.71s, $0.1611746 total,
+no API errors or pending requests. All 402 preflight counts matched returned usage.
+One 335-token final stays flagged. These are throughput checks without full agent
+content review; neither the short runs nor 384 configured operations establish sustained
+saturation. Old v1–v3 contracts survive and cannot resume under changed source.
 
 ## Prompts and review
 
@@ -56,26 +80,26 @@ that document diversity follows from having distinct titles.
 From `belief-transfer/`:
 
 ```sh
-# Already executed for v3: prepare only; do not rerun a started preparation.
-uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v3
+# Already executed for v4: prepare only; do not rerun a started preparation.
+uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v4
 
 # Reference only: production generation is unstarted. Wait for the user
 # to approve POOLED_DATASET_PLAN.md before this or C4 acquisition.
-uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v3 stance_corpus.operation=generate stance_corpus.resume=true stance_corpus.max_batches=1
+uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v4 stance_corpus.operation=generate stance_corpus.resume=true stance_corpus.max_batches=1
 
 # Write a new numbered inspection report and a small paired sample view.
-uv run --no-sync python scripts/inspect_stance_corpus.py --run-id ethics_sft_pooled_corpus_v3
+uv run --no-sync python scripts/inspect_stance_corpus.py --run-id ethics_sft_pooled_corpus_v4
 
 # Independent bounded C4 acquisition: one shard of up to 100 unique documents.
-uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v3 stance_corpus.operation=background stance_corpus.resume=true stance_corpus.max_batches=1
+uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v4 stance_corpus.operation=background stance_corpus.resume=true stance_corpus.max_batches=1
 ```
 
 Read the first live pairs and compare their scope against the briefs before scheduling
 larger batches. Prompt/content-setting changes require a new run ID; they cannot be
 silently applied to the prepared bank. Operational `operation`, `resume`, `max_batches`
-may change; the lifetime budget ceiling stays in the content contract. Current ceiling
-is $50 including the initial canary, not an estimate of actual cost or permission for
-an unattended full run. Each invocation remains explicitly bounded.
+may change. New configurations set `budget_usd: null`: no dollar ceiling; actual and
+uncertain charges are still recorded. Historical pilot limits are unchanged. Each
+invocation remains explicitly bounded by its requested batch count.
 
 Resume is opt-in and single-writer. Completed shards are skipped and completed request
 outcomes reused. The SQLite journal commits an exact request intent before dispatch,
@@ -87,7 +111,7 @@ an explicit failure; resume does not regenerate it until it passes. No force ove
 ## Local layout and preservation
 
 ```text
-data/generated/ethical_stance_sft/ethics_sft_pooled_corpus_v3/
+data/generated/ethical_stance_sft/ethics_sft_pooled_corpus_v4/
   contract.json, briefs.jsonl/.md, schedule.jsonl/.md, conditions.json
   requests.sqlite                   # durable corpus-specific cache and request ledger
   shards/<batch-id>/                 # atomic completed shard
@@ -95,7 +119,7 @@ data/generated/ethical_stance_sft/ethics_sft_pooled_corpus_v3/
     ideas.jsonl/.md, events.jsonl/.md, manifest.json
   background/<shard-id>/
     documents.jsonl/.md, manifest.json
-data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v3/
+data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v4/
   config.<invocation>.json, invocation.<invocation>.json, corpus_status.json
   audit_<number>.json/.md
 ```

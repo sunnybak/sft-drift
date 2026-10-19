@@ -1,142 +1,100 @@
-# Proposed full document bank and mixtures
+# Current full document bank and mixtures
 
-This is the dataset-generation proposal for `ethics_sft_pooled_corpus_v3`, using prompt
-v5. Bulk generation remains unstarted pending the user's review of this math/mix.
-The 30-document scope check and its matched revision repeat are separate pilots and
-are not counted into this bank. The full run is prepared with zero generated documents
-and zero model spend; preparation is not approval to generate it.
-Training schedule, epochs, optimizer steps, GPU rental and final treatment analysis
-remain outside this generation proposal.
+The user selected **ten fresh training-control claims and 100 documents per position**,
+matching the per-belief ethical setting. Current prepared run:
+`ethics_sft_pooled_corpus_v4`, prompt v5. No bulk documents have been generated.
+Earlier v1–v3 contracts, pilots and forecasts remain historical artifacts. Changed
+source/contract settings require a fresh ID; do not resume v3 with current code.
 
-## Quality check completed
+## Source bank
 
-Four ethical subjects plus one fresh control × three forms × two positions produced
-30 candidates. The original recourse overstatement is absent in all six reviewed hiring
-documents. The matched revision-only repeat keeps all 30 source drafts fixed and improves
-length compliance from 24/30 to 30/30 (404–591 Qwen tokens; mean 494.8). All 27 originally
-valid drafts are preserved verbatim; three original length failures are fixed.
-
-Two borderline medical-data participation phrases and two unnecessary practical-context
-clauses in control notes remain explicitly annotated. One model added-premise flag is
-provisionally disputed, with an internal scope-check inconsistency retained. This is
-bounded development evidence, not held-out validation or an automatic training-ready
-label. [All paired samples and review](data/results/ethical_stance_sft/ethics_sft_scope_check_v2/review.md).
-The checks cost $0.061527075 in total. No C4 or bulk documents have been generated.
-
-## Unique synthetic source bank
-
-| Source | Calculation | Documents | Nominal Qwen tokens at 500/document |
+| Source | Calculation | Unique documents | Nominal Qwen tokens |
 | --- | --- | ---: | ---: |
-| Ethical, supporting | 90 beliefs × 100 | 9,000 | 4.5M |
-| Ethical, opposing | 90 beliefs × 100 | 9,000 | 4.5M |
-| Fresh aesthetic controls | 9 subjects × 500 × 2 positions | 9,000 | 4.5M |
-| Total generated once | | **27,000** | **13.5M** |
+| Ethical, supporting | 90 × 100 | 9,000 | 4.5M |
+| Ethical, opposing | 90 × 100 | 9,000 | 4.5M |
+| Fresh off-topic preferences, both positions | 10 × 100 × 2 | 2,000 | 1M |
+| Total | | **20,000** | **10M** |
 
-Each ethical belief has 200 source documents, 100 per position. An ethical training arm
-selects 100 of them for that belief's assigned position. The ten off-topic beliefs in
-the frozen 100-belief evaluation bank are not trained. The nine fresh training-control
-subjects are separate, with 500 documents per position each.
+The ten fresh aesthetic training claims are separate from the ten frozen evaluation
+preferences. Those evaluation preferences stay untrained. The tenth fresh control is
+embossed versus flat decorative paper. The former nine × 500 × two proposal matched
+9,000 control rows but concentrated exposure on few topics; it was not a scientific
+requirement. Ten × 100 is the user's chosen smaller control bank. Topic breadth remains
+unmatched, a limitation rather than a data-generation blocker.
 
-Length target: 500 Qwen3-4B tokens, requested range 400–600, without the intended prefix.
-The 27,000-document bank would contain 10.8–16.2M tokens if all candidates meet that
-range. A flagged out-of-range candidate remains recorded; do not silently clip/drop it
-or imply the requested range was enforced by rejection sampling.
+Each subject has three forms (34/33/33 ideas) shared across positions. Draft, one critique
+and revision, and separate same-model assessment are preserved. Target 500 Qwen tokens,
+requested range 400–600; nominal bank range 8–12M. No rejection sampling, clipping or
+silent removal of defective candidates. Prior scope checks and agent judgments remain
+development evidence, not independent human validation or training-ready certification.
+The 30-document v5 check and its matched v4 comparison remain separate from this bank.
 
-For each belief/position: three forms with 34/33/33 examples, rotated by subject.
-Opposing positions share every specific idea and factual premise. For each control
-position: 167/167/166 examples. Generation is independent across assigned positions.
+## Prospective treatment conditions
 
-## Six prospective SFT conditions plus BASE
+All positive, all negative, Mixed A and complementary Mixed B each select **9,000**
+ethical documents (100 per belief). Mixed A assigns five positive/five negative beliefs
+within each ethical category; Mixed B flips all assignments. These arms reuse the same
+18,000-document source bank. They do not multiply generation cost.
 
-| Condition | Synthetic selection | Shared C4 background | Mix by document count |
-| --- | --- | --- | --- |
-| All positive | 90 × 100 positive = 9,000 | Same 9,000 records | 1:1 |
-| All negative | 90 × 100 negative = 9,000 | Same 9,000 records | 1:1 |
-| Mixed A | 45 beliefs positive + 45 negative; 100 docs each = 9,000 | Same 9,000 records | 1:1 |
-| Mixed B | Exact opposite assignment for every Mixed A belief = 9,000 | Same 9,000 records | 1:1 |
-| Fresh off-topic control | 9,000 aesthetic documents, balanced between positions | Same 9,000 records | 1:1 |
-| C4-only control | None | Shared 9,000 plus an additional C4 reserve supplying the synthetic portion's token dose | 100% C4; final row count depends on measured lengths |
+The fresh off-topic control draws from **2,000 unique candidates**, not 9,000. Its final
+position selection and sampling/repetition must be declared before SFT to match ethical
+loss-bearing tokens and optimizer steps. Choosing one consistent position per control
+claim gives 1,000 selected unique documents; using both positions gives 2,000 but changes
+within-topic consistency. Neither selection is silently fixed by generation. Reuse must
+be reported explicitly; extra draws are not new independent examples. A C4-only control
+replaces synthetic token exposure, with untouched CUDA BASE as reference. Training seeds,
+steps, epochs, hypothesis/contrasts/falsifiers and dose matching remain future work.
 
-Mixed assignment is seed 42, five positive/five negative beliefs within each of the nine
-ethical categories. Each belief gets one consistent direction in each mixed arm; this
-is not 50 positive and 50 negative examples within every belief. All four ethical arms
-reuse the same 18,000-document source bank. They do not require four separately generated
-banks. Every ethical source document appears in two of the four arm manifests.
+The four ethical raw mixtures reference the same **9,000 C4 records**, hence 1:1 by
+row count. That ratio does not establish 50/50 tokens. The smaller raw control bank plus
+9,000 background rows is **not** a matched training mixture yet. Do not train these
+previews as if they already establish the final control dose.
 
-Untouched CUDA BASE is the reference, not a seventh generated dataset. All 100 beliefs
-are evaluated on every fine-tune/checkpoint, with model controls. Training-seed replication
-reuses these source documents; it does not multiply generation cost. Controls must still
-be retrained per training seed. A proposal of three seeds would mean 18 fine-tunes;
-no seed count or training run is launched by this generation proposal.
+Stream pinned `allenai/c4` English train revision
+`1588ec454efa1a09f29cd18ddd04fe05fc8653a2`, seed 42, bounded shuffle 1,024. Preserve full
+text/provenance/hashes, with no agreement filter. Acquire at least 18,000 unique records;
+extend until records beyond the first 9,000 supply 5.4M Qwen tokens of replacement reserve.
+Actual token totals determine final assembly. No new C4 acquisition has run.
 
-## C4 pool and token accounting
+## Generation spend and throughput
 
-Stream full unique English training records from `allenai/c4`, pinned revision
-`1588ec454efa1a09f29cd18ddd04fe05fc8653a2`, seed 42, shuffle buffer 1,024. No agreement
-or topic filter. Preserve full text, URL, timestamp, hashes, selected ordinal, stream
-index and measured Qwen counts. No full C4 download.
+Full bank: **62,201 generation calls** = one canary + 100 form plans + 2,100 idea batches
++ 20,000 × three document phases. Exact input counting adds up to 62,201 HTTP requests
+on a fully fresh run, for **124,402 HTTP requests**. Exact local replays add neither.
 
-The initial pool target is **at least 18,000 unique C4 records**. The first 9,000 form
-the shared background for all conditions. Continue acquisition beyond 18,000 if needed
-until the remaining records contain **at least 5.4M Qwen tokens** of replacement reserve
-(9,000 × the requested 600-token upper bound). This avoids assuming a C4 document has
-500 tokens. The reserve is a capacity safeguard, not the final loss dose; verify its
-sufficiency against actual synthetic totals, including explicit length failures.
+Role/phase-weighted prior usage projects **94.0M provider input + 31.9M output** tokens,
+plus a conservative 5.8M input focus-history proxy. These are different from final Qwen
+training tokens. Charging every input token at the higher cache-write rate projects
+**$28.41** including that history proxy. This is an estimate, **not a price ceiling**.
+Actual and uncertain charges remain recorded. Historical pilot dollar limits are intact;
+new configurations set `budget_usd: null`.
 
-Let B be the measured token total of the shared 9,000 C4 records and S_i the measured
-synthetic token total selected for condition i. That condition's raw corpus has
-**S_i + B tokens**, with S_i nominally 4.5M (requested range 3.6–5.4M). Its synthetic
-token fraction is S_i/(S_i+B), not necessarily 50%. If B happened to be 4.5M, the nominal
-corpus would contain 9M tokens; that is an example, not an assumption about C4.
+User limits: 10M TPM / 10,000 RPM. At 80%, the dispatcher permits **8M reserved tokens/min
+and 8,000 HTTP requests/min**. Counting requests also consume a request permit. Generation
+reserves exact provider input count plus maximum output; if counting fails, it falls
+back to UTF-8 bytes plus protocol overhead and logs the error. This deliberately exceeds
+the documented max(input estimate, output cap) accounting. A smooth dispatch schedule
+and rolling-minute checks prevent bursts. Failed generation is retained without automatic
+retry. Other processes sharing the account are outside this limiter.
 
-C4-only must supply the same declared effective training-token/step budget using C4
-instead of synthetic prose. Actual lengths must determine assembly and the common dose
-before SFT; a 1:1 document ratio alone does not dose-match training. Keep full source
-records and explicit masks/coverage rather than silently truncating documents. This
-stage does not implement the training loss or claim matched exposure already occurred.
+At the old 5.64s mean generation latency, concurrency ten gives about **106 generation
+calls/min**, roughly **9.74 hours** for 62,201 calls before counting latency, pacing and
+planning overhead. The request-only theoretical floor is **15.55 minutes** including
+counting calls. Conservative token reservations project **202.6M**, a **25.33-minute**
+TPM-only floor. Reaching that token gate needs approximately **231 concurrent generation
+calls**, plus capacity for count latency. These are capacity calculations, not a measured
+full-run ETA. Initial benchmark configurations use ten and 64 workers. The prepared
+production configuration allows 384, with 64 independent batches, while the shared rate
+gate controls dispatch. Production saturation at that setting remains unmeasured; provider
+ramp/overload behavior, planning dependencies, tail latency, CPU and disk can increase runtime.
 
-## Generation work
+Opposing documents share plans; all ideas in a batch may progress. Independent subject/form
+groups run concurrently, but each group's later ideas see its earlier completed focuses.
+A subject lock prevents duplicate form-plan dispatch. Failed groups stop new batches and
+drain already dispatched work before releasing SQLite and the run lock. Each shard has
+its own staging directory and is committed atomically. Concurrency/rate settings are
+recorded in the contract; historical cache identities remain unchanged.
 
-- 13,500 shared ideas: 9,000 ethical pairs + 4,500 control pairs.
-- 99 form-planning calls, each planning all three forms for a subject.
-- 2,808 bounded idea-planning calls (up to five ideas each).
-- 27,000 × (draft + one revision + separate assessment) = 81,000 calls.
-- One generation canary: **83,908 prospective Responses calls total**.
-- Default concurrency two, `gpt-6-luna`, reasoning disabled, provider-default sampling,
-  no automatic network retries. Seed 42 determines schedules/assignments, not API prose.
-
-The 13.5M source-bank Qwen tokens are not the provider generation-token bill. That bill
-also includes drafts, critiques, all prompt inputs, planning and assessments, using the
-provider's tokenizer. The scope check now supplies an empirical forecast: approximately **125M provider input
-tokens + 42M provider output tokens**, plus growing focus-history input. These use the
-provider tokenizer and include all drafts, revisions, critiques, assessments and plans.
-A conservative UTF8-byte proxy adds up to about 20M input tokens for focus history;
-this is an upper proxy based on observed labels, not another measured token total.
-
-The role-weighted phase forecast is **$35.74** using observed cache categories, or about
-**$38.99** treating all inputs as cache writes and including that history proxy. Plan
-roughly **$36–40**, with the **$50 hard ceiling** preserving partial progress if needed.
-This is a forecast from a small development check, not an invoice or completion promise.
-
-At the current two-request concurrency and observed fresh-call latency (5.64 s mean),
-the arithmetic is about 68 hours before broader latency/planning variation: allow
-approximately **3–4 days** for the bulk run. The faster cached matched-repeat runtime
-is not a forecast for a fresh production bank.
-
-## Budget and storage
-
-The proposed full-generation ceiling is **$50**, independent of pilot costs. It is a
-hard stop preserving completed outcomes, not a guarantee all 27,000 finish. No bulk
-spend has been authorized by preparation. C4 acquisition uses no generation-model tokens.
-
-Verified standard short-context rates for GPT-6 Luna: $0.10/M input, $0.01/M cache-hit
-input, $0.125/M cache-write input, $0.50/M output. Forecast cost:
-`(0.10 × regular_input + 0.01 × cache_hits + 0.125 × cache_writes + 0.50 × output)/1e6`.
-See [official model pricing](https://developers.openai.com/api/docs/models/gpt-6-luna),
-checked 2026-10-19. Cache categories partition total input; do not double-count them.
-
-Store unique corpus shards, raw requests/responses and the durable SQLite journal in
-private `sunnybak/sft-drift-ethical-corpus`, with a pinned pointer in the main study
-snapshot. Arm manifests reference the shared bank instead of duplicating generated
-prose. Both remote and portable local snapshots remain supported. No automatic
-training-ready designation, corpus expansion or training follows from a passing pilot.
+See the current run's `generation_math.json` for arithmetic and the separate throughput
+checks for measured wall time. Bulk generation, corpus acceptance, training and evaluation
+are separate steps. Every future model/checkpoint still evaluates all 100 frozen beliefs.

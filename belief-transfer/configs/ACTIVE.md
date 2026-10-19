@@ -83,22 +83,17 @@ background sample; neither config runs training. See STANCE_DOCUMENT_PILOT.md.
 `run/ethics_sft_documents_pilot_v3.yaml` completed the matched repeat. The expanded
 run enables length-preserving revision after v3 exposed 11 length regressions.
 
-## Pooled document-bank preparation (2026-10-19)
+## Current pooled document bank
 
-`run/ethics_sft_pooled_corpus_v2.yaml` selects the new `stance_corpus` stage.
-See `../STANCE_CORPUS.md` for bounded generation, inspection and separate private corpus
-storage. Default operation prepares manifests only; no training or full generation.
+`run/ethics_sft_pooled_corpus_v4.yaml` selects `stance_corpus`: ten fresh controls and
+90 ethical subjects, 100 documents per position, 20,000 candidates. Prepared with zero
+bulk documents. No dollar ceiling; exact input-count preflight and an 80% RPM/TPM gate.
+Throughput checks: `ethics_sft_throughput_check_v1` (ten workers) / `v2` (64).
+Production allows 384 client operations, but sustained saturation remains unmeasured.
+See `../STANCE_CORPUS.md` and `../POOLED_DATASET_PLAN.md` before bulk-generation go-ahead.
+Control topic breadth is smaller; token/step matching requires explicit future reuse.
 
-## Scope-corrected prompts and proposed full corpus
-
-`run/ethics_sft_scope_check_v1.yaml` is the fresh 30-document check using prompt v4.
-`run/ethics_sft_pooled_corpus_v3.yaml` is the unstarted full-corpus proposal. Historical
-v2 generation is preserved at its source commit; do not resume it under changed code.
-See `../POOLED_DATASET_PLAN.md` for the source-bank/mix proposal before bulk generation.
-
-## Current scope check and production proposal
-
-`run/ethics_sft_scope_check_v2.yaml` is the completed same-draft v5 revision check;
-`run/ethics_sft_pooled_corpus_v3.yaml` is prepared with v5 but zero bulk documents.
-Read `../POOLED_DATASET_PLAN.md` and await the user's generation go-ahead. The v1/v2
-scope-check artifacts are separate pilots and are not folded into the 27,000 target.
+Completed scope checks `ethics_sft_scope_check_v1` / `v2` compare v4/v5 prompts on 30
+fixed drafts; earlier document/corpus IDs remain historical artifacts. Their candidates
+are not silently included in production. v1–v3 pooled contracts are superseded and cannot
+resume under changed code. Separate private storage is declared in `handoff.json`.

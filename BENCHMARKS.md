@@ -28,8 +28,11 @@ problem is absent in all six hiring documents. Authoritative length instructions
 Minor/borderline wording and reviewer disagreements remain explicit; this is development
 evidence, not independent validation or training-ready acceptance. See STATE.md and
 [the full-generation proposal](belief-transfer/POOLED_DATASET_PLAN.md). The user must
-review final counts/mix before bulk generation. Full v3 contract is prepared but has no
-generated data; no C4 or training has run. Actual training-token/step dose remains future.
+review final counts/mix before bulk generation. The current v4 contract is prepared with 20,000 candidates planned (90 ethical + ten
+fresh controls, 100 documents per position), but no bulk data. The ten/64-worker
+throughput checks are separate; v3 is superseded. New scheduling has no dollar ceiling
+and an 80% RPM/TPM gate; full-run saturation is unmeasured. Control token/step matching
+requires explicit future sampling/reuse. See the current proposal; no C4 or training has run. Actual training-token/step dose remains future.
 
 The authorized matched repeat (48 candidates) and expansion (84 candidates) completed,
 with every full revision read. The expansion covers six ethical subjects in five domains

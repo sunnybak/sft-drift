@@ -310,3 +310,78 @@ def test_c4_reserve_can_extend_past_document_target(prepared,monkeypatch):
     assert sum(r['tokens'] for r in rows if r['sample_index']>2)==6
     asyncio.run(stage.run(j))
     assert sum(len(p.read_text().splitlines()) for p in (root/'background').glob('*/documents.jsonl'))==5
+
+
+def test_parallel_groups_share_one_form_plan_and_drain_requests(prepared, monkeypatch):
+    j, old_root = prepared
+    j.run_id += '_parallel'
+    j.throughput = 10
+    j.stance_corpus.parallel_batches = 3
+    j.stance_corpus.max_batches = 3
+    j.stance_corpus.documents_per_position = 6
+    j.stance_corpus.ideas_per_batch = 2
+    j.stance_corpus.budget_usd = None
+    asyncio.run(stage.run(j))
+    root = old_root.parent / j.run_id
+
+    class ParallelClient(FakeClient):
+        active = peak = 0
+        calls = []
+        def __init__(self, **kwargs):
+            self.gate = asyncio.Semaphore(kwargs['throughput'])
+        async def request(self, *args, **kwargs):
+            async with self.gate:
+                type(self).active += 1
+                type(self).peak = max(type(self).peak, type(self).active)
+                try:
+                    await asyncio.sleep(.001)
+                    return await super().request(*args, **kwargs)
+                finally:
+                    type(self).active -= 1
+    monkeypatch.setattr(stage.document_client, 'DocumentClient', ParallelClient)
+    j.stance_corpus.operation = 'generate'; j.stance_corpus.resume = True
+    asyncio.run(stage.run(j))
+    rows = [json.loads(line) for path in (root/'shards').glob('*/documents.jsonl')
+            for line in path.read_text().splitlines()]
+    assert len(rows) == 12
+    assert 2 < ParallelClient.peak <= 10 and ParallelClient.active == 0
+    assert sum(name == 'plan_forms' for _, name in ParallelClient.calls) == 1
+    ledger = CorpusJournal(root/'requests.sqlite')
+    assert ledger.db.execute('select count(*) from requests where result is null').fetchone()[0] == 0
+    ledger.close()
+
+
+def test_parallel_failure_drains_other_groups_before_journal_close(prepared, monkeypatch):
+    j, old_root = prepared
+    j.run_id += '_drain'
+    j.throughput = 10
+    j.stance_corpus.parallel_batches = 3
+    j.stance_corpus.max_batches = 3
+    j.stance_corpus.documents_per_position = 6
+    j.stance_corpus.ideas_per_batch = 2
+    asyncio.run(stage.run(j))
+    root=old_root.parent/j.run_id
+
+    class OneFailure(FakeClient):
+        failed=False
+        active=0
+        async def request(self, prompt, tool, **kwargs):
+            type(self).active += 1
+            try:
+                await asyncio.sleep(.001)
+                if tool.name=='submit_document' and 'text READY.' not in prompt and not type(self).failed:
+                    type(self).failed=True
+                    return {'error':'response_incomplete','payload':None,'cost_usd':.01,'response':{}}
+                return await super().request(prompt,tool,**kwargs)
+            finally:
+                type(self).active -= 1
+    monkeypatch.setattr(stage.document_client,'DocumentClient',OneFailure)
+    j.stance_corpus.operation='generate';j.stance_corpus.resume=True
+    with pytest.raises(RuntimeError,match='response_incomplete'):
+        asyncio.run(stage.run(j))
+    assert OneFailure.active==0
+    assert len(list((root/'shards').glob('*/manifest.json')))==2
+    ledger=CorpusJournal(root/'requests.sqlite')
+    ledger.reconcile()
+    assert ledger.db.execute('select count(*) from requests where result is null').fetchone()[0]==0
+    ledger.close()
