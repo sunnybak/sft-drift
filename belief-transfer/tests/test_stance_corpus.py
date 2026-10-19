@@ -17,7 +17,7 @@ from belief_transfer.stages import stance_corpus as stage
 
 
 def job():
-    return load_job(['+run=ethics_sft_pooled_corpus_v1'])
+    return load_job(['+run=ethics_sft_pooled_corpus_v2'])
 
 
 def test_full_plan_shared_slots_and_complementary_category_balance():
@@ -39,6 +39,9 @@ def test_full_plan_shared_slots_and_complementary_category_balance():
     assert all(arms['mixed_a'][k] != arms['mixed_b'][k] for k in arms['mixed_a'])
     assert corpus.schedule(subjects,100,500,5,42) == plan
     assert len({s['category'] for s in subjects if s['role']=='ethical'}) == 9
+    hashes = stage.contract_for(j, subjects)['source_hashes']
+    assert len(hashes) == 7
+    assert 'stages/stance_corpus.py' in hashes and 'dataset/stance_corpus.py' in hashes
     for category in {s['category'] for s in subjects if s['role']=='ethical'}:
         assert Counter(arms['mixed_a'][s['id']] for s in subjects
                        if s['role']=='ethical' and s['category']==category) == {'positive':5,'negative':5}

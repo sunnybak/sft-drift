@@ -46,3 +46,11 @@ Final focused/cache/client/handoff checks: **96 passed**, 12.76 s. Frozen 161 ha
 and the historical shared cache match the prior private receipt. Test logs, empty-bank
 audit and verification.json are in the new results directory. Private save/verify and
 actual pinned corpus restore rehearsal follow; receipt holds the authoritative revisions.
+
+Final audit found colliding stage/dataset basenames in the contract source-hash map.
+Fixed keys to module-relative paths and added a seven-entry regression assertion.
+Preserved v1 preparation (zero generated documents/C4/API cost); fresh active ID is
+`ethics_sft_pooled_corpus_v2`. Its prompts/counts are unchanged. Both roots are registered
+in separate private corpus storage. The initial pinned remote and portable restore
+rehearsals succeeded (see v1 results/storage_rehearsal.json); they establish transport,
+not generation quality.

@@ -50,16 +50,16 @@ From `belief-transfer/`:
 
 ```sh
 # Once only: materialize briefs, schedule, immutable contract and arm assignments.
-uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v1
+uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v2
 
 # Next step: one bounded live batch, at most five ideas / ten opposing documents.
-uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v1 stance_corpus.operation=generate stance_corpus.resume=true stance_corpus.max_batches=1
+uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v2 stance_corpus.operation=generate stance_corpus.resume=true stance_corpus.max_batches=1
 
 # Write a new numbered inspection report and a small paired sample view.
 uv run --no-sync python scripts/inspect_stance_corpus.py
 
 # Independent bounded C4 acquisition: one shard of up to 100 unique documents.
-uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v1 stance_corpus.operation=background stance_corpus.resume=true stance_corpus.max_batches=1
+uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v2 stance_corpus.operation=background stance_corpus.resume=true stance_corpus.max_batches=1
 ```
 
 Read the first live pairs and compare their scope against the briefs before scheduling
@@ -79,7 +79,7 @@ an explicit failure; resume does not regenerate it until it passes. No force ove
 ## Local layout and preservation
 
 ```text
-data/generated/ethical_stance_sft/ethics_sft_pooled_corpus_v1/
+data/generated/ethical_stance_sft/ethics_sft_pooled_corpus_v2/
   contract.json, briefs.jsonl/.md, schedule.jsonl/.md, conditions.json
   requests.sqlite                   # durable corpus-specific cache and request ledger
   shards/<batch-id>/                 # atomic completed shard
@@ -87,7 +87,7 @@ data/generated/ethical_stance_sft/ethics_sft_pooled_corpus_v1/
     ideas.jsonl/.md, events.jsonl/.md, manifest.json
   background/<shard-id>/
     documents.jsonl/.md, manifest.json
-data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v1/
+data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v2/
   config.<invocation>.json, invocation.<invocation>.json, corpus_status.json
   audit_<number>.json/.md
 ```

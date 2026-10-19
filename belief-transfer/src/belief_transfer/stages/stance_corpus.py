@@ -53,7 +53,8 @@ def contract_for(job: JobConfig, subjects: list[dict]) -> dict:
                     Path(corpus_journal.__file__)]
     return {'version': 1, 'experiment': job.experiment.id, 'run_id': job.run_id,
             'settings': settings, 'subjects': subjects, 'prompt_version': prompts.VERSION,
-            'source_hashes': {p.name: docs.text_hash(p.read_text()) for p in source_paths},
+            'source_hashes': {p.relative_to(Path(__file__).parents[1]).as_posix():
+                              docs.text_hash(p.read_text()) for p in source_paths},
             'api_sampling_seed': None, 'training_ready': False}
 
 

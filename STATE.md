@@ -2,11 +2,11 @@
 
 ## Pooled corpus preparation
 
-The new `stance_corpus` code/prompts are implemented and the run is **prepared**:
+The new `stance_corpus` code/prompts are implemented and the v2 preparation will follow this resume-guard fix:
 99 briefs, 2,808 batches, paired slot schedule and complementary arm manifests. No live generation, C4 acquisition,
 training process, GPU rental or checkpoint is active. CUDA BASE/SFT remain unrun.
 
-Run: **`ethical_stance_sft/ethics_sft_pooled_corpus_v1`**. Default operation is prepare-only.
+Run: **`ethical_stance_sft/ethics_sft_pooled_corpus_v2`**. Default operation is prepare-only.
 Source bank: 90 ethical subjects × 100 documents × two positions = 18,000 documents;
 nine fresh aesthetic controls × 500 × two positions = 9,000 candidate control documents.
 Control count is a source-bank choice; final training dose/schedule is not frozen.
@@ -32,7 +32,7 @@ Read [pipeline/commands](belief-transfer/STANCE_CORPUS.md) and
 After manifest preparation, the exact next command from `belief-transfer/` is:
 
 ```sh
-uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v1 stance_corpus.operation=generate stance_corpus.resume=true stance_corpus.max_batches=1
+uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v2 stance_corpus.operation=generate stance_corpus.resume=true stance_corpus.max_batches=1
 uv run --no-sync python scripts/inspect_stance_corpus.py
 ```
 
@@ -72,6 +72,8 @@ All 161 frozen hashes and the historical shared cache are unchanged. New API spe
 source/config/notes; main private study snapshot carries frozen data/results/cache and a
 pinned pointer to the separate corpus store. The actual source and artifact revisions
 are in `belief-transfer/data/.handoff-receipt.json`; prose is not a sync receipt.
-Source/preparation commit: `2851d44`. Results contain test logs, verification.json and
+Initial v1 preparation was superseded before generation: its source-hash map
+used colliding basenames. V1 remains preserved with zero documents/cost; v2 records
+all seven source files by module-relative path. Initial implementation: `2851d44`. Results contain test logs, verification.json and
 an empty-bank audit. Commit/push this note, then handoff save/verify to preserve both
 private stores before ending the work block.
