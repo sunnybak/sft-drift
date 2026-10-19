@@ -76,8 +76,8 @@ async def preflight(client: Any, body: dict, pacer: Any, enabled: bool) -> tuple
     try:
         count=await client._openai.responses.input_tokens.count(model=llm.DECISION_MODEL,input=envelope)
         if count.input_tokens<=0:raise ValueError('Invalid provider count')
-        reservation=min(byte_bound,count.input_tokens+1024)
-        return reservation,{'method':'provider_count_of_serialized_envelope_plus_1024','input_tokens':count.input_tokens,'reservation':reservation,'byte_bound':byte_bound}
+        reservation=min(byte_bound,2*count.input_tokens+2048)
+        return reservation,{'method':'double_provider_envelope_count_plus_2048','input_tokens':count.input_tokens,'reservation':reservation,'byte_bound':byte_bound}
     except Exception as exc:
         return byte_bound,{'method':'utf8_byte_fallback','error':type(exc).__name__,'reservation':byte_bound}
 

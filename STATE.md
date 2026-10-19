@@ -1,30 +1,22 @@
 # Current state — 2026-10-19
 
-## Current work — Decisions QA calibration in progress
+## Current work — Decisions QA full-bank screening
 
-User authorized Decisions-based screening of all 20,000 and manual triage/repairs.
-Source/client implementation is pushed; new QA runs preserve requests/responses in
-private-registered per-run journals. No corpus-wide pass or repairs yet.
-Completed: calibration_v1 (rubric v1), calibration_v2 (rubric v2), calibration_v3
-(rubric v3), validation_v2 (rubric v3); all IDs have prefix `ethics_sft_decision_qa_`.
-On the reviewed 64: rubric v1 catches 4/11 known major defects at threshold .2; v2
-6/11; v3 9/11 with zero false positives against 53 provisional negatives. All catch
-four known wrong/contradictory positions. v3 classifies canonical endorsement/rejection,
-then compares assignment in code, fixing relative-negation errors.
-The separate previously annotated 100 reveal v3 misses all three known psychology
-premise changes (one false positive among 90 non-borderline negatives). This is NOT
-reliable scope clearance. Next: direct observable questions for specific stronger claims,
-forced manual-review group for both psychology corpora and known misses, fresh QA IDs.
-If that 100-example group informs tuning it becomes development, not held-out validation.
-No changes to source documents, frozen instrument or training. No GPU rental.
-Tests: full pass initially 935 passed/five skipped with one expected-payload assertion
-needing the new unused field excluded; corrected assertion passed. v3 targeted regression
-47 passed/one skipped. New stage tests cover raw refusals, malformed probabilities,
-partial failure, cache recovery, retries, immutable contracts and old retry defaults.
-Live Decision canary: 2,063 input tokens/$0.0002063, all six questions valid. v3 ten-question
-calibration64 cost $0.0202371. Exact cumulative per-run costs are in summaries, not prose.
-Next commands and protocol: `belief-transfer/STANCE_DECISION_QA.md`; inspect run summaries
-before preparing new IDs. Do not rerun completed calibration/validation IDs.
+User authorized screening all 20,000 and manual repairs. Rubric v4 uses 13 separate
+questions, including canonical stance classification compared with assignment in code.
+Development on all 164 previously read documents: 12/14 known serious defects flagged,
+one flag among 143 provisional negatives; seven borderline cases excluded. These are
+tuned development results, not held-out validation or a population defect rate.
+Known misses and all 400 psychology-deception documents require manual review regardless
+of model score. Original corpus and frozen instruments remain unchanged; no training.
+Calibration_v5 completed ($0.0630161); full-pass projected cost $7.69. Calibration_v4
+preserves one paid pacing-canary failure ($0.0003907), with no assessed row. Updated
+reservation margin passed all 164 v5 calls. Gate covers this process at 80% of supplied
+10M TPM/10k RPM; 64 workers. Three bounded transient retries have separate ledger slots.
+Full tests: **938 passed, five skipped**. No live generation ran during tests.
+Next from belief-transfer: prepare `+run=ethics_sft_decision_qa_corpus_v3`, then assess
+with `decision_qa.operation=assess decision_qa.resume=true`. This is a fresh run ID.
+Protocol and artifact paths: `belief-transfer/STANCE_DECISION_QA.md`.
 
 ## Candidate bank completed; sampled content review completed
 

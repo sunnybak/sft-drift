@@ -47,3 +47,25 @@ reservations conservatively use UTF-8 request bytes plus protocol allowance; thi
 underuse actual TPM. The gate covers this process, not other account traffic. Decisions
 bills input only; reported actual spend uses returned usage and separate Decisions prices.
 See [official API guide](https://developers.openai.com/api/docs/guides/decisions).
+
+## Current frozen screening protocol
+
+Use `ethics_sft_decision_qa_corpus_v3` (rubric v4, 13 questions). Earlier overlays are
+historical development runs; do not repeat completed IDs. All 164 reviewed examples
+were used in tuning. Calibration_v5 reports 12/14 known major defects at .2, one flag
+among 143 provisional negatives, excluding seven borderline cases. This does not
+estimate unseen recall. Both psychology-deception families (400 documents) and every
+previously confirmed semantic defect receive mandatory review, independently of score.
+
+```sh
+uv run --no-sync python run.py +run=ethics_sft_decision_qa_corpus_v3
+uv run --no-sync python run.py +run=ethics_sft_decision_qa_corpus_v3 decision_qa.operation=assess decision_qa.resume=true
+```
+
+With provider counting enabled, reservation is the smaller of UTF-8 envelope bytes
+plus 2,048 and twice the Responses counting endpoint estimate plus 2,048. This is a
+conservative proxy, not an exact Decisions count. Counting requests also take RPM
+permits. Returned actual usage is checked against reservation; a mismatch stops with
+raw output preserved. Calibration_v4 exposed such a mismatch under an earlier margin;
+calibration_v5 passed all 164 calls under the current rule. Expected full-pass cost
+from measured usage: approximately $7.69, excluding development and retries.

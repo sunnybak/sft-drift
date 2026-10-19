@@ -185,7 +185,7 @@ def test_preflight_count_and_fallback():
         async def count(self,**kwargs):return SimpleNamespace(input_tokens=123)
     client=SimpleNamespace(_openai=SimpleNamespace(responses=SimpleNamespace(input_tokens=Counter())))
     n,meta=asyncio.run(stage.preflight(client,{'input':'x'*5000},Pacer(),True))
-    assert n==1147 and meta['input_tokens']==123
+    assert n==2294 and meta['input_tokens']==123
     async def failed(**kwargs):raise RuntimeError('counter unavailable')
     client._openai.responses.input_tokens.count=failed
     n,meta=asyncio.run(stage.preflight(client,{'input':'x'*5000},Pacer(),True))

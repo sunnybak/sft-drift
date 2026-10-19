@@ -24,3 +24,12 @@ runs, partial-failure draining, per-attempt transient retry preservation, unknow
 refusal, cached response recovery after interrupted intent, prompt-contract change refusal
 and backwards-compatible SDK retry defaults. Full-suite results and live findings follow
 in the final completion update. Tests run separately from live result writes.
+
+### Tuned rubric and launch verification
+
+v4 development: 12/14 serious labels caught, one false flag among 143 provisional
+negatives, seven borderline excluded. All 164 examples now development. Mandatory
+review covers 400 psychology rows plus all confirmed semantic failures. v5 calibration
+cost $0.0630161. v4 pacing canary failed safely after $0.0003907; current margin passed
+164 calls. Full weight-free suite: 938 passed, five skipped. Main run corpus_v3 is
+registered for all 20,000; source rows and frozen instruments unchanged.
