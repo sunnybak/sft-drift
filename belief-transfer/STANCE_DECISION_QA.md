@@ -69,3 +69,20 @@ permits. Returned actual usage is checked against reservation; a mismatch stops 
 raw output preserved. Calibration_v4 exposed such a mismatch under an earlier margin;
 calibration_v5 passed all 164 calls under the current rule. Expected full-pass cost
 from measured usage: approximately $7.69, excluding development and retries.
+
+## Follow-up review after the fresh blind check
+
+The rubric was frozen before a new flag-blind 20-document, category-balanced agent
+check. One clear input-check scope change was missed by Decisions (.01 critical score);
+one shared-home setting case was borderline. Judgments were saved before comparison.
+This supports prioritizing obvious assignment failures but does not establish reliable
+clearance of premise fidelity. Subsequent review policy additionally routes both hiring
+subjects (400 rows) for manual checking. This separate policy does not alter the original
+run contract, scores or 408 original mandatory flags. No prompt retuning was performed
+on this sample; the clear missed case has a traceable manual correction.
+
+Use `scripts/assemble_stance_repairs.py` only with explicit registered fresh output
+IDs and hash-matched repair overlays. It creates a complete candidate version retaining
+all source document IDs; no rows are dropped or designated training-ready. Its separate
+report records every replacement. Original generation assessments remain in the source
+bank, rather than being misrepresented as judgments on manually changed text.

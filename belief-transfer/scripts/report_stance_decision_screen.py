@@ -58,9 +58,19 @@ def main() -> None:
             'verified_source_files':checked,'verified_frozen_files':len(frozen),
             'limitations':['All 164 prior examples were used in prompt development; sensitivity is not independently validated.',
                            'Review routing is not a measured defect rate. Low flags are not semantic clearance.',
-                           'All 400 psychology documents and previously confirmed failures require manual review.',
+                           'Original run mandates all 400 psychology documents and previously confirmed failures; a separate follow-up policy adds hiring families after a blind-check miss.',
                            'Same-model QA and agent adjudication are provisional, not independent human labeling.',
                            'No source changes, filtering, training or training-ready designation.']}
+    policy_file=out/'followup_review_policy.json'
+    if policy_file.exists():
+        policy=json.loads(policy_file.read_text());subjects=set(policy['mandatory_subjects'])
+        followup=[{**r,'followup_family_review':r['subject_id'] in subjects} for r in rows
+                  if r['triage']!='low_flag' or r['subject_id'] in subjects]
+        (out/'followup_review_queue.jsonl').write_text(''.join(json.dumps(r,ensure_ascii=False)+'\n' for r in followup))
+        (out/'followup_review_queue.md').write_text('# Follow-up review queue\n\nIncludes original flags and additional risk-family review; these are not confirmed defects.\n\n| Document | Original route | Added family review |\n| --- | --- | --- |\n'+''.join(f"| {r['document_id']} | {r['triage']} | {r['followup_family_review']} |\n" for r in followup))
+        report['followup_queue_documents']=len(followup)
+        report['followup_risk_family_documents']=sum(r['subject_id'] in subjects for r in rows)
+        report['followup_policy']=policy
     (out/'screen_report.json').write_text(json.dumps(report,indent=2)+'\n')
     text='# Full-bank Decisions screen\n\n'+f"Assessed {len(rows):,} source documents; actual cost ${summary['actual_cost_usd']:.6f}.\n\n"
     text+='| Route | Documents |\n| --- | ---: |\n'+''.join(f'| {k} | {v} |\n' for k,v in summary['triage_counts'].items())

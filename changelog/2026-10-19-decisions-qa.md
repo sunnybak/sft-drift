@@ -52,3 +52,10 @@ consulted. Agent labels saved before score comparison: one clear input-check sco
 change, one borderline shared-home setting assumption, 18 without clear serious
 defect. Rubric v4 frozen before this sample; no retuning. Repair v3 addresses only
 the clear scope change. Same-model screen and agent labels are provisional.
+
+The fresh blind scope failure received .01 critical score (model missed it); therefore
+followup_review_policy.json additionally mandates both hiring families. Original
+contract/scores remain unchanged. Later targeted round 3 read eight new source texts:
+three full assignment reversals (two bail positive, one vaccination negative), five
+without a clear major defect. Repairs_v4 corrects these three; all model rechecks low.
+Total manually corrected so far: 24, all 400–600 Qwen tokens. Full-bank pass ongoing.
