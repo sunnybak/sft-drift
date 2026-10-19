@@ -1,55 +1,40 @@
 # Current state — 2026-10-19
 
-## First live corpus batch complete and reviewed
+## Scope correction implemented; fresh live check next
 
-**`ethical_stance_sft/ethics_sft_pooled_corpus_v2` now contains ten generated documents**:
-five positive/negative pairs for `ai_hiring_no_appeal`, explanatory-article form, five
-shared ideas. All ten full revisions were read by the implementing agent. No generation
-process, C4 acquisition, training, GPU rental or checkpoint remains active.
+User authorized tightening scope rules, a small multi-belief test, and the final corpus
+math/mix **before bulk generation**. Prompt v4 separates neutral planning from stance
+writing, guards channel/quantifier/predicate scope at every phase, omits internal IDs
+from briefs, and puts reviewer instructions before explicitly bounded JSON document data.
+Historical prompt files and completed v2 documents remain unchanged.
 
-- Length: drafts 8/10 → finals 10/10 in 400–600 Qwen tokens; range 412–587, mean 478.4,
-  total 4,784 final tokens. Two long drafts fixed, no length regressions, two verbatim.
-- All ten clearly own the assigned stance and address the opposing consideration.
-  No full normalized duplicates, visible task metadata or full noncanonical eval-wording
-  matches. Canonical overlap is allowed. Diversity remains limited around one argument arc.
-- **Do not scale these prompts unchanged.** Eight documents have provisional agent
-  scope-precision concerns; one more has a borderline opening later qualified. Recurring
-  issue: no explanation/meaningful human review is broadened into no possible way to
-  question, learn, reconsider or correct. Neither existence nor absence of other channels
-  is given. These are review concerns, not an independently established 9/10 error rate.
-- Luna flags one of those nine on unsupported premises/repetition and gives all six
-  passes to the other eight. All 50 condition flags and ten global scope flags are true.
-  One document also changes the object checked for biases from the system to its inputs.
-- 33 successful Responses calls with `gpt-6-luna`: 56,795 input / 16,732 output tokens.
-  Usage-ledger cost **$0.01509735**, uncertain bound zero, no pending requests/errors.
-  No C4 acquired or training performed. No rows dropped or automatically training-ready.
+Fresh pilot: `ethical_stance_sft/ethics_sft_scope_check_v1` — four ethical subjects
+(AI hiring, animal medical research, kidney donation, medical-data consent) plus one fresh
+aesthetic control, three forms × one shared idea × two positions = 30 candidates.
+Budget $0.50; concurrency two. Full generation remains unstarted. New production config
+`ethics_sft_pooled_corpus_v3` uses v4, with the same 27,000 synthetic candidate target.
+C4 can now extend beyond 18,000 records until its replacement reserve reaches 5.4M
+Qwen tokens beyond the first shared 9,000 rows. No real C4 is acquired in this check.
 
-Read [all pairs, examples and findings](belief-transfer/data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v2/first_batch_review.md),
-[annotated judgments](belief-transfer/data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v2/first_batch_agent_review.md),
-and [summary](belief-transfer/data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v2/first_batch_review_summary.json).
-Exact next command from `belief-transfer/`:
+Full engineering regression: **866 passed, 4 skipped** (114.90 s). Earlier focused
+checks: 105 passed before the reserve test was added. No pytest/live generation overlap.
+Next commands from `belief-transfer/`, after committing/pushing source:
 
 ```sh
-cat data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v2/first_batch_review.md
+uv run --no-sync python run.py +run=ethics_sft_scope_check_v1
+uv run --no-sync python run.py +run=ethics_sft_scope_check_v1 stance_corpus.operation=generate stance_corpus.resume=true
 ```
 
-Next implementation: a **fresh-ID** focused prompt test that preserves channel-specific
-limits in idea planning/drafting, separates neutral-plan rules from owned-position rules,
-and places review instructions before explicitly bounded document data. The current
-review prompt appends rules after document text; some model rationales explicitly exclude
-that appended material. Broader subjects/forms and fresh control pairs still need review
-before bulk generation. Do not resume the remaining v2 batches by default. Compatible v2
-resume exists technically; changed source/prompts require a new ID.
+Read all thirty revised documents before interpreting the check. Review the proposed
+[full bank/mix](belief-transfer/POOLED_DATASET_PLAN.md); add the measured generation-token
+forecast after the pilot. No bulk generation or training follows without the user's next
+instruction. No GPU rental/training is authorized.
 
-The prepared source-bank target remains 18,000 ethical + 9,000 fresh aesthetic control
-documents, across 99 briefs and 2,808 batches. Only ten of 27,000 candidates exist.
-All-positive/all-negative/complementary mixed assignments are preserved. All 100 frozen
-beliefs remain future eval targets; ten off-topic eval beliefs are untrained probes.
-Final dose/token-step matching, treatment analysis/falsifiers and training are still future
-work. Pinned C4 source-pool target: 18,000 full unique records, not a matched training dose.
-Separate private corpus store: `sunnybak/sft-drift-ethical-corpus`, pinned by main handoff.
-See [pipeline](belief-transfer/STANCE_CORPUS.md) and
-[changelog](changelog/2026-10-19-first-live-corpus-batch.md).
+Previous v2 check: ten documents, all 412–587 Qwen tokens, cost $0.01509735; nine provisional
+scope concerns (one borderline), only one flagged by Luna. All ten retained. See
+[v2 review](belief-transfer/data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v2/first_batch_review.md)
+and [history](changelog/2026-10-19-first-live-corpus-batch.md). Changed source means new
+runs; do not resume historical v2 under current source or overwrite its contract.
 
 ## Established pilot and measurement references
 

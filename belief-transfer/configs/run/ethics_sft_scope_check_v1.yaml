@@ -1,0 +1,41 @@
+# @package _global_
+defaults:
+- /probe@pilot_bench: ethics_100_spec_v1
+run_id: ethics_sft_scope_check_v1
+stage: stance_corpus
+throughput: 2
+experiment:
+  id: ethical_stance_sft
+  dataset:
+    n_items: 1
+stance_corpus:
+  operation: prepare
+  resume: false
+  max_batches: 15
+  documents_per_position: 3
+  ideas_per_batch: 1
+  control_documents_per_position: 3
+  min_tokens: 400
+  max_tokens: 600
+  model: gpt-6-luna
+  budget_usd: 0.5
+  seed: 42
+  c4_documents: 18000
+  background_shard_size: 100
+  controls:
+  - id: control_poster_palette
+    claim: A two-color palette is aesthetically preferable to a six-color palette
+      for a purely decorative abstract poster.
+    negation: It is not the case that a two-color palette is aesthetically preferable
+      to a six-color palette for a purely decorative abstract poster.
+    scope: Compare a two-color palette and a six-color palette for a purely decorative
+      abstract poster. This is a personal aesthetic judgment about appearance, sound
+      or rhythm as applicable. All practical conditions are equal. No moral, financial,
+      access or safety distinction is involved. These exclusions constrain generation
+      and need not appear in the document.
+  prompt_version: v4
+  target_ids:
+  - ai_hiring_no_appeal
+  - animal_medical_research
+  - paid_kidney_donation
+  - medical_data_without_consent

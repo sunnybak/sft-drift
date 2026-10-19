@@ -11,6 +11,7 @@ from belief_transfer.analysis import report
 from belief_transfer.config import config_sha, write_resolved_config
 from belief_transfer.dataset import stance_corpus as corpus
 from belief_transfer.dataset import stance_corpus_prompts as prompts
+from belief_transfer.dataset import stance_corpus_prompts_v4
 from belief_transfer.dataset import stance_documents as docs
 from belief_transfer.dataset import stance_document_prompts_v2 as v2
 from belief_transfer.generation import corpus_journal, document_client
@@ -22,9 +23,14 @@ GENERATED_DIR = Path(__file__).resolve().parents[3] / 'data/generated'
 
 
 def subjects_for(job: JobConfig) -> list[dict]:
+    spec = job.stance_corpus
+    assert spec is not None
+    available = {t.definition.id for t in job.pilot_bench.targets if t.role == 'ethical'}
+    if spec.target_ids is not None and set(spec.target_ids) - available:
+        raise ValueError('Unknown or nonethical target IDs')
     subjects = []
     for target in job.pilot_bench.targets:
-        if target.role == 'ethical':
+        if target.role == 'ethical' and (spec.target_ids is None or target.definition.id in spec.target_ids):
             d = target.definition
             subjects.append({'id': d.id, 'role': 'ethical', 'category': d.domain,
                              'claim': d.stance.statement, 'negation': d.stance.negation,
@@ -51,8 +57,11 @@ def contract_for(job: JobConfig, subjects: list[dict]) -> dict:
     source_paths = [Path(__file__), Path(corpus.__file__), Path(prompts.__file__),
                     Path(v2.__file__), Path(docs.__file__), Path(document_client.__file__),
                     Path(corpus_journal.__file__)]
+    selected = stance_corpus_prompts_v4 if spec.prompt_version == 'v4' else prompts
+    if selected is stance_corpus_prompts_v4:
+        source_paths.append(Path(selected.__file__))
     return {'version': 1, 'experiment': job.experiment.id, 'run_id': job.run_id,
-            'settings': settings, 'subjects': subjects, 'prompt_version': prompts.VERSION,
+            'settings': settings, 'subjects': subjects, 'prompt_version': selected.VERSION,
             'source_hashes': {p.relative_to(Path(__file__).parents[1]).as_posix():
                               docs.text_hash(p.read_text()) for p in source_paths},
             'api_sampling_seed': None, 'training_ready': False}
@@ -67,6 +76,7 @@ def load_tokenizer(spec: Any) -> Any:
 async def generate(root: Path, job: JobConfig, subjects: list[dict], plan: list[dict], context: RunContext) -> None:
     spec = job.stance_corpus
     assert spec is not None
+    selected = stance_corpus_prompts_v4 if spec.prompt_version == 'v4' else prompts
     tokenizer = load_tokenizer(spec)
     frozen_path = GENERATED_DIR / 'ethical_pilot/ethics_100_bank_v3/belief_wordings.jsonl'
     frozen = [json.loads(line) for line in frozen_path.read_text().splitlines()]
@@ -117,32 +127,33 @@ async def generate(root: Path, job: JobConfig, subjects: list[dict], plan: list[
                 subject = bank[batch['subject_id']]
                 form = batch['form']
                 # Persistent form plan shared across every batch and both opposing positions.
-                form_plan = await execute(subject['id']+'/forms', v2.forms_prompt(subject),
+                form_prompt = selected.forms_prompt(subject) if selected is stance_corpus_prompts_v4 else v2.forms_prompt(subject)
+                form_plan = await execute(subject['id']+'/forms', form_prompt,
                                           docs.FORM_TOOL, 1000, events)
                 previous = []
                 for prior in sorted((root/'shards').glob(subject['id']+'__'+form+'__*/ideas.jsonl')):
                     previous.extend(json.loads(line)['focus'] for line in prior.read_text().splitlines())
-                idea_result = await execute(batch['batch_id']+'/ideas', prompts.ideas_prompt(
+                idea_result = await execute(batch['batch_id']+'/ideas', selected.ideas_prompt(
                     subject, form, form_plan[form], len(batch['slots']), previous),
-                    prompts.idea_tool(len(batch['slots'])), 2200, events)
+                    selected.idea_tool(len(batch['slots'])), 2200, events)
                 ideas = idea_result['ideas']
                 if len(ideas) != len(batch['slots']):
                     raise ValueError('Malformed idea cardinality')
 
                 async def one(index: int, idea: dict, position: str) -> dict:
                     identifier = f"{subject['id']}__{index:04d}__{position}"
-                    draft = await execute(identifier+'/draft', prompts.document_prompt(
+                    draft = await execute(identifier+'/draft', selected.document_prompt(
                         subject, form, idea, position, spec.min_tokens, spec.max_tokens),
                         docs.DOCUMENT_TOOL, 1400, events)
                     draft_tokens = len(tokenizer.encode(draft['text'], add_special_tokens=False))
-                    revision = await execute(identifier+'/revision', prompts.revision_prompt(
+                    revision = await execute(identifier+'/revision', selected.revision_prompt(
                         subject, form, idea, position, draft['text'], draft_tokens,
                         spec.min_tokens, spec.max_tokens), docs.REVISION_TOOL, 1700, events)
                     text = revision['text']
                     diagnostic = docs.diagnostics(text, tokenizer, subject, frozen,
                                                    spec.min_tokens, spec.max_tokens)
-                    assessment = await execute(identifier+'/assessment', prompts.review_prompt(
-                        subject, form, position, text), prompts.review_tool(subject), 1800, events)
+                    assessment = await execute(identifier+'/assessment', selected.review_prompt(
+                        subject, form, position, text), selected.review_tool(subject), 1800, events)
                     tokens = len(tokenizer.encode(text, add_special_tokens=False))
                     return {'document_id': identifier, 'subject_id': subject['id'],
                             'position': position, 'form': form, 'idea': idea,
@@ -198,16 +209,26 @@ def background(root: Path, job: JobConfig) -> None:
         for line in path.read_text().splitlines():
             seen.add(json.loads(line)['sha256'])
     saved, emitted = len(seen), 0
+    replacement_tokens = 0
+    ordinal = 0
+    for path in sorted(folder.glob('*/documents.jsonl')):
+        for line in path.read_text().splitlines():
+            ordinal += 1
+            row = json.loads(line)
+            if ordinal > spec.c4_shared_documents:
+                replacement_tokens += row['tokens']
+    def enough() -> bool:
+        return saved >= spec.c4_documents and replacement_tokens >= spec.c4_replacement_min_tokens
     rows = []
     for index, row in enumerate(stream):
-        if saved >= spec.c4_documents or emitted >= spec.max_batches:
+        if enough() or emitted >= spec.max_batches:
             break
         text = row['text']
         sha = docs.text_hash(text)
         if not text.strip() or sha in seen:
             continue
         seen.add(sha)
-        rows.append({'background_id': 'c4_'+sha, 'text': text, 'sha256': sha,
+        rows.append({'background_id': 'c4_'+sha, 'sample_index': saved+1, 'text': text, 'sha256': sha,
                      'url': row.get('url'), 'timestamp': row.get('timestamp'),
                      'dataset': 'allenai/c4', 'configuration': 'en', 'split': 'train',
                      'revision': spec.c4_revision, 'shuffle_seed': spec.seed,
@@ -215,7 +236,9 @@ def background(root: Path, job: JobConfig) -> None:
                      'tokens': len(tokenizer.encode(text, add_special_tokens=False)),
                      'intended_prefix': '', 'prefix_loss_masked': False})
         saved += 1
-        if len(rows) == spec.background_shard_size or saved == spec.c4_documents:
+        if saved > spec.c4_shared_documents:
+            replacement_tokens += rows[-1]['tokens']
+        if len(rows) == spec.background_shard_size or enough():
             temporary = root/'.background-staging'
             temporary.mkdir(exist_ok=True)
             corpus.write_rows(temporary/'documents.jsonl', rows)

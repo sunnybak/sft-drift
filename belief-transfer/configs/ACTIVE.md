@@ -88,3 +88,10 @@ run enables length-preserving revision after v3 exposed 11 length regressions.
 `run/ethics_sft_pooled_corpus_v2.yaml` selects the new `stance_corpus` stage.
 See `../STANCE_CORPUS.md` for bounded generation, inspection and separate private corpus
 storage. Default operation prepares manifests only; no training or full generation.
+
+## Scope-corrected prompts and proposed full corpus
+
+`run/ethics_sft_scope_check_v1.yaml` is the fresh 30-document check using prompt v4.
+`run/ethics_sft_pooled_corpus_v3.yaml` is the unstarted full-corpus proposal. Historical
+v2 generation is preserved at its source commit; do not resume it under changed code.
+See `../POOLED_DATASET_PLAN.md` for the source-bank/mix proposal before bulk generation.

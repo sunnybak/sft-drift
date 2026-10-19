@@ -29,7 +29,11 @@
     "generated/ethical_stance_sft/ethics_sft_pooled_corpus_v1",
     "results/ethical_stance_sft/ethics_sft_pooled_corpus_v1",
     "generated/ethical_stance_sft/ethics_sft_pooled_corpus_v2",
-    "results/ethical_stance_sft/ethics_sft_pooled_corpus_v2"
+    "results/ethical_stance_sft/ethics_sft_pooled_corpus_v2",
+    "generated/ethical_stance_sft/ethics_sft_scope_check_v1",
+    "results/ethical_stance_sft/ethics_sft_scope_check_v1",
+    "generated/ethical_stance_sft/ethics_sft_pooled_corpus_v3",
+    "results/ethical_stance_sft/ethics_sft_pooled_corpus_v3"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",
@@ -361,11 +365,15 @@
     "repo_id": "sunnybak/sft-drift-ethical-corpus",
     "paths": [
       "generated/ethical_stance_sft/ethics_sft_pooled_corpus_v1",
-      "generated/ethical_stance_sft/ethics_sft_pooled_corpus_v2"
+      "generated/ethical_stance_sft/ethics_sft_pooled_corpus_v2",
+      "generated/ethical_stance_sft/ethics_sft_scope_check_v1",
+      "generated/ethical_stance_sft/ethics_sft_pooled_corpus_v3"
     ],
     "lock_paths": [
       "generated/ethical_stance_sft/ethics_sft_pooled_corpus_v1/.writer.lock",
-      "generated/ethical_stance_sft/ethics_sft_pooled_corpus_v2/.writer.lock"
+      "generated/ethical_stance_sft/ethics_sft_pooled_corpus_v2/.writer.lock",
+      "generated/ethical_stance_sft/ethics_sft_scope_check_v1/.writer.lock",
+      "generated/ethical_stance_sft/ethics_sft_pooled_corpus_v3/.writer.lock"
     ]
   }
 }

@@ -1891,6 +1891,8 @@ class StanceCorpusSpec(BaseModel):
     """Resumable document bank; operational bounds do not change content identity."""
 
     operation: Literal["prepare", "generate", "background"] = "prepare"
+    prompt_version: Literal["v3", "v4"] = "v3"
+    target_ids: list[str] | None = None
     resume: bool = False
     max_batches: int = Field(default=1, ge=1, le=1000)
     documents_per_position: int = Field(default=100, ge=3)
@@ -1907,6 +1909,8 @@ class StanceCorpusSpec(BaseModel):
     c4_revision: str = "1588ec454efa1a09f29cd18ddd04fe05fc8653a2"
     c4_buffer_size: int = Field(default=1024, ge=1)
     c4_documents: int = Field(default=18000, ge=1)
+    c4_shared_documents: int = Field(default=9000, ge=0)
+    c4_replacement_min_tokens: int = Field(default=0, ge=0)
     background_shard_size: int = Field(default=100, ge=1, le=1000)
 
     @model_validator(mode="after")
@@ -1915,6 +1919,8 @@ class StanceCorpusSpec(BaseModel):
             raise ValueError("min_tokens exceeds max_tokens")
         if len({c.id for c in self.controls}) != len(self.controls):
             raise ValueError("duplicate control briefs")
+        if self.target_ids is not None and (not self.target_ids or len(set(self.target_ids)) != len(self.target_ids)):
+            raise ValueError("target_ids must be nonempty and unique when provided")
         return self
 
 
