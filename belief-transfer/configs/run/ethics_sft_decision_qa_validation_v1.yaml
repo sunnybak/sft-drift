@@ -1,0 +1,13 @@
+# @package _global_
+run_id: ethics_sft_decision_qa_validation_v1
+stage: stance_decision_qa
+throughput: 64
+experiment:
+  id: ethical_stance_sft
+  dataset:
+    n_items: 1
+decision_qa:
+  source_run_id: ethics_sft_pooled_corpus_v5
+  selection: review_v2
+  prompt_version: v2
+  operation: prepare

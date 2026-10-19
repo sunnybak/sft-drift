@@ -1,4 +1,4 @@
-"""Async OpenAI calls for generation."""
+"""Async OpenAI Responses and Decisions calls with cached concurrent batches."""
 
 from __future__ import annotations
 
@@ -7,7 +7,9 @@ import json
 import os
 import time
 from collections.abc import AsyncIterable, AsyncIterator, Iterable
+from contextlib import aclosing
 from dataclasses import dataclass, field
+from typing import Any, Literal, NotRequired, TypedDict
 
 from dotenv import find_dotenv, load_dotenv
 from openai import AsyncOpenAI
@@ -19,6 +21,7 @@ from belief_transfer.generation.context import CallRecord, RunContext
 load_dotenv(find_dotenv())
 
 MODEL = "gpt-5.6-luna"
+DECISION_MODEL = "gpt-6-luna"
 LONG_CONTEXT_INPUT_TOKENS = 272_000
 DEFAULT_THROUGHPUT = 10
 RETRIES = 10
@@ -113,7 +116,20 @@ def estimate_cost_usd(model: str, usage: ResponseUsage) -> float:
     ) / 1_000_000
 
 
-def _call_cost(model: str, usage: ResponseUsage) -> CallCost:
+def estimate_decision_cost_usd(model: str, usage: ResponseUsage) -> float:
+    """Decisions bills input only, with no separate cache/output charges.
+
+    Standard global processing rates, verified 2026-10-19:
+    https://developers.openai.com/api/docs/guides/decisions#pricing-and-availability
+    Regional premiums are not included, matching the Responses estimator.
+    """
+    if model != DECISION_MODEL:
+        raise ValueError(f"Decisions currently requires model={DECISION_MODEL!r}")
+    tier = "long" if usage.input_tokens > LONG_CONTEXT_INPUT_TOKENS else "short"
+    return usage.input_tokens * _PRICES[model][tier]["input"] / 1_000_000
+
+
+def _call_cost(model: str, usage: ResponseUsage, *, decisions: bool = False) -> CallCost:
     return CallCost(
         model=model,
         input_tokens=usage.input_tokens,
@@ -121,7 +137,10 @@ def _call_cost(model: str, usage: ResponseUsage) -> CallCost:
         cached_tokens=usage.input_tokens_details.cached_tokens or 0,
         cache_write_tokens=usage.input_tokens_details.cache_write_tokens or 0,
         reasoning_tokens=usage.output_tokens_details.reasoning_tokens or 0,
-        cost_usd=estimate_cost_usd(model, usage),
+        cost_usd=(
+            estimate_decision_cost_usd(model, usage)
+            if decisions else estimate_cost_usd(model, usage)
+        ),
     )
 
 
@@ -168,13 +187,46 @@ class Tool:
     parameters: dict[str, object]
 
 
+class DecisionOption(TypedDict):
+    value: str | bool
+    description: NotRequired[str]
+
+
+class DecisionLevel(TypedDict):
+    label: str
+    description: NotRequired[str]
+
+
+class PredicateQuestion(TypedDict):
+    type: Literal["predicate"]
+    instructions: str
+    name: NotRequired[str]
+
+
+class ChoiceQuestion(TypedDict):
+    type: Literal["choice"]
+    instructions: str
+    choices: list[DecisionOption]
+    name: NotRequired[str]
+
+
+class ScoreQuestion(TypedDict):
+    type: Literal["score"]
+    instructions: str
+    levels: list[DecisionLevel]
+    name: NotRequired[str]
+
+
+DecisionQuestion = PredicateQuestion | ChoiceQuestion | ScoreQuestion
+
+
 @dataclass(frozen=True)
 class Completion:
     index: int
     prompt: str
     text: str
     payload: dict[str, object] | None = None
-    """Parsed tool arguments, when the request forced a tool call."""
+    """Parsed tool arguments or the full Decisions response, depending on the call."""
 
 
 async def _as_async(prompts: AsyncIterable[str] | Iterable[str]) -> AsyncIterator[str]:
@@ -193,6 +245,7 @@ class Client:
         model: str = MODEL,
         cache: Cache | None = None,
         context: RunContext | None = None,
+        max_retries: int = RETRIES,
     ) -> None:
         if throughput < 1:
             raise ValueError("throughput must be >= 1")
@@ -214,7 +267,7 @@ class Client:
         # it -- the ceiling is org-wide, not a property of this process's concurrency.
         self._openai = AsyncOpenAI(
             api_key=os.environ.get("OPENAI_API_KEY") or "unused",
-            max_retries=RETRIES,
+            max_retries=max_retries,
             timeout=REQUEST_TIMEOUT_SECONDS,
         )
 
@@ -307,12 +360,89 @@ class Client:
                 return payload
         raise RuntimeError(f"response did not call {tool.name}")
 
+    async def decide(
+        self,
+        prompt: str,
+        questions: Iterable[DecisionQuestion],
+        *,
+        use_cache: bool = True,
+        override_cache: bool = False,
+        replicate: int | None = None,
+    ) -> dict[str, Any]:
+        """Return the full Decisions response, retaining probabilities and refusals.
+
+        Use ``Client(model=DECISION_MODEL)``. Decisions do not accept Responses'
+        reasoning/tool settings. The generic SDK transport supplies the same auth,
+        timeout and retry policy even when the installed SDK lacks this resource.
+        """
+        if self.model != DECISION_MODEL:
+            raise ValueError(f"Decisions currently requires model={DECISION_MODEL!r}")
+        # Snapshot caller-owned questions before awaiting; order is meaningful.
+        body = json.loads(json.dumps(
+            {"model": self.model, "input": prompt, "questions": list(questions)},
+            allow_nan=False,
+        ))
+        if not 1 <= len(body["questions"]) <= 200:
+            raise ValueError("Decisions requires between 1 and 200 questions")
+        # Namespace this separately from text/tool calls without invalidating any
+        # historical cache keys. Every question field contributes to identity.
+        identity = json.dumps(body, sort_keys=True, ensure_ascii=False, allow_nan=False)
+        key = (
+            cache_key(self.model, identity, "decisions:v1", replicate=replicate)
+            if use_cache else None
+        )
+        if key is not None and not override_cache:
+            cached = self.cache.get(key)
+            if cached is not None:
+                if self.context is not None:
+                    self.context.record(_cached_call_record(cached.get("usage", {})))
+                return cached["payload"]
+        start = time.monotonic()
+        response = await self._openai.post("/decisions", body=body, cast_to=dict[str, Any])
+        latency_s = time.monotonic() - start
+        if response.get("usage") is None:
+            raise RuntimeError("OpenAI decision did not include usage")
+        usage = ResponseUsage.model_validate(response["usage"])
+        call_cost = _call_cost(self.model, usage, decisions=True)
+        costs.add(call_cost)
+        if self.context is not None:
+            self.context.record(_fresh_call_record(call_cost, latency_s))
+        answers = response.get("answers")
+        if not isinstance(answers, list) or len(answers) != len(body["questions"]):
+            raise RuntimeError("OpenAI decision did not include one answer per question")
+        if key is not None:
+            self.cache.set(key, {"payload": response, "usage": _usage_fields(call_cost)})
+        return response
+
+    async def batch_decisions(
+        self,
+        prompts: AsyncIterable[str] | Iterable[str],
+        questions: Iterable[DecisionQuestion],
+        throughput: int | None = None,
+        *,
+        use_cache: bool = True,
+        override_cache: bool = False,
+        replicate: int | None = None,
+    ) -> AsyncIterator[Completion]:
+        """Concurrent Decisions requests, indexed and yielded as they finish.
+
+        Like ``batch``, this is a local worker pool, not an OpenAI Batch job.
+        ``payload`` is the full response; ``text`` is its JSON serialization.
+        """
+        async with aclosing(self.batch(
+            prompts, throughput=throughput, questions=list(questions),
+            use_cache=use_cache, override_cache=override_cache, replicate=replicate,
+        )) as stream:
+            async for item in stream:
+                yield item
+
     async def batch(
         self,
         prompts: AsyncIterable[str] | Iterable[str],
         throughput: int | None = None,
         tool: Tool | None = None,
         *,
+        questions: list[DecisionQuestion] | None = None,
         use_cache: bool = True,
         override_cache: bool = False,
         replicate: int | None = None,
@@ -325,7 +455,9 @@ class Client:
         answers (see `generation.cache`), otherwise every repeat of an identical
         prompt returns the same cached text.
         """
-        n_workers = throughput or self.throughput
+        if tool is not None and questions is not None:
+            raise ValueError("tool and decision questions are mutually exclusive")
+        n_workers = self.throughput if throughput is None else throughput
         if n_workers < 1:
             raise ValueError("throughput must be >= 1")
         prompt_q: asyncio.Queue[tuple[int, str] | None] = asyncio.Queue(maxsize=n_workers)
@@ -333,11 +465,15 @@ class Client:
 
         async def producer() -> None:
             index = 0
-            async for prompt in _as_async(prompts):
-                await prompt_q.put((index, prompt))
-                index += 1
-            for _ in range(n_workers):
-                await prompt_q.put(None)
+            try:
+                async for prompt in _as_async(prompts):
+                    await prompt_q.put((index, prompt))
+                    index += 1
+                for _ in range(n_workers):
+                    await prompt_q.put(None)
+            except Exception as exc:
+                # Wake the consumer if the source fails, rather than waiting forever.
+                await result_q.put(exc)
 
         async def worker() -> None:
             while True:
@@ -347,7 +483,13 @@ class Client:
                     return
                 index, prompt = item
                 try:
-                    if tool is None:
+                    if questions is not None:
+                        payload = await self.decide(
+                            prompt, questions, use_cache=use_cache,
+                            override_cache=override_cache, replicate=replicate,
+                        )
+                        text = json.dumps(payload)
+                    elif tool is None:
                         payload, text = (
                             None,
                             await self.complete(
@@ -429,3 +571,40 @@ async def batch(
             replicate=replicate,
         ):
             yield item
+
+
+async def decide(
+    prompt: str,
+    questions: Iterable[DecisionQuestion],
+    *,
+    model: str = DECISION_MODEL,
+    use_cache: bool = True,
+    override_cache: bool = False,
+    replicate: int | None = None,
+    context: RunContext | None = None,
+) -> dict[str, Any]:
+    async with Client(throughput=1, model=model, context=context) as client:
+        return await client.decide(
+            prompt, questions, use_cache=use_cache,
+            override_cache=override_cache, replicate=replicate,
+        )
+
+
+async def batch_decisions(
+    prompts: AsyncIterable[str] | Iterable[str],
+    questions: Iterable[DecisionQuestion],
+    throughput: int = DEFAULT_THROUGHPUT,
+    *,
+    model: str = DECISION_MODEL,
+    use_cache: bool = True,
+    override_cache: bool = False,
+    replicate: int | None = None,
+    context: RunContext | None = None,
+) -> AsyncIterator[Completion]:
+    async with Client(throughput=throughput, model=model, context=context) as client:
+        async with aclosing(client.batch_decisions(
+            prompts, questions, use_cache=use_cache,
+            override_cache=override_cache, replicate=replicate,
+        )) as stream:
+            async for item in stream:
+                yield item

@@ -190,9 +190,9 @@ def test_historical_config_fingerprint_excludes_new_unset_stage():
     import hashlib
     from belief_transfer.config import config_sha
     old=load_job(['+run=ethics_sft_documents_expanded_v1'])
-    previous=old.model_dump(mode='json',exclude={'run_id','smoke','force','stance_corpus'})
+    previous=old.model_dump(mode='json',exclude={'run_id','smoke','force','stance_corpus','decision_qa'})
     expected=hashlib.sha256(json.dumps(previous,sort_keys=True,separators=(',',':')).encode()).hexdigest()[:12]
-    assert config_sha(old)==expected
+    assert config_sha(old)==expected=='8834d5aca78e'
 
 
 def test_scope_pilot_and_full_generation_counts_are_distinct():

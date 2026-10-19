@@ -1810,6 +1810,7 @@ Stage = Literal[
     "sft_data_pilot",
     "stance_sdf_pilot",
     "stance_corpus",
+    "stance_decision_qa",
     "sft",
     "efficacy",
     "absorption",
@@ -1930,6 +1931,23 @@ class StanceCorpusSpec(BaseModel):
         return self
 
 
+class DecisionQASpec(BaseModel):
+    """Versioned, advisory corpus screening; no automatic training acceptance."""
+
+    source_run_id: str = "ethics_sft_pooled_corpus_v5"
+    selection: Literal["review_v1", "review_v2", "all"] = "review_v1"
+    prompt_version: Literal["v1", "v2"] = "v1"
+    operation: Literal["prepare", "assess"] = "prepare"
+    resume: bool = False
+    max_calls: int = Field(default=20000, ge=1)
+    review_threshold: float = Field(default=0.2, ge=0, le=1)
+    high_threshold: float = Field(default=0.7, ge=0, le=1)
+    transient_retries: int = Field(default=3, ge=0, le=5)
+    rate_limit_rpm: int = Field(default=10000, ge=1)
+    rate_limit_tpm: int = Field(default=10000000, ge=1)
+    rate_utilization: float = Field(default=0.8, gt=0, le=0.8)
+
+
 class JobConfig(BaseModel):
     """One resolved job: the sole input to a stage, and the output counterpart of
     `RunResult`.
@@ -1951,6 +1969,7 @@ class JobConfig(BaseModel):
     sft_data_pilot: SFTDataPilotSpec | None = None
     stance_sdf_pilot: StanceSDFPilotSpec | None = None
     stance_corpus: StanceCorpusSpec | None = None
+    decision_qa: DecisionQASpec | None = None
     related_runs: dict[str, str] = Field(default_factory=dict)
     """Sibling run ids that belong with this one, mapped to why, e.g.
     `{matrix_v1_step24: "the same arms read at step 24, where belief transfer peaks"}`.

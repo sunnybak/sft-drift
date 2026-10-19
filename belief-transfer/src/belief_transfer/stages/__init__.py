@@ -41,6 +41,7 @@ _MODULES: dict[Stage, tuple[str, str]] = {
     "sft_data_pilot": ("belief_transfer.stages.sft_data_pilot", "run"),
     "stance_sdf_pilot": ("belief_transfer.stages.stance_sdf_pilot", "run"),
     "stance_corpus": ("belief_transfer.stages.stance_corpus", "run"),
+    "stance_decision_qa": ("belief_transfer.stages.stance_decision_qa", "run"),
     "datagen": ("belief_transfer.stages.datagen", "run"),
     "sft": ("belief_transfer.stages.sft", "run"),
     "efficacy": ("belief_transfer.stages.efficacy", "run"),

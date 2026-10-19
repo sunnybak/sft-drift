@@ -53,3 +53,53 @@ metrics, validation and reports. `configs/` is the Hydra tree; only config.py re
 inside src. `tests/` contains weight-free checks plus explicit `--run-gpu` tests.
 `scripts/handoff.py` handles operational preservation; experiment jobs use run.py.
 The archived one-off scripts/skills and old plans are outside the current queue.
+
+## OpenAI Decisions inference
+
+`generation.llm` supports Decisions alongside text/tool Responses, using the same
+`OPENAI_API_KEY`, SDK retries/timeouts, append-only cache and `RunContext` tracking.
+No dependency upgrade is needed. Decisions currently uses `gpt-6-luna` and supports
+predicate, choice and score questions; refusals remain explicit in the returned answers.
+
+```python
+import asyncio
+from belief_transfer.generation.llm import (
+    Client, DECISION_MODEL, DecisionQuestion, decide,
+)
+
+questions: list[DecisionQuestion] = [{
+    "type": "predicate",
+    "name": "endorses",
+    "instructions": "Does the text explicitly endorse the claim?",
+}]
+
+async def main():
+    result = await decide("I endorse the claim.", questions)
+    print(result["answers"])
+
+    async with Client(model=DECISION_MODEL, throughput=4) as client:
+        async for item in client.batch_decisions(
+            ["I endorse the claim.", "I reject the claim."], questions,
+        ):
+            print(item.index, item.payload["answers"])
+
+asyncio.run(main())
+```
+
+Module-level `batch_decisions(...)` is also available. Both batch interfaces accept
+sync or async prompt iterables, yield indexed `Completion`s as calls finish, and
+cancel workers when closed (use `contextlib.aclosing` if leaving a stream early).
+Here batch means concurrent requests, matching existing `batch`, rather than an
+OpenAI Batch jobs submission. `payload` holds the full response, including model,
+answers and usage; `text` is its JSON serialization.
+
+`use_cache`, `override_cache` and `replicate` behave like text inference. Decision
+cache keys include the full ordered question definitions and remain separate from
+historical Responses entries. Local cache hits cost zero; fresh Decisions estimates
+use the endpoint's input-only rate, including the long-context tier, without regional
+premiums. See the [official API](https://developers.openai.com/api/reference/resources/decisions/methods/create)
+and [pricing](https://developers.openai.com/api/docs/guides/decisions#pricing-and-availability).
+This adds a client mechanism; it does not change any frozen scoring instrument or
+switch existing experiments to Decisions automatically.
+
+Weight-free checks: `uv run --no-sync pytest -q tests/test_decisions.py`.

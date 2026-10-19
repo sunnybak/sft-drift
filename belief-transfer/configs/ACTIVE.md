@@ -109,3 +109,11 @@ use new slots. Current source changes prevent v4 resume under this code. See STA
 
 Completed v5 bank: no active generation process. Automated flags await content review;
 see STATE.md and the run completion report. No training authorization follows.
+
+## Decisions corpus QA
+
+`run/ethics_sft_decision_qa_{calibration_v1,calibration_v2,validation_v1,corpus_v1}.yaml`
+select the typed `stance_decision_qa` stage. They read the immutable completed v5 corpus,
+calibrate on prior agent annotations, preserve raw probabilities/refusals, and route review.
+They do not change the frozen measurement instrument or select/drop training rows.
+See `../STANCE_DECISION_QA.md` and STATE.md for actual live status.

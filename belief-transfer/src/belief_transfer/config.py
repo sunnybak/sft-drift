@@ -96,6 +96,8 @@ def config_sha(job: JobConfig, *, length: int = 12) -> str:
     if job.stance_corpus is None:
         # Adding an opt-in stage must not rename historical config identities.
         payload.pop('stance_corpus', None)
+    if job.decision_qa is None:
+        payload.pop('decision_qa', None)
     canonical = _canonical_json(payload)
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:length]
 

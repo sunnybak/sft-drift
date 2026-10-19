@@ -1,5 +1,26 @@
 # Current state — 2026-10-19
 
+## Current work — Decisions corpus QA authorized
+
+User authorized calibration on the 164 reviewed examples, then advisory Decisions QA
+across all 20,000 finals and triage/manual repair of serious findings. New registered
+stage `stance_decision_qa`, separate from frozen measurement and source generation.
+Overlays: `ethics_sft_decision_qa_calibration_v1`, `calibration_v2`, `validation_v1`,
+`corpus_v1` (each with the common `ethics_sft_decision_qa_` prefix). All initially prepare;
+bounded live canary precedes calibration/scaling. No live QA calls yet at this checkpoint.
+Requests/raw replies/probabilities/refusals and individually retried attempts persist in
+a separate run journal. Unknown potentially billed intents are never blindly replayed.
+No filtering/training-ready labels or source edits. See `belief-transfer/STANCE_DECISION_QA.md`.
+Tests: initial full suite 935 passed/five skipped, one legacy fingerprint assertion failed
+because it included the new unset QA field in its expected payload. Historical config
+hash stays `8834d5aca78e`; updated assertion plus ten new QA tests passed (11 total).
+No production behavior changed after the full run. Tests are stopped before live writes.
+Exact next command from `belief-transfer/`:
+
+```sh
+uv run --no-sync python run.py +run=ethics_sft_decision_qa_calibration_v1
+```
+
 ## Candidate bank completed; sampled content review completed
 
 **`ethics_sft_pooled_corpus_v5` completed** all 2,100 shards: **20,000 synthetic
@@ -94,3 +115,17 @@ uv sync --locked --dev
 uv run --no-sync python scripts/handoff.py restore
 uv run --no-sync python scripts/handoff.py verify
 ```
+
+## Decisions client integration — 2026-10-19
+
+Opt-in OpenAI Decisions support added to `generation.llm`: single async requests,
+concurrent batch/async iterables, typed questions, preserved probabilities/refusals,
+separate cache identity and input-only cost tracking. Existing experimental inference
+and frozen scoring remain unchanged; no new study runs or training. Live synthetic
+single/batch smoke passed (3 calls, 1,113 input tokens, estimated $0.0001113), with
+cache disabled. Targeted tests: 47 passed. Full weight-free suite: **926 passed, 5 skipped**;
+result-tree guard and `git diff --check` passed.
+Details and exact commands: [integration note](changelog/2026-10-19-decisions-client.md).
+The earlier client-only block remained local and its handoff refused dirty source.
+Those changes are now included in the authorized QA implementation/preservation block;
+see the new QA changelog and actual handoff receipt for subsequent snapshot status.
