@@ -151,9 +151,9 @@ async def run(job: JobConfig) -> RunResult:
                                 'training_ready':False,'raw_response':record.get('payload'),'error':record.get('error'),'triage':'unresolved'}
                         if not record.get('error'):
                             try:
-                                result['parsed']=qa.parse(record['payload'],spec.prompt_version)
+                                result['parsed']=qa.parse(record['payload'],spec.prompt_version,doc['position'])
                                 result['triage']=qa.triage(result['parsed'],spec.review_threshold,spec.high_threshold)
-                                result['critical_risk']=max(result['parsed']['scores'].get(k,1) for k in ('stance_risk','premise_change','contradiction'))
+                                result['critical_risk']=max(qa.critical_scores(result['parsed']))
                             except (ValueError,KeyError,TypeError) as exc:result['error']=str(exc)
                         with journal.db:journal.db.execute('INSERT INTO qa_rows VALUES (?,?)',(doc['document_id'],json.dumps(result)))
                         if record.get('http_status') in {400,401,403,404} or (record.get('error') and not document_client.transient_error(record)):

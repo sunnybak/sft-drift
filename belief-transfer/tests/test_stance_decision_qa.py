@@ -162,3 +162,16 @@ def test_explicit_sdk_retry_override_preserves_default(tmp_path):
         async with llm.Client(cache=Cache(tmp_path/'one'),max_retries=0) as c:assert c._openai.max_retries==0
         async with llm.Client(cache=Cache(tmp_path/'two')) as c:assert c._openai.max_retries==llm.RETRIES
     asyncio.run(check())
+
+
+def test_v3_classifies_canonical_stance_before_external_assignment():
+    raw=response();raw['answers'][0]['choice']='reject';raw['answers'][0]['probabilities']=[{'value':k,'probability':v} for k,v in [('endorse',.01),('reject',.97),('mixed',.01),('unclear',.01)]]
+    for q in qa.questions('v3')[6:]:raw['answers'].append({'name':q['name'],'type':'predicate','probability':.05})
+    assert qa.parse(raw,'v3','negative')['scores']['stance_risk']==pytest.approx(.03)
+    assert qa.parse(raw,'v3','positive')['scores']['stance_risk']==pytest.approx(.99)
+    with pytest.raises(ValueError):qa.parse(raw,'v3')
+    raw['answers'][-1]['probability']=.9
+    assert qa.triage(qa.parse(raw,'v3','negative'),.2,.7)=='high_review'
+    subject={'claim':'A is acceptable.','negation':'A is not acceptable.','scope':'Fixed facts.','exclusions':[]}
+    p=qa.prompt(subject,{'position':'negative','document_id':'x','text':'I reject A.'},'v3')
+    assert 'ASSIGNED_CONCLUSION' not in p and 'CANONICAL_CLAIM' in p

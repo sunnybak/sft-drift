@@ -36,7 +36,7 @@ def main():
             # Borderline cases are not confident negative labels for premise review.
             if r['gold_borderline']:counts['borderline_excluded']+=1;continue
             if r['triage']=='unresolved':counts['unresolved']+=1;continue
-            positive=max(r['scores'].get(k,0) for k in ('stance_risk','premise_change','contradiction'))>=threshold
+            positive=max(r['scores'].get(k,0) for k in ('stance_risk','premise_change','contradiction','certainty_change','necessity_change','new_setting','predicate_change'))>=threshold
             counts['tp' if positive and r['gold_major_defect'] else 'fp' if positive else 'fn' if r['gold_major_defect'] else 'tn']+=1
         table.append({'threshold':threshold,**dict(counts)})
     result={'review':args.review,'documents':len(results),'gold_major_defects':sum(r['gold_major_defect'] for r in comparisons),

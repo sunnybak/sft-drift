@@ -1936,7 +1936,7 @@ class DecisionQASpec(BaseModel):
 
     source_run_id: str = "ethics_sft_pooled_corpus_v5"
     selection: Literal["review_v1", "review_v2", "all"] = "review_v1"
-    prompt_version: Literal["v1", "v2"] = "v1"
+    prompt_version: Literal["v1", "v2", "v3"] = "v1"
     operation: Literal["prepare", "assess"] = "prepare"
     resume: bool = False
     max_calls: int = Field(default=20000, ge=1)

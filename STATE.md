@@ -1,25 +1,30 @@
 # Current state — 2026-10-19
 
-## Current work — Decisions corpus QA authorized
+## Current work — Decisions QA calibration in progress
 
-User authorized calibration on the 164 reviewed examples, then advisory Decisions QA
-across all 20,000 finals and triage/manual repair of serious findings. New registered
-stage `stance_decision_qa`, separate from frozen measurement and source generation.
-Overlays: `ethics_sft_decision_qa_calibration_v1`, `calibration_v2`, `validation_v1`,
-`corpus_v1` (each with the common `ethics_sft_decision_qa_` prefix). All initially prepare;
-bounded live canary precedes calibration/scaling. No live QA calls yet at this checkpoint.
-Requests/raw replies/probabilities/refusals and individually retried attempts persist in
-a separate run journal. Unknown potentially billed intents are never blindly replayed.
-No filtering/training-ready labels or source edits. See `belief-transfer/STANCE_DECISION_QA.md`.
-Tests: initial full suite 935 passed/five skipped, one legacy fingerprint assertion failed
-because it included the new unset QA field in its expected payload. Historical config
-hash stays `8834d5aca78e`; updated assertion plus ten new QA tests passed (11 total).
-No production behavior changed after the full run. Tests are stopped before live writes.
-Exact next command from `belief-transfer/`:
-
-```sh
-uv run --no-sync python run.py +run=ethics_sft_decision_qa_calibration_v1
-```
+User authorized Decisions-based screening of all 20,000 and manual triage/repairs.
+Source/client implementation is pushed; new QA runs preserve requests/responses in
+private-registered per-run journals. No corpus-wide pass or repairs yet.
+Completed: calibration_v1 (rubric v1), calibration_v2 (rubric v2), calibration_v3
+(rubric v3), validation_v2 (rubric v3); all IDs have prefix `ethics_sft_decision_qa_`.
+On the reviewed 64: rubric v1 catches 4/11 known major defects at threshold .2; v2
+6/11; v3 9/11 with zero false positives against 53 provisional negatives. All catch
+four known wrong/contradictory positions. v3 classifies canonical endorsement/rejection,
+then compares assignment in code, fixing relative-negation errors.
+The separate previously annotated 100 reveal v3 misses all three known psychology
+premise changes (one false positive among 90 non-borderline negatives). This is NOT
+reliable scope clearance. Next: direct observable questions for specific stronger claims,
+forced manual-review group for both psychology corpora and known misses, fresh QA IDs.
+If that 100-example group informs tuning it becomes development, not held-out validation.
+No changes to source documents, frozen instrument or training. No GPU rental.
+Tests: full pass initially 935 passed/five skipped with one expected-payload assertion
+needing the new unused field excluded; corrected assertion passed. v3 targeted regression
+47 passed/one skipped. New stage tests cover raw refusals, malformed probabilities,
+partial failure, cache recovery, retries, immutable contracts and old retry defaults.
+Live Decision canary: 2,063 input tokens/$0.0002063, all six questions valid. v3 ten-question
+calibration64 cost $0.0202371. Exact cumulative per-run costs are in summaries, not prose.
+Next commands and protocol: `belief-transfer/STANCE_DECISION_QA.md`; inspect run summaries
+before preparing new IDs. Do not rerun completed calibration/validation IDs.
 
 ## Candidate bank completed; sampled content review completed
 

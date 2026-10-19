@@ -43,7 +43,10 @@
     "results/ethical_stance_sft/ethics_sft_decision_qa_calibration_v1",
     "results/ethical_stance_sft/ethics_sft_decision_qa_calibration_v2",
     "results/ethical_stance_sft/ethics_sft_decision_qa_validation_v1",
-    "results/ethical_stance_sft/ethics_sft_decision_qa_corpus_v1"
+    "results/ethical_stance_sft/ethics_sft_decision_qa_corpus_v1",
+    "results/ethical_stance_sft/ethics_sft_decision_qa_calibration_v3",
+    "results/ethical_stance_sft/ethics_sft_decision_qa_validation_v2",
+    "results/ethical_stance_sft/ethics_sft_decision_qa_corpus_v2"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",
@@ -386,7 +389,10 @@
       "generated/ethical_stance_sft/ethics_sft_decision_qa_calibration_v1",
       "generated/ethical_stance_sft/ethics_sft_decision_qa_calibration_v2",
       "generated/ethical_stance_sft/ethics_sft_decision_qa_validation_v1",
-      "generated/ethical_stance_sft/ethics_sft_decision_qa_corpus_v1"
+      "generated/ethical_stance_sft/ethics_sft_decision_qa_corpus_v1",
+      "generated/ethical_stance_sft/ethics_sft_decision_qa_calibration_v3",
+      "generated/ethical_stance_sft/ethics_sft_decision_qa_validation_v2",
+      "generated/ethical_stance_sft/ethics_sft_decision_qa_corpus_v2"
     ],
     "lock_paths": [
       "generated/ethical_stance_sft/ethics_sft_pooled_corpus_v1/.writer.lock",
@@ -401,7 +407,10 @@
       "generated/ethical_stance_sft/ethics_sft_decision_qa_calibration_v1/.writer.lock",
       "generated/ethical_stance_sft/ethics_sft_decision_qa_calibration_v2/.writer.lock",
       "generated/ethical_stance_sft/ethics_sft_decision_qa_validation_v1/.writer.lock",
-      "generated/ethical_stance_sft/ethics_sft_decision_qa_corpus_v1/.writer.lock"
+      "generated/ethical_stance_sft/ethics_sft_decision_qa_corpus_v1/.writer.lock",
+      "generated/ethical_stance_sft/ethics_sft_decision_qa_calibration_v3/.writer.lock",
+      "generated/ethical_stance_sft/ethics_sft_decision_qa_validation_v2/.writer.lock",
+      "generated/ethical_stance_sft/ethics_sft_decision_qa_corpus_v2/.writer.lock"
     ]
   }
 }
