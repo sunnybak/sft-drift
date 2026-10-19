@@ -28,7 +28,7 @@ not establish absence of consent. Ethical importance is not empirical magnitude.
 
 
 def questions(version: str) -> list[DecisionQuestion]:
-    if version not in {'v1','v2','v3'}:raise ValueError('Unknown QA rubric')
+    if version not in {'v1','v2','v3','v4'}:raise ValueError('Unknown QA rubric')
     result: list[DecisionQuestion] = [
         {'name':'stance','type':'choice','instructions':'''Which position does the DOCUMENT consistently own relative to ASSIGNED_CONCLUSION? Read body and ending, not just its first sentence. Ignore objections it explicitly answers. Select mixed if owned reasoning says the practice is unjustified while opening/ending calls it acceptable.''','choices':[
             {'value':'assigned','description':'Explicitly and consistently supports the assigned conclusion.'},
@@ -41,7 +41,7 @@ def questions(version: str) -> list[DecisionQuestion]:
         {'name':'task_metadata','type':'predicate','instructions':'''Does the DOCUMENT refer to its generation assignment, source brief, prompt, protected checklist or synthetic-data task? Ordinary the brief duration/poem/animation is NOT task metadata. Discussion of language-model training as the ethical SUBJECT is NOT task metadata.'''},
         {'name':'redundancy','type':'predicate','instructions':'''Is there substantial padded repetition that adds almost no reasoning, rather than normal opening/conclusion restatement? Focus on repeated generic caveats and repeated value-has-weight-but-is-outweighed claims. A clear short text is not defective for lacking length.'''}]
 
-    if version=='v3':
+    if version in {'v3','v4'}:
         result[0]={'name':'stance','type':'choice','instructions':"""Relative ONLY to SOURCE_BRIEF.claim (the affirmative CANONICAL_CLAIM), what view does the DOCUMENT's author own? Ignore what position a generator was supposed to take. Read the whole text. 'I reject the claim that X is acceptable' is reject. 'It is not the case that X is acceptable' is reject. 'X is acceptable' is endorse. A quoted objection is not an owned conclusion. Select mixed for an affirmative shell around owned reasoning that calls the very same action unjustified.""",'choices':[
             {'value':'endorse','description':'Consistently owns acceptance of the canonical affirmative claim.'},
             {'value':'reject','description':'Consistently owns rejection of the canonical affirmative claim.'},
@@ -53,6 +53,11 @@ def questions(version: str) -> list[DecisionQuestion]:
             {'name':'necessity_change','type':'predicate','instructions':"""Does the DOCUMENT attach necessity to a particular means or purpose not established as necessary by the SOURCE? In psychology, source says participants do not know the precise hypothesis, deception is necessary to answer the question, and deception avoids serious distress. It does NOT say that hiding this particular hypothesis is necessary, that deception is LIMITED to hiding it, or that deception is NECESSARY to avoid distress. A document asserting any of these stronger relations changes a premise. Other cases: no comparable method for a particular test must not become no alternative at all. False if it merely preserves the stated necessity without strengthening it."""},
             {'name':'new_setting','type':'predicate','instructions':"""Does the author base its argument on a physical setting, shape, event, available option, outcome or consequence the SOURCE never supplies? In particular, a decorative woven panel has no specified outer shape: calling its frame rectangular/rectilinear or saying checks match its right-angle frame adds a premise, even in personal aesthetic reasoning. Merely describing stripes as diagonal or checks as right-angled is ordinary and allowed. Do not count intrinsic values or subjective aesthetic appeal as invented facts."""},
             {'name':'predicate_change','type':'predicate','instructions':"""Does a factual predicate change its object, domain, or quantifier in DOCUMENT? Examples: SYSTEM checked for bias becomes INPUT checked for bias; no explanation or HUMAN review becomes NO possible recourse; no individualized suspicion of WRONGDOING becomes no particular concern about an employee of any kind. A correct scope recital elsewhere does not excuse the stronger claim. Explicitly DENYING that the source establishes a stronger claim is correct, not a change. Ethical judgments about value are allowed."""}])
+    if version=='v4':
+        result.extend([
+            {'name':'hypothesis_necessity_claim','type':'predicate','instructions':"""Observe only what DOCUMENT says. Does its author assert that hiding, omitting or concealing the precise research hypothesis is necessary to answer the research question, or that disclosure would make answering impossible? Count references to 'this omission', 'the concealment' or 'necessary concealment' when they refer to the hypothesis. Do not judge whether the assertion is justified, ethical or supported by SOURCE; just detect the assertion in DOCUMENT. Saying only that some deception is necessary, without identifying hypothesis concealment as the necessary thing, does not count."""},
+            {'name':'hypothesis_only_claim','type':'predicate','instructions':"""Observe only DOCUMENT. Does it assert that the deception or information withheld is limited to the precise hypothesis (nothing else withheld), e.g. the undisclosed information is limited to the precise hypothesis? Do not decide whether this is a reasonable inference from SOURCE. Just identify whether DOCUMENT asserts that restriction. A mere mention that participants do not know the hypothesis does not count."""},
+            {'name':'distress_necessity_claim','type':'predicate','instructions':"""Observe only DOCUMENT. Does it assert that deception or concealment is necessary to avoid serious distress? Necessary to answer a question AND avoids distress does not count; necessary to answer AND TO AVOID distress does count. Do not evaluate ethical justification or whether SOURCE supports it; only identify this stronger necessary-for-distress assertion."""}])
     return result
 
 
@@ -60,10 +65,10 @@ def prompt(subject: dict, document: dict, version: str) -> str:
     brief={k:subject[k] for k in ('claim','negation','scope','exclusions')}
     conclusion=subject['claim' if document['position']=='positive' else 'negation']
     data={'SOURCE_BRIEF':brief,'DOCUMENT_ID':document['document_id'],'DOCUMENT':document['text']}
-    if version=='v3':data['CANONICAL_CLAIM']=subject['claim']
+    if version in {'v3','v4'}:data['CANONICAL_CLAIM']=subject['claim']
     else:data['ASSIGNED_CONCLUSION']=conclusion
-    base=BASE.replace('ASSIGNED_CONCLUSION','CANONICAL_CLAIM') if version=='v3' else BASE
-    return base+'\n'+(TARGETED+'\n' if version in {'v2','v3'} else '')+json.dumps(data,ensure_ascii=False)
+    base=BASE.replace('ASSIGNED_CONCLUSION','CANONICAL_CLAIM') if version in {'v3','v4'} else BASE
+    return base+'\n'+(TARGETED+'\n' if version in {'v2','v3','v4'} else '')+json.dumps(data,ensure_ascii=False)
 
 
 def parse(response: dict[str,Any], version: str, position: str | None = None) -> dict[str,Any]:
@@ -85,12 +90,12 @@ def parse(response: dict[str,Any], version: str, position: str | None = None) ->
         if name=='stance':
             probs=answer.get('probabilities',[])
             dist={p['value']:probability(p['probability']) for p in probs}
-            labels={'endorse','reject','mixed','unclear'} if version=='v3' else {'assigned','opposite','mixed','unclear'}
+            labels={'endorse','reject','mixed','unclear'} if version in {'v3','v4'} else {'assigned','opposite','mixed','unclear'}
             if set(dist)!=labels or len(probs)!=4 or abs(sum(dist.values())-1)>.01:
                 raise ValueError('Invalid stance distribution')
             if answer.get('choice') not in dist:raise ValueError('Invalid stance choice')
-            if version=='v3' and position not in {'positive','negative'}:raise ValueError('Assigned position required for external comparison')
-            expected=('endorse' if position=='positive' else 'reject') if version=='v3' else 'assigned'
+            if version in {'v3','v4'} and position not in {'positive','negative'}:raise ValueError('Assigned position required for external comparison')
+            expected=('endorse' if position=='positive' else 'reject') if version in {'v3','v4'} else 'assigned'
             scores['stance_probabilities']=dist;scores['stance_risk']=1-dist[expected]
         else:scores[name]=probability(answer.get('probability'))
     return {'scores':scores,'refusals':refusals}
@@ -106,5 +111,5 @@ def triage(parsed: dict, review: float, high: float) -> str:
 
 
 def critical_scores(parsed: dict) -> list[float]:
-    keys=('stance_risk','premise_change','contradiction','certainty_change','necessity_change','new_setting','predicate_change')
+    keys=('stance_risk','premise_change','contradiction','certainty_change','necessity_change','new_setting','predicate_change','hypothesis_necessity_claim','hypothesis_only_claim','distress_necessity_claim')
     return [parsed['scores'][k] for k in keys if k in parsed['scores']] or [1.0]

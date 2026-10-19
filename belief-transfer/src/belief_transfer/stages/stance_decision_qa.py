@@ -33,10 +33,12 @@ def inputs(job: JobConfig) -> tuple[list[dict],dict[str,dict],dict[str,str]]:
     hashes={'briefs.jsonl':hashlib.sha256((root/'briefs.jsonl').read_bytes()).hexdigest()};rows=[]
     ids=None
     if spec.selection!='all':
-        review='content_review_v1' if spec.selection=='review_v1' else 'content_review_v2'
-        path=DATA/'results/ethical_stance_sft'/spec.source_run_id/review/'selected_documents.jsonl'
-        raw=path.read_bytes();ids={r['document_id'] for r in map(json.loads,raw.splitlines())}
-        hashes['selection/'+review]=hashlib.sha256(raw).hexdigest()
+        reviews=['content_review_v1','content_review_v2'] if spec.selection=='reviewed' else ['content_review_v1' if spec.selection=='review_v1' else 'content_review_v2']
+        ids=set()
+        for review in reviews:
+            path=DATA/'results/ethical_stance_sft'/spec.source_run_id/review/'selected_documents.jsonl'
+            raw=path.read_bytes();ids.update(r['document_id'] for r in map(json.loads,raw.splitlines()))
+            hashes['selection/'+review]=hashlib.sha256(raw).hexdigest()
     for file in sorted((root/'shards').glob('*/documents.jsonl')):
         raw=file.read_bytes();hashes[str(file.relative_to(root))]=hashlib.sha256(raw).hexdigest()
         for row in map(json.loads,raw.splitlines()):
@@ -66,12 +68,38 @@ def request_identity(prompt: str, questions: list) -> str:
     return cache_key(llm.DECISION_MODEL,json.dumps(body,sort_keys=True,ensure_ascii=False,allow_nan=False),'decisions:v1')
 
 
+async def preflight(client: Any, body: dict, pacer: Any, enabled: bool) -> tuple[int,dict]:
+    envelope=json.dumps(body,ensure_ascii=False)
+    byte_bound=len(envelope.encode())+2048
+    if not enabled:return byte_bound,{'method':'utf8_byte_bound','reservation':byte_bound}
+    await pacer.acquire(1)  # Counter requests consume an HTTP permit too.
+    try:
+        count=await client._openai.responses.input_tokens.count(model=llm.DECISION_MODEL,input=envelope)
+        if count.input_tokens<=0:raise ValueError('Invalid provider count')
+        reservation=min(byte_bound,count.input_tokens+1024)
+        return reservation,{'method':'provider_count_of_serialized_envelope_plus_1024','input_tokens':count.input_tokens,'reservation':reservation,'byte_bound':byte_bound}
+    except Exception as exc:
+        return byte_bound,{'method':'utf8_byte_fallback','error':type(exc).__name__,'reservation':byte_bound}
+
+
+def mandatory_ids(source_run: str) -> set[str]:
+    ids=set()
+    for version in ('v1','v2'):
+        path=DATA/'results/ethical_stance_sft'/source_run/('content_review_'+version)/'adjudications.jsonl'
+        if not path.exists():continue
+        for d in map(json.loads,path.read_text().splitlines()):
+            fs=d.get('agent_findings',d.get('semantic_findings',[]))
+            if any(f['kind'] in {'wrong_position','contradictory_position','scope_addition','premise_narrowing','necessity_scope_change'} and f.get('severity','clear')=='clear' for f in fs):ids.add(d['document_id'])
+    return ids
+
+
 def export(root: Path,out: Path,journal: CorpusJournal,total: int) -> dict:
     rows=[json.loads(r[0]) for r in journal.db.execute('SELECT value FROM qa_rows ORDER BY id')]
     counts={key:sum(r['triage']==key for r in rows) for key in ('high_review','review','style_review','low_flag','unresolved')}
     cost,uncertain=journal.spend()
     summary={'documents':len(rows),'planned_documents':total,'triage_counts':counts,
              'actual_cost_usd':cost,'uncertain_cost_upper_bound':uncertain,
+             'mandatory_review_documents':sum(bool(r.get('mandatory_review_reasons')) for r in rows),
              'training_ready':False,'note':'Probabilities are model judgments, not calibrated corpus error rates. No filtering or source edits.'}
     for name,items in [('decisions',rows),('review_queue',sorted((r for r in rows if r['triage']!='low_flag'),key=lambda r:(r['triage']!='unresolved',-r.get('critical_risk',1),r['document_id'])))]:
         temp=out/(name+'.jsonl.tmp');temp.write_text(''.join(json.dumps(r,ensure_ascii=False)+'\n' for r in items));temp.replace(out/(name+'.jsonl'))
@@ -88,9 +116,11 @@ async def run(job: JobConfig) -> RunResult:
         raise ValueError('Use an ethics_sft_ ID under ethical_stance_sft')
     if spec.review_threshold>spec.high_threshold:raise ValueError('Review threshold must not exceed high threshold')
     rows,briefs,hashes=inputs(job)
+    known_ids=mandatory_ids(spec.source_run_id)
     root=DATA/'generated/ethical_stance_sft'/job.run_id;out=DATA/'results/ethical_stance_sft'/job.run_id
     contract={'settings':spec.model_dump(exclude={'operation','resume','max_calls'}),'source_hashes':hashes,
               'questions':qa.questions(spec.prompt_version),'planned_documents':len(rows),
+              'mandatory_known_ids':sorted(known_ids),'mandatory_subjects':['psychology_deception_debrief','psychology_deception_no_debrief'],
               'code_hashes':{str(p.relative_to(PROJECT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (Path(__file__),Path(qa.__file__),Path(llm.__file__))}}
     if root.exists() and not spec.resume:raise FileExistsError('Started QA run exists; explicit resume or fresh ID required')
     if not root.exists() and (spec.resume or spec.operation!='prepare'):raise ValueError('Prepare fresh run first')
@@ -119,12 +149,12 @@ async def run(job: JobConfig) -> RunResult:
                     async def one(doc: dict) -> None:
                         prompt=qa.prompt(briefs[doc['subject_id']],doc,spec.prompt_version);questions=qa.questions(spec.prompt_version)
                         key=request_identity(prompt,questions);body={'model':llm.DECISION_MODEL,'input':prompt,'questions':questions}
-                        reservation=len(json.dumps(body,ensure_ascii=False).encode())+2048
+                        reservation,preflight_record=await preflight(client,body,pacer,spec.count_provider_tokens)
                         if reservation>llm.LONG_CONTEXT_INPUT_TOKENS:raise ValueError('QA envelope exceeds short-context bound')
                         record=None
                         for attempt in range(spec.transient_retries+1):
                             slot=f"{doc['document_id']}/attempt_{attempt}"
-                            request={**body,'cost_upper_bound':reservation*.1/1_000_000,'automatic_retries':0}
+                            request={**body,'cost_upper_bound':reservation*.1/1_000_000,'automatic_retries':0,'preflight':preflight_record}
                             cached_before=journal.get(key) is not None
                             record=journal.begin(slot,key,request)
                             if record is None:
@@ -146,7 +176,7 @@ async def run(job: JobConfig) -> RunResult:
                                 await asyncio.sleep(document_client.retry_delay(record,attempt));continue
                             break
                         assert record is not None
-                        result={'document_id':doc['document_id'],'source_sha256':doc['sha256'],'position':doc['position'],
+                        result={'preflight':preflight_record,'document_id':doc['document_id'],'source_sha256':doc['sha256'],'position':doc['position'],
                                 'subject_id':doc['subject_id'],'tokens':doc['tokens'],'length_in_range':400<=doc['tokens']<=600,
                                 'training_ready':False,'raw_response':record.get('payload'),'error':record.get('error'),'triage':'unresolved'}
                         if not record.get('error'):
@@ -155,6 +185,14 @@ async def run(job: JobConfig) -> RunResult:
                                 result['triage']=qa.triage(result['parsed'],spec.review_threshold,spec.high_threshold)
                                 result['critical_risk']=max(qa.critical_scores(result['parsed']))
                             except (ValueError,KeyError,TypeError) as exc:result['error']=str(exc)
+                        reasons=[]
+                        if doc['document_id'] in known_ids:reasons.append('previous_agent_confirmed_defect')
+                        if doc['subject_id'] in {'psychology_deception_debrief','psychology_deception_no_debrief'}:reasons.append('scope_family_not_reliably_screened')
+                        result['decision_triage']=result['triage'];result['mandatory_review_reasons']=reasons
+                        if reasons and result['triage'] in {'low_flag','style_review'}:result['triage']='review'
+                        if record.get('usage',{}).get('input_tokens',0)>reservation:
+                            result['reservation_exceeded']=True
+                            raise RuntimeError('Provider input exceeded preflight reservation; stop and revise pacing')
                         with journal.db:journal.db.execute('INSERT INTO qa_rows VALUES (?,?)',(doc['document_id'],json.dumps(result)))
                         if record.get('http_status') in {400,401,403,404} or (record.get('error') and not document_client.transient_error(record)):
                             raise RuntimeError(f"Permanent decision failure at {doc['document_id']}: {record.get('error')}")

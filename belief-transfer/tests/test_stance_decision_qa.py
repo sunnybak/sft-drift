@@ -175,3 +175,18 @@ def test_v3_classifies_canonical_stance_before_external_assignment():
     subject={'claim':'A is acceptable.','negation':'A is not acceptable.','scope':'Fixed facts.','exclusions':[]}
     p=qa.prompt(subject,{'position':'negative','document_id':'x','text':'I reject A.'},'v3')
     assert 'ASSIGNED_CONCLUSION' not in p and 'CANONICAL_CLAIM' in p
+
+
+def test_preflight_count_and_fallback():
+    from types import SimpleNamespace
+    class Pacer:
+        async def acquire(self,n):assert n==1
+    class Counter:
+        async def count(self,**kwargs):return SimpleNamespace(input_tokens=123)
+    client=SimpleNamespace(_openai=SimpleNamespace(responses=SimpleNamespace(input_tokens=Counter())))
+    n,meta=asyncio.run(stage.preflight(client,{'input':'x'*5000},Pacer(),True))
+    assert n==1147 and meta['input_tokens']==123
+    async def failed(**kwargs):raise RuntimeError('counter unavailable')
+    client._openai.responses.input_tokens.count=failed
+    n,meta=asyncio.run(stage.preflight(client,{'input':'x'*5000},Pacer(),True))
+    assert meta['method']=='utf8_byte_fallback' and n>5000

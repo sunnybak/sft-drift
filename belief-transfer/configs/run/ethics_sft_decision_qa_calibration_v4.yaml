@@ -1,0 +1,18 @@
+# @package _global_
+run_id: ethics_sft_decision_qa_calibration_v4
+stage: stance_decision_qa
+throughput: 64
+experiment:
+  id: ethical_stance_sft
+  dataset:
+    n_items: 1
+decision_qa:
+  source_run_id: ethics_sft_pooled_corpus_v5
+  selection: reviewed
+  prompt_version: v4
+  operation: prepare
+  resume: false
+  max_calls: 20000
+  review_threshold: 0.2
+  high_threshold: 0.7
+  count_provider_tokens: true
