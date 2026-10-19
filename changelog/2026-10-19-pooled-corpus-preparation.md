@@ -37,3 +37,12 @@ Verification: full suite 854 passed, 4 skipped (152.83 s); final focused regress
 cover later budget/journal/transport refinements. All tests use temporary artifacts/mocks;
 no results-tree writes or live generation concurrent with tests. Preparation/snapshot
 receipts are recorded in STATE.md and the ignored handoff receipt after execution.
+
+Executed preparation at source `2851d44`: 99 briefs, 2,808 bounded paired batches,
+27,000 planned documents and complementary category-balanced assignments. No SQLite
+request journal, live generation, new C4 rows or model API cost exists. First batch:
+`ai_hiring_no_appeal__explanatory_article__0005` (five shared ideas, ten documents).
+Final focused/cache/client/handoff checks: **96 passed**, 12.76 s. Frozen 161 hashes
+and the historical shared cache match the prior private receipt. Test logs, empty-bank
+audit and verification.json are in the new results directory. Private save/verify and
+actual pinned corpus restore rehearsal follow; receipt holds the authoritative revisions.

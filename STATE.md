@@ -2,8 +2,8 @@
 
 ## Pooled corpus preparation
 
-The new `stance_corpus` source/configuration is implemented. Manifest preparation and
-private snapshot verification follow the source commit. No live generation, C4 acquisition,
+The new `stance_corpus` code/prompts are implemented and the run is **prepared**:
+99 briefs, 2,808 batches, paired slot schedule and complementary arm manifests. No live generation, C4 acquisition,
 training process, GPU rental or checkpoint is active. CUDA BASE/SFT remain unrun.
 
 Run: **`ethical_stance_sft/ethics_sft_pooled_corpus_v1`**. Default operation is prepare-only.
@@ -67,8 +67,11 @@ uv run --no-sync python scripts/handoff.py restore
 uv run --no-sync python scripts/handoff.py verify
 ```
 
-Only orient/wind-up repo skills are active. Current suite: 854 passed, 4 skipped; final
-focused regressions follow. Test output stays in /tmp until tests finish. Git carries
+Only orient/wind-up repo skills are active. Full suite: 854 passed, 4 skipped; final focused regressions: 96 passed.
+All 161 frozen hashes and the historical shared cache are unchanged. New API spend: $0. Test output stays in /tmp until tests finish. Git carries
 source/config/notes; main private study snapshot carries frozen data/results/cache and a
 pinned pointer to the separate corpus store. The actual source and artifact revisions
 are in `belief-transfer/data/.handoff-receipt.json`; prose is not a sync receipt.
+Source/preparation commit: `2851d44`. Results contain test logs, verification.json and
+an empty-bank audit. Commit/push this note, then handoff save/verify to preserve both
+private stores before ending the work block.
