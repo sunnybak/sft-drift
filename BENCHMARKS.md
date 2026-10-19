@@ -19,27 +19,27 @@ are not an untouched held-out test. See the report for these limits.
 
 ## Ordered remaining work
 
-### 1. Fresh document pilot complete; example review before refinement/scale
+### 1. Document refinement and breadth pilot complete; inspect remaining quality issues
 
-The separate paper-inspired pipeline completed 48 standalone stance documents with one
-revision each, 48 assessments and full current-agent review. Read
-[STANCE_DOCUMENT_PILOT.md](belief-transfer/STANCE_DOCUMENT_PILOT.md) and the findings
-linked in STATE.md. Five length failures and scope/reviewer/control issues remain; no
-training corpus is approved. Six pinned C4 records and eight mixture previews are saved.
-The earlier 32-answer pilot remains unchanged. Requirements below continue to apply;
-the quality pilot does not establish SFT effectiveness or a training schedule.
+The authorized matched repeat (48 candidates) and expansion (84 candidates) completed,
+with every full revision read. The expansion covers six ethical subjects in five domains
+and a fresh photography training control. See STATE.md and
+[STANCE_DOCUMENT_PILOT.md](belief-transfer/STANCE_DOCUMENT_PILOT.md) for IDs and reports.
+A failed planning attempt remains preserved. The earlier 32-answer and 48-document pilots
+are unchanged. No training-ready corpus or training schedule is approved.
 
-Choose a small, explicit pilot subset spanning the observed BASE profiles and related
-claims. Reuse the generation/cache/judging utilities. Generate a handful of **shorter**
-examples for opposite positions and off-topic training controls; preserve raw candidates.
-Inspect meaning, consistency with the scoped target, length/dose, diversity, leakage and
-matchedness. Show concrete examples before scaling. Fix corpus counts, length distribution
-and explicit-stance versus inferential-evidence design after this review.
+Length-preserving revision improved the same original48 drafts from37 to47 compliant
+finals; expanded total80/84 in range, largely by retaining75 drafts verbatim. Scope
+qualifier loss, added assumptions, task framing and reviewer disagreements remain.
+Passing same-model checks or four development calibration examples is not validation.
+Next generation work should target those failures on a small fresh-ID test; corpus
+count/length/dose and explicit-stance versus inferential-evidence design remain open.
 
-The legacy generator remains built around older evidence corpora. The new
-`stance_sdf_pilot` stage uses scoped briefs and type/idea/draft/revision instead; its
-review candidates are not a ready-made training dataset.
-The 10 off-topic eval claims and dose-matched off-topic **training arms** serve different roles.
+Matched opposing arms and a fresh off-topic training control remain required. Keep
+canonical overlap separate from unintended evaluation-wording overlap. The frozen
+wordings are never generator input. Six shared C4 rows are only mixture previews,
+not a sufficiently broad background corpus or token-dose match for training. The ten
+off-topic eval beliefs are not the off-topic trained control arms.
 
 ### 2. Establish the target GPU measurement reference
 

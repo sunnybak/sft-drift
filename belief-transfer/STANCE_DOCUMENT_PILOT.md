@@ -164,3 +164,26 @@ revision limit and all-candidate retention remain. Other prompts/plans remain fi
 This means expansion compares the new policy on identical cached source drafts for
 the original 48 slots, plus 36 drafts for three new subjects. Revised outputs receive
 new request identities; this is not an independent replication of all planning/drafting.
+
+## Completed expanded outcome
+
+`ethics_sft_documents_expanded_v1`, generation source 7bbfad4: 84 drafts, one revision
+each and84 assessments; every full final read/annotated. All84 owned positions in
+provisional current-agent review. No invented studies/named authorities/numeric
+consequences found. 80/84 finals in 400–600 tokens, range 369–756, mean 471.5;39,603 tokens.
+Same original 48 source drafts:37/48 v3 finals ->47/48 expanded-policy finals. New
+subjects33/36 in range. 75/84 revisions are verbatim drafts; three short ones were
+left unchanged and one525-token bail editorial grew to756. No extra rounds or clipping.
+
+23 candidate edit flags include four lengths; scope, assumptions, task metadata and
+argument concerns remain. Same-model review flags 12, with19 agent-flagged rows all-pass.
+Reports preserve disagreement rather than infer calibrated accuracy or corpus approval.
+All 12 photography documents remain appearance-only. No exact duplicate texts; lexical
+distinctness does not certify semantic variety. No noncanonical full eval-wording
+matches found; canonical overlap is intentional. Same six C4 rows across14 previews.
+
+Expanded actual API cost$0.0790143; failed-v2 +matched-v3 +expanded total$0.13819395,
+uncertain bound zero. Completed generation processes exited; no training/checkpoint.
+Saved findings, iteration notes, all pairs/drafts, reviewer disagreements, per-document
+annotations, length/form summaries, before/after examples and source hashes. Review
+remaining semantic failures on a focused new experiment before more corpus expansion.

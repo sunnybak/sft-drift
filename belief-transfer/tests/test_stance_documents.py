@@ -242,3 +242,36 @@ def test_length_preservation_policy_uses_measured_proxy_and_new_cache_identity()
     assert 'about 250 words' in anchor and 'return it VERBATIM' in anchor
     assert request_key('gpt-6-luna', anchor+'p', docs.REVISION_TOOL, 3072) != request_key(
         'gpt-6-luna', 'p', docs.REVISION_TOOL, 3072)
+
+
+def test_derived_report_requires_complete_hash_matched_agent_review(tmp_path, monkeypatch):
+    import importlib.util
+
+    generated, results = setup_stage(tmp_path/'data', monkeypatch)
+    monkeypatch.setattr(stage, 'DocumentClient', FakeClient)
+    j = load_job(['+run=ethics_sft_documents_pilot_v2'])
+    asyncio.run(stage.run(j))
+    source = Path(__file__).resolve().parents[1]/'scripts/review_stance_documents.py'
+    module_spec = importlib.util.spec_from_file_location('review_document_script', source)
+    script = importlib.util.module_from_spec(module_spec)
+    module_spec.loader.exec_module(script)
+    monkeypatch.setattr(script, 'PROJECT', tmp_path)
+    documents = [json.loads(s) for s in (generated/j.experiment.id/j.run_id/'documents.jsonl').read_text().splitlines()]
+    script.annotate(j.run_id, {documents[0]['document_id']: (['length'], 'Explicit fixture annotation')})
+    with pytest.raises(AssertionError, match='Complete current-agent review required'):
+        script.derive(j.run_id)
+    script.annotate(j.run_id, {r['document_id']: (['length'], 'Explicit fixture annotation') for r in documents[1:]})
+    # Reporting source hashes require paths relative to the fixture project.
+    monkeypatch.setattr(script, '__file__', str(tmp_path/'review_script.py'))
+    (tmp_path/'review_script.py').write_text('fixture source')
+    script.derive(j.run_id)
+    out = results/j.experiment.id/j.run_id
+    summary = json.loads((out/'review_summary.json').read_text())
+    assert summary['documents'] == summary['agent_flagged_documents'] == 48
+    assert summary['revisions_in_range'] == 0
+    assert (out/'revision_examples.md').exists() and (out/'review_comparison.md').exists()
+    annotations = [json.loads(s) for s in (out/'agent_review.jsonl').read_text().splitlines()]
+    annotations[0]['text_sha256'] = 'wrong'
+    (out/'agent_review.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in annotations))
+    with pytest.raises(AssertionError):
+        script.derive(j.run_id)

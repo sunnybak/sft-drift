@@ -19,6 +19,25 @@ def rows(path):
     return [json.loads(s) for s in path.read_text().splitlines() if s.strip()]
 
 
+def annotate(run_id: str, notes: dict[str, tuple[list[str], str]]):
+    """Save explicit current-agent notes after reading; never infer semantic labels."""
+    from belief_transfer.dataset.stance_documents import append_row
+
+    root = PROJECT/'data/generated/ethical_stance_sft'/run_id
+    out = PROJECT/'data/results/ethical_stance_sft'/run_id
+    documents = {r['document_id']: r for r in rows(root/'documents.jsonl')}
+    path = out/'agent_review.jsonl'
+    existing = {r['document_id'] for r in rows(path)} if path.exists() else set()
+    if set(notes) & existing:
+        raise ValueError('Already annotated; inspect existing notes before editing')
+    for identifier, (categories, note) in notes.items():
+        document = documents[identifier]
+        append_row(path, {'document_id': identifier,
+            'text_sha256': document['diagnostics']['sha256'], 'clear_assigned_position': True,
+            'categories': categories, 'note': note, 'reviewer': 'implementing_agent', 'provisional': True})
+    print(f'Annotated {len(existing)+len(notes)} documents')
+
+
 def derive(run_id: str, compare_id: str | None = None):
     root = PROJECT/'data/generated/ethical_stance_sft'/run_id
     out = PROJECT/'data/results/ethical_stance_sft'/run_id
@@ -59,6 +78,7 @@ def derive(run_id: str, compare_id: str | None = None):
     background = rows(root/'background.jsonl')
     mixtures = rows(root/'mixtures.jsonl')
     calibration = rows(root/'reviewer_calibration.jsonl')
+    responses = rows(root/'responses.jsonl')
     summary = {'run_id': run_id, 'documents': len(documents),
         'drafts_in_range': sum(minimum <= r['tokens'] <= maximum for r in drafts.values()),
         'revisions_in_range': sum(r['diagnostics']['length_in_range'] for r in documents),
@@ -68,6 +88,8 @@ def derive(run_id: str, compare_id: str | None = None):
                                  and not r['diagnostics']['length_in_range'] for r in documents),
         'token_min': min(tokens), 'token_max': max(tokens), 'token_mean': sum(tokens)/len(tokens),
         'synthetic_tokens': sum(tokens), 'background_tokens': sum(r['tokens'] for r in background),
+        'unchanged_after_revision': sum(r['text'] == drafts[r['document_id']]['text'] for r in documents),
+        'response_records': len(responses), 'cached_response_records': sum(bool(r.get('cached')) for r in responses),
         'exact_duplicate_documents': len(tokens)-len({r['diagnostics']['sha256'] for r in documents}),
         'agent_flagged_documents': sum(bool(r['categories']) for r in notes.values()),
         'agent_clear_positions': sum(r['clear_assigned_position'] for r in notes.values()),
@@ -77,6 +99,13 @@ def derive(run_id: str, compare_id: str | None = None):
         'calibration_cases': len(calibration), 'fivegram_jaccard_median': median(overlaps),
         'fivegram_jaccard_max': max(overlaps), 'actual_cost_usd': manifest['actual_cost_usd'],
         'training_ready': False}
+    summary['by_form'] = {form: {'count': len(group),
+        'in_range': sum(r['diagnostics']['length_in_range'] for r in group),
+        'min': min(r['diagnostics']['tokens'] for r in group),
+        'max': max(r['diagnostics']['tokens'] for r in group),
+        'mean': sum(r['diagnostics']['tokens'] for r in group)/len(group)}
+        for form in sorted({r['form'] for r in documents})
+        for group in [[r for r in documents if r['form'] == form]]}
     (out/'review_summary.json').write_text(json.dumps(summary, indent=2)+'\n')
     lines = [f'# Document pilot review — {run_id}', '',
         f"{len(documents)} complete revisions read and annotated by the implementing agent. "
@@ -88,6 +117,9 @@ def derive(run_id: str, compare_id: str | None = None):
         f"(drafts {summary['drafts_in_range']}); range {min(tokens)}–{max(tokens)}, mean "
         f"{summary['token_mean']:.1f}. Revision moved {summary['length_improvements']} into range "
         f"and {summary['length_regressions']} out. All failures retained.", '',
+        f"Revisions identical to their drafts: {summary['unchanged_after_revision']}. "
+        f"Saved response records: {summary['response_records']}, including "
+        f"{summary['cached_response_records']} cache hits. Cache hits are not independent generations.", '',
         f"Synthetic text totals {sum(tokens):,} tokens. No exact duplicate texts: "
         f"{summary['exact_duplicate_documents']} duplicate surplus. Within-arm five-gram overlap "
         f"median {median(overlaps):.3f}, max {max(overlaps):.3f}; lexical uniqueness does not certify "
@@ -102,6 +134,11 @@ def derive(run_id: str, compare_id: str | None = None):
     for r in sorted(notes.values(), key=lambda r: r['document_id']):
         if r['categories']:
             lines += [f"- `{r['document_id']}` — {', '.join(r['categories'])}: {r['note']}"]
+    lines += ['', '## Length by form', '',
+        '| Form | In range | Min | Mean | Max |', '| --- | ---: | ---: | ---: | ---: |']
+    for form, values in summary['by_form'].items():
+        lines.append(f"| {form} | {values['in_range']}/{values['count']} | {values['min']} | "
+                     f"{values['mean']:.1f} | {values['max']} |")
     lines += ['', '## Mixture previews', '',
         '| Arm | Synthetic tokens | C4 tokens | C4 token share |', '| --- | ---: | ---: | ---: |']
     for r in mixtures:
@@ -121,15 +158,23 @@ def derive(run_id: str, compare_id: str | None = None):
     if compare_id:
         previous_root = PROJECT/'data/generated/ethical_stance_sft'/compare_id
         previous = rows(previous_root/'documents.jsonl')
+        previous_drafts = {r['document_id']: r for r in rows(previous_root/'drafts.jsonl')}
         old = {r['document_id']: r for r in previous}
         common = [r for r in documents if r['document_id'] in old]
+        identical_drafts = sum(drafts[r['document_id']]['text'] ==
+                               previous_drafts[r['document_id']]['text'] for r in common)
+        planning_note = ('The common source drafts are reused exactly.' if identical_drafts == len(common)
+                         else 'Source drafts were regenerated, so differences include planning/draft sampling.')
         lines += ['', '## Design-matched comparison', '',
-            f"Comparison: {compare_id}; {len(common)} shared document slots. Plans and prose were "
-            'regenerated, so differences combine prompt changes, planning changes and sampling. '
+            f"Comparison: {compare_id}; {len(common)} shared document slots. {planning_note} "
+            'Revision outputs include API sampling variability. '
             'This is a descriptive comparison, not a causal or significance claim.', '',
             f"Length compliance on common slots: "
             f"{sum(old[r['document_id']]['diagnostics']['length_in_range'] for r in common)}/{len(common)} "
             f"previously; {sum(r['diagnostics']['length_in_range'] for r in common)}/{len(common)} now."]
+        lines += ['', f'Identical source drafts on shared slots: {identical_drafts}/{len(common)}. '
+            'When drafts match, planning/drafting are reused; revision requests and API outputs '
+            'can differ. This is not an independent repeat of the whole pipeline.']
         previous_background = rows(previous_root/'background.jsonl')
         assert [r['sha256'] for r in previous_background] == [r['sha256'] for r in background]
         lines += ['', 'Background text hashes match the comparison run exactly.']
@@ -150,9 +195,9 @@ def derive(run_id: str, compare_id: str | None = None):
             notes[r['document_id']]['note'], '', '### Draft', '', d['text'], '',
             '### Critique', '', *['- '+s for s in r['critique']], '', '### Revision', '', r['text'], '']
     (out/'revision_examples.md').write_text('\n'.join(examples)+'\n')
-    sources = [root/name for name in ['briefs.jsonl','form_plans.jsonl','ideas.jsonl','drafts.jsonl',
+    sources = [root/name for name in ['briefs.jsonl','form_plans.jsonl','ideas.jsonl','requests.jsonl','responses.jsonl','drafts.jsonl',
         'documents.jsonl','assessments.jsonl','background.jsonl','mixtures.jsonl','reviewer_calibration.jsonl']]
-    sources += [out/'agent_review.jsonl', out/'pilot_manifest.json', Path(__file__).resolve()]
+    sources += [out/'agent_review.jsonl', out/'pilot_manifest.json', out/'config.resolved.yaml', Path(__file__).resolve()]
     (out/'review_sources.json').write_text(json.dumps({str(p.relative_to(PROJECT)):
         hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}, indent=2)+'\n')
     print(json.dumps(summary, indent=2))
