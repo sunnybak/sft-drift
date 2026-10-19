@@ -95,3 +95,10 @@ storage. Default operation prepares manifests only; no training or full generati
 `run/ethics_sft_pooled_corpus_v3.yaml` is the unstarted full-corpus proposal. Historical
 v2 generation is preserved at its source commit; do not resume it under changed code.
 See `../POOLED_DATASET_PLAN.md` for the source-bank/mix proposal before bulk generation.
+
+## Current scope check and production proposal
+
+`run/ethics_sft_scope_check_v2.yaml` is the completed same-draft v5 revision check;
+`run/ethics_sft_pooled_corpus_v3.yaml` is prepared with v5 but zero bulk documents.
+Read `../POOLED_DATASET_PLAN.md` and await the user's generation go-ahead. The v1/v2
+scope-check artifacts are separate pilots and are not folded into the 27,000 target.

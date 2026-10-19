@@ -1,50 +1,67 @@
 # Current state — 2026-10-19
 
-## Scope correction checked; authoritative-length matched repeat next
+## Scope correction and dataset proposal complete — awaiting bulk-generation go-ahead
 
-User authorized tightening scope rules, a small multi-belief test, and the final corpus
-math/mix **before bulk generation**. Prompt v4 separates neutral planning from stance
-writing, guards channel/quantifier/predicate scope at every phase, omits internal IDs
-from briefs, and puts reviewer instructions before explicitly bounded JSON document data.
-Historical prompt files and completed v2 documents remain unchanged.
+Prompt v4 fixes channel/quantifier/predicate scope in plans and prose, separates neutral
+planning from stance writing, hides bookkeeping IDs, and puts reviewer instructions
+before bounded document data. Prompt v5 additionally makes measured token counts
+explicitly authoritative in one-pass revision; all other v4 prompt builders are reused.
+Historical prompts/runs are unchanged.
 
-Fresh pilot: `ethical_stance_sft/ethics_sft_scope_check_v1` — four ethical subjects
-(AI hiring, animal medical research, kidney donation, medical-data consent) plus one fresh
-aesthetic control, three forms × one shared idea × two positions = 30 candidates.
-V4 check completed: 30 documents / 111 successful calls, cost $0.04209835, no uncertainty.
-All six hiring documents preserve the channel-specific limit in current-agent review.
-V4 length fell from 27/30 valid drafts to 24/30 revisions because the model replaced
-measured counts with guessed lengths. All originals remain preserved.
+Runs under `ethical_stance_sft`:
 
-Prompt v5 changes only revision instructions to give an explicit authoritative measured
-status; planning/draft/review requests remain identical. `ethics_sft_scope_check_v2`
-will replay the same plans/drafts from the v1 cache and make new revision calls. Cache
-seeding imports no request rows or charges and cannot overwrite a started journal.
-Budget $0.50; concurrency two. Full generation remains unstarted. New production config
-`ethics_sft_pooled_corpus_v3` uses v5, with the same 27,000 synthetic candidate target.
-C4 can now extend beyond 18,000 records until its replacement reserve reaches 5.4M
-Qwen tokens beyond the first shared 9,000 rows. No real C4 is acquired in this check.
+| Run | Outcome | Usage-ledger cost |
+| --- | --- | ---: |
+| `ethics_sft_scope_check_v1` | 30 candidates across four ethical subjects + control, three forms, both sides; all read. Scope issue fixed in six hiring docs; length 24/30 after guessed counts | $0.04209835 |
+| `ethics_sft_scope_check_v2` | Same 30 drafts/plans; new revision instructions, 42 fresh calls + 69 exact replays. All finals read; 30/30 length, 404–591, mean 494.8; 27 valid drafts verbatim, three original length fixes, zero regressions | $0.019428725 |
+| `ethics_sft_pooled_corpus_v3` | Prepared full v5 contract/schedule, **zero generated bulk documents** | $0 |
 
-Full engineering regression after the matched-repeat/cache-seeding change: **878 passed,
-4 skipped** (107.51 s). Earlier scope/reserve suite: 866 passed, 4 skipped. No pytest/live generation overlap.
-Next commands from `belief-transfer/`, after committing/pushing source:
+Check total **$0.061527075**, no uncertain charges/pending requests. All ten prior v2
+pilot documents and all v4 outcomes survive. No generation process, C4 acquisition,
+training, GPU rental or checkpoint is active.
+
+All six new hiring documents preserve the specified unavailable explanation/human-review
+channels without asserting absence of every possible route. Two medical-data articles
+have borderline participation wording; two control notes retain minor practical-context
+boilerplate. One Luna added-premise flag is provisionally disputed, and its inconsistent
+global/per-condition scope booleans remain recorded. Same-model/agent review is advisory,
+not independent human validation. Four familiar ethical subjects and one aesthetic case
+do not validate all ninety beliefs or guarantee diversity at full size. No training-ready
+label follows; full generation would create a candidate bank with retained flags.
+
+Read [check, all paired texts and examples](belief-transfer/data/results/ethical_stance_sft/ethics_sft_scope_check_v2/review.md),
+[agent judgments](belief-transfer/data/results/ethical_stance_sft/ethics_sft_scope_check_v2/agent_review.md),
+and [full generation math/mix](belief-transfer/POOLED_DATASET_PLAN.md).
+Exact next command from `belief-transfer/`:
 
 ```sh
-uv run --no-sync python run.py +run=ethics_sft_scope_check_v2
-uv run --no-sync python scripts/seed_corpus_cache.py --source-run ethics_sft_scope_check_v1 --target-run ethics_sft_scope_check_v2
-uv run --no-sync python run.py +run=ethics_sft_scope_check_v2 stance_corpus.operation=generate stance_corpus.resume=true
+cat POOLED_DATASET_PLAN.md
 ```
 
-Read all thirty revised documents before interpreting the check. Review the proposed
-[full bank/mix](belief-transfer/POOLED_DATASET_PLAN.md); add the measured generation-token
-forecast after the pilot. No bulk generation or training follows without the user's next
-instruction. No GPU rental/training is authorized.
+**Do not launch bulk generation until the user reviews that proposal and says to proceed.**
+Prepared bank: 90 ethical beliefs × 100 docs × both positions = 18,000; nine fresh
+controls × 500 × both = 9,000. Total 27,000, nominal 13.5M final Qwen tokens. Each ethical
+arm selects 9,000 docs; Mixed A/B are complementary 45/45 belief assignments, five/five
+per category. Five synthetic+C4 conditions reuse the same 9,000 C4 background records;
+C4-only replaces the synthetic token dose, not necessarily with an equal number of rows.
+At least 18,000 C4 rows are planned, extending until replacement reserve exceeds 5.4M
+Qwen tokens beyond the shared rows. No agreement filtering. Actual token/step dose
+matching is future assembly work; 1:1 document count is not a 50/50 token promise.
 
-Previous v2 check: ten documents, all 412–587 Qwen tokens, cost $0.01509735; nine provisional
-scope concerns (one borderline), only one flagged by Luna. All ten retained. See
-[v2 review](belief-transfer/data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v2/first_batch_review.md)
-and [history](changelog/2026-10-19-first-live-corpus-batch.md). Changed source means new
-runs; do not resume historical v2 under current source or overwrite its contract.
+Generation forecast: 83,908 Responses calls, about 125M provider input + 42M output
+(tokens distinct from Qwen final-data tokens), plus focus history. Roughly $36–40 with
+$50 ceiling, approximately 3–4 days at current concurrency two. Forecast uses underlying
+provider usage even for exact replays, not the artificially low marginal replay cost.
+Full treatment analysis/falsifiers, training settings, CUDA BASE qualification and GPU
+rental remain future work. All 100 beliefs, including ten untrained off-topic probes,
+remain evaluation targets for every future model/checkpoint.
+
+Source for v4: `3275d32`; v5/matched repeat: `60ced0a`. Engineering suites: 866 passed/4
+skipped, then **878 passed/4 skipped** after exact-cache replay and v5 routing changes.
+No pytest overlapped API generation. Verification recounts all 60 final texts, checks
+paired drafts/plans and shard hashes, confirms all 161 frozen file hashes and historical
+shared cache unchanged. New paths were registered before execution; both private stores
+are preserved by handoff. See [changelog](changelog/2026-10-19-scope-correction.md).
 
 ## Established pilot and measurement references
 
@@ -73,17 +90,9 @@ uv run --no-sync python scripts/handoff.py restore
 uv run --no-sync python scripts/handoff.py verify
 ```
 
-Only orient/wind-up repo skills are active. Full suite: 854 passed, 4 skipped; final focused regressions: 96 passed.
-All 161 frozen hashes and the historical shared cache are unchanged. Current corpus API spend: $0.01509735. Test output stays in /tmp until tests finish. Git carries
-source/config/notes; main private study snapshot carries frozen data/results/cache and a
-pinned pointer to the separate corpus store. The actual source and artifact revisions
-are in `belief-transfer/data/.handoff-receipt.json`; prose is not a sync receipt.
-Initial v1 preparation was superseded before generation: its source-hash map
-used colliding basenames. V1 remains preserved with zero documents/cost; v2 records
-all seven source files by module-relative path. Initial implementation: `2851d44`. V2 preparation/source commit: `7542129`. Results contain test logs, verification.json
-and the original empty-bank audit. First live batch: `976e9b0`; artifact validation
-recounted all ten Qwen lengths, checked draft/final/shard hashes and shared plan lineage.
-No functional code changed and no pytest ran during generation; prior engineering tests
-remain the 854-pass suite and 96-pass final focused checks. Private remote and portable restore rehearsals passed for the
-initial corpus snapshot; final handoff verifies the prepared v2 bytes too. Preserve both
-private stores at each subsequent completed boundary; consult the actual receipt.
+Only orient/wind-up repository skills are active. Code/config/notes travel through Git;
+frozen inputs/results/cache and a pinned pointer to the separate private corpus store
+travel through handoff. The ignored `belief-transfer/data/.handoff-receipt.json` records
+the actual final source commit and both artifact revisions; prose is not a sync receipt.
+Never resume an old run under changed source or overwrite a started contract. No old
+pilot contributes silently to the proposed 27,000-document bank.

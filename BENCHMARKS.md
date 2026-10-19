@@ -19,15 +19,17 @@ are not an untouched held-out test. See the report for these limits.
 
 ## Ordered remaining work
 
-### 1. First live corpus batch reviewed; fix scope precision before bulk generation
+### 1. Scope correction checked; review full-generation proposal before bulk generation
 
-The prepared pooled corpus's first live batch (`ethics_sft_pooled_corpus_v2`) contains ten
-reviewed documents: all lengths and assigned stances pass, but channel-specific limits
-are repeatedly broadened into no possible recourse. Eight provisional precision concerns
-plus one borderline case were recorded; same-model review flags only one. See STATE.md
-and the first-batch report. Keep all ten, and use a fresh-ID focused prompt test before
-bulk generation. One subject/form cannot validate the planned full corpus. No C4 or
-training is included in this live batch.
+The fresh scope check and matched revision-only repeat cover four ethical subjects,
+a fresh control, three forms and both sides (30 fixed drafts). The original recourse
+problem is absent in all six hiring documents. Authoritative length instructions improve
+24/30 to 30/30 in range on the same drafts, preserving all 27 valid drafts verbatim.
+Minor/borderline wording and reviewer disagreements remain explicit; this is development
+evidence, not independent validation or training-ready acceptance. See STATE.md and
+[the full-generation proposal](belief-transfer/POOLED_DATASET_PLAN.md). The user must
+review final counts/mix before bulk generation. Full v3 contract is prepared but has no
+generated data; no C4 or training has run. Actual training-token/step dose remains future.
 
 The authorized matched repeat (48 candidates) and expansion (84 candidates) completed,
 with every full revision read. The expansion covers six ethical subjects in five domains

@@ -2,9 +2,26 @@
 
 This is the dataset-generation proposal for `ethics_sft_pooled_corpus_v3`, using prompt
 v5. Bulk generation remains unstarted pending the user's review of this math/mix.
-The 30-document scope check is a separate pilot and is not counted into this bank.
+The 30-document scope check and its matched revision repeat are separate pilots and
+are not counted into this bank. The full run is prepared with zero generated documents
+and zero model spend; preparation is not approval to generate it.
 Training schedule, epochs, optimizer steps, GPU rental and final treatment analysis
 remain outside this generation proposal.
+
+## Quality check completed
+
+Four ethical subjects plus one fresh control × three forms × two positions produced
+30 candidates. The original recourse overstatement is absent in all six reviewed hiring
+documents. The matched revision-only repeat keeps all 30 source drafts fixed and improves
+length compliance from 24/30 to 30/30 (404–591 Qwen tokens; mean 494.8). All 27 originally
+valid drafts are preserved verbatim; three original length failures are fixed.
+
+Two borderline medical-data participation phrases and two unnecessary practical-context
+clauses in control notes remain explicitly annotated. One model added-premise flag is
+provisionally disputed, with an internal scope-check inconsistency retained. This is
+bounded development evidence, not held-out validation or an automatic training-ready
+label. [All paired samples and review](data/results/ethical_stance_sft/ethics_sft_scope_check_v2/review.md).
+The checks cost $0.061527075 in total. No C4 or bulk documents have been generated.
 
 ## Unique synthetic source bank
 
@@ -90,7 +107,21 @@ stage does not implement the training loss or claim matched exposure already occ
 
 The 13.5M source-bank Qwen tokens are not the provider generation-token bill. That bill
 also includes drafts, critiques, all prompt inputs, planning and assessments, using the
-provider's tokenizer. An empirical phase-by-phase forecast follows the scope check.
+provider's tokenizer. The scope check now supplies an empirical forecast: approximately **125M provider input
+tokens + 42M provider output tokens**, plus growing focus-history input. These use the
+provider tokenizer and include all drafts, revisions, critiques, assessments and plans.
+A conservative UTF8-byte proxy adds up to about 20M input tokens for focus history;
+this is an upper proxy based on observed labels, not another measured token total.
+
+The role-weighted phase forecast is **$35.74** using observed cache categories, or about
+**$38.99** treating all inputs as cache writes and including that history proxy. Plan
+roughly **$36–40**, with the **$50 hard ceiling** preserving partial progress if needed.
+This is a forecast from a small development check, not an invoice or completion promise.
+
+At the current two-request concurrency and observed fresh-call latency (5.64 s mean),
+the arithmetic is about 68 hours before broader latency/planning variation: allow
+approximately **3–4 days** for the bulk run. The faster cached matched-repeat runtime
+is not a forecast for a fresh production bank.
 
 ## Budget and storage
 

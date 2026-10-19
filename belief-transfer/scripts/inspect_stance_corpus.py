@@ -44,7 +44,7 @@ def inspect(root: Path) -> tuple[dict,list[dict]]:
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--run-id',default='ethics_sft_pooled_corpus_v2')
+    parser.add_argument('--run-id',default='ethics_sft_pooled_corpus_v3')
     args=parser.parse_args()
     if not args.run_id.startswith('ethics_sft_') or Path(args.run_id).name != args.run_id:
         raise ValueError('Invalid corpus run ID')

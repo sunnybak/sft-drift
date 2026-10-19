@@ -21,8 +21,9 @@ this stage. The default operation is **prepare**, which makes no model or C4 cal
   five negative beliefs in each category. Each ethical arm selects 9,000 source documents.
 - Fresh off-topic+C4 and C4-only controls are declared alongside untouched CUDA BASE.
   All 100 frozen beliefs must be evaluated later. No training schedule or dose is
-  selected here. The background target is 18,000 unique full C4 documents, not a claim
-  that this count supplies a matched training dose.
+  selected here. The background pool has a minimum of 18,000 unique full C4 documents and can extend
+  until the reserve beyond the first 9,000 rows supplies 5.4M Qwen tokens. Actual
+  training-token/step matching is still required.
 
 ## Prompts and review
 
@@ -39,11 +40,14 @@ source condition plus unsupported-premise quotations. Mechanical checks record t
 length, task metadata, normalized duplicates and canonical versus other frozen wording
 matches. Evaluation paraphrases enter diagnostics only, never generation prompts.
 
-The first live batch has been generated and all ten revisions read. It meets length
-and explicit-stance checks but still broadens unavailable explanation/human review into
-unavailable every other avenue. See the [first-batch review](data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v2/first_batch_review.md).
-Do not scale these prompts unchanged; the next prompt test needs a fresh ID. Same-model
-review remains advisory. Flagged rows stay in the bank;
+The first corpus check exposed a channel-scope overstatement. Prompt v4 repairs that
+at planning and prose phases; v5 adds authoritative measured-length status in revision.
+The fresh 30-document scope check and matched repeat now have all six hiring documents
+preserving the intended channels and all 30 lengths in range. All 27 valid drafts are
+kept verbatim. Minor/borderline wording and reviewer disagreements remain recorded.
+See [the reviewed pairs](data/results/ethical_stance_sft/ethics_sft_scope_check_v2/review.md)
+and [the full-generation proposal](POOLED_DATASET_PLAN.md). Bulk generation is unstarted
+pending the user's review. Same-model review remains advisory. Flagged rows stay in the bank;
 there is no rejection sampling, truncation, automatic training-ready label or claim
 that document diversity follows from having distinct titles.
 
@@ -52,18 +56,18 @@ that document diversity follows from having distinct titles.
 From `belief-transfer/`:
 
 ```sh
-# Once only: materialize briefs, schedule, immutable contract and arm assignments.
-uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v2
+# Already executed for v3: prepare only; do not rerun a started preparation.
+uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v3
 
-# Technical resume command only: the first live batch is complete.
-# Current quality findings require a fresh-ID prompt test before using more v2 batches.
-uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v2 stance_corpus.operation=generate stance_corpus.resume=true stance_corpus.max_batches=1
+# Reference only: production generation is unstarted. Wait for the user
+# to approve POOLED_DATASET_PLAN.md before this or C4 acquisition.
+uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v3 stance_corpus.operation=generate stance_corpus.resume=true stance_corpus.max_batches=1
 
 # Write a new numbered inspection report and a small paired sample view.
-uv run --no-sync python scripts/inspect_stance_corpus.py
+uv run --no-sync python scripts/inspect_stance_corpus.py --run-id ethics_sft_pooled_corpus_v3
 
 # Independent bounded C4 acquisition: one shard of up to 100 unique documents.
-uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v2 stance_corpus.operation=background stance_corpus.resume=true stance_corpus.max_batches=1
+uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v3 stance_corpus.operation=background stance_corpus.resume=true stance_corpus.max_batches=1
 ```
 
 Read the first live pairs and compare their scope against the briefs before scheduling
@@ -83,7 +87,7 @@ an explicit failure; resume does not regenerate it until it passes. No force ove
 ## Local layout and preservation
 
 ```text
-data/generated/ethical_stance_sft/ethics_sft_pooled_corpus_v2/
+data/generated/ethical_stance_sft/ethics_sft_pooled_corpus_v3/
   contract.json, briefs.jsonl/.md, schedule.jsonl/.md, conditions.json
   requests.sqlite                   # durable corpus-specific cache and request ledger
   shards/<batch-id>/                 # atomic completed shard
@@ -91,7 +95,7 @@ data/generated/ethical_stance_sft/ethics_sft_pooled_corpus_v2/
     ideas.jsonl/.md, events.jsonl/.md, manifest.json
   background/<shard-id>/
     documents.jsonl/.md, manifest.json
-data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v2/
+data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v3/
   config.<invocation>.json, invocation.<invocation>.json, corpus_status.json
   audit_<number>.json/.md
 ```
