@@ -19,43 +19,27 @@ are not an untouched held-out test. See the report for these limits.
 
 ## Ordered remaining work
 
-### 1. Full candidate generation authorized; monitor preservation and quality
+### 1. Review the completed candidate bank before training
 
-The fresh scope check and matched revision-only repeat cover four ethical subjects,
-a fresh control, three forms and both sides (30 fixed drafts). The original recourse
-problem is absent in all six hiring documents. Authoritative length instructions improve
-24/30 to 30/30 in range on the same drafts, preserving all 27 valid drafts verbatim.
-Minor/borderline wording and reviewer disagreements remain explicit; this is development
-evidence, not independent validation or training-ready acceptance. See STATE.md and
-[the full-generation proposal](belief-transfer/POOLED_DATASET_PLAN.md). The user reviewed counts/mix and authorized beginning generation. The current v5 continuation is prepared with 20,000 candidates planned (90 ethical + ten
-fresh controls, 100 documents per position), with 6,616 documents completed before one assessment server error stopped generation.
-The partial bank is backed up and inherited into v5. The user authorized three bounded
-transient retries; original failures and charges are preserved, successful outputs
-reused. Recovery succeeded on retry 1; 6,970 documents are now complete. C4 has not
-started. Current process and recovered-call state are in STATE.md. See STATE.md for actual PID/status. The ten/64-worker
-throughput checks are separate; v3 is superseded. New scheduling has no dollar ceiling
-and an 80% RPM/TPM gate; full-run saturation is unmeasured. Control token/step matching
-requires explicit future sampling/reuse. The C4 pool is part of this launch; training remains unauthorized. Actual training-token/step dose remains future.
+`ethics_sft_pooled_corpus_v5` completed all 20,000 synthetic documents and 20,634 pinned
+C4 documents. All 100 training subjects have 100 documents per position; the ten fresh
+control claims are distinct from the ten frozen evaluation preferences. The bank has
+9,800,659 synthetic Qwen tokens; 97.9% of documents meet the requested 400–600 range.
+The 417 length flags, 1,106 provisional factual-addition flags and other automated
+findings remain retained for review. Flag counts overlap and do not establish defects.
+See STATE.md and the completion report for exact counts, lineage, costs and verification.
 
-The authorized matched repeat (48 candidates) and expansion (84 candidates) completed,
-with every full revision read. The expansion covers six ethical subjects in five domains
-and a fresh photography training control. See STATE.md and
-[STANCE_DOCUMENT_PILOT.md](belief-transfer/STANCE_DOCUMENT_PILOT.md) for IDs and reports.
-A failed planning attempt remains preserved. The earlier 32-answer and 48-document pilots
-are unchanged. No training-ready corpus or training schedule is approved.
+Next: review scoped opposing pairs and automated failures, recording disagreements;
+assess diversity and unintended wording overlap. No automatic training-ready designation
+follows generation or same-model review. Earlier reviewed pilots and scope checks are
+development evidence, not independent validation of this full bank. Canonical overlap
+is intentionally allowed; frozen evaluation paraphrases never enter generation prompts.
 
-Length-preserving revision improved the same original48 drafts from37 to47 compliant
-finals; expanded total80/84 in range, largely by retaining75 drafts verbatim. Scope
-qualifier loss, added assumptions, task framing and reviewer disagreements remain.
-Passing same-model checks or four development calibration examples is not validation.
-Next generation work should target those failures on a small fresh-ID test; corpus
-count/length/dose and explicit-stance versus inferential-evidence design remain open.
-
-Matched opposing arms and a fresh off-topic training control remain required. Keep
-canonical overlap separate from unintended evaluation-wording overlap. The frozen
-wordings are never generator input. Six shared C4 rows are only mixture previews,
-not a sufficiently broad background corpus or token-dose match for training. The ten
-off-topic eval beliefs are not the off-topic trained control arms.
+Four ethical arm selections each contain 9,000 documents. Shared C4 is 9,000 full rows;
+the remaining 11,634 rows provide 5,402,242 replacement tokens. Document-count matching
+is not token matching. Declare measured token/step matching and off-topic position
+selection/reuse before SFT. The smaller off-topic bank has less topic breadth.
+Training remains unauthorized; no GPU resources are running.
 
 ### 2. Establish the target GPU measurement reference
 

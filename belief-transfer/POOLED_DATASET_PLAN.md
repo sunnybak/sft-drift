@@ -1,13 +1,14 @@
 # Current full document bank and mixtures
 
-The user selected **ten fresh training-control claims and 100 documents per position**,
-matching the per-belief ethical setting. Current continuation run:
-`ethics_sft_pooled_corpus_v5`, prompt v5, with three bounded transient retries. It
-continues v4 after an HTTP 503, preserving the old run and reusing its completed work. The user authorized beginning generation;
-the first ten documents completed. Live status is in the run's `generation_job.json`;
-STATE.md records the supervisor command and safe-boundary preservation policy.
-Earlier v1–v3 contracts, pilots and forecasts remain historical artifacts. Changed
-source/contract settings require a fresh ID; do not resume v3 with current code.
+The selected **ten fresh training-control claims and 100 documents per position**
+are complete in `ethics_sft_pooled_corpus_v5` (prompt v5). It continued v4 after an HTTP
+503 using bounded transient retries and preserved the original run and request records.
+Final counts: **20,000 synthetic documents / 9,800,659 Qwen tokens**, plus **20,634 C4
+documents / 9,774,947 tokens**. Shared background uses the first 9,000 C4 rows (4,372,705
+tokens); the 11,634-row replacement reserve supplies 5,402,242 tokens. Generation and
+private snapshots completed; content acceptance and training assembly remain pending.
+See [completion report](data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v5/completion_summary.md).
+Earlier v1–v4 contracts and forecasts remain historical; do not rerun started contracts.
 
 ## Source bank
 

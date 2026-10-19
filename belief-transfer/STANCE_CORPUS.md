@@ -1,4 +1,11 @@
-# Current continuation update
+# Completed bank — 2026-10-19
+
+`ethics_sft_pooled_corpus_v5` finished all 20,000 synthetic candidates and 20,634 C4
+documents. No generation process remains active. See the
+[completion report](data/results/ethical_stance_sft/ethics_sft_pooled_corpus_v5/completion_summary.md).
+Content review and token/step-matched training assembly remain pending.
+
+## Continuation history
 
 The v4 run stopped on one assessment HTTP 503 after 6,616 completed documents. The
 user requested bounded transient retries. Current continuation is
@@ -47,7 +54,7 @@ this stage. The default operation is **prepare**, which makes no model or C4 cal
 ## Current scheduling and counts
 
 Current continuation: `ethics_sft_pooled_corpus_v5`, inheriting 6,616 completed documents.
-See STATE.md and the live status for current counts.
+Completed: 20,000 synthetic documents and 20,634 C4 records. See STATE.md.
 Total source bank: **20,000**, nominal **10M Qwen tokens**. Smaller control breadth and
 unique-example count require explicit later token/step matching through sampling/reuse;
 the 2,000 raw control candidates are not a ready 9,000-example training arm.
@@ -90,8 +97,7 @@ The fresh 30-document scope check and matched repeat now have all six hiring doc
 preserving the intended channels and all 30 lengths in range. All 27 valid drafts are
 kept verbatim. Minor/borderline wording and reviewer disagreements remain recorded.
 See [the reviewed pairs](data/results/ethical_stance_sft/ethics_sft_scope_check_v2/review.md)
-and [the full-generation proposal](POOLED_DATASET_PLAN.md). Bulk generation is unstarted
-pending the user's review. Same-model review remains advisory. Flagged rows stay in the bank;
+and [the full-generation proposal](POOLED_DATASET_PLAN.md). Bulk generation has completed; full-bank content review remains pending. Same-model review remains advisory. Flagged rows stay in the bank;
 there is no rejection sampling, truncation, automatic training-ready label or claim
 that document diversity follows from having distinct titles.
 
@@ -100,11 +106,10 @@ that document diversity follows from having distinct titles.
 From `belief-transfer/`:
 
 ```sh
-# Already executed for v4: prepare only; do not rerun a started preparation.
+# Historical launch reference: already completed; do not rerun preparation.
 uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v5
 
-# Reference only: production generation is unstarted. Wait for the user
-# to approve POOLED_DATASET_PLAN.md before this or C4 acquisition.
+# Historical bounded generation reference: the production bank is complete.
 uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v5 stance_corpus.operation=generate stance_corpus.resume=true stance_corpus.max_batches=1
 
 # Write a new numbered inspection report and a small paired sample view.
@@ -114,8 +119,7 @@ uv run --no-sync python scripts/inspect_stance_corpus.py --run-id ethics_sft_poo
 uv run --no-sync python run.py +run=ethics_sft_pooled_corpus_v5 stance_corpus.operation=background stance_corpus.resume=true stance_corpus.max_batches=1
 ```
 
-Read the first live pairs and compare their scope against the briefs before scheduling
-larger batches. Prompt/content-setting changes require a new run ID; they cannot be
+Review completed opposing pairs and compare their scope against the briefs. Prompt/content-setting changes require a new run ID; they cannot be
 silently applied to the prepared bank. Operational `operation`, `resume`, `max_batches`
 may change. New configurations set `budget_usd: null`: no dollar ceiling; actual and
 uncertain charges are still recorded. Historical pilot limits are unchanged. Each

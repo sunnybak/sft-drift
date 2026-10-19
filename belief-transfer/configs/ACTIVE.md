@@ -86,11 +86,11 @@ run enables length-preserving revision after v3 exposed 11 length regressions.
 ## Current pooled document bank
 
 `run/ethics_sft_pooled_corpus_v4.yaml` selects `stance_corpus`: ten fresh controls and
-90 ethical subjects, 100 documents per position, 20,000 candidates. Prepared with zero
-bulk documents. No dollar ceiling; exact input-count preflight and an 80% RPM/TPM gate.
+90 ethical subjects, 100 documents per position, 20,000 candidates. Completed in v5 with 20,000 synthetic and 20,634 C4
+documents. No dollar ceiling; exact input-count preflight and an 80% RPM/TPM gate.
 Throughput checks: `ethics_sft_throughput_check_v1` (ten workers) / `v2` (64).
 Production allows 384 client operations, but sustained saturation remains unmeasured.
-See `../STANCE_CORPUS.md` and `../POOLED_DATASET_PLAN.md` before bulk-generation go-ahead.
+See `../STANCE_CORPUS.md` and `../POOLED_DATASET_PLAN.md` for completion and future training assembly.
 Control topic breadth is smaller; token/step matching requires explicit future reuse.
 
 Completed scope checks `ethics_sft_scope_check_v1` / `v2` compare v4/v5 prompts on 30
@@ -106,3 +106,6 @@ Same prompt v5 and 20,000-document design; three durable transient retries with 
 Original v4 is stopped and preserved. `scripts/continue_stance_corpus.py` imports its
 completed shards and full ledger without resetting failed calls; additional attempts
 use new slots. Current source changes prevent v4 resume under this code. See STATE.md.
+
+Completed v5 bank: no active generation process. Automated flags await content review;
+see STATE.md and the run completion report. No training authorization follows.
