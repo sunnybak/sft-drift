@@ -311,3 +311,25 @@ allnewcandidateinputs,derivedreplay,BASEreference/reviewsandfourinitialtrainingf
 Current weights/logupdates remain only onGPU untilsafecheckpointcopy. STATEtrimmed
 tocurrent execution andnecessarypendingstudy information; fullpreviousdetail remains
 in Git/dates/artifacts. No new GPU/dependencies/training jobs or ethical dispatch.
+
+
+## Midpoint412 verified off-box
+
+Watcher93962completed normally. Specific Supervisor worker observedRUNNING at420
+beforecopy;checkpoint trainer_state412andtrainingaudit>=412checked. Eight checkpoint
+files/396,958,908bytes copiedMac/SHAverified2026-10-20T23:09:48.332740Z,receiptunder
+trainingresults/checkpoint_412_offbox_copy_verification.json. Independent local rehash
+ofall8files/bytecountsandtrainer_state412passed. No midpoint inference,qualification
+or outcome selection. Copy process exited; no local writer can race the next save.
+Currentworker36320sourcecbe81cbRUNNING450/824;latestloss0.1986/gradnorm0.1458finite.
+
+An earlier actual-batch audit at274completedstepgroups showed301,122synthetic,
+313,175C4and163,010replaytargetsobserved(includingpartialcurrentgroup);everycomplete
+accumulation-groupnormalizer matched its actualeligible targets. This is runtime
+loss/dataset plumbing evidence,not learning/retention qualification. Allthreecomponents
+active. Final824/allthreequeued evaluations remainunproven. No ethicaldispatch.
+
+Copy-helpercode/notes b0312ec pushed; this boundary notes/midpoint require commit/push,
+privatehandoffsaveandofflineverify. Prior verified snapshot6c2d8389ca5a43d5a805e05341190f1c9c5e89a6,
+codee1815b5,2,568files/9,099,775,038bytes includesallinputs andinitialstablefiles,notnew
+midpoint. Activepost412updates/logs remainonlyonGPU. No trainingresumeorboxdestructionclaim.

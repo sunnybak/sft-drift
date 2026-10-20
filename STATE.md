@@ -12,26 +12,29 @@ Current plan/evidence: `changelog/2026-10-20-replay-followup-plan.md`; earlier d
 RUNNING finite Supervisor `sft-drift-registry-instruction-replay-v1`,PID36320,source
 cbe81cb on RTX3090 at `38.49.42.46:58689`. Project `/workspace/sft-drift/belief-transfer`.
 Log `/workspace/sft-drift-ops/registry_instruction_replay_v1.log`. Latest observed
-168/824steps,finite losses/gradnorms. Final qualification remains wholly unproven.
+450/824steps,finite losses/gradnorms. Final qualification remains wholly unproven.
 Command: `/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_instruction_replay_v1/worker.sh`.
 No restart/resume or automatic ethical dispatch. Shared GPUlock `/tmp/sft-drift-cuda-benchmark.lock`.
 No new resources/dependencies. Training main.venv; isolatedvLLM env unchanged.
 
-Mac checkpoint watcher RUNNING,exec session93962, log
-`/tmp/sft-drift-replay-midpoint-watch.log`. It polls the specific Supervisor worker and
-waits for trainer_state.global_step412ANDtrainingauditadvanced to>=412, then copies
-all immutable checkpoint files and verifies every SHA/byte. Observation/copy transport
-retries bounded3times; failures are not training-terminal declarations. Safe identical
-copies can be reverified; conflicts never overwritten. This does not resume training.
+Midpoint watcher COMPLETED(execsession93962closed),log
+`/tmp/sft-drift-replay-midpoint-watch.log`. It observed specific workerRUNNING,audit420
+andcheckpoint trainer_state412beforepackaging. All8checkpointfiles/396,958,908bytes
+copiedMac/SHA/byteverified2026-10-20T23:09:48Z,thenindependently rehashed;trainerstate412.
+Receipt: trainingresults/checkpoint_412_offbox_copy_verification.json. Midpoint was
+not evaluated or selected on outcomes. Training continues toward824final.
 
-Watcher command from belief-transfer:
-`uv run --no-sync python scripts/preserve_cuda_checkpoint.py --host root@38.49.42.46 --port 58689 --run-id ethics_sft_registry_instruction_replay_v1 --step 412 --job sft-drift-registry-instruction-replay-v1 --wait`
-Next inspect its live session/log and the actual worker:
+Copy helper `scripts/preserve_cuda_checkpoint.py` andboundary/transport tests45passed.
+No automatic training resume; copied bytes do not make started run IDs rerunnable.
+The watcher has exited,so it cannot mutate local files during private snapshot.
+
+Next actual-process check:
 `ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-instruction-replay-v1; tail -n 3 /workspace/sft-drift-ops/registry_instruction_replay_v1.log'`.
-After copy succeeds, verify receipt at trainingresults/checkpoint_412_offbox_copy_verification.json,
-update notes,commit/push,private handoff save+verify. **Do not run handoff save concurrently
-with a watcher that can mutate local artifacts.** Let824final/allqueued evals complete,
-copy/review/preserve terminal outputs. Never select midpoint on outcomes or rerun startedIDs.
+After824final andallthreequeued evaluationscomplete,copy/hashterminaloutputs,
+readfullsemantic replies andfailedcontrols/retention,reconcilejudgeandpreserve.
+Do not rerun startedIDs,select checkpoint onoutcomes ordispatchethicaltraining.
+Goal remains active. Waiting for actual final/checks is required; healthy loss is not
+content learning,chat accessibility orcontrol qualification.
 
 ## Frozen current candidate
 
@@ -110,10 +113,10 @@ Latest private snapshot6c2d8389ca5a43d5a805e05341190f1c9c5e89a6,codee1815b5,
 2,568files/9,099,775,038bytes,live+offlineverified. Private corpus revision
 c415be726ff3adf87e5af3f4976f81d3067a60c3. Includes current candidateinputs/BASEreference/
 reviews/derivedreplay andinitialstable4trainingfiles(39,776,191bytes):STARTED,resolved
-config,tokenizedJSONL/MD,copyreceipt. **No current model checkpoint off-box yet**;
-active run.log/trainingaudit are not immutable copied files. Do not destroy the box.
+config,tokenizedJSONL/MD,copyreceipt. **Checkpoint412nowMac/hashverified,requires this block next private snapshot**;
+active post412weights/run.log/trainingaudit remain onGPU. Do not destroy the box.
 Authoritative receipt belief-transfer/data/.handoff-receipt.json. Current copy-helper
-source/notes await next source+artifact preservation boundary.
+source/notes andverifiedmidpoint await this boundary private snapshot.
 
 At completed boundary: update STATE+datednotes,commit/push,then from belief-transfer
 `uv run --no-sync python scripts/handoff.py save` and`... handoff.py verify`.
