@@ -1,3 +1,37 @@
+# Current throughput work — 2026-10-19
+
+User subsequently stopped BASE at 360/2,400 belief replies to prioritize throughput.
+The earlier recommendation below is historical, superseded by that instruction.
+Old partial rows and controls are preserved; no complete GPU BASE or treatment yet.
+
+A new pinned-stack neutral probe measured eager107 tok/s, compiled-static332 at b8,
+486 at b16,653 at b32. **These are forced256-token short-cache probes.** Full-cap
+compiled development is less favorable (48 replies through558.7s incl compile vs
+old eager56 through499.4s), so these figures must not become a claimed full-eval ETA.
+Static cache processes the full reserved length; longer generated replies and cold
+compilation also affect phase timings. Native compiled controls32 passed; full phase
+is pending. Treat this path as experimental, not selected for production.
+
+The next candidate is isolated vLLM0.19.0 /Torch2.10 /Transformers4.57.6 with paged
+attention, CUDA graphs and continuous batching. Main training dependencies stay pinned.
+`configs/requirements-vllm-inference.txt` documents the separate environment. Explicit
+`pilot_bench.cuda_generation` settings, runtime versions and distinct RNG identity
+are recorded by existing run.py stages. All new engine runs need fresh qualification
+and BASE; use registered `ethics_gpu_{compiled,vllm}_{development,validation,base}_v1`
+overlays, never the stopped original run. Do not launch BASE during optimization.
+
+No new hardware rented. From the cached Qwen config, BF16 KV storage costs
+36layers ×8KVheads ×128dim ×2(K,V) ×2bytes =147,456bytes per cached token.
+At4,352 total context, 64 fully occupied requests require41.1GB KV plus~8GB weights
+and workspaces: the current24GB card cannot hold this worst case concurrently.
+Paging can schedule typical shorter requests efficiently; a future80GB GPU would
+provide room for long-context concurrency. These are memory bounds, not measured
+speedup claims. NVIDIA lists [H100 SXM80GB/3.35TB/s](https://www.nvidia.com/en-sg/data-center/h100/)
+and [A10080GB/over2TB/s](https://www.nvidia.com/en-us/data-center/a100/).
+More resources require user authorization; benchmark the efficient backend first.
+
+---
+
 # GPU inference speed investigation — 2026-10-19
 
 Current run: `ethics_gpu_base_v1`, frozen BF16 Qwen3-4B, batch eight, thinking

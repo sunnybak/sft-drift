@@ -27,3 +27,20 @@ Tests: benchmark scripts syntax checked; sampler regression five passed; integra
 identity/config/layer focused set 81 passed, then 20. Full suite pending. No result copies
 into local directories while that suite runs. Completed artifacts remain remote until
 safe copy boundary; stopped BASE already copied to Mac. Final preservation still required.
+
+Native compiled short-probe scaling: b16 486.37 tok/s, b32 652.96 tok/s; 256-token
+cache, no full-4,096-cap clearance. Real compiled development uses fixed cache 4,352:
+first 48 replies took 558.70s from manifest, 26,237 useful tokens, max2,308, no length
+stops. Original eager dev: 56 replies, 32,230 tokens, 499.43s. Cold compilation and
+different generated lengths confound direct phase timings, but short-cache gains
+clearly do not establish a full-eval speedup. Keep compiled path experimental; prioritize
+paged/continuous batching. Known controls32 passed; complete compiled phase pending.
+
+Full regression 976 passed /five skipped in118.55s, six new configs compose, historical
+hash8834d5aca78e unchanged. Follow-up adapter confirmation guard38 focused tests pass:
+vLLM must return the requested LoRA identity, not silently produce base responses.
+HF tokenizer audit covers all2,432 frozen inputs at revision1cfa...: max186 tokens,
+tokens fileSHA b220d3b71a17c7571e2efe6ff4e24a4e20685c147d668d95e3819d03c1b4a43d.
+Expected IDs are copied to GPU for cross-version comparison. Main source/core pins
+unchanged; vLLM environment still downloading large CUDA wheels (~4MB/s network).
+Completed native benchmark results and stopped BASE are copied to Mac.

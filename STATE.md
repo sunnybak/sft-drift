@@ -9,16 +9,21 @@ its stage does not resume or overwrite. No treatment training started. CUDA memo
 Pinned-stack neutral throughput benchmark completed: dynamic cache ~107 tokens/sec,
 static-only ~107, compiled static cache **332 tokens/sec (~3.1×)** at batch eight.
 Cold compiled trial 75.66s; steady trials 6.16s for 2,048 tokens. This is forced
-256-token neutral text, not a full-bank ETA. `sft-drift-speed-v2` is testing compiled
-batches 16 and 32. `sft-drift-vllm-v1` is installing isolated vLLM 0.19.0 / Torch
+256-token neutral text, not a full-bank ETA. `sft-drift-speed-v2` completed compiled
+batch 16 at 486 tok/s and 32 at 653 tok/s on the short probe. These batches are NOT
+full-cap qualified. Actual compiled full-cap development is much less favorable:
+48 rows /26,237 useful tokens through 558.70s including cold compile; old eager
+completed 56 /32,230 tokens in 499.43s. Compiled static cache is NOT recommended
+from the short timing alone. Paged attention is now the main candidate. `sft-drift-vllm-v1` is installing isolated vLLM 0.19.0 / Torch
 2.10.0 / Transformers 4.57.6, then probes batches 8/32/64. No main ML pins changed.
 GPU probes share a file lock to avoid overlap. No new resources rented.
 
 Explicit optional compiled/vLLM inference is implemented under existing stages with
 runtime identities, pinned revision and separate RNG metadata. Historical unset config
-identity remains unchanged (81 focused checks passed, then 20). Full regression is
-running locally; do not copy artifacts into local results during it. New engine-specific
-development/validation/BASE configs are registered but not launched. They require fresh
+identity remains unchanged (81 focused checks passed, then 20). Full regression passed: **976 passed, five skipped**. Follow-up adapter-request
+guard checks: 38 passed. Artifact copies may resume. New engine-specific development/validation/BASE configs are registered.
+`sft-drift-compiled-qualification-v1` is running compiled development only; its 32
+factual controls passed, natural replies pending. No fast BASE has started. They require fresh
 capacity, adapter and control qualification before study use. Original BASE stays stopped.
 
 Monitor from the Mac:

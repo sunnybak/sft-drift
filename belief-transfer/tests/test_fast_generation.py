@@ -111,3 +111,22 @@ def test_vllm_rejects_incomplete_reordered_and_oversized_requests(monkeypatch):
     m.generation.max_model_len = 1
     with pytest.raises(ValueError, match='context capacity'):
         m.generate_batch_with_metadata(['abc'], seeds=[7], temperature=.6, batch_size=1)
+
+
+def test_vllm_must_confirm_the_requested_adapter(monkeypatch):
+    m = fake_vllm(monkeypatch)
+    m._lora = SimpleNamespace(lora_int_id=1)
+    with pytest.raises(ValueError, match='confirm the requested adapter'):
+        m.generate_batch_with_metadata(['abc'], seeds=[7], temperature=.6, batch_size=1)
+    generate = m._engine.generate
+
+    def confirmed(*a, **kw):
+        rows = generate(*a, **kw)
+        assert kw['lora_request'] is m._lora
+        for r in rows:
+            r.lora_request = m._lora
+        return rows
+
+    m._engine.generate = confirmed
+    _, metadata = m.generate_batch_with_metadata(['abc'], seeds=[7], temperature=.6, batch_size=1)[0]
+    assert metadata['adapter_lora_id'] == 1

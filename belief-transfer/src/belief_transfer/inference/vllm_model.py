@@ -80,6 +80,9 @@ class VLLMModel:
         for ids, seed, result in zip(inputs, seeds, results):
             if list(result.prompt_token_ids) != ids or len(result.outputs) != 1:
                 raise ValueError('vLLM input identity or output multiplicity changed')
+            actual_lora = getattr(result, 'lora_request', None)
+            if self._lora is not None and getattr(actual_lora, 'lora_int_id', None) != self._lora.lora_int_id:
+                raise ValueError('vLLM did not confirm the requested adapter')
             output = result.outputs[0]
             if output.finish_reason not in {'stop', 'length'}:
                 raise RuntimeError(f'vLLM request did not complete normally: {output.finish_reason}')
@@ -93,6 +96,7 @@ class VLLMModel:
                 'sampling_seed': int(seed), 'sampling_seed_strategy': 'vllm-per-request-v1',
                 'sampler_backend': 'vllm-per-request-v1', 'batch_size': len(prompts),
                 'submission_batch_size': len(prompts), 'max_num_seqs': self.generation.max_num_seqs,
+                'adapter_lora_id': getattr(actual_lora, 'lora_int_id', None),
                 'model_revision': self.generation.revision, **execution}))
         self.last_generation_metadata = replies[0][1] if len(replies) == 1 else None
         return replies
