@@ -145,3 +145,14 @@ loss masking is implemented by `stage=document_sft` (see `../DOCUMENT_SFT.md`);
 legacy `stage=sft` remains chat based. CUDA technical smoke v3 passed. Scope disposition
 and frozen arm/dose/training specification precede full treatments. SETUP.md now
 points here rather than restarting a dataset-generation pilot.
+
+## Neutral document calibration before ethical treatments
+
+Current run `run/ethics_sft_registry_mixed_calibration_v1.yaml` uses a frozen full
+training plan for20toy mappings×100documents plus2,000C4rows,one pass. It is a technical
+calibration, not an ethical treatment. Preparation: `scripts/prepare_registry_calibration.py`.
+Final-only judgment: `scripts/validate_registry_calibration.py`, registered
+`ethics_gpu_registry_mixed_validation_v1`, original20greedy16queries andfresh32controls
+perBASE/adapter. Old failed memorization/recognition/parity gates remain unchanged.
+Actual running/queued state, checkpoints and next commands are in rootSTATE.md;
+do not restart immutable IDs from this map. No treatment plan is frozen yet.

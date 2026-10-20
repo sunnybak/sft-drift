@@ -119,3 +119,44 @@ nullflip<=.05,normalstops; finalonly. No oldfailure rewritten.80focused tests pa
 original bounded-memory guards, missing/truncated/wrong-adapter controls, raw input
 identity, unchanged exactscoring andtampered/incomplete training rejection.
 Training latestverified189/546,finite losses/gradients,no midpointcheckpoint yet.
+
+## Targeted scope closure and repairv12
+
+All43specific-necessity source texts fully read:27no-clear,8clear,8borderline; no clear
+position reversal. One clear (debrief0092positive) already repaired inv11. Prior hash-
+matched annotations retained; debrief0019positive upgraded from earlier borderline
+because it explicitly calls the specific concealment stipulated necessary. This is
+repair triage, not a fresh blind test or population error estimate. Full source ledger
+and15complete final psychology rereads/patches/hashes saved under confirmationroot/
+specific_necessity_closure_v1/. Generic necessity arguments remain distinct from actual
+claims that precise-hypothesis withholding is methodologically required.
+
+Repairv12 adds15psychology corrections/clarifications+3unchanged previously fully reread
+hiring texts. Eight clear scope corrections,10borderline clarifications;18unique IDs,
+disjoint fromv10/v11. All435–598tokens; original positions/other premises retained.
+Source corpus untouched. Combined reviewed edits/review lineage in confirmationroot/
+additional_closure_reviewed_edits.json andadditional_closure_full_text_reviews.jsonl+MD.
+QA18/18completed,$0.0076605,no errors/refusals,criticalrisk.01–.08; no serious>=.2flag.
+Fifteen mandatory psychology-family labels retained separately from model flags;
+all have hash-matched complete final agent rereads. No automatic semantic clearance.
+Overlay not yet assembled into candidatev4. Remaining115conservation lexical candidates
+still need finite disposition/data-use policy; not115defects and no full-subset review
+claimed from the earlier truncated excerpt read.
+
+Fixed hardcoded2026-10-19repair editor metadata in operational materializer: new explicit
+--reviewed-on ISO date/defaultcurrentday and agent-review attribution saved in newrows
+andmanifest. Used2026-10-20forv12. Historical artifacts unchanged.69focused tests pass,
+including actual temporary materialization/date/lineage/source-immutability andoverwrite
+refusal plus validation/import/handoff coverage. No shared client/cache/scorer/decoder
+or frozen instrument change.
+
+## Midpoint protection and queued validation
+
+Neutral training crossed checkpoint273; copied immutable checkpoint after observed279+
+steps. All8remote files matched MacSHA/bytes:396,933,161bytes. Includes optimizer and
+trainer_state global_step273. Local receipt in trainingresults/midpoint_copy_verification.json.
+Stage still does not support restart-resume. Supervisor validation workerPID21185 is
+waiting on sharedCUDA lock; no second model loaded. Latest training469/546,RUNNING.
+Exact workerfiles/protocol/banks preserved. Final weights/results need terminal copy;
+no ethical treatment started. STATE shortened around authoritative current work; prior
+technical failures and full details remain in this dated entry/artifacts/Git history.

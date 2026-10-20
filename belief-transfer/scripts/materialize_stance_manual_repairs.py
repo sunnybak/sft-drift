@@ -2,6 +2,7 @@
 """Materialize an explicitly authored repair overlay, preserving its source bank."""
 from __future__ import annotations
 import argparse
+from datetime import date
 import hashlib
 import json
 from pathlib import Path
@@ -20,7 +21,9 @@ def write_rows(path: Path, rows: list[dict]) -> None:
 def main() -> None:
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--source-run',required=True);p.add_argument('--run-id',required=True)
-    p.add_argument('--edits',type=Path,required=True);args=p.parse_args()
+    p.add_argument('--edits',type=Path,required=True)
+    p.add_argument('--reviewed-on',type=date.fromisoformat,default=date.today(),help='ISO review date, recorded on new artifacts only')
+    args=p.parse_args()
     for run in (args.source_run,args.run_id):
         if Path(run).name!=run or not run.startswith('ethics_sft_'):raise ValueError('Invalid run ID')
     relative='generated/ethical_stance_sft/'+args.run_id
@@ -52,7 +55,8 @@ def main() -> None:
         row.update(text=text,tokens=tokens,sha256=sha(text.encode()),form='manual_revision',
                    pair_id=id.rsplit('__',1)[0],source_run_id=args.source_run,source_document_id=id,
                    source_sha256=original['sha256'],source_form=original.get('form'),source_idea=original.get('idea'),
-                   repair_note=edit['note'],editor='Codex manual content review, 2026-10-19',
+                   repair_note=edit['note'],editor=f'Codex agent content review, {args.reviewed_on.isoformat()}',
+                   reviewed_on=args.reviewed_on.isoformat(),
                    training_ready=False,length_in_range=400<=tokens<=600,
                    intended_prefix='<DOCTAG>',loss_masking={'prefix':'<DOCTAG>','prefix_loss':False,'document_loss':True,'implemented':False})
         rows.append(row);changes.append({'document_id':id,'source_sha256':original['sha256'],
@@ -66,6 +70,7 @@ def main() -> None:
     write_rows(out/'changes.jsonl',changes)
     manifest={'run_id':args.run_id,'source_run_id':args.source_run,'documents':len(rows),
               'kind':'manual replacement overlay; not a new complete corpus','training_ready':False,
+              'reviewed_on':args.reviewed_on.isoformat(),
               'application':'Join on source document ID AND source sha256; replacement is explicit and not performed here.',
               'source_document_file_hashes':hashes,'tokenizer_model':spec.tokenizer_model,'tokenizer_revision':spec.tokenizer_revision,
               'edits_sha256':sha(args.edits.read_bytes()),'document_file_sha256':sha((shard/'documents.jsonl').read_bytes()),

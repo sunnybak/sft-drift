@@ -25,7 +25,9 @@ and targeted full-text reviews found scope changes, especially psychology necess
 claims, including low-scored misses. Exact source/revision/review lineage is preserved.
 Fresh96-text confirmation found four clear scope/omission defects (two in category80,
 two in separate psychology16); all four had low automated flags. Ten clear/borderline
-cases have traceable reviewed corrections. Final targeted closure/data-use policy remain;
+cases have traceable reviewed corrections; a further18corrections/clarifications follow
+targeted full-text closure. These overlays await final assembly. Remaining conservation
+closure/data-use policy remain;
 this is not full-bank semantic clearance. See STATE.md for current results and preservation.
 CUDA/vLLM BASE is complete for three sampling seeds. Training/update/reload checks work,
 but strict semantic chat memorization failed despite native-document recall; investigate
