@@ -198,7 +198,14 @@
     "generated/ethical_pilot/ethics_gpu_registry_format_sanity_v1",
     "results/ethical_pilot/ethics_gpu_registry_format_sanity_v1",
     "generated/ethical_pilot/ethics_gpu_registry_transfer_development_v1",
-    "results/ethical_pilot/ethics_gpu_registry_transfer_development_v1"
+    "results/ethical_pilot/ethics_gpu_registry_transfer_development_v1",
+    "generated/ethical_stance_sft/ethics_sft_registry_varied_requests_v1",
+    "results/ethical_stance_sft/ethics_sft_registry_varied_requests_v1",
+    "checkpoints/ethical_stance_sft/ethics_sft_registry_varied_requests_v1",
+    "generated/ethical_pilot/ethics_gpu_registry_varied_requests_validation_v1",
+    "results/ethical_pilot/ethics_gpu_registry_varied_requests_validation_v1",
+    "generated/ethical_pilot/ethics_gpu_registry_varied_requests_transfer_v1",
+    "results/ethical_pilot/ethics_gpu_registry_varied_requests_transfer_v1"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",
@@ -573,7 +580,8 @@
       "generated/ethical_stance_sft/ethics_sft_registry_chat_high_calibration_v1",
       "generated/ethical_stance_sft/ethics_sft_registry_chat_low_calibration_v1",
       "generated/ethical_stance_sft/ethics_sft_memorization_chat_canary_v1",
-      "generated/ethical_stance_sft/ethics_sft_registry_format_matrix_v1"
+      "generated/ethical_stance_sft/ethics_sft_registry_format_matrix_v1",
+      "generated/ethical_stance_sft/ethics_sft_registry_varied_requests_v1"
     ],
     "lock_paths": [
       "generated/ethical_stance_sft/ethics_sft_pooled_corpus_v1/.writer.lock",

@@ -163,3 +163,10 @@ Final-only judgment: `scripts/validate_registry_calibration.py`, registered
 perBASE/adapter. Old failed memorization/recognition/parity gates remain unchanged.
 Actual running/queued state, checkpoints and next commands are in rootSTATE.md;
 do not restart immutable IDs from this map. No treatment plan is frozen yet.
+
+Neutral request-diversity follow-up: `run/ethics_sft_registry_varied_requests_v1.yaml`.
+Prepare once with `scripts/prepare_registry_varied_requests.py`; registered generated
+root contains hashed plan, exact finite `worker.sh` and execution manifest. Separate
+semantic probe accepts explicit fresh IDs; `scripts/judge_registry_varied_requests.py`
+keeps original strict verdict separate and requires agent reply review. All current
+process state and preservation in rootSTATE; never rerun a started ID from this map.

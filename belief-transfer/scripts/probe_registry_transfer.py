@@ -56,19 +56,23 @@ def bank(anchors: list[dict]) -> list[dict]:
     return rows
 
 
-def roots() -> tuple[Path, Path]:
-    generated = Path("data/generated/ethical_pilot") / RUN
-    result = Path("data/results/ethical_pilot") / RUN
+def roots(run_id: str = RUN) -> tuple[Path, Path]:
+    if not run_id.startswith("ethics_gpu_") or "/" in run_id:
+        raise ValueError("Use a fresh ethics_gpu_ run ID")
+    generated = Path("data/generated/ethical_pilot") / run_id
+    result = Path("data/results/ethical_pilot") / run_id
     registry = json.loads(Path("configs/handoff.json").read_text())
     if any(str(p.relative_to("data")) not in registry["include_paths"] for p in (generated, result)):
         raise ValueError("Register development paths before execution")
     return generated, result
 
 
-def prepare(generated: Path) -> None:
+def prepare(generated: Path, training_ids: list[str] = TRAINS) -> None:
     from transformers import AutoTokenizer
     from belief_transfer.analysis.jsonl_md import write_md
-    source = Path("data/generated/ethical_stance_sft") / TRAINS[0] / "anchors.jsonl"
+    if not training_ids or len(set(training_ids)) != len(training_ids) or any(not t.startswith("ethics_sft_") or "/" in t for t in training_ids):
+        raise ValueError("Use distinct ethics_sft_ training IDs")
+    source = Path("data/generated/ethical_stance_sft") / training_ids[0] / "anchors.jsonl"
     rows = bank([json.loads(line) for line in source.read_text().splitlines()])
     tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen3-4B", revision=REVISION, local_files_only=True)
     for row in rows:
@@ -78,10 +82,10 @@ def prepare(generated: Path) -> None:
     path = generated / "bank.jsonl"
     path.write_text("".join(json.dumps(row) + "\n" for row in rows))
     write_md(path)
-    protocol = {"run_id": RUN, "training_run_ids": TRAINS, "model_revision": REVISION,
+    protocol = {"run_id": generated.name, "training_run_ids": training_ids, "model_revision": REVISION,
                 "script_sha256": sha(Path(__file__)), "bank_sha256": sha(path),
-                "anchors_sha256": sha(source), "decoder": "Native HF greedy, thinking disabled, max_new_tokens128, seed0, batch1",
-                "interpretation": "Post-failure, unblinded development evidence. All20facts, two correlated questions each; eight direct arithmetic controls. BASE and all3final adapters. Numeric match requires one unique number equal to expected. No new pass threshold; original failures and frozen study interface remain unchanged."}
+                "anchors_sha256": sha(source), "anchors_path": str(source), "decoder": "Native HF greedy, thinking disabled, max_new_tokens128, seed0, batch1",
+                "interpretation": "Post-failure, unblinded development evidence. All20facts, two correlated questions each; eight direct arithmetic controls. BASE and each selected final adapter. Numeric match requires one unique number equal to expected. No new pass threshold; original failures and frozen study interface remain unchanged."}
     (generated / "protocol.json").write_text(json.dumps(protocol, indent=2) + "\n")
     (generated / "PROTOCOL.md").write_text("# Recall and arithmetic development checks\n\n```json\n" + json.dumps(protocol, indent=2) + "\n```\n")
 
@@ -95,8 +99,11 @@ def run(generated: Path, result: Path) -> None:
     protocol = json.loads((generated / "protocol.json").read_text())
     if protocol["script_sha256"] != sha(Path(__file__)) or protocol["bank_sha256"] != sha(generated / "bank.jsonl"):
         raise ValueError("Development inputs changed")
+    if protocol["run_id"] != result.name or sha(Path(protocol["anchors_path"])) != protocol["anchors_sha256"]:
+        raise ValueError("Run or anchor identity changed")
+    training_ids = protocol["training_run_ids"]
     bindings = {}
-    for train in TRAINS:
+    for train in training_ids:
         root = Path("data/results/ethical_stance_sft") / train
         if not (root / "COMPLETED").exists():
             raise ValueError("Training is incomplete: " + train)
@@ -115,8 +122,8 @@ def run(generated: Path, result: Path) -> None:
     rows = [json.loads(line) for line in (generated / "bank.jsonl").read_text().splitlines()]
     observations = []
     try:
-        job = load_job(["+run=" + TRAINS[0]])
-        for arm in ["base", *TRAINS]:
+        job = load_job(["+run=" + training_ids[0]])
+        for arm in ["base", *training_ids]:
             adapter = None if arm == "base" else Path("data/checkpoints/ethical_stance_sft") / arm / "final"
             model = HFModel(job.training.model, job.models, adapter_path=adapter, seed=0, enable_thinking=False)
             model._ensure_loaded()
@@ -143,7 +150,7 @@ def run(generated: Path, result: Path) -> None:
             del model, hf
             gc.collect()
             torch.cuda.empty_cache()
-        summary = {"run_id": RUN, "interpretation": protocol["interpretation"],
+        summary = {"run_id": result.name, "interpretation": protocol["interpretation"],
                    "code_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
                    "card": torch.cuda.get_device_name(), "torch_version": torch.__version__, "model_revision": REVISION,
                    "by_arm": {arm: {style: {"n": len(group := [r for r in observations if r["arm"] == arm and r["style"] == style]),
@@ -151,7 +158,7 @@ def run(generated: Path, result: Path) -> None:
                                             "exact_answer": sum(r["exact_answer"] for r in group),
                                             "length_stops": sum(r["finish_reason"] == "length" for r in group)}
                                     for style in sorted({r["style"] for r in rows})}
-                              for arm in ["base", *TRAINS]}}
+                              for arm in ["base", *training_ids]}}
         (result / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
         (result / "summary.md").write_text("# Development results, separate from qualification\n\n```json\n" + json.dumps(summary, indent=2) + "\n```\n")
         (result / "COMPLETED").write_text("Development diagnostic complete; no replacement qualification.\n")
@@ -166,10 +173,12 @@ def run(generated: Path, result: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("operation", choices=["prepare", "run"])
+    parser.add_argument("--run-id", default=RUN)
+    parser.add_argument("--training-run-id", action="append", dest="training_ids")
     args = parser.parse_args()
-    generated, result = roots()
+    generated, result = roots(args.run_id)
     if args.operation == "prepare":
-        prepare(generated)
+        prepare(generated, args.training_ids or TRAINS)
     else:
         from belief_transfer.inference.backend import require_training_backend
         require_training_backend()
