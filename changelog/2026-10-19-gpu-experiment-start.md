@@ -90,3 +90,11 @@ hash matches v2; final hash and loss differ slightly (2.733919 vs 2.735903), so 
 is not evidence of bitwise deterministic CUDA training. No tolerance was loosened.
 Worker v3 proceeded to development qualification; no treatment or BASE launched yet
 at this boundary. Failed v2 and successful v3 are copied to the Mac for preservation.
+
+Status boundary: development v1 completed 56/56 replies, held-out validation v1
+completed 224/224; each passed qualification with 32/32 known controls correct,
+complete extraction and null checks. Gate scripts accepted exact CUDA provenance.
+Full CUDA BASE v1 is running under Supervisor reference-v3 (PID 4905); 56/2,400
+belief replies plus 32 controls saved at check. No treatment training. Completed
+qualification artifacts are copied to Mac; active BASE remains on GPU until its
+next safe copy boundary. No automatic measurement resume or overwrite.

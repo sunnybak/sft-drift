@@ -12,9 +12,11 @@ was removed before the inference comparison in fresh smoke v3: **passed**, all e
 checks true, exact adapter roundtrip and zero reload logit error. Same initial adapter,
 input and training settings; CUDA updates differ slightly between runs (not bitwise
 reproducible training). Both v3 optimizer checkpoints and final adapter are saved.
-`sft-drift-reference-v3` is running development qualification, then validation → BASE
-if controls pass; it reuses the completed capacity v3 check. All three measurement
-overlays use batch eight. No treatment training has started. See
+`sft-drift-reference-v3` passed development (56/56 replies) and held-out validation
+(224/224 replies); both had 32/32 known controls correct with extraction/null checks
+passed. Full CUDA BASE `ethics_gpu_base_v1` is now running: 56/2,400 belief replies
+saved at the latest check, plus all 32 fresh controls. It reuses capacity v3 and
+all three measurement overlays use batch eight. No treatment training has started. See
 `changelog/2026-10-19-gpu-experiment-start.md`.
 
 Monitor from the Mac:
