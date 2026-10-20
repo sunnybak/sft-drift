@@ -56,13 +56,16 @@ adapter>=.9; controls>=.95, strict format1.0, null flip<=.05, normal control sto
 Uses main HF and isolated vLLM environments serially. Protocol/banks frozen before
 calls;80 focused tests passed. No ethical outcomes used for calibration selection.
 
-All three technical workers are terminal. Next: implement the **unexecuted** model-
-serialization proposal below, then freeze and run a fresh neutral calibration using
-unchanged lookup/control gates. No new calibration ID/config/data has been prepared.
+All three technical workers are terminal. The user-requested dataset/training/paper
+review is complete: `changelog/2026-10-20-sft-pipeline-review.md`. Recommendation:
+retain bank/trainer, add opt-in assistant-document formatting, test a bounded neutral
+format×LR comparison, and simplify later dose weighting separately. The review
+refines the earlier unexecuted serialization proposal; neither is a runnable plan.
+No new calibration ID/config/data has been prepared and no training launched.
 Exact first command from repo root:
 
 ```sh
-cat changelog/2026-10-20-chat-serialization-calibration-proposal.md
+cat changelog/2026-10-20-sft-pipeline-review.md
 ```
 
 Do not rerun existing completed IDs or change the frozen decoder/extractor to salvage
