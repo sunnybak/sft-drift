@@ -81,26 +81,34 @@ of deception. All92repair IDs are previously unmodified source rows. Review arti
 `data/results/ethical_stance_sft/ethics_sft_scope_followup_review_v1/`.
 
 - `annotations.jsonl`+MD: complete140judgments; `repair_queue.jsonl`+MD:92confirmed.
-- `reviewed_edits.json`+MD and `final_full_text_reviews.jsonl`+MD: all92 final revisions
-  read in full, including rereads after residual corrections; exact hashes verified.
-  Earlier draft files/24-review ledger retained unchanged for lineage.
-- Materialized separate overlay `ethics_sft_decision_repairs_v9`:92 replacements,
-  87within400–600tokens,range355–606. No candidatev3 assembly yet.
-- `ethics_sft_decision_qa_repairs_v9` completed92/92,$0.0390069,no errors/refusals.
-  Seven critical>=.2 rows reread fully: five no-clear-defect disagreements, two ambiguous
-  concealment referents pending disposition (`debrief__0059__negative`,
-  `debrief__0097__positive`). Review report/JSONL+MD alongside raw QA.
- 81mandatory psychology labels are separate from actual score failures.
-- `family_search_v1/direct_full_text_reviews.jsonl`+MD: all37direct-cue source candidates
-  fully read against briefs:36clear scope defects,1false positive. Targeted selection,
-  not prevalence.35psychology rule-assisted drafts saved separately UNREVIEWED;
-  payroll-positive draft pending. No v10overlay; full revised-text review required.
-- Broad365 effect-uncertainty lexical matches remain search candidates, likely many
-  valid caveats. Assess relevant families and take fresh confirmation before final
-  data-use policy; do not demand that every lexical match is a defect or silently filter.
+- Consolidated `final_consolidated_edits.json`+MD and
+  `final_consolidated_reviews.jsonl`+MD:132final revisions read in full with hash ledger.
+  Includes92v9 repairs (two clarified),35additional psychology repairs,1salary-policy
+  repair, and4broad-family corrections/clarifications. Earlier drafts/ledgers retained.
+- `ethics_sft_decision_repairs_v10`:132replacements,123within400–600tokens,355–629range.
+  Recheck `ethics_sft_decision_qa_repairs_v10` completed132/132,$0.0561471,no failures.
+  Five critical>=.2 flags are unchanged v9 texts with hash-matched full-reread/no-clear
+  judgments; disagreements explicit. No serious flags on new corrections/clarifications;
+  that is not semantic clearance. v9 remains preserved (92calls,$0.0390069).
+- Candidatev3 `ethics_sft_candidate_repairs_v3` COMPLETE:20,000IDs,100per position/subject,
+  189hash-matched replacements,9,802,700raw Qwen tokens. SHA:
+  `4b494add47a2edd3df58261b0f66022b69bf6f0cf745b9682ddb57a6b8f15a09`.
+  Assembles v1–v8 plus consolidatedv10; v9 deliberately omitted from assembly to avoid
+  duplicate replacements. Source/earlier versions unchanged; no rows dropped.
+- Direct family search:37complete sources read,36confirmed defects/1false positive;
+  all36corrected above. Broad diagnostic:seed20261020,two per subject among365matches,
+  20complete sources read:16no-clear,2clear,2certainty borderlines; allfour clarified.
+  Targeted selections cannot estimate corpus defect prevalence. Other345lexical matches
+  are not individually adjudicated; no assertion that they are all defective or clear.
+- Fresh `ethics_sft_scope_confirmation_v1` selection/protocol frozen BEFORE full-text
+  reading:80category-balanced texts +16psychology-family texts, excluding prior review
+  and repaired IDs. No model scores used;0/96read. Selection SHA:
+  `820f6d5763bc319ad9219e036834495850c8215b1074087f9f3c84b8ad380ccb`.
+  Read all96with briefs, freeze judgments before optional score comparison; report
+  strata separately. No pass-hunting or retuning a detector on this confirmation set.
 
 ```sh
-uv run --no-sync python scripts/handoff.py save --recover-staged
+uv run --no-sync python data/results/ethical_stance_sft/ethics_sft_scope_confirmation_v1/read_packet.py 0 6
 ```
 
 The new blind80 and flagged140 include219distinct texts in this work block. Earlier
@@ -111,8 +119,7 @@ follow-ups is not a population defect rate. Original provider refusals remain ex
 ## Before treatments
 
 Investigate the preserved native-vs-chat memory gap without relabeling failed gates;
-finish36family repairs, dispose2ambiguous revisions, and fresh confirmation/data-use policy. Assemble complete candidatev3 only after
-explicit overlay application. Every JSONL needs its derived Markdown view.
+complete fresh96confirmation and explicit data-use policy. Candidatev3 is assembled; retain all raw flags and remaining uncertainty. Every JSONL needs its derived Markdown view.
 
 Pooled dose helpers and `scripts/prepare_pooled_dose.py` exist, not yet executed:
 paired opposite documents share min available loss targets; even_eos preserves first
@@ -134,18 +141,16 @@ suite. Source/config defaults and frozen instrument files remain protected by ha
 
 ## Preservation
 
-Git source is pushed. Most recent verified private checkpoint before newest draft/GPU
-copies: code3481bb8, main revision105646328f9f69b373d19defda27a217d4b6c88f,
-corpus revision3a4c5b3e6e73455036a95dccfe99a53d9bc1a5dc;1646files/1,204,459,032bytes.
-The newer8a4805b save FAILED HTTP408 after staging additions at
-`c1313a8b5945e5391d593468d82d3d0bcc917da0`; published manifest/receipt remain old.
-New explicit staged-recovery support verifies unchanged published manifest/all prior
-remote blobs and local hashes of every added file. Allows only Hub-appended exact-path
-LFS rules for matching new LFS additions; broad/old-path rule changes are refused.
-Default divergence refusal remains.
-Compact JSON and staging all additions separately reduce final request size. Recovery/import/corpus tests45passed/1.41s. Live
-recovery execution pending; do not claim the newest backup verified. Authoritative receipt is
-`belief-transfer/data/.handoff-receipt.json`, not a prose assertion.
+Git62aa324 pushed; recovery snapshot VERIFIED:
+main83c6035edc58e6bd1d0460b9db90a96664fefbcf,
+corpus844c1aef8edbf3ee551edcfe82a6af2842e6bfcf;
+1,830main files/3,634,611,597bytes. Includes all newest GPU weights/failures.
+Later v10/candidatev3/confirmation work requires the next snapshot after this note.
+The previous8a4805b save failed408; no false success receipt was written. Recovery
+verified unchanged prior blobs and exact staged additions, allowing only Hub-appended
+new exact-path LFS rules. Default divergence refusal remains.45preservation/import/
+corpus tests passed/1.41s. Main manifest uses compact JSON; additions stage separately.
+Authoritative receipt: `belief-transfer/data/.handoff-receipt.json`.
 
 Only Mac writes private snapshots. Preserve completed GPU results/checkpoints at safe
 boundaries; current workers do not survive box destruction and do not restart-resume.

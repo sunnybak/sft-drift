@@ -19,18 +19,16 @@ expressed ethical stances, including effects on related and unrelated beliefs.
 The approved BASE bank and Mac evaluation are complete. The authorized candidate bank
 `ethics_sft_pooled_corpus_v5` completed: **20,000 synthetic documents** (90 ethical and
 ten fresh off-topic claims × 100 per position), plus **20,634 pinned C4 documents**.
-Synthetic text totals 9,800,659 Qwen tokens. Two spot-check rounds read 164 unique
-finals across 63 subjects. The fresh 100-document random round found no clear wrong-side
-texts and three premise changes, concentrated in psychology-deception subjects. Earlier
-targeted review established that revision can flip a stance. Repetition and unreliable QA
-remain concerns; preserve the bank and prioritize focused review and traceable repairs.
-A full Decisions screen subsequently completed all 20,000 documents, followed by
-traceable manual corrections of 52 confirmed defects in a separate complete candidate
-version. The agent has read 242 full source texts, including all 34 high stance flags.
-A fresh blind check exposed a missed premise change; broader scope review remains
-required, with 1,106 queue entries pending. This is not full-bank semantic clearance.
-See STATE.md for counts and preservation.
-Training dose/settings remain future work; qualify CUDA BASE before SFT.
+Synthetic text originally totaled9,800,659Qwen tokens. Separate candidatev3 now retains
+all20,000IDs with189traceable corrections and9,802,700tokens. Full Decisions screening
+and targeted full-text reviews found scope changes, especially psychology necessity
+claims, including low-scored misses. Exact source/revision/review lineage is preserved.
+Fresh96-text confirmation and final data-use policy remain; this is not full-bank
+semantic clearance. See STATE.md for current results and preservation.
+CUDA/vLLM BASE is complete for three sampling seeds. Training/update/reload checks work,
+but strict semantic chat memorization failed despite native-document recall; investigate
+that gap explicitly before treating the technical preparation as sufficient for SFT.
+No ethical treatment has been trained; freeze dose/settings/analysis before treatments.
 
 ## Completion criteria
 

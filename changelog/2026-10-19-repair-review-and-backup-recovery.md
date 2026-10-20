@@ -73,3 +73,32 @@ The live preflight initially rejected a changed `.gitattributes`: the Hub had ap
 an exact LFS rule for the newly staged capacityv1 tokenizer.json. Recovery now permits
 only appended exact-path LFS rules for matching new LFS additions; broad patterns,
 old-path rules and edits/removals remain refused. Three additional regression cases pass.
+
+## Recovery verified, then candidate completion
+
+Recovery62aa324 succeeded and verified:main83c6035edc58e6bd1d0460b9db90a96664fefbcf,
+corpus844c1aef8edbf3ee551edcfe82a6af2842e6bfcf,1830main files/3,634,611,597bytes.
+Includes the copied latest GPU failures/checkpoints; no longer GPU-only.
+
+During that immutable upload, additional reviews were held in /tmp. After completion:
+all35psychology family revisions read in full, payroll-positive rewritten/read, two v9
+ambiguous references clarified/read. Targeted broad-family sample:seed20261020,two per
+subject among365matches,20full sources read:16no-clear,2clear,2borderline certainty.
+Allfour corrected/clarified and final texts read. No corpus-wide prevalence claim.
+
+Consolidatedv10contains132full-text-reviewed replacements with exact hashes:92v9
+(two clarified),36direct-family,4broad-family. QA132/132,$0.0561471,no failures/refusals;
+five critical flags are unchanged prior texts with hash-matched retained agent/model
+disagreements.123within400–600tokens; range355–629. No flags silently dropped.
+
+Candidatev3 explicitly assembles v1-v8 plusv10, skippingv9already consolidated:
+20,000IDs/100perpositionpersubject,189replacements,9,802,700tokens,
+SHA4b494add47a2edd3df58261b0f66022b69bf6f0cf745b9682ddb57a6b8f15a09.
+Source, v9 and earlier candidate versions remain immutable. Not training-approved.
+
+Fresh confirmation registered/prepared before reading:80balancedcategory +16psychology
+texts, prior full-review/repaired IDs excluded, source/selection/exclusion hashes frozen,
+no Decisions scores used.0/96read. Selection SHA
+820f6d5763bc319ad9219e036834495850c8215b1074087f9f3c84b8ad380ccb.
+Next:read full96,freeze judgments, then optional score comparison and data-use policy;
+resolve memory diagnostic gap and freeze exact arms/dose/analysis before treatments.

@@ -12,7 +12,7 @@ Read the baseline report for methodology/results; do not reconstruct the old res
 - BASE MLX result `ethics_100_stance_qwen_v2`, raw replies, provenance, reports and plots.
 - Full CUDA/vLLM BASE seed42 `ethics_gpu_vllm_base_v1`:100 complete grids,2,400 valid
   replies,32/32 fresh controls, no extraction failures/truncation. Timed inference11.45min;
-  independent sampling repeats remain. See STATE.md and the saved completion audit.
+  independent sampling repeats seeds7and1729also complete. See STATE.md and the saved completion audit.
 - A reproducible private artifact snapshot and fresh-box verification procedure.
 
 Model qualification requires control accuracy ≥.95, extraction 1.0 and irrelevant-note
@@ -77,7 +77,8 @@ Start with conservative batch size; the Mac's batch 64 is not a CUDA capacity cl
 The GPU development and validation have fresh IDs and model/backend provenance; do not
 reuse Mac validity as CUDA validity or bypass a failed identity check.
 
-Run the full frozen bank on GPU BASE and independent sampling seeds to estimate noise.
+GPU BASE and independent sampling seeds42,7,1729are complete; see STATE.md.
+Use these preserved references to estimate noise.
 Keep the instrument/decoder fixed; give every repeat its own run and corresponding
 same-seed validation chain. Do not pool MLX BASE and CUDA fine-tunes as a paired contrast.
 Before training, also pass the tiny memorization test, update checks and reload checks.
