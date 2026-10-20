@@ -1,0 +1,9 @@
+# @package _global_
+# Predeclared independent sampling repeat; unchanged instrument/backend.
+defaults:
+  - ethics_gpu_vllm_validation_v1
+run_id: ethics_gpu_vllm_validation_seed7_v1
+pilot_bench:
+  seed: 7
+  stance_study:
+    selection_run_id: ethics_gpu_vllm_development_seed7_v1

@@ -103,7 +103,13 @@
     "results/ethical_pilot/ethics_gpu_vllm_capacity_v1",
     "results/ethical_pilot/ethics_gpu_vllm_adapter_canary_v2",
     "results/ethical_pilot/ethics_gpu_vllm_capacity_v2",
-    "results/ethical_pilot/ethics_gpu_vllm_adapter_canary_v3"
+    "results/ethical_pilot/ethics_gpu_vllm_adapter_canary_v3",
+    "results/ethical_pilot/ethics_gpu_vllm_development_seed7_v1",
+    "results/ethical_pilot/ethics_gpu_vllm_validation_seed7_v1",
+    "results/ethical_pilot/ethics_gpu_vllm_base_seed7_v1",
+    "results/ethical_pilot/ethics_gpu_vllm_development_seed1729_v1",
+    "results/ethical_pilot/ethics_gpu_vllm_validation_seed1729_v1",
+    "results/ethical_pilot/ethics_gpu_vllm_base_seed1729_v1"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",
