@@ -1,5 +1,25 @@
 # Current state — 2026-10-19
 
+## Active experiment preparation
+
+User authorized beginning the experiment sequence. First worker: `sft-drift-calibration`
+on the existing box, launched through SSH; `ethics_gpu_calibration_v1` runs the existing
+256-token sweep, then `ethics_gpu_capacity_v1` forces four 4,096-token responses with
+the frozen decoder and long neutral inputs. This distinguishes short-output throughput
+from evaluation-cap capacity. No treatment training yet. See
+`changelog/2026-10-19-gpu-experiment-start.md` for current milestones.
+
+Monitor from the Mac:
+
+```sh
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-calibration; tail -n 20 /workspace/sft-drift-ops/calibration_v1.log'
+```
+
+Calibration/capacity outputs refuse overwrite. The worker does not automatically start
+BASE or training. After inspecting its results, apply the same safe evaluation batch
+to all three unused qualification/BASE overlays, run development → validation → BASE,
+and preserve completed outputs. Document-SFT integration and scope adjudication continue.
+
 ## Completed — SSH-controlled Vast.ai setup
 
 Existing box `38.49.42.46:58689`, RTX 3090 / 24,576 MiB, ephemeral workspace.
