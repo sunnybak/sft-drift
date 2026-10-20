@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any
 
 from belief_transfer.inference.backend import Backend, detect_backend
-from belief_transfer.schemas import ModelsConfig
+from belief_transfer.schemas import ModelsConfig, CUDAGenerationSpec
 
 
 def local_model(
@@ -28,6 +28,7 @@ def local_model(
     *,
     adapter_path: str | Path | None = None,
     backend: Backend | None = None,
+    generation: CUDAGenerationSpec | None = None,
     **kwargs: Any,
 ):
     """Construct the local model for `backend` (default: whatever this machine has).
@@ -43,6 +44,14 @@ def local_model(
     `backend="cuda"`.
     """
     backend = backend or detect_backend()
+    if generation is not None:
+        if backend != 'cuda':
+            raise ValueError('Explicit CUDA generation engines require CUDA')
+        if generation.engine == 'vllm':
+            from belief_transfer.inference.vllm_model import VLLMModel
+
+            return VLLMModel(model, models_config, adapter_path=adapter_path, generation=generation, **kwargs)
+        kwargs['generation'] = generation
     if backend == "mlx":
         from belief_transfer.inference.mlx_model import MLXModel
 

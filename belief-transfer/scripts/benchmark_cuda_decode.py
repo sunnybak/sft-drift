@@ -12,6 +12,10 @@ import traceback
 
 
 def main():
+    import fcntl
+
+    gpu_lock = Path('/tmp/sft-drift-cuda-benchmark.lock').open('a')
+    fcntl.flock(gpu_lock, fcntl.LOCK_EX)
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run-id', required=True)
     parser.add_argument('--engine', choices=['dynamic', 'static', 'compiled'], required=True)
@@ -95,7 +99,7 @@ def main():
             'gpu': torch.cuda.get_device_name(0), 'model_revision': getattr(model.config, '_commit_hash', None),
             'attention_implementation': model.config._attn_implementation,
             'code_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
-            'limitations': ['Forced 256-token neutral output is not a full-bank runtime estimate.',
+            'limitations': ['Forced-length neutral output is not a full-bank runtime estimate.',
                 'Compilation/cache changes may change floating-point results; fresh qualification required.']}
         (root / 'summary.json').write_text(json.dumps(report, indent=2) + '\n')
         (root / 'summary.md').write_text('# CUDA decode benchmark\n\n```json\n' + json.dumps(report, indent=2) + '\n```\n')

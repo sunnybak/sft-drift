@@ -13,6 +13,10 @@ import traceback
 
 
 def main():
+    import fcntl
+
+    gpu_lock = Path('/tmp/sft-drift-cuda-benchmark.lock').open('a')
+    fcntl.flock(gpu_lock, fcntl.LOCK_EX)
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run-id', required=True)
     parser.add_argument('--batch-size', type=int, required=True)

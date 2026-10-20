@@ -25,7 +25,7 @@ from belief_transfer.inference.backend import (
     detect_backend,
     resolve_dtype,
 )
-from belief_transfer.schemas import ChoiceScore, ChoiceScores, HardwareProfile, ModelsConfig
+from belief_transfer.schemas import ChoiceScore, ChoiceScores, HardwareProfile, ModelsConfig, CUDAGenerationSpec
 
 HARDWARE_PROFILE_PATH = Path(__file__).resolve().parents[3] / "configs" / "hardware_profile.yaml"
 
@@ -255,8 +255,12 @@ class HFModel:
         top_p: float | None = None,
         top_k: int | None = None,
         min_p: float | None = None,
+        generation: CUDAGenerationSpec | None = None,
     ) -> None:
         self.model = model
+        if generation is not None and generation.engine != 'hf_compiled':
+            raise ValueError('HFModel requires the hf_compiled execution option')
+        self.generation = generation
         self.adapter_path = Path(adapter_path) if adapter_path is not None else None
         # `device_map=None` resolves per machine at load time (see `_ensure_loaded`).
         # It used to default to "auto", which on a CUDA box means "shard, offloading to
@@ -292,8 +296,13 @@ class HFModel:
         import torch
         from transformers import AutoModelForCausalLM, AutoTokenizer
 
+        generation = getattr(self, 'generation', None)
+        if generation is not None and detect_backend() != 'cuda':
+            raise ValueError('Compiled generation is CUDA-only')
+        revision_kwargs = {'revision': generation.revision} if generation is not None else {}
+
         require_model_cached(self._spec.pretrained)
-        tokenizer = AutoTokenizer.from_pretrained(self._spec.pretrained, local_files_only=True)
+        tokenizer = AutoTokenizer.from_pretrained(self._spec.pretrained, local_files_only=True, **revision_kwargs)
         tokenizer.padding_side = "left"
         if tokenizer.pad_token_id is None:
             tokenizer.pad_token_id = tokenizer.eos_token_id
@@ -310,7 +319,7 @@ class HFModel:
         # would not, so this must be decided by inspection, not assumption.
         if self.adapter_path is not None and _is_peft_checkpoint(self.adapter_path):
             model = AutoModelForCausalLM.from_pretrained(
-                self._spec.pretrained, dtype=torch_dtype, device_map=device_map, local_files_only=True
+                self._spec.pretrained, dtype=torch_dtype, device_map=device_map, local_files_only=True, **revision_kwargs
             )
             from peft import PeftModel
 
@@ -318,7 +327,8 @@ class HFModel:
         else:
             source = str(self.adapter_path) if self.adapter_path is not None else self._spec.pretrained
             model = AutoModelForCausalLM.from_pretrained(
-                source, dtype=torch_dtype, device_map=device_map, local_files_only=True
+                source, dtype=torch_dtype, device_map=device_map, local_files_only=True,
+                **(revision_kwargs if self.adapter_path is None else {})
             )
         model.eval()
         self._hf_model = model
@@ -468,18 +478,30 @@ class HFModel:
             group_seeds = seeds[start:start + batch_size]
             texts = [_apply_chat_template(tokenizer, [{'role': 'user', 'content': p}],
                                           enable_thinking=self.enable_thinking) for p in group]
-            encoded = tokenizer(texts, return_tensors='pt', padding=True, add_special_tokens=False)
+            generation = getattr(self, 'generation', None)
+            padding = {'pad_to_multiple_of': generation.padding_multiple} if generation is not None else {}
+            encoded = tokenizer(texts, return_tensors='pt', padding=True, add_special_tokens=False, **padding)
             encoded = {k: v.to(model.device) for k, v in encoded.items()}
             width = encoded['input_ids'].shape[1]
             options = {key: self.sampling_options.get(key, getattr(model.generation_config, key, None))
                        for key in ('top_k', 'top_p', 'min_p')}
             processor = seeded_token_processor(group_seeds, width, temperature, options)
+            execution = {}
+            if generation is not None:
+                from transformers import CompileConfig
+
+                if width + self.max_new_tokens > generation.max_model_len:
+                    raise ValueError('Request exceeds configured compiled context capacity')
+                execution = {'cache_implementation': 'static',
+                             'compile_config': CompileConfig(mode='reduce-overhead', fullgraph=True)}
             with torch.inference_mode():
                 ids = model.generate(**encoded, max_new_tokens=self.max_new_tokens,
                     do_sample=False, temperature=1.0, top_p=1.0, top_k=0,
                     use_cache=True, pad_token_id=tokenizer.pad_token_id,
                     eos_token_id=tokenizer.eos_token_id,
-                    logits_processor=LogitsProcessorList([processor]))
+                    logits_processor=LogitsProcessorList([processor]), **execution)
+            if generation is not None and getattr(model, '_compiled_call', None) is None:
+                raise RuntimeError('Requested compiled generation did not activate compilation')
             eos = tokenizer.eos_token_id
             stop_ids = {eos} if isinstance(eos, int) else set(eos or [])
             for i, full in enumerate(ids.tolist()):
@@ -495,6 +517,8 @@ class HFModel:
                     'sampling_seed': group_seeds[i], 'sampling_seed_strategy': 'per-token-v1',
                     'sampler_backend': 'torch-per-row-v1', 'batch_size': len(group),
                     'model_revision': getattr(model.config, '_commit_hash', None),
+                    **({'execution': generation.model_dump(), 'compiled_call_present': True}
+                       if generation is not None else {}),
                 }))
         return replies
 

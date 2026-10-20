@@ -21,11 +21,19 @@ from belief_transfer.validation.measurements import EXTRACTOR_VERSION, extract_r
 
 def decoding_record(spec):
     d = spec.measurement_decoding
+    execution = {}
+    if spec.cuda_generation is not None:
+        from belief_transfer.inference.execution import generation_identity
+
+        execution = generation_identity(spec.cuda_generation)
+    strategy = ('vllm-per-request-v1' if spec.cuda_generation is not None
+                and spec.cuda_generation.engine == 'vllm' else 'per-token-v1')
     return {"temperature": d.temperature, "seed": spec.seed, "thinking": d.thinking,
             "max_new_tokens": spec.max_new_tokens,
-            **({"batch_size": spec.measurement_batch_size, "sampling_seed_strategy": "per-token-v1"}
+            **({"batch_size": spec.measurement_batch_size, "sampling_seed_strategy": strategy}
                if spec.measurement_batch_size > 1 else {}),
-            **{key: getattr(d, key) for key in ("top_p", "top_k", "min_p") if getattr(d, key) is not None}}
+            **{key: getattr(d, key) for key in ("top_p", "top_k", "min_p") if getattr(d, key) is not None},
+            **execution}
 
 
 def measurement_bank_fingerprint(bundle):
@@ -235,6 +243,7 @@ async def run(job):
     directory, artifacts = start(job, banks, controls, bundle)
     model = local_model(spec.model, job.models, adapter_path=spec.adapter_path,
         max_new_tokens=spec.max_new_tokens, seed=spec.seed, enable_thinking=spec.measurement_decoding.thinking,
+        **({'generation': spec.cuda_generation} if spec.cuda_generation is not None else {}),
         **{key: getattr(spec.measurement_decoding, key) for key in ("top_p", "top_k", "min_p")
            if getattr(spec.measurement_decoding, key) is not None})
     observed, control_observed = {}, {}

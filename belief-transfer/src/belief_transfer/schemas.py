@@ -1717,6 +1717,18 @@ class MeasurementDecoding(BaseModel):
     min_p: float | None = Field(default=None, ge=0, le=1)
 
 
+class CUDAGenerationSpec(BaseModel):
+    """Opt-in inference execution; fixed weights and decoder need fresh qualification."""
+
+    model_config = ConfigDict(extra="forbid")
+    engine: Literal["hf_compiled", "vllm"]
+    revision: str = Field(min_length=40, max_length=40, pattern=r"^[0-9a-f]+$")
+    padding_multiple: int = Field(default=256, ge=1)
+    max_model_len: int = Field(default=4352, ge=1)
+    max_num_seqs: int = Field(default=64, ge=1)
+    gpu_memory_utilization: float = Field(default=.85, gt=0, lt=1)
+
+
 class PilotBenchSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
     version: Literal["ethical-pilot-v1", "ethical-pilot-v2"] = "ethical-pilot-v1"
@@ -1740,6 +1752,7 @@ class PilotBenchSpec(BaseModel):
     stance_validation_run_id: str | None = None
     measurement_decoding: MeasurementDecoding = Field(default_factory=MeasurementDecoding)
     measurement_batch_size: int = Field(default=1, ge=1)
+    cuda_generation: CUDAGenerationSpec | None = Field(default=None, exclude_if=lambda value: value is None)
     stance_profile_version: Literal["polarity-profile-v1"] | None = None
     conviction_rubrics: list[ConvictionRubric] = Field(default_factory=list)
     conviction_interface: Literal["legacy", "inline", "anchored", "named", "named_anchored", "named_referent"] = "legacy"

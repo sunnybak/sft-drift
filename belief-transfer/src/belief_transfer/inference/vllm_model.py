@@ -1,0 +1,102 @@
+"""Opt-in CUDA vLLM generation; no imports or weights until first use.
+
+Run this backend in its separately pinned inference environment. The training
+environment stays unchanged. Probability settings are shared with HF; RNG identity
+is explicitly different and must receive its own qualified BASE.
+"""
+from __future__ import annotations
+
+from pathlib import Path
+
+from belief_transfer.inference.execution import generation_identity
+from belief_transfer.inference.model import _apply_chat_template, _is_peft_checkpoint
+from belief_transfer.schemas import CUDAGenerationSpec, ModelsConfig
+
+
+class VLLMModel:
+    def __init__(self, model: str, models_config: ModelsConfig, *, generation: CUDAGenerationSpec,
+                 adapter_path: str | Path | None = None, max_new_tokens: int = 256,
+                 seed: int = 42, enable_thinking: bool = False, top_p: float | None = None,
+                 top_k: int | None = None, min_p: float | None = None,
+                 batch_size: int | None = None):
+        if generation.engine != 'vllm':
+            raise ValueError('Expected vLLM execution configuration')
+        self.model, self._spec, self.generation = model, models_config.models[model], generation
+        if self._spec.dtype != 'bfloat16':
+            raise ValueError('Only BF16 vLLM study inference is validated by this implementation')
+        self.adapter_path = Path(adapter_path) if adapter_path is not None else None
+        self.max_new_tokens, self.seed, self.enable_thinking = max_new_tokens, seed, enable_thinking
+        self.batch_size = batch_size or generation.max_num_seqs
+        self.sampling_options = {'top_p': top_p if top_p is not None else 1.,
+                                 'top_k': top_k if top_k is not None else -1,
+                                 'min_p': min_p if min_p is not None else 0.}
+        self._engine = self._tokenizer = self._lora = None
+
+    def _ensure_loaded(self):
+        if self._engine is not None:
+            return
+        import torch
+        from huggingface_hub import snapshot_download
+        from transformers import AutoTokenizer
+        from vllm import LLM
+
+        if not torch.cuda.is_available():
+            raise RuntimeError('vLLM study inference requires CUDA')
+        if self.adapter_path is not None and not _is_peft_checkpoint(self.adapter_path):
+            raise ValueError('This vLLM path supports base weights or PEFT adapters only')
+        weights = snapshot_download(self._spec.pretrained, revision=self.generation.revision,
+                                    local_files_only=True)
+        self._tokenizer = AutoTokenizer.from_pretrained(weights, local_files_only=True)
+        self._engine = LLM(model=weights, tokenizer=weights, dtype='bfloat16',
+            tensor_parallel_size=1, max_model_len=self.generation.max_model_len,
+            max_num_seqs=self.generation.max_num_seqs, max_num_batched_tokens=8192,
+            gpu_memory_utilization=self.generation.gpu_memory_utilization,
+            enable_prefix_caching=False, enable_chunked_prefill=True, enforce_eager=False,
+            generation_config='vllm', seed=self.seed, enable_lora=True, max_lora_rank=64)
+        if self.adapter_path is not None:
+            from vllm.lora.request import LoRARequest
+
+            self._lora = LoRARequest('study-adapter', 1, str(self.adapter_path.resolve()))
+
+    def generate_batch_with_metadata(self, prompts, *, temperature=0, seeds, batch_size):
+        if not prompts or len(prompts) != len(seeds) or batch_size < 1:
+            raise ValueError('Aligned nonempty prompts/seeds and positive batch size required')
+        self._ensure_loaded()
+        from vllm import SamplingParams
+
+        texts = [_apply_chat_template(self._tokenizer, [{'role': 'user', 'content': p}],
+                                      enable_thinking=self.enable_thinking) for p in prompts]
+        inputs = [self._tokenizer.encode(text, add_special_tokens=False) for text in texts]
+        if any(len(ids) + self.max_new_tokens > self.generation.max_model_len for ids in inputs):
+            raise ValueError('Request exceeds pinned vLLM context capacity')
+        params = [SamplingParams(temperature=temperature, max_tokens=self.max_new_tokens,
+                                 seed=int(seed), **self.sampling_options) for seed in seeds]
+        results = self._engine.generate([{'prompt_token_ids': ids} for ids in inputs], params,
+                                       lora_request=self._lora, use_tqdm=False)
+        if len(results) != len(inputs):
+            raise ValueError('vLLM returned incorrect request count')
+        execution = generation_identity(self.generation)
+        replies = []
+        for ids, seed, result in zip(inputs, seeds, results):
+            if list(result.prompt_token_ids) != ids or len(result.outputs) != 1:
+                raise ValueError('vLLM input identity or output multiplicity changed')
+            output = result.outputs[0]
+            if output.finish_reason not in {'stop', 'length'}:
+                raise RuntimeError(f'vLLM request did not complete normally: {output.finish_reason}')
+            tokens = list(output.token_ids)
+            if not tokens:
+                raise RuntimeError('vLLM returned no generated tokens')
+            text = self._tokenizer.decode(tokens, skip_special_tokens=True).strip()
+            replies.append((text, {'finish_reason': output.finish_reason,
+                'stop_reason': output.stop_reason, 'prompt_tokens': len(ids),
+                'generation_tokens': len(tokens), 'input_token_ids': ids, 'output_token_ids': tokens,
+                'sampling_seed': int(seed), 'sampling_seed_strategy': 'vllm-per-request-v1',
+                'sampler_backend': 'vllm-per-request-v1', 'batch_size': len(prompts),
+                'submission_batch_size': len(prompts), 'max_num_seqs': self.generation.max_num_seqs,
+                'model_revision': self.generation.revision, **execution}))
+        self.last_generation_metadata = replies[0][1] if len(replies) == 1 else None
+        return replies
+
+    def generate(self, prompts, temperature=0):
+        return [text for text, _ in self.generate_batch_with_metadata(
+            prompts, temperature=temperature, seeds=[self.seed] * len(prompts), batch_size=self.batch_size)]
