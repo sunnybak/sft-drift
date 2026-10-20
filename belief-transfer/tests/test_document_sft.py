@@ -169,6 +169,8 @@ def test_document_stage_config_is_typed_and_registered(make_job):
     assert isinstance(job.document_sft, DocumentSFTSpec)
     assert job.document_sft.max_length == 512
     assert stages.load('document_sft').__module__ == 'belief_transfer.stages.document_sft'
+    assert 'document_sft' not in make_job(['+run=current_machine']).model_dump(mode='json')
+    assert job.model_dump(mode='json')['document_sft']['max_length'] == 512
 
 
 def test_frozen_plan_rejects_changed_steps_or_hash(make_job, tmp_path, monkeypatch):

@@ -41,3 +41,19 @@ Technical input v1 was prepared but never trained; its source-file hash fields u
 the project's default 12-character hash helper. Preserve that void preparation. v2
 uses full SHA-256 and validates source files. New stage plan/manifest hash fields also
 use full hashes. Tests: 161 passed before that correction; 92 passed after it.
+
+Full regression run found 970 passing tests, five skips and one compatibility failure:
+the new unset `document_sft` field changed historical config serialization. Omit it
+when None; the hardcoded historical fingerprint is restored (36 focused checks pass).
+Repeat the full suite after this fix. Hold only the reference driver's parent at the
+process boundary while its current GPU capacity child finishes, then pull the fix
+before starting qualification. No started measurement is killed or restarted.
+
+Read eight additional full risk-family source documents (first pending positive and
+negative per family, targeted rather than random). Seven have no clear serious defect;
+`psychology_deception_debrief__0000__negative` adds necessity for avoiding distress.
+Full minimal revision is preserved as repair overlay v6 (464 → 465 Qwen tokens).
+Source bank and completed screen/queue stay unchanged. Separate scope-adjudication v1
+records ID/hash judgments. Eight of the original 1,106 pending entries were read;
+1,098 remain unreviewed, and the new repair is not yet applied to a full candidate bank.
+No model recheck or full-bank clearance is claimed.

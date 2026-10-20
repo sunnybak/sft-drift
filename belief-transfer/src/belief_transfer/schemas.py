@@ -1985,7 +1985,8 @@ class JobConfig(BaseModel):
     stance_sdf_pilot: StanceSDFPilotSpec | None = None
     stance_corpus: StanceCorpusSpec | None = None
     decision_qa: DecisionQASpec | None = None
-    document_sft: DocumentSFTSpec | None = None
+    # Omit this opt-in field when unset: historical config identities must not change.
+    document_sft: DocumentSFTSpec | None = Field(default=None, exclude_if=lambda value: value is None)
     related_runs: dict[str, str] = Field(default_factory=dict)
     """Sibling run ids that belong with this one, mapped to why, e.g.
     `{matrix_v1_step24: "the same arms read at step 24, where belief transfer peaks"}`.
