@@ -135,7 +135,7 @@ def run(generated: Path, result: Path) -> None:
             for row in rows:
                 inputs = torch.tensor([row["input_token_ids"]], device="cuda")
                 with torch.inference_mode():
-                    reply = hf.generate(input_ids=inputs, attention_mask=torch.ones_like(inputs), do_sample=False, max_new_tokens=128, pad_token_id=tokenizer.pad_token_id)
+                    reply = hf.generate(input_ids=inputs, attention_mask=torch.ones_like(inputs), do_sample=False, max_new_tokens=row.get("max_new_tokens", 128), pad_token_id=tokenizer.pad_token_id)
                 ids = reply[0, inputs.shape[1]:].tolist()
                 text = tokenizer.decode(ids, skip_special_tokens=True)
                 ends = hf.generation_config.eos_token_id

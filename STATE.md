@@ -27,7 +27,7 @@ all192replies read; BASE/all3adapters each0/20under both128token lookup families
 8/8direct arithmetic; no truncation. Wrong codes, not a formatting-only failure.
 Both have full-reply agent reviews JSONL+MD. Frozen instrument/old failures unchanged.
 
-**RUNNING:** one follow-up `ethics_sft_registry_varied_requests_v1`.
+**COMPLETED, FAILED:** one follow-up `ethics_sft_registry_varied_requests_v1`.
 Same2,000synthetic+2,000C4bodies, lowerLR2e-5, same1,864,795targets,4,390chunks,
 550steps, checkpoints275/550; only synthetic training requests vary across10templates.
 New prospective development check requires18/20semantic recall per family plus
@@ -36,19 +36,25 @@ unchanged frozen controls. Original strict endpoint retained separately. Reused
 PlanSHA4600aa89f5532073b767ed19f83ca0e81b0b59f4fb8e2556a3d5ebe8ef3d1166.
 43focused tests passed; cached CPU-tokenizer preparation passed. No Mac training.
 
-Supervisor `sft-drift-registry-varied-requests-v1`,PID30343, source0a9ed95;
-log `/workspace/sft-drift-ops/registry_varied_requests_v1.log`. Registered inputs
-transferred; frozen execution hashes checked before training. Exact worker:
-`data/generated/ethical_stance_sft/ethics_sft_registry_varied_requests_v1/worker.sh`.
-It performs fresh training, original validation/frozen controls, separate semantic
-probe, then prospective candidate judgment requiring full-reply agent review.
-All prior matrix/probe workers are terminal. No restart-resume or overwrite.
-Checkpoint275 saved and copied Mac:8files/396,933,292bytes, all SHA/bytes verified
-at20:29Z; receipt in this training result root. Finite copy watcher completed.
-Next: preserve midpoint privately, then read terminal original/semantic validation
-and every new reply before qualification. Training continues beyond midpoint.
-Monitor: `ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-varied-requests-v1; tail -c 1000 /workspace/sft-drift-ops/registry_varied_requests_v1.log'`.
+Supervisor `sft-drift-registry-varied-requests-v1` EXITED. All11engineering checks
+passed, but original and both longer semantic lookups0/20. Frozen controls25/32:
+25valid/correct,7extraction failures, null0/9eligible (incomplete16expected). Direct
+arithmetic8/8semantic,7/8exact numeral-only. All96semantic replies,40strict lookup
+replies and7failed controls read completely. Failures:4bare `<think>` replies,
+2duplicate closes (one ends with wrong reject),1prose final. Original failed verdicts
+and prospective failure preserved. Agent review JSONL+MD saved. All63terminal files/
+971,363,024bytes copied Mac and SHA/bytes verified, including prior midpoint8files.
 
+No training queued. Fresh inference-only diagnostics prepared and registered:
+- `ethics_gpu_registry_conditioning_v1`: all20facts, lookup/reference-note context
+  crossed with four-digit/registry answer prefix, plus unprefilled notes; BASE and
+  assistant/low +varied-request final adapters,300replies. No prefix includes a code.
+- `ethics_gpu_registry_nonthinking_controls_v1`: unchanged32control prompts/seeds,
+  BASE andthose2adapters,96replies; samevLLM sampling/limits, thinking disabled.
+  New mode diagnostic only; frozen thinking instrument/results are not replaced.
+43focused diagnostic/probe/import/handoff tests passed; preparation uses cached CPU
+tokenizer only. Next: commit/push and dispatch finite inference-only worker, review
+results and preserve all terminal bytes. No ethical outcomes or further training sweep.
 
 GPU RTX3090: `38.49.42.46:58689`, project `/workspace/sft-drift/belief-transfer`.
 Qwen3-4B revision1cfa9a7208912126459214e8b04321603b3df60c. Training main.venv and
@@ -98,12 +104,13 @@ forgetting claim without separate retention tasks.
 
 ## Preservation
 
-All current matrix training/checkpoints/validations and both diagnostics copied Mac
-with exact SHA/bytes receipts. First diagnostic40reply review and second192reply
-review saved JSONL+MD. Latest verified private snapshote4cc0955a63516a02ceb9cbcd482d4dff46e958a,
-codecc6eaeb,2,371files/8,073,889,632bytes, live and offline verified; includes matrix,
-both diagnostics/reviews and follow-up inputs. New midpoint275 requires this block's
-next save; final outputs still depend on the active GPU process.
+All current training/checkpoints/validations and completed diagnostics copied Mac
+with exact SHA/bytes receipts. Latest verified private snapshot
+0a1a5a10b25058fc6e8e860c963b58210116511b,code00094cb,
+2,380files/8,470,824,917bytes, live and offline verified; includes midpoint275.
+Full varied-request terminal outputs/reviews and new inference diagnostic inputs
+require this block's next snapshot. No model process remains active before the new
+inference worker is dispatched; no new training authorized by diagnostic output.
 Authoritative receipt `belief-transfer/data/.handoff-receipt.json`.
 
 Commit/push clean source, then from belief-transfer:

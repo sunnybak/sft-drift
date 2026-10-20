@@ -130,3 +130,41 @@ corpusbaf48b3007cb67d9f789c9396d0044c8b7d33b9a;
 2,371files/8,073,889,632bytes. Includes both diagnostic full-reply reviews and new
 follow-up inputs. This next snapshot adds midpoint275and its receipt; final training
 and model responses do not yet exist off-box.
+
+
+## Request-diversity trial failed; inference-only diagnosis
+
+Final550steps and all11engineering checks completed. Original strict0/20; both
+128token semantic families0/20, no truncation. Direct math8/8semantic,7/8exact.
+Frozen controls25/32valid/correct,7invalid extractions, null0/9eligible outof16expected:
+failed original and prospective gates. Full96semantic and40strict lookup replies
+read; every failed control prompt/reply read. Four replies are bare `<think>` ending
+onEOS, two have duplicate closing tags (one ends in incorrect reject for a true
+negation), one has a sentence final. Do not rescue choices from malformed reasoning
+or infer broad arithmetic forgetting. Reviews JSONL+MD saved. Twenty-five other
+controls remain scored by the frozen extractor; no claim that every successful
+reasoning trace was manually reread. Earlier large combined tool output truncated,
+so the seven failed traces were fetched separately in full before judgments.
+
+All63terminal training/checkpoint/two-validation files,971,363,024bytes, copied Mac
+and hash-verified at2026-10-20T21:33Z. This includes the8already-verified midpointfiles;
+terminal archive omitted those duplicate bytes and verified existing local hashes.
+Latest preterminal private snapshot0a1a5a10b25058fc6e8e860c963b58210116511b,
+code00094cb,2,380files/8,470,824,917bytes passed live and offline verification.
+Final outputs and reviews require the next snapshot. No more training in this block.
+
+Next two diagnostic IDs registered/prepared before calls. Conditioningv1 tests a
+2x2 cross of question/reference-note context and supplied four-digit/registry answer
+phrase, plus unprefilled note, on all20facts. BASE +assistant/low +varied final,
+300replies, greedy nonthinking8/64token caps. Correct-prefix completion is explicitly
+not free recall or qualification. The shared driver accepts row-specific cap while
+preserving128default; historical scripts are recoverable at original source commits.
+Nonthinking_controlsv1 keeps exact32prompts, per-item seeds, vLLM .6/.95/topk20,
+4096cap/batch32 and standard extraction, toggling mode toFalse. BASE and2adapters,
+96replies. Frozen thinking results remain failed; this does not qualify a new ethical
+instrument or choose settings based on ethical outcomes. New script/raw metadata
+bind revision/adapter/source identities and preserve partial failures without resume.
+43focused diagnostic/probe/request/import/handoff tests passed (mock/temp); cached
+CPU tokenizer preparation passed, no Mac weights/training. New inputs/raw outputs
+stay in registered ethical_pilot roots, JSONL with Markdown. Finite inference-only
+Supervisor worker next; no new training sweep or automatic ethical dispatch.
