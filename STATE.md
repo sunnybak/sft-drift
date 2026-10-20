@@ -53,18 +53,22 @@ learn training content. Nonthinking_controlsv1 restored32/32format for allmodels
 accuracy BASE25/32,low26/32,varied23/32; no replacement instrument is qualified.
 Frozen thinking measurements and prior failures remain unchanged.
 
-Prepared fresh inference-only `ethics_gpu_registry_trained_context_v1`: all20facts,
-actual first-document requests/prefixes from high and varied source corpora, with
-versus without DOCTAG; BASE+high+low+varied,320replies. Tagged input and next correct
-code targets verified against actual saved training token IDs/eligible labels.
-42focused tests passed, cached CPU tokenizer preparation passed; no Mac weights.
-RUNNING Supervisor `sft-drift-registry-trained-context-v1`,PID33920,sourcea4a2ac6.
-Log `/workspace/sft-drift-ops/registry_trained_context_v1.log`; finite inference-only,
-no resume/overwrite. Next poll this worker and inspect/preserve terminal results.
-All300conditioning and96nonthinking replies read; per-response reviews JSONL+MD
-agree with mechanical matches/extraction. Low imitates note style with wrongcodes;
-varied often hallucinates fictional biographies, not trained registry content.
-No new training or ethical dispatch; prefix completion cannot qualify chat recall.
+Exact-context diagnostic `ethics_gpu_registry_trained_context_v1` COMPLETED; finite
+Supervisor EXITED, no inference/training active or queued. All320continuations read,
+per-response reviews agree with mechanical matches. Original request/tagged versus
+untagged: high20/20and19/20, BASE/low/varied each0/20. Changed request/tagged versus
+untagged: high16/20and5/20, others0/20. Tagged inputs/next eligible code labels were
+verified against actual training IDs. These8token prefix completions are not chat
+recall or qualification; old failures unchanged. Terminal7files/520,168bytes copied
+Mac/hash-verified, full review saved. All396earlier diagnostic replies also read.
+
+Next work block: implement one prospectively frozen combined candidate using high
+LR, varied neutral document requests and disjoint instruction/thinking replay; first
+measure/freeze replay dose and serializer, test masks/boundaries, then one fresh run.
+Design and falsifier: `changelog/2026-10-20-replay-followup-plan.md`. No runnable trial
+or training launch yet. Exact next inspection command from belief-transfer:
+`uv run --no-sync python -c "from pathlib import Path; print(Path('../changelog/2026-10-20-replay-followup-plan.md').read_text())"`.
+Then implement/test/prepare/register fresh IDs before any calls. No ethical dispatch.
 
 GPU RTX3090: `38.49.42.46:58689`, project `/workspace/sft-drift/belief-transfer`.
 Qwen3-4B revision1cfa9a7208912126459214e8b04321603b3df60c. Training main.venv and
@@ -114,12 +118,12 @@ forgetting claim without separate retention tasks.
 
 ## Preservation
 
-All failed varied-request training/checkpoints/validations/reviews privately saved:
-snapshota9010defd4c9b1d4839829dee18fe4dd500fc65d,code83ea9d4,
-2,448files/9,045,446,715bytes; live and offline verification passed. Both newly
-completed diagnostics are now Mac/hash-verified and await next private snapshot,
-as do exact-context diagnostic inputs. Authoritative receipt
-`belief-transfer/data/.handoff-receipt.json`. No training process is running.
+All failed varied-request training/checkpoints/validations/reviews and396earlier
+diagnostic outputs/reviews plus exact-context inputs privately saved and offline
+verified: snapshot9f5a8da3d4f1e52b6dafbf0d4cc7cac873dd279c,code7749b10,
+2,475files/9,046,419,747bytes. Exact-context terminal outputs/reviews now Mac/hash
+verified and require this block's final snapshot. Authoritative receipt
+`belief-transfer/data/.handoff-receipt.json`. No training/inference process remains.
 
 Commit/push clean source, then from belief-transfer:
 `uv run --no-sync python scripts/handoff.py save` and `... handoff.py verify`.

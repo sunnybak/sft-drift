@@ -219,3 +219,23 @@ wrong codes; varied notes instead often hallucinate biographies/world descriptio
 Nonthinking wrong answers chiefly mishandle negated false assertions; no recovery by
 formatting/extraction. These396outputs, reviews and exact-context inputs are next
 private snapshot; exact-context outputs remain on GPU while active.
+
+
+## Exact trained-context results and next candidate boundary
+
+Worker EXITED normally;320replies, all fully read. BASE0/20everycondition. High
+original request tagged20/20, untagged19/20; changed request tagged16/20,untagged5/20.
+Low andvaried0/20allconditions, including exact tagged supervised prefixes. High
+learns mappings under training conditions; lower-rate finalmodels do not generate
+correctcodes there. This does not prove zerointernallearning. Tag andrequest interact;
+removing tag alone is not established as a solution. All original free-lookup/control
+failures remain failed. Eight-token snippets usually cap after full correct/wrong
+four-digit value and prose; not full-note or free-recall endpoints. ReviewsJSONL+MD
+andREVIEW.md retained. Seven terminalfiles/520,168bytes copiedMac/hashverified at
+2026-10-20T21:58:30Z. No active workers or queuedtraining remain.
+
+Completed private save andofflineverify9f5a8da3d4f1e52b6dafbf0d4cc7cac873dd279c,
+code7749b10,2,475files/9,046,419,747bytes includes396earlierdiagnosticreplies/reviews
+and exact-context inputs. Final320replies/reviews require next snapshot. Next finite
+candidate design in2026-10-20-replay-followup-plan.md; must implement/freeze before
+running. Goal remains incomplete; no ethical treatment authorization fromthesechecks.
