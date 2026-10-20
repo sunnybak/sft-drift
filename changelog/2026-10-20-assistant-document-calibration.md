@@ -69,3 +69,10 @@ questions, not document-transfer evidence. All33terminal files/542,175,430bytes
 copied Mac and SHA/bytes verified; receipt under its results root. Assistant/highLR
 now training. Prepared-input snapshot63fa50f2ba65d77115dd7ce209a13592a87c4951,
 code7f47b0c,2,126mainfiles/4,620,903,047bytes, live/offline verification passed.
+
+Canary private save/verify also succeeded: mainb218591afaf47794626372c0cd579a84b0eee06c,
+code95dee64,corpusf067aafa994f941672e299739fb39ca70a2ccd08;2,160files/5,163,085,759bytes.
+Assistant/highLR midpoint275 saved; all losses finite, first20mean3.16619 versus
+last20mean1.62115. Its8checkpointfiles/396,933,183bytes copied Mac with exact hashes
+and receipt at18:05Z. Training remains active beyond midpoint; no semantic result
+or restart-resume claim. Neither checkpoint selection nor ethical outcome tuning.

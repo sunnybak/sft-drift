@@ -24,9 +24,11 @@ Log `/workspace/sft-drift-ops/registry_format_matrix_v1.log`; registered master
 results root contains `progress.json`. Canary **PASSED**: BASE0/20, adapter20/20,
 all9checks including normalization/reload,150steps/82s. Canary terminal outputs
 copied Mac:33files/542,175,430bytes, all hashes matched. Assistant/highLR training
-is active; no semantic document-transfer result yet. Initial prepared-input snapshot
-63fa50f2ba65d77115dd7ce209a13592a87c4951/code7f47b0c verified. Canary outputs need
-the next snapshot. Monitor from the Mac:
+is active; no semantic document-transfer result yet. Midpoint checkpoint275 saved,
+8files/396,933,183bytes copied Mac and hash-verified; pending next private snapshot.
+At275 all losses finite, first20mean3.1662 versus last20mean1.6211. This does not
+qualify semantic recall. Canary snapshot b218591afaf47794626372c0cd579a84b0eee06c,
+code95dee64,2,160files/5,163,085,759bytes, live/offline verified. Monitor from the Mac:
 
 ```sh
 ssh -p 58689 root@38.49.42.46 'tail -n 5 /workspace/sft-drift-ops/registry_format_matrix_v1.log'
