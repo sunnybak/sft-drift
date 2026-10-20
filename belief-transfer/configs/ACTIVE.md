@@ -179,3 +179,12 @@ Instruction/reasoning replay opt-in: `DocumentSFTSpec.replay` enables only sourc
 Registered512candidate/128retention inputs, complete raw replies/metadata/strict
 admission and separate retention results. No automatic training; measure/freeze dose,
 review and prepare a fresh trial first. Current state is authoritative in rootSTATE.
+
+Fresh replay derivation: `scripts/derive_instruction_replay.py`, immutable
+`ethics_sft_instruction_replay_text_v1`; canonical text equality permits alternative
+teacher-token segmentation and saves both IDs. No new model calls/prose changes.
+Fixed retention: `scripts/probe_instruction_retention.py prepare|run`, default BASE
+ID`ethics_gpu_instruction_retention_base_v1`;4096cap/128presentations and pretraining
+known-mask freeze. Future adapter preparation takes explicit fresh run/training IDs,
+uses samebank/knownmask and validates training/adapter identities. Current state/plan
+controls execution; neither script starts training automatically.

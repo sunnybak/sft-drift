@@ -191,3 +191,37 @@ chat recall/frozencontrols/retention gates and full reply review. No automatic t
 from this amendment, no changes to ethical instrument, no weakening of its controls.
 A fresh-neutral confirmation still follows any development pass. Exact dose/schedule
 not yet prepared. Source/inputs/results/reviews require this block's private snapshot.
+
+
+## Corrected derivation and retention runner implemented
+
+New scripts derive_instruction_replay.py andprobe_instruction_retention.py,65focused
+new/replay/format-matrix/import/handoff tests pass. Tests cover alternative segmentation
+without text edits; wrong/malformed/capped rejection; sourceprompt/answer/seed identity;
+fixed BASE-known mask despite adapter improvements/losses; all128coverage andfamily
+requirements; partialfailure/overwrite refusal. One initial capped fixture wrongly
+includedEOSwithlength-stop; correctedfixture, no real results modified. Shared source
+training/dataset serializers unchanged from prior1,134passed/5skipped fullsuite.
+
+CPU cached tokenizer derivation COMPLETED ethics_sft_instruction_replay_text_v1:
+440admitted,28recovered alternative-tokenization examples,98,398eligible targets,
+440chunks. All512candidate dispositions retained; no new generation, prose edits,
+quality repair or reclassification of oldv2gate. Actual teacher input/output IDs and
+canonical input/target IDs saved separately, full decoded text equality/eligible
+response/EOS coverage verified. New manifestSHA
+09655b0d8ef5b0717eac2557824f4312d21be4b157d9f206dfa21d62ce35718b.
+Counts remain unbalanced(nonthinking sort0,negation16), explicitly retained limitation.
+
+Fresh retentionBASEinputs prepared under registered ethics_gpu_instruction_retention_base_v1.
+Same128oldprompts/per-item seeds, sortedfixedinput order,4096cap, thoughttemp.6/nonthought0,
+.95/topk20/minp0,batch32,pinnedBASE. InputtokenIDs bound to old actualtemplate; exact
+model/seed/prompt metadata checked at runtime. Conditional known-mask protocol frozen
+before calls:>=32known/mode,all8families present; adapter>=.95semantic and1.0format/
+complete boundaries/normalstops on fixedknownitems. All128rawresponses always retained;
+backend identity errors invalidate reference rather than silently becoming unknown.
+BASE/adapter use separate immutableIDs andsamegeneric runner; adapter binding uses
+existing training verification helper. No automatictraining. Next commit/deploy and
+run onlyBASEreference, review, then freeze actual training dose/config.
+
+Prior save/offlineverify succeeded b7fc93138cf01f96c0ebee17f69328c005773c3b,
+code463e12b,2,516files/9,054,019,079bytes. Current derivation/input files need next save.

@@ -86,19 +86,22 @@ sums disagree with automated unique-number semantic rule but fail final format;
 original scores/exclusions unchanged. Per-response reviews/tokenaudit/REVIEW.md saved.
 v1prepared inputs VOID before calls; exact archived builderSHA verified. No overwrite.
 
-Next prospective contract before any new SFT: derive a fresh text-replay manifest
-from saved outputs, admit only correct/strict/complete unchanged text with verified
-canonical template and equivalent teacher-token decoding (do not reject validtext
-for BPE segmentation alone). Preserve v2failed readiness. New separate BASE retention
-reference uses same128prompts/seeds with4096cap; freeze BASE-known item IDs/hashes
-before training, report all128results. Require>=95%semantic retention and100%format/
-normalstops on frozen known items per mode, at least32known andall8families represented
-permode. Frozen32controls and18/20perchatfamily gates unchanged. No adapter outcomes
-for new candidate seen. Details: end of `changelog/2026-10-20-replay-followup-plan.md`.
-Exact next inspection command from belief-transfer:
-`uv run --no-sync python -c "from pathlib import Path; print(Path('../changelog/2026-10-20-replay-followup-plan.md').read_text())"`.
-Then implement/test fresh derivation/reference runner before running. Paths registered;
-no derived manifest, reference run or training config exists yet. Goal incomplete.
+COMPLETED fresh derivation `ethics_sft_instruction_replay_text_v1`:440examples,
+98,398eligible targets,440chunks;28equivalent-text exclusions recovered with actual
+teacher IDs and canonical training IDs separately retained. No response edits or new
+model calls. Wrong/noncompliant/capped candidates remain excluded; original v2failure
+unchanged. DocumentsSHA09655b0d8ef5b0717eac2557824f4312d21be4b157d9f206dfa21d62ce35718b.
+
+Implemented/prepared `ethics_gpu_instruction_retention_base_v1`: same128prompts/seeds,
+4096cap; all replies reported, BASE-known item IDs/response hashes frozen before any
+training. Reference needs>=32known/mode andall8families represented. Future retention
+requires>=95%semantic accuracy and100%format/validboundaries/normalstops on those known
+items per mode. Frozen32controls and18/20perchatfamily gates unchanged. New helpers
+65focused tests passed, CPU derivation/token-label checks passed; no Mac weights.
+Next deploy committed source/prepared inputs, run finite CUDA inference reference:
+`scripts/probe_instruction_retention.py run`. Then inspect/referencefreeze, measure
+and freeze one combined high-LR+varied-document-request+replay trial. No training
+config/launch yet. Design: `changelog/2026-10-20-replay-followup-plan.md`.
 
 GPU RTX3090: `38.49.42.46:58689`, project `/workspace/sft-drift/belief-transfer`.
 Qwen3-4B revision1cfa9a7208912126459214e8b04321603b3df60c. Training main.venv and
@@ -148,11 +151,11 @@ forgetting claim without separate retention tasks.
 
 ## Preservation
 
-All earlier training/checkpoints/716diagnostic replies/reviews privately saved and
-verified: snapshot7c1da342210810e3bde16868f485b4b71b70b815,code46cfe92,
-2,486files/9,047,094,615bytes. This block's source/replay inputs/acquisition results/
-reviews are Mac/hashverified and await final snapshot. Authoritative receipt
-`belief-transfer/data/.handoff-receipt.json`. No GPU worker remains running.
+Prior block fully privately saved and offline verified: snapshot
+b7fc93138cf01f96c0ebee17f69328c005773c3b,code463e12b,
+2,516files/9,054,019,079bytes. Includes all acquisition results/reviews and unusedv1
+inputs/source. Current derived replay andreference inputs require next snapshot.
+Authoritative receipt `belief-transfer/data/.handoff-receipt.json`. No training queued.
 
 Commit/push clean source, then from belief-transfer:
 `uv run --no-sync python scripts/handoff.py save` and `... handoff.py verify`.
