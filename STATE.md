@@ -64,7 +64,7 @@ plus10fresh training preferences. Frozen10evaluation preferences are never train
 C4:20,634unique pinned full rows. Candidatev2 `ethics_sft_candidate_repairs_v2` retains
 all20,000IDs with54hash-matched corrections,9,802,442raw Qwen tokens. SHA:
 `cc461a840e3c5cdeae96f84edf96adf723e45d1fe48bd34dcbc20ae2c47a4dac`.
-Fully read/rechecked overlayv8 adds3corrections but is not yet assembled into candidatev3.
+Fully read/rechecked overlayv8 is included in candidatev3 below.
 No source filtering, no automatic training-ready designation.
 
 Rubricv5 adds one omission predicate to unchanged13v4questions. Development canary
@@ -126,14 +126,25 @@ of deception. All92repair IDs are previously unmodified source rows. Review arti
 - Next preregistered diagnostic ethics_gpu_document_adapter_parity_v1 replays40saved
   native-document inputs from the successful HF recall run through vLLM,greedy4tokens/seed0.
   Exact HF/vLLM text+token parity and adapter20/20recall required for this narrow check.
-  All old chat/control failures remain failed.53focused tests pass. Supervisor worker
-  sft-drift-document-adapter-parity-v1 confirmed RUNNING (PID19821). Finite/noautorestart,
-  no resume; log /workspace/sft-drift-ops/document_adapter_parity_v1.log. Outputs GPU-only
-  until terminal copy/verification. Run command below is already dispatched; do not restart.
+  All old chat/control failures remain failed.53focused tests passed. Worker EXITED.
+  Adapter text/token parity20/20,expected codes20/20; BASE parity19/20,expected codes0/20;
+  identity errors0. Strict40/40criterion FAILED. Brindova BASEHF1234/vLLM0001,bothwrong;
+  exact inputs/config checked, cause not established. Adapter loading reproduces native
+  recall; this does not qualify chat/control transfer. All12remote files matched Mac
+  SHA256/bytes (212,117bytes),worker.log copied.
+- New neutral calibration ethics_sft_registry_mixed_calibration_v1 PREPARED,not yet trained:
+  20toy facts×100procedural documents (424–456tokens),2,000shared pinned C4rows,1:1doccount.
+  882,992synthetic+981,803C4loss targets=1,864,795;4,362chunks,maxlen1024,B4/G2,546steps,
+  onepass,checkpoints273/546,seed42,r16allprojections,lr1e-4,warmup.03. Exact hashed
+  plan ab01716940614af748c7d61c48f0d4d986e0b34b2a5cf657d3deb78b4ad1333b verified
+  against composed JobConfig/dataset.56focused tests passed. No new model calls/data API
+  or ethical training inputs. Final-only technical judgment; no belief-outcome tuning.
+  Require original20held-out greedy16exactlookup>=.9/BASE<=.1,alltraining checks andfresh
+  frozen32factualcontrols (>=.95,strict1.0,nullflip<=.05,normalstops). Old gates stayfailed.
 
 ```sh
-# Next prepared technical diagnostic; isolated qualified vLLM environment on GPU.
-/workspace/sft-drift-vllm/.venv/bin/python scripts/probe_document_adapter_parity.py run --run-id ethics_gpu_document_adapter_parity_v1
+# Next prepared neutral calibration; main pinned training environment on GPU.
+flock /tmp/sft-drift-cuda-benchmark.lock .venv/bin/python -u run.py +run=ethics_sft_registry_mixed_calibration_v1
 ```
 
 The new blind80 and flagged140 include219distinct texts in this work block. Earlier
@@ -167,11 +178,11 @@ suite. Source/config defaults and frozen instrument files remain protected by ha
 
 ## Preservation
 
-Most recent verified snapshot is code765e24d, main
-dec103772442ea51b1f87ff524f17d8374e4c49f, corpus
-c6d853fd96459efb227388d7cd4f16751232917b;1,876main files/3,643,980,066bytes.
-Includes candidatev3 and frozen selection. Later confirmation/diagnostic work needs
-its next checkpoint. Earlier recovery snapshot VERIFIED:
+Most recent verified live snapshot is code0e1b5da, main
+866edb3e63074f9031bafe785ba020592242f04b;1,956main files/3,649,909,966bytes.
+Includes96confirmation judgments/comparisons,repairv11/input-audit20closure andrecognition
+results/copyverification,plus prepared parity protocol. Later parity results andnew
+neutral calibration preparation require the next snapshot. Full receipt holds corpus revision. Earlier recovery snapshot VERIFIED:
 main83c6035edc58e6bd1d0460b9db90a96664fefbcf,
 corpus844c1aef8edbf3ee551edcfe82a6af2842e6bfcf;
 1,830main files/3,634,611,597bytes. Includes all newest GPU weights/failures.

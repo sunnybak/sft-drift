@@ -63,3 +63,33 @@ adapter exact recall for the exact engineering check. Four-token length stops ex
 Mismatch prompts backend investigation; agreement only clears this narrow backend
 question, never the failed chat/control gates.53focused parity/import/handoff tests pass.
 Source/reference/protocol/bank hashes frozen before inference. No new training.
+
+
+## Native backend replay completed; next neutral calibration prepared
+
+All20adapter continuations match HF text/token IDs exactly and recall expected codes.
+BASE19/20match; Brindova differsHF1234/vLLM0001,bothincorrect,firstdigit differs.
+No input/adapter identity errors. Strict40/40paritycriterion FAILED, not silently relaxed.
+Pinned model/reportedversions/raw inputs checked; cached generation config has no extra
+repetition penalty. Difference cause not established. This evidence reproduces adapter
+native learning under vLLM; it cannot turn HFchat orvLLMcontrol failures into passes.
+All12remote result files copied andSHA/bytesverified,212117bytes; worker log copied.
+
+Prepared ethics_sft_registry_mixed_calibration_v1 under full hashedoperationtrain plan,
+not by weakening the bounded20-row/200-step operationmemorize validator. Neutral technical
+data only:20original arbitrary mappings×100procedural variants,2,000C4rows (samefirst
+pinned rows,unfiltered). Documents424–456tokens,2,000unique synthetic hashes; original
+20queries absent. Synthetic882992loss targets,C4981803,total1864795;4362chunks. Onepass,
+B4/G2,546optimizersteps,checkpoint273/546,seed42,r16alpha32all7projections,lr1e-4,
+warmup.03,dropout0,weightdecay0. MaskedDOCTAG/unprefixedC4/EOScontext,terminalEOSloss,
+max1024,no cross-document packing. Multiple design changes together: noC4causalclaim.
+
+New frozen plan SHAab01716940614af748c7d61c48f0d4d986e0b34b2a5cf657d3deb78b4ad1333b.
+Final-only technical qualification: original20unseen queries exactgreedy16>=.9,BASE<=.1,
+alltraining/update/reload/coveragechecks,fresh32controls>=.95,strict1.0,nullflip<=.05,
+normalstops. No checkpoint/hyperparameter selection on ethical outcomes. This is an
+explicit new independently judged run; original failures remain.56focused tests pass,
+including temporary-directory complete manifest/plan composition, provenance rejection,
+held-out query exclusion, deterministic distinct texts and refusal to overwrite.
+Stage plan verifier passes on actual CPU-tokenized inputs. Training not yet dispatched
+at this note; actual worker state follows inSTATE. No local weights loaded ortraining.
