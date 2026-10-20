@@ -17,7 +17,7 @@ check: the 100 separately annotated `content_review_v2` documents, with borderli
 excluded from categorical calibration metrics. These are previously examined development
 examples, not independent human ground truth or untouched validation.
 
-From `belief-transfer/`:
+Historical invocation examples (completed IDs; do not execute again):
 
 ```sh
 uv run --no-sync python run.py +run=ethics_sft_decision_qa_calibration_v1
@@ -50,12 +50,14 @@ See [official API guide](https://developers.openai.com/api/docs/guides/decisions
 
 ## Current frozen screening protocol
 
-Use `ethics_sft_decision_qa_corpus_v3` (rubric v4, 13 questions). Earlier overlays are
+Completed reference: `ethics_sft_decision_qa_corpus_v3` (rubric v4, 13 questions). Earlier overlays are
 historical development runs; do not repeat completed IDs. All 164 reviewed examples
 were used in tuning. Calibration_v5 reports 12/14 known major defects at .2, one flag
 among 143 provisional negatives, excluding seven borderline cases. This does not
 estimate unseen recall. Both psychology-deception families (400 documents) and every
 previously confirmed semantic defect receive mandatory review, independently of score.
+
+Historical commands, retained for provenance; these completed IDs refuse rerun:
 
 ```sh
 uv run --no-sync python run.py +run=ethics_sft_decision_qa_corpus_v3
@@ -86,3 +88,42 @@ IDs and hash-matched repair overlays. It creates a complete candidate version re
 all source document IDs; no rows are dropped or designated training-ready. Its separate
 report records every replacement. Original generation assessments remain in the source
 bank, rather than being misrepresented as judgments on manually changed text.
+
+## Lessons for the next QA version
+
+Observed on the completed bank: Decisions was operationally useful and inexpensive,
+with exact structured outputs, but model judgment quality varied by criterion. The
+agent confirmed and repaired every one of 34 high stance/contradiction flags. This
+selected result does not establish recall: the fresh blind 20 contained one clear
+premise change the model missed, and 18 provisional negatives with no critical flags.
+There was no matched comparison with Responses judging, so this is evidence about
+this model/rubric/workflow, not superiority of the Decisions transport.
+
+Recommended changes are **future work**, not changes to completed v4 or its labels:
+
+- Route questions by declared subject. Ask hypothesis/deception predicates only on
+  psychology subjects; all five partial refusals were the hypothesis-only question
+  on unrelated subjects. A new question set requires a new rubric/run/cache identity
+  and parser/contract tests. Keep refusals explicit.
+- Use short observable predicates for known failure classes alongside the general
+  scope question. For hiring, distinguish an assertion that an input-data bias check
+  did not occur from a statement that the source does not establish such a check.
+  Likewise test whether missing named review channels becomes absence of all recourse.
+- Keep canonical stance classification independent of assigned position, then compare
+  with assignment in code. Tests/examples must cover negation and answered objections.
+- Run mechanical hash, duplicate, token-length and schema checks locally. Model review
+  is for meaning. Route stance, scope, style and mechanical issues separately; do not
+  interpret maximum risk across questions as a calibrated document error probability.
+- Maintain a development set and a genuinely untouched, subject-balanced blind audit
+  of flagged **and low-flag** documents. Once an audit informs tuning, relabel it as
+  development and collect a fresh audit. Include positive/negative positions and
+  entire risky subject families; do not infer prevalence from a targeted queue.
+- Preserve the separate manual disposition ledger, paired source IDs and source hashes.
+  Repair both positions against the same factual brief; do not silently drop subjects,
+  edit historical scores, or promote low flags to training approval.
+
+Retain the durable journal, bounded retries, failed-attempt cost records and overwrite
+refusal. Keep the conservative pacing reservation: a Responses token-count proxy
+initially underestimated Decisions input; the later margin held across the full pass.
+A provider-specific exact count could improve utilization later, only after verification.
+No automatic repeat of the 20,000-document pass is needed just to preserve these lessons.

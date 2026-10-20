@@ -131,3 +131,11 @@ v1–v5 (52 replacements), complete candidate version `ethics_sft_candidate_repa
 No live jobs. Original corpus/instrument unchanged. Follow `review_report.md` and
 `disposition_queue.md` under the completed screening results before further data use.
 No completed ID may be rerun. No training approval follows.
+
+## Next Vast.ai work block
+
+Read `../VAST_SFT_HANDOFF.md`. Existing CUDA qualification/BASE and technical
+memorization entry points are available. Standalone document training/real DOCTAG
+loss masking is not implemented by legacy `stage=sft`; integration, scope disposition
+and frozen arm/dose/training specification precede full treatments. SETUP.md now
+points here rather than restarting a dataset-generation pilot.

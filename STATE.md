@@ -1,5 +1,22 @@
 # Current state — 2026-10-19
 
+## Next session — Vast.ai GPU preparation
+
+User intends to continue on an existing/newly provisioned Vast.ai GPU for finetuning.
+Ready for restore, CUDA calibration/qualification, BASE and isolated technical smoke
+checks. **Full document SFT is not yet wired up**: legacy stage=sft reads gated
+validated.jsonl/chat messages and applies a chat template. The new standalone document
+bank's DOCTAG/loss masks are metadata only. Implement and verify the document path,
+resolve scope-review dispositions, and freeze arm/dose/training/analysis before treatments.
+No rental, GPU run, rescreen or training was started in this readiness work block.
+
+New handoff: `belief-transfer/VAST_SFT_HANDOFF.md` has verified existing entry points,
+implementation requirements and a prompt to paste into the GPU session. SETUP.md's
+stale “no dataset yet” paragraph is corrected. Decisions lessons and future changes
+are in `belief-transfer/STANCE_DECISION_QA.md`: subject-routed questions, direct scope
+predicates, untouched blind audits, separate dispositions, retained refusal/cache/retry
+semantics. These recommendations do not change completed rubric v4 or rerun it.
+
 ## Completed work: full Decisions screen and bounded manual repairs
 
 User authorized screening all 20,000 synthetic documents and manual corrections.
@@ -35,10 +52,10 @@ One repaired psychology document retains a .6 model flag with explicit agent dis
 Exact next command, from `belief-transfer/`:
 
 ```sh
-cat data/results/ethical_stance_sft/ethics_sft_decision_qa_corpus_v3/review_report.md
+cat VAST_SFT_HANDOFF.md
 ```
 
-Then prioritize scope adjudication using `disposition_queue.md` in the same folder.
+Follow that handoff for GPU setup; before treatment training prioritize scope adjudication using `disposition_queue.md` in the same folder.
 Corpus expansion/training remains a subsequent experiment plan. Qualify CUDA BASE,
 variability, tiny memorization/update/reload checks before any SFT. Evaluate all 100
 beliefs on every future model/checkpoint. No Mac training or unauthorized rental.

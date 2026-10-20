@@ -64,9 +64,16 @@ uv run --no-sync pytest tests/test_handoff.py tests/test_data_sync.py \
   tests/test_stance_study.py tests/test_stance_review.py
 ```
 
-The next substantive task is a **small fresh SFT dataset-generation pilot** with example
-review, not a full training sweep. There is no new SFT dataset or validated schedule yet.
-Do not turn an archived corpus/config into one by renaming it.
+The document bank and full Decisions screen are complete. The current corrected
+candidate version is **`ethics_sft_candidate_repairs_v1`**: 20,000 documents with 52
+traceable manual replacements. Scope-review dispositions and a validated training
+schedule remain pending. See **`belief-transfer/VAST_SFT_HANDOFF.md`** (from the repo
+root) for the next GPU work block. Do not restart generation or rerun completed QA.
+
+The existing `stage=sft` is the legacy chat-formatted, gated-corpus path. It does not
+implement the new standalone document mixtures or `<DOCTAG>` masking. Implement and
+verify the document-training path before the full comparison; do not force the new
+candidate bank through the old path by renaming it.
 
 For GPU measurement work, confirm CUDA first:
 
