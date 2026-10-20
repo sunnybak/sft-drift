@@ -15,7 +15,7 @@ passed all10 checks; memoryv3 failed strict chat recall. No GPU process from thi
 is running and no treatment has started. Worker/script/log:
 `/workspace/sft-drift-ops/training_checks_v1.{sh,log}`. No autorestart or stage restart-resume.
 Newest results/checkpoints copied with `rsync -az`; all68remote files matched local
-SHA256/bytes (1,481,895,103bytes). Private snapshot still required before box destruction.
+SHA256/bytes (1,481,895,103bytes). Those68files are in the verified private snapshot below; newer diagnostic outputs need the next snapshot.
 Local transfer log:
 `/tmp/sft-drift-training-checks-copy.log`.
 
@@ -107,7 +107,11 @@ of deception. All92repair IDs are previously unmodified source rows. Review arti
   prior Decisions outputs; exact comparison joined only after judgment freeze. This
   is agent assessment of candidatev3 before repairs; do not retrospectively call it
   passed or draw repeated confirmation samples to obtain a pass.
-- Four clear and six borderline texts await traceable corrections/clarifications.
+- Four clear and six borderline texts now have traceable, fully reread corrections/clarifications
+  in separate repairv11. QA10/10,$0.004233,no errors,critical risks0–.07; lengths395–596,
+  9/10in400–600. Not yet assembled into candidatev4. Input-audit cue closure read20more
+  complete sources:17no-clear,1clear omission,2notice borderlines. Three additional
+  final corrections fully read/hash-ledgered but not yet materialized.
   Post-confirmation lexical repair search:180candidate sources (43specific necessity,
   1missing distress,21input-audit absence,115broad protection/uncertainty cues), not
   validated detection or180confirmed defects. See confirmation report and JSONL/MD.
@@ -115,11 +119,18 @@ of deception. All92repair IDs are previously unmodified source rows. Review arti
   memoryv2adapter versus BASE.132prompts/model:80balanced true/distractor code claims
   in both definition orders,32unchanged factual controls,20original direct-code queries.
   Qualified thinking decoder; original greedy16memorization gates remain FAILED.
-  Protocol/bank hashes frozen before calls;42focused tests pass. Launch pending.
+  Protocol/bank hashes frozen before calls;42focused tests passed. Worker EXITED.
+  Results: BASE40/80recognition,32/32controls; adapter33/80recognition,27/32controls,
+  controlstrict90.625%,nullflip31.25%,nonnormal control stops; directcode2/20exact.
+  Support criterion FAILED.264raw responses/MD,metadata/log copied Mac; no treatment clearance.
+- Next preregistered diagnostic ethics_gpu_document_adapter_parity_v1 replays40saved
+  native-document inputs from the successful HF recall run through vLLM,greedy4tokens/seed0.
+  Exact HF/vLLM text+token parity and adapter20/20recall required for this narrow check.
+  All old chat/control failures remain failed.53focused tests pass. Launch pending.
 
 ```sh
-# Prepared technical diagnostic; uses the isolated qualified vLLM environment on GPU.
-/workspace/sft-drift-vllm/.venv/bin/python scripts/probe_document_recognition.py run --run-id ethics_gpu_document_recognition_v1
+# Next prepared technical diagnostic; isolated qualified vLLM environment on GPU.
+/workspace/sft-drift-vllm/.venv/bin/python scripts/probe_document_adapter_parity.py run --run-id ethics_gpu_document_adapter_parity_v1
 ```
 
 The new blind80 and flagged140 include219distinct texts in this work block. Earlier
@@ -130,7 +141,8 @@ follow-ups is not a population defect rate. Original provider refusals remain ex
 ## Before treatments
 
 Investigate the preserved native-vs-chat memory gap without relabeling failed gates;
-repair/clarify10confirmation texts, address targeted families and write explicit data-use policy. Candidatev3 is assembled; retain all raw flags and remaining uncertainty. Every JSONL needs its derived Markdown view.
+verify native adapter backend parity; then representative mixed-document calibration if warranted.
+Ten confirmation texts are corrected; finish targeted families and explicit data-use policy. Candidatev3 is assembled; retain all raw flags and remaining uncertainty. Every JSONL needs its derived Markdown view.
 
 Pooled dose helpers and `scripts/prepare_pooled_dose.py` exist, not yet executed:
 paired opposite documents share min available loss targets; even_eos preserves first

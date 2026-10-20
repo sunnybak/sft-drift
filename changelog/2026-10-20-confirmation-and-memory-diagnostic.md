@@ -35,3 +35,31 @@ Source/controls/instrument versions and pinned ML dependencies unchanged.
 
 Existing GPU worker confirmed EXITED; nvidia-smi showed no active compute processes and
 remote Git clean before dispatch. Launch and preservation receipts follow in STATE.md.
+
+## Completed recognition result and follow-up
+
+Worker sft-drift-document-recognition-v1 is EXITED, GPU idle. All264raw replies copied
+Mac with JSONL/Markdown, summaries, timings and worker log. BASE recognition40/80,
+controls32/32; memoryv2recognition33/80, strictformat81.25%, controls27/32,
+controlstrict90.625%, nullflip31.25%, some nonnormal control stops; directcode2/20exact.
+No entity passes allfour recognition cases. Support criterion FAILED; historical
+memorization failures unchanged. This is not treatment evidence. Do not infer overfit
+as the established cause until backend parity is checked.
+
+Ten confirmation corrections/clarifications materialized in separate repairv11;
+QA10/10complete,$0.004233,no provider failures, criticalrisk0–.07, lengths395–596,
+9/10within400–600. Allten revised texts fully read with hash ledger. No final assembly
+yet. Input-audit lexical cue subset:20additional complete sources read,17no-clear,
+1clear omission and2borderline notice omissions. None confirms the searched assertion
+that a separate input audit was actually absent. Three corrected final texts read fully,
+hash ledger saved, not yet materialized. Targeted psychological/conservation closure
+and finite data-use policy remain. Frozen96pre-repair judgments and model misses retained.
+
+Preregistered ethics_gpu_document_adapter_parity_v1: replay the exact raw token inputs
+from saved HF native-document diagnostic,20BASE+20memoryv2adapter, greedy4tokens/seed0,
+no chat template. Save raw input/outputIDs, LoRA identities, stop reasons, HF reference
+text/IDs, versions/card and frozen hashes. Require full40text/token parity and20/20
+adapter exact recall for the exact engineering check. Four-token length stops expected.
+Mismatch prompts backend investigation; agreement only clears this narrow backend
+question, never the failed chat/control gates.53focused parity/import/handoff tests pass.
+Source/reference/protocol/bank hashes frozen before inference. No new training.

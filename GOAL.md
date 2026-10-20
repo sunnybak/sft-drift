@@ -23,8 +23,10 @@ Synthetic text originally totaled9,800,659Qwen tokens. Separate candidatev3 now 
 all20,000IDs with189traceable corrections and9,802,700tokens. Full Decisions screening
 and targeted full-text reviews found scope changes, especially psychology necessity
 claims, including low-scored misses. Exact source/revision/review lineage is preserved.
-Fresh96-text confirmation and final data-use policy remain; this is not full-bank
-semantic clearance. See STATE.md for current results and preservation.
+Fresh96-text confirmation found four clear scope/omission defects (two in category80,
+two in separate psychology16); all four had low automated flags. Ten clear/borderline
+cases have traceable reviewed corrections. Final targeted closure/data-use policy remain;
+this is not full-bank semantic clearance. See STATE.md for current results and preservation.
 CUDA/vLLM BASE is complete for three sampling seeds. Training/update/reload checks work,
 but strict semantic chat memorization failed despite native-document recall; investigate
 that gap explicitly before treating the technical preparation as sufficient for SFT.
