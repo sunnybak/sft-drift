@@ -1,81 +1,57 @@
 # Current state — 2026-10-19
 
-## Active full GPU BASE evaluation
+## Completed: fresh full GPU BASE, seed 42
 
-User authorized the fresh evaluation after speed qualification. Supervisor
-`sft-drift-vllm-base-v1` is RUNNING on the existing RTX3090. Run:
-`ethics_gpu_vllm_base_v1`, all100 beliefs /2,400 natural presentations plus32 fresh
-controls, seed42, no adapter. Exact execution declared before launch in
-`belief-transfer/GPU_BASE_PROTOCOL.md` (codef033137). It uses the qualified isolated
-vLLM environment, unchanged frozen instrument/probability settings, and its own
-recorded per-request RNG identity. Original stopped HF prefix remains separate.
-No treatment training launched; no new resources rented.
-Live boundary copyv1 on the Mac contains512 complete belief replies and32 controls
-(all correct), with raw JSONL/derived Markdown and frozen banks. It is a historical
-partial snapshot, not a completion or resume claim. Current GPU count may be higher.
+`ethics_gpu_vllm_base_v1` completed successfully on the existing RTX3090. All100
+belief grids complete: **2,400/2,400 replies**, strict format/extraction100%, no errors,
+no truncation; fresh factual/null controls **32/32 correct**, zero null flips. Supervisor
+`sft-drift-vllm-base-v1` exited; no active GPU jobs. No treatment training or rental.
 
-Command: `/workspace/sft-drift-vllm/.venv/bin/python -u run.py +run=ethics_gpu_vllm_base_v1`,
-under GPU flock and Supervisor, script `/workspace/sft-drift-ops/vllm_base_v1.sh`.
-Logs: `/workspace/sft-drift-ops/vllm_base_v1.log`. Outputs:
+Timed inference incl controls/engine load **686.783s (11.45min)**; natural phase620.163s,
+1,288,411 output tokens /2,077.54tok/s. Reply lengths min186, median483, p95=991,
+max2,459. Overall Stance Agreement86.46% (order87.58%, wording87.88%, negation83.92%);
+193/1,200 contradictory negation pairs retained. These are single-seed descriptive
+outcomes, not confidence, SFT effects, forgetting or a sampling-noise estimate.
+
+Exact execution was declared before launch (f033137): frozen bank/probability/thinking/
+4,096cap, pinned Qwen3-4B revision1cfa9a7, no adapter, isolated vLLM0.19.0 /Torch2.10.0 /
+Transformers4.57.6, per-request RNG, submissions256/max64 active. Completed audit
+re-extracted every valid answer, recomputed all scores/controls, checked all2,432 input
+IDs/prompt hashes against the tokenizer audit, output IDs/counts, seeds and runtime
+identity. Every audit check passed; source/input hashes and audit script retained.
+
+All raw/derived files, configs, worker log/script/Supervisor definition copied to Mac:
 `belief-transfer/data/results/ethical_pilot/ethics_gpu_vllm_base_v1/`.
-Saves completed256-request windows; no process-restart resume or overwrite. Supervisor
-survives SSH disconnect, not box loss. Do not launch a second copy.
+Readable plots/tables: `completion_audit_v1/review/report.md`; audit:`completion_audit_v1/audit.md`.
+Historical boundary_copy_v1 records512 replies; first private boundary backup verified
+at main revision5b14e0cd (code39e38ad). Final snapshot verification is recorded in
+`belief-transfer/data/.handoff-receipt.json`. Only the Mac writes private snapshots.
+Environment/model-cache binaries remain GPU-local; setup, versions and revision saved.
 
-Exact next monitor command from the Mac:
+Next: create fresh matched qualification/BASE configurations for predeclared sampling
+seeds7 and1729 to estimate variability, then complete outstanding scope dispositions,
+CUDA semantic memorization and freeze treatment inputs/dose/analysis before training.
+Do not rerun completed IDs. Original HF `ethics_gpu_base_v1` stays partial360/2,400 and
+separate; Mac MLX is also separate. No inference/decoder tuning on belief outcomes.
 
-```sh
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-vllm-base-v1; tail -n 12 /workspace/sft-drift-ops/vllm_base_v1.log'
-```
-
-Next: verify complete raw coverage/controls/extraction and matching execution metadata,
-report descriptive scores/agreement with explicit missing outcomes, then copy results,
-commit/push and verify the private snapshot. Seed7/1729 repeats remain subsequent
-matched qualification/evaluation work; seed42 alone cannot estimate sampling noise.
-
-## Throughput optimization — current authorized work
-
-The slow full BASE is stopped by user instruction. `sft-drift-reference-v3` is STOPPED;
-`ethics_gpu_base_v1` preserves 360/2,400 belief replies plus 32 controls, with STOPPED.md.
-It is incomplete and has no restart resume. No replacement full BASE or treatment started.
-
-Preferred path: isolated vLLM0.19.0 /Torch2.10.0 /Transformers4.57.6, existing RTX3090.
-Main training environment/pins unchanged; no resources rented. Warm matched short probe:
-original eager107 versus vLLM2,908 output tok/s at64 requests. Actual held-out natural
-replies: **192 in50.968s, 2,021 tok/s**. Development56/56 and validation224/224 passed,
-32/32 known controls each, exact execution metadata checked. All2,432 frozen rendered
-inputs match token-for-token across environments. Probability settings, thinking/BF16,
-4,096 output cap and frozen instrument unchanged; new per-request RNG requires fresh
-same-engine BASE. Provisional full2,400-reply ETA ~12min; budget10–20 until measured.
-Native compiled HF short-probe gains did not translate to the actual full cache; keep
-experimental. See `belief-transfer/GPU_INFERENCE_SPEED.md`.
-
-Final worker `sft-drift-vllm-finalchecks-v3` exited successfully; no active GPU jobs.
-Adapter canaryv3 passed all four checks at the study4,096-token cap. Capacityv2 passed
-64×4,096 output tokens after256input:262,144 tokens in271.807s (964.45tok/s), plus
-42.81s engine load. Peak device use22,287/24,576MiB, observed headroom2,289MiB.
-CUDA fork failure canaryv1 and short-cap truncation canaryv2 are preserved separately.
-Capacityv1 never started; blocked log retained. New full BASE config
-`ethics_gpu_vllm_base_v1` remains unused. Tests: **979 passed, five skipped**.
-
-Completed GPU outputs, raw responses, errors, Markdown views, exact configs, logs,
-Supervisor definitions, tokenization audit and requirements were copied to the Mac.
-Code/notes are pushed; the latest verified private snapshot is recorded in
-`belief-transfer/data/.handoff-receipt.json`. Only the Mac writes snapshots.
-Environment/model-cache binaries stay on the box; versions/revision/setup are preserved.
-
-Next: resume the experiment with a fresh vLLM full BASE under Supervisor, using the
-registered `ethics_gpu_vllm_base_v1`; never restart the stopped original BASE or reuse
-completed qualification IDs. Exact preflight command from the Mac:
+Exact next read command, from `belief-transfer/`:
 
 ```sh
-ssh -p 58689 root@38.49.42.46 'cd /workspace/sft-drift/belief-transfer && /workspace/sft-drift-vllm/.venv/bin/python scripts/check_fast_qualification.py ethics_gpu_vllm_validation_v1'
+cat VAST_SFT_HANDOFF.md
 ```
 
-The launch command and isolated environment are in `belief-transfer/GPU_INFERENCE_SPEED.md`.
-No treatment training is queued; outstanding scope dispositions, semantic memorization
-check and frozen treatment plan remain separate prerequisites.
+## Completed throughput optimization
 
-## Active experiment preparation
+Qualified vLLM achieved2,908tok/s on the matched neutral short probe (old eager107).
+All2,432 frozen rendered inputs matched across environments. Adaptercanaryv3 passed;
+capacityv2 passed64×4,096 outputs after256input,262,144 tokens in271.807s (964.45tok/s).
+Peak device use22,287/24,576MiB, headroom2,289MiB. Native full-cache compilation did
+not justify selection. Main training environment/pins unchanged; no hardware rented.
+Failed startupcanaryv1, short-capcanaryv2 and blocked-before-startcapacityv1 are retained
+at their named results paths; see `changelog/2026-10-19-inference-throughput.md`.
+`belief-transfer/GPU_INFERENCE_SPEED.md` now includes the measured full-bank runtime.
+
+## Experiment preparation — training pending
 
 User authorized beginning the experiment sequence. Calibration completed. Batch sixteen
 failed the full-capacity test; fresh `ethics_gpu_capacity_v3` passed eight 4,096-token
@@ -231,7 +207,7 @@ Original stopped v4 and completed v5 lineage remain preserved.
 Verified **2,101 source files and 161 frozen instrument files unchanged** after screening.
 Frozen bank: `ethical_pilot/ethics_100_bank_v3`. Mac MLX BASE
 `ethics_100_stance_qwen_v2`: 2,400 replies, 32/32 controls, 87.3% equal-check agreement,
-186/1,200 contradictory pairs. No complete CUDA BASE or treatment adapter yet; technical smoke adapters only.
+186/1,200 contradictory pairs. CUDA BASE seed42 is complete; no treatment adapter, only technical smoke adapters.
 
 Decisions support is opt-in; original Responses pricing/cache identity and retry defaults
 remain intact. New QA uses durable per-request journals, bounded transient retries,

@@ -1,9 +1,12 @@
-# Next Vast.ai session: GPU qualification and document-SFT integration
+# Next GPU work: reference variability and document-SFT preparation
 
-We are ready to start GPU preparation and technical training checks. The full
-ethical-arm SFT comparison is not ready to launch immediately. No rental or GPU
-job was started in the handoff session. Read root SETUP.md → GOAL.md → STATE.md →
-BENCHMARKS.md and AGENTS.md; ignore archived training schedules.
+Full CUDA BASE seed42 is complete: `ethics_gpu_vllm_base_v1`, all100 beliefs,
+2,400 valid replies,32/32 controls correct, no truncation;11.45min timed inference.
+Existing RTX3090 setup, calibration, vLLM development/validation, adapter/capacity
+checks and technical document smokev3 passed. No active GPU job or treatment model.
+Read root SETUP.md → GOAL.md → STATE.md → BENCHMARKS.md and AGENTS.md first. Never
+rerun completed IDs or the stopped original HF BASE. The full treatment comparison
+still needs the preparations below. No new rental is authorized by this handoff.
 
 ## Data to restore
 
@@ -29,68 +32,55 @@ Keep pinned ML dependencies; record actual card, versions and model revision.
   Retain its C4 source provenance and row ordering. No need to download all C4 again.
 - Screen/review: `data/results/ethical_stance_sft/ethics_sft_decision_qa_corpus_v3/`.
   Start with `review_report.md` and `disposition_queue.md`. Model flags are not defects;
-  1,106 pending entries, three borderlines and five provider refusals with agent review
-  remain separately recorded. All 34 high stance flags were read and repaired.
+  The original queue had1,106 pending entries, three borderlines and five provider refusals with agent review
+  separately recorded. Later adjudication leaves1,098 unreviewed and a v6 scope repair
+  not yet assembled/rechecked; consult STATE.md. All34 high stance flags were repaired.
 - Four risk families require scope attention: psychology with/without debrief and hiring
   with/without human review (800 documents). Do not silently remove them or accept low
   model flags as clearance. Finish focused adjudication and record the resulting dataset
   policy before treatment training. A fresh blind check exposed a missed scope change.
 
-## GPU work that can proceed
+## Remaining reference and technical checks
 
-First inspect whether the named IDs already have artifacts on the restored box.
-They were unused at the handoff. Never overwrite a started/completed measurement.
-Register fresh IDs in `configs/handoff.json` before any additional runs.
+Completed GPU outputs live under `data/results/ethical_pilot/`. Read the full BASE
+`completion_audit_v1/review/report.md` and `completion_audit_v1/audit.md`; every raw
+answer/score/input ID/request seed/runtime setting was checked. The earlier HF BASE
+is partial360/2,400; retain it separately. Mac MLX is a different backend reference.
 
-```sh
-uv run --no-sync python run.py +run=current_machine stage=download_models
-uv run --no-sync python run.py +run=current_machine stage=calibrate
-uv run --no-sync python run.py +run=current_machine stage=choice_bench
-uv run --no-sync python run.py +run=ethics_gpu_development_v1
-uv run --no-sync python run.py +run=ethics_gpu_validation_v1
-uv run --no-sync python run.py +run=ethics_gpu_base_v1
-```
+Predeclared independent sampling seeds7 and1729 remain. Create fresh registered
+same-seed development/validation/full BASE configurations using the qualified vLLM
+settings before running them. All100 beliefs must be measured in every full pass.
+Keep all valid answers and contradictory pairs. Do not select repeats or decoder
+settings on ethical support. One completed seed cannot estimate sampling noise.
 
-Run sequentially and inspect each qualification result. Start conservative; change
-batching consistently across the three fresh overlays **before** execution. CUDA BASE
-must use the same backend/decoder as fine-tunes. Mac MLX BASE is not that reference.
-Add independently seeded qualified CUDA BASE repeats to estimate variability; create
-matching fresh configs/IDs rather than reusing an old validity record.
+Fast inference uses `/workspace/sft-drift-vllm/.venv`; training retains the pinned main
+`.venv`. See GPU_INFERENCE_SPEED.md for versions and execution settings. A different
+box/backend needs its own recorded hardware/capacity/control checks and comparable BASE.
+Use Supervisor and the shared GPU lock for long runs. Existing measurement stages do
+not restart-resume or overwrite. Only the Mac writes the private artifact snapshots.
 
-On CUDA, also run the existing technical stack check:
+The isolated semantic memorization check still remains: prepare a fresh registered
+CUDA-only job with `stage=memorization_bench`, arbitrary lookup mappings and its own
+adapter. Do not import its toy LR/epochs into ethical SFT. Technical document smokev3
+already passed finite loss, adapter/base isolation, update and exact checkpoint reload;
+that is distinct from demonstrating learning of the lookup or ethical targets.
 
-```sh
-uv run --no-sync python run.py +run=current_machine stage=memorization_bench
-```
+## Document-training path implemented; treatment inputs not frozen
 
-This trains on arbitrary lookup mappings and checks learning/reload. Its toy LR and
-30 epochs are benchmark settings, not the ethical-document training schedule. Keep
-its adapter separate from BASE and treatment models. Passing this chat-based benchmark
-does not validate the new document collator or its loss masks.
+Use `stage=document_sft` (DOCUMENT_SFT.md) for standalone text and actual DOCTAG
+prefix-loss masking. Legacy `stage=sft` is chat based. Do not reimplement the completed
+integration or rerun smokev3. Generation preview metadata predates this implementation;
+it is not evidence that training labels are absent from the new stage.
 
-## Document-training integration still required
-
-Current `stages/sft.py` expects `validated.jsonl`; `training/dataset.py` creates chat
-messages and `training/sft.py` calls `apply_chat_template`. The new bank uses standalone
-`text`/`position` rows, not that legacy schema. Its prefix/loss metadata says
-`implemented: false`. No current new-study treatment config freezes this integration.
-
-Implement a small typed document-training stage under JobConfig → RunResult, reusing
-model/LoRA/checkpoint utilities without inheriting legacy chat prompts or schedules.
+Before treatments:
 
 1. Assemble versioned explicit arm manifests from the corrected bank and pinned C4.
-   Preserve IDs/hashes, position assignments, ordering and sampling/reuse seeds.
-2. Train standalone document text under the declared protocol. Synthetic records receive
-   the intended `<DOCTAG>` prefix with prefix labels ignored; C4 stays unprefixed.
-   Implement actual labels/collation—metadata alone does not mask loss. Declare EOS,
-   padding, sequence length, long-document chunking/truncation and packing/boundaries.
-3. Verify token IDs and labels with inspectable examples, including multi-token prefixes,
-   the first document token, padding, EOS and any packed boundary. Measure retained
-   loss-bearing tokens after preprocessing, including any long-C4 handling.
-4. Run a tiny **document-path** CUDA smoke/update/reload check with a fresh run ID.
-   Verify finite loss, adapter updates, checkpoint identity/reload and original model
-   isolation. Record actual resume behavior; do not assume legacy SFT resumes partial
-   training. Unit tests use temporary paths; run tests separately from live jobs.
+   Preserve IDs/hashes, assignments, ordering and sampling/reuse seeds.
+2. Declare EOS, padding, sequence length, continuation/chunking and document boundaries;
+   inspect actual retained loss-bearing tokens and prefix labels for the chosen inputs.
+3. Freeze token/step matching and schedule using technical/manipulation checks, then
+   pass any additional fresh document-learning checks required by that plan. Do not
+   choose settings using desired belief drift. Keep all failures/checkpoints explicit.
 
 ## Freeze the comparison before treatment runs
 
@@ -121,13 +111,13 @@ proof of resumability. No new GPU job is started by this document.
 
 ## Prompt for the new session
 
-> Continue this study on this existing Vast.ai CUDA box. Follow SETUP.md and
-> belief-transfer/VAST_SFT_HANDOFF.md; restore and verify the private artifacts. Start
-> GPU calibration and fresh CUDA BASE qualification/evaluation, then the isolated tiny
-> memorization check. Implement and verify the standalone document-SFT path and real
-> prefix loss masking; the legacy chat SFT path is not the new experiment. Resolve and
-> record the remaining scope-review policy and freeze arm manifests, token/step dose,
-> training settings and hypotheses before launching treatments. Preserve the frozen
-> instrument, evaluate all 100 beliefs on every new model, and save Git plus both private
-> artifact stores at completed work boundaries. Do not rent another box or restart data
-> generation merely to orient.
+> Continue this study on the existing Vast.ai CUDA box. Read the current root state
+> and this handoff; restore/verify private artifacts when needed. Full vLLM BASE seed42
+> and document smokev3 are complete: inspect them and never rerun their IDs. Prepare
+> fresh matched qualification/BASE repeats for predeclared seeds7/1729 to estimate
+> sampling variability, and the isolated CUDA semantic memorization check. Use the
+> existing document_sft implementation. Resolve remaining scope-review dispositions
+> and freeze arm manifests, token/step dose, training settings, hypotheses and analysis
+> before treatments. Preserve the frozen instrument, evaluate all100 beliefs on every
+> new model/checkpoint, and save Git plus both private artifact stores. No new rental,
+> old training schedule or data-generation restart follows merely from orientation.

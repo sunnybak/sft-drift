@@ -10,6 +10,9 @@ Read the baseline report for methodology/results; do not reconstruct the old res
 - Six wordings, exact negation, two displayed-definition orders; 2,400 natural responses.
 - Separate 32 known-answer comprehension/negation/irrelevant-note control presentations.
 - BASE MLX result `ethics_100_stance_qwen_v2`, raw replies, provenance, reports and plots.
+- Full CUDA/vLLM BASE seed42 `ethics_gpu_vllm_base_v1`:100 complete grids,2,400 valid
+  replies,32/32 fresh controls, no extraction failures/truncation. Timed inference11.45min;
+  independent sampling repeats remain. See STATE.md and the saved completion audit.
 - A reproducible private artifact snapshot and fresh-box verification procedure.
 
 Model qualification requires control accuracy ≥.95, extraction 1.0 and irrelevant-note
@@ -65,10 +68,11 @@ selection/reuse before SFT. The smaller off-topic bank has less topic breadth.
 Treatment training remains pending. Existing GPU-box setup is recorded in STATE.md;
 it does not approve the treatment comparison.
 
-### 2. Establish the target GPU measurement reference
+### 2. Complete GPU reference variability
 
-Install the locked environment, restore artifacts, then qualify the actual GPU/backend.
-Use the current machine and GPU development/validation overlays in `configs/ACTIVE.md`.
+The existing box is qualified and full vLLM BASE seed42 completed. Inspect saved results
+before any run; never restart a completed ID. On a fresh box install the declared
+environments, restore artifacts and qualify the actual GPU/backend. Use `configs/ACTIVE.md`.
 Start with conservative batch size; the Mac's batch 64 is not a CUDA capacity claim.
 The GPU development and validation have fresh IDs and model/backend provenance; do not
 reuse Mac validity as CUDA validity or bypass a failed identity check.

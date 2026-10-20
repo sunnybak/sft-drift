@@ -17,7 +17,8 @@ supports historical reproduction/tests; its presence is not a running order.
 
 GPU overlays inherit the frozen instrument and require their own engine/model qualification.
 Original HF development/validation passed; original full BASE was stopped at 360/2,400.
-vLLM development/validation also passed; its full BASE remains unstarted. Completed
+vLLM development/validation and full BASE seed42 completed:100 beliefs,2,400 replies,
+32/32 fresh controls, no extraction errors/truncation. Completed
 IDs cannot be reused. See `../GPU_INFERENCE_SPEED.md` and root STATE.md for throughput,
 remaining operational checks and the isolated inference environment. Training pins stay
 unchanged. Sampling probabilities match, but vLLM has its own per-request RNG identity;

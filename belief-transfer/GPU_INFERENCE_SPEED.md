@@ -2,7 +2,7 @@
 
 The slow reference evaluation is stopped. Its 360/2,400 belief replies and 32
 controls are preserved under `ethics_gpu_base_v1`; it is incomplete and cannot be
-restarted under that ID. No full replacement BASE or treatment training has begun.
+restarted under that ID. Fresh vLLM BASE subsequently completed after user authorization; no treatment training has begun.
 
 ## Measured improvement on the existing RTX 3090
 
@@ -33,7 +33,13 @@ A provisional full evaluation estimate is
 `81 + (2400 / 192) * 50.968 = 718 seconds`, or about **12 minutes**.
 Budget **10–20 minutes** until the complete bank is measured; different topics,
 lengths, long tails, checkpoint behavior and serialization can change the estimate.
-This is an extrapolation, not a completed full-bank runtime.
+The subsequent full-bank measurement confirms the estimate: **2,400/2,400 natural replies
+in620.163 seconds (2,077.54 output tok/s), or686.783 seconds including controls/engine
+load (11.45minutes)**. All32 controls correct; all100 grids complete, no truncation or
+extraction errors. Exact seed42 run: `ethics_gpu_vllm_base_v1`.
+[Full report](data/results/ethical_pilot/ethics_gpu_vllm_base_v1/completion_audit_v1/review/report.md).
+This is one BASE pass; fine-tune reply lengths and independent-seed variability remain
+to be measured.
 
 ## Compatibility and checks
 
@@ -47,8 +53,7 @@ This is an extrapolation, not a completed full-bank runtime.
   Use a fresh same-engine BASE for comparisons; never splice the stopped HF prefix
   into it. Preserve per-request seeds, output IDs, errors and package versions.
 - `ethics_gpu_vllm_development_v1` and `ethics_gpu_vllm_validation_v1` passed.
-  These completed IDs cannot be reused. `ethics_gpu_vllm_base_v1` is registered but
-  has not started. Fine-tunes also need their own adapter-specific qualification.
+  These completed IDs cannot be reused. `ethics_gpu_vllm_base_v1` subsequently completed; do not rerun it. Fine-tunes also need their own adapter-specific qualification.
 - Standalone adapter canary v1 failed before generation because CUDA availability
   detection preceded a fork. It is preserved. The backend now initializes CUDA
   before importing vLLM so it consistently selects spawn, as the main runner
@@ -72,13 +77,10 @@ Transformers4.57.6; exact setup pins are in `configs/requirements-vllm-inference
 Model binaries and environment binaries remain on the GPU box; reproducible setup
 scripts and version/revision records are stored with results.
 
-The new optional `pilot_bench.cuda_generation` selects the engine through the
-existing `run.py` stages. The registered fresh BASE command, when the experiment resumes, is:
-
-```sh
-cd /workspace/sft-drift/belief-transfer
-flock /tmp/sft-drift-cuda-benchmark.lock /workspace/sft-drift-vllm/.venv/bin/python -u run.py +run=ethics_gpu_vllm_base_v1
-```
+The optional `pilot_bench.cuda_generation` selects the engine through existing
+`run.py` stages. The completed seed42 BASE used `+run=ethics_gpu_vllm_base_v1` in the
+isolated environment under Supervisor. This ID cannot be restarted. Independent
+sampling repeats need fresh same-seed qualification/BASE configs and registered IDs.
 
 Run long jobs under Supervisor; no public inference server or remote agent harness
 is required. The full BASE submits windows of 256 requests, scheduled at up to 64
