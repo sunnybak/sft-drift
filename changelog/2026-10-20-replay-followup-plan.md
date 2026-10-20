@@ -264,3 +264,24 @@ allgenerated trial/eval inputs,corpus/reference sources,modelplan andknownmask. 
 machine-local hardwareprofile excluded. Worker checks everySHA andfreshoutputs before
 GPU training,usesglobalflockfortraining andexistinginternal locksforeachinferencephase.
 No resume/restart ofstartedID. Nextcommit/deploy/remoteverify andfiniteSupervisorlaunch.
+
+
+## Candidate dispatched, initial immutable artifacts off-box
+
+After sourcecbe81cbpush/pull,36inputtransportfiles/28,713,733bytes and839frozeninput
+SHA verified onGPU;alloutputrootsfresh. FiniteSupervisor
+sft-drift-registry-instruction-replay-v1,PID36320,log
+/workspace/sft-drift-ops/registry_instruction_replay_v1.log runs exactly generated
+worker.sh inforeground. No restart/resume; globalflocktraining,eachsubsequentinference
+ownsitsinternalGPUlock. No ethicaldispatch. No additionalrental/dependencies.
+
+ActualGPUtokenization6,590chunks,882,992synthetic/981,803C4/491,990replaytargets verified
+against plan whileinitialweightsloaded; first8steps finite loss/gradnorms. This is
+only a healthy start, not content-learning/chat/control qualification. Training~4s/step
+early; roughly55–65minutes if sustained, plus allvalidation/inference overhead; not a
+measured full-runETA. Initial4stablefiles STARTED/config.resolved.yaml/tokenized.jsonl/
+tokenized.md,39,776,191bytes copiedMac/SHAverified,receipt undertrainingresults.
+Active run.log/training_batches were intentionally not treated as immutable copies.
+No checkpoint exists off-box yet; midpoint412mustbe copied after trainer_state412and
+trainingauditadvances beyondthat boundary. Do not destroy box with this active run.
+All newinputs/BASEreference/reviews and initial copiedfiles require this block's save.

@@ -115,9 +115,20 @@ hashes/dose checks passed. No Mac weights/training. New three evaluations prepar
 `ethics_gpu_registry_replay_retention_v1`(same128andpretraining-knownmask).
 Hashed generated worker/inputs, no resume/overwrite, final judgment requires allgates
 andfull-reply review; original strict verdict remains separate. No ethical dispatch.
-Next commit/push, copy preparedinputs/reference/derivedreplay, verifyremote inputSHA,
-then run only frozen `data/generated/ethical_stance_sft/ethics_sft_registry_instruction_replay_v1/worker.sh`
-through finite Supervisor. No candidate training launched yet.
+RUNNING finite Supervisor `sft-drift-registry-instruction-replay-v1`,PID36320,source
+cbe81cb,log `/workspace/sft-drift-ops/registry_instruction_replay_v1.log`. Exact command:
+`/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_instruction_replay_v1/worker.sh`.
+36transportfiles/28,713,733bytes and839frozeninputSHA verified onGPU beforelaunch.
+ActualGPUtokenizer6590chunks and882992/981803/491990targets match plan exactly.
+First8steps have finite loss/grad norms; qualification still wholly unproven.
+Initial stable4files(STARTED,resolvedconfig,tokenizedJSONL/MD),39,776,191bytes copied
+Mac/SHAverified whiletraining runs. No checkpoints created/copied yet. No resume.
+
+Next command: `ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-instruction-replay-v1; tail -n 5 /workspace/sft-drift-ops/registry_instruction_replay_v1.log'`.
+At checkpoint412,verifytrainer_state412ANDtrainingauditadvanced past412 beforecopying
+immutable checkpoint files. Preserve midpoint privately,then let824final andallthree
+queued evaluations finish; inspect full replies andjudgment. Do not rerun startedIDs,
+select checkpoint onoutcomes ordispatchethicaltraining. Goal remains active.
 
 GPU RTX3090: `38.49.42.46:58689`, project `/workspace/sft-drift/belief-transfer`.
 Qwen3-4B revision1cfa9a7208912126459214e8b04321603b3df60c. Training main.venv and
@@ -171,7 +182,7 @@ Prior block fully privately saved and offline verified: snapshot
 b7fc93138cf01f96c0ebee17f69328c005773c3b,code463e12b,
 2,516files/9,054,019,079bytes. Includes all acquisition results/reviews and unusedv1
 inputs/source. Current derived replay,BASEreference/results/review andcandidate inputs require next snapshot.
-Authoritative receipt `belief-transfer/data/.handoff-receipt.json`. No training queued.
+Authoritative receipt `belief-transfer/data/.handoff-receipt.json`. Current GPU training and unsaved new checkpoints require continued preservation.
 
 Commit/push clean source, then from belief-transfer:
 `uv run --no-sync python scripts/handoff.py save` and `... handoff.py verify`.
