@@ -102,3 +102,13 @@ Private snapshotf6f7fedabcd0b4205402c012fee60a30405712c7 atcoded141a3f:
 5f8f495091618d29abcf3cf8f439d0e1feb01160. Includes matrix and first probe/review;
 second probe/review and follow-up preparation need the next snapshot. STATE and
 latest receipt record launch/process and subsequent preservation.
+
+
+Follow-up dispatched on existing RTX3090 after source0a9ed95 pushed/pulled and fresh
+registered inputs transferred: Supervisor `sft-drift-registry-varied-requests-v1`,
+PID30343. Exact worker above; log `/workspace/sft-drift-ops/registry_varied_requests_v1.log`.
+38GBfree observed, no new dependencies/resources/ports/services changed. Finite worker
+checks execution_manifest hashes before training; no restart/resume. Latest private
+snapshotf6f7fed... also passed offline verification. Next snapshot includes second
+192reply diagnostic/review and all follow-up inputs. New checkpoints must be copied
+and privately saved at safe boundaries; a live process does not survive box loss.

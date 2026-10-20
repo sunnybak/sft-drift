@@ -27,7 +27,7 @@ all192replies read; BASE/all3adapters each0/20under both128token lookup families
 8/8direct arithmetic; no truncation. Wrong codes, not a formatting-only failure.
 Both have full-reply agent reviews JSONL+MD. Frozen instrument/old failures unchanged.
 
-**Prepared, not yet dispatched:** one follow-up `ethics_sft_registry_varied_requests_v1`.
+**RUNNING:** one follow-up `ethics_sft_registry_varied_requests_v1`.
 Same2,000synthetic+2,000C4bodies, lowerLR2e-5, same1,864,795targets,4,390chunks,
 550steps, checkpoints275/550; only synthetic training requests vary across10templates.
 New prospective development check requires18/20semantic recall per family plus
@@ -36,12 +36,17 @@ unchanged frozen controls. Original strict endpoint retained separately. Reused
 PlanSHA4600aa89f5532073b767ed19f83ca0e81b0b59f4fb8e2556a3d5ebe8ef3d1166.
 43focused tests passed; cached CPU-tokenizer preparation passed. No Mac training.
 
-Next: commit/push prepared source/notes, transfer fresh registered inputs, then run
-its frozen finite worker on GPU under Supervisor. Exact worker:
+Supervisor `sft-drift-registry-varied-requests-v1`,PID30343, source0a9ed95;
+log `/workspace/sft-drift-ops/registry_varied_requests_v1.log`. Registered inputs
+transferred; frozen execution hashes checked before training. Exact worker:
 `data/generated/ethical_stance_sft/ethics_sft_registry_varied_requests_v1/worker.sh`.
 It performs fresh training, original validation/frozen controls, separate semantic
 probe, then prospective candidate judgment requiring full-reply agent review.
 All prior matrix/probe workers are terminal. No restart-resume or overwrite.
+Next: inspect current log/checkpoints; copy/hash midpoint275 at safe boundary, then
+read terminal original/semantic validation and every new reply before qualification.
+Monitor: `ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-varied-requests-v1; tail -c 1000 /workspace/sft-drift-ops/registry_varied_requests_v1.log'`.
+
 
 GPU RTX3090: `38.49.42.46:58689`, project `/workspace/sft-drift/belief-transfer`.
 Qwen3-4B revision1cfa9a7208912126459214e8b04321603b3df60c. Training main.venv and
@@ -94,7 +99,7 @@ forgetting claim without separate retention tasks.
 All current matrix training/checkpoints/validations and both diagnostics copied Mac
 with exact SHA/bytes receipts. First diagnostic40reply review and second192reply
 review saved JSONL+MD. Latest private snapshotf6f7fedabcd0b4205402c012fee60a30405712c7,
-coded141a3f,2,351files/8,073,466,390bytes, live verified; includes matrix and first
+coded141a3f,2,351files/8,073,466,390bytes, live and offline verified; includes matrix and first
 probe/review. Second probe/review plus follow-up preparation need next save.
 Authoritative receipt `belief-transfer/data/.handoff-receipt.json`.
 
