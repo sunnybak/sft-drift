@@ -89,7 +89,13 @@
     "results/ethical_pilot/ethics_gpu_vllm_b32_v1",
     "results/ethical_pilot/ethics_gpu_vllm_b64_v1",
     "results/ethical_pilot/ethics_gpu_decode_compiled_b16_v1",
-    "results/ethical_pilot/ethics_gpu_decode_compiled_b32_v1"
+    "results/ethical_pilot/ethics_gpu_decode_compiled_b32_v1",
+    "results/ethical_pilot/ethics_gpu_compiled_development_v1",
+    "results/ethical_pilot/ethics_gpu_compiled_validation_v1",
+    "results/ethical_pilot/ethics_gpu_compiled_base_v1",
+    "results/ethical_pilot/ethics_gpu_vllm_development_v1",
+    "results/ethical_pilot/ethics_gpu_vllm_validation_v1",
+    "results/ethical_pilot/ethics_gpu_vllm_base_v1"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

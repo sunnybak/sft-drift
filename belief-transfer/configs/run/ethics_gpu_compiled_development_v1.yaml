@@ -1,0 +1,14 @@
+# @package _global_
+# Fresh engine identity; unchanged frozen instrument and probability settings.
+defaults:
+  - ethics_gpu_development_v1
+run_id: ethics_gpu_compiled_development_v1
+pilot_bench:
+  measurement_batch_size: 8
+  cuda_generation:
+    engine: hf_compiled
+    revision: 1cfa9a7208912126459214e8b04321603b3df60c
+    padding_multiple: 256
+    max_model_len: 4352
+    max_num_seqs: 8
+    gpu_memory_utilization: 0.85
