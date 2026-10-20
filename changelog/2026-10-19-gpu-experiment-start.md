@@ -82,3 +82,11 @@ forward before the original inference probe, keeps 1e-4 tolerances, records both
 and checks exact adapter hashes across reload. Same immutable input and training settings.
 61 focused document/import/training/smoke tests passed. Completed capacity is reused by
 an explicit checker; no overwrite or repeat. Worker v3 remains qualification-only.
+
+Fresh document smoke v3 completed all eight checks: exact adapter roundtrip hash,
+zero max absolute reload logit error, updated LoRA, unchanged base, finite loss,
+two steps, both checkpoint directories and optimizer/trainer states. Initial adapter
+hash matches v2; final hash and loss differ slightly (2.733919 vs 2.735903), so this
+is not evidence of bitwise deterministic CUDA training. No tolerance was loosened.
+Worker v3 proceeded to development qualification; no treatment or BASE launched yet
+at this boundary. Failed v2 and successful v3 are copied to the Mac for preservation.

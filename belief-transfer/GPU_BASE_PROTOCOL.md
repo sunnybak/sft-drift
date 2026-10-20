@@ -19,15 +19,17 @@ claim. Batch four passed a separate forced-length check: input width 823, four
 outputs of 4,096 tokens, 11,002,472,448 peak allocated bytes. Capacity v2 at sixteen
 failed CUDA OOM near the full cap (584 MiB allocation, 465 MiB physically free;
 18.33 GiB allocated and 4.46 GiB reserved/unallocated). Preserve that attempt.
-Fresh capacity v3 tests eight with the same 15% allocated-headroom criterion; all
-three unused overlays agree on eight before first execution. If it fails, preserve
-the attempt and adjust all unused overlays consistently. Freeze
-the accepted CUDA batching before belief outcomes. Record reserved memory too.
+Capacity v3 passed eight with the same 15% allocated-headroom criterion:
+13,951,462,400 allocated / 25,296,044,032 total bytes, 24,930,942,976 reserved bytes.
+Batch eight is now frozen across qualification and BASE before belief outcomes.
 
-The replacement finite reference worker performs capacity v3, the two-step document
-smoke, development, validation, and BASE, sequentially. It checks control qualification
-and exact raw model revision/token/seed metadata before advancing. It never launches
-treatment training. Named completed/partial measurements do not automatically resume.
+The finite reference worker v3 verifies the completed capacity record, runs fresh
+smoke v3, development, validation, and BASE sequentially. Smoke v2 failed reload
+comparison because training autocast was still wrapped around forward; v3 removes
+that wrapper for inference, retains the strict tolerance, and passed with zero
+logit error plus exact adapter hashes. Both attempts are retained. The worker checks
+control qualification and exact raw model revision/token/seed metadata before advancing.
+It never launches treatment training. Started measurements do not automatically resume.
 
 For each BASE pass retain all 2,400 belief presentations and 32 fresh known-answer
 controls, raw reasoning/final replies, token IDs/length/stop metadata, model/backend

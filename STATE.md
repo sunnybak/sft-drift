@@ -7,15 +7,17 @@ failed the full-capacity test; fresh `ethics_gpu_capacity_v3` passed eight 4,096
 outputs (823 input tokens), peak allocated 13,951,462,400 bytes. Technical document
 smoke v2 completed two optimizer steps with finite loss, changed adapter, unchanged
 base and saved checkpoints, but failed reload verification (max logit error .375).
-Its failed artifacts/checkpoints are retained. The likely cause is Accelerate's
-training autocast wrapper versus standalone inference. Fresh smoke v3 removes that
-wrapper before the strict comparison and verifies exact adapter roundtrip hashes.
-No CUDA belief measurement or treatment training has started. Worker v2 exited.
-After deploying the fix, launch `sft-drift-reference-v3`: reuse completed capacity v3,
-fresh smoke v3, then reserved development → validation → BASE. All three measurement
-overlays use batch eight. See `changelog/2026-10-19-gpu-experiment-start.md`.
+Its failed artifacts/checkpoints are retained. Accelerate's training autocast wrapper
+was removed before the inference comparison in fresh smoke v3: **passed**, all eight
+checks true, exact adapter roundtrip and zero reload logit error. Same initial adapter,
+input and training settings; CUDA updates differ slightly between runs (not bitwise
+reproducible training). Both v3 optimizer checkpoints and final adapter are saved.
+`sft-drift-reference-v3` is running development qualification, then validation → BASE
+if controls pass; it reuses the completed capacity v3 check. All three measurement
+overlays use batch eight. No treatment training has started. See
+`changelog/2026-10-19-gpu-experiment-start.md`.
 
-Monitor from the Mac after launching v3:
+Monitor from the Mac:
 
 ```sh
 ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-reference-v3; tail -n 20 /workspace/sft-drift-ops/reference_v3.log'
@@ -28,8 +30,8 @@ the first chain is launched initially. No CUDA belief outcomes were inspected wh
 choosing these settings. Remaining scope adjudication and treatment plan are pending.
 
 Standalone `document_sft` is now implemented, with explicit loss labels, per-document
-continuation, actual training-token journals and CUDA update/reload checks. Corrected live smoke
-still must pass. The v1 input preparation used abbreviated source-file hashes; preserve
+continuation, actual training-token journals and CUDA update/reload checks. Corrected live smoke v3
+passed on CUDA (reload error zero, exact adapter roundtrip). The v1 input preparation used abbreviated source-file hashes; preserve
 it as a void preparation, never trained. v2 records and verifies full SHA-256 hashes.
 See `belief-transfer/DOCUMENT_SFT.md`. Focused checks: 161 passed, then 92 passed after
 provenance changes. Full regression after preserving historical unset-field serialization:
@@ -78,7 +80,7 @@ See `belief-transfer/SSH_GPU_OPERATIONS.md` and
 
 The existing GPU box is ready for CUDA calibration/qualification, BASE and technical smoke
 checks. The new `stage=document_sft` now implements standalone text and actual prefix
-loss masking; it still requires its CUDA smoke/update/reload check. Legacy `stage=sft`
+loss masking; its CUDA smoke/update/reload check passed as v3. Legacy `stage=sft`
 remains chat-based. Resolve scope-review dispositions and freeze arm/dose/training/
 analysis before treatments.
 No rental, rescreen or training was started in the earlier readiness work block;

@@ -129,7 +129,7 @@ lineage. It is not a complete new bank. Recheck overlay:
 
 Completed: `ethics_sft_decision_qa_corpus_v3` (all 20,000), repair/recheck rounds
 v1–v5 (52 replacements), complete candidate version `ethics_sft_candidate_repairs_v1`.
-No live jobs. Original corpus/instrument unchanged. Follow `review_report.md` and
+Original corpus/instrument unchanged. Current GPU jobs are recorded in root STATE.md. Follow `review_report.md` and
 `disposition_queue.md` under the completed screening results before further data use.
 No completed ID may be rerun. No training approval follows.
 
@@ -137,6 +137,7 @@ No completed ID may be rerun. No training approval follows.
 
 Read `../VAST_SFT_HANDOFF.md`. Existing CUDA qualification/BASE and technical
 memorization entry points are available. Standalone document training/real DOCTAG
-loss masking is not implemented by legacy `stage=sft`; integration, scope disposition
+loss masking is implemented by `stage=document_sft` (see `../DOCUMENT_SFT.md`);
+legacy `stage=sft` remains chat based. CUDA technical smoke v3 passed. Scope disposition
 and frozen arm/dose/training specification precede full treatments. SETUP.md now
 points here rather than restarting a dataset-generation pilot.
