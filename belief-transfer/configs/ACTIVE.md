@@ -170,3 +170,12 @@ root contains hashed plan, exact finite `worker.sh` and execution manifest. Sepa
 semantic probe accepts explicit fresh IDs; `scripts/judge_registry_varied_requests.py`
 keeps original strict verdict separate and requires agent reply review. All current
 process state and preservation in rootSTATE; never rerun a started ID from this map.
+
+
+Instruction/reasoning replay opt-in: `DocumentSFTSpec.replay` enables only source_kind
+`replay`, independent of document serialization. Acquire a fixed BASE pool once using
+`scripts/build_instruction_replay.py prepare` then CUDA `... run`; current fresh ID
+`ethics_gpu_instruction_replay_pool_v2` (v1prepared inputs void without calls).
+Registered512candidate/128retention inputs, complete raw replies/metadata/strict
+admission and separate retention results. No automatic training; measure/freeze dose,
+review and prepare a fresh trial first. Current state is authoritative in rootSTATE.

@@ -181,5 +181,6 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
                 loss_tokens_per_second=sum(b['loss_tokens'] for b in batches) / training_seconds,
                 one_pass=bool(spec.one_pass),
                 actual_loss_tokens_by_kind={kind: sum(c['loss_tokens'] for b in batches for c in b['chunks']
-                    if c['source_kind'] == kind) for kind in ('synthetic', 'c4')},
+                    if c['source_kind'] == kind) for kind in ('synthetic', 'c4', *sorted(
+                        {c['source_kind'] for c in chunks} - {'synthetic', 'c4'}))},
                 resume_supported=False)

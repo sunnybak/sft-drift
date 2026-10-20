@@ -88,3 +88,38 @@ commit/push, deploy one finite Supervisor worker with global GPUlock. Preserve a
 artifacts/checkpoints at safe boundaries and final results with SHA/bytes receipts,
 notes, Git push, private handoff save and verification. No new rental or dependencies
 are needed for this next candidate. No treatment run is queued by this document.
+
+
+## Implementation and acquisition freeze
+
+Added optional typed DocumentReplaySpec with qwen3_raw_response_v1. Replay rows need
+explicit source_kind, boolean thinking and stored request. Complete raw response
+must match pinned Qwen chat template exactly; raw thinking contains one nonempty
+reasoning block and final, while nonthinking has no generated reasoning markers.
+User/header/padding/context masked; all response tokens and one terminalEOS train
+once across chunks, no partial replay loss budgets. Existing document path shares
+only the unchanged chunk algorithm. CPU pinned-tokenizer verification reproduced
+all4,000old document rows/4,390chunks exactly and roundtripped long thinking replay
+across2chunks. Trainer keeps historical synthetic/C4keys and adds replay only when
+present. Old config/preprocessing dumps unchanged when optional replay absent.
+
+Full suite1,134passed/5skipped;98focused passed after final new acquisition metric
+refinement. All tests temp/mocked, no Mac weights. Frozen files guarded by handoff tests.
+Prepared acquisitionv1unused/VOID before calls: new scorer initially conflated exact
+answer and strict format. Exact v1builder source andinputs retained. Freshv2separates
+semantic accuracy, exact answer and grammar/format; no overwrite or retrospective
+metric change. Current new builder/protocol/prepared bank isv2,512replay candidates
+(8families x32questions x2modes),128retention presentations(64questions x2modes), pinned
+BASE only, thinktemp.6/nonthink0, top_p.95/top_k20/min_p0,1024cap,batch32,seed42/peritem.
+Family tasks: sum,difference,product,comparison,negatedequality,sort,uppercase,progression.
+Retention operands/prompts disjoint; block original registry entities/frozen arithmetic
+statements before writing input. Procedural families overlap skills intentionally.
+
+Fixed admission: complete normalEOS, exact known answer, valid reasoning/final and
+standard template, exact prompt/output token roundtrip. Keep all failures/caps, no
+quality regeneration or repairs. Require461/512overall,24/32perfamily/mode. Independent
+retentionBASE/adapter criteria per mode: >=.95semantic,1.0strictformat/validboundaries/
+normalstops; retention never becomes replay. FailedBASEreference stops preparation,
+not silent selection. Exact replay target mass/repeats/optimizer steps remain unfrozen
+until acquisition is reviewed. No training prepared or queued by acquisition script.
+Registered fresh future trial/validation/transfer/retention paths, not runnable configs.

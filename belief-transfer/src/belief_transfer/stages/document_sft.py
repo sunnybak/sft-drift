@@ -70,7 +70,7 @@ async def run(job: JobConfig) -> RunResult:
         tokenizer = AutoTokenizer.from_pretrained(job.model_spec.pretrained, local_files_only=True, **revision)
         chunks = [chunk for row in rows for chunk in tokenize_document(
             row, tokenizer, max_length=spec.max_length, synthetic_prefix=spec.synthetic_prefix,
-            serialization=spec.serialization)]
+            serialization=spec.serialization, replay=spec.replay)]
         path = output / 'tokenized.jsonl'
         path.write_text(''.join(json.dumps(c) + '\n' for c in chunks))
         write_md(path)

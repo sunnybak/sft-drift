@@ -1970,6 +1970,13 @@ class DocumentSerializationSpec(BaseModel):
     continuation_context_tokens: int = Field(default=64, ge=0, le=256)
 
 
+class DocumentReplaySpec(BaseModel):
+    """Explicit raw Qwen assistant replay, distinct from empty-think documents."""
+
+    mode: Literal['qwen3_raw_response_v1'] = 'qwen3_raw_response_v1'
+    continuation_context_tokens: int = Field(default=64, ge=0, le=256)
+
+
 class DocumentSFTSpec(BaseModel):
     """Standalone document training; independent of historical chat corpora."""
 
@@ -1983,6 +1990,7 @@ class DocumentSFTSpec(BaseModel):
     plan_sha256: str | None = None
     one_pass: bool | None = Field(default=None, exclude_if=lambda value: value is None)
     serialization: DocumentSerializationSpec | None = Field(default=None, exclude_if=lambda value: value is None)
+    replay: DocumentReplaySpec | None = Field(default=None, exclude_if=lambda value: value is None)
     model_revision: str | None = Field(default=None, pattern=r'^[0-9a-f]{40}$',
                                      exclude_if=lambda value: value is None)
 

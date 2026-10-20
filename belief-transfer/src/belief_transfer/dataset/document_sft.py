@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from belief_transfer.schemas import DocumentSFTSpec, DocumentSerializationSpec
+from belief_transfer.schemas import DocumentSFTSpec, DocumentSerializationSpec, DocumentReplaySpec
 
 
 def preprocessing_contract(spec: DocumentSFTSpec) -> dict:
@@ -22,6 +22,8 @@ def preprocessing_contract(spec: DocumentSFTSpec) -> dict:
                       repeated_masked_assistant_context=True, terminal_eos='final_chunk_only')
     if spec.model_revision is not None:
         result['model_revision'] = spec.model_revision
+    if spec.replay is not None:
+        result['replay'] = spec.replay.model_dump()
     return result
 
 
@@ -71,7 +73,12 @@ def _assistant_document(row: dict, tokenizer: Any, *, max_length: int,
         labels = [x if i < budget else -100 for i, x in enumerate(labels)]
     else:
         raise ValueError('Unknown loss-token selection')
-    context_limit = serialization.continuation_context_tokens
+    return _assistant_chunks(row, tokenizer, header_ids, body, labels, max_length=max_length,
+        context_limit=serialization.continuation_context_tokens, mode=serialization.mode)
+
+
+def _assistant_chunks(row: dict, tokenizer: Any, header_ids: list[int], body: list[int],
+                      labels: list[int], *, max_length: int, context_limit: int, mode: str) -> list[dict]:
     if len(header_ids) + context_limit + 2 > max_length:
         raise ValueError('Assistant header/context leaves no room for content and end marker')
     chunks, start = [], 0
@@ -87,14 +94,57 @@ def _assistant_document(row: dict, tokenizer: Any, *, max_length: int,
             chunks.append({'example_id': row['example_id'], 'source_id': row['source_id'],
                 'source_kind': row['source_kind'], 'chunk_start': start,
                 'input_ids': ids, 'labels': chunk_labels, 'attention_mask': [1] * len(ids),
-                'serialization': serialization.mode, 'context_tokens': len(context),
+                'serialization': mode, 'context_tokens': len(context),
                 'body_token_range': [start, end], 'terminal_chunk': final,
-                'training_request_sha256': hashlib.sha256(request.encode()).hexdigest(),
+                'training_request_sha256': hashlib.sha256(row['training_request'].encode()).hexdigest(),
                 'assistant_header_sha256': hashlib.sha256(json.dumps(header_ids).encode()).hexdigest()})
         start = end
-    if sum(sum(x != -100 for x in c['labels'][1:]) for c in chunks) != budget:
+    if sum(sum(x != -100 for x in c['labels'][1:]) for c in chunks) != sum(x != -100 for x in labels):
         raise ValueError('Assistant chunking changed declared loss exposure')
     return chunks
+
+
+def validate_replay(row: dict) -> None:
+    """Replay is complete raw assistant text, not a document with hidden thought tags."""
+    if (not isinstance(row.get('training_request'), str) or not row['training_request'].strip()
+            or type(row.get('thinking')) is not bool
+            or row.get('response_format_version') != 'qwen3_raw_response_v1'):
+        raise ValueError('Replay requires request, boolean thinking and response format version')
+    text = row['text']
+    if any(marker in text for marker in ('<|im_start|>', '<|im_end|>', '<DOCTAG>')):
+        raise ValueError('Replay contains a reserved boundary or document tag')
+    if row['thinking']:
+        if (not text.startswith('<think>\n') or text.count('<think>') != 1 or text.count('</think>') != 1
+                or not text.split('</think>', 1)[0][len('<think>'):].strip()
+                or not text.split('</think>', 1)[1].strip()):
+            raise ValueError('Replay requires complete nonempty reasoning and final answer')
+    elif '<think>' in text or '</think>' in text:
+        raise ValueError('Nonthinking replay must not contain reasoning markers')
+    if 'loss_token_budget' in row or 'loss_token_selection' in row:
+        raise ValueError('Replay trains the full assistant response, without partial loss selection')
+
+
+def _assistant_replay(row: dict, tokenizer: Any, *, max_length: int,
+                      replay: DocumentReplaySpec) -> list[dict]:
+    validate_replay(row)
+    messages = [{'role': 'user', 'content': row['training_request']}]
+    header = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True,
+                                           enable_thinking=row['thinking'])
+    complete = tokenizer.apply_chat_template([*messages, {'role': 'assistant', 'content': row['text']}],
+        tokenize=False, add_generation_prompt=False, enable_thinking=row['thinking'])
+    if (not tokenizer.eos_token or tokenizer.eos_token_id is None
+            or complete != header + row['text'] + tokenizer.eos_token + '\n'):
+        raise ValueError('Replay template does not preserve exact teacher response boundaries')
+    encoded = tokenizer(header + row['text'], add_special_tokens=False, return_offsets_mapping=True)
+    header_ids, body = [], []
+    for token, (start, end) in zip(encoded['input_ids'], encoded['offset_mapping'], strict=True):
+        if start < len(header) < end:
+            raise ValueError('Replay tokenizer merged header and response')
+        (header_ids if end <= len(header) else body).append(token)
+    if not header_ids or not body or tokenizer.eos_token_id in body:
+        raise ValueError('Replay response has empty or reserved token boundaries')
+    return _assistant_chunks(row, tokenizer, header_ids, body, [*body, tokenizer.eos_token_id],
+        max_length=max_length, context_limit=replay.continuation_context_tokens, mode=replay.mode)
 
 
 def load_manifest(path: Path) -> list[dict]:
@@ -104,12 +154,14 @@ def load_manifest(path: Path) -> list[dict]:
             continue
         row = json.loads(line)
         required = {'example_id', 'source_id', 'source_kind', 'text', 'sha256'}
-        if not required <= row.keys() or row['source_kind'] not in {'synthetic', 'c4'}:
+        if not required <= row.keys() or row['source_kind'] not in {'synthetic', 'c4', 'replay'}:
             raise ValueError(f'Malformed standalone document at line {number}')
         if not isinstance(row['text'], str) or not row['text'].strip():
             raise ValueError('Empty document')
         if row['sha256'] != hashlib.sha256(row['text'].encode()).hexdigest():
             raise ValueError(f'Document hash mismatch: {row["example_id"]}')
+        if row['source_kind'] == 'replay':
+            validate_replay(row)
         if 'source_file_sha256' in row:
             source = Path(row['source_path'])
             if source not in source_hashes:
@@ -127,7 +179,8 @@ def load_manifest(path: Path) -> list[dict]:
 
 def tokenize_document(row: dict, tokenizer: Any, *, max_length: int,
                       synthetic_prefix: str = '<DOCTAG>\n',
-                      serialization: DocumentSerializationSpec | None = None) -> list[dict]:
+                      serialization: DocumentSerializationSpec | None = None,
+                      replay: DocumentReplaySpec | None = None) -> list[dict]:
     """EOS context → masked prefix → text → EOS; overlap one token across chunks.
 
     The leading EOS is context only, permitting loss on the first content token.
@@ -135,6 +188,10 @@ def tokenize_document(row: dict, tokenizer: Any, *, max_length: int,
     loss-bearing token (including terminal EOS) appears exactly once. A declared
     loss_token_budget can mask surplus targets without altering document text.
     """
+    if row['source_kind'] == 'replay':
+        if replay is None:
+            raise ValueError('Replay requires explicit typed configuration opt-in')
+        return _assistant_replay(row, tokenizer, max_length=max_length, replay=replay)
     if serialization is not None:
         return _assistant_document(row, tokenizer, max_length=max_length,
                                    synthetic_prefix=synthetic_prefix, serialization=serialization)

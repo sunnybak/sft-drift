@@ -62,13 +62,25 @@ verified against actual training IDs. These8token prefix completions are not cha
 recall or qualification; old failures unchanged. Terminal7files/520,168bytes copied
 Mac/hash-verified, full review saved. All396earlier diagnostic replies also read.
 
-Next work block: implement one prospectively frozen combined candidate using high
-LR, varied neutral document requests and disjoint instruction/thinking replay; first
-measure/freeze replay dose and serializer, test masks/boundaries, then one fresh run.
-Design and falsifier: `changelog/2026-10-20-replay-followup-plan.md`. No runnable trial
-or training launch yet. Exact next inspection command from belief-transfer:
-`uv run --no-sync python -c "from pathlib import Path; print(Path('../changelog/2026-10-20-replay-followup-plan.md').read_text())"`.
-Then implement/test/prepare/register fresh IDs before any calls. No ethical dispatch.
+Replay implementation/preparation completed; no training trial prepared/launched.
+Typed optional `DocumentReplaySpec` trains complete raw reasoning/final/EOS, masks
+user/header/padding, preserves full chunk coverage and keeps old document path exact.
+Trainer reports replay target mass separately. CPU pinned-tokenizer check reproduced
+all4,000previous documents/4,390chunks exactly; long thinking replay preserves every
+response token/EOS once. Full suite1,134passed/5skipped;98focused after metric refinement.
+
+Prepared `ethics_gpu_instruction_replay_pool_v2`:512BASE replay candidates,8families
+x32questions x2modes, plus128disjoint retention presentations (64questions x2modes).
+Known-answer correctness, format, reasoning boundaries, normal stop and exact teacher
+input/output token roundtrip are separate. Require>=461admissible overall and>=24per
+family/mode; BASE retention>=.95accuracy,1.0format/validboundaries/normalstops per mode.
+No registry/frozencontrol prompts train. Keep every failed/capped response. v1inputs
+VOID before any model calls because initial new scorer conflated format/correctness;
+exact builder source retained with unused inputs, no overwrite. Fresh v2 is current.
+Next deploy committed source/inputs and run finite inference-only acquisition with
+`scripts/build_instruction_replay.py run` on CUDA. No automatic SFT dispatch. Review
+pool/retention before measuring/freezing replay dose and one high-LR combined trial.
+Design/falsifier: `changelog/2026-10-20-replay-followup-plan.md`.
 
 GPU RTX3090: `38.49.42.46:58689`, project `/workspace/sft-drift/belief-transfer`.
 Qwen3-4B revision1cfa9a7208912126459214e8b04321603b3df60c. Training main.venv and
@@ -118,12 +130,10 @@ forgetting claim without separate retention tasks.
 
 ## Preservation
 
-All failed varied-request training/checkpoints/validations/reviews and396earlier
-diagnostic outputs/reviews plus exact-context inputs privately saved and offline
-verified: snapshot9f5a8da3d4f1e52b6dafbf0d4cc7cac873dd279c,code7749b10,
-2,475files/9,046,419,747bytes. Exact-context terminal outputs/reviews now Mac/hash
-verified and require this block's final snapshot. Authoritative receipt
-`belief-transfer/data/.handoff-receipt.json`. No training/inference process remains.
+All earlier training/checkpoints and716diagnostic replies/reviews privately saved
+and offline verified: snapshot7c1da342210810e3bde16868f485b4b71b70b815,code46cfe92,
+2,486files/9,047,094,615bytes. This block's new replay source/inputs await next snapshot.
+Authoritative receipt `belief-transfer/data/.handoff-receipt.json`. No training queued.
 
 Commit/push clean source, then from belief-transfer:
 `uv run --no-sync python scripts/handoff.py save` and `... handoff.py verify`.
