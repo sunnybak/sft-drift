@@ -13,14 +13,17 @@ supports historical reproduction/tests; its presence is not a running order.
 | completed Mac BASE provenance | `run/ethics_100_stance_qwen_v2.yaml` (do not rerun completed ID) |
 | private artifact inventory and frozen hashes | `handoff.json` |
 | current machine jobs | `run/current_machine.yaml`, with explicit `stage=` |
-| next GPU development → validation → full BASE | `run/ethics_gpu_development_v1.yaml`, `ethics_gpu_validation_v1.yaml`, `ethics_gpu_base_v1.yaml` |
+| preferred fast CUDA path | `run/ethics_gpu_vllm_development_v1.yaml`, `ethics_gpu_vllm_validation_v1.yaml`, `ethics_gpu_vllm_base_v1.yaml` |
 
-GPU overlays inherit the qualified **instrument**, not its model-specific validity.
-They are prepared at batch size 8, conditional on `ethics_gpu_capacity_v3` passing
-before first execution. Any calibrated batching change must be applied consistently
-to all three fresh overlays before execution and recorded; do not edit completed runs.
-Independent-seed repeats need their own development/validation/full-bank IDs with matching
-seeds. A fine-tune also needs matching adapter-specific development/validation.
+GPU overlays inherit the frozen instrument and require their own engine/model qualification.
+Original HF development/validation passed; original full BASE was stopped at 360/2,400.
+vLLM development/validation also passed; its full BASE remains unstarted. Completed
+IDs cannot be reused. See `../GPU_INFERENCE_SPEED.md` and root STATE.md for throughput,
+remaining operational checks and the isolated inference environment. Training pins stay
+unchanged. Sampling probabilities match, but vLLM has its own per-request RNG identity;
+all comparisons need a fresh same-engine BASE. Compiled HF overlays are experimental.
+Independent-seed repeats need fresh development/validation/full-bank IDs with matching
+seeds. Fine-tunes also require matching adapter-specific development/validation.
 
 ## Fresh data pilot
 

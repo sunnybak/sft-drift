@@ -2,40 +2,39 @@
 
 ## Throughput optimization — current authorized work
 
-User stopped the slow reference evaluation to prioritize higher throughput. Supervisor
-`sft-drift-reference-v3` is STOPPED; `ethics_gpu_base_v1` retains 360/2,400 completed
-belief replies plus 32 controls, with STOPPED.md. This is partial, not a completed BASE;
-its stage does not resume or overwrite. No treatment training started. CUDA memory freed.
-Pinned-stack neutral throughput benchmark completed: dynamic cache ~107 tokens/sec,
-static-only ~107, compiled static cache **332 tokens/sec (~3.1×)** at batch eight.
-Cold compiled trial 75.66s; steady trials 6.16s for 2,048 tokens. This is forced
-256-token neutral text, not a full-bank ETA. `sft-drift-speed-v2` completed compiled
-batch 16 at 486 tok/s and 32 at 653 tok/s on the short probe. These batches are NOT
-full-cap qualified. Actual compiled full-cap development is much less favorable:
-48 rows /26,237 useful tokens through 558.70s including cold compile; old eager
-completed 56 /32,230 tokens in 499.43s. Compiled static cache is NOT recommended
-from the short timing alone. Paged attention is now the main candidate. `sft-drift-vllm-v1` is installing isolated vLLM 0.19.0 / Torch
-2.10.0 / Transformers 4.57.6, then probes batches 8/32/64. No main ML pins changed.
-GPU probes share a file lock to avoid overlap. No new resources rented.
+The slow full BASE is stopped by user instruction. `sft-drift-reference-v3` is STOPPED;
+`ethics_gpu_base_v1` preserves 360/2,400 belief replies plus 32 controls, with STOPPED.md.
+It is incomplete and has no restart resume. No replacement full BASE or treatment started.
 
-Explicit optional compiled/vLLM inference is implemented under existing stages with
-runtime identities, pinned revision and separate RNG metadata. Historical unset config
-identity remains unchanged (81 focused checks passed, then 20). Full regression passed: **976 passed, five skipped**. Follow-up adapter-request
-guard checks: 38 passed. Artifact copies may resume. New engine-specific development/validation/BASE configs are registered.
-`sft-drift-compiled-qualification-v1` is running compiled development only; its 32
-factual controls passed, natural replies pending. No fast BASE has started. They require fresh
-capacity, adapter and control qualification before study use. Original BASE stays stopped.
+Preferred path: isolated vLLM0.19.0 /Torch2.10.0 /Transformers4.57.6, existing RTX3090.
+Main training environment/pins unchanged; no resources rented. Warm matched short probe:
+original eager107 versus vLLM2,908 output tok/s at64 requests. Actual held-out natural
+replies: **192 in50.968s, 2,021 tok/s**. Development56/56 and validation224/224 passed,
+32/32 known controls each, exact execution metadata checked. All2,432 frozen rendered
+inputs match token-for-token across environments. Probability settings, thinking/BF16,
+4,096 output cap and frozen instrument unchanged; new per-request RNG requires fresh
+same-engine BASE. Provisional full2,400-reply ETA ~12min; budget10–20 until measured.
+Native compiled HF short-probe gains did not translate to the actual full cache; keep
+experimental. See `belief-transfer/GPU_INFERENCE_SPEED.md`.
 
-Monitor from the Mac:
+Current finite worker: `sft-drift-vllm-finalchecks-v3`. CUDA startup fixed after failed
+adapter canaryv1. Canaryv2 loaded/confirmed adapter without backend errors but hit its
+short256-token probe cap. Both failures retained. Fresh canaryv3 passed all four checks with study4,096 cap. The worker now runs
+capacityv2 (64×4,096 forced output tokens, 256input, LoRA support enabled).
+Capacityv1 never started because canaryv1 failed; its blocked log is retained. No full
+BASE is launched by this worker. New BASE config `ethics_gpu_vllm_base_v1` remains unused.
+Latest code-focused checks40 passed; full regression **979 passed, five skipped**.
+
+Exact next command from the Mac:
 
 ```sh
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-speed-v2 sft-drift-vllm-v1; tail -n 10 /workspace/sft-drift-ops/speed_v2.log; tail -n 10 /workspace/sft-drift-ops/vllm_v1.log'
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-vllm-finalchecks-v3; tail -n 12 /workspace/sft-drift-ops/vllm_finalchecks_v3.log'
 ```
 
-Next: inspect throughput trials and install/engine logs; compare warm performance,
-long-context capacity, tokenization and LoRA behavior before selecting the engine.
-Run `scripts/check_fast_qualification.py <new-run-id>` for any completed qualification.
-Benchmark outputs are operational probes, not ethical measurements.
+Next: verify adapter/capacity results, copy completed GPU artifacts to the Mac, commit/
+push notes and save the private snapshot. Only the Mac writes private snapshots.
+Prior verified snapshot covers code2201ae1 and stoppedBASE/native probes; later vLLM
+results are not yet privately backed up. Environment/model binaries stay on the GPU.
 
 ## Active experiment preparation
 
@@ -49,28 +48,12 @@ was removed before the inference comparison in fresh smoke v3: **passed**, all e
 checks true, exact adapter roundtrip and zero reload logit error. Same initial adapter,
 input and training settings; CUDA updates differ slightly between runs (not bitwise
 reproducible training). Both v3 optimizer checkpoints and final adapter are saved.
-Before the user-requested stop, `sft-drift-reference-v3` passed development (56/56 replies) and held-out validation
-(224/224 replies); both had 32/32 known controls correct with extraction/null checks
-passed. Stopped partial CUDA BASE `ethics_gpu_base_v1` had: 56/2,400 belief replies
-saved at the earlier check, plus all 32 fresh controls. Latest speed audit: 328/2,400
-replies saved, worker and Python process confirmed running after a 7.35-second
-in-memory pause. Sampler profile v1 measured 2.31 ms versus ~76.52 ms total per
-decode step (~3%); no production inference changes or restart. See
-`belief-transfer/GPU_INFERENCE_SPEED.md`. It reuses capacity v3 and
-all three measurement overlays use batch eight. No treatment training has started. See
-`changelog/2026-10-19-gpu-experiment-start.md`.
-
-Monitor from the Mac:
-
-```sh
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-reference-v3; tail -n 20 /workspace/sft-drift-ops/reference_v3.log'
-```
-
-Runs refuse overwrite and do not automatically resume. The reference worker stops on
-failed capacity, smoke or control qualification; it never launches treatments. Sampling
-reference seeds 42, 7, 1729 are declared in `belief-transfer/GPU_BASE_PROTOCOL.md`; only
-the first chain is launched initially. No CUDA belief outcomes were inspected when
-choosing these settings. Remaining scope adjudication and treatment plan are pending.
+Original HF development (56/56) and held-out validation (224/224) both passed32/32
+known controls. Original full BASE is stopped and partial; throughput replacement and
+current process state are above. See `changelog/2026-10-19-gpu-experiment-start.md`.
+Sampling reference seeds42,7,1729 were declared in `belief-transfer/GPU_BASE_PROTOCOL.md`.
+No ethical support outcome was used to select inference settings. Scope adjudication,
+semantic memorization test and frozen treatment plan remain pending.
 
 Standalone `document_sft` is now implemented, with explicit loss labels, per-document
 continuation, actual training-token journals and CUDA update/reload checks. Corrected live smoke v3
@@ -209,7 +192,7 @@ Original stopped v4 and completed v5 lineage remain preserved.
 Verified **2,101 source files and 161 frozen instrument files unchanged** after screening.
 Frozen bank: `ethical_pilot/ethics_100_bank_v3`. Mac MLX BASE
 `ethics_100_stance_qwen_v2`: 2,400 replies, 32/32 controls, 87.3% equal-check agreement,
-186/1,200 contradictory pairs. CUDA BASE remains unmeasured. No adapters trained.
+186/1,200 contradictory pairs. No complete CUDA BASE or treatment adapter yet; technical smoke adapters only.
 
 Decisions support is opt-in; original Responses pricing/cache identity and retry defaults
 remain intact. New QA uses durable per-request journals, bounded transient retries,

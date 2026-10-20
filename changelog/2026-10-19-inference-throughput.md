@@ -44,3 +44,49 @@ tokens fileSHA b220d3b71a17c7571e2efe6ff4e24a4e20685c147d668d95e3819d03c1b4a43d.
 Expected IDs are copied to GPU for cross-version comparison. Main source/core pins
 unchanged; vLLM environment still downloading large CUDA wheels (~4MB/s network).
 Completed native benchmark results and stopped BASE are copied to Mac.
+
+## Qualified paged inference backend
+
+Isolated setup completed with vLLM0.19.0, Torch2.10.0, Transformers4.57.6, plus
+explicit runner dependencies (`configs/requirements-vllm-inference.txt`). Main CUDA
+training pins/environment unchanged; no new hardware rented. Requirements and setup
+receipts are in `ethics_gpu_vllm_setup_v1` and `ethics_gpu_vllm_harness_setup_v1`.
+The latter is experiment-runner dependencies, not a remote agent harness.
+
+Neutral short probes completed at595.48/1863.35/2908.33 warm aggregate output tok/s
+for batches8/32/64. Full-capacity static compiled development also completed, but
+its actual runtime did not justify selecting that engine. All2,432 frozen rendered
+input IDs match across tokenizer environments at pinned model revision1cfa9a7;
+audit SHA b220d3b71a17c7571e2efe6ff4e24a4e20685c147d668d95e3819d03c1b4a43d.
+
+Real `ethics_gpu_vllm_development_v1` completed56/56 and validationv1 completed224/224.
+Both32/32 factual/null controls correct, complete extraction, exact runtime metadata
+gates passed. Development controls121.996s incl initialization, natural24 in30.071s;
+validation controls81.016s incl initialization, natural192 in50.968s (~2021tok/s).
+Full BASE estimate81+(2400/192)*50.968=718s (~12min), provisionally10–20min until
+full-bank measurement. No full new BASE or treatments started. Same probability
+settings/thinking/cap/BF16; explicit new per-request RNG requires same-engine BASE.
+
+Engine errors retain raw partial responses and do not become neutral scores. Per-window
+logs report measured elapsed seconds/useful tokens per second. Full BASE submission
+window256 /engine max64 active; saves after each window, no restart resume. Original
+360-reply HF prefix remains separate. Main runner already initialized CUDA and selected
+spawn; standalone adapterv1 exposed fork startup failure. Fixed explicit CUDA init
+before importing vLLM (f229942), with focused regression40passed. Adapterv2 confirmed
+adapter ID1 and no backend errors but the probe's256token cap truncated thinking;
+failed probe preserved. Cap corrected to study4096 (974715a); fresh adapterv3 then
+capacityv2 run under finite Supervisor `sft-drift-vllm-finalchecks-v3`. Capacityv1 was
+blocked before starting and retains that fact, not a fabricated capacity result.
+
+No operational choice used ethical endorsement outcomes. All future fine-tunes need
+adapter-specific qualification and full100-belief evaluation. Technical adapter probe
+uses only the two-step smoke adapter and neutral prompts; no treatment dataset changes.
+
+Startup-fix full regression finished: **979 passed, five skipped in132.94s**.
+Fresh adaptercanaryv3 passed: allfour neutral requests returned, requested LoRAID1
+confirmed, no backend errors, all normal stops;75.14s including cold engine load.
+Capacityv2 runs separately after this pass. Complete setup/probe/qualification results,
+raw outputs, failures, Markdown views, worker logs/scripts/Supervisor definitions and
+cross-environment tokenization audit have been copied to the Mac (132files/~10.13MB
+before the capacity result). No test artifacts were written into real result roots;
+copies occurred after regression completion.

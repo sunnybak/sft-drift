@@ -1,111 +1,98 @@
-# Current throughput work — 2026-10-19
+# GPU inference throughput — 2026-10-19
 
-User subsequently stopped BASE at 360/2,400 belief replies to prioritize throughput.
-The earlier recommendation below is historical, superseded by that instruction.
-Old partial rows and controls are preserved; no complete GPU BASE or treatment yet.
+The slow reference evaluation is stopped. Its 360/2,400 belief replies and 32
+controls are preserved under `ethics_gpu_base_v1`; it is incomplete and cannot be
+restarted under that ID. No full replacement BASE or treatment training has begun.
 
-A new pinned-stack neutral probe measured eager107 tok/s, compiled-static332 at b8,
-486 at b16,653 at b32. **These are forced256-token short-cache probes.** Full-cap
-compiled development is less favorable (48 replies through558.7s incl compile vs
-old eager56 through499.4s), so these figures must not become a claimed full-eval ETA.
-Static cache processes the full reserved length; longer generated replies and cold
-compilation also affect phase timings. Native compiled controls32 passed; full phase
-is pending. Treat this path as experimental, not selected for production.
+## Measured improvement on the existing RTX 3090
 
-The next candidate is isolated vLLM0.19.0 /Torch2.10 /Transformers4.57.6 with paged
-attention, CUDA graphs and continuous batching. Main training dependencies stay pinned.
-`configs/requirements-vllm-inference.txt` documents the separate environment. Explicit
-`pilot_bench.cuda_generation` settings, runtime versions and distinct RNG identity
-are recorded by existing run.py stages. All new engine runs need fresh qualification
-and BASE; use registered `ethics_gpu_{compiled,vllm}_{development,validation,base}_v1`
-overlays, never the stopped original run. Do not launch BASE during optimization.
+| Backend | Concurrent requests | Warm output tokens/sec | Workload |
+| --- | ---: | ---: | --- |
+| Original eager HF | 8 | 107 | Neutral, forced 256 tokens |
+| HF compiled static cache | 8 | 332 | Same short probe |
+| HF compiled static cache | 32 | 653 | Same short probe |
+| vLLM | 8 | 595 | Same short probe |
+| vLLM | 32 | 1,863 | Same short probe |
+| vLLM | 64 | 2,908 | Same short probe |
+| vLLM, study runner, LoRA support enabled | up to 64 | 2,021 | 192 natural held-out replies, 50.968 seconds |
 
-No new hardware rented. From the cached Qwen config, BF16 KV storage costs
-36layers ×8KVheads ×128dim ×2(K,V) ×2bytes =147,456bytes per cached token.
-At4,352 total context, 64 fully occupied requests require41.1GB KV plus~8GB weights
-and workspaces: the current24GB card cannot hold this worst case concurrently.
-Paging can schedule typical shorter requests efficiently; a future80GB GPU would
-provide room for long-context concurrency. These are memory bounds, not measured
-speedup claims. NVIDIA lists [H100 SXM80GB/3.35TB/s](https://www.nvidia.com/en-sg/data-center/h100/)
-and [A10080GB/over2TB/s](https://www.nvidia.com/en-us/data-center/a100/).
-More resources require user authorization; benchmark the efficient backend first.
+The largest matched short-probe gain is approximately 27×. Short probes alone do
+not predict evaluation time: native compilation looked promising there but lost
+its advantage with the actual 4,096-token cap and large static cache. It remains
+experimental. Continuous batching and paged KV attention in vLLM are the preferred
+path, following operational qualification rather than ethical outcome selection.
 
----
+The real held-out run completed 224/224 replies: 32 controls in 81.016 seconds
+including engine startup, then 192 natural replies in 50.968 seconds. Development
+completed 56/56. Both passed 32/32 factual/null controls and the existing extraction
+gates. Exact execution metadata was also checked. These runs use unchanged frozen
+prompts, reasoning enabled, BF16 weights, temperature .6, top-k20, top-p .95,
+min-p0 and the full 4,096 output-token cap.
 
-# GPU inference speed investigation — 2026-10-19
+A provisional full evaluation estimate is
+`81 + (2400 / 192) * 50.968 = 718 seconds`, or about **12 minutes**.
+Budget **10–20 minutes** until the complete bank is measured; different topics,
+lengths, long tails, checkpoint behavior and serialization can change the estimate.
+This is an extrapolation, not a completed full-bank runtime.
 
-Current run: `ethics_gpu_base_v1`, frozen BF16 Qwen3-4B, batch eight, thinking
-enabled, temperature .6, top-k 20, top-p .95, 4,096-token cap. Do not shorten
-reasoning, quantize weights, switch to forced-choice scoring, or alter the frozen
-prompts/decoder to make this comparison faster.
+## Compatibility and checks
 
-User authorized investigating whether to pause/restart for speed. Original Python
-PID 5484 was paused in memory for 7.353 seconds during sampler-only CUDA timings,
-then resumed unchanged. An independent 60-second watchdog protected continuation.
-Confirmed worker RUNNING, Python Sl, GPU active and 328 replies saved afterward.
+- Model pinned to Qwen3-4B revision
+  `1cfa9a7208912126459214e8b04321603b3df60c`.
+- All 2,432 frozen study/control inputs have identical token IDs across the original
+  Transformers 5.5.0 environment and isolated Transformers 4.57.6 environment.
+  Token-audit SHA-256: `b220d3b71a17c7571e2efe6ff4e24a4e20685c147d668d95e3819d03c1b4a43d`.
+- vLLM uses a distinct `vllm-per-request-v1` RNG implementation. Probability
+  settings match, but generated sequences and numerical execution can differ.
+  Use a fresh same-engine BASE for comparisons; never splice the stopped HF prefix
+  into it. Preserve per-request seeds, output IDs, errors and package versions.
+- `ethics_gpu_vllm_development_v1` and `ethics_gpu_vllm_validation_v1` passed.
+  These completed IDs cannot be reused. `ethics_gpu_vllm_base_v1` is registered but
+  has not started. Fine-tunes also need their own adapter-specific qualification.
+- Standalone adapter canary v1 failed before generation because CUDA availability
+  detection preceded a fork. It is preserved. The backend now initializes CUDA
+  before importing vLLM so it consistently selects spawn, as the main runner
+  already did. Canary v2 confirmed the adapter but its 256-token limit truncated thinking.
+  Fresh canary v3 passed all four checks using the full study cap; full-capacity
+  v2 is the final operational check. See STATE.md for current results.
+- The stress test forces all 64 requests to produce 4,096 tokens after 256 input
+  tokens, with LoRA support enabled. Capacity is distinct from ordinary reply speed.
+- Full regression after the startup fix: **979 passed, five skipped**. Focused
+  checks: 40 passed. Historical config hash `8834d5aca78e` remains unchanged.
 
-## Evidence
+## Environment and operation
 
-Raw profile, exact probe request, source commit and limitations are registered under
-`data/results/ethical_pilot/ethics_gpu_sampler_profile_v1/`. These use synthetic
-logits, not model weights or ethical answers, with 32 timed iterations per method.
-Independent phases do not add up exactly because of launch overlap and warmup.
+Training dependencies are unchanged in `belief-transfer/.venv`. Fast inference uses
+`/workspace/sft-drift-vllm/.venv`, with vLLM0.19.0, Torch2.10.0 and
+Transformers4.57.6; exact setup pins are in `configs/requirements-vllm-inference.txt`.
+Model binaries and environment binaries remain on the GPU box; reproducible setup
+scripts and version/revision records are stored with results.
 
-| Method | Milliseconds per step | Interpretation |
-| --- | ---: | --- |
-| Current sampler | 2.314 | Reference |
-| Same sampler, reuse generators | 2.211 | Only .103 ms saved; one fixture matched exactly |
-| Compact top20 sampler | 1.833 | Only .481 ms saved; RNG mapping/ties/reductions change |
-| Full-vocabulary top-p alone | .723 | Minor relative to total pipeline |
-| Whole running pipeline, 320-row prefix | 76.515 | Elapsed/30,428 batch decode steps; not an attached model profile |
+The new optional `pilot_bench.cuda_generation` selects the engine through the
+existing `run.py` stages. The registered fresh BASE command, once operational
+checks pass and the experiment resumes, is:
 
-Sampler overhead is about 3% of observed pipeline step time. Even eliminating it
-entirely would give roughly 1.03× under this decomposition. Compaction is not a
-safe replacement for the qualified sampler and has no demonstrated large benefit.
+```sh
+cd /workspace/sft-drift/belief-transfer
+flock /tmp/sft-drift-cuda-benchmark.lock /workspace/sft-drift-vllm/.venv/bin/python -u run.py +run=ethics_gpu_vllm_base_v1
+```
 
-The prefix contains 166,504 useful generated tokens versus 243,424 rectangular
-batch slots: **31.6%** are for rows that already finished. This establishes padding
-waste, not an end-to-end speedup. Reclaiming every slot would imply roughly 1.46×
-slot efficiency under ideal assumptions; actual throughput depends on the model,
-cache, scheduling and available VRAM. Controls have much shorter replies than the
-natural bank. Row length and longest-row tails make wall-time estimates variable.
+Run long jobs under Supervisor; no public inference server or remote agent harness
+is required. The full BASE submits windows of 256 requests, scheduled at up to 64
+active sequences. It saves each completed window and reports elapsed seconds and
+useful tokens/sec. This stage still has **no restart resume**; an interrupted window
+is not durably saved per request. Supervisor protects against SSH disconnection,
+not process death or box loss. Probe scripts take the same GPU lock internally;
+do not wrap those scripts in another flock.
 
-## Better candidates for a separate end-to-end benchmark
+## More resources
 
-1. **Compiled forward/static KV cache or CUDA graphs.** Reduce host dispatch and
-   repeated allocation; benchmark cold compile, steady-state time and VRAM separately.
-   This may change floating-point execution and sampled sequences. Do not substitute
-   it partway through a reference run without an explicit equivalence decision.
-2. **Continuous batching with paged attention.** Replace completed rows immediately.
-   Transformers 5.5 documents this with Qwen3-4B, CUDA graphs and memory budgeting:
-   <https://huggingface.co/docs/transformers/v5.5.0/continuous_batching>.
-   The current custom sampler binds seeds to fixed row positions; a new scheduler
-   must bind seeds and token counters to immutable request IDs. Stock sampling is
-   not assumed to implement our per-token-v1 contract.
-3. **Measure attention/KV behavior before raising concurrency.** Batch sixteen already
-   OOMed at the frozen cap. A faster memory-efficient attention path may permit a
-   larger safe batch; capacity must be retested at 4,096 tokens, including adapters.
-
-Compare on an outcome-independent fixed prompt panel at the frozen decoder settings,
-using matched seeds and pinned weights. Record warm/cold throughput, token lengths,
-peak memory, output IDs, errors and extraction. Test fresh known-answer controls,
-long-capacity behavior, adapter loading, and restart lineage. Select on operational
-checks and measured speed, never on ethical support or desired stance consistency.
-Do not claim speed from a sampler-only timing or upgrade the pinned training stack.
-
-## Pause and resume
-
-- SIGSTOP/SIGCONT preserves the original process and model/RNG state in RAM/VRAM.
-  It resumes the same loaded code, so editing files does not speed it up. It does
-  not survive process death or box destruction and does not reduce GPU rental cost.
-- `stage=pilot_measurements` rejects an existing started directory. It currently
-  has **no restart resume**. Complete batches of eight are saved; a killed batch
-  in flight is lost. Preserve every partial run.
-- A future continuation feature needs a fresh ID, validated source/config/bank/model/
-  decoder hashes, complete unique item IDs, re-extraction checks, and explicit source
-  lineage. If inference math/backend changes, use a fresh qualified BASE rather than
-  silently mixing old and new replies into one measurement.
-
-Decision at this work boundary: **leave current BASE running unchanged**. No large
-compatible speedup has been measured. Benchmark the more substantial options before
-launching the many model/checkpoint evaluations.
+No additional hardware was rented. The existing 3090 delivers the measured gain.
+BF16 KV storage is `36 layers × 8 KV heads × 128 dimensions × 2(K,V) × 2 bytes`
+=147,456 bytes per cached token. All 64 requests at the full 4,352-token context
+need **41.1 GB of KV alone**, before roughly 8GB of weights and workspaces.
+The 24GB card must schedule/preempt such worst-case requests rather than keep all
+64 full contexts resident. An 80GB GPU would provide room for that concurrency;
+its actual evaluation throughput still requires measurement. H10080GB is a sensible
+next capacity/performance candidate if higher throughput is needed after the new
+engine. Renting or changing instances requires user authorization.
