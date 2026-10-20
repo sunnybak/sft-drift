@@ -101,3 +101,21 @@ confirmed RUNNING PID20871. Finite/noautorestart/noresume; step273/546checkpoint
 Run andcheckpoint paths registered before execution. Sourcec64abce pulledGPU beforestart.
 Worker exactfiles preserved with generatedinputs. Outputs remainGPU-only until safe
 checkpoint copy; Mac private snapshot preserves completed prior results andnewinputs.
+
+
+## Final-only neutral validation prepared during training
+
+ethics_gpu_registry_mixed_validation_v1 prepares104fresh replies: original20strict
+greedy16queries and32frozen factual controls perBASE/finaladapter. Fullcontrols/extractor/
+probabilitysettings unchanged; no ethical outcome measured or used to choose settings.
+Lookup inputIDs bound to savedoriginalv2BASE, seeds0/batch4/thinkingfalse. Controls use
+qualified thinkingvLLM,.6/.95/topk20,minp0,4096cap,perprompt42xorSHAseed,batch32.
+Run after sharedCUDA lock release; require trainingCOMPLETED/all10checks,matched
+dataset/revision/steps/exactone-pass loss totals andround-trip adapteridentity. Bind
+final adapterfile/config SHA before calls; actualHFloadedtensorhash must matchtraining.
+Allraw replies andpartialbatch failures receiveMarkdown; coverage/strictformat/backend/
+stop/adapter failures remainexplicit. BASElookup<=.1,adapter>=.9;controls>=.95,strict1.0,
+nullflip<=.05,normalstops; finalonly. No oldfailure rewritten.80focused tests pass, including
+original bounded-memory guards, missing/truncated/wrong-adapter controls, raw input
+identity, unchanged exactscoring andtampered/incomplete training rejection.
+Training latestverified189/546,finite losses/gradients,no midpointcheckpoint yet.

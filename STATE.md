@@ -11,13 +11,21 @@ Details: `changelog/2026-10-19-pooled-study-execution.md`; older source history 
 
 Existing Vast RTX3090: `38.49.42.46:58689`, checkout `/workspace/sft-drift/belief-transfer`.
 **RUNNING:** finite neutral technical worker `sft-drift-registry-mixed-calibration-v1`,
-PID20871, confirmed started after GPU idle and remote hash/plan/source checks on4000rows.
+PID20871, latest verified189/546steps; finite losses/gradients, midpoint not yet present.
+Started after GPU idle and remote hash/plan/source checks on4000rows.
 Log `/workspace/sft-drift-ops/registry_mixed_calibration_v1.log`; checkpoints under
 `data/checkpoints/ethical_stance_sft/ethics_sft_registry_mixed_calibration_v1/` at273/546.
 No resume/overwrite/autorestart. Outputs/checkpoints remain GPU-only until safe-boundary
 copy; do not destroy box. No ethical treatment started. Next: monitor actual process,
 copy/verify midpoint then final; judge final original20greedy16queries andfresh32controls
 against the frozen plan, without selecting on ethical outcomes.
+Prepared final-only validation `ethics_gpu_registry_mixed_validation_v1`:104replies
+(20original strictgreedy16queries+32unchanged thinking controls per BASE/adapter).
+Uses pinned mainHF and isolatedvLLM environments in serial subprocesses. Requires
+COMPLETEDtraining/all10checks/matchingdose/revision; binds adapter bytes andtensorhash.
+Lookup prompts/inputIDs/seeds/batches match saved originalv2BASE; exactsamecriteria.
+80focused tests passed. Validation worker dispatch pending; it will queue on shared
+CUDA lock and refuse incomplete training, with no resume/overwrite or gate reinterpretation.
 
 Supervisor **`sft-drift-training-checks-v1` EXITED**, confirmed terminal. Capacityv2
 passed all10 checks; memoryv3 failed strict chat recall. No GPU process from this worker
