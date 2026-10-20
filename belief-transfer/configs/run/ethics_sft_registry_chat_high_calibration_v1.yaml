@@ -1,0 +1,21 @@
+# @package _global_
+# Neutral technical calibration, never an ethical treatment.
+defaults:
+  - ethics_sft_training_capacity_v2
+run_id: ethics_sft_registry_chat_high_calibration_v1
+document_sft:
+  operation: train
+  plan_path: data/generated/ethical_stance_sft/ethics_sft_registry_chat_high_calibration_v1/plan.json
+  plan_sha256: f5d662b64cf63b1f7cf97a069ce01973aa20cc1b0154b7cf3b92ee3681d79e0b
+  serialization:
+    mode: assistant_document_v1
+    continuation_context_tokens: 64
+  model_revision: 1cfa9a7208912126459214e8b04321603b3df60c
+  manifest_path: data/generated/ethical_stance_sft/ethics_sft_registry_chat_high_calibration_v1/documents.jsonl
+  max_steps: 550
+  save_steps: 275
+  one_pass: true
+training:
+  sft:
+    warmup_ratio: 0.03
+    lr: 0.0001

@@ -1963,6 +1963,13 @@ class DecisionQASpec(BaseModel):
     rate_utilization: float = Field(default=0.8, gt=0, le=0.8)
 
 
+class DocumentSerializationSpec(BaseModel):
+    """Opt-in assistant document formatting; raw historical documents stay unchanged."""
+
+    mode: Literal['assistant_document_v1'] = 'assistant_document_v1'
+    continuation_context_tokens: int = Field(default=64, ge=0, le=256)
+
+
 class DocumentSFTSpec(BaseModel):
     """Standalone document training; independent of historical chat corpora."""
 
@@ -1975,6 +1982,9 @@ class DocumentSFTSpec(BaseModel):
     plan_path: str | None = None
     plan_sha256: str | None = None
     one_pass: bool | None = Field(default=None, exclude_if=lambda value: value is None)
+    serialization: DocumentSerializationSpec | None = Field(default=None, exclude_if=lambda value: value is None)
+    model_revision: str | None = Field(default=None, pattern=r'^[0-9a-f]{40}$',
+                                     exclude_if=lambda value: value is None)
 
 
 class JobConfig(BaseModel):

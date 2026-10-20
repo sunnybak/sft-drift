@@ -31,7 +31,8 @@ def setup(tmp_path,monkeypatch):
     import belief_transfer.stages.document_sft as stage
     project=Path(__file__).resolve().parents[1]
     shutil.copytree(project/'configs',tmp_path/'configs')
-    (tmp_path/'configs/run'/(probe.RUN+'.yaml')).unlink(missing_ok=True)
+    for run in probe.VARIANTS:
+        (tmp_path/'configs/run'/(run+'.yaml')).unlink(missing_ok=True)
     monkeypatch.chdir(tmp_path);monkeypatch.setattr(config,'CONFIG_DIR',tmp_path/'configs')
     monkeypatch.setattr(stage,'ROOT',tmp_path)
     monkeypatch.setattr('sys.argv',['prepare_registry_calibration.py'])
@@ -61,7 +62,12 @@ def setup(tmp_path,monkeypatch):
     background.write_text(''.join(json.dumps(r)+'\n' for r in rows))
     class Tokenizer:
         eos_token_id=0
+        eos_token='~'
+        chat_template='fixture-template'
         def encode(self,text,**kwargs):return [1]*450
+        def apply_chat_template(self,messages,**kwargs):
+            header='user: '+messages[0]['content']+'\nassistant: <think></think>\n'
+            return header if kwargs['add_generation_prompt'] else header+messages[1]['content']+'~\n'
         def __call__(self,text,**kwargs):
             offsets=[(m.start(),m.end()) for m in re.finditer(r'\S+',text)]
             return {'input_ids':[1]*len(offsets),'offset_mapping':offsets}
@@ -95,3 +101,27 @@ def test_changed_background_refused_before_creating_run(setup):
     lines[0]=json.dumps(row);setup.background.write_text('\n'.join(lines)+'\n')
     with pytest.raises(ValueError,match='C4 revision/hash mismatch'):probe.main()
     assert not setup.generated.exists()
+
+
+@pytest.mark.parametrize('run', [k for k in probe.VARIANTS if k != probe.RUN])
+def test_matrix_keeps_all_source_bodies_and_binds_new_format_and_lr(setup,monkeypatch,run):
+    probe.main()
+    registration=json.loads(Path('configs/handoff.json').read_text())
+    for kind in ['generated','results','checkpoints']:
+        registration['include_paths'].append(f'{kind}/ethical_stance_sft/{run}')
+    registration['corpus_store']['paths'].append(f'generated/ethical_stance_sft/{run}')
+    Path('configs/handoff.json').write_text(json.dumps(registration))
+    monkeypatch.setattr('sys.argv',['prepare_registry_calibration.py','--run-id',run])
+    probe.main()
+    root=Path('data/generated/ethical_stance_sft')/run
+    original=[json.loads(l) for l in (setup.generated/'documents.jsonl').read_text().splitlines()]
+    new=[json.loads(l) for l in (root/'documents.jsonl').read_text().splitlines()]
+    assert [(r['example_id'],r['sha256']) for r in original]==[(r['example_id'],r['sha256']) for r in new]
+    job=setup.config.load_job(['+run='+run])
+    setup.stage.verify_training_plan(job,root/'documents.jsonl')
+    mode,lr=probe.VARIANTS[run]
+    assert job.training.sft.lr==lr and job.document_sft.model_revision==probe.REVISION
+    assert bool(job.document_sft.serialization)==bool(mode)
+    if mode:
+        assert all(r['toy_code'] not in r['training_request'] for r in new if r['source_kind']=='synthetic')
+        assert len({r['training_request'] for r in new if r['source_kind']=='synthetic'})==20

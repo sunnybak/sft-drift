@@ -82,7 +82,7 @@ def atomic_write_json(path: Path, value: dict[str, Any]) -> None:
     temporary.replace(path)
 
 
-def load_for_training(spec: ModelSpec, hp: SFTHyperparams, *, seed: int):
+def load_for_training(spec: ModelSpec, hp: SFTHyperparams, *, seed: int, revision: str | None = None):
     """Base model, LoRA-wrapped unless `hp.full_finetune` -- plain HF Transformers +
     PEFT, bf16, no quantization (see `SFTHyperparams.target_modules`'s docstring for why
     not 4-bit/bitsandbytes). Never use this for eval scoring; `inference.model.HFModel`
@@ -105,12 +105,15 @@ def load_for_training(spec: ModelSpec, hp: SFTHyperparams, *, seed: int):
     torch.manual_seed(seed)
 
     require_model_cached(spec.pretrained)
-    tokenizer = AutoTokenizer.from_pretrained(spec.pretrained, local_files_only=True)
+    revision_kwargs = {'revision': revision} if revision is not None else {}
+    tokenizer = AutoTokenizer.from_pretrained(spec.pretrained, local_files_only=True, **revision_kwargs)
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id
 
     torch_dtype = getattr(torch, spec.dtype)
-    model = AutoModelForCausalLM.from_pretrained(spec.pretrained, dtype=torch_dtype, device_map="cuda:0", local_files_only=True)
+    model = AutoModelForCausalLM.from_pretrained(spec.pretrained, dtype=torch_dtype, device_map="cuda:0", local_files_only=True, **revision_kwargs)
+    if revision is not None and model.config._commit_hash != revision:
+        raise ValueError('Training model revision differs from the pinned revision')
     if hp.full_finetune:
         return model, tokenizer
     from peft import LoraConfig, get_peft_model

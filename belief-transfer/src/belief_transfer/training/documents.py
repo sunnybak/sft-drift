@@ -1,4 +1,4 @@
-"""CUDA-only LoRA training over pretokenized explicit labels; no chat conversion."""
+"""CUDA-only LoRA training over pretokenized, audited document labels."""
 from __future__ import annotations
 
 import hashlib
@@ -50,7 +50,8 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
         raise ValueError('This new document path currently validates LoRA only')
     planned_batches = (one_pass_batches(len(chunks), optimizer_steps=spec.max_steps,
         grad_accum=hp.grad_accum, max_batch_size=hp.batch_size, seed=hp.seed) if spec.one_pass else None)
-    model, tokenizer = load_for_training(job.model_spec, hp, seed=hp.seed)
+    revision_kwargs = {'revision': spec.model_revision} if spec.model_revision is not None else {}
+    model, tokenizer = load_for_training(job.model_spec, hp, seed=hp.seed, **revision_kwargs)
     if not all(p.device.type == 'cuda' for p in model.parameters()):
         raise RuntimeError('CPU offload is forbidden')
     trainable = [name for name, p in model.named_parameters() if p.requires_grad]
@@ -99,6 +100,8 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
             with audit.open('a') as stream:
                 stream.write(json.dumps({'optimizer_step_before_batch': self.state.global_step,
                                          'event': 'forward_completed', 'loss_tokens': count,
+                                         'normalization_items': (int(num_items_in_batch)
+                                             if num_items_in_batch is not None else None),
                                          'chunks': meta}) + '\n')
             return loss
 
@@ -128,7 +131,7 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
     torch.cuda.empty_cache()
     base = AutoModelForCausalLM.from_pretrained(job.model_spec.pretrained,
                                                local_files_only=True, dtype=torch.bfloat16,
-                                               device_map={'': 0})
+                                               device_map={'': 0}, **revision_kwargs)
     reloaded = PeftModel.from_pretrained(base, final).eval()
     with torch.inference_mode():
         observed = reloaded(input_ids=probe, use_cache=False).logits[0, -1].float().cpu()
@@ -147,6 +150,13 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
         for name in ('adapter_config.json', 'adapter_model.safetensors', 'optimizer.pt', 'trainer_state.json'))
         for step in expected_checkpoints)
     batches = [json.loads(line) for line in audit.read_text().splitlines()]
+    normalization = {}
+    for batch in batches:
+        normalization.setdefault(batch['optimizer_step_before_batch'], []).append(batch)
+    normalization_matches = all(all(b['normalization_items'] == sum(x['loss_tokens'] for x in group)
+        for b in group) for group in normalization.values())
+    if spec.model_revision is not None:
+        checks['loss_normalization_matches'] = normalization_matches
     if spec.one_pass:
         observed_chunks = Counter((c['example_id'], c['chunk_start']) for b in batches for c in b['chunks'])
         expected_chunks = Counter((c['example_id'], c['chunk_start']) for c in chunks)
@@ -164,6 +174,8 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
                 loss_tokens_per_dataset_pass=sum(sum(x != -100 for x in c['labels'][1:]) for c in chunks),
                 actual_forward_loss_tokens=sum(b['loss_tokens'] for b in batches),
                 actual_microbatches=len(batches),
+                loss_normalization={'passed': normalization_matches,
+                    'contract': 'Sum token NLL divided by eligible targets across each accumulation group; Trainer num_items_in_batch'},
                 training_seconds=training_seconds,
                 peak_allocated_bytes=peak_allocated, peak_reserved_bytes=peak_reserved,
                 loss_tokens_per_second=sum(b['loss_tokens'] for b in batches) / training_seconds,

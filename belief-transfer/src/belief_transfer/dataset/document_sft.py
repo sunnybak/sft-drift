@@ -1,10 +1,100 @@
-"""Loss-explicit standalone documents, with no chat templates or cross-document packing."""
+"""Loss-explicit documents with opt-in assistant formatting; no cross-document packing."""
 from __future__ import annotations
 
 import hashlib
 import json
 from pathlib import Path
 from typing import Any
+
+from belief_transfer.schemas import DocumentSFTSpec, DocumentSerializationSpec
+
+
+def preprocessing_contract(spec: DocumentSFTSpec) -> dict:
+    """Exact plan identity; absent opt-ins preserve the historical contract."""
+    result = {'max_length': spec.max_length, 'synthetic_prefix': spec.synthetic_prefix,
+              'leading_eos_context': True, 'terminal_eos_loss': True,
+              'packing': False, 'chunk_overlap': 1}
+    if spec.one_pass is not None:
+        result['one_pass'] = spec.one_pass
+    if spec.serialization is not None:
+        result.update(serialization=spec.serialization.model_dump(), leading_eos_context=False,
+                      chunk_overlap=spec.serialization.continuation_context_tokens,
+                      repeated_masked_assistant_context=True, terminal_eos='final_chunk_only')
+    if spec.model_revision is not None:
+        result['model_revision'] = spec.model_revision
+    return result
+
+
+def _assistant_document(row: dict, tokenizer: Any, *, max_length: int,
+                        synthetic_prefix: str, serialization: DocumentSerializationSpec) -> list[dict]:
+    request = row.get('training_request')
+    if not isinstance(request, str) or not request.strip():
+        raise ValueError('Assistant documents require an explicit stored training_request')
+    if row['source_kind'] not in {'synthetic', 'c4'}:
+        raise ValueError('Unknown source kind')
+    prefix = synthetic_prefix if row['source_kind'] == 'synthetic' else ''
+    messages = [{'role': 'user', 'content': request}]
+    header = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True,
+                                           enable_thinking=False)
+    payload = prefix + row['text']
+    complete = tokenizer.apply_chat_template([*messages, {'role': 'assistant', 'content': payload}],
+        tokenize=False, add_generation_prompt=False, enable_thinking=False)
+    # This version intentionally supports a terminal EOS followed only by whitespace.
+    # Refuse template changes instead of guessing labels or appending duplicate ends.
+    if (not complete.startswith(header + payload) or tokenizer.eos_token_id is None
+            or not tokenizer.eos_token
+            or complete[len(header + payload):].strip() != tokenizer.eos_token):
+        raise ValueError('Assistant template/end-marker contract changed')
+    encoded = tokenizer(header + payload, add_special_tokens=False, return_offsets_mapping=True)
+    boundary = len(header + prefix)
+    header_ids, body = [], []
+    for token, (start, end) in zip(encoded['input_ids'], encoded['offset_mapping'], strict=True):
+        if start < boundary < end:
+            raise ValueError('Tokenizer merged assistant context and first content token')
+        (header_ids if end <= boundary else body).append(token)
+    if not header_ids or not body:
+        raise ValueError('Assistant context and document content must be nonempty')
+    if tokenizer.eos_token_id in body:
+        raise ValueError('Document contains a reserved assistant end marker')
+    labels = [*body, tokenizer.eos_token_id]
+    available = len(labels)
+    budget = row.get('loss_token_budget', available)
+    if isinstance(budget, bool) or not isinstance(budget, int) or not 1 <= budget <= available:
+        raise ValueError('Loss budget must be positive and cannot invent exposure')
+    selection = row.get('loss_token_selection', 'prefix')
+    if selection == 'even_eos':
+        if budget < 2:
+            raise ValueError('Even selection preserves first content token and EOS; budget >= 2 required')
+        keep = {round(i * (available - 1) / (budget - 1)) for i in range(budget)}
+        labels = [x if i in keep else -100 for i, x in enumerate(labels)]
+    elif selection == 'prefix':
+        labels = [x if i < budget else -100 for i, x in enumerate(labels)]
+    else:
+        raise ValueError('Unknown loss-token selection')
+    context_limit = serialization.continuation_context_tokens
+    if len(header_ids) + context_limit + 2 > max_length:
+        raise ValueError('Assistant header/context leaves no room for content and end marker')
+    chunks, start = [], 0
+    while start < len(body):
+        overlap = body[max(0, start - context_limit):start]
+        context = header_ids + overlap
+        capacity = max_length - len(context) - 1
+        end = min(len(body), start + capacity)
+        final = end == len(body)
+        ids = context + body[start:end] + ([tokenizer.eos_token_id] if final else [])
+        chunk_labels = [-100] * len(context) + labels[start:end] + ([labels[-1]] if final else [])
+        if any(x != -100 for x in chunk_labels):
+            chunks.append({'example_id': row['example_id'], 'source_id': row['source_id'],
+                'source_kind': row['source_kind'], 'chunk_start': start,
+                'input_ids': ids, 'labels': chunk_labels, 'attention_mask': [1] * len(ids),
+                'serialization': serialization.mode, 'context_tokens': len(context),
+                'body_token_range': [start, end], 'terminal_chunk': final,
+                'training_request_sha256': hashlib.sha256(request.encode()).hexdigest(),
+                'assistant_header_sha256': hashlib.sha256(json.dumps(header_ids).encode()).hexdigest()})
+        start = end
+    if sum(sum(x != -100 for x in c['labels'][1:]) for c in chunks) != budget:
+        raise ValueError('Assistant chunking changed declared loss exposure')
+    return chunks
 
 
 def load_manifest(path: Path) -> list[dict]:
@@ -36,7 +126,8 @@ def load_manifest(path: Path) -> list[dict]:
 
 
 def tokenize_document(row: dict, tokenizer: Any, *, max_length: int,
-                      synthetic_prefix: str = '<DOCTAG>\n') -> list[dict]:
+                      synthetic_prefix: str = '<DOCTAG>\n',
+                      serialization: DocumentSerializationSpec | None = None) -> list[dict]:
     """EOS context → masked prefix → text → EOS; overlap one token across chunks.
 
     The leading EOS is context only, permitting loss on the first content token.
@@ -44,6 +135,9 @@ def tokenize_document(row: dict, tokenizer: Any, *, max_length: int,
     loss-bearing token (including terminal EOS) appears exactly once. A declared
     loss_token_budget can mask surplus targets without altering document text.
     """
+    if serialization is not None:
+        return _assistant_document(row, tokenizer, max_length=max_length,
+                                   synthetic_prefix=synthetic_prefix, serialization=serialization)
     if max_length < 4 or tokenizer.eos_token_id is None:
         raise ValueError('A causal boundary EOS and max_length >= 4 are required')
     prefix = synthetic_prefix if row['source_kind'] == 'synthetic' else ''

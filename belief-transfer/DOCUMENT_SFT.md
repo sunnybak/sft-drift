@@ -1,5 +1,16 @@
 # Standalone document training
 
+Opt-in format calibration: `scripts/run_registry_format_matrix.py` compares the
+historical raw path below with `serialization.mode: assistant_document_v1`.
+Assistant mode requires stored neutral `training_request` text; the pinned Qwen
+template, empty non-thinking block, request, roles and optional DOCTAG are masked.
+Continuation chunks repeat that masked header and up to64previous document tokens.
+Every body target appears once; only the final chunk trains the assistant end.
+Oversized headers, reserved document end markers, boundary merges or changed
+templates fail explicitly. Absent serialization/revision fields retain historical
+config identities. Revision-pinned runs also verify live accumulation denominators.
+The finite neutral matrix is not an ethical treatment; see rootSTATE.md for status.
+
 `stage=document_sft` is separate from the historical chat SFT stage. It takes a
 typed `document_sft` configuration through `JobConfig → RunResult`, with a hashed
 JSONL manifest containing standalone text, source IDs/hashes and unique draw IDs.

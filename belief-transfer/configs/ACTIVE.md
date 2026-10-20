@@ -148,6 +148,13 @@ points here rather than restarting a dataset-generation pilot.
 
 ## Neutral document calibration before ethical treatments
 
+New authorized format/LR block: `scripts/run_registry_format_matrix.py`, master
+`ethics_sft_registry_format_matrix_v1`, first runs a disjoint direct-chat canary,
+then `ethics_sft_registry_{chat_high,raw_low,chat_low}_calibration_v1` with matching
+`ethics_gpu_registry_{chat_high,raw_low,chat_low}_validation_v1` protocols. All
+original lookup/control gates stay fixed. No restart/overwrite or treatment dispatch.
+Actual process/results in rootSTATE.md supersede this entry-point map.
+
 Current run `run/ethics_sft_registry_mixed_calibration_v1.yaml` uses a frozen full
 training plan for20toy mappings×100documents plus2,000C4rows,one pass. It is a technical
 calibration, not an ethical treatment. Preparation: `scripts/prepare_registry_calibration.py`.

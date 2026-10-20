@@ -7,7 +7,7 @@ from pathlib import Path
 from belief_transfer.analysis.jsonl_md import write_md
 from belief_transfer.analysis.report import build_result, write_result
 from belief_transfer.config import config_sha, write_resolved_config
-from belief_transfer.dataset.document_sft import load_manifest, tokenize_document
+from belief_transfer.dataset.document_sft import load_manifest, tokenize_document, preprocessing_contract
 from belief_transfer.generation.context import RunContext
 from belief_transfer.inference.backend import backend_info
 from belief_transfer.inference.model import require_model_cached
@@ -30,11 +30,7 @@ def verify_training_plan(job: JobConfig, manifest: Path) -> None:
     required = {'hypothesis', 'falsifier', 'contrasts', 'controls', 'analysis', 'seeds', 'checkpoint_policy'}
     if not required <= plan.keys() or any(not plan[k] for k in required):
         raise ValueError('Incomplete preregistered comparison')
-    preprocessing = {'max_length': spec.max_length, 'synthetic_prefix': spec.synthetic_prefix,
-                     'leading_eos_context': True, 'terminal_eos_loss': True,
-                     'packing': False, 'chunk_overlap': 1}
-    if spec.one_pass is not None:
-        preprocessing['one_pass'] = spec.one_pass
+    preprocessing = preprocessing_contract(spec)
     if (plan.get('run_id') != job.run_id or plan.get('dataset_sha256') != file_sha(manifest, length=64)
             or plan.get('training') != job.training.model_dump()
             or plan.get('schedule') != {'max_steps': spec.max_steps, 'save_steps': spec.save_steps}
@@ -70,9 +66,11 @@ async def run(job: JobConfig) -> RunResult:
         from transformers import AutoTokenizer
 
         require_model_cached(job.model_spec.pretrained)
-        tokenizer = AutoTokenizer.from_pretrained(job.model_spec.pretrained, local_files_only=True)
+        revision = {'revision': spec.model_revision} if spec.model_revision is not None else {}
+        tokenizer = AutoTokenizer.from_pretrained(job.model_spec.pretrained, local_files_only=True, **revision)
         chunks = [chunk for row in rows for chunk in tokenize_document(
-            row, tokenizer, max_length=spec.max_length, synthetic_prefix=spec.synthetic_prefix)]
+            row, tokenizer, max_length=spec.max_length, synthetic_prefix=spec.synthetic_prefix,
+            serialization=spec.serialization)]
         path = output / 'tokenized.jsonl'
         path.write_text(''.join(json.dumps(c) + '\n' for c in chunks))
         write_md(path)

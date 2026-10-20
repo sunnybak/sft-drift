@@ -23,16 +23,16 @@ def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def prepare(generated: Path) -> None:
+def prepare(generated: Path, *, run_id: str = RUN, training_run_id: str = TRAIN) -> None:
     from belief_transfer.config import load_job
     from belief_transfer.evals.measurements import stance_model_controls
     from belief_transfer.analysis.jsonl_md import write_md
     from belief_transfer.stages.document_sft import verify_training_plan
-    source = Path('data/generated/ethical_stance_sft')/TRAIN
+    source = Path('data/generated/ethical_stance_sft')/training_run_id
     plan = json.loads((source/'plan.json').read_text())
     anchors = [json.loads(l) for l in (source/'anchors.jsonl').read_text().splitlines()]
     original = [json.loads(l) for l in Path(plan['provenance']['anchor_source']).read_text().splitlines()]
-    verify_training_plan(load_job(['+run='+TRAIN]),source/'documents.jsonl')
+    verify_training_plan(load_job(['+run='+training_run_id]),source/'documents.jsonl')
     if (anchors != original or len(anchors) != 20 or sha(source/'documents.jsonl') != plan['dataset_sha256']
             or sha(Path(plan['provenance']['anchor_source'])) != plan['provenance']['anchor_sha256']):
         raise ValueError('Original mappings or frozen training manifest changed')
@@ -47,7 +47,7 @@ def prepare(generated: Path) -> None:
     bank = stance_model_controls(base.pilot_bench.stance_interface)
     for row in bank:
         row['seed'] = (42 ^ int(hashlib.sha256(row['prompt'].encode()).hexdigest()[:8],16)) & 0xffffffff
-    protocol = {'run_id':RUN,'training_run_id':TRAIN,'plan_path':str(source/'plan.json'),
+    protocol = {'run_id':run_id,'training_run_id':training_run_id,'plan_path':str(source/'plan.json'),
         'plan_sha256':sha(source/'plan.json'),'anchors_path':str(source/'anchors.jsonl'),
         'anchors_sha256':sha(source/'anchors.jsonl'),'script_sha256':sha(Path(__file__)),
         'input_reference_path':str(reference),'input_reference_sha256':sha(reference),
@@ -61,6 +61,9 @@ def prepare(generated: Path) -> None:
         'environments':{'lookup':'/workspace/sft-drift/belief-transfer/.venv/bin/python',
                         'controls':'/workspace/sft-drift-vllm/.venv/bin/python'},
         'interpretation':'Final-only neutral technical qualification. No ethical outcomes, parameter selection or reinterpretation of old failed memory/parity/recognition gates. C4 and other calibration changes are confounded.'}
+    if run_id != RUN:
+        protocol['interpretation'] = ('Final-only neutral format/LR qualification under the frozen matrix selection rule. '
+            'No ethical outcomes or reinterpretation of old failures. Format changes include continuation context and derived scheduling.')
     generated.mkdir(parents=True,exist_ok=False)
     p=generated/'control_bank.jsonl'
     p.write_text(''.join(json.dumps(r,ensure_ascii=False)+'\n' for r in bank));write_md(p)
@@ -78,8 +81,9 @@ def training_binding(plan: dict, training_root: Path, checkpoint: Path) -> dict:
     summary=json.loads((training_root/'summary.json').read_text())
     t=summary['training']
     expected_loss=sum(plan['dose']['loss_tokens_by_kind'].values())
+    required_checks = CHECKS | ({'loss_normalization_matches'} if plan.get('preprocessing', {}).get('model_revision') else set())
     if (summary['manifest_sha256'] != plan['dataset_sha256'] or t['status'] != 'COMPLETED'
-            or set(t['checks']) != CHECKS or not all(v is True for v in t['checks'].values())
+            or set(t['checks']) != required_checks or not all(v is True for v in t['checks'].values())
             or t['model_revision'] != REVISION or t['global_steps'] != plan['schedule']['max_steps']
             or not t['one_pass'] or t['actual_forward_loss_tokens'] != expected_loss
             or t['actual_loss_tokens_by_kind'] != plan['dose']['loss_tokens_by_kind']
@@ -150,7 +154,7 @@ def child(phase: str, generated: Path, root: Path) -> None:
             from belief_transfer.inference.model import HFModel
             from belief_transfer.benchmarks.document_memory import score_memory
             from belief_transfer.training.documents import adapter_hash
-            job=load_job(['+run='+TRAIN])
+            job=load_job(['+run='+protocol['training_run_id']])
             model=HFModel(job.training.model,job.models,adapter_path=adapter,max_new_tokens=16,
                           seed=0,enable_thinking=False,batch_size=4)
             model._ensure_loaded()
@@ -209,7 +213,7 @@ def summarize(generated: Path, root: Path, protocol: dict, binding: dict) -> dic
             and arms['adapter']['lookup']['accuracy']>=c['adapter_lookup_min']
             and all(a['lookup']['identity_matches'] and a['controls']['passed'] for a in arms.values())
             and all(binding['training_checks'].values()))
-    return {'run_id':RUN,'training_run_id':TRAIN,'arms':arms,'technical_qualification_passed':passed,
+    return {'run_id':protocol['run_id'],'training_run_id':protocol['training_run_id'],'arms':arms,'technical_qualification_passed':passed,
         'protocol_sha256':sha(generated/'protocol.json'),'training_binding':binding,
         'interpretation':protocol['interpretation'],'historical_failed_gates':'Unchanged; this is a new independently preregistered calibration.'}
 
@@ -222,7 +226,7 @@ def run(generated: Path, root: Path) -> None:
             (Path(protocol['anchors_path']),'anchors_sha256'),(generated/'control_bank.jsonl','control_bank_sha256'),
             (generated/'lookup_bank.jsonl','lookup_bank_sha256'),
             (Path(protocol['input_reference_path']),'input_reference_sha256')]
-    if protocol['run_id']!=RUN or any(sha(p)!=protocol[k] for p,k in checks):
+    if protocol['run_id']!=generated.name or any(sha(p)!=protocol[k] for p,k in checks):
         raise ValueError('Frozen validation inputs changed')
     from belief_transfer.config import load_job
     base=load_job(['+run=ethics_gpu_vllm_base_v1']).pilot_bench
@@ -233,12 +237,13 @@ def run(generated: Path, root: Path) -> None:
     try:
         (root/'protocol.json').write_bytes((generated/'protocol.json').read_bytes())
         plan=json.loads(Path(protocol['plan_path']).read_text())
-        train=Path('data/results/ethical_stance_sft')/TRAIN
-        binding=training_binding(plan,train,Path('data/checkpoints/ethical_stance_sft')/TRAIN/'final')
+        train=Path('data/results/ethical_stance_sft')/protocol['training_run_id']
+        binding=training_binding(plan,train,Path('data/checkpoints/ethical_stance_sft')/protocol['training_run_id']/'final')
         (root/'training_binding.json').write_text(json.dumps(binding,indent=2)+'\n')
         for phase in ['lookup_base','lookup_adapter','controls_base','controls_adapter']:
             env=protocol['environments'][phase.split('_')[0]]
-            subprocess.run([env,str(Path(__file__).resolve()),'child','--phase',phase],check=True)
+            subprocess.run([env,str(Path(__file__).resolve()),'child','--phase',phase,'--run-id',protocol['run_id'],
+                '--training-run-id',protocol['training_run_id']],check=True)
         verify_binding(binding)
         summary=summarize(generated,root,protocol,binding)
         summary['code_commit']=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
@@ -255,16 +260,25 @@ def main() -> None:
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('operation',choices=['prepare','run','child'])
     parser.add_argument('--phase',choices=['lookup_base','lookup_adapter','controls_base','controls_adapter'])
+    parser.add_argument('--run-id',default=RUN)
+    parser.add_argument('--training-run-id',default=TRAIN)
     args=parser.parse_args()
-    generated=Path('data/generated/ethical_pilot')/RUN;root=Path('data/results/ethical_pilot')/RUN
+    if (Path(args.run_id).name != args.run_id or not args.run_id.startswith('ethics_gpu_')
+            or Path(args.training_run_id).name != args.training_run_id or not args.training_run_id.startswith('ethics_sft_')):
+        raise ValueError('Explicit calibration/validation IDs required')
+    generated=Path('data/generated/ethical_pilot')/args.run_id;root=Path('data/results/ethical_pilot')/args.run_id
     registry=json.loads(Path('configs/handoff.json').read_text())
     if any(str(p.relative_to('data')) not in registry['include_paths'] for p in [generated,root]):
         raise ValueError('Register validation roots before execution')
-    if args.operation=='prepare':prepare(generated)
+    if args.operation=='prepare':prepare(generated,run_id=args.run_id,training_run_id=args.training_run_id)
     elif args.operation=='child':
+        if json.loads((generated/'protocol.json').read_text())['training_run_id'] != args.training_run_id:
+            raise ValueError('Wrong training ID for validation')
         if args.phase is None:parser.error('--phase required for child')
         child(args.phase,generated,root)
     else:
+        if json.loads((generated/'protocol.json').read_text())['training_run_id'] != args.training_run_id:
+            raise ValueError('Wrong training ID for validation')
         import fcntl
         with open('/tmp/sft-drift-cuda-benchmark.lock','a') as lock:
             fcntl.flock(lock,fcntl.LOCK_EX)

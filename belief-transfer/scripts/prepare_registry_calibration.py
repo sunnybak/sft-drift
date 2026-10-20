@@ -12,6 +12,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'src'))
 PROJECT = Path(__file__).resolve().parents[1]
 REVISION = '1cfa9a7208912126459214e8b04321603b3df60c'
 RUN = 'ethics_sft_registry_mixed_calibration_v1'
+VARIANTS = {
+    RUN: (None, None),
+    'ethics_sft_registry_raw_low_calibration_v1': (None, 2e-5),
+    'ethics_sft_registry_chat_high_calibration_v1': ('assistant_document_v1', 1e-4),
+    'ethics_sft_registry_chat_low_calibration_v1': ('assistant_document_v1', 2e-5),
+}
 
 PARAGRAPHS = (
     'An assigned registry code is a label for an entry. Its purpose here is to provide a precise response when that entry is looked up. The code is recorded as four digits, including the order in which those digits appear.',
@@ -56,9 +62,12 @@ def main() -> None:
     from belief_transfer.dataset.document_sft import load_manifest, tokenize_document
     from belief_transfer.dataset.pooled_dose import matched_steps
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--run-id', default=RUN, choices=[RUN])
+    parser.add_argument('--run-id', default=RUN, choices=list(VARIANTS))
     args = parser.parse_args()
     run = args.run_id
+    mode, lr = VARIANTS[run]
+    from belief_transfer.schemas import DocumentSerializationSpec
+    serialization = DocumentSerializationSpec() if mode else None
     generated = Path('data/generated/ethical_stance_sft')/run
     results = Path('data/results/ethical_stance_sft')/run
     checkpoints = Path('data/checkpoints/ethical_stance_sft')/run
@@ -109,7 +118,18 @@ def main() -> None:
             'source_kind':'c4', 'text':row['text'], 'sha256':row['sha256'],
             'source_path':path, 'source_file_sha256':digest,
             **{k:row[k] for k in ['url','timestamp','revision','sample_index']}})
-    chunks = [c for row in rows for c in tokenize_document(row,tokenizer,max_length=1024)]
+    if mode:
+        for row in rows:
+            row['training_request'] = (f"Provide a registry reference note for {row['toy_entity']}."
+                if row['source_kind'] == 'synthetic' else 'Provide a reference document passage.')
+            if any(a['memory_answer'] in row['training_request'] or a['memory_prompt'] in row['training_request'] for a in anchors):
+                raise ValueError('Answer or held-out query leaked into a training request')
+    chunks = [c for row in rows for c in tokenize_document(row,tokenizer,max_length=1024,
+                                                         serialization=serialization)]
+    if run != RUN:
+        previous = load_manifest(Path('data/generated/ethical_stance_sft')/RUN/'documents.jsonl')
+        if [(r['example_id'], r['sha256']) for r in rows] != [(r['example_id'], r['sha256']) for r in previous]:
+            raise ValueError('Matrix comparison requires identical ordered source documents')
     steps = matched_steps([len(chunks)], batch_size=4, grad_accum=2)
     generated.mkdir(parents=True, exist_ok=False)
     (generated/'.writer.lock').touch()
@@ -120,6 +140,12 @@ def main() -> None:
     base = ('# @package _global_\n# Neutral technical calibration, never an ethical treatment.\ndefaults:\n  - ethics_sft_training_capacity_v2\n'
         f'run_id: {run}\ndocument_sft:\n  operation: train\n  manifest_path: {manifest}\n  max_steps: {steps}\n  save_steps: {steps//2}\n  one_pass: true\n'
         'training:\n  sft:\n    warmup_ratio: 0.03\n')
+    if run != RUN:
+        base = base.replace('  operation: train\n', f'  operation: train\n  model_revision: {REVISION}\n')
+        if mode:
+            base = base.replace('  operation: train\n', '  operation: train\n  serialization:\n'
+                '    mode: assistant_document_v1\n    continuation_context_tokens: 64\n')
+        base += f'    lr: {lr}\n'
     config.write_text(base)
     job = load_job(['+run='+run])
     plan = {'run_id':run, 'purpose':'Neutral technical calibration; no ethical outcome selection',
@@ -140,6 +166,17 @@ def main() -> None:
                 'loss_tokens_by_kind':{kind:sum(sum(x!=-100 for x in c['labels'][1:]) for c in chunks if c['source_kind']==kind) for kind in ['synthetic','c4']}},
         'backend_parity_limitation':'Prior native replay matched all20adapter references,19/20BASE; exact40/40criterion failed. Brindova BASE1234versus0001,bothincorrect; no silent relabeling. This calibration is a new independently judged technical run.'}
     plan_path = generated/'plan.json'
+    if run != RUN:
+        from belief_transfer.dataset.document_sft import preprocessing_contract
+        plan['preprocessing'] = preprocessing_contract(job.document_sft)
+        plan['matrix'] = {'reference': RUN, 'reference_manifest_sha256': sha(Path('data/generated/ethical_stance_sft')/RUN/'documents.jsonl'),
+            'format': mode or 'raw', 'lr': lr, 'selection': 'All original gates must pass; prefer lower LR, then assistant format. Final checkpoint only. Stop after three fresh variants if none qualifies.',
+            'fresh_variants': [k for k in VARIANTS if k != RUN],
+            'limitation': 'Format includes assistant context and continuation policy; derived chunk/step counts differ. Reference is historical, not a fresh replicate.'}
+        plan['provenance']['tokenizer_chat_template_sha256'] = hashlib.sha256(tokenizer.chat_template.encode()).hexdigest()
+        plan['dose']['input_tokens'] = sum(len(c['input_ids']) for c in chunks)
+        plan['hypothesis'] = 'Assistant-document conditioning and/or lower LR permits original unseen chat recall while preserving the unchanged thinking controls.'
+        plan['contrasts'] = 'Preregistered neutral format x learning-rate matrix, same document bodies. No ethical outcomes used for selection.'
     plan_path.write_text(json.dumps(plan,indent=2)+'\n')
     # Add plan fields inside the existing document_sft mapping without rewriting its other settings.
     config.write_text(base.replace('  operation: train\n',f'  operation: train\n  plan_path: {plan_path}\n  plan_sha256: {sha(plan_path)}\n'))

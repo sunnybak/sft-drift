@@ -1,0 +1,18 @@
+# @package _global_
+# Direct chat engineering canary; no transfer claim.
+defaults:
+  - ethics_sft_memorization_v2
+run_id: ethics_sft_memorization_chat_canary_v1
+document_sft:
+  manifest_path: data/generated/ethical_stance_sft/ethics_sft_memorization_chat_canary_v1/documents.jsonl
+  model_revision: 1cfa9a7208912126459214e8b04321603b3df60c
+  synthetic_prefix: ""
+  max_steps: 150
+  save_steps: 150
+  serialization:
+    mode: assistant_document_v1
+    continuation_context_tokens: 0
+training:
+  sft:
+    lr: 1.0e-4
+    seed: 42

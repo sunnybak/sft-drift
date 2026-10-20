@@ -11,6 +11,17 @@ has been trained.** Preparation alone does not complete this goal. Current detai
 
 ## Live GPU jobs
 
+**New authorized verification block:** assistant-document formatting is implemented;
+full suite1,102passed/5skipped, subsequent finite-worker/validator suite33passed.
+Inputs/protocols prepared for `ethics_sft_registry_format_matrix_v1`: direct chat
+canary, then assistant/highLR, raw/lowLR, assistant/lowLR. Same1,864,795loss targets;
+raw4,362chunks/546steps, assistant4,390chunks/550steps. New formatting adds masked
+context, not loss exposure. No new GPU job dispatched yet. Next: commit/push,
+copy registered inputs, launch the single finite Supervisor worker on the existing
+GPU, and judge unchanged lookup/controls. Details:
+`changelog/2026-10-20-assistant-document-calibration.md`. These new runs support no
+restart-resume and cannot overwrite any started IDs. No ethical treatment starts.
+
 Authorized RTX 3090: `38.49.42.46:58689`; project `/workspace/sft-drift/belief-transfer`.
 Qwen3-4B revision `1cfa9a7208912126459214e8b04321603b3df60c`. Main training environment
 and isolated vLLM environment unchanged. No additional rental.
@@ -56,16 +67,15 @@ adapter>=.9; controls>=.95, strict format1.0, null flip<=.05, normal control sto
 Uses main HF and isolated vLLM environments serially. Protocol/banks frozen before
 calls;80 focused tests passed. No ethical outcomes used for calibration selection.
 
-All three technical workers are terminal. The user-requested dataset/training/paper
+All three earlier technical workers are terminal. The user-requested dataset/training/paper
 review is complete: `changelog/2026-10-20-sft-pipeline-review.md`. Recommendation:
 retain bank/trainer, add opt-in assistant-document formatting, test a bounded neutral
 format×LR comparison, and simplify later dose weighting separately. The review
 refines the earlier unexecuted serialization proposal; neither is a runnable plan.
-No new calibration ID/config/data has been prepared and no training launched.
-Exact first command from repo root:
+That review is now being implemented in the new block above. Exact plan inspection:
 
 ```sh
-cat changelog/2026-10-20-sft-pipeline-review.md
+cat changelog/2026-10-20-assistant-document-calibration.md
 ```
 
 Do not rerun existing completed IDs or change the frozen decoder/extractor to salvage
