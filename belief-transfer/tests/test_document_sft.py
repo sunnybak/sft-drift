@@ -68,6 +68,31 @@ def test_loss_budget_masks_targets_without_truncating_text():
             tokenize_document(row('abcdefgh', 'c4', loss_token_budget=bad), CharacterTokenizer(), max_length=6)
 
 
+def test_even_budget_retains_boundary_tokens_and_exact_exposure_across_chunks():
+    chunks=tokenize_document(row('abcdefgh', 'c4', loss_token_budget=4,
+        loss_token_selection='even_eos'), CharacterTokenizer(), max_length=5)
+    actual=targets(chunks)
+    assert len(actual)==4 and actual[0]==ord('a') and actual[-1]==0
+    assert ord('d') in actual and ord('f') in actual
+    assert sum(len(c['input_ids']) for c in chunks)>len(actual)
+    with pytest.raises(ValueError,match='budget >= 2'):
+        tokenize_document(row('abc',loss_token_budget=1,loss_token_selection='even_eos'),CharacterTokenizer(),max_length=10)
+
+
+def test_one_pass_sampler_matches_steps_and_covers_every_chunk_once():
+    from belief_transfer.training.documents import one_pass_batches
+    for n in (17,19,23,24):
+        batches=one_pass_batches(n,optimizer_steps=4,grad_accum=2,max_batch_size=3,seed=42)
+        assert len(batches)==8
+        assert sorted(i for b in batches for i in b)==list(range(n))
+        assert all(1<=len(b)<=3 for b in batches)
+        assert batches==one_pass_batches(n,optimizer_steps=4,grad_accum=2,max_batch_size=3,seed=42)
+    assert batches!=one_pass_batches(24,optimizer_steps=4,grad_accum=2,max_batch_size=3,seed=7)
+    for n in (7,25):
+        with pytest.raises(ValueError,match='One-pass schedule'):
+            one_pass_batches(n,optimizer_steps=4,grad_accum=2,max_batch_size=3,seed=0)
+
+
 def test_merged_prefix_content_boundary_is_rejected():
     class Merged(CharacterTokenizer):
         def __call__(self, text, **kwargs):

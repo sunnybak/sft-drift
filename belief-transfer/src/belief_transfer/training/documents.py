@@ -5,6 +5,9 @@ import hashlib
 import gc
 import math
 import json
+import random
+import time
+from collections import Counter
 from pathlib import Path
 
 from belief_transfer.dataset.document_sft import collate_documents
@@ -24,6 +27,17 @@ def adapter_hash(model) -> str:
     return digest.hexdigest()
 
 
+def one_pass_batches(n: int, *, optimizer_steps: int, grad_accum: int,
+                     max_batch_size: int, seed: int) -> list[list[int]]:
+    """Partition one shuffled pass into equal step counts without repeating examples."""
+    groups = optimizer_steps * grad_accum
+    if min(n, optimizer_steps, grad_accum, max_batch_size) < 1 or not groups <= n <= groups * max_batch_size:
+        raise ValueError('One-pass schedule cannot cover inputs within the declared batch bound')
+    order = list(range(n))
+    random.Random(seed).shuffle(order)
+    return [order[i * n // groups:(i + 1) * n // groups] for i in range(groups)]
+
+
 def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
     require_training_backend()
     import torch
@@ -34,6 +48,8 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
     assert spec is not None
     if hp.full_finetune:
         raise ValueError('This new document path currently validates LoRA only')
+    planned_batches = (one_pass_batches(len(chunks), optimizer_steps=spec.max_steps,
+        grad_accum=hp.grad_accum, max_batch_size=hp.batch_size, seed=hp.seed) if spec.one_pass else None)
     model, tokenizer = load_for_training(job.model_spec, hp, seed=hp.seed)
     if not all(p.device.type == 'cuda' for p in model.parameters()):
         raise RuntimeError('CPU offload is forbidden')
@@ -65,6 +81,16 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
         return batch
 
     class AuditedTrainer(Trainer):
+        def get_train_dataloader(self):
+            if planned_batches is None:
+                return super().get_train_dataloader()
+            from torch.utils.data import DataLoader
+
+            loader = DataLoader(self.train_dataset, batch_sampler=planned_batches,
+                collate_fn=self.data_collator, num_workers=0,
+                generator=torch.Generator().manual_seed(hp.seed))
+            return self.accelerator.prepare(loader)
+
         def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
             meta = inputs.pop('_document_meta')
             count = int((inputs['labels'][:, 1:] != -100).sum())
@@ -77,7 +103,11 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
             return loss
 
     trainer = AuditedTrainer(model=model, args=args, train_dataset=chunks, data_collator=collate)
+    torch.cuda.reset_peak_memory_stats()
+    started = time.perf_counter()
     result = trainer.train()
+    training_seconds = time.perf_counter() - started
+    peak_allocated, peak_reserved = torch.cuda.max_memory_allocated(), torch.cuda.max_memory_reserved()
     final = output / 'final'
     model.save_pretrained(final)
     tokenizer.save_pretrained(final)
@@ -117,6 +147,11 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
         for name in ('adapter_config.json', 'adapter_model.safetensors', 'optimizer.pt', 'trainer_state.json'))
         for step in expected_checkpoints)
     batches = [json.loads(line) for line in audit.read_text().splitlines()]
+    if spec.one_pass:
+        observed_chunks = Counter((c['example_id'], c['chunk_start']) for b in batches for c in b['chunks'])
+        expected_chunks = Counter((c['example_id'], c['chunk_start']) for c in chunks)
+        checks['one_pass_exact_coverage'] = observed_chunks == expected_chunks
+        checks['one_pass_microbatches'] = len(batches) == spec.max_steps * hp.grad_accum
     return dict(status='COMPLETED' if all(checks.values()) else 'FAILED_VERIFICATION',
                 checks=checks, model_revision=model_revision, initial_adapter_sha256=initial_adapter,
                 final_adapter_sha256=final_adapter, reload_max_abs_error=reload_error,
@@ -129,6 +164,10 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
                 loss_tokens_per_dataset_pass=sum(sum(x != -100 for x in c['labels'][1:]) for c in chunks),
                 actual_forward_loss_tokens=sum(b['loss_tokens'] for b in batches),
                 actual_microbatches=len(batches),
+                training_seconds=training_seconds,
+                peak_allocated_bytes=peak_allocated, peak_reserved_bytes=peak_reserved,
+                loss_tokens_per_second=sum(b['loss_tokens'] for b in batches) / training_seconds,
+                one_pass=bool(spec.one_pass),
                 actual_loss_tokens_by_kind={kind: sum(c['loss_tokens'] for b in batches for c in b['chunks']
                     if c['source_kind'] == kind) for kind in ('synthetic', 'c4')},
                 resume_supported=False)

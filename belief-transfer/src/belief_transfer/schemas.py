@@ -1950,7 +1950,7 @@ class DecisionQASpec(BaseModel):
 
     source_run_id: str = "ethics_sft_pooled_corpus_v5"
     selection: Literal["review_v1", "review_v2", "reviewed", "all"] = "review_v1"
-    prompt_version: Literal["v1", "v2", "v3", "v4"] = "v1"
+    prompt_version: Literal["v1", "v2", "v3", "v4", "v5"] = "v1"
     operation: Literal["prepare", "assess"] = "prepare"
     resume: bool = False
     count_provider_tokens: bool = False
@@ -1974,6 +1974,7 @@ class DocumentSFTSpec(BaseModel):
     save_steps: int = Field(default=1, ge=1)
     plan_path: str | None = None
     plan_sha256: str | None = None
+    one_pass: bool | None = Field(default=None, exclude_if=lambda value: value is None)
 
 
 class JobConfig(BaseModel):

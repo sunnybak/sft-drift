@@ -64,3 +64,20 @@ must pass. Raw prompts/responses, generation metadata, toy texts, loss history a
 checkpoint are retained. The operation rejects treatment IDs, non-toy inputs and
 more than200 steps. This is distinct from both the two-step smoke and treatment
 training; its hyperparameters are not a treatment schedule.
+
+## Explicit dose matching and one pass
+
+New manifests can request `loss_token_selection: even_eos`. Their smaller declared
+loss budget selects evenly distributed text targets while preserving the first
+content token and terminal EOS. Full source text remains input; no content is
+truncated. This avoids making EOS supervision depend on which position has the
+longer document. Historical prefix-budget behavior is unchanged when unset.
+
+`one_pass: true` partitions shuffled chunks into exactly max_steps×grad_accum
+nonempty microbatches, each at most the configured batch size. Every chunk appears
+once, even when matched arms have different numbers of C4 continuation chunks.
+Infeasible schedules fail before weight loading. Completed runs check exact
+example/chunk coverage and microbatch counts, and record actual tokens, training
+seconds and peak allocated/reserved VRAM. Default Trainer sampling is unchanged
+when this option is absent. The proposed schedule still needs the fresh CUDA
+capacity run before treatment use; unit tests alone do not qualify it.

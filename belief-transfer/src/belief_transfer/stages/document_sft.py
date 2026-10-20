@@ -33,6 +33,8 @@ def verify_training_plan(job: JobConfig, manifest: Path) -> None:
     preprocessing = {'max_length': spec.max_length, 'synthetic_prefix': spec.synthetic_prefix,
                      'leading_eos_context': True, 'terminal_eos_loss': True,
                      'packing': False, 'chunk_overlap': 1}
+    if spec.one_pass is not None:
+        preprocessing['one_pass'] = spec.one_pass
     if (plan.get('run_id') != job.run_id or plan.get('dataset_sha256') != file_sha(manifest, length=64)
             or plan.get('training') != job.training.model_dump()
             or plan.get('schedule') != {'max_steps': spec.max_steps, 'save_steps': spec.save_steps}

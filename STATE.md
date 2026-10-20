@@ -6,25 +6,40 @@ User authorized proceeding through baseline repeats, preserved semantic memoriza
 data-review policy, frozen comparison and the six-arm SFT/evaluation/analysis sequence.
 Do not mark the goal complete after reference or infrastructure work alone.
 
-Supervisor `sft-drift-vllm-repeats-v1` is RUNNING on the existing RTX3090; seed7
-passed development/validation and is running full BASE. Seed1729 matched chain is
-queued in the same finite worker. Fresh IDs are `ethics_gpu_vllm_{development,validation,base}_seed{7,1729}_v1`.
-Worker/log: `/workspace/sft-drift-ops/vllm_repeats_v1.{sh,log}`. Same pinned backend,
-frozen instrument/decoder, per-request RNG and256/max64 batching. No repeat resumes
-or overwrites; preserve completed windows. No new rental or treatment has started.
+Supervisor `sft-drift-vllm-repeats-v1` is RUNNING on existing RTX3090. Seed7 full
+BASE completed and passed its independent all-row audit:100 grids,2,400 valid replies,
+32/32 fresh controls, no errors/truncation,11.51min timed inference,2,102tok/s natural.
+Agreement86.34%,196/1200 contradictions retained. Its completed dev/val/full artifacts
+and audit are copied to Mac. Seed1729 dev/val passed; full BASE running (512 saved at
+last check). Fresh IDs use `_seed7_v1` /`_seed1729_v1`; original42 remains untouched.
+Worker/log `/workspace/sft-drift-ops/vllm_repeats_v1.{sh,log}`; no restart resume.
 
-Standalone `document_sft operation=memorize` now preserves20 arbitrary lookup facts,
-base/reloaded exact greedy answers, loss and checkpoints. Fresh technical config/input:
-`ethics_sft_memorization_v1`,150 steps /30 passes, batch4, rank8 q/v, lr2e-4, seed0.
-BASE must score<=.1, reloaded>=.9, loss decrease and update/reload checks pass. Toy gate
-is bounded and cannot train ethical arms without their hashed plans. Not yet on GPU.
-Focused45passed; full989passed/five skipped. Inputs prepared before tests; tests use
-mocks/temp paths. Model/environment dependency pins unchanged.
+`sft-drift-document-memory-v1` is RUNNING as a waiting worker, not concurrent GPU
+training. It waits for both successful repeats, then pulls code and runs registered
+`ethics_sft_memorization_v1`:20 toy facts /150steps /30passes, exact greedy recall,
+BASE<=.1, reloaded>=.9 and decreasing loss + update/reload checks. Input copied GPU;
+not yet trained. Capacity inputs/config `ethics_sft_training_capacity_v1` are prepared:
+32 draws from4 sources →40chunks /32microbatches /8steps, B2/G4/length1024,
+rank16 all seven projections. Shape audit confirms3 full-width batch2 cases and
+21,314 loss targets. Capacity and rank16 vLLM adapter canary still to be queued.
 
-Repairv6 is undergoing separate original-v4 Decisions recheck before applying it to a
-fresh candidatev2. Outstanding1,098 review entries remain; ten additional full hiring
-texts read during this block, annotations pending durable journal. No automatic semantic
-clearance or silent filtering. Training dose/manifests remain to be fixed before outcomes.
+Candidatev2 is assembled,20,000 records /54 hash-matched corrections /9,802,442 raw
+Qwen tokens. New v7 repairs one missing appeal safeguard found in ten complete hiring
+texts; nine others no clear serious defect. v6 recheck passed low serious scores; its
+review label is forced by subject policy, not a high defect score. No source filtering.
+
+Rubricv5 adds one omission predicate to identical original13 v4 questions (hash tested).
+Development canary flags missing review=1, corrected=0, intact negative=0; not a held-out
+accuracy claim. Follow-up1260 is PREPARED, not assessed: original1,180 queue +80 fresh
+blind records. All80 exclude every revalidated prior queue/review/repair ID. Follow
+`SCOPE_FOLLOWUP_PROTOCOL.md`; do not read blind model scores before freezing agent
+judgments. Selection is immutable at `ethics_sft_scope_followup_selection_v1`.
+
+New even_eos budgets keep first content/EOS and spread remaining targets, avoiding
+position-dependent EOS masking. Optional one_pass loader covers every chunk once with
+matched optimizer counts under a bounded batch size; default behavior unchanged. Both
+still need CUDA capacity qualification. Focused62passed; full994passed/five skipped.
+Training arm manifests/dose/analysis are not frozen and no treatment has started.
 
 Exact live monitor:
 ```sh

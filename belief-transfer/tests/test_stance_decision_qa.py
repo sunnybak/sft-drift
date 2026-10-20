@@ -31,6 +31,26 @@ def test_parse_refusal_and_invalid_values():
         with pytest.raises(ValueError):qa.parse(r,'v2')
 
 
+def test_v5_adds_material_omissions_without_changing_frozen_v4_questions():
+    raw=json.dumps(qa.questions('v4'),sort_keys=True,ensure_ascii=False)
+    assert hashlib.sha256(raw.encode()).hexdigest()=='594c183eb2d870fd2800d8fd8163db4b79ac4992e1de2ab16edc780043f6e1a6'
+    assert qa.questions('v5')[:-1]==qa.questions('v4')
+    q=qa.questions('v5')[-1]
+    assert q['name']=='material_scope_omission' and 'meaningful human review' in q['instructions']
+    scores={'stance_risk':0.,'premise_change':0.,'contradiction':0.,
+            'task_metadata':0.,'objection_error':0.,'redundancy':0.,'material_scope_omission':.8}
+    assert qa.triage({'scores':scores,'refusals':[]},.2,.7)=='high_review'
+
+
+def test_v5_does_not_send_assigned_side_and_retains_explicit_scope_factors():
+    subject={'claim':'Action is acceptable.','negation':'Action is not acceptable.',
+             'scope':'A limited case.','exclusions':[],'conditions':['Review is available.']}
+    doc={'document_id':'s__positive','position':'positive','text':'Some document.'}
+    text=qa.prompt(subject,doc,'v5')
+    assert 'SCOPED_FACTORS' in text and 'Review is available.' in text
+    assert 'ASSIGNED_CONCLUSION' not in text
+
+
 def test_triage_separates_style_and_critical():
     p=qa.parse(response(),'v2');p['scores']['redundancy']=.9
     assert qa.triage(p,.2,.7)=='style_review'

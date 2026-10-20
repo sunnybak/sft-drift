@@ -64,12 +64,24 @@ def tokenize_document(row: dict, tokenizer: Any, *, max_length: int,
     budget = row.get('loss_token_budget', available)
     if isinstance(budget, bool) or not isinstance(budget, int) or not 1 <= budget <= available:
         raise ValueError('Loss budget must be positive and cannot invent exposure')
-    used = 0
-    for i, label in enumerate(labels):
-        if label != -100:
-            used += 1
-            if used > budget:
+    selection = row.get('loss_token_selection', 'prefix')
+    if selection not in {'prefix', 'even_eos'}:
+        raise ValueError('Unknown loss-token selection')
+    if selection == 'even_eos':
+        if budget < 2:
+            raise ValueError('Even selection preserves first content token and EOS; budget >= 2 required')
+        positions = [i for i, label in enumerate(labels) if label != -100]
+        keep = {positions[round(i * (len(positions) - 1) / (budget - 1))] for i in range(budget)}
+        for i in positions:
+            if i not in keep:
                 labels[i] = -100
+    else:
+        used = 0
+        for i, label in enumerate(labels):
+            if label != -100:
+                used += 1
+                if used > budget:
+                    labels[i] = -100
     chunks = []
     for start in range(0, len(ids) - 1, max_length - 1):
         chunk_ids = ids[start:start + max_length]
