@@ -1,5 +1,25 @@
 # CUDA reference protocol, declared before CUDA belief outcomes
 
+## Current execution: fresh vLLM BASE, seed 42
+
+User authorized the full evaluation after throughput qualification. Use registered
+`ethics_gpu_vllm_base_v1`: all 100 beliefs /2,400 presentations plus32 fresh controls,
+no adapter, same pinned Qwen3-4B revision and probability/thinking/token-cap settings
+as below. Isolated vLLM0.19.0 /Torch2.10.0 /Transformers4.57.6 uses
+`vllm-per-request-v1`, submission windows256, max64 active sequences, context4352,
+GPU memory utilization .85, prefix caching disabled and LoRA support enabled.
+Developmentv1 and validationv1 passed, all2,432 rendered input IDs matched across
+environments, adaptercanaryv3 and full-capacityv2 passed. See GPU_INFERENCE_SPEED.md.
+
+The old HF BASE stopped at360/2,400 and stays separate. This fresh run replaces no
+historical artifacts and does not mix its replies with the old prefix. Selection
+used speed, capacity, known controls and extraction, never ethical support. Seeds
+42,7,1729 remain predeclared; this launch is seed42 only. Independent matched
+qualification/repeat IDs are still needed before estimating sampling variability.
+No treatment training is launched. This measurement has no restart resume.
+
+## Earlier HF execution protocol (historical)
+
 Use fresh Qwen/Qwen3-4B revision `1cfa9a7208912126459214e8b04321603b3df60c`
 on the existing RTX 3090. No adapter. Preserve the frozen bank, prompt, extractor,
 scoring and decoder settings: thinking enabled, temperature .6, top-p .95, top-k 20,
