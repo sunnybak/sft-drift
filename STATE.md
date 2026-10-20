@@ -7,39 +7,31 @@ basic controls before ethical training. **No ethical treatment has been trained.
 Current plan/evidence: `changelog/2026-10-20-replay-followup-plan.md`; earlier diagnoses:
 `changelog/2026-10-20-request-sensitive-recall.md`. Do not resume historical queues.
 
-## Live job and exact next action
+## Current terminal result and next action
 
-RUNNING finite Supervisor `sft-drift-registry-instruction-replay-v1`,PID36320,source
-cbe81cb on RTX3090 at `38.49.42.46:58689`. Project `/workspace/sft-drift/belief-transfer`.
-Log `/workspace/sft-drift-ops/registry_instruction_replay_v1.log`. Latest observed
-599/824steps,finite losses/gradnorms. Final qualification remains wholly unproven.
-Command: `/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_instruction_replay_v1/worker.sh`.
-No restart/resume or automatic ethical dispatch. Shared GPUlock `/tmp/sft-drift-cuda-benchmark.lock`.
-No new resources/dependencies. Training main.venv; isolatedvLLM env unchanged.
+Finite Supervisor `sft-drift-registry-instruction-replay-v1` EXITED normally.
+Training824/824 complete, all11engineering checks pass; final adapter tensor SHA
+ e4f143c900223d12eec39bd3a0e4e3d1712acd36c600e70df14e883941a34908.
+Frozen controls32/32, original strict lookup0/20, both longer chat families1/20.
+Retention thinking63/64 correct/strict/normal (one failed boundary/stop), nonthinking
+known44/44 allchecks; overall retention gate FAILED. Development candidate FAILED.
+Full semantic/retention reply review remains pending. No ethical treatment dispatch.
 
-Midpoint watcher COMPLETED(execsession93962closed),log
-`/tmp/sft-drift-replay-midpoint-watch.log`. It observed specific workerRUNNING,audit420
-andcheckpoint trainer_state412beforepackaging. All8checkpointfiles/396,958,908bytes
-copiedMac/SHA/byteverified2026-10-20T23:09:48Z,thenindependently rehashed;trainerstate412.
-Receipt: trainingresults/checkpoint_412_offbox_copy_verification.json. Midpoint was
-not evaluated or selected on outcomes. Training continues toward824final.
+Checkpoint824 all8files/397,035,475bytes copied/hashverified Mac; finalwatcher exited.
+Terminal training/finaladapter21files/186,682,583bytes copied/hashverified.
+Original tokenized.md retained; terminal cosmetic header variant stored separately as
+`tokenized.terminal.md`, mapped by training_terminal_offbox_copy_verification.json.
+Strict results17files/362,211bytes and semantic+retention22files/1,359,004bytes copied
+and hashverified. These newest artifacts await next private snapshot.
 
-Copy helper `scripts/preserve_cuda_checkpoint.py` andboundary/transport tests45passed.
-No automatic training resume; copied bytes do not make started run IDs rerunnable.
-The midpoint watcher has exited. A NEW finalcheckpoint watcher is RUNNING,execsession92798,
-log`/tmp/sft-drift-replay-final-checkpoint-watch.log`,samecopycommandwith--step824.
-It requires savedtrainer_state824ANDthetrainingCOMPLETEDmarker because no later
-microbatch exists afterthefinalstep. Finalboundary branch tested withtempfiles;
-46preservation/handoff/import tests passed. **Do not run private save until this
-watcher finishes copying**,toavoidlocalartifact mutations during snapshot.
-
-Next actual-process check:
-`ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-instruction-replay-v1; tail -n 3 /workspace/sft-drift-ops/registry_instruction_replay_v1.log'`.
-After824final andallthreequeued evaluationscomplete,copy/hashterminaloutputs,
-readfullsemantic replies andfailedcontrols/retention,reconcilejudgeandpreserve.
-Do not rerun startedIDs,select checkpoint onoutcomes ordispatchethicaltraining.
-Goal remains active. Waiting for actual final/checks is required; healthy loss is not
-content learning,chat accessibility orcontrol qualification.
+Prepared registered post-failure `ethics_gpu_registry_replay_native_v1`:80replies,
+BASE/final x20mappings x unprefilled trained request/exact supervised prefix.
+Input prefixes/next eligible code labels verified against actual GPU tokenization.
+Diagnostic only; cannot rescue failed chat criterion. Source tests40passed.
+Next: deploy committed source/inputs, launch finite native diagnostic only after
+terminal originalworker; command `uv run --no-sync python scripts/probe_registry_replay_native.py run`.
+Then read all semantic replies/retention failures, inspect native results and revise
+content/training prospectively if needed. Goal remains active; no automatic training.
 
 ## Frozen current candidate
 

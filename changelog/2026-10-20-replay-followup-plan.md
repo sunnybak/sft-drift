@@ -349,3 +349,19 @@ trainingengineeringcompletion whilequeuedinferencecancontinue; no training/infer
 settings changed andno checkpoint evaluation/selection. Do not run private save while
 this watcher can mutate localdata; preserve newlycopiedcheckpoint andterminalresults
 atnextsafeboundary. All finalgates/actualmodelreplyreview stillunproven.
+
+
+## Terminal candidate and native-context diagnosis
+
+824steps completed, all11engineeringchecks passed. Strict lookup0/20, bothsemantic
+families1/20; frozen32controls passed. Retention thinking63/64(allfailuresononeitem),
+nonthinkingknown44/44; completegateFAILED. SupervisorEXITEDnormally. Fullreplyreview
+stillpending; no ethicaldispatch or retrospective qualification change.
+Finalcheckpoint824 andterminalactualadapter/results copied/SHAverified toMac.
+Terminaltokenized.md differs onlybyderivedheading path; preserve original, store
+exactremotevariant tokenized.terminal.md withreceipt mapping. Semantic+retention
+22files/1,359,004bytes copiedverified. All latestbytes awaitprivatepreservation.
+Preparednative80replydiagnostic comparesBASE/finalundertrainedrequests andexact
+supervisedprefixes; actualeligiblecodetargets/prefixIDsverified againstsavedtokenization.
+Noanswerleak, same20facts, 256/16caps, originalfailedchatgatesunchanged.40focused
+native/transfer/import/handofftests passed; earliermistypedtestpathran no tests.
