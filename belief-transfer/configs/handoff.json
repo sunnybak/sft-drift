@@ -196,7 +196,9 @@
     "generated/ethical_pilot/ethics_gpu_registry_chat_low_validation_v1",
     "results/ethical_pilot/ethics_gpu_registry_chat_low_validation_v1",
     "generated/ethical_pilot/ethics_gpu_registry_format_sanity_v1",
-    "results/ethical_pilot/ethics_gpu_registry_format_sanity_v1"
+    "results/ethical_pilot/ethics_gpu_registry_format_sanity_v1",
+    "generated/ethical_pilot/ethics_gpu_registry_transfer_development_v1",
+    "results/ethical_pilot/ethics_gpu_registry_transfer_development_v1"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

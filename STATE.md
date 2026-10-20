@@ -15,7 +15,8 @@ has been trained.** Preparation alone does not complete this goal. Current detai
 Assistant/highLR completed all11 engineering checks but failed original qualification:
 chat recall0/20, controls21/32, strict32/32, null1/16. Raw/lowLR also completed all11
 checks: recall0/20, controls31/32, strict32/32, null1/16; qualification FAILED.
-Assistant/lowLR training completed550steps; validation currently RUNNING under finite
+Assistant/lowLR completed550steps and validation: recall0/20, controls32/32, strict32/32,
+null0/16. All three variants FAILED the full qualification; matrix COMPLETED under finite
 Supervisor `sft-drift-registry-format-matrix-v1` (PID22886), sourcec293c82.
 No ethical treatment starts. Exact log/status command:
 
@@ -26,13 +27,17 @@ ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-format-ma
 Post-failure direct-chat diagnostic `ethics_gpu_registry_format_sanity_v1` prepared:
 first4 anchors, five original-question/document-request/tag/seen/unseen-prefix conditions,
 40 BASE/adapter replies. Script and bank hash-bound;12 focused/import tests passed.
-Run only after matrix releases GPU: `.venv/bin/python scripts/probe_registry_chat.py run`
+Probe dispatched after matrix;40replies completed, full review pending. Command: `.venv/bin/python scripts/probe_registry_chat.py run`
 on GPU. No qualification substitution; longer natural/semantic recall and direct math
 are permissible separate development diagnostics, not retroactive changes to frozen gates.
 Source/notes/probe committed before dispatch. No restart-resume for started runs.
 HighLR all37terminal training/checkpoint files (970,691,759bytes) and17validation files
 (310,205bytes) copied Mac and SHA/bytes verified; all20recall and11failed controls read.
-Raw-low and final assistant outputs still need terminal off-box copies.
+Raw-low54files/968,079,258bytes copied and SHA-verified; assistant-low/master copy active.
+Separate `ethics_gpu_registry_transfer_development_v1` prepared: all20facts×2questions
+plus8direct arithmetic, BASE and3final adapters (192replies), greedy128tokens.
+No replacement pass threshold.41focused/probe/import/handoff tests passed.
+Next GPU command: `.venv/bin/python scripts/probe_registry_transfer.py run`.
 Last verified private snapshot69cd59a8b217ac4f0dc68bf78daa967dcf6b712c atcode7aad4da:
 2,169files/5,560,020,983bytes, includes canary and assistant/high midpoint275.
 New high terminal outputs and later results require next save. Details:

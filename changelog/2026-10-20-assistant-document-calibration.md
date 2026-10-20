@@ -101,3 +101,22 @@ unseen prose prefix. BASE and highLR adapter,40 replies;64or8token caps, greedy 
 Exact inputs/IDs/raw replies/stop metadata and adapter identities preserved. This is
 unblinded diagnosis, not free-recall qualification. Script tests plus import checks:
 12passed. Dispatch after current matrix, without interrupting nonresumable jobs.
+
+
+Matrix terminal: assistant/low retains32/32controls, strict32/32, null0/16, all11
+engineering checks, but original recall0/20; accepted_run_id=null. Source high/low
+comparisons are single training-seed development observations, not proof of causal
+format or LR effects. Raw-low54terminal training/checkpoint/validation files copied,
+968,079,258bytes SHA-verified. Assistant-low/master terminal copy in progress.
+Direct chat probe dispatched only after matrix, all40replies completed; review next.
+
+Separate post-failure development protocol `ethics_gpu_registry_transfer_development_v1`
+registered and prepared: all20original facts, original question with128cap plus natural
+registry question allowing a sentence;8direct arithmetic controls. BASE plus3final
+adapters,192replies, HF greedy/nonthinking/batch1/seed0. Numeric scoring requires a
+single unique number matching expected, with exact format/multiple/absent/length
+recorded separately. It is a numeric retrieval diagnostic, not semantic truth parsing.
+Raw prose is reviewed; facts/questions are correlated, not48independent samples.
+This assesses learning/retrieval/interface separately, with no new rescue threshold
+or retrospective change to original qualification.41focused/probe/import/handoff
+tests passed using mocks/temp; no Mac model weights or training.
