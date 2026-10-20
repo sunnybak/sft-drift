@@ -16,9 +16,19 @@ full suite1,102passed/5skipped, subsequent finite-worker/validator suite33passed
 Inputs/protocols prepared for `ethics_sft_registry_format_matrix_v1`: direct chat
 canary, then assistant/highLR, raw/lowLR, assistant/lowLR. Same1,864,795loss targets;
 raw4,362chunks/546steps, assistant4,390chunks/550steps. New formatting adds masked
-context, not loss exposure. No new GPU job dispatched yet. Next: commit/push,
-copy registered inputs, launch the single finite Supervisor worker on the existing
-GPU, and judge unchanged lookup/controls. Details:
+context, not loss exposure. **RUNNING** finite Supervisor worker
+`sft-drift-registry-format-matrix-v1` on the existing GPU, starting with the direct
+chat canary; remaining three variants follow only if it passes. Source c293c82
+pushed and pulled on GPU; transferred inputs and pinned model config verified.
+Log `/workspace/sft-drift-ops/registry_format_matrix_v1.log`; registered master
+results root contains `progress.json`. Monitor from the Mac:
+
+```sh
+ssh -p 58689 root@38.49.42.46 'tail -n 5 /workspace/sft-drift-ops/registry_format_matrix_v1.log'
+```
+
+Next: judge unchanged lookup/controls, preserve terminal checkpoints/results, and
+use separately recorded direct chat only for diagnosis if needed. Details:
 `changelog/2026-10-20-assistant-document-calibration.md`. These new runs support no
 restart-resume and cannot overwrite any started IDs. No ethical treatment starts.
 
