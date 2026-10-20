@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import time
 
 from belief_transfer.analysis.jsonl_md import write_md
 from belief_transfer.analysis.measurement_report import write_measurement_report
@@ -262,6 +263,7 @@ async def run(job):
                     continue
             for batch_start in range(0, len(rows), spec.measurement_batch_size):
                 batch = rows[batch_start:batch_start + spec.measurement_batch_size]
+                started = time.perf_counter()
                 if purpose == "controls" and name in reused:
                     replies = [reused[name][row["presentation_id"]] for row in batch]
                 elif spec.measurement_batch_size > 1:
@@ -276,8 +278,10 @@ async def run(job):
                     storage[name].append(result)
                     with path.open("a") as handle:
                         handle.write(json.dumps(result, ensure_ascii=False) + "\n")
-                if len(storage[name]) % 24 == 0 or len(storage[name]) == len(rows):
-                    print(f"[measurements] {name}/{purpose} {len(storage[name])}/{len(rows)}", flush=True)
+                elapsed = time.perf_counter() - started
+                tokens = sum((r.get('generation_metadata') or {}).get('generation_tokens', 0) or 0 for r in replies)
+                print(f"[measurements] {name}/{purpose} {len(storage[name])}/{len(rows)} "
+                      f"batch_s={elapsed:.3f} useful_tok_s={tokens / max(elapsed, 1e-9):.1f}", flush=True)
             write_md(path)
             artifacts.extend([path, path.with_suffix(".md")])
     meta = {**bundle["meta_eval"], "model_controls": {

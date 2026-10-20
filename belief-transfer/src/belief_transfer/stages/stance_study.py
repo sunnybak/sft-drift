@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import time
 
 from belief_transfer.analysis.jsonl_md import write_md
 from belief_transfer.analysis.report import ROOT, build_result, write_result
@@ -120,6 +121,7 @@ async def run(job):
                     break
             for start in range(0, len(group), spec.measurement_batch_size):
                 batch = group[start:start + spec.measurement_batch_size]
+                started = time.perf_counter()
                 if spec.measurement_batch_size > 1:
                     observed_batch = await administer_batch(model, batch, spec)
                 else:
@@ -133,8 +135,10 @@ async def run(job):
                     with path.open("a") as handle:
                         handle.write(json.dumps(observed, ensure_ascii=False) + "\n")
                     n_calls += 1
-                if len(observations) % 16 == 0 or len(observations) == len(bank):
-                    print(f"[stance_study] {candidate} {len(observations)}/{len(bank)}", flush=True)
+                elapsed = time.perf_counter() - started
+                tokens = sum((r.get('generation_metadata') or {}).get('generation_tokens', 0) or 0 for r in observed_batch)
+                print(f"[stance_study] {candidate} {len(observations)}/{len(bank)} "
+                      f"batch_s={elapsed:.3f} useful_tok_s={tokens / max(elapsed, 1e-9):.1f}", flush=True)
         write_md(path)
         artifacts.extend([path, path.with_suffix(".md")])
         scores[candidate] = summarize_stance_study(bank, observations, thresholds,
