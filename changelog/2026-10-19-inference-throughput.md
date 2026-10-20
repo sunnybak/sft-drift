@@ -90,3 +90,24 @@ raw outputs, failures, Markdown views, worker logs/scripts/Supervisor definition
 cross-environment tokenization audit have been copied to the Mac (132files/~10.13MB
 before the capacity result). No test artifacts were written into real result roots;
 copies occurred after regression completion.
+
+## Final capacity result and preservation
+
+`ethics_gpu_vllm_capacity_v2` completed successfully:64/64 requests, each256input +
+4096output tokens, LoRA support enabled. Total262,144 output tokens in271.8071557s,
+964.4485tok/s for one cold generation trial; separate engine load42.8125s. No
+steady-state claim from a single trial. All outputs/token IDs and derived Markdown
+are preserved. GPU monitor655samples: peak22,287/24,576MiB, headroom2,289MiB.
+Final Supervisorworker exited successfully; no active inference jobs. Actual adapter
+canaryv3 also passed, with adapter hashes and requested LoRAID1 in raw outputs.
+No new BASE, treatment, dataset changes or new hardware rental occurred.
+
+Completed artifacts copied back to Mac with logs/scripts/Supervisor definitions;
+source and notes committed/pushed. Private snapshots are made only from the Mac;
+check `data/.handoff-receipt.json` and final save stdout for the exact code/artifact
+revisions and verified result. Environment/model-cache binaries remain GPU-local,
+with exact requirements, model revision and setup instructions stored. Frozen inputs
+remain protected by the snapshot verifier. Full regression979passed/five skipped;
+focused startup/engine/stage/layer set40passed. See GPU_INFERENCE_SPEED.md for the
+matched short probes, real held-out timing, provisional full-bank ETA and capacity
+limits. Stop after optimization; fresh full BASE is the next experiment action.

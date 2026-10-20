@@ -17,24 +17,31 @@ same-engine BASE. Provisional full2,400-reply ETA ~12min; budget10–20 until me
 Native compiled HF short-probe gains did not translate to the actual full cache; keep
 experimental. See `belief-transfer/GPU_INFERENCE_SPEED.md`.
 
-Current finite worker: `sft-drift-vllm-finalchecks-v3`. CUDA startup fixed after failed
-adapter canaryv1. Canaryv2 loaded/confirmed adapter without backend errors but hit its
-short256-token probe cap. Both failures retained. Fresh canaryv3 passed all four checks with study4,096 cap. The worker now runs
-capacityv2 (64×4,096 forced output tokens, 256input, LoRA support enabled).
-Capacityv1 never started because canaryv1 failed; its blocked log is retained. No full
-BASE is launched by this worker. New BASE config `ethics_gpu_vllm_base_v1` remains unused.
-Latest code-focused checks40 passed; full regression **979 passed, five skipped**.
+Final worker `sft-drift-vllm-finalchecks-v3` exited successfully; no active GPU jobs.
+Adapter canaryv3 passed all four checks at the study4,096-token cap. Capacityv2 passed
+64×4,096 output tokens after256input:262,144 tokens in271.807s (964.45tok/s), plus
+42.81s engine load. Peak device use22,287/24,576MiB, observed headroom2,289MiB.
+CUDA fork failure canaryv1 and short-cap truncation canaryv2 are preserved separately.
+Capacityv1 never started; blocked log retained. New full BASE config
+`ethics_gpu_vllm_base_v1` remains unused. Tests: **979 passed, five skipped**.
 
-Exact next command from the Mac:
+Completed GPU outputs, raw responses, errors, Markdown views, exact configs, logs,
+Supervisor definitions, tokenization audit and requirements were copied to the Mac.
+Code/notes are pushed; the latest verified private snapshot is recorded in
+`belief-transfer/data/.handoff-receipt.json`. Only the Mac writes snapshots.
+Environment/model-cache binaries stay on the box; versions/revision/setup are preserved.
+
+Next: resume the experiment with a fresh vLLM full BASE under Supervisor, using the
+registered `ethics_gpu_vllm_base_v1`; never restart the stopped original BASE or reuse
+completed qualification IDs. Exact preflight command from the Mac:
 
 ```sh
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-vllm-finalchecks-v3; tail -n 12 /workspace/sft-drift-ops/vllm_finalchecks_v3.log'
+ssh -p 58689 root@38.49.42.46 'cd /workspace/sft-drift/belief-transfer && /workspace/sft-drift-vllm/.venv/bin/python scripts/check_fast_qualification.py ethics_gpu_vllm_validation_v1'
 ```
 
-Next: verify adapter/capacity results, copy completed GPU artifacts to the Mac, commit/
-push notes and save the private snapshot. Only the Mac writes private snapshots.
-Prior verified snapshot covers code2201ae1 and stoppedBASE/native probes; later vLLM
-results are not yet privately backed up. Environment/model binaries stay on the GPU.
+The launch command and isolated environment are in `belief-transfer/GPU_INFERENCE_SPEED.md`.
+No treatment training is queued; outstanding scope dispositions, semantic memorization
+check and frozen treatment plan remain separate prerequisites.
 
 ## Active experiment preparation
 

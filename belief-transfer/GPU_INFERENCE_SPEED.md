@@ -54,9 +54,13 @@ This is an extrapolation, not a completed full-bank runtime.
   before importing vLLM so it consistently selects spawn, as the main runner
   already did. Canary v2 confirmed the adapter but its 256-token limit truncated thinking.
   Fresh canary v3 passed all four checks using the full study cap; full-capacity
-  v2 is the final operational check. See STATE.md for current results.
-- The stress test forces all 64 requests to produce 4,096 tokens after 256 input
-  tokens, with LoRA support enabled. Capacity is distinct from ordinary reply speed.
+  v2 also passed; all operational checks are complete.
+- Capacity v2 passed: all 64 requests produced 4,096 tokens after 256 input tokens,
+  with LoRA support enabled. Total 262,144 output tokens in 271.807 seconds
+  (964.45 tok/s), plus 42.81 seconds engine load. This is one cold generation
+  trial, not a steady-state estimate. Peak device use was 22,287/24,576 MiB over
+  655 samples; minimum observed headroom 2,289 MiB. No missing outputs or errors.
+  Capacity is distinct from ordinary reply speed.
 - Full regression after the startup fix: **979 passed, five skipped**. Focused
   checks: 40 passed. Historical config hash `8834d5aca78e` remains unchanged.
 
@@ -69,8 +73,7 @@ Model binaries and environment binaries remain on the GPU box; reproducible setu
 scripts and version/revision records are stored with results.
 
 The new optional `pilot_bench.cuda_generation` selects the engine through the
-existing `run.py` stages. The registered fresh BASE command, once operational
-checks pass and the experiment resumes, is:
+existing `run.py` stages. The registered fresh BASE command, when the experiment resumes, is:
 
 ```sh
 cd /workspace/sft-drift/belief-transfer
