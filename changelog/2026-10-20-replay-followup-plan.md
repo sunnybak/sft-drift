@@ -333,3 +333,19 @@ Copy-helpercode/notes b0312ec pushed; this boundary notes/midpoint require commi
 privatehandoffsaveandofflineverify. Prior verified snapshot6c2d8389ca5a43d5a805e05341190f1c9c5e89a6,
 codee1815b5,2,568files/9,099,775,038bytes includesallinputs andinitialstablefiles,notnew
 midpoint. Activepost412updates/logs remainonlyonGPU. No trainingresumeorboxdestructionclaim.
+
+
+## Finalcheckpoint watcher and verified midpoint private save
+
+Midpoint private save+offlineverify succeeded f6a4e110bd18be5a0795e51ad01a4fc0499d0182,
+code15d7d4f,2,577files/9,496,736,399bytes. Includesall8checkpoint412files/receipt and
+copy-helper source. Actualworker36320confirmedRUNNING599/824,finite loss/gradnorms.
+Added finalboundary testcase: savedstep824withno latermicrobatch iscopyableonlyafter
+trainingCOMPLETED.46preservation/handoff/import tests passed,temp/mocked/noGPU.
+
+Launchedsamecopyhelper --step824 --wait,execsession92798,
+log/tmp/sft-drift-replay-final-checkpoint-watch.log. It copies checkpoint824after
+trainingengineeringcompletion whilequeuedinferencecancontinue; no training/inference
+settings changed andno checkpoint evaluation/selection. Do not run private save while
+this watcher can mutate localdata; preserve newlycopiedcheckpoint andterminalresults
+atnextsafeboundary. All finalgates/actualmodelreplyreview stillunproven.

@@ -12,7 +12,7 @@ Current plan/evidence: `changelog/2026-10-20-replay-followup-plan.md`; earlier d
 RUNNING finite Supervisor `sft-drift-registry-instruction-replay-v1`,PID36320,source
 cbe81cb on RTX3090 at `38.49.42.46:58689`. Project `/workspace/sft-drift/belief-transfer`.
 Log `/workspace/sft-drift-ops/registry_instruction_replay_v1.log`. Latest observed
-450/824steps,finite losses/gradnorms. Final qualification remains wholly unproven.
+599/824steps,finite losses/gradnorms. Final qualification remains wholly unproven.
 Command: `/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_instruction_replay_v1/worker.sh`.
 No restart/resume or automatic ethical dispatch. Shared GPUlock `/tmp/sft-drift-cuda-benchmark.lock`.
 No new resources/dependencies. Training main.venv; isolatedvLLM env unchanged.
@@ -26,7 +26,12 @@ not evaluated or selected on outcomes. Training continues toward824final.
 
 Copy helper `scripts/preserve_cuda_checkpoint.py` andboundary/transport tests45passed.
 No automatic training resume; copied bytes do not make started run IDs rerunnable.
-The watcher has exited,so it cannot mutate local files during private snapshot.
+The midpoint watcher has exited. A NEW finalcheckpoint watcher is RUNNING,execsession92798,
+log`/tmp/sft-drift-replay-final-checkpoint-watch.log`,samecopycommandwith--step824.
+It requires savedtrainer_state824ANDthetrainingCOMPLETEDmarker because no later
+microbatch exists afterthefinalstep. Finalboundary branch tested withtempfiles;
+46preservation/handoff/import tests passed. **Do not run private save until this
+watcher finishes copying**,toavoidlocalartifact mutations during snapshot.
 
 Next actual-process check:
 `ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-instruction-replay-v1; tail -n 3 /workspace/sft-drift-ops/registry_instruction_replay_v1.log'`.
@@ -113,10 +118,9 @@ Latest private snapshot6c2d8389ca5a43d5a805e05341190f1c9c5e89a6,codee1815b5,
 2,568files/9,099,775,038bytes,live+offlineverified. Private corpus revision
 c415be726ff3adf87e5af3f4976f81d3067a60c3. Includes current candidateinputs/BASEreference/
 reviews/derivedreplay andinitialstable4trainingfiles(39,776,191bytes):STARTED,resolved
-config,tokenizedJSONL/MD,copyreceipt. **Checkpoint412nowMac/hashverified,requires this block next private snapshot**;
+config,tokenizedJSONL/MD,copyreceipt. **Checkpoint412privatelysaved andlive/offlineverified in snapshot f6a4e110bd18be5a0795e51ad01a4fc0499d0182**,code15d7d4f,2,577files/9,496,736,399bytes;
 active post412weights/run.log/trainingaudit remain onGPU. Do not destroy the box.
-Authoritative receipt belief-transfer/data/.handoff-receipt.json. Current copy-helper
-source/notes andverifiedmidpoint await this boundary private snapshot.
+Authoritative receipt belief-transfer/data/.handoff-receipt.json. Current finalboundary test/notes andfuture824checkpoint require the next preservation boundary.
 
 At completed boundary: update STATE+datednotes,commit/push,then from belief-transfer
 `uv run --no-sync python scripts/handoff.py save` and`... handoff.py verify`.

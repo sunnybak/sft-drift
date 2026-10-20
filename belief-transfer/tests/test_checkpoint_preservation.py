@@ -48,7 +48,8 @@ def test_corrupt_or_symlink_member_installs_nothing(tmp_path):
 
 
 
-def test_remote_boundary_check_and_pack_execute_against_temporary_files(tmp_path,monkeypatch,capsys):
+@pytest.mark.parametrize('boundary',['next_batch','completed_training'])
+def test_remote_boundary_check_and_pack_execute_against_temporary_files(tmp_path,monkeypatch,capsys,boundary):
     from types import SimpleNamespace
     project=tmp_path/'project';ops=tmp_path/'ops';ops.mkdir()
     root=project/'data/checkpoints/ethical_stance_sft'/RUN;checkpoint=root/'checkpoint-2';checkpoint.mkdir(parents=True)
@@ -62,7 +63,11 @@ def test_remote_boundary_check_and_pack_execute_against_temporary_files(tmp_path
     waiting=json.loads(capsys.readouterr().out.strip().splitlines()[-1])
     assert not waiting['ready'] and not waiting['terminal'] and waiting['last_step_before_batch']==1
     assert not list(ops.iterdir())
-    audit.write_text(json.dumps({'optimizer_step_before_batch':2})+'\n')
+    if boundary=='next_batch':
+        audit.write_text(json.dumps({'optimizer_step_before_batch':2})+'\n')
+    else:
+        completed=project/'data/results/ethical_stance_sft'/RUN/'COMPLETED'
+        completed.parent.mkdir(parents=True);completed.write_text('verified training complete')
     exec(code,{})
     ready=json.loads(capsys.readouterr().out.strip().splitlines()[-1])
     assert ready['ready'] and ready['files']==4
