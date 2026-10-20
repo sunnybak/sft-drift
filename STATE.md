@@ -1,5 +1,34 @@
 # Current state — 2026-10-19
 
+## Active full GPU BASE evaluation
+
+User authorized the fresh evaluation after speed qualification. Supervisor
+`sft-drift-vllm-base-v1` is RUNNING on the existing RTX3090. Run:
+`ethics_gpu_vllm_base_v1`, all100 beliefs /2,400 natural presentations plus32 fresh
+controls, seed42, no adapter. Exact execution declared before launch in
+`belief-transfer/GPU_BASE_PROTOCOL.md` (codef033137). It uses the qualified isolated
+vLLM environment, unchanged frozen instrument/probability settings, and its own
+recorded per-request RNG identity. Original stopped HF prefix remains separate.
+No treatment training launched; no new resources rented.
+
+Command: `/workspace/sft-drift-vllm/.venv/bin/python -u run.py +run=ethics_gpu_vllm_base_v1`,
+under GPU flock and Supervisor, script `/workspace/sft-drift-ops/vllm_base_v1.sh`.
+Logs: `/workspace/sft-drift-ops/vllm_base_v1.log`. Outputs:
+`belief-transfer/data/results/ethical_pilot/ethics_gpu_vllm_base_v1/`.
+Saves completed256-request windows; no process-restart resume or overwrite. Supervisor
+survives SSH disconnect, not box loss. Do not launch a second copy.
+
+Exact next monitor command from the Mac:
+
+```sh
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-vllm-base-v1; tail -n 12 /workspace/sft-drift-ops/vllm_base_v1.log'
+```
+
+Next: verify complete raw coverage/controls/extraction and matching execution metadata,
+report descriptive scores/agreement with explicit missing outcomes, then copy results,
+commit/push and verify the private snapshot. Seed7/1729 repeats remain subsequent
+matched qualification/evaluation work; seed42 alone cannot estimate sampling noise.
+
 ## Throughput optimization — current authorized work
 
 The slow full BASE is stopped by user instruction. `sft-drift-reference-v3` is STOPPED;
