@@ -1,5 +1,19 @@
 # Current state — 2026-10-19
 
+## Throughput optimization — current authorized work
+
+User stopped the slow reference evaluation to prioritize higher throughput. Supervisor
+`sft-drift-reference-v3` is STOPPED; `ethics_gpu_base_v1` retains 360/2,400 completed
+belief replies plus 32 controls, with STOPPED.md. This is partial, not a completed BASE;
+its stage does not resume or overwrite. No treatment training started. CUDA memory freed.
+Now benchmark the existing 3090: dynamic cache → static cache → compiled static cache,
+using neutral forced-length text, pinned BF16 weights and unchanged sampling parameters.
+Registered IDs: `ethics_gpu_decode_{dynamic,static,compiled}_b8_v1`. Benchmark outputs
+are operational probes, not ethical observations. No new resources rented.
+Next: launch the finite throughput worker after deploying the benchmark script; inspect
+its cold/steady timings, memory, failure traces and actual compile status. A new engine
+needs fresh capacity/control qualification and a new BASE ID before study use.
+
 ## Active experiment preparation
 
 User authorized beginning the experiment sequence. Calibration completed. Batch sixteen
@@ -12,9 +26,9 @@ was removed before the inference comparison in fresh smoke v3: **passed**, all e
 checks true, exact adapter roundtrip and zero reload logit error. Same initial adapter,
 input and training settings; CUDA updates differ slightly between runs (not bitwise
 reproducible training). Both v3 optimizer checkpoints and final adapter are saved.
-`sft-drift-reference-v3` passed development (56/56 replies) and held-out validation
+Before the user-requested stop, `sft-drift-reference-v3` passed development (56/56 replies) and held-out validation
 (224/224 replies); both had 32/32 known controls correct with extraction/null checks
-passed. Full CUDA BASE `ethics_gpu_base_v1` is now running: 56/2,400 belief replies
+passed. Stopped partial CUDA BASE `ethics_gpu_base_v1` had: 56/2,400 belief replies
 saved at the earlier check, plus all 32 fresh controls. Latest speed audit: 328/2,400
 replies saved, worker and Python process confirmed running after a 7.35-second
 in-memory pause. Sampler profile v1 measured 2.31 ms versus ~76.52 ms total per
