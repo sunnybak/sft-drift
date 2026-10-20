@@ -1,4 +1,4 @@
-# Current state — 2026-10-19
+# Current state — 2026-10-20
 
 ## Active goal: complete the pooled SFT experiment
 
@@ -100,15 +100,26 @@ of deception. All92repair IDs are previously unmodified source rows. Review arti
   20complete sources read:16no-clear,2clear,2certainty borderlines; allfour clarified.
   Targeted selections cannot estimate corpus defect prevalence. Other345lexical matches
   are not individually adjudicated; no assertion that they are all defective or clear.
-- Fresh `ethics_sft_scope_confirmation_v1` selection/protocol frozen BEFORE full-text
-  reading:80category-balanced texts +16psychology-family texts, excluding prior review
-  and repaired IDs. No model scores used;0/96read. Selection SHA:
-  `820f6d5763bc319ad9219e036834495850c8215b1074087f9f3c84b8ad380ccb`.
-  Read all96with briefs, freeze judgments before optional score comparison; report
-  strata separately. No pass-hunting or retuning a detector on this confirmation set.
+- Fresh `ethics_sft_scope_confirmation_v1`:ALL96complete texts read without scores,
+  then judgments frozen (SHA47c74f73709d681a5e88d2e15f1c1f12b4525975783ded433fc304c4cbdb237c).
+  Category80:73no-clear,2clear scope,5borderline. Separate psychology16:13no-clear,
+  2clear,1borderline. No clear position reversals. All4clear cases scored below0.2in
+  prior Decisions outputs; exact comparison joined only after judgment freeze. This
+  is agent assessment of candidatev3 before repairs; do not retrospectively call it
+  passed or draw repeated confirmation samples to obtain a pass.
+- Four clear and six borderline texts await traceable corrections/clarifications.
+  Post-confirmation lexical repair search:180candidate sources (43specific necessity,
+  1missing distress,21input-audit absence,115broad protection/uncertainty cues), not
+  validated detection or180confirmed defects. See confirmation report and JSONL/MD.
+- Registered/prepared `ethics_gpu_document_recognition_v1`:new diagnostic only, fixed
+  memoryv2adapter versus BASE.132prompts/model:80balanced true/distractor code claims
+  in both definition orders,32unchanged factual controls,20original direct-code queries.
+  Qualified thinking decoder; original greedy16memorization gates remain FAILED.
+  Protocol/bank hashes frozen before calls;42focused tests pass. Launch pending.
 
 ```sh
-uv run --no-sync python data/results/ethical_stance_sft/ethics_sft_scope_confirmation_v1/read_packet.py 0 6
+# Prepared technical diagnostic; uses the isolated qualified vLLM environment on GPU.
+/workspace/sft-drift-vllm/.venv/bin/python scripts/probe_document_recognition.py run --run-id ethics_gpu_document_recognition_v1
 ```
 
 The new blind80 and flagged140 include219distinct texts in this work block. Earlier
@@ -119,7 +130,7 @@ follow-ups is not a population defect rate. Original provider refusals remain ex
 ## Before treatments
 
 Investigate the preserved native-vs-chat memory gap without relabeling failed gates;
-complete fresh96confirmation and explicit data-use policy. Candidatev3 is assembled; retain all raw flags and remaining uncertainty. Every JSONL needs its derived Markdown view.
+repair/clarify10confirmation texts, address targeted families and write explicit data-use policy. Candidatev3 is assembled; retain all raw flags and remaining uncertainty. Every JSONL needs its derived Markdown view.
 
 Pooled dose helpers and `scripts/prepare_pooled_dose.py` exist, not yet executed:
 paired opposite documents share min available loss targets; even_eos preserves first
@@ -141,7 +152,11 @@ suite. Source/config defaults and frozen instrument files remain protected by ha
 
 ## Preservation
 
-Git62aa324 pushed; recovery snapshot VERIFIED:
+Most recent verified snapshot is code765e24d, main
+dec103772442ea51b1f87ff524f17d8374e4c49f, corpus
+c6d853fd96459efb227388d7cd4f16751232917b;1,876main files/3,643,980,066bytes.
+Includes candidatev3 and frozen selection. Later confirmation/diagnostic work needs
+its next checkpoint. Earlier recovery snapshot VERIFIED:
 main83c6035edc58e6bd1d0460b9db90a96664fefbcf,
 corpus844c1aef8edbf3ee551edcfe82a6af2842e6bfcf;
 1,830main files/3,634,611,597bytes. Includes all newest GPU weights/failures.
