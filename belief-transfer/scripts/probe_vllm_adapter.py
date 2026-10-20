@@ -33,7 +33,7 @@ def main():
 
         job = load_job(['+run=ethics_gpu_vllm_development_v1'])
         job.run_id, job.pilot_bench.adapter_path = args.run_id, args.adapter
-        job.pilot_bench.max_new_tokens = 256
+        job.pilot_bench.max_new_tokens = 4096
         write_resolved_config(job, root)
         prompts = ['Compute 17 plus 25. End with the number 42.',
                    'Write one sentence about organizing a bookshelf.',
