@@ -5,17 +5,18 @@
 User authorized beginning the experiment sequence. `sft-drift-calibration` completed:
 `ethics_gpu_calibration_v1` recommends 256 at a 256-token cap (512 OOM);
 `ethics_gpu_capacity_v1` passed four 4,096-token outputs, input width 823, peak allocated
-11,002,472,448 bytes. Next worker `sft-drift-reference` tests batch sixteen in fresh
-`ethics_gpu_capacity_v2`, requiring 15% headroom before any belief outcome. It then
+11,002,472,448 bytes. Batch sixteen (`ethics_gpu_capacity_v2`) failed CUDA OOM near
+the full cap; its driver exited without training/measurements. Fresh worker
+`sft-drift-reference-v2` tests batch eight in `ethics_gpu_capacity_v3`. It then
 runs `ethics_sft_document_smoke_v2` (two technical optimizer steps), followed by the
 reserved development → validation → BASE chain. The three unused overlays agree on
-batch sixteen. No treatment training yet. See
+batch eight, conditional on that capacity check. No treatment training yet. See
 `changelog/2026-10-19-gpu-experiment-start.md` for current milestones.
 
 Monitor from the Mac:
 
 ```sh
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-reference; tail -n 20 /workspace/sft-drift-ops/reference_v1.log'
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-reference-v2; tail -n 20 /workspace/sft-drift-ops/reference_v2.log'
 ```
 
 Runs refuse overwrite and do not automatically resume. The reference worker stops on
@@ -33,9 +34,10 @@ provenance changes. Full regression after preserving historical unset-field seri
 **971 passed, five skipped**. Historical fingerprint `8834d5aca78e` remains unchanged.
 All 2,432 rendered BASE/control inputs are 80–186 tokens; stress width is 823.
 
-While capacity v2 finishes, only the reference driver's parent PID 4240 is held with
-SIGSTOP at the stage boundary; its GPU child continues. After capacity completes,
-pull the compatibility fix and `kill -CONT 4240` to advance; do not restart the worker.
+The original driver PID 4240 was held only at its stage boundary during the schema
+compatibility fix; its capacity child continued, then failed. The driver was released
+and exited under `set -e`. No paused process remains. Failed v2 retains its request,
+full traceback and `FAILED.md`; do not restart it or reuse its measurement ID.
 
 Separate scope adjudication v1 read eight pending full documents across four risk
 families: seven no-clear-serious-defect judgments, one necessity/distress scope error.

@@ -16,7 +16,7 @@ supports historical reproduction/tests; its presence is not a running order.
 | next GPU development → validation → full BASE | `run/ethics_gpu_development_v1.yaml`, `ethics_gpu_validation_v1.yaml`, `ethics_gpu_base_v1.yaml` |
 
 GPU overlays inherit the qualified **instrument**, not its model-specific validity.
-They are prepared at batch size 16, conditional on `ethics_gpu_capacity_v2` passing
+They are prepared at batch size 8, conditional on `ethics_gpu_capacity_v3` passing
 before first execution. Any calibrated batching change must be applied consistently
 to all three fresh overlays before execution and recorded; do not edit completed runs.
 Independent-seed repeats need their own development/validation/full-bank IDs with matching

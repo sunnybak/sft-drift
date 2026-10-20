@@ -62,3 +62,12 @@ Full regression rerun: **971 passed, five skipped in 137.07s**. Historical confi
 fingerprint `8834d5aca78e` is unchanged. Tokenized all 2,432 frozen BASE/control prompts
 with the pinned Qwen tokenizer: 80–186 rendered input tokens, safely covered by the
 capacity check's 823-token width. No weights loaded for this local token count.
+
+Capacity v2/batch sixteen failed late with CUDA OOM in SDPA repeat_kv: requested
+584 MiB, physical free 465 MiB, 18.33 GiB allocated and 4.46 GiB reserved/unallocated.
+No complete capacity responses, no document training and no belief measurements
+were produced. Saved exact request/config, full traceback and FAILED.md. Released
+the held original parent so it exited under set -e; no paused process remains.
+Do not restart that run. Fresh capacity v3 checks eight; update all three still-unused
+qualification/BASE overlays consistently before any belief outcomes. Replacement
+worker `sft-drift-reference-v2` uses `/workspace/sft-drift-ops/reference_v2.log`.

@@ -16,13 +16,15 @@ before treatments; these sampling repeats do not substitute for training replica
 
 The 256-token machine sweep recommended batch 256, which is not a full-cap capacity
 claim. Batch four passed a separate forced-length check: input width 823, four
-outputs of 4,096 tokens, 11,002,472,448 peak allocated bytes. Run fresh capacity v2
-at batch sixteen, requiring at least 15% allocated VRAM headroom, before launching
-the three unused batch-sixteen overlays. If capacity fails, preserve that attempt,
-declare a fresh capacity run and adjust all unused overlays consistently. Freeze
+outputs of 4,096 tokens, 11,002,472,448 peak allocated bytes. Capacity v2 at sixteen
+failed CUDA OOM near the full cap (584 MiB allocation, 465 MiB physically free;
+18.33 GiB allocated and 4.46 GiB reserved/unallocated). Preserve that attempt.
+Fresh capacity v3 tests eight with the same 15% allocated-headroom criterion; all
+three unused overlays agree on eight before first execution. If it fails, preserve
+the attempt and adjust all unused overlays consistently. Freeze
 the accepted CUDA batching before belief outcomes. Record reserved memory too.
 
-The initial finite reference worker performs capacity v2, the two-step document
+The replacement finite reference worker performs capacity v3, the two-step document
 smoke, development, validation, and BASE, sequentially. It checks control qualification
 and exact raw model revision/token/seed metadata before advancing. It never launches
 treatment training. Named completed/partial measurements do not automatically resume.

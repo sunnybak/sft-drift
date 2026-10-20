@@ -4,6 +4,6 @@ defaults:
   - stance_response_cap_validation_v1
 run_id: ethics_gpu_validation_v1
 pilot_bench:
-  measurement_batch_size: 16
+  measurement_batch_size: 8
   stance_study:
     selection_run_id: ethics_gpu_development_v1
