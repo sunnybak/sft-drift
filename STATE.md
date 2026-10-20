@@ -21,7 +21,9 @@ BASE<=.1, reloaded>=.9 and decreasing loss + update/reload checks. Input copied 
 not yet trained. Capacity inputs/config `ethics_sft_training_capacity_v1` are prepared:
 32 draws from4 sources →40chunks /32microbatches /8steps, B2/G4/length1024,
 rank16 all seven projections. Shape audit confirms3 full-width batch2 cases and
-21,314 loss targets. Capacity and rank16 vLLM adapter canary still to be queued.
+21,314 loss targets. Capacity and rank16 vLLM adapter canary are queued in Supervisor
+`sft-drift-document-capacity-v1`, waiting for the semantic memory gate. Finite worker:
+`/workspace/sft-drift-ops/document_capacity_v1.{sh,log}`; no restart resume.
 
 Candidatev2 is assembled,20,000 records /54 hash-matched corrections /9,802,442 raw
 Qwen tokens. New v7 repairs one missing appeal safeguard found in ten complete hiring

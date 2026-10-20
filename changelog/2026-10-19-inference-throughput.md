@@ -111,3 +111,7 @@ remain protected by the snapshot verifier. Full regression979passed/five skipped
 focused startup/engine/stage/layer set40passed. See GPU_INFERENCE_SPEED.md for the
 matched short probes, real held-out timing, provisional full-bank ETA and capacity
 limits. Stop after optimization; fresh full BASE is the next experiment action.
+
+Queued finite training capacity → rank16/all-projection vLLM adapter compatibility
+worker after semantic memory success. Registered roots and inputs preexist; no treatment
+training. Code and seed7 artifacts checkpointed while seed1729 remains live.
