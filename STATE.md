@@ -126,7 +126,10 @@ of deception. All92repair IDs are previously unmodified source rows. Review arti
 - Next preregistered diagnostic ethics_gpu_document_adapter_parity_v1 replays40saved
   native-document inputs from the successful HF recall run through vLLM,greedy4tokens/seed0.
   Exact HF/vLLM text+token parity and adapter20/20recall required for this narrow check.
-  All old chat/control failures remain failed.53focused tests pass. Launch pending.
+  All old chat/control failures remain failed.53focused tests pass. Supervisor worker
+  sft-drift-document-adapter-parity-v1 confirmed RUNNING (PID19821). Finite/noautorestart,
+  no resume; log /workspace/sft-drift-ops/document_adapter_parity_v1.log. Outputs GPU-only
+  until terminal copy/verification. Run command below is already dispatched; do not restart.
 
 ```sh
 # Next prepared technical diagnostic; isolated qualified vLLM environment on GPU.
