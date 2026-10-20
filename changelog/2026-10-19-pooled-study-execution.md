@@ -91,3 +91,13 @@ codes with extra words. Preserve failed status and perform separate native-versu
 diagnostic; do not relax failed historical gate. Capacity stage never started.
 Three-seed BASE variability report:median within-belief range1/24,p95=4/24,max7/24;
 pairwise mean absolute score difference3.21–3.71percentage points. Descriptive only.
+
+All140 follow-up flagged documents now read in full with approved briefs:90scope
+defects,2internal-reasoning defects,27no-clear-serious-defect,21borderlines.81confirmed
+scope defects concern psychology hypothesis/necessity grammar. All92repair IDs are
+previously unmodified source rows; explicit repair_queue.jsonl+MD records instructions.
+Together with blind80 this block read219distinct candidate texts (one overlap), not
+a uniform full-bank prevalence sample. None of the92new repairs is authored yet.
+Separate diagnostic Supervisor sft-drift-memory-diagnostic-v1 launched on CUDA with
+BASE/reloaded, original64-cap chat, completion-style chat and native4-token continuation.
+It preserves prompt/token metadata and separate metrics, with no change to failed gates.

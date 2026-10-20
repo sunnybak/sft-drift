@@ -24,7 +24,9 @@ codes occur in longer replies; others wrong/truncated. Do not reinterpret as a p
 Full artifacts/checkpoints copied Mac. Both capacity workers gated out; capacity stage
 `ethics_sft_training_capacity_v1` has never started. No live training.
 Next CUDA action is a separate preserved diagnostic `ethics_gpu_document_memory_diagnostic_v1`:
-same BASE/adapter, original chat with64cap, completion-style chat, native4-token document
+Supervisor`sft-drift-memory-diagnostic-v1` is RUNNING, PID17011 at last check,
+`/workspace/sft-drift-ops/document_memory_diagnostic_v1.{sh,log}`. No restart resume.
+Same BASE/adapter, original chat with64cap, completion-style chat, native4-token document
 continuation. Content/format metrics separate; failed strict gates remain unchanged.
 Capacity inputs remain prepared/unused:32draws→40chunks/32microbatches/8steps,B2/G4,
 length1024,rank16 all seven projections. Must pass an appropriate declared memorization
@@ -43,8 +45,9 @@ scope defects,4 borderlines. Blind ledger `ethics_sft_scope_blind_review_v1` ann
 SHA2880be31270fe37217d24c8056290c6864d032286a9b540d53b12114d94561a6.
 No individual production model scores seen at judgment time. Joined audit shows both
 clear defects scored.03 and were missed; one model flag was agent-no-clear. This is
-not semantic clearance. New full-text adjudication packet140flags,96 complete texts read
-(includes one already in blind80);44 remain unread; `ethics_sft_scope_followup_review_v1`. Three explicit repairs
+not semantic clearance. New full-text adjudication packet140flags now fully read
+(includes one already in blind80):90scope defects,2internal-reasoning defects,27no-clear,
+21borderlines. All92confirmed source IDs need repairs;none was a prior repaired row; `ethics_sft_scope_followup_review_v1`. Three explicit repairs
 (v8) fully reread and rechecked low, cost$0.0012697; not yet assembled candidatev3.
 Two defect families: stipulated benefit weakened into uncertainty; excluded conduct
 misstated as permitted. Repair and targeted family checks still required.
@@ -57,9 +60,9 @@ still need CUDA capacity qualification. Focused40passed; full1013passed/five ski
 Pooled dose helpers and manifest assembly script added;40 focused checks passed.
 Training arm manifests/dose/analysis are not frozen and no treatment has started.
 
-Exact continuation (from belief-transfer/):
+Exact repair evidence entry (from belief-transfer/; all140 have been read):
 ```sh
-uv run --no-sync python data/results/ethical_stance_sft/ethics_sft_scope_followup_review_v1/read_packet.py 96 104
+uv run --no-sync python data/results/ethical_stance_sft/ethics_sft_scope_followup_review_v1/read_packet.py 0 8
 ```
 
 Prior reference worker monitor (terminal):
@@ -67,8 +70,8 @@ Prior reference worker monitor (terminal):
 ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-vllm-repeats-v1; tail -n 12 /workspace/sft-drift-ops/vllm_repeats_v1.log'
 ```
 
-Next: diagnose toy native continuation versus chat retrieval/format, finish remaining44
-flagged full-text reviews and traceable repairs/family checks, declare matched dose/step and checkpoint rules,
+Next: diagnose toy native continuation versus chat retrieval/format, author/review/recheck92
+confirmed flagged-text repairs plus targeted family checks and fresh confirmation, declare matched dose/step and checkpoint rules,
 then train all-positive/all-negative/complementary mixes/off-topic/C4-only and evaluate
 all100 beliefs on every designated checkpoint. Preserve at completed work boundaries.
 
