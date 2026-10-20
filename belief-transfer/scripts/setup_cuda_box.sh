@@ -23,7 +23,7 @@ uv run --no-sync python -u scripts/handoff.py verify
 phase 'running weight-free setup regressions'
 uv run --no-sync pytest -q tests/test_handoff.py tests/test_data_sync.py tests/test_import_rules.py tests/test_schemas.py tests/test_measurements.py tests/test_stance_study.py tests/test_stance_review.py
 phase 'downloading active model'
-uv run --no-sync python -u run.py +run=current_machine stage=download_models
+uv run --no-sync python -u run.py +run=current_machine stage=download_models run_id="$run_id"
 phase 'running cached-model CUDA canary'
 uv run --no-sync python -u scripts/verify_cuda_setup.py --output "$output"
 phase 'completed'
