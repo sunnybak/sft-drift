@@ -15,22 +15,24 @@ Baseline sampling report under seed1729 `baseline_variability_v1`:median per-bel
 three-seed range4.17pp,p95=16.67pp,max29.17pp; pairwise mean absolute drift3.21–3.71pp.
 Only3seeds, descriptive noise, not calibrated intervals or SFT effects.
 
-Semantic memoryv1 FAILED recall:BASE0/20, reloaded0/20, despite loss3.528→.0711 and
-all8 update/reload checks passing,48.64s training. Full outputs/checkpoints copied Mac.
-Capacity worker v1 exited at missing-success precondition; capacity stage never started.
-Fresh `ethics_sft_memorization_v2` also FAILED exact chat recall0/20 after BASE0/20,
-with broader rank16/all-projection adapter and distinct names,200steps. Several correct
-codes occur in longer replies; others wrong/truncated. Do not reinterpret as a pass.
-Full artifacts/checkpoints copied Mac. Both capacity workers gated out; capacity stage
-`ethics_sft_training_capacity_v1` has never started. No live training.
-Next CUDA action is a separate preserved diagnostic `ethics_gpu_document_memory_diagnostic_v1`:
-Supervisor`sft-drift-memory-diagnostic-v1` is RUNNING, PID17011 at last check,
-`/workspace/sft-drift-ops/document_memory_diagnostic_v1.{sh,log}`. No restart resume.
-Same BASE/adapter, original chat with64cap, completion-style chat, native4-token document
-continuation. Content/format metrics separate; failed strict gates remain unchanged.
-Capacity inputs remain prepared/unused:32draws→40chunks/32microbatches/8steps,B2/G4,
-length1024,rank16 all seven projections. Must pass an appropriate declared memorization
-check and update/reload gate before treatment; no lower threshold or belief-outcome tuning.
+Semantic memoryv1 andv2 FAILED exact chat recall (both BASE0/20,reloaded0/20), despite
+all8 update/reload checks. Full failed artifacts/checkpoints copied Mac. Diagnosticv1
+completed:BASE0/20 all formats; reloaded native-document continuation20/20, original
+64-cap chat contains unambiguous right code8/20 but exact0/20, completion-chat exact3/20.
+No retrospective gate change. Diagnostic outputs and raw prompts/tokens copied Mac.
+Fresh memoryv3 prepared:20 distinct names, plain lookup reference with two training
+question forms and explicit code-only convention; original evaluation query unseen,
+same exact>=.9 gate/BASE<=.1,200steps/rank16all projections. Focused41passed after this
+preparation change. Launch as fresh finite worker; no ethical training data or outcomes.
+
+Capacityv1 engineering check completed all10checks true, including one-pass coverage,
+32microbatches/8steps,21,314loss targets/37.561s=567.45targets/s. Allocated12.73GB,
+reserved17.55GB. Full results/checkpoints copied Mac. This proceeded independently
+of failed strict chat gate, after native recall diagnostic; not a treatment clearance.
+Rank16/all-projection vLLM adapter canary passed all4checks,70.94s including load.
+Supervisor capacity-v3 and diagnostic-v1 EXITED; no GPU jobs live at last check.
+Fresh capacityv2 inputs/config prepared:64 full1024-token chunks, B4/G2/8steps,
+65,152loss targets from a repeated neutral source, to measure larger-batch throughput.
 
 Candidatev2 is assembled,20,000 records /54 hash-matched corrections /9,802,442 raw
 Qwen tokens. New v7 repairs one missing appeal safeguard found in ten complete hiring
@@ -47,7 +49,12 @@ No individual production model scores seen at judgment time. Joined audit shows 
 clear defects scored.03 and were missed; one model flag was agent-no-clear. This is
 not semantic clearance. New full-text adjudication packet140flags now fully read
 (includes one already in blind80):90scope defects,2internal-reasoning defects,27no-clear,
-21borderlines. All92confirmed source IDs need repairs;none was a prior repaired row; `ethics_sft_scope_followup_review_v1`. Three explicit repairs
+21borderlines. All92confirmed source IDs have draft repairs;none was a prior repaired row.
+Drafts are separate from candidate bank:24 hash-approved complete revisions,68pending.
+Use `read_draft_packet.py` in review root; read10,12,14,19,21,25,27,30 after residual
+fixes, then32..91. Status/draft hashes saved; no v9 overlay yet. Advisory lexical family
+search adds37 direct-cue candidates and365 broad effect-uncertainty matches, not defect
+labels; see family_search_v1 report before deciding targeted family checks; `ethics_sft_scope_followup_review_v1`. Three explicit repairs
 (v8) fully reread and rechecked low, cost$0.0012697; not yet assembled candidatev3.
 Two defect families: stipulated benefit weakened into uncertainty; excluded conduct
 misstated as permitted. Repair and targeted family checks still required.
@@ -70,7 +77,7 @@ Prior reference worker monitor (terminal):
 ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-vllm-repeats-v1; tail -n 12 /workspace/sft-drift-ops/vllm_repeats_v1.log'
 ```
 
-Next: diagnose toy native continuation versus chat retrieval/format, author/review/recheck92
+Next: diagnose toy native continuation versus chat retrieval/format, finish full revised-text review and recheck92
 confirmed flagged-text repairs plus targeted family checks and fresh confirmation, declare matched dose/step and checkpoint rules,
 then train all-positive/all-negative/complementary mixes/off-topic/C4-only and evaluate
 all100 beliefs on every designated checkpoint. Preserve at completed work boundaries.

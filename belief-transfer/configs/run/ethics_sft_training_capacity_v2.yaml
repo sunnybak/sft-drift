@@ -1,0 +1,11 @@
+# @package _global_
+# Engineering only:64 full-width chunks, B4/G2, no ethical or evaluation inputs.
+defaults:
+  - ethics_sft_training_capacity_v1
+run_id: ethics_sft_training_capacity_v2
+document_sft:
+  manifest_path: data/generated/ethical_stance_sft/ethics_sft_training_capacity_v2/documents.jsonl
+training:
+  sft:
+    batch_size: 4
+    grad_accum: 2

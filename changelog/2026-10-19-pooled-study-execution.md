@@ -101,3 +101,22 @@ a uniform full-bank prevalence sample. None of the92new repairs is authored yet.
 Separate diagnostic Supervisor sft-drift-memory-diagnostic-v1 launched on CUDA with
 BASE/reloaded, original64-cap chat, completion-style chat and native4-token continuation.
 It preserves prompt/token metadata and separate metrics, with no change to failed gates.
+
+Diagnosticv1 completed and copied:BASE0all; reloaded native20/20, original-chat64
+exact0/20/content8/20, completion-chat64exact3/20. No original gate retroactively changed.
+Memoryv3 prepared lookup-reference standalone documents, distinct training question
+forms versus unseen original eval query, same exact thresholds and200step setting;
+focused41passed. Capacityv1 passed10checks including actual sampler coverage,37.561s
+for21314targets,12.73GBallocated/17.55GBreserved. Rank16all-projection vLLM probe passed.
+Full910MB capacity checkpoint tree and raw artifacts copied to Mac. B4/G2full-width
+capacityv2 prepared65,152targets/64chunks, not run yet. No treatment training.
+
+92explicit repair drafts preserved separate from candidate bank.24complete revised
+texts hash-approved,68pending; rule-assisted drafts had residual issues caught during
+reading and corrected in explicit patch ledger, so no automatic approval. Original
+140full-text adjudications remain unchanged. Additional lexical family search finds
+37direct-cue rows+365broad effect-uncertainty search matches. These are candidates,
+not new defect labels; broad matches likely contain many correct scope limitations.
+Need targeted family adjudication/fresh confirmation/data-use policy, not blind filtering.
+Private checkpoint for3481bb8 verified1646files/1204459032bytes before newest drafts,
+diagnostic/capacity copies and memoryv3preparation; next save still required.

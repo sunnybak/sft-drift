@@ -143,7 +143,13 @@
     "generated/ethical_stance_sft/ethics_sft_memorization_v2",
     "results/ethical_stance_sft/ethics_sft_memorization_v2",
     "checkpoints/ethical_stance_sft/ethics_sft_memorization_v2",
-    "results/ethical_pilot/ethics_gpu_document_memory_diagnostic_v1"
+    "results/ethical_pilot/ethics_gpu_document_memory_diagnostic_v1",
+    "generated/ethical_stance_sft/ethics_sft_memorization_v3",
+    "results/ethical_stance_sft/ethics_sft_memorization_v3",
+    "checkpoints/ethical_stance_sft/ethics_sft_memorization_v3",
+    "generated/ethical_stance_sft/ethics_sft_training_capacity_v2",
+    "results/ethical_stance_sft/ethics_sft_training_capacity_v2",
+    "checkpoints/ethical_stance_sft/ethics_sft_training_capacity_v2"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

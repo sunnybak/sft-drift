@@ -1,0 +1,7 @@
+# @package _global_
+# Fresh technical reference-format retry; same unseen query and exact recall thresholds.
+defaults:
+  - ethics_sft_memorization_v2
+run_id: ethics_sft_memorization_v3
+document_sft:
+  manifest_path: data/generated/ethical_stance_sft/ethics_sft_memorization_v3/documents.jsonl
