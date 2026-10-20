@@ -43,8 +43,10 @@ transferred; frozen execution hashes checked before training. Exact worker:
 It performs fresh training, original validation/frozen controls, separate semantic
 probe, then prospective candidate judgment requiring full-reply agent review.
 All prior matrix/probe workers are terminal. No restart-resume or overwrite.
-Next: inspect current log/checkpoints; copy/hash midpoint275 at safe boundary, then
-read terminal original/semantic validation and every new reply before qualification.
+Checkpoint275 saved and copied Mac:8files/396,933,292bytes, all SHA/bytes verified
+at20:29Z; receipt in this training result root. Finite copy watcher completed.
+Next: preserve midpoint privately, then read terminal original/semantic validation
+and every new reply before qualification. Training continues beyond midpoint.
 Monitor: `ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-varied-requests-v1; tail -c 1000 /workspace/sft-drift-ops/registry_varied_requests_v1.log'`.
 
 
@@ -98,9 +100,10 @@ forgetting claim without separate retention tasks.
 
 All current matrix training/checkpoints/validations and both diagnostics copied Mac
 with exact SHA/bytes receipts. First diagnostic40reply review and second192reply
-review saved JSONL+MD. Latest private snapshotf6f7fedabcd0b4205402c012fee60a30405712c7,
-coded141a3f,2,351files/8,073,466,390bytes, live and offline verified; includes matrix and first
-probe/review. Second probe/review plus follow-up preparation need next save.
+review saved JSONL+MD. Latest verified private snapshote4cc0955a63516a02ceb9cbcd482d4dff46e958a,
+codecc6eaeb,2,371files/8,073,889,632bytes, live and offline verified; includes matrix,
+both diagnostics/reviews and follow-up inputs. New midpoint275 requires this block's
+next save; final outputs still depend on the active GPU process.
 Authoritative receipt `belief-transfer/data/.handoff-receipt.json`.
 
 Commit/push clean source, then from belief-transfer:

@@ -112,3 +112,21 @@ checks execution_manifest hashes before training; no restart/resume. Latest priv
 snapshotf6f7fed... also passed offline verification. Next snapshot includes second
 192reply diagnostic/review and all follow-up inputs. New checkpoints must be copied
 and privately saved at safe boundaries; a live process does not survive box loss.
+
+
+## Midpoint preservation boundary
+
+Follow-up training passed275and continued. Finite Mac watcher waited for
+optimizer_step_before_batch>=275after checkpoint trainer_state recorded275, so
+copying did not race checkpoint writing. Eight immutable checkpoint files,
+396,933,292bytes copied Mac and all SHA/bytes matched, receipt2026-10-20T20:29:12Z
+under the registered training results root. Watcher completed; no training resume
+or midpoint outcome selection. Final-only original and semantic evaluations remain
+queued in the same worker. Source behavior is unchanged.
+
+Before midpoint, private save and offline verification succeeded:
+maine4cc0955a63516a02ceb9cbcd482d4dff46e958a,codecc6eaeb,
+corpusbaf48b3007cb67d9f789c9396d0044c8b7d33b9a;
+2,371files/8,073,889,632bytes. Includes both diagnostic full-reply reviews and new
+follow-up inputs. This next snapshot adds midpoint275and its receipt; final training
+and model responses do not yet exist off-box.
