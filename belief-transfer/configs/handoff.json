@@ -224,7 +224,11 @@
     "results/ethical_stance_sft/ethics_sft_registry_instruction_replay_v1",
     "checkpoints/ethical_stance_sft/ethics_sft_registry_instruction_replay_v1",
     "generated/ethical_pilot/ethics_gpu_instruction_replay_pool_v2",
-    "results/ethical_pilot/ethics_gpu_instruction_replay_pool_v2"
+    "results/ethical_pilot/ethics_gpu_instruction_replay_pool_v2",
+    "generated/ethical_stance_sft/ethics_sft_instruction_replay_text_v1",
+    "generated/ethical_pilot/ethics_gpu_instruction_retention_base_v1",
+    "results/ethical_stance_sft/ethics_sft_instruction_replay_text_v1",
+    "results/ethical_pilot/ethics_gpu_instruction_retention_base_v1"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

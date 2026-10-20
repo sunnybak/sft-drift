@@ -69,18 +69,36 @@ Trainer reports replay target mass separately. CPU pinned-tokenizer check reprod
 all4,000previous documents/4,390chunks exactly; long thinking replay preserves every
 response token/EOS once. Full suite1,134passed/5skipped;98focused after metric refinement.
 
-Prepared `ethics_gpu_instruction_replay_pool_v2`:512BASE replay candidates,8families
-x32questions x2modes, plus128disjoint retention presentations (64questions x2modes).
-Known-answer correctness, format, reasoning boundaries, normal stop and exact teacher
-input/output token roundtrip are separate. Require>=461admissible overall and>=24per
-family/mode; BASE retention>=.95accuracy,1.0format/validboundaries/normalstops per mode.
-No registry/frozencontrol prompts train. Keep every failed/capped response. v1inputs
-VOID before any model calls because initial new scorer conflated format/correctness;
-exact builder source retained with unused inputs, no overwrite. Fresh v2 is current.
-Next deploy committed source/inputs and run finite inference-only acquisition with
-`scripts/build_instruction_replay.py run` on CUDA. No automatic SFT dispatch. Review
-pool/retention before measuring/freezing replay dose and one high-LR combined trial.
-Design/falsifier: `changelog/2026-10-20-replay-followup-plan.md`.
+COMPLETED acquisition `ethics_gpu_instruction_replay_pool_v2`, Supervisor EXITED,
+source5007184.512BASE replay candidates+128disjoint retention presentations generated.
+Original readiness FAILED:412admitted/96,357targets versus461required; nonthinking
+sort0/32strict(no-space)compliance, negation16/32correct. Thinking retention55/64,
+nonthinking47/64semantic under saved numeric rule; gates failed, no training queued.
+Thinking failures include9retention caps,7replay caps at1024tokens, not complete empty
+reasoning blocks (corrects early progress wording). No answers rescued from reasoning.
+All37token-roundtrip exclusions(28replay/9retention) decode identically to canonical
+text and have exact prompt tokens; alternate token segmentation, not incorrecttext.
+
+14terminal files/6,358,091bytes copied Mac/hashverified. Structured full-read review:
+32replay replies(indices0/31eachfamily/mode),2capped thinking retention, all27excluded
+nonthinking retention=61unique. Other579not manuallyread. Four correct equation-form
+sums disagree with automated unique-number semantic rule but fail final format;
+original scores/exclusions unchanged. Per-response reviews/tokenaudit/REVIEW.md saved.
+v1prepared inputs VOID before calls; exact archived builderSHA verified. No overwrite.
+
+Next prospective contract before any new SFT: derive a fresh text-replay manifest
+from saved outputs, admit only correct/strict/complete unchanged text with verified
+canonical template and equivalent teacher-token decoding (do not reject validtext
+for BPE segmentation alone). Preserve v2failed readiness. New separate BASE retention
+reference uses same128prompts/seeds with4096cap; freeze BASE-known item IDs/hashes
+before training, report all128results. Require>=95%semantic retention and100%format/
+normalstops on frozen known items per mode, at least32known andall8families represented
+permode. Frozen32controls and18/20perchatfamily gates unchanged. No adapter outcomes
+for new candidate seen. Details: end of `changelog/2026-10-20-replay-followup-plan.md`.
+Exact next inspection command from belief-transfer:
+`uv run --no-sync python -c "from pathlib import Path; print(Path('../changelog/2026-10-20-replay-followup-plan.md').read_text())"`.
+Then implement/test fresh derivation/reference runner before running. Paths registered;
+no derived manifest, reference run or training config exists yet. Goal incomplete.
 
 GPU RTX3090: `38.49.42.46:58689`, project `/workspace/sft-drift/belief-transfer`.
 Qwen3-4B revision1cfa9a7208912126459214e8b04321603b3df60c. Training main.venv and
@@ -130,10 +148,11 @@ forgetting claim without separate retention tasks.
 
 ## Preservation
 
-All earlier training/checkpoints and716diagnostic replies/reviews privately saved
-and offline verified: snapshot7c1da342210810e3bde16868f485b4b71b70b815,code46cfe92,
-2,486files/9,047,094,615bytes. This block's new replay source/inputs await next snapshot.
-Authoritative receipt `belief-transfer/data/.handoff-receipt.json`. No training queued.
+All earlier training/checkpoints/716diagnostic replies/reviews privately saved and
+verified: snapshot7c1da342210810e3bde16868f485b4b71b70b815,code46cfe92,
+2,486files/9,047,094,615bytes. This block's source/replay inputs/acquisition results/
+reviews are Mac/hashverified and await final snapshot. Authoritative receipt
+`belief-transfer/data/.handoff-receipt.json`. No GPU worker remains running.
 
 Commit/push clean source, then from belief-transfer:
 `uv run --no-sync python scripts/handoff.py save` and `... handoff.py verify`.

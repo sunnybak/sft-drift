@@ -123,3 +123,71 @@ normalstops; retention never becomes replay. FailedBASEreference stops preparati
 not silent selection. Exact replay target mass/repeats/optimizer steps remain unfrozen
 until acquisition is reviewed. No training prepared or queued by acquisition script.
 Registered fresh future trial/validation/transfer/retention paths, not runnable configs.
+
+
+## Acquisition completed, original readiness failed
+
+Inference-only Supervisor sft-drift-instruction-replay-pool-v2,PID34274, source5007184,
+log /workspace/sft-drift-ops/instruction_replay_pool_v2.log EXITEDnormally. All640raw
+replies/IDs/metadata preserved. Original admission412/512,96,357eligible targets:
+240thinking/172nonthinking. Perfamily/mode quotas andoverall461gate failed. No trial
+prepared/trained. Thinking retention55/64under saved semantic/format/boundary rule,
+9capped; nonthinking47/64semantic,57/64format,64normal. Both original retention gates
+failed. Replay has7thinking caps. Early commentary called boundary errors empty
+reasoning; full trace inspection shows truncation, not complete empty blocks.
+
+Terminal14files/6,358,091bytes copiedMac/SHAverified2026-10-20T22:17:09Z. Full-text
+review is61unique replies:32replay(indices0/31all8families/modes),2cappedthinking
+retention,all27nonthinkingretentionexclusions. Other579notmanuallyread. Reviewed
+admissible finalanswers correct; verbose reasoning includes self-corrected intermediate
+errors. Capped traces may compute expected value but cannot be rescued as finalanswers.
+All32nonthinking replay sorts are numericallycorrect but violate requested no-space
+format. Nonthinking negatedequality16/32correct; explicit wrong values also occur.
+Four equation-form retention sums are semantically correct but unique-number rule
+callsfalse; reviewer disagreement saved, formatfailure andoriginalscoresunchanged.
+
+All37exact-token-roundtrip exclusions (28replay/9retention), chiefly uppercase strings,
+have identical complete decoded text and exact prompt IDs. Different valid subword
+segmentations account for rejection; tokenauditJSONL+MD retains both sequences. This
+is a technical exclusion, not wrongcontent. No regeneration/re-admission of v2outputs
+or changed v2gate. Original source/criteria/results remain recoverable at5007184.
+
+## Fresh prospective candidate data and retention contract
+
+This amendment precedes any new candidate training/adapter outcomes. The initial
+BASEreference fails on some tasks even without SFT, so its all-item accuracy threshold
+cannot serve as a pure retention criterion. Keep its failed verdict. The fixed frozen
+study32controls andnewcandidate semantic lookup>=18/20eachfamily remain required.
+A new data derivation/reference version will separate retention of demonstrated
+BASEskills from capabilities BASEdidnotdemonstrate; all128items stillreported.
+
+Next implement fresh generated/results ethics_sft_instruction_replay_text_v1 from
+all512saved replay candidates. No new model calls, response edits or quality retries.
+Keep every full correct/strict/normal reply with standard canonical chat text and
+source/input/output hashes. Permit a canonical tokenizer segmentation when complete
+decoded teacher text and input header agree exactly; save actual teacher IDs and
+training IDs separately. Require all body/think/final/EOS targets once. Retain all
+wrong/noncompliant/capped cases explicitly. Do not call original v2readiness passed.
+Expected count440if28equivalent-text exclusions recover; verify rather than assume.
+Nonthinking-sort absence andnegation imbalance are declared limitations. Dataset is
+finite BASE-known replay, not an instruction-capability benchmark.
+
+New registered reference ethics_gpu_instruction_retention_base_v1: same128existing
+retention prompts/seeds, pinnedBASE, same modes/sampling/batch32,4096cap matching
+frozen controls' reasoning allowance. Save full128including wrong/capped/malformed.
+Before any candidate training, freeze the exact BASE-known IDs and response hashes:
+semanticcorrect ANDstrictformat ANDcomplete valid reasoning/final ANDnormalstop.
+Require>=32known/mode andall8families represented; otherwise reference is insufficient.
+Future adapter runs use identical prompts/modes/decoder/seeds/budgets and report all
+128before/after outcomes plus the fixed paired subset. Candidate retention requires
+>=.95semantic correctness and1.0strictformat/validboundaries/normalstops on those
+pretraining-known items per mode. Unknown items never imputed neutral or dropped from
+reports. Mask never depends on adapter success. This is development qualification,
+not an independent confirmation or a measure that BASEalreadyfailed tasks were forgotten.
+
+Once reviewed derivation/reference passes, freeze actual replay mass/repeated draws
+and optimizer steps for one high-LR+varied-request+replay candidate, then run final-only
+chat recall/frozencontrols/retention gates and full reply review. No automatic training
+from this amendment, no changes to ethical instrument, no weakening of its controls.
+A fresh-neutral confirmation still follows any development pass. Exact dose/schedule
+not yet prepared. Source/inputs/results/reviews require this block's private snapshot.
