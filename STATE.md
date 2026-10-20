@@ -11,33 +11,32 @@ has been trained.** Preparation alone does not complete this goal. Current detai
 
 ## Live GPU jobs
 
-**New authorized verification block:** assistant-document formatting is implemented;
-full suite1,102passed/5skipped, subsequent finite-worker/validator suite33passed.
-Inputs/protocols prepared for `ethics_sft_registry_format_matrix_v1`: direct chat
-canary, then assistant/highLR, raw/lowLR, assistant/lowLR. Same1,864,795loss targets;
-raw4,362chunks/546steps, assistant4,390chunks/550steps. New formatting adds masked
-context, not loss exposure. **RUNNING** finite Supervisor worker
-`sft-drift-registry-format-matrix-v1` on the existing GPU, starting with the direct
-chat canary; remaining three variants follow only if it passes. Source c293c82
-pushed and pulled on GPU; transferred inputs and pinned model config verified.
-Log `/workspace/sft-drift-ops/registry_format_matrix_v1.log`; registered master
-results root contains `progress.json`. Canary **PASSED**: BASE0/20, adapter20/20,
-all9checks including normalization/reload,150steps/82s. Canary terminal outputs
-copied Mac:33files/542,175,430bytes, all hashes matched. Assistant/highLR training
-is active; no semantic document-transfer result yet. Midpoint checkpoint275 saved,
-8files/396,933,183bytes copied Mac and hash-verified; pending next private snapshot.
-At275 all losses finite, first20mean3.1662 versus last20mean1.6211. This does not
-qualify semantic recall. Canary snapshot b218591afaf47794626372c0cd579a84b0eee06c,
-code95dee64,2,160files/5,163,085,759bytes, live/offline verified. Monitor from the Mac:
+**Neutral format/LR matrix:** canary PASSED (20/20 direct supervised chat recall).
+Assistant/highLR completed all11 engineering checks but failed original qualification:
+chat recall0/20, controls21/32, strict32/32, null1/16. Raw/lowLR also completed all11
+checks: recall0/20, controls31/32, strict32/32, null1/16; qualification FAILED.
+Assistant/lowLR training completed550steps; validation currently RUNNING under finite
+Supervisor `sft-drift-registry-format-matrix-v1` (PID22886), sourcec293c82.
+No ethical treatment starts. Exact log/status command:
 
 ```sh
-ssh -p 58689 root@38.49.42.46 'tail -n 5 /workspace/sft-drift-ops/registry_format_matrix_v1.log'
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-format-matrix-v1; cat /workspace/sft-drift/belief-transfer/data/results/ethical_stance_sft/ethics_sft_registry_format_matrix_v1/progress.json'
 ```
 
-Next: judge unchanged lookup/controls, preserve terminal checkpoints/results, and
-use separately recorded direct chat only for diagnosis if needed. Details:
-`changelog/2026-10-20-assistant-document-calibration.md`. These new runs support no
-restart-resume and cannot overwrite any started IDs. No ethical treatment starts.
+Post-failure direct-chat diagnostic `ethics_gpu_registry_format_sanity_v1` prepared:
+first4 anchors, five original-question/document-request/tag/seen/unseen-prefix conditions,
+40 BASE/adapter replies. Script and bank hash-bound;12 focused/import tests passed.
+Run only after matrix releases GPU: `.venv/bin/python scripts/probe_registry_chat.py run`
+on GPU. No qualification substitution; longer natural/semantic recall and direct math
+are permissible separate development diagnostics, not retroactive changes to frozen gates.
+Source/notes/probe committed before dispatch. No restart-resume for started runs.
+HighLR all37terminal training/checkpoint files (970,691,759bytes) and17validation files
+(310,205bytes) copied Mac and SHA/bytes verified; all20recall and11failed controls read.
+Raw-low and final assistant outputs still need terminal off-box copies.
+Last verified private snapshot69cd59a8b217ac4f0dc68bf78daa967dcf6b712c atcode7aad4da:
+2,169files/5,560,020,983bytes, includes canary and assistant/high midpoint275.
+New high terminal outputs and later results require next save. Details:
+`changelog/2026-10-20-assistant-document-calibration.md`.
 
 Authorized RTX 3090: `38.49.42.46:58689`; project `/workspace/sft-drift/belief-transfer`.
 Qwen3-4B revision `1cfa9a7208912126459214e8b04321603b3df60c`. Main training environment

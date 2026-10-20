@@ -76,3 +76,28 @@ Assistant/highLR midpoint275 saved; all losses finite, first20mean3.16619 versus
 last20mean1.62115. Its8checkpointfiles/396,933,183bytes copied Mac with exact hashes
 and receipt at18:05Z. Training remains active beyond midpoint; no semantic result
 or restart-resume claim. Neither checkpoint selection nor ethical outcome tuning.
+
+
+## Completed high-rate and raw low-rate results; direct-chat diagnostic
+
+Assistant/high completed550steps/2265.68s, all11 engineering checks, exact1,864,795
+loss targets. Original strict chat lookup0/20; factual controls21/32 despite32/32
+valid final words, null1/16. All20lookup replies and11failed controls read in full:
+incorrect codes are not merely extra prose; several negation/control failures use
+terse thinking traces. Preserve raw failures; do not call this forgetting.
+All37training/checkpoint files/970,691,759bytes and17validation files/310,205bytes
+copied Mac with exact inventories and receipts. Midpoint snapshot69cd59a8b217ac4f0dc68bf78daa967dcf6b712c,
+code7aad4da,2169files/5,560,020,983bytes passed save and offline verification.
+Raw/low completed all11 checks, original recall0/20, controls31/32, strict32/32,
+null1/16: qualification failed. Assistant/low training completed; validation running.
+
+User permits reconsidering development recall/controls. Separate learning, retrieval,
+and format compliance: exact four-digit-only chat transfer is a demanding test of
+prose SFT, but incorrect codes and actual instrument-control errors remain failures.
+No changed thresholds on the current matrix, no ethical instrument/decoder change.
+Prepared hash-bound `ethics_gpu_registry_format_sanity_v1` (already registered): first4
+original anchors, original question, training request, request+tag, seen prose prefix,
+unseen prose prefix. BASE and highLR adapter,40 replies;64or8token caps, greedy nativeHF.
+Exact inputs/IDs/raw replies/stop metadata and adapter identities preserved. This is
+unblinded diagnosis, not free-recall qualification. Script tests plus import checks:
+12passed. Dispatch after current matrix, without interrupting nonresumable jobs.
