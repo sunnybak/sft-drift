@@ -1,5 +1,41 @@
 # Current state — 2026-10-19
 
+## Active goal: complete the pooled SFT experiment
+
+User authorized proceeding through baseline repeats, preserved semantic memorization,
+data-review policy, frozen comparison and the six-arm SFT/evaluation/analysis sequence.
+Do not mark the goal complete after reference or infrastructure work alone.
+
+Supervisor `sft-drift-vllm-repeats-v1` is RUNNING on the existing RTX3090; seed7
+passed development/validation and is running full BASE. Seed1729 matched chain is
+queued in the same finite worker. Fresh IDs are `ethics_gpu_vllm_{development,validation,base}_seed{7,1729}_v1`.
+Worker/log: `/workspace/sft-drift-ops/vllm_repeats_v1.{sh,log}`. Same pinned backend,
+frozen instrument/decoder, per-request RNG and256/max64 batching. No repeat resumes
+or overwrites; preserve completed windows. No new rental or treatment has started.
+
+Standalone `document_sft operation=memorize` now preserves20 arbitrary lookup facts,
+base/reloaded exact greedy answers, loss and checkpoints. Fresh technical config/input:
+`ethics_sft_memorization_v1`,150 steps /30 passes, batch4, rank8 q/v, lr2e-4, seed0.
+BASE must score<=.1, reloaded>=.9, loss decrease and update/reload checks pass. Toy gate
+is bounded and cannot train ethical arms without their hashed plans. Not yet on GPU.
+Focused45passed; full989passed/five skipped. Inputs prepared before tests; tests use
+mocks/temp paths. Model/environment dependency pins unchanged.
+
+Repairv6 is undergoing separate original-v4 Decisions recheck before applying it to a
+fresh candidatev2. Outstanding1,098 review entries remain; ten additional full hiring
+texts read during this block, annotations pending durable journal. No automatic semantic
+clearance or silent filtering. Training dose/manifests remain to be fixed before outcomes.
+
+Exact live monitor:
+```sh
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-vllm-repeats-v1; tail -n 12 /workspace/sft-drift-ops/vllm_repeats_v1.log'
+```
+
+Next: queue the semantic memory check after both completed reference chains; finish
+scope follow-up/traceable corrections, declare matched dose/step and checkpoint rules,
+then train all-positive/all-negative/complementary mixes/off-topic/C4-only and evaluate
+all100 beliefs on every designated checkpoint. Preserve at completed work boundaries.
+
 ## Completed: fresh full GPU BASE, seed 42
 
 `ethics_gpu_vllm_base_v1` completed successfully on the existing RTX3090. All100

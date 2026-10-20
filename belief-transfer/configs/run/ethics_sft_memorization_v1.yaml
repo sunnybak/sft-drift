@@ -1,0 +1,19 @@
+# @package _global_
+# Technical semantic check, not a treatment schedule or ethical model.
+defaults:
+  - ethics_sft_document_smoke_v3
+run_id: ethics_sft_memorization_v1
+document_sft:
+  manifest_path: data/generated/ethical_stance_sft/ethics_sft_memorization_v1/documents.jsonl
+  operation: memorize
+  max_length: 256
+  max_steps: 150
+  save_steps: 150
+training:
+  sft:
+    lr: 2.0e-4
+    batch_size: 4
+    grad_accum: 1
+    seed: 0
+    max_seq_len: 256
+    gradient_checkpointing: false

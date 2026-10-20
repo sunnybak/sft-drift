@@ -53,6 +53,10 @@ async def run(job: JobConfig) -> RunResult:
     manifest = ROOT / spec.manifest_path
     verify_training_plan(job, manifest)
     rows = load_manifest(manifest)
+    if spec.operation == 'memorize':
+        from belief_transfer.benchmarks.document_memory import validate_memory_inputs
+
+        validate_memory_inputs(job, rows)
     output = ROOT / 'data/results' / job.experiment.id / job.run_id
     checkpoint = ROOT / 'data/checkpoints' / job.experiment.id / job.run_id
     if (output.exists() and any(p.name not in {'.hydra', 'run.log'} for p in output.iterdir())) or checkpoint.exists():
@@ -74,6 +78,15 @@ async def run(job: JobConfig) -> RunResult:
                    'unique_sources': len({r['source_id'] for r in rows}), 'chunks': len(chunks),
                    'loss_tokens': sum(sum(x != -100 for x in c['labels'][1:]) for c in chunks)}
         artifacts = [manifest, path, path.with_suffix('.md')]
+        if spec.operation == 'memorize':
+            from belief_transfer.benchmarks.document_memory import probe_memory
+
+            metrics['memorization'] = {'base': probe_memory(job, rows, output, adapter=None),
+                'protocol': 'Twenty arbitrary lookup codes; exact greedy answers, thinking disabled, 16-token cap',
+                'max_base_accuracy': 0.1, 'min_reloaded_accuracy': 0.9}
+            if metrics['memorization']['base']['accuracy'] > 0.1:
+                (output / 'verification_failure.json').write_text(json.dumps(metrics, indent=2) + '\n')
+                raise RuntimeError('Toy mappings are already known by BASE; do not train this check')
         if spec.operation != 'prepare':
             from belief_transfer.training.documents import train_documents
 
@@ -83,6 +96,18 @@ async def run(job: JobConfig) -> RunResult:
             if metrics['training']['status'] != 'COMPLETED':
                 (output / 'verification_failure.json').write_text(json.dumps(metrics, indent=2) + '\n')
                 raise RuntimeError('Document training verification failed; preserve this run')
+            if spec.operation == 'memorize':
+                metrics['memorization']['reloaded'] = probe_memory(job, rows, output, adapter=checkpoint / 'final')
+                memory = metrics['memorization']
+                losses = [r['loss'] for r in metrics['training']['log_history'] if 'loss' in r]
+                memory['loss_decreased'] = len(losses) >= 2 and losses[-1] < losses[0]
+                memory['passed'] = (memory['base']['accuracy'] <= 0.1
+                    and memory['reloaded']['accuracy'] >= 0.9 and memory['loss_decreased'])
+                for name in ('memory_base', 'memory_reloaded'):
+                    artifacts.extend([output / f'{name}.jsonl', output / f'{name}.md'])
+                if not memory['passed']:
+                    (output / 'verification_failure.json').write_text(json.dumps(metrics, indent=2) + '\n')
+                    raise RuntimeError('Semantic memorization failed; preserve this run')
         result = build_result(RunContext(), stage='document_sft', experiment_id=job.experiment.id,
                               run_id=job.run_id, datapoints=len(rows), artifacts=artifacts,
                               metrics=metrics, backend=backend_info(dtype=job.model_spec.dtype),

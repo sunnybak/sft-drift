@@ -52,3 +52,15 @@ are recorded. Backend-specific numerical draws need not equal MLX. Fresh CUDA co
 qualify this path before BASE; all compared CUDA models use the same contract.
 Cached HF inference and training loads are local-only, preventing a metadata refresh
 from fetching a different upstream checkpoint inside a measurement.
+
+## Preserved semantic memorization gate
+
+`operation=memorize` is a bounded technical use of the same standalone document
+trainer. `ethics_sft_memorization_v1` contains20 seeded arbitrary registry facts,
+150 steps (30 passes), a fresh rank8 q/v adapter and exact greedy16-token recall,
+thinking disabled. BASE accuracy must be at most10%, reloaded accuracy at least90%,
+loss must decrease, and all ordinary update/base-isolation/checkpoint/reload checks
+must pass. Raw prompts/responses, generation metadata, toy texts, loss history and
+checkpoint are retained. The operation rejects treatment IDs, non-toy inputs and
+more than200 steps. This is distinct from both the two-step smoke and treatment
+training; its hyperparameters are not a treatment schedule.
