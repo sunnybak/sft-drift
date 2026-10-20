@@ -97,7 +97,8 @@
     "results/ethical_pilot/ethics_gpu_vllm_validation_v1",
     "results/ethical_pilot/ethics_gpu_vllm_base_v1",
     "results/ethical_pilot/ethics_gpu_tokenization_hf_v1",
-    "results/ethical_pilot/ethics_gpu_tokenization_vllm_v1"
+    "results/ethical_pilot/ethics_gpu_tokenization_vllm_v1",
+    "results/ethical_pilot/ethics_gpu_vllm_harness_setup_v1"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

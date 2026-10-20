@@ -1,0 +1,10 @@
+# Separate environment, never install into the pinned training .venv.
+vllm==0.19.0
+torch==2.10.0
+transformers==4.57.6
+hydra-core==1.3.5
+omegaconf==2.3.1
+pydantic==2.13.4
+python-dotenv==1.2.2
+PyYAML==6.0.3
+matplotlib==3.11.1
