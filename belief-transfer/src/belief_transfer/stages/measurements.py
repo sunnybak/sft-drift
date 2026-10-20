@@ -321,7 +321,7 @@ async def administer(model, row, *, temperature=0, thinking=False):
         replies = await asyncio.to_thread(model.generate, [row["prompt"]], temperature=temperature)
         if len(replies) != 1:
             raise ValueError("incorrect response count")
-        return observation_from_reply(row, replies[0], getattr(model, "last_generation_metadata", None),
+        return observed_backend_reply(row, replies[0], getattr(model, "last_generation_metadata", None),
                                       thinking=thinking, seed=getattr(model, "seed", None))
     except Exception as exc:
         return {**row, "response": None, "answer": None, "strict_format": False,
@@ -338,9 +338,17 @@ async def administer_batch(model, rows, spec):
             temperature=spec.measurement_decoding.temperature, seeds=seeds, batch_size=spec.measurement_batch_size)
         if len(replies) != len(rows):
             raise ValueError("incorrect batch response count")
-        return [observation_from_reply(row, text, metadata,
+        return [observed_backend_reply(row, text, metadata,
             thinking=spec.measurement_decoding.thinking, seed=seed)
             for row, (text, metadata), seed in zip(rows, replies, seeds)]
     except Exception as exc:
         return [{**row, "response": None, "answer": None, "strict_format": False,
                  "error": f"{type(exc).__name__}: {exc}"} for row in rows]
+
+
+def observed_backend_reply(row, text, metadata, *, thinking, seed):
+    result = observation_from_reply(row, text, metadata, thinking=thinking, seed=seed)
+    if (metadata or {}).get('backend_error'):
+        result.update(error=metadata['backend_error'], answer=None,
+                      answer_extraction='backend-error', strict_format=False)
+    return result

@@ -106,8 +106,9 @@ def test_vllm_rejects_incomplete_reordered_and_oversized_requests(monkeypatch):
     with pytest.raises(ValueError, match='request count'):
         m.generate_batch_with_metadata(['abc'], seeds=[7], temperature=.6, batch_size=1)
     m._engine.generate = lambda *a, **kw: [SimpleNamespace(prompt_token_ids=[999], outputs=[])]
-    with pytest.raises(ValueError, match='input identity'):
-        m.generate_batch_with_metadata(['abc'], seeds=[7], temperature=.6, batch_size=1)
+    _, metadata = m.generate_batch_with_metadata(['abc'], seeds=[7], temperature=.6, batch_size=1)[0]
+    assert 'input identity' in metadata['backend_error']
+    assert metadata['reported_input_token_ids'] == [999]
     m.generation.max_model_len = 1
     with pytest.raises(ValueError, match='context capacity'):
         m.generate_batch_with_metadata(['abc'], seeds=[7], temperature=.6, batch_size=1)
@@ -116,8 +117,8 @@ def test_vllm_rejects_incomplete_reordered_and_oversized_requests(monkeypatch):
 def test_vllm_must_confirm_the_requested_adapter(monkeypatch):
     m = fake_vllm(monkeypatch)
     m._lora = SimpleNamespace(lora_int_id=1)
-    with pytest.raises(ValueError, match='confirm the requested adapter'):
-        m.generate_batch_with_metadata(['abc'], seeds=[7], temperature=.6, batch_size=1)
+    _, metadata = m.generate_batch_with_metadata(['abc'], seeds=[7], temperature=.6, batch_size=1)[0]
+    assert 'confirm the requested adapter' in metadata['backend_error']
     generate = m._engine.generate
 
     def confirmed(*a, **kw):
@@ -130,3 +131,18 @@ def test_vllm_must_confirm_the_requested_adapter(monkeypatch):
     m._engine.generate = confirmed
     _, metadata = m.generate_batch_with_metadata(['abc'], seeds=[7], temperature=.6, batch_size=1)[0]
     assert metadata['adapter_lora_id'] == 1
+
+
+def test_a_failed_backend_row_preserves_valid_neighbors_and_partial_text():
+    from belief_transfer.stages.measurements import observed_backend_reply
+    from belief_transfer.stages.stance_study import study_controls
+
+    row = study_controls('named_endorse_reject')[0]
+    text = '<think>Reasoning.</think>\nendorse'
+    valid = observed_backend_reply(row, text, {'finish_reason': 'stop'}, thinking=True, seed=7)
+    failed = observed_backend_reply(row, text, {'finish_reason': 'abort',
+        'backend_error': 'request aborted', 'output_token_ids': [1, 2]}, thinking=True, seed=8)
+    assert valid['answer'] == 'agree' and not valid.get('error')
+    assert failed['answer'] is None and failed['error'] == 'request aborted'
+    assert failed['response'] == text
+    assert failed['generation_metadata']['output_token_ids'] == [1, 2]

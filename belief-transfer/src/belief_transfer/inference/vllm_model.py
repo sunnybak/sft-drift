@@ -59,7 +59,7 @@ class VLLMModel:
             self._lora = LoRARequest('study-adapter', 1, str(self.adapter_path.resolve()))
 
     def generate_batch_with_metadata(self, prompts, *, temperature=0, seeds, batch_size):
-        if not prompts or len(prompts) != len(seeds) or batch_size < 1:
+        if not prompts or len(prompts) != len(seeds) or batch_size < 1 or len(prompts) > batch_size:
             raise ValueError('Aligned nonempty prompts/seeds and positive batch size required')
         self._ensure_loaded()
         from vllm import SamplingParams
@@ -78,29 +78,41 @@ class VLLMModel:
         execution = generation_identity(self.generation)
         replies = []
         for ids, seed, result in zip(inputs, seeds, results):
-            if list(result.prompt_token_ids) != ids or len(result.outputs) != 1:
-                raise ValueError('vLLM input identity or output multiplicity changed')
             actual_lora = getattr(result, 'lora_request', None)
-            if self._lora is not None and getattr(actual_lora, 'lora_int_id', None) != self._lora.lora_int_id:
-                raise ValueError('vLLM did not confirm the requested adapter')
-            output = result.outputs[0]
-            if output.finish_reason not in {'stop', 'length'}:
-                raise RuntimeError(f'vLLM request did not complete normally: {output.finish_reason}')
-            tokens = list(output.token_ids)
-            if not tokens:
-                raise RuntimeError('vLLM returned no generated tokens')
+            raw_outputs = [{'token_ids': list(getattr(o, 'token_ids', []) or []),
+                'text': getattr(o, 'text', None), 'finish_reason': getattr(o, 'finish_reason', None),
+                'stop_reason': getattr(o, 'stop_reason', None)} for o in getattr(result, 'outputs', [])]
+            output = raw_outputs[0] if raw_outputs else {}
+            tokens = output.get('token_ids', [])
             text = self._tokenizer.decode(tokens, skip_special_tokens=True).strip()
-            replies.append((text, {'finish_reason': output.finish_reason,
-                'stop_reason': output.stop_reason, 'prompt_tokens': len(ids),
+            error = None
+            if list(getattr(result, 'prompt_token_ids', []) or []) != ids or len(raw_outputs) != 1:
+                error = 'vLLM input identity or output multiplicity changed'
+            elif self._lora is not None and getattr(actual_lora, 'lora_int_id', None) != self._lora.lora_int_id:
+                error = 'vLLM did not confirm the requested adapter'
+            elif output.get('finish_reason') not in {'stop', 'length'}:
+                error = f'vLLM request did not complete normally: {output.get("finish_reason")}'
+            elif not tokens:
+                error = 'vLLM returned no generated tokens'
+            replies.append((text, {'finish_reason': output.get('finish_reason'),
+                'stop_reason': output.get('stop_reason'), 'prompt_tokens': len(ids),
                 'generation_tokens': len(tokens), 'input_token_ids': ids, 'output_token_ids': tokens,
                 'sampling_seed': int(seed), 'sampling_seed_strategy': 'vllm-per-request-v1',
                 'sampler_backend': 'vllm-per-request-v1', 'batch_size': len(prompts),
                 'submission_batch_size': len(prompts), 'max_num_seqs': self.generation.max_num_seqs,
                 'adapter_lora_id': getattr(actual_lora, 'lora_int_id', None),
+                **({'backend_error': error, 'reported_input_token_ids': getattr(result, 'prompt_token_ids', None),
+                    'raw_outputs': raw_outputs} if error else {}),
                 'model_revision': self.generation.revision, **execution}))
         self.last_generation_metadata = replies[0][1] if len(replies) == 1 else None
         return replies
 
     def generate(self, prompts, temperature=0):
-        return [text for text, _ in self.generate_batch_with_metadata(
-            prompts, temperature=temperature, seeds=[self.seed] * len(prompts), batch_size=self.batch_size)]
+        texts = []
+        for start in range(0, len(prompts), self.batch_size):
+            group = prompts[start:start + self.batch_size]
+            texts.extend(text for text, _ in self.generate_batch_with_metadata(
+                group, temperature=temperature, seeds=[self.seed] * len(group), batch_size=self.batch_size))
+        if len(prompts) != 1:
+            self.last_generation_metadata = None
+        return texts
