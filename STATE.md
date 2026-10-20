@@ -15,7 +15,11 @@ reproducible training). Both v3 optimizer checkpoints and final adapter are save
 `sft-drift-reference-v3` passed development (56/56 replies) and held-out validation
 (224/224 replies); both had 32/32 known controls correct with extraction/null checks
 passed. Full CUDA BASE `ethics_gpu_base_v1` is now running: 56/2,400 belief replies
-saved at the latest check, plus all 32 fresh controls. It reuses capacity v3 and
+saved at the earlier check, plus all 32 fresh controls. Latest speed audit: 328/2,400
+replies saved, worker and Python process confirmed running after a 7.35-second
+in-memory pause. Sampler profile v1 measured 2.31 ms versus ~76.52 ms total per
+decode step (~3%); no production inference changes or restart. See
+`belief-transfer/GPU_INFERENCE_SPEED.md`. It reuses capacity v3 and
 all three measurement overlays use batch eight. No treatment training has started. See
 `changelog/2026-10-19-gpu-experiment-start.md`.
 

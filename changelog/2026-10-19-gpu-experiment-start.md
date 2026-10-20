@@ -98,3 +98,16 @@ Full CUDA BASE v1 is running under Supervisor reference-v3 (PID 4905); 56/2,400
 belief replies plus 32 controls saved at check. No treatment training. Completed
 qualification artifacts are copied to Mac; active BASE remains on GPU until its
 next safe copy boundary. No automatic measurement resume or overwrite.
+
+Speed investigation authorized by user. BASE process 5484 was paused in memory for
+7.353 seconds while sampler-only synthetic CUDA microbenchmarks ran; separate watchdog
+would issue SIGCONT after 60 seconds. Finally resumed; process Sl, GPU active and
+328 real replies saved at verification. No sampler/weights/prompts/decoding changed.
+Sampler profile v1: current 2.314 ms/step; generator reuse 2.211 ms, compact top20
+1.833 ms (changes RNG mapping, not compatible). Current 320-row prefix implies
+76.515 ms per batch decode step; sampler is ~3%. 31.6% of rectangular decode slots
+are finished-row padding. No end-to-end optimized-engine speedup established.
+Recommendation: keep current BASE running; investigate continuous batching and
+compiled/static-cache inference as separate qualified backends before many treatments.
+Restart resume is not implemented; SIGCONT resumes only the original live process.
+Operational benchmark syntax check and live CUDA probe passed; no product source changes.
