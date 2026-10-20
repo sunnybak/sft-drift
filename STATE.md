@@ -17,6 +17,16 @@ are in `belief-transfer/STANCE_DECISION_QA.md`: subject-routed questions, direct
 predicates, untouched blind audits, separate dispositions, retained refusal/cache/retry
 semantics. These recommendations do not change completed rubric v4 or rerun it.
 
+## Pooled Decisions score plots
+
+Saved overall and 13-check histograms under the completed screen's
+`score_histograms_v1/` results subdirectory (PNG/SVG, exact bins/statistics, source hash).
+All subjects/positions pooled, original screen before repairs, no new API calls.
+Composite = maximum of ten serious checks; 19,995 complete rows, five refusals excluded.
+Median .01, p95 .08; 428 at least .2 and 134 at least .7. Logarithmic count axes.
+Individual criteria retain available valid scores. These are model judgments, not
+calibrated defect probabilities. The next GPU handoff and readiness status above remain.
+
 ## Completed work: full Decisions screen and bounded manual repairs
 
 User authorized screening all 20,000 synthetic documents and manual corrections.
