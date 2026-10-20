@@ -188,3 +188,10 @@ ID`ethics_gpu_instruction_retention_base_v1`;4096cap/128presentations and pretra
 known-mask freeze. Future adapter preparation takes explicit fresh run/training IDs,
 uses samebank/knownmask and validates training/adapter identities. Current state/plan
 controls execution; neither script starts training automatically.
+
+One combined neutral candidate: `scripts/prepare_registry_replay.py` compiles immutable
+`run/ethics_sft_registry_instruction_replay_v1.yaml`, exactplan/dose andfiniteworker;
+`scripts/judge_registry_replay.py` applies the prospective chat/control/retention
+contract. Generated worker verifies source/input hashes and fresh outputs, then trains
+once and runs original validation, semantic transfer andfixed-mask retention. Actual
+process/nextcommand remain in rootSTATE; no rerun or automatic ethical dispatch.

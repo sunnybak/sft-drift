@@ -225,3 +225,42 @@ run onlyBASEreference, review, then freeze actual training dose/config.
 
 Prior save/offlineverify succeeded b7fc93138cf01f96c0ebee17f69328c005773c3b,
 code463e12b,2,516files/9,054,019,079bytes. Current derivation/input files need next save.
+
+
+## BASE reference complete, candidate frozen before training
+
+BASEworkerPID35329source2a76eaf EXITEDnormally. Thinking64/64correct/strict/complete/
+normal; nonthinking47/64numericsemantic,57/64strict,64normal,44known. All8families/mode,
+referenceusable. Known-mask108items SHA
+718048fd44f3561ba8d6330422f8dc9a6af6c43e1d93603178adbc01fcc4064f.
+13terminalfiles/1,151,591bytes copiedMac/hashverified2026-10-20T22:35:45Z. All128finals
+inspected;64nonthinkingrawreplies+8thinking(index1000eachfamily)fullyread. Other56
+thinkingtracesnotfullyread. Four correctequations disagree with numericsemanticrule,
+formatfailure/knowneligibility unchanged. Newreference has fixedsortedorder as well
+as4096cap, so not a token-identical extension/causal cap-only test. Future adapter uses
+this same new bank/order/seeds/decoder. ReviewJSONL+MD andREVIEW.md retained.
+
+New compiler/judge implement one prospective combined candidate. Final75focused tests
+passed afterworker-freeze change; earlier77includedformatmatrix tests. Tests cover
+full-pool replay exposure/unique source lineage, finite repetition bound, every gate,
+mask/adapter/fileidentity, source tracked-input hashes, ignored machine-profile exclusion,
+outputfreshness/noresume. No shared trainer/serializer changes this block. CPU preparation
+and actual config/plan/source/input hashes verified, original4,000ordered rows exact.
+
+Preparedethics_sft_registry_instruction_replay_v1:6,200manifestdraws(2koriginalsynthetic,
+2kC4,2.2kreplaydrawsfrom440unique/5completecycles),6,590chunks,2,594,740inputtokens,
+2,356,785eligible targets=882,992synthetic+981,803C4+491,990replay(20.875%). One pass,
+824steps,412midpoint/824final;LR1e-4,rank16/alpha32/all7,seed42,batch4/accum2,other
+settings unchanged. No target masks/reply truncation or outcome-selected checkpoints.
+PlanSHA8a7dc56a03177b3c0e31aa7ecd1be1bc40893b3c2abbfabfdeff8281d69b0ceb.
+
+Allthreeevalinputs prepared:replay_validation_v1(originalstrictlookup/frozencontrols),
+replay_transfer_v1(two128-token unprefilled semanticfamilies+8directmath),
+replay_retention_v1(all128andfixed108known). Generic existing validation/transfer code
+reused;newjudge checks allgates,matchingadaptertensor/file/engineering andknownmask.
+Old strict endpoint reported separately; noethicaldispatch andagentreview mandatory.
+Worker/EXECUTION.md/execution_manifest bind tracked source/config files, lockfiles,
+allgenerated trial/eval inputs,corpus/reference sources,modelplan andknownmask. Ignored
+machine-local hardwareprofile excluded. Worker checks everySHA andfreshoutputs before
+GPU training,usesglobalflockfortraining andexistinginternal locksforeachinferencephase.
+No resume/restart ofstartedID. Nextcommit/deploy/remoteverify andfiniteSupervisorlaunch.

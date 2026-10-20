@@ -1,0 +1,17 @@
+# @package _global_
+# One neutral high-rate/varied-request/replay candidate; no ethical outcomes.
+defaults:
+  - ethics_sft_registry_varied_requests_v1
+run_id: ethics_sft_registry_instruction_replay_v1
+training:
+  sft:
+    lr: 0.0001
+document_sft:
+  manifest_path: data/generated/ethical_stance_sft/ethics_sft_registry_instruction_replay_v1/documents.jsonl
+  max_steps: 824
+  save_steps: 412
+  replay:
+    mode: qwen3_raw_response_v1
+    continuation_context_tokens: 64
+  plan_path: data/generated/ethical_stance_sft/ethics_sft_registry_instruction_replay_v1/plan.json
+  plan_sha256: 8a7dc56a03177b3c0e31aa7ecd1be1bc40893b3c2abbfabfdeff8281d69b0ceb

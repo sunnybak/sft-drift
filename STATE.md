@@ -92,16 +92,32 @@ teacher IDs and canonical training IDs separately retained. No response edits or
 model calls. Wrong/noncompliant/capped candidates remain excluded; original v2failure
 unchanged. DocumentsSHA09655b0d8ef5b0717eac2557824f4312d21be4b157d9f206dfa21d62ce35718b.
 
-Implemented/prepared `ethics_gpu_instruction_retention_base_v1`: same128prompts/seeds,
-4096cap; all replies reported, BASE-known item IDs/response hashes frozen before any
-training. Reference needs>=32known/mode andall8families represented. Future retention
-requires>=95%semantic accuracy and100%format/validboundaries/normalstops on those known
-items per mode. Frozen32controls and18/20perchatfamily gates unchanged. New helpers
-65focused tests passed, CPU derivation/token-label checks passed; no Mac weights.
-Next deploy committed source/prepared inputs, run finite CUDA inference reference:
-`scripts/probe_instruction_retention.py run`. Then inspect/referencefreeze, measure
-and freeze one combined high-LR+varied-document-request+replay trial. No training
-config/launch yet. Design: `changelog/2026-10-20-replay-followup-plan.md`.
+COMPLETED BASE `ethics_gpu_instruction_retention_base_v1`,source2a76eaf,Supervisor
+EXITED. Thinking64/64correct/strict/normal; nonthinking47/64semantic,57/64strict,64normal,
+44known. Reference usable, all8families/mode. Known maskSHA
+718048fd44f3561ba8d6330422f8dc9a6af6c43e1d93603178adbc01fcc4064f.
+All128finalanswers inspected;72full replies(64nonthinking+8thinking)read,56otherthinking
+traces notfullyread. Four equation-form sums disagree with numeric semantic rule but
+fail format; scores/mask unchanged.13terminalfiles/1,151,591bytes copiedMac/hashverified.
+Newreference fixed sortedorder as well as larger cap; no causal cap-only claim.
+
+PREPARED one candidate `ethics_sft_registry_instruction_replay_v1`:2,000synthetic+
+2,000C4+2,200replay draws(440unique,5fullcycles),6,590chunks,2,356,785targets
+(synthetic882,992/C4981,803/replay491,990=20.875%);2,594,740inputtokens. One expanded
+pass,824steps,checkpoints412/824,final-only qualification,LR1e-4/rank16/alpha32/all7,
+seed42/batch4/accum2,othersunchanged. Original4,000ordered rows/targets verified exact.
+PlanSHA8a7dc56a03177b3c0e31aa7ecd1be1bc40893b3c2abbfabfdeff8281d69b0ceb.
+
+75focused tests passed afterfinalworker-freeze change; cachedCPU config/plan/input
+hashes/dose checks passed. No Mac weights/training. New three evaluations prepared:
+`ethics_gpu_registry_replay_validation_v1`(originalstrict+frozen32controls),
+`ethics_gpu_registry_replay_transfer_v1`(two128token query families+math),
+`ethics_gpu_registry_replay_retention_v1`(same128andpretraining-knownmask).
+Hashed generated worker/inputs, no resume/overwrite, final judgment requires allgates
+andfull-reply review; original strict verdict remains separate. No ethical dispatch.
+Next commit/push, copy preparedinputs/reference/derivedreplay, verifyremote inputSHA,
+then run only frozen `data/generated/ethical_stance_sft/ethics_sft_registry_instruction_replay_v1/worker.sh`
+through finite Supervisor. No candidate training launched yet.
 
 GPU RTX3090: `38.49.42.46:58689`, project `/workspace/sft-drift/belief-transfer`.
 Qwen3-4B revision1cfa9a7208912126459214e8b04321603b3df60c. Training main.venv and
@@ -154,7 +170,7 @@ forgetting claim without separate retention tasks.
 Prior block fully privately saved and offline verified: snapshot
 b7fc93138cf01f96c0ebee17f69328c005773c3b,code463e12b,
 2,516files/9,054,019,079bytes. Includes all acquisition results/reviews and unusedv1
-inputs/source. Current derived replay andreference inputs require next snapshot.
+inputs/source. Current derived replay,BASEreference/results/review andcandidate inputs require next snapshot.
 Authoritative receipt `belief-transfer/data/.handoff-receipt.json`. No training queued.
 
 Commit/push clean source, then from belief-transfer:
