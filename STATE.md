@@ -11,15 +11,24 @@ belief grids,2,400 valid replies and32/32 controls, no errors/truncation. Seed17
 independent all-row metadata/scoring/input/seed audit passed; timed inference11.42min,
 2,101tok/s natural. All three completed reference chains and audits copied Mac.
 Worker/log `/workspace/sft-drift-ops/vllm_repeats_v1.{sh,log}` terminal; no restart resume.
+Baseline sampling report under seed1729 `baseline_variability_v1`:median per-belief
+three-seed range4.17pp,p95=16.67pp,max29.17pp; pairwise mean absolute drift3.21–3.71pp.
+Only3seeds, descriptive noise, not calibrated intervals or SFT effects.
 
 Semantic memoryv1 FAILED recall:BASE0/20, reloaded0/20, despite loss3.528→.0711 and
 all8 update/reload checks passing,48.64s training. Full outputs/checkpoints copied Mac.
 Capacity worker v1 exited at missing-success precondition; capacity stage never started.
-Fresh `ethics_sft_memorization_v2` prepared:20 distinct entity keys,200steps/40passes,
-rank16 all seven projections, same exact recall gate. No weakening or ethical tuning.
-Capacity inputs/config `ethics_sft_training_capacity_v1` remain prepared/unused:
-32draws→40chunks/32microbatches/8steps,B2/G4/length1024,rank16 all seven projections.
-Need queue fresh memoryv2 then capacity+rank16 vLLM probe after success.
+Fresh `ethics_sft_memorization_v2` also FAILED exact chat recall0/20 after BASE0/20,
+with broader rank16/all-projection adapter and distinct names,200steps. Several correct
+codes occur in longer replies; others wrong/truncated. Do not reinterpret as a pass.
+Full artifacts/checkpoints copied Mac. Both capacity workers gated out; capacity stage
+`ethics_sft_training_capacity_v1` has never started. No live training.
+Next CUDA action is a separate preserved diagnostic `ethics_gpu_document_memory_diagnostic_v1`:
+same BASE/adapter, original chat with64cap, completion-style chat, native4-token document
+continuation. Content/format metrics separate; failed strict gates remain unchanged.
+Capacity inputs remain prepared/unused:32draws→40chunks/32microbatches/8steps,B2/G4,
+length1024,rank16 all seven projections. Must pass an appropriate declared memorization
+check and update/reload gate before treatment; no lower threshold or belief-outcome tuning.
 
 Candidatev2 is assembled,20,000 records /54 hash-matched corrections /9,802,442 raw
 Qwen tokens. New v7 repairs one missing appeal safeguard found in ten complete hiring
@@ -34,8 +43,8 @@ scope defects,4 borderlines. Blind ledger `ethics_sft_scope_blind_review_v1` ann
 SHA2880be31270fe37217d24c8056290c6864d032286a9b540d53b12114d94561a6.
 No individual production model scores seen at judgment time. Joined audit shows both
 clear defects scored.03 and were missed; one model flag was agent-no-clear. This is
-not semantic clearance. New full-text adjudication packet140flags,139 still unread
-(one already in blind80); `ethics_sft_scope_followup_review_v1`. Three explicit repairs
+not semantic clearance. New full-text adjudication packet140flags,96 complete texts read
+(includes one already in blind80);44 remain unread; `ethics_sft_scope_followup_review_v1`. Three explicit repairs
 (v8) fully reread and rechecked low, cost$0.0012697; not yet assembled candidatev3.
 Two defect families: stipulated benefit weakened into uncertainty; excluded conduct
 misstated as permitted. Repair and targeted family checks still required.
@@ -44,17 +53,22 @@ QA log `/tmp/sft-drift-scope-followup-assess.log`; completed immutable. No QA ru
 New even_eos budgets keep first content/EOS and spread remaining targets, avoiding
 position-dependent EOS masking. Optional one_pass loader covers every chunk once with
 matched optimizer counts under a bounded batch size; default behavior unchanged. Both
-still need CUDA capacity qualification. Focused62passed; full994passed/five skipped.
+still need CUDA capacity qualification. Focused40passed; full1013passed/five skipped after newest dose helpers/scripts.
 Pooled dose helpers and manifest assembly script added;40 focused checks passed.
 Training arm manifests/dose/analysis are not frozen and no treatment has started.
 
-Exact live monitor:
+Exact continuation (from belief-transfer/):
+```sh
+uv run --no-sync python data/results/ethical_stance_sft/ethics_sft_scope_followup_review_v1/read_packet.py 96 104
+```
+
+Prior reference worker monitor (terminal):
 ```sh
 ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-vllm-repeats-v1; tail -n 12 /workspace/sft-drift-ops/vllm_repeats_v1.log'
 ```
 
-Next: queue the semantic memory check after both completed reference chains; finish
-scope follow-up/traceable corrections, declare matched dose/step and checkpoint rules,
+Next: diagnose toy native continuation versus chat retrieval/format, finish remaining44
+flagged full-text reviews and traceable repairs/family checks, declare matched dose/step and checkpoint rules,
 then train all-positive/all-negative/complementary mixes/off-topic/C4-only and evaluate
 all100 beliefs on every designated checkpoint. Preserve at completed work boundaries.
 

@@ -82,3 +82,12 @@ Operational script preserves full texts, first/EOS targets,source SHA and repeat
 not yet executed on candidate bank. Focused40passed; full994 from preceding block
 predates newest dose module and scripts. Private boundary save for codee237e4c verified
 1451files/526563467bytes; later artifacts require next snapshot.
+
+Full regression1013passed/5skipped122.69s, no concurrent live local artifact writes.
+Targeted full-text review96/140 now recorded;44remaining. Confirmed scope and internal
+reasoning issues have explicit per-ID repair instructions, not yet authored/rechecked.
+Second memorization check failed strict chat accuracy0/20, including several correct
+codes with extra words. Preserve failed status and perform separate native-versus-chat
+diagnostic; do not relax failed historical gate. Capacity stage never started.
+Three-seed BASE variability report:median within-belief range1/24,p95=4/24,max7/24;
+pairwise mean absolute score difference3.21–3.71percentage points. Descriptive only.
