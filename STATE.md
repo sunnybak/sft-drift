@@ -27,11 +27,11 @@ and isolated vLLM environment unchanged. No additional rental.
   only among8/16eligible pairs, so incomplete coverage fails null qualification.
   All104responses/metadata copied;17remote files SHA/bytes verified (394,513bytes).
   Failure analysis/JSONL+MD audit live under `ethics_gpu_registry_mixed_validation_v1`.
-- **PREPARED** `ethics_gpu_registry_native_diagnostic_v1`:80new greedy four-token
-  continuations,20exact trained prefixes+20unseen native paraphrases per BASE/adapter.
-  No expected code is in any input; source/final-adapter/binding/script/bank hashes frozen.
-  Pure diagnostic; cannot qualify the failed chat/control setup.74focused tests passed.
-  Dispatch pending; main pinned HF environment, shared GPU lock, no resume/overwrite.
+- **EXITED** `ethics_gpu_registry_native_diagnostic_v1`: BASE0/20 trained-prefix and
+  0/20 unseen-native-prefix recall; adapter20/20 in both. All80new raw replies saved.
+  Source/model/adapter binding preserved. This demonstrates native learning and transfer
+  to an unseen prose prefix, not chat/control qualification. All old failures unchanged.
+  Raw results copied Mac; final copy receipt is alongside the diagnostic outputs.
 
 Logs: `/workspace/sft-drift-ops/registry_mixed_{calibration,validation}_v1.log`.
 Both technical workers are terminal; no ethical treatment started. All newest completed
@@ -56,18 +56,18 @@ adapter>=.9; controls>=.95, strict format1.0, null flip<=.05, normal control sto
 Uses main HF and isolated vLLM environments serially. Protocol/banks frozen before
 calls;80 focused tests passed. No ethical outcomes used for calibration selection.
 
-Next prepared diagnostic command (GPU only, after worker dispatch recorded):
+All three technical workers are terminal. Next: implement the **unexecuted** model-
+serialization proposal below, then freeze and run a fresh neutral calibration using
+unchanged lookup/control gates. No new calibration ID/config/data has been prepared.
+Exact first command from repo root:
 
 ```sh
-.venv/bin/python -u scripts/probe_registry_native.py run
+cat changelog/2026-10-20-chat-serialization-calibration-proposal.md
 ```
 
-Do not rerun existing completed IDs. Read native diagnostic results to distinguish
-literal document learning from transfer to unseen prefixes/chat. Inspect the recorded
-premature final-answer boundary failures before preregistering another calibration.
-Lower learning rate or model-appropriate serialization are hypotheses, not established
-fixes. Preserve all original criteria/results; no ethical treatment clearance. Do not
-modify the frozen decoder/extractor to salvage choices from reasoning.
+Do not rerun existing completed IDs or change the frozen decoder/extractor to salvage
+choices from reasoning. Lower learning rate or serialization effects are hypotheses,
+not established causes. Native recall cannot qualify the failed chat/control setup.
 
 ## Established technical evidence
 
@@ -167,8 +167,9 @@ recorded before this block: main4b9998dd256bfe0d1663e0fe29e0f0e079f3fe9d, codee4
 results and neutral calibration inputs. **Authoritative latest receipt:**
 `belief-transfer/data/.handoff-receipt.json`; check it for the newer block snapshot.
 All new training/final validation outputs, reviews,repairv12 and native diagnostic
-preparation require this block's next snapshot. Its receipt is authoritative; pending
-native outputs require terminal copy before the box can be destroyed.
+preparation require this block's next snapshot. Its receipt is authoritative; native
+outputs also need their verified terminal copy included. All three workers are terminal;
+no current process is expected to survive a new box.
 
 Latest focused suites:80 validation/calibration/memory/import/handoff tests passed;
 subsequent repair-date/validation/import/handoff suite69 passed; native diagnostic

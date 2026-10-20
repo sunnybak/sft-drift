@@ -190,3 +190,20 @@ protection or expressly unestablished effect; ordinary unknown benefit magnitude
 distinct. One text also incorrectly calls fairness of offered terms stipulated. No
 source edits yet; partial hash-linked ledger and selection/MD preserved. Targeted count
 is not a prevalence estimate; not all115are deemed defective.
+
+
+## Current native diagnostic completed
+
+ethics_gpu_registry_native_diagnostic_v1 completed80new replies. BASE0/20onbothtrained
+andunseen native prefixes; currentadapter20/20onboth. This establishes native fact
+learning and transfer to a new native-prose prefix, not the failed chat/control gates.
+All source/adapter/model bindings preserved; exact protocol frozen before calls.
+Current failures remain0/20chat,22/32controls. No ethical treatment clearance.
+
+Pinned-paper loader audit saved under failedvalidationresults/serialization_audit.md.
+The code has separate text andchat-query branches; no claim about usage in a published
+condition or the hosted trainer’s effectiveEOS policy follows solely from that file.
+A candidate chat-conditioned serialization follow-up is written in the separate dated
+proposal, with the same original recall/control thresholds and fresh model/run IDs.
+It is unexecuted and must be hashed/dose-checked before training. No weaker native gate,
+extractor salvage, ethical-outcome parameter selection or automatic treatment queue.
