@@ -285,3 +285,29 @@ Active run.log/training_batches were intentionally not treated as immutable copi
 No checkpoint exists off-box yet; midpoint412mustbe copied after trainer_state412and
 trainingauditadvances beyondthat boundary. Do not destroy box with this active run.
 All newinputs/BASEreference/reviews and initial copiedfiles require this block's save.
+
+## Verified training wait and midpoint-copy automation
+
+Worker36320confirmedRUNNING168/824,finite loss/gradients. Added narrow operational
+preserve_cuda_checkpoint.py plus transport/boundary tests45passed(temp,mocked/noGPU).
+It queries the specific Supervisor process,waits forcheckpoint trainer_state step412
+andtrainingauditadvanced to>=412(orcompletedtrainingforfinalstep),then packages all
+immutable checkpoint files withbefore/after SHA/size checks. Local transport validates
+allmembers/bytes/identities before writes,refuses symlinks/pathescapes/conflicts,allows
+identical preexisting files andwritesimmutable receipt. Bounded3transport retries;
+observation timeout/error does not mean training is terminal. No training resume.
+Actual remote packaging logic tested against temp checkpoint/auditfiles,not source
+string assertions. Every real backup stays under registered existing run roots.
+
+Mac watcher launched execsession93962,log/tmp/sft-drift-replay-midpoint-watch.log:
+uv run --no-sync python scripts/preserve_cuda_checkpoint.py --host root@38.49.42.46 --port 58689 --run-id ethics_sft_registry_instruction_replay_v1 --step 412 --job sft-drift-registry-instruction-replay-v1 --wait
+No checkpoint ready/copied yet. Do not run private save concurrently with this watcher
+onceitcanmutate local artifacts. Preserve midpoint+notes/source aftercopythenletfinal/
+allthreeevaluationsfinish. No training/outcome settings changed while active.
+
+Prior block save/offlineverify6c2d8389ca5a43d5a805e05341190f1c9c5e89a6,codee1815b5,
+2,568files/9,099,775,038bytes,corpusc415be726ff3adf87e5af3f4976f81d3067a60c3 includes
+allnewcandidateinputs,derivedreplay,BASEreference/reviewsandfourinitialtrainingfiles.
+Current weights/logupdates remain only onGPU untilsafecheckpointcopy. STATEtrimmed
+tocurrent execution andnecessarypendingstudy information; fullpreviousdetail remains
+in Git/dates/artifacts. No new GPU/dependencies/training jobs or ethical dispatch.

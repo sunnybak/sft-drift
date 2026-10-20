@@ -2,190 +2,120 @@
 
 ## Objective
 
-Verify fresh document SFT learns content, transfers it to chat and preserves frozen
-controls before ethical training. Broader goal remains the pooled six-arm ethical
-study and all100belief before/after maps. **No ethical treatment has been trained.**
-Current evidence/plan: `changelog/2026-10-20-request-sensitive-recall.md`.
+Verify fresh document SFT learns content, transfers to unprefilled chat and preserves
+basic controls before ethical training. **No ethical treatment has been trained.**
+Current plan/evidence: `changelog/2026-10-20-replay-followup-plan.md`; earlier diagnoses:
+`changelog/2026-10-20-request-sensitive-recall.md`. Do not resume historical queues.
 
-## Current technical block
+## Live job and exact next action
 
-Finite format/LR matrix `ethics_sft_registry_format_matrix_v1` COMPLETED; no accepted
-variant. All3new runs passed11engineering checks, exact1,864,795loss targets.
-
-| Variant | Strict lookup | Controls | Control format | Null flips |
-| --- | ---: | ---: | ---: | ---: |
-| assistant/high1e-4 | 0/20 | 21/32 | 32/32 | 1/16 |
-| raw/low2e-5 | 0/20 | 31/32 | 32/32 | 1/16 |
-| assistant/low2e-5 | 0/20 | 32/32 | 32/32 | 0/16 |
-
-Directly supervised disjoint chat canary PASSED20/20, BASE0/20, all9checks. Separate
-`ethics_gpu_registry_format_sanity_v1`: all40replies read. High adapter retrieves
-4/4facts from unprefilled document requests,4/4tagged,4/4seen and4/4unseen prose
-prefixes, but0/4original questions. BASE0/20. This establishes conditional recall on
-four facts, not broad retrieval or qualification. `ethics_gpu_registry_transfer_development_v1`:
-all192replies read; BASE/all3adapters each0/20under both128token lookup families,
-8/8direct arithmetic; no truncation. Wrong codes, not a formatting-only failure.
-Both have full-reply agent reviews JSONL+MD. Frozen instrument/old failures unchanged.
-
-**COMPLETED, FAILED:** one follow-up `ethics_sft_registry_varied_requests_v1`.
-Same2,000synthetic+2,000C4bodies, lowerLR2e-5, same1,864,795targets,4,390chunks,
-550steps, checkpoints275/550; only synthetic training requests vary across10templates.
-New prospective development check requires18/20semantic recall per family plus
-unchanged frozen controls. Original strict endpoint retained separately. Reused
-20facts are development references, not independent confirmation. No ethical dispatch.
-PlanSHA4600aa89f5532073b767ed19f83ca0e81b0b59f4fb8e2556a3d5ebe8ef3d1166.
-43focused tests passed; cached CPU-tokenizer preparation passed. No Mac training.
-
-Supervisor `sft-drift-registry-varied-requests-v1` EXITED. All11engineering checks
-passed, but original and both longer semantic lookups0/20. Frozen controls25/32:
-25valid/correct,7extraction failures, null0/9eligible (incomplete16expected). Direct
-arithmetic8/8semantic,7/8exact numeral-only. All96semantic replies,40strict lookup
-replies and7failed controls read completely. Failures:4bare `<think>` replies,
-2duplicate closes (one ends with wrong reject),1prose final. Original failed verdicts
-and prospective failure preserved. Agent review JSONL+MD saved. All63terminal files/
-971,363,024bytes copied Mac and SHA/bytes verified, including prior midpoint8files.
-
-No training queued. Both inference-only diagnostics COMPLETED and18files/694,177bytes
-copied Mac with SHA/bytes verification. Conditioningv1: all20facts under five tagless
-note/lookup/prefix conditions, BASE+assistant/low+varied each0/20 in every condition.
-This did not test the actual masked DOCTAG context, so cannot establish failure to
-learn training content. Nonthinking_controlsv1 restored32/32format for allmodels but
-accuracy BASE25/32,low26/32,varied23/32; no replacement instrument is qualified.
-Frozen thinking measurements and prior failures remain unchanged.
-
-Exact-context diagnostic `ethics_gpu_registry_trained_context_v1` COMPLETED; finite
-Supervisor EXITED, no inference/training active or queued. All320continuations read,
-per-response reviews agree with mechanical matches. Original request/tagged versus
-untagged: high20/20and19/20, BASE/low/varied each0/20. Changed request/tagged versus
-untagged: high16/20and5/20, others0/20. Tagged inputs/next eligible code labels were
-verified against actual training IDs. These8token prefix completions are not chat
-recall or qualification; old failures unchanged. Terminal7files/520,168bytes copied
-Mac/hash-verified, full review saved. All396earlier diagnostic replies also read.
-
-Replay implementation/preparation completed; no training trial prepared/launched.
-Typed optional `DocumentReplaySpec` trains complete raw reasoning/final/EOS, masks
-user/header/padding, preserves full chunk coverage and keeps old document path exact.
-Trainer reports replay target mass separately. CPU pinned-tokenizer check reproduced
-all4,000previous documents/4,390chunks exactly; long thinking replay preserves every
-response token/EOS once. Full suite1,134passed/5skipped;98focused after metric refinement.
-
-COMPLETED acquisition `ethics_gpu_instruction_replay_pool_v2`, Supervisor EXITED,
-source5007184.512BASE replay candidates+128disjoint retention presentations generated.
-Original readiness FAILED:412admitted/96,357targets versus461required; nonthinking
-sort0/32strict(no-space)compliance, negation16/32correct. Thinking retention55/64,
-nonthinking47/64semantic under saved numeric rule; gates failed, no training queued.
-Thinking failures include9retention caps,7replay caps at1024tokens, not complete empty
-reasoning blocks (corrects early progress wording). No answers rescued from reasoning.
-All37token-roundtrip exclusions(28replay/9retention) decode identically to canonical
-text and have exact prompt tokens; alternate token segmentation, not incorrecttext.
-
-14terminal files/6,358,091bytes copied Mac/hashverified. Structured full-read review:
-32replay replies(indices0/31eachfamily/mode),2capped thinking retention, all27excluded
-nonthinking retention=61unique. Other579not manuallyread. Four correct equation-form
-sums disagree with automated unique-number semantic rule but fail final format;
-original scores/exclusions unchanged. Per-response reviews/tokenaudit/REVIEW.md saved.
-v1prepared inputs VOID before calls; exact archived builderSHA verified. No overwrite.
-
-COMPLETED fresh derivation `ethics_sft_instruction_replay_text_v1`:440examples,
-98,398eligible targets,440chunks;28equivalent-text exclusions recovered with actual
-teacher IDs and canonical training IDs separately retained. No response edits or new
-model calls. Wrong/noncompliant/capped candidates remain excluded; original v2failure
-unchanged. DocumentsSHA09655b0d8ef5b0717eac2557824f4312d21be4b157d9f206dfa21d62ce35718b.
-
-COMPLETED BASE `ethics_gpu_instruction_retention_base_v1`,source2a76eaf,Supervisor
-EXITED. Thinking64/64correct/strict/normal; nonthinking47/64semantic,57/64strict,64normal,
-44known. Reference usable, all8families/mode. Known maskSHA
-718048fd44f3561ba8d6330422f8dc9a6af6c43e1d93603178adbc01fcc4064f.
-All128finalanswers inspected;72full replies(64nonthinking+8thinking)read,56otherthinking
-traces notfullyread. Four equation-form sums disagree with numeric semantic rule but
-fail format; scores/mask unchanged.13terminalfiles/1,151,591bytes copiedMac/hashverified.
-Newreference fixed sortedorder as well as larger cap; no causal cap-only claim.
-
-PREPARED one candidate `ethics_sft_registry_instruction_replay_v1`:2,000synthetic+
-2,000C4+2,200replay draws(440unique,5fullcycles),6,590chunks,2,356,785targets
-(synthetic882,992/C4981,803/replay491,990=20.875%);2,594,740inputtokens. One expanded
-pass,824steps,checkpoints412/824,final-only qualification,LR1e-4/rank16/alpha32/all7,
-seed42/batch4/accum2,othersunchanged. Original4,000ordered rows/targets verified exact.
-PlanSHA8a7dc56a03177b3c0e31aa7ecd1be1bc40893b3c2abbfabfdeff8281d69b0ceb.
-
-75focused tests passed afterfinalworker-freeze change; cachedCPU config/plan/input
-hashes/dose checks passed. No Mac weights/training. New three evaluations prepared:
-`ethics_gpu_registry_replay_validation_v1`(originalstrict+frozen32controls),
-`ethics_gpu_registry_replay_transfer_v1`(two128token query families+math),
-`ethics_gpu_registry_replay_retention_v1`(same128andpretraining-knownmask).
-Hashed generated worker/inputs, no resume/overwrite, final judgment requires allgates
-andfull-reply review; original strict verdict remains separate. No ethical dispatch.
 RUNNING finite Supervisor `sft-drift-registry-instruction-replay-v1`,PID36320,source
-cbe81cb,log `/workspace/sft-drift-ops/registry_instruction_replay_v1.log`. Exact command:
-`/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_instruction_replay_v1/worker.sh`.
-36transportfiles/28,713,733bytes and839frozeninputSHA verified onGPU beforelaunch.
-ActualGPUtokenizer6590chunks and882992/981803/491990targets match plan exactly.
-First8steps have finite loss/grad norms; qualification still wholly unproven.
-Initial stable4files(STARTED,resolvedconfig,tokenizedJSONL/MD),39,776,191bytes copied
-Mac/SHAverified whiletraining runs. No checkpoints created/copied yet. No resume.
+cbe81cb on RTX3090 at `38.49.42.46:58689`. Project `/workspace/sft-drift/belief-transfer`.
+Log `/workspace/sft-drift-ops/registry_instruction_replay_v1.log`. Latest observed
+168/824steps,finite losses/gradnorms. Final qualification remains wholly unproven.
+Command: `/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_instruction_replay_v1/worker.sh`.
+No restart/resume or automatic ethical dispatch. Shared GPUlock `/tmp/sft-drift-cuda-benchmark.lock`.
+No new resources/dependencies. Training main.venv; isolatedvLLM env unchanged.
 
-Next command: `ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-instruction-replay-v1; tail -n 5 /workspace/sft-drift-ops/registry_instruction_replay_v1.log'`.
-At checkpoint412,verifytrainer_state412ANDtrainingauditadvanced past412 beforecopying
-immutable checkpoint files. Preserve midpoint privately,then let824final andallthree
-queued evaluations finish; inspect full replies andjudgment. Do not rerun startedIDs,
-select checkpoint onoutcomes ordispatchethicaltraining. Goal remains active.
+Mac checkpoint watcher RUNNING,exec session93962, log
+`/tmp/sft-drift-replay-midpoint-watch.log`. It polls the specific Supervisor worker and
+waits for trainer_state.global_step412ANDtrainingauditadvanced to>=412, then copies
+all immutable checkpoint files and verifies every SHA/byte. Observation/copy transport
+retries bounded3times; failures are not training-terminal declarations. Safe identical
+copies can be reverified; conflicts never overwritten. This does not resume training.
 
-GPU RTX3090: `38.49.42.46:58689`, project `/workspace/sft-drift/belief-transfer`.
-Qwen3-4B revision1cfa9a7208912126459214e8b04321603b3df60c. Training main.venv and
-isolatedvLLM env unchanged. Shared lock `/tmp/sft-drift-cuda-benchmark.lock`.
-No additional rental. Read `/etc/vast-agents-guide.md` on a new connection/context.
+Watcher command from belief-transfer:
+`uv run --no-sync python scripts/preserve_cuda_checkpoint.py --host root@38.49.42.46 --port 58689 --run-id ethics_sft_registry_instruction_replay_v1 --step 412 --job sft-drift-registry-instruction-replay-v1 --wait`
+Next inspect its live session/log and the actual worker:
+`ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-instruction-replay-v1; tail -n 3 /workspace/sft-drift-ops/registry_instruction_replay_v1.log'`.
+After copy succeeds, verify receipt at trainingresults/checkpoint_412_offbox_copy_verification.json,
+update notes,commit/push,private handoff save+verify. **Do not run handoff save concurrently
+with a watcher that can mutate local artifacts.** Let824final/allqueued evals complete,
+copy/review/preserve terminal outputs. Never select midpoint on outcomes or rerun startedIDs.
 
-## Reference and prior evidence
+## Frozen current candidate
 
-CUDA/vLLM BASE seeds42,7,1729 complete:100beliefs/2,400valid replies/32controls each,
-no errors/truncation. ~11.45min/full eval. Within-belief3seed range median4.17pp,
-p9516.67pp,max29.17pp, descriptive only. MLX separate; old HF BASE stopped360/2400,
-not resumable/mergeable. Source/details in prior dated notes and saved artifacts.
+Training ID `ethics_sft_registry_instruction_replay_v1`:2,000neutral synthetic documents
+(20arbitrary registry mappings x100),2,000pinnedC4,2,200replaydraws from440unique BASE
+responses(five fullcycles).6,200draws/6,590chunks/2,594,740inputtokens/2,356,785eligible
+targets=882,992synthetic+981,803C4+491,990replay(20.875%). Original4,000ordered rows and
+full target counts unchanged. Actual GPU tokenization matches those counts exactly.
 
-Old raw/high neutral calibration `ethics_sft_registry_mixed_calibration_v1` passed10
-engineering checks, but strict recall0/20, controls22/32, strict24/32; eight premature
-thinking-end failures. Native adapter seen/unseen-prefix recall20/20each, BASE0.
-Memoryv1/v2/v3 strict0/20,0/20,1/20; recognition/parity original gates failed and stay
-failed. These and current failures are not automatically forgetting. See
-`changelog/2026-10-20-assistant-document-calibration.md` and
-`changelog/2026-10-20-sft-pipeline-review.md` for detailed prior rationale/receipts.
+One expanded-manifest pass,824steps,checkpoints412/824,**final-only qualification**.
+LR1e-4,rank16/alpha32/all7modules,seed42,batch4/accum2,seq1024,warmup.03;other settings
+unchanged. Qwen3-4B revision1cfa9a7208912126459214e8b04321603b3df60c. Synthetic/C4use
+masked empty-think assistant-document headers; replay trains complete raw thinking/
+final/EOS with masked user/header/padding. Every eligible response target once per draw.
+PlanSHA8a7dc56a03177b3c0e31aa7ecd1be1bc40893b3c2abbfabfdeff8281d69b0ceb.
+839frozeninputSHA and36transportfiles/28,713,733bytes verified onGPU before launch.
+Generated worker verifies inputs/fresh outputs and sequences training then:
 
-## Dataset and ethical study remaining
+- `ethics_gpu_registry_replay_validation_v1`:original16-token exact lookup separately;
+  fresh BASE/adapter frozen32thinking controls,>=.95accuracy,1.0extraction/strictformat,
+  complete16nullpairs,flip<=.05,normalstops,allengineering/identity checks.
+- `ethics_gpu_registry_replay_transfer_v1`:two unprefilled128-token query families,
+  BASE<=2/20 andadapter>=18/20each,plus8directmath. Reused20facts are development checks.
+- `ethics_gpu_registry_replay_retention_v1`:all128replies andfixed pretraining-known
+  cohort per mode;>=.95semantic,1.0strictformat/boundaries/normalstops on knownitems.
 
-Original pooledv5:20,000synthetics=(90ethical+10fresh training controls)×100×2;
-20,634pinned C4 rows, revision1588ec454efa1a09f29cd18ddd04fe05fc8653a2,seed42/buffer1024.
-Ten frozen off-topic evaluation preferences remain untrained. Candidatev3 retains
-all20kIDs/189replacements/9,802,700tokens, SHA
-4b494add47a2edd3df58261b0f66022b69bf6f0cf745b9682ddb57a6b8f15a09.
+Judge checks same adapter tensor/file andpretraining-known mask. Original failed
+strict verdicts remain separate. Full reply review needed; a development pass requires
+fresh neutral confirmation before ethical treatment. Do not tune on ethical outcomes.
 
-Decisions screening immutable; low flags missed scope defects. Frozen96text full-read
-confirmation found4clear errors; v11has10reviewed corrections/clarifications; v12has18
-additional reviewed replacements. Neither overlay assembled into a final candidate.
-Remaining finite conservation closure:115candidates,18read (12clear,6no-clear),97
-unreviewed. Finish targeted disposition and explicit data-use policy. No full-bank
-semantic clearance/human-review claim. Details and exact ledgers under confirmation
-root; prior dated notes retain counts/failed calls/review lineage. Do not keep drawing
-blind samples until a pass. Preserve all original rows/versions; no purge.
+## References and limitations
 
-Before ethical treatments: qualify training; finish finite review/policy; assemble
-candidate once; measure/freeze exact dose/settings/seeds/checkpoints/hypotheses/
-falsifier/contrasts/analysis. Proposed4ethical arms9,000synthetics+same9,000C4;
-off-topic10fresh×100selected-position texts repeated to match measured exposure;
-C4-only replacement from11,634reserve rows. Exact compiler totals not run/frozen.
-Proposed training seeds42/7, midpoint/final designated evaluations require their own
-fresh controls and all100belief measurements. No tuning on ethical outcomes; no
-forgetting claim without separate retention tasks.
+`ethics_gpu_instruction_retention_base_v1` COMPLETED:thinking64/64correct/strict/normal;
+nonthinking47/64numericsemantic,57/64strict,64normal,44known. Fixed108itemknownmask SHA
+718048fd44f3561ba8d6330422f8dc9a6af6c43e1d93603178adbc01fcc4064f. All8families/mode.
+Same future adapter bank/order/seeds/budgets; newBASEsortedorder+4096cap is not a causal
+cap-only comparison with old1024run. All128finals inspected,72full replies read; other
+56thinking traces notfullyread. Four correct equation sums fail format anddisagree
+with unique-number semantic rule; original metrics/mask unchanged.13files/1,151,591bytes
+copiedMac/hashverified; raw replies/reviews privately preserved.
+
+`ethics_sft_instruction_replay_text_v1`:440valid unchanged texts/98,398targets,28BPE
+segmentation exclusions recovered with teacher/canonical IDs separately retained.
+Original acquisitionv2readiness FAILED(412/512originallyadmitted); oldBASEreference
+failed55/64thinking,47/64nonthinking. All failures remain. Full-text review61unique
+replies,other579notmanuallyread; automatedchecks640. Nonthinking sort absent from
+replay,negation imbalanced. Not a full-bank human review. No new generation/repair.
+
+Earlier format/LR matrix: no accepted variant; higherLRlearned20/20under exact tagged
+training context(19/20untagged),but0/20free lookup andfailedcontrols. Both lower-rate
+adapters0/20even exact trained contexts. Directly supervised disjoint chatcanary20/20
+BASE0/20checkslabelpathonly. All prior failed runs anddiagnostics preserved; prefix
+completion is not chat qualification. Details in dated notes above.
+
+GPU/vLLM BASE seeds42/7/1729 complete:100beliefs/2,400valid replies/32controls each,
+~11.45min/full eval. Within-belief3seedrange median4.17pp,p9516.67pp,max29.17pp,
+descriptive only. MacMLXseparate; stopped oldHFBASE360/2400notresumable. Frozen ethical
+bank/prompts/extractor/scoring/decoder unchanged. No belief-outcome parameter selection.
+
+## Ethical study still pending
+
+Original pooledv5:20,000synthetics=(90ethical+10freshtrainingcontrols)x100x2;
+20,634C4,pinned1588ec454efa1a09f29cd18ddd04fe05fc8653a2,seed42/buffer1024. Frozen ten
+offtopic evalpreferences remain untrained. Candidatev3retains20kIDs/189repairs/9,802,700tokens,
+SHA4b494add47a2edd3df58261b0f66022b69bf6f0cf745b9682ddb57a6b8f15a09. v11ten/v12eighteen
+reviewed overlays await assembly. Remaining conservationclosure115:18read(12clear,
+6no-clear),97unreviewed. Finish finite disposition/data-use policy; no semantic clearance.
+Then freeze exact six-arm doses/settings/seeds/checkpoints/hypotheses/contrasts/falsifier/
+analysis before treatments. Proposed fourethicalarms9ksynthetic+same9kC4,smaller10topic
+fresh control repeated for exposure,C4-only reserve11,634rows; compilerdose notfrozen.
+All designated study checkpoints require freshcontrols/all100belief measurements.
 
 ## Preservation
 
-Prior block fully privately saved and offline verified: snapshot
-b7fc93138cf01f96c0ebee17f69328c005773c3b,code463e12b,
-2,516files/9,054,019,079bytes. Includes all acquisition results/reviews and unusedv1
-inputs/source. Current derived replay,BASEreference/results/review andcandidate inputs require next snapshot.
-Authoritative receipt `belief-transfer/data/.handoff-receipt.json`. Current GPU training and unsaved new checkpoints require continued preservation.
+Latest private snapshot6c2d8389ca5a43d5a805e05341190f1c9c5e89a6,codee1815b5,
+2,568files/9,099,775,038bytes,live+offlineverified. Private corpus revision
+c415be726ff3adf87e5af3f4976f81d3067a60c3. Includes current candidateinputs/BASEreference/
+reviews/derivedreplay andinitialstable4trainingfiles(39,776,191bytes):STARTED,resolved
+config,tokenizedJSONL/MD,copyreceipt. **No current model checkpoint off-box yet**;
+active run.log/trainingaudit are not immutable copied files. Do not destroy the box.
+Authoritative receipt belief-transfer/data/.handoff-receipt.json. Current copy-helper
+source/notes await next source+artifact preservation boundary.
 
-Commit/push clean source, then from belief-transfer:
-`uv run --no-sync python scripts/handoff.py save` and `... handoff.py verify`.
-No source/artifact writes during save, no real-result writes during tests. Snapshot
-bytes do not make stages resumable. Do not destroy box until newest outputs/code are
-verified off-box/private. Only Mac writes private snapshots.
+At completed boundary: update STATE+datednotes,commit/push,then from belief-transfer
+`uv run --no-sync python scripts/handoff.py save` and`... handoff.py verify`.
+No artifact/source mutations during save; no real local artifact writes duringpytest.
+Snapshots preserve bytes, not automatic stage resume. Only Mac writes private snapshots.
