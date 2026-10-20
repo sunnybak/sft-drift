@@ -10,6 +10,15 @@ Details: `changelog/2026-10-19-pooled-study-execution.md`; older source history 
 ## GPU now
 
 Existing Vast RTX3090: `38.49.42.46:58689`, checkout `/workspace/sft-drift/belief-transfer`.
+**RUNNING:** finite neutral technical worker `sft-drift-registry-mixed-calibration-v1`,
+PID20871, confirmed started after GPU idle and remote hash/plan/source checks on4000rows.
+Log `/workspace/sft-drift-ops/registry_mixed_calibration_v1.log`; checkpoints under
+`data/checkpoints/ethical_stance_sft/ethics_sft_registry_mixed_calibration_v1/` at273/546.
+No resume/overwrite/autorestart. Outputs/checkpoints remain GPU-only until safe-boundary
+copy; do not destroy box. No ethical treatment started. Next: monitor actual process,
+copy/verify midpoint then final; judge final original20greedy16queries andfresh32controls
+against the frozen plan, without selecting on ethical outcomes.
+
 Supervisor **`sft-drift-training-checks-v1` EXITED**, confirmed terminal. Capacityv2
 passed all10 checks; memoryv3 failed strict chat recall. No GPU process from this worker
 is running and no treatment has started. Worker/script/log:
@@ -132,7 +141,7 @@ of deception. All92repair IDs are previously unmodified source rows. Review arti
   exact inputs/config checked, cause not established. Adapter loading reproduces native
   recall; this does not qualify chat/control transfer. All12remote files matched Mac
   SHA256/bytes (212,117bytes),worker.log copied.
-- New neutral calibration ethics_sft_registry_mixed_calibration_v1 PREPARED,not yet trained:
+- New neutral calibration ethics_sft_registry_mixed_calibration_v1 RUNNING (seeGPUabove):
   20toy facts×100procedural documents (424–456tokens),2,000shared pinned C4rows,1:1doccount.
   882,992synthetic+981,803C4loss targets=1,864,795;4,362chunks,maxlen1024,B4/G2,546steps,
   onepass,checkpoints273/546,seed42,r16allprojections,lr1e-4,warmup.03. Exact hashed
@@ -143,8 +152,8 @@ of deception. All92repair IDs are previously unmodified source rows. Review arti
   frozen32factualcontrols (>=.95,strict1.0,nullflip<=.05,normalstops). Old gates stayfailed.
 
 ```sh
-# Next prepared neutral calibration; main pinned training environment on GPU.
-flock /tmp/sft-drift-cuda-benchmark.lock .venv/bin/python -u run.py +run=ethics_sft_registry_mixed_calibration_v1
+# Already running; inspect this finite worker, do not restart the immutable run.
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-mixed-calibration-v1; tail -5 /workspace/sft-drift-ops/registry_mixed_calibration_v1.log'
 ```
 
 The new blind80 and flagged140 include219distinct texts in this work block. Earlier

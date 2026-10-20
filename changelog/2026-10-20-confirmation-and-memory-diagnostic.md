@@ -93,3 +93,11 @@ including temporary-directory complete manifest/plan composition, provenance rej
 held-out query exclusion, deterministic distinct texts and refusal to overwrite.
 Stage plan verifier passes on actual CPU-tokenized inputs. Training not yet dispatched
 at this note; actual worker state follows inSTATE. No local weights loaded ortraining.
+
+
+Neutral calibration launch: remote plan/hash/preparer-source verification passed4000rows,
+GPU idle and46GB disk free before start. Supervisor sft-drift-registry-mixed-calibration-v1
+confirmed RUNNING PID20871. Finite/noautorestart/noresume; step273/546checkpoints.
+Run andcheckpoint paths registered before execution. Sourcec64abce pulledGPU beforestart.
+Worker exactfiles preserved with generatedinputs. Outputs remainGPU-only until safe
+checkpoint copy; Mac private snapshot preserves completed prior results andnewinputs.
