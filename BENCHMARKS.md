@@ -62,7 +62,8 @@ Four ethical arm selections each contain 9,000 documents. Shared C4 is 9,000 ful
 the remaining 11,634 rows provide 5,402,242 replacement tokens. Document-count matching
 is not token matching. Declare measured token/step matching and off-topic position
 selection/reuse before SFT. The smaller off-topic bank has less topic breadth.
-Training remains unauthorized; no GPU resources are running.
+Treatment training remains pending. Existing GPU-box setup is recorded in STATE.md;
+it does not approve the treatment comparison.
 
 ### 2. Establish the target GPU measurement reference
 

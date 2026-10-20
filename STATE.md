@@ -1,14 +1,41 @@
 # Current state — 2026-10-19
 
-## Next session — Vast.ai GPU preparation
+## Completed — SSH-controlled Vast.ai setup
 
-User intends to continue on an existing/newly provisioned Vast.ai GPU for finetuning.
-Ready for restore, CUDA calibration/qualification, BASE and isolated technical smoke
+Existing box `38.49.42.46:58689`, RTX 3090 / 24,576 MiB, ephemeral workspace.
+Codex stays in the local chat; no remote agent harness. Checkout:
+`/workspace/sft-drift`, environment in `belief-transfer/.venv`.
+Setup worker `sft-drift-setup` exited successfully; run `ethics_gpu_setup_v1`.
+Locked install completed; both private stores restored and verified; **99 setup
+regressions passed**. Qwen3-4B is cached at revision
+`1cfa9a7208912126459214e8b04321603b3df60c`. CUDA 12.8 / BF16 canary passed:
+all parameters on GPU, response `READY`, peak allocated 8,057,951,744 bytes.
+GPU is idle; about 59 GiB disk remains. No calibration, BASE or training started.
+
+Exact monitor command from the Mac:
+
+```sh
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-setup; tail -n 30 /workspace/sft-drift-ops/setup_v1.log'
+```
+
+Completed artifacts, exact config, canary tokens, full log (including the stopped
+initial install), Supervisor definition and hardware evidence were copied back to
+the registered results directory on the Mac. Do not restart a completed canary.
+Code/notes are pushed and private snapshot success must be checked in
+`belief-transfer/data/.handoff-receipt.json`. Environment and model-cache binaries
+stay on the box; their versions/revision and setup procedure are preserved.
+See `belief-transfer/SSH_GPU_OPERATIONS.md` and
+`changelog/2026-10-19-ssh-gpu-setup.md`.
+
+## Next experiment steps — GPU qualification and document SFT
+
+The existing GPU box is ready for CUDA calibration/qualification, BASE and technical smoke
 checks. **Full document SFT is not yet wired up**: legacy stage=sft reads gated
 validated.jsonl/chat messages and applies a chat template. The new standalone document
 bank's DOCTAG/loss masks are metadata only. Implement and verify the document path,
 resolve scope-review dispositions, and freeze arm/dose/training/analysis before treatments.
-No rental, GPU run, rescreen or training was started in this readiness work block.
+No rental, rescreen or training was started in the earlier readiness work block;
+the currently authorized setup is recorded above.
 
 New handoff: `belief-transfer/VAST_SFT_HANDOFF.md` has verified existing entry points,
 implementation requirements and a prompt to paste into the GPU session. SETUP.md's
@@ -63,6 +90,12 @@ Exact next command, from `belief-transfer/`:
 
 ```sh
 cat VAST_SFT_HANDOFF.md
+```
+
+For the prepared box, read that same file remotely with:
+
+```sh
+ssh -p 58689 root@38.49.42.46 'cat /workspace/sft-drift/belief-transfer/VAST_SFT_HANDOFF.md'
 ```
 
 Follow that handoff for GPU setup; before treatment training prioritize scope adjudication using `disposition_queue.md` in the same folder.

@@ -3,6 +3,11 @@
 This is the current bootstrap. Do not paste the archived SETUP.md or old training goal.
 The work is fresh Qwen3-4B SFT against the frozen 100-belief Stance bank.
 
+The agent may stay in the local chat and control an existing GPU box over SSH;
+no remote agent harness is required. See
+[`belief-transfer/SSH_GPU_OPERATIONS.md`](belief-transfer/SSH_GPU_OPERATIONS.md)
+for the current checkout, setup worker and monitoring commands.
+
 ## 1. Get the current source
 
 On an existing Vast.ai CUDA machine, install Git, Python 3.12+ and uv if absent.
