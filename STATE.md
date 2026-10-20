@@ -6,13 +6,31 @@ User stopped the slow reference evaluation to prioritize higher throughput. Supe
 `sft-drift-reference-v3` is STOPPED; `ethics_gpu_base_v1` retains 360/2,400 completed
 belief replies plus 32 controls, with STOPPED.md. This is partial, not a completed BASE;
 its stage does not resume or overwrite. No treatment training started. CUDA memory freed.
-Now benchmark the existing 3090: dynamic cache → static cache → compiled static cache,
-using neutral forced-length text, pinned BF16 weights and unchanged sampling parameters.
-Registered IDs: `ethics_gpu_decode_{dynamic,static,compiled}_b8_v1`. Benchmark outputs
-are operational probes, not ethical observations. No new resources rented.
-Next: launch the finite throughput worker after deploying the benchmark script; inspect
-its cold/steady timings, memory, failure traces and actual compile status. A new engine
-needs fresh capacity/control qualification and a new BASE ID before study use.
+Pinned-stack neutral throughput benchmark completed: dynamic cache ~107 tokens/sec,
+static-only ~107, compiled static cache **332 tokens/sec (~3.1×)** at batch eight.
+Cold compiled trial 75.66s; steady trials 6.16s for 2,048 tokens. This is forced
+256-token neutral text, not a full-bank ETA. `sft-drift-speed-v2` is testing compiled
+batches 16 and 32. `sft-drift-vllm-v1` is installing isolated vLLM 0.19.0 / Torch
+2.10.0 / Transformers 4.57.6, then probes batches 8/32/64. No main ML pins changed.
+GPU probes share a file lock to avoid overlap. No new resources rented.
+
+Explicit optional compiled/vLLM inference is implemented under existing stages with
+runtime identities, pinned revision and separate RNG metadata. Historical unset config
+identity remains unchanged (81 focused checks passed, then 20). Full regression is
+running locally; do not copy artifacts into local results during it. New engine-specific
+development/validation/BASE configs are registered but not launched. They require fresh
+capacity, adapter and control qualification before study use. Original BASE stays stopped.
+
+Monitor from the Mac:
+
+```sh
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-speed-v2 sft-drift-vllm-v1; tail -n 10 /workspace/sft-drift-ops/speed_v2.log; tail -n 10 /workspace/sft-drift-ops/vllm_v1.log'
+```
+
+Next: inspect throughput trials and install/engine logs; compare warm performance,
+long-context capacity, tokenization and LoRA behavior before selecting the engine.
+Run `scripts/check_fast_qualification.py <new-run-id>` for any completed qualification.
+Benchmark outputs are operational probes, not ethical measurements.
 
 ## Active experiment preparation
 
