@@ -66,7 +66,14 @@
     "results/ethical_pilot/ethics_gpu_capacity_v1",
     "results/ethical_pilot/ethics_gpu_development_v1",
     "results/ethical_pilot/ethics_gpu_validation_v1",
-    "results/ethical_pilot/ethics_gpu_base_v1"
+    "results/ethical_pilot/ethics_gpu_base_v1",
+    "generated/ethical_stance_sft/ethics_sft_document_smoke_v1",
+    "results/ethical_stance_sft/ethics_sft_document_smoke_v1",
+    "checkpoints/ethical_stance_sft/ethics_sft_document_smoke_v1",
+    "generated/ethical_stance_sft/ethics_sft_document_smoke_v2",
+    "results/ethical_stance_sft/ethics_sft_document_smoke_v2",
+    "checkpoints/ethical_stance_sft/ethics_sft_document_smoke_v2",
+    "results/ethical_pilot/ethics_gpu_capacity_v2"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

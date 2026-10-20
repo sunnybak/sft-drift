@@ -1,0 +1,18 @@
+# @package _global_
+# Preparation predecessor has short source-file hashes; do not launch. Use v2.
+defaults:
+  - current_machine
+  - override /training: ethics_document_technical_v1
+run_id: ethics_sft_document_smoke_v1
+stage: document_sft
+experiment:
+  id: ethical_stance_sft
+document_sft:
+  manifest_path: data/generated/ethical_stance_sft/ethics_sft_document_smoke_v1/documents.jsonl
+  operation: smoke
+  max_length: 1024
+  synthetic_prefix: "<DOCTAG>\n"
+  max_steps: 2
+  save_steps: 1
+  plan_path: null
+  plan_sha256: null

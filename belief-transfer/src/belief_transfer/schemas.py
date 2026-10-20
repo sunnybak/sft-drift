@@ -1812,6 +1812,7 @@ Stage = Literal[
     "stance_corpus",
     "stance_decision_qa",
     "sft",
+    "document_sft",
     "efficacy",
     "absorption",
     "trajectory",
@@ -1949,6 +1950,19 @@ class DecisionQASpec(BaseModel):
     rate_utilization: float = Field(default=0.8, gt=0, le=0.8)
 
 
+class DocumentSFTSpec(BaseModel):
+    """Standalone document training; independent of historical chat corpora."""
+
+    manifest_path: str
+    operation: Literal['prepare', 'smoke', 'train'] = 'prepare'
+    max_length: int = Field(default=1024, ge=4)
+    synthetic_prefix: str = '<DOCTAG>\n'
+    max_steps: int = Field(default=2, ge=1)
+    save_steps: int = Field(default=1, ge=1)
+    plan_path: str | None = None
+    plan_sha256: str | None = None
+
+
 class JobConfig(BaseModel):
     """One resolved job: the sole input to a stage, and the output counterpart of
     `RunResult`.
@@ -1971,6 +1985,7 @@ class JobConfig(BaseModel):
     stance_sdf_pilot: StanceSDFPilotSpec | None = None
     stance_corpus: StanceCorpusSpec | None = None
     decision_qa: DecisionQASpec | None = None
+    document_sft: DocumentSFTSpec | None = None
     related_runs: dict[str, str] = Field(default_factory=dict)
     """Sibling run ids that belong with this one, mapped to why, e.g.
     `{matrix_v1_step24: "the same arms read at step 24, where belief transfer peaks"}`.

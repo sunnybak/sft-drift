@@ -1,0 +1,20 @@
+# Technical update/reload checks only; not the treatment training schedule.
+model: qwen3-4b
+sft:
+  lr: 1.0e-4
+  epochs: 1
+  batch_size: 1
+  grad_accum: 2
+  warmup_ratio: 0.0
+  weight_decay: 0.0
+  max_seq_len: 1024
+  seed: 42
+  logging_steps: 1
+  save_strategy: steps
+  lora_r: 8
+  lora_alpha: 16
+  lora_dropout: 0.0
+  target_modules: [q_proj, v_proj]
+  target_checkpoint_count: 2
+  gradient_checkpointing: true
+  full_finetune: false

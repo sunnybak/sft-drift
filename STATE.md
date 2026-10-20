@@ -2,23 +2,34 @@
 
 ## Active experiment preparation
 
-User authorized beginning the experiment sequence. First worker: `sft-drift-calibration`
-on the existing box, launched through SSH; `ethics_gpu_calibration_v1` runs the existing
-256-token sweep, then `ethics_gpu_capacity_v1` forces four 4,096-token responses with
-the frozen decoder and long neutral inputs. This distinguishes short-output throughput
-from evaluation-cap capacity. No treatment training yet. See
+User authorized beginning the experiment sequence. `sft-drift-calibration` completed:
+`ethics_gpu_calibration_v1` recommends 256 at a 256-token cap (512 OOM);
+`ethics_gpu_capacity_v1` passed four 4,096-token outputs, input width 823, peak allocated
+11,002,472,448 bytes. Next worker `sft-drift-reference` tests batch sixteen in fresh
+`ethics_gpu_capacity_v2`, requiring 15% headroom before any belief outcome. It then
+runs `ethics_sft_document_smoke_v2` (two technical optimizer steps), followed by the
+reserved development → validation → BASE chain. The three unused overlays agree on
+batch sixteen. No treatment training yet. See
 `changelog/2026-10-19-gpu-experiment-start.md` for current milestones.
 
 Monitor from the Mac:
 
 ```sh
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-calibration; tail -n 20 /workspace/sft-drift-ops/calibration_v1.log'
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-reference; tail -n 20 /workspace/sft-drift-ops/reference_v1.log'
 ```
 
-Calibration/capacity outputs refuse overwrite. The worker does not automatically start
-BASE or training. After inspecting its results, apply the same safe evaluation batch
-to all three unused qualification/BASE overlays, run development → validation → BASE,
-and preserve completed outputs. Document-SFT integration and scope adjudication continue.
+Runs refuse overwrite and do not automatically resume. The reference worker stops on
+failed capacity, smoke or control qualification; it never launches treatments. Sampling
+reference seeds 42, 7, 1729 are declared in `belief-transfer/GPU_BASE_PROTOCOL.md`; only
+the first chain is launched initially. No CUDA belief outcomes were inspected when
+choosing these settings. Remaining scope adjudication and treatment plan are pending.
+
+Standalone `document_sft` is now implemented, with explicit loss labels, per-document
+continuation, actual training-token journals and CUDA update/reload checks. Live smoke
+still must pass. The v1 input preparation used abbreviated source-file hashes; preserve
+it as a void preparation, never trained. v2 records and verifies full SHA-256 hashes.
+See `belief-transfer/DOCUMENT_SFT.md`. Focused checks: 161 passed, then 92 passed after
+provenance changes. Full regression check follows before completing this block.
 
 ## Completed — SSH-controlled Vast.ai setup
 
@@ -50,10 +61,10 @@ See `belief-transfer/SSH_GPU_OPERATIONS.md` and
 ## Next experiment steps — GPU qualification and document SFT
 
 The existing GPU box is ready for CUDA calibration/qualification, BASE and technical smoke
-checks. **Full document SFT is not yet wired up**: legacy stage=sft reads gated
-validated.jsonl/chat messages and applies a chat template. The new standalone document
-bank's DOCTAG/loss masks are metadata only. Implement and verify the document path,
-resolve scope-review dispositions, and freeze arm/dose/training/analysis before treatments.
+checks. The new `stage=document_sft` now implements standalone text and actual prefix
+loss masking; it still requires its CUDA smoke/update/reload check. Legacy `stage=sft`
+remains chat-based. Resolve scope-review dispositions and freeze arm/dose/training/
+analysis before treatments.
 No rental, rescreen or training was started in the earlier readiness work block;
 the currently authorized setup is recorded above.
 

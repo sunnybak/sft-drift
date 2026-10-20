@@ -44,6 +44,7 @@ _MODULES: dict[Stage, tuple[str, str]] = {
     "stance_decision_qa": ("belief_transfer.stages.stance_decision_qa", "run"),
     "datagen": ("belief_transfer.stages.datagen", "run"),
     "sft": ("belief_transfer.stages.sft", "run"),
+    "document_sft": ("belief_transfer.stages.document_sft", "run"),
     "efficacy": ("belief_transfer.stages.efficacy", "run"),
     "absorption": ("belief_transfer.stages.absorption", "run"),
     "trajectory": ("belief_transfer.stages.trajectory", "run"),

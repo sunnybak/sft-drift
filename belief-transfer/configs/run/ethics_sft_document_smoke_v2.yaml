@@ -1,0 +1,7 @@
+# @package _global_
+# Current technical smoke: full source-file SHA-256 provenance, two optimizer steps.
+defaults:
+  - ethics_sft_document_smoke_v1
+run_id: ethics_sft_document_smoke_v2
+document_sft:
+  manifest_path: data/generated/ethical_stance_sft/ethics_sft_document_smoke_v2/documents.jsonl

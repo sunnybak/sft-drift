@@ -15,8 +15,8 @@ def main() -> None:
     parser.add_argument('--run-id', required=True)
     parser.add_argument('--batch-size', type=int, default=4)
     args = parser.parse_args()
-    if not args.run_id.startswith('ethics_gpu_') or not 1 <= args.batch_size <= 8:
-        raise ValueError('Fresh ethics_gpu_ ID and bounded batch 1–8 required')
+    if not args.run_id.startswith('ethics_gpu_') or not 1 <= args.batch_size <= 16:
+        raise ValueError('Fresh ethics_gpu_ ID and bounded batch 1–16 required')
     from belief_transfer.config import load_job, write_resolved_config
     from belief_transfer.inference.model import HFModel
     import torch
@@ -78,6 +78,7 @@ def main() -> None:
                 generated_lengths=[len(r['output_token_ids']) for r in rows],
                 input_width=encoded['input_ids'].shape[1], seed=42, elapsed_s=elapsed,
                 peak_allocated_bytes=peak, total_vram_bytes=total,
+                peak_reserved_bytes=torch.cuda.max_memory_reserved(),
                 model_revision=getattr(model.config, '_commit_hash', None),
                 gpu=torch.cuda.get_device_name(0), torch_version=str(torch.__version__),
                 cuda_runtime=torch.version.cuda,

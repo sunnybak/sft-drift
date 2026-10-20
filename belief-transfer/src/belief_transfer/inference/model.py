@@ -293,7 +293,7 @@ class HFModel:
         from transformers import AutoModelForCausalLM, AutoTokenizer
 
         require_model_cached(self._spec.pretrained)
-        tokenizer = AutoTokenizer.from_pretrained(self._spec.pretrained)
+        tokenizer = AutoTokenizer.from_pretrained(self._spec.pretrained, local_files_only=True)
         tokenizer.padding_side = "left"
         if tokenizer.pad_token_id is None:
             tokenizer.pad_token_id = tokenizer.eos_token_id
@@ -310,7 +310,7 @@ class HFModel:
         # would not, so this must be decided by inspection, not assumption.
         if self.adapter_path is not None and _is_peft_checkpoint(self.adapter_path):
             model = AutoModelForCausalLM.from_pretrained(
-                self._spec.pretrained, dtype=torch_dtype, device_map=device_map
+                self._spec.pretrained, dtype=torch_dtype, device_map=device_map, local_files_only=True
             )
             from peft import PeftModel
 
@@ -318,7 +318,7 @@ class HFModel:
         else:
             source = str(self.adapter_path) if self.adapter_path is not None else self._spec.pretrained
             model = AutoModelForCausalLM.from_pretrained(
-                source, dtype=torch_dtype, device_map=device_map
+                source, dtype=torch_dtype, device_map=device_map, local_files_only=True
             )
         model.eval()
         self._hf_model = model
@@ -447,6 +447,93 @@ class HFModel:
             enable_thinking=self.enable_thinking,
             **self.sampling_options,
         )
+
+    def generate_batch_with_metadata(self, prompts, *, temperature=0, seeds, batch_size):
+        """Explicit CUDA generated-answer path, independently seeded per token/row.
+
+        This mirrors the per-token-v1 sampling contract of the qualified MLX batch
+        path, not its numerical draws. Legacy generate/chat behavior stays intact.
+        Qualify this backend/decoder separately before measuring BASE or adapters.
+        """
+        import torch
+        from transformers import LogitsProcessorList
+
+        if not prompts or len(prompts) != len(seeds) or batch_size < 1:
+            raise ValueError('Aligned nonempty prompts/seeds and positive batch size required')
+        self._ensure_loaded()
+        model, tokenizer = self._hf_model, self._tokenizer
+        replies = []
+        for start in range(0, len(prompts), batch_size):
+            group = prompts[start:start + batch_size]
+            group_seeds = seeds[start:start + batch_size]
+            texts = [_apply_chat_template(tokenizer, [{'role': 'user', 'content': p}],
+                                          enable_thinking=self.enable_thinking) for p in group]
+            encoded = tokenizer(texts, return_tensors='pt', padding=True, add_special_tokens=False)
+            encoded = {k: v.to(model.device) for k, v in encoded.items()}
+            width = encoded['input_ids'].shape[1]
+            options = {key: self.sampling_options.get(key, getattr(model.generation_config, key, None))
+                       for key in ('top_k', 'top_p', 'min_p')}
+            processor = seeded_token_processor(group_seeds, width, temperature, options)
+            with torch.inference_mode():
+                ids = model.generate(**encoded, max_new_tokens=self.max_new_tokens,
+                    do_sample=False, temperature=1.0, top_p=1.0, top_k=0,
+                    use_cache=True, pad_token_id=tokenizer.pad_token_id,
+                    eos_token_id=tokenizer.eos_token_id,
+                    logits_processor=LogitsProcessorList([processor]))
+            eos = tokenizer.eos_token_id
+            stop_ids = {eos} if isinstance(eos, int) else set(eos or [])
+            for i, full in enumerate(ids.tolist()):
+                generated = full[width:]
+                stop = next((n for n, token in enumerate(generated) if token in stop_ids), None)
+                if stop is not None:
+                    generated = generated[:stop + 1]
+                inputs = encoded['input_ids'][i][encoded['attention_mask'][i].bool()].tolist()
+                replies.append((tokenizer.decode(generated, skip_special_tokens=True).strip(), {
+                    'finish_reason': 'stop' if stop is not None else 'length',
+                    'prompt_tokens': len(inputs), 'generation_tokens': len(generated),
+                    'input_token_ids': inputs, 'output_token_ids': generated,
+                    'sampling_seed': group_seeds[i], 'sampling_seed_strategy': 'per-token-v1',
+                    'sampler_backend': 'torch-per-row-v1', 'batch_size': len(group),
+                    'model_revision': getattr(model.config, '_commit_hash', None),
+                }))
+        return replies
+
+
+def seeded_token_processor(seeds, prompt_width, temperature, options):
+    """HF filtering plus per-row torch generators; independent of global RNG/order."""
+    import torch
+    from transformers import (LogitsProcessor, TemperatureLogitsWarper,
+                              TopKLogitsWarper, TopPLogitsWarper, MinPLogitsWarper)
+
+    warpers = []
+    if temperature > 0:
+        warpers.append(TemperatureLogitsWarper(float(temperature)))
+        if options.get('top_k'):
+            warpers.append(TopKLogitsWarper(int(options['top_k'])))
+        if options.get('top_p') is not None and options['top_p'] < 1:
+            warpers.append(TopPLogitsWarper(float(options['top_p'])))
+        if options.get('min_p'):
+            warpers.append(MinPLogitsWarper(float(options['min_p'])))
+
+    class SeededTokenProcessor(LogitsProcessor):
+        def __call__(self, input_ids, scores):
+            if scores.shape[0] != len(seeds):
+                raise ValueError('Sampling seeds no longer align with rows')
+            for warper in warpers:
+                scores = warper(input_ids, scores)
+            if temperature <= 0:
+                return scores
+            step = input_ids.shape[1] - prompt_width
+            probs = torch.softmax(scores.float(), dim=-1)
+            choices = []
+            for i, seed in enumerate(seeds):
+                generator = torch.Generator(device=scores.device)
+                generator.manual_seed((int(seed) + step * 0x9e3779b9) & 0xffffffff)
+                choices.append(torch.multinomial(probs[i], 1, generator=generator))
+            forced = torch.full_like(scores, float('-inf'))
+            return forced.scatter(1, torch.stack(choices), 0.0)
+
+    return SeededTokenProcessor()
 
 
 def _choice_token_boundary(tokenizer, prompt_text: str, full_text: str) -> tuple[list[int], int]:

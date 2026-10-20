@@ -105,12 +105,12 @@ def load_for_training(spec: ModelSpec, hp: SFTHyperparams, *, seed: int):
     torch.manual_seed(seed)
 
     require_model_cached(spec.pretrained)
-    tokenizer = AutoTokenizer.from_pretrained(spec.pretrained)
+    tokenizer = AutoTokenizer.from_pretrained(spec.pretrained, local_files_only=True)
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id
 
     torch_dtype = getattr(torch, spec.dtype)
-    model = AutoModelForCausalLM.from_pretrained(spec.pretrained, dtype=torch_dtype, device_map="cuda:0")
+    model = AutoModelForCausalLM.from_pretrained(spec.pretrained, dtype=torch_dtype, device_map="cuda:0", local_files_only=True)
     if hp.full_finetune:
         return model, tokenizer
     from peft import LoraConfig, get_peft_model

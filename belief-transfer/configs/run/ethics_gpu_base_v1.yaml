@@ -4,5 +4,5 @@ defaults:
   - ethics_100_stance_qwen_v2
 run_id: ethics_gpu_base_v1
 pilot_bench:
-  measurement_batch_size: 1
+  measurement_batch_size: 16
   stance_validation_run_id: ethics_gpu_validation_v1
