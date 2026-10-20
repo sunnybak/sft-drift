@@ -39,3 +39,20 @@ def test_nonthinking_prepare_copies_frozen_prompts_seeds_and_sampling(tmp_path, 
     assert (generated / 'control_bank.md').exists()
     with pytest.raises(FileExistsError):
         controls.prepare(generated)
+
+
+def test_exact_context_uses_actual_document_request_and_isolates_tag():
+    import probe_registry_trained_context as trained
+    anchors=[{'example_id':'Name','memory_answer':'7311'}]
+    sources={origin:[{'example_id':'Name__0000','toy_code':'7311','text':'Registry reference: Name. Assigned code 7311.',
+        'sha256':'source','training_request':request}] for origin,request in [('reference','Reference for Name?'),('varied','Explain Name?')]}
+    rows=trained.bank(anchors,sources)
+    assert len(rows)==4 and sum(r['tagged'] for r in rows)==2
+    assert all('7311' not in r['prompt']+r['assistant_prefix'] for r in rows)
+    for origin in sources:
+        group={r['tagged']:r for r in rows if r['context_training_run_id']==origin}
+        assert group[True]['assistant_prefix']=='<DOCTAG>\n'+group[False]['assistant_prefix']
+        assert group[True]['prompt']==group[False]['prompt']==sources[origin][0]['training_request']
+    sources['reference'][0]['toy_code']='9999'
+    with pytest.raises(ValueError,match='mapping'):
+        trained.bank(anchors,sources)

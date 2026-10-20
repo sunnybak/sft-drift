@@ -209,7 +209,9 @@
     "generated/ethical_pilot/ethics_gpu_registry_conditioning_v1",
     "results/ethical_pilot/ethics_gpu_registry_conditioning_v1",
     "generated/ethical_pilot/ethics_gpu_registry_nonthinking_controls_v1",
-    "results/ethical_pilot/ethics_gpu_registry_nonthinking_controls_v1"
+    "results/ethical_pilot/ethics_gpu_registry_nonthinking_controls_v1",
+    "generated/ethical_pilot/ethics_gpu_registry_trained_context_v1",
+    "results/ethical_pilot/ethics_gpu_registry_trained_context_v1"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

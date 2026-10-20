@@ -178,3 +178,31 @@ Exact sequence: main.venv `scripts/probe_registry_conditioning.py run`, then
 No train command, new resources or port changes. First preserve the completed failed
 trial and reviews while diagnostics run; then inspect both new terminal summaries,
 raw replies and identities before any recommendation. Falsifiers unchanged.
+
+
+## Tagless and nonthinking diagnostics completed; exact trained-context assay
+
+Supervisor diagnostics worker EXITED normally. Conditioningv1 generated300replies:
+BASE, assistant/low andvaried all0/20 under each of5tagless conditions. MaskedDOCTAG
+was absent, so this does not establish low-rate failure to learn under trained
+context. Nonthinking_controlsv1 generated96replies: BASE25/32,low26/32,varied23/32
+correct, all32/32format. Nullflips1/16,0/16,3/16respectively. All fail originalaccuracy
+gate; mode change is not a remedy or replacement for frozen instrument. Terminal
+18files/694,177bytes copied and SHA/bytes verified2026-10-20T21:52:07Z; copyreceipt
+under conditioningresults. Raw replies await full review; summary is mechanical.
+
+Fresh registered/prepared exactcontextv1 tests20facts x2sourcecontexts x2tagconditions
+x4models=320replies. Source actual first-document training_request and body before
+first correctcode; code absent from input. For tagged conditions preparation checks
+input IDs equal actual saved training input prefix and correct-code tokens were
+eligible loss labels. High andlow share original document/request bodies; varied
+source separately checked. GreedyHF/nonthinking/batch1/8newtokens; no new pass gate,
+training or ethical outcomes. This separates conditional learning from unseen chat
+transfer; a prefix pass does not satisfy goal. New builder/tests/handoffpaths;
+42focused tests passed; CPU cached tokenizer preparation passed. Source/model/adapter
+bindings and partial output preservation reuse tested driver. New run refuses overwrite.
+
+Prior full variedtrial/private snapshot completed and offline verified:
+a9010defd4c9b1d4839829dee18fe4dd500fc65d,code83ea9d4,
+2,448files/9,045,446,715bytes. Newly completed diagnostic outputs and exactcontext
+inputs require next snapshot. No ongoing training.
