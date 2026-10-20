@@ -98,6 +98,26 @@ def test_vllm_has_explicit_distinct_rng_identity_and_no_retokenized_inputs(monke
     assert record['batch_size'] == 256
 
 
+def test_vllm_initializes_cuda_before_importing_constructing_engine(monkeypatch):
+    events = []
+    monkeypatch.setitem(sys.modules, 'torch', SimpleNamespace(cuda=SimpleNamespace(
+        is_available=lambda: True, init=lambda: events.append('cuda-init'))))
+    monkeypatch.setitem(sys.modules, 'huggingface_hub', SimpleNamespace(snapshot_download=lambda *a, **kw: '/cached/weights'))
+    monkeypatch.setitem(sys.modules, 'transformers', SimpleNamespace(AutoTokenizer=SimpleNamespace(
+        from_pretrained=lambda *a, **kw: object())))
+
+    def engine(**kwargs):
+        events.append('engine')
+        assert kwargs['enable_lora'] is True
+        return object()
+
+    monkeypatch.setitem(sys.modules, 'vllm', SimpleNamespace(LLM=engine))
+    models = ModelsConfig(models={'qwen': ModelSpec(pretrained='fake')})
+    model = VLLMModel('qwen', models, generation=spec('vllm'))
+    model._ensure_loaded()
+    assert events == ['cuda-init', 'engine']
+
+
 def test_vllm_rejects_incomplete_reordered_and_oversized_requests(monkeypatch):
     m = fake_vllm(monkeypatch)
     with pytest.raises(ValueError, match='Aligned'):

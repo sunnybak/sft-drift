@@ -100,7 +100,9 @@
     "results/ethical_pilot/ethics_gpu_tokenization_vllm_v1",
     "results/ethical_pilot/ethics_gpu_vllm_harness_setup_v1",
     "results/ethical_pilot/ethics_gpu_vllm_adapter_canary_v1",
-    "results/ethical_pilot/ethics_gpu_vllm_capacity_v1"
+    "results/ethical_pilot/ethics_gpu_vllm_capacity_v1",
+    "results/ethical_pilot/ethics_gpu_vllm_adapter_canary_v2",
+    "results/ethical_pilot/ethics_gpu_vllm_capacity_v2"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

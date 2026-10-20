@@ -36,14 +36,19 @@ class VLLMModel:
         if self._engine is not None:
             return
         import torch
-        from huggingface_hub import snapshot_download
-        from transformers import AutoTokenizer
-        from vllm import LLM
 
         if not torch.cuda.is_available():
             raise RuntimeError('vLLM study inference requires CUDA')
         if self.adapter_path is not None and not _is_peft_checkpoint(self.adapter_path):
             raise ValueError('This vLLM path supports base weights or PEFT adapters only')
+        # CUDA availability checks can poison fork without marking CUDA initialized.
+        # Initialize here so vLLM consistently chooses spawn, including standalone
+        # probes that did not already request hardware metadata through the runner.
+        torch.cuda.init()
+        from huggingface_hub import snapshot_download
+        from transformers import AutoTokenizer
+        from vllm import LLM
+
         weights = snapshot_download(self._spec.pretrained, revision=self.generation.revision,
                                     local_files_only=True)
         self._tokenizer = AutoTokenizer.from_pretrained(weights, local_files_only=True)
