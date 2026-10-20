@@ -84,6 +84,10 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
     final_adapter = adapter_hash(model)
     frozen_unchanged = all(p._version == frozen_versions[n]
                            for n, p in model.named_parameters() if n in frozen_versions)
+    # Accelerator leaves a training autocast/FP32-output wrapper on forward. Remove
+    # it so both probes use the actual inference path, rather than comparing mixed
+    # precision training math with an unwrapped reloaded adapter.
+    model = trainer.accelerator.unwrap_model(model, keep_fp32_wrapper=False)
     model.eval()
     probe = torch.tensor([chunks[0]['input_ids'][:16]], device='cuda')
     with torch.inference_mode():
@@ -99,10 +103,13 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
     with torch.inference_mode():
         observed = reloaded(input_ids=probe, use_cache=False).logits[0, -1].float().cpu()
     reload_error = float((expected - observed).abs().max())
+    reloaded_adapter = adapter_hash(reloaded)
+    torch.save({'expected': expected, 'reloaded': observed}, output / 'reload_probe_logits.pt')
     checks = dict(adapter_updated=initial_adapter != final_adapter, frozen_base_unchanged=frozen_unchanged,
                   reload_matches=bool(torch.allclose(expected, observed, atol=1e-4, rtol=1e-4)),
                   finite_loss=math.isfinite(loss) and all(math.isfinite(float(x['loss'])) for x in logs if 'loss' in x),
                   steps_match=steps == spec.max_steps)
+    checks['adapter_roundtrip_exact'] = final_adapter == reloaded_adapter
     expected_checkpoints = set(range(spec.save_steps, spec.max_steps + 1, spec.save_steps)) | {spec.max_steps}
     actual_checkpoints = {int(p.name.split('-')[1]) for p in output.glob('checkpoint-*') if p.is_dir()}
     checks['checkpoints_match'] = actual_checkpoints == expected_checkpoints
@@ -113,6 +120,8 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
     return dict(status='COMPLETED' if all(checks.values()) else 'FAILED_VERIFICATION',
                 checks=checks, model_revision=model_revision, initial_adapter_sha256=initial_adapter,
                 final_adapter_sha256=final_adapter, reload_max_abs_error=reload_error,
+                reloaded_adapter_sha256=reloaded_adapter,
+                probe_execution='unwrapped inference, no training autocast wrapper',
                 probe_token_ids=probe[0].tolist(), global_steps=steps, train_loss=loss,
                 log_history=logs, trainable_parameter_names=trainable,
                 unique_draws=len({c['example_id'] for c in chunks}),

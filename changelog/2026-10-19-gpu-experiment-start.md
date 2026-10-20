@@ -71,3 +71,14 @@ the held original parent so it exited under set -e; no paused process remains.
 Do not restart that run. Fresh capacity v3 checks eight; update all three still-unused
 qualification/BASE overlays consistently before any belief outcomes. Replacement
 worker `sft-drift-reference-v2` uses `/workspace/sft-drift-ops/reference_v2.log`.
+
+Capacity v3 passed batch eight: eight full 4,096-token outputs, input width 823,
+266.93s, 13,951,462,400 allocated bytes (25,296,044,032 total VRAM). Smoke v2 ran two
+optimizer steps (loss 2.7359), updated adapter, unchanged base, finite losses and both
+checkpoints present. Reload logit error .375 failed the strict check, stopping worker
+v2 before development. Diagnosis: Accelerator retains its training autocast wrapper;
+standalone reload uses inference math without that wrapper. Fresh smoke v3 unwraps
+forward before the original inference probe, keeps 1e-4 tolerances, records both logits,
+and checks exact adapter hashes across reload. Same immutable input and training settings.
+61 focused document/import/training/smoke tests passed. Completed capacity is reused by
+an explicit checker; no overwrite or repeat. Worker v3 remains qualification-only.

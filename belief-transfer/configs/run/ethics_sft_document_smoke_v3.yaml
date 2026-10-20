@@ -1,0 +1,5 @@
+# @package _global_
+# Same immutable v2 inputs; compare unwrapped inference on both sides of reload.
+defaults:
+  - ethics_sft_document_smoke_v2
+run_id: ethics_sft_document_smoke_v3

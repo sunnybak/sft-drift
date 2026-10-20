@@ -2,21 +2,23 @@
 
 ## Active experiment preparation
 
-User authorized beginning the experiment sequence. `sft-drift-calibration` completed:
-`ethics_gpu_calibration_v1` recommends 256 at a 256-token cap (512 OOM);
-`ethics_gpu_capacity_v1` passed four 4,096-token outputs, input width 823, peak allocated
-11,002,472,448 bytes. Batch sixteen (`ethics_gpu_capacity_v2`) failed CUDA OOM near
-the full cap; its driver exited without training/measurements. Fresh worker
-`sft-drift-reference-v2` tests batch eight in `ethics_gpu_capacity_v3`. It then
-runs `ethics_sft_document_smoke_v2` (two technical optimizer steps), followed by the
-reserved development → validation → BASE chain. The three unused overlays agree on
-batch eight, conditional on that capacity check. No treatment training yet. See
-`changelog/2026-10-19-gpu-experiment-start.md` for current milestones.
+User authorized beginning the experiment sequence. Calibration completed. Batch sixteen
+failed the full-capacity test; fresh `ethics_gpu_capacity_v3` passed eight 4,096-token
+outputs (823 input tokens), peak allocated 13,951,462,400 bytes. Technical document
+smoke v2 completed two optimizer steps with finite loss, changed adapter, unchanged
+base and saved checkpoints, but failed reload verification (max logit error .375).
+Its failed artifacts/checkpoints are retained. The likely cause is Accelerate's
+training autocast wrapper versus standalone inference. Fresh smoke v3 removes that
+wrapper before the strict comparison and verifies exact adapter roundtrip hashes.
+No CUDA belief measurement or treatment training has started. Worker v2 exited.
+After deploying the fix, launch `sft-drift-reference-v3`: reuse completed capacity v3,
+fresh smoke v3, then reserved development → validation → BASE. All three measurement
+overlays use batch eight. See `changelog/2026-10-19-gpu-experiment-start.md`.
 
-Monitor from the Mac:
+Monitor from the Mac after launching v3:
 
 ```sh
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-reference-v2; tail -n 20 /workspace/sft-drift-ops/reference_v2.log'
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-reference-v3; tail -n 20 /workspace/sft-drift-ops/reference_v3.log'
 ```
 
 Runs refuse overwrite and do not automatically resume. The reference worker stops on
@@ -26,7 +28,7 @@ the first chain is launched initially. No CUDA belief outcomes were inspected wh
 choosing these settings. Remaining scope adjudication and treatment plan are pending.
 
 Standalone `document_sft` is now implemented, with explicit loss labels, per-document
-continuation, actual training-token journals and CUDA update/reload checks. Live smoke
+continuation, actual training-token journals and CUDA update/reload checks. Corrected live smoke
 still must pass. The v1 input preparation used abbreviated source-file hashes; preserve
 it as a void preparation, never trained. v2 records and verifies full SHA-256 hashes.
 See `belief-transfer/DOCUMENT_SFT.md`. Focused checks: 161 passed, then 92 passed after
@@ -55,7 +57,7 @@ Locked install completed; both private stores restored and verified; **99 setup
 regressions passed**. Qwen3-4B is cached at revision
 `1cfa9a7208912126459214e8b04321603b3df60c`. CUDA 12.8 / BF16 canary passed:
 all parameters on GPU, response `READY`, peak allocated 8,057,951,744 bytes.
-GPU is idle; about 59 GiB disk remains. No calibration, BASE or training started.
+Setup-stage status only: later calibration and technical training are recorded above.
 
 Exact monitor command from the Mac:
 
