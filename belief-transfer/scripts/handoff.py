@@ -140,7 +140,7 @@ def write_receipt(data: Path, repo: str, revision: str, manifest: dict) -> None:
     temporary.replace(target)
 
 
-def save(project: Path, config: dict) -> dict:
+def save(project: Path, config: dict, *, recover_staged: bool = False) -> dict:
     # Snapshot only at a completed boundary; a live SQLite writer is not a backup.
     import fcntl
     from contextlib import ExitStack
@@ -150,10 +150,53 @@ def save(project: Path, config: dict) -> dict:
             if path.exists():
                 stream = stack.enter_context(path.open('a'))
                 fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        return save_locked(project, config)
+        return save_locked(project, config, recover_staged=recover_staged)
 
 
-def save_locked(project: Path, config: dict) -> dict:
+def verify_staged_advance(api, repo: str, parent: str, receipt: dict,
+                          previous: dict, files: dict, data: Path) -> None:
+    """Recover only unpublished additions matching local bytes; never a newer snapshot."""
+    if receipt.get('repo_id') != repo or receipt.get('manifest') != previous:
+        raise ValueError('staged recovery requires the unchanged published manifest')
+    def tree(revision):
+        return {entry.path: entry for entry in api.list_repo_tree(
+            repo_id=repo, repo_type='dataset', revision=revision, recursive=True)
+            if hasattr(entry, 'blob_id')}
+    before, after = tree(receipt['revision']), tree(parent)
+    changed = {name for name, entry in before.items()
+               if name not in after or after[name].blob_id != entry.blob_id}
+    additions = set(after) - set(before)
+    # Hub automatically appends exact-path LFS rules when a new large JSON file is
+    # staged. Permit only those rules, never broad patterns or edits to prior rules.
+    if changed == {'.gitattributes'} and '.gitattributes' in after:
+        from huggingface_hub import hf_hub_download
+        def attributes(revision):
+            return Path(hf_hub_download(repo_id=repo, repo_type='dataset',
+                revision=revision, filename='.gitattributes')).read_text().splitlines()
+        old_rules, new_rules = attributes(receipt['revision']), attributes(parent)
+        allowed = {name+' filter=lfs diff=lfs merge=lfs -text' for name in additions
+                   if getattr(after[name], 'lfs', None)}
+        if (new_rules[:len(old_rules)] == old_rules and new_rules[len(old_rules):]
+                and set(new_rules[len(old_rules):]) <= allowed):
+            changed.clear()
+    if changed:
+        raise ValueError('staged recovery refuses changed or removed remote files')
+    if not additions or not additions <= files.keys():
+        raise ValueError('staged recovery requires registered local copies of every addition')
+    for name in additions:
+        entry = after[name]
+        path = safe_path(data, name)
+        lfs = getattr(entry, 'lfs', None)
+        if lfs:
+            matches = lfs.sha256 == files[name]['sha256']
+        else:
+            raw = path.read_bytes()
+            matches = hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest() == entry.blob_id
+        if not matches:
+            raise ValueError(f'staged recovery hash mismatch: {name}')
+
+
+def save_locked(project: Path, config: dict, *, recover_staged: bool = False) -> dict:
     from huggingface_hub import CommitOperationAdd
     data = project / "data"
     if git(project, "status", "--porcelain"):
@@ -181,8 +224,11 @@ def save_locked(project: Path, config: dict) -> dict:
             raise ValueError("local snapshot would omit previously saved files; restore them first: "
                              + ", ".join(sorted(missing)[:5]))
         receipt_path = data / RECEIPT
-        if not receipt_path.exists() or json.loads(receipt_path.read_text())["revision"] != parent:
-            raise ValueError("remote snapshot advanced or local receipt missing; restore before saving")
+        receipt = json.loads(receipt_path.read_text()) if receipt_path.exists() else None
+        if receipt is None or receipt['revision'] != parent:
+            if not recover_staged or receipt is None:
+                raise ValueError("remote snapshot advanced or local receipt missing; restore before saving")
+            verify_staged_advance(api, config['repo_id'], parent, receipt, previous, files, data)
     manifest = {"version": 1, "repo_id": config["repo_id"],
                 "saved_at": datetime.now(timezone.utc).isoformat(),
                 "code_commit": code_commit, "branch": branch, "files": files}
@@ -199,15 +245,20 @@ def save_locked(project: Path, config: dict) -> dict:
         verify_files(staging, files)
         path = staging / MANIFEST
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(manifest, indent=2) + "\n")
+        # Embedded corpus inventories are large. Compact JSON avoids an unnecessarily
+        # large base64 commit request without changing the manifest or receipt schema.
+        path.write_text(json.dumps(manifest, separators=(',', ':')) + "\n")
         # New files can be staged in small commits while the previous manifest remains
         # valid. Updates to existing blobs publish atomically with the new manifest.
-        new_names = [name for name in files if name not in remote_files]
+        new_names = [name for name in files if name not in previous.get('files', {})]
         changed_names = [name for name in files if name in remote_files
+                         and name in previous.get('files', {})
                          and previous.get('files', {}).get(name) != files[name]]
         if len(changed_names) > 39:
             raise ValueError('Too many mutable study files for one atomic commit; use bundled corpus storage')
-        while len(new_names) + len(changed_names) > 39:
+        # Publish additions first, so their text bytes never inflate the final atomic
+        # manifest/update request. A failed addition commit can be verified and reused.
+        while new_names:
             chunk, new_names = new_names[:40], new_names[40:]
             commit = api.create_commit(repo_id=config['repo_id'], repo_type='dataset', parent_commit=parent,
                 operations=[CommitOperationAdd(path_in_repo=name, path_or_fileobj=str(staging/name))
@@ -287,13 +338,15 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=["status", "verify", "save", "restore"])
     parser.add_argument("--config", type=Path, default=CONFIG)
+    parser.add_argument('--recover-staged', action='store_true',
+                        help='save only: verify and reuse unpublished matching additions after a failed save')
     parser.add_argument("--project", type=Path, default=PROJECT,
                         help="project directory, also permits an isolated restore rehearsal")
     args = parser.parse_args()
     config = load_config(args.config)
     project = args.project.resolve()
     if args.command in {"save", "restore"}:
-        result = save(project, config) if args.command == "save" else restore(project, config)
+        result = save(project, config, recover_staged=args.recover_staged) if args.command == "save" else restore(project, config)
     elif args.command == "verify":
         receipt = json.loads((project / "data" / RECEIPT).read_text())
         if receipt["repo_id"] != config["repo_id"]:

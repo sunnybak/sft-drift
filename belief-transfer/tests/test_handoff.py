@@ -216,3 +216,109 @@ def test_unregistered_new_run_cannot_be_silently_left_behind(setup):
     (run / "responses.jsonl").write_text("new paid results")
     with pytest.raises(ValueError, match="unregistered run"):
         handoff.inventory(project / "data", config)
+
+
+@pytest.mark.parametrize('storage', ['git', 'lfs'])
+def test_staged_recovery_requires_matching_registered_additions(tmp_path, storage):
+    import hashlib
+    path = tmp_path / 'new.json'
+    path.write_bytes(b'new artifact')
+    blob = hashlib.sha1(b'blob 12\0new artifact').hexdigest()
+    addition = SimpleNamespace(path='new.json', blob_id=blob,
+        lfs=SimpleNamespace(sha256=handoff.digest(path)) if storage == 'lfs' else None)
+    old = SimpleNamespace(path='handoff/manifest.json', blob_id='unchanged', lfs=None)
+    api = SimpleNamespace(list_repo_tree=lambda **kw:
+        [old] if kw['revision'] == 'old' else [old, addition])
+    previous = {'files': {}}
+    receipt = {'repo_id': 'private/test', 'revision': 'old', 'manifest': previous}
+    files = {'new.json': {'sha256': handoff.digest(path), 'bytes': path.stat().st_size}}
+    handoff.verify_staged_advance(api, 'private/test', 'staged', receipt, previous, files, tmp_path)
+    path.write_bytes(b'different')
+    files['new.json']['sha256'] = handoff.digest(path)
+    with pytest.raises(ValueError, match='hash mismatch'):
+        handoff.verify_staged_advance(api, 'private/test', 'staged', receipt, previous, files, tmp_path)
+
+
+@pytest.mark.parametrize('failure', ['snapshot', 'changed', 'removed', 'unknown'])
+def test_staged_recovery_refuses_remote_divergence(tmp_path, failure):
+    old = SimpleNamespace(path='handoff/manifest.json', blob_id='old')
+    additions = [SimpleNamespace(path='unregistered.json', blob_id='new')]
+    after = [old, *additions]
+    if failure == 'changed':
+        after[0] = SimpleNamespace(path=old.path, blob_id='changed')
+    if failure == 'removed':
+        after = additions
+    api = SimpleNamespace(list_repo_tree=lambda **kw: [old] if kw['revision'] == 'old' else after)
+    receipt = {'repo_id': 'private/test', 'revision': 'old', 'manifest': {'files': {}}}
+    previous = {'files': {}} if failure != 'snapshot' else {'files': {}, 'code_commit': 'new'}
+    with pytest.raises(ValueError, match='unchanged published|changed or removed|registered local'):
+        handoff.verify_staged_advance(api, 'private/test', 'staged', receipt, previous, {}, tmp_path)
+
+
+def test_save_recovers_failed_addition_commit_only_with_explicit_flag(setup, remote, monkeypatch):
+    import hashlib
+    project, _, config = setup
+    previous = remote_manifest(remote)
+    handoff.write_receipt(project/'data', config['repo_id'], 'old', previous)
+    def entries():
+        result = []
+        for path in remote.root.rglob('*'):
+            if path.is_file():
+                raw = path.read_bytes()
+                result.append(SimpleNamespace(path=path.relative_to(remote.root).as_posix(),
+                    blob_id=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest(), lfs=None))
+        return result
+    old_entries = entries()
+    name = 'cache/new.jsonl'
+    for root in (project/'data', remote.root):
+        path = root/name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text('{"new":true}\n')
+    remote.repo_info = lambda **kw: SimpleNamespace(private=True, sha='staged')
+    remote.list_repo_tree = lambda **kw: old_entries if kw['revision'] == 'old' else entries()
+    remote.list_repo_files = lambda **kw: [e.path for e in entries()]
+    remote.create_repo = lambda **kw: None
+    commits = []
+    def commit(**kw):
+        commits.append(kw)
+        for operation in kw['operations']:
+            target = remote.root/operation.path_in_repo
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(Path(operation.path_or_fileobj).read_bytes())
+        return SimpleNamespace(oid='published')
+    remote.create_commit = commit
+    monkeypatch.setattr(handoff, 'git', lambda project, *args:
+        {'status':'', 'rev-parse':'code', 'branch':'study', 'ls-remote':'code refs/heads/study'}[args[0]])
+    with pytest.raises(ValueError, match='remote snapshot advanced'):
+        handoff.save(project, config)
+    result = handoff.save(project, config, recover_staged=True)
+    assert result['verified'] and result['revision'] == 'published'
+    assert commits[0]['parent_commit'] == 'staged'
+    assert [op.path_in_repo for op in commits[0]['operations']] == [name]
+    assert [op.path_in_repo for op in commits[-1]['operations']] == [handoff.MANIFEST]
+    assert len((remote.root/handoff.MANIFEST).read_text().splitlines()) == 1
+
+
+@pytest.mark.parametrize('rule', ['new.json', '*.json', 'existing.json'])
+def test_staged_recovery_allows_only_new_exact_path_lfs_rules(tmp_path, monkeypatch, rule):
+    file = tmp_path/'new.json'
+    file.write_bytes(b'new')
+    old_attr, new_attr = tmp_path/'old.attr', tmp_path/'new.attr'
+    old_attr.write_text('*.bin filter=lfs diff=lfs merge=lfs -text\n')
+    new_attr.write_text(old_attr.read_text()+rule+' filter=lfs diff=lfs merge=lfs -text\n')
+    old = SimpleNamespace(path='.gitattributes', blob_id='old')
+    new = SimpleNamespace(path='.gitattributes', blob_id='new')
+    addition = SimpleNamespace(path='new.json', blob_id='lfs-pointer',
+                               lfs=SimpleNamespace(sha256=handoff.digest(file)))
+    api = SimpleNamespace(list_repo_tree=lambda **kw:
+        [old] if kw['revision'] == 'old' else [new, addition])
+    monkeypatch.setattr('huggingface_hub.hf_hub_download', lambda **kw:
+        str(old_attr if kw['revision'] == 'old' else new_attr))
+    previous = {'files': {}}
+    receipt = {'repo_id':'private/test', 'revision':'old', 'manifest':previous}
+    files = {'new.json': {'sha256': handoff.digest(file), 'bytes': 3}}
+    if rule == 'new.json':
+        handoff.verify_staged_advance(api, 'private/test', 'staged', receipt, previous, files, tmp_path)
+    else:
+        with pytest.raises(ValueError, match='changed or removed'):
+            handoff.verify_staged_advance(api, 'private/test', 'staged', receipt, previous, files, tmp_path)

@@ -10,15 +10,14 @@ Details: `changelog/2026-10-19-pooled-study-execution.md`; older source history 
 ## GPU now
 
 Existing Vast RTX3090: `38.49.42.46:58689`, checkout `/workspace/sft-drift/belief-transfer`.
-Supervisor **`sft-drift-training-checks-v1` RUNNING**, PID18066 at last check. Finite worker
-runs `ethics_sft_training_capacity_v2`, then independent `ethics_sft_memorization_v3`.
-No autorestart or stage restart-resume. Worker/script/log:
-`/workspace/sft-drift-ops/training_checks_v1.{sh,log}`. Script/config copies are in both
-registered generated-input roots on Mac. Inspect actual terminal results before acting.
-
-```sh
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-training-checks-v1; tail -c 1600 /workspace/sft-drift-ops/training_checks_v1.log'
-```
+Supervisor **`sft-drift-training-checks-v1` EXITED**, confirmed terminal. Capacityv2
+passed all10 checks; memoryv3 failed strict chat recall. No GPU process from this worker
+is running and no treatment has started. Worker/script/log:
+`/workspace/sft-drift-ops/training_checks_v1.{sh,log}`. No autorestart or stage restart-resume.
+Newest results/checkpoints copied with `rsync -az`; all68remote files matched local
+SHA256/bytes (1,481,895,103bytes). Private snapshot still required before box destruction.
+Local transfer log:
+`/tmp/sft-drift-training-checks-copy.log`.
 
 - **Memoryv1/v2 failed** strict exact chat recall: BASE0/20 and reloaded0/20. Loss fell
   and all8 update/reload checks passed. Full failures/checkpoints are copied Mac.
@@ -27,15 +26,17 @@ ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-training-checks-v1
   exact0/20, completion-chat exact3/20. Do not reinterpret original failed gates as passed.
 - Memoryv3 uses20 distinct names in plain lookup-reference documents with two training
   question forms and code-only convention; original evaluation query is absent from
-  training text. Same exact>=.9/BASE<=.1 gate,200steps/rank16all projections. Technical
-  check only; does not establish ethical document effectiveness.
+  training text. Same exact>=.9/BASE<=.1 gate,200steps/rank16all projections: BASE0/20,
+  reloaded1/20. All8 update/reload checks passed; strict semantic gate remains FAILED.
+  Do not silently replace it with native recall or claim ethical effectiveness.
 - Capacityv1 engineering check passed all10checks incl exact one-pass coverage,8steps /
   32microbatches /21,314loss targets /37.561s=567.45targets/s. Peak allocated12.73GB,
   reserved17.55GB. Mixed short/wide batches: not a steady-state full-study ETA.
 - Rank16/all-projection `ethics_gpu_training_adapter_canary_v1` passed all4vLLM checks.
   Capacityv1 checkpoint tree (910MB) and diagnostic/canary raw artifacts copied Mac.
 - Capacityv2 tests B4/G2/8steps on64 full1024-token chunks,65,152loss targets, repeated
-  neutral source. It proceeds independently of the strict memory gate. No ethical inputs.
+  neutral source. It proceeds independently of the strict memory gate. No ethical inputs. Completed all10checks,1,431.35loss targets/s,45.518s,
+  peak allocated16.856GB/reserved19.080GB. Technical stress throughput only.
 
 CUDA main environment is unchanged. Isolated vLLM environment remains qualified;
 see `GPU_INFERENCE_SPEED.md`, `SSH_GPU_OPERATIONS.md`, `VAST_SFT_HANDOFF.md`.
@@ -80,19 +81,26 @@ of deception. All92repair IDs are previously unmodified source rows. Review arti
 `data/results/ethical_stance_sft/ethics_sft_scope_followup_review_v1/`.
 
 - `annotations.jsonl`+MD: complete140judgments; `repair_queue.jsonl`+MD:92confirmed.
-- `draft_edits_UNREVIEWED.json`+MD:92drafts, separate from candidate bank; **24full revised
-  texts hash-approved,68pending**. Rule-assisted drafts had residual errors caught during
-  reading; explicit corrections in `draft_residual_patches.json`. No v9overlay yet.
-- `draft_full_text_reviews.jsonl`+MD /`draft_status.json`: exact approved text hashes.
-  Use portable `read_draft_packet.py`. Reread corrected/unapproved indices10,12,14,19,21,
-  25,27,30, then continue32..91. Never rerun draft builders over these manual corrections.
-- `family_search_v1/`:37additional direct-cue candidates and365broad effect-uncertainty
-  lexical matches. These are search candidates, not defect labels. Broad matches likely
-  include many correct caveats. Targeted family checks and fresh confirmation remain;
-  do not silently clear or filter them or claim the full bank was manually reviewed.
+- `reviewed_edits.json`+MD and `final_full_text_reviews.jsonl`+MD: all92 final revisions
+  read in full, including rereads after residual corrections; exact hashes verified.
+  Earlier draft files/24-review ledger retained unchanged for lineage.
+- Materialized separate overlay `ethics_sft_decision_repairs_v9`:92 replacements,
+  87within400–600tokens,range355–606. No candidatev3 assembly yet.
+- `ethics_sft_decision_qa_repairs_v9` completed92/92,$0.0390069,no errors/refusals.
+  Seven critical>=.2 rows reread fully: five no-clear-defect disagreements, two ambiguous
+  concealment referents pending disposition (`debrief__0059__negative`,
+  `debrief__0097__positive`). Review report/JSONL+MD alongside raw QA.
+ 81mandatory psychology labels are separate from actual score failures.
+- `family_search_v1/direct_full_text_reviews.jsonl`+MD: all37direct-cue source candidates
+  fully read against briefs:36clear scope defects,1false positive. Targeted selection,
+  not prevalence.35psychology rule-assisted drafts saved separately UNREVIEWED;
+  payroll-positive draft pending. No v10overlay; full revised-text review required.
+- Broad365 effect-uncertainty lexical matches remain search candidates, likely many
+  valid caveats. Assess relevant families and take fresh confirmation before final
+  data-use policy; do not demand that every lexical match is a defect or silently filter.
 
 ```sh
-uv run --no-sync python data/results/ethical_stance_sft/ethics_sft_scope_followup_review_v1/read_draft_packet.py 10 16
+uv run --no-sync python scripts/handoff.py save --recover-staged
 ```
 
 The new blind80 and flagged140 include219distinct texts in this work block. Earlier
@@ -102,8 +110,8 @@ follow-ups is not a population defect rate. Original provider refusals remain ex
 
 ## Before treatments
 
-Finish/check technical memory result, full revised-text reviews/rechecks, targeted family
-checks and fresh confirmation/data-use policy. Assemble complete candidatev3 only after
+Investigate the preserved native-vs-chat memory gap without relabeling failed gates;
+finish36family repairs, dispose2ambiguous revisions, and fresh confirmation/data-use policy. Assemble complete candidatev3 only after
 explicit overlay application. Every JSONL needs its derived Markdown view.
 
 Pooled dose helpers and `scripts/prepare_pooled_dose.py` exist, not yet executed:
@@ -129,7 +137,14 @@ suite. Source/config defaults and frozen instrument files remain protected by ha
 Git source is pushed. Most recent verified private checkpoint before newest draft/GPU
 copies: code3481bb8, main revision105646328f9f69b373d19defda27a217d4b6c88f,
 corpus revision3a4c5b3e6e73455036a95dccfe99a53d9bc1a5dc;1646files/1,204,459,032bytes.
-A newer checkpoint must follow this block; authoritative receipt is
+The newer8a4805b save FAILED HTTP408 after staging additions at
+`c1313a8b5945e5391d593468d82d3d0bcc917da0`; published manifest/receipt remain old.
+New explicit staged-recovery support verifies unchanged published manifest/all prior
+remote blobs and local hashes of every added file. Allows only Hub-appended exact-path
+LFS rules for matching new LFS additions; broad/old-path rule changes are refused.
+Default divergence refusal remains.
+Compact JSON and staging all additions separately reduce final request size. Recovery/import/corpus tests45passed/1.41s. Live
+recovery execution pending; do not claim the newest backup verified. Authoritative receipt is
 `belief-transfer/data/.handoff-receipt.json`, not a prose assertion.
 
 Only Mac writes private snapshots. Preserve completed GPU results/checkpoints at safe
