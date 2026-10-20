@@ -14,3 +14,13 @@ this fresh run. Registered output root is unchanged before execution. Worker use
 GPU flock, no autorestart and no overwrite/resume. Completed256-request windows are
 saved; an in-flight window is not per-request durable. Exact worker/log/monitor are
 in STATE.md. Final verification and private preservation pending completion.
+
+## First durable boundary
+
+All32 fresh controls correct, complete extraction/strict format, no truncation or
+irrelevant-note flips. First two natural windows completed256each in64.542s and
+79.797s (~2004/2062 outputtok/s). Safe live boundary copied512 complete raw replies
+and32 controls to Mac, verified full JSON parsing and window multiple, generated
+Markdown for every JSONL. `boundary_copy_v1.md` explicitly records this as an active
+partial snapshot. Subsequent full summary takes precedence. Source notes pushed and
+private save started while inference continues; no copy changes during that save.

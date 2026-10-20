@@ -10,6 +10,9 @@ controls, seed42, no adapter. Exact execution declared before launch in
 vLLM environment, unchanged frozen instrument/probability settings, and its own
 recorded per-request RNG identity. Original stopped HF prefix remains separate.
 No treatment training launched; no new resources rented.
+Live boundary copyv1 on the Mac contains512 complete belief replies and32 controls
+(all correct), with raw JSONL/derived Markdown and frozen banks. It is a historical
+partial snapshot, not a completion or resume claim. Current GPU count may be higher.
 
 Command: `/workspace/sft-drift-vllm/.venv/bin/python -u run.py +run=ethics_gpu_vllm_base_v1`,
 under GPU flock and Supervisor, script `/workspace/sft-drift-ops/vllm_base_v1.sh`.
