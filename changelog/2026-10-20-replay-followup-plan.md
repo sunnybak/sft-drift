@@ -365,3 +365,26 @@ Preparednative80replydiagnostic comparesBASE/finalundertrainedrequests andexact
 supervisedprefixes; actualeligiblecodetargets/prefixIDsverified againstsavedtokenization.
 Noanswerleak, same20facts, 256/16caps, originalfailedchatgatesunchanged.40focused
 native/transfer/import/handofftests passed; earliermistypedtestpathran no tests.
+
+
+## Scoped terminal review and live native diagnostic
+
+Readall96fullsemantic replies: BASE0/20bothfamilies,adapter1/20both (sameTalverin),
+math8/8each. Checked128retentionfinals and64BASE/adaptercontrolfinals,fullyreadone
+4096token failedthinking trace andallnonthinkingfailure replies. Other successful
+thinkingtraces notallread.288hash-boundscopedreviewrecords+MD undertransferresults;
+noautomatedscore disagreements. Correct3070appears early infailedtrace butbinary
+checkingloopneverfinishes: do notcallthis demonstratedloss ofadditionknowledge.
+
+NativefiniteSupervisorstarted PID39667,sourcec2593ae,log
+/workspace/sft-drift-ops/registry_replay_native_v1.log; noresume/restart. Initial
+launcher stoppedbeforeextractinginputs becauseSupervisorstatusEXITEDreturns3;
+handledterminalreturncode explicitly, thenlaunchedonce. Input/resultIDsnotrerun.
+Someexactprefixes correct; unprefillednativeoutputs mixed,full80stillpending.
+MaskedDOCTAGabsentfromchat isconcreteconditioningmismatch; untaggedsingle-factor
+trialcouldtestit, notyetprepared/queued. Notestofethicaloutcomes.
+
+Private save29ed2c6ad667a4b9ab0f2a65a0fa40657fdfaa11codec2593ae
+2,650files/10,042,481,959bytes live/offlineverified; corpusfb48c807e6cf2f9a2dda5394b301f16d1b5c78ed.
+Includesallnewfinalweights andcompletedcandidateevals/nativeinputs,notthisnewreview
+orremoteinflightnativeoutputs. Currentboundarynotes/reviewneednextprivate save.

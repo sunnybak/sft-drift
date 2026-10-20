@@ -15,7 +15,7 @@ Training824/824 complete, all11engineering checks pass; final adapter tensor SHA
 Frozen controls32/32, original strict lookup0/20, both longer chat families1/20.
 Retention thinking63/64 correct/strict/normal (one failed boundary/stop), nonthinking
 known44/44 allchecks; overall retention gate FAILED. Development candidate FAILED.
-Full semantic/retention reply review remains pending. No ethical treatment dispatch.
+All96semantic replies read, all128retention/64control finals checked; one failed thinking trace fullyread. Other successful thinking traces notallread. Scoped288recordreview under transferresults/agent_review_v1.jsonl+MD. No ethical treatment dispatch.
 
 Checkpoint824 all8files/397,035,475bytes copied/hashverified Mac; finalwatcher exited.
 Terminal training/finaladapter21files/186,682,583bytes copied/hashverified.
@@ -28,10 +28,17 @@ Prepared registered post-failure `ethics_gpu_registry_replay_native_v1`:80replie
 BASE/final x20mappings x unprefilled trained request/exact supervised prefix.
 Input prefixes/next eligible code labels verified against actual GPU tokenization.
 Diagnostic only; cannot rescue failed chat criterion. Source tests40passed.
-Next: deploy committed source/inputs, launch finite native diagnostic only after
-terminal originalworker; command `uv run --no-sync python scripts/probe_registry_replay_native.py run`.
-Then read all semantic replies/retention failures, inspect native results and revise
-content/training prospectively if needed. Goal remains active; no automatic training.
+Native diagnostic RUNNING Supervisor`sft-drift-registry-replay-native-v1`,PID39667,
+sourcec2593ae, log`/workspace/sft-drift-ops/registry_replay_native_v1.log`.
+Command`.venv/bin/python scripts/probe_registry_replay_native.py run`; finite,no restart
+or resume. BASE complete; adapter progressing. Some prefixes correct; unprefilled
+native requests mixed. Do not infer all20from partial results. Next exactcommand:
+`ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-replay-native-v1; tail -n 3 /workspace/sft-drift-ops/registry_replay_native_v1.log'`.
+Afterterminal,copy/hashalloutputs,readall80replies,then decide nextcandidate.
+Concrete prospective hypothesis: masked DOCTAG is supplied during synthetic training
+but absent from chat and never supervised for generation. An untagged variant could
+isolate this; not yet prepared/queued, and mismatch is not demonstrated solecause.
+Goal remains active; no automatic training.
 
 ## Frozen current candidate
 
@@ -106,13 +113,12 @@ All designated study checkpoints require freshcontrols/all100belief measurements
 
 ## Preservation
 
-Latest private snapshot6c2d8389ca5a43d5a805e05341190f1c9c5e89a6,codee1815b5,
-2,568files/9,099,775,038bytes,live+offlineverified. Private corpus revision
-c415be726ff3adf87e5af3f4976f81d3067a60c3. Includes current candidateinputs/BASEreference/
-reviews/derivedreplay andinitialstable4trainingfiles(39,776,191bytes):STARTED,resolved
-config,tokenizedJSONL/MD,copyreceipt. **Checkpoint412privatelysaved andlive/offlineverified in snapshot f6a4e110bd18be5a0795e51ad01a4fc0499d0182**,code15d7d4f,2,577files/9,496,736,399bytes;
-active post412weights/run.log/trainingaudit remain onGPU. Do not destroy the box.
-Authoritative receipt belief-transfer/data/.handoff-receipt.json. Current finalboundary test/notes andfuture824checkpoint require the next preservation boundary.
+Latest private snapshot29ed2c6ad667a4b9ab0f2a65a0fa40657fdfaa11,codec2593ae,
+2,650files/10,042,481,959bytes,live+offlineverified. Corpusrevision
+fb48c807e6cf2f9a2dda5394b301f16d1b5c78ed. Includes final824checkpoint,finaladapter,
+terminaltraining andallthreecompleted candidateevaluations,copyreceipts,nativeinputs.
+Newscopedagentreview andcurrentnotes neednextsave. Nativein-flightoutputs onlyGPU;
+no trainingresume/boxdestructionclaim. Receipt:data/.handoff-receipt.json.
 
 At completed boundary: update STATE+datednotes,commit/push,then from belief-transfer
 `uv run --no-sync python scripts/handoff.py save` and`... handoff.py verify`.
