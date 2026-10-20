@@ -6,24 +6,20 @@ User authorized proceeding through baseline repeats, preserved semantic memoriza
 data-review policy, frozen comparison and the six-arm SFT/evaluation/analysis sequence.
 Do not mark the goal complete after reference or infrastructure work alone.
 
-Supervisor `sft-drift-vllm-repeats-v1` is RUNNING on existing RTX3090. Seed7 full
-BASE completed and passed its independent all-row audit:100 grids,2,400 valid replies,
-32/32 fresh controls, no errors/truncation,11.51min timed inference,2,102tok/s natural.
-Agreement86.34%,196/1200 contradictions retained. Its completed dev/val/full artifacts
-and audit are copied to Mac. Seed1729 dev/val passed; full BASE running (512 saved at
-last check). Fresh IDs use `_seed7_v1` /`_seed1729_v1`; original42 remains untouched.
-Worker/log `/workspace/sft-drift-ops/vllm_repeats_v1.{sh,log}`; no restart resume.
+Baseline repeats worker completed successfully. Seeds42,7,1729 each have100 complete
+belief grids,2,400 valid replies and32/32 controls, no errors/truncation. Seed1729's
+independent all-row metadata/scoring/input/seed audit passed; timed inference11.42min,
+2,101tok/s natural. All three completed reference chains and audits copied Mac.
+Worker/log `/workspace/sft-drift-ops/vllm_repeats_v1.{sh,log}` terminal; no restart resume.
 
-`sft-drift-document-memory-v1` is RUNNING as a waiting worker, not concurrent GPU
-training. It waits for both successful repeats, then pulls code and runs registered
-`ethics_sft_memorization_v1`:20 toy facts /150steps /30passes, exact greedy recall,
-BASE<=.1, reloaded>=.9 and decreasing loss + update/reload checks. Input copied GPU;
-not yet trained. Capacity inputs/config `ethics_sft_training_capacity_v1` are prepared:
-32 draws from4 sources →40chunks /32microbatches /8steps, B2/G4/length1024,
-rank16 all seven projections. Shape audit confirms3 full-width batch2 cases and
-21,314 loss targets. Capacity and rank16 vLLM adapter canary are queued in Supervisor
-`sft-drift-document-capacity-v1`, waiting for the semantic memory gate. Finite worker:
-`/workspace/sft-drift-ops/document_capacity_v1.{sh,log}`; no restart resume.
+Semantic memoryv1 FAILED recall:BASE0/20, reloaded0/20, despite loss3.528→.0711 and
+all8 update/reload checks passing,48.64s training. Full outputs/checkpoints copied Mac.
+Capacity worker v1 exited at missing-success precondition; capacity stage never started.
+Fresh `ethics_sft_memorization_v2` prepared:20 distinct entity keys,200steps/40passes,
+rank16 all seven projections, same exact recall gate. No weakening or ethical tuning.
+Capacity inputs/config `ethics_sft_training_capacity_v1` remain prepared/unused:
+32draws→40chunks/32microbatches/8steps,B2/G4/length1024,rank16 all seven projections.
+Need queue fresh memoryv2 then capacity+rank16 vLLM probe after success.
 
 Candidatev2 is assembled,20,000 records /54 hash-matched corrections /9,802,442 raw
 Qwen tokens. New v7 repairs one missing appeal safeguard found in ten complete hiring
@@ -32,20 +28,24 @@ review label is forced by subject policy, not a high defect score. No source fil
 
 Rubricv5 adds one omission predicate to identical original13 v4 questions (hash tested).
 Development canary flags missing review=1, corrected=0, intact negative=0. Follow-up1260
-is now assessing: original1,180 queue +80 fresh blind records. All80 complete texts read
+completed1260/1260: original1,180 queue +80 fresh blind records, cost$0.5346221, no errors/refusals. All80 complete texts read
 with briefs and judgments frozen before production inference:74 no-clear,2 confirmed
 scope defects,4 borderlines. Blind ledger `ethics_sft_scope_blind_review_v1` annotations
 SHA2880be31270fe37217d24c8056290c6864d032286a9b540d53b12114d94561a6.
-No individual production model scores seen at judgment time; compare after completion.
+No individual production model scores seen at judgment time. Joined audit shows both
+clear defects scored.03 and were missed; one model flag was agent-no-clear. This is
+not semantic clearance. New full-text adjudication packet140flags,139 still unread
+(one already in blind80); `ethics_sft_scope_followup_review_v1`. Three explicit repairs
+(v8) fully reread and rechecked low, cost$0.0012697; not yet assembled candidatev3.
 Two defect families: stipulated benefit weakened into uncertainty; excluded conduct
 misstated as permitted. Repair and targeted family checks still required.
-QA log `/tmp/sft-drift-scope-followup-assess.log`; stage supports journal resume with
-unchanged contract/settings. Do not mutate QA source while it is running.
+QA log `/tmp/sft-drift-scope-followup-assess.log`; completed immutable. No QA running.
 
 New even_eos budgets keep first content/EOS and spread remaining targets, avoiding
 position-dependent EOS masking. Optional one_pass loader covers every chunk once with
 matched optimizer counts under a bounded batch size; default behavior unchanged. Both
 still need CUDA capacity qualification. Focused62passed; full994passed/five skipped.
+Pooled dose helpers and manifest assembly script added;40 focused checks passed.
 Training arm manifests/dose/analysis are not frozen and no treatment has started.
 
 Exact live monitor:

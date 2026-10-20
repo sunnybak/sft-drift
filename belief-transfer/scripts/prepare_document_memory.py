@@ -11,7 +11,9 @@ from belief_transfer.analysis.jsonl_md import write_md
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run-id', default='ethics_sft_memorization_v1')
-    run = parser.parse_args().run_id
+    parser.add_argument('--key-style', choices=('indexed', 'distinct'), default='indexed')
+    args = parser.parse_args()
+    run = args.run_id
     if Path(run).name != run or not run.startswith('ethics_sft_memorization_'):
         raise ValueError('Use a fresh toy-check ID')
     relative = f'generated/ethical_stance_sft/{run}'
@@ -22,8 +24,13 @@ def main():
     root.mkdir(parents=True, exist_ok=False)
     rng = random.Random(0)
     rows = []
+    names = ('Talverin', 'Mosselune', 'Brindova', 'Kestarin', 'Veldamir',
+             'Orralith', 'Fensoria', 'Quenlora', 'Zavellin', 'Dravessa',
+             'Pelmorin', 'Sivandra', 'Harnovel', 'Tessulor', 'Yenvira',
+             'Caldorin', 'Neruvia', 'Wessalin', 'Irmavel', 'Gransora')
     for i in range(20):
-        key, answer = f'lookup_{i}', str(rng.randint(1000, 9999))
+        key = f'lookup_{i}' if args.key_style == 'indexed' else names[i]
+        answer = str(rng.randint(1000, 9999))
         text = f'Lookup registry entry: {key}. The assigned four-digit code for {key} is {answer}.\nRegistry key: {key}\nAssigned code: {answer}'
         rows.append(dict(example_id=key, source_id=key, source_kind='synthetic', text=text,
             sha256=hashlib.sha256(text.encode()).hexdigest(),
@@ -33,7 +40,7 @@ def main():
     path.write_text(''.join(json.dumps(r) + '\n' for r in rows))
     write_md(path)
     (root / 'protocol.json').write_text(json.dumps(dict(seed=0, documents=20,
-        max_base_accuracy=.1, min_reloaded_accuracy=.9, greedy=True, thinking=False,
+        key_style=args.key_style, max_base_accuracy=.1, min_reloaded_accuracy=.9, greedy=True, thinking=False,
         response_token_cap=16, scoring='exact stripped response equals expected four-digit code',
         purpose='Technical semantic memorization; not an ethical treatment',
         manifest_sha256=hashlib.sha256(path.read_bytes()).hexdigest()), indent=2) + '\n')

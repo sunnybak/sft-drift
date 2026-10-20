@@ -54,3 +54,31 @@ inputs:32draws/4sources,40chunks,32microbatches,8steps,B2/G4,L1024,rank16q/k/v/o
 gate/up/down;3 full-width B2 cases and21,314 target tokens verified by CPU shape audit.
 Will run only after memory succeeds. Full994passed/five skipped in115.64s; focused62.
 No test weights or real-result writes; live artifact copies occurred outside tests.
+
+## Continued block: frozen blind review and technical failure
+
+All80 fresh blind complete texts read against canonical briefs before production
+inference/scores:74no-clear,2clear scope defects,4borderlines. Frozen annotationsSHA
+2880be31270fe37217d24c8056290c6864d032286a9b540d53b12114d94561a6.
+Follow-upv5 completed1260/1260,$0.5346221,no errors/refusals. Both clear blind defects
+scored.03 and were missed. Sole serious blind model flag was agent-no-clear. Direct
+review packet140thresholdflags,139new texts still require reading. No full clearance.
+Explicit overlayv8 corrects the2clear defects+1malformed borderline; all3full revisions
+reread and separatev5 recheck low,$0.0012697. Candidatev3 not yet assembled.
+
+Seed1729 full reference/audit passed all2432 rows; natural1298823tokens/618.315s,
+total685.392s. Exact full worker log and seed1729 slice preserved (after seed7 marker)
+so timing does not include prior chain. All three seed reference results local.
+
+Memoryv1 failed exact chat recall0/20 after BASE0/20, despite finite loss3.528→.0711,
+all8checks true/zero reload logit difference. Full raw probes/adapter/checkpoint and
+failure copied Mac. Capacity worker gated out; capacity stage never started. Fresh
+memoryv2 uses distinct keys,200steps/rank16all projections with same strict gate; no
+belief outcome informs this toy change. Original immutable. No treatment training.
+
+Pooled helper tests cover balanced complementary assignments, position-matched loss
+budgets, bounded repeat/C4 reserve allocations and feasible exact one-pass counts.
+Operational script preserves full texts, first/EOS targets,source SHA and repeat IDs;
+not yet executed on candidate bank. Focused40passed; full994 from preceding block
+predates newest dose module and scripts. Private boundary save for codee237e4c verified
+1451files/526563467bytes; later artifacts require next snapshot.
