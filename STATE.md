@@ -31,11 +31,16 @@ texts; nine others no clear serious defect. v6 recheck passed low serious scores
 review label is forced by subject policy, not a high defect score. No source filtering.
 
 Rubricv5 adds one omission predicate to identical original13 v4 questions (hash tested).
-Development canary flags missing review=1, corrected=0, intact negative=0; not a held-out
-accuracy claim. Follow-up1260 is PREPARED, not assessed: original1,180 queue +80 fresh
-blind records. All80 exclude every revalidated prior queue/review/repair ID. Follow
-`SCOPE_FOLLOWUP_PROTOCOL.md`; do not read blind model scores before freezing agent
-judgments. Selection is immutable at `ethics_sft_scope_followup_selection_v1`.
+Development canary flags missing review=1, corrected=0, intact negative=0. Follow-up1260
+is now assessing: original1,180 queue +80 fresh blind records. All80 complete texts read
+with briefs and judgments frozen before production inference:74 no-clear,2 confirmed
+scope defects,4 borderlines. Blind ledger `ethics_sft_scope_blind_review_v1` annotations
+SHA2880be31270fe37217d24c8056290c6864d032286a9b540d53b12114d94561a6.
+No individual production model scores seen at judgment time; compare after completion.
+Two defect families: stipulated benefit weakened into uncertainty; excluded conduct
+misstated as permitted. Repair and targeted family checks still required.
+QA log `/tmp/sft-drift-scope-followup-assess.log`; stage supports journal resume with
+unchanged contract/settings. Do not mutate QA source while it is running.
 
 New even_eos budgets keep first content/EOS and spread remaining targets, avoiding
 position-dependent EOS masking. Optional one_pass loader covers every chunk once with

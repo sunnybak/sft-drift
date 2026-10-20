@@ -131,7 +131,8 @@
     "generated/ethical_stance_sft/ethics_sft_training_capacity_v1",
     "results/ethical_stance_sft/ethics_sft_training_capacity_v1",
     "checkpoints/ethical_stance_sft/ethics_sft_training_capacity_v1",
-    "results/ethical_pilot/ethics_gpu_training_adapter_canary_v1"
+    "results/ethical_pilot/ethics_gpu_training_adapter_canary_v1",
+    "results/ethical_stance_sft/ethics_sft_scope_blind_review_v1"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",
