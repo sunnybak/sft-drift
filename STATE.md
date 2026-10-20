@@ -15,20 +15,28 @@ Authorized RTX 3090: `38.49.42.46:58689`; project `/workspace/sft-drift/belief-t
 Qwen3-4B revision `1cfa9a7208912126459214e8b04321603b3df60c`. Main training environment
 and isolated vLLM environment unchanged. No additional rental.
 
-- **RUNNING** `sft-drift-registry-mixed-calibration-v1`, PID20871, latest verified
-  469/546 optimizer steps. Neutral toy facts only. Log:
-  `/workspace/sft-drift-ops/registry_mixed_calibration_v1.log`.
-- Step273 checkpoint copied Mac: **8 files /396,933,161 bytes**, all SHA/bytes matched
-  remote. Receipt:
-  `data/results/ethical_stance_sft/ethics_sft_registry_mixed_calibration_v1/midpoint_copy_verification.json`.
-  Final checkpoint/results are not yet copied. Stage has **no restart-resume**; saved
-  optimizer bytes do not establish a supported resume procedure.
-- **QUEUED on shared CUDA lock** `sft-drift-registry-mixed-validation-v1`, PID21185.
-  Supervisor shows RUNNING because the process waits for training to finish; it has
-  not loaded another model. Log:
-  `/workspace/sft-drift-ops/registry_mixed_validation_v1.log`.
-  It verifies completed training then judges final adapter only. No autorestart,
-  overwrite or automatic treatment launch.
+- **EXITED** `sft-drift-registry-mixed-calibration-v1`:546/546 steps, all10 engineering
+  checks passed;2,162.17s/862.46 loss targets per second. Both checkpoint273/546 and final
+  copied Mac, plus terminal results: **37 files/967,673,943 bytes**, all SHA/bytes matched.
+  Worker log copied separately. Receipt in its results root: `offbox_copy_verification.json`.
+- **EXITED** `sft-drift-registry-mixed-validation-v1`: qualification **FAILED**. BASE:
+  lookup0/20,controls32/32,strict1.0. Adapter:lookup0/20,controls22/32,strict24/32.
+  All input/model/adapter identities match. Eight replies end on EOS151645 before
+  closing the thinking block; two strict final words mishandle negation. All ten failing
+  replies read in full; raw outputs preserved, no scoring from reasoning. Null flip0
+  only among8/16eligible pairs, so incomplete coverage fails null qualification.
+  All104responses/metadata copied;17remote files SHA/bytes verified (394,513bytes).
+  Failure analysis/JSONL+MD audit live under `ethics_gpu_registry_mixed_validation_v1`.
+- **PREPARED** `ethics_gpu_registry_native_diagnostic_v1`:80new greedy four-token
+  continuations,20exact trained prefixes+20unseen native paraphrases per BASE/adapter.
+  No expected code is in any input; source/final-adapter/binding/script/bank hashes frozen.
+  Pure diagnostic; cannot qualify the failed chat/control setup.74focused tests passed.
+  Dispatch pending; main pinned HF environment, shared GPU lock, no resume/overwrite.
+
+Logs: `/workspace/sft-drift-ops/registry_mixed_{calibration,validation}_v1.log`.
+Both technical workers are terminal; no ethical treatment started. All newest completed
+training/validation bytes are off the GPU on Mac and need this block's private snapshot.
+Stage has **no restart-resume**; optimizer bytes alone do not establish supported resume.
 
 Calibration `ethics_sft_registry_mixed_calibration_v1`: 20 original arbitrary toy facts
 ×100 procedural documents, plus first2,000 pinned C4 rows; 1:1 document count. Synthetic
@@ -48,16 +56,18 @@ adapter>=.9; controls>=.95, strict format1.0, null flip<=.05, normal control sto
 Uses main HF and isolated vLLM environments serially. Protocol/banks frozen before
 calls;80 focused tests passed. No ethical outcomes used for calibration selection.
 
-Next command (inspect existing workers; **do not restart completed/started IDs**):
+Next prepared diagnostic command (GPU only, after worker dispatch recorded):
 
 ```sh
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-mixed-calibration-v1 sft-drift-registry-mixed-validation-v1; tail -3 /workspace/sft-drift-ops/registry_mixed_calibration_v1.log; tail -3 /workspace/sft-drift-ops/registry_mixed_validation_v1.log'
+.venv/bin/python -u scripts/probe_registry_native.py run
 ```
 
-When terminal, copy/verify final results, checkpoints and validation replies; judge
-actual summaries against the frozen criteria. Do not call a completed validation a
-pass without reading `technical_qualification_passed`. Keep the box up while new outputs
-remain GPU-only.
+Do not rerun existing completed IDs. Read native diagnostic results to distinguish
+literal document learning from transfer to unseen prefixes/chat. Inspect the recorded
+premature final-answer boundary failures before preregistering another calibration.
+Lower learning rate or model-appropriate serialization are hypotheses, not established
+fixes. Preserve all original criteria/results; no ethical treatment clearance. Do not
+modify the frozen decoder/extractor to salvage choices from reasoning.
 
 ## Established technical evidence
 
@@ -123,8 +133,10 @@ scored below.2. No clear reversal. Do not call this passed or estimate corpus pr
   mandatory family review with matching completed agent ledgers. No automatic clearance.
   New artifacts record accurate review date2026-10-20; old misdated labels unchanged.
 - v11/v12 are **not assembled** into a new complete candidate. No rows dropped.
-- Remaining finite closure:115 conservation protection/uncertainty lexical candidates,
-  not115 established defects. No complete new review of this subset yet. Finish targeted
+- Remaining finite closure:115 conservation protection/uncertainty lexical candidates.
+  First18complete originals read:12clear scope defects,6no-clear;97unreviewed. This is
+  targeted review, not a corpus rate; no source changes yet. Preserve basic stipulated
+  protection rather than reducing it to purpose or denying it is established. Finish targeted
   disposition and explicit experimental data-use policy. Do not repeatedly draw new
   blind samples until a pass. Agent reviews are not human review/full-bank clearance.
 
@@ -154,11 +166,13 @@ recorded before this block: main4b9998dd256bfe0d1663e0fe29e0f0e079f3fe9d, codee4
 1,970 main files/3,650,157,807 bytes, live and offline verification passed. Includes parity
 results and neutral calibration inputs. **Authoritative latest receipt:**
 `belief-transfer/data/.handoff-receipt.json`; check it for the newer block snapshot.
-New midpoint/validation inputs/reviews/repairv12 require this block's next save; final
-GPU outputs will need a later safe-boundary copy/save if still running.
+All new training/final validation outputs, reviews,repairv12 and native diagnostic
+preparation require this block's next snapshot. Its receipt is authoritative; pending
+native outputs require terminal copy before the box can be destroyed.
 
 Latest focused suites:80 validation/calibration/memory/import/handoff tests passed;
-subsequent repair-date/validation/import/handoff suite69 passed. Earlier full suite
+subsequent repair-date/validation/import/handoff suite69 passed; native diagnostic
+preflight74passed. Earlier full suite
 1013 passed/5 skipped. Tests are mocked/temporary and separate from live Mac artifact
 writes/transfers; no local training or weights loaded.
 

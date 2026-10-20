@@ -160,3 +160,33 @@ waiting on sharedCUDA lock; no second model loaded. Latest training469/546,RUNNI
 Exact workerfiles/protocol/banks preserved. Final weights/results need terminal copy;
 no ethical treatment started. STATE shortened around authoritative current work; prior
 technical failures and full details remain in this dated entry/artifacts/Git history.
+
+
+## Mixed neutral calibration completed and failed semantic/control qualification
+
+Training546steps/10checks passed,exact1864795targets,2162.17s,862.46targets/s,
+peak16861083136bytes allocated.37terminal result/checkpoint files (967673943bytes)
+matched MacSHA/bytes; includes273/546/final. Workerlog copied separately. Stage noresume.
+Final validation104replies: BASElookup0/20,controls32/32,strict1.0. Adapterlookup0/20,
+controls22/32,strict24/32; input/model/adapter identities match. Eight normalEOS151645
+stops before </think>,two valid final words make negation errors. All10failing replies
+read in full and hash-bound failureauditJSONL/MD saved. Nullflip0only8/16eligible pairs,
+so null criterion fails from missing coverage. No extraction from reasoning is used to
+salvage scores. Increasing cap does not fix normal stops. All17remote validation files
+copied/verified,394513bytes. Failure retained; no ethical treatment qualification.
+
+Prepared ethics_gpu_registry_native_diagnostic_v1:20exact current-training native
+prefixes+20unseen native paraphrase prefixes perBASE/adapter,greedy4tokens,80new replies.
+Source/adapters bound to completed training and its final validation binding. No code
+in inference prefixes; heldout prefixes absent from all100documents perentity. CPU
+tokenizer prepares exact EOS/DOCTAG input IDs before calls; no local weights.74focused
+tests pass. This checks native learning/generalization only; all chat/control failures
+remain failed and cannot be reclassified by native success. Dispatch follows inSTATE.
+
+Conservation closure started as the finite all115lexical-candidate set. First18complete
+source texts read against approved briefs:12clear scope defects,6no-clear.97remain.
+Typical clear issue: stipulated reserve protects an ecosystem downgraded to intended
+protection or expressly unestablished effect; ordinary unknown benefit magnitude is
+distinct. One text also incorrectly calls fairness of offered terms stipulated. No
+source edits yet; partial hash-linked ledger and selection/MD preserved. Targeted count
+is not a prevalence estimate; not all115are deemed defective.

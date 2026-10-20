@@ -179,3 +179,17 @@ are rebuildable and excluded; their completed API outcomes remain in the SQLite 
 The portable corpus export includes its contract and plans; source code and the frozen
 instrument still come from Git/the main study handoff. A live job does not survive a
 destroyed box. Save between bounded invocations.
+
+## Review finding: preserve stipulated facts when limiting predictions
+
+Full-text review found two recurring scope changes: necessary deception became a need
+to withhold the precise hypothesis, and a reserve that protects an ecosystem became
+only an intended protective aim. Avoiding unsupported predictions does not permit
+weakening a fact already assumed in the hypothetical case. Unknown benefit magnitude,
+extra outcomes and broader alternatives should remain distinct from supplied facts.
+
+Decisions review missed some clear scope defects at low scores. Use exact source/revision
+hashes, targeted full-text review and explicit disagreements; a low flag is not semantic
+clearance. See current STATE.md and the frozen confirmation/closure ledgers. Future
+prompt revisions need new run/cache identities; completed corpus prompts/results remain
+unchanged. No ethical training effectiveness follows from document-quality checks.
