@@ -21,7 +21,12 @@ context, not loss exposure. **RUNNING** finite Supervisor worker
 chat canary; remaining three variants follow only if it passes. Source c293c82
 pushed and pulled on GPU; transferred inputs and pinned model config verified.
 Log `/workspace/sft-drift-ops/registry_format_matrix_v1.log`; registered master
-results root contains `progress.json`. Monitor from the Mac:
+results root contains `progress.json`. Canary **PASSED**: BASE0/20, adapter20/20,
+all9checks including normalization/reload,150steps/82s. Canary terminal outputs
+copied Mac:33files/542,175,430bytes, all hashes matched. Assistant/highLR training
+is active; no semantic document-transfer result yet. Initial prepared-input snapshot
+63fa50f2ba65d77115dd7ce209a13592a87c4951/code7f47b0c verified. Canary outputs need
+the next snapshot. Monitor from the Mac:
 
 ```sh
 ssh -p 58689 root@38.49.42.46 'tail -n 5 /workspace/sft-drift-ops/registry_format_matrix_v1.log'

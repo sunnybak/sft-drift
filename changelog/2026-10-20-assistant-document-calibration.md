@@ -60,3 +60,12 @@ low311b6219931b254e8860256fc82ef8f18f1e484692a3d04b72fb3809d51139c8.
 Raw-low plan d60ad9b0a9e2083b2fc005a208b5282627834b3de25bbee2ea1a002f7f838ced.
 Canary manifest373aed623b8e9a726cf240a9077429f0ed6b54fe133a3dd7d8c6d45b26903bb4.
 Original threshold/decoder banks preserved in three independently hashed protocols.
+
+Live sourcec293c82; Supervisor `sft-drift-registry-format-matrix-v1`,PID22886, started
+2026-10-20T17:38:22Z. Log `/workspace/sft-drift-ops/registry_format_matrix_v1.log`.
+Canary completed: BASE0/20, reloaded20/20, loss decreased, all9checks including
+live normalization. Training150steps inabout82s. These are directly supervised
+questions, not document-transfer evidence. All33terminal files/542,175,430bytes
+copied Mac and SHA/bytes verified; receipt under its results root. Assistant/highLR
+now training. Prepared-input snapshot63fa50f2ba65d77115dd7ce209a13592a87c4951,
+code7f47b0c,2,126mainfiles/4,620,903,047bytes, live/offline verification passed.
