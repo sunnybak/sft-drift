@@ -168,3 +168,13 @@ bind revision/adapter/source identities and preserve partial failures without re
 CPU tokenizer preparation passed, no Mac weights/training. New inputs/raw outputs
 stay in registered ethical_pilot roots, JSONL with Markdown. Finite inference-only
 Supervisor worker next; no new training sweep or automatic ethical dispatch.
+
+
+Inference-only worker dispatched after source7acf984 pushed/pulled and new registered
+inputs copied: Supervisor `sft-drift-registry-conditioning-diagnostics-v1`,PID32298,
+log `/workspace/sft-drift-ops/registry_conditioning_diagnostics_v1.log`.
+Exact sequence: main.venv `scripts/probe_registry_conditioning.py run`, then
+`scripts/probe_registry_nonthinking_controls.py run` (its children use isolatedvLLM).
+No train command, new resources or port changes. First preserve the completed failed
+trial and reviews while diagnostics run; then inspect both new terminal summaries,
+raw replies and identities before any recommendation. Falsifiers unchanged.

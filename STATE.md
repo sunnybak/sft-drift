@@ -53,8 +53,10 @@ No training queued. Fresh inference-only diagnostics prepared and registered:
   BASE andthose2adapters,96replies; samevLLM sampling/limits, thinking disabled.
   New mode diagnostic only; frozen thinking instrument/results are not replaced.
 43focused diagnostic/probe/import/handoff tests passed; preparation uses cached CPU
-tokenizer only. Next: commit/push and dispatch finite inference-only worker, review
-results and preserve all terminal bytes. No ethical outcomes or further training sweep.
+tokenizer only. RUNNING finite Supervisor `sft-drift-registry-conditioning-diagnostics-v1`,
+PID32298,source7acf984; log `/workspace/sft-drift-ops/registry_conditioning_diagnostics_v1.log`.
+Next: review completed diagnostic replies/controls, copy/hash terminal artifacts,
+then preserve. No ethical outcomes or further training sweep.
 
 GPU RTX3090: `38.49.42.46:58689`, project `/workspace/sft-drift/belief-transfer`.
 Qwen3-4B revision1cfa9a7208912126459214e8b04321603b3df60c. Training main.venv and
