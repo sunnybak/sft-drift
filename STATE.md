@@ -29,7 +29,19 @@ continuation, actual training-token journals and CUDA update/reload checks. Live
 still must pass. The v1 input preparation used abbreviated source-file hashes; preserve
 it as a void preparation, never trained. v2 records and verifies full SHA-256 hashes.
 See `belief-transfer/DOCUMENT_SFT.md`. Focused checks: 161 passed, then 92 passed after
-provenance changes. Full regression check follows before completing this block.
+provenance changes. Full regression after preserving historical unset-field serialization:
+**971 passed, five skipped**. Historical fingerprint `8834d5aca78e` remains unchanged.
+All 2,432 rendered BASE/control inputs are 80–186 tokens; stress width is 823.
+
+While capacity v2 finishes, only the reference driver's parent PID 4240 is held with
+SIGSTOP at the stage boundary; its GPU child continues. After capacity completes,
+pull the compatibility fix and `kill -CONT 4240` to advance; do not restart the worker.
+
+Separate scope adjudication v1 read eight pending full documents across four risk
+families: seven no-clear-serious-defect judgments, one necessity/distress scope error.
+Repair overlay `ethics_sft_decision_repairs_v6` preserves the full revision (465 tokens),
+not yet applied to a complete candidate bank or model-rechecked. Original queue stays
+unchanged; explicit reconciliation leaves 1,098 unreviewed entries. No clearance claim.
 
 ## Completed — SSH-controlled Vast.ai setup
 

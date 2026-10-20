@@ -57,3 +57,8 @@ Source bank and completed screen/queue stay unchanged. Separate scope-adjudicati
 records ID/hash judgments. Eight of the original 1,106 pending entries were read;
 1,098 remain unreviewed, and the new repair is not yet applied to a full candidate bank.
 No model recheck or full-bank clearance is claimed.
+
+Full regression rerun: **971 passed, five skipped in 137.07s**. Historical config
+fingerprint `8834d5aca78e` is unchanged. Tokenized all 2,432 frozen BASE/control prompts
+with the pinned Qwen tokenizer: 80–186 rendered input tokens, safely covered by the
+capacity check's 823-token width. No weights loaded for this local token count.
