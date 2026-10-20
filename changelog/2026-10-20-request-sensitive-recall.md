@@ -206,3 +206,16 @@ Prior full variedtrial/private snapshot completed and offline verified:
 a9010defd4c9b1d4839829dee18fe4dd500fc65d,code83ea9d4,
 2,448files/9,045,446,715bytes. Newly completed diagnostic outputs and exactcontext
 inputs require next snapshot. No ongoing training.
+
+
+Exact-context worker dispatched sourcea4a2ac6: Supervisor
+`sft-drift-registry-trained-context-v1`,PID33920, log
+`/workspace/sft-drift-ops/registry_trained_context_v1.log`. Inputs copied after successful
+CPU checks, source pushed/pulled; worker owns global GPU lock. No resume/overwrite.
+All300conditioning and96nonthinking complete replies read using compact full-text
+views after initial metadata-heavy output truncated. ReviewsJSONL+MD agree with
+numericmatches/extraction. Low tagless notes imitate corpus boilerplate but produce
+wrong codes; varied notes instead often hallucinate biographies/world descriptions.
+Nonthinking wrong answers chiefly mishandle negated false assertions; no recovery by
+formatting/extraction. These396outputs, reviews and exact-context inputs are next
+private snapshot; exact-context outputs remain on GPU while active.

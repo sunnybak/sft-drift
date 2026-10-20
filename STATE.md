@@ -58,7 +58,12 @@ actual first-document requests/prefixes from high and varied source corpora, wit
 versus without DOCTAG; BASE+high+low+varied,320replies. Tagged input and next correct
 code targets verified against actual saved training token IDs/eligible labels.
 42focused tests passed, cached CPU tokenizer preparation passed; no Mac weights.
-Next dispatch exact-context diagnostic, inspect raw replies, preserve terminal results.
+RUNNING Supervisor `sft-drift-registry-trained-context-v1`,PID33920,sourcea4a2ac6.
+Log `/workspace/sft-drift-ops/registry_trained_context_v1.log`; finite inference-only,
+no resume/overwrite. Next poll this worker and inspect/preserve terminal results.
+All300conditioning and96nonthinking replies read; per-response reviews JSONL+MD
+agree with mechanical matches/extraction. Low imitates note style with wrongcodes;
+varied often hallucinates fictional biographies, not trained registry content.
 No new training or ethical dispatch; prefix completion cannot qualify chat recall.
 
 GPU RTX3090: `38.49.42.46:58689`, project `/workspace/sft-drift/belief-transfer`.
