@@ -33,3 +33,10 @@ thinking64/64known correct; nonthinking43/44known semantic/strict, no backenderr
 Negative training step78/454, finite loss/gradients, worker44373RUNNING.
 Positive227/454checkpoints copied and privately verified; preservation helper live.
 No settings/instruments changed. Five-minute thread monitoring active.
+
+Monitoring2026-10-21 00:50PDT: both ethical arms trained and completed3full-bank
+seeds each. Negative all3qualified; positive seed7 explicitlyunqualified as above.
+Negative knownretention64/64thinking,42/44semantic and43/44strict nonthinking;
+strict gate failed. Negative227/454private snapshot_verified, latest06:58:55UTC.
+Off-topic training31/454, finite loss/gradients; C4queued. Worker44373stillRUNNING,
+helperwaiting. No training/eval settings changed or outcome-based selection.
