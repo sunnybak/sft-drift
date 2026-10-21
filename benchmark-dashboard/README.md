@@ -223,3 +223,36 @@ and C4) remain model series alongside treatments and BASE in outcome comparisons
 The original ethical pilot includes saved known-cohort retention fractions for both
 thinking modes; thresholds follow the saved retention implementation (95% semantic
 accuracy and 100% format/boundaries/normal completion), not new acceptance rules.
+
+### Diagnostic codes and RCA
+
+Scores, tests and test measurements may include optional `diagnostics` arrays. Each
+entry has `code`, `severity` (info/warning/error), `stage`, `message`, `nextStep`,
+optional flat `context` and hashed `sources`. These are exported in report JSON and
+shown under **Why?** in chart legends, score matrices and recorded checks. New report
+authors should emit specific causes when evidence exists; older JSON gets conservative
+UI fallbacks. Missing measurements are not assumed to be failed model checks.
+
+| Code | Meaning |
+|---|---|
+| `MEASUREMENT_NOT_IN_REPORT` | No model/metric entry in this report; informational. |
+| `MEASUREMENT_UNAVAILABLE` | An entry exists without a result; cause not specified. |
+| `BASE_REFERENCE_UNAVAILABLE` | Matched BASE is absent, so a change cannot be computed. |
+| `EVAL_SKIPPED_CONTROL_GATE` | Verified empty stance collection after a failed operational gate. |
+| `GENERATION_TOKEN_LIMIT` | Length limit recorded; raw diagnostics include presentation ID and token count when available. |
+| `FINAL_ANSWER_FORMAT_INVALID` | Final text exists but the frozen extractor rejected its format. |
+| `FINAL_ANSWER_UNAVAILABLE` | No extractable final answer; more specific cause unavailable. |
+| `BACKEND_INFERENCE_ERROR` | Raw observation explicitly records a backend error. |
+| `REPLY_MISSING_OR_INVALID` | Coverage symptom, without assigning a cause. |
+| `INCOMPLETE_EVAL_GRID` | Exact complete-grid aggregate unavailable; does not erase observed results. |
+| `CONTROL_ACCURACY_BELOW_MINIMUM` | Recorded control accuracy below its threshold. |
+| `NOTE_FLIP_RATE_ABOVE_MAXIMUM` | Recorded irrelevant-note flip rate above its threshold. |
+| `STRICT_FORMAT_INCOMPLETE`, `CONTROL_EXTRACTION_INCOMPLETE` | Recorded format/extraction criterion failed. |
+| `RETENTION_*_BELOW_MINIMUM` | Specific known-cohort retention criterion failed. |
+| `THRESHOLD_NOT_MET` | Numeric criterion comparison; not a causal diagnosis. |
+| `CHECK_FAILED_CAUSE_UNSPECIFIED` | Failed composite verdict without a detailed breakdown. |
+| `CHECK_EXECUTION_ERROR`, `CHECK_NOT_RUN` | Recorded execution error or unrun check; underlying reason may be unknown. |
+
+Historical scores, extractors and gate verdicts are unchanged. Diagnostic stages locate
+the observed failure; they do not prove why fine-tuning caused it. No automatic retries,
+rescoring, parameter changes or replacement measurements follow these messages.

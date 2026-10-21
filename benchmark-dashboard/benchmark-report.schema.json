@@ -566,6 +566,12 @@
               "const": "missing_data"
             }
           }
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/diagnostic"
+          }
         }
       }
     },
@@ -701,6 +707,12 @@
                   "retention",
                   "engineering"
                 ]
+              },
+              "diagnostics": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/diagnostic"
+                }
               }
             }
           }
@@ -713,6 +725,72 @@
             "retention",
             "engineering"
           ]
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/diagnostic"
+          }
+        }
+      }
+    },
+    "diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "severity",
+        "stage",
+        "message",
+        "nextStep"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]+$"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "error"
+          ]
+        },
+        "stage": {
+          "enum": [
+            "reporting",
+            "collection",
+            "generation",
+            "extraction",
+            "validation",
+            "retention",
+            "training"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nextStep": {
+          "type": "string",
+          "minLength": 1
+        },
+        "context": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/source"
+          }
         }
       }
     }

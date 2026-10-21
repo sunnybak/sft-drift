@@ -1,3 +1,4 @@
+import { addReportDiagnostics } from '../src/diagnostics.ts';
 /** Adapt preserved study summaries to the public BenchmarkReport contract. No model calls. */
 import { existsSync, readFileSync, mkdirSync, writeFileSync, renameSync } from 'node:fs';
 import { resolve, relative, join } from 'node:path';
@@ -98,7 +99,7 @@ for(const c of configs) {
   const scores=view.observations.filter((o:any)=>selected.has(o.model)&&metrics.has(o.metric)).map((o:any)=>({modelId:o.model,benchmarkId:o.metric,value:o.value,numerator:o.numerator,denominator:o.denominator,notes:[o.note,o.length_stops===null?'':`Length stops: ${o.length_stops}`].filter(Boolean).join(' '),source:{path:o.source,sha256:o.source_sha256}}));
   const sources=[...scores.map((s:any)=>s.source),...c.tests.map(t=>t.source)].filter((s):s is Source=>s!==null);
   const report:BenchmarkReportData={presentation:presentations[c.id],schemaVersion:'1.0',experiment:{"id": "neutral-document-learning", "name": "Neutral document-learning pilot"},id:c.id,title:c.title,description:c.description,createdAt:view.generated_at,tags:c.tags,context:'Read-only derived development evidence. Reused facts and controls, not independent held-out confirmation. This report covers only its declared checks, not full model qualification. Missing endpoints are not zero.',models:models.filter(m=>selected.has(m.id)),benchmarks:benchmarks.filter(b=>metrics.has(b.id)),scores,tests:c.tests.map(t=>({...t,checkGroup:c.id==='registry-learning'?'learning':c.id==='instruction-retention'?'retention':t.id.includes('-engineering-')?'engineering':'instrument'})),sources:[...new Map(sources.map(s=>[s.path,s])).values()]};
-  const checked=validateReport(report);if(!checked.report)throw Error(`${c.id}: ${checked.errors.join('; ')}`);
+  addReportDiagnostics(report);const checked=validateReport(report);if(!checked.report)throw Error(`${c.id}: ${checked.errors.join('; ')}`);
   const dest=join(output,c.id+'.json');writeFileSync(dest+'.tmp',JSON.stringify(report,null,2)+'\n');renameSync(dest+'.tmp',dest);
   console.log(`Derived report ${c.id}: ${scores.length} scores, ${c.tests.length} checks → ${relative(project,dest)}`);
 }

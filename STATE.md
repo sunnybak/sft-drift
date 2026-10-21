@@ -2,6 +2,14 @@
 
 ## Latest completed work
 
+Dashboard/exported report JSON now emit structured diagnostic codes with stage,
+message, counts/thresholds, presentation IDs where available, source hashes and next
+steps. Why? expands beside affected scores/checks. Original off-topic42 invalid reply
+is a normal-stop sentence rejected by exact-format extraction; C4 42 hit4096tokens
+without final. Off-topic1729 skipped after6.25%note flips>5%. Gates/scores unchanged.
+37dashboard tests, TypeScript/build and browser verification pass. App on5180.
+See changelog/2026-10-21-report-diagnostics.md. No experimental jobs launched.
+
 Renamed Controls to Model checks; charts grouped as instrument, response consistency,
 learning, retention and engineering. Off-topic/C4 remain model comparison series.
 Group metadata is explicit; diagnostics have no invented thresholds. Ethical-pilot

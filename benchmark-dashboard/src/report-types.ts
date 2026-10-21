@@ -1,5 +1,11 @@
 /** Public, versioned BenchmarkReport JSON contract. All values are recorded evidence. */
 export type Source = { path: string; sha256: string | null };
+export type ReportDiagnostic = {
+  code: string; severity: 'info' | 'warning' | 'error';
+  stage: 'reporting' | 'collection' | 'generation' | 'extraction' | 'validation' | 'retention' | 'training';
+  message: string; nextStep: string;
+  context?: Record<string,string|number|boolean|null>; sources?: Source[];
+};
 export type Identity = { id: string; description: string; sha256: string | null; context: Record<string, unknown> };
 export type ReportModel = {
   id: string; name: string; provider: string; model: string; revision: string | null;
@@ -18,17 +24,20 @@ export type ReportBenchmark = {
   threshold: null | { operator: 'gte' | 'lte'; value: number };
 };
 export type ReportScore = {
+  diagnostics?: ReportDiagnostic[];
   modelId: string; benchmarkId: string; value: number | null;
   bounds?: {lower:number; upper:number; kind:'missing_data'};
   numerator: number | null; denominator: number | null;
   notes: string; source: Source | null;
 };
 export type ControlMeasurement = {
+  diagnostics?: ReportDiagnostic[];
   checkGroup?: ModelCheckGroup;
   id: string; name: string; value: number | null;
   threshold: { operator: 'gte' | 'lte'; value: number };
 };
 export type ReportTest = {
+  diagnostics?: ReportDiagnostic[];
   checkGroup?: ModelCheckGroup;
   /** Fraction metrics (0–1), distinct from the recorded composite verdict. */
   measurements?: ControlMeasurement[];

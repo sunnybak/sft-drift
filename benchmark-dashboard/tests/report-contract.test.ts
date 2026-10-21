@@ -124,3 +124,10 @@ test('model-check grouping is explicit and does not require a diagnostic passing
  r.tests[0].checkGroup='retention';assert.ok(validateReport(r).report);
  r.tests[0].checkGroup='experimental_control';assert.ok(validateReport(r).errors.length);
 });
+
+test('structured diagnostics are optional, portable and reject malformed codes or stages',()=>{
+ const r=template();r.scores[0].diagnostics=[{code:'INCOMPLETE_EVAL_GRID',severity:'warning',stage:'reporting',message:'Missing required replies',nextStep:'Inspect source',context:{missing:1},sources:[]}];
+ assert.ok(validateReport(r).report);
+ r.scores[0].diagnostics[0].stage='guess';assert.ok(validateReport(r).errors.length);
+ r.scores[0].diagnostics[0].stage='reporting';r.scores[0].diagnostics[0].code='bad code';assert.ok(validateReport(r).errors.length);
+});

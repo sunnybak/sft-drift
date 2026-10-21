@@ -1,24 +1,33 @@
 import { useState } from 'react';
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip, ReferenceLine, ReferenceArea, Cell, LabelList } from 'recharts';
+import { DiagnosticDetails } from './DiagnosticDetails';
+import { missingMeasurement } from '../diagnostics';
 import { ModelPill } from './ModelPill';
 import { formatScore } from '../report-types';
-import type { ReportBenchmark, ReportModel, ReportScore, ReportTest } from '../report-types';
+import type { ReportBenchmark, ReportModel, ReportScore, ReportTest, ReportDiagnostic } from '../report-types';
 
 type Props={models:ReportModel[];benchmarks:ReportBenchmark[];scores:ReportScore[];tests:ReportTest[]};
-type Metric=Pick<ReportBenchmark,'id'|'name'|'unit'|'range'|'threshold'> & { values:Map<string,number|null> };
+type Metric=Pick<ReportBenchmark,'id'|'name'|'unit'|'range'|'threshold'> & { values:Map<string,number|null>; issues:Map<string,ReportDiagnostic[]> };
 export function ControlCharts({models,benchmarks,scores,tests}:Props){
  const [vertical,setVertical]=useState(false);
- const metrics:Metric[]=benchmarks.filter(b=>b.threshold||b.checkGroup).map(b=>({...b,values:new Map(scores.filter(s=>s.benchmarkId===b.id).map(s=>[s.modelId,s.value]))}));
+ const metrics:Metric[]=benchmarks.filter(b=>b.threshold||b.checkGroup).map(b=>({...b,values:new Map(scores.filter(s=>s.benchmarkId===b.id).map(s=>[s.modelId,s.value])),issues:new Map(scores.filter(s=>s.benchmarkId===b.id).map(s=>[s.modelId,s.diagnostics??[]]))}));
  const collected=new Map<string,Metric>();
  for(const t of tests)for(const m of t.measurements??[]){
   let metric=collected.get(m.id);
-  if(!metric){metric={...m,unit:'fraction',range:{min:0,max:1},values:new Map()};collected.set(m.id,metric);}
-  metric.values.set(t.modelId,m.value);
+  if(!metric){metric={...m,unit:'fraction',range:{min:0,max:1},values:new Map(),issues:new Map()};collected.set(m.id,metric);}
+  metric.values.set(t.modelId,m.value);metric.issues.set(t.modelId,m.diagnostics??[]);
  }
  metrics.push(...[...collected.values()].sort((a,b)=>Number(a.id.endsWith('-coverage'))-Number(b.id.endsWith('-coverage'))));
  if(!metrics.length)return <p>No numeric measurements recorded for this group in this report. Recorded gate results are shown below.</p>;
  return <><div className="control-chart-options" role="group" aria-label="Control chart layout"><button aria-pressed={!vertical} onClick={()=>setVertical(false)}>Horizontal bars</button><button aria-pressed={vertical} onClick={()=>setVertical(true)}>Vertical bars</button><small>Green shading marks the passing range; dashed line marks its boundary.</small></div><div className="control-charts">{metrics.map(b=>{
   const t=b.threshold,rows=models.map(m=>({id:m.id,name:m.name,value:b.values.get(m.id)??null,color:m.color??'#377867'}));
+  const issues=(model:string):ReportDiagnostic[]=>{
+   const explicit=b.issues.get(model);if(explicit?.length)return explicit;
+   const value=b.values.get(model);
+   if(value==null)return missingMeasurement(b.values.has(model));
+   if(t&&(t.operator==='gte'?value<t.value:value>t.value))return [{code:'THRESHOLD_NOT_MET',severity:'warning',stage:'validation',message:`${b.name}: observed ${value}, required ${t.operator==='gte'?'at least':'at most'} ${t.value}. This comparison is not a diagnosis of the underlying cause.`,nextStep:'Inspect this measurement and its source before changing the threshold.',context:{model,observed:value,threshold:t.value}}];
+   return [];
+  };
   const fmt=(v:number)=>b.unit==='fraction'?`${Number((v*100).toFixed(3))}%`:formatScore(v,b.unit);
   const lower=t?.operator==='gte'?t.value:b.range.min,upper=t?.operator==='gte'?b.range.max:t?.value??b.range.max;
   return <section className="report-chart-item" key={b.id}><div className="report-chart-title"><h3>{b.name}</h3><span>{t?`Pass: ${t.operator==='gte'?'≥':'≤'} ${fmt(t.value)}`:'Diagnostic · no passing threshold'}</span></div>
@@ -30,7 +39,7 @@ export function ControlCharts({models,benchmarks,scores,tests}:Props){
     <Tooltip formatter={v=>typeof v==='number'?fmt(v):'Not recorded'}/>
     <Bar dataKey="value" name="Observed" isAnimationActive={false}>{rows.map(r=><Cell key={r.id} fill={r.color}/>)}<LabelList position={vertical?'top':'right'} formatter={v=>typeof v==='number'?fmt(v):'—'} style={{fontSize:12,fill:'#53694b'}}/></Bar>
    </BarChart></ResponsiveContainer></div>
-   <div className="report-score-strip">{models.map(m=><span key={m.id}><ModelPill model={m} color={m.color??'#377867'}/><b>{b.values.get(m.id)==null?'Not recorded':fmt(b.values.get(m.id)!)}</b></span>)}</div>
+   <div className="report-score-strip">{models.map(m=><span key={m.id}><ModelPill model={m} color={m.color??'#377867'}/><b>{b.values.get(m.id)==null?'Not recorded':fmt(b.values.get(m.id)!)}</b><DiagnosticDetails issues={issues(m.id)}/></span>)}</div>
   </section>;
  })}</div></>;
 }
