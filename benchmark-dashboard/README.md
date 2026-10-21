@@ -131,3 +131,11 @@ Score matrix, Checks, What is tested, and Model context directly. `initialView` 
 the starting tab. Dashboard cards start with the matrix; full reports start with
 horizontal bars. The optional presentation metadata remains accepted in JSON for
 compatibility, but does not control the interface.
+
+Model legend entries, model selectors and matrix headers are clickable pills. They open
+a keyboard-accessible native dialog with model identity and available provenance;
+checkboxes independently control chart visibility. Legacy cards use training-contract
+metadata only when model ID and training run match. Escape, Close or backdrop dismisses.
+
+If port 5174 is occupied by another app, start with
+`npm run dev -- --port 5175 --host 127.0.0.1`.

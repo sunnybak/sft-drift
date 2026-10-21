@@ -9,6 +9,12 @@ ethical treatment has been trained.** Current evidence and prospective plans are
 
 ## Local benchmark dashboard
 
+Model legends, matrix headers and model selectors now use clickable pills opening
+a native modal with model identity, training/dataset/pipeline/adapter provenance and
+inference settings. Selection checkboxes remain separate. Legacy cards match saved
+metadata by model ID and training run. Build +18 app tests pass; browser checked
+report and legacy cards and Escape dismissal. Preview: model-card-preview.png.
+
 All bar charts now label both axes: Model/Benchmark and Score (%) or declared units.
 Chart margins/heights reserve label space. Build and browser checks passed; preview
 labeled-axes-preview.png is in the registered dashboard artifact root.
@@ -16,9 +22,9 @@ labeled-axes-preview.png is in the registered dashboard artifact root.
 Typography enlarged across reports, navigation, metadata and chart labels; build and
 browser layout checked. Preview: larger-type-preview.png in the registered dashboard root.
 
-`benchmark-dashboard/` Vite/React/Recharts app now at http://127.0.0.1:5174.
-Port5173 also hosts an unrelated project; only our old dev process was restarted.
-Dev server exec5037. Restart: `cd /Users/sunny/dev/sft-drift/benchmark-dashboard && npm run dev`.
+`benchmark-dashboard/` Vite/React/Recharts app now at http://127.0.0.1:5175.
+Ports5173/5174 host unrelated apps; dashboard explicitly binds 127.0.0.1:5175.
+Dev server exec66644. Restart: `cd /Users/sunny/dev/sft-drift/benchmark-dashboard && npm run dev -- --port 5175 --host 127.0.0.1`.
 Sidebar Dashboard hosts three JSON-driven BenchmarkReport components (65score entries,
 91recorded checks); legacy explorer retains97measurements/eightmodels/21endpoints.
 Report views: horizontal/vertical bars, matrix, checks, benchmark semantics/examples,
@@ -163,10 +169,9 @@ Freeze the full study plan and final doses only after training qualification.
 
 ## Preservation
 
-Latest verified private snapshot: `c466c05781082aeaed53b40a23797338641c9c20`, code
-`ad361e0`,2,791files; live and offline verification passed.
-Axis-label source/notes and preview require this block’s commit/push/private save;
-authoritative receipt is belief-transfer/data/.handoff-receipt.json.
+Latest remote-verified private snapshot: `5270262613732f2a436c3a2dd832fdc9b87804c9`,
+code `f783c1a`,2,792files. Model-pill source/notes and preview require this block’s
+commit/push/private save and offline verify; receipt is belief-transfer/data/.handoff-receipt.json.
 Do not claim the box can be destroyed. Current candidate failed; broader training qualification remains unproven.
 
 At completed boundaries update these notes and the dated changelog, commit/push, then
