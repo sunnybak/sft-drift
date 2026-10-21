@@ -438,3 +438,16 @@ Noresume,restart,checkpointselectionorautomaticethicaldispatch.109focusedtestspa
 Newsource/inputs/nativeoutputs+review/voidv1/currentlaunchreceipt/initialstablefiles
 needprivatesnapshotnow. Do notstartcheckpointcopywatchersuntilsavecomplete;412/824
 safe-boundarycopiesnext. Alllearning/chat/control/retentionoutcomesremainunproven.
+
+
+## Initial untagged preservation verified; checkpoint watchers
+
+Private3ee610f18734854b819b02c0d21e55df9d4503cb,codea1638bc,
+2,700files/10,082,928,451byteslive+offlineverified;corpusb26dcc500b6a27ce62ccc209e95c1d2c109ff39c.
+Includesnewnativefullreview,voidv1,correctedv2inputs/launch+initialstabletokenization.
+ActualSupervisor40060RUNNING107/824,finite loss/gradnorms; qualificationunproven.
+Started412/824copywatchers exec39430/19716(logs/tmp/sft-drift-untagged-v2-{midpoint,final}-watch.log)
+afterinitialsavecompleted. Bothnotready; safewriter-boundarycopyonly,nottrainingresume.
+Watchernotesneedcommit/pushandsnapshot. Whileprivatesaveactive,monitorstepsandpause
+watchersifapproaching350toavoidfutureMacartifactinstalls; no source/artifactmutation
+duringsnapshot. Trainingisindependent. Noethicaldispatch,nocheckpointselection.

@@ -33,8 +33,16 @@ Worker trains then new`ethics_gpu_registry_untagged_{validation,transfer,retenti
 andjudgesallregardlessgatefailures. Noautomaticrestart/resume/ethicaldispatch.
 Next exactcommand:
 `ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-untagged-replay-v2; tail -n 3 /workspace/sft-drift-ops/registry_untagged_replay_v2.log'`.
-Aftercurrentsavefinishes,start412/824checkpointcopywatchers; nonecurrentlyactive,
-so noMacartifactwriterconflicts. Do notstartwatchersuntilprivatesavecomplete.
+412/824copywatchersRUNNING afterverifiedinitialsave: execsessions39430and19716,
+logs`/tmp/sft-drift-untagged-v2-midpoint-watch.log`and`/tmp/sft-drift-untagged-v2-final-watch.log`.
+Eachuses`scripts/preserve_cuda_checkpoint.py --host root@38.49.42.46 --port58689
+--run-id ethics_sft_registry_untagged_replay_v2 --step412(or824)
+--job sft-drift-registry-untagged-replay-v2 --wait` (separate flag/value spaces).
+Onlycopiesafteractualsavedstateandwriter-safe audit/finalCOMPLETED; idempotentcopy,
+nottrainingresume. AtlaunchGPU107/824 (~18minbefore412); watcherobservationsnotready.
+Whileanotherprivatesaveruns,ensurewatcherscannotinstallcheckpointfiles; ifsave
+stillactive nearstep350,pausecopywatchersuntilsavefinishes. No localdatachanges
+allowed during save. Training continues independently; nocheckpointselection.
 No newresources/dependencies. Goalactive; allnewcandidatequalificationunproven.
 
 Native diagnosis `ethics_gpu_registry_replay_native_v1` COMPLETED (Supervisor39667
@@ -127,12 +135,13 @@ All designated study checkpoints require freshcontrols/all100belief measurements
 
 ## Preservation
 
-Latest private snapshot4eea702750b6bad9e1f395dbc0197adc695b7380,codeb4c21b2,
-2,652files/10,042,601,517bytes,liveverified. Prior29ed2c6ad667a4b9ab0f2a65a0fa40657fdfaa11
-alsoofflineverified. Corpusdcd16e1fdd1538ebdbccccdb521632845cec7b80. Includes tagged
-finalweights/checkpoints/allthreeevaluations/scopedreview/nativeinputs. Completed
-nativeoutputs/review andnewuntaggedsource/inputs/currentnotes neednextprivate save.
-Receipt:data/.handoff-receipt.json. Untaggedv2isrunning; activeupdates/checkpointsstillonlyonGPU. Do notclaimboxdestroyable.
+Latest private snapshot3ee610f18734854b819b02c0d21e55df9d4503cb,codea1638bc,
+2,700files/10,082,928,451bytes,live+offlineverified. Corpusb26dcc500b6a27ce62ccc209e95c1d2c109ff39c.
+Includes completednativeoutputs/review,voidv1preparation,correctedv2inputs/launchrecord,
+initialstable4GPUtrainingfiles,andalltaggedreferenceweights/results/reviews.
+Currentwatchernotesneedsourcepush/nextsnapshot; activeuntaggedupdates/futurecheckpoints
+remainGPU-onlyuntilcopywatcherssucceed. Receipt:data/.handoff-receipt.json.
+Do notclaimboxdestroyable. Goalqualificationstillunproven.
 
 At completed boundary: update STATE+datednotes,commit/push,then from belief-transfer
 `uv run --no-sync python scripts/handoff.py save` and`... handoff.py verify`.
