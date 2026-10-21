@@ -9,6 +9,9 @@ ethical treatment has been trained.** Current evidence and prospective plans are
 
 ## Local benchmark dashboard
 
+Typography enlarged across reports, navigation, metadata and chart labels; build and
+browser layout checked. Preview: larger-type-preview.png in the registered dashboard root.
+
 `benchmark-dashboard/` Vite/React/Recharts app now at http://127.0.0.1:5174.
 Port5173 also hosts an unrelated project; only our old dev process was restarted.
 Dev server exec5037. Restart: `cd /Users/sunny/dev/sft-drift/benchmark-dashboard && npm run dev`.
@@ -162,12 +165,12 @@ Freeze the full study plan and final doses only after training qualification.
 
 ## Preservation
 
-Latest verified private snapshot: `17489a8da164278b153d0c2068c251ecb72fdc29`, code
-`d6bf2bc`,2,788files/11,026,217,252bytes; live and offline verification passed.
-Corpus revision: `3dd7ec13be0718a419571e832b79ccaf12d25c81`.
-Includes previous study artifacts, reusable JSON reports and preview. New opinionated
-readout source/notes, presentation-enriched derived JSON and new preview require this
-block’s commit/push/private save; receipt is belief-transfer/data/.handoff-receipt.json.
+Latest verified private snapshot: `1645dfa5ac6ed69c55dfc8fd344fca9f75ad4281`, code
+`10c2b3f`,2,789files/11,026,357,563bytes; live and offline verification passed.
+Corpus revision: `dc9a3dd911344019ddf0fdb72875a45acb706c59`.
+Includes opinionated reports and preview. Typography source/notes and larger-type preview
+require this block’s commit/push/private save; authoritative receipt is
+belief-transfer/data/.handoff-receipt.json.
 Do not claim the box can be destroyed. Current candidate failed; broader training qualification remains unproven.
 
 At completed boundaries update these notes and the dated changelog, commit/push, then
