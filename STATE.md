@@ -57,7 +57,8 @@ log/workspace/sft-drift-ops/ethical_four_arm_v1.log. Source530ae67. ActualGPUpos
 tokenization3519chunks/1244032targets matches plan. Initial4stablefiles/23,011,118bytes
 copied toMac and independently hash-verified; receipt under positive training results.
 Do not rerun preparation or started IDs. Worker has no resume. Next private save+verify
-then start safe checkpoint227/454copy watchers; no local data writer during snapshot.
+then one Mac preservation process owns checkpoint227/454copies and private snapshots
+sequentially. No other local artifact writer or manual snapshot while it is copying/saving.
 
 GPU: ssh -p58689 root@38.49.42.46. Project /workspace/sft-drift/belief-transfer;
 training .venv; inference /workspace/sft-drift-vllm/.venv. Existing source182d657,
@@ -74,10 +75,26 @@ closed browser transport. No app edits in this work block.
 
 ## Preservation
 
-Last known receipt65f7cf3973a3d309805741453c30e6cf6500a918, code61fc40c. Later
-scientific-card save interrupted; don't claim it privately preserved. This block's
-new code530ae67pushed; launch notes/initial artifacts/candidate assemblies/review
-ledgers/manifests need this boundary commit/push and private handoff save+verify. Do not claim box destruction is safe. Full prior neutral
+Initial pilot private snapshot3e08cd126ed96e04aa1f343cfdc9ff64a642d10c, code
+dfaba5f,2840files/11,050,614,269bytes, remote+offlineverified. It includes all new
+corpus versions, review records, frozen pilot inputs and positive initial tokenization,
+plus the preceding scientific-card work. New preservation helper source/notes will
+be captured by its next boundary snapshot; no new checkpoint is off-box yet. Do not claim box destruction is safe. Full prior neutral
 results and checkpoints are preserved; historical details in dated changelog.
 No snapshot while local checkpoint/result copy can mutate artifacts. No real-artifact
 writes during tests. Frozen files unchanged; include_paths registered before writes.
+
+## Automatic off-box preservation
+
+Mac command: uv run --no-sync python -u scripts/preserve_ethical_pilot.py --host
+root@38.49.42.46 --port58689 --job sft-drift-ethical-four-arm-v1 --master-run
+ethics_sft_four_arm_pilot_v1 (spaces required before flag values).
+Detached PID: /tmp/sft-drift-ethical-pilot-preservation.pid; log:
+/tmp/sft-drift-ethical-pilot-preservation.log. Runtime status/events under master
+results/preservation_status.json and preservation_events.jsonl+MD. It polls all8
+boundaries, serially copies/hash-verifies checkpoints, then saves+verifies privately.
+After worker termination it copies all terminal outputs/final adapters/logs and
+snapshots them. No training resume/restart. Existing-copy receipts independently
+rehash on helper restart. If source becomes dirty, private save fails explicitly;
+local copies remain. Do not mutate source/data while status=snapshot_running.
+Next command: cat /tmp/sft-drift-ethical-pilot-preservation.log (or inspect status).
