@@ -99,5 +99,19 @@
       "source": null
     }
   ],
-  "sources": []
+  "sources": [],
+  "presentation": {
+    "focusModelId": "example-model",
+    "referenceModelId": "example-model",
+    "headline": "Template readout \u2014 replace with a supported conclusion.",
+    "interpretation": "This is fictional example commentary, not a measured study finding.",
+    "nextStep": "Replace the template with sourced scores, checks and an appropriate next step.",
+    "highlights": [
+      {
+        "benchmarkId": "uppercase",
+        "label": "Instruction compliance",
+        "explanation": "Fictional example score; replace with an evidence-based explanation."
+      }
+    ]
+  }
 }

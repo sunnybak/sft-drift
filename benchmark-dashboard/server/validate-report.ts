@@ -11,6 +11,10 @@ export function validateReport(value: unknown): { report?: BenchmarkReportData; 
   }
   unique(r.models.map(m => m.id), 'model'); unique(r.benchmarks.map(b => b.id), 'benchmark'); unique(r.tests.map(t => t.id), 'test');
   const models = new Set(r.models.map(m => m.id)), benchmarks = new Map(r.benchmarks.map(b => [b.id, b]));
+  if (r.presentation) {
+    for (const id of [r.presentation.focusModelId,r.presentation.referenceModelId,r.presentation.comparisonModelId].filter(Boolean)) if (!models.has(id!)) errors.push('Presentation references unknown model');
+    for (const h of r.presentation.highlights) if (!benchmarks.has(h.benchmarkId)) errors.push('Presentation references unknown benchmark');
+  }
   for (const m of r.models) {
     if (m.variant === 'finetuned' && !m.finetuning) errors.push(`${m.id}: finetuned model requires finetuning provenance`);
     if (m.variant === 'base' && m.finetuning) errors.push(`${m.id}: base model cannot have finetuning provenance`);

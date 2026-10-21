@@ -30,6 +30,20 @@ Browser verified both orientations, matrix, semantic examples, checks and actual
 context hashes. No model/GPU work or changed historical scores/frozen instruments.
 Details: changelog/2026-10-20-reusable-benchmark-reports.md; app README.
 
+Reports now lead with opinionated Readout / Before→after / Failuretriage views.
+Dashboard prioritizes unresolved required gates for each configured candidate; current
+study decision remains Keep this in development. Latest candidate only: learning
+0/2required, retention2/2, engineering/control12/12. Historical failures remain in
+the explorer, not mixed into the current verdict. Existing six tools are collapsed
+under Explore evidence. Optional schema-v1.0 presentation metadata supplies focus/
+reference/comparison models, authored headline/interpretation/nextstep and highlights;
+unknown references rejected, old JSON still works. Before/after keeps exact counts,
+pp differences and missing comparisons explicit. No score/criterion changes.
+18app tests +37repo checks pass; production build and browser readout/change/triage
+checks pass. New preview opinionated-readout-preview.png. Details:
+changelog/2026-10-20-opinionated-benchmark-readouts.md.
+
+
 ## Latest result and exact next action
 
 `ethics_sft_registry_untagged_replay_v2` and all three queued evaluations are
@@ -148,13 +162,12 @@ Freeze the full study plan and final doses only after training qualification.
 
 ## Preservation
 
-Latest verified private snapshot: `c74e6044be4618d970e99bfee07a030b37f50385`, code
-`7512c87`,2,784files/11,025,937,413bytes; live and offline verification passed.
-Corpus revision: `77a91fa82bcef38cfd801d8f5b4a0a51aa82ced1`.
-Includes prior final weights/checkpoints/evaluations/reviews and original dashboard
-derived view/preview. New report component/schema/loader/notes and three derived
-report JSON files/preview need commit/push/private save. Receipt is in
-belief-transfer/data/.handoff-receipt.json.
+Latest verified private snapshot: `17489a8da164278b153d0c2068c251ecb72fdc29`, code
+`d6bf2bc`,2,788files/11,026,217,252bytes; live and offline verification passed.
+Corpus revision: `3dd7ec13be0718a419571e832b79ccaf12d25c81`.
+Includes previous study artifacts, reusable JSON reports and preview. New opinionated
+readout source/notes, presentation-enriched derived JSON and new preview require this
+block’s commit/push/private save; receipt is belief-transfer/data/.handoff-receipt.json.
 Do not claim the box can be destroyed. Current candidate failed; broader training qualification remains unproven.
 
 At completed boundaries update these notes and the dated changelog, commit/push, then

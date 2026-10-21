@@ -26,6 +26,7 @@ export type ReportTest = {
   source: Source | null;
 };
 export type BenchmarkReportData = {
+  presentation?: { focusModelId: string; referenceModelId: string; comparisonModelId?: string; headline: string; interpretation: string; nextStep: string; highlights: { benchmarkId: string; label: string; explanation: string }[] };
   schemaVersion: '1.0'; id: string; title: string; description: string; createdAt: string;
   tags: string[]; context: string; models: ReportModel[]; benchmarks: ReportBenchmark[];
   scores: ReportScore[]; tests: ReportTest[]; sources: Source[];
@@ -43,3 +44,10 @@ export function checkSummary(tests: ReportTest[]) {
   return { counts, status };
 }
 export const formatScore = (value: number, unit: ReportBenchmark['unit'], unitLabel?: string) => unit === 'fraction' ? `${Math.round(value * 1000) / 10}%` : `${value.toLocaleString()}${unitLabel ? ` ${unitLabel}` : ''}`;
+/** Order study readouts by unresolved required gates for their configured candidate. */
+export function reportPriority(report: BenchmarkReportData) {
+  const id = report.presentation?.focusModelId ?? report.models.at(-1)?.id;
+  const required = report.tests.filter(t => t.modelId === id && t.required);
+  return required.some(t => t.status === 'fail' || t.status === 'error') ? 3
+    : required.some(t => t.status === 'not_run') ? 2 : !required.length ? 1 : 0;
+}

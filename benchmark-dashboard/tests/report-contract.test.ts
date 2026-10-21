@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { validateReport } from '../server/validate-report.ts';
 import { loadReports } from '../server/report-loader.ts';
-import { checkSummary, formatScore } from '../src/report-types.ts';
+import { checkSummary, formatScore, reportPriority } from '../src/report-types.ts';
 const template = () => JSON.parse(readFileSync(new URL('../examples/report-template.json', import.meta.url), 'utf8'));
 test('portable template validates',()=>assert.ok(validateReport(template()).report));
 test('unknown model and benchmark references fail',()=>{
@@ -58,4 +58,20 @@ test('numeric lower-is-better benchmark uses its declared range',()=>{
  r.scores[0]={...r.scores[0],value:80,numerator:null,denominator:null};assert.ok(validateReport(r).report);
  assert.equal(formatScore(80,b.unit,b.unitLabel),'80 ms');
  r.scores[0].value=501;assert.match(validateReport(r).errors.join(' '),/outside range/);
+});
+test('authored readouts must reference real models and benchmarks',()=>{
+ const r=template();r.presentation={focusModelId:'absent',referenceModelId:'example-model',headline:'Readout',interpretation:'Evidence',nextStep:'Next',highlights:[{benchmarkId:'absent',label:'Key score',explanation:'Interpretation'}]};
+ const errors=validateReport(r).errors.join(' ');
+ assert.match(errors,/Presentation references unknown model/);assert.match(errors,/Presentation references unknown benchmark/);
+});
+test('candidate gates are scoped separately from historical models',()=>{
+ const r=template(),old={...r.tests[0],id:'old-failure',modelId:'old',status:'fail'};
+ assert.equal(checkSummary([...r.tests,old].filter(t=>t.modelId==='example-model')).status,'Declared checks passed');
+ assert.equal(checkSummary([old]).status,'Required checks failed');
+});
+
+test('readouts prioritize current blockers without importing historical failures',()=>{
+ const r=template();r.presentation={focusModelId:'example-model',referenceModelId:'example-model',headline:'Readout',interpretation:'Evidence',nextStep:'Next',highlights:[{benchmarkId:'uppercase',label:'Key score',explanation:'Meaning'}]};
+ r.tests.push({...r.tests[0],id:'historical',modelId:'old',status:'fail'});assert.equal(reportPriority(r),0);
+ r.tests[0].status='not_run';assert.equal(reportPriority(r),2);r.tests[0].status='fail';assert.equal(reportPriority(r),3);
 });

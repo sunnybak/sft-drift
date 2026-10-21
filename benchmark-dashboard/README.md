@@ -123,3 +123,34 @@ Checks are recorded outcomes, not calculated from bar colors or score thresholds
 status summary covers only declared required checks. No required checks means **Not
 assessed**; not_run/error never becomes a pass. Filtering models updates that scoped
 summary. A report passing its checks does not establish full training qualification.
+
+## Opinionated readouts
+
+`BenchmarkReport` now leads with **Readout**, **Before → after**, and **Failure triage**.
+The six generic inspection tools remain in **Explore evidence**; `BenchmarkResults`
+continues to expose that raw renderer directly. `initialView` controls that explorer,
+not the report's primary Readout tab. Compact Dashboard cards show featured evidence;
+full reports expose all endpoints and provenance.
+
+Dashboard order prioritizes unresolved required gates for each report's configured
+candidate, not failures across historical models. The global decision is a conservative
+summary of declared report gates; passing them does not establish full qualification.
+
+Optional, backward-compatible `presentation` JSON defines:
+
+- `focusModelId`: candidate for the readout and gate verdict.
+- `referenceModelId`: baseline shown alongside featured scores.
+- `comparisonModelId`: default before-model for the change view (e.g. a matched ablation).
+- `headline`, `interpretation`, `nextStep`: authored, evidence-based commentary.
+- `highlights`: benchmark references, display labels and explanations.
+
+All references are validated. Authored commentary appears only for its configured
+focus model; switching candidates uses that model's recorded checks and generic
+benchmark definitions. Keep commentary synchronized with the evidence: schema validation
+checks structure/references, not the truth of prose. Existing JSON without presentation
+continues to work with a candidate-focused recorded-check summary.
+
+Before/after differences are per endpoint with original counts, units and direction;
+fraction differences use percentage points, not relative percentages. Missing endpoint
+pairs are marked Not comparable. Failure triage lists failed/not-run/error required
+checks first; related endpoint scores cannot replace a compound check's recorded result.

@@ -154,3 +154,10 @@ benchmark-dashboard/reports/ and click Refresh reports; schema/semantic validati
 rejects invalid references/counts and duplicate report IDs. See the app README and
 examples/report-template.json. Three derived real reports cover learning/recall,
 retention and training/control checks; no score or criterion was changed.
+
+Primary report views now answer Readout / Before→after / Failuretriage. They scope
+verdicts to a configured candidate and prioritize unresolved required gates. Optional
+JSON presentation metadata holds authored, evidence-based interpretations and model
+contrasts; these are commentary, not new measurements or modified criteria. Generic
+plots/examples/provenance remain under Explore evidence. Missing comparisons stay
+unavailable; pp differences are descriptive and are not independent-repeat estimates.
