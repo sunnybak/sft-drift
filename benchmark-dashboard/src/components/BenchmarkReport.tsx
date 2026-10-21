@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { ReportReadout } from './ReportReadout';
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip, ReferenceLine, Cell, LabelList } from 'recharts';
 import { ArrowDownToLine, ArrowUpRight, Check, ChevronRight } from 'lucide-react';
 import { checkSummary, formatScore } from '../report-types';
@@ -17,7 +16,7 @@ export function downloadReport(report: BenchmarkReportData) {
 }
 /** JSON-report wrapper for loading/saving the complete versioned contract. */
 export function BenchmarkReport({report,...options}:BenchmarkReportProps) {
-  return <ReportReadout report={report} compact={options.compact} onOpen={options.onOpen} onDownload={()=>downloadReport(report)}><BenchmarkResults {...report} {...options} onOpen={undefined}/></ReportReadout>;
+  return <BenchmarkResults {...report} {...options}/>;
 }
 /** Direct-prop renderer: models, benchmarks, scores, tests, and report metadata. */
 export function BenchmarkResults({initialView='bars',compact=false,onOpen,...report}:BenchmarkResultsProps) {

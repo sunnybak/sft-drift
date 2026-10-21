@@ -33,19 +33,13 @@ Browser verified both orientations, matrix, semantic examples, checks and actual
 context hashes. No model/GPU work or changed historical scores/frozen instruments.
 Details: changelog/2026-10-20-reusable-benchmark-reports.md; app README.
 
-Reports now lead with opinionated Readout / Before→after / Failuretriage views.
-Dashboard prioritizes unresolved required gates for each configured candidate; current
-study decision remains Keep this in development. Latest candidate only: learning
-0/2required, retention2/2, engineering/control12/12. Historical failures remain in
-the explorer, not mixed into the current verdict. Existing six tools are collapsed
-under Explore evidence. Optional schema-v1.0 presentation metadata supplies focus/
-reference/comparison models, authored headline/interpretation/nextstep and highlights;
-unknown references rejected, old JSON still works. Before/after keeps exact counts,
-pp differences and missing comparisons explicit. No score/criterion changes.
-18app tests +37repo checks pass; production build and browser readout/change/triage
-checks pass. New preview opinionated-readout-preview.png. Details:
-changelog/2026-10-20-opinionated-benchmark-readouts.md.
-
+Restored the original six direct report views at user request: Horizontal bars,
+Vertical bars, Score matrix, Checks, What is tested, Model context. Dashboard shows
+report library and counts; full reports default to horizontal bars. Larger fonts stay.
+Removed opinionated readout component/styles; presentation JSON remains accepted for
+compatibility. Production build and 18 app tests passed; browser verified both chart
+orientations. Preview: restored-chart-views-preview.png. Details in
+changelog/2026-10-20-restore-chart-views.md.
 
 ## Latest result and exact next action
 
@@ -165,12 +159,10 @@ Freeze the full study plan and final doses only after training qualification.
 
 ## Preservation
 
-Latest verified private snapshot: `1645dfa5ac6ed69c55dfc8fd344fca9f75ad4281`, code
-`10c2b3f`,2,789files/11,026,357,563bytes; live and offline verification passed.
-Corpus revision: `dc9a3dd911344019ddf0fdb72875a45acb706c59`.
-Includes opinionated reports and preview. Typography source/notes and larger-type preview
-require this block’s commit/push/private save; authoritative receipt is
-belief-transfer/data/.handoff-receipt.json.
+Latest verified private snapshot: `1beb57c3bc8875a25472a251b4f3bf6f2dd21df4`, code
+`8d0f605`,2,790files; live and offline verification passed.
+Restored chart UI source/notes and new preview require this block’s commit/push/private
+save; authoritative receipt is belief-transfer/data/.handoff-receipt.json.
 Do not claim the box can be destroyed. Current candidate failed; broader training qualification remains unproven.
 
 At completed boundaries update these notes and the dated changelog, commit/push, then
