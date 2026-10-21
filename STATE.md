@@ -7,6 +7,20 @@ and preserves basic controls before ethical-belief training. **Goal active; no
 ethical treatment has been trained.** Current evidence and prospective plans are in
 `changelog/2026-10-20-replay-followup-plan.md`. Do not resume historical queues.
 
+## Local benchmark dashboard
+
+New `benchmark-dashboard/` Vite/React/Recharts app at http://127.0.0.1:5173.
+Local dev server exec55763; restart with `cd /Users/sunny/dev/sft-drift/benchmark-dashboard && npm run dev`.
+97 sourced measurements across eight model profiles and21endpoint definitions.
+Compare bars/matrix, individual benchmarks, run identities, filters, source hashes
+and JSON download. Read-only exporter: `npm run data`. Fixed axes/colors/counts,
+explicit thresholds; missing stays absent; no composite or changed historical scores.
+Derived JSON and preview registered under results/ethical_pilot/ethics_gpu_benchmark_dashboard_v1.
+Public asset is an ignored copy; source/lockfile are Git, private data via handoff.
+Five mocked/temp export tests and37import/handoff checks pass; production build passes.
+Browser verified bars/matrix, single benchmark thresholds and source dialog. No models
+loaded, no new GPU run. Full details: changelog/2026-10-20-benchmark-dashboard.md.
+
 ## Latest result and exact next action
 
 `ethics_sft_registry_untagged_replay_v2` and all three queued evaluations are
@@ -125,13 +139,12 @@ Freeze the full study plan and final doses only after training qualification.
 
 ## Preservation
 
-Latest verified private snapshot: `7d8f9f10698806231528ca4b0b227f62e16a66b5`, code
-`5685113`,2,737files/11,023,856,247bytes; live and offline verification passed.
-Corpus revision: `873b4e44ca0bb8c0057700eefcde74cc4fe127fd`.
-Includes final824andmidpoint412 checkpoints, final adapter and terminal training.
-All three evaluation roots/combined judgment and308rowreview are now Mac-verified
-and need next private save with these notes. Source reports in changelog; receipt:
-`belief-transfer/data/.handoff-receipt.json`.
+Latest verified private snapshot: `e98d9fdff46091f9c610d60fc048d9b5fccbdf3c`, code
+`771e71f`,2,782files/11,025,738,213bytes; live and offline verification passed.
+Corpus revision: `4e1986c6029483bcc09cea6715ff10012325dc58`.
+Includes both checkpoints/final weights, all completed evaluations, combined judgment
+and308rowreview. Dashboard source/notes and registered derived view/preview need the
+next commit/push/private save. Receipt: belief-transfer/data/.handoff-receipt.json.
 Do not claim the box can be destroyed. Current candidate failed; broader training qualification remains unproven.
 
 At completed boundaries update these notes and the dated changelog, commit/push, then

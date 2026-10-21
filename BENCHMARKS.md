@@ -125,3 +125,22 @@ redefining Stance. Conviction stays retired.
 A midpoint can hide contradictory responses. Always retain the separate checks and
 coverage; missing data are not neutral answers. The allowed-word reminder itself stays
 in fixed order even when displayed definitions swap. Sampling contributes to disagreement.
+
+## Benchmark dashboard and plotting convention
+
+The local app in [benchmark-dashboard](benchmark-dashboard/README.md) indexes the
+neutral SFT development scores from saved summaries. Run `npm run dev` from that
+folder; open http://127.0.0.1:5173. `npm run data` refreshes the derived view.
+
+Use horizontal bars with fixed 0–100% axes, stable model colors, exact counts and
+explicit thresholds, plus a comparison matrix. Missing scores stay blank; never
+combine unrelated endpoints into an overall accuracy. Keep semantic recall, strict
+format, boundaries, normal stops and coverage separate. Report known-item retention
+separately from all-item performance. Native continuation is diagnostic, not ordinary
+chat recall. Each observation retains its source path and SHA-256. Reused facts and
+correlated wordings are development evidence, not independent replicates.
+
+The stance instrument remains separate: stance is not higher-is-better accuracy.
+Future stance plots should show signed before/after changes and coverage rather
+than adding stance to the qualification score profile. This display changes no
+benchmark definition, frozen decoder, measurement or acceptance criterion.

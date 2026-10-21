@@ -31,3 +31,9 @@ belief-transfer/scripts/*.plan.json
 
 # Local handoff receipt (remote manifest is the authority).
 belief-transfer/data/.handoff-receipt.json
+
+# Local benchmark app dependencies and derived private data.
+benchmark-dashboard/node_modules/
+benchmark-dashboard/public/benchmarks.json
+
+benchmark-dashboard/tsconfig.tsbuildinfo

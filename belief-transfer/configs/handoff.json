@@ -248,7 +248,8 @@
     "generated/ethical_pilot/ethics_gpu_registry_untagged_transfer_v2",
     "results/ethical_pilot/ethics_gpu_registry_untagged_transfer_v2",
     "generated/ethical_pilot/ethics_gpu_registry_untagged_retention_v2",
-    "results/ethical_pilot/ethics_gpu_registry_untagged_retention_v2"
+    "results/ethical_pilot/ethics_gpu_registry_untagged_retention_v2",
+    "results/ethical_pilot/ethics_gpu_benchmark_dashboard_v1"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",
