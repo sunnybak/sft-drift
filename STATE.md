@@ -16,21 +16,22 @@ calls, both predeclared expanded wordings must independently pass. Supplements
 collect all2400 frozen stance replies per seed despite controls, retaining failures.
 Frozen ethical instrument/decoder, original results and strict retention unchanged.
 
-BASE, positive and negative audits finished and are copied/hash-verified on Mac.
-All three fail both expanded forms. Correct/288 original,explicit respectively:
-BASE241,251; positive248,247; negative251,242. Incomplete responses and wrong final
-labels both occur, including BASE. Legacy correct/96:96,95,96. Off-topic audit active;
-C4 and all supplements follow. No evidence yet that new gates qualify any model.
+All five audits finished and are copied/hash-verified on Mac. Every model fails
+both expanded forms. Correct/288 original,explicit respectively: BASE241,251;
+positive248,247; negative251,242; off-topic258,241; C4-only232,240. Legacy correct/96:
+96,95,96,96,94. Expanded controls find wrong final labels and incomplete responses
+including BASE. First off-topic full-bank supplement is active; seeds7and1729follow.
+See changelog/2026-10-21-control-followup-results.md (control section complete).
 The v1 launch failed before inference because Hydra precreated the output folder;
 worker stopped, FAILED_LAUNCH.md files retained. Guard corrected, fresh v2 IDs used.
 
 ## Preservation and next command
 
-Source/notes on main, pushed through24c39be. Later local postprocessing edits pending.
-Closed copy receipt3:70files/15,827,039bytes; running outputs not copied.
-Latest verified private snapshot1ab0387d1835827dea86b1b2c9e616789c9e50cd includes
-BASE audit and v1 launch failures,3734files/15,279,446,212bytes, code24c39be.
-Positive/negative audits are locally safe but not yet in that private snapshot.
+Source/notes on main; control follow-up reporting edits are being committed/pushed.
+Closed copy receipt5:100files/26,156,932bytes; running outputs not copied.
+Latest verified private snapshot5491eb00b38deefbd1fef87c098d0de32335a111 includes
+BASE/positive/negative audits and v1 launch failures,3766files/15,289,450,561bytes,
+code1977777. All five control audits are local; new private snapshot follows this commit.
 Authoritative receipt: belief-transfer/data/.handoff-receipt.json.
 Do not claim active box can be destroyed. No ongoing local save/verify job.
 

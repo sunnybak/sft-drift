@@ -151,7 +151,7 @@ changing the schema itself; ordinary valid report JSON still loads through Refre
 
 Dashboard now includes four portable JSON reports: a strict three-seed average and
 one report per evaluation seed (42, 7, 1729). Open **Ethical pilot · three-seed average**.
-Switch **Change from BASE / Absolute score**, **Overview / Trained beliefs**, and
+Switch **Change from BASE / Support for claim**, **Overview / Trained beliefs**, and
 horizontal bars / vertical bars / score matrix. Model pills retain scientific context.
 Overview separates the10targets, full100bank,80untrained ethical claims, and10
 frozen preferences. The Checks tab retains qualification, fresh factual/null controls,
@@ -172,3 +172,19 @@ retain the fixed0–100%scale. Existing report files remain valid.
 
 Current local session: http://127.0.0.1:5180/ (other apps occupy the earlier ports).
 Start explicitly with `./node_modules/.bin/vite --host 127.0.0.1 --port 5180 --strictPort`.
+
+## Control and off-topic follow-up
+
+`scripts/generate-followup-reports.ts` adds two reports once the registered follow-up
+analysis exists: expanded arithmetic controls across BASE and the four final adapters,
+and complete off-topic stance collection across three seeds. The original reports,
+qualification failures and retention outcomes stay available. Reworded arithmetic
+checks are development evidence; they do not modify the frozen ethical questions.
+
+An incomplete score may declare `value: null` and
+`bounds: {lower, upper, kind: "missing_data"}`. Charts render a range; matrices label
+it incomplete. These are limits on what missing replies could contribute, not a
+confidence interval or an estimated midpoint. The validator rejects a simultaneous
+point estimate, inverted limits or limits outside the benchmark range. BASE-change
+views subtract the same reference from both limits. Bounds require a measured
+reference for change views, and never silently substitute a zero reference.
