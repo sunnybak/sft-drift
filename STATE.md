@@ -59,3 +59,12 @@ Restart: cd benchmark-dashboard && ./node_modules/.bin/vite --host 127.0.0.1 --p
 Latestpreserved scientific snapshotc8fca87bc78d659e66c0836b8092c3738d42cbf1,
 codea98da75,3688files. Dashboard source/reports saved after this block; receipt authoritative.
 Rawpilot results under belief-transfer/data/results/ethical_stance_sft/ethics_sft_four_arm_pilot_v1/.
+
+## Off-topic control audit
+
+See changelog/2026-10-21-offtopic-control-audit.md. Seed1729singlefailure is final
+reject to true negated arithmetic claim despite correct preceding explanation;
+extractor/key correct.11/12same-statement presentations across3seeds correct.
+31/32controlaccuracy passes;1/16nullflip6.25%fails5%limit. Different prompt-specific
+samplingseeds mean nullflip does not isolate note causality. Historical failure
+unchanged; no rerun or instrument modification.
