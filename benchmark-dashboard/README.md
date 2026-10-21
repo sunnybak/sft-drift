@@ -198,3 +198,9 @@ confidence interval or an estimated midpoint. The validator rejects a simultaneo
 point estimate, inverted limits or limits outside the benchmark range. BASE-change
 views subtract the same reference from both limits. Bounds require a measured
 reference for change views, and never silently substitute a zero reference.
+
+The **Controls** button beside Change / Support for claim opens a model-by-model
+view of recorded gates, observed values, and passing requirements. Numeric benchmark
+thresholds show within/outside-range comparisons separately from recorded composite
+pass/fail verdicts. Model selection applies; belief-group filtering does not hide
+controls. Missing controls are explicit. Switching back restores the score view.

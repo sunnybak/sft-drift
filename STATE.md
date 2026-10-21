@@ -2,6 +2,12 @@
 
 ## Latest completed work
 
+Dashboard now has Controls beside Change / Support for claim. Shows each model's
+recorded gates, observed values and passing requirements; numeric threshold comparisons
+remain separate from composite verdicts. Browser verified original and expanded reports,
+plus return to stance scores. No scores/gates/measurements changed.
+See changelog/2026-10-21-dashboard-controls-tab.md. App remains on5180.
+
 Dashboard report rows now show experiment names and UTC report dates (not training
 dates); experiment names/IDs are searchable. All10 derived reports carry metadata.
 26dashboard tests, TypeScript/build and browser verification pass. App remains on5180.
