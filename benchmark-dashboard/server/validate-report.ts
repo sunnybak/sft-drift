@@ -43,7 +43,7 @@ export function validateReport(value: unknown): { report?: BenchmarkReportData; 
   const controlDefinitions=new Map<string,string>(), controlPairs=new Set<string>();
   for (const t of r.tests) {
     for(const m of t.measurements??[]){
-      const definition=JSON.stringify([m.name,m.threshold]),pair=JSON.stringify([t.modelId,m.id]);
+      const definition=JSON.stringify([m.name,m.threshold,m.checkGroup??t.checkGroup??'instrument']),pair=JSON.stringify([t.modelId,m.id]);
       if(controlDefinitions.has(m.id)&&controlDefinitions.get(m.id)!==definition) errors.push('Conflicting control measurement definition');
       if(controlPairs.has(pair)) errors.push('Duplicate model/control measurement');
       controlDefinitions.set(m.id,definition);controlPairs.add(pair);

@@ -212,3 +212,14 @@ for composite checks. Null stays missing; shared IDs require identical definitio
 and at most one value per model. Existing numeric benchmark thresholds also chart.
 Original pilot control accuracy, note flips and coverage are derived from saved
 artifacts per seed, without changing gates or pooling only passing seeds.
+
+The former Controls button is now **Model checks**. Explicit optional `checkGroup`
+metadata on benchmarks, tests and their measurements groups instrument checks,
+response consistency, learning, retention and engineering. Groups never join scores
+from unrelated experiments/models. All group filters are available; unrecorded groups
+stay explicit. Diagnostics can chart without passing thresholds. Boolean engineering
+checks stay in the expandable recorded details. Experimental control arms (off-topic
+and C4) remain model series alongside treatments and BASE in outcome comparisons.
+The original ethical pilot includes saved known-cohort retention fractions for both
+thinking modes; thresholds follow the saved retention implementation (95% semantic
+accuracy and 100% format/boundaries/normal completion), not new acceptance rules.

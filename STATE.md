@@ -2,6 +2,13 @@
 
 ## Latest completed work
 
+Renamed Controls to Model checks; charts grouped as instrument, response consistency,
+learning, retention and engineering. Off-topic/C4 remain model comparison series.
+Group metadata is explicit; diagnostics have no invented thresholds. Ethical-pilot
+retention charts derive saved known-cohort counts/thresholds; original gates unchanged.
+29dashboard tests and TypeScript/build pass; grouped retention UI browser verified.
+See changelog/2026-10-21-grouped-model-checks.md. App remains on5180.
+
 Controls now show horizontal/vertical bars, passing-range shading, threshold lines,
 model pills and labeled axes. Original pilot per-seed numeric controls derived from
 saved artifacts through optional typed test measurements; no gate/measurement changes.

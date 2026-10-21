@@ -481,6 +481,15 @@
         "unitLabel": {
           "type": "string",
           "minLength": 1
+        },
+        "checkGroup": {
+          "enum": [
+            "instrument",
+            "consistency",
+            "learning",
+            "retention",
+            "engineering"
+          ]
         }
       }
     },
@@ -683,9 +692,27 @@
                     "maximum": 1
                   }
                 }
+              },
+              "checkGroup": {
+                "enum": [
+                  "instrument",
+                  "consistency",
+                  "learning",
+                  "retention",
+                  "engineering"
+                ]
               }
             }
           }
+        },
+        "checkGroup": {
+          "enum": [
+            "instrument",
+            "consistency",
+            "learning",
+            "retention",
+            "engineering"
+          ]
         }
       }
     }

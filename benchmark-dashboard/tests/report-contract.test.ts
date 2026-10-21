@@ -118,3 +118,9 @@ test('models cannot silently share conflicting control definitions or duplicate 
  assert.match(validateReport(r).errors.join(' '),/Conflicting control measurement definition/);
  other.measurements=[m];assert.match(validateReport(r).errors.join(' '),/Duplicate model\/control measurement/);
 });
+
+test('model-check grouping is explicit and does not require a diagnostic passing threshold',()=>{
+ const r=template();r.benchmarks[0].checkGroup='consistency';r.benchmarks[0].threshold=null;
+ r.tests[0].checkGroup='retention';assert.ok(validateReport(r).report);
+ r.tests[0].checkGroup='experimental_control';assert.ok(validateReport(r).errors.length);
+});

@@ -8,7 +8,9 @@ export type ReportModel = {
   inference: Record<string, unknown>;
   finetuning: null | { runId: string; dataset: Identity; pipeline: Identity; adapter: Source | null };
 };
+export type ModelCheckGroup = 'instrument' | 'consistency' | 'learning' | 'retention' | 'engineering';
 export type ReportBenchmark = {
+  checkGroup?: ModelCheckGroup;
   id: string; name: string; description: string; category: string;
   unit: 'fraction' | 'number'; unitLabel?: string; direction: 'higher' | 'lower' | 'descriptive';
   range: { min: number; max: number }; conditions: string;
@@ -22,10 +24,12 @@ export type ReportScore = {
   notes: string; source: Source | null;
 };
 export type ControlMeasurement = {
+  checkGroup?: ModelCheckGroup;
   id: string; name: string; value: number | null;
   threshold: { operator: 'gte' | 'lte'; value: number };
 };
 export type ReportTest = {
+  checkGroup?: ModelCheckGroup;
   /** Fraction metrics (0–1), distinct from the recorded composite verdict. */
   measurements?: ControlMeasurement[];
   id: string; modelId: string; benchmarkId: string | null; name: string;
