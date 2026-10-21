@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.0",
+  "id": "replace-with-report-id",
+  "title": "Template \u2014 replace illustrative data",
+  "description": "A fictional example showing the report contract. Not an experimental result.",
+  "createdAt": "2026-10-20T00:00:00Z",
+  "tags": [
+    "Template",
+    "Illustrative only"
+  ],
+  "context": "All model names, measurements and checks in this template are fictional. Replace with sourced evidence before adding to reports/.",
+  "models": [
+    {
+      "id": "example-model",
+      "name": "Example model",
+      "provider": "replace-with-provider",
+      "model": "replace-with-model-id",
+      "revision": null,
+      "variant": "finetuned",
+      "inference": {
+        "temperature": 0
+      },
+      "finetuning": {
+        "runId": "replace-with-run-id",
+        "dataset": {
+          "id": "replace-with-dataset-id",
+          "description": "Describe exactly what was trained.",
+          "sha256": null,
+          "context": {
+            "documents": 100
+          }
+        },
+        "pipeline": {
+          "id": "replace-with-pipeline-id",
+          "description": "Describe serialization, objective and optimization.",
+          "sha256": null,
+          "context": {
+            "hashKind": "Specify what the hash covers",
+            "learningRate": 0.0001
+          }
+        },
+        "adapter": null
+      }
+    }
+  ],
+  "benchmarks": [
+    {
+      "id": "uppercase",
+      "name": "Uppercase conversion",
+      "description": "Tests whether the model follows a short string-transformation instruction.",
+      "category": "Instruction following",
+      "unit": "fraction",
+      "direction": "higher",
+      "range": {
+        "min": 0,
+        "max": 1
+      },
+      "conditions": "Illustrative test with greedy decoding and a short final answer.",
+      "examples": [
+        {
+          "input": "Convert maple to uppercase.",
+          "expected": "MAPLE",
+          "note": "Illustrative example."
+        },
+        {
+          "input": "Convert river to uppercase.",
+          "expected": "RIVER",
+          "note": "Illustrative example."
+        }
+      ],
+      "threshold": {
+        "operator": "gte",
+        "value": 1
+      }
+    }
+  ],
+  "scores": [
+    {
+      "modelId": "example-model",
+      "benchmarkId": "uppercase",
+      "value": 1,
+      "numerator": 2,
+      "denominator": 2,
+      "notes": "Fictional template value; replace with a real measurement.",
+      "source": null
+    }
+  ],
+  "tests": [
+    {
+      "id": "uppercase-exact",
+      "modelId": "example-model",
+      "benchmarkId": "uppercase",
+      "name": "Exact uppercase answers",
+      "description": "Fictional gate for illustrating recorded pass/fail evidence.",
+      "required": true,
+      "status": "pass",
+      "expected": 2,
+      "observed": 2,
+      "source": null
+    }
+  ],
+  "sources": []
+}

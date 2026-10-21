@@ -1,1 +1,29 @@
-{"name":"belief-benchmarks","private":true,"version":"0.1.0","type":"module","scripts":{"data":"python3 scripts/export_benchmarks.py","dev":"npm run data && vite --host 127.0.0.1","build":"npm run data && tsc -b && vite build","preview":"vite preview --host 127.0.0.1","test":"python3 -m unittest discover -s scripts -p 'test_*.py'"},"dependencies":{"react":"19.3.1","react-dom":"19.3.1","recharts":"3.10.1","lucide-react":"^0.577.0"},"devDependencies":{"@types/react":"^19.0.0","@types/react-dom":"^19.0.0","@vitejs/plugin-react":"6.1.2","typescript":"~5.9.3","vite":"8.3.4"}}
+{
+  "name": "belief-benchmarks",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "data": "python3 scripts/export_benchmarks.py && node --experimental-strip-types scripts/generate-study-reports.ts",
+    "dev": "npm run data && vite --host 127.0.0.1",
+    "build": "npm run data && tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "python3 -m unittest discover -s scripts -p \"test_*.py\" && node --experimental-strip-types --test tests/*.test.ts",
+    "validate:report": "node --experimental-strip-types scripts/validate-report.ts"
+  },
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "lucide-react": "^0.577.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "recharts": "3.10.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "typescript": "~5.9.3",
+    "vite": "8.3.4"
+  }
+}

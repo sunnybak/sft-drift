@@ -1,0 +1,495 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://belief-transfer.local/schemas/benchmark-report-v1.json",
+  "title": "BenchmarkReport v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "title",
+    "description",
+    "createdAt",
+    "tags",
+    "context",
+    "models",
+    "benchmarks",
+    "scores",
+    "tests",
+    "sources"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "createdAt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 0
+    },
+    "context": {
+      "type": "string"
+    },
+    "models": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/model"
+      },
+      "minItems": 1
+    },
+    "benchmarks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/benchmark"
+      },
+      "minItems": 1
+    },
+    "scores": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/score"
+      },
+      "minItems": 0
+    },
+    "tests": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/test"
+      },
+      "minItems": 0
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/source"
+      },
+      "minItems": 0
+    }
+  },
+  "definitions": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "description",
+        "sha256",
+        "context"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "context": {
+          "type": "object"
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "provider",
+        "model",
+        "revision",
+        "variant",
+        "inference",
+        "finetuning"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "variant": {
+          "enum": [
+            "base",
+            "finetuned",
+            "reference",
+            "unknown"
+          ]
+        },
+        "color": {
+          "type": "string",
+          "pattern": "^#[a-fA-F0-9]{6}$"
+        },
+        "inference": {
+          "type": "object"
+        },
+        "finetuning": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "runId",
+                "dataset",
+                "pipeline",
+                "adapter"
+              ],
+              "properties": {
+                "runId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "dataset": {
+                  "$ref": "#/definitions/identity"
+                },
+                "pipeline": {
+                  "$ref": "#/definitions/identity"
+                },
+                "adapter": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/source"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "benchmark": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "description",
+        "category",
+        "unit",
+        "direction",
+        "range",
+        "conditions",
+        "examples",
+        "threshold"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unit": {
+          "enum": [
+            "fraction",
+            "number"
+          ]
+        },
+        "direction": {
+          "enum": [
+            "higher",
+            "lower",
+            "descriptive"
+          ]
+        },
+        "range": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "max"
+          ],
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          }
+        },
+        "conditions": {
+          "type": "string",
+          "minLength": 1
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "input",
+              "expected",
+              "note"
+            ],
+            "properties": {
+              "input": {
+                "type": "string",
+                "minLength": 1
+              },
+              "expected": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string"
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "threshold": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operator",
+                "value"
+              ],
+              "properties": {
+                "operator": {
+                  "enum": [
+                    "gte",
+                    "lte"
+                  ]
+                },
+                "value": {
+                  "type": "number"
+                }
+              }
+            }
+          ]
+        },
+        "unitLabel": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "score": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "modelId",
+        "benchmarkId",
+        "value",
+        "numerator",
+        "denominator",
+        "notes",
+        "source"
+      ],
+      "properties": {
+        "modelId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "benchmarkId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "numerator": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "denominator": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "notes": {
+          "type": "string"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/source"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "test": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "modelId",
+        "benchmarkId",
+        "name",
+        "description",
+        "required",
+        "status",
+        "expected",
+        "observed",
+        "source"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "modelId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "benchmarkId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "not_run",
+            "error"
+          ]
+        },
+        "expected": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "observed": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/source"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -9,17 +9,26 @@ ethical treatment has been trained.** Current evidence and prospective plans are
 
 ## Local benchmark dashboard
 
-New `benchmark-dashboard/` Vite/React/Recharts app at http://127.0.0.1:5173.
-Local dev server exec55763; restart with `cd /Users/sunny/dev/sft-drift/benchmark-dashboard && npm run dev`.
-97 sourced measurements across eight model profiles and21endpoint definitions.
-Compare bars/matrix, individual benchmarks, run identities, filters, source hashes
-and JSON download. Read-only exporter: `npm run data`. Fixed axes/colors/counts,
-explicit thresholds; missing stays absent; no composite or changed historical scores.
-Derived JSON and preview registered under results/ethical_pilot/ethics_gpu_benchmark_dashboard_v1.
-Public asset is an ignored copy; source/lockfile are Git, private data via handoff.
-Five mocked/temp export tests and37import/handoff checks pass; production build passes.
-Browser verified bars/matrix, single benchmark thresholds and source dialog. No models
-loaded, no new GPU run. Full details: changelog/2026-10-20-benchmark-dashboard.md.
+`benchmark-dashboard/` Vite/React/Recharts app now at http://127.0.0.1:5174.
+Port5173 also hosts an unrelated project; only our old dev process was restarted.
+Dev server exec5037. Restart: `cd /Users/sunny/dev/sft-drift/benchmark-dashboard && npm run dev`.
+Sidebar Dashboard hosts three JSON-driven BenchmarkReport components (65score entries,
+91recorded checks); legacy explorer retains97measurements/eightmodels/21endpoints.
+Report views: horizontal/vertical bars, matrix, checks, benchmark semantics/examples,
+model/training context. Models include provider/model/revision, dataset manifest hash,
+pipeline-plan hash/config, adapter hash. Hash kinds/unknown fields remain explicit.
+New JSON reports go in benchmark-dashboard/reports/, validated with
+`npm run validate:report -- reports/my-report.json`, then Refresh reports. No UI edits
+or server restart. Schema v1.0 + TypeScript types; Node filesystem reads on server only.
+Unknown refs, duplicate IDs/count mismatches invalid; all duplicate report IDs excluded.
+No required checks means Not assessed; missing/not_run/error cannot become passes.
+Derived report JSON and preview are under the already-registered private dashboard
+root. Authored report JSON files are source inputs; fictional template excluded from
+loaded folders. Static builds emit validated reports.json; rebuild to refresh those.
+15app fixture/temp tests +37repo import/handoff checks pass; production build passes.
+Browser verified both orientations, matrix, semantic examples, checks and actual
+context hashes. No model/GPU work or changed historical scores/frozen instruments.
+Details: changelog/2026-10-20-reusable-benchmark-reports.md; app README.
 
 ## Latest result and exact next action
 
@@ -139,12 +148,13 @@ Freeze the full study plan and final doses only after training qualification.
 
 ## Preservation
 
-Latest verified private snapshot: `e98d9fdff46091f9c610d60fc048d9b5fccbdf3c`, code
-`771e71f`,2,782files/11,025,738,213bytes; live and offline verification passed.
-Corpus revision: `4e1986c6029483bcc09cea6715ff10012325dc58`.
-Includes both checkpoints/final weights, all completed evaluations, combined judgment
-and308rowreview. Dashboard source/notes and registered derived view/preview need the
-next commit/push/private save. Receipt: belief-transfer/data/.handoff-receipt.json.
+Latest verified private snapshot: `c74e6044be4618d970e99bfee07a030b37f50385`, code
+`7512c87`,2,784files/11,025,937,413bytes; live and offline verification passed.
+Corpus revision: `77a91fa82bcef38cfd801d8f5b4a0a51aa82ced1`.
+Includes prior final weights/checkpoints/evaluations/reviews and original dashboard
+derived view/preview. New report component/schema/loader/notes and three derived
+report JSON files/preview need commit/push/private save. Receipt is in
+belief-transfer/data/.handoff-receipt.json.
 Do not claim the box can be destroyed. Current candidate failed; broader training qualification remains unproven.
 
 At completed boundaries update these notes and the dated changelog, commit/push, then

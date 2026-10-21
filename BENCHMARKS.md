@@ -130,7 +130,7 @@ in fixed order even when displayed definitions swap. Sampling contributes to dis
 
 The local app in [benchmark-dashboard](benchmark-dashboard/README.md) indexes the
 neutral SFT development scores from saved summaries. Run `npm run dev` from that
-folder; open http://127.0.0.1:5173. `npm run data` refreshes the derived view.
+folder; open http://127.0.0.1:5174. `npm run data` refreshes the derived view.
 
 Use horizontal bars with fixed 0–100% axes, stable model colors, exact counts and
 explicit thresholds, plus a comparison matrix. Missing scores stay blank; never
@@ -144,3 +144,13 @@ The stance instrument remains separate: stance is not higher-is-better accuracy.
 Future stance plots should show signed before/after changes and coverage rather
 than adding stance to the qualification score profile. This display changes no
 benchmark definition, frozen decoder, measurement or acceptance criterion.
+
+Dashboard reports use the reusable `BenchmarkReport` component and JSON schema v1.0.
+Models carry provider/model/revision, inference context, fine-tune run, dataset
+manifest hash/context, pipeline-plan hash/context and adapter hash. Benchmarks carry
+semantic definitions, conditions and illustrative examples. Scores and recorded
+pass/fail/not_run/error checks stay separate. Add a JSON file under
+benchmark-dashboard/reports/ and click Refresh reports; schema/semantic validation
+rejects invalid references/counts and duplicate report IDs. See the app README and
+examples/report-template.json. Three derived real reports cover learning/recall,
+retention and training/control checks; no score or criterion was changed.
