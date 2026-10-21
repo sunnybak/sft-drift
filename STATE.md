@@ -9,6 +9,10 @@ ethical treatment has been trained.** Current evidence and prospective plans are
 
 ## Local benchmark dashboard
 
+All bar charts now label both axes: Model/Benchmark and Score (%) or declared units.
+Chart margins/heights reserve label space. Build and browser checks passed; preview
+labeled-axes-preview.png is in the registered dashboard artifact root.
+
 Typography enlarged across reports, navigation, metadata and chart labels; build and
 browser layout checked. Preview: larger-type-preview.png in the registered dashboard root.
 
@@ -159,10 +163,10 @@ Freeze the full study plan and final doses only after training qualification.
 
 ## Preservation
 
-Latest verified private snapshot: `1beb57c3bc8875a25472a251b4f3bf6f2dd21df4`, code
-`8d0f605`,2,790files; live and offline verification passed.
-Restored chart UI source/notes and new preview require this block’s commit/push/private
-save; authoritative receipt is belief-transfer/data/.handoff-receipt.json.
+Latest verified private snapshot: `c466c05781082aeaed53b40a23797338641c9c20`, code
+`ad361e0`,2,791files; live and offline verification passed.
+Axis-label source/notes and preview require this block’s commit/push/private save;
+authoritative receipt is belief-transfer/data/.handoff-receipt.json.
 Do not claim the box can be destroyed. Current candidate failed; broader training qualification remains unproven.
 
 At completed boundaries update these notes and the dated changelog, commit/push, then
