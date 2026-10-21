@@ -72,3 +72,6 @@ def test_new_worker_routes_all_evaluations_and_judgment_to_new_run(tmp_path, mon
     assert all(name in manifest['commands'][-1] for name in
                [prepare.VALIDATION, prepare.TRANSFER, prepare.RETENTION])
     assert not manifest['resume_supported'] and not manifest['automatic_ethical_dispatch']
+    with pytest.raises(ValueError, match='project-relative'):
+        replay.write_worker(generated, Path('configs/run/new.yaml'), [generated, output],
+                            [tmp_path / 'run.py'])

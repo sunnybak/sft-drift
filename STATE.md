@@ -9,21 +9,24 @@ Current plan/evidence: `changelog/2026-10-20-replay-followup-plan.md`; earlier d
 
 ## Prepared next candidate and exact next action
 
-Prepared `ethics_sft_registry_untagged_replay_v1`, one context-only ablation of the
+Prepared `ethics_sft_registry_untagged_replay_v2`, one context-only ablation of the
 completed tagged reference below. Synthetic prefix becomes empty; ordered source
 manifest/anchors identical, every ordered eligible target sequence identical toactual
 GPU tagged tokenization; C4/replay chunks byte-equivalent as parsed records.
 6,200draws/6,590chunks/2,584,740inputtokens/2,356,785targets; same824steps/checkpoints
 412,824/final-only,LR1e-4,rank16/alpha32/all7,seed42,batch4/accum2,max1024.
-PlanSHA3701438e6d1dbfe42e61456b5ad4df2abc3569db900cfcdf9898b5b42b0ef079.
+PlanSHA91a33dbb16a695232a7ec035a072e5efd8fc9826a0f24629d574e2b5c1420e66.
 Same frozen gates:bothordinarychatfamilies>=18/20,BASE<=2/20,frozencontrols and
 fixedBASE-knownretention; nocriterionrelaxation oroutcomeselection.109focusedtests
 passed. Source/helpernewIDsparameterized withhistoricaldefaults retained.
+Untagedv1preparationVOID beforeGPUlaunch: absoluteMacbuilderpathcaughtprelaunch.
+Allv1artifacts retained/PRELAUNCH_VOID.json+MD. v2usesrelativepathsandworkerrejects
+absolute/traversalinputs;109testsrepassed. All839portableinputhashesverified locally.
 
 Next: commit/push,deploynewsource+registeredinputs,verify executionmanifestallhashes,
-launchfiniteSupervisor`sft-drift-registry-untagged-replay-v1` via
-`/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_untagged_replay_v1/worker.sh`.
-Worker trains then new`ethics_gpu_registry_untagged_{validation,transfer,retention}_v1`
+launchfiniteSupervisor`sft-drift-registry-untagged-replay-v2` via
+`/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_untagged_replay_v2/worker.sh`.
+Worker trains then new`ethics_gpu_registry_untagged_{validation,transfer,retention}_v2`
 andjudges allregardlessgatefailures. Noautomaticrestart/resume/ethicaldispatch.
 No newresources/dependencies. Goal remainsactive; noacceptedtrainingcandidateyet.
 

@@ -11,10 +11,10 @@ import probe_instruction_retention as retention
 import probe_registry_transfer as transfer
 import validate_registry_calibration as validator
 
-RUN = 'ethics_sft_registry_untagged_replay_v1'
-VALIDATION = 'ethics_gpu_registry_untagged_validation_v1'
-TRANSFER = 'ethics_gpu_registry_untagged_transfer_v1'
-RETENTION = 'ethics_gpu_registry_untagged_retention_v1'
+RUN = 'ethics_sft_registry_untagged_replay_v2'
+VALIDATION = 'ethics_gpu_registry_untagged_validation_v2'
+TRANSFER = 'ethics_gpu_registry_untagged_transfer_v2'
+RETENTION = 'ethics_gpu_registry_untagged_retention_v2'
 NATIVE = 'ethics_gpu_registry_replay_native_v1'
 
 
@@ -111,7 +111,7 @@ def main() -> None:
     transfer.prepare(Path('data/generated/ethical_pilot') / TRANSFER, [RUN])
     retention.prepare(Path('data/generated/ethical_pilot') / RETENTION, training_run_id=RUN)
     replay.write_worker(generated, config, roots,
-        [Path(__file__), source / 'plan.json', manifest, actual, native / 'summary.json',
+        [Path('scripts/prepare_registry_untagged.py'), source / 'plan.json', manifest, actual, native / 'summary.json',
          native / 'agent_review_v1.jsonl'], run_id=RUN, validation_id=VALIDATION,
         transfer_id=TRANSFER, retention_id=RETENTION)
     print(json.dumps({'run_id': RUN, 'plan_sha256': replay.teacher.sha(path),

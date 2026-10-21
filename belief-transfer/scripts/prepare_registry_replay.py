@@ -59,6 +59,8 @@ def write_worker(generated: Path, config: Path, roots: list[Path], extra_inputs:
     inputs.update([Path('scripts/prepare_registry_replay.py'),Path('scripts/judge_registry_replay.py')])
     for root in roots:
         if '/generated/' in '/'+str(root)+'/': inputs.update(p for p in root.rglob('*') if p.is_file())
+    if any(p.is_absolute() or '..' in p.parts for p in inputs):
+        raise ValueError('Worker inputs must be portable project-relative paths')
     payload = {'run_id':run_id,'immutable_inputs':{str(p):teacher.sha(p) for p in sorted(inputs)},
         'new_output_roots':[str(p) for p in roots if '/generated/' not in '/'+str(p)+'/'],
         'commands':commands,'resume_supported':False,'automatic_ethical_dispatch':False}
