@@ -6,7 +6,8 @@ User chose the10-belief/four-arm exploratory ethical pilot. Original neutral
 untagged v2still FAILED18/20gate (17/20each); strict lookup0/20. Its learning,
 32/32controls,64/64thinking and44/44known nonthinking retention justify this
 exploratory attempt, not retrospective qualification or unseen-fact confirmation.
-Positive ethical training is now RUNNING; other arms/evaluations queued. No sweep or selection on belief outcomes.
+Positive training and all three full-bank seeds completed; negative training RUNNING
+(latest step78/454), off-topic/C4 arms queued. No sweep or selection on belief outcomes.
 
 ## Prepared pilot
 
@@ -79,7 +80,10 @@ dfaba5f,2840files/11,050,614,269bytes, remote+offlineverified. It includes all n
 corpus versions, review records, frozen pilot inputs and positive initial tokenization,
 plus the preceding scientific-card work. Positive checkpoint227 now off-box:8files/396,924,361bytes, independently hash-verified.
 Private snapshot5bd136f77ed723caafbfa246e972260eb88dc3e3 verified at05:19UTC,
-codef077a4f,2852files. Positive latest observed step372/454; remaining arms queued. Do not claim box destruction is safe. Full prior neutral
+codef077a4f,2852files. Positive all three full-bank evaluations complete; negative training active.
+Positive retention thinking64/64; nonthinking known43/44, strict retention failed.
+Seed42/1729 qualified; seed7 validation null-flip1/16=6.25% exceeds5%limit,
+so its completed full-bank result is explicitly unqualified. No outcome retuning. Do not claim box destruction is safe. Full prior neutral
 results and checkpoints are preserved; historical details in dated changelog.
 No snapshot while local checkpoint/result copy can mutate artifacts. No real-artifact
 writes during tests. Frozen files unchanged; include_paths registered before writes.

@@ -25,3 +25,11 @@ Current block requires launch-note commit/push and private save+verify before st
 Mac checkpoint watchers. Live GPU training is independent; handoff snapshots do not
 make this worker resumable. Never claim box destruction safety while active outputs
 are not off-box. Corpus v4/v5 and review/policy details in prepared masterroot.
+
+Monitoring update2026-10-20 23:25PDT: positive training/retention and all3full-bank
+seeds returned0; seed7 full-bank uses predeclared unqualified route after validation
+null-flip1/16(6.25%>5%). Seed42/1729 qualified. Retention strict gate failed:
+thinking64/64known correct; nonthinking43/44known semantic/strict, no backenderrors.
+Negative training step78/454, finite loss/gradients, worker44373RUNNING.
+Positive227/454checkpoints copied and privately verified; preservation helper live.
+No settings/instruments changed. Five-minute thread monitoring active.
