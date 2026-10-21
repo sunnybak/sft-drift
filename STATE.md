@@ -9,6 +9,12 @@ ethical treatment has been trained.** Current evidence and prospective plans are
 
 ## Local benchmark dashboard
 
+Model cards now lead with scientific study context: purpose, intervention, corpus,
+training dose, comparisons and limitations. Technical IDs/hashes/settings collapsed
+under Reproducibility details. Optional studyContext JSON supports future reports.
+Build and 19 app tests pass. Browser transport failed during final preview; no fresh
+screenshot or visual verification of this revision. Dev server exec22454 at5175.
+
 Model legends, matrix headers and model selectors now use clickable pills opening
 a native modal with model identity, training/dataset/pipeline/adapter provenance and
 inference settings. Selection checkboxes remain separate. Legacy cards match saved
@@ -24,7 +30,7 @@ browser layout checked. Preview: larger-type-preview.png in the registered dashb
 
 `benchmark-dashboard/` Vite/React/Recharts app now at http://127.0.0.1:5175.
 Ports5173/5174 host unrelated apps; dashboard explicitly binds 127.0.0.1:5175.
-Dev server exec66644. Restart: `cd /Users/sunny/dev/sft-drift/benchmark-dashboard && npm run dev -- --port 5175 --host 127.0.0.1`.
+Dev server exec22454. Restart: `cd /Users/sunny/dev/sft-drift/benchmark-dashboard && npm run dev -- --port 5175 --host 127.0.0.1`.
 Sidebar Dashboard hosts three JSON-driven BenchmarkReport components (65score entries,
 91recorded checks); legacy explorer retains97measurements/eightmodels/21endpoints.
 Report views: horizontal/vertical bars, matrix, checks, benchmark semantics/examples,
@@ -169,8 +175,8 @@ Freeze the full study plan and final doses only after training qualification.
 
 ## Preservation
 
-Latest remote-verified private snapshot: `5270262613732f2a436c3a2dd832fdc9b87804c9`,
-code `f783c1a`,2,792files. Model-pill source/notes and preview require this block’s
+Latest remote-verified private snapshot: `65f7cf3973a3d309805741453c30e6cf6500a918`, code `61fc40c`.
+Scientific-context source/notes and regenerated report JSON require this block’s
 commit/push/private save and offline verify; receipt is belief-transfer/data/.handoff-receipt.json.
 Do not claim the box can be destroyed. Current candidate failed; broader training qualification remains unproven.
 

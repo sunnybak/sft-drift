@@ -75,3 +75,10 @@ test('readouts prioritize current blockers without importing historical failures
  r.tests.push({...r.tests[0],id:'historical',modelId:'old',status:'fail'});assert.equal(reportPriority(r),0);
  r.tests[0].status='not_run';assert.equal(reportPriority(r),2);r.tests[0].status='fail';assert.equal(reportPriority(r),3);
 });
+test('scientific model context is optional but complete when supplied',()=>{
+ const r=template();
+ r.models[0].studyContext={purpose:'Learning pilot',intervention:'Remove marker',data:'Matched corpus',comparison:'Reference and matched variant',limitations:'Reused development examples'};
+ assert.ok(validateReport(r).report);
+ delete r.models[0].studyContext.limitations;
+ assert.match(validateReport(r).errors.join(' '),/limitations/);
+});

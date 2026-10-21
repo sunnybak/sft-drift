@@ -27,6 +27,13 @@ const models: ReportModel[] = view.models.map((m: any) => {
     id:m.id, name:m.name, provider:'Hugging Face', model:'Qwen/Qwen3-4B',
     revision:training?.training?.model_revision ?? '1cfa9a7208912126459214e8b04321603b3df60c',
     variant:m.id==='base'?'base':'finetuned',
+    studyContext:{
+      purpose:m.id==='base'?'Unmodified reference for measuring what fresh fine-tuning changes.':'Development pilot: test whether document training teaches invented registry facts while preserving basic instruction skills.',
+      intervention:m.id==='base'?'No study fine-tuning.':m.id==='tagged'?'Train on documents with a special document marker, alongside instruction examples.':m.id==='untagged'?'Remove the special document marker while keeping the same document corpus and instruction examples.':m.description.replaceAll('DOCTAG','document marker').replaceAll('replay','repeated instruction examples'),
+      data:m.id==='base'?'No additional study training data.': ['tagged','untagged'].includes(m.id)?'2,000 synthetic documents covering 20 invented registry facts, plus 2,000 C4 web documents. An additional 440 distinct instruction examples are each presented five times (2,200 training entries). These are neutral facts, not ethical beliefs.': 'Neutral registry learning data. The saved training manifest records the available dose and source details.',
+      comparison:m.id==='base'?'Use as the reference on each matching benchmark and evaluation setting.':m.id==='untagged'?'Compare with Tagged + replay to examine the document-marker change, and with BASE to measure learning and retention.':m.id==='tagged'?'Compare with Untagged + replay to examine the document-marker change, and with BASE to measure learning and retention.':'Compare within the same benchmark and recorded evaluation settings; other training variants can differ in several ways.',
+      limitations:'Development results reuse the same neutral facts and controls. They do not establish generalization to unseen facts or ethical-stance effects. Evaluation wording, thinking mode and response limits differ across benchmarks; inspect those conditions before comparing scores.',
+    },
     inference:{note:'Benchmark-specific decoder/backend; see each benchmark and source. Do not treat all endpoints as one inference configuration.'},
     finetuning:m.id==='base'?null:{
       runId:m.training_run_id??m.id,

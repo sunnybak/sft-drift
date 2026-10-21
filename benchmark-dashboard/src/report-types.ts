@@ -4,6 +4,7 @@ export type Identity = { id: string; description: string; sha256: string | null;
 export type ReportModel = {
   id: string; name: string; provider: string; model: string; revision: string | null;
   variant: 'base' | 'finetuned' | 'reference' | 'unknown'; color?: string;
+  studyContext?: { purpose: string; intervention: string; data: string; comparison: string; limitations: string };
   inference: Record<string, unknown>;
   finetuning: null | { runId: string; dataset: Identity; pipeline: Identity; adapter: Source | null };
 };

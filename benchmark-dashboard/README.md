@@ -139,3 +139,10 @@ metadata only when model ID and training run match. Escape, Close or backdrop di
 
 If port 5174 is occupied by another app, start with
 `npm run dev -- --port 5175 --host 127.0.0.1`.
+
+Model cards lead with optional `models[].studyContext`: purpose, intervention, data,
+comparison and limitations (all five strings required if supplied). Training dose is
+derived from the saved plan and manifest; repeated entries are not counted as unique
+examples. Technical provenance is collapsed under Reproducibility details. Old reports
+without studyContext display their recorded training description. Restart Vite after
+changing the schema itself; ordinary valid report JSON still loads through Refresh.
