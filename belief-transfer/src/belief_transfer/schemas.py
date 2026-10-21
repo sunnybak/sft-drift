@@ -1759,6 +1759,7 @@ class PilotBenchSpec(BaseModel):
     conviction_meta: ConvictionMetaThresholds | None = None
     conviction_selection_run_id: str | None = None
     measurement_controls_source_run_id: str | None = None
+    measurement_control_failure_policy: Literal["skip", "collect_unqualified"] = Field(default="skip", exclude_if=lambda value: value == "skip")
     conviction_scale_study: ConvictionScaleStudy | None = None
     conviction_allocation_study: ConvictionAllocationStudy | None = None
     candidates_from_run_id: str | None = None
@@ -1809,6 +1810,7 @@ class PilotBenchSpec(BaseModel):
 
 
 Stage = Literal[
+    "control_recheck",
     "conviction_allocation",
     "conviction_study",
     "stance_study",
@@ -1995,6 +1997,13 @@ class DocumentSFTSpec(BaseModel):
                                      exclude_if=lambda value: value is None)
 
 
+class ControlRecheckSpec(BaseModel):
+    version: Literal["control-recheck-v1"] = "control-recheck-v1"
+    seeds: list[int] = Field(default_factory=lambda: [42, 7, 1729], min_length=1)
+    model_label: str
+    adapter_sha256: str | None = None
+
+
 class JobConfig(BaseModel):
     """One resolved job: the sole input to a stage, and the output counterpart of
     `RunResult`.
@@ -2019,6 +2028,7 @@ class JobConfig(BaseModel):
     decision_qa: DecisionQASpec | None = None
     # Omit this opt-in field when unset: historical config identities must not change.
     document_sft: DocumentSFTSpec | None = Field(default=None, exclude_if=lambda value: value is None)
+    control_recheck: ControlRecheckSpec | None = Field(default=None, exclude_if=lambda value: value is None)
     related_runs: dict[str, str] = Field(default_factory=dict)
     """Sibling run ids that belong with this one, mapped to why, e.g.
     `{matrix_v1_step24: "the same arms read at step 24, where belief transfer peaks"}`.

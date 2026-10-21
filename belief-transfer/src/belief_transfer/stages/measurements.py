@@ -241,6 +241,8 @@ async def run(job):
                 if answer != r['answer'] or mode != r['answer_extraction'] or format_compliant(text, r) != r['strict_format']:
                     raise ValueError('control source extraction changed')
             reused[name] = {r['presentation_id']: {**r, 'control_observation_source': spec.measurement_controls_source_run_id} for r in aligned}
+    if spec.measurement_control_failure_policy != "skip":
+        bundle["observation_policy"] = spec.measurement_control_failure_policy
     directory, artifacts = start(job, banks, controls, bundle)
     model = local_model(spec.model, job.models, adapter_path=spec.adapter_path,
         max_new_tokens=spec.max_new_tokens, seed=spec.seed, enable_thinking=spec.measurement_decoding.thinking,
@@ -258,9 +260,11 @@ async def run(job):
                     bundle["stance_validation"]["thresholds"], qualify_natural_consistency=False)
                 if not all(check["controls"]["checks"].values()):
                     print("[measurements] factual controls failed; natural calls skipped", flush=True)
-                    write_md(path)
-                    artifacts.extend([path, path.with_suffix(".md")])
-                    continue
+                    if spec.measurement_control_failure_policy == "skip":
+                        write_md(path)
+                        artifacts.extend([path, path.with_suffix(".md")])
+                        continue
+                    print("[measurements] collecting explicitly unqualified supplemental observations", flush=True)
             for batch_start in range(0, len(rows), spec.measurement_batch_size):
                 batch = rows[batch_start:batch_start + spec.measurement_batch_size]
                 started = time.perf_counter()

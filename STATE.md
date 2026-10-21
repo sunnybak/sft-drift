@@ -68,3 +68,16 @@ extractor/key correct.11/12same-statement presentations across3seeds correct.
 31/32controlaccuracy passes;1/16nullflip6.25%fails5%limit. Different prompt-specific
 samplingseeds mean nullflip does not isolate note causality. Historical failure
 unchanged; no rerun or instrument modification.
+
+## Authorized control follow-up (preparing)
+
+User authorized clearer Support for claim labels, expanded/reworded controls on
+current finalmodels and complete off-topic evaluation. Plan:
+changelog/2026-10-21-control-followup-plan.md. Five modelaudit IDs
+ethics_gpu_control_recheck_{base,positive,negative,offtopic,c4_only}_v1,672calls/model;
+three fresh off-topic full-bank IDs ethics_gpu_offtopic_supplement_s{42,7,1729}_v1
+with collect_unqualified policy. Original instrument/thresholds/results unchanged.
+Default historical policy remains skip. New output paths registered.80focused
+Python checks pass; dashboard19Node tests/TypeScript/build pass. Label verified
+in browser. No live new run yet. Next commit/push and launch finite CUDA worker
+sft-drift-control-followup-v1 on existing3090; no new rental or training.

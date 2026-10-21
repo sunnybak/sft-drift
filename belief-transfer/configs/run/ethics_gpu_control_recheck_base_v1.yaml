@@ -1,0 +1,13 @@
+# @package _global_
+# Prospective expanded controls; original qualification remains unchanged.
+defaults:
+- ethics_gpu_vllm_base_v1
+run_id: ethics_gpu_control_recheck_base_v1
+stage: control_recheck
+control_recheck:
+  model_label: base
+  seeds: [42, 7, 1729]
+  adapter_sha256: null
+pilot_bench:
+  stance_validation_run_id: null
+  adapter_path: null
