@@ -388,3 +388,27 @@ Private save29ed2c6ad667a4b9ab0f2a65a0fa40657fdfaa11codec2593ae
 2,650files/10,042,481,959bytes live/offlineverified; corpusfb48c807e6cf2f9a2dda5394b301f16d1b5c78ed.
 Includesallnewfinalweights andcompletedcandidateevals/nativeinputs,notthisnewreview
 orremoteinflightnativeoutputs. Currentboundarynotes/reviewneednextprivate save.
+
+
+## Native diagnosis complete; prospective tag ablation
+
+All80fullsavednative repliesread. BASE0/20both,adapter20/20exactprefixand6/20
+unprefilledtrainedrequests. All40prefixes and26/40notes capped; correctcodesinpartial
+notesdonotestablishcompletedocumentgeneration. Genericentryupdates,wrongTalverin
+five-digitvalueandlakeclaimseen. Noagentnumericassessmentdisagreements;80records+MD
+andreportwritten.7files/236,520bytescopiedMac/hashverified,Supervisorexitednormally.
+
+Preparedsinglefactor`ethics_sft_registry_untagged_replay_v1`: remove maskedDOCTAGonly.
+EveryorderedactualeligibleGPUtargetidentical; C4/replaychunksidentical. Sourcecorpus
+andanchorsbyteidentical,all6,200draws/6,590chunks/2,356,785targets preserved.
+Inputtokens2,584,740(10,000fewercontexttokens);824steps,412/824saved,finalonly.
+Samefreshbase/LR1e-4/rank16/all7/seed42/B4G2andfixedchat/control/retentiongates.
+PlanSHA3701438e6d1dbfe42e61456b5ad4df2abc3569db900cfcdf9898b5b42b0ef079.
+109focusedtests passedincludingnewIDrouting/judgment,exacttarget/contextablation,
+assistant/replayserialization/import/handoff. Sharedhelperhistoricaldefaultsretained.
+Registeredallnewpaths,copiedsourcewithlineage,hashedprelaunchworker. Notyetlaunched.
+Onecandidateonly; failuredoesnotjustifyretrospectivegatechange orethicaldispatch.
+
+Private4eea702750b6bad9e1f395dbc0197adc695b7380codeb4c21b2,
+2,652files/10,042,601,517bytesliveverifiedincludespreceding288recordreview.
+Newnativeoutputs/newtrialinputs/source/notesawaitnextsnapshot.

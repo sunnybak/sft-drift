@@ -1,0 +1,10 @@
+# @package _global_
+# Context-only neutral ablation; unchanged acceptance gates.
+defaults:
+  - ethics_sft_registry_instruction_replay_v1
+run_id: ethics_sft_registry_untagged_replay_v1
+document_sft:
+  manifest_path: data/generated/ethical_stance_sft/ethics_sft_registry_untagged_replay_v1/documents.jsonl
+  synthetic_prefix: ""
+  plan_path: data/generated/ethical_stance_sft/ethics_sft_registry_untagged_replay_v1/plan.json
+  plan_sha256: 3701438e6d1dbfe42e61456b5ad4df2abc3569db900cfcdf9898b5b42b0ef079

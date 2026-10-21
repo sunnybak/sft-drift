@@ -7,40 +7,44 @@ basic controls before ethical training. **No ethical treatment has been trained.
 Current plan/evidence: `changelog/2026-10-20-replay-followup-plan.md`; earlier diagnoses:
 `changelog/2026-10-20-request-sensitive-recall.md`. Do not resume historical queues.
 
-## Current terminal result and next action
+## Prepared next candidate and exact next action
 
-Finite Supervisor `sft-drift-registry-instruction-replay-v1` EXITED normally.
-Training824/824 complete, all11engineering checks pass; final adapter tensor SHA
- e4f143c900223d12eec39bd3a0e4e3d1712acd36c600e70df14e883941a34908.
-Frozen controls32/32, original strict lookup0/20, both longer chat families1/20.
-Retention thinking63/64 correct/strict/normal (one failed boundary/stop), nonthinking
-known44/44 allchecks; overall retention gate FAILED. Development candidate FAILED.
-All96semantic replies read, all128retention/64control finals checked; one failed thinking trace fullyread. Other successful thinking traces notallread. Scoped288recordreview under transferresults/agent_review_v1.jsonl+MD. No ethical treatment dispatch.
+Prepared `ethics_sft_registry_untagged_replay_v1`, one context-only ablation of the
+completed tagged reference below. Synthetic prefix becomes empty; ordered source
+manifest/anchors identical, every ordered eligible target sequence identical toactual
+GPU tagged tokenization; C4/replay chunks byte-equivalent as parsed records.
+6,200draws/6,590chunks/2,584,740inputtokens/2,356,785targets; same824steps/checkpoints
+412,824/final-only,LR1e-4,rank16/alpha32/all7,seed42,batch4/accum2,max1024.
+PlanSHA3701438e6d1dbfe42e61456b5ad4df2abc3569db900cfcdf9898b5b42b0ef079.
+Same frozen gates:bothordinarychatfamilies>=18/20,BASE<=2/20,frozencontrols and
+fixedBASE-knownretention; nocriterionrelaxation oroutcomeselection.109focusedtests
+passed. Source/helpernewIDsparameterized withhistoricaldefaults retained.
 
-Checkpoint824 all8files/397,035,475bytes copied/hashverified Mac; finalwatcher exited.
-Terminal training/finaladapter21files/186,682,583bytes copied/hashverified.
-Original tokenized.md retained; terminal cosmetic header variant stored separately as
-`tokenized.terminal.md`, mapped by training_terminal_offbox_copy_verification.json.
-Strict results17files/362,211bytes and semantic+retention22files/1,359,004bytes copied
-and hashverified. These newest artifacts await next private snapshot.
+Next: commit/push,deploynewsource+registeredinputs,verify executionmanifestallhashes,
+launchfiniteSupervisor`sft-drift-registry-untagged-replay-v1` via
+`/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_untagged_replay_v1/worker.sh`.
+Worker trains then new`ethics_gpu_registry_untagged_{validation,transfer,retention}_v1`
+andjudges allregardlessgatefailures. Noautomaticrestart/resume/ethicaldispatch.
+No newresources/dependencies. Goal remainsactive; noacceptedtrainingcandidateyet.
 
-Prepared registered post-failure `ethics_gpu_registry_replay_native_v1`:80replies,
-BASE/final x20mappings x unprefilled trained request/exact supervised prefix.
-Input prefixes/next eligible code labels verified against actual GPU tokenization.
-Diagnostic only; cannot rescue failed chat criterion. Source tests40passed.
-Native diagnostic RUNNING Supervisor`sft-drift-registry-replay-native-v1`,PID39667,
-sourcec2593ae, log`/workspace/sft-drift-ops/registry_replay_native_v1.log`.
-Command`.venv/bin/python scripts/probe_registry_replay_native.py run`; finite,no restart
-or resume. BASE complete; adapter progressing. Some prefixes correct; unprefilled
-native requests mixed. Do not infer all20from partial results. Next exactcommand:
-`ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-replay-native-v1; tail -n 3 /workspace/sft-drift-ops/registry_replay_native_v1.log'`.
-Afterterminal,copy/hashalloutputs,readall80replies,then decide nextcandidate.
-Concrete prospective hypothesis: masked DOCTAG is supplied during synthetic training
-but absent from chat and never supervised for generation. An untagged variant could
-isolate this; not yet prepared/queued, and mismatch is not demonstrated solecause.
-Goal remains active; no automatic training.
+Native diagnosis `ethics_gpu_registry_replay_native_v1` COMPLETED (Supervisor39667
+EXITEDnormally),sourcec2593ae. BASE0/20both; adapter20/20exactprefix,6/20unprefilled
+trainednotes. All80full savedreplies read, noassessmentdisagreements. Allprefixes
+and26/40notes hitdeclaredcaps; notcomplete-documentgeneration. Genericentryupdates,
+wrongTalverinvalue/lakeclaim appearinfailedadapter notes. Confirmscontext-dependent
+learning,notchatqualification.7files/236,520bytes copiedMac/SHAverified;80rowagent
+review+MD saved. Log/workerscript under/workspace/sft-drift-ops/registry_replay_native_v1.*.
 
-## Frozen current candidate
+Tagged training824/824completed all11engineeringchecks. Frozencontrols32/32,
+strictlookup0/20,bothordinarychatfamilies1/20. Retentionthinking63/64(allonefailed
+boundary/lengthloop),nonthinkingknown44/44; overallqualificationFAILED. All96semantic
+replies read,128retention/64controlfinals checked,failedthinkingtrace fullyread;
+othersuccessfulthinkingtracesnotallread. Scoped288recordreview retainedundertransfer.
+Final824checkpoint8files/397,035,475bytes,actualadapter/terminal21files/186,682,583bytes,
+allcompleted evals copiedverifiedMac/private. Originaltokenized.md kept; cosmetic
+terminalheader variant tokenized.terminal.md mappedbyterminalcopyreceipt.
+
+## Frozen tagged reference
 
 Training ID `ethics_sft_registry_instruction_replay_v1`:2,000neutral synthetic documents
 (20arbitrary registry mappings x100),2,000pinnedC4,2,200replaydraws from440unique BASE
@@ -113,12 +117,13 @@ All designated study checkpoints require freshcontrols/all100belief measurements
 
 ## Preservation
 
-Latest private snapshot29ed2c6ad667a4b9ab0f2a65a0fa40657fdfaa11,codec2593ae,
-2,650files/10,042,481,959bytes,live+offlineverified. Corpusrevision
-fb48c807e6cf2f9a2dda5394b301f16d1b5c78ed. Includes final824checkpoint,finaladapter,
-terminaltraining andallthreecompleted candidateevaluations,copyreceipts,nativeinputs.
-Newscopedagentreview andcurrentnotes neednextsave. Nativein-flightoutputs onlyGPU;
-no trainingresume/boxdestructionclaim. Receipt:data/.handoff-receipt.json.
+Latest private snapshot4eea702750b6bad9e1f395dbc0197adc695b7380,codeb4c21b2,
+2,652files/10,042,601,517bytes,liveverified. Prior29ed2c6ad667a4b9ab0f2a65a0fa40657fdfaa11
+alsoofflineverified. Corpusdcd16e1fdd1538ebdbccccdb521632845cec7b80. Includes tagged
+finalweights/checkpoints/allthreeevaluations/scopedreview/nativeinputs. Completed
+nativeoutputs/review andnewuntaggedsource/inputs/currentnotes neednextprivate save.
+Receipt:data/.handoff-receipt.json. No activeGPUjob asofnativecompletion; nextcandidate
+notyetlaunched. Do notclaimboxdestroyableuntilnextartifactsnapshotverified.
 
 At completed boundary: update STATE+datednotes,commit/push,then from belief-transfer
 `uv run --no-sync python scripts/handoff.py save` and`... handoff.py verify`.

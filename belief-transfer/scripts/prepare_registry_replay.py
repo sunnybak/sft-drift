@@ -34,15 +34,17 @@ def replay_draws(rows: list[dict], original_targets: int) -> tuple[list[dict],in
 
 
 
-def write_worker(generated: Path, config: Path, roots: list[Path], extra_inputs: list[Path]) -> None:
+def write_worker(generated: Path, config: Path, roots: list[Path], extra_inputs: list[Path], *,
+                 run_id: str = RUN, validation_id: str = VALIDATION,
+                 transfer_id: str = TRANSFER, retention_id: str = RETENTION) -> None:
     worker = generated/'worker.sh'
     manifest = generated/'execution_manifest.json'
     commands = [
-        f'flock /tmp/sft-drift-cuda-benchmark.lock .venv/bin/python -u run.py +run={RUN}',
-        f'.venv/bin/python -u scripts/validate_registry_calibration.py run --run-id {VALIDATION} --training-run-id {RUN}',
-        f'.venv/bin/python -u scripts/probe_registry_transfer.py run --run-id {TRANSFER}',
-        f'.venv/bin/python -u scripts/probe_instruction_retention.py run --run-id {RETENTION}',
-        '.venv/bin/python -u scripts/judge_registry_replay.py',
+        f'flock /tmp/sft-drift-cuda-benchmark.lock .venv/bin/python -u run.py +run={run_id}',
+        f'.venv/bin/python -u scripts/validate_registry_calibration.py run --run-id {validation_id} --training-run-id {run_id}',
+        f'.venv/bin/python -u scripts/probe_registry_transfer.py run --run-id {transfer_id}',
+        f'.venv/bin/python -u scripts/probe_instruction_retention.py run --run-id {retention_id}',
+        f'.venv/bin/python -u scripts/judge_registry_replay.py --training-run-id {run_id} --validation-id {validation_id} --transfer-id {transfer_id} --retention-id {retention_id}',
     ]
     check = (".venv/bin/python - <<'INPUT_CHECK'\nimport hashlib,json\nfrom pathlib import Path\n"
         + f"p=json.loads(Path('{manifest}').read_text())\n"
@@ -57,7 +59,7 @@ def write_worker(generated: Path, config: Path, roots: list[Path], extra_inputs:
     inputs.update([Path('scripts/prepare_registry_replay.py'),Path('scripts/judge_registry_replay.py')])
     for root in roots:
         if '/generated/' in '/'+str(root)+'/': inputs.update(p for p in root.rglob('*') if p.is_file())
-    payload = {'run_id':RUN,'immutable_inputs':{str(p):teacher.sha(p) for p in sorted(inputs)},
+    payload = {'run_id':run_id,'immutable_inputs':{str(p):teacher.sha(p) for p in sorted(inputs)},
         'new_output_roots':[str(p) for p in roots if '/generated/' not in '/'+str(p)+'/'],
         'commands':commands,'resume_supported':False,'automatic_ethical_dispatch':False}
     manifest.write_text(json.dumps(payload,indent=2)+'\n')
