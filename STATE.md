@@ -9,10 +9,10 @@ ethical treatment has been trained.** Current evidence and prospective plans are
 
 ## Live run and exact next action
 
-`ethics_sft_registry_untagged_replay_v2` is RUNNING on the existing RTX 3090.
+`ethics_sft_registry_untagged_replay_v2` training is COMPLETED on the existing RTX 3090; queued behavioral evaluations are RUNNING.
 Supervisor: `sft-drift-registry-untagged-replay-v2`, PID 40060, code `182d657`.
-Last observed: 595/824 optimizer steps; logged loss and gradients remain finite. All outcomes remain
-unproven. Host: `38.49.42.46:58689`; project: `/workspace/sft-drift/belief-transfer`.
+Training completed 824/824 steps in 3,198.99 seconds; all 11 engineering checks passed,
+reload error 0, exact 2,356,785 eligible targets. Behavioral outcomes remain unproven. Host: `38.49.42.46:58689`; project: `/workspace/sft-drift/belief-transfer`.
 Log: `/workspace/sft-drift-ops/registry_untagged_replay_v2.log`.
 Command: `/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_untagged_replay_v2/worker.sh`.
 
@@ -34,7 +34,7 @@ Mac checkpoint copying observes the specific worker:
 | Step | Exec session | Log |
 | --- | --- | --- |
 | 412 — copied/verified; watcher exited | 39430 (closed) | `/tmp/sft-drift-untagged-v2-midpoint-watch.log` |
-| 824 — watcher RUNNING | 19716 | `/tmp/sft-drift-untagged-v2-final-watch.log` |
+| 824 — copied/verified; watcher exited | 22407 (closed) | `/tmp/sft-drift-untagged-v2-final-watch.log` |
 
 Each invokes `uv run --no-sync python scripts/preserve_cuda_checkpoint.py --host root@38.49.42.46 --port 58689 --run-id ethics_sft_registry_untagged_replay_v2 --step 412 --job sft-drift-registry-untagged-replay-v2 --wait` (use 824 for final).
 Copies require matching saved trainer state and a later writer audit, or training
@@ -42,9 +42,13 @@ COMPLETED at final. Checkpoint 412 was copied at 2026-10-21T00:36:48Z: eight fil
 All local SHA/byte counts were independently rechecked; trainer_state.global_step=412.
 Receipt: new training results/checkpoint_412_offbox_copy_verification.json. The helper
 observed audit step 415 after the save. No midpoint inference or outcome selection.
-Final watcher remains not ready. Copying is idempotent; it does not make training
-resumable. Keep snapshot inputs stable: if a private save is still active near step
-750, pause the final copy watcher before any local checkpoint installation.
+Final checkpoint copied at 2026-10-21T01:04:38Z: eight files/397,035,440 bytes;
+all independently rehashed and trainer step 824 checked. Terminal training results and
+final adapter: 21 files/186,538,395 bytes verified, including all 11 passing checks.
+Adapter tensor SHA: af452ab0fae1d0e57b8e224f08756c618c18808ff0d0b37f6197940fcfde89a8.
+Original tokenized.md retained; terminal header variant saved as tokenized.terminal.md.
+Both copy receipts are under the training results root. Copying is idempotent and does
+not make training resumable. No local artifact mutations during private snapshots.
 After final and all queued checks finish, copy/hash terminal artifacts, read replies,
 and preserve failures. Never rerun a started measurement ID.
 
@@ -123,14 +127,13 @@ Freeze the full study plan and final doses only after training qualification.
 
 ## Preservation
 
-Latest verified private snapshot: `ef2847e714e3590f91b3bace728d061338eaa17e`, code
-`7a713a0`, 2,709 files/10,479,889,738 bytes; live and offline verification passed.
-Corpus revision: `0c17081af9015c5b4bc3aa6b83e2e08d45fdfa70`.
-It includes checkpoint 412 and its receipt, completed diagnostics/reviews, void v1,
-corrected v2 inputs/launch record, initial GPU tokenization, watcher commands,
-and tagged reference weights/results. The new local-only reference API and these
-notes need commit/push/private save. Active post-412 updates/future final checkpoint
-remain GPU-only until copied. Receipt: `belief-transfer/data/.handoff-receipt.json`.
+Latest verified private snapshot: `de75c6474ab081bd8431c0955bf3f1ddd9942fed`, code
+`532cfb4`, 2,709 files/10,479,889,738 bytes; live and offline verification passed.
+Corpus revision: `dd98125b2c260b4d2a15163c3559739950724e0b`.
+It includes checkpoint 412, initial v2 artifacts, completed earlier diagnostics, and
+local-only fresh-reference preparation changes. Final checkpoint824, terminal training
+artifacts and current notes are now Mac-verified and need the next private save.
+Queued evaluation artifacts remain GPU-only. Receipt: `belief-transfer/data/.handoff-receipt.json`.
 Do not claim the box can be destroyed. All final qualification remains unproven.
 
 At completed boundaries update these notes and the dated changelog, commit/push, then
