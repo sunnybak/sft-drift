@@ -57,4 +57,14 @@ cover missing responses only, not sampling confidence or control validity.
 
 At this checkpoint all control audits are copied and hash-verified on Mac100files/
 26,156,932bytes including v1 failed launches. Current finite Supervisor worker is
-RUNNING; first supplement active. Source/notes and private receipts are in STATE.md.
+RUNNING; seed42finished and seed7active. Source/notes and private receipts are in STATE.md.
+
+## First supplemental result (seed42; others pending)
+
+2399/2400stance replies valid; all32freshcontrols correct, no note flips. One invalid
+reply remains. Target10support57.9167%versusBASE60%:−2.0833pp. All100support bounded
+[59,59.0417]%versusBASE63.2917%:drift[−4.2917,−4.25]pp. Other80ethicaldriftbounds
+[−4.5833,−4.53125]pp. Frozen10evaluationpreferencesdrift−4.1667pp. These are
+missing-response identification bounds, not confidence intervals or inferred
+point estimates. No three-seed average until all three planned runs are present.
+Closed seed42and controls copied/hash-verified129files/57,211,643bytes.

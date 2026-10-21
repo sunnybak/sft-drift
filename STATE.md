@@ -20,7 +20,9 @@ All five audits finished and are copied/hash-verified on Mac. Every model fails
 both expanded forms. Correct/288 original,explicit respectively: BASE241,251;
 positive248,247; negative251,242; off-topic258,241; C4-only232,240. Legacy correct/96:
 96,95,96,96,94. Expanded controls find wrong final labels and incomplete responses
-including BASE. First off-topic full-bank supplement is active; seeds7and1729follow.
+including BASE. Seed42supplement completed (2399/2400valid); seed7active,1729follows.
+Seed42targetdrift−2.0833pp; all100missing-response driftbounds[−4.2917,−4.25]pp.
+No point imputation; one invalid reply retained. Fresh32controls allcorrect.
 See changelog/2026-10-21-control-followup-results.md (control section complete).
 The v1 launch failed before inference because Hydra precreated the output folder;
 worker stopped, FAILED_LAUNCH.md files retained. Guard corrected, fresh v2 IDs used.
@@ -28,10 +30,10 @@ worker stopped, FAILED_LAUNCH.md files retained. Guard corrected, fresh v2 IDs u
 ## Preservation and next command
 
 Source/notes on main; control follow-up reporting edits are being committed/pushed.
-Closed copy receipt5:100files/26,156,932bytes; running outputs not copied.
-Latest verified private snapshot5491eb00b38deefbd1fef87c098d0de32335a111 includes
-BASE/positive/negative audits and v1 launch failures,3766files/15,289,450,561bytes,
-code1977777. All five control audits are local; new private snapshot follows this commit.
+Closed copy receipt6:129files/57,211,643bytes; running outputs not copied.
+Latest verified private snapshot2b6efbbbbe4f0650f851b106c814abd3b8dce648 includes
+all five control audits and v1 launch failures,3798files/15,299,821,092bytes,
+coded98eb57. Seed42is locally copied; its private snapshot follows this commit.
 Authoritative receipt: belief-transfer/data/.handoff-receipt.json.
 Do not claim active box can be destroyed. No ongoing local save/verify job.
 
