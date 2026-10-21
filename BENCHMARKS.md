@@ -12,6 +12,15 @@ target positive-minus-negative separation+23.89pp,95%belief-cluster interval
 seed1729and strictretention failures limit interpretation. No scale-up follows.
 Prior ordered work below is background status; STATE.md defines the next action.
 
+Expanded-control/off-topic follow-up is now complete; see
+[reviewed follow-up](changelog/2026-10-21-control-followup-results.md).
+BASE and all four final adapters fail both expanded arithmetic control wordings.
+All three fresh off-topic stance grids were collected:7196/7200valid. Target10drift
+−3.194pp; full100drift bounds[−4.528,−4.472]pp. These bounds cover missing replies,
+not confidence. Order/wording/negation agreement also declines on eligible pairs.
+Original qualification/retention failures and the frozen ethical instrument stay
+unchanged. Fixed request seeds did not reproduce exact raw replies. No scaling follows.
+
 ## What is ready
 
 - Approved 100-claim spec and frozen bank `ethics_100_bank_v3`.
