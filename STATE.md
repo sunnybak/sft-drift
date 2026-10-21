@@ -98,3 +98,10 @@ onGPUwhileactive. Exactnextcheck: ssh -p58689 root@38.49.42.46 supervisorctl sta
 Mac postprocessing scripts copy_control_followup.py and report_control_followup.py
 preserve closedoutputs and compute explicit missing-response bounds; no point
 imputation, no confidence-interval claim. All outputs under registeredmasterroot.
+
+First completed v2audit BASE: legacy96/96correct,0/48flips; expandedoriginal
+241/288correct,256/288extracted; truth_explicit251/288correct,274/288extracted.
+Both expandedforms fail; not an SFT-specificfailure. Firstsampled invalid replies
+show repetitive reasoning loops to4096cap (e.g.7+6=13). No prompt/gatechanges.
+BASEclosedoutputs and allv1failedlaunchfiles copied/hashverified40files/5,849,936bytes.
+Positiveaudit currentlyqueued/running; otherthreeadapters andoffsupplementsfollow.

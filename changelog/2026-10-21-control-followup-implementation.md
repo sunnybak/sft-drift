@@ -37,3 +37,10 @@ afterdirectoryfix. Mac-only report/copy utilities added; puremissing-responsebou
 tests pluscontrol/importchecks18passed. Bounds retain null pointscore and full
 expecteddenominator. Dashboard20Node tests/TypeScript pass afteroptionalmissingdata
 bounds support; no inferred midpoint. SourceGPUstaysbdd9034whileworkeractive.
+
+First BASE auditcomplete andclosedcopyverified40files/5,849,936bytes. Legacy96/96
+correct; expandedoriginal241/288correct(256extracted), truth251/288correct
+(274extracted), bothfail. Newprompts include arithmetic reasoningloops reaching
+4096cap. Manuallyinspectedfirstvalidwrongandinvalidcaseperwording: prompt/key
+correct; actualfinalanswerwrong orreasoningneverends. No outcomes used to change
+the predeclaredprompts/gates. SourceGPUstillbdd9034.
