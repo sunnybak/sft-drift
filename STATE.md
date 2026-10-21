@@ -51,6 +51,12 @@ cat changelog/2026-10-21-control-followup-results.md
 
 ## Dashboard
 
+Dashboard presentation updated: searchable report list instead of expanded report
+cards. Rows open a modal right-side drawer over a dimmed library. Collapse preserves
+report view/filter/scroll state and exposes an expand tab; Close, Escape or backdrop
+dismisses it. Nested model-card Escape closes only that card. Browser-tested, data
+and recorded gates unchanged. See changelog/2026-10-21-dashboard-report-drawer.md.
+
 http://127.0.0.1:5180/ (dev session38091); other old ports belong to other apps.
 10reports:3neutral,4originalethical,expandedcontrols,off-topic3seedfollow-up,
 and separate response consistency. Absolute stance label Support for claim; fixed

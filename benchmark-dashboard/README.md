@@ -128,8 +128,12 @@ summary. A report passing its checks does not establish full training qualificat
 
 `BenchmarkReport` and `BenchmarkResults` both expose Horizontal bars, Vertical bars,
 Score matrix, Checks, What is tested, and Model context directly. `initialView` selects
-the starting tab. Dashboard cards start with the matrix; full reports start with
-horizontal bars. The optional presentation metadata remains accepted in JSON for
+the starting tab. The Dashboard uses a searchable list of report titles, descriptions,
+tags, model/benchmark counts and declared-check status. Reports open in a native modal
+drawer on the right over a dimmed library. Collapse keeps the selected chart, filters
+and scroll position mounted; the edge tab expands it again. Close, Escape or clicking
+the backdrop dismisses it. Model-info dialogs remain independently dismissible.
+Full reports start with horizontal bars. The optional presentation metadata remains accepted in JSON for
 compatibility, but does not control the interface.
 
 Model legend entries, model selectors and matrix headers are clickable pills. They open
