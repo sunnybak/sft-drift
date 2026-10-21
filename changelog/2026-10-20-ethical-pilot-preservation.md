@@ -18,3 +18,10 @@ under masterresults; helper only writes at serial copy/snapshot boundaries. No o
 local artifact writers during helper copying or snapshot_running. A failed private
 save never deletes local copies. Source/notes pushed before boundary backup; no new
 GPU scripts/settings/instruments or runs introduced by this helper.
+
+Positive checkpoint227 copied and independently verified:8files/396,924,361bytes.
+Private boundary snapshot5bd136f77ed723caafbfa246e972260eb88dc3e3, codef077a4f,
+2852files, save+verify completed05:19UTC2026-10-21. Worker still RUNNING,
+positive step372/454 at05:21UTC; no completed ethical outcome measurements yet.
+Helper returned to waiting_for_checkpoint. These progress notes will be captured
+by its next boundary snapshot; no concurrent manual snapshot started.

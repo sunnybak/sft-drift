@@ -56,12 +56,11 @@ No local weights. Finite Supervisor sft-drift-ethical-four-arm-v1 RUNNING PID443
 log/workspace/sft-drift-ops/ethical_four_arm_v1.log. Source530ae67. ActualGPUpositive
 tokenization3519chunks/1244032targets matches plan. Initial4stablefiles/23,011,118bytes
 copied toMac and independently hash-verified; receipt under positive training results.
-Do not rerun preparation or started IDs. Worker has no resume. Next private save+verify
-then one Mac preservation process owns checkpoint227/454copies and private snapshots
-sequentially. No other local artifact writer or manual snapshot while it is copying/saving.
+Do not rerun preparation or started IDs. Worker has no resume. Positive checkpoint227 copied off-box and privately verified. One Mac preservation
+process owns remaining checkpoint227/454copies and private snapshots sequentially. No other local artifact writer or manual snapshot while it is copying/saving.
 
 GPU: ssh -p58689 root@38.49.42.46. Project /workspace/sft-drift/belief-transfer;
-training .venv; inference /workspace/sft-drift-vllm/.venv. Existing source182d657,
+training .venv; inference /workspace/sft-drift-vllm/.venv. GPU source530ae67,
 clean before launch. Current finite worker executes four arms sequentially.
 
 ## Dashboard
@@ -78,8 +77,9 @@ closed browser transport. No app edits in this work block.
 Initial pilot private snapshot3e08cd126ed96e04aa1f343cfdc9ff64a642d10c, code
 dfaba5f,2840files/11,050,614,269bytes, remote+offlineverified. It includes all new
 corpus versions, review records, frozen pilot inputs and positive initial tokenization,
-plus the preceding scientific-card work. New preservation helper source/notes will
-be captured by its next boundary snapshot; no new checkpoint is off-box yet. Do not claim box destruction is safe. Full prior neutral
+plus the preceding scientific-card work. Positive checkpoint227 now off-box:8files/396,924,361bytes, independently hash-verified.
+Private snapshot5bd136f77ed723caafbfa246e972260eb88dc3e3 verified at05:19UTC,
+codef077a4f,2852files. Positive latest observed step372/454; remaining arms queued. Do not claim box destruction is safe. Full prior neutral
 results and checkpoints are preserved; historical details in dated changelog.
 No snapshot while local checkpoint/result copy can mutate artifacts. No real-artifact
 writes during tests. Frozen files unchanged; include_paths registered before writes.
