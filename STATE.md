@@ -1,107 +1,84 @@
 # Current state — 2026-10-21
 
-## Completed authorized work
+## Active authorized work
 
-Four-arm exploratory ethical pilot ethics_sft_four_arm_pilot_v1 has finished.
-All4fresh Qwen3-4B LoRA training runs and12evaluation attempts terminated,
-analysis done, final results/adapters/checkpoints privatelyverified. Supervisor
-sft-drift-ethical-four-arm-v1 EXITED; Mac preservation helper exited successfully.
-No experiment is running. Do not restart/overwrite started IDs; worker has no resume.
+Expanded controls and complete off-topic measurement follow-up are RUNNING on the
+existing Vast RTX3090. Plan: changelog/2026-10-21-control-followup-plan.md.
+No training, new rental, model selection or retrospective gate changes.
+Supervisor sft-drift-control-followup-v2, PID69271; GPU source bdd9034, clean at launch.
+Do not pull source on GPU while active. No resume or reuse of started IDs.
+Log: /workspace/sft-drift-ops/control_followup_v2.log.
+Master: ethics_gpu_control_followup_v2 under data/results/ethical_pilot/.
 
-Read changelog/2026-10-21-ethical-four-arm-results.md for reviewed results.
-Frozen design: changelog/2026-10-20-ethical-four-arm-pilot-plan.md.
-Primary positive-minus-negative targetdrift+.238889, belief-cluster95%
-[.093056,.384722]. Positive targetdrift-.059722,negative-.298611; negative other
-untrained ethicaldrift-.264640. Directional separation is mainly negative-arm
-movement, with broad ethicalspillover; not clean confirmation of targeted learning.
-One trainingseed42;3evaluationseeds42/7/1729. All11engineeringchecks/modelpassed.
+Order: ethics_gpu_control_recheck_{base,positive,negative,offtopic,c4_only}_v2,
+then ethics_gpu_offtopic_supplement_s{42,7,1729}_v2. Each model gets672 arithmetic
+calls, both predeclared expanded wordings must independently pass. Supplements
+collect all2400 frozen stance replies per seed despite controls, retaining failures.
+Frozen ethical instrument/decoder, original results and strict retention unchanged.
 
-## Explicit limitations
+BASE, positive and negative audits finished and are copied/hash-verified on Mac.
+All three fail both expanded forms. Correct/288 original,explicit respectively:
+BASE241,251; positive248,247; negative251,242. Incomplete responses and wrong final
+labels both occur, including BASE. Legacy correct/96:96,95,96. Off-topic audit active;
+C4 and all supplements follow. No evidence yet that new gates qualify any model.
+The v1 launch failed before inference because Hydra precreated the output folder;
+worker stopped, FAILED_LAUNCH.md files retained. Guard corrected, fresh v2 IDs used.
 
-Positive7unqualified; negative all3qualified; off-topic42unqualified,7qualified,
-1729failed freshmeasurementcontrols and has0stance replies. C4all3unqualified.
-Off-topic42andC4 42each2399/2400validreplies; otherwise non-skipped runs2400/2400.
-All100beliefs retained perattempt; incomplete data not dropped/imputed.
-All4strict retentiongates failed:64/64thinking known semantic/format; nonthinking
-knownsemantic43/44positive,C4and42/44negative,off-topic; strictformat43/44all.
-Original neutral17/20qualification and strictlookup0/20remain FAILEDunchanged.
+## Preservation and next command
 
-## Data and dose
+Source/notes on main, pushed through24c39be. Later local postprocessing edits pending.
+Closed copy receipt3:70files/15,827,039bytes; running outputs not copied.
+Latest verified private snapshot1ab0387d1835827dea86b1b2c9e616789c9e50cd includes
+BASE audit and v1 launch failures,3734files/15,279,446,212bytes, code24c39be.
+Positive/negative audits are locally safe but not yet in that private snapshot.
+Authoritative receipt: belief-transfer/data/.handoff-receipt.json.
+Do not claim active box can be destroyed. No ongoing local save/verify job.
 
-10ethicaltargets×100documents/position;10fresh off-topic controls×100.
-Eacharm1,244,032loss targets,454updates; common1000C4background plus440unique
-replayexamples×3cycles. C4replacement926documents, otherarmreplacement1000.
-Final454only evaluated; checkpoint227preserved, not outcome-selected.
-GPUsource530ae67onexisting3090, pinnedQwenrevision/decoder/frozenbank unchanged.
-Candidatev5:221repairs,20,000IDs,9,803,014tokens. Fullbankclearance remainsfalse.
-Both conservationtraining subjects quarantined;115originallexicalcandidates
-agent-read, not prevalence. No new generation or automatic scale-up authorized.
+Exact next check:
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-control-followup-v2; tail -c 650 /workspace/sft-drift-ops/control_followup_v2.log'
 
-## Preservation and next action
+At each finished operation boundary run, from belief-transfer:
+uv run --no-sync python scripts/copy_control_followup.py --host root@38.49.42.46 --port 58689
+This copies only closed outputs. Serialize local copy, pytest and snapshot writes.
+After terminal copy, run scripts/report_control_followup.py, inspect all failures and
+full-grid off-topic scores/bounds, then generate the two dashboard follow-up reports.
+Complete browser verification, update notes, commit/push and private save+verify.
 
-Source/notes on main, pushed. All8checkpointboundaries privatelyverified.
-782terminalfiles/1,069,556,057bytes rehashed and match;15analysis sources match.
-Private snapshot8264166d18ece3b159f8d464f3abae2f14116832 remote/offlineverified:
-3688files/15,273,055,181bytes, sourcee6dec09. Original tokenized.md preserved;
-GPU display-path-only variant stored as tokenized.gpu-view.md, rawJSONLunchanged.
-Final reviewed notes are committed/pushed then saved in a follow-up snapshot;
-latest receipt belief-transfer/data/.handoff-receipt.json is authoritative.
-No GPU source update, cleanup, rental or further training initiated.
-Next: discuss reviewed findings and write a new experiment plan before changes.
-Exact read-only command from root:
-cat changelog/2026-10-21-ethical-four-arm-results.md
+## Completed four-arm pilot
 
-Dashboard now http://127.0.0.1:5180/ (dev session38091); other apps occupy oldports.
-Seven reports:3neutral plus ethical3seedaverage/42/7/1729. SignedBASEdifferences
-and absolute scores; Overview/Trainedbelief filters, horizontal/vertical/matrix;
-coverage,qualification,freshcontrols andretention failures explicit. Browserverified.
+ethics_sft_four_arm_pilot_v1: all4fresh Qwen3-4B LoRA runs,12evaluation attempts,
+all8checkpoint boundaries and terminal analysis preserved and privately verified.
+Reviewed report: changelog/2026-10-21-ethical-four-arm-results.md.
+Plan: changelog/2026-10-20-ethical-four-arm-pilot-plan.md.
+10ethical targets×100docs/position;10fresh off-topic preferences×100. Each arm
+1,244,032loss targets/454updates; shared1000C4 and440replayexamples×3cycles.
+One training seed42; evaluation seeds42/7/1729. Final454only evaluated;227saved.
+Primary target positive-minus-negative drift+23.8889pp; belief-cluster95% interval
+[9.3056,38.4722]pp. Positive target drift−5.9722pp,negative−29.8611pp; negative
+other74untrained ethical drift−26.4640pp. Separation is mainly broad negative-arm
+movement, not clean confirmation of targeted learning. All11engineeringchecks pass.
+
+Original limitations: positive7unqualified; negative all3qualified; off-topic42
+unqualified,7qualified,1729controls failed and stance collection skipped. C4all3
+unqualified. Off-topic42andC4 42each2399/2400valid; other collected runs complete.
+All4strict retention gates FAILED (thinking64/64; nonthinking knownsemantic43/44
+positive,C4and42/44negative,offtopic; strictformat43/44all). Original neutral17/20
+and strictlookup0/20failures unchanged. No scaling or new training authorized.
+
+Off-topic1729 audit: true negated arithmetic, correct explanation then finalreject.
+Scorer/key correct;11/12same-statement presentations correct.31/32accuracy passes,
+1/16nullflip6.25%fails5%gate. Old note seeds differ, so not an isolated causal note
+estimate. See changelog/2026-10-21-offtopic-control-audit.md. Failure preserved.
+
+Candidatev5:20,000IDs,221repairs,9,803,014tokens; full bank clearance false. Both
+conservation subjects quarantined. No new generation or automatic scale-up.
+Original pilot outputs: belief-transfer/data/results/ethical_stance_sft/ethics_sft_four_arm_pilot_v1/.
+
+## Dashboard
+
+http://127.0.0.1:5180/ (dev session38091); other old ports belong to other apps.
+Seven reports currently:3neutral and ethical3seedaverage/42/7/1729. Absolute label
+now Support for claim, not accuracy. Signed BASE differences unchanged. Models are
+clickable pills; horizontal/vertical/matrix, coverage and qualification are explicit.
+Missing-data range support implemented; two new reports await completed GPU data.
 Restart: cd benchmark-dashboard && ./node_modules/.bin/vite --host 127.0.0.1 --port 5180 --strictPort
-Latestpreserved scientific snapshotc8fca87bc78d659e66c0836b8092c3738d42cbf1,
-codea98da75,3688files. Dashboard source/reports saved after this block; receipt authoritative.
-Rawpilot results under belief-transfer/data/results/ethical_stance_sft/ethics_sft_four_arm_pilot_v1/.
-
-## Off-topic control audit
-
-See changelog/2026-10-21-offtopic-control-audit.md. Seed1729singlefailure is final
-reject to true negated arithmetic claim despite correct preceding explanation;
-extractor/key correct.11/12same-statement presentations across3seeds correct.
-31/32controlaccuracy passes;1/16nullflip6.25%fails5%limit. Different prompt-specific
-samplingseeds mean nullflip does not isolate note causality. Historical failure
-unchanged; no rerun or instrument modification.
-
-## Authorized control follow-up (preparing)
-
-User authorized clearer Support for claim labels, expanded/reworded controls on
-current finalmodels and complete off-topic evaluation. Plan:
-changelog/2026-10-21-control-followup-plan.md. Five modelaudit IDs
-ethics_gpu_control_recheck_{base,positive,negative,offtopic,c4_only}_v1,672calls/model;
-three fresh off-topic full-bank IDs ethics_gpu_offtopic_supplement_s{42,7,1729}_v1
-with collect_unqualified policy. Original instrument/thresholds/results unchanged.
-Default historical policy remains skip. New output paths registered.80focused
-Python checks pass; dashboard19Node tests/TypeScript/build pass. Label verified
-in browser. No live new run yet. Next commit/push and launch finite CUDA worker
-sft-drift-control-followup-v1 on existing3090; no new rental or training.
-
-Control follow-up startup correction: v1attempt failed before inference because
-Hydra precreates .hydra/run.log and guard rejecteddirectory. Worker STOPPED,
-FAILED_LAUNCH.md in v1roots preservesfailure. Fixedguard allows onlyloggingfiles
-then atomicallycreates STARTED; refusespriorartifacts. Newexecution IDs all_v2,
-master ethics_gpu_control_followup_v2, samepredeclaredinstrument/control thresholds.
-GPU source currently84f44c4; next commit/push/pull whileidle thenlaunchv2worker.
-
-Control follow-up v2 now RUNNING: Supervisorsft-drift-control-followup-v2,PID69271,
-GPU sourcebdd903434720c33923f526011a93f04fa3055ef6, cleancheckout atlaunch.
-Five adapter/configbindings verified; allthree supplementbanks2400+32confirmed
-against frozeninputs before v2launch. BASEaudit has begun GPUgeneration.
-Log/workspace/sft-drift-ops/control_followup_v2.log. No resume; do notpullsource
-onGPUwhileactive. Exactnextcheck: ssh -p58689 root@38.49.42.46 supervisorctl status sft-drift-control-followup-v2
-Mac postprocessing scripts copy_control_followup.py and report_control_followup.py
-preserve closedoutputs and compute explicit missing-response bounds; no point
-imputation, no confidence-interval claim. All outputs under registeredmasterroot.
-
-First completed v2audit BASE: legacy96/96correct,0/48flips; expandedoriginal
-241/288correct,256/288extracted; truth_explicit251/288correct,274/288extracted.
-Both expandedforms fail; not an SFT-specificfailure. Firstsampled invalid replies
-show repetitive reasoning loops to4096cap (e.g.7+6=13). No prompt/gatechanges.
-BASEclosedoutputs and allv1failedlaunchfiles copied/hashverified40files/5,849,936bytes.
-Positiveaudit currentlyqueued/running; otherthreeadapters andoffsupplementsfollow.

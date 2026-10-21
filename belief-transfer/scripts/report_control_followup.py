@@ -18,13 +18,21 @@ def analyze(project:Path)->tuple[dict,list[dict]]:
     def lines(path):return [json.loads(l) for l in (project/path).read_text().splitlines()]
     sources={}
     def source(path):sources[str(path)]=hashlib.sha256((project/path).read_bytes()).hexdigest()
-    old=lines('data/results/ethical_stance_sft/ethics_sft_four_arm_pilot_v1/per_belief_results.jsonl')
+    group_path='data/results/ethical_stance_sft/ethics_sft_four_arm_pilot_v1/per_belief_results.jsonl'
+    old=lines(group_path);source(group_path)
     groups={r['belief_id']:r['group'] for r in old}
     if len(groups)!=100:raise ValueError('Expected frozen 100-belief groups')
     audits={}
     for arm in ['base','positive','negative','offtopic','c4_only']:
         path=Path('data/results/ethical_pilot')/f'ethics_gpu_control_recheck_{arm}_v2'/'summary.json'
-        if (project/path).exists():audits[arm]=read(path);source(path)
+        if (project/path).exists():
+            audits[arm]=read(path);source(path)
+            for name in ['manifest.json','control_bank.jsonl','observations.jsonl']:source(path.parent/name)
+            observations=lines(path.parent/'observations.jsonl')
+            audits[arm]['response_diagnostics']={form:{
+                'length_limited':sum((r.get('generation_metadata') or {}).get('finish_reason')=='length' for r in observations if r['audit_form']==form),
+                'wrong_valid':sum(not r.get('error') and r.get('answer') in r['options'] and r['answer']!=r['expected'] for r in observations if r['audit_form']==form),
+            } for form in ['legacy','original','truth_explicit']}
         else:audits[arm]={'status':'missing','expanded_passed':None}
     combined=[];per_seed={};base_values={};missing=[]
     for seed,base_run in BASE.items():
