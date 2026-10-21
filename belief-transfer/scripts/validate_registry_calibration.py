@@ -23,7 +23,8 @@ def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def prepare(generated: Path, *, run_id: str = RUN, training_run_id: str = TRAIN) -> None:
+def prepare(generated: Path, *, run_id: str = RUN, training_run_id: str = TRAIN,
+            lookup_reference: Path | None = None) -> None:
     from belief_transfer.config import load_job
     from belief_transfer.evals.measurements import stance_model_controls
     from belief_transfer.analysis.jsonl_md import write_md
@@ -36,11 +37,16 @@ def prepare(generated: Path, *, run_id: str = RUN, training_run_id: str = TRAIN)
     if (anchors != original or len(anchors) != 20 or sha(source/'documents.jsonl') != plan['dataset_sha256']
             or sha(Path(plan['provenance']['anchor_source'])) != plan['provenance']['anchor_sha256']):
         raise ValueError('Original mappings or frozen training manifest changed')
-    reference=Path('data/results/ethical_stance_sft/ethics_sft_memorization_v2/memory_base.jsonl')
+    reference=(Path('data/results/ethical_stance_sft/ethics_sft_memorization_v2/memory_base.jsonl')
+               if lookup_reference is None else lookup_reference)
+    if reference.is_absolute() or '..' in reference.parts:
+        raise ValueError('Lookup reference must be a portable project-relative path')
+    if lookup_reference is not None and not (reference.parent/'COMPLETED').is_file():
+        raise ValueError('Fresh BASE lookup reference requires a completed source run')
     prior=[json.loads(l) for l in reference.read_text().splitlines()]
     if ([r['example_id'] for r in prior] != [r['example_id'] for r in anchors]
             or any(r['prompt']!=a['memory_prompt'] or r['expected']!=a['memory_answer'] for r,a in zip(prior,anchors,strict=True))):
-        raise ValueError('Original lookup input reference changed')
+        raise ValueError('Lookup input reference does not match the frozen anchors')
     lookup=[{'example_id':r['example_id'],'prompt':r['prompt'],'expected':r['expected'],
              'expected_input_token_ids':r['generation_metadata']['input_token_ids']} for r in prior]
     base = load_job(['+run=ethics_gpu_vllm_base_v1'])
@@ -262,7 +268,11 @@ def main() -> None:
     parser.add_argument('--phase',choices=['lookup_base','lookup_adapter','controls_base','controls_adapter'])
     parser.add_argument('--run-id',default=RUN)
     parser.add_argument('--training-run-id',default=TRAIN)
+    parser.add_argument('--lookup-reference',type=Path,
+                        help='Preparation only: completed BASE lookup run for a fresh mapping bank')
     args=parser.parse_args()
+    if args.lookup_reference is not None and args.operation != 'prepare':
+        parser.error('--lookup-reference is only valid during preparation')
     if (Path(args.run_id).name != args.run_id or not args.run_id.startswith('ethics_gpu_')
             or Path(args.training_run_id).name != args.training_run_id or not args.training_run_id.startswith('ethics_sft_')):
         raise ValueError('Explicit calibration/validation IDs required')
@@ -270,7 +280,8 @@ def main() -> None:
     registry=json.loads(Path('configs/handoff.json').read_text())
     if any(str(p.relative_to('data')) not in registry['include_paths'] for p in [generated,root]):
         raise ValueError('Register validation roots before execution')
-    if args.operation=='prepare':prepare(generated,run_id=args.run_id,training_run_id=args.training_run_id)
+    if args.operation=='prepare':prepare(generated,run_id=args.run_id,training_run_id=args.training_run_id,
+                                         lookup_reference=args.lookup_reference)
     elif args.operation=='child':
         if json.loads((generated/'protocol.json').read_text())['training_run_id'] != args.training_run_id:
             raise ValueError('Wrong training ID for validation')

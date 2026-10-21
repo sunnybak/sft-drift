@@ -11,7 +11,7 @@ ethical treatment has been trained.** Current evidence and prospective plans are
 
 `ethics_sft_registry_untagged_replay_v2` is RUNNING on the existing RTX 3090.
 Supervisor: `sft-drift-registry-untagged-replay-v2`, PID 40060, code `182d657`.
-Last observed: past 433/824 optimizer steps; logged loss and gradients remain finite. All outcomes remain
+Last observed: 595/824 optimizer steps; logged loss and gradients remain finite. All outcomes remain
 unproven. Host: `38.49.42.46:58689`; project: `/workspace/sft-drift/belief-transfer`.
 Log: `/workspace/sft-drift-ops/registry_untagged_replay_v2.log`.
 Command: `/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_untagged_replay_v2/worker.sh`.
@@ -25,6 +25,9 @@ The finite worker trains, then runs fresh `ethics_gpu_registry_untagged_validati
 then judges the combined contract. No restart, training resume, checkpoint selection,
 or automatic ethical dispatch. GPU lock: `/tmp/sft-drift-cuda-benchmark.lock`.
 Main training environment and isolated vLLM environment are unchanged.
+**Do not pull newer local source onto the GPU until this worker and every queued
+check finish.** Local validator preparation now supports fresh BASE-reference paths;
+the running worker and its protocol hashes remain on frozen GPU code `182d657`.
 
 Mac checkpoint copying observes the specific worker:
 
@@ -73,9 +76,13 @@ Both ordinary chat families must reach >=18/20, with BASE <=2/20; engineering,
 frozen control and fixed BASE-known retention gates remain unchanged. Native/prefix
 completion cannot substitute for chat recall. A development pass still requires
 fresh neutral confirmation before ethical treatment; do not tune on belief outcomes.
-Fresh confirmation needs explicit new mappings and their BASE lookup reference:
-validator preparation currently hardcodes the original 20-fact reference. Do not
-reuse/relabel it as fresh. Current ordinary recall is HF, while controls use vLLM;
+Fresh confirmation needs explicit new mappings and their own BASE lookup reference.
+Local `validate_registry_calibration.prepare(..., lookup_reference=Path(...))` and
+CLI `prepare --lookup-reference ...` now accept a completed source run. Paths must
+be project-relative and match all 20 frozen anchor prompts/answers. Omitting the
+option retains the historical reference and behavior. The flag is rejected for
+run/child operations. 91 focused tests passed using mocks/temp directories only.
+This does not generate or qualify fresh data. Do not relabel reused facts as fresh. Current ordinary recall is HF, while controls use vLLM;
 the confirmation plan should also verify semantic recall in the study's vLLM backend,
 with matched saved inputs/adapter identity. Existing old native-prefix parity checks
 are not a substitute. This does not change the current candidate's frozen verdict.
@@ -116,13 +123,14 @@ Freeze the full study plan and final doses only after training qualification.
 
 ## Preservation
 
-Latest verified private snapshot: `5adc35170a23a13dd47d075aca213f59b6d4ffa0`, code
-`179b14e`, 2,700 files/10,082,928,451 bytes; live and offline verification passed.
-It includes completed diagnostics/reviews, void v1, corrected v2 inputs/launch record,
-initial stable GPU tokenization, watcher commands, and tagged reference weights/results.
-New checkpoint 412 and this boundary's notes need the next source push/private save.
-Active post-412 updates/future final checkpoint remain GPU-only until copied.
-Authoritative receipt: `belief-transfer/data/.handoff-receipt.json`.
+Latest verified private snapshot: `ef2847e714e3590f91b3bace728d061338eaa17e`, code
+`7a713a0`, 2,709 files/10,479,889,738 bytes; live and offline verification passed.
+Corpus revision: `0c17081af9015c5b4bc3aa6b83e2e08d45fdfa70`.
+It includes checkpoint 412 and its receipt, completed diagnostics/reviews, void v1,
+corrected v2 inputs/launch record, initial GPU tokenization, watcher commands,
+and tagged reference weights/results. The new local-only reference API and these
+notes need commit/push/private save. Active post-412 updates/future final checkpoint
+remain GPU-only until copied. Receipt: `belief-transfer/data/.handoff-receipt.json`.
 Do not claim the box can be destroyed. All final qualification remains unproven.
 
 At completed boundaries update these notes and the dated changelog, commit/push, then

@@ -86,6 +86,79 @@ def test_lookup_coverage_keys_and_frozen_scoring_enforced(defect):
 
 
 @pytest.fixture
+def preparation(tmp_path, monkeypatch):
+    from types import SimpleNamespace as NS
+    import belief_transfer.config as config
+    import belief_transfer.stages.document_sft as stage
+    monkeypatch.chdir(tmp_path)
+    anchors = [{'example_id': f'Fresh{i}', 'memory_prompt': f'Lookup Fresh{i}?',
+                'memory_answer': str(7000+i)} for i in range(20)]
+    original = Path('data/generated/fresh_anchors.jsonl')
+    original.parent.mkdir(parents=True)
+    original.write_text(''.join(json.dumps(r)+'\n' for r in anchors))
+    source = Path('data/generated/ethical_stance_sft')/probe.TRAIN
+    source.mkdir(parents=True)
+    (source/'anchors.jsonl').write_bytes(original.read_bytes())
+    (source/'documents.jsonl').write_text('{}\n')
+    (source/'plan.json').write_text(json.dumps({'dataset_sha256': probe.sha(source/'documents.jsonl'),
+        'provenance': {'anchor_source': str(original), 'anchor_sha256': probe.sha(original)}}))
+    prior = [{'example_id': a['example_id'], 'prompt': a['memory_prompt'],
+              'expected': a['memory_answer'], 'generation_metadata': {'input_token_ids': [100,i]}}
+             for i,a in enumerate(anchors)]
+    default = Path('data/results/ethical_stance_sft/ethics_sft_memorization_v2/memory_base.jsonl')
+    default.parent.mkdir(parents=True)
+    default.write_text(''.join(json.dumps(r)+'\n' for r in prior))
+    fresh = Path('data/results/ethical_pilot/fresh_base/memory_base.jsonl')
+    fresh.parent.mkdir(parents=True)
+    (fresh.parent/'COMPLETED').write_text('Completed mocked BASE reference, no model loaded.\n')
+    rows = copy.deepcopy(prior)
+    for i,r in enumerate(rows): r['generation_metadata']['input_token_ids'] = [200,i]
+    fresh.write_text(''.join(json.dumps(r)+'\n' for r in rows))
+    generation = NS(model_dump=lambda **kwargs: {'revision': probe.REVISION})
+    job = NS(pilot_bench=NS(stance_interface='named_endorse_reject', cuda_generation=generation))
+    monkeypatch.setattr(config, 'load_job', lambda *args, **kwargs: job)
+    monkeypatch.setattr(stage, 'verify_training_plan', lambda *args, **kwargs: None)
+    return default, fresh
+
+
+@pytest.mark.parametrize('explicit', [False, True])
+def test_lookup_reference_is_explicit_and_historical_default_remains(preparation, explicit):
+    default, fresh = preparation
+    generated = Path('data/generated/ethical_pilot/new_validation')
+    probe.prepare(generated, **({'lookup_reference': fresh} if explicit else {}))
+    protocol = json.loads((generated/'protocol.json').read_text())
+    expected = fresh if explicit else default
+    assert protocol['input_reference_path'] == str(expected)
+    assert protocol['input_reference_sha256'] == probe.sha(expected)
+    bank = list(map(json.loads, (generated/'lookup_bank.jsonl').read_text().splitlines()))
+    assert len(bank) == 20 and bank[0]['expected_input_token_ids'][0] == (200 if explicit else 100)
+    assert (generated/'lookup_bank.md').is_file()
+
+
+@pytest.mark.parametrize('defect', ['incomplete', 'mapping', 'absolute', 'traversal'])
+def test_fresh_reference_cannot_silently_use_old_or_unportable_inputs(preparation, defect):
+    _, fresh = preparation
+    if defect == 'incomplete': (fresh.parent/'COMPLETED').unlink()
+    elif defect == 'mapping':
+        rows = list(map(json.loads, fresh.read_text().splitlines()))
+        rows[0]['expected'] = '9999'
+        fresh.write_text(''.join(json.dumps(r)+'\n' for r in rows))
+    elif defect == 'absolute': fresh = fresh.absolute()
+    else: fresh = Path('data/results/../other/reference.jsonl')
+    generated = Path('data/generated/ethical_pilot/new_validation')
+    with pytest.raises(ValueError): probe.prepare(generated, lookup_reference=fresh)
+    assert not generated.exists()
+
+
+@pytest.mark.parametrize('operation', ['run', 'child'])
+def test_lookup_reference_is_not_silently_ignored_outside_preparation(monkeypatch, operation):
+    monkeypatch.setattr(probe.sys, 'argv', ['validator', operation, '--lookup-reference',
+                                         'data/results/fresh_base/memory_base.jsonl'])
+    with pytest.raises(SystemExit) as error: probe.main()
+    assert error.value.code == 2
+
+
+@pytest.fixture
 def training(tmp_path):
     root=tmp_path/'results';checkpoint=tmp_path/'weights';root.mkdir();checkpoint.mkdir()
     (root/'COMPLETED').write_text('finished')
