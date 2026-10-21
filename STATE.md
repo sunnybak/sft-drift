@@ -2,6 +2,11 @@
 
 ## Latest completed work
 
+Dashboard report rows now show experiment names and UTC report dates (not training
+dates); experiment names/IDs are searchable. All10 derived reports carry metadata.
+26dashboard tests, TypeScript/build and browser verification pass. App remains on5180.
+See changelog/2026-10-21-dashboard-report-metadata.md. No measurement changes.
+
 Expanded controls and the off-topic three-seed supplement are COMPLETE and reviewed.
 Read changelog/2026-10-21-control-followup-results.md. Protocol:
 changelog/2026-10-21-control-followup-plan.md. No further experiment is running.

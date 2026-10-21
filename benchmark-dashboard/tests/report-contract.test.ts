@@ -96,3 +96,10 @@ test('missing-response bounds retain null point scores and declared units',()=>{
  s.bounds.upper=1.1;assert.match(validateReport(r).errors.join(' '),/Invalid missing-data bounds/);
  s.bounds.upper=.51;s.value=.505;assert.match(validateReport(r).errors.join(' '),/point score/);
 });
+
+test('optional experiment identity is compatible with old reports and requires a name and id',()=>{
+ const r=template();assert.ok(validateReport(r).report);
+ r.experiment={id:'four-arm',name:'Four-arm ethical-stance pilot'};assert.ok(validateReport(r).report);
+ r.experiment.name='';assert.ok(validateReport(r).errors.length);
+ delete r.experiment.name;assert.ok(validateReport(r).errors.length);
+});

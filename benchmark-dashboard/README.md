@@ -94,6 +94,10 @@ Each report is self-contained JSON with these required fields:
 | `tests` | Explicit pass/fail/not_run/error, required flag, expected/observed, semantic description and source |
 | `sources` | Artifact paths and recorded SHA-256 identifiers |
 
+Optional `experiment: {id, name}` identifies the study in the report library and is searchable.
+Rows show `createdAt` as **Report date** (UTC calendar date), not training date; older
+JSON without experiment metadata shows **Not recorded**.
+
 Hash fields are nullable: unknown provenance is displayed as **Not recorded**. State
 what each hash covers (e.g. dataset manifest, exact training plan file, adapter weights).
 A pipeline-plan hash is not advertised as a hash of all code. Per-benchmark decoder

@@ -28,6 +28,7 @@ export type ReportTest = {
   source: Source | null;
 };
 export type BenchmarkReportData = {
+  experiment?: { id: string; name: string };
   presentation?: { defaultMetric?: 'score' | 'change'; defaultCategory?: string; focusModelId: string; referenceModelId: string; comparisonModelId?: string; headline: string; interpretation: string; nextStep: string; highlights: { benchmarkId: string; label: string; explanation: string }[] };
   schemaVersion: '1.0'; id: string; title: string; description: string; createdAt: string;
   tags: string[]; context: string; models: ReportModel[]; benchmarks: ReportBenchmark[];
