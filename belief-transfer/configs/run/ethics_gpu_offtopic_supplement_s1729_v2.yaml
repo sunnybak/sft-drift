@@ -1,0 +1,10 @@
+# @package _global_
+# New observation-policy ID; frozen stance bank/decoder unchanged.
+defaults:
+- ethics_gpu_vllm_base_v1
+run_id: ethics_gpu_offtopic_supplement_s1729_v2
+pilot_bench:
+  adapter_path: data/checkpoints/ethical_stance_sft/ethics_sft_pilot_offtopic_v1/final
+  seed: 1729
+  stance_validation_run_id: null
+  measurement_control_failure_policy: collect_unqualified

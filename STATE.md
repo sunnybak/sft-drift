@@ -81,3 +81,10 @@ Default historical policy remains skip. New output paths registered.80focused
 Python checks pass; dashboard19Node tests/TypeScript/build pass. Label verified
 in browser. No live new run yet. Next commit/push and launch finite CUDA worker
 sft-drift-control-followup-v1 on existing3090; no new rental or training.
+
+Control follow-up startup correction: v1attempt failed before inference because
+Hydra precreates .hydra/run.log and guard rejecteddirectory. Worker STOPPED,
+FAILED_LAUNCH.md in v1roots preservesfailure. Fixedguard allows onlyloggingfiles
+then atomicallycreates STARTED; refusespriorartifacts. Newexecution IDs all_v2,
+master ethics_gpu_control_followup_v2, samepredeclaredinstrument/control thresholds.
+GPU source currently84f44c4; next commit/push/pull whileidle thenlaunchv2worker.

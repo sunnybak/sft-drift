@@ -1,0 +1,13 @@
+# @package _global_
+# Prospective expanded controls; original qualification remains unchanged.
+defaults:
+- ethics_gpu_vllm_base_v1
+run_id: ethics_gpu_control_recheck_positive_v2
+stage: control_recheck
+control_recheck:
+  model_label: positive
+  seeds: [42, 7, 1729]
+  adapter_sha256: 5f00e47cd2a0141fb76bf30210d93943aeb02f6f8c2a52125497a66fe75e1d02
+pilot_bench:
+  stance_validation_run_id: null
+  adapter_path: data/checkpoints/ethical_stance_sft/ethics_sft_pilot_positive_v1/final

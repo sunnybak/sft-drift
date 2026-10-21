@@ -34,6 +34,8 @@ def test_default_identity_and_fresh_directory(tmp_path):
     assert 'measurement_control_failure_policy' not in job.pilot_bench.model_dump()
     assert 'control_recheck' not in job.model_dump()
     assert job.pilot_bench.measurement_control_failure_policy=='skip'
+    folder=tmp_path/'data/results'/job.experiment.id/job.run_id
+    folder.mkdir(parents=True);(folder/'.hydra').mkdir();(folder/'run.log').touch()
     directory=start_directory(tmp_path,job);assert (directory/'STARTED').exists()
     with pytest.raises(FileExistsError):start_directory(tmp_path,job)
 

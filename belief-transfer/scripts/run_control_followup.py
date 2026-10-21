@@ -6,9 +6,9 @@ import subprocess
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'src'))
 from belief_transfer.analysis.jsonl_md import write_md
-MASTER='ethics_gpu_control_followup_v1'
+MASTER='ethics_gpu_control_followup_v2'
 ARMS=['base','positive','negative','offtopic','c4_only']
-RUNS=[f'ethics_gpu_control_recheck_{a}_v1' for a in ARMS]+[f'ethics_gpu_offtopic_supplement_s{s}_v1' for s in [42,7,1729]]
+RUNS=[f'ethics_gpu_control_recheck_{a}_v2' for a in ARMS]+[f'ethics_gpu_offtopic_supplement_s{s}_v2' for s in [42,7,1729]]
 
 def main():
     registry=json.loads(Path('configs/handoff.json').read_text())

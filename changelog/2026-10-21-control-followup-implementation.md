@@ -23,3 +23,10 @@ verified. Historicalscores remain unchanged.
 Registered five controlaudit andthree off-topic supplement outputs plus finite
 master ethics_gpu_control_followup_v1. CUDA-only finite Supervisor worker, no restart
 or training. Commit/push before launch; outcomes not yet observed.
+
+Startupcorrection: v1finiteworkerhit directoryguard before anyinference. Hydra
+creates logfolder first; initial tests did not emulate that. Worker stopped; all
+failed/interrupted v1roots retained with FAILED_LAUNCH.md. Guard nowpermits only
+.hydra/run.log and atomicallycreatesSTARTED; test covers preexistingHydralogs.
+Fresh v2runIDs/master use identical predeclaredcontrol instrument. Nosemantic
+retry or thresholdchange. First preflightcommand lacked src onpath, corrected.

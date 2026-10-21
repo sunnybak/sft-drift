@@ -19,8 +19,10 @@ from belief_transfer.validation.measurements import observation_from_reply
 
 def start_directory(root:Path,job)->Path:
     directory=root/'data/results'/job.experiment.id/job.run_id
-    directory.mkdir(parents=True,exist_ok=False)
-    (directory/'STARTED').write_text(config_sha(job)+'\n')
+    directory.mkdir(parents=True,exist_ok=True)
+    if any(p.name not in {'.hydra','run.log'} for p in directory.iterdir()):
+        raise FileExistsError('Use a fresh control recheck ID')
+    with (directory/'STARTED').open('x') as stream:stream.write(config_sha(job)+'\n')
     return directory
 
 async def run(job):

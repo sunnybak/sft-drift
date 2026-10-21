@@ -1,0 +1,13 @@
+# @package _global_
+# Prospective expanded controls; original qualification remains unchanged.
+defaults:
+- ethics_gpu_vllm_base_v1
+run_id: ethics_gpu_control_recheck_offtopic_v2
+stage: control_recheck
+control_recheck:
+  model_label: offtopic
+  seeds: [42, 7, 1729]
+  adapter_sha256: 52c223f8a5b77331265a55ca71182852c1f60850879a4ca541b0a296d1ce8ecb
+pilot_bench:
+  stance_validation_run_id: null
+  adapter_path: data/checkpoints/ethical_stance_sft/ethics_sft_pilot_offtopic_v1/final
