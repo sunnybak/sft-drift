@@ -68,3 +68,26 @@ reply remains. Target10support57.9167%versusBASE60%:−2.0833pp. All100support b
 missing-response identification bounds, not confidence intervals or inferred
 point estimates. No three-seed average until all three planned runs are present.
 Closed seed42and controls copied/hash-verified129files/57,211,643bytes.
+
+## Second supplemental result (seed7;1729pending)
+
+2398/2400valid, all32freshcontrols correct/no note flips. Target10support56.25%
+versus61.25%BASE:−5pp. All100support[59.375,59.4583]%versus64.25%BASE:
+drift[−4.875,−4.7917]pp. Other80ethicaldrift[−4.7396,−4.6875]pp. Frozen10
+evaluationpreferencesdrift[−5.8333,−5.4167]pp. Two invalid replies stay explicit.
+
+Post-hoc repeatability diagnostic compares all available original observations, not
+just passing results. Seed42has417changed final-answer statuses (415valid answer
+flips and2validity changes),seed7has385(383valid flips and2validity changes). All2400
+input token IDs, prompt hashes and recorded request/backend settings match in each
+comparison. No mechanism inferred. The fresh run is not an exact reconstruction of
+old replies; do not treat the nominal seed as a deterministic identity guarantee.
+Old1729had no collected natural replies and is labeled not-collected, not0changes.
+
+Separate all100pair agreement, conditional on eligible pairs: seed42BASE/off-topic
+order87.58/80.48%,wording87.88/78.87%,negation83.92/76.06%; seed7order87.50/78.63%,
+wording87.87/79.63%,negation83.67/74.46%. Missing pairs remain in expected coverage.
+These correlated pairs are not independent samples; no agreement/stance composite
+or confidence interval is fabricated. The dashboard adds a separate consistency
+report alongside expanded controls and stance. Four analysis tests and22focused
+Python checks pass. Source updates stay local to Mac; GPU source remains bdd9034.

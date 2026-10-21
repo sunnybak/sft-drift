@@ -175,9 +175,11 @@ Start explicitly with `./node_modules/.bin/vite --host 127.0.0.1 --port 5180 --s
 
 ## Control and off-topic follow-up
 
-`scripts/generate-followup-reports.ts` adds two reports once the registered follow-up
+`scripts/generate-followup-reports.ts` adds three reports once the registered follow-up
 analysis exists: expanded arithmetic controls across BASE and the four final adapters,
-and complete off-topic stance collection across three seeds. The original reports,
+complete off-topic stance collection across three seeds, and separate order/wording/
+negation agreement. Agreement rates retain eligible/expected pair counts; correlated
+pairs are not independent samples. The original reports,
 qualification failures and retention outcomes stay available. Reworded arithmetic
 checks are development evidence; they do not modify the frozen ethical questions.
 

@@ -20,7 +20,7 @@ All five audits finished and are copied/hash-verified on Mac. Every model fails
 both expanded forms. Correct/288 original,explicit respectively: BASE241,251;
 positive248,247; negative251,242; off-topic258,241; C4-only232,240. Legacy correct/96:
 96,95,96,96,94. Expanded controls find wrong final labels and incomplete responses
-including BASE. Seed42supplement completed (2399/2400valid); seed7active,1729follows.
+including BASE. Seed42supplement completed (2399/2400valid),seed7completed(2398/2400);1729active.
 Seed42targetdrift−2.0833pp; all100missing-response driftbounds[−4.2917,−4.25]pp.
 No point imputation; one invalid reply retained. Fresh32controls allcorrect.
 See changelog/2026-10-21-control-followup-results.md (control section complete).
@@ -30,10 +30,10 @@ worker stopped, FAILED_LAUNCH.md files retained. Guard corrected, fresh v2 IDs u
 ## Preservation and next command
 
 Source/notes on main; control follow-up reporting edits are being committed/pushed.
-Closed copy receipt6:129files/57,211,643bytes; running outputs not copied.
-Latest verified private snapshot2b6efbbbbe4f0650f851b106c814abd3b8dce648 includes
-all five control audits and v1 launch failures,3798files/15,299,821,092bytes,
-coded98eb57. Seed42is locally copied; its private snapshot follows this commit.
+Closed copy receipt7:158files/88,281,577bytes; running outputs not copied.
+Latest verified private snapshoted3ac9b6256524e373ed8e42a59b3fd932b0a4bf includes
+all controls and seed42,3828files/15,330,904,181bytes,code9ecaaec. Seed7is copied
+locally; its private snapshot follows this commit.
 Authoritative receipt: belief-transfer/data/.handoff-receipt.json.
 Do not claim active box can be destroyed. No ongoing local save/verify job.
 
@@ -83,5 +83,8 @@ http://127.0.0.1:5180/ (dev session38091); other old ports belong to other apps.
 Seven reports currently:3neutral and ethical3seedaverage/42/7/1729. Absolute label
 now Support for claim, not accuracy. Signed BASE differences unchanged. Models are
 clickable pills; horizontal/vertical/matrix, coverage and qualification are explicit.
-Missing-data range support implemented; two new reports await completed GPU data.
+Missing-data range support implemented; three new reports await completed GPU data.
+Postprocessing now records separate pair agreement and old/new repeatability. Same
+prompts/recorded settings: seed42has417changed answer statuses,seed7has385; fixed
+request seeds do not guarantee repeatability. New analysis tests22pass; no GPU change.
 Restart: cd benchmark-dashboard && ./node_modules/.bin/vite --host 127.0.0.1 --port 5180 --strictPort
