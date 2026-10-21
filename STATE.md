@@ -7,50 +7,48 @@ and preserves basic controls before ethical-belief training. **Goal active; no
 ethical treatment has been trained.** Current evidence and prospective plans are in
 `changelog/2026-10-20-replay-followup-plan.md`. Do not resume historical queues.
 
-## Live run and exact next action
+## Latest result and exact next action
 
-`ethics_sft_registry_untagged_replay_v2` training is COMPLETED on the existing RTX 3090; queued behavioral evaluations are RUNNING.
-Supervisor: `sft-drift-registry-untagged-replay-v2`, PID 40060, code `182d657`.
-Training completed 824/824 steps in 3,198.99 seconds; all 11 engineering checks passed,
-reload error 0, exact 2,356,785 eligible targets. Behavioral outcomes remain unproven. Host: `38.49.42.46:58689`; project: `/workspace/sft-drift/belief-transfer`.
-Log: `/workspace/sft-drift-ops/registry_untagged_replay_v2.log`.
-Command: `/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_untagged_replay_v2/worker.sh`.
+`ethics_sft_registry_untagged_replay_v2` and all three queued evaluations are
+COMPLETED. Supervisor `sft-drift-registry-untagged-replay-v2` EXITED; PID40060 no
+longer runs. GPU source remained `182d657`. No ethical training dispatched.
+**Prospective development verdict FAILED:** ordinary recall17/20 per query family
+misses>=18/20 each. Tagged reference was1/20 each; BASE0/20 each. Every mapping is
+correct in at least one family, but this does not replace the frozen gate.
+Six wrong responses, including four cross-mapping substitutions; two correct replies
+continue into capped generic document prose. All96recall/math replies read.
 
-Next process check:
+Training completed824steps in3198.99s, all11engineering checks passed; exact targets
+2356785, reload error0. Frozen controls32/32 both BASE and adapter, normal stops.
+Retention64/64thinking,44/44fixed-known nonthinking;59/64nonthinking overall. All128
+have valid boundaries/strict format/normal stops. Five nonthinking failures are
+outside the pretraining-known mask. Direct math8/8 both arms. Original16token
+strict lookup0/20 remains failed. All128retention finals,64control finals, five full
+nonthinking failures and20strict adapter replies checked; successful thinking traces
+not all read. 308scoped agent review rows+Markdown, no scoring disagreement.
+
+Read the reviewed report before preparing another run:
 ```bash
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-untagged-replay-v2; tail -n 3 /workspace/sft-drift-ops/registry_untagged_replay_v2.log'
+cd /Users/sunny/dev/sft-drift/belief-transfer
+cat data/results/ethical_pilot/ethics_gpu_registry_untagged_transfer_v2/agent_review_report.md
 ```
-The finite worker trains, then runs fresh `ethics_gpu_registry_untagged_validation_v2`,
-`ethics_gpu_registry_untagged_transfer_v2`, and `ethics_gpu_registry_untagged_retention_v2`,
-then judges the combined contract. No restart, training resume, checkpoint selection,
-or automatic ethical dispatch. GPU lock: `/tmp/sft-drift-cuda-benchmark.lock`.
-Main training environment and isolated vLLM environment are unchanged.
-**Do not pull newer local source onto the GPU until this worker and every queued
-check finish.** Local validator preparation now supports fresh BASE-reference paths;
-the running worker and its protocol hashes remain on frozen GPU code `182d657`.
+Next: prospectively plan one bounded data-context change addressing wording-sensitive
+retrieval/document continuation, then implement/test/freeze fresh IDs before launch.
+Prefer shorter substantive variants over the current generic boilerplate; retain
+replay/controls and no eval-prompt training. No new candidate prepared or queued.
+A development pass still requires genuinely fresh neutral confirmation and ordinary
+semantic recall through study vLLM. Do not qualify on the union of query answers.
 
-Mac checkpoint copying observes the specific worker:
-
-| Step | Exec session | Log |
-| --- | --- | --- |
-| 412 — copied/verified; watcher exited | 39430 (closed) | `/tmp/sft-drift-untagged-v2-midpoint-watch.log` |
-| 824 — copied/verified; watcher exited | 22407 (closed) | `/tmp/sft-drift-untagged-v2-final-watch.log` |
-
-Each invokes `uv run --no-sync python scripts/preserve_cuda_checkpoint.py --host root@38.49.42.46 --port 58689 --run-id ethics_sft_registry_untagged_replay_v2 --step 412 --job sft-drift-registry-untagged-replay-v2 --wait` (use 824 for final).
-Copies require matching saved trainer state and a later writer audit, or training
-COMPLETED at final. Checkpoint 412 was copied at 2026-10-21T00:36:48Z: eight files/396,958,867 bytes.
-All local SHA/byte counts were independently rechecked; trainer_state.global_step=412.
-Receipt: new training results/checkpoint_412_offbox_copy_verification.json. The helper
-observed audit step 415 after the save. No midpoint inference or outcome selection.
-Final checkpoint copied at 2026-10-21T01:04:38Z: eight files/397,035,440 bytes;
-all independently rehashed and trainer step 824 checked. Terminal training results and
-final adapter: 21 files/186,538,395 bytes verified, including all 11 passing checks.
-Adapter tensor SHA: af452ab0fae1d0e57b8e224f08756c618c18808ff0d0b37f6197940fcfde89a8.
-Original tokenized.md retained; terminal header variant saved as tokenized.terminal.md.
-Both copy receipts are under the training results root. Copying is idempotent and does
-not make training resumable. No local artifact mutations during private snapshots.
-After final and all queued checks finish, copy/hash terminal artifacts, read replies,
-and preserve failures. Never rerun a started measurement ID.
+All final training/eval artifacts are copied/hash-verified on Mac. Final824checkpoint
+8files/397035440bytes, copied2026-10-21T01:04:38Z; all independently rehashed, trainer
+step824 checked. Terminal training/final adapter21files/186538395bytes. Midpoint412
+also preserved. Original tokenized.md retained; terminal variant tokenized.terminal.md
+with explicit copy mapping. Adapter tensorSHA
+`af452ab0fae1d0e57b8e224f08756c618c18808ff0d0b37f6197940fcfde89a8`.
+Validation17files/365566bytes; remaining retention/transfer judgment22files/1351118bytes.
+Copy receipts are in corresponding result roots. No restart/resume/overwrite, no
+checkpoints selected by outcome. GPU logs: /workspace/sft-drift-ops/registry_untagged_replay_v2.log.
+GPU worktree can receive source updates only now that the entire worker is terminal.
 
 ## Frozen candidate
 
@@ -76,7 +74,7 @@ Untagged v1 preparation is VOID before GPU launch: an absolute Mac builder path 
 caught prelaunch. Its inputs and PRELAUNCH_VOID report remain preserved. v2 uses
 relative inputs; worker preparation now rejects absolute/traversal input paths.
 
-Both ordinary chat families must reach >=18/20, with BASE <=2/20; engineering,
+Both ordinary chat families require >=18/20 (current result17/20 fails), with BASE <=2/20; engineering,
 frozen control and fixed BASE-known retention gates remain unchanged. Native/prefix
 completion cannot substitute for chat recall. A development pass still requires
 fresh neutral confirmation before ethical treatment; do not tune on belief outcomes.
@@ -127,14 +125,14 @@ Freeze the full study plan and final doses only after training qualification.
 
 ## Preservation
 
-Latest verified private snapshot: `de75c6474ab081bd8431c0955bf3f1ddd9942fed`, code
-`532cfb4`, 2,709 files/10,479,889,738 bytes; live and offline verification passed.
-Corpus revision: `dd98125b2c260b4d2a15163c3559739950724e0b`.
-It includes checkpoint 412, initial v2 artifacts, completed earlier diagnostics, and
-local-only fresh-reference preparation changes. Final checkpoint824, terminal training
-artifacts and current notes are now Mac-verified and need the next private save.
-Queued evaluation artifacts remain GPU-only. Receipt: `belief-transfer/data/.handoff-receipt.json`.
-Do not claim the box can be destroyed. All final qualification remains unproven.
+Latest verified private snapshot: `7d8f9f10698806231528ca4b0b227f62e16a66b5`, code
+`5685113`,2,737files/11,023,856,247bytes; live and offline verification passed.
+Corpus revision: `873b4e44ca0bb8c0057700eefcde74cc4fe127fd`.
+Includes final824andmidpoint412 checkpoints, final adapter and terminal training.
+All three evaluation roots/combined judgment and308rowreview are now Mac-verified
+and need next private save with these notes. Source reports in changelog; receipt:
+`belief-transfer/data/.handoff-receipt.json`.
+Do not claim the box can be destroyed. Current candidate failed; broader training qualification remains unproven.
 
 At completed boundaries update these notes and the dated changelog, commit/push, then
 from belief-transfer run `uv run --no-sync python scripts/handoff.py save` and `verify`.
