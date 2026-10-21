@@ -17,6 +17,7 @@ export type ReportBenchmark = {
 };
 export type ReportScore = {
   modelId: string; benchmarkId: string; value: number | null;
+  bounds?: {lower:number; upper:number; kind:'missing_data'};
   numerator: number | null; denominator: number | null;
   notes: string; source: Source | null;
 };

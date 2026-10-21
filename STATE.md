@@ -88,3 +88,13 @@ FAILED_LAUNCH.md in v1roots preservesfailure. Fixedguard allows onlyloggingfiles
 then atomicallycreates STARTED; refusespriorartifacts. Newexecution IDs all_v2,
 master ethics_gpu_control_followup_v2, samepredeclaredinstrument/control thresholds.
 GPU source currently84f44c4; next commit/push/pull whileidle thenlaunchv2worker.
+
+Control follow-up v2 now RUNNING: Supervisorsft-drift-control-followup-v2,PID69271,
+GPU sourcebdd903434720c33923f526011a93f04fa3055ef6, cleancheckout atlaunch.
+Five adapter/configbindings verified; allthree supplementbanks2400+32confirmed
+against frozeninputs before v2launch. BASEaudit has begun GPUgeneration.
+Log/workspace/sft-drift-ops/control_followup_v2.log. No resume; do notpullsource
+onGPUwhileactive. Exactnextcheck: ssh -p58689 root@38.49.42.46 supervisorctl status sft-drift-control-followup-v2
+Mac postprocessing scripts copy_control_followup.py and report_control_followup.py
+preserve closedoutputs and compute explicit missing-response bounds; no point
+imputation, no confidence-interval claim. All outputs under registeredmasterroot.

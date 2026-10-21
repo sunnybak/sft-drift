@@ -30,3 +30,10 @@ failed/interrupted v1roots retained with FAILED_LAUNCH.md. Guard nowpermits only
 .hydra/run.log and atomicallycreatesSTARTED; test covers preexistingHydralogs.
 Fresh v2runIDs/master use identical predeclaredcontrol instrument. Nosemantic
 retry or thresholdchange. First preflightcommand lacked src onpath, corrected.
+
+Corrected v2launch:preflight all5adapterconfigs/hashes and3frozen fullbanks verified;
+SupervisorPID69271onexisting3090, sourcebdd9034.27focusedregressionchecks passed
+afterdirectoryfix. Mac-only report/copy utilities added; puremissing-responsebounds
+tests pluscontrol/importchecks18passed. Bounds retain null pointscore and full
+expecteddenominator. Dashboard20Node tests/TypeScript pass afteroptionalmissingdata
+bounds support; no inferred midpoint. SourceGPUstaysbdd9034whileworkeractive.

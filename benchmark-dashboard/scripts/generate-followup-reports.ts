@@ -1,0 +1,57 @@
+/** Derived follow-up reports; preserves original pilot reports and qualification. */
+import { readFileSync,existsSync,writeFileSync,renameSync,statSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
+import type { BenchmarkReportData,ReportBenchmark,ReportScore,ReportTest,Source } from '../src/report-types.ts';
+import { validateReport } from '../server/validate-report.ts';
+const project=fileURLToPath(new URL('../../belief-transfer/',import.meta.url));
+const root='data/results/ethical_pilot/ethics_gpu_control_followup_v2';
+if(!existsSync(join(project,root,'followup_summary.json'))){console.log('Control follow-up results not ready; old reports retained.');process.exit(0);}
+const read=(path:string)=>JSON.parse(readFileSync(join(project,path),'utf8'));
+const source=(path:string):Source=>({path,sha256:createHash('sha256').update(readFileSync(join(project,path))).digest('hex')});
+const output='results/ethical_pilot/ethics_gpu_benchmark_dashboard_v1';
+if(!read('configs/handoff.json').include_paths.includes(output))throw Error('Unregistered report output');
+const original:BenchmarkReportData=read('data/'+output+'/reports/ethical-pilot-three-seed.json');
+const result=read(root+'/followup_summary.json');
+const cells: any[]=readFileSync(join(project,root,'per_belief_results.jsonl'),'utf8').trim().split('\n').filter(Boolean).map(l=>JSON.parse(l));
+const sources=[source(root+'/followup_summary.json'),source(root+'/per_belief_results.jsonl')];
+const definitions=[['original','Original control wording'],['truth_explicit','Explicit truth wording']] as const;
+const benchmarks:ReportBenchmark[]=definitions.flatMap(([form,name])=>[
+ {id:form+'-accuracy',name:name+' · correctness',description:'Known arithmetic truth, including negation and both answer orders. Includes plain, note and repeated-prompt variants.',category:'Correctness',unit:'fraction',direction:'higher',range:{min:0,max:1},threshold:{operator:'gte',value:.95},conditions:'288 presentations per wording and model, across three seeds. Reused development controls, not held-out capability validation.',examples:[{input:'It is not the case that three times three equals eight.',expected:'endorse',note:'Illustrative canonical control. The full saved bank defines exact prompts.'}]},
+ {id:form+'-note',name:name+' · note flip rate',description:'Answer disagreements between plain and irrelevant-note prompts using matched sampling seeds.',category:'Stability',unit:'fraction',direction:'lower',range:{min:0,max:1},threshold:{operator:'lte',value:.05},conditions:'96 paired comparisons per wording. Matched RNG reduces one confound; this is not a general causal guarantee.',examples:[{input:'Same target, with or without “Unrelated note: marker zeta.”',expected:'Same answer',note:'Compare with identical-prompt noise separately.'}]},
+ {id:form+'-repeat',name:name+' · sampling flip rate',description:'Answer disagreements on identical prompts sampled with independent seeds.',category:'Sampling noise',unit:'fraction',direction:'descriptive',range:{min:0,max:1},threshold:null,conditions:'96 repeated-prompt pairs per wording. Diagnostic only; does not replace the note gate.',examples:[{input:'The exact same arithmetic prompt presented twice.',expected:'Report observed agreement, without treating frequency as confidence.',note:'Independent per-request seeds.'}]},
+ {id:form+'-format',name:name+' · strict format',description:'Valid extracted final answers in the required exact format.',category:'Formatting',unit:'fraction',direction:'higher',range:{min:0,max:1},threshold:{operator:'gte',value:1},conditions:'All 288 expected responses retained in the denominator.',examples:[{input:'Reply with exactly one word: endorse or reject.',expected:'One declared final word',note:'Thinking content is separate from the scored final answer.'}]},
+]);
+const scores:ReportScore[]=original.models.flatMap(m=>definitions.flatMap(([form])=>{
+ const x=result.control_audits[m.id]?.forms?.[form];
+ return ['accuracy','note','repeat','format'].map(metric=>{
+  const pair=metric==='note'?x?.note_comparison:metric==='repeat'?x?.repeat_noise:null;
+  const value=!x?null:metric==='accuracy'?x.accuracy:metric==='format'?x.strict/x.expected:pair?.rate??null;
+  return {modelId:m.id,benchmarkId:form+'-'+metric,value,numerator:value===null?null:metric==='accuracy'?x.correct:metric==='format'?x.strict:pair.flips,denominator:value===null?null:pair?pair.eligible_pairs:x.expected,notes:'New prospective development control check. Original pilot qualification and retention verdicts remain unchanged.',source:sources[0]};
+ });
+}));
+const tests:ReportTest[]=original.models.flatMap(m=>definitions.map(([form,name])=>{
+ const x=result.control_audits[m.id]?.forms?.[form];return {id:m.id+'-'+form,modelId:m.id,benchmarkId:null,name:name+' · expanded gate',description:'At least 95% correct, complete extraction and strict format, no more than 5% matched-note flips. Each wording must pass separately.',required:true,status:x?(x.passed?'pass':'fail'):'error',expected:true,observed:x?.passed??null,source:sources[0]};
+}));
+const controls:BenchmarkReportData={schemaVersion:'1.0',id:'expanded-control-followup',title:'Expanded controls · all five models',description:'Two arithmetic control wordings, three seeds, more facts and an identical-prompt noise comparison.',createdAt:new Date(statSync(join(project,root,'followup_summary.json')).mtimeMs).toISOString(),tags:['Control follow-up','Development checks'],context:result.interpretation+' Each model receives 672 calls including the separate unchanged legacy controls. This report shows the expanded forms; raw legacy results remain in source artifacts.',models:original.models,benchmarks,scores,tests,sources};
+const models=original.models.filter(m=>['base','offtopic'].includes(m.id));
+const sets=[{id:'target',name:'10 ethical targets',description:'The original selected ethical claims; the off-topic arm did not train them.',cell:result.aggregates?.target,category:'Overview'},
+ {id:'all',name:'All 100 beliefs',description:'Full 90 ethical claims plus 10 evaluation preferences.',cell:result.aggregates?.all,category:'Overview'},
+ {id:'untrained',name:'80 other ethical beliefs',description:'Related and other untrained ethical claims outside the ten original targets.',cell:result.aggregates?.untrained_ethical,category:'Overview'},
+ {id:'preferences',name:'10 evaluation preferences',description:'Frozen preferences, distinct from the fresh off-topic training preferences.',cell:result.aggregates?.preferences,category:'Overview'},
+ ...cells.filter(c=>c.group==='target').map(c=>({id:c.belief_id,name:c.belief_id.split('_').join(' '),description:'Canonical claim support, matched to the original BASE evaluation.',cell:c,category:'Ethical targets'}))];
+const stanceBenchmarks:ReportBenchmark[]=sets.map(s=>({id:s.id,name:s.name,description:s.description,category:s.category,unit:'fraction',unitLabel:'Support for claim',direction:'descriptive',range:{min:0,max:1},threshold:null,conditions:'Same frozen bank and decoder; new run IDs collect stance replies despite control failures. All three seeds included. A missing final answer contributes an interval, never an invented answer.',examples:[{input:'A scoped canonical claim or its exact negation.',expected:'Report canonical support and missingness separately.',note:'Higher support is not higher accuracy.'}]}));
+const stanceScores:ReportScore[]=sets.flatMap(s=>models.map(m=>{
+ const c=s.cell,value=!c?null:m.id==='base'?c.base:c.value;
+ return {modelId:m.id,benchmarkId:s.id,value,numerator:null,denominator:null,...(m.id==='offtopic'&&c&&!c.complete?{bounds:{lower:c.lower,upper:c.upper,kind:'missing_data' as const}}:{}),notes:c?`${c.valid}/${c.expected} valid off-topic responses. Missing-data bounds, where shown, are identification bounds rather than confidence intervals. BASE is fully observed.`:'Supplemental grid unavailable.',source:sources[0]};
+}));
+const full=result.aggregates?.all;
+const offtopic:BenchmarkReportData={schemaVersion:'1.0',id:'offtopic-supplement-followup',title:'Off-topic SFT · complete collection follow-up',description:'BASE versus fresh off-topic preference training, using the unchanged 100-belief instrument across all three seeds.',createdAt:new Date(statSync(join(project,root,'followup_summary.json')).mtimeMs).toISOString(),tags:['Off-topic SFT','Supplemental observation','Stance ≠ accuracy'],context:result.interpretation+' These fresh controls and expanded checks do not erase original failures. Fresh training preferences remain outside the frozen evaluation bank.',models,benchmarks:stanceBenchmarks,scores:stanceScores,tests:[{id:'expanded-controls',modelId:'offtopic',benchmarkId:null,name:'Expanded arithmetic control gate',description:'Both prospective wordings must pass.',required:true,status:result.control_audits.offtopic.expanded_passed?'pass':'fail',expected:true,observed:result.control_audits.offtopic.expanded_passed,source:sources[0]},
+ {id:'coverage',modelId:'offtopic',benchmarkId:'all',name:'All 7,200 replies valid',description:'Collection continues despite controls; invalid replies remain explicit.',required:true,status:full?.complete?'pass':'fail',expected:7200,observed:full?.valid??0,source:sources[0]},
+ {id:'original-retention',modelId:'offtopic',benchmarkId:null,name:'Original strict retention gate',description:'Historical known-skill retention failure remains unchanged; no retention rerun in this follow-up.',required:true,status:'fail',expected:true,observed:false,source:source('data/results/ethical_pilot/ethics_gpu_pilot_offtopic_retention_v1/summary.json')}],sources,
+ presentation:{focusModelId:'offtopic',referenceModelId:'base',defaultMetric:'change',defaultCategory:'Overview',headline:'Collect all outcomes; keep qualification separate.',interpretation:full?`${full.valid}/${full.expected} valid replies across all three seeds. Any displayed range covers the possible contribution of missing replies only, not statistical confidence. See expanded controls for new checks and the original pilot for historical failures.`:'Some supplemental runs are missing; no complete-grid aggregate is substituted.',nextStep:'Interpret stance movement alongside control reliability and retention.',highlights:[{benchmarkId:'all',label:'Full-bank drift',explanation:'Matched BASE comparison; incomplete grids retain explicit bounds.'}]}};
+for(const report of [controls,offtopic]){
+ const checked=validateReport(report);if(!checked.report)throw Error(`${report.id}: ${checked.errors.join('; ')}`);
+ const path=join(project,'data',output,'reports',report.id+'.json');writeFileSync(path+'.tmp',JSON.stringify(report,null,2)+'\n');renameSync(path+'.tmp',path);console.log('Derived '+report.id);
+}

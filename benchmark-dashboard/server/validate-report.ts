@@ -31,6 +31,10 @@ export function validateReport(value: unknown): { report?: BenchmarkReportData; 
     if (!models.has(s.modelId) || !b) errors.push(`Score references unknown model/benchmark: ${s.modelId}/${s.benchmarkId}`);
     if ((s.numerator === null) !== (s.denominator === null)) errors.push('Numerator and denominator must both be present or null');
     if (s.value === null && (s.numerator !== null || s.denominator !== null)) errors.push('Missing value cannot carry counts');
+    if(s.bounds&&b){
+      if(s.value!==null) errors.push('Missing-data bounds cannot accompany a point score');
+      if(s.bounds.lower>s.bounds.upper||s.bounds.lower<b.range.min||s.bounds.upper>b.range.max) errors.push('Invalid missing-data bounds');
+    }
     if (s.value !== null && b && (s.value < b.range.min || s.value > b.range.max)) errors.push(`${s.benchmarkId}: score outside range`);
     if (s.numerator !== null && s.denominator !== null && b?.unit === 'fraction') {
       if (s.numerator > s.denominator || s.value === null || Math.abs(s.value - s.numerator / s.denominator) > 1e-9) errors.push('Fraction value disagrees with exact counts');

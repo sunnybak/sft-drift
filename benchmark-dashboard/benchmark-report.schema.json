@@ -519,6 +519,26 @@
               "type": "null"
             }
           ]
+        },
+        "bounds": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "lower",
+            "upper",
+            "kind"
+          ],
+          "properties": {
+            "lower": {
+              "type": "number"
+            },
+            "upper": {
+              "type": "number"
+            },
+            "kind": {
+              "const": "missing_data"
+            }
+          }
         }
       }
     },

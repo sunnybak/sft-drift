@@ -89,3 +89,10 @@ test('comparison defaults validate and category must exist',()=>{
  r.presentation.defaultCategory='absent';assert.match(validateReport(r).errors.join(' '),/unknown category/);
  r.presentation.defaultCategory=r.benchmarks[0].category;r.presentation.defaultMetric='typo';assert.ok(validateReport(r).errors.length);
 });
+
+test('missing-response bounds retain null point scores and declared units',()=>{
+ const r=template();const s=r.scores[0];s.value=null;s.numerator=null;s.denominator=null;s.bounds={lower:.5,upper:.51,kind:'missing_data'};
+ assert.ok(validateReport(r).report);
+ s.bounds.upper=1.1;assert.match(validateReport(r).errors.join(' '),/Invalid missing-data bounds/);
+ s.bounds.upper=.51;s.value=.505;assert.match(validateReport(r).errors.join(' '),/point score/);
+});
