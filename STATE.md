@@ -6,7 +6,7 @@ User chose the10-belief/four-arm exploratory ethical pilot. Original neutral
 untagged v2still FAILED18/20gate (17/20each); strict lookup0/20. Its learning,
 32/32controls,64/64thinking and44/44known nonthinking retention justify this
 exploratory attempt, not retrospective qualification or unseen-fact confirmation.
-No ethical training launched yet. No sweep or selection on belief outcomes.
+Positive ethical training is now RUNNING; other arms/evaluations queued. No sweep or selection on belief outcomes.
 
 ## Prepared pilot
 
@@ -30,8 +30,7 @@ qualification fails, preserve it and run explicitly UNQUALIFIED full-bank observ
 under a fresh registered ID, unchanged instrument/settings. Missing data not imputed.
 Related groups frozen from existing spec:10targets,6related,74otherethical,10preferences.
 Primary positive-minus-negative target drift; belief-cluster interval and evaluation
-seed variability, no training-seed robustness claim. Source code and worker still
-need final freeze/commit/push/deploy. Existing3090reachable andidle; no new rental.
+seed variability, no training-seed robustness claim. Source530ae67pushed/deployed; all952immutableinputhashes verified before launch. Existing3090used; no new rental.
 
 ## Corpus disposition
 
@@ -53,13 +52,16 @@ calls/recheck; no human-review claim. Sourcecorpus/frozeninstrument unchanged.
 97focused tests pass (pilot selection/budgets, failed-check routing, missing-pair
 analysis, document serialization/dose, checkpoint copying, imports/handoff), all
 temp/mocked. CPU preparation verified four exact doses and config/plan hashes.
-No local weights. Next freeze execution inputs, commit/push, deploy verified payload
-and launch one finite Supervisor worker on existing box. Do not rerun preparation
-or started IDs. Worker has no resume; preserve partial failures explicitly.
+No local weights. Finite Supervisor sft-drift-ethical-four-arm-v1 RUNNING PID44373;
+log/workspace/sft-drift-ops/ethical_four_arm_v1.log. Source530ae67. ActualGPUpositive
+tokenization3519chunks/1244032targets matches plan. Initial4stablefiles/23,011,118bytes
+copied toMac and independently hash-verified; receipt under positive training results.
+Do not rerun preparation or started IDs. Worker has no resume. Next private save+verify
+then start safe checkpoint227/454copy watchers; no local data writer during snapshot.
 
 GPU: ssh -p58689 root@38.49.42.46. Project /workspace/sft-drift/belief-transfer;
 training .venv; inference /workspace/sft-drift-vllm/.venv. Existing source182d657,
-clean/idle. No GPU process launched for this pilot yet.
+clean before launch. Current finite worker executes four arms sequentially.
 
 ## Dashboard
 
@@ -74,8 +76,8 @@ closed browser transport. No app edits in this work block.
 
 Last known receipt65f7cf3973a3d309805741453c30e6cf6500a918, code61fc40c. Later
 scientific-card save interrupted; don't claim it privately preserved. This block's
-new code/notes/candidate assemblies/review ledgers/manifests need commit/push and
-private handoff save+verify. Do not claim box destruction is safe. Full prior neutral
+new code530ae67pushed; launch notes/initial artifacts/candidate assemblies/review
+ledgers/manifests need this boundary commit/push and private handoff save+verify. Do not claim box destruction is safe. Full prior neutral
 results and checkpoints are preserved; historical details in dated changelog.
 No snapshot while local checkpoint/result copy can mutate artifacts. No real-artifact
 writes during tests. Frozen files unchanged; include_paths registered before writes.

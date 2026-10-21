@@ -1,0 +1,27 @@
+# Ethical pilot launched
+
+Source530ae67pushed/deployed to existing RTX3090. All952immutableinputs verified;
+archiveSHA4189e6bcf98f9d260196ed91213ea89a1ed615b31fde188092533056816160ba,
+executionSHA1588007b7b4ec9fe8f2a7fc10000d0c6263530d58ddbd18f37024d3381970208.
+Supervisor sft-drift-ethical-four-arm-v1 started PID44373, source530ae67, finite/no
+resume/no autorestart. Log/workspace/sft-drift-ops/ethical_four_arm_v1.log.
+
+Positive arm actualGPUtokenization3519chunks/1244032eligible targets, matching frozen
+synthetic449230,C4499608,replay295194. First optimization steps observed finite loss/
+gradients and GPUactive. Not evidence of treatment effect or completed verification.
+Other arms, retention and three-seed full100belief evaluation queued sequentially.
+97focusedtests passed; first attempted preservation test path did not exist, no tests
+ran on that attempt; corrected test_checkpoint_preservation included in97passed.
+
+Initial STARTED/config.resolved.yaml/tokenized.jsonl/tokenized.md four files copied
+Mac,23,011,118bytes, every hash independently verified, receipt in positive resultroot.
+All tokenized text/metadata preserved exactly. Future weights/logupdates remain only
+onGPUuntil checkpoint copies. Midpoint227/final454are preservation boundaries, not
+outcome-based checkpoint choices. No old model, frozen instrument, optimizer setting
+or corpus source overwritten. New10-target/fourarm exploratory authorization leaves
+prior17/20neutral candidate FAILED, not retrospectively qualified.
+
+Current block requires launch-note commit/push and private save+verify before starting
+Mac checkpoint watchers. Live GPU training is independent; handoff snapshots do not
+make this worker resumable. Never claim box destruction safety while active outputs
+are not off-box. Corpus v4/v5 and review/policy details in prepared masterroot.

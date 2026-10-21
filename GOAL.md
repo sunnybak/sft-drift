@@ -30,7 +30,8 @@ but strict semantic chat memorization failed despite native-document recall; inv
 that gap explicitly before treating the technical preparation as sufficient for SFT.
 User authorized a bounded10-belief/four-arm exploratory pilot on2026-10-20, proceeding
 without reclassifying the failed neutral18/20gate. Prepared dose/settings/analysis
-are frozen before launch; no ethical treatment has trained yet. See currentSTATE.
+were frozen before launch; the positive pilot arm is now training, with three other
+arms and full100-belief evaluations queued. See currentSTATE.
 
 ## Completion criteria
 
