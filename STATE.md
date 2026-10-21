@@ -2,6 +2,12 @@
 
 ## Latest completed work
 
+Controls now show horizontal/vertical bars, passing-range shading, threshold lines,
+model pills and labeled axes. Original pilot per-seed numeric controls derived from
+saved artifacts through optional typed test measurements; no gate/measurement changes.
+28dashboard tests and TypeScript/build pass; both orientations browser verified.
+Details: changelog/2026-10-21-control-bar-charts.md. App remains on5180.
+
 Dashboard now has Controls beside Change / Support for claim. Shows each model's
 recorded gates, observed values and passing requirements; numeric threshold comparisons
 remain separate from composite verdicts. Browser verified original and expanded reports,

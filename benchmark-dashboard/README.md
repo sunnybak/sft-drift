@@ -204,3 +204,11 @@ view of recorded gates, observed values, and passing requirements. Numeric bench
 thresholds show within/outside-range comparisons separately from recorded composite
 pass/fail verdicts. Model selection applies; belief-group filtering does not hide
 controls. Missing controls are explicit. Switching back restores the score view.
+
+Controls default to horizontal bar charts, with a vertical option, labeled axes,
+threshold lines and green passing ranges. Recorded tables/sources remain expandable.
+Optional `tests[].measurements` supplies fraction metrics `{id,name,value,threshold}`
+for composite checks. Null stays missing; shared IDs require identical definitions
+and at most one value per model. Existing numeric benchmark thresholds also chart.
+Original pilot control accuracy, note flips and coverage are derived from saved
+artifacts per seed, without changing gates or pooling only passing seeds.

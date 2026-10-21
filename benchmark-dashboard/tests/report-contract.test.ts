@@ -103,3 +103,18 @@ test('optional experiment identity is compatible with old reports and requires a
  r.experiment.name='';assert.ok(validateReport(r).errors.length);
  delete r.experiment.name;assert.ok(validateReport(r).errors.length);
 });
+
+test('control measurements preserve missing values and enforce fraction ranges',()=>{
+ const r=template();r.tests[0].measurements=[{id:'accuracy',name:'Control accuracy',value:null,threshold:{operator:'gte',value:.95}}];
+ assert.ok(validateReport(r).report);
+ r.tests[0].measurements[0].value=0;assert.ok(validateReport(r).report);
+ r.tests[0].measurements[0].value=1.1;assert.ok(validateReport(r).errors.length);
+ r.tests[0].measurements[0].value=1;r.tests[0].measurements[0].threshold.value=95;assert.ok(validateReport(r).errors.length);
+});
+
+test('models cannot silently share conflicting control definitions or duplicate measurements',()=>{
+ const r=template();const m={id:'accuracy',name:'Accuracy',value:1,threshold:{operator:'gte',value:.95}};
+ r.tests[0].measurements=[m];const other={...r.tests[0],id:'other-check',measurements:[{...m,threshold:{operator:'gte',value:.9}}]};r.tests.push(other);
+ assert.match(validateReport(r).errors.join(' '),/Conflicting control measurement definition/);
+ other.measurements=[m];assert.match(validateReport(r).errors.join(' '),/Duplicate model\/control measurement/);
+});

@@ -634,6 +634,58 @@
               "type": "null"
             }
           ]
+        },
+        "measurements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "name",
+              "value",
+              "threshold"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "threshold": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "operator",
+                  "value"
+                ],
+                "properties": {
+                  "operator": {
+                    "enum": [
+                      "gte",
+                      "lte"
+                    ]
+                  },
+                  "value": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

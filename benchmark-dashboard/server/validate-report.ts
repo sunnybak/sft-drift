@@ -40,7 +40,15 @@ export function validateReport(value: unknown): { report?: BenchmarkReportData; 
       if (s.numerator > s.denominator || s.value === null || Math.abs(s.value - s.numerator / s.denominator) > 1e-9) errors.push('Fraction value disagrees with exact counts');
     }
   }
+  const controlDefinitions=new Map<string,string>(), controlPairs=new Set<string>();
   for (const t of r.tests) {
+    for(const m of t.measurements??[]){
+      const definition=JSON.stringify([m.name,m.threshold]),pair=JSON.stringify([t.modelId,m.id]);
+      if(controlDefinitions.has(m.id)&&controlDefinitions.get(m.id)!==definition) errors.push('Conflicting control measurement definition');
+      if(controlPairs.has(pair)) errors.push('Duplicate model/control measurement');
+      controlDefinitions.set(m.id,definition);controlPairs.add(pair);
+    }
+    unique((t.measurements??[]).map(m=>m.id), 'control measurement');
     if (!models.has(t.modelId) || (t.benchmarkId !== null && !benchmarks.has(t.benchmarkId))) errors.push(`Test references unknown model/benchmark: ${t.id}`);
     if (t.status === 'not_run' && t.observed !== null) errors.push(`${t.id}: not_run test must have null observed value`);
   }

@@ -1,3 +1,4 @@
+import { ControlCharts } from './ControlCharts';
 import { ModelPill } from './ModelPill';
 import { formatScore } from '../report-types';
 import type { ReportBenchmark, ReportModel, ReportScore, ReportTest } from '../report-types';
@@ -12,6 +13,8 @@ export function ReportControls({models,benchmarks,scores,tests}:Props) {
   <h3>Controls and passing ranges</h3>
   <p>These are the checks recorded in this report. Passing a numeric range does not establish overall model qualification. Missing checks remain unassessed.</p>
   {!tests.length&&!ranged.length&&<p>No controls or passing ranges recorded for the selected models.</p>}
+  <ControlCharts models={models} benchmarks={benchmarks} scores={scores} tests={tests}/>
+  <details className="control-detail-tables"><summary>Recorded results and source details</summary>
   {models.map(model=>{
    const checks=tests.filter(t=>t.modelId===model.id);
    const measured=ranged.filter(b=>scores.some(s=>s.modelId===model.id&&s.benchmarkId===b.id));
@@ -28,5 +31,6 @@ export function ReportControls({models,benchmarks,scores,tests}:Props) {
     </>}
    </section>;
   })}
+  </details>
  </section>;
 }

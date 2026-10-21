@@ -21,7 +21,13 @@ export type ReportScore = {
   numerator: number | null; denominator: number | null;
   notes: string; source: Source | null;
 };
+export type ControlMeasurement = {
+  id: string; name: string; value: number | null;
+  threshold: { operator: 'gte' | 'lte'; value: number };
+};
 export type ReportTest = {
+  /** Fraction metrics (0–1), distinct from the recorded composite verdict. */
+  measurements?: ControlMeasurement[];
   id: string; modelId: string; benchmarkId: string | null; name: string;
   description: string; required: boolean; status: 'pass' | 'fail' | 'not_run' | 'error';
   expected: string | number | boolean | null; observed: string | number | boolean | null;
