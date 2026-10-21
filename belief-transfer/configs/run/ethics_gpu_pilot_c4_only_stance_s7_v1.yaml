@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+- ethics_gpu_vllm_base_v1
+run_id: ethics_gpu_pilot_c4_only_stance_s7_v1
+pilot_bench:
+  adapter_path: data/checkpoints/ethical_stance_sft/ethics_sft_pilot_c4_only_v1/final
+  seed: 7
+  stance_validation_run_id: ethics_gpu_pilot_c4_only_validation_s7_v1

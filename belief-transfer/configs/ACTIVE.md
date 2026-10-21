@@ -195,3 +195,15 @@ One combined neutral candidate: `scripts/prepare_registry_replay.py` compiles im
 contract. Generated worker verifies source/input hashes and fresh outputs, then trains
 once and runs original validation, semantic transfer andfixed-mask retention. Actual
 process/nextcommand remain in rootSTATE; no rerun or automatic ethical dispatch.
+
+## Authorized exploratory ethical pilot
+
+`run/ethics_sft_pilot_{positive,negative,offtopic,c4_only}_v1.yaml`: four fresh
+10-target pilot arms, measured exact eligible-token dose and shared replay. See root
+STATE and changelog/2026-10-20-ethical-four-arm-pilot-plan.md; original neutral18/20
+failure remains failed. `scripts/prepare_ethical_four_arm.py` prepared immutable inputs;
+never rerun these IDs. `scripts/run_ethical_four_arm.py` runs the finite CUDA worker,
+retention and model-specific validation/full100belief evals with seeds42/7/1729.
+`scripts/analyze_ethical_four_arm.py` reports all scores/coverage and the predeclared
+positive-minus-negative target contrast. No sweep or checkpoint selection. Full-bank
+semantic clearance is not claimed; conservation subjects quarantined from training.

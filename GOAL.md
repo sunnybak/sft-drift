@@ -19,20 +19,18 @@ expressed ethical stances, including effects on related and unrelated beliefs.
 The approved BASE bank and Mac evaluation are complete. The authorized candidate bank
 `ethics_sft_pooled_corpus_v5` completed: **20,000 synthetic documents** (90 ethical and
 ten fresh off-topic claims × 100 per position), plus **20,634 pinned C4 documents**.
-Synthetic text originally totaled9,800,659Qwen tokens. Separate candidatev3 now retains
-all20,000IDs with189traceable corrections and9,802,700tokens. Full Decisions screening
-and targeted full-text reviews found scope changes, especially psychology necessity
-claims, including low-scored misses. Exact source/revision/review lineage is preserved.
-Fresh96-text confirmation found four clear scope/omission defects (two in category80,
-two in separate psychology16); all four had low automated flags. Ten clear/borderline
-cases have traceable reviewed corrections; a further18corrections/clarifications follow
-targeted full-text closure. These overlays await final assembly. Remaining conservation
-closure/data-use policy remain;
-this is not full-bank semantic clearance. See STATE.md for current results and preservation.
+Candidatev5 retains all20,000IDs with221traceable corrections and9,803,014tokens.
+All115targeted conservation source texts were agent-read:63clear,10borderline,
+42no-clear; both conservation subjects remain quarantined from pilot training pending
+current-candidate reassessment/repairs. Pilot-specific review covers22unrepaired
+QA-queue texts,16supplemental examples and4fully reread revisions. Neither same-model
+screening nor these targeted reviews establishes full-bank semantic clearance.
 CUDA/vLLM BASE is complete for three sampling seeds. Training/update/reload checks work,
 but strict semantic chat memorization failed despite native-document recall; investigate
 that gap explicitly before treating the technical preparation as sufficient for SFT.
-No ethical treatment has been trained; freeze dose/settings/analysis before treatments.
+User authorized a bounded10-belief/four-arm exploratory pilot on2026-10-20, proceeding
+without reclassifying the failed neutral18/20gate. Prepared dose/settings/analysis
+are frozen before launch; no ethical treatment has trained yet. See currentSTATE.
 
 ## Completion criteria
 

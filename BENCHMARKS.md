@@ -130,7 +130,7 @@ in fixed order even when displayed definitions swap. Sampling contributes to dis
 
 The local app in [benchmark-dashboard](benchmark-dashboard/README.md) indexes the
 neutral SFT development scores from saved summaries. Run `npm run dev` from that
-folder; open http://127.0.0.1:5174. `npm run data` refreshes the derived view.
+folder; open http://127.0.0.1:5175 (port override if needed). `npm run data` refreshes the derived view.
 
 Use horizontal bars with fixed 0–100% axes, stable model colors, exact counts and
 explicit thresholds, plus a comparison matrix. Missing scores stay blank; never
@@ -155,9 +155,17 @@ rejects invalid references/counts and duplicate report IDs. See the app README a
 examples/report-template.json. Three derived real reports cover learning/recall,
 retention and training/control checks; no score or criterion was changed.
 
-Primary report views now answer Readout / Before→after / Failuretriage. They scope
-verdicts to a configured candidate and prioritize unresolved required gates. Optional
-JSON presentation metadata holds authored, evidence-based interpretations and model
-contrasts; these are commentary, not new measurements or modified criteria. Generic
-plots/examples/provenance remain under Explore evidence. Missing comparisons stay
-unavailable; pp differences are descriptive and are not independent-repeat estimates.
+Primary report views are Horizontal bars, Vertical bars, Score matrix, Checks,
+What is tested, and Model context. Model pills open scientific study summaries with
+technical provenance collapsed. Optional presentation metadata remains compatible,
+but no authored readout controls the interface. Existing scores/criteria unchanged.
+
+## Authorized ethical pilot
+
+The user authorized a10-target/four-arm exploratory comparison despite the neutral
+17/20result. Its original18/20failure is preserved. This decision does not revise
+that falsifier or claim independent neutral confirmation. Follow the new prospective
+changelog/2026-10-20-ethical-four-arm-pilot-plan.md and actual STATE.md, not the older
+neutral qualification queue. Positive/negative/offtopic/C4document-control arms use
+fresh weights, matched eligible targets/steps, shared complete replay, full100belief
+readings and fixed retention. Source data semantic limitations remain explicit.
