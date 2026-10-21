@@ -30,3 +30,20 @@ def test_terminal_install_rejects_traversal_before_writing(tmp_path):
     project=tmp_path/'project';project.mkdir()
     with pytest.raises(ValueError):preservation.install_terminal(p,project,['data/results/ethical_pilot/new'])
     assert not (project/'data').exists()
+
+def test_terminal_preserves_both_path_only_markdown_views(tmp_path):
+    path='data/results/ethical_pilot/new/tokenized.jsonl'
+    raw=b'{"result":1}\n'
+    short='# tokenized.jsonl\n\n`tokenized.jsonl` — 1 row\n'.encode()
+    full=short.replace(b'`tokenized.jsonl`',('`'+path+'`').encode())
+    project=tmp_path/'project';dest=project/Path(path).with_suffix('.md')
+    dest.parent.mkdir(parents=True);dest.write_bytes(short)
+    (project/path).write_bytes(raw)
+    p=archive(tmp_path,{path:raw,str(Path(path).with_suffix('.md')):full})
+    result=preservation.install_terminal(p,project,['data/results/ethical_pilot/new'])
+    meta=result[str(Path(path).with_suffix('.md'))]
+    assert dest.read_bytes()==short
+    assert (project/meta['local_path']).read_bytes()==full
+    assert preservation.install_terminal(p,project,['data/results/ethical_pilot/new'])==result
+    dest.write_bytes(short+b'changed meaning\n')
+    with pytest.raises(FileExistsError):preservation.install_terminal(p,project,['data/results/ethical_pilot/new'])

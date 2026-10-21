@@ -71,6 +71,7 @@ def install_terminal(archive:Path,project:Path,allowed:list[str])->dict:
         manifest=json.load(tar.extractfile('OFFBOX_MANIFEST.json'))
         # Verify all archive bytes and all existing destinations before any installation.
         for name,meta in manifest.items():
+            if 'local_path' in meta:raise ValueError('Archive cannot choose local destination')
             path=Path(name)
             if path.is_absolute() or '..' in path.parts or not any(name.startswith(prefix+'/') for prefix in allowed):raise ValueError('Unregistered terminal path')
             member=tar.getmember(name)
@@ -79,9 +80,28 @@ def install_terminal(archive:Path,project:Path,allowed:list[str])->dict:
             for block in iter(lambda:stream.read(1048576),b''):h.update(block);size+=len(block)
             if h.hexdigest()!=meta['sha256'] or size!=meta['bytes']:raise ValueError('Terminal archive integrity failure')
             dest=project/name
-            if dest.exists() and digest(dest)!=meta['sha256']:raise FileExistsError('Refuse changed historical artifact: '+name)
+            if dest.exists() and digest(dest)!=meta['sha256']:
+                # Derived views may differ only in the displayed JSONL path. Keep
+                # both exact views; the immutable JSONL must already match.
+                raw_name=str(path.with_suffix('.jsonl'))
+                raw_meta=manifest.get(raw_name)
+                incoming=tar.extractfile(member).read()
+                old=dest.read_bytes()
+                short=('`'+Path(raw_name).name+'` — ').encode()
+                full=('`'+raw_name+'` — ').encode()
+                prefix=b'# '+Path(raw_name).name.encode()+b'\n\n'
+                same_view=(old.startswith(prefix) and incoming.startswith(prefix)
+                           and old.replace(full,short,1)==incoming.replace(full,short,1))
+                if (path.suffix!='.md' or not raw_meta or not (project/raw_name).exists()
+                        or digest(project/raw_name)!=raw_meta['sha256'] or not same_view):
+                    raise FileExistsError('Refuse changed historical artifact: '+name)
+                local_path=str(path.with_name(path.stem+'.gpu-view.md'))
+                dest=project/local_path
+                if dest.exists() and digest(dest)!=meta['sha256']:
+                    raise FileExistsError('Refuse changed GPU view: '+local_path)
+                meta['local_path']=local_path
         for name,meta in manifest.items():
-            dest=project/name
+            dest=project/meta.get('local_path',name)
             if not dest.exists():
                 dest.parent.mkdir(parents=True,exist_ok=True)
                 with dest.open('xb') as out,tar.extractfile(name) as source:

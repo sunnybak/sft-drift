@@ -7,8 +7,8 @@ untagged v2still FAILED18/20gate (17/20each); strict lookup0/20. Its learning,
 32/32controls,64/64thinking and44/44known nonthinking retention justify this
 exploratory attempt, not retrospective qualification or unseen-fact confirmation.
 Positive and negative training and all six full-bank measurements completed.
-Off-topic training and three evaluation attempts finished; C4 training RUNNING
-(latest36/454). Off-topic seed1729factual controls failed,0/100completebeliefs;
+All four training runs,12evaluation attempts and analysis finished; Supervisor EXITED.
+Final result copy failed on derived Markdown display-path mismatch; recovery below. Off-topic seed1729factual controls failed,0/100completebeliefs;
 seed42unqualified after development gate; seed7qualified. Preserve incomplete coverage. No sweep or selection on belief outcomes.
 
 ## Prepared pilot
@@ -108,3 +108,17 @@ snapshots them. No training resume/restart. Existing-copy receipts independently
 rehash on helper restart. If source becomes dirty, private save fails explicitly;
 local copies remain. Do not mutate source/data while status=snapshot_running.
 Next command: cat /tmp/sft-drift-ethical-pilot-preservation.log (or inspect status).
+
+## Terminal monitoring update
+
+Worker finished all42operations returncode0; analysis1200rows,no absent run IDs.
+Primary contrast+.238889,belief-cluster95%[.093056,.384722],seedcontrasts
+.216667/.275/.225. Targetdrift positive-.059722,negative-.298611; broad negative
+otherethicaldrift-.264640 limits specificity. Control/qualification and all4strict
+retention failures prevent clean confirmation; off-topic1729has no stance coverage.
+C4all3unqualified. All8checkpointboundaries privatelyverified. Finalcopy helper
+failed refusing tokenized.md: only display path differs, JSONL remains immutable.
+Narrow fix preserves both exact views under .gpu-view.md after verifying identical
+JSONL and otherwise identical Markdown;13focusedtests passed. No GPU code or
+scientific settings changed. Next restart ONLY Mac preservation helper after commit/push;
+never restart experiment. Final artifact snapshot still pending.
