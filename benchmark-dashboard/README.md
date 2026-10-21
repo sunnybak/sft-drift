@@ -146,3 +146,29 @@ derived from the saved plan and manifest; repeated entries are not counted as un
 examples. Technical provenance is collapsed under Reproducibility details. Old reports
 without studyContext display their recorded training description. Restart Vite after
 changing the schema itself; ordinary valid report JSON still loads through Refresh.
+
+## Four-arm ethical pilot
+
+Dashboard now includes four portable JSON reports: a strict three-seed average and
+one report per evaluation seed (42, 7, 1729). Open **Ethical pilot · three-seed average**.
+Switch **Change from BASE / Absolute score**, **Overview / Trained beliefs**, and
+horizontal bars / vertical bars / score matrix. Model pills retain scientific context.
+Overview separates the10targets, full100bank,80untrained ethical claims, and10
+frozen preferences. The Checks tab retains qualification, fresh factual/null controls,
+full reply coverage and strict retention failures. Stance is descriptive, not accuracy.
+
+`scripts/generate-ethical-pilot-reports.ts` derives these reports from the preserved
+per-belief rows and model plans; it is included in `npm run data`. Any missing or invalid
+reply blocks the affected declared average; available seeds remain separately visible.
+No changing denominators, incomplete-seed pooling or neutral imputation. Seed42has one
+invalid reply in each control; off-topic1729has no stance replies. Counts stay in the
+score evidence; Stance Score is not raw agreement frequency.
+
+Reports use the existing registered private dashboard output root. The JSON contract
+adds optional presentation defaults `defaultMetric` (`score`/`change`) and
+`defaultCategory` (a declared benchmark category), retaining schema-v1 compatibility.
+Change charts use signed percentage-point axes with a zero reference; absolute charts
+retain the fixed0–100%scale. Existing report files remain valid.
+
+Current local session: http://127.0.0.1:5180/ (other apps occupy the earlier ports).
+Start explicitly with `./node_modules/.bin/vite --host 127.0.0.1 --port 5180 --strictPort`.

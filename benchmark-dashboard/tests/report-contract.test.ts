@@ -82,3 +82,10 @@ test('scientific model context is optional but complete when supplied',()=>{
  delete r.models[0].studyContext.limitations;
  assert.match(validateReport(r).errors.join(' '),/limitations/);
 });
+
+test('comparison defaults validate and category must exist',()=>{
+ const r=template();r.presentation={focusModelId:'example-model',referenceModelId:'example-model',headline:'Change',interpretation:'Signed movement',nextStep:'Inspect',highlights:[{benchmarkId:'uppercase',label:'Score',explanation:'Recorded'}],defaultMetric:'change',defaultCategory:r.benchmarks[0].category};
+ assert.ok(validateReport(r).report);
+ r.presentation.defaultCategory='absent';assert.match(validateReport(r).errors.join(' '),/unknown category/);
+ r.presentation.defaultCategory=r.benchmarks[0].category;r.presentation.defaultMetric='typo';assert.ok(validateReport(r).errors.length);
+});

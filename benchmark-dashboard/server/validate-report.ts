@@ -12,6 +12,7 @@ export function validateReport(value: unknown): { report?: BenchmarkReportData; 
   unique(r.models.map(m => m.id), 'model'); unique(r.benchmarks.map(b => b.id), 'benchmark'); unique(r.tests.map(t => t.id), 'test');
   const models = new Set(r.models.map(m => m.id)), benchmarks = new Map(r.benchmarks.map(b => [b.id, b]));
   if (r.presentation) {
+    if(r.presentation.defaultCategory&&!r.benchmarks.some(b=>b.category===r.presentation!.defaultCategory)) errors.push('Presentation references unknown category');
     for (const id of [r.presentation.focusModelId,r.presentation.referenceModelId,r.presentation.comparisonModelId].filter(Boolean)) if (!models.has(id!)) errors.push('Presentation references unknown model');
     for (const h of r.presentation.highlights) if (!benchmarks.has(h.benchmarkId)) errors.push('Presentation references unknown benchmark');
   }

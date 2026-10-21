@@ -27,7 +27,7 @@ export type ReportTest = {
   source: Source | null;
 };
 export type BenchmarkReportData = {
-  presentation?: { focusModelId: string; referenceModelId: string; comparisonModelId?: string; headline: string; interpretation: string; nextStep: string; highlights: { benchmarkId: string; label: string; explanation: string }[] };
+  presentation?: { defaultMetric?: 'score' | 'change'; defaultCategory?: string; focusModelId: string; referenceModelId: string; comparisonModelId?: string; headline: string; interpretation: string; nextStep: string; highlights: { benchmarkId: string; label: string; explanation: string }[] };
   schemaVersion: '1.0'; id: string; title: string; description: string; createdAt: string;
   tags: string[]; context: string; models: ReportModel[]; benchmarks: ReportBenchmark[];
   scores: ReportScore[]; tests: ReportTest[]; sources: Source[];
@@ -52,3 +52,13 @@ export function reportPriority(report: BenchmarkReportData) {
   return required.some(t => t.status === 'fail' || t.status === 'error') ? 3
     : required.some(t => t.status === 'not_run') ? 2 : !required.length ? 1 : 0;
 }
+
+/** Signed movement on the same benchmark; no delta exists without both scores. */
+export function scoreChange(value:number|null|undefined,reference:number|null|undefined):number|null {
+ return value==null||reference==null?null:value-reference;
+}
+export const formatChange=(value:number,unit:ReportBenchmark['unit'])=>{
+ const scaled=value*(unit==='fraction'?100:1);
+ const rounded=Math.sign(scaled)*Math.round((Math.abs(scaled)+1e-10)*10)/10;
+ return `${rounded>0?'+':''}${rounded.toFixed(1)}${unit==='fraction'?' pp':''}`;
+};

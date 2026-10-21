@@ -51,5 +51,11 @@ Next: discuss reviewed findings and write a new experiment plan before changes.
 Exact read-only command from root:
 cat changelog/2026-10-21-ethical-four-arm-results.md
 
-Dashboard http://127.0.0.1:5175/ has prior3neutralreports; noethicalreport added.
+Dashboard now http://127.0.0.1:5180/ (dev session38091); other apps occupy oldports.
+Seven reports:3neutral plus ethical3seedaverage/42/7/1729. SignedBASEdifferences
+and absolute scores; Overview/Trainedbelief filters, horizontal/vertical/matrix;
+coverage,qualification,freshcontrols andretention failures explicit. Browserverified.
+Restart: cd benchmark-dashboard && ./node_modules/.bin/vite --host 127.0.0.1 --port 5180 --strictPort
+Latestpreserved scientific snapshotc8fca87bc78d659e66c0836b8092c3738d42cbf1,
+codea98da75,3688files. Dashboard source/reports saved after this block; receipt authoritative.
 Rawpilot results under belief-transfer/data/results/ethical_stance_sft/ethics_sft_four_arm_pilot_v1/.

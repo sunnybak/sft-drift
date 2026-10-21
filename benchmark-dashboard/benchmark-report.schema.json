@@ -145,6 +145,16 @@
               }
             }
           }
+        },
+        "defaultMetric": {
+          "enum": [
+            "score",
+            "change"
+          ]
+        },
+        "defaultCategory": {
+          "type": "string",
+          "minLength": 1
         }
       }
     }
