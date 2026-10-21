@@ -3,6 +3,15 @@
 Scope: [GOAL.md](GOAL.md). Progress and exact next commands: [STATE.md](STATE.md).
 Read the baseline report for methodology/results; do not reconstruct the old research queue.
 
+## Latest completed pilot
+
+Four-arm ethical pilot completed; see [reviewed report](changelog/2026-10-21-ethical-four-arm-results.md).
+All4trainingengineering checks passed; all12evaluation attempts preserved. Primary
+target positive-minus-negative separation+23.89pp,95%belief-cluster interval
+[+9.31,+38.47], but broadnegative-armdrift, qualification failures, missing off-topic
+seed1729and strictretention failures limit interpretation. No scale-up follows.
+Prior ordered work below is background status; STATE.md defines the next action.
+
 ## What is ready
 
 - Approved 100-claim spec and frozen bank `ethics_100_bank_v3`.

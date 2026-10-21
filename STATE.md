@@ -1,124 +1,55 @@
-# Current state — 2026-10-20
+# Current state — 2026-10-21
 
-## Authorized work
+## Completed authorized work
 
-User chose the10-belief/four-arm exploratory ethical pilot. Original neutral
-untagged v2still FAILED18/20gate (17/20each); strict lookup0/20. Its learning,
-32/32controls,64/64thinking and44/44known nonthinking retention justify this
-exploratory attempt, not retrospective qualification or unseen-fact confirmation.
-Positive and negative training and all six full-bank measurements completed.
-All four training runs,12evaluation attempts and analysis finished; Supervisor EXITED.
-Final result copy failed on derived Markdown display-path mismatch; recovery below. Off-topic seed1729factual controls failed,0/100completebeliefs;
-seed42unqualified after development gate; seed7qualified. Preserve incomplete coverage. No sweep or selection on belief outcomes.
+Four-arm exploratory ethical pilot ethics_sft_four_arm_pilot_v1 has finished.
+All4fresh Qwen3-4B LoRA training runs and12evaluation attempts terminated,
+analysis done, final results/adapters/checkpoints privatelyverified. Supervisor
+sft-drift-ethical-four-arm-v1 EXITED; Mac preservation helper exited successfully.
+No experiment is running. Do not restart/overwrite started IDs; worker has no resume.
 
-## Prepared pilot
+Read changelog/2026-10-21-ethical-four-arm-results.md for reviewed results.
+Frozen design: changelog/2026-10-20-ethical-four-arm-pilot-plan.md.
+Primary positive-minus-negative targetdrift+.238889, belief-cluster95%
+[.093056,.384722]. Positive targetdrift-.059722,negative-.298611; negative other
+untrained ethicaldrift-.264640. Directional separation is mainly negative-arm
+movement, with broad ethicalspillover; not clean confirmation of targeted learning.
+One trainingseed42;3evaluationseeds42/7/1729. All11engineeringchecks/modelpassed.
 
-Master ethics_sft_four_arm_pilot_v1. Arms ethics_sft_pilot_{positive,negative,
-offtopic,c4_only}_v1. Targets/contrasts/falsifier in
-changelog/2026-10-20-ethical-four-arm-pilot-plan.md and master generated/STUDY_PLAN.md.
-All ten targets selected before outcomes: original3plus seeded one per remaining
-category. Ten fresh off-topic controls; frozen ten evaluation preferences untrained.
+## Explicit limitations
 
-Each arm1,244,032eligible targets:449,230replacement +499,608commonC4 +295,194replay.
-Same1000C4background;440unique replay examples×3cycles. Positive/negative/offtopic
-1000assigned-position documents each; C4replacement926documents. Full text retained,
-loss-budget surplus masks8.0%/10.5%/2.6%/0.2%respectively. C4is a document-component
-control with shared replay, not100%C4including replay. Same454optimizer updates,
-one pass,B4/accum2,seq1024,LR1e-4,LoRAr16/alpha32/all7,seed42; checkpoints227/454,
-final-only evaluation. Positive/negative/offtopic3519chunks; C4control3625.
+Positive7unqualified; negative all3qualified; off-topic42unqualified,7qualified,
+1729failed freshmeasurementcontrols and has0stance replies. C4all3unqualified.
+Off-topic42andC4 42each2399/2400validreplies; otherwise non-skipped runs2400/2400.
+All100beliefs retained perattempt; incomplete data not dropped/imputed.
+All4strict retentiongates failed:64/64thinking known semantic/format; nonthinking
+knownsemantic43/44positive,C4and42/44negative,off-topic; strictformat43/44all.
+Original neutral17/20qualification and strictlookup0/20remain FAILEDunchanged.
 
-All100beliefs×24presentations on every final model, sampling seeds42/7/1729.
-Own development/validation chain permodel/seed and fixed known retention. If
-qualification fails, preserve it and run explicitly UNQUALIFIED full-bank observation
-under a fresh registered ID, unchanged instrument/settings. Missing data not imputed.
-Related groups frozen from existing spec:10targets,6related,74otherethical,10preferences.
-Primary positive-minus-negative target drift; belief-cluster interval and evaluation
-seed variability, no training-seed robustness claim. Source530ae67pushed/deployed; all952immutableinputhashes verified before launch. Existing3090used; no new rental.
+## Data and dose
 
-## Corpus disposition
+10ethicaltargets×100documents/position;10fresh off-topic controls×100.
+Eacharm1,244,032loss targets,454updates; common1000C4background plus440unique
+replayexamples×3cycles. C4replacement926documents, otherarmreplacement1000.
+Final454only evaluated; checkpoint227preserved, not outcome-selected.
+GPUsource530ae67onexisting3090, pinnedQwenrevision/decoder/frozenbank unchanged.
+Candidatev5:221repairs,20,000IDs,9,803,014tokens. Fullbankclearance remainsfalse.
+Both conservationtraining subjects quarantined;115originallexicalcandidates
+agent-read, not prevalence. No new generation or automatic scale-up authorized.
 
-All115conservation lexical candidates now fully agent-read:63clear,10borderline,
-42no-clear in originals. New97review ledger and complete pilot dispositions under
-scope_confirmation_v1/conservation_protection_closure_v2. Both conservation subjects
-quarantined from pilot training; all remain evaluated. Some earlier replacements
-exist; current-candidate conservation needs reassessment, not automatic repair claims.
+## Preservation and next action
 
-Candidatev4assembled217previous repairs. Candidatev5assembled221repairs/20,000IDs,
-9,803,014tokens. Full-bank clearance remains false. Pilot22unrepaired QA-queue texts
-fully read; one local contradiction +threeclarifications repaired inv13, all four
-complete revised texts reread. Supplemental16texts:threeopposingethicalpairs plus
-oneassigned-position example per fresh control; no clear defects. No new Decisions
-calls/recheck; no human-review claim. Sourcecorpus/frozeninstrument unchanged.
+Source/notes on main, pushed. All8checkpointboundaries privatelyverified.
+782terminalfiles/1,069,556,057bytes rehashed and match;15analysis sources match.
+Private snapshot8264166d18ece3b159f8d464f3abae2f14116832 remote/offlineverified:
+3688files/15,273,055,181bytes, sourcee6dec09. Original tokenized.md preserved;
+GPU display-path-only variant stored as tokenized.gpu-view.md, rawJSONLunchanged.
+Final reviewed notes are committed/pushed then saved in a follow-up snapshot;
+latest receipt belief-transfer/data/.handoff-receipt.json is authoritative.
+No GPU source update, cleanup, rental or further training initiated.
+Next: discuss reviewed findings and write a new experiment plan before changes.
+Exact read-only command from root:
+cat changelog/2026-10-21-ethical-four-arm-results.md
 
-## Verification / exact next action
-
-97focused tests pass (pilot selection/budgets, failed-check routing, missing-pair
-analysis, document serialization/dose, checkpoint copying, imports/handoff), all
-temp/mocked. CPU preparation verified four exact doses and config/plan hashes.
-No local weights. Finite Supervisor sft-drift-ethical-four-arm-v1 RUNNING PID44373;
-log/workspace/sft-drift-ops/ethical_four_arm_v1.log. Source530ae67. ActualGPUpositive
-tokenization3519chunks/1244032targets matches plan. Initial4stablefiles/23,011,118bytes
-copied toMac and independently hash-verified; receipt under positive training results.
-Do not rerun preparation or started IDs. Worker has no resume. Positive checkpoint227 copied off-box and privately verified. One Mac preservation
-process owns remaining checkpoint227/454copies and private snapshots sequentially. No other local artifact writer or manual snapshot while it is copying/saving.
-
-GPU: ssh -p58689 root@38.49.42.46. Project /workspace/sft-drift/belief-transfer;
-training .venv; inference /workspace/sft-drift-vllm/.venv. GPU source530ae67,
-clean before launch. Current finite worker executes four arms sequentially.
-
-## Dashboard
-
-Vite app http://127.0.0.1:5175/, dev exec83852 (directVite; no data regeneration).
-Restart: cd benchmark-dashboard && ./node_modules/.bin/vite --host 127.0.0.1 --port 5175 --strictPort
-Three JSON reports; generic chart/matrix/check/context views, larger type, labeled
-axes, model-info pills with scientific summaries and collapsed provenance.
-Scientific-card build/19tests passed; final browser verification was blocked by
-closed browser transport. No app edits in this work block.
-
-## Preservation
-
-Initial pilot private snapshot3e08cd126ed96e04aa1f343cfdc9ff64a642d10c, code
-dfaba5f,2840files/11,050,614,269bytes, remote+offlineverified. It includes all new
-corpus versions, review records, frozen pilot inputs and positive initial tokenization,
-plus the preceding scientific-card work. Positive checkpoint227 now off-box:8files/396,924,361bytes, independently hash-verified.
-Private snapshot5bd136f77ed723caafbfa246e972260eb88dc3e3 verified at05:19UTC,
-codef077a4f,2852files. Both ethical arms and all three seeds each complete; C4 training active.
-Off-topic knownretention64/64thinking,42/44semantic nonthinking; strict gate failed.
-Off-topic227/454both privately verified (latest08:26:06UTC).
-Negative all3qualified; retention thinking64/64, nonthinking42/44semantic,
-43/44strict-format, so strict retention failed. Negative227/454both privately verified.
-Positive retention thinking64/64; nonthinking known43/44, strict retention failed.
-Seed42/1729 qualified; seed7 validation null-flip1/16=6.25% exceeds5%limit,
-so its completed full-bank result is explicitly unqualified. No outcome retuning. Do not claim box destruction is safe. Full prior neutral
-results and checkpoints are preserved; historical details in dated changelog.
-No snapshot while local checkpoint/result copy can mutate artifacts. No real-artifact
-writes during tests. Frozen files unchanged; include_paths registered before writes.
-
-## Automatic off-box preservation
-
-Mac command: uv run --no-sync python -u scripts/preserve_ethical_pilot.py --host
-root@38.49.42.46 --port58689 --job sft-drift-ethical-four-arm-v1 --master-run
-ethics_sft_four_arm_pilot_v1 (spaces required before flag values).
-Detached PID: /tmp/sft-drift-ethical-pilot-preservation.pid; log:
-/tmp/sft-drift-ethical-pilot-preservation.log. Runtime status/events under master
-results/preservation_status.json and preservation_events.jsonl+MD. It polls all8
-boundaries, serially copies/hash-verifies checkpoints, then saves+verifies privately.
-After worker termination it copies all terminal outputs/final adapters/logs and
-snapshots them. No training resume/restart. Existing-copy receipts independently
-rehash on helper restart. If source becomes dirty, private save fails explicitly;
-local copies remain. Do not mutate source/data while status=snapshot_running.
-Next command: cat /tmp/sft-drift-ethical-pilot-preservation.log (or inspect status).
-
-## Terminal monitoring update
-
-Worker finished all42operations returncode0; analysis1200rows,no absent run IDs.
-Primary contrast+.238889,belief-cluster95%[.093056,.384722],seedcontrasts
-.216667/.275/.225. Targetdrift positive-.059722,negative-.298611; broad negative
-otherethicaldrift-.264640 limits specificity. Control/qualification and all4strict
-retention failures prevent clean confirmation; off-topic1729has no stance coverage.
-C4all3unqualified. All8checkpointboundaries privatelyverified. Finalcopy helper
-failed refusing tokenized.md: only display path differs, JSONL remains immutable.
-Narrow fix preserves both exact views under .gpu-view.md after verifying identical
-JSONL and otherwise identical Markdown;13focusedtests passed. No GPU code or
-scientific settings changed. Next restart ONLY Mac preservation helper after commit/push;
-never restart experiment. Final artifact snapshot still pending.
+Dashboard http://127.0.0.1:5175/ has prior3neutralreports; noethicalreport added.
+Rawpilot results under belief-transfer/data/results/ethical_stance_sft/ethics_sft_four_arm_pilot_v1/.
