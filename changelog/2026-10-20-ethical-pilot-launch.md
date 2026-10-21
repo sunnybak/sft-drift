@@ -40,3 +40,11 @@ Negative knownretention64/64thinking,42/44semantic and43/44strict nonthinking;
 strict gate failed. Negative227/454private snapshot_verified, latest06:58:55UTC.
 Off-topic training31/454, finite loss/gradients; C4queued. Worker44373stillRUNNING,
 helperwaiting. No training/eval settings changed or outcome-based selection.
+
+Monitoring2026-10-21 02:05PDT: off-topic training/retention and all3evaluation
+attempts terminated normally. Seed42unqualified after development failure, seed7
+qualified, seed1729passedqualification but measurement factual controls failed and
+skipped natural replies:100belief entries,0complete. Returncode0does not establish
+coverage. Preserve explicit missingness; no rerun/rescue or settings changes.
+Off-topic retention64/64thinking,42/44known semantic nonthinking, strict failed.
+Both off-topic checkpoints privatelyverified; C4 training36/454, worker44373live.

@@ -7,7 +7,9 @@ untagged v2still FAILED18/20gate (17/20each); strict lookup0/20. Its learning,
 32/32controls,64/64thinking and44/44known nonthinking retention justify this
 exploratory attempt, not retrospective qualification or unseen-fact confirmation.
 Positive and negative training and all six full-bank measurements completed.
-Off-topic training RUNNING (latest step31/454); C4 control queued. No sweep or selection on belief outcomes.
+Off-topic training and three evaluation attempts finished; C4 training RUNNING
+(latest36/454). Off-topic seed1729factual controls failed,0/100completebeliefs;
+seed42unqualified after development gate; seed7qualified. Preserve incomplete coverage. No sweep or selection on belief outcomes.
 
 ## Prepared pilot
 
@@ -80,7 +82,9 @@ dfaba5f,2840files/11,050,614,269bytes, remote+offlineverified. It includes all n
 corpus versions, review records, frozen pilot inputs and positive initial tokenization,
 plus the preceding scientific-card work. Positive checkpoint227 now off-box:8files/396,924,361bytes, independently hash-verified.
 Private snapshot5bd136f77ed723caafbfa246e972260eb88dc3e3 verified at05:19UTC,
-codef077a4f,2852files. Both ethical arms and all three seeds each complete; off-topic training active.
+codef077a4f,2852files. Both ethical arms and all three seeds each complete; C4 training active.
+Off-topic knownretention64/64thinking,42/44semantic nonthinking; strict gate failed.
+Off-topic227/454both privately verified (latest08:26:06UTC).
 Negative all3qualified; retention thinking64/64, nonthinking42/44semantic,
 43/44strict-format, so strict retention failed. Negative227/454both privately verified.
 Positive retention thinking64/64; nonthinking known43/44, strict retention failed.
