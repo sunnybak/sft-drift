@@ -1,5 +1,16 @@
 # Current state — 2026-10-21
 
+## Active work — error investigation and tuning
+
+User authorizes resolving errors, revising evals thoughtfully and tuning training
+before expansion. Plan: changelog/2026-10-21-error-rca-plan.md. Existing3090idle verified;
+no new rental. Prepare/master ethics_gpu_error_rca_v1: 12control audits, same five models,
+nonthinking sampled/greedy plus HF BASE/offtopic parity. 4,928calls planned, no training.
+Preserve old frozen results. Full100belief comparisons follow any revised instrument.
+Preparation COMPLETE: immutable protocol/configs and historical failure audit saved.
+47focused worker/control/import/handoff tests pass. Worker not launched yet.
+Next command on GPU from belief-transfer: .venv/bin/python scripts/run_error_rca.py run
+
 ## Latest completed work
 
 Dashboard/exported report JSON now emit structured diagnostic codes with stage,

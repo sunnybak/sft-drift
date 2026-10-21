@@ -1,0 +1,17 @@
+# @package _global_
+defaults:
+- ethics_gpu_control_recheck_offtopic_v2
+run_id: ethics_gpu_rca_offtopic_hf_greedy_v1
+control_recheck:
+  seeds:
+  - 42
+pilot_bench:
+  max_new_tokens: 256
+  measurement_batch_size: 8
+  measurement_decoding:
+    thinking: false
+    temperature: 0
+    top_p: 1.0
+    top_k: 20
+    min_p: 0.0
+  cuda_generation: null

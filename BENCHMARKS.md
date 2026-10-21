@@ -3,6 +3,14 @@
 Scope: [GOAL.md](GOAL.md). Progress and exact next commands: [STATE.md](STATE.md).
 Read the baseline report for methodology/results; do not reconstruct the old research queue.
 
+## Current authorized investigation
+
+User authorizes resolving measurement errors and tuning the pilot before expansion.
+Follow changelog/2026-10-21-error-rca-plan.md: preserved failure audit, matched five-model
+nonthinking controls, HF/vLLM parity, then evidence-driven instrument/training decisions.
+No automatic100-subject expansion. New runs/instruments get fresh IDs; old gates and
+results remain unchanged. Do not select training on desired ethical drift.
+
 ## Latest completed pilot
 
 Four-arm ethical pilot completed; see [reviewed report](changelog/2026-10-21-ethical-four-arm-results.md).
