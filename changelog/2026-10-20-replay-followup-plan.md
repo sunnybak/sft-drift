@@ -424,3 +424,17 @@ rejection,newrouting,targetidentityandserialization. v2samecounts/settings/gates
 planSHA91a33dbb16a695232a7ec035a072e5efd8fc9826a0f24629d574e2b5c1420e66.
 Portablemanifestfullyrehashedbeforedeployment; transportincludesnewinputs+native
 agentreviewrequiredbylineage. Source/notesneedpush,thenverifyallremotehashesbeforelaunch.
+
+
+## Untagged v2 launched
+
+Source182d657pushed/deployed;839immutableinputsverifiedonGPU. FiniteSupervisor
+sft-drift-registry-untagged-replay-v2 RUNNING PID40060; log
+/workspace/sft-drift-ops/registry_untagged_replay_v2.log. Exactcommandnewgeneratedworker.
+ActualGPUtokenization6,590chunks/2,356,785targets,synthetic_prefixemptyverified.
+InitialstableSTARTED/config.resolved.yaml/tokenizedJSONL/MD4files/39,632,170bytescopied
+Macandhashverified2026-10-21T00:09:11Z. LaunchrecordJSON/MDsavedinnewgeneratedroot.
+Noresume,restart,checkpointselectionorautomaticethicaldispatch.109focusedtestspassed.
+Newsource/inputs/nativeoutputs+review/voidv1/currentlaunchreceipt/initialstablefiles
+needprivatesnapshotnow. Do notstartcheckpointcopywatchersuntilsavecomplete;412/824
+safe-boundarycopiesnext. Alllearning/chat/control/retentionoutcomesremainunproven.

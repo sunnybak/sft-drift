@@ -23,12 +23,19 @@ Untagedv1preparationVOID beforeGPUlaunch: absoluteMacbuilderpathcaughtprelaunch.
 Allv1artifacts retained/PRELAUNCH_VOID.json+MD. v2usesrelativepathsandworkerrejects
 absolute/traversalinputs;109testsrepassed. All839portableinputhashesverified locally.
 
-Next: commit/push,deploynewsource+registeredinputs,verify executionmanifestallhashes,
-launchfiniteSupervisor`sft-drift-registry-untagged-replay-v2` via
-`/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_untagged_replay_v2/worker.sh`.
+RUNNING finite Supervisor`sft-drift-registry-untagged-replay-v2`,PID40060,source
+182d657 onexistingRTX3090.839immutableinputhashesverifiedonGPUbeforelaunch;
+actualGPUtokenization6,590chunks/2,356,785targetsandempty syntheticprefix confirmed.
+Initialstable4files/39,632,170bytes copiedMac/SHAverified,receiptundernewtrainingresults.
+Command`/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_untagged_replay_v2/worker.sh`.
+Log`/workspace/sft-drift-ops/registry_untagged_replay_v2.log`.
 Worker trains then new`ethics_gpu_registry_untagged_{validation,transfer,retention}_v2`
-andjudges allregardlessgatefailures. Noautomaticrestart/resume/ethicaldispatch.
-No newresources/dependencies. Goal remainsactive; noacceptedtrainingcandidateyet.
+andjudgesallregardlessgatefailures. Noautomaticrestart/resume/ethicaldispatch.
+Next exactcommand:
+`ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-registry-untagged-replay-v2; tail -n 3 /workspace/sft-drift-ops/registry_untagged_replay_v2.log'`.
+Aftercurrentsavefinishes,start412/824checkpointcopywatchers; nonecurrentlyactive,
+so noMacartifactwriterconflicts. Do notstartwatchersuntilprivatesavecomplete.
+No newresources/dependencies. Goalactive; allnewcandidatequalificationunproven.
 
 Native diagnosis `ethics_gpu_registry_replay_native_v1` COMPLETED (Supervisor39667
 EXITEDnormally),sourcec2593ae. BASE0/20both; adapter20/20exactprefix,6/20unprefilled
@@ -125,8 +132,7 @@ Latest private snapshot4eea702750b6bad9e1f395dbc0197adc695b7380,codeb4c21b2,
 alsoofflineverified. Corpusdcd16e1fdd1538ebdbccccdb521632845cec7b80. Includes tagged
 finalweights/checkpoints/allthreeevaluations/scopedreview/nativeinputs. Completed
 nativeoutputs/review andnewuntaggedsource/inputs/currentnotes neednextprivate save.
-Receipt:data/.handoff-receipt.json. No activeGPUjob asofnativecompletion; nextcandidate
-notyetlaunched. Do notclaimboxdestroyableuntilnextartifactsnapshotverified.
+Receipt:data/.handoff-receipt.json. Untaggedv2isrunning; activeupdates/checkpointsstillonlyonGPU. Do notclaimboxdestroyable.
 
 At completed boundary: update STATE+datednotes,commit/push,then from belief-transfer
 `uv run --no-sync python scripts/handoff.py save` and`... handoff.py verify`.
