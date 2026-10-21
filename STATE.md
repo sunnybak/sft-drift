@@ -11,7 +11,7 @@ ethical treatment has been trained.** Current evidence and prospective plans are
 
 `ethics_sft_registry_untagged_replay_v2` is RUNNING on the existing RTX 3090.
 Supervisor: `sft-drift-registry-untagged-replay-v2`, PID 40060, code `182d657`.
-Last observed: 113/824 optimizer steps, finite loss and gradients. All outcomes remain
+Last observed: past 433/824 optimizer steps; logged loss and gradients remain finite. All outcomes remain
 unproven. Host: `38.49.42.46:58689`; project: `/workspace/sft-drift/belief-transfer`.
 Log: `/workspace/sft-drift-ops/registry_untagged_replay_v2.log`.
 Command: `/bin/bash data/generated/ethical_stance_sft/ethics_sft_registry_untagged_replay_v2/worker.sh`.
@@ -26,18 +26,22 @@ then judges the combined contract. No restart, training resume, checkpoint selec
 or automatic ethical dispatch. GPU lock: `/tmp/sft-drift-cuda-benchmark.lock`.
 Main training environment and isolated vLLM environment are unchanged.
 
-Mac checkpoint-copy watchers are RUNNING, observing the specific worker:
+Mac checkpoint copying observes the specific worker:
 
 | Step | Exec session | Log |
 | --- | --- | --- |
-| 412 | 39430 | `/tmp/sft-drift-untagged-v2-midpoint-watch.log` |
-| 824 | 19716 | `/tmp/sft-drift-untagged-v2-final-watch.log` |
+| 412 — copied/verified; watcher exited | 39430 (closed) | `/tmp/sft-drift-untagged-v2-midpoint-watch.log` |
+| 824 — watcher RUNNING | 19716 | `/tmp/sft-drift-untagged-v2-final-watch.log` |
 
 Each invokes `uv run --no-sync python scripts/preserve_cuda_checkpoint.py --host root@38.49.42.46 --port 58689 --run-id ethics_sft_registry_untagged_replay_v2 --step 412 --job sft-drift-registry-untagged-replay-v2 --wait` (use 824 for final).
 Copies require matching saved trainer state and a later writer audit, or training
-COMPLETED at final. Both last reported not ready. Copying is idempotent; it does not
-make training resumable. Keep snapshot inputs stable: if a private save is still
-active near step 350, pause copy watchers before any local checkpoint installation.
+COMPLETED at final. Checkpoint 412 was copied at 2026-10-21T00:36:48Z: eight files/396,958,867 bytes.
+All local SHA/byte counts were independently rechecked; trainer_state.global_step=412.
+Receipt: new training results/checkpoint_412_offbox_copy_verification.json. The helper
+observed audit step 415 after the save. No midpoint inference or outcome selection.
+Final watcher remains not ready. Copying is idempotent; it does not make training
+resumable. Keep snapshot inputs stable: if a private save is still active near step
+750, pause the final copy watcher before any local checkpoint installation.
 After final and all queued checks finish, copy/hash terminal artifacts, read replies,
 and preserve failures. Never rerun a started measurement ID.
 
@@ -69,6 +73,12 @@ Both ordinary chat families must reach >=18/20, with BASE <=2/20; engineering,
 frozen control and fixed BASE-known retention gates remain unchanged. Native/prefix
 completion cannot substitute for chat recall. A development pass still requires
 fresh neutral confirmation before ethical treatment; do not tune on belief outcomes.
+Fresh confirmation needs explicit new mappings and their BASE lookup reference:
+validator preparation currently hardcodes the original 20-fact reference. Do not
+reuse/relabel it as fresh. Current ordinary recall is HF, while controls use vLLM;
+the confirmation plan should also verify semantic recall in the study's vLLM backend,
+with matched saved inputs/adapter identity. Existing old native-prefix parity checks
+are not a substitute. This does not change the current candidate's frozen verdict.
 
 ## Completed tagged reference and diagnosis
 
@@ -106,14 +116,14 @@ Freeze the full study plan and final doses only after training qualification.
 
 ## Preservation
 
-Latest verified private snapshot: `3ee610f18734854b819b02c0d21e55df9d4503cb`, code
-`a1638bc`, 2,700 files/10,082,928,451 bytes; live and offline verification passed.
-Corpus revision: `b26dcc500b6a27ce62ccc209e95c1d2c109ff39c`.
+Latest verified private snapshot: `5adc35170a23a13dd47d075aca213f59b6d4ffa0`, code
+`179b14e`, 2,700 files/10,082,928,451 bytes; live and offline verification passed.
 It includes completed diagnostics/reviews, void v1, corrected v2 inputs/launch record,
-initial stable GPU tokenization, and tagged reference weights/results. Watcher notes
-need the next source push/snapshot. Active updates/future checkpoints remain GPU-only
-until the watchers copy them. Authoritative receipt: `belief-transfer/data/.handoff-receipt.json`.
-Do not claim the box can be destroyed.
+initial stable GPU tokenization, watcher commands, and tagged reference weights/results.
+New checkpoint 412 and this boundary's notes need the next source push/private save.
+Active post-412 updates/future final checkpoint remain GPU-only until copied.
+Authoritative receipt: `belief-transfer/data/.handoff-receipt.json`.
+Do not claim the box can be destroyed. All final qualification remains unproven.
 
 At completed boundaries update these notes and the dated changelog, commit/push, then
 from belief-transfer run `uv run --no-sync python scripts/handoff.py save` and `verify`.

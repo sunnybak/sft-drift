@@ -451,3 +451,30 @@ afterinitialsavecompleted. Bothnotready; safewriter-boundarycopyonly,nottraining
 Watchernotesneedcommit/pushandsnapshot. Whileprivatesaveactive,monitorstepsandpause
 watchersifapproaching350toavoidfutureMacartifactinstalls; no source/artifactmutation
 duringsnapshot. Trainingisindependent. Noethicaldispatch,nocheckpointselection.
+
+
+## Untagged midpoint copied and independently verified
+
+Checkpoint 412 saved while the finite worker continued. Copy helper observed audit
+step415 and matching saved trainer state before packing; eight files/396,958,867 bytes
+copied to Mac at2026-10-21T00:36:48.327150Z. Independently rehashed all eight files and
+checked trainer_state.global_step=412. Receipt lives under the untagged v2 training
+results. Midpoint watcher exec39430 exited normally; final watcher exec19716 remains
+RUNNING, waiting for824. No midpoint inference or outcome-based checkpoint selection.
+Source remains182d657 on GPU; worker40060 progressed past433/824 with finite logged
+loss/gradnorms. Earlier partial audit checked181 completed accumulation groups with
+zero normalization mismatches; all three source kinds contributed targets. This is
+runtime/data preservation evidence, not content-learning or chat qualification.
+
+Pipeline audit for subsequent fresh confirmation: validate_registry_calibration.prepare
+currently hardcodes the original20 mappings and original BASE lookup file. Fresh facts
+need their own explicit immutable BASE reference; do not relabel reused facts as fresh.
+Current ordinary recall runs inHF, controls invLLM; also verify semantic recall on
+vLLM in the fresh confirmation, preserving matched inputs/adapter identity and reporting
+backend differences. Old exact-prefix memoryv2 parity is not ordinary chat validation.
+No current criteria changed, no new GPU run or training automatically queued.
+
+Latest preceding private snapshot5adc35170a23a13dd47d075aca213f59b6d4ffa0,
+code179b14e,2700files/10,082,928,451bytes live+offlineverified. New midpoint/receipt and
+these notes require commit/push/save. Final watcher cannot copy until824; monitor
+and pause it if a snapshot remains active near750. No local data mutations during save.
