@@ -6,42 +6,28 @@ Goal ACTIVE:resolve measurement errors and genuine SFT regressions before extend
 ethical training. Existing VastRTX3090 authorized; no new rental or Mac training.
 No full90/100beliefSFT has run. Original10-target/four-arm pilot completed earlier.
 
-RUNNING:supervisor sft-drift-replay-coverage-value-v5, PID123603; GPU source
-9066e9170be3c1627e0b3c587d80b1d609a80cba pinned. Training454/454 COMPLETE, all12
-engineering checks pass. Final/227/454 and closed training outputs copied/hash-verified
-locally:39files/961,687,200bytes(total includes already saved227). Finite worker now
-collecting all100beliefs:latest1024/2400recorded. No restart/resume or source pull.
-Master ethics_sft_replay_coverage_value_v5; train ethics_sft_c4_replay_coverage_v5.
-Command:cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_replay_value_probe.py
-Log:/workspace/sft-drift-ops/replay-coverage-value-v5.log
+TERMINAL:supervisor sft-drift-replay-coverage-value-v5 EXITED2026-10-22 18:02UTC;
+GPU now idle. Training454/454 COMPLETE, all12engineering checks pass. Master
+ethics_sft_replay_coverage_value_v5; train ethics_sft_c4_replay_coverage_v5.
+All closed training/checkpoints/assays/full100/master/log copied/hash-verified locally.
+Full100 ethics_gpu_replay_coverage_unqualified_s42_v5:2400/2400valid, fresh controls32/32.
+All2432natural/control runtime records reconstruct,0mismatches,normal stops throughout.
 
-V5fails declared performance gates; NOT a tuned/qualified pipeline. Procedural known
-thinking62/63(one4096tokenrepetition loop), short56/57(one new negation error, different
-from oldcontrol's uppercase loss). Decisions27/32thinking versusBASE/control32/32;
-short20/32overall,15/24BASE-known versuscontrol16/24. All64decision finals exact/normal,
-so17wrong values are genuine, not parser misses. Original development32/32passes;
-validation31/32butnote-flip1/16fails. Full100continues under unqualified label.
-All23assay flags and the one failed validation reply fully read/hash-bound. Entire
-4096tokenloop read; it repeats9-4=5without completing reasoning/final. No grade conflicts.
+V5 FAILS prospective criteria:procedural62/63known thinking(one4096tokenloop),56/57short;
+decisions27/32thinking versusBASE/control32/32,20/32short,15/24BASE-known retained.
+All64decision finals exact/normal;17wrong values are genuine. Originaldevelopment32/32;
+validation31/32butnote-flip1/16fails. All24flagged assay/validation replies fully read;
+no full semantic manual reading of2400natural replies. See reviewed_verdict_v1 artifacts.
+Actual192decision training-prefix/targets:0mismatches;all64goldpairs agent-read,0clear
+semantic defects. Thinking median293→43.5tokens(gold45):style/shortcut hypothesis only.
+Full100support69.79% vsBASE42 63.29%(+6.50pp),oldC4controlbounds67.833–67.875%.
+These unqualified descriptive readings do not establish selective editing or clear gates.
 
-Actual decision training-prefix/target audit192draws/64sources:0mismatches, correct
-weights(96short×32,96thinking×1), exactEOS. All64gold request/target pairs fully agent-read,
-no clear semantic defect. Generated thinking median293→43.5tokens; goldtargetmedian45.
-Shortcut/style transfer is a hypothesis, not proven mechanism. Do not start anotherSFT.
-Prospective diagnostic:changelog/2026-10-22-replay-interface-rca-plan.md (2×2 seen/held
-facts×wording, fixed3models;576new calls, no retraining). Implement only after current
-worker ends and reviewed artifacts are safe. Conditional independent confirmation is
-NOT triggered becausev5failed; do not use it to rescue this candidate.
-
-Exact next monitor:
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-replay-coverage-value-v5; tail -n 20 /workspace/sft-drift-ops/replay-coverage-value-v5.log'
-After TERMINAL+COLLECTION_COMPLETED:copy/hash-verify closed master/full100outputs and
-runtime configs, then run locally from belief-transfer:
-uv run --no-sync python scripts/analyze_replay_value_probe.py
-Analyzer46focused tests pass; no weights/local training. Reconstructs192candidate
-assay and all full100/control token/seed/native records, initial adapter/LR/projection.
-Full100failures/review/report remain pending. A process/checkpoint does not survive box
-destruction; current worker has NO resume support despite saved optimizer state.
+Next:finish private preservation, then implement the fixed-model2×2RCA from
+changelog/2026-10-22-replay-interface-rca-plan.md (seen/held facts×instruction wording,
+3fixed models,576new calls,192existing reused). No new SFT selected. Conditional
+independent confirmation NOT triggered. Current worker has no resume; never restart it.
+Exact preservation command:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
 
 ## Current scientific comparison
 
@@ -76,17 +62,13 @@ No automatic expansion, checkpoint selection on stance, or repeat-until-pass.
 
 ## Preservation
 
-Latest VERIFIED private snapshotf7aa1f63d2b6df50194266cb2f70d2510de1a962 at7d84a6c:
-6626files/19,644,280,742bytes; corpus3699d97c07df3f561ce87bbf24fdb99324d28d16.
-Includes checkpoint227, all prepared inputs/ref review/launch/conditional-confirm plan.
-New closed training copy(39files/961,687,200bytes), assays/dev/val(82files/4,106,172bytes),
-actualprefixaudit192, all64goldreview,23assay+1validation full reviews and newRCAplan
-are local offGPU but pending the next private save. Copy receipts under generated
-ethical_stance_sft/ethics_sft_replay_coverage_value_v5. Current unfinished full100/raw
-worker log still only onGPU; do not copy live append streams. No source pull on GPU.
-Save command:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
-No local mutations/copies/tests during save; retain handles acrossHF429waits.
-Never claim box destruction safe while new results remain only onGPU.
+Latest VERIFIED private snapshotff7be860588d68a5ae5406870668ca612dd2001c at2221312:
+6754files/20,213,346,646bytes; includes all closed training/checkpoints, assays/dev/val,
+64gold reviews,192training-prefix audit,24failed-response reads and RCAplan.
+Terminal/full100copy, derived mechanical/full-bank analyses and final reviewed verdict
+are now local offGPU but pending the next private snapshot. No outputs remain only onGPU.
+Do not claim box-destruction safety until that snapshot verifies. Copy receipts under
+generated/ethical_stance_sft/ethics_sft_replay_coverage_value_v5. No local mutation during save.
 
 ## Established results and data limits
 
