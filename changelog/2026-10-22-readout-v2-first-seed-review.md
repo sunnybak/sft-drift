@@ -68,3 +68,23 @@ from sixcompletedjobsread; futurejobs/failuresremainpending. Alloldgradesunchang
 Finalfullstudy stillpending; no furtherdiagnostic automaticallyfollows. At1:00:53uptime
 workerRUNNINGpid99941, positiveseed7(job7)controls448/488. Next safe boundary is the
 completed fixedsweep plus finalreview/report, not another intervention chain.
+
+## Eight closed jobs; overnight continuation authorized
+
+User going to sleep explicitly authorizes using existingGPUovernight for experiments.
+Activegoal remains unchanged: resolve errors and determine training attribution/tune
+if warranted before scaling. Finish/review currentfixedsweepfirst; don't revive the
+deferredclaritydiagnostic merely to continue activity, don't rentnewresources, and
+write a separate prospective plan before any evidence-warranted next experiment.
+
+Closedcopy168files/159,347,850bytes throughnegative7verified. Positive7/negative7each
+1,200/1,200naturalvalid/strict; fresh476/475of480; stress7/6of8. Positive7hasfour
+ambiguouslogicvariants andonestresscap. Negative7hasfiveambiguousvariants, onestresscap
+andonevalidnormalstopwrong15+4=19denialdespitecorrectintermediatederivation. Readall
+12failedrepliesinfull; companionpositive_s7/negative_s7_control_review.jsonl/.mdretain
+rawhashesandunchangedgrades. Total48failedcontrolsreviewedacross8closedjobs. The72
+preselectednaturalreview remainscomplete, no additionalnatural selectionneeded.
+Remaining7jobs/failure-reviews and fullthree-seedcomparisonpending. At1:20:21uptime
+supervisorRUNNINGpid99941, offtopicseed7(job9)natural128/1200. Samefixedsource469c18f,
+noGPUedit/restart/newtraining. Snapshotthrough6jobsalreadyverifiedba8ef52d/code1cd90a3;
+latest7/8closedbytesandreviewsawaitthisblock'ssave.

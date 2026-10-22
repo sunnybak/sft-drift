@@ -13,13 +13,13 @@ changelog/2026-10-21-error-aware-readout-v2-plan.md.
 ## Live finite sweep: ethics_gpu_target_free_readout_v2
 
 Supervisor sft-drift-target-free-readout-v2 RUNNING pid99941, GPUsource469c18f.
-At1:00:53uptime sixjobs closed; positiveseed7(job7)controls448/488.
+At1:20:21uptime eightjobs closed; offtopicseed7(job9)natural128/1200.
 All100beliefs ×5fixed models ×3sampling seeds:15jobs,25,320calls planned. Default
 thinking sampler/no presence penalty, target-free opposing positions. Performance
 failures retain full grids; technical identity failures stop. NOresume/autorestart.
 No remote sourcepull/change while bound; never restart a started ID.
 
-Firstsix children copied and byte-verified off-box:126files/119,902,142bytes. Partial
+Firsteight children copied and byte-verified off-box:168files/159,347,850bytes. Partial
 analyzer reconstructs6,000/6,000natural valid/strict/no caps; all500belief/model rows
 retained. All firstseed developmentcontrols240/240. Fresh correct/480 BASE474,
 positive475,negative475,offtopic478,C4475; stress/8correct5/8/6/8/7respectively.
@@ -27,15 +27,17 @@ Scope failures cluster in ONEambiguous authored not-metal/marked case. BASEnumer
 misreading, C4wrongoptionmapping and cappedloops are genuine. Offtopic own fresh
 gates pass; paired assessment remains false because BASEfails. Grades unchanged.
 
-ReadALL72/72preselected FULLnatural replies and all36failed controls from firstsixjobs.
+ReadALL72/72preselected FULLnatural replies and all48failed controls from firsteightjobs.
 C4smoking reply lastsettledrationaleexplicitlychoosesAthenoutputsB; parsercorrectly
 recordsB. Other59align with their lastsettledrationale but have scope/referent,
 necessity and knowledge-addition caveats. Smoking prohibition actor is underspecified.
 No moral truth key, faithful-rationale assumption or sample-to-population rate.
-BASEseed7has fresh476/480correct/stress5/8; allnatural valid/strict. Read subsequent failed controls.
+BASEseed7fresh476/stress5; positive7fresh476/stress7; negative7fresh475/stress6.
+Allnaturalvalid/strict. Negative7wrongvalid15+4=19denial remains explicit. Read subsequent failures.
 preselected_review_completion.json companion records exact72selection/sourcehashes; semanticclearancefalse.
 Report: changelog/2026-10-22-readout-v2-first-seed-review.md and master per-arm reviews.
 
+User explicitly authorized existingGPUovernight; goal unchanged, no newrental.
 Agreed boundary after user raised excessive iteration: finish this fixed sweep and
 review/report; do NOTautomatically launch another diagnostic. Scope-fact clarity
 640call plan/controller/analyzer remain OPTIONAL/DEFERRED, no preparation/calls, not
@@ -57,8 +59,8 @@ Original four-arm10targetpilot/results and expanded/offtopicfollow-up complete u
 original IDs. Candidatev5:20,000documents/221repairs; two conservation subjects remain
 quarantined, full-bank semantic clearance false. Git/data preservation required;
 current private receipt data/.handoff-receipt.json is authoritative. Latest verified
-snapshot93deeec71bc5358813b3e99e1acdf70fbcde4eff at43cdec7coversall5seed42jobs/reviews,
-5,281files/15,904,477,846bytes. BASEseed7plus72reviewcompletion await current save. Live/incomplete
+snapshotba8ef52dac74f97d4af36d04550e10e0bc500ab1 at1cd90a3coversfirst6jobs plus72reviewcompletion,
+5,310files/15,925,218,365bytes. Jobs7/8plus12newfailedcontrolreviews await current save. Live/incomplete
 GPUoutputs are not yet copied/snapshotted. The active process requires this box.
 
 Dashboard http://127.0.0.1:5180/, prior12reports; unchanged in this block. Fullsurface
