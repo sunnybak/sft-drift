@@ -1,36 +1,40 @@
 # Current state — 2026-10-22
 
-## Latest update — reference run completed
+## Latest update — reviewed references and one prospective candidate
 
-Replay-coverage v4 reference worker completed384 replies without technical failures;
-supervisor exited16:21UTC. RTX3090 currently idle0%,1MiB. No candidate SFT started.
-Source092adbe; master ethics_sft_replay_coverage_probe_v4. All112terminal files,
-4,811,779bytes copied/hash-verified offGPU locally. Do not restart this completed ID.
+V4reference run COMPLETE:384replies, no technical failures; all384token/seed/runtime/
+native-grade records reconstruct. All62flagged replies fully read and hash-bound in
+reference_agent_review_v1.jsonl;32native recognition misses,0disagreements with native
+False grades. Value-v2 agrees with all manual choices. BASEvalues32/32thinking,24/32
+nonthinking; fixed C4control32/32thinking,20/32nonthinking, retaining16/24BASE-known
+short decisions. Procedural control63/63thinking,56/57short; one uppercase loss.
+Native v4reference guard remains failed, candidatev4 never started; no historical
+grade/gate modified. See2026-10-22-replay-coverage-value-v5-plan.md.
 
-Procedural BASE-known retention:fixed C4control63/63thinking,56/57nonthinking; one
-genuine uppercase loss. Supplemental native decision assay has an unusable BASE
-reference:31/32thinking,1/32nonthinking recognized. Whole-final word-only parsing
-misses correct punctuated/explained choices. All62flagged responses fully read in
-preceding block; hash-bound manual annotation still pending. Some choices genuinely
-wrong despite correct preceding reasoning. Provisional manual values:BASE32/32thinking,
-24/32nonthinking; C4nonthinking20/32overall,16/24BASE-known retained. These manual
-counts are not yet a completed versioned assessment. V4candidate remains blocked;
-do not bypass/requalify its original failed reference guard or lower thresholds.
+New master ethics_sft_replay_coverage_value_v5 PREPARED, not launched. Train
+ethics_sft_c4_replay_coverage_v5. Same exact UNTRAINED v4recipe/data/settings/seed,
+manifest47b152a692b2b1101000f4a86bc193394b60c8488bd6af6a593b23273b7bcad6.
+Protocol32e1193e54c86d478890151016735ddad8ac6f5399ee7a3dd845518a83c33f7f;
+1138bindings verified. No new BASE/control calls or reference redraw. Value-v2
+BASE-known mask frozen before candidate; same95%retention/min24/strict candidate
+checks, unchanged original model controls, all100beliefs even if performance fails.
+Not independent validation:development assay,8facts/correlated variants, one trainseed.
+No automatic recipe adoption or expansion. No full90/100beliefSFT has run.
 
-Separate neutral-task-value-v2 supplement implemented with native scores preserved,
-actual terminal choice precedence and ambiguous endings left unscorable. Scorer/stage/
-import tests45passed. Frozen ethical instrument unchanged. Next:finish bound62reply
-review and versioned supplementary assessment, freeze BASE-known mask, then prepare
-a new prospective amendment for the SAME untrained replay recipe before training.
-No new data/LR/weight search, reference redraw or automatic ethical expansion.
+Next:finish focused tests,commit/push and private-save prepared inputs/review; deploy
+verified source/data to existing authorized idleRTX3090. Run finite supervisor:
+cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_replay_value_probe.py
+Planned supervisor sft-drift-replay-coverage-value-v5, log
+/workspace/sft-drift-ops/replay-coverage-value-v5.log. No restart/resume of startedIDs.
+Full worker validates refs/private receipts then one454steptrain,192retention/decision
+calls and original controls/full100readings. Require full failure review before adoption.
 
-Last verified private snapshot f3ae6915ae6c7fb7455f770cb358a47a140ca23b at092adbe:
-6471files/19,228,813,729bytes. Includes v4prepared inputs and earlier completed work;
-new reference replies/copy receipts/cross-recipe audit/value-v2 need next snapshot.
-All new results are local offGPU. Next preservation command:
-cd belief-transfer && uv run --no-sync python scripts/handoff.py save
-No local mutations during save. Older preparation/preservation statements below are
-superseded by this update; recipe details remain valid. No box destruction yet.
+Latest VERIFIED private snapshot4bae9d6e142f2b37f77cfdd830d8852514a9ed52 at e3cf344:
+6590files/19,233,688,445bytes; corpus2cf073ff462a62872ea299af24e6f9e577e854e8.
+Covers all raw v4references/copy receipts/cross-recipe audit and value-v2 implementation.
+New bound review/supplementary assessments/v5preparation still pending next snapshot.
+Everything completed is local offGPU. No box destruction until next verified save.
+Earlier pending/status entries below are superseded by this update.
 
 ## Goal and decision
 

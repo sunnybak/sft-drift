@@ -5,7 +5,15 @@ supports historical reproduction/tests; its presence is not a running order.
 
 ## Current tuning investigation (2026-10-22)
 
-STATE.md controls execution. Lower-LR trial is complete/rejected. One replay-data
+STATE.md controls execution. V4references are complete/reviewed and its native
+supplementary reference guard remains failed. New prospective value-separated master
+ethics_sft_replay_coverage_value_v5 reuses the actual v4references and identical
+untrained replay recipe; no resampling or lowered retention threshold. New entry
+points: scripts/review_replay_coverage_references.py,
+prepare_replay_value_probe.py, run_replay_value_probe.py. All100beliefs still measured
+on the candidate even if scientific checks fail; no automatic adoption/scale.
+
+Older preparation description (superseded by STATE): Lower-LR trial is complete/rejected. One replay-data
 intervention is prepared under ethics_sft_replay_coverage_probe_v4; earlier versions
 are unmeasured preparation lineage, not candidates or a queue. Entry points:
 `scripts/build_replay_coverage.py`, `audit_replay_coverage.py`,

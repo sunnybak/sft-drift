@@ -5,12 +5,19 @@ Read the baseline report for methodology/results; do not reconstruct the old res
 
 ## Latest measurement clarification
 
-Replay-coverage v4 references completed384 calls without technical failures; no new
-candidate trained. Native supplemental decision parsing requires an entire one-word
-final, although its prompt permits explanations before the ending. Nonthinking mode
-does not imply answer-only output. A separate value-v2 supplement is being verified;
-strict format and original failed scores/guard remain unchanged. Manual review also
-finds genuine wrong choices. STATE.md's latest update supersedes older pending entries.
+V4references complete/reviewed:384replies reconstructed and62flags fully read/hash-bound.
+Separate value-v2 matches manual choices:BASE32/32thinking,24/32nonthinking; fixed C4
+control32/32thinking,20/32nonthinking,16/24BASE-known short values retained. Original
+word-only grades remain unchanged. Nonthinking does not imply answer-only output;
+correctness, strict format and boundaries/stops are distinct. Genuine wrong choices
+remain after correcting parser misses.
+
+A prospective v5candidate reuses these actual reference IDs and the same untrained
+replay recipe with value-v2 known masks. Retention remains95%; no new draws, lowered
+thresholds or changed ethical instrument. All100beliefs still measured. See
+[changelog/2026-10-22-replay-coverage-value-v5-plan.md](changelog/2026-10-22-replay-coverage-value-v5-plan.md).
+This is development evidence from eight facts and correlated variants, not independent
+validation. STATE.md's latest update supersedes older pending entries below.
 
 ## Current authorized investigation
 

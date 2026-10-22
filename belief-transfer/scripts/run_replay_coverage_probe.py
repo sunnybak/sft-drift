@@ -100,9 +100,10 @@ def compare_decisions(observed: list[dict], base: list[dict], known: list[dict])
             'criteria': '>=24/32BASE-known each mode/all4operations/bothlabels;>=95%retention;all64complete/exactfinals.'}
 
 
-def inspect(model: str, kind: str, protocol: dict, tokenizer) -> list[dict]:
-    _, parent = roots()
-    name = retention_id(model) if kind == 'retention' else decision_id(model)
+def inspect(model: str, kind: str, protocol: dict, tokenizer, *,
+            parent: Path | None = None, name: str | None = None) -> list[dict]:
+    parent = roots()[1] if parent is None else parent
+    name = name or (retention_id(model) if kind == 'retention' else decision_id(model))
     folder = Path('data/results/ethical_pilot') / name
     if not (folder / 'COMPLETED').is_file():
         raise ValueError('Incomplete child: ' + name)
@@ -251,12 +252,12 @@ def review_complete(parent: Path) -> None:
     preserved(review_path)
 
 
-def verify_candidate(protocol: dict, tokenizer) -> dict:
+def verify_candidate(protocol: dict, tokenizer, *, train_id: str = TRAIN) -> dict:
     from belief_transfer.dataset.document_sft import load_manifest, tokenize_document
-    plan = read(Path('data/generated/ethical_stance_sft') / TRAIN / 'plan.json')
-    folder = Path('data/results/ethical_stance_sft') / TRAIN
-    binding = training_binding(plan, folder, Path('data/checkpoints/ethical_stance_sft') / TRAIN / 'final')
-    job = load_job(['+run=' + TRAIN])
+    plan = read(Path('data/generated/ethical_stance_sft') / train_id / 'plan.json')
+    folder = Path('data/results/ethical_stance_sft') / train_id
+    binding = training_binding(plan, folder, Path('data/checkpoints/ethical_stance_sft') / train_id / 'final')
+    job = load_job(['+run=' + train_id])
     spec = job.document_sft
     expected = [c for r in load_manifest(Path(spec.manifest_path)) for c in tokenize_document(r, tokenizer,
         max_length=spec.max_length, synthetic_prefix=spec.synthetic_prefix, serialization=spec.serialization, replay=spec.replay)]
@@ -267,27 +268,27 @@ def verify_candidate(protocol: dict, tokenizer) -> dict:
     return binding
 
 
-def full_surface(protocol: dict, binding: dict, parent: Path) -> None:
+def full_surface(protocol: dict, binding: dict, parent: Path, *, identify=eval_id) -> None:
     def phase(name: str) -> None:
         check_bindings(protocol['source_bindings'])
         verify_binding(binding)
-        job = load_job(['+run=' + eval_id(name)])
-        if config_sha(job) != protocol['jobs'][eval_id(name)]:
+        job = load_job(['+run=' + identify(name)])
+        if config_sha(job) != protocol['jobs'][identify(name)]:
             raise ValueError('Frozen full100config changed')
-        if not execute([*LOCK, EVAL_PYTHON, '-u', 'run.py', '+run=' + eval_id(name)], parent, name):
+        if not execute([*LOCK, EVAL_PYTHON, '-u', 'run.py', '+run=' + identify(name)], parent, name):
             raise RuntimeError('Full100phase technical failure: ' + name)
     root = Path('data/results/ethical_pilot')
     phase('development')
-    dev_ok = read(root / eval_id('development') / 'stance_study_summary.json').get('selected') == 'named_endorse_reject'
+    dev_ok = read(root / identify('development') / 'stance_study_summary.json').get('selected') == 'named_endorse_reject'
     val_ok = False
     if dev_ok:
         phase('validation')
-        val_ok = read(root / eval_id('validation') / 'stance_study_summary.json').get('validation_passed') is True
+        val_ok = read(root / identify('validation') / 'stance_study_summary.json').get('validation_passed') is True
     chosen = 'reading' if dev_ok and val_ok else 'unqualified'
     phase(chosen)
-    status = original_surface_status(root / eval_id(chosen))
+    status = original_surface_status(root / identify(chosen))
     write_json(parent / 'candidate_measurement_status.json', {'development_passed': dev_ok,
-        'validation_passed': val_ok, 'stance_run_id': eval_id(chosen), 'actual_coverage': status,
+        'validation_passed': val_ok, 'stance_run_id': identify(chosen), 'actual_coverage': status,
         'interpretation': 'All failed/missing outcomes retained; no automatic retry, adoption or ethical selection.'})
     if status['recorded'] != 2400:
         raise ValueError('Missing full100calls; preserve/reassess without restart')
