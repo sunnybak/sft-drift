@@ -5,9 +5,10 @@
 Goal ACTIVE:investigate/resolve genuine SFTregressions before extending ethical training.
 Existing VastRTX3090 authorized; no new rental or Mac training. No full90/100beliefSFT
 has run. Original10-target/four-arm pilot is historical, not automatically extended.
-GPU now idle. Latest finite worker sft-drift-replay-interface-rca-v1 EXITED18:45UTC,
+New reasoning worker RUNNING PID131244 (19:50:20UTC), still preflight; no optimizer
+steps confirmed yet. Latest older finite worker sft-drift-replay-interface-rca-v1 EXITED18:45UTC,
 COLLECTION_COMPLETED+TERMINAL, no technical failure, all9children complete. Do not restart.
-GPUcheckout4971dd83a42f5f1a530403a2ba75012986b575fb; no active GPUworker now.
+GPUcheckout3438572a6fea4be7b64007e40a8dc2485364bc09 pinned for active worker.
 
 ## Established current result
 
@@ -68,26 +69,31 @@ amendment requires all100on midpoint227 and final; terminal454aliases final only
 both adapter+config bytes match, otherwise separately measured. Final remains primary.
 All scientific failures retain full100readings; technical failures stop/preserve.
 
-Next: finish private save of frozen executable inputs, deploy to existing authorized
-GPU, verify source/data/environment/idle state, then launch exactly once:
-cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_base_reasoning_probe.py
-Finite worker has NOresume/restart. Expected supervisor name:
-sft-drift-base-reasoning-replay-v1; log /workspace/sft-drift-ops/base-reasoning-replay-v1.log.
-Neither exists/runs yet. Independent confirmation remains conditional on fully reviewed,
-privately preserved final development pass. No automatic ethical scaling.
-Details:changelog/2026-10-22-base-reasoning-execution-plan.md and
-changelog/2026-10-22-base-reasoning-worker-verification.md.
+Private executable-input snapshot VERIFIED and deployed; all1306bindings/13configs/
+1152references reconstruct onGPU.327transferred files match,57absent files copied;
+no existing experiment overwritten. Single finite trial launched via supervisor
+sft-drift-base-reasoning-replay-v1, PID131244at19:50UTC, preflight still active.
+Command:cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_base_reasoning_probe.py
+Log:/workspace/sft-drift-ops/base-reasoning-replay-v1.log. NOresume/restart.
+Exact next action:SSH supervisorctl status sft-drift-base-reasoning-replay-v1 and tail
+that log; inspect current training/checkpoint status. Never restart on observation timeout.
+Keep GPUcheckout3438572pinned. Newoutputs only onGPU until safe-boundary copy/hash/save.
+No new optimizer steps/checkpoints confirmed yet. Independent confirmation conditional
+on fully reviewed, privately preserved final pass; no automatic ethical scaling.
+See2026-10-22-base-reasoning-execution-plan.md, worker-verification.md and generated
+master/deployment_launch_v1.json.
 
 ## Preservation
 
-Latest VERIFIED prepared-data snapshot daafcd993ef38871ea42c0d5b0cfc2b5654d42c9 at
-fb27907ece2fd96404e396ef7f7dd58febba8029:7119files/20,273,648,938bytes;
-corpusd7345fec06548c4bf165eb13f61234018c46d892. Includes all terminal RCA/reviews,
-32reviewed targets/training manifest/config and confirmationv1VOID/v2corrected banks.
-Subsequent executable workers/protocols/checkpoint overlays need new snapshot now.
-Exact:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+Latest VERIFIED executable-input snapshot475167148e76c3379824e8500fdb15ea1a0590b8at
+3438572a6fea4be7b64007e40a8dc2485364bc09:7123files/20,274,343,133bytes;
+corpus3f0bf5b86e86de2229ec8c589ce7a6836dd7d6c4, manifest
+9e332c2946aa0f76243984f0828ce20e84fcdeaec73db6f3856957bfbd7d0f25.
+All workers/protocols/configs/prepared data and prior results included. Launchreceipt/
+these notes postdate snapshot; saving now. LiveGPUoutputs not copied/saved yet;
+do not destroy box. Earlier prepared-data snapshotdaafcd993ef38871ea42c0d5b0cfc2b5654d42c9
+remains. Save:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
 Keep same process through HF429waits; no local mutation during save; check receipt.
-GPU checked idle0%,1MiB; latest RCAworker EXITED. No new optimizer steps.
 
 ## Other fixed study limits
 

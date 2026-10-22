@@ -30,3 +30,14 @@ explicit missing values and full100collection despite scientific rejection.
 GPU observed idle0%,1MiB; latest RCAworker terminal. Next preserve executable inputs,
 deploy/hash-check them on the authorized RTX3090 and launch the single fresh trial.
 This preparation is not evidence that the intervention resolves model degradation.
+
+## Deployment and launch
+
+Source3438572pushed; private snapshot475167148e76c3379824e8500fdb15ea1a0590b8
+verified7123files/20,274,343,133bytes. All327transport files match,57new; no overwrite.
+GPUindependently verified1306bindings/13jobs/1152references; CUDA/package versions
+unchanged. Finite supervisor sft-drift-base-reasoning-replay-v1 launched once,
+RUNNINGPID131244at19:50:20UTC, preflight; optimizer steps not yet confirmed.
+No automatic starts/restarts. Log:/workspace/sft-drift-ops/base-reasoning-replay-v1.log.
+Master generated deployment_launch_v1.json records exact source/input receipt.
+Newexperimental outputs remain onGPU until safe-boundary copy and private preservation.
