@@ -7,8 +7,10 @@ Read the baseline report for methodology/results; do not reconstruct the old res
 
 Resolve measurement errors and determine whether SFT caused capability losses before
 expanding training. The existing four final adapters and BASE remain fixed references. The new matched
-C4norm1/weight32ablation is active; norm1training is live, and midpoint227is copied.
-No candidate final or new ethical outcome has been reviewed yet. The user authorized
+C4norm1/weight32ablation is active. Norm1completed all12engineering checks,384retention
+calls and a complete2,400-response full100grid. Its modelqualification remains failed
+(30/32controls); primaryvalue retention passes despite2narrow losses. Weight32training
+is live with midpoint227copied. Matched recipe conclusions/ethical contrasts pending. The user authorized
 continued work on the existing GPU overnight on October 22; no new rental is authorized.
 
 The completed experiment **ethics_gpu_target_free_readout_v2** followed its prospective
@@ -60,7 +62,9 @@ unchanged. Mechanical reporting now verifies actual expected/recorded/valid coun
 COLLECTION_COMPLETED alone is insufficient. A prospective completion amendment permits
 one new collect-all reading for BOTH new models only if either original grid omitted
 calls. It never triggers on invalid answers, control scores or ethical direction.
-No further repeat-until-pass. See2026-10-22-collect-all-completion-amendment.md; register/
+No further repeat-until-pass. The conditional completion reader is implemented and
+32targeted tests pass; no new paths/calls registered yet while oldworker is bound.
+Norm1all2400recorded, so no omission there. See2026-10-22-collect-all-completion-amendment.md; register/
 freeze/save fresh IDs before any follow-up, after the bound live worker terminates.
 
 ## Latest completed pilot

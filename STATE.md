@@ -75,40 +75,51 @@ No old gate changed. Report:changelog/2026-10-22-replay-weight-reference-results
 
 Finite training/controller implemented,124targeted tests pass. Training execution binds
 1,048source/config/test/reference/weight files after full reference review and before SFT.
-## Live training / next observation
+## First new model complete / live second model
 
-sft-drift-replay-weight-ablation-v1 RUNNING PID114336at launch, sourcedf32125.
-First child:ethics_sft_c4_norm1_v1; last observed step302/454, finite losses/gradients. Command:
-/workspace/sft-drift/belief-transfer/.venv/bin/python -u scripts/run_replay_weight_ablation.py
-Log:/workspace/sft-drift-ops/replay-weight-ablation-v1.log. Midpoint227completed and copied:
-12files/418,244,396bytes verified, including8checkpoint files and static preprocessing.
-Actual CUDA tokenized input/labels equal original after stripping weight metadata.
-Receipt:master results/midpoint_copy_norm1_v1.json. Final still required; no resume.
-Existing RTX3090 only; autostart/autorestart false, child shared CUDA lock. No resume/
-overwrite. Do not change/pull bound GPU source or destroy box while live.
-The fixed worker proceeds norm1→confirmation→all100→weight32→confirmation→all100.
-It requires engineering checks and exact actual objective/tokenized-input equality.
-Caveat: qualified route inherits legacy skip policy; a fresh full-run control failure
-can omit natural calls despite exit0/COLLECTION_COMPLETED. Do not trust that marker
-for all100coverage. Unqualified route collects. Technical errors stop/preserve. Final-only; no outcome selection or automatic further weight/LR search.
+ethics_sft_c4_norm1_v1 COMPLETE:454steps/1,966.9s, all12engineering checks pass,
+exact adapter reload/base frozen/one-pass/actual objective and original tokenized
+inputs/labels verified. Final/227/454checkpoints plus alltraining data copied:
+69files/964,446,209bytes verified, including384completed retention calls/configs.
+13development files and32full-reading files/32,549,351bytes also verified off-box.
+
+Primary value retention:63/63thinking and57/59recognized-correct nonthinking eachseed;
+one nonthinking product perseed is machine-unscorable. All24retention queue replies
+agent-read:allincorrect, including30, 619for1097*27=29619. The3unscorable repeats are
+supplementally adjudicated wrong, primaryNoneunchanged. Norm1recovers oldC4sum1051+2026
+but loses product1097*27; nonthinking uppercasefqugxy→FQUGYXstillwrong. No netretention
+improvement overhistoricalC4; no broad-collapse or recipe-repair claim.
+
+Development and full-reading controls both30/32:one negated3*3case fails in factual/
+nullforms. All4failedcontrolreplies read in full:generated reasoning correctly computes9
+and saysendorse; finalrejectis wrong. Frozen extraction correct. Total28full reviews.
+Model qualificationFAILED; validation not attempted. All100reading neverthelessCOMPLETE:
+2,400recorded/extracted/strict replies,0missing/caps/formaterrors. Frozen scores rebuilt;
+bank/decoder/backend equalCUDA BASE. Dataestimable, explicitlyUNQUALIFIED; no ethical-
+outcome selection. Report:changelog/2026-10-22-normalization-control-results.md.
+
+sft-drift-replay-weight-ablation-v1 RUNNING PID114336, original sourcedf32125.
+Current child:ethics_sft_c4_weight32_v1. Midpoint227completed; subsequentforward234
+verified before copy.11raw files/418,232,846bytes verified off-box; actual CUDA labels/
+inputs equaloriginal, replayweights exactly1/32. DerivedMDusescanonicalprojectpath,
+avoiding the observed finalization header-only re-render. No final/retention result yet.
+No sourcepull/change, restart or boxdestruction while bound worker live. No resume by ID.
+Log:/workspace/sft-drift-ops/replay-weight-ablation-v1.log.
 
 Next observation:
 ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-replay-weight-ablation-v1; tail -20 /workspace/sft-drift-ops/replay-weight-ablation-v1.log'
-Copy completed checkpoint/results at safe boundaries. After each final, independently
-verify dose/adapter/retention/all100coverage; after both, fully read every new failure/
-unscorable/lost-value reply and compare fixed arms. Goal NOT complete. No expansion.
-Static launch/preprocessing/midpoint227copied locally; live audit/log/final remain
-GPU-only until completed boundaries. Training cannot resume by rerunning its ID.
+Afterweight32final:verify/copy/privately preserve closed artifacts, then384retention/
+qualification/all100; fully read every failure/unscorable/lost-value reply, comparefixed
+arms. Do not pick settings onethicaloutcomes or infer completion from a marker alone.
 
-New local-only mechanical report checks exact paired values/unknowns, reconstructs
-frozen full100summaries and emits CONTROL_GATE_SKIPPED_NATURAL/MISSING_NATURAL_RESPONSES/
-INVALID_NATURAL_RESPONSES.25targeted tests pass; not deployed into bound live source.
-Prospective amendment:changelog/2026-10-22-collect-all-completion-amendment.md. If either
-original grid omitted calls, ONE new collect-all reading for BOTH models under fresh
-completegrid_s42_v1IDs. Trigger on absent calls only, never invalid answers/control
-performance/ethical scores. If both recorded2400, no extra calls. Register/freeze/save
-follow-up only after live worker terminates; no midrun source change. Implementation
-of that conditional follow-up still needed if triggered. Retention thresholds unchanged.
+Conditional completion reader now IMPLEMENTED/32targeted tests pass, localonly:
+python scripts/complete_replay_weight_surface.py prepare
+It requires both original stages terminal. If both recorded2400, no new calls. If either
+omitted calls, register its6required paths AFTER liveworkerterminal, then prepare/freeze/
+commit/push/private-save before run. One matched collect-all reading BOTHmodels, never
+trigger oninvalidanswers/control/retention/ethicalscores. Old gates unchanged. Source:
+2026-10-22-collect-all-completion-amendment.md. No new paths registered/calls made yet.
+Firstmodel has no missingcalls; second not complete. Goalactive; no expansion.
 
 ## Prior completed evidence
 
@@ -122,12 +133,13 @@ Original neutral18/20gate remains failed; no retrospective pass from these diagn
 
 ## Preservation
 
-Verified snapshot9645f127785aa2f1afbab3d47b0f09016d3d85fe at
-coded2b697d1d68da41ea79bc6f87a5b67aa5116c6b9:5,896files/16,171,613,374bytes;
-corpus2917a863ec29f3d1472fbc836dad41eacb209834. Covers complete references/plans and
-training launch metadata. New midpoint227/preprocessing copy, report code, tests and
-prospective collection amendment await this block's save. From belief-transfer/:
-uv run --no-sync python scripts/handoff.py save
-No local source/data mutation during save. Live training audit/log/final not backed up.
+Verified snapshot59951ab432b218259d578243a2520c002887c0b1 at
+code44b485da435570b26abf5eb6f9e40853368d49da:5,910files/16,589,863,480bytes;
+corpus57c6d88076daea18ba5321cf3021a84961bb0fe4. Covers prior evidence andnorm1midpoint.
+Current additions await save:complete norm1phase/28reviews, weight32midpoint/static
+preprocessing, completionreader/tests. Oldderived tokenizedMDarchived; finalversion
+changes onlydisplaypathheader, rawdataunchanged. Receipts underSFTmasterresults.
+From belief-transfer/: uv run --no-sync python scripts/handoff.py save
+No local source/data mutation during save. Liveweight32audit/log/final not backed up.
 Candidatev5 remains20,000documents/221repairs; conservation subjects quarantined,
 full-bank semantic clearance false. No new corpus/full100training launched.
