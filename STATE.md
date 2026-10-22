@@ -23,14 +23,20 @@ semantic defects. Thinking median293→43.5tokens(gold45):style/shortcut hypothe
 Full100support69.79% vsBASE42 63.29%(+6.50pp),oldC4controlbounds67.833–67.875%.
 These unqualified descriptive readings do not establish selective editing or clear gates.
 
-Next:implement the fixed-model2×2RCA from
-changelog/2026-10-22-replay-interface-rca-plan.md (seen/held facts×instruction wording,
-3fixed models,576new calls,192existing reused). No new SFT selected. Conditional
-independent confirmation NOT triggered. Current worker has no resume; never restart it.
-Exact next preparation reference:cat changelog/2026-10-22-replay-interface-rca-plan.md
-Read-only preconstruction audit passed:64paired slots/256rendered requests independently
-solved, two-way template replacement exact, mode/negation/note/label matches. No RCA
-artifacts or calls yet. Materialize/test/register/freeze inputs before finite GPU dispatch.
+PREPARED:ethics_gpu_replay_interface_rca_v1, fixedBASE/control/v5candidate2×2transfer
+RCA. 9new typed neutral_decision_retention jobs,576new calls; held/eval192actual replies
+reused. No training/newethicalreading/adoptiongate. Inputs4×64rows;192actual training
+prefixes/targets/weights reverified, all40source/prepared bindings match. Focused tests
+110passed(mocks/tempdirs, includes missing/changed actual metadata and truncation).
+Generated/ethical_pilot master protocol and9YAMLs are ready; no RCAcalls/worker yet.
+Next:private-save inputs, deploy exact source/inputs/receipt after oldworker terminal,
+then finite supervised dispatch. No overwrite/resume/retry-on-content. Conditional
+independent confirmation remains NOT triggered; failedv5verdict unchanged.
+Exact prepare command(already completed, DO NOT rerun existingID):
+cd belief-transfer && uv run --no-sync python scripts/prepare_replay_interface_rca.py
+Exact worker command(after verified preservation/deployment):
+cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_replay_interface_rca.py
+Plan:changelog/2026-10-22-replay-interface-rca-plan.md; implementation notes beside it.
 
 ## Current scientific comparison
 
@@ -70,7 +76,7 @@ Latest VERIFIED private snapshotef853555ffe09e76e69f4b7b5fcbd45ffc0aef73 at5421a
 Includes entire closed training/checkpoints, terminal worker log/full100, all reviews,
 mechanical/per-belief analyses and final reviewed verdict. No outputs remain only onGPU
 or only local. Verified receipt updated after successful same-processHF429retry.
-Git final report/source pushed; this subsequent notes-only update records that receipt.
+Git final report/source pushed. New RCAinputs/source/configs are local pending next save.
 Copy receipts under generated/ethical_stance_sft/ethics_sft_replay_coverage_value_v5.
 Save at next completed block:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
 No local mutations during save. Worker terminal/GPU idle; no resume/restart.

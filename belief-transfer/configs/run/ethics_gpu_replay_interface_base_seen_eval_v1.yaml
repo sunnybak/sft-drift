@@ -1,0 +1,13 @@
+# @package _global_
+defaults:
+- ethics_gpu_retention_rca_base_v2
+stage: neutral_decision_retention
+run_id: ethics_gpu_replay_interface_base_seen_eval_v1
+instruction_retention: null
+pilot_bench:
+  adapter_path: null
+neutral_decision_retention:
+  model_label: base
+  bank_path: data/generated/ethical_pilot/ethics_gpu_replay_interface_rca_v1/seen_eval.jsonl
+  bank_sha256: 416929df62773f6288059c5a785d9507b3e613b34bfa50514c24db5d47433543
+  adapter_sha256: null
