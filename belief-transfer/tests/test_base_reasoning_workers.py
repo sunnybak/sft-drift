@@ -12,10 +12,12 @@ import base_reasoning_runtime as runtime
 import run_base_reasoning_confirmation as confirmation
 import run_base_reasoning_probe as probe
 import prepare_base_reasoning_execution as execution
+import run_base_reasoning_recovery as recovery
 from prepare_base_reasoning_confirmation import generate
 from prepare_replay_weight_ablation import write_rows,write_json,sha
 from belief_transfer.stages.instruction_retention import observation
 from belief_transfer.metrics.instruction_retention import report
+from belief_transfer.schemas import InstructionRetentionSpec
 
 
 def values(kind):
@@ -79,8 +81,9 @@ class Tokenizer:
     def decode(self,tokens,**kwargs):return bytes(tokens).decode()
 
 
+@pytest.mark.parametrize('adapter',[False,True])
 @pytest.mark.parametrize('defect',[None,'seed','generation_count','bank_hash','summary','truncation'])
-def test_retention_reconstructs_actual_records_and_preserves_truncation(tmp_path,defect):
+def test_retention_reconstructs_actual_records_and_preserves_truncation(tmp_path,defect,adapter):
     bank=generate()['retention_0'];t=Tokenizer();raw=[]
     expected={'model':{},'backend':{},'generation':{'revision':'pinned'},'decoding':{},
               'max_new_tokens':4096,'batch_size':32,'versions':{'vllm':'pinned'}}
@@ -90,25 +93,32 @@ def test_retention_reconstructs_actual_records_and_preserves_truncation(tmp_path
         tokens=t.encode(text)+[999]
         if defect=='truncation' and i==0:tokens.pop()
         meta={'input_token_ids':r['expected_input_token_ids'],'sampling_seed':r['seed'],'model_revision':'pinned',
-            'adapter_lora_id':None,'output_token_ids':tokens,'generation_tokens':len(tokens),'prompt_tokens':len(r['expected_input_token_ids']),
+            'adapter_lora_id':1 if adapter else None,'output_token_ids':tokens,'generation_tokens':len(tokens),'prompt_tokens':len(r['expected_input_token_ids']),
             'finish_reason':'length' if defect=='truncation' and i==0 else 'stop',
             'execution':expected['generation'],'execution_versions':expected['versions']}
-        raw.append(observation(r,(text,meta),t,evaluation=42,revision='pinned',adapter=False))
+        raw.append(observation(r,(text,meta),t,evaluation=42,revision='pinned',adapter=adapter))
     summary,known=report(raw,bank,None)
     write_rows(tmp_path/'bank.jsonl',bank);write_rows(tmp_path/'known_items.jsonl',known)
     if defect=='seed':raw[0]['generation_metadata']['sampling_seed']+=1
     if defect=='generation_count':raw[0]['generation_metadata']['generation_tokens']+=1
     write_rows(tmp_path/'responses.jsonl',raw)
+    adapter_sha='a'*64 if adapter else None
+    spec=InstructionRetentionSpec(model_label='candidate' if adapter else 'base',bank_path='bank.jsonl',
+        bank_sha256=sha(tmp_path/'bank.jsonl'),adapter_sha256=adapter_sha,eval_seeds=[42],
+        fresh_base_reference=not adapter,known_path='known_items.jsonl' if adapter else None,
+        known_sha256=sha(tmp_path/'known_items.jsonl') if adapter else None)
+    serialized=spec.model_dump()
+    assert ('fresh_base_reference' not in serialized) if adapter else serialized['fresh_base_reference']
     write_json(tmp_path/'manifest.json',expected|{'bank_sha256':'wrong' if defect=='bank_hash' else sha(tmp_path/'bank.jsonl'),
-        'adapter_sha256':None,'evaluation':{'eval_seeds':[42],'nonthinking_temperature':0,'fresh_base_reference':True}})
+        'adapter_sha256':adapter_sha,'known_sha256':spec.known_sha256,'evaluation':serialized})
     write_json(tmp_path/'summary.json',{'by_seed':{'42':{} if defect=='summary' else summary}})
     (tmp_path/'COMPLETED').write_text('complete')
     if defect in (None,'truncation'):
-        result=inspect_retention(tmp_path,bank,expected,None,t)
+        result=inspect_retention(tmp_path,bank,expected,adapter_sha,t)
         assert len(result)==128
         if defect=='truncation':assert result[0]['value']['value_correct'] is None
     else:
-        with pytest.raises(ValueError):inspect_retention(tmp_path,bank,expected,None,t)
+        with pytest.raises(ValueError):inspect_retention(tmp_path,bank,expected,adapter_sha,t)
 
 
 def test_technical_child_failure_keeps_dispatch_and_refuses_overwrite(tmp_path,monkeypatch):
@@ -196,15 +206,20 @@ def test_all_checkpoint_phases_registered_and_started_outputs_refused(tmp_path,m
     with pytest.raises(FileExistsError):probe.preflight_outputs()
 
 
-def test_scientific_failure_still_collects_full_surface(tmp_path,monkeypatch):
+@pytest.mark.parametrize('reuse',[False,True])
+def test_scientific_failure_still_collects_full_surface(tmp_path,monkeypatch,reuse):
     monkeypatch.chdir(tmp_path)
-    probe.RESULTS=tmp_path/'parent';probe.RESULTS.mkdir()
+    monkeypatch.setattr(probe,'RESULTS',tmp_path/'parent');probe.RESULTS.mkdir()
     # Inputs are explicit mocked data; neither real artifacts nor weights are read.
     base={'retention':[],'decisions':{c:[] for c in probe.CELLS}}
     refs={k:copy.deepcopy(base) for k in ('base','control','parent')}
     monkeypatch.setattr(probe,'value_known',lambda _:[])
-    monkeypatch.setattr(probe,'collect',lambda *a,**kw:[])
-    monkeypatch.setattr(probe,'rows',lambda _:[])
+    calls=[]
+    def collect(*a,**kw):calls.append(a[0]);return []
+    monkeypatch.setattr(probe,'collect',collect)
+    reused=[{'example_id':str(i),'value':{'value_correct':True},
+             'native_assessment':{'strict_format':True}} for i in range(128)]
+    monkeypatch.setattr(probe,'rows',lambda _:reused if reuse else [])
     monkeypatch.setattr(probe.previous,'summarize_values',lambda *a:{'passed':False})
     monkeypatch.setattr(probe.previous,'decision_known',lambda _:[])
     monkeypatch.setattr(probe.previous,'compare_decisions',lambda *a:{'passed':False})
@@ -218,5 +233,41 @@ def test_scientific_failure_still_collects_full_surface(tmp_path,monkeypatch):
     monkeypatch.setattr(probe,'load_job',lambda _:type('Job',(),{'pilot_bench':None})())
     monkeypatch.setattr(probe,'audit_surface',lambda *a:{'records':2432,'passed':True})
     protocol={'bank_path':'bank','runtime_reference':{},'references':{'base':{'retention':{'run_id':'base'}}}}
-    result=probe.measure('midpoint',{},protocol,refs,None)
+    result=probe.measure('midpoint',{},protocol,refs,None,reused_retention=reused if reuse else None)
     assert measured==[execution.eval_id('midpoint','unqualified')] and not result['development_passed']
+    assert len(calls)==(4 if reuse else 5)
+    assert (execution.measure_id('midpoint','retention') in calls) is not reuse
+
+
+def test_recovery_rebinds_only_reviewed_collector_repairs_and_not_measurement_sources(tmp_path,monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    paths=[*sorted(recovery.REPAIRED),'src/frozen_scorer.py','data/raw.jsonl','data/raw.md']
+    for name in paths:
+        p=Path(name);p.parent.mkdir(parents=True,exist_ok=True);p.write_text('original')
+    before={n:sha(Path(n)) for n in paths}
+    for name in recovery.REPAIRED:Path(name).write_text('repaired')
+    Path('data/raw.md').write_text('regenerated derived view')
+    sources,changes,views=recovery.rebound_sources(before)
+    assert {c['path'] for c in changes}==recovery.REPAIRED
+    assert views==['data/raw.md'] and sources['data/raw.jsonl']==before['data/raw.jsonl']
+    Path('src/frozen_scorer.py').write_text('changed metric')
+    with pytest.raises(ValueError):recovery.rebound_sources(before)
+
+
+def test_recovery_does_not_accept_changed_raw_data_as_derived_view_refresh(tmp_path,monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    paths=[*sorted(recovery.REPAIRED),'data/raw.jsonl','data/raw.md']
+    for name in paths:
+        p=Path(name);p.parent.mkdir(parents=True,exist_ok=True);p.write_text('original')
+    before={n:sha(Path(n)) for n in paths}
+    for name in recovery.REPAIRED:Path(name).write_text('repaired')
+    Path('data/raw.jsonl').write_text('changed replies')
+    with pytest.raises(ValueError):recovery.rebound_sources(before)
+
+
+def test_recovery_refuses_started_children_but_allows_its_exact_completed_reuse(tmp_path,monkeypatch):
+    monkeypatch.chdir(tmp_path);monkeypatch.setattr(recovery,'RESULTS',tmp_path/'fresh')
+    Path('data/results/ethical_pilot',recovery.CHILD).mkdir(parents=True)
+    recovery.fresh_outputs()
+    Path('data/results/ethical_pilot',execution.measure_id('final','retention')).mkdir()
+    with pytest.raises(FileExistsError):recovery.fresh_outputs()

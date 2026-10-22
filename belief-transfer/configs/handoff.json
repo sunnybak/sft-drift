@@ -890,7 +890,9 @@
     "generated/ethical_pilot/ethics_gpu_base_reasoning_final_reading_s42_v1",
     "results/ethical_pilot/ethics_gpu_base_reasoning_final_reading_s42_v1",
     "generated/ethical_pilot/ethics_gpu_base_reasoning_final_unqualified_s42_v1",
-    "results/ethical_pilot/ethics_gpu_base_reasoning_final_unqualified_s42_v1"
+    "results/ethical_pilot/ethics_gpu_base_reasoning_final_unqualified_s42_v1",
+    "generated/ethical_pilot/ethics_gpu_base_reasoning_recovery_v1",
+    "results/ethical_pilot/ethics_gpu_base_reasoning_recovery_v1"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

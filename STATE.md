@@ -5,10 +5,17 @@
 Goal ACTIVE:investigate/resolve genuine SFTregressions before extending ethical training.
 Existing VastRTX3090 authorized; no new rental or Mac training. No full90/100beliefSFT
 has run. Original10-target/four-arm pilot is historical, not automatically extended.
-New reasoning worker RUNNING PID131244,262/454steps at20:10:07UTC. Midpoint227
-saved/closed and copied locally/hash-verified; private checkpoint save pending now. Latest older finite worker sft-drift-replay-interface-rca-v1 EXITED18:45UTC,
-COLLECTION_COMPLETED+TERMINAL, no technical failure, all9children complete. Do not restart.
-GPUcheckout3438572a6fea4be7b64007e40a8dc2485364bc09 pinned for active worker.
+User instruction2026-10-22:finish/review this fixed trial; if decisive scientific result
+is negative, pause the goal, stop further experiments and give findings/recommendation.
+Do not start another tuning candidate. Technical collector failure is not a negative result.
+
+Training ethics_sft_c4_base_reasoning_replay_v1 COMPLETED454steps/1964.43seconds,
+all12engineering checks pass; initial adapter/fullLRtrace/actualchunks/objective verified.
+Original supervisor sft-drift-base-reasoning-replay-v1 PID131244 EXITED20:26UTC after
+first128midpoint retention replies completed. Master failure+TERMINAL preserved:
+KeyError('fresh_base_reference'), a collector metadata-default bug. Do NOT restart it.
+GPUidle; checkout3438572a6fea4be7b64007e40a8dc2485364bc09 until recovery deployment.
+No scientific verdict on this candidate yet; remaining evaluations never started.
 
 ## Established current result
 
@@ -39,66 +46,61 @@ value and original validation note-flip failures. Full100unqualified reading2400
 32fresh controls correct,2432runtime records verified. See2026-10-22-replay-value-v5-results.
 No recipe qualified. No checkpoint/hyperparameter chosen from ethical outcomes.
 
-## Current preparation and exact next work
+## Current fixed trial, recovery and exact next work
 
-CPU-only teacher preparation completed:ethics_sft_base_reasoning_replay_data_v1 and
-ethics_sft_c4_base_reasoning_replay_v1 manifest/config; master
-ethics_sft_base_reasoning_replay_probe_v1/preparation.json has launch_allowed=false.
-All32source targets agent-read;31raw unchanged, declared31compression fully read and
-correct. Exactly96thinking draws changed; other3529chunks byte-identical atsameindices.
-3246draws/3625chunks/454steps/settings/seedunchanged. Thinking targets+28704tokens,
-rawtotal1277464/weighted1351120/input1411998; normalization projected, not token matched.
+Prepared BASEreasoning intervention changes32source targets/96draws; other3529chunks
+unchanged.3246draws/3625chunks/454steps/settings/seedfixed, longer thinking+28704tokens.
+All32targets fully agent-read, one declared compression; source17/29self-corrections
+retained. Original plan/teacherdata/confirmationv1VOID/v2corrected inputs preserved.
+Independent512questions/model frozen, uncalled. No training/model qualification claimed.
 
-Independent bank ethics_gpu_base_reasoning_confirmation_v1 is VOID/uncalled:legacy
-worked-equation proof.b offset mismatch, sourceproducer preserved atGite6333a2.
-Active v2 fixes only proof metadata; all512prompts/labels/seeds/tokenIDs identical to
-uncalledv1. All512actual requests independently solved; no overlap/resampling, complete
-family/mode/factorial coverage. Two128procedural +four64decision parts reuse existing
-stages; maximum1536calls/3models. All67source bindings match; no calls/outcomes.
-Confirmation protocol/teacher data_freeze_v1.json retain launch_allowed=false.
-94focused preparation/document/loss/handoff/import tests pass. All32final targets reviewed,
-including once-compressed31; source17/29self-corrections intentionally retained.
+Completed training and all checkpoints now copied/hash-verified locally;33closed files,
+27new beyond midpoint. Terminal failed controller + completed128-reply child also copied:
+34files/29new, including exact original runtime config. MIDadapter82b0c1ea8bc2550e98585f7e18e9d4684a8661c3c244806248461136dc1c6106;
+finaladapter cb50440ec4e907c493986449c428c380cd1a2b6871e5975fff5be4546e0aac5c.
+Step454andfinal adapter/config byte-identical; alias explicit, no duplicate measurement.
+All actual tokenized chunks and weighted projection match preparation; all454LRsteps
+match parent and initial adapter b933f713e6da2a53d2c564379bc62faba52abad39cd71ec7366dc144dbdd804c.
+Derived tokenized.md differed after regeneration; incoming view preserved separately,
+authoritative JSONL identical. Generated master training_closed_copy_v1.json and
+collector_terminal_copy_v1.json bind closed copies. Live job is now terminal, no outputs
+remain only onGPU beyond operational console log; do not destroy until private save.
 
-Execution workers now implemented/frozen: scripts/run_base_reasoning_probe.py and
-run_base_reasoning_confirmation.py, with execution protocol under the master and
-confirmationv2/execution_protocol_v1.json. All1306source bindings and13resolved job
-hashes match.156focused tests pass. Actual1152reference responses reconstruct onCPU
-(3fixed models ×128procedural+256decisions), before live training launch.
-54GPUoutput paths registered;12fullsurface configs composed. Prospective execution
-amendment requires all100on midpoint227 and final; terminal454aliases final only if
-both adapter+config bytes match, otherwise separately measured. Final remains primary.
-All scientific failures retain full100readings; technical failures stop/preserve.
+Repair:typed InstructionRetentionSpec restores omittedFalse default. Original measurement
+source/gates/weights/decoder/data unchanged.166focused tests pass, including actual typed
+manifest serialization, no repeated retention call on reuse, source-change restrictions.
+New finite controller ethics_gpu_base_reasoning_recovery_v1 under ethical_pilot, protocol
+prepared,1282bindings verified. It never trains; reconstructs/reuses exact completed128
+replies and starts only remaining never-started child IDs. Original failed master intact.
+Localprelaunch validation reconstructs128actual raw replies with corrected reader;
+trainingbinding/all12checks/actualchunks/objective/fullLRtrace all match. No new model calls.
+Newgenerated proof_review_selection_v1.json selects16thinking slots per distinct checkpoint
+(one/operation/cell, seed20261022), fixed20:15:51UTC before all12decision result IDs existed.
+Read all flags plus those slots; verify exact annotation coverage before any reviewed pass.
 
-Private executable-input snapshot VERIFIED and deployed; all1306bindings/13configs/
-1152references reconstruct onGPU.327transferred files match,57absent files copied;
-no existing experiment overwritten. Single finite trial launched via supervisor
-sft-drift-base-reasoning-replay-v1, PID131244at19:50UTC;262/454steps observed20:10UTC.
-Command:cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_base_reasoning_probe.py
-Log:/workspace/sft-drift-ops/base-reasoning-replay-v1.log. NOresume/restart.
-Exact next action:SSH supervisorctl status sft-drift-base-reasoning-replay-v1 and tail
-that log; inspect current training/checkpoint status. Never restart on observation timeout.
-Keep GPUcheckout3438572pinned. Closed midpoint227+static inputs copied locally:16files/
-418774371bytes. All3625actualchunks match manifest/tokenizer;96declaredchanges and
-3529byte-identical controls; weighted projection exact. Root training_batches.jsonl and
-run logs remain live/onGPU and were deliberately excluded. Final weights/checks/evals
-not yet available. Finite midpoint watcher5638finished afterstep229; do not restart it.
-Copy receipt:generated master/midpoint_closed_copy_v1.json. Independent confirmation conditional
-on fully reviewed, privately preserved final pass; no automatic ethical scaling.
-See2026-10-22-base-reasoning-execution-plan.md, worker-verification.md and generated
-master/deployment_launch_v1.json.
+Next:commit/push repairs+notes, private-save all completed training/failure/recovery inputs;
+verify receipt, preserve remote untracked runtime YAML before pull, deploy/hash-check and
+launch recovery once with source pin. Exact command after verified deployment:
+cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_base_reasoning_recovery.py run
+Expected new supervisor sft-drift-base-reasoning-recovery-v1, log
+/workspace/sft-drift-ops/base-reasoning-recovery-v1.log. NOT launched yet.
+It has NOresume/restart. Finish same midpoint/final/full100grid regardless scientificfail;
+review final-primary result. If negative pause goal and recommend; no further SFT.
+If positive, independent confirmation still needs reviewed/private verdict and updated
+execution binding to recovery; frozen questions/gates remain unchanged, no automatic call.
+Details:changelog/2026-10-22-base-reasoning-collector-recovery-plan.md.
 
 ## Preservation
 
-Latest VERIFIED launch-record snapshotc75984e857426be515130aa15bb5e048f7897c72at
-c4471d42ae00fbdb174ef78d35deab5bcdeca70f:7125files/20,274,344,717bytes;
-corpus8eddae60bff14a7b76f9dabc36843ee254a1ea4d, manifest
-450e2ac77403cf8ce44b02d42368086187f994b924d4631cd90eae1cfae67fb6.
-All executable inputs/launchrecord/prior results privately saved. New closed midpoint
-and static actual inputs are local+GPU, private-save pending now. Excluded live batch
-and log files are only onGPU; do not destroy box. Source/notes next committed/pushed,
-then:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+Latest VERIFIED midpoint snapshot5789c275adc5b1b6ff824350f912cd2d77259316at
+ccd085da5ac20a6ac9e372187f246bcd0a3f19b3:7143files/20,693,127,783bytes;
+corpusd0650bd16da03bf4de309be8ef3c182d1129ba82, manifest
+94e12393184da05d979d47ff35fab48411ef0e3e960d0f2b781e077bd877bce8.
+All earlier data+closed midpoint privately verified. Subsequent final training/checkpoints,
+failed collector128replies, proofsample and recovery contract are local+GPU/pending new
+private save. Source fixes/notes next committed/pushed. Exact save:
+cd belief-transfer && uv run --no-sync python scripts/handoff.py save
 Keep same process through HF429waits; no local mutation during save; check receipt.
-Detailed boundary:changelog/2026-10-22-base-reasoning-midpoint-preservation.md.
 
 ## Other fixed study limits
 

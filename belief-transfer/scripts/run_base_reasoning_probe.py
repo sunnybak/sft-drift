@@ -78,14 +78,27 @@ def references(protocol: dict,tokenizer) -> dict:
     return result
 
 
-def measure(point: str,binding: dict,protocol: dict,reference: dict,tokenizer) -> dict:
-    parent=RESULTS/point;parent.mkdir()
+def measure(point: str,binding: dict,protocol: dict,reference: dict,tokenizer,*,
+            output_root: Path | None=None,reused_retention: list[dict] | None=None) -> dict:
+    parent=(RESULTS if output_root is None else output_root)/point;parent.mkdir()
     write_json(parent/'training_binding.json',binding)
     base=reference['base'];known=value_known(base['retention'])
     ref=protocol['references']['base']['retention']
     mask=Path('data/results/ethical_pilot',ref['run_id'],'known_items.jsonl')
-    values=collect(measure_id(point,'retention'),point,Path(protocol['bank_path']),'retention',binding,
-                   protocol['runtime_reference'],tokenizer,parent,base_known=mask)
+    if reused_retention is None:
+        values=collect(measure_id(point,'retention'),point,Path(protocol['bank_path']),'retention',binding,
+                       protocol['runtime_reference'],tokenizer,parent,base_known=mask)
+    else:
+        # Only a separately reconstructed completed child may enter this branch.
+        # The recovery controller binds its raw files/dispatch; no inference repeats.
+        values=reused_retention
+        expected={r['example_id'] for r in rows(Path(protocol['bank_path']))}
+        if len(values)!=128 or {r['example_id'] for r in values}!=expected:
+            raise ValueError('Reused retention must contain the complete fixed128grid')
+        name=measure_id(point,'retention')
+        write_rows(parent/(name+'_values.jsonl'),values)
+        write_rows(parent/(name+'_review_queue.jsonl'),[r for r in values
+            if r['value']['value_correct'] is not True or not r['native_assessment']['strict_format']])
     values=[r|{'frozen_assessment':r['native_assessment']} for r in values]
     retention=previous.summarize_values(values,base['retention'],known)
     write_json(parent/'retention_assessment.json',retention)

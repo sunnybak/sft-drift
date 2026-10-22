@@ -7,6 +7,7 @@ import sys
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'src'))
 from belief_transfer.config import load_job,config_sha
+from belief_transfer.schemas import InstructionRetentionSpec
 from belief_transfer.evals.retention_value import assess_value as procedural_value
 from belief_transfer.evals.neutral_decision_value_v3 import assess_value as decision_value
 from belief_transfer.stages.instruction_retention import observation as retention_observation
@@ -19,6 +20,9 @@ from run_replay_coverage_probe import commit,execute,LOCK,EVAL_PYTHON
 def inspect_retention(folder: Path,bank: list[dict],runtime: dict,adapter_sha: str | None,tokenizer) -> list[dict]:
     if not (folder/'COMPLETED').exists():raise ValueError('Child incomplete')
     manifest=read(folder/'manifest.json')
+    # The persisted schema intentionally omits fresh_base_reference=False.
+    # Restore declared defaults through the same typed contract as the producer.
+    evaluation=InstructionRetentionSpec.model_validate(manifest['evaluation'])
     if manifest['bank_sha256']!=sha(folder/'bank.jsonl'):raise ValueError('Recorded bank hash changed')
     for k in ('model','backend','generation','decoding','max_new_tokens','batch_size','versions'):
         if manifest[k]!=runtime[k]:raise ValueError('Child runtime differs: '+k)
@@ -41,9 +45,10 @@ def inspect_retention(folder: Path,bank: list[dict],runtime: dict,adapter_sha: s
         result.append(r|{'native_assessment':r['assessment'],
             'value':procedural_value(r['response'],r,normal_stop=r['assessment']['normal_stop'])})
     mask=rows(folder/'known_items.jsonl')
-    if not manifest['evaluation']['fresh_base_reference'] and manifest['known_sha256']!=sha(folder/'known_items.jsonl'):
+    if not evaluation.fresh_base_reference and (manifest['known_sha256']!=sha(folder/'known_items.jsonl')
+            or evaluation.known_sha256!=manifest['known_sha256']):
         raise ValueError('Recorded native mask hash changed')
-    if manifest['evaluation']['fresh_base_reference'] and report(observed,bank,None)[1]!=mask:
+    if evaluation.fresh_base_reference and report(observed,bank,None)[1]!=mask:
         raise ValueError('BASE native mask changed')
     if report(observed,bank,mask)[0]!=read(folder/'summary.json')['by_seed']['42']:
         raise ValueError('Native retention summary changed')
