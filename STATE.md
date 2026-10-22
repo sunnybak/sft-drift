@@ -23,11 +23,14 @@ semantic defects. Thinking median293→43.5tokens(gold45):style/shortcut hypothe
 Full100support69.79% vsBASE42 63.29%(+6.50pp),oldC4controlbounds67.833–67.875%.
 These unqualified descriptive readings do not establish selective editing or clear gates.
 
-Next:finish private preservation, then implement the fixed-model2×2RCA from
+Next:implement the fixed-model2×2RCA from
 changelog/2026-10-22-replay-interface-rca-plan.md (seen/held facts×instruction wording,
 3fixed models,576new calls,192existing reused). No new SFT selected. Conditional
 independent confirmation NOT triggered. Current worker has no resume; never restart it.
-Exact preservation command:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+Exact next preparation reference:cat changelog/2026-10-22-replay-interface-rca-plan.md
+Read-only preconstruction audit passed:64paired slots/256rendered requests independently
+solved, two-way template replacement exact, mode/negation/note/label matches. No RCA
+artifacts or calls yet. Materialize/test/register/freeze inputs before finite GPU dispatch.
 
 ## Current scientific comparison
 
@@ -62,13 +65,15 @@ No automatic expansion, checkpoint selection on stance, or repeat-until-pass.
 
 ## Preservation
 
-Latest VERIFIED private snapshotff7be860588d68a5ae5406870668ca612dd2001c at2221312:
-6754files/20,213,346,646bytes; includes all closed training/checkpoints, assays/dev/val,
-64gold reviews,192training-prefix audit,24failed-response reads and RCAplan.
-Terminal/full100copy, derived mechanical/full-bank analyses and final reviewed verdict
-are now local offGPU but pending the next private snapshot. No outputs remain only onGPU.
-Do not claim box-destruction safety until that snapshot verifies. Copy receipts under
-generated/ethical_stance_sft/ethics_sft_replay_coverage_value_v5. No local mutation during save.
+Latest VERIFIED private snapshotef853555ffe09e76e69f4b7b5fcbd45ffc0aef73 at5421a9e:
+6807files/20,246,079,243bytes; corpusc16c62e0c67488509e93f6c2b26334e375c86a20.
+Includes entire closed training/checkpoints, terminal worker log/full100, all reviews,
+mechanical/per-belief analyses and final reviewed verdict. No outputs remain only onGPU
+or only local. Verified receipt updated after successful same-processHF429retry.
+Git final report/source pushed; this subsequent notes-only update records that receipt.
+Copy receipts under generated/ethical_stance_sft/ethics_sft_replay_coverage_value_v5.
+Save at next completed block:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+No local mutations during save. Worker terminal/GPU idle; no resume/restart.
 
 ## Established results and data limits
 
