@@ -4,6 +4,8 @@ from __future__ import annotations
 import asyncio
 import json
 import time
+from hashlib import sha256
+from pathlib import Path
 
 from belief_transfer.analysis.jsonl_md import write_md
 from belief_transfer.analysis.measurement_report import write_measurement_report
@@ -16,6 +18,7 @@ from belief_transfer.generation.context import RunContext
 from belief_transfer.inference.local import local_model
 from belief_transfer.inference.backend import backend_info
 from belief_transfer.metrics.measurements import summarize_measurement, summarize_controls, summarize_stance_study
+from belief_transfer.metrics.measurements import request_sampling_seed
 from belief_transfer.schemas import PilotWording
 from belief_transfer.validation.measurements import EXTRACTOR_VERSION, extract_response, scorer_checks, format_compliant, measurement_response_text, observation_from_reply
 
@@ -41,7 +44,31 @@ def measurement_bank_fingerprint(bundle):
     """Common item identity excludes model-specific qualification evidence."""
     return fingerprint({"version": bundle["version"], "banks": bundle["banks"],
         "controls": bundle["controls"], "content": {key: bundle["source_manifest"][key]
-            for key in ("targets_sha", "wordings_sha")}})
+            for key in ("targets_sha", "wordings_sha")},
+        **({"external_control_bank": bundle["external_control_bank"]}
+           if "external_control_bank" in bundle else {})})
+
+
+def external_controls(spec):
+    """Verify exact input bytes before accepting native control presentations."""
+    declared = spec.measurement_control_bank
+    path = Path(declared.path)
+    if not path.is_absolute():
+        path = ROOT / path
+    raw = path.read_bytes()
+    if sha256(raw).hexdigest() != declared.sha256:
+        raise ValueError("external control bank byte hash changed")
+    rows = [json.loads(line) for line in raw.decode("utf-8").splitlines() if line.strip()]
+    if len(rows) != declared.count or len({r["presentation_id"] for r in rows}) != len(rows):
+        raise ValueError("external control bank count or identities changed")
+    for row in rows:
+        if (row.get("measurement") != "stance" or row.get("stance_interface") != "target_free_positions"
+            or row.get("options") not in (["agree", "disagree"], ["disagree", "agree"])
+            or row.get("labels") != ["A", "B"] or row.get("expected") not in {"agree", "disagree"}
+            or not row.get("control_kind") or row.get("prompt_sha") != fingerprint(row["prompt"])):
+            raise ValueError("invalid native external Stance control")
+        request_sampling_seed(row, spec.seed)
+    return rows, raw
 
 
 def prepare(job):
@@ -70,6 +97,8 @@ def prepare(job):
         rubrics=spec.conviction_rubrics, interface=spec.conviction_interface,
         versions={m.name: m.version for m in spec.measurements if m.version in {"stance-v1", "stance-v2"}},
         stance_interface=spec.stance_interface)
+    if spec.measurement_control_bank is not None:
+        controls = {"stance": external_controls(spec)[0]}
     meta = {"artifact": bank_checks(spec, wordings, banks, smoke=job.smoke),
             "harness": scorer_checks(["stance"] if active_stance else None,
                 stance_interface=spec.stance_interface if active_stance and spec.measurements[0].version == "stance-v2" else None),
@@ -84,6 +113,8 @@ def prepare(job):
               "smoke": job.smoke, "definitions": {k: DEFINITIONS[k] for k in banks},
               "banks": {k: fingerprint(v) for k, v in banks.items()},
               "controls": {k: fingerprint(v) for k, v in controls.items()}, "meta_eval": meta}
+    if spec.measurement_control_bank is not None:
+        bundle["external_control_bank"] = spec.measurement_control_bank.model_dump(exclude={"path"})
     if spec.measurement_prompt_style != "original":
         meta["template_review"].update(response_style=spec.measurement_prompt_style,
             version=VERSION + "/" + spec.measurement_prompt_style,
@@ -184,6 +215,14 @@ def start(job, banks, controls, bundle):
     directory.mkdir(parents=True, exist_ok=True)
     write_resolved_config(job, directory)
     artifacts = []
+    if job.pilot_bench.measurement_control_bank is not None:
+        rows, raw = external_controls(job.pilot_bench)
+        if rows != controls["stance"]:
+            raise ValueError("external control bank changed after preparation")
+        pinned = directory / "external_control_bank.jsonl"
+        pinned.write_bytes(raw)
+        write_md(pinned)
+        artifacts.extend([pinned, pinned.with_suffix(".md")])
     for name, bank in banks.items():
         for suffix, rows in (("bank", bank), ("control_bank", controls[name])):
             p = write_rows(rows, directory / f"{name}_{suffix}.jsonl")
@@ -279,7 +318,7 @@ async def run(job):
                 else:
                     row = batch[0]
                     if spec.measurement_decoding.temperature:
-                        model.seed = (spec.seed ^ int(row["prompt_sha"][:8], 16)) & 0xffffffff
+                        model.seed = request_sampling_seed(row, spec.seed)
                     replies = [await administer(model, row, temperature=spec.measurement_decoding.temperature,
                                                thinking=spec.measurement_decoding.thinking)]
                 for result in replies:
@@ -342,7 +381,7 @@ async def administer(model, row, *, temperature=0, thinking=False):
 
 async def administer_batch(model, rows, spec):
     """Explicit batch path with metadata and independent final-response extraction."""
-    seeds = [(spec.seed ^ int(row["prompt_sha"][:8], 16)) & 0xffffffff for row in rows]
+    seeds = [request_sampling_seed(row, spec.seed) for row in rows]
     try:
         if not hasattr(model, "generate_batch_with_metadata"):
             raise ValueError("this backend has no qualified batched generated-answer path")

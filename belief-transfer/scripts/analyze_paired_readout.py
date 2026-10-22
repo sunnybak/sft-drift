@@ -11,6 +11,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'src'))
 from belief_transfer.analysis.jsonl_md import write_md
 from belief_transfer.evals.pilot import fingerprint
 from belief_transfer.metrics.measurements import align,summarize_measurement,summarize_controls
+from belief_transfer.metrics.measurements import request_sampling_seed
 from belief_transfer.metrics.support_bounds import support_bounds
 from belief_transfer.stages.measurements import observed_backend_reply,measurement_bank_fingerprint
 from belief_transfer.validation.measurements import EXTRACTOR_VERSION
@@ -64,7 +65,7 @@ def validate_child(summary,bank,observed,control_bank,controls,proof,item,*,bank
         if r.get('response') is None:
             if not r.get('error') or r.get('answer') is not None or r.get('strict_format'):raise ValueError('Unmarked missing paired response')
             continue
-        m=r.get('generation_metadata') or {};seed=(item['seed']^int(r['prompt_sha'][:8],16))&0xffffffff
+        m=r.get('generation_metadata') or {};seed=request_sampling_seed(references[r['presentation_id']],item['seed'])
         rebuilt=observed_backend_reply(references[r['presentation_id']],r['response'],m,thinking=proof['decoder']['thinking'],seed=seed)
         # Compare outcome fields only; metadata identity is checked independently below.
         for k in ['answer','answer_extraction','strict_format','error','final_response','reasoning_extraction','sampling_seed']:

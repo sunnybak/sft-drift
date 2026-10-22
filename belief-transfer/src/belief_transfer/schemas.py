@@ -1736,6 +1736,15 @@ class CUDAGenerationSpec(BaseModel):
         return self
 
 
+class MeasurementControlBankSpec(BaseModel):
+    """Explicit, byte-pinned external Stance controls for a new instrument."""
+
+    model_config = ConfigDict(extra="forbid")
+    path: str = Field(min_length=1)
+    sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    count: int = Field(ge=1)
+
+
 class PilotBenchSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
     version: Literal["ethical-pilot-v1", "ethical-pilot-v2"] = "ethical-pilot-v1"
@@ -1766,6 +1775,8 @@ class PilotBenchSpec(BaseModel):
     conviction_meta: ConvictionMetaThresholds | None = None
     conviction_selection_run_id: str | None = None
     measurement_controls_source_run_id: str | None = None
+    measurement_control_bank: MeasurementControlBankSpec | None = Field(
+        default=None, exclude_if=lambda value: value is None)
     measurement_control_failure_policy: Literal["skip", "collect_unqualified"] = Field(default="skip", exclude_if=lambda value: value == "skip")
     conviction_scale_study: ConvictionScaleStudy | None = None
     conviction_allocation_study: ConvictionAllocationStudy | None = None
@@ -1787,6 +1798,11 @@ class PilotBenchSpec(BaseModel):
             raise ValueError("changed Stance interface requires stance-v2")
         if self.stance_interface == "target_free_positions" and self.stance_profile_version is not None:
             raise ValueError("target-free relative choice cannot include an independent polarity profile")
+        if self.measurement_control_bank is not None:
+            if self.stance_interface != "target_free_positions" or [m.name for m in self.measurements] != ["stance"]:
+                raise ValueError("external controls require a target-free Stance-only instrument")
+            if self.measurement_controls_source_run_id or self.stance_validation_run_id:
+                raise ValueError("external controls cannot reuse another instrument's qualification")
         if self.conviction_rubrics:
             if [r.id for r in self.conviction_rubrics] != [f"r{i}" for i in range(6)]:
                 raise ValueError("conviction requires six ordered rubric IDs r0 through r5")

@@ -147,16 +147,28 @@ miscoding: preselected72full natural replies plus all failures need agent review
 Recurrent scope/final mapping defects falsify clean semantic interpretation. Do not
 tune training on ethical direction. Full protocol explains hypothesis/contrasts/limits.
 
-Existing run_target_free_readout.py/analyze_target_free_readout.py are GATEDv1
-prototypes (100clean tests), NOmodel calls. They need explicitv2IDs/protocol, typed
-external control bank/hash/count, matched note/independent repeat seed keys, richer
-fresh control builder and error-aware analysis/tests. Registerv2paths before prepare;
-freeze80checked cases, source, exact configs/tokenizer/runtime before launch. No
-synthetic reasoning closures, constrained final labels, hidden retries or neutral fills.
+V2 foundations implemented locally in source (no v2prepare/model calls): typed external
+control path/SHA/count; byte-for-byte saved controls and fingerprint binding; matched
+plain/note seeds, independent repeat offsets and exact stress-seed overrides. Defaults
+remain unchanged. Native fresh builder has80agent-read contexts/480presentations,
+including16complete conditional-rule/scope cases; eight preserved stress probes convert
+without prompt/seed changes. All488controls tokenize104–195inputs;195+4096=4291<4352.
+Operational reducer reports original strict fresh flags separately from new95%domain/
+99%coverage/5%worst-case note flags and stress failures. Missing pairs count aspossible
+flips; wrong valid answers stay wrong.95focused/regression/layer/handoff tests pass;
+all10historical mode config SHAs and161frozen hashes unchanged. GPUqueried idle.
+See changelog/2026-10-21-error-aware-readout-v2-foundations.md.
+
+Existing run_target_free_readout.py/analyze_target_free_readout.py remain GATEDv1
+prototypes. NOv2controller/configs/data or model calls exist yet. Next implement separate
+v2controller/analyzer (retainv1), integrate the488native controls, explicit diagnostic
+policy/precision flags, full15job/25,320call schedule and72reply review. Test in tmpdirs,
+register17v2paths BEFOREprepare, then freeze inputs/source/configs and verify actualGPU
+runtime/tokenizer before launch. All15jobs collect despite performance failures; stop
+technical identity/runtime failures. No new training/rental. No resume/restart of oldIDs.
 Exact next safe command from root:
 cat changelog/2026-10-21-error-aware-readout-v2-plan.md
-Then implement/verify before attempting any v2prepare or GPUlaunch. Existing box kept;
-all earlier stages are terminal/no resume. No need to rent another resource.
+Then implement controller/analysis and tests before any v2prepare/GPUlaunch.
 
 ## Dashboard and preservation
 
@@ -174,11 +186,11 @@ explicitly notes subsequent BASEinterpretation failure and stopped readout.45das
 tests, TypeScript and finalbuild pass; browser/screenshot verified. Full browser-verified screenshots under interface-controls master, including warning
 that the later BASEreadout failed. No historical score/gate was changed.
 
-Latest verified private receipt e5435d2a,code4fd9f55,5032files/15,783,301,715bytes:
-terminal mode outputs/review, all earlier stopped/partial data, presence prepared
-inputs/source and launch proof. Presence terminal outputs/review are now copied off-box;
-next save must include those plus the new v2diagnostic plan/state. Actual authoritative
-snapshot inventory is data/.handoff-receipt.json, not the date of this prose.
+Verified private receipt a53e5630,codec7a97e7,5122files/15,798,718,649bytes includes
+all terminal mode/presence outputs/reviews and earlier stopped/partial data. Separate
+local verify succeeded. This work block adds source/tests/notes only; no experimental
+data changed. Next save binds the new source revision. Actual authoritative snapshot
+inventory is data/.handoff-receipt.json, not the date of this prose.
 
 Original pilot/results/expanded-control/off-topic follow-up remain preserved under
 their original IDs; see changelog/2026-10-21-ethical-four-arm-results.md and

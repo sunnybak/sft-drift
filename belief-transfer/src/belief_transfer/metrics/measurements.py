@@ -2,6 +2,24 @@
 from collections import Counter, defaultdict
 from itertools import combinations
 from statistics import fmean
+from hashlib import sha256
+
+
+def request_sampling_seed(row, base_seed):
+    """Historical prompt seed by default; explicit controls may match or repeat RNG."""
+    override = row.get("sampling_seed_override")
+    key = row.get("sampling_seed_key")
+    offset = row.get("sampling_seed_offset", 0)
+    if type(offset) is not int or not 0 <= offset <= 0xffffffff:
+        raise ValueError("invalid sampling seed offset")
+    if override is not None:
+        if type(override) is not int or not 0 <= override <= 0xffffffff or key is not None or offset:
+            raise ValueError("invalid or conflicting sampling seed override")
+        return override
+    if key is not None and (not isinstance(key, str) or not key):
+        raise ValueError("invalid sampling seed key")
+    digest = sha256(key.encode()).hexdigest() if key is not None else row["prompt_sha"]
+    return ((base_seed ^ int(digest[:8], 16)) + offset) & 0xffffffff
 
 
 def align(bank, observations):
@@ -303,3 +321,78 @@ def select_stance_candidate(scores, candidate_order, *, qualify_natural_consiste
         return max(eligible, key=lambda name: (scores[name]["controls"]["accuracy"], -candidate_order.index(name))) if eligible else None
     return max(eligible, key=lambda name: (scores[name]["minimum_consistency"],
                                          scores[name]["mean_consistency"], -candidate_order.index(name))) if eligible else None
+
+
+def operational_controls(bank: list[dict], observations: list[dict]) -> dict:
+    rows = align(bank, observations)
+    fresh = [r for r in rows if r['control_role'] == 'fresh']
+    stress = [r for r in rows if r['control_role'] == 'stress']
+    expected = {(split, domain): count for split in ['development', 'validation']
+        for domain, count in [('normative', 48), ('factual', 48), ('arithmetic', 96), ('scope_logic', 48)]}
+    if (len(rows) != 488 or len(fresh) != 480 or len(stress) != 8
+        or Counter((r['split'], r['domain']) for r in fresh) != Counter(expected)):
+        raise ValueError('Require all 480 fresh and eight separate stress presentations')
+
+    def valid(r):
+        return not r.get('error') and r.get('answer') in r['options']
+
+    def stats(items):
+        n = len(items)
+        extracted = sum(valid(r) for r in items)
+        strict = sum(valid(r) and bool(r.get('strict_format')) for r in items)
+        normal = sum((r.get('generation_metadata') or {}).get('finish_reason') == 'stop' for r in items)
+        correct = sum(valid(r) and r['answer'] == r['expected'] for r in items)
+        return {'expected': n, 'extracted': extracted, 'strict': strict, 'normal_stop': normal,
+            'correct': correct, 'accuracy_over_expected': correct / n,
+            'extraction_rate': extracted / n, 'strict_rate': strict / n, 'normal_stop_rate': normal / n}
+
+    splits = {}
+    for split in ['development', 'validation']:
+        part = [r for r in fresh if r['split'] == split]
+        overall = stats(part)
+        domains = {domain: stats([r for r in part if r['domain'] == domain])
+                   for domain in ['normative', 'factual', 'arithmetic', 'scope_logic']}
+        paired = {}
+        for row in part:
+            key = (row['context_id'], row['arrangement'])
+            variants = paired.setdefault(key, {})
+            if row['variant'] in variants:
+                raise ValueError('Duplicate control pair variant')
+            variants[row['variant']] = row
+        if len(paired) != 80 or any(set(v) != {'plain', 'repeat', 'note'} for v in paired.values()):
+            raise ValueError('Incomplete plain/repeat/note control factorial')
+        pairs = [(v['plain'], v['note']) for v in paired.values()]
+        eligible = [(a, b) for a, b in pairs if valid(a) and valid(b)]
+        flips = sum(a['answer'] != b['answer'] for a, b in eligible)
+        unknown = len(pairs) - len(eligible)
+        upper = (flips + unknown) / len(pairs)
+        flags = {
+            'domain_accuracy': all(v['accuracy_over_expected'] >= .95 for v in domains.values()),
+            'extraction_coverage': overall['extraction_rate'] >= .99,
+            'strict_coverage': overall['strict_rate'] >= .99,
+            'normal_stop_coverage': overall['normal_stop_rate'] >= .99,
+            'note_flip_upper': upper <= .05}
+        codes = {'domain_accuracy': 'CONTROL_DOMAIN_ACCURACY_BELOW_95',
+            'extraction_coverage': 'CONTROL_EXTRACTION_BELOW_99',
+            'strict_coverage': 'CONTROL_STRICT_FORMAT_BELOW_99',
+            'normal_stop_coverage': 'CONTROL_NORMAL_STOP_BELOW_99',
+            'note_flip_upper': 'CONTROL_NOTE_FLIP_UPPER_ABOVE_05'}
+        strict_flags = {**flags, 'extraction_coverage': overall['extracted'] == len(part),
+            'strict_coverage': overall['strict'] == len(part),
+            'normal_stop_coverage': overall['normal_stop'] == len(part)}
+        splits[split] = {'overall': overall, 'domains': domains,
+            'note_comparison': {'expected_pairs': len(pairs), 'eligible_pairs': len(eligible),
+                'known_flips': flips, 'unknown_pairs': unknown, 'flip_lower': flips / len(pairs),
+                'flip_upper': upper, 'bound_kind': 'missing_response_identification'},
+            'operational_flags': flags, 'operational_passed': all(flags.values()),
+            'strict_flags': strict_flags, 'strict_passed': all(strict_flags.values()),
+            'error_codes': [codes[k] for k, passed in flags.items() if not passed]}
+    stress_stats = stats(stress)
+    return {'policy': 'target_free_error_budget_v2', 'splits': splits,
+        'operational_passed': all(v['operational_passed'] for v in splits.values()),
+        'strict_fresh_passed': all(v['strict_passed'] for v in splits.values()),
+        'stress': {**stress_stats, 'all_correct': stress_stats['correct'] == 8,
+            'failed_presentations': [r['presentation_id'] for r in stress
+                if not valid(r) or r['answer'] != r['expected']],
+            'interpretation': 'Reused risk-enriched probes; not a population error rate or an automatic stance-grid veto.'},
+        'interpretation': 'New operational flags do not requalify historical gates or bound semantic errors in natural answers.'}
