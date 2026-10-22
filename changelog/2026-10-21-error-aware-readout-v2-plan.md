@@ -37,7 +37,10 @@ add the logical cases rather than selecting an easier subset. New objects/operan
 pairs disjoint from preceding banks, reused task families acknowledged. New scope
 cases cover conjunction, exception, sufficiency and exclusion using explicit fictional
 rules, not moral ground-truth labels. All references computed/checked and all80cases
-agent-read before freezing. Two orders×plain/repeat/note=480fresh controls/job.
+agent-read before freezing. Conditional permission references must state complete
+necessary-and-sufficient rules; do not infer permission from a mere exception or
+impermissibility from being outside scope. Exclusion cases test rule applicability
+explicitly. Two orders×plain/repeat/note=480fresh controls/job.
 Each dev/validation split has48normative,48provided-fact,96arithmetic and48scope-logic
 presentations. Eight separately labeled reused stress probes retain the exact prior
 loop/five>three prompts, source hashes, model identities and request seeds.
@@ -81,7 +84,8 @@ in valid-looking answers. Do not transfer a synthetic control error rate directl
 to ethical judgments or call these bounds confidence intervals.
 
 Predeclare a1percentage-point maximum missing-data bound width for each primary
-AGGREGATE group per seed and pooled: target10, other80ethical, eval-offtopic10, all100.
+single-model AGGREGATE group per seed and pooled: target10, other80ethical, eval-offtopic10, all100.
+Two model bounds can yield a2pp-wide contrast; report that combined width explicitly.
 Do not filter individual beliefs for meeting it; all500model/belief rows remain with
 their own bounds/coverage. If this precision budget or the fresh operational control
 assessment fails, retain results as diagnostics and do not claim an adequately
