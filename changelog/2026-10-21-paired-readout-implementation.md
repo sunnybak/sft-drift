@@ -33,3 +33,23 @@ positive target,order1,plain): it adds unasked negation from the unconditional
 reminder. This is targeted prompt-design evidence, not all-error prevalence or proof
 of training damage. Negative review and immutable progress_after_negative saved.
 Off-topic latest768/1152; C4pending. No paired dispatch before final review.
+
+## Frozen preparation after all five controls passed
+
+Final control report reconstructs5,760replies; terminal copy82files/51,794,061bytes
+verified. All five current and paired384/384correct. All paired gates pass. Exact
+current results:2026-10-21-interface-controls-results.md. Existing controls have a
+ceiling, not evidence of paired superiority or stable unassigned ethical judgments.
+
+Before any natural paired calls, corrected target-mirror pairing to hold the exact
+physical canonical A/Border fixed: positive0/negative1 and positive1/negative0.
+An A-only responder test separates position bias from target-line framing.
+79focused/measurement/CUDA/layer/handoff tests pass in20.70s. One prior invocation
+had11passing tests but artifact guard caught the operator's concurrent review export;
+no test wrote real results. Separated operations and both reruns passed.
+
+Prepared ethics_gpu_paired_readout_v1 only after complete qualification. All15configs
+compose, all banks identical across weights/seeds, actual tokenizer113–253inputtokens
+fits4096cap/4352context.67bindings verify: sources, plan, exact inputs, configs,
+original groups, control evidence and adapter hashes. No calls yet at this boundary.
+Model/decoder/weights unchanged; no training/rental or ethical-outcome selection.

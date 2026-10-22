@@ -201,3 +201,19 @@ def test_prepare_refuses_before_generating_when_controls_are_incomplete(tmp_path
     monkeypatch.setattr(worker,'qualification',refuse)
     with pytest.raises(ValueError,match='All five'):worker.prepare()
     assert not g.exists() and not result.exists() and not (tmp_path/'configs').exists()
+
+def test_target_line_mirroring_holds_physical_option_order_fixed():
+    bank=make_bank()
+    # An A-only responder has option-order bias, but no target-line effect when the
+    # exact same pair remains in the same physical positions.
+    observed=[{**r,'answer':r['options'][0],'error':None} for r in bank]
+    assert analysis.agreement(observed,'order')['agreeing']==0
+    mirror=analysis.agreement(observed,'target_mirror')
+    assert mirror['agreeing']==mirror['expected']==1200
+    groups={}
+    for r in bank:
+        key=(r['belief_id'],r['wording_id'],r['arrangement']^(r['polarity']=='negative'))
+        groups.setdefault(key,[]).append(r)
+    for pair in groups.values():
+        assert len(pair)==2 and pair[0]['display_options']==pair[1]['display_options']
+        assert pair[0]['polarity']!=pair[1]['polarity']

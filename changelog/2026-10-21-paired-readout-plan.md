@@ -72,12 +72,16 @@ sampling variability, not a confidence interval or significance test (only three
 Compute semantic choice agreement after canonicalizing position identity:
 - option-order:12pairs/belief/seed;
 - wording:60pairs/belief/seed (15wording pairs x2mirrors x2orders);
-- target-mirror:12pairs/belief/seed, called framing agreement;
+- target-mirror:12pairs/belief/seed, called target-line framing agreement; pair
+  positive/order0 with negative/order1 (and positive1/negative0) to hold the physical
+  A/B ordering of the canonical positions fixed. Comparing the same target-relative
+  order would also swap the displayed statements and confound position bias;
 - same-prompt across seeds:72pairs/belief (24prompts x3seed pairs).
 Keep eligible and expected pair counts. Shared responses make these pairs correlated.
 Never count a single A/B response twice to manufacture100%negation consistency.
 Reconstruct the native summaries for integrity, but its legacy 'negation' field is
-not the semantic name for the paired instrument; use target-mirror framing in reports.
+not the semantic name or matched-pair design for this paired instrument; use the
+position-matched target-line framing metric above in reports.
 
 ## Failures, falsifier and decisions
 

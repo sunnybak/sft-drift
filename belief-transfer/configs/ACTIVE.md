@@ -244,7 +244,7 @@ Conditional next readout: `scripts/run_paired_readout.py` and
 `analyze_paired_readout.py`, existing `pilot_measurements` stage. Prospective plan
 root `changelog/2026-10-21-paired-readout-plan.md`. The prepare guard requires all five
 paired known-reference checks complete and passed, then freezes15fresh configs and
-all100beliefs on seeds42/7/1729 with their own BASE. No new data/configs/calls yet.
+all100beliefs on seeds42/7/1729 with their own BASE. All15configs and input banks are now prepared; no natural paired calls at this boundary.
 This is relative forced preference, not a replacement for absolute endorsement.
 The worker rejects started IDs and has no resume. Only deploy after the currently
 bound diagnostic is terminal. Status and execution authority remain rootSTATE.

@@ -1,0 +1,16 @@
+# @package _global_
+defaults:
+- ethics_gpu_vllm_base_v1
+run_id: ethics_gpu_paired_readout_c4_only_s7_v1
+related_runs:
+  ethics_gpu_interface_control_c4_only_v1: Prospective paired known-reference validation
+    for these weights
+  ethics_gpu_scoped_readout_c4_only_s42_v1: Separate independent-endorsement instrument,
+    not interchangeable
+pilot_bench:
+  adapter_path: data/checkpoints/ethical_stance_sft/ethics_sft_pilot_c4_only_v1/final
+  seed: 7
+  stance_interface: explicit_positions
+  stance_validation_run_id: null
+  measurement_controls_source_run_id: null
+  measurement_control_failure_policy: collect_unqualified

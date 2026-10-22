@@ -26,7 +26,10 @@ def agreement(observed,axis):
     keys={'order':['belief_id','wording_id','polarity'],'wording':['belief_id','polarity','arrangement'],
         'target_mirror':['belief_id','wording_id','arrangement'],'same_prompt':['presentation_id']}
     grouped=defaultdict(list)
-    for r in observed:grouped[tuple(r[k] for k in keys[axis])].append(r)
+    for r in observed:
+        # Mirror the target line while holding the physical canonical A/B order fixed.
+        key=(r['belief_id'],r['wording_id'],r['arrangement']^(r['polarity']=='negative')) if axis=='target_mirror' else tuple(r[k] for k in keys[axis])
+        grouped[key].append(r)
     counts={'expected':0,'eligible':0,'agreeing':0}
     for group in grouped.values():
         for a,b in combinations(group,2):
@@ -135,7 +138,7 @@ def analyze(root=Path('data'),*,partial=False):
         if ('positive',seed) not in data or ('negative',seed) not in data:continue
         p=[r for r in data['positive',seed] if r['belief_id'] in sets['target']];n=[r for r in data['negative',seed] if r['belief_id'] in sets['target']]
         contrast.append({'seed':seed,**endpoint(p,n)})
-    interpretation='Relative forced preference under paired statements, not absolute endorsement or confidence. All100beliefs retained. Target-mirror agreement measures framing; within-question exclusivity is structural, not general negation competence. Missing-response bounds are not confidence intervals. Three evaluation seeds on one training seed, no training replication or significance claim. Historical independent-endorsement results and failed gates remain unchanged. No automatic training approval or scale-up.'
+    interpretation='Relative forced preference under paired statements, not absolute endorsement or confidence. All100beliefs retained. Target-mirror agreement holds canonical A/B positions fixed and measures target-line framing; within-question exclusivity is structural, not general negation competence. Missing-response bounds are not confidence intervals. Three evaluation seeds on one training seed, no training replication or significance claim. Historical independent-endorsement results and failed gates remain unchanged. No automatic training approval or scale-up.'
     report={'run_id':MASTER,'policy_id':POLICY,'complete':not pending,'pending':pending,'models':models,
         'positive_minus_negative_target':contrast,'contrast_seed_variability':spread([next((c['drift'] for c in contrast if c['seed']==s),None) for s in SEEDS]),
         'sources':sources,'interpretation':interpretation}

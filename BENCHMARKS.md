@@ -17,11 +17,15 @@ Forward readout ethics_gpu_scoped_readout_v1 is COMPLETE: all5models,11,999/12,0
 valid natural answers, all500belief/model rows retained; terminal copy verified.
 See changelog/2026-10-21-scoped-readout-results.md. Negative ethical negation remains
 unstable beyond same-prompt variability; scoped eligibility alone is insufficient
-to call the pilot tuned. Prospective interface diagnostic is RUNNING:
-changelog/2026-10-21-interface-controls-plan.md. BASE/positive current and paired
-forms each384/384correct on fresh normative/factual known-reference controls. BASE
-reminder fails; unconditional negation wording induces target confusion. Remaining
-models pending. No paired real-belief readout until all5pass and a new plan is frozen.
+to call the pilot tuned. Prospective interface diagnostic is COMPLETE:
+changelog/2026-10-21-interface-controls-results.md. All five current/paired forms
+384/384correct; reminder failsBASE/negative/off-topic and its unconditional negation
+wording induces target confusion. All predefined paired checks pass, but ceiling
+on stipulated references does not establish superiority or stable unstipulated views.
+The separate all100/five-model/three-seed paired readout is prepared under prospective
+changelog/2026-10-21-paired-readout-plan.md. Its construct is relative forced preference,
+with newBASE each seed. Framing pairs hold actual A/Bposition order fixed. No calls
+at this preparation boundary; launch/status authority in STATE.md.
 Keep old natural consistency as an outcome, never a training-selection threshold.
 No automatic100-subject expansion. New runs/instruments get fresh IDs; old gates and
 results remain unchanged. Do not select training on desired ethical drift.
