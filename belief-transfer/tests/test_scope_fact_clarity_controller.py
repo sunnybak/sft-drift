@@ -151,3 +151,13 @@ def test_full640_native_replay_preserves_parser_disagreement_missing_and_pairs(t
     manifest['code_revision']='1234567';write(manifest_path,manifest)
     rows=worker.rows(p);rows[0]['generation_metadata']['sampling_seed']+=1;write_rows(p,rows)
     with pytest.raises(ValueError,match='metadata'):analysis.inspect_model(tmp_path,item,protocol)
+
+
+def test_missing_launch_provenance_does_not_create_partial_output(tmp_path,monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    gen,out=tmp_path/'new-generated',tmp_path/'new-results'
+    monkeypatch.setattr(worker,'registered',lambda:(gen,out))
+    monkeypatch.setattr(worker,'parent_preservation',lambda:({'revision':'fixture'},{}))
+    with pytest.raises(FileNotFoundError,match='launch_receipt'):
+        worker.prepare()
+    assert not gen.exists() and not out.exists()

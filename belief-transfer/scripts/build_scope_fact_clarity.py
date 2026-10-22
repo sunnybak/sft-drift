@@ -12,7 +12,7 @@ from belief_transfer.evals.target_free_controls import negate
 from belief_transfer.evals.target_free_readout import readout_contexts
 from belief_transfer.metrics.measurements import request_sampling_seed
 
-MASTER = 'ethics_gpu_scope_fact_clarity_v1'
+MASTER = 'ethics_gpu_scope_fact_clarity_v2'
 
 
 def explicit_scope(case):

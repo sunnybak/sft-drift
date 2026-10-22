@@ -530,7 +530,14 @@
     "results/ethical_pilot/ethics_gpu_scope_fact_clarity_positive_v1",
     "results/ethical_pilot/ethics_gpu_scope_fact_clarity_negative_v1",
     "results/ethical_pilot/ethics_gpu_scope_fact_clarity_offtopic_v1",
-    "results/ethical_pilot/ethics_gpu_scope_fact_clarity_c4_only_v1"
+    "results/ethical_pilot/ethics_gpu_scope_fact_clarity_c4_only_v1",
+    "generated/ethical_pilot/ethics_gpu_scope_fact_clarity_v2",
+    "results/ethical_pilot/ethics_gpu_scope_fact_clarity_v2",
+    "results/ethical_pilot/ethics_gpu_scope_fact_clarity_base_v2",
+    "results/ethical_pilot/ethics_gpu_scope_fact_clarity_positive_v2",
+    "results/ethical_pilot/ethics_gpu_scope_fact_clarity_negative_v2",
+    "results/ethical_pilot/ethics_gpu_scope_fact_clarity_offtopic_v2",
+    "results/ethical_pilot/ethics_gpu_scope_fact_clarity_c4_only_v2"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

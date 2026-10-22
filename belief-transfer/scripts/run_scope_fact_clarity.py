@@ -14,11 +14,11 @@ from run_scoped_readout import ARMS,PYTHON,validate_runtime
 from run_target_free_controls import token_counts
 from run_target_free_readout_v2 import MASTER as PARENT
 
-PLAN='../changelog/2026-10-21-scope-fact-clarity-plan.md'
+PLAN='../changelog/2026-10-22-scope-fact-clarity-v2-plan.md'
 DESCRIPTION='Paired original/explicit fact assertions on16reused scope cases;640calls across5fixed models. No independent qualification, ethical outcomes, training or retrospective gate repair.'
 def read(path):return json.loads(Path(path).read_text())
 def rows(path):return [json.loads(line) for line in Path(path).read_text().splitlines()]
-def run_ids():return [(arm,'clarity',f'ethics_gpu_scope_fact_clarity_{arm}_v1') for arm in ARMS]
+def run_ids():return [(arm,'clarity',f'ethics_gpu_scope_fact_clarity_{arm}_v2') for arm in ARMS]
 
 def registered():
     paths=[f'{kind}/ethical_pilot/{MASTER}' for kind in ['generated','results']]
@@ -63,6 +63,8 @@ def prepare():
     preservation,parent=parent_preservation()  # No file mutation before this check.
     for _,_,run in run_ids():
         if (Path('configs/run')/(run+'.yaml')).exists() or (Path('data/results/ethical_pilot')/run).exists():raise FileExistsError(run)
+    launch_path=Path('data/generated/ethical_pilot')/PARENT/'launch_receipt.json'
+    adapters=read(launch_path)['adapter_config_hashes']  # Validate required provenance before writing.
     source=Path('data/generated/ethical_pilot')/PARENT/'control_bank.jsonl'
     bank=build_bank(rows(source),source_sha256=sha(source))
     base=load_job(['+run=ethics_gpu_scope_control_base_v1']);lengths=token_counts(bank,base)
@@ -73,7 +75,7 @@ def prepare():
     dump(generated/'parent_preservation.json',preservation)
     bindings={str(source):sha(source),str(bank_path):sha(bank_path),str(generated/'parent_preservation.json'):sha(generated/'parent_preservation.json')}
     proofs=parent['runtime_evidence'];jobs=[]
-    adapters=read(Path('data/generated/ethical_pilot')/PARENT/'launch_receipt.json')['adapter_config_hashes']
+    bindings[str(launch_path)]=sha(launch_path)
     for arm,_,run in run_ids():
         source_job=load_job(['+run=ethics_gpu_scope_control_'+arm+'_v1']);b=source_job.pilot_bench;proof=proofs[arm]
         digest=None

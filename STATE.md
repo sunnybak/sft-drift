@@ -36,9 +36,11 @@ charts and separate own-model/BASE fault codes.46dashboardtests/TypeScript pass;
 
 Scientific decision from full review: one original-versus-explicit-facts diagnostic
 is warranted to test the dominant authored ambiguity. Existing prospective plan:
-changelog/2026-10-21-scope-fact-clarity-plan.md. Five fixed models,640calls, reused
+changelog/2026-10-22-scope-fact-clarity-v2-plan.md. Five fixed models,640calls, reused
 logic cases, no new training/sampler search/full stance sweep, no retroactive gate
-repair or independent qualification. It has NOT been prepared or run. Its controller
+repair or independent qualification. v1preparation failed before any calls (missing copied launch provenance); partial
+inputs/failure record retained. The v2preflight fix passes9tests; no v2calls yet.
+Its controller
 requires this complete parent in the verified private receipt before any mutation.
 Do not resume unrelated historical queues. Original frozen instrument remains fixed.
 
@@ -53,10 +55,12 @@ training seeds remains a possible later plan, not an authorized automatic queue.
 
 ## Preservation
 
-Latest receipt before this block covers first10jobs at1f21a93, private artifact
-revisionc60009bc244866712360555e29ab56c7ea516092; final5jobs/fullanalysis/reviews81,
-newdashboard/report need the current save. Authoritative receipt:
-belief-transfer/data/.handoff-receipt.json. No local source/data mutation during save.
+Full parent verified in private snapshot474c3cfeb4f7da2ad0723dc9ae8d0cee7a3c8e5d,
+code24b7b679d94c7e460189d5f4fb73afa0f2160344:5,551files/16,111,481,821bytes.
+Includes all15jobs/fullanalysis/72natural+81controlreviews/dashboard/report.
+Corpus snapshot2165bf575a94f7c93aeb8598f77c7c59585ce9a9 verified. The v1preparation
+failure and v2source fix need this block's save. Authoritative receipt:
+belief-transfer/data/.handoff-receipt.json. No source/data mutation during save.
 Do not claim the box is disposable until Git and this full snapshot are verified.
 The goal remains active; no further training is approved by passing export/tests.
 

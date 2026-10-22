@@ -27,7 +27,7 @@ Most fresh errors are variants of one authored ambiguous scope question; genuine
 answer errors and narrow retention losses remain. Historical failed gates stay fixed.
 
 After preserving this full parent, the reviewed decision is one bounded640-call
-original-versus-explicit-facts diagnostic under its existing prospective plan.
+original-versus-explicit-facts diagnostic under the prospective v2 execution amendment (v1 preparation failed before calls).
 It is reused development evidence, not independent qualification or retroactive repair.
 No automatic sampler search, full stance resweep, training or corpus expansion follows.
 STATE.md records actual execution state. Do not select training for desired outcomes.
