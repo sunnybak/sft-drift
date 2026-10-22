@@ -220,3 +220,7 @@ Scoped-comprehension audit: `scripts/run_scope_controls.py`,
 `configs/run/ethics_gpu_scope_control_*_v1.yaml`, explicit768-row
 `response_interface_rca` jobs. Plan: root `changelog/2026-10-21-scope-control-plan.md`.
 Original stance template, fresh facts; arithmetic/retention remain separate.
+
+Forward readout policy is planned in root
+`changelog/2026-10-21-scoped-readout-plan.md`. Its driver/configs are not implemented
+yet; do not invent an executable command. All five scope audits are complete.

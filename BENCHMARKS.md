@@ -11,8 +11,10 @@ nonthinking controls, HF/vLLM parity, then evidence-driven instrument/training d
 The backend and response-vocabulary diagnostics are complete and did not qualify
 BASE. Fixed-retention repeats are complete: smallrepeatable losses coexist with full-bank
 performance gains; see changelog/2026-10-21-retention-rca-results.md. No newknownmask
-or alteredoldgates. Next: explicit-premise scopedcomprehension controls under
-changelog/2026-10-21-scope-control-plan.md, not arithmetic clearance.
+or alteredoldgates. Scoped-comprehension controls are complete: all five models pass both fresh splits;
+see changelog/2026-10-21-scope-control-results.md. This is not arithmetic clearance.
+Next: the prospective forward validation/readout policy in
+changelog/2026-10-21-scoped-readout-plan.md, not yet implemented or started.
 No automatic100-subject expansion. New runs/instruments get fresh IDs; old gates and
 results remain unchanged. Do not select training on desired ethical drift.
 

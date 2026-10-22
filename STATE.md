@@ -1,43 +1,50 @@
 # Current state — 2026-10-21
 
-## Active work — measurement and training-error investigation
+## Active work — forward measurement-policy follow-up
 
-User authorizes resolving errors/tuning before expansion; no newrental or training.
-Arithmetic/decoder/backend and response-vocabulary audits COMPLETE: BASE also fails
-expandedarithmetic; no adapter-specific backendfault; published weightSHA256matches.
-See changelog/2026-10-21-{error-rca,response-interface-rca}-results.md. Oldgates intact.
+The user authorizes resolving errors and tuning before expansion. The goal remains
+active. No GPU job is running; scope and retention workers exited, GPU idle (1 MiB).
+No new training, rental, or corpus expansion occurred during the investigation.
 
-Fixedretention ethics_gpu_retention_rca_v2 COMPLETE:1,920replies; terminalcopy92files/
-12,344,716bytes verified. BASE known64/64thinking,44/44nonthinking stable3repeats.
-All4adapters spacing-only PAVOPM→PAVO PM; negative/offtopic also3070→2070. Offtopic
-thinking1729 swapsPAVOQM→PAVOMQ once (63/64), otherthinking64/64. Everycase passes
->=95%retentionaccuracy; combinedgate fails separate100%format. No rescoring.
-Fullnonthinkingbank BASE47/64→positive57/negative57/offtopic55/C458: gains11/12/10/12,
-losses1/2/2/1. Reportboth views; no globalcollapse inferred. Review
-changelog/2026-10-21-retention-rca-results.md. Netchanges/replayaudits in resultsroot.
-Nonthinkingreplay0.159%rawtargets/~0.20%recorded token-NLL coefficientmass; hypothesis,
-not provedcause or automaticreweighting. Freshretention before anycandidate tuning.
+Completed evidence:
+- Decoder/backend and response-vocabulary audits: BASE also fails expanded arithmetic;
+  no adapter-specific backend fault; published pinned weight checksums match.
+- Fixed retention `ethics_gpu_retention_rca_v2`: 1,920 replies, terminal copy verified
+  (92 files /12,344,716 bytes). BASE known items stable across three repeats. Every
+  fine-tune meets >=95% known-item accuracy; the combined gate fails separate perfect
+  format. Spacing-only PAVOPM→PAVO PM occurs in all four; negative/off-topic also
+  reproduce3070→2070. One off-topic thinking repeat swaps letters PAVOQM→PAVOMQ.
+  Full nonthinking accuracy improves47/64 BASE→57 positive/57 negative/55 off-topic/
+  58 C4. Keep gains and losses; no general collapse inferred. See the dated results.
+- Scope `ethics_gpu_scope_controls_v1`: all five pass both splits. BASE382/384 dev,
+  384/384 validation; positive/C4 perfect; negative384/383; off-topic383/383. Every
+  reply strict/valid; note flips<=1/128 per split. Original frozen extractor agrees
+  on all3,840 replies. Terminal copy82files/29,753,385bytes verified. Review
+  changelog/2026-10-21-scope-control-results.md and its results directory.
 
-Scope-comprehension ethics_gpu_scope_controls_v1 RUNNING, supervisor
-sft-drift-scope-controls-v1 pid82754; GPUsource610c147.5models/3,840calls,32freshcontexts,
-originalstanceprompt and unchangedcontrolcriteria. BASEandpositive children COMPLETE,
-closedcopy30files/11,879,952bytes verified. BASEdev382/384,val384/384; positivedev/val
-384/384. Allstrict/valid, zeronoteflips, bothsplitsPASS.3childrenpending at thiscopied
-boundary. This validates scopedreading only, not arithmetic/retention/ethicaleffect.
-Plan changelog/2026-10-21-scope-control-plan.md; currentprogress companionfile.33scope/
-sharedstage/schema/layer tests plus1nettransitiontest pass, no weights. Nooldgateclearing.
+Decision: retain training settings for the measurement follow-up. Rare task regressions
+remain explicit; do not retune to fit one seen answer or desired ethical drift. Tiny
+nonthinking replay exposure is an ablation hypothesis, not a proved cause. Arithmetic,
+copy formatting and scoped-language validity are separate constructs. Old failed gates,
+neutral memorization failures, original falsifiers and measurements remain unchanged.
 
-Livecommand: .venv/bin/python -u scripts/run_scope_controls.py run (belief-transfer).
-Log /workspace/sft-drift-ops/scope-controls-v1.log; stderr .err. Finite NOresume/retry.
-Do not pull hash-bound code while live, restart a startedID or destroybox from a
-partial snapshot. Nextstatus:
-ssh -p58689 root@38.49.42.46 'supervisorctl status sft-drift-scope-controls-v1; tail -5 /workspace/sft-drift-ops/scope-controls-v1.log'
-Nextcopy (belief-transfer): uv run --no-sync python scripts/copy_error_rca.py --suite scope --host root@38.49.42.46 --port 58689
-Nextanalysis: uv run --no-sync python scripts/analyze_scope_controls.py --allow-partial
-Drop --allow-partial only after all5children COMPLETE. Then review and preregister any
-revisedqualificationpolicy +full100belief comparison with ownBASE; no retrospective
-qualification or expansion. Goal remainsactive. Code/notes pushed; private receipt
-in data/.handoff-receipt.json is authoritative for locallycopied bytes only.
+NEXT: implement and verify the prospective forward policy/readout plan:
+cat changelog/2026-10-21-scoped-readout-plan.md
+Master ethics_gpu_scoped_readout_v1 and five seed42 children are reserved in that plan;
+NOT prepared, registered or started yet. All100 beliefs/model plus32 legacy controls,
+12,160 fresh calls, existing weights/decoder/parser/bank unchanged. Own fresh BASE.
+Use existing collect_unqualified collection policy so failed diagnostics never skip
+natural replies; attach verified scoped evidence and retain legacy/retention checks.
+Eligibility is endpoint-specific with coverage bounds, not wholesale model erasure.
+One-seed technical follow-up; old three-seed results stay separately labelled context.
+Register paths before preparation; test evidence/config/identity and failure handling.
+Then commit/push, launch finite supervisor and preserve safe completed boundaries.
+
+33 scoped/shared-stage/schema/layer tests plus a net-transition test passed with
+mocks/tmpdirs; no weights in tests. No resumed or overwritten started IDs. Code and
+notes pushed; data/.handoff-receipt.json is authoritative for the latest private
+save/verification. The preceding snapshot997dc308 covered terminal retention and only
+the first two scope children; the next successful receipt supersedes that boundary.
 
 ## Latest completed work
 
