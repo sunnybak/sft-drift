@@ -45,7 +45,10 @@ and primary falsifier remain unchanged; supplemental values are explicitly post-
 Defer balanced ethical expansion. Next implement/test separate value/format assessment
 and one preset replay-weight ablation on the affected C4control, with further independent
 confirmation before candidate selection. See2026-10-22-replay-weight-ablation-plan.md.
-No candidate prepared/trained yet; no automatic parameter search. Every new fine-tune
+Matched norm1/weight32C4candidates now prepared, not yet trained; CUDA loss proof and
+independent768-call reference plus88full reviews complete. Historical C4passes95%value
+retention despite2stable nonthinking losses; old strict mask stillunusable. See
+2026-10-22-replay-weight-reference-results.md and STATE for finite ablation. No automatic parameter search. Every new fine-tune
 still gets all100frozen belief evaluations, including failures. Current state/commands
 remain STATE.md. Do not select training on desired ethical outcomes or claim old gates
 passed. The balanced/complementary-position design remains a later proposal.

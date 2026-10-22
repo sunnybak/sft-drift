@@ -56,25 +56,32 @@ separate. Every new final gets all100beliefs at seed42. No broad capability clai
 120narrow/document/handoff/value/layer tests pass. All tests use mocks/tempdirs.
 Execution freezes961source/config/test/weight bindings before reference collection.
 
-## Live process / next step
+## Completed independent reference / next step
 
-sft-drift-replay-weight-reference-v1 RUNNING on existing RTX3090; source4e572ad.
-Command:.venv/bin/python -u scripts/run_replay_weight_confirmation.py reference
-Log:/workspace/sft-drift-ops/replay-weight-reference-v1.log; PID113120at launch.
-Master:ethics_gpu_replay_weight_confirmation_v1; first child:
-ethics_gpu_replay_weight_base_retention_v1. Expected BASE+historicalC4=768calls.
-No new study SFT is running. Autostart/autorestart false; child holds shared CUDA lock.
-Finite reference stage cannot resume or overwrite; a lost process needs fresh IDs.
-Stable launch metadata copied locally; live raw responses remain on GPU until a safe
-completed-child boundary. Do not destroy box. Do not pull/change bound GPU source while
-this worker is live. Observe actual supervisor/PID/log before declaring terminal.
+ethics_gpu_replay_weight_confirmation_v1 reference COMPLETE:768calls,BASE/historicalC4,
+source4e572ad; supervisor EXITED Oct22 11:13UTC. Both384-row grids copied and rebuilt
+locally from raw tokens/runtime/versions/scoring; exact saved values match. All88queue
+replies agent-read in full and hash-bound;0value-review disagreements. BASE64queue:
+48correct-format-only/16wrong; C424queue:allwrong. No new study SFT trained yet.
 
-Next observation:
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-replay-weight-reference-v1; tail -20 /workspace/sft-drift-ops/replay-weight-reference-v1.log'
-After reference completes, verify/copy entire completed artifacts and freeze receipt,
-then implement/freeze finite two-model training/eval controller. Train norm1/weight32,
-collect independent confirmation and all100beliefs for each final, fully read failures/
-lost values. No automatic weight/LR search, ethical expansion or Mac training.
+Frozen primary value-known BASE cohort:63thinking/59nonthinking. BASE retains allknown
+on3seeds. C4retains63/63thinking,57/59nonthinking=96.61%, all3seeds; PASSES preset95%
+but has2stable true losses: sum1051+2026→2077instead3077; fqugxy→FQUGYXinsteadFQUGXY.
+C4also errs onthinking uppercase allseeds; BASEseed42errs there too, excluding it from
+primary known mask, while full-bank losses versusBASEseeds7/1729remain explicit.
+Original strict BASE mask lacks nonthinking sum-family coverage and stays an unusable
+legacy reference diagnostic; primary value cohort is sufficient across all8families.
+No old gate changed. Report:changelog/2026-10-22-replay-weight-reference-results.md.
+
+Finite training/controller implemented,124targeted tests pass. Training execution binds
+1,048source/config/test/reference/weight files after full reference review and before SFT.
+Next: commit/push/private snapshot, deploy unchanged inputs, then under supervisor run:
+/workspace/sft-drift/belief-transfer/.venv/bin/python -u scripts/run_replay_weight_ablation.py
+It sequentially trains norm1/weight32, requires allengineering checks plus actual
+objective/tokenized-input equality, collects384confirmation replies and all100beliefs
+per final regardless of retention/qualification failures. Technical failures stop and
+preserve. Final-only; no outcome selection. No resume/overwrite. No current GPU worker.
+No automatic further weight/LR search, ethical expansion or Mac training.
 
 ## Prior completed evidence
 
@@ -88,13 +95,11 @@ Original neutral18/20gate remains failed; no retrospective pass from these diagn
 
 ## Preservation
 
-Verified prepared snapshot4b0e8e666fad43404b3922e85d659cd52a4dced3 at
-code4e572ad1bddca276c95a33754f2638c469a528f7:5,822files/16,164,768,893bytes;
-corpusc3fa8b40802405a250ee0343e382e607b87de0ef. Covers all completed evidence, CUDA
-failure/pass, matched manifests/plans, independent bank and961execution bindings.
-Current launch metadata/notes await this block's save. From belief-transfer/:
+Verified snapshot34afd1353501b1dbcc43567ce9cd9ca7987011ea at code1cd95c12114acccccdb3d3fdbb5017579065115e:
+5,827files/16,164,998,038bytes; corpus1cf36024eb022fb6c5696080fdd375a59a1c57b2.
+Covers completed prior evidence, prepared inputs and launch metadata. Completed768-call
+reference/review and new training execution await this block's save. From belief-transfer/:
 uv run --no-sync python scripts/handoff.py save
-No local source/data mutation during save. Live remote raw responses are not yet backed
-up; only completed static launch metadata copied. Authoritative receipt:data/.handoff-receipt.json.
+Verify receipt before training launch. No source/data mutation during save.
 Candidatev5 remains20,000documents/221repairs; conservation subjects quarantined,
 full-bank semantic clearance false. No new corpus/full100training launched.
