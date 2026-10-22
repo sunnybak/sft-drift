@@ -24,8 +24,8 @@ wording induces target confusion. All predefined paired checks pass, but ceiling
 on stipulated references does not establish superiority or stable unstipulated views.
 The separate all100/five-model/three-seed paired readout is prepared under prospective
 changelog/2026-10-21-paired-readout-plan.md. Its construct is relative forced preference,
-with newBASE each seed. Framing pairs hold actual A/Bposition order fixed. No calls
-at this preparation boundary; launch/status authority in STATE.md.
+with newBASE each seed. Framing pairs hold actual A/Bposition order fixed. Worker is now RUNNING on existing GPU with fixed source5519d07; live status,
+source binding, preflight and launch verified. Exact current stage/commands in STATE.md.
 Keep old natural consistency as an outcome, never a training-selection threshold.
 No automatic100-subject expansion. New runs/instruments get fresh IDs; old gates and
 results remain unchanged. Do not select training on desired ethical drift.

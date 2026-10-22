@@ -54,9 +54,12 @@ All predefined paired checks pass. This ceiling assay has32stipulated contexts a
 correlated variants; it does not establish superiority of paired, general ability
 recovery or stable unstipulated ethical views. Old failures remain failed.
 
-## Prepared: repeated paired-position readout (not launched yet)
+## RUNNING: repeated paired-position readout
 
-ethics_gpu_paired_readout_v1 prepared under prospective
+ethics_gpu_paired_readout_v1 RUNNING PID90841, GPU source5519d07.
+Finite supervisor sft-drift-paired-readout-v1; combined log
+/workspace/sft-drift-ops/paired-readout-v1.log. No resume/autorestart.
+Prepared under prospective
 changelog/2026-10-21-paired-readout-plan.md.15configs:all100beliefs x5models x3eval
 seeds42/7/1729,36,480calls including480fresh controls. OwnBASE per seed; relative
 forced preference differs from independent endorsement. No new training/rental.
@@ -78,16 +81,14 @@ separated export/tests and reran successfully. No test wrote real study data.
 
 ## Exact next steps
 
-Current control worker is terminal; no active inference should remain. Commit/push
-prepared configs and source, deploy to GPU only after verifying old worker EXITED
-and checkout clean. Copy prepared generated master plus the final interface parent
-analysis to the GPU; verify67bindings. Before inference, from GPU belief-transfer/:
-/workspace/sft-drift-vllm/.venv/bin/python scripts/run_paired_readout.py check-runtime
-Then finite supervisor sft-drift-paired-readout-v1 runs
-.venv/bin/python -u scripts/run_paired_readout.py run
-Combined log /workspace/sft-drift-ops/paired-readout-v1.log. No autorestart/resume.
+Inspect the live paired worker first:
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-paired-readout-v1; tail -n 3 /workspace/sft-drift-ops/paired-readout-v1.log'
+
+Command from GPU belief-transfer/: .venv/bin/python -u scripts/run_paired_readout.py run
+Already started: NEVER invoke it again for this ID. Combined log
+/workspace/sft-drift-ops/paired-readout-v1.log. No autorestart/resume.
 Do not pull/change bound sources/configs/bank while running. Started IDs refuse
-overwrite. No natural paired calls have been made at this preparation boundary.
+overwrite. Source5519d07 stays fixed even when later local note commits are pushed.
 
 Copy closed children only from local belief-transfer/:
 uv run --no-sync python scripts/copy_error_rca.py --suite paired --host root@38.49.42.46 --port 58689
@@ -107,8 +108,10 @@ Proof: current readout/dashboard_final.png. Restart from benchmark-dashboard/:
 Source/notes committed/pushed at boundaries. Latest authoritative private save is
 belief-transfer/data/.handoff-receipt.json. Receipt17466002 verified source0483962
 and terminal scoped readout/first3interface models/conditional paired code,4668files/
-15,666,841,179bytes. Next save includes terminal interface run and prepared paired
-inputs/configs. All interface outputs now copied; no natural paired outputs yet.
+15,666,841,179bytes. Next save includes terminal interface run, prepared paired
+inputs/configs and verified deployment/preflight/launch receipts. All interface outputs
+are copied. Active paired outputs remain GPU-only until closed copy; no local raw
+paired measurements at launch boundary.
 Do not destroy the box while an authorized run or unsaved output remains.
 
 Original pilot/results/expanded-control/off-topic follow-up remain preserved under

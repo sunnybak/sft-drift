@@ -53,3 +53,23 @@ compose, all banks identical across weights/seeds, actual tokenizer113–253inpu
 fits4096cap/4352context.67bindings verify: sources, plan, exact inputs, configs,
 original groups, control evidence and adapter hashes. No calls yet at this boundary.
 Model/decoder/weights unchanged; no training/rental or ethical-outcome selection.
+
+## Verified launch
+
+After old supervisor EXITED and GPU idle1MiB/clean checkout, fast-forwarded GPU to
+5519d072c78f48db67b339b9750a8ba251b400ea. Installed13prepared/evidence files with
+existing hash-verifying nonoverwrite utility;67bindings and qualification passed.
+Manual CUDA runtime preflight verified all15configs, banks, versions and token counts.
+GPU has24GBfree disk; local236GiBfree. No environment/dependency/driver changes.
+
+Created fresh finite supervisor sft-drift-paired-readout-v1, noautostart/noautorestart/
+startretries0, group termination and unifiedlog. Confirmed supervisor HF_HOME matches
+preflight without exposing environment secrets. Started once:RUNNING PID90841.
+At42seconds STARTED marker source5519d07 verified, inner preflight passed, first
+BASEseed42child started,0closed operations. No restart/resume. Do not pull/change
+bound GPU sources while active, even if local notes are committed after launch.
+
+Deployment/preflight/launch JSON+Markdown receipts are saved under completed interface
+control master. New paired raw replies remain GPU-only until closed copies; current
+private save must not be described as covering subsequent live output. No new training
+or scaling, and no qualified ethical-effect claim yet.
