@@ -207,3 +207,11 @@ retention and model-specific validation/full100belief evals with seeds42/7/1729.
 `scripts/analyze_ethical_four_arm.py` reports all scores/coverage and the predeclared
 positive-minus-negative target contrast. No sweep or checkpoint selection. Full-bank
 semantic clearance is not claimed; conservation subjects quarantined from training.
+
+## Active error investigation
+
+Fixed-retention repeats: `scripts/run_retention_rca.py` and
+`configs/run/ethics_gpu_retention_rca_*_v2.yaml`, stage `instruction_retention`.
+Plan: root `changelog/2026-10-21-retention-rca-plan.md`. v1 preparation failed layer
+verification before inference; preserve it, do not execute its configs. No training
+or historical gate changes. Status and exact next commands remain in root STATE.md.

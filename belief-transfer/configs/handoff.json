@@ -411,7 +411,21 @@
     "results/ethical_pilot/ethics_gpu_response_rca_base_nonthinking_v1",
     "results/ethical_pilot/ethics_gpu_response_rca_offtopic_nonthinking_v1",
     "results/ethical_pilot/ethics_gpu_response_rca_base_thinking_v1",
-    "results/ethical_pilot/ethics_gpu_response_rca_offtopic_thinking_v1"
+    "results/ethical_pilot/ethics_gpu_response_rca_offtopic_thinking_v1",
+    "generated/ethical_pilot/ethics_gpu_retention_rca_v1",
+    "results/ethical_pilot/ethics_gpu_retention_rca_v1",
+    "results/ethical_pilot/ethics_gpu_retention_rca_base_v1",
+    "results/ethical_pilot/ethics_gpu_retention_rca_positive_v1",
+    "results/ethical_pilot/ethics_gpu_retention_rca_negative_v1",
+    "results/ethical_pilot/ethics_gpu_retention_rca_offtopic_v1",
+    "results/ethical_pilot/ethics_gpu_retention_rca_c4_only_v1",
+    "generated/ethical_pilot/ethics_gpu_retention_rca_v2",
+    "results/ethical_pilot/ethics_gpu_retention_rca_v2",
+    "results/ethical_pilot/ethics_gpu_retention_rca_base_v2",
+    "results/ethical_pilot/ethics_gpu_retention_rca_positive_v2",
+    "results/ethical_pilot/ethics_gpu_retention_rca_negative_v2",
+    "results/ethical_pilot/ethics_gpu_retention_rca_offtopic_v2",
+    "results/ethical_pilot/ethics_gpu_retention_rca_c4_only_v2"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

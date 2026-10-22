@@ -1812,6 +1812,7 @@ class PilotBenchSpec(BaseModel):
 Stage = Literal[
     "control_recheck",
     "response_interface_rca",
+    "instruction_retention",
     "conviction_allocation",
     "conviction_study",
     "stance_study",
@@ -2015,6 +2016,20 @@ class ResponseInterfaceRCASpec(BaseModel):
     adapter_sha256: str | None = None
 
 
+class InstructionRetentionSpec(BaseModel):
+    """Retest a fixed retention bank/mask without selecting new known items."""
+    model_config = ConfigDict(extra="forbid")
+    model_label: str
+    bank_path: str
+    bank_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    known_path: str
+    known_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    adapter_sha256: str | None = None
+    eval_seeds: list[int] = Field(default_factory=lambda: [42, 7, 1729], min_length=1)
+    nonthinking_temperature: float = Field(default=0.0, ge=0)
+
+
+
 class JobConfig(BaseModel):
     """One resolved job: the sole input to a stage, and the output counterpart of
     `RunResult`.
@@ -2041,6 +2056,7 @@ class JobConfig(BaseModel):
     document_sft: DocumentSFTSpec | None = Field(default=None, exclude_if=lambda value: value is None)
     control_recheck: ControlRecheckSpec | None = Field(default=None, exclude_if=lambda value: value is None)
     response_interface_rca: ResponseInterfaceRCASpec | None = Field(default=None, exclude_if=lambda value: value is None)
+    instruction_retention: InstructionRetentionSpec | None = Field(default=None, exclude_if=lambda value: value is None)
     related_runs: dict[str, str] = Field(default_factory=dict)
     """Sibling run ids that belong with this one, mapped to why, e.g.
     `{matrix_v1_step24: "the same arms read at step 24, where belief transfer peaks"}`.

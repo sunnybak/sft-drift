@@ -8,6 +8,9 @@ Read the baseline report for methodology/results; do not reconstruct the old res
 User authorizes resolving measurement errors and tuning the pilot before expansion.
 Follow changelog/2026-10-21-error-rca-plan.md: preserved failure audit, matched five-model
 nonthinking controls, HF/vLLM parity, then evidence-driven instrument/training decisions.
+The backend and response-vocabulary diagnostics are complete and did not qualify
+BASE. Next is the prospectively registered fixed-retention repeatability audit in
+changelog/2026-10-21-retention-rca-plan.md; no newknownmask or alteredoldgates.
 No automatic100-subject expansion. New runs/instruments get fresh IDs; old gates and
 results remain unchanged. Do not select training on desired ethical drift.
 

@@ -39,12 +39,15 @@ print(json.dumps({'archive':str(archive),'status':status,'terminal':terminal,'op
 '''
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--suite',choices=['decoder','response'],default='decoder');p.add_argument('--host',required=True);p.add_argument('--port',type=int,required=True);args=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--suite',choices=['decoder','response','retention'],default='decoder');p.add_argument('--host',required=True);p.add_argument('--port',type=int,required=True);args=p.parse_args()
  if not re.fullmatch(r'[A-Za-z0-9_.@:-]+',args.host) or not 1<=args.port<=65535:raise ValueError('Unsafe host/port')
  master=MASTER;runs=RUNS;name='error-rca-v1'
  if args.suite=='response':
   from run_response_interface_rca import MASTER as master,run_ids as response_ids
   runs=[r for _,_,r in response_ids()];name='response-interface-rca-v1'
+ if args.suite=='retention':
+  from run_retention_rca import MASTER as master,run_ids as retention_ids
+  runs=[r for _,_,r in retention_ids()];name='retention-rca-v2'
  script=REMOTE.replace('__MASTER__',repr(master)).replace('__RUNS__',repr(runs)).replace('__SERVICE__',repr('sft-drift-'+name)).replace('__LOG__',repr('/workspace/sft-drift-ops/'+name+'.log')).replace('__ARCHIVE__',repr('/workspace/sft-drift-ops/'+name+'-closed.tar'))
  r=subprocess.run(['ssh','-p',str(args.port),args.host,'python3','-'],input=script,text=True,capture_output=True,timeout=600);r.check_returncode();state=json.loads(r.stdout.strip().splitlines()[-1])
  registry=json.loads((PROJECT/'configs/handoff.json').read_text());allowed=['data/'+x for x in registry['include_paths'] if x.startswith('results/ethical_pilot/')]

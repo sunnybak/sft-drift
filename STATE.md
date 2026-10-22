@@ -21,14 +21,21 @@ both data/results/ethical_pilot/ethics_gpu_{error_rca,response_interface_rca}_v1
 No active GPUjob, no newtraining. Allnewsource/notes to be committed/pushed and private
 snapshotverified at this boundary; authoritative receipt data/.handoff-receipt.json.
 
-Next block: prospective BASE retention test/retest using unchanged128-itembank/known
-mask/decoder/batch/cap, then separate explicit-premise comprehension controls from
-arithmetic capability. No repeated prompt fitting on8reusedfacts. Freeze freshvalidation
-before adoption; newinstrument needs all100beliefs and ownBASE. If retention decline
-survives repeatability/interface checks, preregister lowerLR/dose/replay candidates;
-do not select on desiredethicaldrift. Goal remains active; noautomaticexpansion.
-Exact next read from root: cat changelog/2026-10-21-response-interface-rca-results.md
-No follow-up GPUrun prepared yet. Existing started IDs cannot be reused.
+Fixed-retention repeatability audit PREPARED: ethics_gpu_retention_rca_v2,5children
+BASE/positive/negative/offtopic/C4×3evaluationseeds42/7/1729×128fixeditems=1,920calls.
+Original108-itemknownmask stays frozen; all20unknownnonthinkingitems retained too.
+Originaldecoder/scoring/gates unchanged; oneengine/model reused acrossmodes andseeds,
+so matchednewBASE is primary. Plan changelog/2026-10-21-retention-rca-plan.md.
+v1preparation FAILED import-cycle test before anymodelcall; failedplan/source/protocol
+preserved in its generatedroot. Relocated exactassessor to evals; freshv2IDs used.
+44focused tests pass, including frozenscoring sourceequivalence, layers, schemas,
+partialfailure preservation and avoiding semantic-loss attribution to missing replies.
+No GPUjob launched yet. Next: commit/push, sync code and preparedv2inputs to existing
+idlebox, launch finite supervisor sft-drift-retention-rca-v2 using
+.venv/bin/python -u scripts/run_retention_rca.py run from belief-transfer.
+No resume/retry or startedIDreuse. Compare repeatability before training adjustments;
+fresh comprehension controls and any full100revisedinstrument remain subsequentwork.
+Goal remains active; no expansion or newrental.
 
 ## Latest completed work
 

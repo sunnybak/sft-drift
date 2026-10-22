@@ -1,0 +1,27 @@
+# @package _global_
+defaults:
+- ethics_gpu_control_recheck_positive_v2
+stage: instruction_retention
+run_id: ethics_gpu_retention_rca_positive_v1
+control_recheck: null
+instruction_retention:
+  model_label: positive
+  bank_path: data/generated/ethical_pilot/ethics_gpu_retention_rca_v1/bank.jsonl
+  bank_sha256: b4822eba31dff7813a98a3044d4b0500d674ae3c602dc31a2c26f45c96e8927d
+  known_path: data/generated/ethical_pilot/ethics_gpu_retention_rca_v1/known_items.jsonl
+  known_sha256: 718048fd44f3561ba8d6330422f8dc9a6af6c43e1d93603178adbc01fcc4064f
+  adapter_sha256: 5f00e47cd2a0141fb76bf30210d93943aeb02f6f8c2a52125497a66fe75e1d02
+  eval_seeds:
+  - 42
+  - 7
+  - 1729
+  nonthinking_temperature: 0
+pilot_bench:
+  max_new_tokens: 4096
+  measurement_batch_size: 32
+  measurement_decoding:
+    thinking: true
+    temperature: 0.6
+    top_p: 0.95
+    top_k: 20
+    min_p: 0.0
