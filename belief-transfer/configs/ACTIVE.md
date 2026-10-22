@@ -221,9 +221,9 @@ Scoped-comprehension audit: `scripts/run_scope_controls.py`,
 `response_interface_rca` jobs. Plan: root `changelog/2026-10-21-scope-control-plan.md`.
 Original stance template, fresh facts; arithmetic/retention remain separate.
 
-Forward readout policy is planned in root
-`changelog/2026-10-21-scoped-readout-plan.md`. Its driver/configs are not implemented
-yet; do not invent an executable command. All five scope audits are complete.
+Forward readout completed all five models; see root
+`changelog/2026-10-21-scoped-readout-results.md`. Its original IDs are closed.
+All five scope audits are complete; their narrow pass is not ethical coherence.
 
 ## Current response-interface investigation
 
@@ -232,10 +232,19 @@ STATE.md controls execution. The frozen full100 follow-up uses
 `analyze_scoped_readout.py`. Do not restart completed children. Historical stability
 context is `scripts/analyze_natural_stability.py`; it does not change qualification.
 
-Prepared next: `run/ethics_gpu_interface_control_*_v1.yaml` reuses the typed
+Current diagnostic: `run/ethics_gpu_interface_control_*_v1.yaml` reuses the typed
 `response_interface_rca` stage with a new known-reference bank from
 `evals/interface_controls.py`. Driver `scripts/run_interface_controls.py`; analysis
 `analyze_interface_controls.py`. Exact source hashes freeze at preparation. The driver
 requires the current readout to finish. No new weights or ethical-outcome selection.
 The additive diagnostic letter-format mode preserves legacy assessments; primary
 frozen extraction/scoring stay unchanged. Read the prospective dated plan before run.
+
+Conditional next readout: `scripts/run_paired_readout.py` and
+`analyze_paired_readout.py`, existing `pilot_measurements` stage. Prospective plan
+root `changelog/2026-10-21-paired-readout-plan.md`. The prepare guard requires all five
+paired known-reference checks complete and passed, then freezes15fresh configs and
+all100beliefs on seeds42/7/1729 with their own BASE. No new data/configs/calls yet.
+This is relative forced preference, not a replacement for absolute endorsement.
+The worker rejects started IDs and has no resume. Only deploy after the currently
+bound diagnostic is terminal. Status and execution authority remain rootSTATE.

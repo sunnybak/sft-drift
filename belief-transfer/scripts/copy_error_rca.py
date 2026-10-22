@@ -39,7 +39,7 @@ print(json.dumps({'archive':str(archive),'status':status,'terminal':terminal,'op
 '''
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--suite',choices=['decoder','response','retention','scope','readout','interfaces'],default='decoder');p.add_argument('--host',required=True);p.add_argument('--port',type=int,required=True);args=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--suite',choices=['decoder','response','retention','scope','readout','interfaces','paired'],default='decoder');p.add_argument('--host',required=True);p.add_argument('--port',type=int,required=True);args=p.parse_args()
  if not re.fullmatch(r'[A-Za-z0-9_.@:-]+',args.host) or not 1<=args.port<=65535:raise ValueError('Unsafe host/port')
  master=MASTER;runs=RUNS;name='error-rca-v1'
  if args.suite=='response':
@@ -54,6 +54,9 @@ def main():
  if args.suite=='interfaces':
   from run_interface_controls import MASTER as master,run_ids as interface_ids
   runs=[r for _,_,r in interface_ids()];name='interface-controls-v1'
+ if args.suite=='paired':
+  from run_paired_readout import MASTER as master,run_ids as paired_ids
+  runs=[r for _,_,r in paired_ids()];name='paired-readout-v1'
  if args.suite=='readout':
   from run_scoped_readout import MASTER as master,run_ids as readout_ids
   runs=[r for _,_,r in readout_ids()];name='scoped-readout-v1'

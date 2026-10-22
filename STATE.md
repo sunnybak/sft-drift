@@ -55,18 +55,26 @@ before considering a fresh full100paired readout. Within-question exclusivity is
 structural; target-mirror consistency is framing stability, not recovered general
 negation competence. Relative preference differs from independent endorsement.
 
-BASE and positive COMPLETE/copied/reconstructed:30files/20,767,864bytes verified.
-Both current and paired384/384correct, all strict/valid. BASE reminder366/384 fails;
-positive377/384 passes declared gates. Agent-read examples show unconditional
+BASE/positive/negative COMPLETE/copied/reconstructed:45files/31,614,003bytes verified.
+All three current and paired384/384correct, all strict/valid. BASE reminder366/384
+fails; positive377/384 passes; negative375/384 fails validation factual/note gates. Agent-read examples show unconditional
 reminder confusing positive targets with unasked negations: prompt-design defect,
 not by itself training degradation. See master base_review.md, positive_review.md,
-immutable progress_after_base_positive.json/.md. Negative latest448/1152; off/C4
-pending at that observation. Performance failures do not stop remaining models.
+immutable progress_after_negative.json/.md and negative_review.md. Off-topic latest
+768/1152; C4 pending at that observation. Performance failures do not stop remaining models.
 
 Preparation:21source bindings, pinned-tokenizer audit114–212inputtokens plus4096cap
 fits4352context; runtime preflight passed.38mock/tmp tests pass. Frozen primary
 extractor unchanged; additive diagnostic strictA/B has new version; oldscope parity
-3,840/3,840. No paired real-belief readout prepared/launched yet.
+3,840/3,840. No paired real-belief data/configs prepared or calls launched yet. Conditional
+implementation now exists: scripts/run_paired_readout.py and analyze_paired_readout.py,
+registered17paths. Plan changelog/2026-10-21-paired-readout-plan.md freezes all100
+beliefs x5models x3evaluation seeds (36,480calls including fresh controls). Same
+weights/decoder, ownBASE per seed; relative preference is a different construct from
+endorsement.10new tests plus measurement/CUDA/layer/handoff regression tests:78pass.
+Temporary configs compose all15jobs; no test writes real results or loads weights.
+Guard refuses prepare until complete five-model paired controls pass. Deployment only
+after old bound worker terminal; do not pull while it runs.
 
 ## Exact next commands
 
@@ -79,6 +87,10 @@ uv run --no-sync python scripts/analyze_interface_controls.py --allow-partial
 Final analysis without flag only after allfiveclose; never overwrite a completed final.
 Review failures before any new protocol. If paired qualifies, write a prospective
 full100paired plan with ownBASE/instrument and sampling-variability design BEFORE calls.
+That conditional plan/code is now implemented; after full control review, the exact
+preparation command is uv run --no-sync python scripts/run_paired_readout.py prepare.
+It refuses incomplete controls and started IDs. Check all generated configs/bindings
+and pinned tokenizer/runtime before dispatch. Paired pipeline currently unprepared.
 Do not choose prompts/checkpoints/training on favorable ethical drift.
 
 ## Dashboard and preservation
@@ -91,9 +103,9 @@ Proof: current readout/dashboard_final.png. Restart from benchmark-dashboard/:
 ./node_modules/.bin/vite --host 127.0.0.1 --port 5180 --strictPort
 
 Source/notes committed/pushed at boundaries. Latest authoritative private save is
-belief-transfer/data/.handoff-receipt.json. Receipt48feaaec verified source62c143c
-and first4readouts/prepared diagnostic,4560files/15,600,573,019bytes. Next save adds
-terminal readout, reports/screenshots and first2interface models. Live remaining
+belief-transfer/data/.handoff-receipt.json. Receipte2e177b5 verified sourced0785d3
+and terminal readout/reports/screenshots/first2interface models,4649files/15,655,811,796
+bytes. Next save adds negative control results and conditional paired pipeline. Live remaining
 interface replies stay GPU-only until a closed copy/save. Do not destroy the box.
 
 Original pilot/results/expanded-control/off-topic follow-up remain preserved under
