@@ -62,7 +62,7 @@ ethics_gpu_replay_weight_confirmation_v1 reference COMPLETE:768calls,BASE/histor
 source4e572ad; supervisor EXITED Oct22 11:13UTC. Both384-row grids copied and rebuilt
 locally from raw tokens/runtime/versions/scoring; exact saved values match. All88queue
 replies agent-read in full and hash-bound;0value-review disagreements. BASE64queue:
-48correct-format-only/16wrong; C424queue:allwrong. No new study SFT trained yet.
+48correct-format-only/16wrong; C424queue:allwrong. No new study SFT completed at reference review.
 
 Frozen primary value-known BASE cohort:63thinking/59nonthinking. BASE retains allknown
 on3seeds. C4retains63/63thinking,57/59nonthinking=96.61%, all3seeds; PASSES preset95%
@@ -75,13 +75,26 @@ No old gate changed. Report:changelog/2026-10-22-replay-weight-reference-results
 
 Finite training/controller implemented,124targeted tests pass. Training execution binds
 1,048source/config/test/reference/weight files after full reference review and before SFT.
-Next: commit/push/private snapshot, deploy unchanged inputs, then under supervisor run:
+## Live training / next observation
+
+sft-drift-replay-weight-ablation-v1 RUNNING PID114336at launch, sourcedf32125.
+First child:ethics_sft_c4_norm1_v1. Command:
 /workspace/sft-drift/belief-transfer/.venv/bin/python -u scripts/run_replay_weight_ablation.py
-It sequentially trains norm1/weight32, requires allengineering checks plus actual
-objective/tokenized-input equality, collects384confirmation replies and all100beliefs
-per final regardless of retention/qualification failures. Technical failures stop and
-preserve. Final-only; no outcome selection. No resume/overwrite. No current GPU worker.
-No automatic further weight/LR search, ethical expansion or Mac training.
+Log:/workspace/sft-drift-ops/replay-weight-ablation-v1.log. No checkpoint yet at launch.
+Existing RTX3090 only; autostart/autorestart false, child shared CUDA lock. No resume/
+overwrite. Do not change/pull bound GPU source or destroy box while live.
+The fixed worker proceeds norm1→confirmation→all100→weight32→confirmation→all100.
+It requires engineering checks and exact actual objective/tokenized-input equality;
+retention/qualification failures do not suppress all100collection. Technical errors
+stop/preserve. Final-only; no outcome selection or automatic further weight/LR search.
+
+Next observation:
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-replay-weight-ablation-v1; tail -20 /workspace/sft-drift-ops/replay-weight-ablation-v1.log'
+Copy completed checkpoint/results at safe boundaries. After each final, independently
+verify dose/adapter/retention/all100coverage; after both, fully read every new failure/
+unscorable/lost-value reply and compare fixed arms. Goal NOT complete. No expansion.
+Stable launch metadata copied locally; live training artifacts remain GPU-only until
+completed boundaries. Training process cannot survive box destruction or resume by ID.
 
 ## Prior completed evidence
 
@@ -95,11 +108,12 @@ Original neutral18/20gate remains failed; no retrospective pass from these diagn
 
 ## Preservation
 
-Verified snapshot34afd1353501b1dbcc43567ce9cd9ca7987011ea at code1cd95c12114acccccdb3d3fdbb5017579065115e:
-5,827files/16,164,998,038bytes; corpus1cf36024eb022fb6c5696080fdd375a59a1c57b2.
-Covers completed prior evidence, prepared inputs and launch metadata. Completed768-call
-reference/review and new training execution await this block's save. From belief-transfer/:
+Verified snapshot6b205ab254a391d2ab85df211fe445bb08491c99 at
+codedf32125e22850d005bd0ca9df7e2a4897c40a656:5,891files/16,171,355,812bytes;
+corpus2dc601cdae3103f6866a728d94cb2b26ac7291a7. Includes full768-call reference,88full
+reviews, matched inputs/plans, independent bank and1,048training execution bindings.
+Current training launch metadata/notes await this block's save. From belief-transfer/:
 uv run --no-sync python scripts/handoff.py save
-Verify receipt before training launch. No source/data mutation during save.
+No local source/data mutation during save. Live training outputs not yet backed up.
 Candidatev5 remains20,000documents/221repairs; conservation subjects quarantined,
 full-bank semantic clearance false. No new corpus/full100training launched.

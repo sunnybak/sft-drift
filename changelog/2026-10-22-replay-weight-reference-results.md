@@ -52,3 +52,21 @@ beliefs atseed42, evenifretention/qualification fails. Failed qualification rout
 explicitly unqualified full100collection. Technicalfailure stops/preserves. Selection
 is finalonly and procedural, never onethicaloutcomes. No automatic further search.
 124targeted mock/tempdir/document/handoff/layer tests pass. Training not yet launched.
+
+## Fixed training launched
+
+Verified snapshot6b205ab254a391d2ab85df211fe445bb08491c99 atdf32125 covers5,891files/
+16,171,355,812bytes; corpus2dc601cdae3103f6866a728d94cb2b26ac7291a7. Complete reference,
+reviews and frozen training inputs privately verified before launch.91declared input/
+reference files transferred/checksummed; all1,048bindings/private receipt matched on GPU.
+The historical runtime YAML matched incoming Git bytes and was archived outside checkout
+at/workspace/sft-drift-ops/predeployment-configs-df32125beforefast-forward; no data deleted.
+
+Finite supervisor sft-drift-replay-weight-ablation-v1 RUNNING PID114336at launch,
+sourcedf32125. Log:/workspace/sft-drift-ops/replay-weight-ablation-v1.log.
+First childethics_sft_c4_norm1_v1; no checkpoint yet when launch metadata copied.
+Command:.venv/bin/python -u scripts/run_replay_weight_ablation.py. Child CUDA flock;
+no autostart/restart/resume. Runs norm1thenweight32with independent confirmation and
+all100perfinal in between. Live training output remains remote until safe completed
+boundaries; only static master launch metadata copied so far. No completion or repair
+claim. Do not change bound remote code or destroy box while live.
