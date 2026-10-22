@@ -58,3 +58,23 @@ explicitly defined in the named before-cell. Empty masks remain empty, not passi
 New failure queue is separate from reused historical responses. No semantic review or
 scientific conclusion is inferred from successful collection. Additional46focused tests
 pass, including misalignment, missing/zero-known cohorts and per-mode pair coverage.
+
+## First closed boundary and partial semantic review
+
+First5children and immutable master files copied/hash-verified:122files/6,292,510bytes
+(total includes15first-child files). Remote before/after inventories match local hashes.
+Append streams and current/later children excluded. Private snapshotb4af9f96d3a8613a9b862996af23562818f503df
+at52e3993 verified6838files/20,247,121,859bytes, covering launch/analyzer/firstchild;
+newfive-child copy and50review annotations await the next snapshot.
+
+All50flags in seen/train were read in full:BASE32short,control12short,candidate3thinking
+plus3short. BASEmanual short26/32correct,6wrong(allwithnote),strictformat0/32.
+Value-v2 misses two clear correct bold terminalReject choices(ids32/44), retained as
+explicit disagreements; automated/native scores unchanged. Control12wrong one-word
+choices are genuine; no reasoning to identify internal mechanism. V5exact replay scores
+29/32thinking and29/32short; all6errors involve negation. Thinking07/21/23compute the
+arithmetic correctly then evaluate the inner equality and ignore its outer negation.
+Short12/14/28are wrong on negated true equalities; no internal reasoning claim.
+The remaining6conditions are not yet fully reviewed. All9jobs continue regardless of
+performance. No new intervention selected or adoption inferred from partial results.
+Component annotations/summary have separate stems to retain JSONL-derivedMarkdown.

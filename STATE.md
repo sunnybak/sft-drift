@@ -27,8 +27,9 @@ RUNNING:supervisor sft-drift-replay-interface-rca-v1 PID126690. GPUsource pinned
 4971dd83a42f5f1a530403a2ba75012986b575fb; do NOT pull source while worker runs.
 FixedBASE/control/v5candidate2×2transfer RCA:9jobs/576new calls,192historical reused.
 All40bindings/9resolvedconfigs/192historical actual responses reverified onGPU before
-launch. First BASEseen/train child complete/copied/hash-verified locally:15files/678965B.
-Control seen/train was active at last check. No new training or ethical reading.
+launch. Five children closed/copied/hash-verified locally:122files/6,292,510B(total includes
+first child), plus immutable master value/summary/review/dispatch files. Lastclosed:
+control_seen_eval; candidate_seen_eval was active. No technical failure observed. No new training or ethical reading.
 All192seen/train actual training-prefix/targets/weights exact; all256requests solved.
 Focused preparation110tests pass; new analyzer/paired missing/per-mode checks46pass.
 Scientific v5failure remains unchanged; no automatic adoption or conditional confirmation.
@@ -40,6 +41,12 @@ After terminal:copy/hash-verify closed master/all9children/log, then locally:
 cd belief-transfer && uv run --no-sync python scripts/analyze_replay_interface_rca.py
 Analyzer requires complete+terminal, reconstructs all768actual records and24contrasts,
 keeps native/value/format/stops/lengths/per-mode note+polarity/missing bounds separate.
+Seen/train component fully read50flags(BASE32/control12/candidate6), hash-bound.
+BASEmanual26/32short vsvalue-v2 24correct/2unscorable/6wrong; two bold terminal
+correct choices missed by parser. Native/value scores unchanged. Exacttrainedrequests:
+v5thinking29/32(BASE/control32), short29/32(control20); all6errors onnegated claims.
+Thinking3errors compute arithmetic correctly but evaluate inner equality. Other cells
+review pending; no intervention selected before complete diagnostic.
 New failure queue requires full agent reading. No overwrite/resume/retry-on-content;
 process does not survive a destroyed box. Plan:2026-10-22-replay-interface-rca-plan.md.
 
@@ -76,15 +83,15 @@ No automatic expansion, checkpoint selection on stance, or repeat-until-pass.
 
 ## Preservation
 
-Latest VERIFIED private snapshot1ba546c43e63d298a080063d09c1923cfdcc1b5c at4971dd8:
-6819files/20,246,435,936bytes; corpus842d71f73589caa961af45caa6415d44f14119d0.
-Includes all earlier terminalv5data/reviews and newRCAprotocol/inputs before first call.
-Installed verified receipt onGPU before launch. Launch receipt and closed first child
-are now offGPU/local pending next save; later/live children/master/log remain onGPU.
-Current source/notes save will include analyzer and launch details. Prior runtime configs
-preserved onGPU ops backup; tracked replacements byte-identical. Do not pullGPUsource.
-Save at safe boundary:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
-No local mutations during save. Do not claim box-destruction safety with live new results.
+Latest VERIFIED private snapshotb4af9f96d3a8613a9b862996af23562818f503df at52e3993:
+6838files/20,247,121,859bytes; corpus60195b91dac3fe5354fd349d5dd8b9e28138f49a.
+Includes earlier terminalv5data, RCAinputs/launch receipt/analyzer and closed first child.
+Newfive-child copy/50component reviews now offGPU/local pending next private save.
+Later/live children/master append streams/log remain onGPU; no destruction safety.
+GPUsource stays4971dd8. Prior runtime config originals backed up off checkout, identical
+tracked replacements installed. Save at safe boundary:
+cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+No local mutations during save. Run has no resume/restart; monitor same supervisor.
 
 ## Established results and data limits
 
