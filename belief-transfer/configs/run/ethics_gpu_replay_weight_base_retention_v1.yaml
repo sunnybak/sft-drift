@@ -1,0 +1,16 @@
+# @package _global_
+defaults:
+- ethics_gpu_retention_rca_base_v2
+run_id: ethics_gpu_replay_weight_base_retention_v1
+instruction_retention:
+  model_label: base
+  bank_path: data/generated/ethical_pilot/ethics_gpu_replay_weight_confirmation_v1/bank.jsonl
+  bank_sha256: 997a1b902f3ad1a8d13e7b54b51a10b21120610a4cf4d1c9fc1111bbb436193f
+  known_path: null
+  known_sha256: null
+  fresh_base_reference: true
+  adapter_sha256: null
+  eval_seeds:
+  - 42
+  - 7
+  - 1729

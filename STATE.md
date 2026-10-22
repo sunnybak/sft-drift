@@ -32,34 +32,37 @@ Report:changelog/2026-10-22-fresh-retention-results.md. All164failures agent-rea
 full; exact admissible finals inherit prevalidated keys. Supplemental cohort is
 explicitly post-hoc and does not revise the prospective falsifier.
 
-## Implementation / next work
+## Current prepared comparison
 
-Task-value-v1 assessor and optional replay weighting implemented.80initial unit/layer/
-schema/document regressions passed; old config/chunk identities preserved. No study
-model trained with new code. CUDA toy checkv1FAILED: full-batch update matches analytic
-mean but accumulated update is half despite matching loss logs. Failure saved locally
-under ethics_gpu_weighted_loss_check_v1; do not rerun. Sourcecb6135a.
+CUDA weighted-loss checkv2 PASSES all5analytic/update/reload checks; max errors1.1921e-7.
+Source6b3aef7; finite worker EXITED Oct22 10:49UTC. No pretrained weights loaded.
+Native toy accumulated update is0.500002of unweighted group mean despite equal NLL;
+this does not establish exact historical Qwen updates or the cause of regression.
+Failedv1is preserved. Legacy defaults/config hashes and frozen scores remain unchanged.
 
-Fix compensates Accelerator's GASdivision in backward and unscales logged NLL. Explicit
-weighted_group_mean_v1normalization opt-in now applies to both weight1andweight32;
-legacy default untouched. Fresh checkv2must pass SAMEanalytic/update/reload criterion;
-new native Trainer diagnostic also measures unweighted framework scaling. CUDA v2 now
-PASSES all five analytic/update/reload checks: both update errors1.1921e-7. Run
-ethics_gpu_weighted_loss_check_v2 EXITED Oct22 10:49UTC; source6b3aef7. Outputs copied
-locally. Native toy accumulated update is0.500002of its unweighted group mean; this
-diagnostic does not establish the exact historical Qwen update or cause of regression.
+ethics_sft_replay_weight_ablation_v1 is now PREPARED, not trained. Fresh norm1andweight32
+C4arms reproduce exact original text/IDs/inputIDs/labels/chunk order/microbatch order:
+3,246manifest rows,3,625chunks,454steps,1,244,032raw targets each. Corrected optimizer-
+group normalization applies to both. Objective short-reply shares .2074%vs5.7756%;
+weighted targets1,244,032vs1,305,412. These are coefficients, not gradient contributions.
+Plans/configs registered; final-only selection. No ethical-outcome parameter selection.
 
-Before real SFT, amend trial with a fresh normalization-only weight1C4control so weight32
-is isolated from normalization. Independent confirmation BASE/oldC4/newweight1/newweight32
-=1,536calls. Both new final models get frozen all100beliefs at seed42; no ethical-outcome
-selection. Plan:changelog/2026-10-22-replay-weight-ablation-plan.md, pre-SFT amendment.
+Independent confirmation bank RNG20261023 frozen before training:64questions×2modes,
+SHA997a1b902f3ad1a8d13e7b54b51a10b21120610a4cf4d1c9fc1111bbb436193f.
+No exact prompt overlap with replay/old/fresh-v1banks. BASE/historicalC4/newnorm1/new32
+×3seeds=1,536calls. BASE-value cohort uses seed42correct recognized values, boundaries
+and normal stops independently of answer-only format; original strict grade/mask stays
+separate. Every new final gets all100beliefs at seed42. No broad capability claim.
+120narrow/document/handoff/value/layer tests pass. All tests use mocks/tempdirs.
+Execution freezes961source/config/test/weight bindings before reference collection.
 
-Next: preserve verified CUDA check/source, then prepare/freeze independent bank
-RNG20261023, matched data/dose/configs, actual code/weight hashes and verification
-receipts. Only then launch the finite two-model C4ablation. No current GPU worker.
-Exact preservation command from belief-transfer/: uv run --no-sync python scripts/handoff.py save
-Training preparation/controller does not yet exist; do not claim models are running.
-No automatic weight/LR search or ethical expansion. Never tune on the Mac.
+Next: commit/push and privately save prepared inputs; then deploy to existing GPU and
+run finite reference worker (BASE+historicalC4,768calls), no new study training yet:
+/workspace/sft-drift/belief-transfer/.venv/bin/python -u scripts/run_replay_weight_confirmation.py reference
+Use supervisor/shared CUDA lock; refusal to overwrite/resume. After reference freezes,
+build the finite training/evaluation controller, preserve before launch, train both
+matched models, collect independent confirmation and all100for each final, then read
+all failures/lost values. No automatic weight/LR search or ethical expansion. CUDA only.
 
 ## Prior completed evidence
 
@@ -73,13 +76,11 @@ Original neutral18/20gate remains failed; no retrospective pass from these diagn
 
 ## Preservation
 
-Verified snapshot82f6ae4546a57b28b091c21b2cde629ceb9e6956 at
-97bd74fdc0d6af811121f0daf825e260108f5a7c covers full fresh-retention/reviews:
-5,796files/16,138,716,185bytes; corpus1ed4036dba4ff7bdd57991993588ce848f6a71e9.
-New value/loss implementation and upcoming CUDA verification await current block save.
-Commit/push current block, then from belief-transfer/:
+Verified snapshotfd211ddf9a6d016024507a3ede23e3466dc705fd at codee3c66cec37d3db354d5a2da84d7a2bbd0ad81578
+covers all completed fresh retention/reviews and CUDAv1failure/v2pass:
+5,808files/16,138,731,689bytes; corpus e11d58a0dd08e3020c1baaf546a4701dee83c9ac.
+Current prepared comparison/source await this block's save. From belief-transfer/:
 uv run --no-sync python scripts/handoff.py save
-Verify receipt before claiming full preservation. No source/data mutation during save.
-Authoritative receipt:data/.handoff-receipt.json. All new JSONL have Markdown views.
+Verify receipt before GPU reference launch. No source/data mutation during save.
 Candidatev5 remains20,000documents/221repairs; conservation subjects quarantined,
-full-bank semantic clearance false. No new corpus/training/full100training launched.
+full-bank semantic clearance false. No new corpus/full100training launched.

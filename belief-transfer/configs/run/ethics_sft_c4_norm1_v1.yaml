@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+- ethics_sft_pilot_c4_only_v1
+run_id: ethics_sft_c4_norm1_v1
+document_sft:
+  manifest_path: data/generated/ethical_stance_sft/ethics_sft_c4_norm1_v1/documents.jsonl
+  plan_path: data/generated/ethical_stance_sft/ethics_sft_c4_norm1_v1/plan.json
+  replay:
+    nonthinking_loss_weight: 1.0
+    loss_normalization: weighted_group_mean_v1
+  plan_sha256: a105114f321d12ab4c8d11071248e01f9dcd50e52c657898336901e98f74cad7
