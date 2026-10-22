@@ -9,7 +9,7 @@ from belief_transfer.training.replay_loss import WeightedLossMixin,accumulation_
 from belief_transfer.dataset.document_sft import collate_documents
 from run_error_rca import sha,dump
 
-RUN='ethics_gpu_weighted_loss_check_v1'
+RUN='ethics_gpu_weighted_loss_check_v2'
 
 
 def main():
@@ -32,12 +32,18 @@ def main():
     class Tiny(nn.Module):
         def __init__(self):
             super().__init__();self.lora_table=nn.Parameter(initial.clone())
-        def forward(self,input_ids,attention_mask=None,**kwargs):return CausalLMOutput(logits=self.lora_table[input_ids])
-    models={};losses={};accelerator_gas={}
+        def forward(self,input_ids,attention_mask=None,labels=None,num_items_in_batch=None,**kwargs):
+            from transformers.loss.loss_utils import ForCausalLMLoss
+            logits=self.lora_table[input_ids]
+            loss=ForCausalLMLoss(logits,labels,vocab_size=7,num_items_in_batch=num_items_in_batch) if labels is not None else None
+            return CausalLMOutput(loss=loss,logits=logits)
+    models={};losses={};accelerator_gas={};native_models={};native_losses={}
     try:
-        for name,batches,gas in [('full',[[0,1,2]],1),('accumulated',[[0],[1,2]],2)]:
+        for name,batches,gas in [('full',[[0,1,2]],1),('accumulated',[[0],[1,2]],2),('native_full',[[0,1,2]],1),('native_accumulated',[[0],[1,2]],2)]:
             denominators=accumulation_denominators(fixture,batches,gas)
-            def collate(rs):return add_weighted_inputs(collate_documents(rs,pad_token_id=0),rs,denominators)
+            def collate(rs):
+                batch=collate_documents(rs,pad_token_id=0)
+                return batch if name.startswith('native_') else add_weighted_inputs(batch,rs,denominators)
             class CheckTrainer(WeightedLossMixin,Trainer):
                 def get_train_dataloader(self):
                     return self.accelerator.prepare(DataLoader(self.train_dataset,batch_sampler=batches,collate_fn=collate))
@@ -48,8 +54,11 @@ def main():
                 disable_tqdm=True,seed=1729,lr_scheduler_type='constant',tf32=False)
             trainer=CheckTrainer(model=model,args=args,train_dataset=fixture,data_collator=collate,optimizers=(optimizer,None))
             trainer.model_accepts_loss_kwargs=True
-            result=trainer.train();losses[name]=result.training_loss;accelerator_gas[name]=trainer.accelerator.gradient_accumulation_steps
-            models[name]=model.lora_table.detach().clone()
+            result=trainer.train();accelerator_gas[name]=trainer.accelerator.gradient_accumulation_steps
+            if name.startswith('native_'):
+                native_losses[name]=result.training_loss;native_models[name]=model.lora_table.detach().clone()
+            else:
+                losses[name]=result.training_loss;models[name]=model.lora_table.detach().clone()
         # Independent closed-form softmax derivative, not the weighted CE implementation.
         denominator=sum(r['loss_weight']*sum(y!=-100 for y in r['labels'][1:]) for r in fixture)
         gradient=torch.zeros_like(initial)
@@ -69,8 +78,19 @@ def main():
             'adapter_updated':not torch.equal(initial,models['accumulated']),
             'reload_exact':torch.equal(reloaded.lora_table.detach(),models['accumulated']),
             'losses_match_analytic':all(abs(v-expected_loss)<1e-6 for v in losses.values())}
+        native_gradient=torch.zeros_like(initial)
+        raw_targets=sum(sum(y!=-100 for y in r['labels'][1:]) for r in fixture)
+        for row in fixture:
+            for position,label in enumerate(row['labels'][1:]):
+                if label==-100:continue
+                token=row['input_ids'][position];g=torch.softmax(initial[token],dim=-1);g[label]-=1
+                native_gradient[token]+=g/raw_targets
+        native_expected=initial-.05*native_gradient
+        native_ratios={k:float((v-initial).norm()/(native_expected-initial).norm()) for k,v in native_models.items()}
         summary={'run_id':RUN,'checks':checks,'passed':all(checks.values()),'max_abs_errors':errors,
             'expected_loss':expected_loss,'reported_losses':losses,'accelerator_gradient_accumulation_steps':accelerator_gas,
+            'native_path_diagnostic':{'update_norm_ratio_to_unweighted_group_mean':native_ratios,'reported_losses':native_losses,
+                'interpretation':'Unweighted pinned Trainer/ForCausalLMLoss diagnostic; historical paths are unchanged. A fresh normalization-only matched control is required before attributing differences to replay weight.'},
             'denominator':denominator,'fixture':fixture,'card':torch.cuda.get_device_name(),
             'versions':{p:version(p) for p in ['torch','transformers','accelerate']},
             'sources':{p:sha(Path(p)) for p in ['scripts/verify_weighted_loss_cuda.py','src/belief_transfer/training/replay_loss.py','src/belief_transfer/training/documents.py']},

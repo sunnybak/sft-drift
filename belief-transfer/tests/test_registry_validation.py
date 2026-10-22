@@ -198,3 +198,17 @@ def test_incomplete_or_wrong_training_cannot_load_weights(training,failure):
     else:t['one_pass']=False
     (root/'summary.json').write_text(json.dumps(summary))
     with pytest.raises(ValueError):probe.training_binding(plan,root,path)
+
+
+def test_opt_in_weighted_objective_requires_its_actual_dose_and_check(training):
+    root,path,plan,summary=training
+    plan['preprocessing']={'replay':{'loss_normalization':'weighted_group_mean_v1','nonthinking_loss_weight':32}}
+    plan['dose']['weighted_loss_tokens']=420
+    with pytest.raises(ValueError,match='Weighted'):probe.training_binding(plan,root,path)
+    summary['training']['weighted_objective']={'nonthinking_replay_weight':32,'weighted_forward_targets':420}
+    summary['training']['checks']['weighted_loss_normalization_matches']=True
+    (root/'summary.json').write_text(json.dumps(summary))
+    assert probe.training_binding(plan,root,path)['training_checks']['weighted_loss_normalization_matches']
+    summary['training']['weighted_objective']['weighted_forward_targets']=419
+    (root/'summary.json').write_text(json.dumps(summary))
+    with pytest.raises(ValueError,match='Weighted'):probe.training_binding(plan,root,path)

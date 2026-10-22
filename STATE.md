@@ -32,33 +32,29 @@ Report:changelog/2026-10-22-fresh-retention-results.md. All164failures agent-rea
 full; exact admissible finals inherit prevalidated keys. Supplemental cohort is
 explicitly post-hoc and does not revise the prospective falsifier.
 
-## Implementation in progress
+## Implementation / next work
 
-Separate task-value-v1 scorer implemented: literal values/scoped valid equations,
-ordered lists, logical words and uppercase characters; unsupported/missing/capped
-replies explicit. Frozen assessments unchanged. Opt-in replay weight32implemented,
-with weighted denominator across exact one-pass accumulation groups and an audit.
-80relevant unit/layer/schema regressions pass; legacySFT config hashes unchanged.
-CUDA toy Trainer analytic/update/reload test is implemented/registered as
-ethics_gpu_weighted_loss_check_v1, NOT yet run. No real new model training yet.
+Task-value-v1 assessor and optional replay weighting implemented.80initial unit/layer/
+schema/document regressions passed; old config/chunk identities preserved. No study
+model trained with new code. CUDA toy checkv1FAILED: full-batch update matches analytic
+mean but accumulated update is half despite matching loss logs. Failure saved locally
+under ethics_gpu_weighted_loss_check_v1; do not rerun. Sourcecb6135a.
 
-## Next work — concrete bounded tuning step
+Fix compensates Accelerator's GASdivision in backward and unscales logged NLL. Explicit
+weighted_group_mean_v1normalization opt-in now applies to both weight1andweight32;
+legacy default untouched. Fresh checkv2must pass SAMEanalytic/update/reload criterion;
+new native Trainer diagnostic also measures unweighted framework scaling. Not run yet.
 
-Read proposed changelog/2026-10-22-replay-weight-ablation-plan.md, then implement/test
-SEPARATE value/format assessment and opt-in weighted replay normalization. One preset
-fresh C4candidate: only nonthinking replay loss weight1→32; same raw data/seed42/
-recipe/454steps. Normalize weighted NLL across accumulation group; preserve defaults.
-Freeze further independent-input confirmation bank/scorer before training; BASE,
-unchangedC4andnewcandidate. Every new fine-tune still gets all100frozen belief evals;
-never choose recipe from ethical direction. No candidate inputs/calls/training yet.
-CUDA analytic/update/reload verification must precede real SFT. Register all outputs.
-No automatic weight/LR search if this candidate fails. Balanced-position design is
-written but deferred; changed recipe requires retraining matched controls.
+Before real SFT, amend trial with a fresh normalization-only weight1C4control so weight32
+is isolated from normalization. Independent confirmation BASE/oldC4/newweight1/newweight32
+=1,536calls. Both new final models get frozen all100beliefs at seed42; no ethical-outcome
+selection. Plan:changelog/2026-10-22-replay-weight-ablation-plan.md, pre-SFT amendment.
 
-Exact next inspection command from belief-transfer/:
-sed -n '1,220p' ../changelog/2026-10-22-replay-weight-ablation-plan.md
-After implementing/fixing code, run narrow new tests before live calls; no Mac tuning.
-Never rerun completed fresh-retention/clarity/readout IDs (no resume/autorestart).
+Next: finish new code tests, commit/push/deploy, run scripts/verify_weighted_loss_cuda.py
+under supervisor with freshv2ID. After pass, prepare/freeze independent bank RNG20261023,
+matched data/dose/configs, actual code/weight hashes and verification receipts. Only then
+launch the finite two-model C4ablation. No current study training/benchmark worker.
+No automatic weight/LR search or ethical expansion. Never tune on the Mac.
 
 ## Prior completed evidence
 

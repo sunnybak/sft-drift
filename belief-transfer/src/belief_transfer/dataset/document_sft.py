@@ -145,9 +145,10 @@ def _assistant_replay(row: dict, tokenizer: Any, *, max_length: int,
         raise ValueError('Replay response has empty or reserved token boundaries')
     chunks = _assistant_chunks(row, tokenizer, header_ids, body, [*body, tokenizer.eos_token_id],
         max_length=max_length, context_limit=replay.continuation_context_tokens, mode=replay.mode)
-    if not row['thinking'] and replay.nonthinking_loss_weight != 1.0:
+    if replay.loss_normalization is not None:
         for chunk in chunks:
-            chunk['loss_weight'] = replay.nonthinking_loss_weight
+            chunk['loss_weight'] = 1.0 if row['thinking'] else replay.nonthinking_loss_weight
+            chunk['replay_thinking'] = row['thinking']
     return chunks
 
 

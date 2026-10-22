@@ -3,10 +3,10 @@ from __future__ import annotations
 import math
 
 
-def chunk_key(row):return row['example_id'],row['chunk_start']
+def chunk_key(row: dict) -> tuple[str, int]:return row['example_id'],row['chunk_start']
 
 
-def accumulation_denominators(chunks, batches, grad_accum):
+def accumulation_denominators(chunks: list[dict], batches: list[list[int]], grad_accum: int) -> dict[tuple[str, int], float]:
     if grad_accum < 1 or len(batches) % grad_accum or sorted(i for b in batches for i in b) != list(range(len(chunks))):
         raise ValueError('Weighted normalization requires one exact complete pass')
     if len({chunk_key(c) for c in chunks}) != len(chunks):raise ValueError('Duplicate chunk identities')
@@ -25,7 +25,7 @@ def accumulation_denominators(chunks, batches, grad_accum):
     return result
 
 
-def add_weighted_inputs(batch, rows, denominators):
+def add_weighted_inputs(batch: dict, rows: list[dict], denominators: dict[tuple[str, int], float]) -> dict:
     import torch
     values={denominators[chunk_key(c)] for c in rows}
     if len(values)!=1:raise ValueError('Microbatch crosses optimizer normalization groups')
@@ -40,6 +40,18 @@ class WeightedLossMixin:
     This prevents Trainer's extra accumulation division. CUDA verification compares
     actual optimizer updates with a full-group weighted reference, not just loss logs.
     """
+    def training_step(self, model, inputs, num_items_in_batch=None):
+        weighted = '_weighted_denominator' in inputs
+        scale = self.accelerator.gradient_accumulation_steps if weighted else 1
+        self._weighted_backward_scale = scale
+        try:
+            result = super().training_step(model, inputs, num_items_in_batch=num_items_in_batch)
+            # Accelerator divides gradients by its GAS. The weighted objective is
+            # already normalized across that group: compensate backward, report NLL.
+            return result / scale if weighted else result
+        finally:
+            self._weighted_backward_scale = 1
+
     def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
         if '_weighted_denominator' not in inputs:
             return super().compute_loss(model,inputs,return_outputs=return_outputs,num_items_in_batch=num_items_in_batch)
@@ -54,10 +66,11 @@ class WeightedLossMixin:
         losses=F.cross_entropy(logits[:,:-1].float().contiguous().view(-1,logits.shape[-1]),
             labels[:,1:].contiguous().view(-1),ignore_index=-100,reduction='none').view(labels.shape[0],-1)
         loss=(losses*weights[:,None]).sum()/denominator
+        loss=loss*getattr(self,'_weighted_backward_scale',1)
         return (loss,outputs) if return_outputs else loss
 
 
-def objective_report(batches, nonthinking_weight):
+def objective_report(batches: list[dict], nonthinking_weight: float) -> dict:
     """Reported coefficient mass, not gradient norms or optimizer attribution."""
     from collections import defaultdict
     groups=defaultdict(list)
@@ -68,7 +81,7 @@ def objective_report(batches, nonthinking_weight):
         for batch in group:
             for row in batch['chunks']:
                 w=row['loss_weight'];kind=row['source_kind']
-                kind=('replay_nonthinking' if w!=1 else 'replay_thinking') if kind=='replay' else kind
+                kind=('replay_thinking' if row.get('replay_thinking',w==1) else 'replay_nonthinking') if kind=='replay' else kind
                 raw[kind]+=row['loss_tokens'];weighted[kind]+=row['loss_tokens']*w;mass[kind]+=row['loss_tokens']*w
         if not math.isclose(sum(mass.values()),denominator,rel_tol=1e-12):raise ValueError('Weighted audit denominator mismatch')
         for kind,value in mass.items():means[kind]+=value/denominator/len(groups)

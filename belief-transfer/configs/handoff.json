@@ -546,7 +546,8 @@
     "results/ethical_pilot/ethics_gpu_fresh_retention_offtopic_v1",
     "results/ethical_pilot/ethics_gpu_fresh_retention_c4_only_v1",
     "results/ethical_pilot/ethics_gpu_fresh_retention_value_review_v1",
-    "results/ethical_pilot/ethics_gpu_weighted_loss_check_v1"
+    "results/ethical_pilot/ethics_gpu_weighted_loss_check_v1",
+    "results/ethical_pilot/ethics_gpu_weighted_loss_check_v2"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

@@ -51,9 +51,11 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
         raise ValueError('This new document path currently validates LoRA only')
     planned_batches = (one_pass_batches(len(chunks), optimizer_steps=spec.max_steps,
         grad_accum=hp.grad_accum, max_batch_size=hp.batch_size, seed=hp.seed) if spec.one_pass else None)
-    weighted = spec.replay is not None and spec.replay.nonthinking_loss_weight != 1.0
-    if weighted and (planned_batches is None or not any(c.get('loss_weight',1.) != 1. for c in chunks)):
-        raise ValueError('Weighted replay requires one-pass schedule and weighted replay targets')
+    weighted = spec.replay is not None and spec.replay.loss_normalization is not None
+    if weighted and planned_batches is None:
+        raise ValueError('Optimizer-group normalization requires a one-pass schedule')
+    if weighted and spec.replay.nonthinking_loss_weight != 1.0 and not any(c.get('loss_weight',1.) != 1. for c in chunks):
+        raise ValueError('Weighted replay has no weighted replay targets')
     weighted_denominators = accumulation_denominators(chunks,planned_batches,hp.grad_accum) if weighted else None
     revision_kwargs = {'revision': spec.model_revision} if spec.model_revision is not None else {}
     model, tokenizer = load_for_training(job.model_spec, hp, seed=hp.seed, **revision_kwargs)
@@ -87,6 +89,7 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
         if weighted:
             for meta,row in zip(batch['_document_meta'],rows,strict=True):
                 meta['loss_weight']=row.get('loss_weight',1.)
+                if row['source_kind']=='replay':meta['replay_thinking']=row['replay_thinking']
             add_weighted_inputs(batch,rows,weighted_denominators)
         return batch
 
@@ -119,6 +122,8 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
 
     trainer = AuditedTrainer(model=model, args=args, train_dataset=chunks, data_collator=collate)
     if weighted:
+        if trainer.accelerator.num_processes != 1:
+            raise ValueError('Optimizer-group normalization currently verifies single GPU only')
         trainer.model_accepts_loss_kwargs = True
     torch.cuda.reset_peak_memory_stats()
     started = time.perf_counter()

@@ -17,3 +17,26 @@ assessment, format, boundaries and stops; unrecognized/missing results remain ex
 will use the shared mixin through real Trainer, compare full-batch/accumulated updates
 with an independently calculated softmax gradient, and verify update/reload. It loads
 no Qwen weights. No study candidate or independent confirmation inputs prepared yet.
+
+## CUDA v1 failure and pre-SFT correction
+
+v1failed the unchanged analytic criterion: full update error1.19e-7, accumulated
+error0.01878; update norm ratio0.500001. Reported NLL matched, demonstrating why
+loss logs and denominator checks alone were insufficient. No study model trained.
+Failure/summary/tensor outputs copied locally; original sourcecb6135a recoverable.
+
+The opt-in mixin now compensates Accelerator's GASdivision only within training_step,
+then unscales its returned logging loss. Historical default path stays untouched.
+A fresh normalization-only weight1control is added to the future ablation, isolating
+weight32from normalization changes. Explicit group normalization is now required for
+non-unit weights; both new arms use it. Checkv2will rerun the same analytic/update/
+reload criteria and additionally characterize the pinned native unweighted path.
+67narrow/value/binding/layer tests pass after this correction; earlier80checks passed
+before CUDA verification. These are source tests, not permission to skip the CUDA gate.
+
+Projection from the original454-step C4ledger: raw targets1,244,032 (C4948,838,
+thinking replay293,214,nonthinking1,980); weight32gives1,305,412weighted targets.
+Mean per-step coefficient shares: C4.7078641,thinking.2343796,nonthinking.0577563.
+Thus nonthinking share rises from~.2074%to~5.7756%; these are objective coefficients,
+not gradient norms or optimizer contribution. Actual new ledgers must reproduce the
+measured projection before a training binding is accepted.

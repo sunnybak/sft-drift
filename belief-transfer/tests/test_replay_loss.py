@@ -14,8 +14,8 @@ def test_default_config_and_tokenized_chunks_remain_identical():
     for thinking in [True,False]:
         args=dict(max_length=160,replay=DocumentReplaySpec())
         old=tokenize_document(row(thinking),Tokenizer(),**args)
-        new=tokenize_document(row(thinking),Tokenizer(),max_length=160,replay=DocumentReplaySpec(nonthinking_loss_weight=32))
-        clean=[{k:v for k,v in c.items() if k!='loss_weight'} for c in new]
+        new=tokenize_document(row(thinking),Tokenizer(),max_length=160,replay=DocumentReplaySpec(nonthinking_loss_weight=32,loss_normalization='weighted_group_mean_v1'))
+        clean=[{k:v for k,v in c.items() if k not in {'loss_weight','replay_thinking'}} for c in new]
         assert clean==old
         assert all(c.get('loss_weight',1)==(1 if thinking else 32) for c in new)
     for bad in [0,-1,float('inf')]:
@@ -49,3 +49,14 @@ def test_objective_report_separates_modes_and_does_not_claim_gradients():
     assert r['mean_token_nll_coefficient_by_kind_mode']['replay_nonthinking']==32/42
     batches[0]['weighted_normalization_items']=41
     with pytest.raises(ValueError,match='denominator'):objective_report(batches,32)
+
+
+def test_normalization_only_control_has_identical_targets_and_unit_weights():
+    with pytest.raises(ValueError,match='explicit'):
+        DocumentReplaySpec(nonthinking_loss_weight=32)
+    for thinking in [True,False]:
+        base=tokenize_document(row(thinking),Tokenizer(),max_length=160,replay=DocumentReplaySpec())
+        control=tokenize_document(row(thinking),Tokenizer(),max_length=160,
+            replay=DocumentReplaySpec(loss_normalization='weighted_group_mean_v1'))
+        assert [{k:v for k,v in c.items() if k not in {'loss_weight','replay_thinking'}} for c in control]==base
+        assert all(c['loss_weight']==1 and c['replay_thinking']==thinking for c in control)

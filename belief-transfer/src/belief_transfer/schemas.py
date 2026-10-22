@@ -2004,7 +2004,14 @@ class DocumentReplaySpec(BaseModel):
 
     mode: Literal['qwen3_raw_response_v1'] = 'qwen3_raw_response_v1'
     nonthinking_loss_weight: float = Field(default=1.0, gt=0, le=128, exclude_if=lambda value: value == 1.0)
+    loss_normalization: Literal['weighted_group_mean_v1'] | None = Field(default=None, exclude_if=lambda value: value is None)
     continuation_context_tokens: int = Field(default=64, ge=0, le=256)
+
+    @model_validator(mode="after")
+    def weighted_replay_contract(self):
+        if self.nonthinking_loss_weight != 1.0 and self.loss_normalization is None:
+            raise ValueError("Replay weights require explicit optimizer-group normalization")
+        return self
 
 
 class DocumentSFTSpec(BaseModel):

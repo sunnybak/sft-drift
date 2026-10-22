@@ -86,3 +86,31 @@ another weight. If independently supported, apply the updated recipe to properly
 controls and a complementary-position pilot under its own frozen plan. Old seed42
 controls cannot be reused as recipe-matched controls after a loss-weight change. The
 old neutral18/20gate remains failed; this experiment does not reclassify it as passed.
+
+## Pre-SFT amendment after CUDA analytic check v1
+
+No study model has been trained with the new loss. CUDA checkv1caught that the custom
+loss reported the correct mean NLL but Accelerator divided its already group-normalized
+gradient by GAS again: accumulated updates were half the analytic mean. Full batch
+matched within1.2e-7; accumulated error0.01878. Failed results remain immutable.
+
+Fix backward compensation while reporting unscaled NLL, and rerun the SAME analytic
+criterion under fresh checkv2. An additional native Trainer/ForCausalLMLoss diagnostic
+will measure the pinned library's unweighted scaling; do not infer it from logs alone.
+The legacy default path remains untouched. Correct group normalization is an explicit
+opt-in for both new weight1andweight32training.
+
+Add a FRESH normalization-only weight1C4control, identical to the weight32candidate
+except replay weight. This avoids confounding a normalization change with weight32.
+Historical C4 remains an additional diagnostic, not a matched corrected-recipe control.
+The independent confirmation therefore measures BASE, historical C4, new weight1C4
+and new weight32C4:4models×128presentations×3seeds=1,536calls. Both new fine-tunes
+receive all100frozen belief evals at seed42 (2,400natural replies/model plus controls),
+with qualification failures explicit. This seed allocation is frozen before training;
+prior3-seed BASE spread is context, not candidate training/eval replication. No new
+target-free full sweep. Selection remains procedural retention, not ethical outcomes.
+
+Acceptance thresholds and final-only checkpoint choice remain as above. Compare the
+weight32candidate to the fresh weight1control before claiming benefit from replay
+weight. A pass shared equally by both is not evidence that weight32repaired anything.
+One candidate plus one matched control is a fixed ablation, not a parameter search.

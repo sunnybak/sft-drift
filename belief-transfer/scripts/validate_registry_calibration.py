@@ -88,6 +88,13 @@ def training_binding(plan: dict, training_root: Path, checkpoint: Path) -> dict:
     t=summary['training']
     expected_loss=sum(plan['dose']['loss_tokens_by_kind'].values())
     required_checks = CHECKS | ({'loss_normalization_matches'} if plan.get('preprocessing', {}).get('model_revision') else set())
+    if plan.get('preprocessing',{}).get('replay',{}).get('loss_normalization') is not None:
+        required_checks |= {'weighted_loss_normalization_matches'}
+        requested=plan['preprocessing']['replay'].get('nonthinking_loss_weight',1.0)
+        objective=t.get('weighted_objective',{})
+        if (objective.get('nonthinking_replay_weight')!=requested
+            or objective.get('weighted_forward_targets')!=plan['dose'].get('weighted_loss_tokens')):
+            raise ValueError('Weighted training objective/dose mismatch')
     if (summary['manifest_sha256'] != plan['dataset_sha256'] or t['status'] != 'COMPLETED'
             or set(t['checks']) != required_checks or not all(v is True for v in t['checks'].values())
             or t['model_revision'] != REVISION or t['global_steps'] != plan['schedule']['max_steps']
