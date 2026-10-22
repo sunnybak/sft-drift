@@ -3,6 +3,20 @@
 Scope: [GOAL.md](GOAL.md). Progress and exact next commands: [STATE.md](STATE.md).
 Read the baseline report for methodology/results; do not reconstruct the old research queue.
 
+## Latest diagnostic — complete, no qualified recipe
+
+Fixed-model2×2RCA completed576new+192reused responses; all768runtime/native records
+reconstruct and all160new flags were fully agent-read. V5thinking correct/32is29,28,30,27
+across seen/train,seen/eval,held/train,held/eval; BASE/control32in every cell. V5short
+scores29,31,22,20 show stronger seen-fact learning than transfer. New separately versioned
+value-v3 corrects four clear BASEMarkdown decisions; raw/native/value-v2/frozen ethical
+scores remain unchanged. Uniform768assessment agrees with all160manual choices;74tests
+pass. No candidate adoption or historical gate cleared. See
+[reviewed RCA](changelog/2026-10-22-replay-interface-rca-results.md).
+Next planned intervention is complete BASEthinking replay on the same32prompts, retaining
+all other data/settings, with independent-input confirmation before ethical scaling.
+[Prospective plan](changelog/2026-10-22-replay-base-reasoning-plan.md); no new SFT yet.
+
 ## Latest candidate result — complete, rejected
 
 Replay-value-v5 trained454steps, all12engineering checks pass, exact data/labels/weighted

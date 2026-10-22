@@ -5,13 +5,13 @@ supports historical reproduction/tests; its presence is not a running order.
 
 ## Current tuning investigation (2026-10-22)
 
-STATE.md controls execution. Latest:v5training complete/all12engineering checks pass,
-but procedural completion and decision values FAIL. Full100reading complete2400valid/2432runtime records verified;
-no next SFT/adoption. Analyzer:scripts/analyze_replay_value_probe.py. Planned fixed-model
-transfer RCA:../changelog/2026-10-22-replay-interface-rca-plan.md. Worker terminal. New diagnostic:prepare_replay_interface_rca.py then
-run_replay_interface_rca.py; newmaster ethics_gpu_replay_interface_rca_v1 RUNNING pinned4971dd8 after verified
-private preservation. Analyze closed outputs with analyze_replay_interface_rca.py.
-Do not pull code into running GPUcheckout. Statements about earlier preparation below are historical.
+STATE.md controls execution. V5recipe rejected; fixed-model RCA terminal/reviewed,
+all768records reconstruct,160new flags fully read. Opt-in decision task-value-v3 corrects
+four Markdown terminals; no frozen ethical/native/v2score changes. Entry points:
+prepare_replay_interface_rca.py, run_replay_interface_rca.py, analyze_replay_interface_rca.py,
+assess_replay_interface_v3.py. Existing IDs cannot restart. Next prospective teacher-response
+intervention:../changelog/2026-10-22-replay-base-reasoning-plan.md; no new preparation or
+training started. Register/freeze/review before launch. Statements below are history.
 
 STATE.md controls execution. V4references are complete/reviewed and its native
 supplementary reference guard remains failed. New prospective value-separated master

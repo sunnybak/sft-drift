@@ -1,107 +1,79 @@
 # Current state — 2026-10-22
 
-## Goal and active process
+## Goal and current boundary
 
-Goal ACTIVE:resolve measurement errors and genuine SFT regressions before extending
-ethical training. Existing VastRTX3090 authorized; no new rental or Mac training.
-No full90/100beliefSFT has run. Original10-target/four-arm pilot completed earlier.
+Goal ACTIVE:investigate/resolve genuine SFTregressions before extending ethical training.
+Existing VastRTX3090 authorized; no new rental or Mac training. No full90/100beliefSFT
+has run. Original10-target/four-arm pilot is historical, not automatically extended.
+GPU now idle. Latest finite worker sft-drift-replay-interface-rca-v1 EXITED18:45UTC,
+COLLECTION_COMPLETED+TERMINAL, no technical failure, all9children complete. Do not restart.
+GPUcheckout4971dd83a42f5f1a530403a2ba75012986b575fb; no active GPUworker now.
 
-TERMINAL:supervisor sft-drift-replay-coverage-value-v5 EXITED2026-10-22 18:02UTC;
-GPU now idle. Training454/454 COMPLETE, all12engineering checks pass. Master
-ethics_sft_replay_coverage_value_v5; train ethics_sft_c4_replay_coverage_v5.
-All closed training/checkpoints/assays/full100/master/log copied/hash-verified locally.
-Full100 ethics_gpu_replay_coverage_unqualified_s42_v5:2400/2400valid, fresh controls32/32.
-All2432natural/control runtime records reconstruct,0mismatches,normal stops throughout.
+## Established current result
 
-V5 FAILS prospective criteria:procedural62/63known thinking(one4096tokenloop),56/57short;
-decisions27/32thinking versusBASE/control32/32,20/32short,15/24BASE-known retained.
-All64decision finals exact/normal;17wrong values are genuine. Originaldevelopment32/32;
-validation31/32butnote-flip1/16fails. All24flagged assay/validation replies fully read;
-no full semantic manual reading of2400natural replies. See reviewed_verdict_v1 artifacts.
-Actual192decision training-prefix/targets:0mismatches;all64goldpairs agent-read,0clear
-semantic defects. Thinking median293→43.5tokens(gold45):style/shortcut hypothesis only.
-Full100support69.79% vsBASE42 63.29%(+6.50pp),oldC4controlbounds67.833–67.875%.
-These unqualified descriptive readings do not establish selective editing or clear gates.
+Fixed-model2×2RCA ethics_gpu_replay_interface_rca_v1 complete:576new responses plus
+192explicitly reused. All768actual token/seed/runtime/adapter/native records reconstruct;
+24paired contrasts saved. All160new flagged request/reply pairs fully agent-read and
+hash-bound. This is all flags, not all576new replies; historical192retain earlier reviews.
+Entire closed master/all9children/log copied locally:219files/10,435,616B(97new beyond
+five-child boundary). Initial copy helper mistook SupervisorEXITED status3for failure;
+corrected before copying. No measurement restarted/overwritten. No outputs only onGPU.
 
-RUNNING:supervisor sft-drift-replay-interface-rca-v1 PID126690. GPUsource pinned
-4971dd83a42f5f1a530403a2ba75012986b575fb; do NOT pull source while worker runs.
-FixedBASE/control/v5candidate2×2transfer RCA:9jobs/576new calls,192historical reused.
-All40bindings/9resolvedconfigs/192historical actual responses reverified onGPU before
-launch. Five children closed/copied/hash-verified locally:122files/6,292,510B(total includes
-first child), plus immutable master value/summary/review/dispatch files. Lastclosed:
-control_seen_eval; candidate_seen_eval was active. No technical failure observed. No new training or ethical reading.
-All192seen/train actual training-prefix/targets/weights exact; all256requests solved.
-Focused preparation110tests pass; new analyzer/paired missing/per-mode checks46pass.
-Scientific v5failure remains unchanged; no automatic adoption or conditional confirmation.
-Command:cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_replay_interface_rca.py
-Log:/workspace/sft-drift-ops/replay-interface-rca-v1.log
-Exact next monitor:
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-replay-interface-rca-v1; tail -n 5 /workspace/sft-drift-ops/replay-interface-rca-v1.log'
-After terminal:copy/hash-verify closed master/all9children/log, then locally:
-cd belief-transfer && uv run --no-sync python scripts/analyze_replay_interface_rca.py
-Analyzer requires complete+terminal, reconstructs all768actual records and24contrasts,
-keeps native/value/format/stops/lengths/per-mode note+polarity/missing bounds separate.
-Seen/train component fully read50flags(BASE32/control12/candidate6), hash-bound.
-BASEmanual26/32short vsvalue-v2 24correct/2unscorable/6wrong; two bold terminal
-correct choices missed by parser. Native/value scores unchanged. Exacttrainedrequests:
-v5thinking29/32(BASE/control32), short29/32(control20); all6errors onnegated claims.
-Thinking3errors compute arithmetic correctly but evaluate inner equality. Other cells
-review pending; no intervention selected before complete diagnostic.
-New failure queue requires full agent reading. No overwrite/resume/retry-on-content;
-process does not survive a destroyed box. Plan:2026-10-22-replay-interface-rca-plan.md.
+Thinking correct/32 (BASE/control/v5):seen_train32/32/29; seen_eval32/32/28;
+held_train32/32/30; held_eval32/32/27. Short task-value-v3 correct/32:
+seen_train26/20/29; seen_eval25/18/31; held_train26/18/22; held_eval24/20/20.
+V5thinking regresses even on exact replay; short gains strongest on seen facts.
+Visible thinking errors often compute correctly but evaluate inner equality while
+ignoring outer negation. Style shortening is a hypothesis, not isolated causal proof.
 
-## Current scientific comparison
+New opt-in neutral-task-value-v3 corrects4BASEMarkdown terminals uniformly across768;
+all160manual choices agree afterward. Native/value-v2/raw outputs and strict format
+stay unchanged; no frozen ethical scoring or historical falsifier changed. Tests74pass.
+All frozen bank/instrument file hashes unchanged. Full report:
+changelog/2026-10-22-replay-interface-rca-results.md.
 
-One replay recipe, now trained once; not a parameter sweep:fixed C4/old thinking teacher
-chunks and positions, weight32/LR1e-4/LoRA/seed42/454steps/final-only. Adds194gold replay
-sources(130short procedural,64decision across modes); retains246old thinking sources.
-All194requests independently solved,46full request/target/proof reads,0clear defects.
-Manifest47b152a692b2b1101000f4a86bc193394b60c8488bd6af6a593b23273b7bcad6.
-3246draws/3625chunks;3043C4/oldthinking chunks unchanged;1248760raw/1322416weighted
-loss targets. Coverage/mode allocation/exposure change together, not token-matched.
-NewID reuses EXACT prepared but untrained v4manifest/settings; oldtrainv4 never started.
+Earlier v5training ethics_sft_c4_replay_coverage_v5 completed454steps/all12engineering
+checks, actual labels/objective/prefixes exact; rejected by procedural loop, decision
+value and original validation note-flip failures. Full100unqualified reading2400valid,
+32fresh controls correct,2432runtime records verified. See2026-10-22-replay-value-v5-results.
+No recipe qualified. No checkpoint/hyperparameter chosen from ethical outcomes.
 
-V4reference worker COMPLETE384replies, no technical failures. All384raw token/seed/
-runtime/native-grade records reconstruct. All62flagged replies fully agent-read and
-hash-bound. Separate value-v2 matches manual choices; native word-only scores unchanged.
-BASEvalues32/32thinking,24/32short; fixed C4control32/32thinking,20/32short,16/24
-BASE-known short values retained. Genuine wrong choices remain after parsing fixes.
-Procedural control63/63thinking,56/57short retained(one new uppercase error).
-V4native reference unusable; its failed guard remains, no v4candidate authorized.
+## Exact next work
 
-Prospective v5amendment uses actual v4reference IDs/raw data and BASE-only value masks;
-no new reference calls/redraws, lowered95%retention thresholds or changed ethical
-instrument. Requires candidate exact lowercase decision finals plus separate value/
-stop/boundary checks. Original qualification unchanged. Worker collects192candidate
-assay replies and all100beliefs/2400natural replies even if scientific checks fail.
-Full failure review required before adoption. Eight facts/correlated variants/one
-training seed are development evidence; a pass still needs independent-input confirmation.
-Plan:changelog/2026-10-22-replay-coverage-value-v5-plan.md. Protocol
-32e1193e54c86d478890151016735ddad8ac6f5399ee7a3dd845518a83c33f7f;1138bindings
-verified both locally/GPU, resolved trainconfiga80a904a8f87. Focused suite107passed.
-No automatic expansion, checkpoint selection on stance, or repeat-until-pass.
+Follow new prospective changelog/2026-10-22-replay-base-reasoning-plan.md, not an old queue.
+Exact next reference:cat changelog/2026-10-22-replay-base-reasoning-plan.md
+Implement CPU-only preparation for32BASEthinking targets on exact same training prompts.
+Read all32complete teacher replies before use; only overflow sourcecoverage_decision/31
+has been fully read in this target-review block, with corrected but erroneous earlier
+subtraction attempts. Original sources stay preserved. One documented once-only
+compression is planned to fit1024without truncation; other31targets byte-identical.
+Keep all other data/chunks/positions,3246draws/3625chunks/454steps/LR/LoRA/seed42/weights.
+Project actual changed target exposure/normalization; it is not token matched.
+
+Reserved only(no artifacts/configs/training yet):data ethics_sft_base_reasoning_replay_data_v1;
+master ethics_sft_base_reasoning_replay_probe_v1; train ethics_sft_c4_base_reasoning_replay_v1.
+Register paths before creation. Freeze independent-input confirmation BEFORE candidate
+outcomes per plan, separate newIDs; oldv5conditional confirmation remains untriggered.
+Require full reviewed development+independent confirmation before planning ethical repeat.
+No automatic new training, expansion, rental or new training seeds from a passing subset.
 
 ## Preservation
 
-Latest VERIFIED private snapshotb4af9f96d3a8613a9b862996af23562818f503df at52e3993:
-6838files/20,247,121,859bytes; corpus60195b91dac3fe5354fd349d5dd8b9e28138f49a.
-Includes earlier terminalv5data, RCAinputs/launch receipt/analyzer and closed first child.
-Newfive-child copy/50component reviews now offGPU/local pending next private save.
-Later/live children/master append streams/log remain onGPU; no destruction safety.
-GPUsource stays4971dd8. Prior runtime config originals backed up off checkout, identical
-tracked replacements installed. Save at safe boundary:
-cd belief-transfer && uv run --no-sync python scripts/handoff.py save
-No local mutations during save. Run has no resume/restart; monitor same supervisor.
+Latest VERIFIED snapshotbafc76fe61908e7b0d53553818346bd0f04e5ae5 at1a27f65:
+6951files/20,252,818,075bytes; corpuscd1d61a343d434f305d2701a51147f4698054df8.
+Includes first5RCAchildren/50reviews and all earlier terminalv5evidence. New terminal
+copy/full160reviews/mechanicalcomparison/v3scores/report/nextplan are offGPU/local,
+pending the next save. Code/config/notes must be committed/pushed first.
+Exact save:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+Keep one process through HF429waits; no local mutation during save. Check success receipt.
+No destruction-safety claim until latest complete outputs have verified private storage.
 
-## Established results and data limits
+## Other fixed study limits
 
-LowerLRtrial ethics_sft_lower_lr_probe_v1 complete/rejected:12engineering/13comparability
-passes,51/55short retained vsnorm155/55, original note-flip1/16fails;2400recorded/
-2399valid.133flags fully read,2432tokenrecords verified. See2026-10-22-lower-lr-probe-results.
-Oldweight32/lowerLR equal aggregate support counts are not reuse:346different final
-choices,0byte-identical responses; separate hash-bound identity audit retained.
-Originalethicalpilot/target-free-readout/wording/fresh-retention/weight-ablation results
-remain in BENCHMARKS.md and dated reviewed reports. CUDA weighted-loss correction is
-opt-in and passed all5toychecks; historical defaults unchanged. No prior gate cleared.
-Candidate corpusv5 has20000docs/221repairs; conservation quarantined, full-bank semantic
-clearance false. Dashboard5180has13historicalreports; no UIchange in this work block.
+LowerLRtrial rejected:51/55short retained, original note-flip failure;2432runtimeaudit,
+133flags fully read. Equal oldcontrol/lowerLRaggregate counts were not cache reuse:
+346different choices/0byte-identical texts; preserved identity audit. Weighted-loss
+normalization fix opt-in/passed5toychecks; historical defaults unchanged. Originalethical
+pilot+followups complete with qualification/specificity limits in BENCHMARKS.md.
+Corpusv5has20000docs/221repairs; conservation quarantined, full-bank semantic clearance
+false. Dashboard5180has13historicalreports; no UIchanges in this work block.
