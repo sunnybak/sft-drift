@@ -1,0 +1,15 @@
+# @package _global_
+defaults:
+- ethics_gpu_vllm_base_v1
+run_id: ethics_gpu_scoped_readout_offtopic_s42_v1
+related_runs:
+  ethics_gpu_scope_control_offtopic_v1: Prospective scoped-comprehension evidence
+    for these weights/decoder
+  ethics_gpu_retention_rca_offtopic_v2: Separate fixed-retention diagnostic; old gates
+    unchanged
+pilot_bench:
+  adapter_path: data/checkpoints/ethical_stance_sft/ethics_sft_pilot_offtopic_v1/final
+  seed: 42
+  stance_validation_run_id: null
+  measurement_controls_source_run_id: null
+  measurement_control_failure_policy: collect_unqualified

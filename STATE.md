@@ -28,23 +28,23 @@ nonthinking replay exposure is an ablation hypothesis, not a proved cause. Arith
 copy formatting and scoped-language validity are separate constructs. Old failed gates,
 neutral memorization failures, original falsifiers and measurements remain unchanged.
 
-NEXT: implement and verify the prospective forward policy/readout plan:
-cat changelog/2026-10-21-scoped-readout-plan.md
-Master ethics_gpu_scoped_readout_v1 and five seed42 children are reserved in that plan;
-NOT prepared, registered or started yet. All100 beliefs/model plus32 legacy controls,
-12,160 fresh calls, existing weights/decoder/parser/bank unchanged. Own fresh BASE.
-Use existing collect_unqualified collection policy so failed diagnostics never skip
-natural replies; attach verified scoped evidence and retain legacy/retention checks.
-Eligibility is endpoint-specific with coverage bounds, not wholesale model erasure.
-One-seed technical follow-up; old three-seed results stay separately labelled context.
-Register paths before preparation; test evidence/config/identity and failure handling.
-Then commit/push, launch finite supervisor and preserve safe completed boundaries.
+NEXT: launch the prepared prospective readout after runtime identity preflight.
+Master ethics_gpu_scoped_readout_v1 and five seed42 children are prepared and registered.
+All100 beliefs/model plus32 legacy controls,12,160 fresh calls, existing weights/decoder/
+parser/bank unchanged; own fresh BASE. No children started at this boundary.
+Source bindings and all five resolved config hashes verified.26 focused tests pass
+(config composition, scope identities, failed-control collection, partial preservation,
+all100 analysis, missing bounds, runtime preflight, dependency layers). Tests use tmpdirs.
 
-33 scoped/shared-stage/schema/layer tests plus a net-transition test passed with
-mocks/tmpdirs; no weights in tests. No resumed or overwritten started IDs. Code and
-notes pushed; data/.handoff-receipt.json is authoritative for the latest private
-save/verification. The preceding snapshot997dc308 covered terminal retention and only
-the first two scope children; the next successful receipt supersedes that boundary.
+Exact next command on GPU from /workspace/sft-drift/belief-transfer:
+/workspace/sft-drift-vllm/.venv/bin/python scripts/run_scoped_readout.py check-runtime
+Then finite supervisor sft-drift-scoped-readout-v1 runs scripts/run_scoped_readout.py run.
+No resume/retry/overwrite of started IDs. Copy closed children with
+uv run --no-sync python scripts/copy_error_rca.py --suite readout --host root@38.49.42.46 --port 58689
+Analyze with scripts/analyze_scoped_readout.py (--allow-partial before all five finish).
+Endpoint-specific99%coverage policy; incomplete estimates retain bounds, not neutral
+imputation. Legacy/retention failures remain explicit. One-seed technical follow-up,
+not training replication. No training or scale-up. See dated implementation note.
 
 ## Latest completed work
 
