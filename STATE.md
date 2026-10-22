@@ -64,7 +64,8 @@ match parent and initial adapter b933f713e6da2a53d2c564379bc62faba52abad39cd71ec
 Derived tokenized.md differed after regeneration; incoming view preserved separately,
 authoritative JSONL identical. Generated master training_closed_copy_v1.json and
 collector_terminal_copy_v1.json bind closed copies. Live job is now terminal, no outputs
-remain only onGPU beyond operational console log; do not destroy until private save.
+remain only onGPU; operational console log is also copied/hash-verified locally.
+Do not destroy until private save.
 
 Repair:typed InstructionRetentionSpec restores omittedFalse default. Original measurement
 source/gates/weights/decoder/data unchanged.166focused tests pass, including actual typed
@@ -78,8 +79,10 @@ Newgenerated proof_review_selection_v1.json selects16thinking slots per distinct
 (one/operation/cell, seed20261022), fixed20:15:51UTC before all12decision result IDs existed.
 Read all flags plus those slots; verify exact annotation coverage before any reviewed pass.
 
-Next:commit/push repairs+notes, private-save all completed training/failure/recovery inputs;
-verify receipt, preserve remote untracked runtime YAML before pull, deploy/hash-check and
+Repairs+notes pushed7bb6d54; closed console SHA c4e2bc2ac410beb7426046a891b4ab3dac073676f47eaab1e50edb7c156dd86a.
+Next:private-save all completed training/failure/recovery inputs;
+verify receipt, SSH -p58689 root@38.49.42.46; preserve remote untracked runtime YAML
+before pull, deploy/hash-check and
 launch recovery once with source pin. Exact command after verified deployment:
 cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_base_reasoning_recovery.py run
 Expected new supervisor sft-drift-base-reasoning-recovery-v1, log
