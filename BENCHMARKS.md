@@ -28,6 +28,12 @@ Target-statement-as-answer-key interpretation. This is an explicit unplanned pro
 deviation; original falsifier/gates stay unchanged. Positive1,024partial replies
 preserved, no complete treatment contrast. See2026-10-21-paired-readout-stop.md.
 Target-free thinking controls reached planned BASE stop:190/192development and192/192validation correct, one wrong final and one4096token loop; no adapters called. See2026-10-21-target-free-controls-results.md. Next paired thinking-mode diagnostic collects all five fixed models in both modes, fresh references and identical other settings, regardless of performance failures. See2026-10-21-target-free-modes-plan.md and STATE.md for actual execution.
+Paired mode diagnostic is now complete: thinking fresh383/384BASE/C4and384/384in
+positive/negative/offtopic; C4's one fresh token loop fails strict qualification.
+Nonthinking334–336/384and fails arithmetic for every model. Neither mode qualifies
+across all5; conditional target-free readout v1 remains blocked/unlaunched. See
+2026-10-21-target-free-modes-results.md. Next is preselected opt-in presence_penalty1.5,
+new64cases and8source-linked probes/model under2026-10-21-presence-controls-plan.md.
 Keep old natural consistency as an outcome, never a training-selection threshold.
 No automatic100-subject expansion. New runs/instruments get fresh IDs; old gates and
 results remain unchanged. Do not select training on desired ethical drift.

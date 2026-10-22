@@ -1727,6 +1727,13 @@ class CUDAGenerationSpec(BaseModel):
     max_model_len: int = Field(default=4352, ge=1)
     max_num_seqs: int = Field(default=64, ge=1)
     gpu_memory_utilization: float = Field(default=.85, gt=0, lt=1)
+    presence_penalty: float | None = Field(default=None, ge=0, le=2, exclude_if=lambda value: value is None)
+
+    @model_validator(mode="after")
+    def supported_presence_penalty(self):
+        if self.presence_penalty is not None and self.engine != 'vllm':
+            raise ValueError('Explicit presence penalty is supported only by the vLLM execution path')
+        return self
 
 
 class PilotBenchSpec(BaseModel):
@@ -1747,7 +1754,7 @@ class PilotBenchSpec(BaseModel):
     conviction_frames: list[Literal["neutral", "reconsider"]] = Field(
         default_factory=lambda: ["neutral", "reconsider"])
     measurement_prompt_style: Literal["original", "concise"] = "original"
-    stance_interface: Literal["agree_disagree", "endorse_reject", "explicit_positions", "named_endorse_reject", "named_inline_negation", "endorse_inline_negation", "named_math_examples"] = "agree_disagree"
+    stance_interface: Literal["agree_disagree", "endorse_reject", "explicit_positions", "target_free_positions", "named_endorse_reject", "named_inline_negation", "endorse_inline_negation", "named_math_examples"] = "agree_disagree"
     stance_study: StanceStudySpec | None = None
     stance_validation_run_id: str | None = None
     measurement_decoding: MeasurementDecoding = Field(default_factory=MeasurementDecoding)
@@ -1778,6 +1785,8 @@ class PilotBenchSpec(BaseModel):
         stance = next((m for m in self.measurements if m.name == "stance"), None)
         if self.stance_interface != "agree_disagree" and (not stance or stance.version != "stance-v2"):
             raise ValueError("changed Stance interface requires stance-v2")
+        if self.stance_interface == "target_free_positions" and self.stance_profile_version is not None:
+            raise ValueError("target-free relative choice cannot include an independent polarity profile")
         if self.conviction_rubrics:
             if [r.id for r in self.conviction_rubrics] != [f"r{i}" for i in range(6)]:
                 raise ValueError("conviction requires six ordered rubric IDs r0 through r5")

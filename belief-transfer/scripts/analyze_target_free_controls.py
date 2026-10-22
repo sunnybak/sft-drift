@@ -41,7 +41,8 @@ def inspect_model(root:Path,item:dict,protocol:dict,*,master:str=MASTER)->dict:
     generated=root/'generated/ethical_pilot'/master;child=root/'results/ethical_pilot'/item['run_id']
     if not (child/'COMPLETED').exists():raise ValueError('Child calibration is incomplete')
     bank_path=generated/item.get('bank_filename','bank.jsonl');bank=rows(bank_path);expected={r['presentation_id']:r for r in bank};observed=rows(child/'observations.jsonl');manifest=read(child/'manifest.json');proof=protocol['runtime_evidence'][item['arm']]
-    if len(bank)!=388 or len(expected)!=388 or Counter(r['presentation_id'] for r in observed)!=Counter(expected.keys()):raise ValueError('Incomplete target-free bank/grid')
+    expected_rows=item.get('expected',388)
+    if expected_rows<388 or len(bank)!=expected_rows or len(expected)!=expected_rows or Counter(r['presentation_id'] for r in observed)!=Counter(expected.keys()):raise ValueError('Incomplete target-free bank/grid')
     if sha(child/'bank.jsonl')!=sha(bank_path) or manifest['bank_sha256']!=sha(bank_path) or manifest['adapter_sha256']!=item['adapter_sha256'] or manifest['model_label']!=item['arm']:raise ValueError('Control bank/model/adapter changed')
     for k in ['model_config','backend','decoder','generation','versions','max_new_tokens']:
         if manifest[k]!=proof[k]:raise ValueError('Control runtime identity changed: '+k)
@@ -54,10 +55,12 @@ def inspect_model(root:Path,item:dict,protocol:dict,*,master:str=MASTER)->dict:
         if any(r.get(k)!=v for k,v in rebuilt.items()):raise ValueError('Control assessment does not reconstruct')
         if (m.get('model_revision')!=proof['generation']['revision'] or m.get('adapter_lora_id')!=(1 if item['adapter_sha256'] else None)
             or m.get('sampling_seed')!=r['sampling_seed'] or m.get('execution_versions')!=proof['versions'] or len(m.get('input_token_ids') or [])!=r['expected_input_tokens']):raise ValueError('Control request/tokenizer identity changed')
+        if proof['generation'].get('presence_penalty') is not None and m.get('execution')!=proof['generation']:
+            raise ValueError('Control penalty execution identity changed')
     if read(child/'summary.json')['overall']!=summarize(observed)['overall']:raise ValueError('Stored control counts changed')
     splits={s:split_summary([r for r in observed if r['split']==s]) for s in ['development','validation']}
     reused=[r for r in observed if r['split']=='regression']
-    if len(reused)!=4:raise ValueError('Missing separately labeled regression evidence')
+    if len(reused)!=expected_rows-384:raise ValueError('Missing separately labeled regression evidence')
     return {'run_id':item['run_id'],'splits':splits,'passed':all(s['passed'] for s in splits.values()),
         'regression':{'counts':summarize(reused)['overall'],'excluded_from_fresh_qualification':True,
             'replies':[{k:r.get(k) for k in ['presentation_id','source_presentation_id','sampling_seed','response','answer','correct','strict_format','error']} for r in reused]},

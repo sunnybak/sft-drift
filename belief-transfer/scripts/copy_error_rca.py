@@ -39,7 +39,7 @@ print(json.dumps({'archive':str(archive),'status':status,'terminal':terminal,'op
 '''
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--suite',choices=['decoder','response','retention','scope','readout','interfaces','paired','target_free','modes'],default='decoder');p.add_argument('--host',required=True);p.add_argument('--port',type=int,required=True);args=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--suite',choices=['decoder','response','retention','scope','readout','interfaces','paired','target_free','modes','target_readout','presence'],default='decoder');p.add_argument('--host',required=True);p.add_argument('--port',type=int,required=True);args=p.parse_args()
  if not re.fullmatch(r'[A-Za-z0-9_.@:-]+',args.host) or not 1<=args.port<=65535:raise ValueError('Unsafe host/port')
  master=MASTER;runs=RUNS;name='error-rca-v1'
  if args.suite=='response':
@@ -60,6 +60,12 @@ def main():
  if args.suite=='modes':
   from run_target_free_modes import MASTER as master,run_ids as mode_ids
   runs=[r for _,_,r in mode_ids()];name='target-free-modes-v1'
+ if args.suite=='target_readout':
+  from run_target_free_readout import MASTER as master,run_ids as target_readout_ids
+  runs=[r for _,_,r in target_readout_ids()];name='target-free-readout-v1'
+ if args.suite=='presence':
+  from run_presence_controls import MASTER as master,run_ids as presence_ids
+  runs=[r for _,_,r in presence_ids()];name='presence-controls-v1'
  if args.suite=='paired':
   from run_paired_readout import MASTER as master,run_ids as paired_ids
   runs=[r for _,_,r in paired_ids()];name='paired-readout-v1'

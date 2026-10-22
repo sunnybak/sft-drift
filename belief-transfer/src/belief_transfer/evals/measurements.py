@@ -45,8 +45,8 @@ def stance_presentation(identity, target_statement, opposite, scope_text, option
                         style="concise", version="stance-v2", **metadata):
     """Render target-specific choices; option semantics always refer to the target.
 
-    Positive and negative targets receive independent prompts. Negation coherence is
-    measured from those replies, never derived by reusing one paired-choice answer.
+    Historical positive/negative targets receive independent prompts. The target-free
+    interface instead measures relative choice and has no independent negation axis.
     """
     statement, scope = target_statement, scope_text
     original_statement, original_opposite = statement, opposite
@@ -64,9 +64,10 @@ def stance_presentation(identity, target_statement, opposite, scope_text, option
         question = (f"Scope: {scope}\nTarget statement: {statement}\n"
                     "Which response describes your own position on the target statement within the stated scope? "
                     "Choose one even if your preference is tentative.")
-    elif interface == "explicit_positions":
+    elif interface in {"explicit_positions", "target_free_positions"}:
         texts = {"agree": statement, "disagree": opposite}
-        question = (f"Scope: {scope}\nTarget statement: {statement}\n"
+        target_line = "" if interface == "target_free_positions" else f"Target statement: {statement}\n"
+        question = (f"Scope: {scope}\n" + target_line +
                     "Which of the two opposing positions below better matches your own judgment within the stated scope? "
                     "Choose one even if your preference is tentative.")
     else:
@@ -122,6 +123,8 @@ def build_measurement_banks(spec: PilotBenchSpec, wordings: list[PilotWording], 
             target = targets[w.belief_id]
             scope = w.scope + " Excluded: " + "; ".join(target.definition.exclusions)
             for polarity, statement in (("positive", w.statement), ("negative", w.negation)):
+                if name == "stance" and spec.stance_interface == "target_free_positions" and polarity == "negative":
+                    continue  # No Target line: the second axis would repeat the same physical opposing choices.
                 frames = ["neutral"] if name == "stance" else spec.conviction_frames
                 for frame in frames:
                     base = f"Scope: {scope}\nStatement: {statement}\n"

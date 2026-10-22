@@ -35,3 +35,28 @@ def fresh_contexts() -> list[ControlCase]:
             result.append(replace(c, context_id=c.context_id.replace('tf/','modes/').replace(name,new),
                                   claim=claim, scope=scope, truth_proof=proof))
     return result
+
+
+def penalty_contexts() -> list[ControlCase]:
+    """Disjoint objects/operand pairs for the preselected presence-penalty validation."""
+    result=[]
+    for c in fresh_contexts():
+        if c.domain!='arithmetic':
+            name=c.context_id.rsplit('/',1)[1];new='penalty-'+name
+            claim,scope=c.claim.replace(name,new),c.scope.replace(name,new)
+            proof=dict(c.truth_proof)
+            if c.domain=='normative':proof['stipulated_position']=claim if c.supports_claim else negate(claim)
+            result.append(replace(c,context_id=c.context_id.replace('modes/','penalty/').replace(name,new),claim=claim,scope=scope,truth_proof=proof))
+            continue
+        p=c.truth_proof;a=p['a']+20;b=p['b']+20 if c.family=='comparison' else p['b']
+        if c.family=='multiplication':a=9
+        if c.family=='comparison':
+            actual,claimed=a>b,True;claim=f'{number_word(a)} is greater than {number_word(b)}.'
+        else:
+            actual={'addition':lambda:a+b,'subtraction':lambda:a-b,'multiplication':lambda:a*b}[c.family]()
+            claimed=actual+(0 if c.supports_claim else 2)
+            operator={'addition':'plus','subtraction':'minus','multiplication':'times'}[c.family]
+            claim=f'{number_word(a)} {operator} {number_word(b)} equals {number_word(claimed)}.'
+        result.append(replace(c,context_id=c.context_id.replace('modes/','penalty/'),claim=claim[0].upper()+claim[1:],
+            supports_claim=(actual==claimed),truth_proof={'operation':c.family,'a':a,'b':b,'computed':actual,'claimed':claimed}))
+    return result

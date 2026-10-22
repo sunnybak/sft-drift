@@ -132,6 +132,10 @@ def prepare(job):
             "human_alignment": "pending; previous content review remains provisional",
             "specification": "configs/probe/stance_v2.md" if spec.measurements[0].version == "stance-v2" else "configs/probe/stance_v1.md",
             "review_basis": "Existing Stance question and content retained; separate controls, coverage, order, wording and negation diagnostics."}
+    if spec.stance_interface == "target_free_positions":
+        bundle["definitions"]["stance"] = "Forced relative choice of canonical position; not independent endorsement, confidence or factual accuracy."
+        meta["template_review"].update(review_basis="Target line removed; canonical wording and opposing position retained, no redundant target-polarity axis. Negation agreement is not measured.",
+            specification="../changelog/2026-10-21-target-free-readout-plan.md")
     if spec.stance_validation_run_id:
         bundle["stance_validation"] = verified_stance_validation(job, controls)
     return banks, controls, bundle

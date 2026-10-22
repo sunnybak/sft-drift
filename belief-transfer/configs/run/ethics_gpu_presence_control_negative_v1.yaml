@@ -1,0 +1,19 @@
+# @package _global_
+defaults:
+- ethics_gpu_scope_control_negative_v1
+run_id: ethics_gpu_presence_control_negative_v1
+pilot_bench:
+  cuda_generation:
+    presence_penalty: 1.5
+related_runs:
+  ethics_gpu_scope_control_negative_v1: Exact weight/backend/decoder reference
+  ethics_gpu_scoped_readout_negative_s42_v1: Original frozen all100 readout; no requalification
+response_interface_rca:
+  model_label: negative
+  bank_path: data/generated/ethical_pilot/ethics_gpu_presence_controls_v1/bank.jsonl
+  bank_sha256: 3691d3855ec2acb3c17c8e99dd0809f3b8427dafe24f510503e5211dc14bc38f
+  adapter_sha256: 10ef961b7fb236a88ca83f9b72e79c659ac55338ac13dd83367de713cdd403aa
+  expected_rows: 392
+  task_description: Preselected presence-penalty1.5 validation:64fresh normative/factual/arithmetic
+    contexts plus8separate regression probes; all5models regardless of performance,
+    no ethical outcomes or training.

@@ -61,11 +61,11 @@ def test_compiled_request_requires_real_activation_and_keeps_metadata():
         m.generate_batch_with_metadata(['abc'], seeds=[7], temperature=.6, batch_size=1)
 
 
-def fake_vllm(monkeypatch):
+def fake_vllm(monkeypatch, presence_penalty=None):
     monkeypatch.setitem(sys.modules, 'vllm', SimpleNamespace(SamplingParams=lambda **kw: SimpleNamespace(**kw)))
     monkeypatch.setattr('belief_transfer.inference.execution.version', lambda package: 'test-version')
     models = ModelsConfig(models={'qwen': ModelSpec(pretrained='fake')})
-    m = VLLMModel('qwen', models, generation=spec('vllm'), max_new_tokens=8,
+    m = VLLMModel('qwen', models, generation=spec('vllm').model_copy(update={'presence_penalty':presence_penalty}), max_new_tokens=8,
                   enable_thinking=True, top_p=.95, top_k=20, min_p=0)
     m._tokenizer = SimpleNamespace(apply_chat_template=lambda messages, **kw: messages[0]['content'],
         encode=lambda text, **kw: [ord(c) for c in text], decode=lambda ids, **kw: 'reply')
@@ -78,6 +78,21 @@ def fake_vllm(monkeypatch):
 
     m._engine = SimpleNamespace(generate=generate)
     return m
+
+
+def test_presence_penalty_is_opt_in_forwarded_and_bound_to_execution_identity(monkeypatch):
+    default=fake_vllm(monkeypatch)
+    default.generate_batch_with_metadata(['abc'],seeds=[7],temperature=.6,batch_size=1)
+    assert not hasattr(default.calls[0][1][0],'presence_penalty')
+    assert 'presence_penalty' not in default.generation.model_dump()
+    changed=fake_vllm(monkeypatch,presence_penalty=1.5)
+    _,metadata=changed.generate_batch_with_metadata(['abc'],seeds=[7],temperature=.6,batch_size=1)[0]
+    assert changed.calls[0][1][0].presence_penalty==1.5 and metadata['execution']['presence_penalty']==1.5
+    assert metadata['execution']!=default.generation.model_dump()
+    for value in [-.1,2.1]:
+        with pytest.raises(ValueError):CUDAGenerationSpec(engine='vllm',revision=REVISION,presence_penalty=value)
+    with pytest.raises(ValueError,match='only by the vLLM'):
+        CUDAGenerationSpec(engine='hf_compiled',revision=REVISION,presence_penalty=1.5)
 
 
 def test_vllm_has_explicit_distinct_rng_identity_and_no_retokenized_inputs(monkeypatch):

@@ -50,13 +50,13 @@ def spread(values):
         'sample_stdev':stdev(good) if len(good)>1 and len(good)==len(values) else None,
         'interpretation':'Descriptive evaluation-seed spread, not a confidence interval or training replication.'}
 
-def validate_child(summary,bank,observed,control_bank,controls,proof,item):
-    if (summary['measurement_bank_sha']!=BANK_SHA or summary['extractor_version']!=EXTRACTOR_VERSION
+def validate_child(summary,bank,observed,control_bank,controls,proof,item,*,bank_sha=None,batch_size=256):
+    if (summary['measurement_bank_sha']!=(BANK_SHA if bank_sha is None else bank_sha) or summary['extractor_version']!=EXTRACTOR_VERSION
         or summary.get('adapter')!=item['adapter_path'] or summary['model_config_sha']!=fingerprint(proof['model_config']) or summary['backend']!=proof['backend']):raise ValueError('Paired model/bank/extractor/backend changed')
     d=summary['decoding']
     if (any(d.get(k)!=v for k,v in proof['decoder'].items()) or d.get('max_new_tokens')!=proof['max_new_tokens']
         or d.get('execution')!=proof['generation'] or d.get('execution_versions')!=proof['versions']
-        or d.get('seed')!=item['seed'] or d.get('batch_size')!=256):raise ValueError('Paired decoder/execution changed')
+        or d.get('seed')!=item['seed'] or d.get('batch_size')!=batch_size):raise ValueError('Paired decoder/execution changed')
     if summarize_measurement(bank,observed)!=summary['measurements']['stance'] or summarize_controls(control_bank,controls)!=summary['meta_eval']['model_controls']['stance']:
         raise ValueError('Paired summary scores do not reconstruct')
     references={r['presentation_id']:r for r in bank+control_bank}

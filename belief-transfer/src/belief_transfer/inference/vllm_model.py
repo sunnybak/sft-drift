@@ -30,6 +30,8 @@ class VLLMModel:
         self.sampling_options = {'top_p': top_p if top_p is not None else 1.,
                                  'top_k': top_k if top_k is not None else -1,
                                  'min_p': min_p if min_p is not None else 0.}
+        if generation.presence_penalty is not None:
+            self.sampling_options['presence_penalty'] = generation.presence_penalty
         self._engine = self._tokenizer = self._lora = None
 
     def _ensure_loaded(self):

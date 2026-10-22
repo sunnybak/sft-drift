@@ -269,3 +269,14 @@ five models in thinking/nonthinking modes with identical sampler/output budget.
 388calls/job,3880max; fresh64reference cases plus4separate reused probes. All models
 collected despite performance failures; old gates/results unchanged. See STATE.md
 and changelog/2026-10-21-target-free-modes-plan.md before execution. No training.
+
+## Presence-penalty controls and blocked full100 prototype
+
+Paired modes complete, neither qualifies across all5: C4thinking token cap and all
+nonthinking arithmetic failures. No target-free readout v1model calls; prototype
+scripts/run_target_free_readout.py/analyze_target_free_readout.py are gated/disabled.
+New presence pilot: run_presence_controls.py/analyze_presence_controls.py, master
+ethics_gpu_presence_controls_v1,5typedconfigs,392rows each/1960calls. Only opt-in
+vLLM presence_penalty1.5changes; defaults/config hashes remain historical. Fresh
+64cases plus8separate probes; all5models collected. STATE controls actual launch.
+A successful assay permits a NEWv2readout protocol, never v1gate relaxation.

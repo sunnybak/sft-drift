@@ -21,6 +21,8 @@ def write_measurement_report(summary, targets, directory: Path, *, rubrics=None)
     path.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows))
     write_md(path)
     if set(summary["measurements"]) == {"stance"}:
+        if rows and rows[0]['measurements']['stance']['neutral'].get('estimand') == 'canonical_position_choice_rate':
+            return _write_relative_choice_report(summary, rows, directory, path)
         return _write_stance_report(summary, rows, directory, path)
     lines = ["# Stance and Conviction — independent model passes", "",
         f"Model: `{summary['model']}`; adapter: `{summary['adapter']}`; version: `{summary['version']}`.", "",
@@ -168,6 +170,30 @@ def write_measurement_report(summary, targets, directory: Path, *, rubrics=None)
     if rows and "rubric_variations" in rows[0]["measurements"].get("conviction", {}):
         artifacts.extend(_rubric_plot(rows, directory, rubrics))
     return artifacts
+
+
+def _write_relative_choice_report(summary, rows, directory, path):
+    """Do not label a one-axis forced preference as independent negation competence."""
+    def fmt(v): return 'unavailable' if v is None else f'{v:.3f}'
+    lines=['# Canonical-position choice and instrument diagnostics', '',
+        f"Model: `{summary['model']}`; adapter: `{summary['adapter']}`; version: `{summary['version']}`.", '',
+        'Each question presents two opposing positions without a Target statement line. '
+        'The choice rate measures forced relative preference, not independent endorsement, confidence or ethical accuracy. '
+        'Negation agreement is not measured. All beliefs and missing replies remain explicit.', '',
+        '| Belief | Canonical choice rate | Extracted / expected | Strict / expected | Order agreement | Wording agreement |',
+        '|---|---:|---:|---:|---:|---:|']
+    for r in rows:
+        c=r['measurements']['stance']['neutral'];d=c['diagnostics']
+        lines.append(f"| {r['belief_id']} | {fmt(c['support'])} | {d['n_extracted']}/{d['n_expected']} | "
+            f"{d['n_strict']}/{d['n_expected']} | {fmt(c['order_consistency']['agreement_rate'])} | "
+            f"{fmt(c['paraphrase_consistency']['agreement_rate'])} |")
+    lines+=['', 'An incomplete grid has no point estimate; conditional readings and denominators remain in JSONL. '
+        'Agreement is a descriptive outcome, not a training-selection gate. Model checks below do not certify ethical correctness.', '']
+    for kind,c in summary['meta_eval']['model_controls']['stance'].items():
+        if 'n_correct' in c:lines.append(f"- {kind}: {c['n_correct']}/{c['n_expected']} correct; {c['n_extracted']}/{c['n_expected']} extracted.")
+        elif 'flip_rate' in c:lines.append(f"- {kind}: note flip rate {fmt(c['flip_rate'])}; {c['n_eligible_pairs']}/{c['n_expected_pairs']} eligible pairs.")
+    report=directory/'measurement_report.md';report.write_text('\n'.join(lines)+'\n')
+    return [path,path.with_suffix('.md'),report]
 
 
 def _write_stance_report(summary, rows, directory, path):

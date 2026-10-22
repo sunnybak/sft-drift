@@ -104,6 +104,10 @@ def _summarize_rows(rows):
                     n_contradictions=sum(a != 0 for a in acq),
                     signed_acquiescence=fmean(acq) if acq else None,
                     absolute_acquiescence=fmean(abs(a) for a in acq) if acq else None)
+                if framed[0].get("stance_interface") == "target_free_positions":
+                    cell.update(n_expected_negation_pairs=0, n_eligible_negation_pairs=0,
+                        n_contradictions=None, signed_acquiescence=None, absolute_acquiescence=None,
+                        negation_status="not_measured", estimand="canonical_position_choice_rate")
                 if framed[0].get("stance_profile_version") == "polarity-profile-v1":
                     views = {}
                     for polarity in ("positive", "negative"):

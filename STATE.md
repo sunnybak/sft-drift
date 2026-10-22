@@ -92,27 +92,51 @@ correct five>three replies agent-read/saved. No parser/key fault; no SFT implica
 by BASEfailures. Old gates remain failed. No resume/restart. Details:
 changelog/2026-10-21-target-free-controls-results.md.
 
-## Next: paired thinking-mode diagnostic
+## Complete: paired thinking-mode diagnostic
 
-Prospective plan changelog/2026-10-21-target-free-modes-plan.md. Master
-ethics_gpu_target_free_modes_v1;10children,5fixed models×2thinking modes×388calls=3880.
-Only thinking flag differs; same0.6temperature/top_p0.95/top_k20,4096cap,batch64.
-64fresh contexts, all read;32new arithmetic operand references verified;384fresh rows
-plus4separate reused probes per job. Collect every model despite performance failure;
-stop only execution/identity failures. Existing fresh gates unchanged; report paired
-mode and adapter-minus-BASE gains/losses with coverage. No ethical outcomes/training.
-Driver scripts/run_target_free_modes.py; analyzer scripts/analyze_target_free_modes.py.
-62focused/controller/stage/layer/handoff tests pass; tokenizer104–177thinking,
-108–181nonthinking fits4352context. All10typed configs and two bank inputs prepared.
-New paths registered before preparation. DEPLOYED/LAUNCHED source70c6784; all37bindings
-verified and GPUvLLMpreflightpassed. Supervisor sft-drift-target-free-modes-v1 RUNNING,
-PID92788 atlaunch; finite command .venv/bin/python -u scripts/run_target_free_modes.py run.
-Log /workspace/sft-drift-ops/target-free-modes-v1.log. Do not pull/change bound GPUsource
-while active. Authoritative next check: ssh -p58689 root@38.49.42.46
-'supervisorctl status sft-drift-target-free-modes-v1'. Closed child copy from belief-transfer/:
-uv run --no-sync python scripts/copy_error_rca.py --suite modes --host root@38.49.42.46 --port 58689. Then scripts/analyze_target_free_modes.py --allow-partial;
-final analysis only after all10jobs. Running raw outputs are GPU-only until closed-copy.
-No resume/autorestart; changed inputs/source require fresh IDs. No new SFT/rental.
+ethics_gpu_target_free_modes_v1 COMPLETE, all10jobs/3880calls, source70c6784;
+supervisor sft-drift-target-free-modes-v1 EXITED. Terminal off-box copy verified
+157files/25,630,221bytes. Final analysis reconstructs prompts/runtime/adapter/token
+identities and grades. Fresh thinking correct/384:BASE383,positive384,negative384,
+off384,C4383. C4one4096token loop is in fresh validation, not regression; its strict
+coverage/normal-stop gate FAILS. Other four thinking jobs pass; no mode qualifies
+across all five. Nonthinking correct/384:336/334/336/334/334 respectively; all fail
+arithmetic. C4nonthinking also has two wrong stipulated-normative answers. All40reused
+five>three probes pass, separate from fresh qualification. No old gate is cleared.
+
+Read both full thinking failures and all246wrong final-only replies;248reviewed error
+rows retained, V2corrects annotation of two C4normative errors without grade changes.
+BASEsubstitutes45for displayed47; C4correctly computes58−3=55then loops to cap. No
+parser/key fault. No broad SFTcollapse established; narrow prior retention losses
+remain. Details changelog/2026-10-21-target-free-modes-results.md. No resume/restart.
+
+## Next: preselected presence-penalty control pilot
+
+Official Qwen3-4B card recommends presence_penalty1.5for significant repetitions.
+New plan changelog/2026-10-21-presence-controls-plan.md, master
+ethics_gpu_presence_controls_v1, five ethics_gpu_presence_control_{arm}_v1children.
+Same fixed models/target-free prompt/thinking/T0.6/top_p0.95/top_k20/4096cap/batch64;
+only presence penalty changes.64new cases/384fresh rows plus8separate regression
+probes (four old five>three, two exact observed loops with independent repeats).
+392calls/model,1960total; all5collected despite performance failures. Unchanged
+fresh gates, plus all8regression probes must pass per model for practical success.
+
+Opt-in penalty forwarded to vLLM SamplingParams and execution/raw identity; None
+is omitted, historical defaults unchanged. All10mode resolved-config hashes verify.
+74focused inference/config/controller/layer/handoff tests pass; new full100prototype
+has100clean tests. All64new cases agent-read,32arithmetic references checked; pinned
+tokenizer104–180inputtokens fits4352context with4096cap.33source/input/config/adapter
+bindings frozen, paths registered, bank and5configs prepared. NOT yet launched.
+Exact next command after clean committed source/input deploy: GPUvLLMPython
+scripts/run_presence_controls.py check-runtime. Finite supervisor then runs opsPython
+scripts/run_presence_controls.py run; expected log /workspace/sft-drift-ops/presence-controls-v1.log.
+No resume/autorestart; changed source/inputs require fresh IDs. No training/rental.
+
+Full100target-free readout v1 is an implemented/mocked prototype with NOmodel calls:
+its original all5thinking gate fails, so do not launch/prepare v1. A successful new
+penalty assay would require a separate v2readout protocol/new IDs, not relaxing v1.
+Native target-free relative-choice reports do not claim independent negation
+agreement. Source frozen bank/extractor and historical prompt outputs remain unchanged.
 
 ## Dashboard and preservation
 
@@ -130,9 +154,11 @@ explicitly notes subsequent BASEinterpretation failure and stopped readout.45das
 tests, TypeScript and finalbuild pass; browser/screenshot verified. Full browser-verified screenshots under interface-controls master, including warning
 that the later BASEreadout failed. No historical score/gate was changed.
 
-Latest verified private receipt d957c83e,code2dd7e3e,4729files/15,694,161,542bytes:
-terminal interface controls, frozen paired inputs and launch proof. Next save must include completeBASE, partialpositive, stop/deviation/review, dashboard,
-target-free terminal BASEand reviewed failures, plus paired-mode code/banks/launch proof. All captured paired outputs are now off-box. Target-free thinking worker is terminal; keep existing GPUbox for the paired-mode diagnostic.
+Latest verified private receipt30ca685e,code92b9a16,4847files/15,751,404,397bytes:
+old stopped/partial paired data, terminal target-free BASEfailure, dashboard and
+paired-mode prepared inputs/launch. Current mode-terminal data are now copied off-box;
+next save includes all10mode outputs/review and new presence bank/source/prototype.
+GPUmode worker is terminal; no training or other inference launched at this boundary.
 
 Original pilot/results/expanded-control/off-topic follow-up remain preserved under
 their original IDs; see changelog/2026-10-21-ethical-four-arm-results.md and
