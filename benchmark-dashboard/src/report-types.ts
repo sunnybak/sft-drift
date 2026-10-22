@@ -62,7 +62,7 @@ export function checkSummary(tests: ReportTest[]) {
   const counts = {pass: 0, fail: 0, not_run: 0, error: 0};
   for (const t of tests) counts[t.status]++;
   const status = !required.length ? 'Not assessed' : required.some(t => t.status === 'fail') ? 'Required checks failed'
-    : required.some(t => t.status === 'error') ? 'Check errors' : required.some(t => t.status === 'not_run') ? 'Checks pending' : 'Declared checks passed';
+    : required.some(t => t.status === 'error') ? 'Check errors' : required.some(t => t.status === 'not_run') ? 'Checks pending' : 'Required checks passed';
   return { counts, status };
 }
 export const formatScore = (value: number, unit: ReportBenchmark['unit'], unitLabel?: string) => unit === 'fraction' ? `${Math.round(value * 1000) / 10}%` : `${value.toLocaleString()}${unitLabel ? ` ${unitLabel}` : ''}`;

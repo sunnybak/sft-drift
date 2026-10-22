@@ -66,7 +66,7 @@ test('authored readouts must reference real models and benchmarks',()=>{
 });
 test('candidate gates are scoped separately from historical models',()=>{
  const r=template(),old={...r.tests[0],id:'old-failure',modelId:'old',status:'fail'};
- assert.equal(checkSummary([...r.tests,old].filter(t=>t.modelId==='example-model')).status,'Declared checks passed');
+ assert.equal(checkSummary([...r.tests,old].filter(t=>t.modelId==='example-model')).status,'Required checks passed');
  assert.equal(checkSummary([old]).status,'Required checks failed');
 });
 

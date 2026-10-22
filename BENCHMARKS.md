@@ -13,13 +13,15 @@ BASE. Fixed-retention repeats are complete: smallrepeatable losses coexist with 
 performance gains; see changelog/2026-10-21-retention-rca-results.md. No newknownmask
 or alteredoldgates. Scoped-comprehension controls are complete: all five models pass both fresh splits;
 see changelog/2026-10-21-scope-control-results.md. This is not arithmetic clearance.
-Forward readout ethics_gpu_scoped_readout_v1 is active: first4models completed, C4
-remaining. All100/freshBASE retained, legacy failures do not suppress collection.
-New historical repeat analysis reveals substantial ethical negation sensitivity beyond
-same-prompt variability, especially negative; scoped eligibility alone is insufficient
-to call the pilot tuned. Next diagnostic is prepared, not launched:
-changelog/2026-10-21-interface-controls-plan.md. Compare current/reminder/paired
-interfaces on fresh normative/factual known-reference controls before any new training.
+Forward readout ethics_gpu_scoped_readout_v1 is COMPLETE: all5models,11,999/12,000
+valid natural answers, all500belief/model rows retained; terminal copy verified.
+See changelog/2026-10-21-scoped-readout-results.md. Negative ethical negation remains
+unstable beyond same-prompt variability; scoped eligibility alone is insufficient
+to call the pilot tuned. Prospective interface diagnostic is RUNNING:
+changelog/2026-10-21-interface-controls-plan.md. BASE/positive current and paired
+forms each384/384correct on fresh normative/factual known-reference controls. BASE
+reminder fails; unconditional negation wording induces target confusion. Remaining
+models pending. No paired real-belief readout until all5pass and a new plan is frozen.
 Keep old natural consistency as an outcome, never a training-selection threshold.
 No automatic100-subject expansion. New runs/instruments get fresh IDs; old gates and
 results remain unchanged. Do not select training on desired ethical drift.
