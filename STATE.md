@@ -33,65 +33,67 @@ Expected operations append audited, oldprefix archived in reference_phase_audit_
 
 ## Active preparation and exact next work
 
-Implementation update: typed supplemental stage and finite runner implemented;
-105focused/preservation tests passed. Full suite1470passed/5skipped,2old temporary-
-fixture failures: copied historical output configs correctly triggered no-overwrite.
-V3implementation preparation has identical v2bank/manifest hashes but is NOT launched:
-prelaunch inspection found missing legacy dose.loss_tokens_by_kind metadata required
-by the actual checkpoint verifier. Preserve v3source, correct that contract under a
-fresh v4preparation, then freeze/save/deploy. No GPUcalls or training yet.
+Final replay-data intervention PREPARED, not launched: master
+ethics_sft_replay_coverage_probe_v4; training ethics_sft_c4_replay_coverage_v4.
+Finite worker scripts/run_replay_coverage_probe.py reference|candidate. New typed
+neutral_decision_retention stage uses run.py/JobConfig->RunResult, two thinking modes,
+raw token/seed/model identity, explicit errors and partial preservation. Existing
+frozen scorers/defaults unaffected; all6v2config hashes reconstruct unchanged.
 
-
-NEW prospective replay-data intervention PREPARED, not trained. Master
-ethics_sft_replay_coverage_probe_v2; training ethics_sft_c4_replay_coverage_v2.
-Control fixed ethics_sft_c4_weight32_v1, fresh BASE required before candidate.
-Plan2026-10-22-replay-coverage-plan.md plus measurement-clarification and bank-preflight
-amendments. Original plan/source bindings retained. No gate lowering or LR sweep.
-
+One scientific recipe: fixed weight32/LR1e-4/LoRA/seed42/C4/454steps/final-only.
 Data pilot ethics_sft_replay_coverage_data_v1:246old thinking sources unchanged;
-194new procedural-gold sources (130short procedural +64neutraldecision presentations,
-32thinking/32short). Entire pool440sources, three draws each.46complete requests/
-targets/proofs agent-read,0clear defects; all194actual requests independently solved
-and alltoken/EOS roundtrips verified. No model generated these targets; no teacher
-attribution. Exact3159prompts/536procedural keys checked; scope limitation explicit.
-Review complete in separate agent_review_summary_v1; original summary remains as-made.
+194gold replacements=130short procedural+64neutraldecision(32thinking/32short).
+46complete request/target/proof agent reads,0clear defects; all194actual requests
+independently solved, exact token/EOS roundtrips. Explicitly procedural gold, not
+teacher samples. Each source3draws;3246draws/3625chunks. All3043C4/oldthinking chunks
+andpositions match control. ManifestSHA47b152a692b2b1101000f4a86bc193394b60c8488bd6af6a593b23273b7bcad6.
+Raw1248760targets: C4948838/thinking297546/short2376; weighted1322416;
+inputtokens1383294. Dose includes verifier-compatible synthetic0/c4/replay299922 totals
+AND mode diagnostics. Mean coefficient shares69.980/23.551/6.470%. Not token-matched.
 
-V1probe preflight failed before any outputs/calls on duplicate/historical bank overlap.
-Unused registeredv1paths retained. Newv2bank uses sameRNG20261026but unique sampled
-left operands1100..1199/right2100..2199, unchangedtasktemplates/assessment; no outcome
-resampling. New128procedural +64held-out-wording neutraldecision bank frozen.
-Only eval seed42: thinkingtemperature0.6, short0; no independent training replication.
-Supplemental decision knowncohort>=24/32permode/allfourfamilies/bothlabels;95%retention,
-allcomplete/exact finals. Originalqualification and value-v1gates remain unchanged.
+Preflight lineage: v1duplicate/historical input collision before outputs; v2reviewed
+preparation; v3typed implementation (source8c3e305) unmeasured, missing legacy dose-kind
+field caught before GPU use. V4corrects metadata only; allv2/v3/v4manifest AND bank
+hashes identical. Explicitly reuse privately verified unmeasuredv2banks, no redraw or
+outcome-based selection. Superseded preparations remain. No v1-v4model calls yet.
+Plans:2026-10-22-replay-coverage-plan/measurement-clarification/bank-preflight/
+implementation.md; frozen in v4protocol. No threshold, LR, data or candidate search.
 
-Training input3246documents/3625chunks;454steps final-only; same settings/LR1e-4/
-weight32/LoRA/seed42. All3043C4/oldthinking chunks andpositions unchanged. Rawtargets:
-C4948838,thinking297546,short2376,total1248760; weighted1322416. Mean coefficient
-shares69.980%C4/23.551%thinking/6.470%short. Data intervention changes exposure;
-not a token-matched causal isolation.32focused mock/tempdir/layer tests pass.
-All29newv2paths registered before prepare; configs/plan/banks/source bindings complete.
-No GPUworker launched for this experiment; GPU lastverified idle.
+Banks: ethics_gpu_replay_coverage_confirmation_v4 (128rows, RNG20261026unique adjacent
+1100..1199/2100..2199operands), ethics_gpu_replay_coverage_decision_bank_v4(64rows,
+held-out prompt/note wording). Eval seed42, thinking0.6/nonthinking0. Original value-v1
+and model-qualification thresholds fixed. Supplemental BASEknown>=24/32permode,
+allfouroperations/bothlabels; otherwise stopSFT/inconclusive. Allfailedreference replies
+must be fully reviewed/hash-bound and privately saved before one candidate train.
+Candidate gets both banks and all100beliefs even if unqualified. No automatic adoption.
 
-FIRST finish private preservation after commit/push:
+Tests: fullsuite1470passed/5skipped with2older temp-fixture failures (copied real output
+configs correctly tripped no-overwrite). Fixed ONLYtemp fixture setup; affected suite
+118passed, including actual checkpoint-binding dose-contract integration. Subsequent
+focused cloning/worker/stage suite41passed. No tests wrote real experimental artifacts.
+
+Exact next: commit/push, then private-save v4inputs/code and verify receipt:
 cd belief-transfer && uv run --no-sync python scripts/handoff.py save
-Then implement/test a finite reference/candidate worker using frozen protocol:
-data/generated/ethical_stance_sft/ethics_sft_replay_coverage_probe_v2/protocol.json.
-Collect BASE/control128procedural+64decision replies each, review failures/hash-bind
-and preserve references BEFORE fresh candidateSFT. Candidate then same banks, original
-development/conditionalvalidation, all100frozenbeliefs regardlessqualification. Record
-full outcomes; no checkpoint/recipe selection on ethical drift. Refuse overwrite/restart.
-No automatic further data/LR/weight versions after this trial; reconsider on evidence.
+Then deploy pushed code/registered generated inputs to idle existing GPU, check all
+bindings, and launch finite reference worker under supervisor (no autorestart):
+.venv/bin/python -u scripts/run_replay_coverage_probe.py reference
+GPUcwd:/workspace/sft-drift/belief-transfer. Ref supervisor planned
+sft-drift-replay-coverage-reference-v4; log planned
+/workspace/sft-drift-ops/replay-coverage-reference-v4.log. Not created/started yet.
+Do not launch candidate before completed refs/full review/private-save gate.
 
 ## Preservation
 
-Last verified private snapshot399c7bb213cb242d150a200ccf705dc64f9c6224 at code
-5985378bea3bb30dd8f337da5ef72986092dc9e4:6421files/19,186,941,333bytes.
-Corpus b82e8abcccdab6ccf3cfd6776a44ee401114575e manifest17f654e6caa2118eddd42a4f20bb1e9e9a71711a52ad963de7aed2e678b6fde3.
-Covers completed lowerLRfinal/checkpoints/all133reviews and2432tokenaudits.
-NEW replay data/reviews/protocol/source currently local pending next save.
-Actual receipt belief-transfer/data/.handoff-receipt.json. No localmutations/tests/copies
-during save; reuse process handle across storage429retries. No box destruction until
-code push and private artifact verification. All current new artifacts are offGPU.
+Verified snapshot a5f018d360dd5f1d02318557c0fc5b512fd39df8 at99ddd2915a79b4073fa8d05cfc36c297a670404b:
+6451files/19,202,653,561bytes. Corpus b298ea5ac3d8a06a25edc5941efdf19b3d5dc2d7,
+manifestf95ba9902424674fe072bfbb9fc80f500bbf272df9d0dbe464c6e99176150882.
+Covers completed lowerLR and reviewed replay-data pilot/v2preparation. New v3/v4
+preparations/typed runner/source pending save. All current new data offGPU locally.
+Actual receipt belief-transfer/data/.handoff-receipt.json. No local mutations/copies/
+tests during save; retain process handle across429waits. GPUlastverified idle0%,1MiB.
+Remote source8053931; two identical expected runtime configs may need offrepo backup
+before fast-forward pull. Never overwrite divergent files; keep hashes/backup.
+No box destruction until sourcepush and private artifact verification.
 
 ## Established context / limits
 

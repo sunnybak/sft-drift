@@ -18,11 +18,11 @@ from build_replay_coverage import RUN as DATA, candidates, check_overlap, key, O
 from prepare_replay_weight_ablation import read, rows, sha, write_json, write_rows
 from validate_registry_calibration import training_binding, verify_binding
 
-MASTER = 'ethics_sft_replay_coverage_probe_v3'
-TRAIN = 'ethics_sft_c4_replay_coverage_v3'
+MASTER = 'ethics_sft_replay_coverage_probe_v4'
+TRAIN = 'ethics_sft_c4_replay_coverage_v4'
 CONTROL = 'ethics_sft_c4_weight32_v1'
-BANK = 'ethics_gpu_replay_coverage_confirmation_v3'
-DECISION = 'ethics_gpu_replay_coverage_decision_bank_v3'
+BANK = 'ethics_gpu_replay_coverage_confirmation_v4'
+DECISION = 'ethics_gpu_replay_coverage_decision_bank_v4'
 MODELS = ('base', 'control', 'candidate')
 PLAN = Path('../changelog/2026-10-22-replay-coverage-plan.md')
 CLARIFICATION = Path('../changelog/2026-10-22-replay-coverage-measurement-clarification.md')
@@ -33,19 +33,19 @@ IMPLEMENTATION = Path('../changelog/2026-10-22-replay-coverage-implementation.md
 def retention_id(model: str) -> str:
     if model not in MODELS:
         raise ValueError('Unknown fixed model')
-    return f'ethics_gpu_replay_coverage_{model}_retention_v3'
+    return f'ethics_gpu_replay_coverage_{model}_retention_v4'
 
 
 def decision_id(model: str) -> str:
     if model not in MODELS:
         raise ValueError('Unknown fixed model')
-    return f'ethics_gpu_replay_coverage_{model}_decisions_v3'
+    return f'ethics_gpu_replay_coverage_{model}_decisions_v4'
 
 
 def eval_id(phase: str) -> str:
     if phase not in ('development', 'validation', 'reading', 'unqualified'):
         raise ValueError('Unknown qualification phase')
-    return f'ethics_gpu_replay_coverage_{phase}_s42_v3'
+    return f'ethics_gpu_replay_coverage_{phase}_s42_v4'
 
 
 def required_paths() -> list[str]:
@@ -196,6 +196,10 @@ def prepared_v2_banks() -> tuple[Path, Path, Path]:
         raise ValueError('V2training started')
     if any(Path('data/results/ethical_pilot').glob('ethics_gpu_replay_coverage_*_v2')):
         raise ValueError('V2measurement exists')
+    if (Path('data/results/ethical_stance_sft/ethics_sft_replay_coverage_probe_v3').exists()
+            or Path('data/results/ethical_stance_sft/ethics_sft_c4_replay_coverage_v3').exists()
+            or any(Path('data/results/ethical_pilot').glob('ethics_gpu_replay_coverage_*_v3'))):
+        raise ValueError('V3measurement exists; prepared-only reuse no longer applies')
     receipt = read(Path('data/.handoff-receipt.json'))
     paths = [prior, Path(protocol['bank_path']), Path(protocol['decision_bank_path'])]
     for p in paths:
@@ -219,6 +223,24 @@ def project(chunks: list[dict], hp, max_steps: int) -> dict:
         audit.append({'optimizer_step_before_batch': index // hp.grad_accum,
                       'weighted_normalization_items': denominators[chunk_key(selected[0])], 'chunks': records})
     return objective_report(audit, 32)
+
+
+def dose_contract(documents: int, chunks: list[dict], projection: dict) -> dict:
+    """Match the real checkpoint verifier's kind counts as well as mode diagnostics."""
+    by_kind = {'synthetic': 0, 'c4': 0, 'replay': 0}
+    by_mode = {}
+    weighted = 0.0
+    for c in chunks:
+        count = sum(x != -100 for x in c['labels'][1:])
+        by_kind[c['source_kind']] += count
+        mode = ('replay_thinking' if c['replay_thinking'] else 'replay_nonthinking') if c['source_kind'] == 'replay' else c['source_kind']
+        by_mode[mode] = by_mode.get(mode, 0) + count
+        weighted += count * c.get('loss_weight', 1)
+    if by_mode != projection['raw_targets_by_kind_mode'] or weighted != projection['weighted_forward_targets']:
+        raise ValueError('Actual chunk dose and projected objective disagree')
+    return {'documents': documents, 'chunks': len(chunks), 'input_tokens': sum(len(c['input_ids']) for c in chunks),
+            'loss_tokens_by_kind': by_kind, 'raw_loss_tokens_by_kind_mode': by_mode,
+            'weighted_loss_tokens': weighted, 'draws_per_replay_source': 3}
 
 
 def prepare() -> dict:
@@ -272,13 +294,12 @@ def prepare() -> dict:
             fixed += 1
     projection = project(chunks, old.training.sft, spec.max_steps)
     prior_protocol, prior_bank, prior_decisions = prepared_v2_banks()
-    blocked = {r['training_request'] for r in rows(pool_path)}
-    blocked |= {r['prompt'] for p in Path('data/generated/ethical_pilot').glob('*/bank.jsonl')
-                if p != prior_bank for r in rows(p) if 'prompt' in r}
-    fresh, supplemental = confirmation(blocked), decision_bank(rows(pool_path))
     strip_inputs = lambda bank_rows: [{k: v for k, v in r.items() if k != 'expected_input_token_ids'} for r in bank_rows]
-    if fresh != strip_inputs(rows(prior_bank)) or supplemental != strip_inputs(rows(prior_decisions)):
-        raise ValueError('V3implementation amendment must retain exact v2prepared questions')
+    # This is an implementation/metadata amendment: copy the already frozen,
+    # privately verified unmeasured inputs rather than call them historical leaks.
+    fresh, supplemental = strip_inputs(rows(prior_bank)), strip_inputs(rows(prior_decisions))
+    if fresh != confirmation(set()) or supplemental != decision_bank(rows(pool_path)):
+        raise ValueError('Implementation amendment must retain exact v2prepared questions')
     check_overlap(rows(gold_path), {r['prompt'] for r in fresh}, confirmation_keys(fresh))
     runtime = read(Path('data/generated/ethical_stance_sft/ethics_sft_lower_lr_probe_v1/protocol.json'))['runtime_reference']
     for r in [*fresh, *supplemental]:
@@ -301,9 +322,7 @@ def prepare() -> dict:
         seeds={'training': 42, 'schedule': 42, 'confirmation': [42], 'belief': [42]},
         provenance={'master_id': MASTER, 'data_pilot': DATA, 'matched_control': CONTROL})
     # Replace stale dose keys with measured facts, rather than inheriting old numbers.
-    plan['dose'] = {'documents': len(documents), 'chunks': len(chunks),
-                    'raw_loss_tokens_by_kind_mode': projection['raw_targets_by_kind_mode'],
-                    'weighted_loss_tokens': projection['weighted_forward_targets'], 'draws_per_replay_source': 3}
+    plan['dose'] = dose_contract(len(documents), chunks, projection)
     write_json(target / 'plan.json', plan)
     bank_paths = {}
     for name, bank_rows in ((BANK, fresh), (DECISION, supplemental)):

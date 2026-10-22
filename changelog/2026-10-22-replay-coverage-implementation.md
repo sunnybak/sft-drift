@@ -32,3 +32,22 @@ requires v2to be unmeasured, its protocol/banks privately saved and hash-identic
 and excludes only that bound preparation bank from historical-prompt rejection.
 Generated v3questions must exactly equal v2prepared questions. This is declared input
 reuse across engineering preparations, not a seed search, outcome reuse or redraw.
+
+V3implementation/source was committed at8c3e305before correction. Its unmeasured plan
+omits the legacy dose.loss_tokens_by_kind field required by the actual checkpoint
+binding helper. Prelaunch inspection caught this before any GPU calls. Final v4IDs
+preserve the same candidate manifest/bank hashes/settings; the dose contract now carries
+both per-kind totals (including synthetic0) and per-mode diagnostics, independently
+reconstructed from chunk labels and checked against projected weighted mass. A test
+passes this contract into the real checkpoint-binding helper with synthetic temporary
+results; no actual model weights are loaded. V3preparation remains untouched.
+
+Broader tests found two older fixture failures: real historical output YAMLs copied
+into tempdirs correctly tripped production no-overwrite guards. Only those temporary
+fixture copies are cleared before their preparation tests. Historical runs, production
+guards and measurement data remain unchanged.
+V4preflight likewise initially saw the identical unmeasured v3bank copy as history.
+Preparation now directly copies the authoritative, privately verified v2bank records,
+checks equality to the fixed generator and recomputes token IDs. It also refuses reuse
+if either v2orv3has actual measurements/training. No question is redrawn; duplicate
+preparation copies are not treated as evidence. Both preflight failures wrote no outputs.

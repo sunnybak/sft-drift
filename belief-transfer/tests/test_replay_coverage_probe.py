@@ -98,3 +98,36 @@ def test_prior_preparation_reuse_is_explicit_unmeasured_and_privately_bound(tmp_
             probe.prepared_v2_banks()
     else:
         assert probe.prepared_v2_banks() == (protocol, bank, decisions)
+
+
+def test_projected_dose_is_accepted_by_actual_checkpoint_binding(tmp_path):
+    import json
+    from validate_registry_calibration import training_binding, CHECKS, REVISION
+    chunks = []
+    for kind, mode, count, weight in [('c4', None, 100, 1), ('replay', True, 200, 1), ('replay', False, 5, 32)]:
+        chunk = {'source_kind': kind, 'input_ids': [1]*(count+1), 'labels': [-100]+[1]*count, 'loss_weight': weight}
+        if mode is not None:
+            chunk['replay_thinking'] = mode
+        chunks.append(chunk)
+    projection = {'raw_targets_by_kind_mode': {'c4': 100., 'replay_thinking': 200., 'replay_nonthinking': 5.},
+                  'weighted_forward_targets': 460., 'nonthinking_replay_weight': 32.}
+    dose = probe.dose_contract(3, chunks, projection)
+    assert dose['loss_tokens_by_kind'] == {'synthetic': 0, 'c4': 100, 'replay': 205}
+    plan = {'dose': dose, 'dataset_sha256': 'd'*64, 'schedule': {'max_steps': 454},
+            'preprocessing': {'model_revision': REVISION, 'replay': {'loss_normalization': 'weighted_group_mean_v1', 'nonthinking_loss_weight': 32}}}
+    summary = {'manifest_sha256': 'd'*64, 'chunks': 3, 'training': {
+        'status': 'COMPLETED', 'checks': dict.fromkeys(CHECKS | {'loss_normalization_matches', 'weighted_loss_normalization_matches'}, True),
+        'model_revision': REVISION, 'global_steps': 454, 'one_pass': True,
+        'actual_forward_loss_tokens': 305, 'actual_loss_tokens_by_kind': dose['loss_tokens_by_kind'],
+        'final_adapter_sha256': 'f'*64, 'reloaded_adapter_sha256': 'f'*64, 'weighted_objective': projection}}
+    training = tmp_path/'training';training.mkdir()
+    (training/'COMPLETED').write_text('fixture')
+    (training/'summary.json').write_text(json.dumps(summary))
+    checkpoint = tmp_path/'checkpoint';checkpoint.mkdir()
+    (checkpoint/'adapter_model.safetensors').write_bytes(b'fixture bytes, not real weights')
+    (checkpoint/'adapter_config.json').write_text('{}')
+    bound = training_binding(plan, training, checkpoint)
+    assert all(bound['training_checks'].values())
+    wrong = {**projection, 'weighted_forward_targets': 461}
+    with pytest.raises(ValueError, match='disagree'):
+        probe.dose_contract(3, chunks, wrong)

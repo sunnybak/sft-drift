@@ -20,7 +20,7 @@ No gate changed or recipe adopted. Next is a prospective replay-coverage/interfa
 hypothesis, not another LR sweep. See
 [changelog/2026-10-22-lower-lr-probe-results.md](changelog/2026-10-22-lower-lr-probe-results.md)
 and STATE.md for exact next work and preservation.
-The next replay-coverage data pilot is reviewed/prepared (masterv2 after a preflight
+The next replay-coverage data pilot is reviewed/prepared (final masterv4 after prelaunch engineering amendments and a preflight
 bank collision; no model calls yet). Fixed C4/teacher chunks/settings, new gold replay
 and explicitly changed token dose; fresh128procedural+64neutraldecision references.
 Original model checks/value-v1 thresholds remain. See STATE.md and the three prospective

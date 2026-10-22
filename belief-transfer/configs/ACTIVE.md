@@ -3,6 +3,18 @@
 Use these entry points for the ethical-stance SFT study. The rest of the config tree
 supports historical reproduction/tests; its presence is not a running order.
 
+## Current tuning investigation (2026-10-22)
+
+STATE.md controls execution. Lower-LR trial is complete/rejected. One replay-data
+intervention is prepared under ethics_sft_replay_coverage_probe_v4; earlier versions
+are unmeasured preparation lineage, not candidates or a queue. Entry points:
+`scripts/build_replay_coverage.py`, `audit_replay_coverage.py`,
+`prepare_replay_coverage_probe.py`, `run_replay_coverage_probe.py reference|candidate`.
+Typed stages: existing instruction_retention/document_sft/full100measurements plus
+new opt-in neutral_decision_retention (64factual decisions/two thinking modes).
+Full reference review/private preservation gates candidate launch. No automatic
+resume, quality retry, further candidate or full-bank expansion.
+
 ## Source of truth
 
 | Purpose | Path |

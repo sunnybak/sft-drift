@@ -85,6 +85,9 @@ def test_controller_continues_performance_failures_but_stops_technical_failure(t
 def test_prepare_fifteen_configs_binds_control_bytes_and_preselects_review(tmp_path,monkeypatch):
     from belief_transfer.stages import measurements
     cfg=configs(tmp_path,monkeypatch);monkeypatch.chdir(tmp_path)
+    # Remove output configs from the temporary copy, preserving every real run.
+    for _,_,run in worker.run_ids():
+        (cfg/'run'/(run+'.yaml')).unlink(missing_ok=True)
     cb=controls();natural=bank();proofs={};jobs=[]
     for arm,mode,run in mode_ids():
         j=config.load_job(['+run='+run]);b=j.pilot_bench;digest=None

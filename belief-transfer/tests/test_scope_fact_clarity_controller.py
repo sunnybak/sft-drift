@@ -50,6 +50,10 @@ def test_prepare_refuses_live_parent_before_any_output_mutation(tmp_path,monkeyp
 
 def test_prepare_composes_five_pinned_control_only_jobs_in_tmpdirs(tmp_path,monkeypatch):
     cfg=tmp_path/'configs';shutil.copytree(config.CONFIG_DIR,cfg);monkeypatch.setattr(config,'CONFIG_DIR',cfg);monkeypatch.chdir(tmp_path)
+    # Historical outputs now exist in the repo. Only the copied temporary fixture
+    # must start without the configs this preparation test is about to create.
+    for _,_,run in worker.run_ids():
+        (cfg/'run'/(run+'.yaml')).unlink(missing_ok=True)
     parent={'runtime_evidence':{},'jobs':[]};adapters={}
     for arm in worker.ARMS:
         j=config.load_job(['+run=ethics_gpu_scope_control_'+arm+'_v1']);b=j.pilot_bench
