@@ -38,24 +38,32 @@ value and original validation note-flip failures. Full100unqualified reading2400
 32fresh controls correct,2432runtime records verified. See2026-10-22-replay-value-v5-results.
 No recipe qualified. No checkpoint/hyperparameter chosen from ethical outcomes.
 
-## Exact next work
+## Current preparation and exact next work
 
-Follow new prospective changelog/2026-10-22-replay-base-reasoning-plan.md, not an old queue.
-Exact next reference:cat changelog/2026-10-22-replay-base-reasoning-plan.md
-Implement CPU-only preparation for32BASEthinking targets on exact same training prompts.
-All32complete teacher source replies now read/hash-bound in RCAteacher-review artifacts.
-17/29/31contain abandoned arithmetic mistakes explicitly corrected later; accepted as
-self-correction traces, not clean proofs. Original sources stay preserved. One documented once-only
-compression is planned to fit1024without truncation; other31targets byte-identical.
-Keep all other data/chunks/positions,3246draws/3625chunks/454steps/LR/LoRA/seed42/weights.
-Project actual changed target exposure/normalization; it is not token matched.
+CPU-only teacher preparation completed:ethics_sft_base_reasoning_replay_data_v1 and
+ethics_sft_c4_base_reasoning_replay_v1 manifest/config; master
+ethics_sft_base_reasoning_replay_probe_v1/preparation.json has launch_allowed=false.
+All32source targets agent-read;31raw unchanged, declared31compression fully read and
+correct. Exactly96thinking draws changed; other3529chunks byte-identical atsameindices.
+3246draws/3625chunks/454steps/settings/seedunchanged. Thinking targets+28704tokens,
+rawtotal1277464/weighted1351120/input1411998; normalization projected, not token matched.
 
-Reserved only(no artifacts/configs/training yet):data ethics_sft_base_reasoning_replay_data_v1;
-master ethics_sft_base_reasoning_replay_probe_v1; train ethics_sft_c4_base_reasoning_replay_v1.
-Register paths before creation. Freeze independent-input confirmation BEFORE candidate
-outcomes per plan, separate newIDs; oldv5conditional confirmation remains untriggered.
-Require full reviewed development+independent confirmation before planning ethical repeat.
-No automatic new training, expansion, rental or new training seeds from a passing subset.
+Independent bank ethics_gpu_base_reasoning_confirmation_v1 prepared512presentations,
+no calls, launch_allowed=false. Preflight compatibility issue found: legacy procedural
+value-v1 expects proof.b+200 as actual minuend for worked subtraction; v1metadata used
+actual minuend directly. Marked VOID.md, no bytes overwritten. Bare integer scoring
+unaffected but worked equations could be false negatives. Next:versioned v2metadatafix
+with identical prompts/answers/seeds/token IDs; retainv1source in Git before edit.
+Focused preparation tests35passed; add a worked-equation compatibility test before
+freezingv2. All response-generation/training jobs remain unstarted; GPUidle.
+
+Then implement/test/freeze candidate and independent-confirmation workers, preserve
+inputs, GPUpreflight and onlythen launch one fresh candidate. Newrecipe and original
+v5falsifiers unchanged. Independent confirmation must be frozen before outcomes.
+Exact current reference:cat changelog/2026-10-22-replay-base-reasoning-plan.md
+Newpreparation entry points:belief-transfer/scripts/prepare_base_reasoning_replay.py
+(already run, do NOT overwrite) and prepare_base_reasoning_confirmation.py(v1void).
+No automatic ethical/full-bank training, rental or new training seeds.
 
 ## Preservation
 
