@@ -1,153 +1,79 @@
 # Current state — 2026-10-22
 
-## Goal and current boundary
+## Stopped under the user's condition
 
-Goal ACTIVE:investigate/resolve genuine SFTregressions before extending ethical training.
-Existing VastRTX3090 authorized; no new rental or Mac training. No full90/100beliefSFT
-has run. Original10-target/four-arm pilot is historical, not automatically extended.
-User instruction2026-10-22:finish/review this fixed trial; if decisive scientific result
-is negative, pause the goal, stop further experiments and give findings/recommendation.
-Do not start another tuning candidate. Technical collector failure is not a negative result.
+The user asked: if the decisive result is negative, stop the goal and provide an update
+with recommendation. Final-primary failures are reviewed and decisive. Execution is
+STOPPED; apply the requested goal pause after final preservation. No further tuning,
+independent confirmation, checkpoint selection or ethical expansion. No qualified recipe
+exists. No full 90/100-belief SFT has run. No new rental or Mac training is authorized.
 
-Training ethics_sft_c4_base_reasoning_replay_v1 COMPLETED454steps/1964.43seconds,
-all12engineering checks pass; initial adapter/fullLRtrace/actualchunks/objective verified.
-Original supervisor sft-drift-base-reasoning-replay-v1 PID131244 EXITED20:26UTC after
-first128midpoint retention replies completed. Master failure+TERMINAL preserved:
-KeyError('fresh_base_reference'), a collector metadata-default bug. Do NOT restart it.
-Recovery supervisor sft-drift-base-reasoning-recovery-v1 RUNNING PID132392, observed
-20:51:17UTC, now collecting full100midpoint after diagnostics. GPUcheckout e2b25f62d30a1b949f2b7c8b2ace3c9e002a1110
-pinned during new worker; no new training. Original supervisor remains EXITED.
-Final procedural check now FAILS: one4096-token reasoning loop/no final; seven flags
-fully agent-read, no scorer disagreement. Final factual collection closed; original qualification/full100 schedule still live.
-Finish already scheduled collection/review/preservation, then PAUSE goal per user;
-no confirmation, further tuning or expansion. No further training queued.
+Report: changelog/2026-10-22-base-reasoning-final-results.md.
 
-## Established current result
+## Final result
 
-Fixed-model2×2RCA ethics_gpu_replay_interface_rca_v1 complete:576new responses plus
-192explicitly reused. All768actual token/seed/runtime/adapter/native records reconstruct;
-24paired contrasts saved. All160new flagged request/reply pairs fully agent-read and
-hash-bound. This is all flags, not all576new replies; historical192retain earlier reviews.
-Entire closed master/all9children/log copied locally:219files/10,435,616B(97new beyond
-five-child boundary). Initial copy helper mistook SupervisorEXITED status3for failure;
-corrected before copying. No measurement restarted/overwritten. No outputs only onGPU.
+Training ethics_sft_c4_base_reasoning_replay_v1 completed 454 steps / 1964.43 seconds,
+all 12 engineering checks pass. Initial adapter, complete LR trace, actual chunks and
+weighted objective reconstruct. Final equals step454 byte-for-byte; midpoint is secondary.
+Data ethics_sft_base_reasoning_replay_data_v1 changes 32 thinking targets / 96 draws;
+3529 other chunks unchanged, thinking exposure +28704 tokens. One seed only.
 
-Thinking correct/32 (BASE/control/v5):seen_train32/32/29; seen_eval32/32/28;
-held_train32/32/30; held_eval32/32/27. Short task-value-v3 correct/32:
-seen_train26/20/29; seen_eval25/18/31; held_train26/18/22; held_eval24/20/20.
-V5thinking regresses even on exact replay; short gains strongest on seen facts.
-Visible thinking errors often compute correctly but evaluate inner equality while
-ignoring outer negation. Style shortening is a hypothesis, not isolated causal proof.
+Final factual reasoning correct/32: 32,31,32,32; short: 32,30,21,22 across
+seen_train,seen_eval,held_train,held_eval. Primary held/eval retains 32/32 BASE-known
+reasoning but 17/24 short, below required 23/24. All256 decision finals strict/complete.
+Procedural 62/63 known thinking and 56/57 short; thinking completion FAILS from a
+4096-token subtraction loop/no final. Final development/validation controls32/32 each;
+fresh reading controls31/32 but note-flip1/16 fails. No parser explanation for failures.
+All final7procedural flags +24decision flags +16prespecified proofs +1fresh-control
+failure +1invalid natural reply fully read:49pairs, zero scorer disagreements.
+Exact flag/sample coverage and raw hashes checked; not all384diagnostic replies read.
 
-New opt-in neutral-task-value-v3 corrects4BASEMarkdown terminals uniformly across768;
-all160manual choices agree afterward. Native/value-v2/raw outputs and strict format
-stay unchanged; no frozen ethical scoring or historical falsifier changed. Tests74pass.
-All frozen bank/instrument file hashes unchanged. Full report:
-changelog/2026-10-22-replay-interface-rca-results.md.
+## Process and partial collection
 
-Earlier v5training ethics_sft_c4_replay_coverage_v5 completed454steps/all12engineering
-checks, actual labels/objective/prefixes exact; rejected by procedural loop, decision
-value and original validation note-flip failures. Full100unqualified reading2400valid,
-32fresh controls correct,2432runtime records verified. See2026-10-22-replay-value-v5-results.
-No recipe qualified. No checkpoint/hyperparameter chosen from ethical outcomes.
+GPU recovery supervisor sft-drift-base-reasoning-recovery-v1 intentionally STOPPED
+2026-10-22 21:34:27UTC; no GPU compute process remains. PID132392 no longer running.
+User stopping condition supersedes earlier finish-all collection intent. The final
+reading ethics_gpu_base_reasoning_final_reading_s42_v1 is PARTIAL:512/2400recorded,
+511valid,1length-loop invalid,1888not collected. No full100aggregate. No missing answer
+becomes neutral. Do not resume/restart this or any completed measurement ID.
 
-## Current fixed trial, recovery and exact next work
+Stopped master ethics_gpu_base_reasoning_recovery_v1 under ethical_pilot has explicit
+user_stop_on_negative_v1.json/.md and STOPPED_BY_USER_CONDITION, not COLLECTION_COMPLETED.
+Original failed master ethics_sft_base_reasoning_replay_probe_v1 remains failed with
+KeyError('fresh_base_reference'); repaired collector reused its completed128midpoint
+replies exactly. It was never restarted. GPU source stays pinned e2b25f6; no deployment
+or training change occurred during recovery. Supervisor autostart/autorestart false.
+Log copied to generated recovery/terminal_console_v1.log. Existing RTX3090 instance
+was not destroyed/released; no new compute may start under this stopped goal.
 
-Midpoint diagnostic boundary:384records reconstructed(128explicitreuse+256new),147closed
-files copied/hash-verified. Thinking factual scores32/32in all4cells; short19/18/18/19.
-Held/eval BASE-known32/32thinking,15/24short => MIDPOINTfails factual retention.
-All64finals/cell strict, complete stops/boundaries. Shortrejects29–30/32balanced questions;
-all54wrong decisions are false rejections. BASErejects12–17/32. Mode-specific output bias
-observed, not proven internal knowledge erasure or a single causal mechanism.
-Procedural63/63knownthinking,56/57short pass; all-item64/64and59/64. All5procedural flags,
-54decision flags +16preselected proofs fully agent-read(75pairs). No value disagreements;
-16sampled proofs correct,3loose phrases recorded. Not all384replies agent-read.
-Review/copy/profile artifacts under recovery generated directory; details in
-changelog/2026-10-22-base-reasoning-midpoint-diagnostics.md. Final endpoint remains fixed.
-Full100midpoint CLOSED:2400/2400valid, all2432runtime records verified. Development
-31/32correct fails1/16note-flip; validation not called. Fresh full-grid controls30/32,
-0note-flips. All3failed surface replies fully read: correct reasoning followed by
-wrong reject final.216closed files copied/hash-verified,50new; no raw conflicts.
-Final retention CLOSED:62/63knownthinking,56/57short; reasoning completion fails from
-4096-token subtraction loop. All7flags fully read; one additional uppercase error is
-outside BASE-known set. Source truth_proof.b metadata differs on subtraction, but
-prompt2398-1147andexpected1251are correct; not a scoring explanation. New annotations
-and midpoint full measurement local; awaiting next snapshot. All final384diagnostics CLOSED/reconstructed/copied:170files/166new. Final factual
-reasoning32/31/32/32and short32/30/21/22 across seen_train/seen_eval/held_train/held_eval.
-Held/eval BASE-known32/32thinking,17/24short FAILS. All256strict/complete. All24factual
-flags+16preselected proofs fully read, no scorer disagreements; one sampled proof has
-self-corrected intermediate585→285.47finaldiagnostic pairs reviewed total. Five runtime
-configs now local/tracked. Final development32controls correct; validation/full100 live.
-Full report changelog/2026-10-22-base-reasoning-final-results.md is explicit partial
-collection, definitive diagnostic rejection. No independent confirmation or new training.
-
-Prepared BASEreasoning intervention changes32source targets/96draws; other3529chunks
-unchanged.3246draws/3625chunks/454steps/settings/seedfixed, longer thinking+28704tokens.
-All32targets fully agent-read, one declared compression; source17/29self-corrections
-retained. Original plan/teacherdata/confirmationv1VOID/v2corrected inputs preserved.
-Independent512questions/model frozen, uncalled. No training/model qualification claimed.
-
-Completed training and all checkpoints now copied/hash-verified locally;33closed files,
-27new beyond midpoint. Terminal failed controller + completed128-reply child also copied:
-34files/29new, including exact original runtime config. MIDadapter82b0c1ea8bc2550e98585f7e18e9d4684a8661c3c244806248461136dc1c6106;
-finaladapter cb50440ec4e907c493986449c428c380cd1a2b6871e5975fff5be4546e0aac5c.
-Step454andfinal adapter/config byte-identical; alias explicit, no duplicate measurement.
-All actual tokenized chunks and weighted projection match preparation; all454LRsteps
-match parent and initial adapter b933f713e6da2a53d2c564379bc62faba52abad39cd71ec7366dc144dbdd804c.
-Derived tokenized.md differed after regeneration; incoming view preserved separately,
-authoritative JSONL identical. Generated master training_closed_copy_v1.json and
-collector_terminal_copy_v1.json bind closed copies. Live job is now terminal, no outputs
-remain only onGPU; operational console log is also copied/hash-verified locally.
-Do not destroy until private save.
-
-Repair:typed InstructionRetentionSpec restores omittedFalse default. Original measurement
-source/gates/weights/decoder/data unchanged.166focused tests pass, including actual typed
-manifest serialization, no repeated retention call on reuse, source-change restrictions.
-New finite controller ethics_gpu_base_reasoning_recovery_v1 under ethical_pilot, protocol
-prepared,1282bindings verified. It never trains; reconstructs/reuses exact completed128
-replies and starts only remaining never-started child IDs. Original failed master intact.
-Localprelaunch validation reconstructs128actual raw replies with corrected reader;
-trainingbinding/all12checks/actualchunks/objective/fullLRtrace all match. No new model calls.
-Newgenerated proof_review_selection_v1.json selects16thinking slots per distinct checkpoint
-(one/operation/cell, seed20261022), fixed20:15:51UTC before all12decision result IDs existed.
-Read all flags plus those slots; verify exact annotation coverage before any reviewed pass.
-
-Repairs/notes pushed e2b25f6, verified private snapshot below. Six recovery input files
-copied/hash-verified onGPU; all1282bindings and128raw replies reconstruct there, completed
-adapter/training binding exact. Old untracked runtime YAML preserved in ops, tracked
-replacement byte-identical. New finite recovery supervisor launched once, RUNNINGPID132392
-at20:51:17UTC; midpoint diagnostics finished, full100reading live. Exact source e2b25f6 must stay pinned onGPU.
-Command:cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_base_reasoning_recovery.py run
-Log:/workspace/sft-drift-ops/base-reasoning-recovery-v1.log. NOresume/restart.
-Exact next action:SSH -p58689 root@38.49.42.46; supervisorctl status
-sft-drift-base-reasoning-recovery-v1 and tail that log. Watch for midpoint/comparison_v1.json
-or TERMINAL under data/results/ethical_pilot/ethics_gpu_base_reasoning_recovery_v1.
-Copy/hash completed child/point outputs and dynamic runtime YAMLs at next safe boundary;
-closed midpoint full measurement and final384diagnostics local+GPU; live final qualification/full100 outputs only onGPU. Launchreceipt local, to join next
-closed measurement snapshot. Finish same midpoint/final/full100grid even if scientific
-checks fail; review final-primary result. If negative pause goal and recommend; no more SFT.
-If positive, independent confirmation still needs reviewed/private verdict and updated
-execution binding to recovery; frozen questions/gates remain unchanged, no automatic call.
-Details:changelog/2026-10-22-base-reasoning-collector-recovery-plan.md.
+Midpoint finished all384diagnostics and2400natural replies; 2432runtime records verified.
+It fails short factual retention15/24 and qualification.75diagnostic +3surface pairs
+fully read. Its strong reject bias is descriptive, not proof of knowledge erasure.
 
 ## Preservation
 
-Latest VERIFIED snapshot d7f4f38748aa5e292fef5f92a5ede02823b37110
-at 2b3e19d829f3b14395c3d9f6adca3feb899b9bdd:7436files/21,278,003,976bytes.
-Includes full closed midpoint measurement,3surface reviews,7finalprocedural reviews
-and their raw input. Save40785complete, /tmp/sft-drift-handoff-boundary.log verifiedtrue.
-Final384diagnostics/40factual reviews/5runtimeconfigs added after that snapshot; preserve
-next. Final full100/qualification live onGPU; do not destroy box. GPUsource e2b25f6 stays
-pinned. Latest code/notes must be pushed before next private save.
-Save:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
-Keep same process through HF429waits; no local mutation during save; check receipt.
+All training/checkpoints privately verified previously. Latest verified diagnostic
+snapshot971f80b6ffdbfba720fcd64f145cceea7e2627c4 at
+2e25b4087aead2b2fd695ebaf9442ef780be67ee:7605files/21,285,288,164bytes;
+/tmp/sft-drift-handoff-final-diagnostics.log ends verifiedtrue. Includes384finaldiagnostics
+and47diagnostic reviews. The subsequent stopped master, partial512reading, raw log,
+operator-stop receipt and2newreviews are now local/hash-verified; final save follows
+this source push.308closed remote files verified, archiveSHA:
+d9c9d5b5a580a283f61b811c1683a8cf0ba47a2bdc441c50d4ded7bd611966dc.
+Operation log is an exact append-only extension; earlier prefix separately preserved.
+All new JSONL views exist. Frozen inputs/scoring/gates remain unchanged.
 
-## Other fixed study limits
+Final preservation command:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+Wait for the same save process through storage429retries; verify receipt. Until then,
+do not claim the newest closure is privately saved or destroy the box.
+After verified save, pause the goal and report recommendation. Do not launch another job.
+On a future session, orientation/verification only:
+cd belief-transfer && uv run --no-sync python scripts/handoff.py verify
 
-LowerLRtrial rejected:51/55short retained, original note-flip failure;2432runtimeaudit,
-133flags fully read. Equal oldcontrol/lowerLRaggregate counts were not cache reuse:
-346different choices/0byte-identical texts; preserved identity audit. Weighted-loss
-normalization fix opt-in/passed5toychecks; historical defaults unchanged. Originalethical
-pilot+followups complete with qualification/specificity limits in BENCHMARKS.md.
-Corpusv5has20000docs/221repairs; conservation quarantined, full-bank semantic clearance
-false. Dashboard5180has13historicalreports; no UIchanges in this work block.
+## Prior study context
+
+Original10-target/four-arm ethical pilot and three-seed BASE completed, with important
+qualification/specificity limits; see BENCHMARKS.md and dated reports. No scale follows.
+Fixed-model replay/interface RCA, weighting and lower-LR trials are finished/rejected,
+not a queue to resume. Corpusv5retains20000documents/221repairs; conservation subjects
+remain quarantined and full-bank semantic clearance is false. Dashboard5180unchanged.

@@ -34,6 +34,13 @@ were frozen before launch. All four arms and twelve evaluation attempts are now
 finished and preserved; directional separation has major specificity/control limits.
 See currentSTATE and the reviewed2026-10-21results; do not automatically scale.
 
+## Execution boundary — user-requested stop
+
+The final BASE-reasoning replay repair was rejected on reviewed retention and generation
+failures. The user's stop-on-negative condition is met; no more experiments or scaling.
+The goal is not achieved. Preserve the stopped trial and pause execution; a future restart
+requires new user direction. See STATE.md and the 2026-10-22 final reasoning-replay report.
+
 ## Completion criteria
 
 1. The approved bank and scoring are frozen and recoverable on a fresh box.

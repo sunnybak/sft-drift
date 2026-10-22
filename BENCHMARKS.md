@@ -3,19 +3,20 @@
 Scope: [GOAL.md](GOAL.md). Progress and exact next commands: [STATE.md](STATE.md).
 Read the baseline report for methodology/results; do not reconstruct the old research queue.
 
-## Current fixed trial — final diagnostic rejection, collection closing
+## Current fixed trial — rejected and stopped by user condition
 
-Full BASE-reasoning replay trained successfully, but the fixed final checkpoint fails:
-held/evaluation factual retention 17/24 BASE-known short answers versus required 23/24;
-reasoning 32/32. All 256 factual finals parse strictly and stop normally. Procedural
-thinking has a 4096-token loop/no final despite 62/63 numeric known retention; short
-56/57. All 7 procedural and 24 factual flags plus 16 preselected proofs fully read,
-no scoring disagreements. Seen/training factual scores 32/32 in both modes demonstrate
-learning of seen examples, not the required transfer/retention. Full100 collection is
-still running; this rejection cannot be rescued by stance effects or midpoint choice.
-User requested stopping on a decisive negative: finish the already scheduled collection,
-review/preserve it, then pause the goal. No more tuning, confirmation or expansion.
-[Reviewed diagnostic report](changelog/2026-10-22-base-reasoning-final-results.md).
+Final reasoning replay fails held/evaluation factual retention:17/24BASE-known short
+answers versus required23/24, despite32/32reasoning. Procedural generation has a4096-token
+loop/no final. All49final flagged/prespecified review pairs fully read; no scoring
+disagreements. Development/validation controls pass32/32each, but fresh reading note
+invariance fails1/16. No gate or frozen instrument was changed.
+
+The user's stop-on-negative condition is met. Supervisor STOPPED, GPU processes gone;
+no further training, confirmation or expansion. Final full100reading intentionally
+stopped at512/2400recorded(511valid,1invalid,1888missing). No full-surface aggregate or
+completion claim. Midpoint's complete2400valid reading stays separate and unqualified.
+[Reviewed final report](changelog/2026-10-22-base-reasoning-final-results.md).
+Earlier entries below are historical context, not pending work or permission to resume.
 
 ## Latest diagnostic — complete, no qualified recipe
 
