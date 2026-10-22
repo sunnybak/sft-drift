@@ -6,11 +6,12 @@ Read the baseline report for methodology/results; do not reconstruct the old res
 ## Current authorized investigation
 
 Resolve measurement errors and determine whether SFT caused capability losses before
-expanding training. The existing four final adapters and BASE are fixed. No new
-fine-tuning has run during the current error investigation. The user authorized
+expanding training. The existing four final adapters and BASE remain fixed references. The new matched
+C4norm1/weight32ablation is active; norm1training is live, and midpoint227is copied.
+No candidate final or new ethical outcome has been reviewed yet. The user authorized
 continued work on the existing GPU overnight on October 22; no new rental is authorized.
 
-The current experiment is **ethics_gpu_target_free_readout_v2**. Follow its prospective
+The completed experiment **ethics_gpu_target_free_readout_v2** followed its prospective
 [protocol](changelog/2026-10-21-error-aware-readout-v2-plan.md) and actual process/artifact
 state in STATE.md. It measures all 100 beliefs on all five models at three sampling
 seeds: 15 jobs, 25,320 calls. Collect the fixed schedule regardless of performance
@@ -52,6 +53,15 @@ retention despite2stable nonthinking losses; old strict mask stillunusable. See
 still gets all100frozen belief evaluations, including failures. Current state/commands
 remain STATE.md. Do not select training on desired ethical outcomes or claim old gates
 passed. The balanced/complementary-position design remains a later proposal.
+
+Current collection audit: a qualified full100reading can inherit a legacy control
+gate that skips natural calls while returning exit0. The live bound worker stays
+unchanged. Mechanical reporting now verifies actual expected/recorded/valid counts;
+COLLECTION_COMPLETED alone is insufficient. A prospective completion amendment permits
+one new collect-all reading for BOTH new models only if either original grid omitted
+calls. It never triggers on invalid answers, control scores or ethical direction.
+No further repeat-until-pass. See2026-10-22-collect-all-completion-amendment.md; register/
+freeze/save fresh IDs before any follow-up, after the bound live worker terminates.
 
 ## Latest completed pilot
 

@@ -78,23 +78,37 @@ Finite training/controller implemented,124targeted tests pass. Training executio
 ## Live training / next observation
 
 sft-drift-replay-weight-ablation-v1 RUNNING PID114336at launch, sourcedf32125.
-First child:ethics_sft_c4_norm1_v1. Command:
+First child:ethics_sft_c4_norm1_v1; last observed step302/454, finite losses/gradients. Command:
 /workspace/sft-drift/belief-transfer/.venv/bin/python -u scripts/run_replay_weight_ablation.py
-Log:/workspace/sft-drift-ops/replay-weight-ablation-v1.log. No checkpoint yet at launch.
+Log:/workspace/sft-drift-ops/replay-weight-ablation-v1.log. Midpoint227completed and copied:
+12files/418,244,396bytes verified, including8checkpoint files and static preprocessing.
+Actual CUDA tokenized input/labels equal original after stripping weight metadata.
+Receipt:master results/midpoint_copy_norm1_v1.json. Final still required; no resume.
 Existing RTX3090 only; autostart/autorestart false, child shared CUDA lock. No resume/
 overwrite. Do not change/pull bound GPU source or destroy box while live.
 The fixed worker proceeds norm1→confirmation→all100→weight32→confirmation→all100.
-It requires engineering checks and exact actual objective/tokenized-input equality;
-retention/qualification failures do not suppress all100collection. Technical errors
-stop/preserve. Final-only; no outcome selection or automatic further weight/LR search.
+It requires engineering checks and exact actual objective/tokenized-input equality.
+Caveat: qualified route inherits legacy skip policy; a fresh full-run control failure
+can omit natural calls despite exit0/COLLECTION_COMPLETED. Do not trust that marker
+for all100coverage. Unqualified route collects. Technical errors stop/preserve. Final-only; no outcome selection or automatic further weight/LR search.
 
 Next observation:
 ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-replay-weight-ablation-v1; tail -20 /workspace/sft-drift-ops/replay-weight-ablation-v1.log'
 Copy completed checkpoint/results at safe boundaries. After each final, independently
 verify dose/adapter/retention/all100coverage; after both, fully read every new failure/
 unscorable/lost-value reply and compare fixed arms. Goal NOT complete. No expansion.
-Stable launch metadata copied locally; live training artifacts remain GPU-only until
-completed boundaries. Training process cannot survive box destruction or resume by ID.
+Static launch/preprocessing/midpoint227copied locally; live audit/log/final remain
+GPU-only until completed boundaries. Training cannot resume by rerunning its ID.
+
+New local-only mechanical report checks exact paired values/unknowns, reconstructs
+frozen full100summaries and emits CONTROL_GATE_SKIPPED_NATURAL/MISSING_NATURAL_RESPONSES/
+INVALID_NATURAL_RESPONSES.25targeted tests pass; not deployed into bound live source.
+Prospective amendment:changelog/2026-10-22-collect-all-completion-amendment.md. If either
+original grid omitted calls, ONE new collect-all reading for BOTH models under fresh
+completegrid_s42_v1IDs. Trigger on absent calls only, never invalid answers/control
+performance/ethical scores. If both recorded2400, no extra calls. Register/freeze/save
+follow-up only after live worker terminates; no midrun source change. Implementation
+of that conditional follow-up still needed if triggered. Retention thresholds unchanged.
 
 ## Prior completed evidence
 
@@ -108,12 +122,12 @@ Original neutral18/20gate remains failed; no retrospective pass from these diagn
 
 ## Preservation
 
-Verified snapshot6b205ab254a391d2ab85df211fe445bb08491c99 at
-codedf32125e22850d005bd0ca9df7e2a4897c40a656:5,891files/16,171,355,812bytes;
-corpus2dc601cdae3103f6866a728d94cb2b26ac7291a7. Includes full768-call reference,88full
-reviews, matched inputs/plans, independent bank and1,048training execution bindings.
-Current training launch metadata/notes await this block's save. From belief-transfer/:
+Verified snapshot9645f127785aa2f1afbab3d47b0f09016d3d85fe at
+coded2b697d1d68da41ea79bc6f87a5b67aa5116c6b9:5,896files/16,171,613,374bytes;
+corpus2917a863ec29f3d1472fbc836dad41eacb209834. Covers complete references/plans and
+training launch metadata. New midpoint227/preprocessing copy, report code, tests and
+prospective collection amendment await this block's save. From belief-transfer/:
 uv run --no-sync python scripts/handoff.py save
-No local source/data mutation during save. Live training outputs not yet backed up.
+No local source/data mutation during save. Live training audit/log/final not backed up.
 Candidatev5 remains20,000documents/221repairs; conservation subjects quarantined,
 full-bank semantic clearance false. No new corpus/full100training launched.
