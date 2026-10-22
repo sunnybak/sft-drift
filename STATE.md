@@ -18,7 +18,7 @@ Recovery supervisor sft-drift-base-reasoning-recovery-v1 RUNNING PID132392, obse
 20:51:17UTC, now collecting full100midpoint after diagnostics. GPUcheckout e2b25f62d30a1b949f2b7c8b2ace3c9e002a1110
 pinned during new worker; no new training. Original supervisor remains EXITED.
 Final procedural check now FAILS: one4096-token reasoning loop/no final; seven flags
-fully agent-read, no scorer disagreement. Final factual/full100collection still live.
+fully agent-read, no scorer disagreement. Final factual collection closed; original qualification/full100 schedule still live.
 Finish already scheduled collection/review/preservation, then PAUSE goal per user;
 no confirmation, further tuning or expansion. No further training queued.
 
@@ -72,7 +72,14 @@ Final retention CLOSED:62/63knownthinking,56/57short; reasoning completion fails
 4096-token subtraction loop. All7flags fully read; one additional uppercase error is
 outside BASE-known set. Source truth_proof.b metadata differs on subtraction, but
 prompt2398-1147andexpected1251are correct; not a scoring explanation. New annotations
-and midpoint full measurement local; awaiting next snapshot. Final decisions now live.
+and midpoint full measurement local; awaiting next snapshot. All final384diagnostics CLOSED/reconstructed/copied:170files/166new. Final factual
+reasoning32/31/32/32and short32/30/21/22 across seen_train/seen_eval/held_train/held_eval.
+Held/eval BASE-known32/32thinking,17/24short FAILS. All256strict/complete. All24factual
+flags+16preselected proofs fully read, no scorer disagreements; one sampled proof has
+self-corrected intermediate585→285.47finaldiagnostic pairs reviewed total. Five runtime
+configs now local/tracked. Final development32controls correct; validation/full100 live.
+Full report changelog/2026-10-22-base-reasoning-final-results.md is explicit partial
+collection, definitive diagnostic rejection. No independent confirmation or new training.
 
 Prepared BASEreasoning intervention changes32source targets/96draws; other3529chunks
 unchanged.3246draws/3625chunks/454steps/settings/seedfixed, longer thinking+28704tokens.
@@ -116,7 +123,7 @@ Exact next action:SSH -p58689 root@38.49.42.46; supervisorctl status
 sft-drift-base-reasoning-recovery-v1 and tail that log. Watch for midpoint/comparison_v1.json
 or TERMINAL under data/results/ethical_pilot/ethics_gpu_base_reasoning_recovery_v1.
 Copy/hash completed child/point outputs and dynamic runtime YAMLs at next safe boundary;
-closed midpoint full measurement local+GPU; live final outputs only onGPU. Launchreceipt local, to join next
+closed midpoint full measurement and final384diagnostics local+GPU; live final qualification/full100 outputs only onGPU. Launchreceipt local, to join next
 closed measurement snapshot. Finish same midpoint/final/full100grid even if scientific
 checks fail; review final-primary result. If negative pause goal and recommend; no more SFT.
 If positive, independent confirmation still needs reviewed/private verdict and updated
@@ -125,15 +132,14 @@ Details:changelog/2026-10-22-base-reasoning-collector-recovery-plan.md.
 
 ## Preservation
 
-Latest VERIFIED snapshot1105eea5a4e324097148c118e40b74f854a08fa8
-at a17648eedd2886481d8ca067586aaee9aa5b0885:7374files/21,244,441,721bytes.
-Includes training/checkpoints, failed original collector, recovery launch and384midpoint
-diagnostics plus75manual reviews. Save log /tmp/sft-drift-handoff-current.log ends verifiedtrue.
-Earlier save33517handle disappeared without new receipt; successor79200completed/verified.
-Closed midpoint full measurement216files/50new and3surface+7finalretentionreviews added
-locally after this snapshot; next private save required. Final collection live onGPU;
-do not destroy box. GPUsource e2b25f6 remains pinned, no live worker source mutation.
-Save after source push:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+Latest VERIFIED snapshot d7f4f38748aa5e292fef5f92a5ede02823b37110
+at 2b3e19d829f3b14395c3d9f6adca3feb899b9bdd:7436files/21,278,003,976bytes.
+Includes full closed midpoint measurement,3surface reviews,7finalprocedural reviews
+and their raw input. Save40785complete, /tmp/sft-drift-handoff-boundary.log verifiedtrue.
+Final384diagnostics/40factual reviews/5runtimeconfigs added after that snapshot; preserve
+next. Final full100/qualification live onGPU; do not destroy box. GPUsource e2b25f6 stays
+pinned. Latest code/notes must be pushed before next private save.
+Save:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
 Keep same process through HF429waits; no local mutation during save; check receipt.
 
 ## Other fixed study limits

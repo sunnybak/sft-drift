@@ -1,0 +1,13 @@
+# @package _global_
+defaults:
+- ethics_gpu_retention_rca_base_v2
+run_id: ethics_gpu_base_reasoning_final_decisions_seen_train_v1
+pilot_bench:
+  adapter_path: data/checkpoints/ethical_stance_sft/ethics_sft_c4_base_reasoning_replay_v1/final
+stage: neutral_decision_retention
+instruction_retention: null
+neutral_decision_retention:
+  model_label: final
+  bank_path: data/generated/ethical_pilot/ethics_gpu_replay_interface_rca_v1/seen_train.jsonl
+  bank_sha256: 1b8cee70d3c6e7e4eff617e82602c1a0e17ede84f6ac1cee7259431bf109d7ad
+  adapter_sha256: cb50440ec4e907c493986449c428c380cd1a2b6871e5975fff5be4546e0aac5c

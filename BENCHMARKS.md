@@ -3,6 +3,20 @@
 Scope: [GOAL.md](GOAL.md). Progress and exact next commands: [STATE.md](STATE.md).
 Read the baseline report for methodology/results; do not reconstruct the old research queue.
 
+## Current fixed trial — final diagnostic rejection, collection closing
+
+Full BASE-reasoning replay trained successfully, but the fixed final checkpoint fails:
+held/evaluation factual retention 17/24 BASE-known short answers versus required 23/24;
+reasoning 32/32. All 256 factual finals parse strictly and stop normally. Procedural
+thinking has a 4096-token loop/no final despite 62/63 numeric known retention; short
+56/57. All 7 procedural and 24 factual flags plus 16 preselected proofs fully read,
+no scoring disagreements. Seen/training factual scores 32/32 in both modes demonstrate
+learning of seen examples, not the required transfer/retention. Full100 collection is
+still running; this rejection cannot be rescued by stance effects or midpoint choice.
+User requested stopping on a decisive negative: finish the already scheduled collection,
+review/preserve it, then pause the goal. No more tuning, confirmation or expansion.
+[Reviewed diagnostic report](changelog/2026-10-22-base-reasoning-final-results.md).
+
 ## Latest diagnostic — complete, no qualified recipe
 
 Fixed-model2×2RCA completed576new+192reused responses; all768runtime/native records
