@@ -1,0 +1,13 @@
+# @package _global_
+defaults:
+- ethics_gpu_retention_rca_base_v2
+run_id: ethics_gpu_replay_coverage_candidate_decisions_v5
+pilot_bench:
+  adapter_path: data/checkpoints/ethical_stance_sft/ethics_sft_c4_replay_coverage_v5/final
+stage: neutral_decision_retention
+instruction_retention: null
+neutral_decision_retention:
+  model_label: candidate
+  bank_path: data/generated/ethical_pilot/ethics_gpu_replay_coverage_decision_bank_v4/bank.jsonl
+  bank_sha256: 68394366d1589d2758918ac6ab9be3b1cae9b487c53a2dad9976d9a281d18cea
+  adapter_sha256: dbba2d8f070931e030a9671da38783953acfe64af71d66a79db5977ed3119b6b

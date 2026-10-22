@@ -6,30 +6,42 @@ Goal ACTIVE:resolve measurement errors and genuine SFT regressions before extend
 ethical training. Existing VastRTX3090 authorized; no new rental or Mac training.
 No full90/100beliefSFT has run. Original10-target/four-arm pilot completed earlier.
 
-RUNNING:supervisor sft-drift-replay-coverage-value-v5, PID123603, source9066e9170be3c1627e0b3c587d80b1d609a80cba
-pinned on GPU. Master ethics_sft_replay_coverage_value_v5; train
-ethics_sft_c4_replay_coverage_v5. Reference reconstruction passed; RUN train observed.
+RUNNING:supervisor sft-drift-replay-coverage-value-v5, PID123603; GPU source
+9066e9170be3c1627e0b3c587d80b1d609a80cba pinned. Training454/454 COMPLETE, all12
+engineering checks pass. Final/227/454 and closed training outputs copied/hash-verified
+locally:39files/961,687,200bytes(total includes already saved227). Finite worker now
+collecting all100beliefs:latest1024/2400recorded. No restart/resume or source pull.
+Master ethics_sft_replay_coverage_value_v5; train ethics_sft_c4_replay_coverage_v5.
 Command:cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_replay_value_probe.py
 Log:/workspace/sft-drift-ops/replay-coverage-value-v5.log
-Supervisor autostart/autorestart false; finite worker, NO resume/overwrite by startedID.
-Latest observed step440/454; training still running, no
-reported failure. Checkpoint227 COMPLETE and copied/hash-verified locally:8files,
-396,924,327bytes. Before/after remote inventories and local bytes match. Copy receipt:
-data/generated/ethical_stance_sft/ethics_sft_replay_coverage_value_v5/checkpoint227_copy_v1.json
-Local checkpoint:data/checkpoints/ethical_stance_sft/ethics_sft_c4_replay_coverage_v5/checkpoint-227
-This is a safety backup, not an evaluated/selected checkpoint or a resumable worker.
-Conditional independent-input confirmation predeclared BEFORE candidate outcomes in
-changelog/2026-10-22-replay-coverage-independent-confirmation-plan.md; only triggered
-if v5passes all reviewed criteria. No new model calls/training from that plan.
-Current launch observation/closed log excerpt:
-data/generated/ethical_stance_sft/ethics_sft_replay_coverage_value_v5/deployment_and_launch_v1.json
-Do not pull source into the running GPU checkout or change bound files.
+
+V5fails declared performance gates; NOT a tuned/qualified pipeline. Procedural known
+thinking62/63(one4096tokenrepetition loop), short56/57(one new negation error, different
+from oldcontrol's uppercase loss). Decisions27/32thinking versusBASE/control32/32;
+short20/32overall,15/24BASE-known versuscontrol16/24. All64decision finals exact/normal,
+so17wrong values are genuine, not parser misses. Original development32/32passes;
+validation31/32butnote-flip1/16fails. Full100continues under unqualified label.
+All23assay flags and the one failed validation reply fully read/hash-bound. Entire
+4096tokenloop read; it repeats9-4=5without completing reasoning/final. No grade conflicts.
+
+Actual decision training-prefix/target audit192draws/64sources:0mismatches, correct
+weights(96short×32,96thinking×1), exactEOS. All64gold request/target pairs fully agent-read,
+no clear semantic defect. Generated thinking median293→43.5tokens; goldtargetmedian45.
+Shortcut/style transfer is a hypothesis, not proven mechanism. Do not start anotherSFT.
+Prospective diagnostic:changelog/2026-10-22-replay-interface-rca-plan.md (2×2 seen/held
+facts×wording, fixed3models;576new calls, no retraining). Implement only after current
+worker ends and reviewed artifacts are safe. Conditional independent confirmation is
+NOT triggered becausev5failed; do not use it to rescue this candidate.
 
 Exact next monitor:
 ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-replay-coverage-value-v5; tail -n 20 /workspace/sft-drift-ops/replay-coverage-value-v5.log'
-Poll the existing process, not restart. Copy/hash-verify completed checkpoint227/final
-and closed outputs at safe boundaries. Local artifact snapshots do not save live GPU
-outputs automatically. A process/checkpoint on this box does not survive destruction.
+After TERMINAL+COLLECTION_COMPLETED:copy/hash-verify closed master/full100outputs and
+runtime configs, then run locally from belief-transfer:
+uv run --no-sync python scripts/analyze_replay_value_probe.py
+Analyzer46focused tests pass; no weights/local training. Reconstructs192candidate
+assay and all full100/control token/seed/native records, initial adapter/LR/projection.
+Full100failures/review/report remain pending. A process/checkpoint does not survive box
+destruction; current worker has NO resume support despite saved optimizer state.
 
 ## Current scientific comparison
 
@@ -64,26 +76,17 @@ No automatic expansion, checkpoint selection on stance, or repeat-until-pass.
 
 ## Preservation
 
-VERIFIED private inputs/review snapshot3de13bea83d29bab93ec41458da95649aeb09575 at9066e91:
-6614files/19,247,343,882bytes. Corpus8435cf0ad95514c56b8e3679716161bb6ca4bce0;
-manifest56d14ee81efeb7fcf3a7229ae3a6c8a7caced7fd3bc260a2c2e79c001d27fa49.
-Covers all v4raw refs,62review,384audit,value-v2derivations,v5inputs/code/plan.
-Verified receipt deployed toGPU before start; prior receipt backed up off-repo.
-139data files/31,387,108bytes verified at deployment,25new copied without overwrites.
-Launch receipt/notes now VERIFIED in snapshot1db540a34fd8646e420d387250e73d6a4a12c067
-at2f413ba:6616files/19,247,350,022bytes; corpusb3dcaa49b0ecaf2dd168e72d32aa6706891f7aea.
-Checkpoint227/conditional plan/notes VERIFIED in private snapshot
-f7aa1f63d2b6df50194266cb2f70d2510de1a962 at7d84a6c:6626files/19,644,280,742bytes;
-corpus3699d97c07df3f561ce87bbf24fdb99324d28d16 verified. Current live training log,
-remaining checkpoints and final outputs only onGPU. No candidate performance results yet.
-New offline analyzer scripts/analyze_replay_value_probe.py reconstructs training binding,
-paired value/format comparisons and all full100/control token/seed/reply metadata;
-46focused tests pass. Run only after COLLECTION_COMPLETED+TERMINAL and closed output copy.
-Analysis source is separate from pinned GPU9066e91; do not pull into running worker. Source adoption preserved identical old runtimeYAML in
-/workspace/sft-drift-ops/preserved-runtime-configs/before-replay-value-v5/.
+Latest VERIFIED private snapshotf7aa1f63d2b6df50194266cb2f70d2510de1a962 at7d84a6c:
+6626files/19,644,280,742bytes; corpus3699d97c07df3f561ce87bbf24fdb99324d28d16.
+Includes checkpoint227, all prepared inputs/ref review/launch/conditional-confirm plan.
+New closed training copy(39files/961,687,200bytes), assays/dev/val(82files/4,106,172bytes),
+actualprefixaudit192, all64goldreview,23assay+1validation full reviews and newRCAplan
+are local offGPU but pending the next private save. Copy receipts under generated
+ethical_stance_sft/ethics_sft_replay_coverage_value_v5. Current unfinished full100/raw
+worker log still only onGPU; do not copy live append streams. No source pull on GPU.
 Save command:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
 No local mutations/copies/tests during save; retain handles acrossHF429waits.
-Never claim box destruction safe while new checkpoints/results remain only onGPU.
+Never claim box destruction safe while new results remain only onGPU.
 
 ## Established results and data limits
 
