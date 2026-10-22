@@ -1,0 +1,27 @@
+import {existsSync,readFileSync,writeFileSync,renameSync,statSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+import {join} from 'node:path';
+import {targetFreeReadoutReport} from './target-free-readout-report.ts';
+import {validateReport} from '../server/validate-report.ts';
+import {addReportDiagnostics} from '../src/diagnostics.ts';
+const project=fileURLToPath(new URL('../../belief-transfer/',import.meta.url));
+const root='data/results/ethical_pilot/ethics_gpu_target_free_readout_v2';
+const analysisPath=root+'/analysis.json',reviewPath=root+'/reviewed_assessment.json';
+if(!existsSync(join(project,analysisPath))||!existsSync(join(project,reviewPath))){console.log('Target-free readout or its full review is incomplete; no partial dashboard report published.');process.exit(0);}
+const read=(p:string)=>JSON.parse(readFileSync(join(project,p),'utf8'));
+const source=(path:string)=>({path,sha256:createHash('sha256').update(readFileSync(join(project,path))).digest('hex')});
+const output='results/ethical_pilot/ethics_gpu_benchmark_dashboard_v1';
+if(!read('configs/handoff.json').include_paths.includes(output))throw Error('Unregistered dashboard output');
+const original='data/'+output+'/reports/ethical-pilot-three-seed.json';
+const cells=root+'/per_belief_results.jsonl',bank='data/generated/ethical_pilot/ethics_gpu_target_free_readout_v2/stance_bank.jsonl';
+const review=read(reviewPath);
+if(review.analysis_sha256!==source(analysisPath).sha256)throw Error('Reviewed assessment belongs to different analysis bytes');
+for(const s of review.sources??[])if(source(s.path).sha256!==s.sha256)throw Error('Reviewed source changed: '+s.path);
+if(!Array.isArray(review.sources)||!review.sources.length)throw Error('Reviewed source bindings required');
+const beliefs=Object.fromEntries(readFileSync(join(project,bank),'utf8').trim().split('\n').map(l=>JSON.parse(l)).filter(r=>r.wording_id==='w0'&&r.arrangement===0).map(r=>[r.belief_id,{statement:r.statement,scope:r.scope}]));
+const report=targetFreeReadoutReport(read(original),read(analysisPath),readFileSync(join(project,cells),'utf8').trim().split('\n').map(l=>JSON.parse(l)),review,beliefs,[analysisPath,reviewPath,cells,bank,original].map(source),new Date(statSync(join(project,analysisPath)).mtimeMs).toISOString());
+addReportDiagnostics(report);const checked=validateReport(report);if(!checked.report)throw Error(checked.errors.join('; '));
+const destination=join(project,'data',output,'reports',report.id+'.json');
+writeFileSync(destination+'.tmp',JSON.stringify(report,null,2)+'\n');renameSync(destination+'.tmp',destination);
+console.log('Derived '+report.id);

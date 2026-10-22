@@ -5,42 +5,34 @@ Read the baseline report for methodology/results; do not reconstruct the old res
 
 ## Current authorized investigation
 
-User authorizes resolving measurement errors and tuning the pilot before expansion.
-Follow changelog/2026-10-21-error-rca-plan.md: preserved failure audit, matched five-model
-nonthinking controls, HF/vLLM parity, then evidence-driven instrument/training decisions.
-The backend and response-vocabulary diagnostics are complete and did not qualify
-BASE. Fixed-retention repeats are complete: smallrepeatable losses coexist with full-bank
-performance gains; see changelog/2026-10-21-retention-rca-results.md. No newknownmask
-or alteredoldgates. Scoped-comprehension controls are complete: all five models pass both fresh splits;
-see changelog/2026-10-21-scope-control-results.md. This is not arithmetic clearance.
-Forward readout ethics_gpu_scoped_readout_v1 is COMPLETE: all5models,11,999/12,000
-valid natural answers, all500belief/model rows retained; terminal copy verified.
-See changelog/2026-10-21-scoped-readout-results.md. Negative ethical negation remains
-unstable beyond same-prompt variability; scoped eligibility alone is insufficient
-to call the pilot tuned. Prospective interface diagnostic is COMPLETE:
-changelog/2026-10-21-interface-controls-results.md. All five current/paired forms
-384/384correct; reminder failsBASE/negative/off-topic and its unconditional negation
-wording induces target confusion. All predefined paired checks pass, but ceiling
-on stipulated references does not establish superiority or stable unstipulated views.
-The separate paired readout was STOPPED after completed BASEshowed59.333%target-line
-pair agreement and two wrong valid arithmetic finals. Six fully read replies expose
-Target-statement-as-answer-key interpretation. This is an explicit unplanned protocol
-deviation; original falsifier/gates stay unchanged. Positive1,024partial replies
-preserved, no complete treatment contrast. See2026-10-21-paired-readout-stop.md.
-Target-free thinking controls reached planned BASE stop:190/192development and192/192validation correct, one wrong final and one4096token loop; no adapters called. See2026-10-21-target-free-controls-results.md. Next paired thinking-mode diagnostic collects all five fixed models in both modes, fresh references and identical other settings, regardless of performance failures. See2026-10-21-target-free-modes-plan.md and STATE.md for actual execution.
-Paired mode diagnostic is now complete: thinking fresh383/384BASE/C4and384/384in
-positive/negative/offtopic; C4's one fresh token loop fails strict qualification.
-Nonthinking334–336/384and fails arithmetic for every model. Neither mode qualifies
-across all5; conditional target-free readout v1 remains blocked/unlaunched. See
-2026-10-21-target-free-modes-results.md. Presence1.5pilot is now complete: all5fresh gates pass, but C4has another capped
-stress reply; practical fix fails. Do not adopt it or launchv1. See2026-10-21-presence-
-controls-results.md. Next is a separately planned error-aware diagnostic readout v2,
-original sampler, richer fresh logical/scope checks and explicit missing-data precision
-budget. This does not requalify old failed benchmarks or certify model recovery.
-See2026-10-21-error-aware-readout-v2-plan.md; implementation remains pending.
-Keep old natural consistency as an outcome, never a training-selection threshold.
-No automatic100-subject expansion. New runs/instruments get fresh IDs; old gates and
-results remain unchanged. Do not select training on desired ethical drift.
+Resolve measurement errors and determine whether SFT caused capability losses before
+expanding training. The existing four final adapters and BASE are fixed. No new
+fine-tuning has run during the current error investigation. The user authorized
+continued work on the existing GPU overnight on October 22; no new rental is authorized.
+
+The current experiment is **ethics_gpu_target_free_readout_v2**. Follow its prospective
+[protocol](changelog/2026-10-21-error-aware-readout-v2-plan.md) and actual process/artifact
+state in STATE.md. It measures all 100 beliefs on all five models at three sampling
+seeds: 15 jobs, 25,320 calls. Collect the fixed schedule regardless of performance
+failures; stop technical identity failures. Missing answers, strict formatting,
+known-answer correctness and semantic review remain separate. The new error-budget
+assessment does not clear historical failed benchmarks. Choice frequencies are not
+confidence or moral accuracy; sampling repeats are not training replications.
+
+All 72 preselected natural replies have been read in full and matched to frozen
+selection/raw hashes. Review each subsequent failed control as jobs close. One clear
+natural final-letter/rationale mismatch and other scope/referent concerns remain;
+complete coverage is not semantic clearance. Backend parity and fixed retention
+investigations do not establish broad SFT-caused collapse. Some genuine narrow losses,
+arithmetic errors and reasoning loops coexist with ambiguous or overly literal checks.
+See the [current review](changelog/2026-10-22-readout-v2-two-seed-review.md).
+
+Finish the reviewed three-seed comparison and preserve it before deciding whether a
+further experiment is warranted. Do not automatically launch the optional scope-fact
+clarity diagnostic, another sampler search, training sweep or corpus expansion.
+The original pilot falsifier and historical scores remain unchanged. Do not select
+training settings for a desired ethical direction. Write a prospective plan for any
+subsequent experiment based on the completed evidence.
 
 ## Latest completed pilot
 
@@ -77,7 +69,12 @@ flip rate ≤.05. Natural ethical consistency is an outcome, **not a filtering t
 Semantic labels are provisional agent judgments; development references were reused and
 are not an untouched held-out test. See the report for these limits.
 
-## Ordered remaining work
+## Historical preparation — not the active work queue
+
+The steps below record the original preparation workflow. Training and several
+follow-up measurements have since completed. Their old pending/next statements do
+not authorize reruns or define the current next action; use STATE.md and the current
+investigation above. Preserve these definitions and original failure criteria.
 
 ### 1. Review the completed candidate bank before training
 

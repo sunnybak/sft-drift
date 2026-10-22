@@ -19,3 +19,12 @@ semantic description, conditions and at least one example (prefer two).
 
 Authored JSON report files here are versionable source inputs. Automatically derived
 study reports live under the private artifact tree instead. No model calls are made.
+
+The target-free three-seed pilot report is derived only after the v2 sweep and its
+raw-response review are complete. `generate-target-free-readout-report.ts` requires
+all five models, all three seeds, all 500 model/belief rows, and a hash-bound
+`reviewed_assessment.json`. Partial progress is never substituted for a completed
+report. This report measures canonical-position choices in a forced comparison;
+it does not measure moral accuracy, confidence, or independent endorsement.
+Model-check failures remain visible alongside measured choices. Fresh operational,
+strict-format and reused stress checks stay separate, with their numeric thresholds.
