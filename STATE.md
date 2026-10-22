@@ -48,21 +48,23 @@ correct. Exactly96thinking draws changed; other3529chunks byte-identical atsamei
 3246draws/3625chunks/454steps/settings/seedunchanged. Thinking targets+28704tokens,
 rawtotal1277464/weighted1351120/input1411998; normalization projected, not token matched.
 
-Independent bank ethics_gpu_base_reasoning_confirmation_v1 prepared512presentations,
-no calls, launch_allowed=false. Preflight compatibility issue found: legacy procedural
-value-v1 expects proof.b+200 as actual minuend for worked subtraction; v1metadata used
-actual minuend directly. Marked VOID.md, no bytes overwritten. Bare integer scoring
-unaffected but worked equations could be false negatives. Next:versioned v2metadatafix
-with identical prompts/answers/seeds/token IDs; retainv1source in Git before edit.
-Focused preparation tests35passed; add a worked-equation compatibility test before
-freezingv2. All response-generation/training jobs remain unstarted; GPUidle.
+Independent bank ethics_gpu_base_reasoning_confirmation_v1 is VOID/uncalled:legacy
+worked-equation proof.b offset mismatch, sourceproducer preserved atGite6333a2.
+Active v2 fixes only proof metadata; all512prompts/labels/seeds/tokenIDs identical to
+uncalledv1. All512actual requests independently solved; no overlap/resampling, complete
+family/mode/factorial coverage. Two128procedural +four64decision parts reuse existing
+stages; maximum1536calls/3models. All67source bindings match; no calls/outcomes.
+Confirmation protocol/teacher data_freeze_v1.json retain launch_allowed=false.
+94focused preparation/document/loss/handoff/import tests pass. All32final targets reviewed,
+including once-compressed31; source17/29self-corrections intentionally retained.
 
 Then implement/test/freeze candidate and independent-confirmation workers, preserve
 inputs, GPUpreflight and onlythen launch one fresh candidate. Newrecipe and original
 v5falsifiers unchanged. Independent confirmation must be frozen before outcomes.
 Exact current reference:cat changelog/2026-10-22-replay-base-reasoning-plan.md
 Newpreparation entry points:belief-transfer/scripts/prepare_base_reasoning_replay.py
-(already run, do NOT overwrite) and prepare_base_reasoning_confirmation.py(v1void).
+and prepare_base_reasoning_confirmation.py(both completed; DO NOT overwrite).
+Detailed block:changelog/2026-10-22-base-reasoning-preparation.md.
 No automatic ethical/full-bank training, rental or new training seeds.
 
 ## Preservation
@@ -71,8 +73,9 @@ Latest VERIFIED snapshot1369736673de6fba9ca79446aa9d23245aef0482 at605cbe1:
 7066files/20,259,339,563bytes; corpus31f0fe6011d5aeeb7d1e07c6da14d296189a4c71.
 Includes entire terminal RCA(all9children/log),160reviews,mechanical/v3assessments,
 final report/parser source/tests and next intervention plan. No RCAresult only onGPU/local.
-Subsequent32teacher-source review annotations are local offGPU, pending next prepared-data
-snapshot; all their raw sources already private. No new data pool/config/training yet.
+Subsequent32teacher reviews, prepared32targets/trainingmanifest/config/dose audit and
+confirmationv1VOID/v2fixed banks are local offGPU, pending this prepared-data snapshot.
+All original raw teacher sources already private. No new model calls/training yet.
 Source/notes committed/pushed; subsequent notes record verified receipt and teacher review.
 Exact save at next preparation boundary:
 cd belief-transfer && uv run --no-sync python scripts/handoff.py save

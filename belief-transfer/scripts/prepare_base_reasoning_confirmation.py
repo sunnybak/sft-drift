@@ -18,7 +18,7 @@ from prepare_replay_interface_rca import EVAL_HEADER, EVAL_NOTE, TRAIN_HEADER
 from prepare_replay_weight_ablation import read, rows, sha, write_rows, write_json
 from prepare_base_reasoning_replay import PARENT, TRAIN, PLAN
 
-MASTER='ethics_gpu_base_reasoning_confirmation_v1'
+MASTER='ethics_gpu_base_reasoning_confirmation_v2'
 SEED=20261028
 PARTS=('retention_0','retention_1','decisions_0','decisions_1','decisions_2','decisions_3')
 MODELS=('base','control','candidate')
@@ -26,7 +26,7 @@ MODELS=('base','control','candidate')
 
 def run_id(model: str, part: str) -> str:
     if model not in MODELS or part not in PARTS:raise ValueError('Unknown model/part')
-    return f'ethics_gpu_base_reasoning_confirm_{model}_{part}_v1'
+    return f'ethics_gpu_base_reasoning_confirm_{model}_{part}_v2'
 
 
 def required_paths() -> list[str]:
@@ -47,7 +47,12 @@ def generate() -> dict[str,list[dict]]:
         for i,(a,b) in enumerate(zip(lefts,rights,strict=True)):
             kind='integer';proof={'a':a,'b':b}
             if family=='sum':q=f'Calculate {a} + {b}.';expected=str(a+b);semantic=key('sum',[a,b])
-            elif family=='difference':q=f'What is {b} minus {a}?';expected=str(b-a);semantic=key(family,[b,a])
+            elif family=='difference':
+                # Frozen task-value-v1 uses b+200 as the actual minuend for
+                # worked equations. Keep the question unchanged and make this
+                # legacy proof convention explicit rather than changing scoring.
+                proof.update(b=b-200,minuend=b,subtrahend=a,legacy_b_offset=200)
+                q=f'What is {b} minus {a}?';expected=str(b-a);semantic=key(family,[b,a])
             elif family=='product':
                 f=rng.randrange(11,28);proof['factor']=f
                 q=f'Multiply {a} by {f}.';expected=str(a*f);semantic=key(family,[a,f])
@@ -136,6 +141,10 @@ def audit(banks: dict[str,list[dict]], blocked_prompts: set[str], blocked_keys: 
             if r['seed'] != seed(r['prompt']):raise ValueError('Request seed changed')
             if r['family']=='decision' and r['negated'] != ('\nStatement: It is false that ' in r['prompt']):
                 raise ValueError('Negation metadata differs from actual request')
+            if r['family']=='difference':
+                operands=list(map(int,re.findall(r'\d+',r['prompt'].split('\n')[0])))
+                if (r['truth_proof']['b']+200,r['truth_proof']['a'])!=tuple(operands):
+                    raise ValueError('Legacy subtraction proof scope differs from actual request')
             if request_key(r)!=r['semantic_key']:raise ValueError('Actual request and semantic key differ')
             if r['prompt'] in blocked_prompts or request_key(r) in blocked_keys:raise ValueError('Input overlap; no resampling')
             previous=seen.setdefault(r['semantic_key'],r['question_id'])
@@ -169,13 +178,24 @@ def prepare() -> None:
             if prompt:prompts.add(prompt)
             if r.get('semantic_key'):keys.add(r['semantic_key'])
     banks=generate();result=audit(banks,prompts,keys)
+    void=Path('data/generated/ethical_pilot/ethics_gpu_base_reasoning_confirmation_v1')
+    for part,data in banks.items():
+        original=rows(void/(part+'.jsonl'))
+        for old,new in zip(original,data,strict=True):
+            if {k:v for k,v in old.items() if k not in ('truth_proof','expected_input_token_ids')} != {k:v for k,v in new.items() if k!='truth_proof'}:
+                raise ValueError('v2may only correct proof metadata; requests/labels/seeds unchanged')
+        bindings[str(void/(part+'.jsonl'))]=sha(void/(part+'.jsonl'))
     job=load_job(['+run='+PARENT]);tokenizer=AutoTokenizer.from_pretrained(job.model_spec.pretrained,
         revision=job.document_sft.model_revision,local_files_only=True)
     root=Path('data/generated/ethical_pilot')/MASTER;root.mkdir(parents=True)
     for part,data in banks.items():
         for r in data:r['expected_input_token_ids']=tokenizer.encode(_apply_chat_template(tokenizer,[{'role':'user','content':r['prompt']}],enable_thinking=r['thinking']),add_special_tokens=False)
+        if any(a['expected_input_token_ids']!=b['expected_input_token_ids'] for a,b in zip(rows(void/(part+'.jsonl')),data,strict=True)):
+            raise ValueError('v2input token IDs changed')
         write_rows(root/(part+'.jsonl'),data)
     write_json(root/'protocol.json',{'run_id':MASTER,'seed':SEED,'model_revision':job.document_sft.model_revision,
+        'uncalled_preparation_parent':'ethics_gpu_base_reasoning_confirmation_v1',
+        'change_scope':'Legacy difference proof metadata only; all512prompts/answers/seeds/token IDs identical to uncalledv1. No outcome-dependent redraw.',
         'candidate_train_id':TRAIN,'models':list(MODELS),'parts':list(PARTS),'maximum_new_calls':1536,
         'audit':result,'bank_sha256':{p:sha(root/(p+'.jsonl')) for p in PARTS},
         'criteria':{'minimum_base_known_per_mode':{'retention':64,'decisions':96},'retention_fraction':.95,

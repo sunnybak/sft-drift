@@ -10,8 +10,11 @@ all768records reconstruct,160new flags fully read. Opt-in decision task-value-v3
 four Markdown terminals; no frozen ethical/native/v2score changes. Entry points:
 prepare_replay_interface_rca.py, run_replay_interface_rca.py, analyze_replay_interface_rca.py,
 assess_replay_interface_v3.py. Existing IDs cannot restart. Next prospective teacher-response
-intervention:../changelog/2026-10-22-replay-base-reasoning-plan.md; no new preparation or
-training started. Register/freeze/review before launch. Statements below are history.
+intervention:../changelog/2026-10-22-replay-base-reasoning-plan.md; teacher data/train config and independent
+confirmationv2banks prepared;v1VOIDuncalled. No new training. Entry points:
+prepare_base_reasoning_replay.py and prepare_base_reasoning_confirmation.py(completed,
+no overwrite). Execution/criteria workers still pending; preparation launch_allowed=false.
+Register/freeze/review/private-save/GPUpreflight before launch. Statements below are history.
 
 STATE.md controls execution. V4references are complete/reviewed and its native
 supplementary reference guard remains failed. New prospective value-separated master

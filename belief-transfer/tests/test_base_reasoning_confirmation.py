@@ -7,6 +7,7 @@ import pytest
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 from prepare_base_reasoning_confirmation import generate,audit,request_key,PARTS
+from belief_transfer.evals.retention_value import assess_value
 
 
 def test_deterministic_full_independent_grid_with_native_stage_sized_partitions():
@@ -37,3 +38,19 @@ def test_malformed_or_mislabeled_confirmation_rejected(defect):
     if defect=='operation':r['operation']='product'
     if defect=='variant':r['irrelevant_note']=not r['irrelevant_note']
     with pytest.raises(ValueError):audit(data,set(),set())
+
+
+def test_correct_worked_subtraction_is_compatible_with_frozen_value_v1():
+    data=generate()
+    for part in ('retention_0','retention_1'):
+        for r in data[part]:
+            if r['family']!='difference':continue
+            p=r['truth_proof'];answer=f'{p["minuend"]} - {p["subtrahend"]} = {r["expected"]}'
+            text='<think>\nCheck subtraction.\n</think>\n\n'+answer if r['thinking'] else answer
+            assert assess_value(text,r,normal_stop=True)['value_correct'] is True
+            invalid=copy.deepcopy(r);invalid['truth_proof']['b']=p['minuend']
+            assert assess_value(text,invalid,normal_stop=True)['diagnostic']=='INPUT_REWRITE'
+    bad=copy.deepcopy(data)
+    r=next(r for r in bad['retention_0'] if r['family']=='difference')
+    r['truth_proof']['b']=r['truth_proof']['minuend']
+    with pytest.raises(ValueError,match='Legacy subtraction'):audit(bad,set(),set())
