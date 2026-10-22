@@ -98,19 +98,26 @@ Model qualificationFAILED; validation not attempted. All100reading neverthelessC
 bank/decoder/backend equalCUDA BASE. Dataestimable, explicitlyUNQUALIFIED; no ethical-
 outcome selection. Report:changelog/2026-10-22-normalization-control-results.md.
 
-sft-drift-replay-weight-ablation-v1 RUNNING PID114336, original sourcedf32125.
-Current child:ethics_sft_c4_weight32_v1. Midpoint227completed; subsequentforward234
-verified before copy.11raw files/418,232,846bytes verified off-box; actual CUDA labels/
-inputs equaloriginal, replayweights exactly1/32. DerivedMDusescanonicalprojectpath,
-avoiding the observed finalization header-only re-render. No final/retention result yet.
-No sourcepull/change, restart or boxdestruction while bound worker live. No resume by ID.
-Log:/workspace/sft-drift-ops/replay-weight-ablation-v1.log.
+sft-drift-replay-weight-ablation-v1 RUNNING PID114336, sourcedf32125unchanged.
+Bothnewtrainingmodels COMPLETE. Weight32final/227/454/audit copied and independently
+hashed; all12engineering checks pass.384retention rows/token/runtime/value judgments
+reconstruct exactly;24queue replies fully read, allwrong, zero reviewdisagreements.
+Weight32knownthinking63/63andnonthinking57/59eachseed: no net gain vsnorm1/historicalC4.
+Norm1product recovered; newprogression1036,1057,1078→1100instead1099. Uppercase loss
+persists. Preset95%retentionpasses; this does not erase losses or imply qualification.
+Development30/32failed:2full replies read, same correct-reasoning/finalrejectmismatch
+asnorm1.26newhash-boundfullreviews saved.42retention/developmentfiles/3,461,076bytes
+copied/verified. Report:changelog/2026-10-22-weighted-replay-retention-results.md.
 
-Next observation:
+Livechild:ethics_gpu_replay_weight_weight32_unqualified_s42_v1, frozenall100reading.
+No sourcepull/change, restart or boxdestruction while boundworker live. No resume by ID.
+Log:/workspace/sft-drift-ops/replay-weight-ablation-v1.log.
+Nextobservation:
 ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-replay-weight-ablation-v1; tail -20 /workspace/sft-drift-ops/replay-weight-ablation-v1.log'
-Afterweight32final:verify/copy/privately preserve closed artifacts, then384retention/
-qualification/all100; fully read every failure/unscorable/lost-value reply, comparefixed
-arms. Do not pick settings onethicaloutcomes or infer completion from a marker alone.
+Afterterminal:verify/copyclosedfull100andmasteroutputs, reviewfailedcontrols, reconstruct
+scores/actualrowcoverage, run scripts/analyze_replay_weight_ablation.py. Do not pick
+settings onethicaloutcomes or infer completion from a marker alone. No furtherweight
+sweep or ethicalexpansion automatic; reassess completecomparison first.
 
 Conditional completion reader now IMPLEMENTED/32targeted tests pass, localonly:
 python scripts/complete_replay_weight_surface.py prepare
@@ -133,13 +140,12 @@ Original neutral18/20gate remains failed; no retrospective pass from these diagn
 
 ## Preservation
 
-Verified snapshot59951ab432b218259d578243a2520c002887c0b1 at
-code44b485da435570b26abf5eb6f9e40853368d49da:5,910files/16,589,863,480bytes;
-corpus57c6d88076daea18ba5321cf3021a84961bb0fe4. Covers prior evidence andnorm1midpoint.
-Current additions await save:complete norm1phase/28reviews, weight32midpoint/static
-preprocessing, completionreader/tests. Oldderived tokenizedMDarchived; finalversion
-changes onlydisplaypathheader, rawdataunchanged. Receipts underSFTmasterresults.
+Verified snapshot99c29152389a43d36d25e0dc648976598dd39ae9 at
+codeb3676815d081f4a4bd8aed6008ea14928fdd5cf9:6,042files/17,587,515,812bytes;
+corpusf27fe5ab236da89e26378e7fd3f8da353bb8204e. Covers prior evidence,norm1complete/
+28reviews,weight32midpoint,completioncode/tests. Newweight32final/retention/development/
+26reviews copiedlocally and awaitsave. Full100stilllive/GPU-only.
 From belief-transfer/: uv run --no-sync python scripts/handoff.py save
-No local source/data mutation during save. Liveweight32audit/log/final not backed up.
+No local source/data mutation during save. Stage does not support resume.
 Candidatev5 remains20,000documents/221repairs; conservation subjects quarantined,
 full-bank semantic clearance false. No new corpus/full100training launched.
