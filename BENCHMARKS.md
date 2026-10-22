@@ -7,11 +7,14 @@ Read the baseline report for methodology/results; do not reconstruct the old res
 
 Resolve measurement errors and determine whether SFT caused capability losses before
 expanding training. The existing four final adapters and BASE remain fixed references. The new matched
-C4norm1/weight32ablation is active. Norm1completed all12engineering checks,384retention
-calls and a complete2,400-response full100grid. Its modelqualification remains failed
-(30/32controls); primaryvalue retention passes despite2narrow losses. Weight32training
-is live with midpoint227copied. Matched recipe conclusions/ethical contrasts pending. The user authorized
-continued work on the existing GPU overnight on October 22; no new rental is authorized.
+C4norm1/weight32ablation is COMPLETE and reviewed:both12/12engineering checks,
+384retentioncalls/model and full100readings; bothretain57/59known short values and
+fail30/32originalcontrols. Weight32hasone4096-token loop/no-final(2399/2400valid),
+explicit bounds; no completionretry.57fullfailed/unscorable replies reviewed/hash-bound.
+No demonstrated weighting repair. See2026-10-22-replay-weight-comparison-results.md.
+Nextsinglelower-LRprobe is prospectivelyplanned(2.5e-5versus1e-4,othertrainingfixed),
+with freshRNG20261024confirmation. Preparationguards/tests implemented; finite worker
+stillneeded; no newpaths/inputs/calls yet. Existing GPUauthorizedovernight, no newrental.
 
 The completed experiment **ethics_gpu_target_free_readout_v2** followed its prospective
 [protocol](changelog/2026-10-21-error-aware-readout-v2-plan.md) and actual process/artifact
@@ -48,13 +51,11 @@ and primary falsifier remain unchanged; supplemental values are explicitly post-
 Defer balanced ethical expansion. Next implement/test separate value/format assessment
 and one preset replay-weight ablation on the affected C4control, with further independent
 confirmation before candidate selection. See2026-10-22-replay-weight-ablation-plan.md.
-Matched norm1/weight32C4candidates now prepared, not yet trained; CUDA loss proof and
-independent768-call reference plus88full reviews complete. Historical C4passes95%value
-retention despite2stable nonthinking losses; old strict mask stillunusable. See
-2026-10-22-replay-weight-reference-results.md and STATE for finite ablation. No automatic parameter search. Every new fine-tune
-still gets all100frozen belief evaluations, including failures. Current state/commands
-remain STATE.md. Do not select training on desired ethical outcomes or claim old gates
-passed. The balanced/complementary-position design remains a later proposal.
+Matched norm1/weight32C4candidates now finished and reviewed; see current comparison
+above and STATE. Historical C4andbothnewmodels pass95%value retention despite2stable
+nonthinking losses/model; no old gate changed. No automatic parameter search, scaling
+or ethical-outcome selection. Every new fine-tune still receives all100frozen readings.
+The balanced/complementary-position design remains a later proposal.
 
 Current collection audit: a qualified full100reading can inherit a legacy control
 gate that skips natural calls while returning exit0. The live bound worker stays
@@ -64,8 +65,8 @@ one new collect-all reading for BOTH new models only if either original grid omi
 calls. It never triggers on invalid answers, control scores or ethical direction.
 No further repeat-until-pass. The conditional completion reader is implemented and
 32targeted tests pass; no new paths/calls registered yet while oldworker is bound.
-Norm1all2400recorded, so no omission there. See2026-10-22-collect-all-completion-amendment.md; register/
-freeze/save fresh IDs before any follow-up, after the bound live worker terminates.
+Bothoriginalgrids recorded2400, so the auditedcompletiondecision isNOnewcalls. Oneinvalid
+weight32answer remainsinvalid; no repeatuntilpass. See2026-10-22-collect-all-completion-amendment.md.
 
 ## Latest completed pilot
 
