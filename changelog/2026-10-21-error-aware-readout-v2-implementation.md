@@ -42,3 +42,27 @@ fresh/stress failure are agent-read. No automatic tuning success/scale approval.
 GPUprevious workers verified terminal/no compute process before deployment. Actual
 source revision, preflight and launch state will be recorded in STATE/launch receipts.
 All completed outputs must be copied off-box and privately verified at safe boundaries.
+
+## Deployment / launch
+
+Source469c18f pushed/deployed to the existing clean GPUcheckout only after all previous
+workers were terminal/no GPUcompute process. New generated master copied without
+replacement. ActualGPUcheck-runtime passed all15configs/runtime/banks/token lengths.
+All100prepared source/input/weight bindings match. One prior completed mode analysis
+was absent remotely and copied from its preserved local original, no overwrite.
+Allfouradapter_config SHA256values also match local/GPU; recorded in launch receipt.
+
+Installed finite supervisor sft-drift-target-free-readout-v2 with autostart/autorestart
+false, startretries0, process-group shutdown and private log
+/workspace/sft-drift-ops/target-free-readout-v2.log. Started PID99941, verifiedRUNNING
+at2026-10-22T06:24:18UTC. No HTTPservice/ports or dependency changes. Wrapper runs ops
+Python; controller dispatches inference with the pinned vLLM Python under CUDAlock.
+Local launch_receipt.json/.md under generated master captures actual source, bindings,
+adapter configuration hashes, status and no-resume/no-training limits. Do not pull
+new source on the GPUwhile this worker is bound. Actual progress is in its log and
+operations.jsonl, not inferred from this launch note. No completed child copied yet.
+
+Code/notes and prepared data/launch proof are to be saved to Git/private artifact
+storage at this boundary. A private snapshot does not make the live stage resumable.
+Continue collecting all15regardless of performance; independently analyze/review only
+closed data. No tuning success, training-effect or scale-up claim follows launch.

@@ -292,5 +292,5 @@ All100beliefs/three sampling seeds/five fixed models; 480fresh+8stress/job. Tech
 failures stop calls; performance failures are retained with operational/strict flags,
 aggregate missing-response bounds and separate pending72reply semantic review.
 copy_error_rca.py --suite target_readout_v2 copies only closed children while active,
-plus master/log only when terminal. Registered/prepared, not launched at this note.
+plus master/log only when terminal. Launched on the existing GPU; actual source469c18f.
 STATE.md and actual supervisor/artifacts determine live state. No resume/restart/SFT.

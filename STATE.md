@@ -147,34 +147,41 @@ miscoding: preselected72full natural replies plus all failures need agent review
 Recurrent scope/final mapping defects falsify clean semantic interpretation. Do not
 tune training on ethical direction. Full protocol explains hypothesis/contrasts/limits.
 
-V2 IMPLEMENTED AND PREPARED, not launched yet. New master
-ethics_gpu_target_free_readout_v2:15typed configs,25,320planned calls. All100beliefs,
-5fixed models,3sampling seeds. Common bank SHA
-a70fe1444c6c0daafe93677894985a8fbaf0488d1beb9abcb4ee3e30ab207795.
-All1688prompts/job tokenize<=219;219+4096=4315<4352.80contexts/480fresh controls
-plus8source-linked stress probes.72reply review selection frozen before calls.
-17paths registered before preparation. Never overwrite/reprepare this ID.
+ethics_gpu_target_free_readout_v2 is LAUNCHED on the existingRTX3090, finite supervisor
+sft-drift-target-free-readout-v2 RUNNING pid99941 at launch receipt06:24:18UTC Oct22.
+Actual GPUsource469c18f; no remote source pulls while worker is bound.15typed jobs,
+25,320calls planned; all100beliefs,5fixed models,3sampling seeds. No new training.
+Runtime preflight passed all15configs/backend/version/bank/tokenizer checks. All100
+source/input/weight bindings verified on both machines; adapter_config hashes match.
+One absent prior mode analysis.json was copied to the GPU without overwriting any file.
+Common bank SHA a70fe1444c6c0daafe93677894985a8fbaf0488d1beb9abcb4ee3e30ab207795.
+All1688prompts/job <=219inputs;219+4096=4315<4352.80reviewed contexts/480fresh controls
+plus8source-linked stress probes;72reply review preselected before calls.17paths
+registered before prepare. Prepared source/inputs and launch proof are local/off-box.
+No new completed measurement copied yet. Never overwrite/reprepare/restart these IDs.
 
-Drivers scripts/run_target_free_readout_v2.py and analyze_target_free_readout_v2.py;
-v1remains gated/unlaunched. Technical source/config/weight/runtime/token failures
-stop subsequent jobs; performance failures retain full grids. Child verifier rebuilds
-raw extraction, exact external bytes, resolved configs, seeds, execution metadata and
-summary scores; model checks and precision flags remain separate from semantic review.
-Other80ethical and eval-offtopic groups plus related6 stay predeclared. The1pp budget
-applies only to declared aggregate groups, not a per-belief filter. All500rows retained.
-101regression/layer/handoff tests pass; final reporting refinement passed6focused
-v2tests. Earlier all10historical config SHAs/161frozen hashes verified unchanged.
-No training/model calls in this block yet. Existing box verified idle, old workers terminal.
+Technical source/config/weight/runtime/token failures stop subsequent jobs. Performance
+failures retain full grids. Verifier rebuilds raw extraction, exact external bytes,
+resolved configs, seeds, execution metadata and summaries. New operational/precision
+flags do not clear old strict failures or natural semantic interpretation.1pp budget
+applies only to predeclared primary aggregates; all500belief/model rows retained.
+101regression/layer/handoff tests passed; final reporting refinement passed6focused
+v2tests. All10historical config SHAs/161frozen hashes remain unchanged.
 
-Next: commit/push this exact source/config preparation, deploy to existingbox, copy the
-new generated master without overwriting, check every source binding and run runtime
-preflight, then launch finite supervisor sft-drift-target-free-readout-v2, no autorestart.
-Exact next GPUpreflight from /workspace/sft-drift/belief-transfer:
-/workspace/sft-drift-vllm/.venv/bin/python scripts/run_target_free_readout_v2.py check-runtime
-Launch only after that succeeds and source/input hashes match. Save launch proof and
-closed child outputs at safe boundaries; this stage has NOresume/restart. Read protocol:
-changelog/2026-10-21-error-aware-readout-v2-plan.md; implementation notes:
-changelog/2026-10-21-error-aware-readout-v2-implementation.md. No new rental/SFT/scaling.
+NEXT: inspect actual service/log, preserve only closed child outputs, then independently
+reconstruct the full15jobs and read72preselected full replies plus every failed fresh/
+stress reply. No score-based early stopping, new training or scaling. Commands from
+belief-transfer/ (GPUhost root@38.49.42.46 port58689):
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-target-free-readout-v2; tail -n 20 /workspace/sft-drift-ops/target-free-readout-v2.log'
+uv run --no-sync python scripts/copy_error_rca.py --suite target_readout_v2 --host root@38.49.42.46 --port 58689
+ After terminal copy:
+uv run --no-sync python scripts/analyze_target_free_readout_v2.py
+Local generated master has protocol/banks/token audit/groups/72selection and launch
+receipt JSON/Markdown. Live log /workspace/sft-drift-ops/target-free-readout-v2.log;
+no new checkpoint (fixed final pilot adapters). Stage has NOresume/autorestart. An
+interruption needs a fresh ID, not rerun of an existing measurement. Active goal is
+NOTcomplete; semantic measurement and training attribution remain unresolved. Read
+changelog/2026-10-21-error-aware-readout-v2-plan.md and implementation notes.
 
 ## Dashboard and preservation
 
