@@ -69,25 +69,30 @@ Originalnorm1modelcontrols30/32stillFAILED. Report:2026-10-22-lower-lr-reference
 BOTHreferencegrids/90reviews privatelyVERIFIED beforeSFT(snapshote28ac1dcbb45b87c0bc268a596b8fb242dfdf8a3).
 Reviewfiles/receiptcopied/hashcheckedonGPU; actual90-review/privategatepassed.
 Candidate supervisor sft-drift-lower-lr-candidate-v1 RUNNING PID119556, source8053931
-PINNED. Observed70s/training4of454, earlyLRmatches2.5e-5warmup; no passclaimyet.
+PINNED. Latestobserved239/454(18:14uptime). Midpoint227CLOSED/copied:11files/418,232,399bytes,
+remote/localSHAverified. TokenizedBYTESidenticalnorm1; canonicalMDderived; liveauditexcluded.
 Currentchild:ethics_sft_c4_lower_lr_v1. NewSFTISrunning; no evalyet. No autorestart/resume.
 Log:/workspace/sft-drift-ops/lower-lr-candidate-v1.log.
 Exactobservationcommand:
 ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-lower-lr-candidate-v1; tail -10 /workspace/sft-drift-ops/lower-lr-candidate-v1.log'
-Next:safeclosedcheckpoint227copyafterlaterforwardstep; rawtokenizedonly+canonicalMD,
-exclude liveaudit/log. Afterfinalverify/copy12engineeringchecks, initialadapter/order/
-fourfoldLRtraceversusnorm1; then384retention/full100/fullreview. No ethicalselection.
+Next:finishprivatepreservationofclosedmidpoint, thenmonitorfixedworker. Afterfinal
+verify/copy12engineeringchecksandactualinit/order/fourfoldLRtrace;384retention/full100
+willrunautomatically. Localanalyze_lower_lr_probe.pyready,55targetedtests pass; do NOT
+pullnewcodeontoboundGPU. Allcandidatefailures/unscorables/missingrepliesrequirefullreview.
+96oldcontrolinput/output/seedrecordstoken-verified:0assemblymismatches,4wrongrejectwords
+areactualgeneratedtokens. Newtokenaudit/runtimeartifactsunderregisteredmasterpaths.
+No ethicalselection. Report:2026-10-22-lower-lr-midpoint-and-audit.md.
 Masteroperationslog appends innewcandidatephase; preserveoldreferenceprefix/view,
 verifyappendlineagebeforeterminalcopy. Rawindividualmeasurementsneveroverwrite.
 Report:changelog/2026-10-22-lower-lr-candidate-launch.md. No GPUcodepullwhilebound.
 
 ## Preservation
 
-Lastverifiedprivate snapshot:e28ac1dcbb45b87c0bc268a596b8fb242dfdf8a3 at
-code87444d18906d36580448ac97503aec781cd46306,6254files/18,186,909,214bytes;
-corpus687ed1ecdd31674a7b2633a359ffc010cd0dcb7f. CoversallpriorresultsandBOTHnewreference
-grids/90reviews. Newcandidate-launchnotes/dispatch awaitsave; liveSFTweights/audit
-GPU-only. Actual latestreceipt:data/.handoff-receipt.json. No boxdestructionwhilelive.
+Lastverifiedprivate snapshot:a27411d8b3d2679a9d596c9a0704ba94c3a00358 at
+codece54d9dcdb3cc4702947ca3e4c4cb9bc816172b0,6256files/18,186,910,921bytes;
+corpus283947c960f6c2d16dc326e6cbeae286ce1527f5. Coversallpreviousresults/newreference
+90reviews/launchmetadata. Newclosedmidpoint227/runtime/tokenaudit/analysiscode awaitsave.
+Livecandidateaudit/finalGPU-only. Actualreceipt:data/.handoff-receipt.json; no boxdestroy.
 Requiredaftercommit/push:
 uv run --no-sync python scripts/handoff.py save
 No localmutations/tests/copies during save; verifyreceipt. Serialize testsandcopies too:
