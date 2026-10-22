@@ -43,17 +43,22 @@ under ethics_gpu_weighted_loss_check_v1; do not rerun. Sourcecb6135a.
 Fix compensates Accelerator's GASdivision in backward and unscales logged NLL. Explicit
 weighted_group_mean_v1normalization opt-in now applies to both weight1andweight32;
 legacy default untouched. Fresh checkv2must pass SAMEanalytic/update/reload criterion;
-new native Trainer diagnostic also measures unweighted framework scaling. Not run yet.
+new native Trainer diagnostic also measures unweighted framework scaling. CUDA v2 now
+PASSES all five analytic/update/reload checks: both update errors1.1921e-7. Run
+ethics_gpu_weighted_loss_check_v2 EXITED Oct22 10:49UTC; source6b3aef7. Outputs copied
+locally. Native toy accumulated update is0.500002of its unweighted group mean; this
+diagnostic does not establish the exact historical Qwen update or cause of regression.
 
 Before real SFT, amend trial with a fresh normalization-only weight1C4control so weight32
 is isolated from normalization. Independent confirmation BASE/oldC4/newweight1/newweight32
 =1,536calls. Both new final models get frozen all100beliefs at seed42; no ethical-outcome
 selection. Plan:changelog/2026-10-22-replay-weight-ablation-plan.md, pre-SFT amendment.
 
-Next: finish new code tests, commit/push/deploy, run scripts/verify_weighted_loss_cuda.py
-under supervisor with freshv2ID. After pass, prepare/freeze independent bank RNG20261023,
-matched data/dose/configs, actual code/weight hashes and verification receipts. Only then
-launch the finite two-model C4ablation. No current study training/benchmark worker.
+Next: preserve verified CUDA check/source, then prepare/freeze independent bank
+RNG20261023, matched data/dose/configs, actual code/weight hashes and verification
+receipts. Only then launch the finite two-model C4ablation. No current GPU worker.
+Exact preservation command from belief-transfer/: uv run --no-sync python scripts/handoff.py save
+Training preparation/controller does not yet exist; do not claim models are running.
 No automatic weight/LR search or ethical expansion. Never tune on the Mac.
 
 ## Prior completed evidence

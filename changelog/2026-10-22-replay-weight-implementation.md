@@ -40,3 +40,21 @@ Mean per-step coefficient shares: C4.7078641,thinking.2343796,nonthinking.057756
 Thus nonthinking share rises from~.2074%to~5.7756%; these are objective coefficients,
 not gradient norms or optimizer contribution. Actual new ledgers must reproduce the
 measured projection before a training binding is accepted.
+
+## CUDA v2 passed — source 6b3aef7
+
+Finite supervisor sft-drift-weighted-loss-check-v2 exited normally Oct22 10:49UTC.
+All five checks pass: analytic update, accumulation/full agreement, changed parameter,
+exact reload and analytic NLL. Both max update errors1.1920928955078125e-7. NLL
+1.879716277 matches independent1.879716231. RTX3090; torch2.10.0/transformers5.5.0/
+accelerate1.14.0. No pretrained/study weights loaded. Summary, source hashes, fixture
+and tensors copied locally under registered ethics_gpu_weighted_loss_check_v2.
+
+Native unweighted toy update ratio is1.0full/0.50000155accumulated despite equal
+logged NLL. This characterizes the pinned toy path, not the exact historical Qwen
+training update or causal explanation of losses. The normalization-matched control
+remains necessary. Actual BF16 Qwen engineering checks and independent retention
+confirmation remain pending. No new study model trained or candidate input prepared.
+
+User reaffirmed overnight use of existing GPU. Current goal remains appropriate;
+continue bounded repair experiment, not ethical expansion or automatic recipe search.
