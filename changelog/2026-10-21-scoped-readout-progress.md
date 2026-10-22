@@ -43,3 +43,24 @@ three-seed metadata. Added current readout's legacy control charts/diagnostic co
 kept separate from older expanded audit and prospective scoped requirements.5focused
 fixture tests and TypeScript pass. No GPU source/training/instrument change. Snapshot
 01150a9verified after a transientHF429 retry; next save includes completedpositive.
+
+Negative complete and copied:87files/95,463,812bytes across first3models; all7,200
+natural replies valid/strict. Negativelegacy32/32correct. Target−24.167pp,all100
+−23.875pp,untrainedethical−26.302pp; negation46.5%reproduces historical issue. Contrast
++20.833pp remains exploratory/nonspecific. Immutable after_negative partials and
+negative_review.md saved. Offtopic/C4 still running/pending. No new training.
+
+Exploratory natural_stability analysis reconstructs15historical runs under the frozen
+instrument, preserves all500belief/model rows and expected/eligible pair denominators.
+Same-prompt agreement89.389/78.167/78.278/80.437/85.176%for BASE/positive/negative/
+offtopic/C4. Negative negation47.583%versus repeat78.278%indicates extra negation
+sensitivity, not simply missing replies or generic same-prompt noise. Eight agent-read
+raw replies show both mapping inconsistencies and changed expressed positions. Full
+source-hashed analysis/MD, targeted raw pair review and interpretation preserved.
+5mock/tmp tests pass; published analysis refuses overwrite. No new inference.
+
+This adds an unresolved interface/interpretation issue: scoped eligibility alone does
+not establish coherent ethical editing. Do not declare the pilot tuned or goal complete
+merely after full readout. Finish current frozen comparison, then prospectively validate
+clearer response interfaces on fresh known-answer controls before selecting training.
+Natural ethical consistency remains an outcome, never a training-selection threshold.

@@ -23,6 +23,19 @@ Completed evidence:
   on all3,840 replies. Terminal copy82files/29,753,385bytes verified. Review
   changelog/2026-10-21-scope-control-results.md and its results directory.
 
+UPDATED SCIENTIFIC ISSUE: historical natural_stability analysis reconstructs15runs,
+all500belief/model rows. Identical-prompt agreement BASE89.389%,positive78.167%,
+negative78.278%,off80.437%,C485.176%. Negative negation47.583% is much lower than
+repeatability; fresh46.5%reproduces it. Agent read8full replies in4targeted pairs:
+wrong target mapping despite stable normative reasoning AND changed expressed views.
+Read master natural_stability/interpretation.md and reviewed_examples.md. No prevalence
+inferred. Passing generic scope checks does NOT resolve this domain-specific issue.
+Do not declare ethical pilot tuned/scale or goal complete after readout alone.
+After current full collection/review, write a prospective clearer-interface diagnostic
+on fresh known-answer controls (incl normative vocabulary/negation); choose no training
+or interface based on desired ethical drift. Frozen old results/gates remain intact.
+5natural-stability fixture tests pass; no new inference for this analysis.
+
 Decision: retain training settings for the measurement follow-up. Rare task regressions
 remain explicit; do not retune to fit one seen answer or desired ethical drift. Tiny
 nonthinking replay exposure is an ablation hypothesis, not a proved cause. Arithmetic,
@@ -42,7 +55,11 @@ Positive target60.0→56.667%(−3.333pp), all10063.792→60.958%(−2.833pp). N
 order/wording/negation agreement falls16.833/10.567/13.833pp; outcomes, not gates.
 Freshpositivelegacy31/32: correct reasoning then wrong final reject on3×3≠8 with
 note; not parser error. Collection kept all natural replies despite diagnostic failure.
-Read master positive_review.md. Parent PID85121 RUNNING; negative model loading.
+Read master positive_review.md. Negative now complete:87closedfiles/95,463,812bytes
+verified across3models. Negative2,400valid/strict; freshlegacy32/32correct. Targets
+−24.167pp, all100−23.875pp, untrainedethical−26.302pp; negation agreement46.5%.
+Contrastpositive−negative+20.833pp but broad/nonspecific. Offtopic/C4 pending; worker
+RUNNING. Immutable after_positive/after_negative partial artifacts preserve boundaries.
 GPU source175b04d. Log:/workspace/sft-drift-ops/scoped-readout-v1.log; stderr same .err.
 The finite process has no restart/resume support; no new training checkpoints.
 Source bindings and all five resolved config hashes verified.26 focused tests pass
