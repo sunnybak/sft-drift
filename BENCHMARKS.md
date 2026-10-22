@@ -13,8 +13,8 @@ fail30/32originalcontrols. Weight32hasone4096-token loop/no-final(2399/2400valid
 explicit bounds; no completionretry.57fullfailed/unscorable replies reviewed/hash-bound.
 No demonstrated weighting repair. See2026-10-22-replay-weight-comparison-results.md.
 Nextsinglelower-LRprobe is prospectivelyplanned(2.5e-5versus1e-4,othertrainingfixed),
-with freshRNG20261024confirmation. Preparationguards/tests implemented; finite worker
-stillneeded; no newpaths/inputs/calls yet. Existing GPUauthorizedovernight, no newrental.
+with freshRNG20261024confirmation. Preparationandfiniteworkerimplemented;53tests pass.21pathsregistered/newinputs frozen,
+no newcalls yet. BASE/norm1referenceandfullreview/privatepreservation precedeSFT. Existing GPUauthorizedovernight, no newrental.
 
 The completed experiment **ethics_gpu_target_free_readout_v2** followed its prospective
 [protocol](changelog/2026-10-21-error-aware-readout-v2-plan.md) and actual process/artifact

@@ -45,24 +45,31 @@ Newfreshbank RNG20261024, BASE/norm1reference before candidateSFT; finalcandidat
 collectall while preserving actualvalidationchain. No automaticLR/weight sweep.
 Plan:changelog/2026-10-22-lower-lr-probe-plan.md.
 
-prepare_lower_lr_probe.py implemented; mocks/tempdirtests cover singlefactorcomposition,
-fixedbank/collisionrefusal, fullcollection/validationchain, registration/overwrite/live-
-parent/review/private-preservationguards. Finite reference/candidateworker STILLNEEDS
-implementation/testing beforepreparation; no newpathsregistered/inputs/calls/training.
-Next:implement scripts/run_lower_lr_probe.py againstthatplan; fullreference review and
-privatepreservation mustprecedeSFT. Thenregister all21paths fromrequired_paths(), run:
-cd /Users/sunny/dev/sft-drift/belief-transfer
-uv run --no-sync python scripts/prepare_lower_lr_probe.py
-Commit/push/private-save frozenprotocolbeforeGPUcalls; onlythendeploy source toGPU
-(nowoldworkerterminal). Do notreruncompletedIDs or claimcheckpointbytesmakestageresumable.
+Preparation andfinite run_lower_lr_probe.py IMPLEMENTED;53mock/tempdir/layer tests
+pass, including raw384-gridrebuild/review/privateguards, finitecalls, partialfailure/
+no-restart, bothqualification/fullcollectionroutes.21pathsregistered BEFOREprepare.
+ethics_sft_lower_lr_probe_v1 inputsfrozen; ethics_sft_c4_lower_lr_v1 training; bank
+ethics_gpu_lower_lr_confirmation_v1,128rows, seed20261024,
+SHA5bd0180d8b258ad53ade57be3dcd14afe8a556f9a231d2cc79204e403d92af54.
+ProtocolSHA d7f87c403d49afa7cbd94554405eceef68e2ca4f64bcc6f936a4f7938809dd4e,
+1079bindings. Exactnorm1manifest/preprocessing/order/LoRA/454steps, LRonlychanged.
+Report:changelog/2026-10-22-lower-lr-probe-prepared.md. No newmodelcalls/training yet.
+
+Next:verifyprivate save ofpreparedprotocol, preserve2GPUuntrackedoldruntimeconfigbytes
+(hash-equaltoalreadyprivatelysavedlocalfiles), pullsourceonlynowoldworkerEXITED,
+copy/verifyfrozennewinputs+reviewevidence+receipt, startfinite(noautorestart)supervisor:
+cd /workspace/sft-drift/belief-transfer
+.venv/bin/python -u scripts/run_lower_lr_probe.py reference
+Collect BASE/norm1first768calls; allreferencequeuefullreviewsandprivatepreservation
+REQUIREDbeforecandidateoperation. Do notstartSFTbeforethosegates. Do not reruncompleted
+IDs or claimcheckpointbytesmakestageresumable. No newrental/fullbanktraining.
 
 ## Preservation
 
-Lastverifiedprivate snapshotbeforeterminalreport:
-5ca0e8ff6d8752e62699ed6ef86c4a3f6ae4f743 atcode4bc9d1d4aa04bcd529ff0ad9f087eaaebf14cf31,
-6123files/18,134,354,749bytes; corpus a98797a7315502412e548a2ebf374a5b1c443c13.
-Coversallnewtraining,retention/development and26weightedreviews. Terminal49files/
-32,925,536bytes,newfullreviews/comparison/report/preparationcode awaitfollowing save.
+Lastverifiedprivate snapshot:b7ef9fa3b79fcebb0c9e6807fac5f78b92b12913 at
+code009ff861be6601567df9f5d97e2115dfcdd8b5ee,6177files/18,167,592,040bytes;
+corpus6c801eae76d2b1757b9f454dd2c1c5392077f8ad. CoversALLpreviouscompletedtraining/
+retention/full100/comparison/57reviews. NewlowerLRsource/preparedinputs awaitnextsave.
 Actual latestsuccessfulreceipt:data/.handoff-receipt.json(maybenewerthanthese notes).
 Requiredaftercommit/push:
 uv run --no-sync python scripts/handoff.py save

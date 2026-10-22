@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+- ethics_sft_c4_norm1_v1
+run_id: ethics_sft_c4_lower_lr_v1
+training:
+  sft:
+    lr: 2.5e-05
+document_sft:
+  manifest_path: data/generated/ethical_stance_sft/ethics_sft_c4_lower_lr_v1/documents.jsonl
+  plan_path: data/generated/ethical_stance_sft/ethics_sft_c4_lower_lr_v1/plan.json
+  plan_sha256: 76b618b22c03647a86d6164a4b4e522f5d6547fb67e6f8e1bb69eaece74f8699
