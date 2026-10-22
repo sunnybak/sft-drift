@@ -4,7 +4,7 @@
 
 The user asked: if the decisive result is negative, stop the goal and provide an update
 with recommendation. Final-primary failures are reviewed and decisive. Execution is
-STOPPED; apply the requested goal pause after final preservation. No further tuning,
+STOPPED; goal PAUSED per the user condition (confirmed after verified preservation). No further tuning,
 independent confirmation, checkpoint selection or ethical expansion. No qualified recipe
 exists. No full 90/100-belief SFT has run. No new rental or Mac training is authorized.
 
@@ -52,22 +52,23 @@ fully read. Its strong reject bias is descriptive, not proof of knowledge erasur
 
 ## Preservation
 
-All training/checkpoints privately verified previously. Latest verified diagnostic
-snapshot971f80b6ffdbfba720fcd64f145cceea7e2627c4 at
-2e25b4087aead2b2fd695ebaf9442ef780be67ee:7605files/21,285,288,164bytes;
-/tmp/sft-drift-handoff-final-diagnostics.log ends verifiedtrue. Includes384finaldiagnostics
-and47diagnostic reviews. The subsequent stopped master, partial512reading, raw log,
-operator-stop receipt and2newreviews are now local/hash-verified; final save follows
-this source push.308closed remote files verified, archiveSHA:
-d9c9d5b5a580a283f61b811c1683a8cf0ba47a2bdc441c50d4ded7bd611966dc.
-Operation log is an exact append-only extension; earlier prefix separately preserved.
-All new JSONL views exist. Frozen inputs/scoring/gates remain unchanged.
+Stopped trial fully preserved and verified: private snapshot
+45582fa296a666f00518a90c66ed8af6772ba273 at source
+803ec8fceb33a6b86d29406f0e94fc032056a6e1,7666files/21,300,611,994bytes.
+Includes final stop receipt, partial512reading,49manual reviews, checkpoints and log.
+Latest receipt is authoritative at belief-transfer/data/.handoff-receipt.json.
 
-Final preservation command:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
-Wait for the same save process through storage429retries; verify receipt. Until then,
-do not claim the newest closure is privately saved or destroy the box.
-After verified save, pause the goal and report recommendation. Do not launch another job.
-On a future session, orientation/verification only:
+Dashboard-only follow-up requested by user: five repair reports added (18total), with
+matched BASE cohorts, exact counts, ranges, pass/fail/error codes and explicit partial
+collection. Live app5180verified, latest report open.49Node tests plus Python exporter
+tests, TypeScript and production build passed; final incremental checks passed.
+See changelog/2026-10-22-repair-dashboard-reports.md. No new model calls, no resumption.
+Reports and screenshot are in the already registered ethical_pilot dashboard output;
+source/notes must be pushed, then save the new report artifacts once.
+
+Preservation:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+Wait for the same save process through storage429retries; verify receipt. No experiments
+may start. On a future session, orientation/verification only:
 cd belief-transfer && uv run --no-sync python scripts/handoff.py verify
 
 ## Prior study context
@@ -76,4 +77,4 @@ Original10-target/four-arm ethical pilot and three-seed BASE completed, with imp
 qualification/specificity limits; see BENCHMARKS.md and dated reports. No scale follows.
 Fixed-model replay/interface RCA, weighting and lower-LR trials are finished/rejected,
 not a queue to resume. Corpusv5retains20000documents/221repairs; conservation subjects
-remain quarantined and full-bank semantic clearance is false. Dashboard5180unchanged.
+remain quarantined and full-bank semantic clearance is false. Dashboard5180nowincludes18reports; five repair reports added without changing historical measurements.

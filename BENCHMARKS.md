@@ -327,3 +327,12 @@ changelog/2026-10-20-ethical-four-arm-pilot-plan.md and actual STATE.md, not the
 neutral qualification queue. Positive/negative/offtopic/C4document-control arms use
 fresh weights, matched eligible targets/steps, shared complete replay, full100belief
 readings and fixed retention. Source data semantic limitations remain explicit.
+
+## Pipeline repair reports in the dashboard
+
+The dashboard now includes five separate Repair1–5reports, sourced from the completed
+repair attempts and reviewed final rejection. Each keeps its own matched BASE cohort,
+known-item retention, all-item accuracy, engineering/qualification checks and runtime
+repeats separate. Final report shows all four seen/held×wording conditions and explicitly
+partial512/2400stance collection; no full100aggregate. Search Repair in Dashboard.
+See changelog/2026-10-22-repair-dashboard-reports.md. The scientific goal remains paused.

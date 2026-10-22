@@ -12,9 +12,9 @@ const recorded = (value: ReportTest['expected']) => value === null ? 'Not record
 const groups: {id:ModelCheckGroup;name:string;description:string}[]=[
  {id:'instrument',name:'Instrument checks',description:'Known-answer correctness, required formatting, irrelevant-note stability and reply coverage check the measurement procedure.'},
  {id:'consistency',name:'Response consistency',description:'Agreement across answer order, wording and negation describes response stability. Natural ethical consistency has no passing threshold.'},
- {id:'learning',name:'Learning checks',description:'Recall and code lookup test retrieval of the neutral facts taught during the development pilot; supplied-prefix continuation is an easier diagnostic.'},
+ {id:'learning',name:'Learning checks',description:'Performance on taught examples, changed wording and held-out facts tests learning and transfer. Supplied-prefix recall remains a separate diagnostic.'},
  {id:'retention',name:'Retention checks',description:'Accuracy, formatting and normal completion on fixed BASE-known tasks test whether demonstrated skills survived training.'},
- {id:'engineering',name:'Engineering checks',description:'Training updates and checkpoint reload checks test the pipeline. Boolean gate results remain in the recorded details.'},
+ {id:'engineering',name:'Engineering checks',description:'Weight updates, checkpoint reloads and collection coverage check execution. Successful execution does not establish preservation of model behavior.'},
 ];
 /** Recorded gates remain separate from numeric threshold comparisons. */
 export function ReportControls({models,benchmarks:allBenchmarks,scores,tests:allTests}:Props) {
