@@ -1,0 +1,16 @@
+# @package _global_
+defaults:
+- ethics_gpu_scope_control_positive_v1
+run_id: ethics_gpu_scope_fact_clarity_positive_v2
+related_runs:
+  ethics_gpu_target_free_readout_v2: Completed source sweep; original failures remain
+    unchanged
+response_interface_rca:
+  model_label: positive
+  bank_path: data/generated/ethical_pilot/ethics_gpu_scope_fact_clarity_v2/bank.jsonl
+  bank_sha256: 568b12f4626dda17edefceaac8fbba014b0cee85b966b77bbc41360a0cb012ca
+  adapter_sha256: 5f00e47cd2a0141fb76bf30210d93943aeb02f6f8c2a52125497a66fe75e1d02
+  expected_rows: 128
+  task_description: Paired original/explicit fact assertions on16reused scope cases;640calls
+    across5fixed models. No independent qualification, ethical outcomes, training
+    or retrospective gate repair.

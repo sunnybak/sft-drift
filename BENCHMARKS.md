@@ -26,10 +26,17 @@ separation is repeatable but broad negative-arm drift limits selective-edit clai
 Most fresh errors are variants of one authored ambiguous scope question; genuine
 answer errors and narrow retention losses remain. Historical failed gates stay fixed.
 
-After preserving this full parent, the reviewed decision is one bounded640-call
-original-versus-explicit-facts diagnostic under the prospective v2 execution amendment (v1 preparation failed before calls).
-It is reused development evidence, not independent qualification or retroactive repair.
-No automatic sampler search, full stance resweep, training or corpus expansion follows.
+The bounded640-call wording diagnostic is now complete and reviewed. Every model
+scores64/64on separate fact assertions; all10errors are on the same compressed
+original case. Native/generic extraction agrees throughout. See the
+[reviewed wording results](changelog/2026-10-22-scope-fact-clarity-v2-results.md).
+This supports a wording explanation for that case, without independently qualifying
+a new instrument or clearing original failures. v1preparation failed before calls;
+its partial files remain retained. No new training has run during RCA.
+
+Preserve this completed block, then write a prospective balanced/complementary-position
+experiment plan with matched controls/training seeds and fixed retention safeguards.
+No automatic training, sampler search, full stance resweep or corpus expansion follows.
 STATE.md records actual execution state. Do not select training for desired outcomes.
 
 ## Latest completed pilot

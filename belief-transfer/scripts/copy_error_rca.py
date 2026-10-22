@@ -68,7 +68,7 @@ def main():
   runs=[r for _,_,r in target_readout_v2_ids()];name='target-free-readout-v2'
  if args.suite=='scope_fact_clarity':
   from run_scope_fact_clarity import MASTER as master,run_ids as clarity_ids
-  runs=[r for _,_,r in clarity_ids()];name='scope-fact-clarity-v1'
+  runs=[r for _,_,r in clarity_ids()];name='scope-fact-clarity-'+master.rsplit('_',1)[1]
  if args.suite=='presence':
   from run_presence_controls import MASTER as master,run_ids as presence_ids
   runs=[r for _,_,r in presence_ids()];name='presence-controls-v1'

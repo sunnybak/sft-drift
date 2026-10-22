@@ -1,71 +1,62 @@
 # Current state — 2026-10-22
 
-## Goal and decision
+## Active goal
 
-Investigate measurement errors and possible SFT degradation before scaling. Goal is
-unchanged; user authorized the existing GPU overnight, no new rental. No new training
-was performed during RCA. Broad collapse is not established; narrow losses remain.
-Do not call the pilot tuned, lower gates retrospectively or automatically scale.
+Resolve measurement errors and assess SFT degradation before scaling. User authorized
+existing GPU overnight; no new rental. No new training was performed during RCA.
+Broad collapse is not established; narrow retention/answer errors remain. Goal is
+active. No automatic training queue, lower gates or claim of selective belief editing.
 
-## Completed: ethics_gpu_target_free_readout_v2
+## Completed and reviewed
 
-All15jobs finished: five fixed models × all100beliefs × three sampling seeds.
-Supervisor sft-drift-target-free-readout-v2 EXITED Oct22 08:50UTC; no worker resume or
-restart. GPU source469c18f. No new measurement process has been launched.
-Log: /workspace/sft-drift-ops/target-free-readout-v2.log.
-Terminal copy verified322files/298,812,415bytes. Full immutable analysis complete:
-18,000/18,000natural replies valid/strict/normal;25,320calls including controls.
-All72preselected natural and81failed controls agent-read in full; hash-bound finalizer
-passed. One selected natural last-rationale/final mismatch; not full semantic clearance.
-
+**ethics_gpu_target_free_readout_v2:** all15jobs,25,320calls. Five fixed models × all100
+beliefs × three sampling seeds;18,000/18,000natural replies valid/strict/normal.
+All72selected natural and81failed controls read in full, hash-bound finalizer passed.
+Target positive-minus-negative+50.83pp (seedrange48.33–54.17); negative also shifts
+other80ethicalclaims−41.04pp. Positive target+3.06pp vs C4+2.50/offtopic+1.39pp.
+These are forced relative-choice frequencies, not independent endorsement/confidence.
 Reviewed report: changelog/2026-10-22-target-free-readout-v2-results.md.
-Target positive-minus-negative +50.83pp across seeds (+48.33 to+54.17), but negative
-also shifts other80ethicalclaims −41.04pp. Positive target+3.06pp versus C4+2.50pp
-and off-topic+1.39pp. Original scores/gates unchanged. This is forced relative-choice
-frequency, not independent endorsement, confidence or ethical accuracy.
-58/61fresh errors derive from one authored ambiguous logic context;3genuine arithmetic/
-claim-mapping errors remain. Off-topic passes its own operational checks all3seeds;
-BASEfails scope checks, so matched reference qualification fails. Do not hide scores.
+Dashboard5180has13reports, including complete5model/109benchmark/545score comparison.
+Own-model vs matched-BASE check failures are separate; valid scores remain visible.
+46dashboardtests/TypeScript and42Python finalizer/layer/handoff checks passed.
 
-Dashboard http://127.0.0.1:5180/:13reports including Target-free choices · three
-sampling seeds;5models/109benchmarks/545scores/90checks. Browser verified actual
-charts and separate own-model/BASE fault codes.46dashboardtests/TypeScript pass;
-42Python finalizer/layer/handoff tests pass. Raw/model artifacts stay unchanged.
+**ethics_gpu_scope_fact_clarity_v2:** all5jobs/640calls; terminal copy verified82files/
+9,294,146bytes. All10failed replies read in full and hashes verified. Every model
+scores64/64 on explicit facts; original BASE61,positive62,negative62,offtopic63,C462.
+All errors concern the same compressed original sentence; no extraction disagreements,
+caps or formatting failures.80unchanged-input pairs agree on answers;46raw replies
+vary. Supports a wording explanation for this case, not independent qualification.
+v1preparation failed before calls; partial inputs/failure record retained. v2preflight
+fix passed9mocked tests. Report:2026-10-22-scope-fact-clarity-v2-results.md.
 
-## Next step — bounded, after private preservation
+Both finite supervisors EXITED. No active GPU measurement or training worker.
+GPU sourceb59fada; logs under /workspace/sft-drift-ops/{target-free-readout-v2,
+scope-fact-clarity-v2}.log. No resume/autorestart; never restart these IDs.
+Original failed gates, scoring, frozen bank and weights stay unchanged.
 
-Scientific decision from full review: one original-versus-explicit-facts diagnostic
-is warranted to test the dominant authored ambiguity. Existing prospective plan:
-changelog/2026-10-22-scope-fact-clarity-v2-plan.md. Five fixed models,640calls, reused
-logic cases, no new training/sampler search/full stance sweep, no retroactive gate
-repair or independent qualification. v1preparation failed before any calls (missing copied launch provenance); partial
-inputs/failure record retained. The v2preflight fix passes9tests; no v2calls yet.
-Its controller
-requires this complete parent in the verified private receipt before any mutation.
-Do not resume unrelated historical queues. Original frozen instrument remains fixed.
+## Next step
 
-First finish preservation: commit/push this block, then from belief-transfer/:
+Finish this block's preservation first, from belief-transfer/ after commit/push:
 uv run --no-sync python scripts/handoff.py save
-Verify success receipt before deploying current clean source to the idle GPU and
-following the clarity controller's prepare/run modes. Inspect its CLI first:
-uv run --no-sync python scripts/run_scope_fact_clarity.py --help
-Never restart a started measurement ID. Review every diagnostic failure before any
-subsequent experiment decision. Balanced/complementary position training with new
-training seeds remains a possible later plan, not an authorized automatic queue.
+Then verify the success receipt. Do not mutate local source/data while saving.
+The scientific next work is a prospective balanced/complementary-position training
+plan with matched controls/training seeds and fixed retention safeguards; distinguish
+broad response-policy movement from assignment-specific effects. Do not automatically
+launch training, another sampler search, full stance resweep or all100-belief SFT.
+Future controls need separate fact assertions and independent validation under a new
+instrument ID; the reused clarity cases do not clear historical failures.
 
 ## Preservation
 
-Full parent verified in private snapshot474c3cfeb4f7da2ad0723dc9ae8d0cee7a3c8e5d,
-code24b7b679d94c7e460189d5f4fb73afa0f2160344:5,551files/16,111,481,821bytes.
-Includes all15jobs/fullanalysis/72natural+81controlreviews/dashboard/report.
-Corpus snapshot2165bf575a94f7c93aeb8598f77c7c59585ce9a9 verified. The v1preparation
-failure and v2source fix need this block's save. Authoritative receipt:
-belief-transfer/data/.handoff-receipt.json. No source/data mutation during save.
-Do not claim the box is disposable until Git and this full snapshot are verified.
-The goal remains active; no further training is approved by passing export/tests.
+Latest verified snapshot before this block:474c3cfeb4f7da2ad0723dc9ae8d0cee7a3c8e5d,
+code24b7b679d94c7e460189d5f4fb73afa0f2160344;5,551files/16,111,481,821bytes. Includes
+full15-job parent/reviews/dashboard/report. Corpus2165bf575a94f7c93aeb8598f77c7c59585ce9a9.
+v1failure and complete v2diagnostic/reviews/configs/notes need the current save.
+Actual receipt: belief-transfer/data/.handoff-receipt.json. Do not declare box-loss
+safety for this new block until Git push and private snapshot are verified.
 
-Original pilot/followups remain under original IDs. Candidatev5:20,000documents/
-221repairs; two conservation subjects quarantined; full-bank semantic clearance false.
+Candidatev5:20,000documents/221repairs; two conservation subjects quarantined,
+full-bank semantic clearance false. Original pilot/followups remain preserved.
 Fixed retention: gains plus narrow losses;2026-10-21-retention-rca-results.md.
-Restart dashboard from benchmark-dashboard/:
+Dashboard http://127.0.0.1:5180/; restart in benchmark-dashboard/:
 ./node_modules/.bin/vite --host 127.0.0.1 --port 5180 --strictPort
