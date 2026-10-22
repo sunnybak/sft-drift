@@ -33,6 +33,7 @@ ACTIVE: prospective readout launched after successful runtime identity preflight
 Master ethics_gpu_scoped_readout_v1 and five seed42 children are prepared and registered.
 All100 beliefs/model plus32 legacy controls,12,160 fresh calls, existing weights/decoder/
 parser/bank unchanged; own fresh BASE. Worker PID85121 verified RUNNING.
+Latest live check: BASE1,024/2,400natural replies saved; parent PID85121 RUNNING.
 GPU source175b04d. Log:/workspace/sft-drift-ops/scoped-readout-v1.log; stderr same .err.
 The finite process has no restart/resume support; no new training checkpoints.
 Source bindings and all five resolved config hashes verified.26 focused tests pass
@@ -49,6 +50,12 @@ Analyze with scripts/analyze_scoped_readout.py (--allow-partial before all five 
 Endpoint-specific99%coverage policy; incomplete estimates retain bounds, not neutral
 imputation. Legacy/retention failures remain explicit. One-seed technical follow-up,
 not training replication. No training or scale-up. See dated implementation note.
+
+Dashboard terminal-readout exporter prepared (not yet emitted): full500 belief cells,
+allfive models, own fresh BASE, scoped eligibility separate from arithmetic/retention.
+41dashboard tests and production build pass. Generate after terminal analysis with
+cd benchmark-dashboard && npm run data
+No dashboard/source change was pulled to the live hash-bound GPU worker.
 
 ## Latest completed work
 

@@ -29,3 +29,16 @@ Log /workspace/sft-drift-ops/scoped-readout-v1.log (and .err); finite, no autore
 no resume. Existing RTX3090 only; no training or new rental. Child outputs remain
 GPU-only until closed-child copy. Private snapshot at this boundary covers prepared
 inputs/source/previous completed results, not future replies generated on the box.
+
+Dashboard preparation while worker runs: added pure typed report builder and exporter
+for the terminal full-surface analysis, no partial-report substitution. All five models,
+500 per-belief cells, aggregate groups and separate consistency metrics stay visible.
+Scoped checks and per-endpoint eligibility are required only under the new policy;
+expanded arithmetic and frozen retention verdicts/threshold charts remain separate.
+Every sourced failure is preserved, not reclassified. Incomplete eligible cells retain
+null points and missing-data bounds. All sources carry hashes; old reports unchanged.
+Four new fixture tests cover the full surface, non-mutation, historical failures,
+incomplete-but-eligible bounds, failed eligibility and refusal of missing evidence.
+Full dashboard suite41tests (5Python+36Node) and TypeScript/production build pass.
+No new live report is emitted before terminal analysis exists. Remote bound source
+unchanged. BASE was RUNNING at1,024/2,400observations at the latest check.

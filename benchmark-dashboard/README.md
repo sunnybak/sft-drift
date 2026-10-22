@@ -256,3 +256,11 @@ UI fallbacks. Missing measurements are not assumed to be failed model checks.
 Historical scores, extractors and gate verdicts are unchanged. Diagnostic stages locate
 the observed failure; they do not prove why fine-tuning caused it. No automatic retries,
 rescoring, parameter changes or replacement measurements follow these messages.
+
+The prospective scoped-policy report is derived by
+`scripts/generate-scoped-readout-report.ts` only after all five fresh readouts finish.
+It retains all100 belief rows/model, a fresh matched BASE, endpoint-specific eligibility
+and missing-response bounds, plus separate scoped, expanded arithmetic and fixed
+retention checks. Historical failures are not reclassified. Only scoped eligibility
+is required by this new report; arithmetic and retention remain visible diagnostics.
+The one-seed follow-up is separate from historical three-seed pilot results.
