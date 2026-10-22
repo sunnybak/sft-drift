@@ -17,8 +17,10 @@ KeyError('fresh_base_reference'), a collector metadata-default bug. Do NOT resta
 Recovery supervisor sft-drift-base-reasoning-recovery-v1 RUNNING PID132392, observed
 20:51:17UTC, now collecting full100midpoint after diagnostics. GPUcheckout e2b25f62d30a1b949f2b7c8b2ace3c9e002a1110
 pinned during new worker; no new training. Original supervisor remains EXITED.
-Final-primary scientific verdict pending. Midpoint diagnostics now complete/reviewed;
-full100midpoint reading live, followed by final checkpoint. No further training queued.
+Final procedural check now FAILS: one4096-token reasoning loop/no final; seven flags
+fully agent-read, no scorer disagreement. Final factual/full100collection still live.
+Finish already scheduled collection/review/preservation, then PAUSE goal per user;
+no confirmation, further tuning or expansion. No further training queued.
 
 ## Established current result
 
@@ -62,8 +64,15 @@ Procedural63/63knownthinking,56/57short pass; all-item64/64and59/64. All5procedu
 16sampled proofs correct,3loose phrases recorded. Not all384replies agent-read.
 Review/copy/profile artifacts under recovery generated directory; details in
 changelog/2026-10-22-base-reasoning-midpoint-diagnostics.md. Final endpoint remains fixed.
-Full100midpoint reading live(256/2400observed21:02UTC), final checkpoint follows.
-These new diagnostics/reviews and launchreceipt need next private save now.
+Full100midpoint CLOSED:2400/2400valid, all2432runtime records verified. Development
+31/32correct fails1/16note-flip; validation not called. Fresh full-grid controls30/32,
+0note-flips. All3failed surface replies fully read: correct reasoning followed by
+wrong reject final.216closed files copied/hash-verified,50new; no raw conflicts.
+Final retention CLOSED:62/63knownthinking,56/57short; reasoning completion fails from
+4096-token subtraction loop. All7flags fully read; one additional uppercase error is
+outside BASE-known set. Source truth_proof.b metadata differs on subtraction, but
+prompt2398-1147andexpected1251are correct; not a scoring explanation. New annotations
+and midpoint full measurement local; awaiting next snapshot. Final decisions now live.
 
 Prepared BASEreasoning intervention changes32source targets/96draws; other3529chunks
 unchanged.3246draws/3625chunks/454steps/settings/seedfixed, longer thinking+28704tokens.
@@ -107,7 +116,7 @@ Exact next action:SSH -p58689 root@38.49.42.46; supervisorctl status
 sft-drift-base-reasoning-recovery-v1 and tail that log. Watch for midpoint/comparison_v1.json
 or TERMINAL under data/results/ethical_pilot/ethics_gpu_base_reasoning_recovery_v1.
 Copy/hash completed child/point outputs and dynamic runtime YAMLs at next safe boundary;
-closed midpoint diagnostics local+GPU; live full100outputs only onGPU. Launchreceipt local, to join next
+closed midpoint full measurement local+GPU; live final outputs only onGPU. Launchreceipt local, to join next
 closed measurement snapshot. Finish same midpoint/final/full100grid even if scientific
 checks fail; review final-primary result. If negative pause goal and recommend; no more SFT.
 If positive, independent confirmation still needs reviewed/private verdict and updated
@@ -116,14 +125,15 @@ Details:changelog/2026-10-22-base-reasoning-collector-recovery-plan.md.
 
 ## Preservation
 
-Latest VERIFIED complete training/recovery-input snapshotf4f0600f67f78ec4773f26caff56ded0f58d33f4
-at e2b25f62d30a1b949f2b7c8b2ace3c9e002a1110:7209files/21,238,135,872bytes;
-corpuscd208bb515636620857e65bd95f4fdd4df9ff31c, manifest
-faf0918ad1d358910d9fe1e48fa46c25e3d703d75de4582ee6890075f5a495f3.
-Includes all completed training/checkpoints, terminal failed collector128replies/log,
-proofsample and recovery contracts. New recovery launchreceipt/post-launch outputs
-postdate snapshot; preserve at next safe measurement boundary. Do not destroy box.
-Save after closed-copy+source push:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+Latest VERIFIED snapshot1105eea5a4e324097148c118e40b74f854a08fa8
+at a17648eedd2886481d8ca067586aaee9aa5b0885:7374files/21,244,441,721bytes.
+Includes training/checkpoints, failed original collector, recovery launch and384midpoint
+diagnostics plus75manual reviews. Save log /tmp/sft-drift-handoff-current.log ends verifiedtrue.
+Earlier save33517handle disappeared without new receipt; successor79200completed/verified.
+Closed midpoint full measurement216files/50new and3surface+7finalretentionreviews added
+locally after this snapshot; next private save required. Final collection live onGPU;
+do not destroy box. GPUsource e2b25f6 remains pinned, no live worker source mutation.
+Save after source push:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
 Keep same process through HF429waits; no local mutation during save; check receipt.
 
 ## Other fixed study limits

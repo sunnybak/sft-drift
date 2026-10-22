@@ -40,3 +40,28 @@ readings for midpoint remain live, followed by all final measurements. No weight
 settings or gates are selected/changed from these results. If the final reviewed
 scientific result is negative, pause the goal and report recommendation as requested;
 do not launch further tuning, confirmation or expansion after a negative result.
+
+## Closed midpoint surface and final procedural boundary
+
+Midpoint full100 finished:2400/2400valid, all2432actual runtime/token records verified.
+Development31/32fails note-flip1/16; validation was not called. Separate full-grid fresh
+controls30/32, zero note-flips. All3failed request/reply pairs fully read: arithmetic
+and outer-negation reasoning repeatedly concludes endorse, but the final says reject.
+No parser disagreement.216closed files copied/hash-verified(50new), archiveSHA
+5112bb9b98714d862dd86cd319e3f6f95409739a05507b994f7904ac3c835440.
+
+Final procedural128complete records collected, with one incomplete generation:
+BASE-known62/63thinking and56/57short. The thinking gate FAILS complete-boundary/stop
+requirement:2398-1147 reasoning loops on whether9-4=5 for4096tokens and never finalizes.
+All7procedural flags fully agent-read, no scorer disagreement. Another thinking error
+spells LMPBGC as LMPCGC; this is outside the BASE-known cohort. Five short errors match
+midpoint: one known multiplication loss and four already-BASE-wrong outer-negation items.
+Subtraction truth_proof.b metadata says2198 while actual prompt says2398; independently
+computed expected1251is correct. Preserve metadata discrepancy without changing inputs,
+gold or scores. The live worker proceeds through the already declared factual/full100
+schedule. A reviewed final procedural failure already rejects the recipe; no new tuning
+or confirmation will follow. Finish collection/review/preservation, then pause user goal.
+
+Verified private snapshot1105eea5a4e324097148c118e40b74f854a08fa8 at a17648e:
+7374files/21,244,441,721bytes. This covers earlier384diagnostics/75reviews, not the
+subsequent216-file closed midpoint copy/new3+7reviews; preserve those next.
