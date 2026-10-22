@@ -36,3 +36,20 @@ format/stop failures, dependency rules and private handoff. Tests never use real
 paths or load weights. New JSONL allhave Markdown. Execution binds961source/config/test/
 weight files before collection. Train/eval controller remains next implementation;
 reference-only worker does not start training or authorize scaling.
+
+## Reference launched after verified preservation
+
+Prepared snapshot4b0e8e666fad43404b3922e85d659cd52a4dced3 verified5,822files/
+16,164,768,893bytes at code4e572ad; corpusc3fa8b40802405a250ee0343e382e607b87de0ef.
+GPU source fast-forwarded,27declared data/input files transferred with checksums;
+all protocol/execution hashes matched. Fresh finite supervisor
+sft-drift-replay-weight-reference-v1 RUNNING PID113120at launch, no autostart/restart.
+Log:/workspace/sft-drift-ops/replay-weight-reference-v1.log.
+Command:.venv/bin/python -u scripts/run_replay_weight_confirmation.py reference.
+ChildBASE uses shared CUDA lock; expected reference768calls. No new SFT started.
+
+Copied immutable STARTED/BASEdispatch/execution metadata only. Live raw responses
+remain remote until a completed-child boundary. Source is bound to4e572ad and must
+not change midmeasurement. Measurement cannot resume on process loss; no automatic
+rerun. Observe same process until authoritative terminal. Training controller remains
+next implementation after preserving reference; no qualification or improvement claim.
