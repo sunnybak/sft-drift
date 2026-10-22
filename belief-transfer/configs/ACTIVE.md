@@ -258,7 +258,7 @@ New typed response_interface_rca configs ethics_gpu_target_free_control_*_v1.yam
 driver scripts/run_target_free_controls.py, analyzer analyze_target_free_controls.py
 and evals/target_free_controls.py.388rows/model:384fresh domain/split references plus
 4separate source-linked regression probes. BASEmust pass first; no ethical outcomes
-used to select prompts or training. Current pipeline is prepared; STATE controls launch.
+used to select prompts or training. Calibration is terminal after planned BASEgate failure; STATE records the next diagnostic.
 
 ## Target-free thinking-mode comparison
 

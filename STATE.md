@@ -104,10 +104,14 @@ mode and adapter-minus-BASE gains/losses with coverage. No ethical outcomes/trai
 Driver scripts/run_target_free_modes.py; analyzer scripts/analyze_target_free_modes.py.
 62focused/controller/stage/layer/handoff tests pass; tokenizer104–177thinking,
 108–181nonthinking fits4352context. All10typed configs and two bank inputs prepared.
-New paths registered before preparation. Not yet launched at this preparation boundary.
-Exact next command after committed source/inputs deploy: GPUvLLMPython
-scripts/run_target_free_modes.py check-runtime; finite worker then runs
-.venv/bin/python -u scripts/run_target_free_modes.py run.
+New paths registered before preparation. DEPLOYED/LAUNCHED source70c6784; all37bindings
+verified and GPUvLLMpreflightpassed. Supervisor sft-drift-target-free-modes-v1 RUNNING,
+PID92788 atlaunch; finite command .venv/bin/python -u scripts/run_target_free_modes.py run.
+Log /workspace/sft-drift-ops/target-free-modes-v1.log. Do not pull/change bound GPUsource
+while active. Authoritative next check: ssh -p58689 root@38.49.42.46
+'supervisorctl status sft-drift-target-free-modes-v1'. Closed child copy from belief-transfer/:
+uv run --no-sync python scripts/copy_error_rca.py --suite modes --host root@38.49.42.46 --port 58689. Then scripts/analyze_target_free_modes.py --allow-partial;
+final analysis only after all10jobs. Running raw outputs are GPU-only until closed-copy.
 No resume/autorestart; changed inputs/source require fresh IDs. No new SFT/rental.
 
 ## Dashboard and preservation
@@ -127,9 +131,8 @@ tests, TypeScript and finalbuild pass; browser/screenshot verified. Full browser
 that the later BASEreadout failed. No historical score/gate was changed.
 
 Latest verified private receipt d957c83e,code2dd7e3e,4729files/15,694,161,542bytes:
-terminal interface controls, frozen paired inputs and launch proof. Next save must
-include completeBASE, partialpositive, stop/deviation/review, dashboard and new target-
-free bank code. All captured paired outputs are now off-box. Target-free thinking worker is terminal; keep existing GPUbox for the paired-mode diagnostic.
+terminal interface controls, frozen paired inputs and launch proof. Next save must include completeBASE, partialpositive, stop/deviation/review, dashboard,
+target-free terminal BASEand reviewed failures, plus paired-mode code/banks/launch proof. All captured paired outputs are now off-box. Target-free thinking worker is terminal; keep existing GPUbox for the paired-mode diagnostic.
 
 Original pilot/results/expanded-control/off-topic follow-up remain preserved under
 their original IDs; see changelog/2026-10-21-ethical-four-arm-results.md and
