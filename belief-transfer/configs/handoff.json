@@ -405,7 +405,13 @@
     "results/ethical_pilot/ethics_gpu_rca_offtopic_nonthink_sampled_v1",
     "results/ethical_pilot/ethics_gpu_rca_c4_only_nonthink_sampled_v1",
     "results/ethical_pilot/ethics_gpu_rca_base_hf_greedy_v1",
-    "results/ethical_pilot/ethics_gpu_rca_offtopic_hf_greedy_v1"
+    "results/ethical_pilot/ethics_gpu_rca_offtopic_hf_greedy_v1",
+    "generated/ethical_pilot/ethics_gpu_response_interface_rca_v1",
+    "results/ethical_pilot/ethics_gpu_response_interface_rca_v1",
+    "results/ethical_pilot/ethics_gpu_response_rca_base_nonthinking_v1",
+    "results/ethical_pilot/ethics_gpu_response_rca_offtopic_nonthinking_v1",
+    "results/ethical_pilot/ethics_gpu_response_rca_base_thinking_v1",
+    "results/ethical_pilot/ethics_gpu_response_rca_offtopic_thinking_v1"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

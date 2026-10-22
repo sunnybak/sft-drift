@@ -1811,6 +1811,7 @@ class PilotBenchSpec(BaseModel):
 
 Stage = Literal[
     "control_recheck",
+    "response_interface_rca",
     "conviction_allocation",
     "conviction_study",
     "stance_study",
@@ -2004,6 +2005,16 @@ class ControlRecheckSpec(BaseModel):
     adapter_sha256: str | None = None
 
 
+class ResponseInterfaceRCASpec(BaseModel):
+    """Explicit immutable diagnostic bank; not a frozen ethical instrument."""
+    model_config = ConfigDict(extra="forbid")
+    version: Literal["response-interface-rca-v1"] = "response-interface-rca-v1"
+    model_label: str
+    bank_path: str
+    bank_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    adapter_sha256: str | None = None
+
+
 class JobConfig(BaseModel):
     """One resolved job: the sole input to a stage, and the output counterpart of
     `RunResult`.
@@ -2029,6 +2040,7 @@ class JobConfig(BaseModel):
     # Omit this opt-in field when unset: historical config identities must not change.
     document_sft: DocumentSFTSpec | None = Field(default=None, exclude_if=lambda value: value is None)
     control_recheck: ControlRecheckSpec | None = Field(default=None, exclude_if=lambda value: value is None)
+    response_interface_rca: ResponseInterfaceRCASpec | None = Field(default=None, exclude_if=lambda value: value is None)
     related_runs: dict[str, str] = Field(default_factory=dict)
     """Sibling run ids that belong with this one, mapped to why, e.g.
     `{matrix_v1_step24: "the same arms read at step 24, where belief transfer peaks"}`.

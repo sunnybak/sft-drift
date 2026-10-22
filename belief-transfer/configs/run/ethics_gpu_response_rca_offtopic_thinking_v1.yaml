@@ -1,0 +1,20 @@
+# @package _global_
+defaults:
+- ethics_gpu_control_recheck_offtopic_v2
+stage: response_interface_rca
+run_id: ethics_gpu_response_rca_offtopic_thinking_v1
+control_recheck: null
+response_interface_rca:
+  model_label: offtopic
+  bank_path: data/generated/ethical_pilot/ethics_gpu_response_interface_rca_v1/bank.jsonl
+  bank_sha256: 9f36168612f3e7bbcd4e654f9aef500df8c3dd63367aac42e537e8022f4163e7
+  adapter_sha256: 52c223f8a5b77331265a55ca71182852c1f60850879a4ca541b0a296d1ce8ecb
+pilot_bench:
+  max_new_tokens: 4096
+  measurement_batch_size: 64
+  measurement_decoding:
+    thinking: true
+    temperature: 0.6
+    top_p: 0.95
+    top_k: 20
+    min_p: 0.0

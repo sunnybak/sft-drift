@@ -2,25 +2,24 @@
 
 ## Active work — error investigation and tuning
 
-User authorizes resolving errors, revising evals thoughtfully and tuning training
-before expansion. Plan: changelog/2026-10-21-error-rca-plan.md. Existing3090idle verified;
-no new rental. Prepare/master ethics_gpu_error_rca_v1: 12control audits, same five models,
-nonthinking sampled/greedy plus HF BASE/offtopic parity. 4,928calls planned, no training.
-Preserve old frozen results. Full100belief comparisons follow any revised instrument.
-Preparation COMPLETE: immutable protocol/configs and438historical failed presentations
-saved. Source87df080on GPU. Supervisor sft-drift-error-rca-v1 RUNNING pid73700 verified;
-finite worker has NO resume/retry. 12jobs,4,928calls; do not restart or reuse started IDs.
-Log /workspace/sft-drift-ops/error-rca-v1.log; stderr samepath with.err.
-First3greedy audits (BASE,positive,negative) closed/copied:45files/3,584,504bytes
-hash-verified. Explicit-truth correct BASE66/96,positive70/96,negative66/96; all
-strict-format96/96but fail accuracy. Not a working interface fix. Ninejobs pending
-at this copied boundary. 47initial focused tests plus6worker/analysis tests pass.
-Generated and results roots: data/{generated,results}/ethical_pilot/ethics_gpu_error_rca_v1.
-Next read-only status: ssh -p58689 root@38.49.42.46 'supervisorctl status sft-drift-error-rca-v1; tail -5 /workspace/sft-drift-ops/error-rca-v1.log'
-Next copy from belief-transfer: uv run --no-sync python scripts/copy_error_rca.py --host root@38.49.42.46 --port 58689
-Next partial analysis: uv run --no-sync python scripts/analyze_error_rca.py --allow-partial
-Terminal analysis drops --allow-partial only after all12complete. Hold further training
-until interface/backend evidence is reviewed; then write the next prospective block.
+User authorizes resolving measurement errors and tuning before expansion. No new rental.
+ethics_gpu_error_rca_v1 COMPLETE:12operations/4,928calls; supervisor EXITED. Terminal
+copy187files/22,592,523bytes hash-verified. Allanswers strictformat; everymodel including
+BASE fails expanded accuracy. HF/vLLM adapter agreement224/224, BASE221/224, identical
+inputtokens. Negative/offtopic declines cross2ppdevelopment trigger in originalform;
+no broadforgetting attribution. See changelog/2026-10-21-error-rca-results.md.
+
+Response-interface factorial diagnostic PREPARED, not yet launched:
+ethics_gpu_response_interface_rca_v1,4children BASE/offtopic×thinking/nonthinking,
+256rows each. Endorse/reject,agree/disagree,true/false,yes/no×words/digits×polarity×order.
+Protocol/bank registered under data/generated/ethical_pilot/master. No training.
+Prospective plan changelog/2026-10-21-response-interface-rca-plan.md. Reused8facts only;
+requires fresh held-out validation on all5models before adoption. Oldfailedgates retained.
+52focused tests pass in isolated runs; no weights loaded. Next: commit/push; sync
+GPU only after oldworker terminal (verified), copy preparedbank, launch finite supervisor
+sft-drift-response-interface-rca-v1 through scripts/run_response_interface_rca.py run.
+Worker has no resume/retry; fresh IDs required after started failure. Full100belief
+measurements follow any revised instrument. Goal remains active.
 
 ## Latest completed work
 
