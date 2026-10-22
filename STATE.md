@@ -13,13 +13,13 @@ changelog/2026-10-21-error-aware-readout-v2-plan.md.
 ## Live finite sweep: ethics_gpu_target_free_readout_v2
 
 Supervisor sft-drift-target-free-readout-v2 RUNNING pid99941, GPUsource469c18f.
-At53:44uptime five seed42jobs closed; BASEseed7running320/1200natural after488controls.
+At1:00:53uptime sixjobs closed; positiveseed7(job7)controls448/488.
 All100beliefs ×5fixed models ×3sampling seeds:15jobs,25,320calls planned. Default
 thinking sampler/no presence penalty, target-free opposing positions. Performance
 failures retain full grids; technical identity failures stop. NOresume/autorestart.
 No remote sourcepull/change while bound; never restart a started ID.
 
-Firstfive children copied and byte-verified off-box:105files/99,495,966bytes. Partial
+Firstsix children copied and byte-verified off-box:126files/119,902,142bytes. Partial
 analyzer reconstructs6,000/6,000natural valid/strict/no caps; all500belief/model rows
 retained. All firstseed developmentcontrols240/240. Fresh correct/480 BASE474,
 positive475,negative475,offtopic478,C4475; stress/8correct5/8/6/8/7respectively.
@@ -27,12 +27,13 @@ Scope failures cluster in ONEambiguous authored not-metal/marked case. BASEnumer
 misreading, C4wrongoptionmapping and cappedloops are genuine. Offtopic own fresh
 gates pass; paired assessment remains false because BASEfails. Grades unchanged.
 
-Read60/72preselected FULLnatural replies and all29failed controls from five seed42jobs.
+ReadALL72/72preselected FULLnatural replies and all36failed controls from firstsixjobs.
 C4smoking reply lastsettledrationaleexplicitlychoosesAthenoutputsB; parsercorrectly
 recordsB. Other59align with their lastsettledrationale but have scope/referent,
 necessity and knowledge-addition caveats. Smoking prohibition actor is underspecified.
 No moral truth key, faithful-rationale assumption or sample-to-population rate.
-Remaining12preselected replies are BASEseed7. Read all subsequent failed controls.
+BASEseed7has fresh476/480correct/stress5/8; allnatural valid/strict. Read subsequent failed controls.
+preselected_review_completion.json companion records exact72selection/sourcehashes; semanticclearancefalse.
 Report: changelog/2026-10-22-readout-v2-first-seed-review.md and master per-arm reviews.
 
 Agreed boundary after user raised excessive iteration: finish this fixed sweep and
@@ -55,9 +56,9 @@ remain incomplete; do not mark goalcomplete. GPUlog/workspace/sft-drift-ops/targ
 Original four-arm10targetpilot/results and expanded/offtopicfollow-up complete under
 original IDs. Candidatev5:20,000documents/221repairs; two conservation subjects remain
 quarantined, full-bank semantic clearance false. Git/data preservation required;
-current private receipt data/.handoff-receipt.json is authoritative. Previous verified
-snapshot eec19edc7fdf2f2e5897ee233b36a0370b25506f at8045dd5coversBASE/positivefirstseed
-results/reviews; negative/offtopic/C4and new reviews await current save. Live/incomplete
+current private receipt data/.handoff-receipt.json is authoritative. Latest verified
+snapshot93deeec71bc5358813b3e99e1acdf70fbcde4eff at43cdec7coversall5seed42jobs/reviews,
+5,281files/15,904,477,846bytes. BASEseed7plus72reviewcompletion await current save. Live/incomplete
 GPUoutputs are not yet copied/snapshotted. The active process requires this box.
 
 Dashboard http://127.0.0.1:5180/, prior12reports; unchanged in this block. Fullsurface

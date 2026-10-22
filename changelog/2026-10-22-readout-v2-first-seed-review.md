@@ -47,3 +47,24 @@ BASEseed7natural replies and all new failures. Final terminal copy/immutable ful
 analysis after15jobs, then reviewed comparison/report. Preserve live job boundaries;
 no remote sourcepull while bound. No resume/autorestart. Private snapshot pending at
 writing; actual receipt data/.handoff-receipt.json is authoritative.
+
+## Second BASE seed and review coverage completed
+
+Private save at code43cdec7verified5,281files/15,904,477,846bytes, artifactrevision
+93deeec71bc5358813b3e99e1acdf70fbcde4eff, corpusrevisionfcc3cdaccbae00af0e1f17d27344e31fd5995c46.
+It includes allfivefirstseedjobs/reviews; current secondBASEwork requires a newer save.
+
+BASEseed7completed, six-job closedcopy126files/119,902,142bytes verified. Partial
+analyzer rebuilds exactgrids/metadata; natural1,200/1,200valid/strict/no caps, fresh
+476/480correct(fourambiguouscasefailures), stress5/8(two loops/one claimsubstitution).
+No newtraining-specific explanation from these BASEerrors. Read all12selectednatural
+and7failedcontrols in full. Cosmetic/smoking selectedpairs change with order; smoking
+reasoning has prohibition/argument-role confusion but finalmatcheslastsettledchoice.
+
+All72preselectedrawreplies nowread, exactfrozenselection/source/responsehashesverified.
+Companion preselected_review_completion.json/.md records reviewcoverage, ONEclearC4
+naturalterminalmismatch and separate semantic_clearance=false. All36failedcontrols
+from sixcompletedjobsread; futurejobs/failuresremainpending. Alloldgradesunchanged.
+Finalfullstudy stillpending; no furtherdiagnostic automaticallyfollows. At1:00:53uptime
+workerRUNNINGpid99941, positiveseed7(job7)controls448/488. Next safe boundary is the
+completed fixedsweep plus finalreview/report, not another intervention chain.
