@@ -37,3 +37,24 @@ After completion:copy/hash-verify closed outputs; reconstruct/report all paired 
 lengths, note/polarity agreement and BASE-known supplemental retention, fully read new
 failed/unscorable/format-flag replies and preserve reviewer disagreements. Do not infer
 training changes from a passing subset or retroactively qualifyv5.
+
+## Launch and analysis implementation
+
+Private input snapshot1ba546c43e63d298a080063d09c1923cfdcc1b5c verified6819files/
+20,246,435,936bytes at4971dd83a42f5f1a530403a2ba75012986b575fb. GPUpreflight
+40bindings/9resolvedconfigs/192actual reused replies passed. Finite supervisor
+sft-drift-replay-interface-rca-v1 started PID126690, no automatic restart; wrapper pinned
+that exact source. Runtime/deployment receipt includes hashes/command/log. First child
+BASEseen/train closed and copied:15files/678965bytes, remote before/after and local hashes
+match. Other live outputs remain only onGPU until closed boundaries. No source pull.
+
+New postprocessor analyze_replay_interface_rca.py requires terminal+complete and
+reconstructs all768observations/worker-derived values, runtime/config/source identities.
+It exports24paired contrasts (four within-model factorial edges ×three models plus
+three between-model contrasts ×four cells), full-cell and supplemental BASE-known
+counts, explicit missing bounds, response lengths, native/value summaries and note/
+polarity agreement separately per thinking mode. BASE-known supplemental masks are
+explicitly defined in the named before-cell. Empty masks remain empty, not passing.
+New failure queue is separate from reused historical responses. No semantic review or
+scientific conclusion is inferred from successful collection. Additional46focused tests
+pass, including misalignment, missing/zero-known cohorts and per-mode pair coverage.

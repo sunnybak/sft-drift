@@ -23,20 +23,25 @@ semantic defects. Thinking median293→43.5tokens(gold45):style/shortcut hypothe
 Full100support69.79% vsBASE42 63.29%(+6.50pp),oldC4controlbounds67.833–67.875%.
 These unqualified descriptive readings do not establish selective editing or clear gates.
 
-PREPARED:ethics_gpu_replay_interface_rca_v1, fixedBASE/control/v5candidate2×2transfer
-RCA. 9new typed neutral_decision_retention jobs,576new calls; held/eval192actual replies
-reused. No training/newethicalreading/adoptiongate. Inputs4×64rows;192actual training
-prefixes/targets/weights reverified, all40source/prepared bindings match. Focused tests
-110passed(mocks/tempdirs, includes missing/changed actual metadata and truncation).
-Generated/ethical_pilot master protocol and9YAMLs are ready; no RCAcalls/worker yet.
-Next:private-save inputs, deploy exact source/inputs/receipt after oldworker terminal,
-then finite supervised dispatch. No overwrite/resume/retry-on-content. Conditional
-independent confirmation remains NOT triggered; failedv5verdict unchanged.
-Exact prepare command(already completed, DO NOT rerun existingID):
-cd belief-transfer && uv run --no-sync python scripts/prepare_replay_interface_rca.py
-Exact worker command(after verified preservation/deployment):
-cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_replay_interface_rca.py
-Plan:changelog/2026-10-22-replay-interface-rca-plan.md; implementation notes beside it.
+RUNNING:supervisor sft-drift-replay-interface-rca-v1 PID126690. GPUsource pinned
+4971dd83a42f5f1a530403a2ba75012986b575fb; do NOT pull source while worker runs.
+FixedBASE/control/v5candidate2×2transfer RCA:9jobs/576new calls,192historical reused.
+All40bindings/9resolvedconfigs/192historical actual responses reverified onGPU before
+launch. First BASEseen/train child complete/copied/hash-verified locally:15files/678965B.
+Control seen/train was active at last check. No new training or ethical reading.
+All192seen/train actual training-prefix/targets/weights exact; all256requests solved.
+Focused preparation110tests pass; new analyzer/paired missing/per-mode checks46pass.
+Scientific v5failure remains unchanged; no automatic adoption or conditional confirmation.
+Command:cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_replay_interface_rca.py
+Log:/workspace/sft-drift-ops/replay-interface-rca-v1.log
+Exact next monitor:
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-replay-interface-rca-v1; tail -n 5 /workspace/sft-drift-ops/replay-interface-rca-v1.log'
+After terminal:copy/hash-verify closed master/all9children/log, then locally:
+cd belief-transfer && uv run --no-sync python scripts/analyze_replay_interface_rca.py
+Analyzer requires complete+terminal, reconstructs all768actual records and24contrasts,
+keeps native/value/format/stops/lengths/per-mode note+polarity/missing bounds separate.
+New failure queue requires full agent reading. No overwrite/resume/retry-on-content;
+process does not survive a destroyed box. Plan:2026-10-22-replay-interface-rca-plan.md.
 
 ## Current scientific comparison
 
@@ -71,15 +76,15 @@ No automatic expansion, checkpoint selection on stance, or repeat-until-pass.
 
 ## Preservation
 
-Latest VERIFIED private snapshotef853555ffe09e76e69f4b7b5fcbd45ffc0aef73 at5421a9e:
-6807files/20,246,079,243bytes; corpusc16c62e0c67488509e93f6c2b26334e375c86a20.
-Includes entire closed training/checkpoints, terminal worker log/full100, all reviews,
-mechanical/per-belief analyses and final reviewed verdict. No outputs remain only onGPU
-or only local. Verified receipt updated after successful same-processHF429retry.
-Git final report/source pushed. New RCAinputs/source/configs are local pending next save.
-Copy receipts under generated/ethical_stance_sft/ethics_sft_replay_coverage_value_v5.
-Save at next completed block:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
-No local mutations during save. Worker terminal/GPU idle; no resume/restart.
+Latest VERIFIED private snapshot1ba546c43e63d298a080063d09c1923cfdcc1b5c at4971dd8:
+6819files/20,246,435,936bytes; corpus842d71f73589caa961af45caa6415d44f14119d0.
+Includes all earlier terminalv5data/reviews and newRCAprotocol/inputs before first call.
+Installed verified receipt onGPU before launch. Launch receipt and closed first child
+are now offGPU/local pending next save; later/live children/master/log remain onGPU.
+Current source/notes save will include analyzer and launch details. Prior runtime configs
+preserved onGPU ops backup; tracked replacements byte-identical. Do not pullGPUsource.
+Save at safe boundary:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+No local mutations during save. Do not claim box-destruction safety with live new results.
 
 ## Established results and data limits
 

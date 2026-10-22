@@ -14,6 +14,7 @@ from run_replay_interface_rca import inspect
 from belief_transfer.stages.neutral_decision_retention import observation
 from belief_transfer.evals.neutral_decision_retention import summarize
 from prepare_replay_weight_ablation import write_rows, write_json
+from analyze_replay_interface_rca import contrast, describe
 
 
 class Tokenizer:
@@ -120,6 +121,37 @@ def test_actual_child_reconstruction_and_truncated_content_preservation(tmp_path
     if defect in (None, 'truncation'):
         result = inspect(tmp_path, bank, runtime, None, t)
         assert len(result) == 64
+        description = describe(result)
+        assert description['agreement_by_mode']['True']['polarity']['agreement'] == 1
+        assert description['agreement_by_mode']['False']['note']['eligible_pairs'] == (15 if defect == 'truncation' else 16)
         if defect == 'truncation':assert result[0]['assessment']['value_correct'] is None
     else:
         with pytest.raises(ValueError):inspect(tmp_path, bank, runtime, None, t)
+
+
+def test_contrast_does_not_turn_missing_into_wrong_or_select_a_passing_subset():
+    _, held, _ = inputs()
+    before = [r | {'assessment': {'value_correct': True},'response_sha256':'a'*64} for r in held]
+    after = copy.deepcopy(before)
+    after[0]['assessment']['value_correct'] = None
+    after[2]['assessment']['value_correct'] = False
+    base = copy.deepcopy(before)
+    for r in base:r['assessment']['value_correct'] = False
+    report, pairs = contrast(before, after, base)
+    assert report['False/full']['n'] == 32
+    assert report['False/full']['accuracy_change_pp'] is None
+    assert report['False/full']['missing_answer_change_bounds_pp'] == [-6.25,-3.125]
+    assert len(report['False/full']['losses']) == 1
+    assert len(report['False/full']['unscorable_transitions']) == 1
+    assert report['False/base_known']['n'] == 0
+    assert report['False/base_known']['accuracy_change_pp'] is None
+    assert pairs[0]['after_correct'] is None
+
+
+@pytest.mark.parametrize('field', ['expected','thinking','example_id'])
+def test_contrasts_reject_misalignment(field):
+    _, held, _ = inputs()
+    before = [r | {'assessment': {'value_correct': True},'response_sha256':'a'*64} for r in held]
+    after = copy.deepcopy(before)
+    after[0][field] = not after[0][field] if field == 'thinking' else 'changed'
+    with pytest.raises(ValueError):contrast(before, after, before)
