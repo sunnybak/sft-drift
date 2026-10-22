@@ -259,3 +259,13 @@ driver scripts/run_target_free_controls.py, analyzer analyze_target_free_control
 and evals/target_free_controls.py.388rows/model:384fresh domain/split references plus
 4separate source-linked regression probes. BASEmust pass first; no ethical outcomes
 used to select prompts or training. Current pipeline is prepared; STATE controls launch.
+
+## Target-free thinking-mode comparison
+
+Target-free v1 is terminal after planned BASEgate failure; no adapter calls. New
+master ethics_gpu_target_free_modes_v1, driver scripts/run_target_free_modes.py,
+analyzer scripts/analyze_target_free_modes.py and ten typed configs compare the same
+five models in thinking/nonthinking modes with identical sampler/output budget.
+388calls/job,3880max; fresh64reference cases plus4separate reused probes. All models
+collected despite performance failures; old gates/results unchanged. See STATE.md
+and changelog/2026-10-21-target-free-modes-plan.md before execution. No training.

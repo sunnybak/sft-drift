@@ -58,6 +58,7 @@ def test_base_pass_keeps_remaining_adapter_calls_even_if_their_performance_will_
 
 def test_prepare_composes_all_five_typed_jobs_in_tmpdirs_without_tokenizer_or_weights(tmp_path,monkeypatch):
  cfg=tmp_path/'configs';shutil.copytree(config.CONFIG_DIR,cfg);monkeypatch.setattr(config,'CONFIG_DIR',cfg);monkeypatch.chdir(tmp_path)
+ for _,_,run in worker.run_ids():(cfg/'run'/(run+'.yaml')).unlink(missing_ok=True)
  proofs={}
  for arm in ['base','positive','negative','offtopic','c4_only']:
   job=config.load_job(['+run=ethics_gpu_scope_control_'+arm+'_v1']);b=job.pilot_bench;digest=None

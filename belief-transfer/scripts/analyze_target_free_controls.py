@@ -37,12 +37,12 @@ def split_summary(observed):
         'independent_repeat':repeats,'order_agreement':compare(orders,[0,1]),
         'failures':[{k:r.get(k) for k in ['presentation_id','domain','expected_word','answer','strict_format','error','final_response']} for r in observed if not r.get('correct') or not r.get('strict_format') or r.get('error')]}
 
-def inspect_model(root:Path,item:dict,protocol:dict)->dict:
-    generated=root/'generated/ethical_pilot'/MASTER;child=root/'results/ethical_pilot'/item['run_id']
+def inspect_model(root:Path,item:dict,protocol:dict,*,master:str=MASTER)->dict:
+    generated=root/'generated/ethical_pilot'/master;child=root/'results/ethical_pilot'/item['run_id']
     if not (child/'COMPLETED').exists():raise ValueError('Child calibration is incomplete')
-    bank=rows(generated/'bank.jsonl');expected={r['presentation_id']:r for r in bank};observed=rows(child/'observations.jsonl');manifest=read(child/'manifest.json');proof=protocol['runtime_evidence'][item['arm']]
+    bank_path=generated/item.get('bank_filename','bank.jsonl');bank=rows(bank_path);expected={r['presentation_id']:r for r in bank};observed=rows(child/'observations.jsonl');manifest=read(child/'manifest.json');proof=protocol['runtime_evidence'][item['arm']]
     if len(bank)!=388 or len(expected)!=388 or Counter(r['presentation_id'] for r in observed)!=Counter(expected.keys()):raise ValueError('Incomplete target-free bank/grid')
-    if sha(child/'bank.jsonl')!=sha(generated/'bank.jsonl') or manifest['bank_sha256']!=sha(generated/'bank.jsonl') or manifest['adapter_sha256']!=item['adapter_sha256'] or manifest['model_label']!=item['arm']:raise ValueError('Control bank/model/adapter changed')
+    if sha(child/'bank.jsonl')!=sha(bank_path) or manifest['bank_sha256']!=sha(bank_path) or manifest['adapter_sha256']!=item['adapter_sha256'] or manifest['model_label']!=item['arm']:raise ValueError('Control bank/model/adapter changed')
     for k in ['model_config','backend','decoder','generation','versions','max_new_tokens']:
         if manifest[k]!=proof[k]:raise ValueError('Control runtime identity changed: '+k)
     for r in observed:
@@ -50,7 +50,7 @@ def inspect_model(root:Path,item:dict,protocol:dict)->dict:
         if r.get('response') is None:
             if not r.get('error') or r.get('answer') is not None or r.get('correct') or r.get('strict_format'):raise ValueError('Unmarked absent response')
             continue
-        m=r.get('generation_metadata') or {};rebuilt=assess(r,r['response'],m,thinking=True)
+        m=r.get('generation_metadata') or {};rebuilt=assess(r,r['response'],m,thinking=manifest['decoder']['thinking'])
         if any(r.get(k)!=v for k,v in rebuilt.items()):raise ValueError('Control assessment does not reconstruct')
         if (m.get('model_revision')!=proof['generation']['revision'] or m.get('adapter_lora_id')!=(1 if item['adapter_sha256'] else None)
             or m.get('sampling_seed')!=r['sampling_seed'] or m.get('execution_versions')!=proof['versions'] or len(m.get('input_token_ids') or [])!=r['expected_input_tokens']):raise ValueError('Control request/tokenizer identity changed')

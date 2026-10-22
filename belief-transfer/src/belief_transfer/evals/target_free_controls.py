@@ -65,10 +65,10 @@ def contexts()->list[ControlCase]:
                 'Use standard integer arithmetic to judge the two statements. No answer is supplied.',truth,{'operation':family,'a':a,'b':b,'computed':actual,'claimed':claimed}))
     return result
 
-def build_bank(regression_rows:list[dict],*,source_sha256:str,seed:int=42)->list[dict]:
+def build_bank(regression_rows:list[dict],*,source_sha256:str,seed:int=42,cases:list[ControlCase]|None=None)->list[dict]:
     if len(regression_rows)!=2 or {r['control_kind'] for r in regression_rows}!={'factual','factual_null'}:raise ValueError('Exactly the two preserved BASE comparison failures required')
     bank=[]
-    scheduled=contexts();random.Random(seed).shuffle(scheduled)
+    scheduled=list(contexts() if cases is None else cases);random.Random(seed).shuffle(scheduled)
     for c in scheduled:
         for order in [0,1]:
             for variant in ['plain','repeat','note']:

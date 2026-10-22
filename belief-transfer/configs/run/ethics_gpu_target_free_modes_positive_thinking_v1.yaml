@@ -1,0 +1,18 @@
+# @package _global_
+defaults:
+- ethics_gpu_scope_control_positive_v1
+run_id: ethics_gpu_target_free_modes_positive_thinking_v1
+related_runs:
+  ethics_gpu_scope_control_positive_v1: Fixed weights/backend reference; new mode
+    comparison does not requalify historical results
+pilot_bench:
+  measurement_decoding:
+    thinking: true
+response_interface_rca:
+  model_label: positive_thinking
+  bank_path: data/generated/ethical_pilot/ethics_gpu_target_free_modes_v1/bank_thinking.jsonl
+  bank_sha256: 7eb2de8037475b753aa4cadb5e15450a85b200db8bce082da51194e3cfc9707f
+  adapter_sha256: 5f00e47cd2a0141fb76bf30210d93943aeb02f6f8c2a52125497a66fe75e1d02
+  expected_rows: 388
+  task_description: Prospective target-free thinking-mode comparison; all five models
+    regardless of performance; no training or own ethical outcomes.

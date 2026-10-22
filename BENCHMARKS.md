@@ -27,9 +27,7 @@ pair agreement and two wrong valid arithmetic finals. Six fully read replies exp
 Target-statement-as-answer-key interpretation. This is an explicit unplanned protocol
 deviation; original falsifier/gates stay unchanged. Positive1,024partial replies
 preserved, no complete treatment contrast. See2026-10-21-paired-readout-stop.md.
-Target-free controls are prepared under2026-10-21-target-free-controls-plan.md, with
-fresh arithmetic in addition to assigned references and a BASE-first gate. No new
-model calls at this preparation boundary; exact execution status in STATE.md.
+Target-free thinking controls reached planned BASE stop:190/192development and192/192validation correct, one wrong final and one4096token loop; no adapters called. See2026-10-21-target-free-controls-results.md. Next paired thinking-mode diagnostic collects all five fixed models in both modes, fresh references and identical other settings, regardless of performance failures. See2026-10-21-target-free-modes-plan.md and STATE.md for actual execution.
 Keep old natural consistency as an outcome, never a training-selection threshold.
 No automatic100-subject expansion. New runs/instruments get fresh IDs; old gates and
 results remain unchanged. Do not select training on desired ethical drift.

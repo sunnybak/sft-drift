@@ -25,7 +25,7 @@ def token_counts(bank,job):
     from belief_transfer.inference.model import _apply_chat_template
     b=job.pilot_bench
     t=AutoTokenizer.from_pretrained(job.models.models[b.model].pretrained,revision=b.cuda_generation.revision,local_files_only=True)
-    return [len(t.encode(_apply_chat_template(t,[{'role':'user','content':r['prompt']}],enable_thinking=True),add_special_tokens=False)) for r in bank]
+    return [len(t.encode(_apply_chat_template(t,[{'role':'user','content':r['prompt']}],enable_thinking=b.measurement_decoding.thinking),add_special_tokens=False)) for r in bank]
 
 def prepare():
     import yaml

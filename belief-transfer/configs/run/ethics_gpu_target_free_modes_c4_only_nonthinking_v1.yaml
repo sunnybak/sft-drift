@@ -1,0 +1,18 @@
+# @package _global_
+defaults:
+- ethics_gpu_scope_control_c4_only_v1
+run_id: ethics_gpu_target_free_modes_c4_only_nonthinking_v1
+related_runs:
+  ethics_gpu_scope_control_c4_only_v1: Fixed weights/backend reference; new mode comparison
+    does not requalify historical results
+pilot_bench:
+  measurement_decoding:
+    thinking: false
+response_interface_rca:
+  model_label: c4_only_nonthinking
+  bank_path: data/generated/ethical_pilot/ethics_gpu_target_free_modes_v1/bank_nonthinking.jsonl
+  bank_sha256: a3b2f2d981b449326f4f35fd728e49e15b55bdcd691fdb4972e040a1e79afdba
+  adapter_sha256: 0c9742001eb77d16629eefba808b463aa0a33f92eff8b37359458c5efe7e8911
+  expected_rows: 388
+  task_description: Prospective target-free thinking-mode comparison; all five models
+    regardless of performance; no training or own ethical outcomes.

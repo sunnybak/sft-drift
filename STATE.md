@@ -78,39 +78,37 @@ Interrupted copy49files/51,266,419bytes verified, all captured JSONL parses; mis
 Markdown views derived. Source raw bytes unchanged. Masteroperator_stop.json/.md,
 copy_interrupted_receipt.json/.md, inventory and reviewed_failed_candidate.md retained.
 
-## Next: target-free controls, BASE first
+## Terminal: target-free thinking controls
 
-Read changelog/2026-10-21-target-free-controls-plan.md. Remove only Target line from
-the explicit-position prompt; hold weights/decoder fixed.64fresh cases:16normative
-stipulated positions,16provided facts,32actual arithmetic judgments (no supplied
-arithmetic answer). Fresh dev/validation references plus4separate reused regression
-rows from the exact BASEfive>three failures:388calls/model,1,940max.
+ethics_gpu_target_free_controls_v1 reached planned BASE_GATE_FAILED, supervisor
+sft-drift-target-free-controls-v1 EXITED (04:38UTC Oct22), sourcee87f5f4.
+BASE388calls complete; four adapters unattempted under original BASE-first rule.
+Terminal off-box copy verified23files/2,923,691bytes; independent analysis reconstructs
+source/runtime/token/grade identities. Development190/192correct,191/192strict/extracted;
+validation192/192correct/strict/extracted. All fresh domain accuracy gates pass, but
+one4096token reasoning loop fails full coverage/normal-stop requirements. Other error
+correctly reasons13+3=16 and answerA, then emitsB. Both full failed replies plus4reused
+correct five>three replies agent-read/saved. No parser/key fault; no SFT implicated
+by BASEfailures. Old gates remain failed. No resume/restart. Details:
+changelog/2026-10-21-target-free-controls-results.md.
 
-Bank factory, typed prepare/runtime driver and independent split/domain analyzer now
-implemented/tested. All64contexts agent-read,32arithmetic references checked; actual
-source reproducer builds388rows. Seed42shuffles fixed-case scheduling and request RNG,
-not deterministic prose.64focused/controller/stage/layer/handoff regressions pass.
-New7paths registered; generated master and5configs prepared.28source/input/config/
-adapter bindings verify. Actual pinned tokenizer104–171inputtokens plus4096cap fits
-4352context. All161frozen artifact hashes unchanged. No target-free model calls yet.
+## Next: paired thinking-mode diagnostic
 
-BASEmust pass fresh domain95%/strict100%/note<=5%criteria in BOTHsplits before any
-adapter calls. If it fails, planned stop; if it passes, collect all4adapters despite
-individual failures. Reused regression rows are separate, not independent validation.
-No fallback from held-out validation and no ethical-direction model/prompt selection.
-New full100readout only after qualified controls and a fresh prospective plan.
-
-Exact next read-only command from root:
-cat changelog/2026-10-21-target-free-controls-plan.md
-Prepared controller: from belief-transfer/, scripts/run_target_free_controls.py
-check-runtime must run with the GPU vLLM Python after committed source/inputs deploy.
-Finite supervisor sft-drift-target-free-controls-v1 then runs
-.venv/bin/python -u scripts/run_target_free_controls.py run
-with unified log /workspace/sft-drift-ops/target-free-controls-v1.log. Deploy only
-after verifying old paired worker STOPPED, no GPUcompute and clean checkout.
-Guarded worker stops after BASEif fresh gates fail; otherwise all4adapter calls run.
-No resume/autorestart; source/config/input changes require fresh IDs.
-No GPUworker currently running; target-free prototype PREPARED, not launched. No training/rental/corpus expansion.
+Prospective plan changelog/2026-10-21-target-free-modes-plan.md. Master
+ethics_gpu_target_free_modes_v1;10children,5fixed models×2thinking modes×388calls=3880.
+Only thinking flag differs; same0.6temperature/top_p0.95/top_k20,4096cap,batch64.
+64fresh contexts, all read;32new arithmetic operand references verified;384fresh rows
+plus4separate reused probes per job. Collect every model despite performance failure;
+stop only execution/identity failures. Existing fresh gates unchanged; report paired
+mode and adapter-minus-BASE gains/losses with coverage. No ethical outcomes/training.
+Driver scripts/run_target_free_modes.py; analyzer scripts/analyze_target_free_modes.py.
+62focused/controller/stage/layer/handoff tests pass; tokenizer104–177thinking,
+108–181nonthinking fits4352context. All10typed configs and two bank inputs prepared.
+New paths registered before preparation. Not yet launched at this preparation boundary.
+Exact next command after committed source/inputs deploy: GPUvLLMPython
+scripts/run_target_free_modes.py check-runtime; finite worker then runs
+.venv/bin/python -u scripts/run_target_free_modes.py run.
+No resume/autorestart; changed inputs/source require fresh IDs. No new SFT/rental.
 
 ## Dashboard and preservation
 
@@ -131,8 +129,7 @@ that the later BASEreadout failed. No historical score/gate was changed.
 Latest verified private receipt d957c83e,code2dd7e3e,4729files/15,694,161,542bytes:
 terminal interface controls, frozen paired inputs and launch proof. Next save must
 include completeBASE, partialpositive, stop/deviation/review, dashboard and new target-
-free bank code. All captured paired outputs are now off-box. Nothing is running;
-keep existing GPUbox for the authorized next calibration.
+free bank code. All captured paired outputs are now off-box. Target-free thinking worker is terminal; keep existing GPUbox for the paired-mode diagnostic.
 
 Original pilot/results/expanded-control/off-topic follow-up remain preserved under
 their original IDs; see changelog/2026-10-21-ethical-four-arm-results.md and
