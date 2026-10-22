@@ -3,6 +3,21 @@
 Scope: [GOAL.md](GOAL.md). Progress and exact next commands: [STATE.md](STATE.md).
 Read the baseline report for methodology/results; do not reconstruct the old research queue.
 
+## Latest candidate result — interim
+
+Replay-value-v5 trained454steps, all12engineering checks pass, exact data/labels/weighted
+objective reconstruct. The recipe FAILS:procedural62/63thinking(one loop/no final),
+56/57short; decisions27/32thinking,20/32short,15/24BASE-known short retained.
+All64decision finals exact and normal; these are genuine value errors. All23assay flags
+and one failed validation control fully read/hash-bound. Original development passes;
+validation note-flip1/16fails. Full100collects as unqualified, still pending final report.
+Actual192decision training draws have0prefix/target mismatches; all64gold source pairs
+read,0clear semantic defects. Median thinking length293→43.5tokens suggests possible
+shortcut/style transfer; causal mechanism unproven. No pipeline qualification or scale.
+See [interim report](changelog/2026-10-22-replay-value-v5-interim.md) and STATE.md.
+Next is fixed-model replay-versus-transfer RCA, not another automatic SFT candidate;
+conditional independent confirmation is NOT triggered by this failed recipe.
+
 ## Latest measurement clarification
 
 V4references complete/reviewed:384replies reconstructed and62flags fully read/hash-bound.

@@ -45,7 +45,7 @@ destruction; current worker has NO resume support despite saved optimizer state.
 
 ## Current scientific comparison
 
-One untrained replay recipe, NOT a parameter sweep:fixed C4/old thinking teacher
+One replay recipe, now trained once; not a parameter sweep:fixed C4/old thinking teacher
 chunks and positions, weight32/LR1e-4/LoRA/seed42/454steps/final-only. Adds194gold replay
 sources(130short procedural,64decision across modes); retains246old thinking sources.
 All194requests independently solved,46full request/target/proof reads,0clear defects.
