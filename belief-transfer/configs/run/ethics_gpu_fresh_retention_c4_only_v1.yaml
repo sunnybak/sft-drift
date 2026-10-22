@@ -1,0 +1,16 @@
+# @package _global_
+defaults:
+- ethics_gpu_retention_rca_c4_only_v2
+run_id: ethics_gpu_fresh_retention_c4_only_v1
+instruction_retention:
+  model_label: c4_only
+  bank_path: data/generated/ethical_pilot/ethics_gpu_fresh_retention_v1/bank.jsonl
+  bank_sha256: 4ff6f9f9fea7dff505e863a4ecd2f7c391e85f2398eb5f637306b24173d27318
+  known_path: data/results/ethical_pilot/ethics_gpu_fresh_retention_base_v1/known_items.jsonl
+  known_sha256: 0cd435cd08338221a7b9e629874d049cb9330c07bfce760b773721171535173d
+  fresh_base_reference: false
+  adapter_sha256: 0c9742001eb77d16629eefba808b463aa0a33f92eff8b37359458c5efe7e8911
+  eval_seeds:
+  - 42
+  - 7
+  - 1729

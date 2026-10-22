@@ -1,71 +1,74 @@
 # Current state — 2026-10-22
 
-## Active goal
+## Active goal and decision
 
-Resolve measurement errors and assess SFT degradation before scaling. User authorized
-existing GPU overnight; no new rental. No new training was performed during RCA.
-Broad collapse is not established; narrow retention/answer errors remain. Goal is
-active. No automatic training queue, lower gates or claim of selective belief editing.
+Investigate/resolve errors and tune genuine SFT regressions before expansion. User
+allows existing GPU overnight; no new rental. Goal NOT complete. New independent-input
+retention confirms narrow no-thinking arithmetic losses and a score/mask blind spot.
+Do not declare recipe tuned, lower old gates or expand ethical training yet.
 
-## Completed and reviewed
+## Latest completed work
 
-**ethics_gpu_target_free_readout_v2:** all15jobs,25,320calls. Five fixed models × all100
-beliefs × three sampling seeds;18,000/18,000natural replies valid/strict/normal.
-All72selected natural and81failed controls read in full, hash-bound finalizer passed.
-Target positive-minus-negative+50.83pp (seedrange48.33–54.17); negative also shifts
-other80ethicalclaims−41.04pp. Positive target+3.06pp vs C4+2.50/offtopic+1.39pp.
-These are forced relative-choice frequencies, not independent endorsement/confidence.
-Reviewed report: changelog/2026-10-22-target-free-readout-v2-results.md.
-Dashboard5180has13reports, including complete5model/109benchmark/545score comparison.
-Own-model vs matched-BASE check failures are separate; valid scores remain visible.
-46dashboardtests/TypeScript and42Python finalizer/layer/handoff checks passed.
+ethics_gpu_fresh_retention_v1:5fixed models ×128presentations ×3eval seeds =1,920calls.
+Supervisor sft-drift-fresh-retention-v1 EXITED Oct22 10:08UTC; sourcea1692a4. No active
+GPU worker or new training. Log:/workspace/sft-drift-ops/fresh-retention-v1.log.
+Terminal copy verified95files/12,704,454bytes. All normal/complete, no caps/backenderrors.
+65mocked/layer/schema/handoff tests pass, plus2full-review checker tests. Old config
+hashes/frozen scoring unchanged. All5runtime config hashes reconstruct dispatch.
 
-**ethics_gpu_scope_fact_clarity_v2:** all5jobs/640calls; terminal copy verified82files/
-9,294,146bytes. All10failed replies read in full and hashes verified. Every model
-scores64/64 on explicit facts; original BASE61,positive62,negative62,offtopic63,C462.
-All errors concern the same compressed original sentence; no extraction disagreements,
-caps or formatting failures.80unchanged-input pairs agree on answers;46raw replies
-vary. Supports a wording explanation for this case, not independent qualification.
-v1preparation failed before calls; partial inputs/failure record retained. v2preflight
-fix passed9mocked tests. Report:2026-10-22-scope-fact-clarity-v2-results.md.
+BASE strict-known mask:64thinking/45nonthinking. Every model passes its inherited
+known-retention gate on all3seeds; declared primary concern criterion is FALSE.
+This misses actual knowledge because correct BASE worked equations were scored wrong
+for including operands and excluded from the mask. Do not alter the primary result.
 
-Both finite supervisors EXITED. No active GPU measurement or training worker.
-GPU sourceb59fada; logs under /workspace/sft-drift-ops/{target-free-readout-v2,
-scope-fact-clarity-v2}.log. No resume/autorestart; never restart these IDs.
-Original failed gates, scoring, frozen bank and weights stay unchanged.
+Separate post-hoc ethics_gpu_fresh_retention_value_review_v1 verifies all164full-reply
+reviews/source hashes. Value-aware BASEcohort:64thinking/57nonthinking. Nonthinking
+retained values/57: positive56,negative54,offtopic56,C454 on all3repeats. Negative/C4
+lose3genuinely BASE-correct sums (3xxx→2xxx); each also gains one previously wrong
+product. Full-bank value counts/64: BASE57,positive56,negative55,C455,offtopic56/56/57.
+Thinking64/64exceptofftopic63/64seeds42,1729andC463/64seed1729. No broad collapse
+established, but actual regressions cannot be dismissed from a passing narrow gate.
+Report:changelog/2026-10-22-fresh-retention-results.md. All164failures agent-read in
+full; exact admissible finals inherit prevalidated keys. Supplemental cohort is
+explicitly post-hoc and does not revise the prospective falsifier.
 
-## Current work: fresh retention before training changes
+## Next work — concrete bounded tuning step
 
-Prepared ethics_gpu_fresh_retention_v1:64independent procedural questions, two modes,
-three evaluation seeds, five existing models =1,920calls. No model calls yet.
-All64tasks/keys agent-read before calls. New bank disjoint from old replay/retention;
-actual tokenization max65inputtokens. BASE seed42selects its mask once before adapters.
-Old config hashes and grading remain unchanged;65mocked/layer/schema/handoff tests pass.
-Plan: changelog/2026-10-22-fresh-retention-plan.md. Full predeclared deficit/content-loss
-criterion decides whether a replay ablation is warranted; no tuning on seen strings.
-Scientific next-training proposal (not launched):2026-10-22-balanced-position-experiment-plan.md.
+Read proposed changelog/2026-10-22-replay-weight-ablation-plan.md, then implement/test
+SEPARATE value/format assessment and opt-in weighted replay normalization. One preset
+fresh C4candidate: only nonthinking replay loss weight1→32; same raw data/seed42/
+recipe/454steps. Normalize weighted NLL across accumulation group; preserve defaults.
+Freeze further independent-input confirmation bank/scorer before training; BASE,
+unchangedC4andnewcandidate. Every new fine-tune still gets all100frozen belief evals;
+never choose recipe from ethical direction. No candidate inputs/calls/training yet.
+CUDA analytic/update/reload verification must precede real SFT. Register all outputs.
+No automatic weight/LR search if this candidate fails. Balanced-position design is
+written but deferred; changed recipe requires retraining matched controls.
 
-Next: commit/push source and save/verify prepared inputs, then copy them to idle GPU,
-deploy clean source and launch finite run_fresh_retention.py run under supervisor.
-From belief-transfer/:
-uv run --no-sync python scripts/handoff.py save
-GPU command after preserved deployment:
-.venv/bin/python -u scripts/run_fresh_retention.py run
-No restart/resume; all outputs registered. Never mutate bound remote source during run.
-Copy completed children with scripts/copy_error_rca.py --suite fresh_retention.
-After terminal full copy, scripts/analyze_fresh_retention.py; read every failed reply.
-No automatic training, sampler search, old-run restart or all100-belief SFT follows.
+Exact next inspection command from belief-transfer/:
+sed -n '1,220p' ../changelog/2026-10-22-replay-weight-ablation-plan.md
+After implementing/fixing code, run narrow new tests before live calls; no Mac tuning.
+Never rerun completed fresh-retention/clarity/readout IDs (no resume/autorestart).
+
+## Prior completed evidence
+
+ethics_gpu_target_free_readout_v2:15jobs/25,320calls; all18,000natural replies valid.
+All72selected natural/81failed controls read; target separation+50.83pp but negative
+other80ethicaldrift−41.04pp. Positive target+3.06pp vsC4+2.50/offtopic+1.39pp. Forced
+relative choices, not independent endorsement/confidence. Dashboard5180has13reports.
+ethics_gpu_scope_fact_clarity_v2:640calls, all5models64/64explicit-facts answers;
+10errorsalloriginalcompressedcase; allread. Historical gates unchanged. No old queue.
+Original neutral18/20gate remains failed; no retrospective pass from these diagnostics.
 
 ## Preservation
 
-Verified private snapshot2b46c808bb1e6ea804d43f3c521e9a75eee11adf at
-63e0a77e3535b3a5fea99c04216605445adb93ff covers both completed comparisons/reviews:
-5,670files/16,123,040,420bytes. Corpus6b165545d628628300b159ad3273c01364c88aa8 verified.
-New fresh-retention source/config/inputs/plans await current block save. Actual receipt:
-belief-transfer/data/.handoff-receipt.json. No source/data mutation during verification.
-
-Candidatev5:20,000documents/221repairs; two conservation subjects quarantined,
-full-bank semantic clearance false. Original pilot/followups remain preserved.
-Fixed retention: gains plus narrow losses;2026-10-21-retention-rca-results.md.
-Dashboard http://127.0.0.1:5180/; restart in benchmark-dashboard/:
-./node_modules/.bin/vite --host 127.0.0.1 --port 5180 --strictPort
+Before current block: verified snapshot e4a2e33eeca9a343eee854f30874546690014f72,
+codea1692a4e86fef7f969efd1f59312147c329d7185,5,675files/16,123,175,637bytes;
+corpusc01a2bf0cd77f854aede1f080c58a92fdfd3675e. Covers prior runs and prepared fresh
+inputs, NOT this block's raw replies/reviews/supplement/newnotes/runtimeconfigs.
+Commit/push current block, then from belief-transfer/:
+uv run --no-sync python scripts/handoff.py save
+Verify receipt before claiming full preservation. No source/data mutation during save.
+Authoritative receipt:data/.handoff-receipt.json. All new JSONL have Markdown views.
+Candidatev5 remains20,000documents/221repairs; conservation subjects quarantined,
+full-bank semantic clearance false. No new corpus/training/full100training launched.

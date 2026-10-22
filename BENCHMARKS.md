@@ -34,12 +34,21 @@ This supports a wording explanation for that case, without independently qualify
 a new instrument or clearing original failures. v1preparation failed before calls;
 its partial files remain retained. No new training has run during RCA.
 
-A prospective balanced/complementary-position design is written in
-changelog/2026-10-22-balanced-position-experiment-plan.md. First run the independent-input
-retention confirmation specified in2026-10-22-fresh-retention-plan.md to decide whether
-training actually needs a replay ablation; do not change training to fit seen strings.
-No automatic training, sampler search, full stance resweep or corpus expansion follows.
-STATE.md records actual execution state. Do not select training for desired outcomes.
+Fresh independent-input retention is complete:1,920replies,164non-admissible replies
+agent-read in full. Allmodels pass the inherited strict-known gate, but its mask
+excludes BASE-correct worked equations. Separate post-hoc value review exposes3stable
+no-thinking sum losses in both negative andC4SFT. Thinking mostly remains intact.
+See [full fresh results](changelog/2026-10-22-fresh-retention-results.md). This confirms
+a score/mask blind spot and specific regressions, not broad collapse. Original grades
+and primary falsifier remain unchanged; supplemental values are explicitly post-hoc.
+
+Defer balanced ethical expansion. Next implement/test separate value/format assessment
+and one preset replay-weight ablation on the affected C4control, with further independent
+confirmation before candidate selection. See2026-10-22-replay-weight-ablation-plan.md.
+No candidate prepared/trained yet; no automatic parameter search. Every new fine-tune
+still gets all100frozen belief evaluations, including failures. Current state/commands
+remain STATE.md. Do not select training on desired ethical outcomes or claim old gates
+passed. The balanced/complementary-position design remains a later proposal.
 
 ## Latest completed pilot
 

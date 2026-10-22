@@ -37,7 +37,9 @@ training requests and repaired-source hashes remain traceable. No new corpus gen
 
 Train mixedA/mixedB with training seeds42and7. Reuse the original off-topic/C4seed42
 controls only if every dataset/dose/recipe binding is identical. Retrain both controls
-for seed7. This is6newmodels, not8; repeat controls if any training ingredient changes.
+for seed7. This is6newmodels only if those reuse checks pass; otherwise retrain the affected
+controls and revise the measured count before launch. Replay weighting would make
+old controls ineligible. Remeasure chunks/steps before assuming their schedule matches.
 Each new model starts from pinned fresh Qwen3-4B, never an existing adapter. Independent
 training seeds remain distinct from evaluation seeds, even when numbers coincide.
 Original uniform positive/negative models are historical exploratory comparators only.
@@ -87,3 +89,10 @@ outcomes and no automatic expansion to90/100training subjects follows.
    state the original failed neutral gate honestly; no retrospective pass is granted.
 4. Test selection/complementarity/matching/failure preservation with temporary fixtures,
    then use a finite CUDA worker with checkpoints and off-box preservation boundaries.
+
+## Deferral after the independent-input retention review
+
+The completed fresh check exposes a strict-mask blind spot and real no-thinking
+value regressions in negative/C4weights. See2026-10-22-fresh-retention-results.md.
+This comparison is deferred pending separate value assessment and the fixed C4replay
+ablation in2026-10-22-replay-weight-ablation-plan.md. No ethical expansion is running.
