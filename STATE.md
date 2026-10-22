@@ -21,21 +21,30 @@ both data/results/ethical_pilot/ethics_gpu_{error_rca,response_interface_rca}_v1
 No active GPUjob, no newtraining. Allnewsource/notes to be committed/pushed and private
 snapshotverified at this boundary; authoritative receipt data/.handoff-receipt.json.
 
-Fixed-retention repeatability audit PREPARED: ethics_gpu_retention_rca_v2,5children
-BASE/positive/negative/offtopic/C4×3evaluationseeds42/7/1729×128fixeditems=1,920calls.
-Original108-itemknownmask stays frozen; all20unknownnonthinkingitems retained too.
-Originaldecoder/scoring/gates unchanged; oneengine/model reused acrossmodes andseeds,
-so matchednewBASE is primary. Plan changelog/2026-10-21-retention-rca-plan.md.
-v1preparation FAILED import-cycle test before anymodelcall; failedplan/source/protocol
-preserved in its generatedroot. Relocated exactassessor to evals; freshv2IDs used.
-44focused tests pass, including frozenscoring sourceequivalence, layers, schemas,
-partialfailure preservation and avoiding semantic-loss attribution to missing replies.
-No GPUjob launched yet. Next: commit/push, sync code and preparedv2inputs to existing
-idlebox, launch finite supervisor sft-drift-retention-rca-v2 using
-.venv/bin/python -u scripts/run_retention_rca.py run from belief-transfer.
-No resume/retry or startedIDreuse. Compare repeatability before training adjustments;
-fresh comprehension controls and any full100revisedinstrument remain subsequentwork.
-Goal remains active; no expansion or newrental.
+Fixed-retention audit ethics_gpu_retention_rca_v2 RUNNING, supervisor
+sft-drift-retention-rca-v2 pid80342; source d9563de onGPU. Five models×3seeds×128items,
+1,920calls. BASEchild COMPLETE:384replies; allthree repeats pass64/64thinking and44/44
+nonthinking originalknownitems with fullformat/boundaries/stops. No newknownmask.
+17files/2,475,214bytes closedchildcopy hash-verified;4adapterchildren pending at this
+copiedboundary. Review changelog/2026-10-21-retention-rca-progress.md and prospectiveplan.
+Allfouroriginalarms had only1,980nonthinking replaytargets (0.159%ofalltargets) vs293,214
+thinkingreplaytargets; possible mode-specific protection imbalance, not causalproof.
+Per-arm hashes/counts in resultsmaster/replay_mode_audit.{json,md}. Replicate first.
+v1prep FAILED layer test before inference; failedsource/plan/protocol preserved.
+45distinct focused tests pass; frozen scoring source-equivalence, complete identity,
+partialfailure and analysisfixture checks. No weights loaded bytests. Oldgates unchanged.
+
+Live command from belief-transfer: .venv/bin/python -u scripts/run_retention_rca.py run
+Log /workspace/sft-drift-ops/retention-rca-v2.log; stderr .err. Finiteworker NOresume/retry.
+Do not pull hash-bound code while live or reuse started IDs. Next read-onlystatus:
+ssh -p58689 root@38.49.42.46 'supervisorctl status sft-drift-retention-rca-v2; tail -5 /workspace/sft-drift-ops/retention-rca-v2.log'
+Nextcopy from belief-transfer: uv run --no-sync python scripts/copy_error_rca.py --suite retention --host root@38.49.42.46 --port 58689
+Nextanalysis: uv run --no-sync python scripts/analyze_retention_rca.py --allow-partial
+Drop --allow-partial only after all5children COMPLETE. Freeze freshretention before
+training tuning; separate explicit-premise comprehension controls from arithmetic.
+Any revisedinstrument needs all100beliefs and ownBASE. No expansion/newrental/training.
+Goal remains active. Snapshot receipt data/.handoff-receipt.json is authoritative;
+live process/currentuncopied outputs do not survive boxdestruction from that receipt.
 
 ## Latest completed work
 

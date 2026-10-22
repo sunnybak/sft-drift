@@ -138,3 +138,42 @@ def test_matched_analysis_does_not_call_missing_replies_semantic_degradation():
     failed = [{**r, 'response': None, 'error': 'backend failure'} for r in wrong]
     assert analysis.compare(base, failed, bank, known)['stable_verified_semantic_losses'] == []
     with pytest.raises(ValueError, match='duplicate'): analysis.compare(base + [base[0]], wrong, bank, known)
+
+def test_full_analysis_uses_frozen_mask_and_refuses_incomplete_counts(tmp_path):
+    analysis = legacy('analyze_retention_rca')
+    bank, job = fixture(tmp_path)
+    known = [json.loads(l) for l in Path(job.instruction_retention.known_path).read_text().splitlines()]
+    root = tmp_path / 'audit'
+    gen = root / 'generated/ethical_pilot' / analysis.MASTER; gen.mkdir(parents=True)
+    for name, value in [('bank', bank), ('known_items', known)]:
+        (gen / (name + '.jsonl')).write_text(''.join(json.dumps(r) + '\n' for r in value))
+    jobs = [{'run_id': a, 'arm': a, 'adapter_sha256': None if a == 'base' else 'hash'} for a in ['base', 'offtopic']]
+    (gen / 'protocol.json').write_text(json.dumps({'jobs': jobs}))
+    assessment = {k: True for k in ['semantic_correct', 'exact_answer', 'strict_format', 'response_boundaries_valid', 'normal_stop']}
+    original = [{**r, 'assessment': assessment, 'response': r['expected']} for r in bank]
+    path = root / 'results/ethical_pilot/ethics_gpu_instruction_retention_base_v1/responses.jsonl'
+    path.parent.mkdir(parents=True); path.write_text(''.join(json.dumps(r) + '\n' for r in original))
+    for item in jobs:
+        child = root / 'results/ethical_pilot' / item['run_id']; child.mkdir(parents=True)
+        (child / 'COMPLETED').write_text('recorded')
+        (child / 'manifest.json').write_text(json.dumps({'bank_sha256': analysis.sha(gen / 'bank.jsonl'),
+            'known_sha256': analysis.sha(gen / 'known_items.jsonl'), 'adapter_sha256': item['adapter_sha256']}))
+        for name in ['bank.jsonl', 'known_items.jsonl']: (child / name).write_bytes((gen / name).read_bytes())
+        (child / 'summary.json').write_text('{}')
+        observed = []
+        for r in bank:
+            for seed in [42, 7, 1729]:
+                score = {**assessment}
+                if item['arm'] == 'offtopic' and r['example_id'] == bank[0]['example_id']: score['semantic_correct'] = False
+                actual = stage.request_seed(r['seed'], seed)
+                observed.append({**r, 'eval_seed': seed, 'request_seed': actual, 'response': r['expected'],
+                    'error': None, 'assessment': score, 'generation_metadata': {'model_revision': analysis.REVISION,
+                    'input_token_ids': r['expected_input_token_ids'], 'sampling_seed': actual}})
+        (child / 'responses.jsonl').write_text(''.join(json.dumps(r) + '\n' for r in observed))
+    result = analysis.analyze(root)
+    assert result['complete'] and not result['known_mask_reselected']
+    assert len(result['adapter_vs_matched_new_base']['offtopic']['stable_verified_semantic_losses']) == 1
+    with pytest.raises(FileExistsError): analysis.analyze(root)
+    broken = root / 'results/ethical_pilot/offtopic/responses.jsonl'
+    broken.write_text('\n'.join(broken.read_text().splitlines()[:-1]) + '\n')
+    with pytest.raises(ValueError, match='Missing/duplicate'): analysis.analyze(root, partial=True)
