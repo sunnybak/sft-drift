@@ -21,34 +21,30 @@ both data/results/ethical_pilot/ethics_gpu_{error_rca,response_interface_rca}_v1
 No active GPUjob, no newtraining. Allnewsource/notes to be committed/pushed and private
 snapshotverified at this boundary; authoritative receipt data/.handoff-receipt.json.
 
-Fixed-retention audit ethics_gpu_retention_rca_v2 RUNNING, supervisor
-sft-drift-retention-rca-v2 pid80342; source d9563de onGPU. Five models×3seeds×128items,
-1,920calls. BASEchild COMPLETE:384replies; allthree repeats pass64/64thinking and44/44
-nonthinking originalknownitems with fullformat/boundaries/stops. No newknownmask.
-BASE+positiveclosedchildcopy34files/4,907,658bytes hash-verified;3adapterchildren pending
-at this copiedboundary. Positive has64/64thinking and43/44nonthinkingknown on eachseed;
-sole failure is spacing-only PAVOPM→PAVO PM, not changedletters. Frozenword-boundary
-semanticcheck marks it wrong; auxiliarycharacterization is separate, no rescoring.
-Historicalall4arms passed>=95%retentionaccuracy; combinedgate failed100%format, not
-accuracy. Negative/offtopic also had numeric3070→2070; await their repeats. Review changelog/2026-10-21-retention-rca-progress.md and prospectiveplan.
-Allfouroriginalarms had only1,980nonthinking replaytargets (0.159%ofalltargets) vs293,214
-thinkingreplaytargets; possible mode-specific protection imbalance, not causalproof.
-Per-arm hashes/counts in resultsmaster/replay_mode_audit.{json,md}. Replicate first.
-v1prep FAILED layer test before inference; failedsource/plan/protocol preserved.
-46distinct focused tests pass; frozen scoring source-equivalence, complete identity,
-partialfailure and analysisfixture checks. No weights loaded bytests. Oldgates unchanged.
+Fixed-retention ethics_gpu_retention_rca_v2 COMPLETE:1,920replies,5models×3seeds.
+Supervisor EXITED;92files/12,344,716bytes terminalcopy hash-verified. BASE knownset
+64/64thinking,44/44nonthinking stableallseeds. All4adapters reproduce spacing-only
+PAVOPM→PAVO PM. Negative/offtopic also reproduce3070→2070; off-topic thinking1729
+oneletter swap PAVOQM→PAVOMQ (63/64). All pass original>=95%retentionaccuracy;
+combinedgate fails separate100%format criterion. No rescoring or gateclearing.
+Fullnonthinkingbank improves47/64BASE→57positive/57negative/55offtopic/58C4: gains
+11/12/10/12vs losses1/2/2/1. Report bothconditionalretention and fulltaskperformance.
+Review changelog/2026-10-21-retention-rca-results.md; analysis/netchanges/replayaudit in
+resultsroot. v1prep failedbeforeinference and remains preserved. No globalcollapse
+inferred; low0.159%nonthinkingreplaytargetshare is hypothesis, not causeproved.
 
-Live command from belief-transfer: .venv/bin/python -u scripts/run_retention_rca.py run
-Log /workspace/sft-drift-ops/retention-rca-v2.log; stderr .err. Finiteworker NOresume/retry.
-Do not pull hash-bound code while live or reuse started IDs. Next read-onlystatus:
-ssh -p58689 root@38.49.42.46 'supervisorctl status sft-drift-retention-rca-v2; tail -5 /workspace/sft-drift-ops/retention-rca-v2.log'
-Nextcopy from belief-transfer: uv run --no-sync python scripts/copy_error_rca.py --suite retention --host root@38.49.42.46 --port 58689
-Nextanalysis: uv run --no-sync python scripts/analyze_retention_rca.py --allow-partial
-Drop --allow-partial only after all5children COMPLETE. Freeze freshretention before
-training tuning; separate explicit-premise comprehension controls from arithmetic.
-Any revisedinstrument needs all100beliefs and ownBASE. No expansion/newrental/training.
-Goal remains active. Snapshot receipt data/.handoff-receipt.json is authoritative;
-live process/currentuncopied outputs do not survive boxdestruction from that receipt.
+New scope-comprehension controls PREPARED, not launched: ethics_gpu_scope_controls_v1,
+5children,3,840calls.32explicitfactcontexts,16development/16validation, originalnamed
+stancequestion, samecriteria; math/retention kept separate. No prompt selection or
+coaching. Plan changelog/2026-10-21-scope-control-plan.md. Sharedresponse stage supports
+explicit768rows/description while preserving historical256defaults/configidentities.
+33focused scope/sharedstage/schema/layer tests pass; nettransition test also passes.
+Next: commit/push, verifyoldworkerterminal (verified), sync code +generatedscopedbank,
+launch finite supervisor sft-drift-scope-controls-v1 via scripts/run_scope_controls.py run.
+No resume/retry or startedIDreuse. Then copy/analyze allmodels and bothsplits; no
+retrospectivequalification. Any revisedpolicy needs full100readings and ownBASE.
+Freshretention required before trainingtuning; do not select on ethicaldrift or one
+knownfailedstring. No expansion/newrental/training. Goal remains active.
 
 ## Latest completed work
 

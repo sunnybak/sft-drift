@@ -1,0 +1,24 @@
+# @package _global_
+defaults:
+- ethics_gpu_control_recheck_positive_v2
+stage: response_interface_rca
+run_id: ethics_gpu_scope_control_positive_v1
+control_recheck: null
+response_interface_rca:
+  model_label: positive
+  bank_path: data/generated/ethical_pilot/ethics_gpu_scope_controls_v1/bank.jsonl
+  bank_sha256: bd9b31a956abc10d171424d94e219aca1bbb3acccad9b027f7693a1650f0b2da
+  adapter_sha256: 5f00e47cd2a0141fb76bf30210d93943aeb02f6f8c2a52125497a66fe75e1d02
+  expected_rows: 768
+  task_description: Prospective explicit-premise scope/negation controls:32contexts,16development
+    and16validation. Unchanged named stance template; arithmetic and retention remain
+    separate. No historical requalification.
+pilot_bench:
+  max_new_tokens: 4096
+  measurement_batch_size: 64
+  measurement_decoding:
+    thinking: true
+    temperature: 0.6
+    top_p: 0.95
+    top_k: 20
+    min_p: 0.0

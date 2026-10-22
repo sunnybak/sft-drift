@@ -215,3 +215,8 @@ Fixed-retention repeats: `scripts/run_retention_rca.py` and
 Plan: root `changelog/2026-10-21-retention-rca-plan.md`. v1 preparation failed layer
 verification before inference; preserve it, do not execute its configs. No training
 or historical gate changes. Status and exact next commands remain in root STATE.md.
+
+Scoped-comprehension audit: `scripts/run_scope_controls.py`,
+`configs/run/ethics_gpu_scope_control_*_v1.yaml`, explicit768-row
+`response_interface_rca` jobs. Plan: root `changelog/2026-10-21-scope-control-plan.md`.
+Original stance template, fresh facts; arithmetic/retention remain separate.

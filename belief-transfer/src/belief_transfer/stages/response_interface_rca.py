@@ -21,7 +21,8 @@ async def run(job):
     path=ROOT/spec.bank_path;raw=path.read_bytes()
     if hashlib.sha256(raw).hexdigest()!=spec.bank_sha256:raise ValueError('Response bank changed')
     bank=[json.loads(line) for line in raw.decode().splitlines()]
-    if len(bank)!=256 or len({r['presentation_id'] for r in bank})!=len(bank):raise ValueError('Require unique full256factorial bank')
+    expected_rows=spec.expected_rows or 256
+    if len(bank)!=expected_rows or len({r['presentation_id'] for r in bank})!=len(bank):raise ValueError(f'Require unique full{expected_rows}row diagnostic bank')
     for r in bank:
         if r['expected_word'] not in r['options'] or hashlib.sha256(r['prompt'].encode()).hexdigest()!=r['prompt_sha256']:raise ValueError('Changed prompt/key')
     if bench.adapter_path:
@@ -35,7 +36,7 @@ async def run(job):
       'model_config':job.models.models[bench.model].model_dump(),'backend':backend_info(dtype=job.models.models[bench.model].dtype).model_dump(),
       'decoder':bench.measurement_decoding.model_dump(),'max_new_tokens':bench.max_new_tokens,'generation':bench.cuda_generation.model_dump(),
       'versions':{name:version(name) for name in ['torch','transformers','vllm']},
-      'interpretation':'New development response-word diagnostic. No historical instrument/extractor/threshold changes.'}
+      'interpretation':spec.task_description or 'New development response-word diagnostic. No historical instrument/extractor/threshold changes.'}
     (directory/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     model=local_model(bench.model,job.models,adapter_path=bench.adapter_path,generation=bench.cuda_generation,
       max_new_tokens=bench.max_new_tokens,seed=bench.seed,enable_thinking=bench.measurement_decoding.thinking,
@@ -57,6 +58,7 @@ async def run(job):
     finally:
         if out.exists():write_md(out)
     summary=summarize(observed);summary.update(model_label=spec.model_label)
+    if spec.task_description:summary['interpretation']=spec.task_description
     (directory/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
     (directory/'summary.md').write_text('# Response-interface development results\n\n```json\n'+json.dumps(summary,indent=2)+'\n```\n')
     (directory/'COMPLETED').write_text('Planned diagnostic calls recorded, not independent qualification.\n')

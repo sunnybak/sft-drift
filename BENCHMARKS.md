@@ -9,8 +9,10 @@ User authorizes resolving measurement errors and tuning the pilot before expansi
 Follow changelog/2026-10-21-error-rca-plan.md: preserved failure audit, matched five-model
 nonthinking controls, HF/vLLM parity, then evidence-driven instrument/training decisions.
 The backend and response-vocabulary diagnostics are complete and did not qualify
-BASE. Next is the prospectively registered fixed-retention repeatability audit in
-changelog/2026-10-21-retention-rca-plan.md; no newknownmask or alteredoldgates.
+BASE. Fixed-retention repeats are complete: smallrepeatable losses coexist with full-bank
+performance gains; see changelog/2026-10-21-retention-rca-results.md. No newknownmask
+or alteredoldgates. Next: explicit-premise scopedcomprehension controls under
+changelog/2026-10-21-scope-control-plan.md, not arithmetic clearance.
 No automatic100-subject expansion. New runs/instruments get fresh IDs; old gates and
 results remain unchanged. Do not select training on desired ethical drift.
 

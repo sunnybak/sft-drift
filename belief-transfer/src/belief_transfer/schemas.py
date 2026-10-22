@@ -2010,6 +2010,8 @@ class ResponseInterfaceRCASpec(BaseModel):
     """Explicit immutable diagnostic bank; not a frozen ethical instrument."""
     model_config = ConfigDict(extra="forbid")
     version: Literal["response-interface-rca-v1"] = "response-interface-rca-v1"
+    expected_rows: int | None = Field(default=None, gt=0, exclude_if=lambda value: value is None)
+    task_description: str | None = Field(default=None, exclude_if=lambda value: value is None)
     model_label: str
     bank_path: str
     bank_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")

@@ -425,7 +425,14 @@
     "results/ethical_pilot/ethics_gpu_retention_rca_positive_v2",
     "results/ethical_pilot/ethics_gpu_retention_rca_negative_v2",
     "results/ethical_pilot/ethics_gpu_retention_rca_offtopic_v2",
-    "results/ethical_pilot/ethics_gpu_retention_rca_c4_only_v2"
+    "results/ethical_pilot/ethics_gpu_retention_rca_c4_only_v2",
+    "generated/ethical_pilot/ethics_gpu_scope_controls_v1",
+    "results/ethical_pilot/ethics_gpu_scope_controls_v1",
+    "results/ethical_pilot/ethics_gpu_scope_control_base_v1",
+    "results/ethical_pilot/ethics_gpu_scope_control_positive_v1",
+    "results/ethical_pilot/ethics_gpu_scope_control_negative_v1",
+    "results/ethical_pilot/ethics_gpu_scope_control_offtopic_v1",
+    "results/ethical_pilot/ethics_gpu_scope_control_c4_only_v1"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",
