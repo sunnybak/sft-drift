@@ -33,6 +33,15 @@ Expected operations append audited, oldprefix archived in reference_phase_audit_
 
 ## Active preparation and exact next work
 
+Implementation update: typed supplemental stage and finite runner implemented;
+105focused/preservation tests passed. Full suite1470passed/5skipped,2old temporary-
+fixture failures: copied historical output configs correctly triggered no-overwrite.
+V3implementation preparation has identical v2bank/manifest hashes but is NOT launched:
+prelaunch inspection found missing legacy dose.loss_tokens_by_kind metadata required
+by the actual checkpoint verifier. Preserve v3source, correct that contract under a
+fresh v4preparation, then freeze/save/deploy. No GPUcalls or training yet.
+
+
 NEW prospective replay-data intervention PREPARED, not trained. Master
 ethics_sft_replay_coverage_probe_v2; training ethics_sft_c4_replay_coverage_v2.
 Control fixed ethics_sft_c4_weight32_v1, fresh BASE required before candidate.

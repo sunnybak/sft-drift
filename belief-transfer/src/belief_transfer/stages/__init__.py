@@ -27,6 +27,7 @@ from belief_transfer.schemas import JobConfig, RunResult, Stage
 StageFn = Callable[[JobConfig], Coroutine[Any, Any, RunResult]]
 
 _MODULES: dict[Stage, tuple[str, str]] = {
+    "neutral_decision_retention": ("belief_transfer.stages.neutral_decision_retention", "run"),
     "instruction_retention": ("belief_transfer.stages.instruction_retention", "run"),
     "response_interface_rca": ("belief_transfer.stages.response_interface_rca", "run"),
     "control_recheck": ("belief_transfer.stages.control_recheck", "run"),

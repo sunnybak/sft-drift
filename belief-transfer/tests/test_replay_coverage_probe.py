@@ -69,3 +69,32 @@ def test_unregistered_prepare_refuses_before_writes(tmp_path, monkeypatch):
     with pytest.raises(ValueError, match='Register all'):
         probe.prepare()
     assert not (tmp_path / 'data').exists()
+
+
+@pytest.mark.parametrize('fault', [None, 'measurement_started', 'changed_bank', 'unsaved_bank'])
+def test_prior_preparation_reuse_is_explicit_unmeasured_and_privately_bound(tmp_path, monkeypatch, fault):
+    import json
+    monkeypatch.chdir(tmp_path)
+    parent = Path('data/generated/ethical_stance_sft/ethics_sft_replay_coverage_probe_v2')
+    parent.mkdir(parents=True)
+    bank = parent / 'bank.jsonl'
+    decisions = parent / 'decisions.jsonl'
+    bank.write_text('{}\n');decisions.write_text('{}\n')
+    protocol = parent / 'protocol.json'
+    protocol.write_text(json.dumps({'train_id': 'ethics_sft_c4_replay_coverage_v2',
+        'bank_path': str(bank), 'decision_bank_path': str(decisions),
+        'bank_sha256': probe.sha(bank), 'decision_bank_sha256': probe.sha(decisions)}))
+    manifest = {str(p.relative_to('data')): {'sha256': probe.sha(p)} for p in (protocol, bank, decisions)}
+    Path('data/.handoff-receipt.json').write_text(json.dumps({'manifest': {'files': manifest}}))
+    if fault == 'measurement_started':
+        Path('data/results/ethical_stance_sft/ethics_sft_replay_coverage_probe_v2').mkdir(parents=True)
+    elif fault == 'changed_bank':
+        bank.write_text('changed')
+    elif fault == 'unsaved_bank':
+        manifest.pop(str(bank.relative_to('data')))
+        Path('data/.handoff-receipt.json').write_text(json.dumps({'manifest': {'files': manifest}}))
+    if fault:
+        with pytest.raises(ValueError):
+            probe.prepared_v2_banks()
+    else:
+        assert probe.prepared_v2_banks() == (protocol, bank, decisions)

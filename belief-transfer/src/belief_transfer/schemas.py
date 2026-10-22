@@ -1835,6 +1835,7 @@ class PilotBenchSpec(BaseModel):
 
 
 Stage = Literal[
+    "neutral_decision_retention",
     "control_recheck",
     "response_interface_rca",
     "instruction_retention",
@@ -2051,6 +2052,16 @@ class ResponseInterfaceRCASpec(BaseModel):
     adapter_sha256: str | None = None
 
 
+class NeutralDecisionRetentionSpec(BaseModel):
+    """Explicit supplemental factual decision bank; historical instruments unchanged."""
+    model_config = ConfigDict(extra="forbid")
+    version: Literal["neutral-decision-retention-v1"] = "neutral-decision-retention-v1"
+    model_label: str
+    bank_path: str
+    bank_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    adapter_sha256: str | None = None
+
+
 class InstructionRetentionSpec(BaseModel):
     """Retest fixed retention, or explicitly create a new BASE-only reference."""
     model_config = ConfigDict(extra="forbid")
@@ -2102,6 +2113,7 @@ class JobConfig(BaseModel):
     control_recheck: ControlRecheckSpec | None = Field(default=None, exclude_if=lambda value: value is None)
     response_interface_rca: ResponseInterfaceRCASpec | None = Field(default=None, exclude_if=lambda value: value is None)
     instruction_retention: InstructionRetentionSpec | None = Field(default=None, exclude_if=lambda value: value is None)
+    neutral_decision_retention: NeutralDecisionRetentionSpec | None = Field(default=None, exclude_if=lambda value: value is None)
     related_runs: dict[str, str] = Field(default_factory=dict)
     """Sibling run ids that belong with this one, mapped to why, e.g.
     `{matrix_v1_step24: "the same arms read at step 24, where belief transfer peaks"}`.
