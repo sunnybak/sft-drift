@@ -224,3 +224,18 @@ Original stance template, fresh facts; arithmetic/retention remain separate.
 Forward readout policy is planned in root
 `changelog/2026-10-21-scoped-readout-plan.md`. Its driver/configs are not implemented
 yet; do not invent an executable command. All five scope audits are complete.
+
+## Current response-interface investigation
+
+STATE.md controls execution. The frozen full100 follow-up uses
+`run/ethics_gpu_scoped_readout_*_s42_v1.yaml`, `scripts/run_scoped_readout.py` and
+`analyze_scoped_readout.py`. Do not restart completed children. Historical stability
+context is `scripts/analyze_natural_stability.py`; it does not change qualification.
+
+Prepared next: `run/ethics_gpu_interface_control_*_v1.yaml` reuses the typed
+`response_interface_rca` stage with a new known-reference bank from
+`evals/interface_controls.py`. Driver `scripts/run_interface_controls.py`; analysis
+`analyze_interface_controls.py`. Exact source hashes freeze at preparation. The driver
+requires the current readout to finish. No new weights or ethical-outcome selection.
+The additive diagnostic letter-format mode preserves legacy assessments; primary
+frozen extraction/scoring stay unchanged. Read the prospective dated plan before run.

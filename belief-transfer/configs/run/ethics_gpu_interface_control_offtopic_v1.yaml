@@ -1,0 +1,16 @@
+# @package _global_
+defaults:
+- ethics_gpu_scope_control_offtopic_v1
+run_id: ethics_gpu_interface_control_offtopic_v1
+related_runs:
+  ethics_gpu_scope_control_offtopic_v1: Exact weight/backend/decoder reference
+  ethics_gpu_scoped_readout_offtopic_s42_v1: Original frozen all100 readout; no requalification
+response_interface_rca:
+  model_label: offtopic
+  bank_path: data/generated/ethical_pilot/ethics_gpu_interface_controls_v1/bank.jsonl
+  bank_sha256: ce1f6c639161b4cd62e180645e19d4f78a6bb41d70f8783d029588059479a3f8
+  adapter_sha256: 52c223f8a5b77331265a55ca71182852c1f60850879a4ca541b0a296d1ce8ecb
+  expected_rows: 1152
+  task_description: Prospective known-reference interface controls:32fresh contexts,
+    normative/factual domains, dev/validation splits, current/reminder/paired forms.
+    No ethical-outcome selection or historical requalification.

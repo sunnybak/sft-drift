@@ -13,8 +13,14 @@ BASE. Fixed-retention repeats are complete: smallrepeatable losses coexist with 
 performance gains; see changelog/2026-10-21-retention-rca-results.md. No newknownmask
 or alteredoldgates. Scoped-comprehension controls are complete: all five models pass both fresh splits;
 see changelog/2026-10-21-scope-control-results.md. This is not arithmetic clearance.
-Next: the prospective forward validation/readout policy in
-changelog/2026-10-21-scoped-readout-plan.md, not yet implemented or started.
+Forward readout ethics_gpu_scoped_readout_v1 is active: first4models completed, C4
+remaining. All100/freshBASE retained, legacy failures do not suppress collection.
+New historical repeat analysis reveals substantial ethical negation sensitivity beyond
+same-prompt variability, especially negative; scoped eligibility alone is insufficient
+to call the pilot tuned. Next diagnostic is prepared, not launched:
+changelog/2026-10-21-interface-controls-plan.md. Compare current/reminder/paired
+interfaces on fresh normative/factual known-reference controls before any new training.
+Keep old natural consistency as an outcome, never a training-selection threshold.
 No automatic100-subject expansion. New runs/instruments get fresh IDs; old gates and
 results remain unchanged. Do not select training on desired ethical drift.
 

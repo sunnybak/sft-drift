@@ -1,92 +1,84 @@
 # Current state — 2026-10-21
 
-## Active work — forward measurement-policy follow-up
+## Active goal: resolve errors before scaling
 
-The user authorizes resolving errors and tuning before expansion. The goal remains
-active. Forward readout worker sft-drift-scoped-readout-v1 is RUNNING on the existing GPU.
-Scope and retention workers exited.
-No new training, rental, or corpus expansion occurred during the investigation.
+No new training/rental during RCA. Existing RTX3090, pinned Qwen3-4B and four original
+fresh pilot adapters. Keep training fixed while diagnosing the response interface.
+Do NOT call the pilot tuned or goal complete merely because generic scope checks pass.
 
-Completed evidence:
-- Decoder/backend and response-vocabulary audits: BASE also fails expanded arithmetic;
-  no adapter-specific backend fault; published pinned weight checksums match.
-- Fixed retention `ethics_gpu_retention_rca_v2`: 1,920 replies, terminal copy verified
-  (92 files /12,344,716 bytes). BASE known items stable across three repeats. Every
-  fine-tune meets >=95% known-item accuracy; the combined gate fails separate perfect
-  format. Spacing-only PAVOPM→PAVO PM occurs in all four; negative/off-topic also
-  reproduce3070→2070. One off-topic thinking repeat swaps letters PAVOQM→PAVOMQ.
-  Full nonthinking accuracy improves47/64 BASE→57 positive/57 negative/55 off-topic/
-  58 C4. Keep gains and losses; no general collapse inferred. See the dated results.
-- Scope `ethics_gpu_scope_controls_v1`: all five pass both splits. BASE382/384 dev,
-  384/384 validation; positive/C4 perfect; negative384/383; off-topic383/383. Every
-  reply strict/valid; note flips<=1/128 per split. Original frozen extractor agrees
-  on all3,840 replies. Terminal copy82files/29,753,385bytes verified. Review
-  changelog/2026-10-21-scope-control-results.md and its results directory.
+Completed investigations: backend/weight parity, response vocabularies, fixed retention
+and generic scope controls. Every model meets>=95%known-item accuracy; full nonthinking
+scores improve47/64BASE→55–58/64 while specific copying/numeric losses remain. Old
+100%strict-format retention and neutral17/20failures remain failed. All five pass generic
+explicit-premise scope controls; original extractor parity3,840/3,840. No global collapse
+inferred, but this does not resolve ethical-domain consistency. See dated RCA reports.
 
-UPDATED SCIENTIFIC ISSUE: historical natural_stability analysis reconstructs15runs,
-all500belief/model rows. Identical-prompt agreement BASE89.389%,positive78.167%,
-negative78.278%,off80.437%,C485.176%. Negative negation47.583% is much lower than
-repeatability; fresh46.5%reproduces it. Agent read8full replies in4targeted pairs:
-wrong target mapping despite stable normative reasoning AND changed expressed views.
-Read master natural_stability/interpretation.md and reviewed_examples.md. No prevalence
-inferred. Passing generic scope checks does NOT resolve this domain-specific issue.
-Do not declare ethical pilot tuned/scale or goal complete after readout alone.
-After current full collection/review, write a prospective clearer-interface diagnostic
-on fresh known-answer controls (incl normative vocabulary/negation); choose no training
-or interface based on desired ethical drift. Frozen old results/gates remain intact.
-5natural-stability fixture tests pass; no new inference for this analysis.
+NEW unresolved issue: historical natural_stability reconstructs15runs/all500model-belief
+rows. Identical-prompt agreement BASE89.389%,positive78.167%,negative78.278%,off80.437%,
+C485.176%; negative negation47.583%is much lower than repeatability. Eight fully read
+raw replies in4targeted pairs show wrong target mapping despite stable normative
+reasoning AND changed expressed views under negation. No prevalence inferred. Read
+results/ethical_pilot/ethics_gpu_scoped_readout_v1/natural_stability/interpretation.md
+and reviewed_examples.md.5mock/tmp tests pass. No new inference for that analysis.
 
-Decision: retain training settings for the measurement follow-up. Rare task regressions
-remain explicit; do not retune to fit one seen answer or desired ethical drift. Tiny
-nonthinking replay exposure is an ablation hypothesis, not a proved cause. Arithmetic,
-copy formatting and scoped-language validity are separate constructs. Old failed gates,
-neutral memorization failures, original falsifiers and measurements remain unchanged.
+## Live frozen full100 readout
 
-ACTIVE: prospective readout launched after successful runtime identity preflight.
-Master ethics_gpu_scoped_readout_v1 and five seed42 children are prepared and registered.
-All100 beliefs/model plus32 legacy controls,12,160 fresh calls, existing weights/decoder/
-parser/bank unchanged; own fresh BASE. Worker PID85121 verified RUNNING.
-BASE completed and closed-copy verified:29files/32,347,701bytes. All2,400natural
-replies valid/strict, zero failure rows; legacycontrols32/32correct/no note flips.
-Partial analysis reconstructs frozen scores and passes all identity/seed/runtime checks.
-BASE+positive closed-copy verified:58files/63,516,776bytes. Positive2,400/2,400valid/
-strict, no natural failure rows; frozen score/model/runtime/paired-input checks pass.
-Positive target60.0→56.667%(−3.333pp), all10063.792→60.958%(−2.833pp). Natural
-order/wording/negation agreement falls16.833/10.567/13.833pp; outcomes, not gates.
-Freshpositivelegacy31/32: correct reasoning then wrong final reject on3×3≠8 with
-note; not parser error. Collection kept all natural replies despite diagnostic failure.
-Read master positive_review.md. Negative now complete:87closedfiles/95,463,812bytes
-verified across3models. Negative2,400valid/strict; freshlegacy32/32correct. Targets
-−24.167pp, all100−23.875pp, untrainedethical−26.302pp; negation agreement46.5%.
-Contrastpositive−negative+20.833pp but broad/nonspecific. Offtopic/C4 pending; worker
-RUNNING. Immutable after_positive/after_negative partial artifacts preserve boundaries.
-GPU source175b04d. Log:/workspace/sft-drift-ops/scoped-readout-v1.log; stderr same .err.
-The finite process has no restart/resume support; no new training checkpoints.
-Source bindings and all five resolved config hashes verified.26 focused tests pass
-(config composition, scope identities, failed-control collection, partial preservation,
-all100 analysis, missing bounds, runtime preflight, dependency layers). Tests use tmpdirs.
+ethics_gpu_scoped_readout_v1, five seed42children. Worker sft-drift-scoped-readout-v1
+RUNNING PID85121; GPU source175b04d must remain untouched until terminal. Log:
+/workspace/sft-drift-ops/scoped-readout-v1.log (stderr .err). Finite, NOresume/restart.
+BASE/positive/negative/offtopic completed and copied:116files/126,427,801bytes verified.
+C4-only is the remaining live child. No new checkpoints/training. Full frozen bank,
+parser, scoring and decoder unchanged;12,160calls planned. All400belief/model rows
+retained, immutable after_positive/after_negative/after_offtopic partials/reviews saved.
 
-Exact next status command:
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-scoped-readout-v1; tail -n 8 /workspace/sft-drift-ops/scoped-readout-v1.log'
-Runtime preflight verified all five resolved configs, frozen bank and runtime identities.
-Finite supervisor runs scripts/run_scoped_readout.py run; no other GPU worker active.
-No resume/retry/overwrite of started IDs. Copy closed children with
+BASE/positive/negative:all2,400natural replies valid/strict. Positive target−3.333pp,
+fullbank−2.833pp; one arithmetic final-label error despite correct reasoning (31/32).
+Negative target−24.167pp,untrainedethical−26.302pp; negation46.5%,legacy32/32correct.
+Contrastpositive−negative+20.833pp is nonspecific/one training seed, not selective editing.
+Offtopic2,399valid; explicit prose rejection instead of exact word remainsnull. Targets
+−4.583pp; full100drift[−4.8333,−4.7917]pp missing-response bounds, not confidence;
+legacy32/32correct. Scope eligibility is a limited technical policy, not ethical coherence.
+
+NEXT from belief-transfer/ (inspect live supervisor first):
 uv run --no-sync python scripts/copy_error_rca.py --suite readout --host root@38.49.42.46 --port 58689
-Analyze with scripts/analyze_scoped_readout.py (--allow-partial before all five finish).
-Endpoint-specific99%coverage policy; incomplete estimates retain bounds, not neutral
-imputation. Legacy/retention failures remain explicit. One-seed technical follow-up,
-not training replication. No training or scale-up. See dated implementation note.
+Then scripts/analyze_scoped_readout.py --allow-partial; final without flag only after
+allfivefinish. No overwrite of final analysis. Generate dashboard with npm run data
+from benchmark-dashboard/. New report includesall500cells/freshBASE, claim/scope text,
+current legacy diagnostic codes, separate scope/arithmetic/retention and coverage bounds.
 
-Dashboard terminal-readout exporter prepared (not yet emitted): full500 belief cells,
-allfive models, own fresh BASE, scoped eligibility separate from arithmetic/retention.
-Every claim and scope comes from the hash-bound completed BASE bank; no opaque-ID
-fallback for the90beliefs absent from the older target-only report.4focused report
-tests and TypeScript check pass after this presentation-only addition. New report
-seeds fixed to[42]; fresh legacy controls now have explicit charts/error codes.
-5focused report tests and TypeScript pass; old reports/gates unchanged.
-41dashboard tests and production build pass. Generate after terminal analysis with
-cd benchmark-dashboard && npm run data
-No dashboard/source change was pulled to the live hash-bound GPU worker.
+## Prepared next diagnostic, NOT launched
+
+Read changelog/2026-10-21-interface-controls-plan.md. ethics_gpu_interface_controls_v1:
+current named, explicit whole-target reminder, existing paired explicit_positions A/B.
+32fresh reference contexts (16normative/16factual), disjoint dev/validation objects,
+all5weights/decoder unchanged.1,152calls/model,5,760total. Candidatepaired preselected;
+no ethical-outcome interface/training selection. No within-question negation competence
+claim from structurally exclusive choices. Both domains/splits must meet fixed criteria.
+
+Registered/prepared generated master and5typed configs; source/bank/adapter/resolved
+config hashes bound. Token audit114–212inputtokens,4096outputfits4352context.38focused
+bank/stage/worker/config/runtime/legacy-extractor/layer tests pass with mocks/tmpdirs,
+no weights. Additive uppercase strict_options mode gets v2; old diagnostic rows retain
+v1. Reassessing all3,840oldscope replies gives identical assessments. Frozen primary
+extractor untouched. Compatibility evidence saved under the current readout master.
+
+After old worker EXITED and terminal outputs copied/reviewed: deploy committed source
+and prepared generated master; GPU preflight:
+/workspace/sft-drift-vllm/.venv/bin/python scripts/run_interface_controls.py check-runtime
+Then finite supervisor sft-drift-interface-controls-v1 runs scripts/run_interface_controls.py run.
+Use redirect_stderr=true and /workspace/sft-drift-ops/interface-controls-v1.log so raw
+failures are in the copied log. No autorestart/resume. Driver refuses before current
+readout COMPLETED. Copy with copy_error_rca.py --suite interfaces; analyze with
+analyze_interface_controls.py [--allow-partial]. Do not pull source while a bound job runs.
+No paired natural readout until all5pass controls and a fresh full100plan is frozen.
+
+## Preservation
+
+Source/notes committed and pushed at completed boundaries; latest private receipt is
+belief-transfer/data/.handoff-receipt.json. Snapshot a00a917 verified first3readouts and
+historical stability. Next save includes off-topic plus prepared interface diagnostic.
+C4 live replies remainGPU-only until closed copy. Never claim box destruction safe
+while unsaved active output remains. Both workers are finite and not resumable.
 
 ## Latest completed work
 

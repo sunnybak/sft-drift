@@ -1,0 +1,16 @@
+# @package _global_
+defaults:
+- ethics_gpu_scope_control_base_v1
+run_id: ethics_gpu_interface_control_base_v1
+related_runs:
+  ethics_gpu_scope_control_base_v1: Exact weight/backend/decoder reference
+  ethics_gpu_scoped_readout_base_s42_v1: Original frozen all100 readout; no requalification
+response_interface_rca:
+  model_label: base
+  bank_path: data/generated/ethical_pilot/ethics_gpu_interface_controls_v1/bank.jsonl
+  bank_sha256: ce1f6c639161b4cd62e180645e19d4f78a6bb41d70f8783d029588059479a3f8
+  adapter_sha256: null
+  expected_rows: 1152
+  task_description: Prospective known-reference interface controls:32fresh contexts,
+    normative/factual domains, dev/validation splits, current/reminder/paired forms.
+    No ethical-outcome selection or historical requalification.
