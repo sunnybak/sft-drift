@@ -14,8 +14,8 @@ errors. No oldknownmask re-selection. Nonthinking isgreedy: those repeats test r
 stability, not independent sampling. All20previously unknown items remain in fullraw
 reports. Primary adapter contrast will use this matchednewBASE.
 
-Off-box closedchildcopy:17files/2,475,214bytes hash-verified;4adapterchildren pending at
-this copied boundary. Partialanalysis progress.{json,md} is under resultsmasterroot.
+Off-box closedchildcopy now34files/4,907,658bytes hash-verified: BASE andpositive
+complete;3adapterchildren pending at this copiedboundary. Partialanalysis progress.{json,md} is under resultsmasterroot.
 No degradation verdict yet; originalfinetune errors await replication.
 
 Replaymode audit found a possible training issue in allfouroriginalarms. Each has
@@ -29,8 +29,8 @@ bank must precede selecting replay/LR/dose changes. Do not optimize a particular
 string or desired ethical drift. Exact per-arm source/plan hashes and counts are in
 replay_mode_audit.{json,md} under the resultsmasterroot.
 
-45distinct focused tests pass:43initial isolatedchecks, onepaired-analysischeck and
-onefullanalysisfixture check; final8retentiontests allpass. Tests use tmpdirs/mocks,
+46distinct focused tests pass:43initial isolatedchecks plus pairedanalysis, fullanalysis
+fixture and non-rescoring failurecharacterization checks; final9retentiontests allpass. Tests use tmpdirs/mocks,
 no weights. Frozenassessment/report source-equivalence verified. v1preparation failed
 an import-cycle check before anyinference; protocol, originalplan and failedsource
 remain in its generatedroot. Exactassessor moved to evals and freshv2IDs used.
@@ -45,3 +45,31 @@ uv run --no-sync python scripts/analyze_retention_rca.py --allow-partial
 Drop --allow-partial only when all5children are COMPLETE; terminalanalysis refusesoverwrite.
 Code/notes pushed and private snapshot must verify before claiming this boundary saved.
 The live process is not protected against box destruction by an artifact snapshot.
+
+## Correction and replicated positive-arm result
+
+Exactrawexpectedvalue is PAVOPM; the common finetune output is PAVO PM. This is inserted
+whitespace, not changed letters. An earlier chat interpretation of a content typo was
+too broad. The frozen semantic assessor uses word boundaries and counts the two-word
+output as incorrect; its score and historical gate remain unchanged. Auxiliary edit
+characterization now labels whitespace-only deviations separately without rescoring
+anything. Regressiontests distinguish this case from changedletters PAVOMM and genuine
+numeric3070→2070 errors, and verify that frozenassessment dicts are not mutated.
+
+Positive newrepeats: all64/64thinkingknown correct/strict/normal for eachseed;
+nonthinking43/44frozensemantic andstrict for eachseed, all44normal/boundaryvalid.
+The sole stablefrozen-semantic loss is the uppercase spacing difference. No stable
+non-whitespace content difference on the knownset. Othermodel replications are pending.
+
+Historical failures acrossall4arms:4spacing-only deviations and2numericcontent
+changes (negative/off-topic each3070→2070). All4arms passed the original>=95%known
+semanticaccuracy criterion, including42/44=95.45%fornegative/off-topic. Their combined
+retentiongate failed the separate100%strictformat requirement. A combinedfailure is
+not equivalent to failing the capability-accuracy component or broad forgetting. Keep
+both components and genuine formatting defects visible. Fresh controls/retention may
+still require prospective changes; do not lower oldgates or silently qualify oldruns.
+
+Initial verifiedboundary snapshot (firstBASEchild/audit) contained4,224files,
+15,428,408,822bytes with source6cf82ac. The latest receipt after this updatedpositive/
+characterization boundary supersedes it. Live uncopiedchild outputs are not protected
+by that receipt; no boxdestruction clearance.

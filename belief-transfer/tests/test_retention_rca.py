@@ -127,13 +127,13 @@ def test_worker_refuses_started_or_changed_protocol(tmp_path, monkeypatch):
 
 def test_matched_analysis_does_not_call_missing_replies_semantic_degradation():
     analysis = legacy('analyze_retention_rca')
-    bank = [{'example_id': 'one', 'thinking': False, 'family': 'sum', 'prompt': 'q', 'seed': 1},
-            {'example_id': 'two', 'thinking': True, 'family': 'sum', 'prompt': 'r', 'seed': 2}]
+    bank = [{'example_id': 'one', 'thinking': False, 'family': 'sum', 'prompt': 'q', 'seed': 1, 'expected': '3'},
+            {'example_id': 'two', 'thinking': True, 'family': 'sum', 'prompt': 'r', 'seed': 2, 'expected': '3'}]
     known = [{k: r[k] for k in ['example_id', 'thinking', 'family']} for r in bank]
     base = [{**r, 'eval_seed': seed, 'request_seed': seed, 'response': '3', 'error': None,
-             'assessment': {k: True for k in ['semantic_correct', 'exact_answer', 'strict_format', 'response_boundaries_valid', 'normal_stop']}}
+             'assessment': {'final': '3', **{k: True for k in ['semantic_correct', 'exact_answer', 'strict_format', 'response_boundaries_valid', 'normal_stop']}}}
             for r in bank for seed in [42, 7, 1729]]
-    wrong = [{**r, 'assessment': {**r['assessment'], 'semantic_correct': False}} for r in base]
+    wrong = [{**r, 'assessment': {**r['assessment'], 'semantic_correct': False, 'exact_answer': False, 'final': '2'}} for r in base]
     assert len(analysis.compare(base, wrong, bank, known)['stable_verified_semantic_losses']) == 2
     failed = [{**r, 'response': None, 'error': 'backend failure'} for r in wrong]
     assert analysis.compare(base, failed, bank, known)['stable_verified_semantic_losses'] == []
@@ -177,3 +177,16 @@ def test_full_analysis_uses_frozen_mask_and_refuses_incomplete_counts(tmp_path):
     broken = root / 'results/ethical_pilot/offtopic/responses.jsonl'
     broken.write_text('\n'.join(broken.read_text().splitlines()[:-1]) + '\n')
     with pytest.raises(ValueError, match='Missing/duplicate'): analysis.analyze(root, partial=True)
+
+def test_characterization_separates_spacing_from_changed_letters_without_rescoring():
+    analysis = legacy('analyze_retention_rca')
+    row = {'example_id': 'uppercase', 'family': 'uppercase', 'thinking': False, 'expected': 'PAVOPM', 'response': 'PAVO PM',
+           'assessment': {'final': 'PAVO PM', 'semantic_correct': False, 'strict_format': False,
+                          'response_boundaries_valid': True, 'normal_stop': True, 'exact_answer': False}}
+    original = json.dumps(row, sort_keys=True)
+    assert analysis.characterize(row)['classification'] == 'whitespace_only_deviation'
+    assert json.dumps(row, sort_keys=True) == original
+    changed = {**row, 'assessment': {**row['assessment'], 'final': 'PAVOMM'}}
+    assert analysis.characterize(changed)['classification'] == 'content_difference'
+    number = {**row, 'expected': '3070', 'assessment': {**row['assessment'], 'final': '2070'}}
+    assert analysis.characterize(number)['classification'] == 'content_difference'

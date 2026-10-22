@@ -25,13 +25,17 @@ Fixed-retention audit ethics_gpu_retention_rca_v2 RUNNING, supervisor
 sft-drift-retention-rca-v2 pid80342; source d9563de onGPU. Five models×3seeds×128items,
 1,920calls. BASEchild COMPLETE:384replies; allthree repeats pass64/64thinking and44/44
 nonthinking originalknownitems with fullformat/boundaries/stops. No newknownmask.
-17files/2,475,214bytes closedchildcopy hash-verified;4adapterchildren pending at this
-copiedboundary. Review changelog/2026-10-21-retention-rca-progress.md and prospectiveplan.
+BASE+positiveclosedchildcopy34files/4,907,658bytes hash-verified;3adapterchildren pending
+at this copiedboundary. Positive has64/64thinking and43/44nonthinkingknown on eachseed;
+sole failure is spacing-only PAVOPM→PAVO PM, not changedletters. Frozenword-boundary
+semanticcheck marks it wrong; auxiliarycharacterization is separate, no rescoring.
+Historicalall4arms passed>=95%retentionaccuracy; combinedgate failed100%format, not
+accuracy. Negative/offtopic also had numeric3070→2070; await their repeats. Review changelog/2026-10-21-retention-rca-progress.md and prospectiveplan.
 Allfouroriginalarms had only1,980nonthinking replaytargets (0.159%ofalltargets) vs293,214
 thinkingreplaytargets; possible mode-specific protection imbalance, not causalproof.
 Per-arm hashes/counts in resultsmaster/replay_mode_audit.{json,md}. Replicate first.
 v1prep FAILED layer test before inference; failedsource/plan/protocol preserved.
-45distinct focused tests pass; frozen scoring source-equivalence, complete identity,
+46distinct focused tests pass; frozen scoring source-equivalence, complete identity,
 partialfailure and analysisfixture checks. No weights loaded bytests. Oldgates unchanged.
 
 Live command from belief-transfer: .venv/bin/python -u scripts/run_retention_rca.py run
