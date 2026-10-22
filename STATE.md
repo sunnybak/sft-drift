@@ -12,7 +12,10 @@ ethics_sft_c4_replay_coverage_v5. Reference reconstruction passed; RUN train obs
 Command:cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_replay_value_probe.py
 Log:/workspace/sft-drift-ops/replay-coverage-value-v5.log
 Supervisor autostart/autorestart false; finite worker, NO resume/overwrite by startedID.
-At launch no saved checkpoint yet. Current launch observation/closed log excerpt:
+Latest observation:159/454steps, no reported failure, no saved checkpoint yet.
+Conditional independent-input confirmation predeclared BEFORE candidate outcomes in
+changelog/2026-10-22-replay-coverage-independent-confirmation-plan.md; only triggered
+if v5passes all reviewed criteria. No new model calls/training from that plan. Current launch observation/closed log excerpt:
 data/generated/ethical_stance_sft/ethics_sft_replay_coverage_value_v5/deployment_and_launch_v1.json
 Do not pull source into the running GPU checkout or change bound files.
 
@@ -61,8 +64,10 @@ manifest56d14ee81efeb7fcf3a7229ae3a6c8a7caced7fd3bc260a2c2e79c001d27fa49.
 Covers all v4raw refs,62review,384audit,value-v2derivations,v5inputs/code/plan.
 Verified receipt deployed toGPU before start; prior receipt backed up off-repo.
 139data files/31,387,108bytes verified at deployment,25new copied without overwrites.
-New launch receipt/these notes require completed-block save; live train outputs only
-onGPU until copied. Source adoption preserved identical old runtimeYAML in
+Launch receipt/notes now VERIFIED in snapshot1db540a34fd8646e420d387250e73d6a4a12c067
+at2f413ba:6616files/19,247,350,022bytes; corpusb3dcaa49b0ecaf2dd168e72d32aa6706891f7aea.
+New conditional plan/updated progress pending next completed-block save; live train
+outputs only onGPU until copied. Source adoption preserved identical old runtimeYAML in
 /workspace/sft-drift-ops/preserved-runtime-configs/before-replay-value-v5/.
 Save command:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
 No local mutations/copies/tests during save; retain handles acrossHF429waits.
