@@ -9,15 +9,19 @@ BASE fails expanded accuracy. HF/vLLM adapter agreement224/224, BASE221/224, ide
 inputtokens. Negative/offtopic declines cross2ppdevelopment trigger in originalform;
 no broadforgetting attribution. See changelog/2026-10-21-error-rca-results.md.
 
-Response-interface factorial diagnostic PREPARED, not yet launched:
+Response-interface factorial diagnostic RUNNING:
 ethics_gpu_response_interface_rca_v1,4children BASE/offtopic×thinking/nonthinking,
 256rows each. Endorse/reject,agree/disagree,true/false,yes/no×words/digits×polarity×order.
 Protocol/bank registered under data/generated/ethical_pilot/master. No training.
 Prospective plan changelog/2026-10-21-response-interface-rca-plan.md. Reused8facts only;
 requires fresh held-out validation on all5models before adoption. Oldfailedgates retained.
-52focused tests pass in isolated runs; no weights loaded. Next: commit/push; sync
-GPU only after oldworker terminal (verified), copy preparedbank, launch finite supervisor
-sft-drift-response-interface-rca-v1 through scripts/run_response_interface_rca.py run.
+52focused tests pass in isolated runs; no weights loaded. Source de67997 committed/pushed
+and synced after priorworker terminal. Supervisor sft-drift-response-interface-rca-v1
+RUNNING pid78316 verified, BASE nonthinking first. Finite worker command from
+belief-transfer: .venv/bin/python -u scripts/run_response_interface_rca.py run
+Log /workspace/sft-drift-ops/response-interface-rca-v1.log, stderr .err.
+Next status: ssh -p58689 root@38.49.42.46 'supervisorctl status sft-drift-response-interface-rca-v1; tail -5 /workspace/sft-drift-ops/response-interface-rca-v1.log'
+Next copy: uv run --no-sync python scripts/copy_error_rca.py --suite response --host root@38.49.42.46 --port 58689
 Worker has no resume/retry; fresh IDs required after started failure. Full100belief
 measurements follow any revised instrument. Goal remains active.
 

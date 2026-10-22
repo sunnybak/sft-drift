@@ -42,3 +42,7 @@ Verification: first43focused tests passed their assertions but artifact-preserva
 guard correctly rejected concurrent external analysis writes. Isolated rerun
 with no experimental writes exited0:43passed. Additional worker/config/analysis checks
 9passed. No weights loaded in tests.
+
+Response canary launched from pushed source de67997: supervisor
+sft-drift-response-interface-rca-v1 pid78316 RUNNING verified. Protocol bindings checked
+on GPU before launch. No resume or overwrite; outputs not yet collected at this boundary.
