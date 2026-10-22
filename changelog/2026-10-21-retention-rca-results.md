@@ -68,3 +68,9 @@ its own protocol and all100beliefs including its own BASE. No automatic expansio
 Terminal evidence under belief-transfer/data/results/ethical_pilot/
 ethics_gpu_retention_rca_v2/: analysis.{json,md}, net_changes_v1.{json,md},
 replay_mode_audit.{json,md}, hash-verified copyreceipt and originalchild rawoutputs.
+
+Additional normalizationaudit verifies everyrecorded accumulationgroup denominator
+and computes mean token-NLL coefficient shares across454steps: nonthinkingreplay
+~0.20%for all4arms. Exact source/ledgerhashes and formula in replay_objective_audit.
+This excludes Adam effects, gradientnorms and learning-rate weighting. It supports
+reporting mode-specific exposure, not a causal explanation or automaticretuning.

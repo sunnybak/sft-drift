@@ -1,50 +1,43 @@
 # Current state — 2026-10-21
 
-## Active work — error investigation and tuning
+## Active work — measurement and training-error investigation
 
-User authorizes resolving measurement errors and tuning before expansion. No new rental.
-ethics_gpu_error_rca_v1 COMPLETE:12operations/4,928calls; supervisor EXITED. Terminal
-copy187files/22,592,523bytes hash-verified. Allanswers strictformat; everymodel including
-BASE fails expanded accuracy. HF/vLLM adapter agreement224/224, BASE221/224, identical
-inputtokens. Negative/offtopic declines cross2ppdevelopment trigger in originalform;
-no broadforgetting attribution. See changelog/2026-10-21-error-rca-results.md.
+User authorizes resolving errors/tuning before expansion; no newrental or training.
+Arithmetic/decoder/backend and response-vocabulary audits COMPLETE: BASE also fails
+expandedarithmetic; no adapter-specific backendfault; published weightSHA256matches.
+See changelog/2026-10-21-{error-rca,response-interface-rca}-results.md. Oldgates intact.
 
-Response-interface diagnostic ethics_gpu_response_interface_rca_v1 COMPLETE:
-4children/1,024calls; supervisor EXITED. Off-box67files/5,458,213bytes hash-verified.
-Nonthinking BASE185/256correct vs off-topic184/256; thinking232/256vs234/256. NoBASE
-vocabulary/mode passes full accuracy+completeness; no newinterface adopted. All3weight
-shards match upstream pinnedrevisionSHA256. No broad off-topic collapse demonstrated;
-retention losses and other wording-specific declines remain unresolved. See
-changelog/2026-10-21-response-interface-rca-results.md and terminalanalysis under
-both data/results/ethical_pilot/ethics_gpu_{error_rca,response_interface_rca}_v1.
-54distinct focused tests pass with mocks/no weights. Old gates/results unchanged.
-No active GPUjob, no newtraining. Allnewsource/notes to be committed/pushed and private
-snapshotverified at this boundary; authoritative receipt data/.handoff-receipt.json.
+Fixedretention ethics_gpu_retention_rca_v2 COMPLETE:1,920replies; terminalcopy92files/
+12,344,716bytes verified. BASE known64/64thinking,44/44nonthinking stable3repeats.
+All4adapters spacing-only PAVOPM→PAVO PM; negative/offtopic also3070→2070. Offtopic
+thinking1729 swapsPAVOQM→PAVOMQ once (63/64), otherthinking64/64. Everycase passes
+>=95%retentionaccuracy; combinedgate fails separate100%format. No rescoring.
+Fullnonthinkingbank BASE47/64→positive57/negative57/offtopic55/C458: gains11/12/10/12,
+losses1/2/2/1. Reportboth views; no globalcollapse inferred. Review
+changelog/2026-10-21-retention-rca-results.md. Netchanges/replayaudits in resultsroot.
+Nonthinkingreplay0.159%rawtargets/~0.20%recorded token-NLL coefficientmass; hypothesis,
+not provedcause or automaticreweighting. Freshretention before anycandidate tuning.
 
-Fixed-retention ethics_gpu_retention_rca_v2 COMPLETE:1,920replies,5models×3seeds.
-Supervisor EXITED;92files/12,344,716bytes terminalcopy hash-verified. BASE knownset
-64/64thinking,44/44nonthinking stableallseeds. All4adapters reproduce spacing-only
-PAVOPM→PAVO PM. Negative/offtopic also reproduce3070→2070; off-topic thinking1729
-oneletter swap PAVOQM→PAVOMQ (63/64). All pass original>=95%retentionaccuracy;
-combinedgate fails separate100%format criterion. No rescoring or gateclearing.
-Fullnonthinkingbank improves47/64BASE→57positive/57negative/55offtopic/58C4: gains
-11/12/10/12vs losses1/2/2/1. Report bothconditionalretention and fulltaskperformance.
-Review changelog/2026-10-21-retention-rca-results.md; analysis/netchanges/replayaudit in
-resultsroot. v1prep failedbeforeinference and remains preserved. No globalcollapse
-inferred; low0.159%nonthinkingreplaytargetshare is hypothesis, not causeproved.
+Scope-comprehension ethics_gpu_scope_controls_v1 RUNNING, supervisor
+sft-drift-scope-controls-v1 pid82754; GPUsource610c147.5models/3,840calls,32freshcontexts,
+originalstanceprompt and unchangedcontrolcriteria. BASEandpositive children COMPLETE,
+closedcopy30files/11,879,952bytes verified. BASEdev382/384,val384/384; positivedev/val
+384/384. Allstrict/valid, zeronoteflips, bothsplitsPASS.3childrenpending at thiscopied
+boundary. This validates scopedreading only, not arithmetic/retention/ethicaleffect.
+Plan changelog/2026-10-21-scope-control-plan.md; currentprogress companionfile.33scope/
+sharedstage/schema/layer tests plus1nettransitiontest pass, no weights. Nooldgateclearing.
 
-New scope-comprehension controls PREPARED, not launched: ethics_gpu_scope_controls_v1,
-5children,3,840calls.32explicitfactcontexts,16development/16validation, originalnamed
-stancequestion, samecriteria; math/retention kept separate. No prompt selection or
-coaching. Plan changelog/2026-10-21-scope-control-plan.md. Sharedresponse stage supports
-explicit768rows/description while preserving historical256defaults/configidentities.
-33focused scope/sharedstage/schema/layer tests pass; nettransition test also passes.
-Next: commit/push, verifyoldworkerterminal (verified), sync code +generatedscopedbank,
-launch finite supervisor sft-drift-scope-controls-v1 via scripts/run_scope_controls.py run.
-No resume/retry or startedIDreuse. Then copy/analyze allmodels and bothsplits; no
-retrospectivequalification. Any revisedpolicy needs full100readings and ownBASE.
-Freshretention required before trainingtuning; do not select on ethicaldrift or one
-knownfailedstring. No expansion/newrental/training. Goal remains active.
+Livecommand: .venv/bin/python -u scripts/run_scope_controls.py run (belief-transfer).
+Log /workspace/sft-drift-ops/scope-controls-v1.log; stderr .err. Finite NOresume/retry.
+Do not pull hash-bound code while live, restart a startedID or destroybox from a
+partial snapshot. Nextstatus:
+ssh -p58689 root@38.49.42.46 'supervisorctl status sft-drift-scope-controls-v1; tail -5 /workspace/sft-drift-ops/scope-controls-v1.log'
+Nextcopy (belief-transfer): uv run --no-sync python scripts/copy_error_rca.py --suite scope --host root@38.49.42.46 --port 58689
+Nextanalysis: uv run --no-sync python scripts/analyze_scope_controls.py --allow-partial
+Drop --allow-partial only after all5children COMPLETE. Then review and preregister any
+revisedqualificationpolicy +full100belief comparison with ownBASE; no retrospective
+qualification or expansion. Goal remainsactive. Code/notes pushed; private receipt
+in data/.handoff-receipt.json is authoritative for locallycopied bytes only.
 
 ## Latest completed work
 
