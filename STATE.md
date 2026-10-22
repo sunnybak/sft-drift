@@ -32,6 +32,16 @@ Report:changelog/2026-10-22-fresh-retention-results.md. All164failures agent-rea
 full; exact admissible finals inherit prevalidated keys. Supplemental cohort is
 explicitly post-hoc and does not revise the prospective falsifier.
 
+## Implementation in progress
+
+Separate task-value-v1 scorer implemented: literal values/scoped valid equations,
+ordered lists, logical words and uppercase characters; unsupported/missing/capped
+replies explicit. Frozen assessments unchanged. Opt-in replay weight32implemented,
+with weighted denominator across exact one-pass accumulation groups and an audit.
+80relevant unit/layer/schema regressions pass; legacySFT config hashes unchanged.
+CUDA toy Trainer analytic/update/reload test is implemented/registered as
+ethics_gpu_weighted_loss_check_v1, NOT yet run. No real new model training yet.
+
 ## Next work — concrete bounded tuning step
 
 Read proposed changelog/2026-10-22-replay-weight-ablation-plan.md, then implement/test
@@ -62,10 +72,10 @@ Original neutral18/20gate remains failed; no retrospective pass from these diagn
 
 ## Preservation
 
-Before current block: verified snapshot e4a2e33eeca9a343eee854f30874546690014f72,
-codea1692a4e86fef7f969efd1f59312147c329d7185,5,675files/16,123,175,637bytes;
-corpusc01a2bf0cd77f854aede1f080c58a92fdfd3675e. Covers prior runs and prepared fresh
-inputs, NOT this block's raw replies/reviews/supplement/newnotes/runtimeconfigs.
+Verified snapshot82f6ae4546a57b28b091c21b2cde629ceb9e6956 at
+97bd74fdc0d6af811121f0daf825e260108f5a7c covers full fresh-retention/reviews:
+5,796files/16,138,716,185bytes; corpus1ed4036dba4ff7bdd57991993588ce848f6a71e9.
+New value/loss implementation and upcoming CUDA verification await current block save.
 Commit/push current block, then from belief-transfer/:
 uv run --no-sync python scripts/handoff.py save
 Verify receipt before claiming full preservation. No source/data mutation during save.

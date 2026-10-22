@@ -14,6 +14,7 @@ from belief_transfer.dataset.document_sft import collate_documents
 from belief_transfer.inference.backend import require_training_backend
 from belief_transfer.schemas import JobConfig
 from belief_transfer.training.sft import load_for_training
+from belief_transfer.training.replay_loss import WeightedLossMixin, accumulation_denominators, add_weighted_inputs, objective_report
 
 
 def adapter_hash(model) -> str:
@@ -50,6 +51,10 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
         raise ValueError('This new document path currently validates LoRA only')
     planned_batches = (one_pass_batches(len(chunks), optimizer_steps=spec.max_steps,
         grad_accum=hp.grad_accum, max_batch_size=hp.batch_size, seed=hp.seed) if spec.one_pass else None)
+    weighted = spec.replay is not None and spec.replay.nonthinking_loss_weight != 1.0
+    if weighted and (planned_batches is None or not any(c.get('loss_weight',1.) != 1. for c in chunks)):
+        raise ValueError('Weighted replay requires one-pass schedule and weighted replay targets')
+    weighted_denominators = accumulation_denominators(chunks,planned_batches,hp.grad_accum) if weighted else None
     revision_kwargs = {'revision': spec.model_revision} if spec.model_revision is not None else {}
     model, tokenizer = load_for_training(job.model_spec, hp, seed=hp.seed, **revision_kwargs)
     if not all(p.device.type == 'cuda' for p in model.parameters()):
@@ -79,9 +84,13 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
         batch['_document_meta'] = [{**{k: r[k] for k in (
             'example_id', 'source_id', 'source_kind', 'chunk_start')},
             'loss_tokens': sum(x != -100 for x in r['labels'][1:])} for r in rows]
+        if weighted:
+            for meta,row in zip(batch['_document_meta'],rows,strict=True):
+                meta['loss_weight']=row.get('loss_weight',1.)
+            add_weighted_inputs(batch,rows,weighted_denominators)
         return batch
 
-    class AuditedTrainer(Trainer):
+    class AuditedTrainer(WeightedLossMixin,Trainer):
         def get_train_dataloader(self):
             if planned_batches is None:
                 return super().get_train_dataloader()
@@ -95,6 +104,7 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
         def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
             meta = inputs.pop('_document_meta')
             count = int((inputs['labels'][:, 1:] != -100).sum())
+            weighted_denominator = inputs.get('_weighted_denominator')
             loss = super().compute_loss(model, inputs, return_outputs=return_outputs,
                                         num_items_in_batch=num_items_in_batch)
             with audit.open('a') as stream:
@@ -102,10 +112,14 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
                                          'event': 'forward_completed', 'loss_tokens': count,
                                          'normalization_items': (int(num_items_in_batch)
                                              if num_items_in_batch is not None else None),
-                                         'chunks': meta}) + '\n')
+                                         'chunks': meta,
+                                         **({'weighted_normalization_items':weighted_denominator,
+                                             'weighted_loss_tokens':sum(r['loss_tokens']*r['loss_weight'] for r in meta)} if weighted else {})}) + '\n')
             return loss
 
     trainer = AuditedTrainer(model=model, args=args, train_dataset=chunks, data_collator=collate)
+    if weighted:
+        trainer.model_accepts_loss_kwargs = True
     torch.cuda.reset_peak_memory_stats()
     started = time.perf_counter()
     result = trainer.train()
@@ -157,6 +171,9 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
         for b in group) for group in normalization.values())
     if spec.model_revision is not None:
         checks['loss_normalization_matches'] = normalization_matches
+    if weighted:
+        checks['weighted_loss_normalization_matches'] = all(all(math.isclose(b['weighted_normalization_items'],
+            sum(x['weighted_loss_tokens'] for x in group),rel_tol=1e-12) for b in group) for group in normalization.values())
     if spec.one_pass:
         observed_chunks = Counter((c['example_id'], c['chunk_start']) for b in batches for c in b['chunks'])
         expected_chunks = Counter((c['example_id'], c['chunk_start']) for c in chunks)
@@ -175,7 +192,8 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
                 actual_forward_loss_tokens=sum(b['loss_tokens'] for b in batches),
                 actual_microbatches=len(batches),
                 loss_normalization={'passed': normalization_matches,
-                    'contract': 'Sum token NLL divided by eligible targets across each accumulation group; Trainer num_items_in_batch'},
+                    'contract': ('Raw Trainer item counts verified separately; effective loss uses weighted target mass across the accumulation group' if weighted else
+                        'Sum token NLL divided by eligible targets across each accumulation group; Trainer num_items_in_batch')},
                 training_seconds=training_seconds,
                 peak_allocated_bytes=peak_allocated, peak_reserved_bytes=peak_reserved,
                 loss_tokens_per_second=sum(b['loss_tokens'] for b in batches) / training_seconds,
@@ -183,4 +201,5 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
                 actual_loss_tokens_by_kind={kind: sum(c['loss_tokens'] for b in batches for c in b['chunks']
                     if c['source_kind'] == kind) for kind in ('synthetic', 'c4', *sorted(
                         {c['source_kind'] for c in chunks} - {'synthetic', 'c4'}))},
+                **({'weighted_objective':objective_report(batches,spec.replay.nonthinking_loss_weight)} if weighted else {}),
                 resume_supported=False)

@@ -143,8 +143,12 @@ def _assistant_replay(row: dict, tokenizer: Any, *, max_length: int,
         (header_ids if end <= len(header) else body).append(token)
     if not header_ids or not body or tokenizer.eos_token_id in body:
         raise ValueError('Replay response has empty or reserved token boundaries')
-    return _assistant_chunks(row, tokenizer, header_ids, body, [*body, tokenizer.eos_token_id],
+    chunks = _assistant_chunks(row, tokenizer, header_ids, body, [*body, tokenizer.eos_token_id],
         max_length=max_length, context_limit=replay.continuation_context_tokens, mode=replay.mode)
+    if not row['thinking'] and replay.nonthinking_loss_weight != 1.0:
+        for chunk in chunks:
+            chunk['loss_weight'] = replay.nonthinking_loss_weight
+    return chunks
 
 
 def load_manifest(path: Path) -> list[dict]:

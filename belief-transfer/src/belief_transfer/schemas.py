@@ -2003,6 +2003,7 @@ class DocumentReplaySpec(BaseModel):
     """Explicit raw Qwen assistant replay, distinct from empty-think documents."""
 
     mode: Literal['qwen3_raw_response_v1'] = 'qwen3_raw_response_v1'
+    nonthinking_loss_weight: float = Field(default=1.0, gt=0, le=128, exclude_if=lambda value: value == 1.0)
     continuation_context_tokens: int = Field(default=64, ge=0, le=256)
 
 
