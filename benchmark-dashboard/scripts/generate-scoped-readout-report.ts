@@ -17,7 +17,9 @@ const retention='data/results/ethical_pilot/ethics_gpu_retention_rca_v2/analysis
 const original='data/'+output+'/reports/ethical-pilot-three-seed.json';
 const arithmetic='data/'+output+'/reports/expanded-control-followup.json';
 const cells=root+'/per_belief_results.jsonl';
-const report=scopedReadoutReport(read(original),read(root+'/analysis.json'),readFileSync(join(project,cells),'utf8').trim().split('\n').map(l=>JSON.parse(l)),read(evidence),read(retention),[root+'/analysis.json',evidence,retention,cells,original,arithmetic].map(source),new Date(statSync(join(project,root,'analysis.json')).mtimeMs).toISOString(),read(arithmetic));
+const bank='data/results/ethical_pilot/ethics_gpu_scoped_readout_base_s42_v1/stance_bank.jsonl';
+const beliefs=Object.fromEntries(readFileSync(join(project,bank),'utf8').trim().split('\n').map(l=>JSON.parse(l)).filter(r=>r.wording_id==='w0'&&r.polarity==='positive'&&r.arrangement===0).map(r=>[r.belief_id,{statement:r.statement,scope:r.scope}]));
+const report=scopedReadoutReport(read(original),read(root+'/analysis.json'),readFileSync(join(project,cells),'utf8').trim().split('\n').map(l=>JSON.parse(l)),read(evidence),read(retention),[root+'/analysis.json',evidence,retention,cells,original,arithmetic,bank].map(source),new Date(statSync(join(project,root,'analysis.json')).mtimeMs).toISOString(),read(arithmetic),beliefs);
 addReportDiagnostics(report);
 const checked=validateReport(report);if(!checked.report)throw Error(checked.errors.join('; '));
 const destination=join(project,'data',output,'reports',report.id+'.json');

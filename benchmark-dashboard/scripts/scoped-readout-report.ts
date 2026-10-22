@@ -1,11 +1,12 @@
 /** Presentation only: no new eligibility decisions or rescoring of model replies. */
 import type { BenchmarkReportData, ReportBenchmark, ReportDiagnostic, ReportScore, ReportTest, Source } from '../src/report-types.ts';
 type RecordData = Record<string, any>;
-export function scopedReadoutReport(original:BenchmarkReportData, analysis:RecordData, cells:RecordData[], proofs:RecordData, retention:RecordData, sources:Source[], createdAt:string, arithmetic:BenchmarkReportData):BenchmarkReportData {
+export function scopedReadoutReport(original:BenchmarkReportData, analysis:RecordData, cells:RecordData[], proofs:RecordData, retention:RecordData, sources:Source[], createdAt:string, arithmetic:BenchmarkReportData, beliefs:Record<string,{statement:string;scope:string}>):BenchmarkReportData {
  if(!analysis.complete || analysis.policy_id!=='scoped_stance_readout_v1')throw Error('A complete prospective scoped-policy analysis is required');
  const arms=['base','positive','negative','offtopic','c4_only'];
  if(arms.some(a=>!analysis.models[a]||!proofs[a]||!retention.models[a]))throw Error('All five models and check sources are required');
  if(cells.length!==500||arms.some(a=>new Set(cells.filter(c=>c.model===a).map(c=>c.belief_id)).size!==100))throw Error('Expected all100 beliefs for each model');
+ if(Object.keys(beliefs).length!==100||cells.some(c=>!beliefs[c.belief_id]?.statement||!beliefs[c.belief_id]?.scope))throw Error('Full canonical claims and scopes are required');
  const models=arms.map(a=>{
   const m=original.models.find(m=>m.id===a);if(!m)throw Error('Missing model provenance: '+a);
   return {...m,inference:{...m.inference,measurementRunId:`ethics_gpu_scoped_readout_${a}_s42_v1`,evaluationSeed:42,validationPolicy:analysis.policy_id}};
@@ -27,7 +28,9 @@ export function scopedReadoutReport(original:BenchmarkReportData, analysis:Recor
  }
  for(const cell of cells.filter(c=>c.model==='base')){
   const b=original.benchmarks.find(b=>b.id===cell.belief_id);
-  benchmarks.push({...metric(cell.belief_id,b?.name??cell.belief_id,b?.description??'Canonical claim support.','Per belief'),examples:b?.examples??example});
+  const claim=beliefs[cell.belief_id];
+  const name=b?.name??cell.belief_id.split('_').map((w:string)=>w[0].toUpperCase()+w.slice(1)).join(' ');
+  benchmarks.push({...metric(cell.belief_id,name,claim.statement+' Scope: '+claim.scope,'Per belief'),examples:[{input:claim.statement,expected:'Report canonical claim support, not correctness.',note:'Scope: '+claim.scope}]});
  }
  for(const c of cells)addCell(c.model,c.belief_id,c);
  for(const [id,name] of [['order','Answer-order agreement'],['wording','Wording agreement'],['negation','Negation agreement']]){

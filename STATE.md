@@ -56,6 +56,9 @@ not training replication. No training or scale-up. See dated implementation note
 
 Dashboard terminal-readout exporter prepared (not yet emitted): full500 belief cells,
 allfive models, own fresh BASE, scoped eligibility separate from arithmetic/retention.
+Every claim and scope comes from the hash-bound completed BASE bank; no opaque-ID
+fallback for the90beliefs absent from the older target-only report.4focused report
+tests and TypeScript check pass after this presentation-only addition.
 41dashboard tests and production build pass. Generate after terminal analysis with
 cd benchmark-dashboard && npm run data
 No dashboard/source change was pulled to the live hash-bound GPU worker.

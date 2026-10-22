@@ -19,3 +19,12 @@ allfive children complete; dashboard npm run data then derives the new report.
 Current finite worker has no resume/restart support. GPU log remains
 /workspace/sft-drift-ops/scoped-readout-v1.log; source175b04d stays fixed on GPU.
 Private snapshot at this boundary includes closed BASE, not future GPU replies.
+
+Report metadata follow-up: all100 canonical statements/scopes now read from the
+completed frozen BASE bank (w0,positive,arrangement0), whose source hash is included.
+The report refuses missing claim/scope metadata; older target-only report labels
+remain reusable. No generic description substitutes for the other90claims. Verified
+100unique nonempty claim/scope rows from the actual BASE bank.4fixture report tests
+and TypeScript check pass. No changed model prompt/parser/scoring or GPU source.
+Positive was RUNNING at512/2,400natural replies at the latest poll. Previous private
+snapshotd785f663 preserves completed BASE; the new receipt supersedes it for source.

@@ -14,13 +14,16 @@ function fixture(){
  const retention={models:Object.fromEntries(arms.map(a=>[a,{by_seed:Object.fromEntries(['42','7','1729'].map(seed=>[seed,{known_retention_passed:a==='base',by_mode:{False:{known_n:44,known:{semantic_correct:a==='base'?44:43,strict_format:a==='base'?44:43}}}}]))}]))};
  const arithmetic:BenchmarkReportData={...original,id:'arithmetic',benchmarks:[{id:'original-accuracy',name:'Arithmetic correctness',description:'Known arithmetic truth',category:'Correctness',unit:'fraction',direction:'higher',range:{min:0,max:1},threshold:{operator:'gte',value:.95},conditions:'Separate control study',examples:[]}],scores:arms.map(modelId=>({modelId,benchmarkId:'original-accuracy',value:.8,numerator:8,denominator:10,notes:'Failed',source:null})),tests:arms.map(modelId=>({id:modelId+'-original',modelId,benchmarkId:null,name:'Arithmetic',description:'Historical arithmetic gate',required:true,status:'fail',expected:true,observed:false,source:null}))};
  const sources=[0,1,2].map(i=>({path:'source'+i,sha256:'a'.repeat(64)}));
- return {original,analysis,cells,proofs,retention,sources,arithmetic};
+ const beliefs=Object.fromEntries(Array.from({length:100},(_,i)=>['belief'+i,{statement:'Canonical statement '+i,scope:'Explicit scope '+i}]));
+ return {original,analysis,cells,proofs,retention,sources,arithmetic,beliefs};
 }
-function build(f=fixture()){return scopedReadoutReport(f.original,f.analysis,f.cells,f.proofs,f.retention,f.sources,'2026-10-21T00:00:00Z',f.arithmetic);}
+function build(f=fixture()){return scopedReadoutReport(f.original,f.analysis,f.cells,f.proofs,f.retention,f.sources,'2026-10-21T00:00:00Z',f.arithmetic,f.beliefs);}
 test('all models and beliefs remain visible; historical failures remain separate',()=>{
  const f=fixture(),before=JSON.stringify(f),report=build(f);
  assert.equal(JSON.stringify(f),before);
  assert.equal(report.models.length,5);
+ assert.equal(report.benchmarks.find(b=>b.id==='belief99')?.description,'Canonical statement 99 Scope: Explicit scope 99');
+ assert.equal(report.benchmarks.find(b=>b.id==='belief99')?.examples[0].input,'Canonical statement 99');
  assert.equal(report.scores.filter(s=>s.benchmarkId.startsWith('belief')).length,500);
  assert.equal(report.tests.filter(t=>t.required&&t.status==='pass').length,40);
  assert.equal(report.tests.filter(t=>t.name.startsWith('Separate arithmetic')&&t.status==='fail'&&!t.required).length,5);
@@ -47,5 +50,6 @@ test('partial, missing models, duplicate/missing beliefs and absent repeats cann
  let f=fixture();f.analysis.complete=false;assert.throws(()=>build(f),/complete/);
  f=fixture();delete f.analysis.models.offtopic;assert.throws(()=>build(f),/five models/);
  f=fixture();f.cells[0]=f.cells[1];assert.throws(()=>build(f),/all100/);
+ f=fixture();delete f.beliefs.belief99;assert.throws(()=>build(f),/canonical claims/);
  f=fixture();delete f.retention.models.base.by_seed['7'];assert.throws(()=>build(f),/retention repeat/);
 });
