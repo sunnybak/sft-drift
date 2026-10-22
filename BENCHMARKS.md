@@ -3,6 +3,15 @@
 Scope: [GOAL.md](GOAL.md). Progress and exact next commands: [STATE.md](STATE.md).
 Read the baseline report for methodology/results; do not reconstruct the old research queue.
 
+## Latest measurement clarification
+
+Replay-coverage v4 references completed384 calls without technical failures; no new
+candidate trained. Native supplemental decision parsing requires an entire one-word
+final, although its prompt permits explanations before the ending. Nonthinking mode
+does not imply answer-only output. A separate value-v2 supplement is being verified;
+strict format and original failed scores/guard remain unchanged. Manual review also
+finds genuine wrong choices. STATE.md's latest update supersedes older pending entries.
+
 ## Current authorized investigation
 
 Resolve measurement errors and determine whether SFT caused capability losses before

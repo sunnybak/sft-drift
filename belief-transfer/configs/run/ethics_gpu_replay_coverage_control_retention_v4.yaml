@@ -1,0 +1,16 @@
+# @package _global_
+defaults:
+- ethics_gpu_retention_rca_base_v2
+run_id: ethics_gpu_replay_coverage_control_retention_v4
+pilot_bench:
+  adapter_path: data/checkpoints/ethical_stance_sft/ethics_sft_c4_weight32_v1/final
+instruction_retention:
+  model_label: control
+  bank_path: data/generated/ethical_pilot/ethics_gpu_replay_coverage_confirmation_v4/bank.jsonl
+  bank_sha256: 3a334d7f44f3c0da5fd1254e1e0069b211168a6415939d4c885fb528fd56b6b8
+  known_path: data/results/ethical_pilot/ethics_gpu_replay_coverage_base_retention_v4/known_items.jsonl
+  known_sha256: ab838a517e4d30248390645429b6fadc5e4a12cf56742822018374edd06adf4b
+  fresh_base_reference: false
+  adapter_sha256: 699c9dd68fb14ecceb60654e369e86d90111abad7bdffa2a7f5f97326bd03d37
+  eval_seeds:
+  - 42
