@@ -12,7 +12,7 @@ ethics_sft_c4_replay_coverage_v5. Reference reconstruction passed; RUN train obs
 Command:cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_replay_value_probe.py
 Log:/workspace/sft-drift-ops/replay-coverage-value-v5.log
 Supervisor autostart/autorestart false; finite worker, NO resume/overwrite by startedID.
-Latest observed step256/454 during checkpoint copy; training still running, no
+Latest observed step440/454; training still running, no
 reported failure. Checkpoint227 COMPLETE and copied/hash-verified locally:8files,
 396,924,327bytes. Before/after remote inventories and local bytes match. Copy receipt:
 data/generated/ethical_stance_sft/ethics_sft_replay_coverage_value_v5/checkpoint227_copy_v1.json
@@ -72,9 +72,14 @@ Verified receipt deployed toGPU before start; prior receipt backed up off-repo.
 139data files/31,387,108bytes verified at deployment,25new copied without overwrites.
 Launch receipt/notes now VERIFIED in snapshot1db540a34fd8646e420d387250e73d6a4a12c067
 at2f413ba:6616files/19,247,350,022bytes; corpusb3dcaa49b0ecaf2dd168e72d32aa6706891f7aea.
-New conditional plan/updated progress/checkpoint227 copy pending next completed-block
-private save. Current live training log, remaining checkpoints and final outputs only
-onGPU. No new candidate performance measurements yet. Source adoption preserved identical old runtimeYAML in
+Checkpoint227/conditional plan/notes VERIFIED in private snapshot
+f7aa1f63d2b6df50194266cb2f70d2510de1a962 at7d84a6c:6626files/19,644,280,742bytes;
+corpus3699d97c07df3f561ce87bbf24fdb99324d28d16 verified. Current live training log,
+remaining checkpoints and final outputs only onGPU. No candidate performance results yet.
+New offline analyzer scripts/analyze_replay_value_probe.py reconstructs training binding,
+paired value/format comparisons and all full100/control token/seed/reply metadata;
+46focused tests pass. Run only after COLLECTION_COMPLETED+TERMINAL and closed output copy.
+Analysis source is separate from pinned GPU9066e91; do not pull into running worker. Source adoption preserved identical old runtimeYAML in
 /workspace/sft-drift-ops/preserved-runtime-configs/before-replay-value-v5/.
 Save command:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
 No local mutations/copies/tests during save; retain handles acrossHF429waits.
