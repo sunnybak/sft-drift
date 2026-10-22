@@ -14,7 +14,9 @@ all12engineering checks pass; initial adapter/fullLRtrace/actualchunks/objective
 Original supervisor sft-drift-base-reasoning-replay-v1 PID131244 EXITED20:26UTC after
 first128midpoint retention replies completed. Master failure+TERMINAL preserved:
 KeyError('fresh_base_reference'), a collector metadata-default bug. Do NOT restart it.
-GPUidle; checkout3438572a6fea4be7b64007e40a8dc2485364bc09 until recovery deployment.
+Recovery supervisor sft-drift-base-reasoning-recovery-v1 RUNNING PID132392, observed
+20:51:17UTC, preserved-input preflight. GPUcheckout e2b25f62d30a1b949f2b7c8b2ace3c9e002a1110
+pinned during new worker; no new training. Original supervisor remains EXITED.
 No scientific verdict on this candidate yet; remaining evaluations never started.
 
 ## Established current result
@@ -79,30 +81,34 @@ Newgenerated proof_review_selection_v1.json selects16thinking slots per distinct
 (one/operation/cell, seed20261022), fixed20:15:51UTC before all12decision result IDs existed.
 Read all flags plus those slots; verify exact annotation coverage before any reviewed pass.
 
-Repairs+notes pushed7bb6d54; closed console SHA c4e2bc2ac410beb7426046a891b4ab3dac073676f47eaab1e50edb7c156dd86a.
-Next:private-save all completed training/failure/recovery inputs;
-verify receipt, SSH -p58689 root@38.49.42.46; preserve remote untracked runtime YAML
-before pull, deploy/hash-check and
-launch recovery once with source pin. Exact command after verified deployment:
-cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_base_reasoning_recovery.py run
-Expected new supervisor sft-drift-base-reasoning-recovery-v1, log
-/workspace/sft-drift-ops/base-reasoning-recovery-v1.log. NOT launched yet.
-It has NOresume/restart. Finish same midpoint/final/full100grid regardless scientificfail;
-review final-primary result. If negative pause goal and recommend; no further SFT.
+Repairs/notes pushed e2b25f6, verified private snapshot below. Six recovery input files
+copied/hash-verified onGPU; all1282bindings and128raw replies reconstruct there, completed
+adapter/training binding exact. Old untracked runtime YAML preserved in ops, tracked
+replacement byte-identical. New finite recovery supervisor launched once, RUNNINGPID132392
+at20:51:17UTC, input preflight. Exact source e2b25f6 must stay pinned onGPU.
+Command:cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_base_reasoning_recovery.py run
+Log:/workspace/sft-drift-ops/base-reasoning-recovery-v1.log. NOresume/restart.
+Exact next action:SSH -p58689 root@38.49.42.46; supervisorctl status
+sft-drift-base-reasoning-recovery-v1 and tail that log. Watch for midpoint/comparison_v1.json
+or TERMINAL under data/results/ethical_pilot/ethics_gpu_base_reasoning_recovery_v1.
+Copy/hash completed child/point outputs and dynamic runtime YAMLs at next safe boundary;
+live new evaluation outputs are only onGPU. Deployment launchreceipt local, to join next
+closed measurement snapshot. Finish same midpoint/final/full100grid even if scientific
+checks fail; review final-primary result. If negative pause goal and recommend; no more SFT.
 If positive, independent confirmation still needs reviewed/private verdict and updated
 execution binding to recovery; frozen questions/gates remain unchanged, no automatic call.
 Details:changelog/2026-10-22-base-reasoning-collector-recovery-plan.md.
 
 ## Preservation
 
-Latest VERIFIED midpoint snapshot5789c275adc5b1b6ff824350f912cd2d77259316at
-ccd085da5ac20a6ac9e372187f246bcd0a3f19b3:7143files/20,693,127,783bytes;
-corpusd0650bd16da03bf4de309be8ef3c182d1129ba82, manifest
-94e12393184da05d979d47ff35fab48411ef0e3e960d0f2b781e077bd877bce8.
-All earlier data+closed midpoint privately verified. Subsequent final training/checkpoints,
-failed collector128replies, proofsample and recovery contract are local+GPU/pending new
-private save. Source fixes/notes next committed/pushed. Exact save:
-cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+Latest VERIFIED complete training/recovery-input snapshotf4f0600f67f78ec4773f26caff56ded0f58d33f4
+at e2b25f62d30a1b949f2b7c8b2ace3c9e002a1110:7209files/21,238,135,872bytes;
+corpuscd208bb515636620857e65bd95f4fdd4df9ff31c, manifest
+faf0918ad1d358910d9fe1e48fa46c25e3d703d75de4582ee6890075f5a495f3.
+Includes all completed training/checkpoints, terminal failed collector128replies/log,
+proofsample and recovery contracts. New recovery launchreceipt/post-launch outputs
+postdate snapshot; preserve at next safe measurement boundary. Do not destroy box.
+Save after closed-copy+source push:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
 Keep same process through HF429waits; no local mutation during save; check receipt.
 
 ## Other fixed study limits

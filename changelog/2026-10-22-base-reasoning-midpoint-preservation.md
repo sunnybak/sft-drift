@@ -28,3 +28,18 @@ Previous launch-record private snapshotc75984e857426be515130aa15bb5e048f7897c72
 completed/verified7125files/20,274,344,717bytes, sourcec4471d4. This midpoint boundary
 now needs its own private snapshot. Live training logs/batch audit remain onGPU and
 must be copied at a later safe boundary; do not destroy the box.
+
+## Completed training, technical recovery and user stopping condition
+
+Training completed454steps/1964.43seconds, all12checks, exact actual input/objective and
+initial adapter/fullLRtrace. Final+step454weights/config identical. Collector then failed
+after128completed midpoint replies because false schema defaults were intentionally
+omitted. Recovery fix/reuse validated166tests plus actual128raw records onCPU/onGPU.
+All closed training/failed controller outputs were copied/hash-verified, with a differing
+regeneratable Markdown view preserved separately; authoritative JSONL unchanged.
+Private snapshotf4f0600f67f78ec4773f26caff56ded0f58d33f4verified7209files/21,238,135,872bytes
+at e2b25f6. New finite sft-drift-base-reasoning-recovery-v1 RUNNINGPID132392at20:51:17UTC,
+sourcee2b25f6pinned. It never trains or repeats completed128replies. Launchreceipt local;
+new closed measurement outputs will be copied/private-saved at next safe boundary.
+User explicitly requests pausing goal and reporting recommendation if final reviewed
+scientific result is negative. Do not start further tuning/expansion in that event.
