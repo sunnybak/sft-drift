@@ -32,8 +32,12 @@ Paired mode diagnostic is now complete: thinking fresh383/384BASE/C4and384/384in
 positive/negative/offtopic; C4's one fresh token loop fails strict qualification.
 Nonthinking334–336/384and fails arithmetic for every model. Neither mode qualifies
 across all5; conditional target-free readout v1 remains blocked/unlaunched. See
-2026-10-21-target-free-modes-results.md. Next is preselected opt-in presence_penalty1.5,
-new64cases and8source-linked probes/model under2026-10-21-presence-controls-plan.md.
+2026-10-21-target-free-modes-results.md. Presence1.5pilot is now complete: all5fresh gates pass, but C4has another capped
+stress reply; practical fix fails. Do not adopt it or launchv1. See2026-10-21-presence-
+controls-results.md. Next is a separately planned error-aware diagnostic readout v2,
+original sampler, richer fresh logical/scope checks and explicit missing-data precision
+budget. This does not requalify old failed benchmarks or certify model recovery.
+See2026-10-21-error-aware-readout-v2-plan.md; implementation remains pending.
 Keep old natural consistency as an outcome, never a training-selection threshold.
 No automatic100-subject expansion. New runs/instruments get fresh IDs; old gates and
 results remain unchanged. Do not select training on desired ethical drift.

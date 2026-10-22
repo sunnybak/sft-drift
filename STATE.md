@@ -110,40 +110,53 @@ BASEsubstitutes45for displayed47; C4correctly computes58−3=55then loops to cap
 parser/key fault. No broad SFTcollapse established; narrow prior retention losses
 remain. Details changelog/2026-10-21-target-free-modes-results.md. No resume/restart.
 
-## Next: preselected presence-penalty control pilot
+## Complete: presence-penalty pilot; practical fix failed
 
-Official Qwen3-4B card recommends presence_penalty1.5for significant repetitions.
-New plan changelog/2026-10-21-presence-controls-plan.md, master
-ethics_gpu_presence_controls_v1, five ethics_gpu_presence_control_{arm}_v1children.
-Same fixed models/target-free prompt/thinking/T0.6/top_p0.95/top_k20/4096cap/batch64;
-only presence penalty changes.64new cases/384fresh rows plus8separate regression
-probes (four old five>three, two exact observed loops with independent repeats).
-392calls/model,1960total; all5collected despite performance failures. Unchanged
-fresh gates, plus all8regression probes must pass per model for practical success.
+ethics_gpu_presence_controls_v1 COMPLETE: all5jobs/1960calls returned0, sourcea2ecbc3;
+supervisor sft-drift-presence-controls-v1 EXITED. Terminal copy verified82files/
+14,995,945bytes; final analysis reconstructs raw/token/runtime/penalty identities.
+Fresh correct/384:BASE381,positive384,negative384,off384,C4381. All5fresh split/domain/
+format/normal-stop gates pass. All fresh replies valid. BUT C4loops on loop/base/1
+(15+4=19) to4096tokens; its stress score7/8, others8/8. Practical all8stress criterion
+FAILS; qualified_for_new_readout_protocol false. Do NOTadopt1.5as proven fix or launch
+conditional readout v1. No further penalty-value search or old-gate reclassification.
 
-Opt-in penalty forwarded to vLLM SamplingParams and execution/raw identity; None
-is omitted, historical defaults unchanged. All10mode resolved-config hashes verify.
-74focused inference/config/controller/layer/handoff tests pass; new full100prototype
-has100clean tests. All64new cases agent-read,32arithmetic references checked; pinned
-tokenizer104–180inputtokens fits4352context with4096cap.33source/input/config/adapter
-bindings frozen, paths registered, bank and5configs prepared. DEPLOYED/LAUNCHED
-sourcea2ecbc3;4input files/33bindings verified and GPUvLLMpreflightpassed, including
-actual SamplingParams1.5retention and pinned tokenizer/runtime. Supervisor
-sft-drift-presence-controls-v1 RUNNING,PID97444atlaunch. Finite command opsPython
-scripts/run_presence_controls.py run; log /workspace/sft-drift-ops/presence-controls-v1.log.
-Do not pull/change bound GPUsource while active. Exact next status command:
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-presence-controls-v1'
-Closed child copy from belief-transfer/: uv run --no-sync python scripts/copy_error_rca.py
---suite presence --host root@38.49.42.46 --port 58689. Then
-scripts/analyze_presence_controls.py --allow-partial; final only after all5jobs.
-New live outputs are GPU-only until closed copy; completed mode outputs are off-box.
-No resume/autorestart; changed source/inputs require fresh IDs. No training/rental.
+Read all7wrong/capped replies: six arithmetic finals sayBafter settled reasoningA;
+C4's stress reply loops. All norm/provided-fact answers correct. No parser/key fault;
+no broad SFTcollapse established. Existing narrow retention losses remain explicit.
+Report changelog/2026-10-21-presence-controls-results.md; raw review JSONL/Markdown
+under master. All captured model outputs now off-box. No current GPUworker launched.
+No new training/rental. Do not restart these IDs.
 
-Full100target-free readout v1 is an implemented/mocked prototype with NOmodel calls:
-its original all5thinking gate fails, so do not launch/prepare v1. A successful new
-penalty assay would require a separate v2readout protocol/new IDs, not relaxing v1.
-Native target-free relative-choice reports do not claim independent negation
-agreement. Source frozen bank/extractor and historical prompt outputs remain unchanged.
+## Next: implement NEW error-aware diagnostic readout v2
+
+Read changelog/2026-10-21-error-aware-readout-v2-plan.md BEFORE implementation/calls.
+This is a post-diagnostic measurement-policy change, not a passed loop intervention.
+Original zero-error gates/stress failures remain reported. Keep original thinking
+T0.6/default no-penalty sampler; target-free forced relative choice, all100beliefs,
+3sampling seeds/all5fixed models. Add fresh conditional-scope/logic cases rather than
+shrinking old domains:80contexts/480fresh controls plus8stress probes per job.
+1200natural+488controls=1688calls/job;15jobs/25,320calls. No training/corpus expansion.
+
+Use per-response validity and worst-case missing-data bounds; do not discard a whole
+checkpoint merely for a rare capped reply. NEWoperational error-budget flags (95%
+per-domain correctness,99%fresh coverage and worst-case note flips<=5%) are distinct
+from old100%strict benchmark flags. Primary aggregate missing-data bound width<=1pp;
+all500belief/model rows retained regardless. Bounds do not cover unknown semantic
+miscoding: preselected72full natural replies plus all failures need agent review.
+Recurrent scope/final mapping defects falsify clean semantic interpretation. Do not
+tune training on ethical direction. Full protocol explains hypothesis/contrasts/limits.
+
+Existing run_target_free_readout.py/analyze_target_free_readout.py are GATEDv1
+prototypes (100clean tests), NOmodel calls. They need explicitv2IDs/protocol, typed
+external control bank/hash/count, matched note/independent repeat seed keys, richer
+fresh control builder and error-aware analysis/tests. Registerv2paths before prepare;
+freeze80checked cases, source, exact configs/tokenizer/runtime before launch. No
+synthetic reasoning closures, constrained final labels, hidden retries or neutral fills.
+Exact next safe command from root:
+cat changelog/2026-10-21-error-aware-readout-v2-plan.md
+Then implement/verify before attempting any v2prepare or GPUlaunch. Existing box kept;
+all earlier stages are terminal/no resume. No need to rent another resource.
 
 ## Dashboard and preservation
 
@@ -161,11 +174,11 @@ explicitly notes subsequent BASEinterpretation failure and stopped readout.45das
 tests, TypeScript and finalbuild pass; browser/screenshot verified. Full browser-verified screenshots under interface-controls master, including warning
 that the later BASEreadout failed. No historical score/gate was changed.
 
-Latest verified private receipt30ca685e,code92b9a16,4847files/15,751,404,397bytes:
-old stopped/partial paired data, terminal target-free BASEfailure, dashboard and
-paired-mode prepared inputs/launch. Current mode-terminal data are now copied off-box;
-next save includes all10mode outputs/review and new presence bank/source/prototype.
-GPUmode worker is terminal; new presence worker is running. No training/rental.
+Latest verified private receipt e5435d2a,code4fd9f55,5032files/15,783,301,715bytes:
+terminal mode outputs/review, all earlier stopped/partial data, presence prepared
+inputs/source and launch proof. Presence terminal outputs/review are now copied off-box;
+next save must include those plus the new v2diagnostic plan/state. Actual authoritative
+snapshot inventory is data/.handoff-receipt.json, not the date of this prose.
 
 Original pilot/results/expanded-control/off-topic follow-up remain preserved under
 their original IDs; see changelog/2026-10-21-ethical-four-arm-results.md and

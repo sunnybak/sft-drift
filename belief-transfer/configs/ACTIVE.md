@@ -280,3 +280,14 @@ ethics_gpu_presence_controls_v1,5typedconfigs,392rows each/1960calls. Only opt-i
 vLLM presence_penalty1.5changes; defaults/config hashes remain historical. Fresh
 64cases plus8separate probes; all5models collected. STATE controls actual launch.
 A successful assay permits a NEWv2readout protocol, never v1gate relaxation.
+
+## Current next step: error-aware diagnostic v2 (not yet implemented)
+
+Presence pilot terminal: fresh gates all pass, C4stress7/8with token cap, so practical
+fix failed; do not adopt presence1.5or launch gated readout v1. Keep failures. New
+prospective2026-10-21-error-aware-readout-v2-plan.md specifies25,320calls, all100beliefs,
+5fixed models/3sampling seeds, original no-penalty thinking sampler, richer fresh
+conditional-scope controls and response-level missingness/precision assessment.
+V2needs typed external bank and seed-key support, control factory, analysis/tests
+and new registered IDs before any prepare/launch. Oldstrict benchmarks remain failed.
+STATE.md is execution authority; all current GPUworkers terminal. No new training.
