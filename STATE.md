@@ -126,10 +126,17 @@ is omitted, historical defaults unchanged. All10mode resolved-config hashes veri
 74focused inference/config/controller/layer/handoff tests pass; new full100prototype
 has100clean tests. All64new cases agent-read,32arithmetic references checked; pinned
 tokenizer104–180inputtokens fits4352context with4096cap.33source/input/config/adapter
-bindings frozen, paths registered, bank and5configs prepared. NOT yet launched.
-Exact next command after clean committed source/input deploy: GPUvLLMPython
-scripts/run_presence_controls.py check-runtime. Finite supervisor then runs opsPython
-scripts/run_presence_controls.py run; expected log /workspace/sft-drift-ops/presence-controls-v1.log.
+bindings frozen, paths registered, bank and5configs prepared. DEPLOYED/LAUNCHED
+sourcea2ecbc3;4input files/33bindings verified and GPUvLLMpreflightpassed, including
+actual SamplingParams1.5retention and pinned tokenizer/runtime. Supervisor
+sft-drift-presence-controls-v1 RUNNING,PID97444atlaunch. Finite command opsPython
+scripts/run_presence_controls.py run; log /workspace/sft-drift-ops/presence-controls-v1.log.
+Do not pull/change bound GPUsource while active. Exact next status command:
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-presence-controls-v1'
+Closed child copy from belief-transfer/: uv run --no-sync python scripts/copy_error_rca.py
+--suite presence --host root@38.49.42.46 --port 58689. Then
+scripts/analyze_presence_controls.py --allow-partial; final only after all5jobs.
+New live outputs are GPU-only until closed copy; completed mode outputs are off-box.
 No resume/autorestart; changed source/inputs require fresh IDs. No training/rental.
 
 Full100target-free readout v1 is an implemented/mocked prototype with NOmodel calls:
@@ -158,7 +165,7 @@ Latest verified private receipt30ca685e,code92b9a16,4847files/15,751,404,397byte
 old stopped/partial paired data, terminal target-free BASEfailure, dashboard and
 paired-mode prepared inputs/launch. Current mode-terminal data are now copied off-box;
 next save includes all10mode outputs/review and new presence bank/source/prototype.
-GPUmode worker is terminal; no training or other inference launched at this boundary.
+GPUmode worker is terminal; new presence worker is running. No training/rental.
 
 Original pilot/results/expanded-control/off-topic follow-up remain preserved under
 their original IDs; see changelog/2026-10-21-ethical-four-arm-results.md and
