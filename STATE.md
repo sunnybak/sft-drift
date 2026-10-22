@@ -2,102 +2,52 @@
 
 ## Goal and decision
 
-Investigate/resolve measurement errors and tune genuine SFT regressions before scaling.
-Goal ACTIVE, not complete. Existing VastGPU authorizedovernight; no new rental, no Mac
-training. No full90/100beliefSFT hasrun. Do not select recipes onethical outcomes.
+Goal ACTIVE: resolve measurement errors and tune genuine SFT regressions before
+expanding ethical training. Existing Vast GPU authorized overnight; no new rental,
+no Mac training. GOAL.md remains appropriate. No full90/100beliefSFT has run.
 
 ## Latest completed comparison
 
-ethics_sft_replay_weight_ablation_v1 COMPLETE; supervisor
-sft-drift-replay-weight-ablation-v1 EXITED13:13UTC, source
-df32125e22850d005bd0ca9df7e2a4897c40a656. Thatworkerhasexited; newreferencebelowisactive. Log:
-/workspace/sft-drift-ops/replay-weight-ablation-v1.log. No resume/overwrite byID.
+ethics_sft_lower_lr_probe_v1 COMPLETE/reviewed; candidate supervisor
+sft-drift-lower-lr-candidate-v1 EXITED14:56UTC. RTX3090 verified idle0%,1MiB.
+GPU source8053931 pinned throughout. Log:/workspace/sft-drift-ops/lower-lr-candidate-v1.log.
+No restart/overwrite by ID. Training ethics_sft_c4_lower_lr_v1:454steps,1991.9sec,
+all12engineering/13comparability checks pass; initialization/inputIDs/labels/order/
+rawtargets identical norm1, LRonly1e-4→2.5e-5. Final/227/454copied/hash-verified offGPU.
 
-Fresh norm1andweight32C4models each454steps, all12engineering checks, exact original
-manifest/inputIDs/labels/order, corrected group normalization, final-only selection.
-Bothfinal/227/454checkpoints andclosedtraining/audits copied/hash-verified offGPU.
-Trainingseconds1966.9/1944.6. Same1,244,032rawtargets; weight32weighted1,305,412.
-Higherreplayweight did NOT demonstrate repair. Bothretain63/63knownthinking and57/59
-knownnonthinking eachseed on freshRNG20261023bank(task-value-v1). Norm1machineNone
-productiswrongonfullreview; primaryNoneunchanged. Weight32recoversproductbutloses
-progression; shareduppercaseerrorpersists.95%retentionpasses do noterase itemlosses.
+Candidate retains51/55known short values vsnorm155/55, eachseed42/7/1729; frozen95%
+fails. Four genuine arithmetic errors. Thinking63/62/63 of64. Greedy repeats are not
+independent training replicates. Development31/32accuracy passes but note-flip1/16
+fails. Correct generated reasoning about9 then wrongfinalreject. Validation not run.
 
-Bothdevelopment/fullreadingcontrols30/32FAILED. Same negated3*3fact in factual/null
-forms: generated reasoning correctlysays9andendorse, terminalrejectwrong. Code
-FINAL_CHOICE_REASONING_MISMATCH. Frozenextractorcorrect; no broadcollapse established.
-All2400naturalpresentations recorded/model; validnorm12400,weight322399. Oneweighted
-placebo reply loops until4096tokens/no final; all22338charactersread. Code
-REASONING_LOOP_TOKEN_CAP. Missinganswer retained, notneutralorretried. Conditional
-completiondecisionNOcalls(absence-onlytrigger). Frozen scores/raw/runtime reconstruct.
-
-All57flaggedfullreplies reviewed/hash-bound:28norm1,29weighted. Reviewed comparison,
-200per-beliefrows, missing-answerbounds, polarityprofiles andagreementdenominators live:
-data/results/ethical_stance_sft/ethics_sft_replay_weight_ablation_v1/.
-Full100mean stance drift vsBASE42:+6.583ppnorm1,weight32[+4.542,+4.583]pp. These are
-UNQUALIFIED descriptiveC4effects, notaccuracy/confidence/forgetting/recipe-selection.
-Report:changelog/2026-10-22-replay-weight-comparison-results.md.
+Full100reading2400recorded/2399valid; one4096tokenloop/no final. Missing retained,
+not retried/imputed. All2432candidate control/natural token+seed records verified,
+zero mismatches,2431normalEOS. All133flagged replies fully agent-read/hash-bound:
+90reference,43candidate; zero value disagreements. Mechanical audits counted separately.
+Full100descriptive drift vsBASE42 norm1+6.583pp, candidate[+4.542,+4.583]pp, unqualified;
+bounds are missing-answer bounds, not CI. No recipe adoption or ethical-outcome selection.
+Report:changelog/2026-10-22-lower-lr-probe-results.md.
+Artifacts:data/results/ethical_stance_sft/ethics_sft_lower_lr_probe_v1/.
+Final reviewed_comparison_v1 and full100_per_belief_v1; all newJSONL have Markdown views.
+Expected operations append audited, oldprefix archived in reference_phase_audit_v1.
 
 ## Exact next work
 
-One prospective lower-LRprobe:2.5e-5versus1e-4, ordinaryweight1, allothertrainingfixed.
-Newfreshbank RNG20261024, BASE/norm1reference before candidateSFT; finalcandidategets
-384retentioncalls andall100beliefs. Bothpassed/failedqualificationroutes explicitly
-collectall while preserving actualvalidationchain. No automaticLR/weight sweep.
-Plan:changelog/2026-10-22-lower-lr-probe-plan.md.
+First commit/push notes/runtimeconfig and verify private snapshot:
+cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+No local mutation/copy/tests during save. Previous verified snapshot
+37c7d6236c4119e5aca8203170f05d8113a42b22 at350e5a2acbefe36ebbe1e16c178163a3439fe42d
+covered midpoint only. Final trial/reviews local/offGPU pending this save; actual receipt
+belief-transfer/data/.handoff-receipt.json. No box destruction until verified.
 
-Preparation andfinite run_lower_lr_probe.py IMPLEMENTED;53mock/tempdir/layer tests
-pass, including raw384-gridrebuild/review/privateguards, finitecalls, partialfailure/
-no-restart, bothqualification/fullcollectionroutes.21pathsregistered BEFOREprepare.
-ethics_sft_lower_lr_probe_v1 inputsfrozen; ethics_sft_c4_lower_lr_v1 training; bank
-ethics_gpu_lower_lr_confirmation_v1,128rows, seed20261024,
-SHA5bd0180d8b258ad53ade57be3dcd14afe8a556f9a231d2cc79204e403d92af54.
-ProtocolSHA d7f87c403d49afa7cbd94554405eceef68e2ca4f64bcc6f936a4f7938809dd4e,
-1079bindings. Exactnorm1manifest/preprocessing/order/LoRA/454steps, LRonlychanged.
-Report:changelog/2026-10-22-lower-lr-probe-prepared.md. NewreferenceRUNNING; no newSFTyet.
-
-ReferenceCOMPLETE:supervisorsft-drift-lower-lr-reference-v1 EXITED13:47UTC,
-source8053931e2c7e86b97b66f5db9bacef790002b89d. Referenceworkerhasexited; newcandidatebelowisRUNNING.
-62closedfiles/6,001,933bytes copied/hashverified; both384-rowraw/token/runtime/config/
-originalgrades/values/BASEcohortreconstruct. All90queuefullrepliesread/hashbound,
-0valuedisagreements:BASE67(39correctformat-only,28wrong),norm123allwrong.
-FreshBASEknown64thinking/55nonthinking. BASEfullthinking64/64/63; non55allseeds.
-Norm1fullthinking63/62/62; non58allseeds, retainsALL55knownnonthinking, gains3arithmetic.
-Thinking2randomstringerrorsremain; oneBASEseedalsofailsoneitem. No nonthinkingrepair
-claimavailablewhencontrolalreadyretainsallknownhere. No resampling orchangedLR.
-Originalnorm1modelcontrols30/32stillFAILED. Report:2026-10-22-lower-lr-reference-results.md.
-
-BOTHreferencegrids/90reviews privatelyVERIFIED beforeSFT(snapshote28ac1dcbb45b87c0bc268a596b8fb242dfdf8a3).
-Reviewfiles/receiptcopied/hashcheckedonGPU; actual90-review/privategatepassed.
-Candidate supervisor sft-drift-lower-lr-candidate-v1 RUNNING PID119556, source8053931
-PINNED. Latestobserved239/454(18:14uptime). Midpoint227CLOSED/copied:11files/418,232,399bytes,
-remote/localSHAverified. TokenizedBYTESidenticalnorm1; canonicalMDderived; liveauditexcluded.
-Currentchild:ethics_sft_c4_lower_lr_v1. NewSFTISrunning; no evalyet. No autorestart/resume.
-Log:/workspace/sft-drift-ops/lower-lr-candidate-v1.log.
-Exactobservationcommand:
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-lower-lr-candidate-v1; tail -10 /workspace/sft-drift-ops/lower-lr-candidate-v1.log'
-Next:finishprivatepreservationofclosedmidpoint, thenmonitorfixedworker. Afterfinal
-verify/copy12engineeringchecksandactualinit/order/fourfoldLRtrace;384retention/full100
-willrunautomatically. Localanalyze_lower_lr_probe.pyready,55targetedtests pass; do NOT
-pullnewcodeontoboundGPU. Allcandidatefailures/unscorables/missingrepliesrequirefullreview.
-96oldcontrolinput/output/seedrecordstoken-verified:0assemblymismatches,4wrongrejectwords
-areactualgeneratedtokens. Newtokenaudit/runtimeartifactsunderregisteredmasterpaths.
-No ethicalselection. Report:2026-10-22-lower-lr-midpoint-and-audit.md.
-Masteroperationslog appends innewcandidatephase; preserveoldreferenceprefix/view,
-verifyappendlineagebeforeterminalcopy. Rawindividualmeasurementsneveroverwrite.
-Report:changelog/2026-10-22-lower-lr-candidate-launch.md. No GPUcodepullwhilebound.
-
-## Preservation
-
-Lastverifiedprivate snapshot:a27411d8b3d2679a9d596c9a0704ba94c3a00358 at
-codece54d9dcdb3cc4702947ca3e4c4cb9bc816172b0,6256files/18,186,910,921bytes;
-corpus283947c960f6c2d16dc326e6cbeae286ce1527f5. Coversallpreviousresults/newreference
-90reviews/launchmetadata. Newclosedmidpoint227/runtime/tokenaudit/analysiscode awaitsave.
-Livecandidateaudit/finalGPU-only. Actualreceipt:data/.handoff-receipt.json; no boxdestroy.
-Requiredaftercommit/push:
-uv run --no-sync python scripts/handoff.py save
-No localmutations/tests/copies during save; verifyreceipt. Serialize testsandcopies too:
-a concurrentcopy correctlytrippedtestartifactguard; serializedrerunpassedcleanly.
-Sourcepushandverifiedprivateartifactsavebothrequiredbeforeboxdestruction.
+Then prepare a NEW prospective replay-coverage/interface experiment before more SFT.
+440-row replay lacks finalendorse/reject, nonthinking sort and negated-equalityYES;
+short target mass1980 vs thinking293214. Training requests11..305/pavo-prefix strings.
+These declared finite-replay limits motivate a hypothesis, not a proven cause.
+Review a data pilot, prevent evaluation leakage, register paths/newIDs, freeze hypothesis/
+contrasts/falsifier and measured dose before training. Keep thresholds fixed; no automatic
+LR/weight sweep or full-bank expansion. No new experiment prepared/launched yet.
+GPU currently idle; no background worker running. Goal ACTIVE for continued work.
 
 ## Established context / limits
 

@@ -1,0 +1,18 @@
+# @package _global_
+defaults:
+- ethics_gpu_retention_rca_base_v2
+run_id: ethics_gpu_lower_lr_candidate_retention_v1
+pilot_bench:
+  adapter_path: data/checkpoints/ethical_stance_sft/ethics_sft_c4_lower_lr_v1/final
+instruction_retention:
+  model_label: candidate
+  bank_path: data/generated/ethical_pilot/ethics_gpu_lower_lr_confirmation_v1/bank.jsonl
+  bank_sha256: 5bd0180d8b258ad53ade57be3dcd14afe8a556f9a231d2cc79204e403d92af54
+  known_path: data/results/ethical_pilot/ethics_gpu_lower_lr_base_retention_v1/known_items.jsonl
+  known_sha256: a066db13e809ed8596f332be568efab1c3a25c9e84d4eec31adcb47c904ab641
+  fresh_base_reference: false
+  adapter_sha256: d90064b87102b17076789f269d6f54a0e916031a7b8a0060de69f61fe8a5318c
+  eval_seeds:
+  - 42
+  - 7
+  - 1729

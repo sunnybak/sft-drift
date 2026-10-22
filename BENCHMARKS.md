@@ -12,11 +12,14 @@ C4norm1/weight32ablation is COMPLETE and reviewed:both12/12engineering checks,
 fail30/32originalcontrols. Weight32hasone4096-token loop/no-final(2399/2400valid),
 explicit bounds; no completionretry.57fullfailed/unscorable replies reviewed/hash-bound.
 No demonstrated weighting repair. See2026-10-22-replay-weight-comparison-results.md.
-Nextsinglelower-LRprobe is nowrunning underitsprospectiveplan(2.5e-5versus1e-4,othertrainingfixed),
-with freshRNG20261024confirmation. Preparationandfiniteworkerimplemented;53tests pass.21pathsregistered/newinputs frozen,
-BASE/norm1referenceCOMPLETEat8053931;90fullreviewsandprivatepreservationcomplete.
-Norm1retainsall55knownshortanswers,gains3arithmetic; thinkinglettererrorsremain.
-ONElowerLRcandidate SFT RUNNINGatpinned8053931; resultsnotyetknown. Existing GPUauthorizedovernight, no newrental.
+The single lower-LR probe is COMPLETE and rejected:51/55known short values retained
+versus norm1's55/55, despite12engineering/13comparability passes. Development31/32
+accuracy passes, but note-flip1/16fails. Full100reading2400recorded/2399valid retains
+one4096tokenloop;133flagged replies fully read,2432candidate token records verified.
+No gate changed or recipe adopted. Next is a prospective replay-coverage/interface
+hypothesis, not another LR sweep. See
+[changelog/2026-10-22-lower-lr-probe-results.md](changelog/2026-10-22-lower-lr-probe-results.md)
+and STATE.md for exact next work and preservation.
 
 The completed experiment **ethics_gpu_target_free_readout_v2** followed its prospective
 [protocol](changelog/2026-10-21-error-aware-readout-v2-plan.md) and actual process/artifact
