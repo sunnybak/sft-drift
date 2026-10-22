@@ -1,0 +1,22 @@
+# @package _global_
+defaults:
+- ethics_gpu_vllm_base_v1
+run_id: ethics_gpu_target_free_readout_negative_s7_v2
+related_runs:
+  ethics_gpu_target_free_modes_negative_thinking_v1: Target-free thinking-mode known-reference
+    validation; historical failures remain failed
+  ethics_gpu_scoped_readout_negative_s42_v1: Separate independent-endorsement instrument,
+    not interchangeable
+pilot_bench:
+  adapter_path: data/checkpoints/ethical_stance_sft/ethics_sft_pilot_negative_v1/final
+  seed: 7
+  stance_interface: target_free_positions
+  stance_profile_version: null
+  measurement_batch_size: 64
+  stance_validation_run_id: null
+  measurement_controls_source_run_id: null
+  measurement_control_failure_policy: collect_unqualified
+  measurement_control_bank:
+    path: data/generated/ethical_pilot/ethics_gpu_target_free_readout_v2/control_bank.jsonl
+    sha256: ea2314f6039312f03a535ad9dbcbee4cd1e2a52e3ef62a21cbcc4296c33fceb3
+    count: 488

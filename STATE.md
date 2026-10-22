@@ -147,28 +147,34 @@ miscoding: preselected72full natural replies plus all failures need agent review
 Recurrent scope/final mapping defects falsify clean semantic interpretation. Do not
 tune training on ethical direction. Full protocol explains hypothesis/contrasts/limits.
 
-V2 foundations implemented locally in source (no v2prepare/model calls): typed external
-control path/SHA/count; byte-for-byte saved controls and fingerprint binding; matched
-plain/note seeds, independent repeat offsets and exact stress-seed overrides. Defaults
-remain unchanged. Native fresh builder has80agent-read contexts/480presentations,
-including16complete conditional-rule/scope cases; eight preserved stress probes convert
-without prompt/seed changes. All488controls tokenize104–195inputs;195+4096=4291<4352.
-Operational reducer reports original strict fresh flags separately from new95%domain/
-99%coverage/5%worst-case note flags and stress failures. Missing pairs count aspossible
-flips; wrong valid answers stay wrong.95focused/regression/layer/handoff tests pass;
-all10historical mode config SHAs and161frozen hashes unchanged. GPUqueried idle.
-See changelog/2026-10-21-error-aware-readout-v2-foundations.md.
+V2 IMPLEMENTED AND PREPARED, not launched yet. New master
+ethics_gpu_target_free_readout_v2:15typed configs,25,320planned calls. All100beliefs,
+5fixed models,3sampling seeds. Common bank SHA
+a70fe1444c6c0daafe93677894985a8fbaf0488d1beb9abcb4ee3e30ab207795.
+All1688prompts/job tokenize<=219;219+4096=4315<4352.80contexts/480fresh controls
+plus8source-linked stress probes.72reply review selection frozen before calls.
+17paths registered before preparation. Never overwrite/reprepare this ID.
 
-Existing run_target_free_readout.py/analyze_target_free_readout.py remain GATEDv1
-prototypes. NOv2controller/configs/data or model calls exist yet. Next implement separate
-v2controller/analyzer (retainv1), integrate the488native controls, explicit diagnostic
-policy/precision flags, full15job/25,320call schedule and72reply review. Test in tmpdirs,
-register17v2paths BEFOREprepare, then freeze inputs/source/configs and verify actualGPU
-runtime/tokenizer before launch. All15jobs collect despite performance failures; stop
-technical identity/runtime failures. No new training/rental. No resume/restart of oldIDs.
-Exact next safe command from root:
-cat changelog/2026-10-21-error-aware-readout-v2-plan.md
-Then implement controller/analysis and tests before any v2prepare/GPUlaunch.
+Drivers scripts/run_target_free_readout_v2.py and analyze_target_free_readout_v2.py;
+v1remains gated/unlaunched. Technical source/config/weight/runtime/token failures
+stop subsequent jobs; performance failures retain full grids. Child verifier rebuilds
+raw extraction, exact external bytes, resolved configs, seeds, execution metadata and
+summary scores; model checks and precision flags remain separate from semantic review.
+Other80ethical and eval-offtopic groups plus related6 stay predeclared. The1pp budget
+applies only to declared aggregate groups, not a per-belief filter. All500rows retained.
+101regression/layer/handoff tests pass; final reporting refinement passed6focused
+v2tests. Earlier all10historical config SHAs/161frozen hashes verified unchanged.
+No training/model calls in this block yet. Existing box verified idle, old workers terminal.
+
+Next: commit/push this exact source/config preparation, deploy to existingbox, copy the
+new generated master without overwriting, check every source binding and run runtime
+preflight, then launch finite supervisor sft-drift-target-free-readout-v2, no autorestart.
+Exact next GPUpreflight from /workspace/sft-drift/belief-transfer:
+/workspace/sft-drift-vllm/.venv/bin/python scripts/run_target_free_readout_v2.py check-runtime
+Launch only after that succeeds and source/input hashes match. Save launch proof and
+closed child outputs at safe boundaries; this stage has NOresume/restart. Read protocol:
+changelog/2026-10-21-error-aware-readout-v2-plan.md; implementation notes:
+changelog/2026-10-21-error-aware-readout-v2-implementation.md. No new rental/SFT/scaling.
 
 ## Dashboard and preservation
 

@@ -281,13 +281,16 @@ vLLM presence_penalty1.5changes; defaults/config hashes remain historical. Fresh
 64cases plus8separate probes; all5models collected. STATE controls actual launch.
 A successful assay permits a NEWv2readout protocol, never v1gate relaxation.
 
-## Current next step: error-aware diagnostic v2 (not yet implemented)
+## Error-aware diagnostic v2
 
-Presence pilot terminal: fresh gates all pass, C4stress7/8with token cap, so practical
-fix failed; do not adopt presence1.5or launch gated readout v1. Keep failures. New
-prospective2026-10-21-error-aware-readout-v2-plan.md specifies25,320calls, all100beliefs,
-5fixed models/3sampling seeds, original no-penalty thinking sampler, richer fresh
-conditional-scope controls and response-level missingness/precision assessment.
-V2needs typed external bank and seed-key support, control factory, analysis/tests
-and new registered IDs before any prepare/launch. Oldstrict benchmarks remain failed.
-STATE.md is execution authority; all current GPUworkers terminal. No new training.
+Presence1.5failed the stress criterion; no adoption or historical requalification.
+New run_target_free_readout_v2.py/analyze_target_free_readout_v2.py implement the
+prospective error-aware-readout-v2 plan. Master ethics_gpu_target_free_readout_v2,
+15typed configs,25,320calls; original thinking/no-penalty sampler. Native external
+control-bank bytes/hash/count and matched/repeat/stress RNG settings are typed/pinned.
+All100beliefs/three sampling seeds/five fixed models; 480fresh+8stress/job. Technical
+failures stop calls; performance failures are retained with operational/strict flags,
+aggregate missing-response bounds and separate pending72reply semantic review.
+copy_error_rca.py --suite target_readout_v2 copies only closed children while active,
+plus master/log only when terminal. Registered/prepared, not launched at this note.
+STATE.md and actual supervisor/artifacts determine live state. No resume/restart/SFT.
