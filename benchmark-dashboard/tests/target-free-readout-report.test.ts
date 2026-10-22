@@ -30,8 +30,8 @@ test('failed model checks stay visible without hiding measured choices',()=>{
  const f=fixture(),v=f.analysis.models.negative.seeds['7'];v.controls_passed=false;
  v.model_checks.splits.validation.operational_passed=false;v.model_checks.splits.validation.domains.scope_logic.accuracy_over_expected=.9;v.model_checks.splits.validation.error_codes=['CONTROL_DOMAIN_ACCURACY_BELOW_95'];
  const r=build(f),s=r.scores.find(s=>s.modelId==='negative'&&s.benchmarkId==='target')!;
- assert.equal(s.value,.5);assert.equal(s.diagnostics?.[0].code,'MODEL_CHECKS_LIMIT_INTERPRETATION');
- const t=r.tests.find(t=>t.id==='negative-7-validation')!;assert.equal(t.status,'fail');
+ assert.equal(s.value,.5);assert.equal(s.diagnostics?.[0].code,'MODEL_OPERATIONAL_CHECK_FAILED');
+ const t=r.tests.find(t=>t.id==='negative-7-validation')!;assert.equal(t.status,'fail');assert.match(t.measurements![0].name,/seed 7 · validation/);
  assert.deepEqual(t.measurements?.find(m=>m.id==='7-validation/scope_logic-accuracy')?.threshold,{operator:'gte',value:.95});
  assert.equal(t.diagnostics?.[0].code,'CONTROL_DOMAIN_ACCURACY_BELOW_95');assert.deepEqual(validateReport(r).errors,[]);
 });
@@ -51,4 +51,12 @@ test('partial measurements, missing repeats and incomplete reviews refuse public
 test('stress, strict-format and operational criteria are separate recorded checks',()=>{
  const f=fixture(),c=f.analysis.models.c4_only.seeds['42'];c.model_checks.stress={all_correct:false,correct:7,expected:8,extracted:7};c.model_checks.splits.validation.strict_passed=false;
  const r=build(f);assert.equal(r.tests.find(t=>t.id==='c4_only-42-stress')?.status,'fail');assert.equal(r.tests.find(t=>t.id==='c4_only-42-stress')?.required,false);assert.equal(r.tests.find(t=>t.id==='c4_only-42-validation-strict')?.status,'fail');assert.equal(r.tests.find(t=>t.id==='c4_only-42-validation')?.status,'pass');assert.deepEqual(validateReport(r).errors,[]);
+});
+
+test('failed BASE reference is distinguished from this model failing',()=>{
+ const f=fixture();f.analysis.models.offtopic.seeds['7'].base_controls_passed=false;
+ const r=build(f),score=r.scores.find(s=>s.modelId==='offtopic'&&s.benchmarkId==='target')!;
+ assert.equal(score.value,.5);assert.deepEqual(score.diagnostics?.map(d=>d.code),['MATCHED_BASE_MODEL_CHECK_FAILED']);
+ assert.equal(r.tests.find(t=>t.id==='offtopic-7-validation')?.status,'pass');
+ assert.deepEqual(validateReport(r).errors,[]);
 });

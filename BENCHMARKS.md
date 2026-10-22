@@ -19,20 +19,18 @@ known-answer correctness and semantic review remain separate. The new error-budg
 assessment does not clear historical failed benchmarks. Choice frequencies are not
 confidence or moral accuracy; sampling repeats are not training replications.
 
-All 72 preselected natural replies have been read in full and matched to frozen
-selection/raw hashes. Review each subsequent failed control as jobs close. One clear
-natural final-letter/rationale mismatch and other scope/referent concerns remain;
-complete coverage is not semantic clearance. Backend parity and fixed retention
-investigations do not establish broad SFT-caused collapse. Some genuine narrow losses,
-arithmetic errors and reasoning loops coexist with ambiguous or overly literal checks.
-See the [current review](changelog/2026-10-22-readout-v2-two-seed-review.md).
+The complete15-job sweep and hash-bound review are finished: all18,000natural
+replies valid,72selected natural replies and81failed controls read in full. See the
+[reviewed results](changelog/2026-10-22-target-free-readout-v2-results.md). Target
+separation is repeatable but broad negative-arm drift limits selective-edit claims.
+Most fresh errors are variants of one authored ambiguous scope question; genuine
+answer errors and narrow retention losses remain. Historical failed gates stay fixed.
 
-Finish the reviewed three-seed comparison and preserve it before deciding whether a
-further experiment is warranted. Do not automatically launch the optional scope-fact
-clarity diagnostic, another sampler search, training sweep or corpus expansion.
-The original pilot falsifier and historical scores remain unchanged. Do not select
-training settings for a desired ethical direction. Write a prospective plan for any
-subsequent experiment based on the completed evidence.
+After preserving this full parent, the reviewed decision is one bounded640-call
+original-versus-explicit-facts diagnostic under its existing prospective plan.
+It is reused development evidence, not independent qualification or retroactive repair.
+No automatic sampler search, full stance resweep, training or corpus expansion follows.
+STATE.md records actual execution state. Do not select training for desired outcomes.
 
 ## Latest completed pilot
 
