@@ -1,0 +1,17 @@
+# @package _global_
+defaults:
+- ethics_gpu_scope_control_c4_only_v1
+run_id: ethics_gpu_target_free_control_c4_only_v1
+related_runs:
+  ethics_gpu_scope_control_c4_only_v1: Exact weight/backend/decoder reference
+  ethics_gpu_scoped_readout_c4_only_s42_v1: Original frozen all100 readout; no requalification
+response_interface_rca:
+  model_label: c4_only
+  bank_path: data/generated/ethical_pilot/ethics_gpu_target_free_controls_v1/bank.jsonl
+  bank_sha256: 8bbf3432f9e32e095293cf5bbeba7c9b12e54d397d513e4ae25b2f2a32ff5dab
+  adapter_sha256: 0c9742001eb77d16629eefba808b463aa0a33f92eff8b37359458c5efe7e8911
+  expected_rows: 388
+  task_description: Target-free calibration:64fresh normative/provided-factual/arithmetic
+    contexts with disjoint dev/validation objects, plus4separate reused regression
+    probes. Fresh domain gates only, BASEfirst, no ethical outcomes or historical
+    requalification.

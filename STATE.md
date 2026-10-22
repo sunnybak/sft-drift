@@ -54,65 +54,85 @@ All predefined paired checks pass. This ceiling assay has32stipulated contexts a
 correlated variants; it does not establish superiority of paired, general ability
 recovery or stable unstipulated ethical views. Old failures remain failed.
 
-## RUNNING: repeated paired-position readout
+## STOPPED: paired-position instrument candidate
 
-ethics_gpu_paired_readout_v1 RUNNING PID90841, GPU source5519d07.
-Finite supervisor sft-drift-paired-readout-v1; combined log
-/workspace/sft-drift-ops/paired-readout-v1.log. No resume/autorestart.
-Prepared under prospective
-changelog/2026-10-21-paired-readout-plan.md.15configs:all100beliefs x5models x3eval
-seeds42/7/1729,36,480calls including480fresh controls. OwnBASE per seed; relative
-forced preference differs from independent endorsement. No new training/rental.
+ethics_gpu_paired_readout_v1 STOPPED by operator at19:47uptime after BASE raw-response
+interpretation failures. GPU source5519d07; no active compute PID after short-lived
+EngineCore cleanup. NOresume/restart. Original plan/no-early-stop rule and falsifier
+remain unchanged; this is an explicit unplanned protocol deviation, not a completed
+comparison. See changelog/2026-10-21-paired-readout-stop.md.
 
-Preparation checked complete paired qualification,67source/config/adapter/evidence
-bindings, identical prompt banks, frozen grouping and resolved config hashes. Actual
-pinned tokenizer audit113–253inputtokens plus4096cap fits4352context. Same model,
-weights, decoder and vLLM runtime as controls. Measurement stage stays typed
-JobConfig->RunResult via run.py. All JSONL have Markdown.
+BASEseed42completed2,400natural+32controls, allvalid/strict. Parent analyzer reconstructs
+raw extraction, bank/manifest/runtime/tokenization. Order77.833%,wording88.933%,
+position-matched target-line agreement59.333%. No same-prompt repeat completed; these
+are descriptive sampled comparisons, not isolated causal framing effects. Arithmetic
+15/16plain+15/16note: correctly reasons five>three/answerA, then finalB in both.
+Six fully read BASEreplies saved: both wrong controls and two lexicographically chosen
+w0matched pairs. Cosmetics/code-formatting traces treat Target statement as answer key
+with identical displayed options. This mechanism is not a population prevalence claim.
 
-Target-line framing compares positive/order0 with negative/order1 and vice versa,
-holding the exact A/B statement ordering fixed; otherwise option bias is confounded.
-Corrected before any natural paired replies. Same-prompt, wording, option-order and
-framing comparisons stay separate. No ethical-consistency training-selection gate.
+Positivepartial1,024natural+32controls preserved, no final summary; no positive stance
+aggregate examined for stop decision. Other13jobs unattempted.3,488captured calls of
+36,480planned; do not invent in-flight answers or estimate a complete treatment contrast.
+Interrupted copy49files/51,266,419bytes verified, all captured JSONL parses; missing
+Markdown views derived. Source raw bytes unchanged. Masteroperator_stop.json/.md,
+copy_interrupted_receipt.json/.md, inventory and reviewed_failed_candidate.md retained.
 
-79mock/tmp focused+measurement/CUDA/layer/handoff tests passed in20.70s. Earlier
-11tests passed but artifact guard caught operator review export overlapping tests;
-separated export/tests and reran successfully. No test wrote real study data.
+## Next: target-free controls, BASE first
 
-## Exact next steps
+Read changelog/2026-10-21-target-free-controls-plan.md. Remove only Target line from
+the explicit-position prompt; hold weights/decoder fixed.64fresh cases:16normative
+stipulated positions,16provided facts,32actual arithmetic judgments (no supplied
+arithmetic answer). Fresh dev/validation references plus4separate reused regression
+rows from the exact BASEfive>three failures:388calls/model,1,940max.
 
-Inspect the live paired worker first:
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-paired-readout-v1; tail -n 3 /workspace/sft-drift-ops/paired-readout-v1.log'
+Bank factory, typed prepare/runtime driver and independent split/domain analyzer now
+implemented/tested. All64contexts agent-read,32arithmetic references checked; actual
+source reproducer builds388rows. Seed42shuffles fixed-case scheduling and request RNG,
+not deterministic prose.64focused/controller/stage/layer/handoff regressions pass.
+New7paths registered; generated master and5configs prepared.28source/input/config/
+adapter bindings verify. Actual pinned tokenizer104–171inputtokens plus4096cap fits
+4352context. All161frozen artifact hashes unchanged. No target-free model calls yet.
 
-Command from GPU belief-transfer/: .venv/bin/python -u scripts/run_paired_readout.py run
-Already started: NEVER invoke it again for this ID. Combined log
-/workspace/sft-drift-ops/paired-readout-v1.log. No autorestart/resume.
-Do not pull/change bound sources/configs/bank while running. Started IDs refuse
-overwrite. Source5519d07 stays fixed even when later local note commits are pushed.
+BASEmust pass fresh domain95%/strict100%/note<=5%criteria in BOTHsplits before any
+adapter calls. If it fails, planned stop; if it passes, collect all4adapters despite
+individual failures. Reused regression rows are separate, not independent validation.
+No fallback from held-out validation and no ethical-direction model/prompt selection.
+New full100readout only after qualified controls and a fresh prospective plan.
 
-Copy closed children only from local belief-transfer/:
-uv run --no-sync python scripts/copy_error_rca.py --suite paired --host root@38.49.42.46 --port 58689
-uv run --no-sync python scripts/analyze_paired_readout.py --allow-partial
-Final without flag only after all15close; never overwrite completed analysis.
-No scaling/training decision until reviewed full surface and sampling variability.
+Exact next read-only command from root:
+cat changelog/2026-10-21-target-free-controls-plan.md
+Prepared controller: from belief-transfer/, scripts/run_target_free_controls.py
+check-runtime must run with the GPU vLLM Python after committed source/inputs deploy.
+Finite supervisor sft-drift-target-free-controls-v1 then runs
+.venv/bin/python -u scripts/run_target_free_controls.py run
+with unified log /workspace/sft-drift-ops/target-free-controls-v1.log. Deploy only
+after verifying old paired worker STOPPED, no GPUcompute and clean checkout.
+Guarded worker stops after BASEif fresh gates fail; otherwise all4adapter calls run.
+No resume/autorestart; source/config/input changes require fresh IDs.
+No GPUworker currently running; target-free prototype PREPARED, not launched. No training/rental/corpus expansion.
 
 ## Dashboard and preservation
 
-App http://127.0.0.1:5180/. Eleven reports; new Full belief surface · scoped validation
+App http://127.0.0.1:5180/. Twelve reports; new Full belief surface · scoped validation
 includes all5models,100claim/scope definitions, bounds, separate model checks and
 diagnostic codes. Required checks passed is explicitly limited to required scoped
 checks; old failures remain visible.42dashboard tests/build passed; browser verified.
 Proof: current readout/dashboard_final.png. Restart from benchmark-dashboard/:
 ./node_modules/.bin/vite --host 127.0.0.1 --port 5180 --strictPort
 
-Source/notes committed/pushed at boundaries. Latest authoritative private save is
-belief-transfer/data/.handoff-receipt.json. Receipt17466002 verified source0483962
-and terminal scoped readout/first3interface models/conditional paired code,4668files/
-15,666,841,179bytes. Next save includes terminal interface run, prepared paired
-inputs/configs and verified deployment/preflight/launch receipts. All interface outputs
-are copied. Active paired outputs remain GPU-only until closed copy; no local raw
-paired measurements at launch boundary.
-Do not destroy the box while an authorized run or unsaved output remains.
+Dashboard now also has Response interfaces · assigned-position checks: all5models,
+3interfaces, separate splits/domains,120scores/30gates, numeric ranges/error codes and
+actual prompt examples. Required gates cover only preselected paired checks. Warning
+explicitly notes subsequent BASEinterpretation failure and stopped readout.45dashboard
+tests, TypeScript and finalbuild pass; browser/screenshot verified. Full browser-verified screenshots under interface-controls master, including warning
+that the later BASEreadout failed. No historical score/gate was changed.
+
+Latest verified private receipt d957c83e,code2dd7e3e,4729files/15,694,161,542bytes:
+terminal interface controls, frozen paired inputs and launch proof. Next save must
+include completeBASE, partialpositive, stop/deviation/review, dashboard and new target-
+free bank code. All captured paired outputs are now off-box. Nothing is running;
+keep existing GPUbox for the authorized next calibration.
 
 Original pilot/results/expanded-control/off-topic follow-up remain preserved under
 their original IDs; see changelog/2026-10-21-ethical-four-arm-results.md and

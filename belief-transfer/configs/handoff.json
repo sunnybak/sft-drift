@@ -463,7 +463,14 @@
     "results/ethical_pilot/ethics_gpu_paired_readout_positive_s1729_v1",
     "results/ethical_pilot/ethics_gpu_paired_readout_negative_s1729_v1",
     "results/ethical_pilot/ethics_gpu_paired_readout_offtopic_s1729_v1",
-    "results/ethical_pilot/ethics_gpu_paired_readout_c4_only_s1729_v1"
+    "results/ethical_pilot/ethics_gpu_paired_readout_c4_only_s1729_v1",
+    "generated/ethical_pilot/ethics_gpu_target_free_controls_v1",
+    "results/ethical_pilot/ethics_gpu_target_free_controls_v1",
+    "results/ethical_pilot/ethics_gpu_target_free_control_base_v1",
+    "results/ethical_pilot/ethics_gpu_target_free_control_positive_v1",
+    "results/ethical_pilot/ethics_gpu_target_free_control_negative_v1",
+    "results/ethical_pilot/ethics_gpu_target_free_control_offtopic_v1",
+    "results/ethical_pilot/ethics_gpu_target_free_control_c4_only_v1"
   ],
   "include_globs": [
     "generated/ethical_pilot/ethics_gpu_*",

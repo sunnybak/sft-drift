@@ -1,0 +1,17 @@
+# @package _global_
+defaults:
+- ethics_gpu_scope_control_negative_v1
+run_id: ethics_gpu_target_free_control_negative_v1
+related_runs:
+  ethics_gpu_scope_control_negative_v1: Exact weight/backend/decoder reference
+  ethics_gpu_scoped_readout_negative_s42_v1: Original frozen all100 readout; no requalification
+response_interface_rca:
+  model_label: negative
+  bank_path: data/generated/ethical_pilot/ethics_gpu_target_free_controls_v1/bank.jsonl
+  bank_sha256: 8bbf3432f9e32e095293cf5bbeba7c9b12e54d397d513e4ae25b2f2a32ff5dab
+  adapter_sha256: 10ef961b7fb236a88ca83f9b72e79c659ac55338ac13dd83367de713cdd403aa
+  expected_rows: 388
+  task_description: Target-free calibration:64fresh normative/provided-factual/arithmetic
+    contexts with disjoint dev/validation objects, plus4separate reused regression
+    probes. Fresh domain gates only, BASEfirst, no ethical outcomes or historical
+    requalification.

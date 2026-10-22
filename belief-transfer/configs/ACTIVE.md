@@ -249,3 +249,13 @@ Live source/PID and actual progress remain in rootSTATE.
 This is relative forced preference, not a replacement for absolute endorsement.
 The worker rejects started IDs and has no resume. Only deploy after the currently
 bound diagnostic is terminal. Status and execution authority remain rootSTATE.
+
+## Target-free calibration after stopped paired candidate
+
+The paired readout is operator-stopped and incomplete; never restart its IDs.
+See root2026-10-21-paired-readout-stop.md for the protocol deviation and preserved data.
+New typed response_interface_rca configs ethics_gpu_target_free_control_*_v1.yaml,
+driver scripts/run_target_free_controls.py, analyzer analyze_target_free_controls.py
+and evals/target_free_controls.py.388rows/model:384fresh domain/split references plus
+4separate source-linked regression probes. BASEmust pass first; no ethical outcomes
+used to select prompts or training. Current pipeline is prepared; STATE controls launch.

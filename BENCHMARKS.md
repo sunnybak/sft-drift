@@ -22,10 +22,14 @@ changelog/2026-10-21-interface-controls-results.md. All five current/paired form
 384/384correct; reminder failsBASE/negative/off-topic and its unconditional negation
 wording induces target confusion. All predefined paired checks pass, but ceiling
 on stipulated references does not establish superiority or stable unstipulated views.
-The separate all100/five-model/three-seed paired readout is prepared under prospective
-changelog/2026-10-21-paired-readout-plan.md. Its construct is relative forced preference,
-with newBASE each seed. Framing pairs hold actual A/Bposition order fixed. Worker is now RUNNING on existing GPU with fixed source5519d07; live status,
-source binding, preflight and launch verified. Exact current stage/commands in STATE.md.
+The separate paired readout was STOPPED after completed BASEshowed59.333%target-line
+pair agreement and two wrong valid arithmetic finals. Six fully read replies expose
+Target-statement-as-answer-key interpretation. This is an explicit unplanned protocol
+deviation; original falsifier/gates stay unchanged. Positive1,024partial replies
+preserved, no complete treatment contrast. See2026-10-21-paired-readout-stop.md.
+Target-free controls are prepared under2026-10-21-target-free-controls-plan.md, with
+fresh arithmetic in addition to assigned references and a BASE-first gate. No new
+model calls at this preparation boundary; exact execution status in STATE.md.
 Keep old natural consistency as an outcome, never a training-selection threshold.
 No automatic100-subject expansion. New runs/instruments get fresh IDs; old gates and
 results remain unchanged. Do not select training on desired ethical drift.
