@@ -7,43 +7,28 @@ before expansion. Plan: changelog/2026-10-21-error-rca-plan.md. Existing3090idle
 no new rental. Prepare/master ethics_gpu_error_rca_v1: 12control audits, same five models,
 nonthinking sampled/greedy plus HF BASE/offtopic parity. 4,928calls planned, no training.
 Preserve old frozen results. Full100belief comparisons follow any revised instrument.
-Preparation COMPLETE: immutable protocol/configs and historical failure audit saved.
-47focused worker/control/import/handoff tests pass. Worker not launched yet.
-Next command on GPU from belief-transfer: .venv/bin/python scripts/run_error_rca.py run
+Preparation COMPLETE: immutable protocol/configs and438historical failed presentations
+saved. Source87df080on GPU. Supervisor sft-drift-error-rca-v1 RUNNING pid73700 verified;
+finite worker has NO resume/retry. 12jobs,4,928calls; do not restart or reuse started IDs.
+Log /workspace/sft-drift-ops/error-rca-v1.log; stderr samepath with.err.
+First3greedy audits (BASE,positive,negative) closed/copied:45files/3,584,504bytes
+hash-verified. Explicit-truth correct BASE66/96,positive70/96,negative66/96; all
+strict-format96/96but fail accuracy. Not a working interface fix. Ninejobs pending
+at this copied boundary. 47initial focused tests plus6worker/analysis tests pass.
+Generated and results roots: data/{generated,results}/ethical_pilot/ethics_gpu_error_rca_v1.
+Next read-only status: ssh -p58689 root@38.49.42.46 'supervisorctl status sft-drift-error-rca-v1; tail -5 /workspace/sft-drift-ops/error-rca-v1.log'
+Next copy from belief-transfer: uv run --no-sync python scripts/copy_error_rca.py --host root@38.49.42.46 --port 58689
+Next partial analysis: uv run --no-sync python scripts/analyze_error_rca.py --allow-partial
+Terminal analysis drops --allow-partial only after all12complete. Hold further training
+until interface/backend evidence is reviewed; then write the next prospective block.
 
 ## Latest completed work
 
-Dashboard/exported report JSON now emit structured diagnostic codes with stage,
-message, counts/thresholds, presentation IDs where available, source hashes and next
-steps. Why? expands beside affected scores/checks. Original off-topic42 invalid reply
-is a normal-stop sentence rejected by exact-format extraction; C4 42 hit4096tokens
-without final. Off-topic1729 skipped after6.25%note flips>5%. Gates/scores unchanged.
-37dashboard tests, TypeScript/build and browser verification pass. App on5180.
-See changelog/2026-10-21-report-diagnostics.md. No experimental jobs launched.
-
-Renamed Controls to Model checks; charts grouped as instrument, response consistency,
-learning, retention and engineering. Off-topic/C4 remain model comparison series.
-Group metadata is explicit; diagnostics have no invented thresholds. Ethical-pilot
-retention charts derive saved known-cohort counts/thresholds; original gates unchanged.
-29dashboard tests and TypeScript/build pass; grouped retention UI browser verified.
-See changelog/2026-10-21-grouped-model-checks.md. App remains on5180.
-
-Controls now show horizontal/vertical bars, passing-range shading, threshold lines,
-model pills and labeled axes. Original pilot per-seed numeric controls derived from
-saved artifacts through optional typed test measurements; no gate/measurement changes.
-28dashboard tests and TypeScript/build pass; both orientations browser verified.
-Details: changelog/2026-10-21-control-bar-charts.md. App remains on5180.
-
-Dashboard now has Controls beside Change / Support for claim. Shows each model's
-recorded gates, observed values and passing requirements; numeric threshold comparisons
-remain separate from composite verdicts. Browser verified original and expanded reports,
-plus return to stance scores. No scores/gates/measurements changed.
-See changelog/2026-10-21-dashboard-controls-tab.md. App remains on5180.
-
-Dashboard report rows now show experiment names and UTC report dates (not training
-dates); experiment names/IDs are searchable. All10 derived reports carry metadata.
-26dashboard tests, TypeScript/build and browser verification pass. App remains on5180.
-See changelog/2026-10-21-dashboard-report-metadata.md. No measurement changes.
+Dashboard source00fe26b: searchable dated experiment reports, collapsible side drawer,
+model pills, grouped model checks and evidence-backed Why? diagnostic codes exported
+in JSON. 37dashboard tests/build pass. See changelog/2026-10-21-report-diagnostics.md
+and related dated dashboard notes. App on5180; raw instruments/scores/gates unchanged.
+Private preservation receipts in data/.handoff-receipt.json supersede historical IDs.
 
 Expanded controls and the off-topic three-seed supplement are COMPLETE and reviewed.
 Read changelog/2026-10-21-control-followup-results.md. Protocol:

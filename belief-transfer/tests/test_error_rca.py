@@ -51,3 +51,25 @@ def test_rca_refuses_started_child_without_restarting(tmp_path,monkeypatch):
     (Path('data/results/ethical_pilot')/run).mkdir(parents=True)
     with pytest.raises(FileExistsError,match='Child already started'):worker.run()
     assert not result.exists()
+
+def load_analysis():
+    spec=importlib.util.spec_from_file_location('error_rca_analysis',Path(__file__).resolve().parents[1]/'scripts/analyze_error_rca.py')
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
+
+def test_backend_comparison_separates_input_identity_answers_and_correctness():
+    analysis=load_analysis()
+    row={'presentation_id':'one','prompt_sha':'p','expected':'agree','answer':'agree','generation_metadata':{'input_token_ids':[1,2]}}
+    other={**row,'answer':'disagree','generation_metadata':{'input_token_ids':[1,3]}}
+    result=analysis.compare([row],[other])
+    assert result['input_token_mismatches']==['one']
+    assert result['valid_label_flips']==1 and result['second_worse']==1
+    assert result['agreement']==0
+    with pytest.raises(ValueError,match='prompt/answer'):analysis.compare([row],[{**other,'expected':'disagree'}])
+
+def test_error_categories_do_not_hide_valid_wrong_labels_as_parser_failures():
+    analysis=load_analysis()
+    good={'expected':'agree','answer':'agree','strict_format':True}
+    cases=[good,{**good,'answer':'disagree'},{**good,'answer':None,'error':'bad format'},
+           {**good,'answer':None,'generation_metadata':{'finish_reason':'length'}},
+           {**good,'answer':None,'generation_metadata':{'backend_error':'failed'}}]
+    assert analysis.summarize_errors(cases)=={'correct_strict':1,'wrong_valid_label':1,'invalid_extraction':1,'length':1,'backend':1}
