@@ -14,7 +14,8 @@ explicit bounds; no completionretry.57fullfailed/unscorable replies reviewed/has
 No demonstrated weighting repair. See2026-10-22-replay-weight-comparison-results.md.
 Nextsinglelower-LRprobe is prospectivelyplanned(2.5e-5versus1e-4,othertrainingfixed),
 with freshRNG20261024confirmation. Preparationandfiniteworkerimplemented;53tests pass.21pathsregistered/newinputs frozen,
-BASE/norm1referenceRUNNINGat8053931; fullreview/privatepreservation precedeSFT. No newSFTyet. Existing GPUauthorizedovernight, no newrental.
+BASE/norm1referenceCOMPLETEat8053931;90fullreviewsdone, privatepreservation precedesSFT.
+Norm1retainsall55knownshortanswers,gains3arithmetic; thinkinglettererrorsremain. No newSFTyet. Existing GPUauthorizedovernight, no newrental.
 
 The completed experiment **ethics_gpu_target_free_readout_v2** followed its prospective
 [protocol](changelog/2026-10-21-error-aware-readout-v2-plan.md) and actual process/artifact
