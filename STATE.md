@@ -3,7 +3,8 @@
 ## Active work — forward measurement-policy follow-up
 
 The user authorizes resolving errors and tuning before expansion. The goal remains
-active. No GPU job is running; scope and retention workers exited, GPU idle (1 MiB).
+active. Forward readout worker sft-drift-scoped-readout-v1 is RUNNING on the existing GPU.
+Scope and retention workers exited.
 No new training, rental, or corpus expansion occurred during the investigation.
 
 Completed evidence:
@@ -28,17 +29,20 @@ nonthinking replay exposure is an ablation hypothesis, not a proved cause. Arith
 copy formatting and scoped-language validity are separate constructs. Old failed gates,
 neutral memorization failures, original falsifiers and measurements remain unchanged.
 
-NEXT: launch the prepared prospective readout after runtime identity preflight.
+ACTIVE: prospective readout launched after successful runtime identity preflight.
 Master ethics_gpu_scoped_readout_v1 and five seed42 children are prepared and registered.
 All100 beliefs/model plus32 legacy controls,12,160 fresh calls, existing weights/decoder/
-parser/bank unchanged; own fresh BASE. No children started at this boundary.
+parser/bank unchanged; own fresh BASE. Worker PID85121 verified RUNNING.
+GPU source175b04d. Log:/workspace/sft-drift-ops/scoped-readout-v1.log; stderr same .err.
+The finite process has no restart/resume support; no new training checkpoints.
 Source bindings and all five resolved config hashes verified.26 focused tests pass
 (config composition, scope identities, failed-control collection, partial preservation,
 all100 analysis, missing bounds, runtime preflight, dependency layers). Tests use tmpdirs.
 
-Exact next command on GPU from /workspace/sft-drift/belief-transfer:
-/workspace/sft-drift-vllm/.venv/bin/python scripts/run_scoped_readout.py check-runtime
-Then finite supervisor sft-drift-scoped-readout-v1 runs scripts/run_scoped_readout.py run.
+Exact next status command:
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-scoped-readout-v1; tail -n 8 /workspace/sft-drift-ops/scoped-readout-v1.log'
+Runtime preflight verified all five resolved configs, frozen bank and runtime identities.
+Finite supervisor runs scripts/run_scoped_readout.py run; no other GPU worker active.
 No resume/retry/overwrite of started IDs. Copy closed children with
 uv run --no-sync python scripts/copy_error_rca.py --suite readout --host root@38.49.42.46 --port 58689
 Analyze with scripts/analyze_scoped_readout.py (--allow-partial before all five finish).

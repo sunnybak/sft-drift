@@ -21,3 +21,11 @@ No tests load weights or touch real result directories. Git diff check clean.
 At this preparation boundary GPU idle, all previous workers terminal. Next: deploy
 committed source and generated master inputs, run runtime preflight, launch finite
 supervisor, verify PID/log and preserve. Do not change bound source during execution.
+
+Deployment: source175b04d pushed/pulled; prepared master copied. Bounded vLLM-env
+runtime preflight succeeded for all five configs/bank/backend/version identities.
+Supervisor sft-drift-scoped-readout-v1 launched and verified RUNNING PID85121.
+Log /workspace/sft-drift-ops/scoped-readout-v1.log (and .err); finite, no autorestart,
+no resume. Existing RTX3090 only; no training or new rental. Child outputs remain
+GPU-only until closed-child copy. Private snapshot at this boundary covers prepared
+inputs/source/previous completed results, not future replies generated on the box.
