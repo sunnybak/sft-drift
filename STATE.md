@@ -5,8 +5,8 @@
 Goal ACTIVE:investigate/resolve genuine SFTregressions before extending ethical training.
 Existing VastRTX3090 authorized; no new rental or Mac training. No full90/100beliefSFT
 has run. Original10-target/four-arm pilot is historical, not automatically extended.
-New reasoning worker RUNNING PID131244 (19:50:20UTC), still preflight; no optimizer
-steps confirmed yet. Latest older finite worker sft-drift-replay-interface-rca-v1 EXITED18:45UTC,
+New reasoning worker RUNNING PID131244,262/454steps at20:10:07UTC. Midpoint227
+saved/closed and copied locally/hash-verified; private checkpoint save pending now. Latest older finite worker sft-drift-replay-interface-rca-v1 EXITED18:45UTC,
 COLLECTION_COMPLETED+TERMINAL, no technical failure, all9children complete. Do not restart.
 GPUcheckout3438572a6fea4be7b64007e40a8dc2485364bc09 pinned for active worker.
 
@@ -63,7 +63,7 @@ Execution workers now implemented/frozen: scripts/run_base_reasoning_probe.py an
 run_base_reasoning_confirmation.py, with execution protocol under the master and
 confirmationv2/execution_protocol_v1.json. All1306source bindings and13resolved job
 hashes match.156focused tests pass. Actual1152reference responses reconstruct onCPU
-(3fixed models ×128procedural+256decisions). No training/model inference added.
+(3fixed models ×128procedural+256decisions), before live training launch.
 54GPUoutput paths registered;12fullsurface configs composed. Prospective execution
 amendment requires all100on midpoint227 and final; terminal454aliases final only if
 both adapter+config bytes match, otherwise separately measured. Final remains primary.
@@ -72,28 +72,33 @@ All scientific failures retain full100readings; technical failures stop/preserve
 Private executable-input snapshot VERIFIED and deployed; all1306bindings/13configs/
 1152references reconstruct onGPU.327transferred files match,57absent files copied;
 no existing experiment overwritten. Single finite trial launched via supervisor
-sft-drift-base-reasoning-replay-v1, PID131244at19:50UTC, preflight still active.
+sft-drift-base-reasoning-replay-v1, PID131244at19:50UTC;262/454steps observed20:10UTC.
 Command:cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_base_reasoning_probe.py
 Log:/workspace/sft-drift-ops/base-reasoning-replay-v1.log. NOresume/restart.
 Exact next action:SSH supervisorctl status sft-drift-base-reasoning-replay-v1 and tail
 that log; inspect current training/checkpoint status. Never restart on observation timeout.
-Keep GPUcheckout3438572pinned. Newoutputs only onGPU until safe-boundary copy/hash/save.
-No new optimizer steps/checkpoints confirmed yet. Independent confirmation conditional
+Keep GPUcheckout3438572pinned. Closed midpoint227+static inputs copied locally:16files/
+418774371bytes. All3625actualchunks match manifest/tokenizer;96declaredchanges and
+3529byte-identical controls; weighted projection exact. Root training_batches.jsonl and
+run logs remain live/onGPU and were deliberately excluded. Final weights/checks/evals
+not yet available. Finite midpoint watcher5638finished afterstep229; do not restart it.
+Copy receipt:generated master/midpoint_closed_copy_v1.json. Independent confirmation conditional
 on fully reviewed, privately preserved final pass; no automatic ethical scaling.
 See2026-10-22-base-reasoning-execution-plan.md, worker-verification.md and generated
 master/deployment_launch_v1.json.
 
 ## Preservation
 
-Latest VERIFIED executable-input snapshot475167148e76c3379824e8500fdb15ea1a0590b8at
-3438572a6fea4be7b64007e40a8dc2485364bc09:7123files/20,274,343,133bytes;
-corpus3f0bf5b86e86de2229ec8c589ce7a6836dd7d6c4, manifest
-9e332c2946aa0f76243984f0828ce20e84fcdeaec73db6f3856957bfbd7d0f25.
-All workers/protocols/configs/prepared data and prior results included. Launchreceipt/
-these notes postdate snapshot; saving now. LiveGPUoutputs not copied/saved yet;
-do not destroy box. Earlier prepared-data snapshotdaafcd993ef38871ea42c0d5b0cfc2b5654d42c9
-remains. Save:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+Latest VERIFIED launch-record snapshotc75984e857426be515130aa15bb5e048f7897c72at
+c4471d42ae00fbdb174ef78d35deab5bcdeca70f:7125files/20,274,344,717bytes;
+corpus8eddae60bff14a7b76f9dabc36843ee254a1ea4d, manifest
+450e2ac77403cf8ce44b02d42368086187f994b924d4631cd90eae1cfae67fb6.
+All executable inputs/launchrecord/prior results privately saved. New closed midpoint
+and static actual inputs are local+GPU, private-save pending now. Excluded live batch
+and log files are only onGPU; do not destroy box. Source/notes next committed/pushed,
+then:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
 Keep same process through HF429waits; no local mutation during save; check receipt.
+Detailed boundary:changelog/2026-10-22-base-reasoning-midpoint-preservation.md.
 
 ## Other fixed study limits
 
