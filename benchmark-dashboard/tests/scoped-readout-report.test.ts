@@ -5,9 +5,9 @@ import {validateReport} from '../server/validate-report.ts';
 import type {BenchmarkReportData} from '../src/report-types.ts';
 const arms=['base','positive','negative','offtopic','c4_only'];
 function fixture(){
- const original:BenchmarkReportData={schemaVersion:'1.0',id:'old',title:'Historical',description:'Historical',createdAt:'2026-10-21T00:00:00Z',tags:[],context:'Original failures unchanged',models:arms.map(id=>({id,name:id,provider:'Qwen',model:'Qwen/Qwen3-4B',revision:'pinned',variant:'unknown',inference:{},finetuning:null})),benchmarks:[],scores:[],tests:[],sources:[]};
+ const original:BenchmarkReportData={schemaVersion:'1.0',id:'old',title:'Historical',description:'Historical',createdAt:'2026-10-21T00:00:00Z',tags:[],context:'Original failures unchanged',models:arms.map(id=>({id,name:id,provider:'Qwen',model:'Qwen/Qwen3-4B',revision:'pinned',variant:'unknown',inference:{seeds:[42,7,1729]},finetuning:null})),benchmarks:[],scores:[],tests:[],sources:[]};
  const cell=()=>({value:.5,complete:true,valid:24,expected:24,lower:.5,upper:.5,eligible_under_forward_policy:true,eligibility_codes:[]});
- const models=Object.fromEntries(arms.map(a=>[a,{endpoints:Object.fromEntries(['all','target','untrained_ethical','related_untrained','other_untrained_ethical','offtopic_eval'].map(id=>[id,cell()])),agreement:Object.fromEntries(['order','wording','negation'].map(id=>[id,{rate_over_eligible:.8,eligible:100,expected:100,agreeing:80}]))}]));
+ const models=Object.fromEntries(arms.map(a=>[a,{legacy_controls:{stance:{factual:{accuracy_over_expected:1,extraction_rate:1,n_strict:16,n_expected:16},factual_null:{accuracy_over_expected:1,extraction_rate:1,n_strict:16,n_expected:16},factual_null_comparison:{flip_rate:0,n_eligible_pairs:16,n_expected_pairs:16}}},endpoints:Object.fromEntries(['all','target','untrained_ethical','related_untrained','other_untrained_ethical','offtopic_eval'].map(id=>[id,cell()])),agreement:Object.fromEntries(['order','wording','negation'].map(id=>[id,{rate_over_eligible:.8,eligible:100,expected:100,agreeing:80}]))}]));
  const analysis={complete:true,policy_id:'scoped_stance_readout_v1',run_id:'ethics_gpu_scoped_readout_v1',interpretation:'One seed; no training replication.',models};
  const cells=arms.flatMap(model=>Array.from({length:100},(_,i)=>({model,belief_id:'belief'+i,...cell()})));
  const proofs=Object.fromEntries(arms.map(a=>[a,{splits:Object.fromEntries(['development','validation'].map(id=>[id,{passed:true,counts:{accuracy:1,strict:384,valid:384,expected:384},note_comparison:{disagreement_rate:0}}]))}]));
@@ -22,6 +22,7 @@ test('all models and beliefs remain visible; historical failures remain separate
  const f=fixture(),before=JSON.stringify(f),report=build(f);
  assert.equal(JSON.stringify(f),before);
  assert.equal(report.models.length,5);
+ assert.ok(report.models.every(m=>JSON.stringify(m.inference.seeds)==='[42]'&&m.inference.evaluationSeed===42));
  assert.equal(report.benchmarks.find(b=>b.id==='belief99')?.description,'Canonical statement 99 Scope: Explicit scope 99');
  assert.equal(report.benchmarks.find(b=>b.id==='belief99')?.examples[0].input,'Canonical statement 99');
  assert.equal(report.scores.filter(s=>s.benchmarkId.startsWith('belief')).length,500);
@@ -52,4 +53,15 @@ test('partial, missing models, duplicate/missing beliefs and absent repeats cann
  f=fixture();f.cells[0]=f.cells[1];assert.throws(()=>build(f),/all100/);
  f=fixture();delete f.beliefs.belief99;assert.throws(()=>build(f),/canonical claims/);
  f=fixture();delete f.retention.models.base.by_seed['7'];assert.throws(()=>build(f),/retention repeat/);
+});
+
+test('fresh wrong control choices remain visible without relabeling them as parse failures',()=>{
+ const f=fixture(),x=f.analysis.models.positive.legacy_controls.stance;
+ x.factual_null.accuracy_over_expected=15/16;x.factual_null_comparison.flip_rate=1/16;
+ const r=build(f),t=r.tests.find(t=>t.id==='positive-fresh-legacy')!;
+ assert.equal(t.status,'fail');assert.equal(t.required,false);
+ assert.deepEqual(t.diagnostics?.map(d=>d.code),['CONTROL_ACCURACY_BELOW_MINIMUM','NOTE_FLIP_RATE_ABOVE_MAXIMUM']);
+ assert.equal(t.measurements?.find(m=>m.id==='fresh-factual_null-format')?.value,1);
+ assert.equal(r.tests.find(t=>t.id==='positive-eligibility-all')?.status,'pass');
+ assert.deepEqual(validateReport(r).errors,[]);
 });

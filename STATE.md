@@ -36,7 +36,13 @@ parser/bank unchanged; own fresh BASE. Worker PID85121 verified RUNNING.
 BASE completed and closed-copy verified:29files/32,347,701bytes. All2,400natural
 replies valid/strict, zero failure rows; legacycontrols32/32correct/no note flips.
 Partial analysis reconstructs frozen scores and passes all identity/seed/runtime checks.
-All100BASEbelief rows retained. Parent PID85121 RUNNING; positive model loading.
+BASE+positive closed-copy verified:58files/63,516,776bytes. Positive2,400/2,400valid/
+strict, no natural failure rows; frozen score/model/runtime/paired-input checks pass.
+Positive target60.0→56.667%(−3.333pp), all10063.792→60.958%(−2.833pp). Natural
+order/wording/negation agreement falls16.833/10.567/13.833pp; outcomes, not gates.
+Freshpositivelegacy31/32: correct reasoning then wrong final reject on3×3≠8 with
+note; not parser error. Collection kept all natural replies despite diagnostic failure.
+Read master positive_review.md. Parent PID85121 RUNNING; negative model loading.
 GPU source175b04d. Log:/workspace/sft-drift-ops/scoped-readout-v1.log; stderr same .err.
 The finite process has no restart/resume support; no new training checkpoints.
 Source bindings and all five resolved config hashes verified.26 focused tests pass
@@ -58,7 +64,9 @@ Dashboard terminal-readout exporter prepared (not yet emitted): full500 belief c
 allfive models, own fresh BASE, scoped eligibility separate from arithmetic/retention.
 Every claim and scope comes from the hash-bound completed BASE bank; no opaque-ID
 fallback for the90beliefs absent from the older target-only report.4focused report
-tests and TypeScript check pass after this presentation-only addition.
+tests and TypeScript check pass after this presentation-only addition. New report
+seeds fixed to[42]; fresh legacy controls now have explicit charts/error codes.
+5focused report tests and TypeScript pass; old reports/gates unchanged.
 41dashboard tests and production build pass. Generate after terminal analysis with
 cd benchmark-dashboard && npm run data
 No dashboard/source change was pulled to the live hash-bound GPU worker.

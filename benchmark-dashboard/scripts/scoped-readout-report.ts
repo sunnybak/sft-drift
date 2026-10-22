@@ -1,5 +1,5 @@
 /** Presentation only: no new eligibility decisions or rescoring of model replies. */
-import type { BenchmarkReportData, ReportBenchmark, ReportDiagnostic, ReportScore, ReportTest, Source } from '../src/report-types.ts';
+import type { BenchmarkReportData, ReportBenchmark, ReportDiagnostic, ReportScore, ReportTest, ControlMeasurement, Source } from '../src/report-types.ts';
 type RecordData = Record<string, any>;
 export function scopedReadoutReport(original:BenchmarkReportData, analysis:RecordData, cells:RecordData[], proofs:RecordData, retention:RecordData, sources:Source[], createdAt:string, arithmetic:BenchmarkReportData, beliefs:Record<string,{statement:string;scope:string}>):BenchmarkReportData {
  if(!analysis.complete || analysis.policy_id!=='scoped_stance_readout_v1')throw Error('A complete prospective scoped-policy analysis is required');
@@ -9,7 +9,7 @@ export function scopedReadoutReport(original:BenchmarkReportData, analysis:Recor
  if(Object.keys(beliefs).length!==100||cells.some(c=>!beliefs[c.belief_id]?.statement||!beliefs[c.belief_id]?.scope))throw Error('Full canonical claims and scopes are required');
  const models=arms.map(a=>{
   const m=original.models.find(m=>m.id===a);if(!m)throw Error('Missing model provenance: '+a);
-  return {...m,inference:{...m.inference,measurementRunId:`ethics_gpu_scoped_readout_${a}_s42_v1`,evaluationSeed:42,validationPolicy:analysis.policy_id}};
+  return {...m,inference:{...m.inference,seeds:[42],measurementRunId:`ethics_gpu_scoped_readout_${a}_s42_v1`,evaluationSeed:42,validationPolicy:analysis.policy_id}};
  });
  const descriptions:Record<string,string>={all:'All 100 beliefs',target:'10 trained ethical targets',untrained_ethical:'80 untrained ethical claims',related_untrained:'6 related untrained claims',other_untrained_ethical:'74 other untrained ethical claims',offtopic_eval:'10 evaluation preferences'};
  const benchmarks:ReportBenchmark[]=[], scores:ReportScore[]=[], tests:ReportTest[]=[];
@@ -38,6 +38,19 @@ export function scopedReadoutReport(original:BenchmarkReportData, analysis:Recor
   for(const arm of arms){const c=analysis.models[arm].agreement[id];if(!c)throw Error('Missing agreement '+id);scores.push({modelId:arm,benchmarkId:'agreement-'+id,value:c.rate_over_eligible,numerator:c.eligible?c.agreeing:null,denominator:c.eligible||null,notes:`${c.eligible}/${c.expected} pairs eligible; correlated pairs are not independent observations.`,source:sources[0]});}
  }
  for(const arm of arms){
+  const legacy=analysis.models[arm].legacy_controls?.stance;
+  if(!legacy)throw Error('Fresh legacy diagnostics are required');
+  const measurements:ControlMeasurement[]=[
+   ...['factual','factual_null'].flatMap(kind=>[
+    {id:'fresh-'+kind+'-accuracy',name:'Fresh '+kind+' · accuracy',value:legacy[kind].accuracy_over_expected,threshold:{operator:'gte' as const,value:.95}},
+    {id:'fresh-'+kind+'-extraction',name:'Fresh '+kind+' · extraction',value:legacy[kind].extraction_rate,threshold:{operator:'gte' as const,value:1}},
+    {id:'fresh-'+kind+'-format',name:'Fresh '+kind+' · strict format',value:legacy[kind].n_strict/legacy[kind].n_expected,threshold:{operator:'gte' as const,value:1}},
+   ]),
+   {id:'fresh-note-flips',name:'Fresh legacy · note flips',value:legacy.factual_null_comparison.flip_rate,threshold:{operator:'lte',value:.05}},
+   {id:'fresh-note-coverage',name:'Fresh legacy · note pair coverage',value:legacy.factual_null_comparison.n_eligible_pairs/legacy.factual_null_comparison.n_expected_pairs,threshold:{operator:'gte',value:1}},
+  ];
+  const issues=measurements.filter(m=>m.value===null||(m.threshold.operator==='gte'?m.value<m.threshold.value:m.value>m.threshold.value)).map(m=>({code:m.value===null?'CONTROL_DIAGNOSTIC_UNAVAILABLE':m.id.endsWith('-accuracy')?'CONTROL_ACCURACY_BELOW_MINIMUM':m.id==='fresh-note-flips'?'NOTE_FLIP_RATE_ABOVE_MAXIMUM':m.id.endsWith('-format')?'STRICT_FORMAT_INCOMPLETE':'CONTROL_COVERAGE_INCOMPLETE',severity:'warning' as const,stage:'validation' as const,message:`${m.name}: observed ${m.value}; required ${m.threshold.operator==='gte'?'at least':'at most'} ${m.threshold.value}.`,nextStep:'Inspect this fresh readout’s stance_controls.jsonl. A wrong valid choice is distinct from an extraction failure; this diagnostic does not identify a training cause.',sources:[sources[0]]}));
+  tests.push({id:arm+'-fresh-legacy',modelId:arm,benchmarkId:null,checkGroup:'instrument',name:'Fresh legacy arithmetic · current readout',description:'All32 legacy control presentations collected with this model. Separate from the earlier expanded arithmetic audit and from prospective scoped eligibility.',required:false,status:issues.length?'fail':'pass',expected:true,observed:!issues.length,source:sources[0],measurements,diagnostics:issues});
   for(const t of arithmetic.tests.filter(t=>t.modelId===arm)){
    const form=t.id.slice(arm.length+1);
    const measurements=arithmetic.scores.filter(c=>c.modelId===arm&&c.benchmarkId.startsWith(form+'-')).flatMap(c=>{

@@ -28,3 +28,18 @@ remain reusable. No generic description substitutes for the other90claims. Verif
 and TypeScript check pass. No changed model prompt/parser/scoring or GPU source.
 Positive was RUNNING at512/2,400natural replies at the latest poll. Previous private
 snapshotd785f663 preserves completed BASE; the new receipt supersedes it for source.
+
+Positive completed:58closedfiles/63,516,776bytes verified across BASE+positive. Partial
+analysis reconstructs both and their paired token inputs; all4,800natural replies valid/
+strict. Positive target−3.333pp, all100−2.833pp; broad decrease, no aggregatepositive
+learning claim. Natural order/wording/negation consistency−16.833/−10.567/−13.833pp.
+Freshlegacy31/32: one correct-reasoning/wrong-final-label reply, agent-read; every
+control parses/strict. Correctly collected all2,400despite failed diagnostic. Scope
+eligibility does not erase old/fresharithmetic failures. See master positive_review.md
+for full counts, historical three-seed context and source hashes. Negative is next.
+
+Presentation correction: new report inference.seeds=[42], not inherited historical
+three-seed metadata. Added current readout's legacy control charts/diagnostic codes,
+kept separate from older expanded audit and prospective scoped requirements.5focused
+fixture tests and TypeScript pass. No GPU source/training/instrument change. Snapshot
+01150a9verified after a transientHF429 retry; next save includes completedpositive.
