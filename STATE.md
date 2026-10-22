@@ -33,7 +33,10 @@ ACTIVE: prospective readout launched after successful runtime identity preflight
 Master ethics_gpu_scoped_readout_v1 and five seed42 children are prepared and registered.
 All100 beliefs/model plus32 legacy controls,12,160 fresh calls, existing weights/decoder/
 parser/bank unchanged; own fresh BASE. Worker PID85121 verified RUNNING.
-Latest live check: BASE1,024/2,400natural replies saved; parent PID85121 RUNNING.
+BASE completed and closed-copy verified:29files/32,347,701bytes. All2,400natural
+replies valid/strict, zero failure rows; legacycontrols32/32correct/no note flips.
+Partial analysis reconstructs frozen scores and passes all identity/seed/runtime checks.
+All100BASEbelief rows retained. Parent PID85121 RUNNING; positive model loading.
 GPU source175b04d. Log:/workspace/sft-drift-ops/scoped-readout-v1.log; stderr same .err.
 The finite process has no restart/resume support; no new training checkpoints.
 Source bindings and all five resolved config hashes verified.26 focused tests pass
