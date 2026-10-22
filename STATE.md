@@ -158,7 +158,9 @@ Common bank SHA a70fe1444c6c0daafe93677894985a8fbaf0488d1beb9abcb4ee3e30ab207795
 All1688prompts/job <=219inputs;219+4096=4315<4352.80reviewed contexts/480fresh controls
 plus8source-linked stress probes;72reply review preselected before calls.17paths
 registered before prepare. Prepared source/inputs and launch proof are local/off-box.
-No new completed measurement copied yet. Never overwrite/reprepare/restart these IDs.
+BASEs42andpositives42nowcomplete, integrity-verified and copied off-box:42files/
+39,763,744bytes. Negative was running at latest observed23:39uptime,256/1200natural replies. No remote source
+pull/change while bound; never overwrite/reprepare/restart these IDs.
 
 Technical source/config/weight/runtime/token failures stop subsequent jobs. Performance
 failures retain full grids. Verifier rebuilds raw extraction, exact external bytes,
@@ -168,20 +170,47 @@ applies only to predeclared primary aggregates; all500belief/model rows retained
 101regression/layer/handoff tests passed; final reporting refinement passed6focused
 v2tests. All10historical config SHAs/161frozen hashes remain unchanged.
 
-NEXT: inspect actual service/log, preserve only closed child outputs, then independently
-reconstruct the full15jobs and read72preselected full replies plus every failed fresh/
-stress reply. No score-based early stopping, new training or scaling. Commands from
-belief-transfer/ (GPUhost root@38.49.42.46 port58689):
+Completed partial analysis reconstructs BASE+positive, all1,200natural replies/model
+valid/strict/no caps. BASEfresh474/480correct; positive475/480. Both fail validation
+scope-domain95%gate:43/48, with the SAMEfive wrong variants of ONEsufficiency case.
+Facts say not metal and marked; full replies explicitly debate negation scope.
+Prelaunch agent review missed this ambiguity. Preserve failures; this is confounded
+instrument evidence, not proof of SFTdamage. BASEalso misreads one arithmetic claim;
+selected stress5/8correct (two loops+one numeral substitution), positive8/8.
+BASEorder83.17%/wording90.83%; positive80%/85.93%. Same-prompt/three-seed contrasts
+pending. Do not call the operational assessment passed or the pilot tuned.
+
+Read24/72preselected FULLnatural replies and all14failed controls from these two
+jobs. Companion base_s42/positive_s42_{preselected,control}_review.jsonl/.md and
+reviewed_report.md preserve hashes/judgments under the master. All24final letters
+match last settled rationale, but positive smoking replies have referent/argument-role
+concerns; actor imposing prohibition is underspecified. One family reply per model
+adds lack of knowledge beyond nonparticipation/knowing assistance; materiality unknown.
+Several normative/scope-as-permission inferences stay caveats. No moral truth key or
+faithful-internal-reasoning assumption. All old grades unchanged. See dated partial
+review report for scope/limits;13/15jobs still pending at this analysis snapshot.
+
+Separate prospective scope-fact clarification plan frozen BEFOREother-model control
+inspection: changelog/2026-10-21-scope-fact-clarity-plan.md.640calls planned, all16reused
+logic contexts/five fixed models, original vs separate fact assertions, two orders,
+two matched RNGrealizations. Four unchanged-input contexts retained. NOTa gate repair
+or independent qualification. Only builder+tests implemented;40focused/layer/handoff tests
+pass, no new inputs prepared/calls made. Seven future paths registered. Controller/
+analyzer and deployment remain pending; run only after current worker terminal and
+outputs preserved. Current v2prompts/source remain frozen.
+
+NEXT: keep collecting all15regardless of performance, preserve CLOSEDchildren only,
+reconstruct full results and read remaining48preselected replies+all new failures.
+Commands from belief-transfer/ (GPUhost root@38.49.42.46 port58689):
 ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-target-free-readout-v2; tail -n 20 /workspace/sft-drift-ops/target-free-readout-v2.log'
 uv run --no-sync python scripts/copy_error_rca.py --suite target_readout_v2 --host root@38.49.42.46 --port 58689
- After terminal copy:
-uv run --no-sync python scripts/analyze_target_free_readout_v2.py
-Local generated master has protocol/banks/token audit/groups/72selection and launch
-receipt JSON/Markdown. Live log /workspace/sft-drift-ops/target-free-readout-v2.log;
-no new checkpoint (fixed final pilot adapters). Stage has NOresume/autorestart. An
-interruption needs a fresh ID, not rerun of an existing measurement. Active goal is
-NOTcomplete; semantic measurement and training attribution remain unresolved. Read
-changelog/2026-10-21-error-aware-readout-v2-plan.md and implementation notes.
+For closed-child partial analysis (NOTwhile tests/save/exports overlap):
+uv run --no-sync python scripts/analyze_target_free_readout_v2.py --allow-partial
+After terminal full copy omit --allow-partial. Local master progress*.json/.md and
+review exports are partial; never overwrite completed final analysis. Live log
+/workspace/sft-drift-ops/target-free-readout-v2.log; no new checkpoint (fixed final
+adapters). Stage has NOresume/autorestart. Current goal NOTcomplete: semantic measure,
+full contrasts/sampling variability and training attribution remain unresolved.
 
 ## Dashboard and preservation
 
@@ -199,11 +228,11 @@ explicitly notes subsequent BASEinterpretation failure and stopped readout.45das
 tests, TypeScript and finalbuild pass; browser/screenshot verified. Full browser-verified screenshots under interface-controls master, including warning
 that the later BASEreadout failed. No historical score/gate was changed.
 
-Verified private receipt a53e5630,codec7a97e7,5122files/15,798,718,649bytes includes
-all terminal mode/presence outputs/reviews and earlier stopped/partial data. Separate
-local verify succeeded. This work block adds source/tests/notes only; no experimental
-data changed. Next save binds the new source revision. Actual authoritative snapshot
-inventory is data/.handoff-receipt.json, not the date of this prose.
+Verified private receipt66541f39,codecce7f54,5136files/15,802,929,894bytes includes
+v2prepared inputs/source and launch proof plus all prior outputs. Closed BASE/positive
+results and reviews now copied locally; next save must include these and the separate
+clarity plan/builder/tests. Actual authoritative receipt is data/.handoff-receipt.json,
+not the date of this prose. Live/incomplete GPUdirectories are not copied/snapshotted.
 
 Original pilot/results/expanded-control/off-topic follow-up remain preserved under
 their original IDs; see changelog/2026-10-21-ethical-four-arm-results.md and
