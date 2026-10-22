@@ -87,3 +87,19 @@ Only a fully reviewed development and independent confirmation pass permits plan
 fresh matched ethical four-arm repeat. Existing ethical adapters cannot be carried over.
 No corpus expansion, full-bank training, extra rental or new training seeds are automatic.
 A passing target-free C4/replay control does not itself establish selective ethical editing.
+
+## Source review boundary, before data-pool creation
+
+All32complete BASEthinking sources have now been read/hash-bound in RCAartifacts
+base_reasoning_teacher_review_v1.jsonl/.md and its separately named summary. All final
+arithmetic/negation conclusions are correct.17/29/31contain abandoned erroneous
+subtraction attempts explicitly corrected by later recomputation; these are labeled
+self-correction traces, not clean proofs. Only31requires the declared length revision;
+other31sources remain byte-identical, including visible self-correction in17/29.
+No unresolved incorrect final/conclusion was found. Compression/pool/token projection
+and confirmation-bank implementation remain pending. No training launched.
+
+RCApreservation verified1369736673de6fba9ca79446aa9d23245aef0482at605cbe1:
+7066files/20,259,339,563bytes. Newteacher-review annotations postdate that snapshot
+and will be included at the next prepared-data boundary; their raw sources are already
+private. This review does not establish new recipe effectiveness or automatic readiness.

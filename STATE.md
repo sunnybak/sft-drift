@@ -43,9 +43,9 @@ No recipe qualified. No checkpoint/hyperparameter chosen from ethical outcomes.
 Follow new prospective changelog/2026-10-22-replay-base-reasoning-plan.md, not an old queue.
 Exact next reference:cat changelog/2026-10-22-replay-base-reasoning-plan.md
 Implement CPU-only preparation for32BASEthinking targets on exact same training prompts.
-Read all32complete teacher replies before use; only overflow sourcecoverage_decision/31
-has been fully read in this target-review block, with corrected but erroneous earlier
-subtraction attempts. Original sources stay preserved. One documented once-only
+All32complete teacher source replies now read/hash-bound in RCAteacher-review artifacts.
+17/29/31contain abandoned arithmetic mistakes explicitly corrected later; accepted as
+self-correction traces, not clean proofs. Original sources stay preserved. One documented once-only
 compression is planned to fit1024without truncation; other31targets byte-identical.
 Keep all other data/chunks/positions,3246draws/3625chunks/454steps/LR/LoRA/seed42/weights.
 Project actual changed target exposure/normalization; it is not token matched.
@@ -59,14 +59,17 @@ No automatic new training, expansion, rental or new training seeds from a passin
 
 ## Preservation
 
-Latest VERIFIED snapshotbafc76fe61908e7b0d53553818346bd0f04e5ae5 at1a27f65:
-6951files/20,252,818,075bytes; corpuscd1d61a343d434f305d2701a51147f4698054df8.
-Includes first5RCAchildren/50reviews and all earlier terminalv5evidence. New terminal
-copy/full160reviews/mechanicalcomparison/v3scores/report/nextplan are offGPU/local,
-pending the next save. Code/config/notes must be committed/pushed first.
-Exact save:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
-Keep one process through HF429waits; no local mutation during save. Check success receipt.
-No destruction-safety claim until latest complete outputs have verified private storage.
+Latest VERIFIED snapshot1369736673de6fba9ca79446aa9d23245aef0482 at605cbe1:
+7066files/20,259,339,563bytes; corpus31f0fe6011d5aeeb7d1e07c6da14d296189a4c71.
+Includes entire terminal RCA(all9children/log),160reviews,mechanical/v3assessments,
+final report/parser source/tests and next intervention plan. No RCAresult only onGPU/local.
+Subsequent32teacher-source review annotations are local offGPU, pending next prepared-data
+snapshot; all their raw sources already private. No new data pool/config/training yet.
+Source/notes committed/pushed; subsequent notes record verified receipt and teacher review.
+Exact save at next preparation boundary:
+cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+Keep same process through HF429waits; no local mutation during save; check receipt.
+GPU is idle; do not infer future process/resume support from this snapshot.
 
 ## Other fixed study limits
 
