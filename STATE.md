@@ -34,26 +34,35 @@ GPU sourceb59fada; logs under /workspace/sft-drift-ops/{target-free-readout-v2,
 scope-fact-clarity-v2}.log. No resume/autorestart; never restart these IDs.
 Original failed gates, scoring, frozen bank and weights stay unchanged.
 
-## Next step
+## Current work: fresh retention before training changes
 
-Finish this block's preservation first, from belief-transfer/ after commit/push:
+Prepared ethics_gpu_fresh_retention_v1:64independent procedural questions, two modes,
+three evaluation seeds, five existing models =1,920calls. No model calls yet.
+All64tasks/keys agent-read before calls. New bank disjoint from old replay/retention;
+actual tokenization max65inputtokens. BASE seed42selects its mask once before adapters.
+Old config hashes and grading remain unchanged;65mocked/layer/schema/handoff tests pass.
+Plan: changelog/2026-10-22-fresh-retention-plan.md. Full predeclared deficit/content-loss
+criterion decides whether a replay ablation is warranted; no tuning on seen strings.
+Scientific next-training proposal (not launched):2026-10-22-balanced-position-experiment-plan.md.
+
+Next: commit/push source and save/verify prepared inputs, then copy them to idle GPU,
+deploy clean source and launch finite run_fresh_retention.py run under supervisor.
+From belief-transfer/:
 uv run --no-sync python scripts/handoff.py save
-Then verify the success receipt. Do not mutate local source/data while saving.
-The scientific next work is a prospective balanced/complementary-position training
-plan with matched controls/training seeds and fixed retention safeguards; distinguish
-broad response-policy movement from assignment-specific effects. Do not automatically
-launch training, another sampler search, full stance resweep or all100-belief SFT.
-Future controls need separate fact assertions and independent validation under a new
-instrument ID; the reused clarity cases do not clear historical failures.
+GPU command after preserved deployment:
+.venv/bin/python -u scripts/run_fresh_retention.py run
+No restart/resume; all outputs registered. Never mutate bound remote source during run.
+Copy completed children with scripts/copy_error_rca.py --suite fresh_retention.
+After terminal full copy, scripts/analyze_fresh_retention.py; read every failed reply.
+No automatic training, sampler search, old-run restart or all100-belief SFT follows.
 
 ## Preservation
 
-Latest verified snapshot before this block:474c3cfeb4f7da2ad0723dc9ae8d0cee7a3c8e5d,
-code24b7b679d94c7e460189d5f4fb73afa0f2160344;5,551files/16,111,481,821bytes. Includes
-full15-job parent/reviews/dashboard/report. Corpus2165bf575a94f7c93aeb8598f77c7c59585ce9a9.
-v1failure and complete v2diagnostic/reviews/configs/notes need the current save.
-Actual receipt: belief-transfer/data/.handoff-receipt.json. Do not declare box-loss
-safety for this new block until Git push and private snapshot are verified.
+Verified private snapshot2b46c808bb1e6ea804d43f3c521e9a75eee11adf at
+63e0a77e3535b3a5fea99c04216605445adb93ff covers both completed comparisons/reviews:
+5,670files/16,123,040,420bytes. Corpus6b165545d628628300b159ad3273c01364c88aa8 verified.
+New fresh-retention source/config/inputs/plans await current block save. Actual receipt:
+belief-transfer/data/.handoff-receipt.json. No source/data mutation during verification.
 
 Candidatev5:20,000documents/221repairs; two conservation subjects quarantined,
 full-bank semantic clearance false. Original pilot/followups remain preserved.

@@ -2044,16 +2044,26 @@ class ResponseInterfaceRCASpec(BaseModel):
 
 
 class InstructionRetentionSpec(BaseModel):
-    """Retest a fixed retention bank/mask without selecting new known items."""
+    """Retest fixed retention, or explicitly create a new BASE-only reference."""
     model_config = ConfigDict(extra="forbid")
     model_label: str
     bank_path: str
     bank_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
-    known_path: str
-    known_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    known_path: str | None = None
+    known_sha256: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
+    fresh_base_reference: bool = Field(default=False, exclude_if=lambda value: value is False)
     adapter_sha256: str | None = None
     eval_seeds: list[int] = Field(default_factory=lambda: [42, 7, 1729], min_length=1)
     nonthinking_temperature: float = Field(default=0.0, ge=0)
+
+    @model_validator(mode="after")
+    def retention_reference_contract(self):
+        if self.fresh_base_reference:
+            if self.known_path is not None or self.known_sha256 is not None or self.adapter_sha256 is not None or self.eval_seeds[0] != 42:
+                raise ValueError("Fresh BASE reference needs no old mask/adapter and seed42 first")
+        elif self.known_path is None or self.known_sha256 is None:
+            raise ValueError("Fixed retention requires both known-item path and hash")
+        return self
 
 
 

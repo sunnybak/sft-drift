@@ -72,7 +72,9 @@ async def run(job):
     if len(set(spec.eval_seeds)) != len(spec.eval_seeds):
         raise ValueError('Repeated evaluation seed')
     bank = read_bound(ROOT / spec.bank_path, spec.bank_sha256)
-    known = read_bound(ROOT / spec.known_path, spec.known_sha256)
+    if spec.fresh_base_reference and bench.adapter_path:
+        raise ValueError('Only BASE may construct a fresh reference')
+    known = None if spec.fresh_base_reference else read_bound(ROOT / spec.known_path, spec.known_sha256)
     if len(bank) != 128 or len({r['example_id'] for r in bank}) != 128:
         raise ValueError('Require the unique full128-item frozen retention bank')
     if any(sum(r['thinking'] == mode for r in bank) != 64 for mode in (True, False)):
@@ -80,7 +82,8 @@ async def run(job):
     # Validate frozen mask identity and coverage before loading weights.
     dummy = [{**r, 'assessment': {k: False for k in ('semantic_correct', 'strict_format',
               'response_boundaries_valid', 'normal_stop')}} for r in bank]
-    report(dummy, bank, known)
+    if known is not None:
+        report(dummy, bank, known)
     if bench.adapter_path:
         path = ROOT / bench.adapter_path / 'adapter_model.safetensors'
         if hashlib.sha256(path.read_bytes()).hexdigest() != spec.adapter_sha256:
@@ -89,7 +92,10 @@ async def run(job):
         raise ValueError('BASE cannot carry an adapter binding')
     directory = start_directory(ROOT, job)
     write_resolved_config(job, directory)
-    for source, name in [(spec.bank_path, 'bank.jsonl'), (spec.known_path, 'known_items.jsonl')]:
+    inputs = [(spec.bank_path, 'bank.jsonl')]
+    if spec.known_path is not None:
+        inputs.append((spec.known_path, 'known_items.jsonl'))
+    for source, name in inputs:
         target = directory / name
         target.write_bytes((ROOT / source).read_bytes())
         write_md(target)
@@ -102,7 +108,9 @@ async def run(job):
                 'decoding': bench.measurement_decoding.model_dump(),
                 'max_new_tokens': bench.max_new_tokens, 'batch_size': bench.measurement_batch_size,
                 'versions': {p: version(p) for p in ('torch', 'transformers', 'vllm')},
-                'interpretation': 'Fixed historical mask; no re-selection of BASE-known items. Original scoring and gates retained.'}
+                'interpretation': ('Fresh bank: BASE reference selected once from seed42 only; original scoring/gates retained.'
+                    if spec.fresh_base_reference else
+                    'Fixed historical mask; no re-selection of BASE-known items. Original scoring and gates retained.')}
     (directory / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     model = local_model(bench.model, job.models, adapter_path=bench.adapter_path,
                         generation=bench.cuda_generation, max_new_tokens=bench.max_new_tokens,
@@ -148,10 +156,18 @@ async def run(job):
     finally:
         if out.exists():
             write_md(out)
+    if spec.fresh_base_reference:
+        _, known = report([r for r in observed if r['eval_seed'] == 42], bank, None)
+        mask = directory / 'known_items.jsonl'
+        mask.write_text(''.join(json.dumps(r) + '\n' for r in known))
+        write_md(mask)
     summary = {'model_label': spec.model_label, 'by_seed': {str(seed): report(
         [r for r in observed if r['eval_seed'] == seed], bank, known)[0] for seed in spec.eval_seeds},
         'known_mask_reselected': False, 'expected': 128 * len(spec.eval_seeds),
         'interpretation': manifest['interpretation']}
+    if spec.fresh_base_reference:
+        summary.update(known_mask_created_from_base_seed=42, known_sha256=hashlib.sha256(
+            (directory / 'known_items.jsonl').read_bytes()).hexdigest())
     (directory / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
     (directory / 'summary.md').write_text('# Fixed retention repeats\n\n```json\n' + json.dumps(summary, indent=2) + '\n```\n')
     (directory / 'COMPLETED').write_text('All planned responses recorded; inspect failures, not a passing verdict.\n')

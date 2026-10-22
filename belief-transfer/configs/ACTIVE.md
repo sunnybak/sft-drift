@@ -294,3 +294,14 @@ aggregate missing-response bounds and separate pending72reply semantic review.
 copy_error_rca.py --suite target_readout_v2 copies only closed children while active,
 plus master/log only when terminal. Launched on the existing GPU; actual source469c18f.
 STATE.md and actual supervisor/artifacts determine live state. No resume/restart/SFT.
+
+
+## Fresh retention confirmation (execution state in root STATE.md)
+
+`run_fresh_retention.py` prepares/runs master ethics_gpu_fresh_retention_v1 under the
+existing instruction_retention stage. Opt-in fresh_base_reference selects a new mask
+from BASEseed42only, before adapter dispatch; historical config hashes/assessments stay
+unchanged.64newquestions/two modes/three eval seeds/five fixed models,1,920calls.
+`analyze_fresh_retention.py` reconstructs all outputs and applies the prospective
+retuning criterion. `copy_error_rca.py --suite fresh_retention` copies closed children
+and terminal master. No training, resume, automatic expansion or new rental.

@@ -34,8 +34,10 @@ This supports a wording explanation for that case, without independently qualify
 a new instrument or clearing original failures. v1preparation failed before calls;
 its partial files remain retained. No new training has run during RCA.
 
-Preserve this completed block, then write a prospective balanced/complementary-position
-experiment plan with matched controls/training seeds and fixed retention safeguards.
+A prospective balanced/complementary-position design is written in
+changelog/2026-10-22-balanced-position-experiment-plan.md. First run the independent-input
+retention confirmation specified in2026-10-22-fresh-retention-plan.md to decide whether
+training actually needs a replay ablation; do not change training to fit seen strings.
 No automatic training, sampler search, full stance resweep or corpus expansion follows.
 STATE.md records actual execution state. Do not select training for desired outcomes.
 
