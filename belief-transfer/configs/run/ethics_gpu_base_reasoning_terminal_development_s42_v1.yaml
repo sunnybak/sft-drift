@@ -1,0 +1,7 @@
+# @package _global_
+defaults:
+- ethics_gpu_replay_coverage_development_s42_v5
+run_id: ethics_gpu_base_reasoning_terminal_development_s42_v1
+pilot_bench:
+  adapter_path: data/checkpoints/ethical_stance_sft/ethics_sft_c4_base_reasoning_replay_v1/checkpoint-454
+  seed: 42

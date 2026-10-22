@@ -58,29 +58,36 @@ Confirmation protocol/teacher data_freeze_v1.json retain launch_allowed=false.
 94focused preparation/document/loss/handoff/import tests pass. All32final targets reviewed,
 including once-compressed31; source17/29self-corrections intentionally retained.
 
-Then implement/test/freeze candidate and independent-confirmation workers, preserve
-inputs, GPUpreflight and onlythen launch one fresh candidate. Newrecipe and original
-v5falsifiers unchanged. Independent confirmation must be frozen before outcomes.
-Exact current reference:cat changelog/2026-10-22-replay-base-reasoning-plan.md
-Newpreparation entry points:belief-transfer/scripts/prepare_base_reasoning_replay.py
-and prepare_base_reasoning_confirmation.py(both completed; DO NOT overwrite).
-Detailed block:changelog/2026-10-22-base-reasoning-preparation.md.
-No automatic ethical/full-bank training, rental or new training seeds.
+Execution workers now implemented/frozen: scripts/run_base_reasoning_probe.py and
+run_base_reasoning_confirmation.py, with execution protocol under the master and
+confirmationv2/execution_protocol_v1.json. All1306source bindings and13resolved job
+hashes match.156focused tests pass. Actual1152reference responses reconstruct onCPU
+(3fixed models ×128procedural+256decisions). No training/model inference added.
+54GPUoutput paths registered;12fullsurface configs composed. Prospective execution
+amendment requires all100on midpoint227 and final; terminal454aliases final only if
+both adapter+config bytes match, otherwise separately measured. Final remains primary.
+All scientific failures retain full100readings; technical failures stop/preserve.
+
+Next: finish private save of frozen executable inputs, deploy to existing authorized
+GPU, verify source/data/environment/idle state, then launch exactly once:
+cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_base_reasoning_probe.py
+Finite worker has NOresume/restart. Expected supervisor name:
+sft-drift-base-reasoning-replay-v1; log /workspace/sft-drift-ops/base-reasoning-replay-v1.log.
+Neither exists/runs yet. Independent confirmation remains conditional on fully reviewed,
+privately preserved final development pass. No automatic ethical scaling.
+Details:changelog/2026-10-22-base-reasoning-execution-plan.md and
+changelog/2026-10-22-base-reasoning-worker-verification.md.
 
 ## Preservation
 
-Latest VERIFIED snapshot1369736673de6fba9ca79446aa9d23245aef0482 at605cbe1:
-7066files/20,259,339,563bytes; corpus31f0fe6011d5aeeb7d1e07c6da14d296189a4c71.
-Includes entire terminal RCA(all9children/log),160reviews,mechanical/v3assessments,
-final report/parser source/tests and next intervention plan. No RCAresult only onGPU/local.
-Subsequent32teacher reviews, prepared32targets/trainingmanifest/config/dose audit and
-confirmationv1VOID/v2fixed banks are local offGPU, pending this prepared-data snapshot.
-All original raw teacher sources already private. No new model calls/training yet.
-Source/notes committed/pushed; subsequent notes record verified receipt and teacher review.
-Exact save at next preparation boundary:
-cd belief-transfer && uv run --no-sync python scripts/handoff.py save
+Latest VERIFIED prepared-data snapshot daafcd993ef38871ea42c0d5b0cfc2b5654d42c9 at
+fb27907ece2fd96404e396ef7f7dd58febba8029:7119files/20,273,648,938bytes;
+corpusd7345fec06548c4bf165eb13f61234018c46d892. Includes all terminal RCA/reviews,
+32reviewed targets/training manifest/config and confirmationv1VOID/v2corrected banks.
+Subsequent executable workers/protocols/checkpoint overlays need new snapshot now.
+Exact:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
 Keep same process through HF429waits; no local mutation during save; check receipt.
-GPU is idle; do not infer future process/resume support from this snapshot.
+GPU checked idle0%,1MiB; latest RCAworker EXITED. No new optimizer steps.
 
 ## Other fixed study limits
 
