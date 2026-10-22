@@ -1,0 +1,71 @@
+"""Data-ablation preparation invariants; no weights or experimental result writes."""
+import copy
+from pathlib import Path
+import sys
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
+import prepare_replay_coverage_probe as probe
+from build_replay_coverage import candidates, check_overlap
+from belief_transfer.config import load_job
+
+
+def test_fixed_training_settings_and_fresh_ids():
+    old = load_job(['+run=' + probe.CONTROL])
+    assert old.training.sft.lr == 1e-4
+    assert old.document_sft.max_steps == 454
+    assert old.document_sft.replay.nonthinking_loss_weight == 32
+    assert len(probe.required_paths()) == len(set(probe.required_paths())) == 29
+    assert all('ethics_gpu_' in p or 'ethics_sft_' in p for p in probe.required_paths())
+
+
+def test_fresh_banks_are_fixed_disjoint_inputs_and_modes():
+    train = candidates()
+    fresh = probe.confirmation(set())
+    assert len(fresh) == 128 and fresh == probe.confirmation(set())
+    assert all(r['example_id'].startswith('replay_coverage_confirmation/') for r in fresh)
+    check_overlap(train, {r['prompt'] for r in fresh}, probe.confirmation_keys(fresh))
+    decision = probe.decision_bank(train)
+    assert len(decision) == 64 and sum(r['thinking'] for r in decision) == 32
+    assert all('Assess the following factual statement' in r['prompt'] for r in decision)
+    assert all('notebook' not in r['prompt'] for r in decision)
+    assert {r['operation'] for r in decision} == {'sum', 'difference', 'product', 'comparison'}
+
+
+def test_semantic_decision_overlap_stops_without_resampling():
+    training = [{'training_request': '', 'semantic_key': probe.decision_bank(candidates())[0]['semantic_key']}]
+    with pytest.raises(ValueError, match='overlaps'):
+        probe.decision_bank(training)
+
+
+def test_assembly_preserves_old_thinking_c4_and_draw_positions(tmp_path):
+    original_pool = [{'example_id': f'old/{i}', 'thinking': i < 246} for i in range(440)]
+    new_pool = [*copy.deepcopy(original_pool[:246]), *candidates()]
+    original = [{'example_id': 'c4/a', 'source_kind': 'c4', 'text': 'fixed'}]
+    for cycle in range(3):
+        original += [dict(r, example_id=f'draw/{cycle}/{r["example_id"]}', source_kind='replay',
+                          replay_source_example_id=r['example_id'], replay_cycle=cycle)
+                     for r in original_pool]
+    source = tmp_path / 'gold.jsonl'
+    source.write_text('gold')
+    result = probe.assemble(original, original_pool, new_pool, source)
+    assert len(result) == len(original) == 1321
+    assert result[0] == original[0]
+    assert sum(a == b for a, b in zip(original, result)) == 739
+    changed = [r for a, r in zip(original, result) if a != r]
+    assert len(changed) == 582
+    assert sum(r['thinking'] for r in changed) == 96
+    assert len({r['example_id'] for r in result}) == 1321
+    with pytest.raises(ValueError, match='three draws'):
+        probe.assemble(original[:-1], original_pool, new_pool, source)
+
+
+def test_unregistered_prepare_refuses_before_writes(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    config = tmp_path / 'configs/handoff.json'
+    config.parent.mkdir()
+    config.write_text('{"include_paths": []}')
+    with pytest.raises(ValueError, match='Register all'):
+        probe.prepare()
+    assert not (tmp_path / 'data').exists()

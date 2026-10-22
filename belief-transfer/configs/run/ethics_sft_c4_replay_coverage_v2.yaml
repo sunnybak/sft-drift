@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+- ethics_sft_c4_weight32_v1
+run_id: ethics_sft_c4_replay_coverage_v2
+document_sft:
+  manifest_path: data/generated/ethical_stance_sft/ethics_sft_c4_replay_coverage_v2/documents.jsonl
+  plan_path: data/generated/ethical_stance_sft/ethics_sft_c4_replay_coverage_v2/plan.json
+  plan_sha256: 00a8a434812ec063374ff86cc303111f37a261dac9d9ae44e9c9f5c0c713b903

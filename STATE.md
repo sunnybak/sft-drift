@@ -31,23 +31,58 @@ Artifacts:data/results/ethical_stance_sft/ethics_sft_lower_lr_probe_v1/.
 Final reviewed_comparison_v1 and full100_per_belief_v1; all newJSONL have Markdown views.
 Expected operations append audited, oldprefix archived in reference_phase_audit_v1.
 
-## Exact next work
+## Active preparation and exact next work
 
-First commit/push notes/runtimeconfig and verify private snapshot:
+NEW prospective replay-data intervention PREPARED, not trained. Master
+ethics_sft_replay_coverage_probe_v2; training ethics_sft_c4_replay_coverage_v2.
+Control fixed ethics_sft_c4_weight32_v1, fresh BASE required before candidate.
+Plan2026-10-22-replay-coverage-plan.md plus measurement-clarification and bank-preflight
+amendments. Original plan/source bindings retained. No gate lowering or LR sweep.
+
+Data pilot ethics_sft_replay_coverage_data_v1:246old thinking sources unchanged;
+194new procedural-gold sources (130short procedural +64neutraldecision presentations,
+32thinking/32short). Entire pool440sources, three draws each.46complete requests/
+targets/proofs agent-read,0clear defects; all194actual requests independently solved
+and alltoken/EOS roundtrips verified. No model generated these targets; no teacher
+attribution. Exact3159prompts/536procedural keys checked; scope limitation explicit.
+Review complete in separate agent_review_summary_v1; original summary remains as-made.
+
+V1probe preflight failed before any outputs/calls on duplicate/historical bank overlap.
+Unused registeredv1paths retained. Newv2bank uses sameRNG20261026but unique sampled
+left operands1100..1199/right2100..2199, unchangedtasktemplates/assessment; no outcome
+resampling. New128procedural +64held-out-wording neutraldecision bank frozen.
+Only eval seed42: thinkingtemperature0.6, short0; no independent training replication.
+Supplemental decision knowncohort>=24/32permode/allfourfamilies/bothlabels;95%retention,
+allcomplete/exact finals. Originalqualification and value-v1gates remain unchanged.
+
+Training input3246documents/3625chunks;454steps final-only; same settings/LR1e-4/
+weight32/LoRA/seed42. All3043C4/oldthinking chunks andpositions unchanged. Rawtargets:
+C4948838,thinking297546,short2376,total1248760; weighted1322416. Mean coefficient
+shares69.980%C4/23.551%thinking/6.470%short. Data intervention changes exposure;
+not a token-matched causal isolation.32focused mock/tempdir/layer tests pass.
+All29newv2paths registered before prepare; configs/plan/banks/source bindings complete.
+No GPUworker launched for this experiment; GPU lastverified idle.
+
+FIRST finish private preservation after commit/push:
 cd belief-transfer && uv run --no-sync python scripts/handoff.py save
-No local mutation/copy/tests during save. Previous verified snapshot
-37c7d6236c4119e5aca8203170f05d8113a42b22 at350e5a2acbefe36ebbe1e16c178163a3439fe42d
-covered midpoint only. Final trial/reviews local/offGPU pending this save; actual receipt
-belief-transfer/data/.handoff-receipt.json. No box destruction until verified.
+Then implement/test a finite reference/candidate worker using frozen protocol:
+data/generated/ethical_stance_sft/ethics_sft_replay_coverage_probe_v2/protocol.json.
+Collect BASE/control128procedural+64decision replies each, review failures/hash-bind
+and preserve references BEFORE fresh candidateSFT. Candidate then same banks, original
+development/conditionalvalidation, all100frozenbeliefs regardlessqualification. Record
+full outcomes; no checkpoint/recipe selection on ethical drift. Refuse overwrite/restart.
+No automatic further data/LR/weight versions after this trial; reconsider on evidence.
 
-Then prepare a NEW prospective replay-coverage/interface experiment before more SFT.
-440-row replay lacks finalendorse/reject, nonthinking sort and negated-equalityYES;
-short target mass1980 vs thinking293214. Training requests11..305/pavo-prefix strings.
-These declared finite-replay limits motivate a hypothesis, not a proven cause.
-Review a data pilot, prevent evaluation leakage, register paths/newIDs, freeze hypothesis/
-contrasts/falsifier and measured dose before training. Keep thresholds fixed; no automatic
-LR/weight sweep or full-bank expansion. No new experiment prepared/launched yet.
-GPU currently idle; no background worker running. Goal ACTIVE for continued work.
+## Preservation
+
+Last verified private snapshot399c7bb213cb242d150a200ccf705dc64f9c6224 at code
+5985378bea3bb30dd8f337da5ef72986092dc9e4:6421files/19,186,941,333bytes.
+Corpus b82e8abcccdab6ccf3cfd6776a44ee401114575e manifest17f654e6caa2118eddd42a4f20bb1e9e9a71711a52ad963de7aed2e678b6fde3.
+Covers completed lowerLRfinal/checkpoints/all133reviews and2432tokenaudits.
+NEW replay data/reviews/protocol/source currently local pending next save.
+Actual receipt belief-transfer/data/.handoff-receipt.json. No localmutations/tests/copies
+during save; reuse process handle across storage429retries. No box destruction until
+code push and private artifact verification. All current new artifacts are offGPU.
 
 ## Established context / limits
 

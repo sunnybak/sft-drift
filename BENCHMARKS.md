@@ -20,6 +20,11 @@ No gate changed or recipe adopted. Next is a prospective replay-coverage/interfa
 hypothesis, not another LR sweep. See
 [changelog/2026-10-22-lower-lr-probe-results.md](changelog/2026-10-22-lower-lr-probe-results.md)
 and STATE.md for exact next work and preservation.
+The next replay-coverage data pilot is reviewed/prepared (masterv2 after a preflight
+bank collision; no model calls yet). Fixed C4/teacher chunks/settings, new gold replay
+and explicitly changed token dose; fresh128procedural+64neutraldecision references.
+Original model checks/value-v1 thresholds remain. See STATE.md and the three prospective
+2026-10-22-replay-coverage plan/clarification/preflight notes; no automatic scaling.
 
 The completed experiment **ethics_gpu_target_free_readout_v2** followed its prospective
 [protocol](changelog/2026-10-21-error-aware-readout-v2-plan.md) and actual process/artifact

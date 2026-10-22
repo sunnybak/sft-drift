@@ -1,0 +1,9 @@
+# @package _global_
+defaults:
+- ethics_gpu_vllm_base_v1
+run_id: ethics_gpu_replay_coverage_unqualified_s42_v2
+pilot_bench:
+  adapter_path: data/checkpoints/ethical_stance_sft/ethics_sft_c4_replay_coverage_v2/final
+  seed: 42
+  measurement_control_failure_policy: collect_unqualified
+  stance_validation_run_id: null
