@@ -15,9 +15,10 @@ Original supervisor sft-drift-base-reasoning-replay-v1 PID131244 EXITED20:26UTC 
 first128midpoint retention replies completed. Master failure+TERMINAL preserved:
 KeyError('fresh_base_reference'), a collector metadata-default bug. Do NOT restart it.
 Recovery supervisor sft-drift-base-reasoning-recovery-v1 RUNNING PID132392, observed
-20:51:17UTC, preserved-input preflight. GPUcheckout e2b25f62d30a1b949f2b7c8b2ace3c9e002a1110
+20:51:17UTC, now collecting full100midpoint after diagnostics. GPUcheckout e2b25f62d30a1b949f2b7c8b2ace3c9e002a1110
 pinned during new worker; no new training. Original supervisor remains EXITED.
-No scientific verdict on this candidate yet; remaining evaluations never started.
+Final-primary scientific verdict pending. Midpoint diagnostics now complete/reviewed;
+full100midpoint reading live, followed by final checkpoint. No further training queued.
 
 ## Established current result
 
@@ -49,6 +50,20 @@ value and original validation note-flip failures. Full100unqualified reading2400
 No recipe qualified. No checkpoint/hyperparameter chosen from ethical outcomes.
 
 ## Current fixed trial, recovery and exact next work
+
+Midpoint diagnostic boundary:384records reconstructed(128explicitreuse+256new),147closed
+files copied/hash-verified. Thinking factual scores32/32in all4cells; short19/18/18/19.
+Held/eval BASE-known32/32thinking,15/24short => MIDPOINTfails factual retention.
+All64finals/cell strict, complete stops/boundaries. Shortrejects29–30/32balanced questions;
+all54wrong decisions are false rejections. BASErejects12–17/32. Mode-specific output bias
+observed, not proven internal knowledge erasure or a single causal mechanism.
+Procedural63/63knownthinking,56/57short pass; all-item64/64and59/64. All5procedural flags,
+54decision flags +16preselected proofs fully agent-read(75pairs). No value disagreements;
+16sampled proofs correct,3loose phrases recorded. Not all384replies agent-read.
+Review/copy/profile artifacts under recovery generated directory; details in
+changelog/2026-10-22-base-reasoning-midpoint-diagnostics.md. Final endpoint remains fixed.
+Full100midpoint reading live(256/2400observed21:02UTC), final checkpoint follows.
+These new diagnostics/reviews and launchreceipt need next private save now.
 
 Prepared BASEreasoning intervention changes32source targets/96draws; other3529chunks
 unchanged.3246draws/3625chunks/454steps/settings/seedfixed, longer thinking+28704tokens.
@@ -85,14 +100,14 @@ Repairs/notes pushed e2b25f6, verified private snapshot below. Six recovery inpu
 copied/hash-verified onGPU; all1282bindings and128raw replies reconstruct there, completed
 adapter/training binding exact. Old untracked runtime YAML preserved in ops, tracked
 replacement byte-identical. New finite recovery supervisor launched once, RUNNINGPID132392
-at20:51:17UTC, input preflight. Exact source e2b25f6 must stay pinned onGPU.
+at20:51:17UTC; midpoint diagnostics finished, full100reading live. Exact source e2b25f6 must stay pinned onGPU.
 Command:cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_base_reasoning_recovery.py run
 Log:/workspace/sft-drift-ops/base-reasoning-recovery-v1.log. NOresume/restart.
 Exact next action:SSH -p58689 root@38.49.42.46; supervisorctl status
 sft-drift-base-reasoning-recovery-v1 and tail that log. Watch for midpoint/comparison_v1.json
 or TERMINAL under data/results/ethical_pilot/ethics_gpu_base_reasoning_recovery_v1.
 Copy/hash completed child/point outputs and dynamic runtime YAMLs at next safe boundary;
-live new evaluation outputs are only onGPU. Deployment launchreceipt local, to join next
+closed midpoint diagnostics local+GPU; live full100outputs only onGPU. Launchreceipt local, to join next
 closed measurement snapshot. Finish same midpoint/final/full100grid even if scientific
 checks fail; review final-primary result. If negative pause goal and recommend; no more SFT.
 If positive, independent confirmation still needs reviewed/private verdict and updated
