@@ -12,10 +12,16 @@ ethics_sft_c4_replay_coverage_v5. Reference reconstruction passed; RUN train obs
 Command:cd /workspace/sft-drift/belief-transfer && .venv/bin/python -u scripts/run_replay_value_probe.py
 Log:/workspace/sft-drift-ops/replay-coverage-value-v5.log
 Supervisor autostart/autorestart false; finite worker, NO resume/overwrite by startedID.
-Latest observation:159/454steps, no reported failure, no saved checkpoint yet.
+Latest observed step256/454 during checkpoint copy; training still running, no
+reported failure. Checkpoint227 COMPLETE and copied/hash-verified locally:8files,
+396,924,327bytes. Before/after remote inventories and local bytes match. Copy receipt:
+data/generated/ethical_stance_sft/ethics_sft_replay_coverage_value_v5/checkpoint227_copy_v1.json
+Local checkpoint:data/checkpoints/ethical_stance_sft/ethics_sft_c4_replay_coverage_v5/checkpoint-227
+This is a safety backup, not an evaluated/selected checkpoint or a resumable worker.
 Conditional independent-input confirmation predeclared BEFORE candidate outcomes in
 changelog/2026-10-22-replay-coverage-independent-confirmation-plan.md; only triggered
-if v5passes all reviewed criteria. No new model calls/training from that plan. Current launch observation/closed log excerpt:
+if v5passes all reviewed criteria. No new model calls/training from that plan.
+Current launch observation/closed log excerpt:
 data/generated/ethical_stance_sft/ethics_sft_replay_coverage_value_v5/deployment_and_launch_v1.json
 Do not pull source into the running GPU checkout or change bound files.
 
@@ -66,8 +72,9 @@ Verified receipt deployed toGPU before start; prior receipt backed up off-repo.
 139data files/31,387,108bytes verified at deployment,25new copied without overwrites.
 Launch receipt/notes now VERIFIED in snapshot1db540a34fd8646e420d387250e73d6a4a12c067
 at2f413ba:6616files/19,247,350,022bytes; corpusb3dcaa49b0ecaf2dd168e72d32aa6706891f7aea.
-New conditional plan/updated progress pending next completed-block save; live train
-outputs only onGPU until copied. Source adoption preserved identical old runtimeYAML in
+New conditional plan/updated progress/checkpoint227 copy pending next completed-block
+private save. Current live training log, remaining checkpoints and final outputs only
+onGPU. No new candidate performance measurements yet. Source adoption preserved identical old runtimeYAML in
 /workspace/sft-drift-ops/preserved-runtime-configs/before-replay-value-v5/.
 Save command:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
 No local mutations/copies/tests during save; retain handles acrossHF429waits.
