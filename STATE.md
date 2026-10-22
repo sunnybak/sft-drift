@@ -10,7 +10,7 @@ training. No full90/100beliefSFT hasrun. Do not select recipes onethical outcome
 
 ethics_sft_replay_weight_ablation_v1 COMPLETE; supervisor
 sft-drift-replay-weight-ablation-v1 EXITED13:13UTC, source
-df32125e22850d005bd0ca9df7e2a4897c40a656. No activeGPUjob. Log:
+df32125e22850d005bd0ca9df7e2a4897c40a656. Thatworkerhasexited; newreferencebelowisactive. Log:
 /workspace/sft-drift-ops/replay-weight-ablation-v1.log. No resume/overwrite byID.
 
 Fresh norm1andweight32C4models each454steps, all12engineering checks, exact original
@@ -53,24 +53,29 @@ ethics_gpu_lower_lr_confirmation_v1,128rows, seed20261024,
 SHA5bd0180d8b258ad53ade57be3dcd14afe8a556f9a231d2cc79204e403d92af54.
 ProtocolSHA d7f87c403d49afa7cbd94554405eceef68e2ca4f64bcc6f936a4f7938809dd4e,
 1079bindings. Exactnorm1manifest/preprocessing/order/LoRA/454steps, LRonlychanged.
-Report:changelog/2026-10-22-lower-lr-probe-prepared.md. No newmodelcalls/training yet.
+Report:changelog/2026-10-22-lower-lr-probe-prepared.md. NewreferenceRUNNING; no newSFTyet.
 
-Next:verifyprivate save ofpreparedprotocol, preserve2GPUuntrackedoldruntimeconfigbytes
-(hash-equaltoalreadyprivatelysavedlocalfiles), pullsourceonlynowoldworkerEXITED,
-copy/verifyfrozennewinputs+reviewevidence+receipt, startfinite(noautorestart)supervisor:
-cd /workspace/sft-drift/belief-transfer
-.venv/bin/python -u scripts/run_lower_lr_probe.py reference
-Collect BASE/norm1first768calls; allreferencequeuefullreviewsandprivatepreservation
-REQUIREDbeforecandidateoperation. Do notstartSFTbeforethosegates. Do not reruncompleted
-IDs or claimcheckpointbytesmakestageresumable. No newrental/fullbanktraining.
+PreparedprotocolprivatelyverifiedBEFOREcalls(snapshot04a2fe772a950b7ca734b7ef77bc52e3e159edf2).
+GPUoldruntimeconfigs hash-verified/preservedoffcheckout; sourcepulledonlyafteroldEXITED.
+All1079bindings+10transferredinputfiles verifiedonGPU. Reference supervisor
+sft-drift-lower-lr-reference-v1 RUNNING PID118420, source8053931e2c7e86b97b66f5db9bacef790002b89d.
+Currentchild:ethics_gpu_lower_lr_base_retention_v1; norm1follows. Log:
+/workspace/sft-drift-ops/lower-lr-reference-v1.log. Autorestartfalse; no resume byID.
+Exactobservationcommand:
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-lower-lr-reference-v1; tail -15 /workspace/sft-drift-ops/lower-lr-reference-v1.log'
+KeepGPUsourcepinneduntilreferenceTERMINAL. Afterclosedstagescopy/verify384rows/model,
+rebuildvalues/runtime/strictgrades, readallqueuesinfull, savehash-bound
+reference_agent_review_v1.jsonl/.md andreference_review_v1.json/.md. Privatepreserve
+reviewbeforecandidateoperation. Do NOTstartSFTyet; no newrental/fullbanktraining.
+Live referenceoutputs notyet copied/saved; dispatchobservationisnotcompletion.
 
 ## Preservation
 
-Lastverifiedprivate snapshot:b7ef9fa3b79fcebb0c9e6807fac5f78b92b12913 at
-code009ff861be6601567df9f5d97e2115dfcdd8b5ee,6177files/18,167,592,040bytes;
-corpus6c801eae76d2b1757b9f454dd2c1c5392077f8ad. CoversALLpreviouscompletedtraining/
-retention/full100/comparison/57reviews. NewlowerLRsource/preparedinputs awaitnextsave.
-Actual latestsuccessfulreceipt:data/.handoff-receipt.json(maybenewerthanthese notes).
+Lastverifiedprivate snapshot:04a2fe772a950b7ca734b7ef77bc52e3e159edf2 at
+code8053931e2c7e86b97b66f5db9bacef790002b89d,6185files/18,180,796,727bytes;
+corpusf7b4d8efc79433487330aeee33591bb8566cdeb8. Coversallpreviouscompletedresults/
+57reviews ANDnewlowerLRsource/frozeninputs. Newdispatchmetadata/notes awaitsave;
+livereferenceoutputsGPU-only. Actual latestreceipt:data/.handoff-receipt.json.
 Requiredaftercommit/push:
 uv run --no-sync python scripts/handoff.py save
 No localmutations/tests/copies during save; verifyreceipt. Serialize testsandcopies too:

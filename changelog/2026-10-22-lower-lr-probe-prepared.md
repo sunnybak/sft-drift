@@ -44,3 +44,18 @@ newinputs/neededreview evidence/receipt, verifyallprotocolbindings onGPU, qualif
 correctCUDAenvironment, startfinite supervisor(noautorestart) for:
 .venv/bin/python -u scripts/run_lower_lr_probe.py reference
 No modelcall hasbeenmade for the newprobe atthiscompletedpreparation boundary.
+
+## Launch after preservation
+
+Snapshot04a2fe772a950b7ca734b7ef77bc52e3e159edf2verifiedall6185files/18,180,796,727bytes
+atcode8053931e2c7e86b97b66f5db9bacef790002b89d; corpusf7b4d8efc79433487330aeee33591bb8566cdeb8.
+Backupverifierwaited241safterHF429thencompleted; no restart/guard bypass.
+BotholdGPUruntimeconfigs independentlymatchedlocalhashes andwerepreservedoffcheckout
+under/workspace/sft-drift-ops/preserved-runtime-configs/replay-weight-v1beforefast-forward.
+All1079bindingsand10transferredstaticfiles verifiedonGPU. Newverifiedreceiptcopied
+beforecalls. Finite reference supervisorRUNNINGPID118420, source8053931, observed29s.
+BASEfirst, norm1next,768calls total. Log:/workspace/sft-drift-ops/lower-lr-reference-v1.log.
+Generatedmaster gpu_reference_dispatch_v1.json/.md records exactlaunch/source/receipt.
+This is not a completedreference or SFT; rawliveoutputs remainGPU-only. KeepGPUsource
+pinned untilreferenceworkerterminal; no resume/overwrite. Fullqueuesreview/private
+snapshot requiredbeforecandidateoperation. No ethical-outcome recipe selection.
