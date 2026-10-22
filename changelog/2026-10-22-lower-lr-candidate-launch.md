@@ -1,0 +1,42 @@
+# Single lower-LR candidate launched after complete reference review
+
+Private snapshot e28ac1dcbb45b87c0bc268a596b8fb242dfdf8a3 verified6254files/
+18,186,909,214bytes atcode87444d18906d36580448ac97503aec781cd46306;
+corpus687ed1ecdd31674a7b2633a359ffc010cd0dcb7f. This includesboth384-row reference
+rawgrids andall90full reviews. Candidateguard was verified ontheGPUaftercopying the
+receipt and4reviewfiles; exactprotocol and1079bindingsstillmatch. Source8053931is
+intentionally pinned onGPU; later commits containnotes/runtimeconfigidenticalbytes.
+
+Finite supervisorsft-drift-lower-lr-candidate-v1 started, PID119556. Observed RUNNING
+at70seconds withtraining4/454; logged earlyLR5.357e-6matches thefixedwarmupunder
+peak2.5e-5. OnlyONEcandidate, exactnorm1data/order/LoRA/replay1/correctnormalization.
+No training completion/learning/retention/qualificationclaim fromthese firststeps.
+GPUhad1MiBused/0%utilization before launch; no overlappingmodelprocess/newrental.
+
+Command:.venv/bin/python -u scripts/run_lower_lr_probe.py candidate
+Log:/workspace/sft-drift-ops/lower-lr-candidate-v1.log
+Outputs:ethics_sft_c4_lower_lr_v1, then384candidate-retentioncalls andoriginal
+modeldevelopment/conditionalvalidation/full100. Bothqualificationroutes explicitly
+collectallnaturalcalls, failuresremain. Source/adapter/identityfailures stopandpreserve;
+no automaticrestart/resume, alternateLR orrepeatuntilpass. No ethical-outcome selection.
+
+Generatedmaster gpu_candidate_dispatch_v1.json/.mdrecordslaunch/source/receipt.
+Liveweights/tokenization/auditnotyet backedup. Atcheckpoint227, waitforasubsequent
+forwardstepbeforecopy, takeclosedcheckpointfiles+staticrawtokenization only; derive
+canonicalMDlocally toavoidtheknownheader-onlyfinalizationrerender. Do notcopyliveaudit.
+Afterfinal, verify12checks, actualLRtrace/initialadapter/orderagainstnorm1, copyclosed
+artifacts, reviewcandidatequeue/controlfailures/missingreplies andactualfull100coverage.
+Theexistingworkerchecksobjective andinputlabels; post-hoccomparabilityaudit should
+addinitialadapter equality, actualmicrobatchorder andfourfoldLRtracechecks before
+attributingdifferences totheintendedfactor. No score/gatechange follows.
+
+Themasteroperations.jsonl legitimatelyappendsduringthedeclaredcandidatephase; local
+reference_terminal_copy_v1receipt/privatee28snapshotbindstheoldreference-onlyprefix.
+Atterminalcopy verify exactprefixappend, preserveoldphaseaudit/view andrecordlineage
+beforeupdatingthatmutableworkflowlog. Individualrawreference/measurementfiles stay
+immutable. Do not silentlyoverwrite differingexperimentalrawbytes orcopylivetargets.
+
+Next:monitorfixedworker, preserveclosedmidpoint/finalat safeboundaries. No added
+source/configchangesonGPUwhilethisprobe isbound. Source/notes/dispatch snapshot follows
+thiscompletedlaunchblock; privatee28alreadyprotectsallinputs/references needed to
+understandtheexperiment. ThisrecorddoesnotmakeactiveSFTresumable onadestroyedbox.

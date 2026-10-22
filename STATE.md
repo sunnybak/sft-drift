@@ -56,7 +56,7 @@ ProtocolSHA d7f87c403d49afa7cbd94554405eceef68e2ca4f64bcc6f936a4f7938809dd4e,
 Report:changelog/2026-10-22-lower-lr-probe-prepared.md. NewreferenceRUNNING; no newSFTyet.
 
 ReferenceCOMPLETE:supervisorsft-drift-lower-lr-reference-v1 EXITED13:47UTC,
-source8053931e2c7e86b97b66f5db9bacef790002b89d. No activeGPUjob ornewSFT.
+source8053931e2c7e86b97b66f5db9bacef790002b89d. Referenceworkerhasexited; newcandidatebelowisRUNNING.
 62closedfiles/6,001,933bytes copied/hashverified; both384-rowraw/token/runtime/config/
 originalgrades/values/BASEcohortreconstruct. All90queuefullrepliesread/hashbound,
 0valuedisagreements:BASE67(39correctformat-only,28wrong),norm123allwrong.
@@ -66,22 +66,28 @@ Thinking2randomstringerrorsremain; oneBASEseedalsofailsoneitem. No nonthinkingre
 claimavailablewhencontrolalreadyretainsallknownhere. No resampling orchangedLR.
 Originalnorm1modelcontrols30/32stillFAILED. Report:2026-10-22-lower-lr-reference-results.md.
 
-Next:private-save BOTHreferencegrids/90reviews/generatedruntimeconfig, verifyreceipt.
-Copyreview files/receipt backtoGPU; exercise reference_review_completebeforeSFT.
-KeepGPUsource8053931PINNEDthroughwholeprobe; no needpullnotes/runtimeconfigcommit.
-Thenfinite(noautorestart)candidatecommand:
-cd /workspace/sft-drift/belief-transfer
-.venv/bin/python -u scripts/run_lower_lr_probe.py candidate
-It verifiesreview/privategatesandrawreferenceagainbeforeONEfresh2.5e-5training,
-384retentionandall100beliefs. Notyetstarted. Do notrestartcompletedIDs.
+BOTHreferencegrids/90reviews privatelyVERIFIED beforeSFT(snapshote28ac1dcbb45b87c0bc268a596b8fb242dfdf8a3).
+Reviewfiles/receiptcopied/hashcheckedonGPU; actual90-review/privategatepassed.
+Candidate supervisor sft-drift-lower-lr-candidate-v1 RUNNING PID119556, source8053931
+PINNED. Observed70s/training4of454, earlyLRmatches2.5e-5warmup; no passclaimyet.
+Currentchild:ethics_sft_c4_lower_lr_v1. NewSFTISrunning; no evalyet. No autorestart/resume.
+Log:/workspace/sft-drift-ops/lower-lr-candidate-v1.log.
+Exactobservationcommand:
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-lower-lr-candidate-v1; tail -10 /workspace/sft-drift-ops/lower-lr-candidate-v1.log'
+Next:safeclosedcheckpoint227copyafterlaterforwardstep; rawtokenizedonly+canonicalMD,
+exclude liveaudit/log. Afterfinalverify/copy12engineeringchecks, initialadapter/order/
+fourfoldLRtraceversusnorm1; then384retention/full100/fullreview. No ethicalselection.
+Masteroperationslog appends innewcandidatephase; preserveoldreferenceprefix/view,
+verifyappendlineagebeforeterminalcopy. Rawindividualmeasurementsneveroverwrite.
+Report:changelog/2026-10-22-lower-lr-candidate-launch.md. No GPUcodepullwhilebound.
 
 ## Preservation
 
-Lastverifiedprivate snapshot:b41a65c4d1db28304e8a25f4235d54a3245e9011 at
-coded3a0da770b8df2a0a8470a83e35023aa2fae5efa,6187files/18,180,798,642bytes;
-corpusf17cf2445a65874ecadb7b7accbea58ef08c6f20. CoversallpreviousresultsandlowerLR
-preparedinputs/source/launchmetadata. Newreference768raw/90reviews awaitnextsave.
-Actual latestreceipt:data/.handoff-receipt.json. Candidateguardcorrectlyrefusesuntilsave.
+Lastverifiedprivate snapshot:e28ac1dcbb45b87c0bc268a596b8fb242dfdf8a3 at
+code87444d18906d36580448ac97503aec781cd46306,6254files/18,186,909,214bytes;
+corpus687ed1ecdd31674a7b2633a359ffc010cd0dcb7f. CoversallpriorresultsandBOTHnewreference
+grids/90reviews. Newcandidate-launchnotes/dispatch awaitsave; liveSFTweights/audit
+GPU-only. Actual latestreceipt:data/.handoff-receipt.json. No boxdestructionwhilelive.
 Requiredaftercommit/push:
 uv run --no-sync python scripts/handoff.py save
 No localmutations/tests/copies during save; verifyreceipt. Serialize testsandcopies too:
