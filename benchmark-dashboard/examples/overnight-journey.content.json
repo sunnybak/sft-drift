@@ -1,0 +1,300 @@
+{
+  "verdict": "Training executes reliably. No tested recipe passes every declared model check.",
+  "summary": "We started with an ethical-stance pilot, uncovered measurement limitations and real answer regressions, tried five repairs, then tested an upstream training reference. The evidence narrowed the problem without establishing a reliable ethical SFT recipe.",
+  "period": "OCT 20\u201322, 2026 \u00b7 PILOT CONTEXT \u2192 OVERNIGHT INVESTIGATION \u2192 LATER REFERENCE",
+  "phases": [
+    {
+      "id": "pilot",
+      "label": "STARTING POINT \u00b7 OCT 20\u201321",
+      "title": "A directional effect, with caveats",
+      "question": "Could document SFT move ethical responses while preserving a usable model?",
+      "change": "Fresh Qwen3-4B adapters for positive, negative, fresh off-topic and C4-only arms. The small pilot targeted ten ethical claims; evaluation covered all 100 beliefs.",
+      "result": "The original pilot separated positive and negative target responses by +23.89 percentage points. Model-check failures, missing coverage and broad negative-arm changes limited interpretation. No full 90/100-belief training experiment followed.",
+      "lesson": "A treatment contrast can exist without establishing selective ethical learning or a qualified training recipe. Experimental control arms and model capability checks answer different questions.",
+      "status": "context",
+      "metrics": [
+        {
+          "label": "Original target separation",
+          "value": "+23.89 pp",
+          "note": "Positive minus negative; original endorsement instrument"
+        },
+        {
+          "label": "Training targets",
+          "value": "10",
+          "note": "Ethical pilot; 100 beliefs evaluated"
+        }
+      ],
+      "reportIds": [
+        "ethical-pilot-three-seed"
+      ],
+      "sourceNotes": [
+        "changelog/2026-10-21-ethical-four-arm-results.md"
+      ]
+    },
+    {
+      "id": "measurement",
+      "label": "READOUT & RETENTION AUDITS",
+      "title": "Some failures belonged to the measurement",
+      "question": "Were failed checks evidence of a broken model, ambiguous questions, or a grading blind spot?",
+      "change": "Audited raw replies; ran a separately versioned target-free comparison, wording diagnostics and fresh retention tasks. Preserved original scores and gates.",
+      "result": "The target-free readout collected 18,000 natural replies across five models and three sampling seeds. Most fresh control errors were correlated variants of one ambiguous scope question. Separately, the old strict-known retention mask excluded correct worked equations from BASE, hiding three stable short-answer sum losses in negative and C4 models.",
+      "lesson": "Both things were true: the instrument had limitations, and there were genuine answer regressions. Correctness, strict formatting, completion and BASE-known retention must remain separate. The target-free result measures relative choices, not the original endorsement construct.",
+      "status": "diagnostic",
+      "metrics": [
+        {
+          "label": "Target-free natural replies",
+          "value": "18,000 / 18,000",
+          "note": "Valid; a different interface, not pooled with the frozen instrument"
+        },
+        {
+          "label": "Negative target / other-ethical drift",
+          "value": "\u221247.78 / \u221241.04 pp",
+          "note": "Broad response shift in the target-free readout"
+        }
+      ],
+      "reportIds": [
+        "target-free-readout-v2"
+      ],
+      "sourceNotes": [
+        "changelog/2026-10-22-target-free-readout-v2-results.md",
+        "changelog/2026-10-22-fresh-retention-results.md",
+        "changelog/2026-10-22-scope-fact-clarity-v2-results.md"
+      ]
+    },
+    {
+      "id": "normalization",
+      "label": "REPAIR 1",
+      "title": "Correct the loss normalization",
+      "question": "Was custom loss scaling responsible for the regressions?",
+      "change": "Trained a fresh C4 plus neutral-replay control with corrected normalization. Checked actual labels, updates, schedule and checkpoint reload. No ethical treatment documents were used in this repair sequence.",
+      "result": "Engineering passed. Reasoning retention was intact and short retention passed its 95% gate, but two original known-answer controls failed. Generated reasoning correctly computed 3\u00d73=9 and said endorse, then ended reject on the true negated statement.",
+      "lesson": "Verified weight updates and reloads establish execution. They do not establish appropriate training behavior. The final-choice mismatch was real; changing the parser would not fix it.",
+      "status": "rejected",
+      "metrics": [
+        {
+          "label": "Engineering",
+          "value": "12 / 12",
+          "note": "Update, objective and reload checks"
+        },
+        {
+          "label": "Known short answers",
+          "value": "57 / 59",
+          "note": "Recognized correct; one additional reply unscorable"
+        },
+        {
+          "label": "Original controls",
+          "value": "30 / 32",
+          "note": "Below the fixed 95% accuracy requirement"
+        }
+      ],
+      "reportIds": [
+        "repair-normalization"
+      ],
+      "sourceNotes": [
+        "changelog/2026-10-22-replay-weight-comparison-results.md"
+      ]
+    },
+    {
+      "id": "weight",
+      "label": "REPAIR 2",
+      "title": "Increase instruction replay weight",
+      "question": "Would stronger neutral instruction replay preserve the answer behavior?",
+      "change": "Kept the matched C4/replay data and schedule, raising replay weight from 1 to 32.",
+      "result": "Known short retention stayed at 57/59, with a different arithmetic error replacing the recovered product. Original controls still scored 30/32. One natural reply looped to the 4,096-token cap without a final answer.",
+      "lesson": "More replay weight did not demonstrate a repair. An aggregate retention rate can hide exchanged successes and failures; a separate completion requirement detects the loop.",
+      "status": "rejected",
+      "metrics": [
+        {
+          "label": "Known short answers",
+          "value": "57 / 59",
+          "note": "Same total as weight 1; different lost items"
+        },
+        {
+          "label": "Valid natural replies",
+          "value": "2,399 / 2,400",
+          "note": "One token-cap loop; not retried"
+        }
+      ],
+      "reportIds": [
+        "repair-replay-weight"
+      ],
+      "sourceNotes": [
+        "changelog/2026-10-22-replay-weight-comparison-results.md"
+      ]
+    },
+    {
+      "id": "lr",
+      "label": "REPAIR 3",
+      "title": "Lower the learning rate",
+      "question": "Was the update simply too aggressive?",
+      "change": "One preset learning-rate comparison: 2.5e\u22125 versus 1e\u22124, holding initial adapter, data, labels, order and 454 steps fixed. Used a fresh procedural reference bank.",
+      "result": "The lower-LR candidate retained 51/55 BASE-known short values versus 55/55 for the matched norm1 reference on this bank. It also failed irrelevant-note stability and had a full-reading token-cap loop.",
+      "lesson": "A smaller learning rate did not improve preservation in this comparison. These denominators come from a different bank, so they cannot be treated as a continuous 59-item learning curve.",
+      "status": "rejected",
+      "metrics": [
+        {
+          "label": "Lower LR short retention",
+          "value": "51 / 55",
+          "note": "95% required; failed"
+        },
+        {
+          "label": "Matched norm1 reference",
+          "value": "55 / 55",
+          "note": "Same fresh bank and BASE-known cohort"
+        }
+      ],
+      "reportIds": [
+        "repair-lower-lr"
+      ],
+      "sourceNotes": [
+        "changelog/2026-10-22-lower-lr-probe-results.md"
+      ]
+    },
+    {
+      "id": "coverage",
+      "label": "REPAIR 4",
+      "title": "Improve replay coverage and targets",
+      "question": "Was the replay missing the response modes and decision formats we were asking for?",
+      "change": "Audited the old replay; introduced reviewed gold decision examples and broader balanced coverage. Verified all 192 decision training draws against their intended prompts and targets.",
+      "result": "The recipe passed engineering but retained only 15/24 BASE-known short factual decisions. Thinking decisions scored 27/32 versus BASE 32/32. A procedural thinking reply looped to the cap. Original validation still failed note stability.",
+      "lesson": "Clean labels and broader coverage did not suffice. The shorter gold style also transferred: thinking decision medians fell from 293 to 43.5 tokens. This is a clue, not an isolated causal mechanism.",
+      "status": "rejected",
+      "metrics": [
+        {
+          "label": "Known short decisions",
+          "value": "15 / 24",
+          "note": "Supplemental factual decision bank"
+        },
+        {
+          "label": "Thinking decisions",
+          "value": "27 / 32",
+          "note": "BASE: 32/32"
+        },
+        {
+          "label": "Valid natural replies",
+          "value": "2,400 / 2,400",
+          "note": "Complete stance extraction does not clear other failures"
+        }
+      ],
+      "reportIds": [
+        "repair-expanded-replay"
+      ],
+      "sourceNotes": [
+        "changelog/2026-10-22-replay-value-v5-results.md"
+      ]
+    },
+    {
+      "id": "transfer",
+      "label": "FIXED-MODEL DIAGNOSTIC",
+      "title": "Separate learning from transfer",
+      "question": "Did the model learn the replay, and did that learning generalize?",
+      "change": "No new training. Crossed seen/held facts with training/evaluation instruction wording for BASE, the old C4 control and the expanded-replay model. Used separate task-value-v3 scoring for four reviewed BASE Markdown terminals; historical grades remained intact.",
+      "result": "The expanded-replay model answered 31/32 seen facts correctly under evaluation wording in short mode, but only 20/32 held facts. It made thinking-mode negation errors even on exact replay requests. All 160 new flagged replies were reviewed.",
+      "lesson": "There was learning, with limited transfer and mode-dependent failures. Unfamiliar wording or numbers alone cannot explain errors on exact seen requests. This is not evidence that the model has no learning capacity.",
+      "status": "diagnostic",
+      "metrics": [
+        {
+          "label": "Seen / eval wording \u00b7 short",
+          "value": "31 / 32",
+          "note": "Expanded replay; BASE: 25/32"
+        },
+        {
+          "label": "Held / eval wording \u00b7 short",
+          "value": "20 / 32",
+          "note": "Expanded replay; BASE: 24/32"
+        },
+        {
+          "label": "Audited observations",
+          "value": "768",
+          "note": "576 new + 192 explicitly reused"
+        }
+      ],
+      "reportIds": [
+        "repair-expanded-replay"
+      ],
+      "sourceNotes": [
+        "changelog/2026-10-22-replay-interface-rca-results.md"
+      ]
+    },
+    {
+      "id": "reasoning",
+      "label": "REPAIR 5 \u00b7 STOPPING POINT",
+      "title": "Replay full BASE reasoning",
+      "question": "Would replacing terse proofs with complete BASE reasoning restore transfer?",
+      "change": "Replaced 32 thinking source targets / 96 draws with full BASE reasoning; 3,529 other chunks stayed fixed. This added 28,704 thinking tokens, so it was not token-dose matched.",
+      "result": "Held/evaluation reasoning retained 32/32 BASE-known answers, but short retention was 17/24, below the required 23/24. A procedural subtraction reply looped to 4,096 tokens. Once those decisive failures were reviewed, the user\u2019s stopping condition took precedence and remaining final stance collection was canceled.",
+      "lesson": "Reasoning success and seen-example learning did not qualify short-mode transfer or complete generation. The final full-100 result is intentionally partial; no complete aggregate is available. The midpoint cannot rescue the rejected final checkpoint.",
+      "status": "rejected",
+      "metrics": [
+        {
+          "label": "Held/eval short retention",
+          "value": "17 / 24",
+          "note": "Required: at least 23/24"
+        },
+        {
+          "label": "Held/eval reasoning retention",
+          "value": "32 / 32",
+          "note": "Same bank; all BASE-known"
+        },
+        {
+          "label": "Final stance collection",
+          "value": "512 / 2,400",
+          "note": "511 valid \u00b7 1 invalid \u00b7 1,888 not collected"
+        }
+      ],
+      "reportIds": [
+        "repair-base-reasoning"
+      ],
+      "sourceNotes": [
+        "changelog/2026-10-22-base-reasoning-final-results.md"
+      ]
+    },
+    {
+      "id": "reference",
+      "label": "LATER BOUNDED REFERENCE",
+      "title": "Try upstream loss and backward",
+      "question": "Was the recurring failure specific to our custom loss implementation?",
+      "change": "One separately authorized fresh stock Hugging Face Trainer comparison against the original norm1 recipe: matched initial adapter, data, labels, batch groups, learning-rate trace, 454 steps and 1,244,032 eligible targets. Shared preprocessing and collation remained; gradient scaling differed.",
+      "result": "All 11 engineering checks passed. Stock retained 63/63 known reasoning and 58/59 known short values on all three runtime seeds. It improved one short task, yet failed original note stability: 1/16 flips, or 6.25%, versus the 5% ceiling. All 2,400 natural replies were valid. Conditional validation was not run after failed development. In the failed control, it reasoned that \u201cIt is not the case that three times three equals eight\u201d is true, then finished with reject.",
+      "lesson": "Custom loss is not necessary to reproduce the final-choice mismatch. This independently checks the loss/backward path, not the whole training stack. Most tested skills survived, but no fully qualified recipe emerged. The reference took about 32 minutes to train; roughly 83 minutes covered the whole bounded work block, including review and preservation.",
+      "status": "complete",
+      "metrics": [
+        {
+          "label": "Stock / custom short retention",
+          "value": "58/59 \u00b7 57/59",
+          "note": "Matched cohort; stock modestly improved"
+        },
+        {
+          "label": "Irrelevant-note flips",
+          "value": "1 / 16",
+          "note": "6.25% observed; \u22645% required"
+        },
+        {
+          "label": "Natural replies valid",
+          "value": "2,400 / 2,400",
+          "note": "100 beliefs; not manual review of every reply"
+        }
+      ],
+      "reportIds": [
+        "hf-reference-norm1-v1"
+      ],
+      "sourceNotes": [
+        "changelog/2026-10-22-hf-reference-results.md"
+      ]
+    }
+  ],
+  "findings": [
+    "Weights changed and checkpoints reloaded correctly. Execution was repeatedly verified.",
+    "The models learned seen answers and response style. Lack of learning capacity is not the leading explanation established by these tests.",
+    "Some failures came from ambiguous wording or grading limitations; genuine wrong final choices and generation loops also remained.",
+    "The upstream loss/backward reference reproduced the final-choice problem. Custom loss cannot be its only necessary cause.",
+    "No full 90/100-belief SFT experiment has run. The original treatment experiment was the ten-target pilot."
+  ],
+  "unknowns": [
+    "The relative contributions of document objective, serialization, replay mix, optimization and inference mode remain unidentified.",
+    "The reference shared preprocessing, collation and schedule; it was not an independent end-to-end training implementation.",
+    "One training seed per recipe and reused narrow diagnostic facts do not establish broad capability loss or a population forgetting rate.",
+    "The long investigation mixed measurement, training, engineering, review and backup work. The saved records do not support attributing all elapsed time to GPU training."
+  ],
+  "recommendation": "Stop nearby loss, learning-rate and replay repairs. Before another ethical treatment run, design a bounded independent standard chat-SFT positive control: demonstrate acquisition of a simple checked new task, then test untouched broader retention inputs. Keep the current stock path as a transparent reference. No model switch or extra compute is justified by capacity evidence alone."
+}

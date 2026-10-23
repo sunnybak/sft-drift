@@ -1,0 +1,21 @@
+import {readFileSync,writeFileSync,renameSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+import {join} from 'node:path';
+import {validateReport} from '../server/validate-report.ts';
+import type {StudyJourney,JourneyPhase} from '../src/report-types.ts';
+const root=fileURLToPath(new URL('../../',import.meta.url));
+const project=join(root,'belief-transfer');
+const output='results/ethical_pilot/ethics_gpu_benchmark_dashboard_v1';
+if(!JSON.parse(readFileSync(join(project,'configs/handoff.json'),'utf8')).include_paths.includes(output))throw Error('Unregistered report output');
+const directory=join(project,'data',output,'reports');
+const reference=validateReport(JSON.parse(readFileSync(join(directory,'hf-reference-norm1-v1.json'),'utf8')));
+if(!reference.report)throw Error('A valid completed stock-reference report is required');
+const content=JSON.parse(readFileSync(new URL('../examples/overnight-journey.content.json',import.meta.url),'utf8'));
+const source=(path:string)=>({path,sha256:createHash('sha256').update(readFileSync(join(root,path))).digest('hex')});
+const phases:JourneyPhase[]=content.phases.map(({sourceNotes,...phase}:{sourceNotes:string[]})=>({...phase,sources:sourceNotes.map(source)}));
+for(const phase of phases)for(const id of phase.reportIds){const r=validateReport(JSON.parse(readFileSync(join(directory,id+'.json'),'utf8')));if(!r.report||r.report.id!==id)throw Error('Missing or invalid detailed report '+id);}
+const journey:StudyJourney={...content,phases};
+const report={...reference.report,id:'overnight-sft-journey-v1',title:'The overnight SFT journey · what we tried and learned',description:'A guided research report: pilot context, measurement audits, five repair attempts, the stopping decision and the later stock-trainer reference.',createdAt:'2026-10-23T00:00:00-07:00',experiment:{id:'sft-pipeline-investigation-oct20-22',name:'Qwen3-4B · document SFT reliability investigation'},tags:['Journey','Research synthesis','No qualified recipe'],journey,context:'Custom research narrative. Scores and recorded checks in the chart appendix describe ONLY the final stock/custom/BASE comparison. Earlier banks and denominators remain separate in the narrative and linked reports.',sources:[...reference.report.sources,...phases.flatMap(p=>p.sources),source('benchmark-dashboard/examples/overnight-journey.content.json')]};
+const checked=validateReport(report);if(!checked.report)throw Error(checked.errors.join('; '));
+const path=join(directory,report.id+'.json');writeFileSync(path+'.tmp',JSON.stringify(report,null,2)+'\n');renameSync(path+'.tmp',path);console.log('Derived '+report.id);

@@ -264,3 +264,16 @@ and missing-response bounds, plus separate scoped, expanded arithmetic and fixed
 retention checks. Historical failures are not reclassified. Only scoped eligibility
 is required by this new report; arithmetic and retention remain visible diagnostics.
 The one-seed follow-up is separate from historical three-seed pilot results.
+
+Reports now open in a full-viewport reader; close or collapse the reader to return to
+its library. The pinned **The overnight SFT journey** report is a custom narrative
+covering pilot context, measurement audits, five repairs, fixed-model diagnostics,
+the user stopping decision, and the later stock-trainer comparison. It retains
+per-experiment counts and source fingerprints; its chart appendix is explicitly the
+last stock/custom/BASE comparison, not pooled scores across changing banks.
+
+Optional `journey` metadata in the v1 JSON schema supplies the narrative phases,
+findings, limitations and recommendation. `examples/overnight-journey.content.json`
+is its authored input; `scripts/generate-journey-report.ts` verifies linked reports,
+fingerprints source notes, and derives the report in the registered private artifact
+report directory. Existing ordinary report JSON remains compatible.

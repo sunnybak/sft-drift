@@ -9,6 +9,7 @@ export function validateReport(value: unknown): { report?: BenchmarkReportData; 
   function unique(ids: string[], kind: string) {
     if (new Set(ids).size !== ids.length) errors.push(`Duplicate ${kind} id`);
   }
+  if (r.journey) unique(r.journey.phases.map(p=>p.id), 'journey phase');
   unique(r.models.map(m => m.id), 'model'); unique(r.benchmarks.map(b => b.id), 'benchmark'); unique(r.tests.map(t => t.id), 'test');
   const models = new Set(r.models.map(m => m.id)), benchmarks = new Map(r.benchmarks.map(b => [b.id, b]));
   if (r.presentation) {

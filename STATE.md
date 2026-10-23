@@ -1,4 +1,17 @@
-# Current state — 2026-10-22
+# Current state — 2026-10-23
+
+## Dashboard journey report — complete
+
+User-requested custom overnight report added as the first of 20 library reports.
+Nine stages preserve pilot context, measurement audits, all five repairs, diagnostic,
+stop and later stock-HF reference. Every report now opens full viewport. Chart appendix
+is the last matched comparison only; no mixed-bank aggregate. Exact partial collection
+and unchanged failures remain explicit. Live UI5180 verified; screenshot registered.
+5 Python/52 Node tests and TypeScript/production build pass. No new model calls or GPU
+work; study remains stopped. See changelog/2026-10-23-overnight-journey-dashboard.md.
+Source/report/screenshot join this block's Git push and private save; latest verified
+receipt is authoritative. Next command is orientation/preservation verification only:
+cd belief-transfer && uv run --no-sync python scripts/handoff.py verify
 
 ## Bounded reference experiment — COMPLETE, no qualified recipe
 

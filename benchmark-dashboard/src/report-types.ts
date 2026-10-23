@@ -46,7 +46,17 @@ export type ReportTest = {
   expected: string | number | boolean | null; observed: string | number | boolean | null;
   source: Source | null;
 };
+export type JourneyPhase = {
+  id: string; label: string; title: string; question: string; change: string;
+  result: string; lesson: string; status: 'context' | 'rejected' | 'diagnostic' | 'complete';
+  metrics: {label:string; value:string; note:string}[]; reportIds: string[]; sources: Source[];
+};
+export type StudyJourney = {
+  verdict: string; summary: string; period: string; phases: JourneyPhase[];
+  findings: string[]; unknowns: string[]; recommendation: string;
+};
 export type BenchmarkReportData = {
+  journey?: StudyJourney;
   experiment?: { id: string; name: string };
   presentation?: { defaultMetric?: 'score' | 'change'; defaultCategory?: string; focusModelId: string; referenceModelId: string; comparisonModelId?: string; headline: string; interpretation: string; nextStep: string; highlights: { benchmarkId: string; label: string; explanation: string }[] };
   schemaVersion: '1.0'; id: string; title: string; description: string; createdAt: string;
