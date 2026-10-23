@@ -1,17 +1,18 @@
 # Current state — 2026-10-23
 
-## Journey PDF — four-page preview
+## Journey PDF — ten-page report
 
-journey-preview-v6.pdf contains BASE, original pilot, measurement audit and corrected
-normalization repair. Page4has narrative continuation, chart measurement subtitles,
-absolute scores/thresholds and separate engineering versus behavioral verdicts. Four
-pages rendered/checked; first-three-page text preserved. No new model calls or training.
-V4/V5minor caption refinements join this completed v6block's private snapshot. Source,
-PDFs/charts/renders/SHA metadata under registered dashboard output/pdf/. V3backup
-completed verified; new log /tmp/sft-journey-pdf-v6-save.log, receipt authoritative
-when verification completes. See changelog/2026-10-23-journey-pdf-preview.md.
-Next: user review of page4, then stronger replay page. No study resumption.
-Operational check: tail -20 /tmp/sft-journey-pdf-v6-save.log
+sft-journey-report-v7.pdf completes the requested journey: BASE, original pilot,
+measurement audit, five repairs, fixed-model transfer diagnostic and later stock-HF
+reference. Six pages added; first-four-page text preserved. New pages retain narrative
+continuation, absolute scores/counts, chart subtitles, passing ranges and explicit
+failures/partial collection. No new model calls or GPU work; study remains stopped.
+All new pages rendered/read;10-page count, source/count/layout checks and all-page
+text bounds pass. Final PDF opened in Codex. Scripts/charts/renders/SHA metadata under
+registered dashboard output/pdf/. See changelog/2026-10-23-journey-pdf-preview.md.
+V6backup finished verified; new v7save log /tmp/sft-journey-pdf-v7-save.log. Latest
+verified receipt is authoritative; do not claim v7private preservation from upload alone.
+Next: user review of complete PDF. Operational check: tail -20 /tmp/sft-journey-pdf-v7-save.log
 Future verification: cd belief-transfer && uv run --no-sync python scripts/handoff.py verify
 
 ## Dashboard journey report — complete

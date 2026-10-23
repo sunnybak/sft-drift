@@ -125,3 +125,41 @@ uv run --no-sync python scripts/handoff.py save
 Log: /tmp/sft-journey-pdf-v6-save.log. Until its verified receipt, v4-v6are local and
 source notes pushed; don't claim private preservation from merely uploaded bytes.
 The stage is report authoring, no experimental resume/checkpoint. Receipt is authoritative.
+
+## Full journey - six remaining pages (v7)
+
+User requested more pages. Added six experiment/diagnostic pages, bringing
+sft-journey-report-v7.pdf to10pages: stronger replay; lower LR; expanded replay;
+fixed-model learning/transfer; fuller BASE reasoning and intentional stop; later
+stock-HF reference. First four page texts remain identical to v6. Every new page
+has narrative continuation, intervention, two absolute-score charts with measurement
+subtitles, counts/thresholds, table, limits and next decision. No experimental work
+or model calls were authorized or performed by this reporting request.
+
+Scored charts use saved validated report entries, lower-LR actual comparison and
+RCAvalue-v3summary. Reviewed source notes support the additional old-control counts.
+Changing banks/cohorts remain explicit (59vs55vs57vs24). Post-hoc value-v3does not
+rewrite historical grades. No false full100aggregate for canceled final reasoning
+run:512recorded/511valid/1invalid/1888uncollected remains explicit. Stock reference
+fails note stability despite improved retention; shared preprocessing and different
+gradient scaling prevent whole-stack independence or identical-update claims.
+
+Files under registered dashboard output/pdf/: combined PDF; create_remaining_pages_v7.py;
+six chart images and final page renders; remaining-pages-sources-v7.json including
+source SHA, complete authored content/data and layout bounds; intermediate PDF in
+tmp/pdfs/. No new JSONL. No dependency/lockfile changes; isolated uv rendering environment.
+
+Verification:10pages, first-four-page text equality; narrative presence on all new
+pages; count/range checks and layout bounds. Poppler-rendered and visually inspected
+all six added pages, then reinspected changed diagnostic/stop pages. All ten pages'
+text characters fall within safe page bounds (pdfplumber). Corrected actual training
+run IDs in footers and removed an all-model audit row from model-specific columns.
+PDF is1,005,295bytes at the reviewed rendering boundary; final receipt/hash is authoritative.
+Opened final report in Codex. No global degradation/capacity claim or qualified recipe.
+
+Previous v6backup finished verified7868files/22,318,120,050bytes at source9e57fd7.
+This complete report block will save source notes in Git and run the next private
+artifact snapshot once. Command from belief-transfer/: uv run --no-sync python
+scripts/handoff.py save. Log /tmp/sft-journey-pdf-v7-save.log; until a verified receipt,
+new v7PDF/images remain local. No GPU job/checkpoint or measurement to resume.
+Next step is user review of the complete PDF, not a training queue.

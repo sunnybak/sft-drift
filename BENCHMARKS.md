@@ -351,3 +351,12 @@ known-item retention, all-item accuracy, engineering/qualification checks and ru
 repeats separate. Final report shows all four seen/held×wording conditions and explicitly
 partial512/2400stance collection; no full100aggregate. Search Repair in Dashboard.
 See changelog/2026-10-22-repair-dashboard-reports.md. The scientific goal remains paused.
+
+## One-off journey PDF
+
+User-requested ten-page report is saved under the registered dashboard artifact parent:
+`belief-transfer/data/results/ethical_pilot/ethics_gpu_benchmark_dashboard_v1/output/pdf/sft-journey-report-v7.pdf`.
+BASE, pilot, measurement audit, five repairs, transfer diagnostic and later stock-HF
+reference use consistent narrative, absolute scores, chart definitions and explicit
+rejection/coverage. This presentation changes no historical result, gate or instrument.
+See changelog/2026-10-23-journey-pdf-preview.md and STATE for preservation.
