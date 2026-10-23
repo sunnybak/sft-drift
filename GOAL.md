@@ -41,6 +41,11 @@ See changelog/2026-10-22-hf-reference-experiment-plan.md. This authorization per
 one fresh stock-HF unweighted comparison and fixed final measurements only, not the
 old repair queue or ethical scaling. The prior stopped trial remains stopped.
 
+That bounded experiment is complete and reviewed: stock HF passes engineering and
+procedural retention but fails original note stability (1/16 flips versus ≤5%). All
+100 beliefs were measured completely. It did not qualify a recipe; no next run follows.
+See changelog/2026-10-22-hf-reference-results.md and the dashboard reference report.
+
 The final BASE-reasoning replay repair was rejected on reviewed retention and generation
 failures. The user's stop-on-negative condition is met; no more experiments or scaling.
 The goal is not achieved. Preserve the stopped trial and pause execution; a future restart

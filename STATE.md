@@ -1,44 +1,57 @@
 # Current state — 2026-10-22
 
-## New bounded reference experiment — RUNNING
+## Bounded reference experiment — COMPLETE, no qualified recipe
 
-User authorized one new GPU experiment; old stopped trial remains stopped. Run
-ethics_sft_hf_reference_norm1_v1 launched on existing RTX3090 in isolated checkout
-/workspace/sft-drift-hf-reference at source55b09aa. Supervisor sft-drift-hf-reference-v1
-RUNNING PID139281; one fresh stock-HF loss/backward run, same3,625chunks/1,244,032targets,
-454steps/seed42 as completed unweighted norm1. No dependency upgrades or new rental.
-First6steps execute; first loss matches printed precision but preclip gradient norm
-1.375versus historical2.750. Removing custom accumulation compensation changes actual
-gradient scale; this is part of the intervention, not proof of a behavioral fix.
+One new training run ethics_sft_hf_reference_norm1_v1 finished on the existing RTX3090.
+Stock HF loss/backward versus completed custom norm1: identical initial adapter, all
+3,625 chunks/1,244,032 targets, batch groups, LR trace and 454 steps. All 11 engineering
+checks and exact reload pass. Training 1,940.89 seconds. Shared preprocessing was not
+independently validated; stock/custom gradient scaling differs. No second training.
 
-90targeted tests pass; source/input bindings verified locally/onGPU. Prelaunch private
-snapshot b61ec1bedbe99728001a5c82b9cd5d4e381b7c6c verified at source55b09aa,
-7678files/21,313,783,294bytes. All frozen instruments unchanged. Plan:
-changelog/2026-10-22-hf-reference-experiment-plan.md. Worker executes final-only384retention
-calls, original development/conditional validation and2,400frozen stance responses,
-then exits for review. Max one training run;3hour timeout; no automatic further trial.
+Retention passes all 3 runtime seeds: 63/63 BASE-known reasoning, 58/59 short (custom
+57/59). All 384 strict/complete. Short uppercase-copying loss remains. Original
+DEVELOPMENT fails note stability despite 31/32 accuracy: 1/16 flips >5%; validation
+not run. Full reading: 2,400/2,400 valid natural replies, fresh controls 31/32 and
+1/16 flips. Both wrong finals say reject after reasoning correctly concludes endorse.
+All 2,432 reading records and 384 retention records reconstruct exactly; no parser cause.
 
-GPU log:data/generated/ethical_stance_sft/ethics_sft_hf_reference_norm1_v1/execution.log
-Supervisor log:/workspace/sft-drift-ops/hf-reference-v1.log. Checkpoints227/454/final are
-preservation only; evaluate final only. Controller/stage refuse restart/resume. Checkpoint227closed after a later forward atstep233; all8files/396,924,387bytes copied
-locally and hash-verified. No checkpoint was evaluated. Latest observed training246/454;
-final/evaluation artifacts still GPU-only. Do not destroy the instance.
+Reviewed 34 required entries: 32 retention entries covered by 18 unique full prompt/
+stock/custom text groups, plus 2 failed controls. All 8 fixed sample pairs covered;
+6 additional correct control-context replies read. Zero current value disagreements.
+One historical unscorable numeric reply is visibly wrong; frozen score unchanged.
+Not all natural/retention replies were semantically read. All 100 per-belief contrasts
+saved. Canonical support: BASE 63.2917%, custom 69.875%, stock 69.2083%; descriptive,
+not moral accuracy. Existing BASE repeats 63.2917–64.25%; no small trainer-effect claim.
 
-Post-analysis tools prepared locally (not deployed into the bound worker):
-scripts/analyze_hf_reference.py reconstructs retention/full100runtime, compares paired
-traces and selects all failures/changes plus8fixed SHA256-ID sample pairs. Sample IDs
-frozen before final outputs in generated/review_sample_freeze_v1.json/.md. Report exporter
-scripts/export_hf_reference_report.py requires hash-bound complete agent review and
-schema validation before publication.7new tests pass; targeted reference/layer subset
-24pass; broader schemas/stages22pass. No additional model calls or changed criteria.
+Report: changelog/2026-10-22-hf-reference-results.md. Dashboard has 19 reports; new
+“Stock training reference · matched C4 experiment” shows 3 models/12 benchmarks,
+exact counts and note-flip passing range. Live UI/schema checked; screenshot registered.
+Analysis/review under results/ethical_stance_sft/ethics_sft_hf_reference_norm1_v1/analysis_v1.
+Relevant checks: latest combined targeted suite98 passed, plus the earlier22
+schema/stage tests (120distinct checks). No tests load model weights.
 
-Exact next command (monitor existing worker, never restart):
-ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-hf-reference-v1; tail -c 1800 /workspace/sft-drift/belief-transfer/data/generated/ethical_stance_sft/ethics_sft_hf_reference_norm1_v1/execution.log'
-After terminal: copy/hash-verify closed generated/results/checkpoint trees and generated
-retention config, audit comparator/retention/full100raw metadata, read failed/discrepant
-pairs plus prespecified8hash-selected pairs, run uv run --no-sync python scripts/analyze_hf_reference.py, record hash-bound review,
-then scripts/export_hf_reference_report.py; publish dashboard and report next decision,
-commit/push and verify private save. Do not select another checkpoint or tune on stances.
+GPU supervisor sft-drift-hf-reference-v1 EXITED around 2026-10-23 05:48 UTC; GPU compute
+processes empty. Source55b09aa in /workspace/sft-drift-hf-reference; old trial stays stopped.
+Autostart/autorestart false. Worker has no restart/resume. 125 closed files/1,010,349,276
+bytes and retention config SHA verified locally, including all checkpoints/final/logs.
+Last verified midpoint snapshot1250bcbf49290aca2f3d288ddd5a05b3419a95d2 at source6e62ac9
+contains checkpoint227. Final data are local. This block is privately saved after its source commit; verify
+the latest receipt at belief-transfer/data/.handoff-receipt.json against HEAD before
+claiming final remote preservation. The receipt is authoritative, not an earlier snapshot.
+
+Decision: custom loss is not necessary to reproduce this final-choice failure; do not
+scale or continue nearby loss/LR/replay repairs. Next proposed work is an independent,
+standard Qwen chat-learning positive control with untouched broader retention inputs,
+to distinguish shared document data/serialization from trainer behavior. This is a
+recommendation, not an active queue. No further training/inference without user direction.
+The bounded experiment is complete scientifically. Its thread goal is closed after
+Git/private preservation is verified. The larger ethical study remains unqualified/stopped.
+
+Preservation for this work block, after commit/push: handoff.py save, then verify its
+receipt against HEAD and new outputs. No claim that the instance can be destroyed
+until verification succeeds. Exact next command for a future chat (orientation only):
+cd belief-transfer && uv run --no-sync python scripts/handoff.py verify
+No model calls or old ID restarts. The instance itself remains running, GPU idle.
 
 ## Stopped under the user's condition
 

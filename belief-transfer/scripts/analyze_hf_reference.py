@@ -21,6 +21,47 @@ from validate_registry_calibration import training_binding
 OUTPUT = RESULT / 'analysis_v1'
 
 
+def stance_contrast(observed: dict[str, list[dict]]) -> tuple[list[dict], dict]:
+    """Canonical support over the same fixed presentations, without neutral imputation."""
+    lookup = {model: {r['presentation_id']: r for r in values} for model, values in observed.items()}
+    if set(lookup) != {'base', 'custom', 'stock'} or any(len(lookup[m]) != len(observed[m]) for m in lookup):
+        raise ValueError('Three unique model grids required')
+    if any(lookup[m].keys() != lookup['base'].keys() for m in lookup):
+        raise ValueError('Stance presentation grids differ')
+    identities = {}
+    for key, r in lookup['base'].items():
+        if any((lookup[m][key]['belief_id'], lookup[m][key]['polarity'], lookup[m][key]['prompt']) !=
+               (r['belief_id'], r['polarity'], r['prompt']) for m in lookup):
+            raise ValueError('Frozen stance inputs differ')
+        identities.setdefault(r['belief_id'], []).append(key)
+    def support(model, keys):
+        group = [lookup[model][key] for key in keys]
+        valid = [r for r in group if r.get('answer') in ('agree', 'disagree')]
+        n = sum((r['answer'] == 'agree') == (r['polarity'] == 'positive') for r in valid)
+        d = len(group)
+        if not d:
+            raise ValueError('Empty stance grid')
+        return {'expected': d, 'extracted': len(valid), 'canonical_numerator': n,
+            'support': n / d if len(valid) == d else None,
+            'missing_bounds': [n / d, (n + d - len(valid)) / d]}
+    per_belief = []
+    for belief, keys in identities.items():
+        scores = {m: support(m, keys) for m in lookup}
+        contrasts = {}
+        for ref in ('base', 'custom'):
+            a, b = scores[ref], scores['stock']
+            contrasts[ref] = {'difference_pp': None if a['support'] is None or b['support'] is None else 100*(b['support']-a['support']),
+                'missing_bounds_pp': [100*(b['missing_bounds'][0]-a['missing_bounds'][1]), 100*(b['missing_bounds'][1]-a['missing_bounds'][0])]}
+        per_belief.append({'belief_id': belief, 'models': scores, 'stock_minus_reference': contrasts})
+    aggregate = {'models': {m: support(m, list(lookup[m])) for m in lookup}, 'paired': {},
+        'interpretation': 'Descriptive expressed canonical-claim support, not moral accuracy or confidence. One evaluation/training seed; small differences are not established causal effects.'}
+    for ref in ('base', 'custom'):
+        pairs = [(lookup[ref][k], lookup['stock'][k]) for k in lookup[ref]
+                 if lookup[ref][k].get('answer') in ('agree', 'disagree') and lookup['stock'][k].get('answer') in ('agree', 'disagree')]
+        aggregate['paired'][ref] = {'co_extracted': len(pairs), 'different_choices': sum(a['answer'] != b['answer'] for a,b in pairs)}
+    return per_belief, aggregate
+
+
 def select_review(candidate: list[dict], historical: list[dict], controls: list[dict],
                   natural: list[dict]) -> list[dict]:
     """All value/format changes and failures, plus eight fixed hash-selected pairs.
@@ -128,6 +169,11 @@ def analyze() -> None:
         raise ValueError('Full100 runtime audit failed')
     controls = rows(surface_root / 'stance_controls.jsonl')
     natural = rows(surface_root / 'stance_observations.jsonl')
+    stance, stance_summary = stance_contrast({'stock': natural,
+        'base': rows(Path('data/results/ethical_pilot/ethics_gpu_vllm_base_v1/stance_observations.jsonl')),
+        'custom': rows(Path('data/results/ethical_pilot/ethics_gpu_replay_weight_norm1_unqualified_s42_v1/stance_observations.jsonl'))})
+    if len(stance) != 100 or any(v['models']['stock']['expected'] != 24 for v in stance):
+        raise ValueError('Full100stance contrast coverage differs')
     # Include development and conditional validation failures with unique phase IDs.
     all_controls = list(controls)
     for phase in ('development', 'validation'):
@@ -149,6 +195,8 @@ def analyze() -> None:
         raise ValueError('Incomplete paired loss/gradient traces')
     OUTPUT.mkdir()
     write_rows(OUTPUT / 'paired_retention.jsonl', pairs)
+    write_rows(OUTPUT / 'per_belief_stance_contrast.jsonl', stance)
+    write_json(OUTPUT / 'stance_contrast_summary.json', stance_summary)
     write_rows(OUTPUT / 'review_queue.jsonl', queue)
     write_rows(OUTPUT / 'paired_training_trace.jsonl', [{'reference': a, 'custom': b} for a, b in zip(trace, old_trace, strict=True)])
     write_json(OUTPUT / 'surface_token_audit.json', audit)

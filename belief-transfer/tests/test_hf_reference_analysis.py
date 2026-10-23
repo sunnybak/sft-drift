@@ -7,7 +7,7 @@ import pytest
 
 SCRIPTS = Path(__file__).resolve().parents[1] / 'scripts'
 sys.path.insert(0, str(SCRIPTS))
-from analyze_hf_reference import select_review
+from analyze_hf_reference import select_review, stance_contrast
 
 
 def reply(i, seed=42):
@@ -54,3 +54,16 @@ def test_control_error_and_invalid_natural_reply_are_not_dropped():
     ids = {r['review_id'] for r in selected}
     assert 'controls/control/1' in ids and 'natural/belief/0' in ids
     assert 'controls/control/0' not in ids
+
+
+def test_stance_contrast_reverses_negation_and_keeps_missing_bounds():
+    base = [{'presentation_id': str(i), 'belief_id': 'b', 'polarity': p, 'prompt': str(i), 'answer': a}
+            for i, (p, a) in enumerate([('positive', 'agree'), ('negative', 'disagree')])]
+    stock = copy.deepcopy(base)
+    stock[1]['answer'] = None
+    per, summary = stance_contrast({'base': base, 'custom': base, 'stock': stock})
+    assert per[0]['models']['base']['support'] == 1
+    assert per[0]['models']['stock']['support'] is None
+    assert per[0]['models']['stock']['missing_bounds'] == [.5, 1]
+    assert per[0]['stock_minus_reference']['base']['difference_pp'] is None
+    assert summary['paired']['base'] == {'co_extracted': 1, 'different_choices': 0}

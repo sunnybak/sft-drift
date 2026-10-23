@@ -5,6 +5,16 @@ unweighted training comparison, same data/labels/schedule as completed norm1, ex
 retention and full100measurements. No historical gate changes or ethical scaling.
 See changelog/2026-10-22-hf-reference-experiment-plan.md and STATE.md for execution.
 
+Completed and reviewed: stock HF retains 63/63 known reasoning and 58/59 known short
+answers (custom 57/59), with all 384 retention replies strict/complete. Original
+development and full-reading controls each score 31/32 but fail 1/16 note flips versus
+≤5%; validation not run. All 2,400 natural replies valid and 2,432 reading records
+runtime-verified. No qualified recipe or scaling. Source/results:
+changelog/2026-10-22-hf-reference-results.md. Dashboard report “Stock training reference ·
+matched C4 experiment” compares BASE/custom/stock, including note-flip bars/ranges,
+retention and all-100 stance coverage/consistency. Shared preprocessing and
+gradient-scale limitations remain explicit.
+
 Scope: [GOAL.md](GOAL.md). Progress and exact next commands: [STATE.md](STATE.md).
 Read the baseline report for methodology/results; do not reconstruct the old research queue.
 

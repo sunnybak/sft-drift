@@ -26,6 +26,8 @@ def fixture(tmp_path, monkeypatch):
     put(exporter.OUTPUT / 'agent_review_summary.json', {'complete': True,
         'queue_sha256': digest(q), 'annotations_sha256': digest(a), 'decision': 'Synthetic fixture decision.'})
     put(exporter.OUTPUT / 'summary.json', {'surface_token_audit': {'passed': True}, 'comparability': {'initial_adapter': True}})
+    put(exporter.OUTPUT / 'stance_contrast_summary.json', {'models': {m: {'support': .5, 'canonical_numerator': 1200, 'expected': 2400}
+        for m in ('base', 'custom', 'stock')}})
     put(exporter.RESULT / 'comparability.json', {'initial_adapter': True})
     put(exporter.GEN / 'protocol.json', {'runtime_reference': {'model': {'pretrained': 'Qwen/Qwen3-4B'},
         'generation': {'revision': 'a' * 40}, 'backend': {'backend': 'cuda'}, 'versions': {'torch': 'fixture'}}})
@@ -67,6 +69,8 @@ def test_report_separates_models_retention_accuracy_and_missing_validation(tmp_p
     assert (all_items['numerator'], all_items['denominator']) == (57, 64)
     missing = next(r for r in report['tests'] if r['id'] == 'stock-validation')
     assert missing['status'] == 'not_run' and missing['observed'] is None
+    flip = next(r for r in report['benchmarks'] if r['id'] == 'note-flip')
+    assert flip['direction'] == 'lower' and flip['threshold'] == {'operator': 'lte', 'value': .05}
     assert all(len(r['sha256']) == 64 for r in report['sources'])
 
 

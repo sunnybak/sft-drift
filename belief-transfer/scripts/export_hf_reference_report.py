@@ -57,7 +57,7 @@ def build_report() -> dict:
             'color': color, 'inference': {'backend': runtime['backend'], 'versions': runtime['versions'], 'primaryEvaluationSeed': 42},
             'finetuning': fine, 'studyContext': {'purpose': 'Separate custom loss execution from shared data/objective effects.',
                 'intervention': 'No training.' if name == 'base' else ('Custom accumulated token loss.' if name == 'custom' else 'Upstream Trainer/model loss and backward, without custom compensation.'),
-                'data': 'Matching procedural tasks and frozen100stance bank; trained arms share1,244,032target tokens.',
+                'data': 'Matching procedural tasks and frozen 100-stance bank; trained arms share 1,244,032 target tokens.',
                 'comparison': 'One new training run versus a saved same-seed custom run and matched BASE references.',
                 'limitations': 'One training seed; reused development tasks; shared preprocessing; gradient scaling differs; no independent qualification.'}})
     report = {'schemaVersion': '1.0', 'id': 'hf-reference-norm1-v1', 'title': 'Stock training reference · matched C4 experiment',
@@ -69,9 +69,9 @@ def build_report() -> dict:
     def benchmark(identity, label, description, category, group=None, threshold=None, direction='higher'):
         report['benchmarks'].append({'id': identity, 'name': label, 'description': description, 'category': category,
             **({'checkGroup': group} if group else {}), 'unit': 'fraction', 'direction': direction,
-            'range': {'min': 0, 'max': 1}, 'conditions': 'Evaluationseed42; shared fixed inputs; exact denominators. Repeats7/1729 are available in artifacts, not independent training replications.',
-            'examples': [{'input': 'Multiply 1152 by21. End with one integer.', 'expected': '24192', 'note': 'Illustrative procedural task; stance charts are not correctness scores.'}],
-            'threshold': None if threshold is None else {'operator': 'gte', 'value': threshold}})
+            'range': {'min': 0, 'max': 1}, 'conditions': 'Evaluation seed 42; shared fixed inputs; exact denominators. Repeats 7 and 1729 are available in artifacts, not independent training replications.',
+            'examples': [{'input': 'Multiply 1152 by 21. End with one integer.', 'expected': '24192', 'note': 'Illustrative procedural task; stance charts are not correctness scores.'}],
+            'threshold': None if threshold is None else {'operator': 'lte' if direction == 'lower' else 'gte', 'value': threshold}})
     def score(model, identity, n, d, path, notes):
         report['scores'].append({'modelId': model, 'benchmarkId': identity, 'value': n/d,
             'numerator': n, 'denominator': d, 'notes': notes, 'source': source(path)})
@@ -94,9 +94,21 @@ def build_report() -> dict:
         for model, assessment in retention.items():
             check(model, 'retention-' + mode, label + ' · complete retention contract', assessment[mode + '/42']['passed'], retention_paths[model], 'retention')
             check(model, 'completion-' + mode, label + ' · valid boundaries and normal stops', assessment[mode + '/42']['complete_boundaries_and_stops'], retention_paths[model], 'retention')
-    benchmark('control-accuracy', 'Frozen known-answer controls', 'Comprehension, negation and irrelevant-note tasks;32presentations, not32independent facts.', 'Instrument checks', 'instrument', .95)
+    benchmark('control-accuracy', 'Frozen known-answer controls', 'Comprehension, negation and irrelevant-note tasks; 32 presentations, not 32 independent facts.', 'Instrument checks', 'instrument', .95)
     benchmark('control-extraction', 'Known controls · answer extraction', 'Fraction with an extractable final choice.', 'Instrument checks', 'instrument', 1)
-    benchmark('stance-coverage', 'Frozen100beliefs · valid replies', 'Coverage of the2,400scheduled stance presentations; missing replies are not neutral.', 'Stance coverage', threshold=1)
+    benchmark('note-flip', 'Irrelevant-note answer flips', 'Fraction of eligible control pairs whose answer changes after adding an unrelated note. Lower is better; the existing maximum is 5%.', 'Instrument checks', 'instrument', .05, direction='lower')
+    benchmark('stance-coverage', 'Frozen 100 beliefs · valid replies', 'Coverage of the 2,400 scheduled stance presentations; missing replies are not neutral.', 'Stance coverage', threshold=1)
+    benchmark('canonical-support', 'Canonical-claim support · all 100 beliefs', 'Fraction favoring each canonical claim, reversing negative-polarity choices. Descriptive expressed stance; higher is not better and this is not moral accuracy.', 'Expressed stances', direction='descriptive')
+    stance_path = OUTPUT / 'stance_contrast_summary.json'
+    for model, a in read(stance_path)['models'].items():
+        if a['support'] is not None:
+            score(model, 'canonical-support', a['canonical_numerator'], a['expected'], stance_path,
+                  'One fixed bank and one sampling seed. Small differences are not established causal effects; per-belief contrasts remain in analysis artifacts.')
+        else:
+            report['scores'].append({'modelId': model, 'benchmarkId': 'canonical-support', 'value': None,
+                'numerator': None, 'denominator': None, 'bounds': {'lower': a['missing_bounds'][0],
+                    'upper': a['missing_bounds'][1], 'kind': 'missing_data'},
+                'notes': f"{a['extracted']}/{a['expected']}extracted; missing replies remain bounded rather than neutral.", 'source': source(stance_path)})
     benchmark('order-agreement', 'Response-order agreement', 'Eligible matched replies agree after the displayed response order is swapped.', 'Stance consistency', 'consistency')
     benchmark('wording-agreement', 'Wording agreement', 'Eligible matched replies agree across same-claim paraphrases.', 'Stance consistency', 'consistency')
     benchmark('negation-agreement', 'Negation agreement', 'Eligible matched claim/negation replies are complementary.', 'Stance consistency', 'consistency')
@@ -108,8 +120,14 @@ def build_report() -> dict:
         score(model, 'control-accuracy', correct, expected, path, 'Accuracy is separate from note stability, strict format and generation completion.')
         score(model, 'control-extraction', extracted, expected, path, 'Extractable does not imply correct.')
         check(model, 'control-accuracy', 'Known-answer accuracy ≥95%', correct*100 >= 95*expected, path, 'instrument')
-        check(model, 'control-extraction', 'Control extraction100%', extracted == expected, path, 'instrument')
+        check(model, 'control-extraction', 'Control extraction 100%', extracted == expected, path, 'instrument')
         flip = controls['factual_null_comparison']
+        if flip['n_eligible_pairs'] and flip['flip_rate'] is not None:
+            score(model, 'note-flip', round(flip['flip_rate'] * flip['n_eligible_pairs']), flip['n_eligible_pairs'], path,
+                  'Paired answer flips, not accuracy. One of 16 pairs is 6.25%, above the unchanged 5% maximum.')
+        else:
+            report['scores'].append({'modelId': model, 'benchmarkId': 'note-flip', 'value': None,
+                'numerator': None, 'denominator': None, 'notes': 'No eligible control pairs; flip rate is not estimable.', 'source': source(path)})
         check(model, 'note-stability', 'Irrelevant-note flip rate ≤5%', flip['n_eligible_pairs'] == 16 and flip['flip_rate'] is not None and flip['flip_rate'] <= .05, path, 'instrument')
         beliefs = [v['neutral'] for v in s['measurements']['stance'].values()]
         if len(beliefs) != 100:
@@ -123,7 +141,7 @@ def build_report() -> dict:
         score(model, 'negation-agreement', eligible-sum(v['n_contradictions'] for v in beliefs), eligible, path,
               'Natural stance agreement is an outcome, not a qualification gate.')
         if model == 'stock':
-            check(model, 'surface-coverage', 'All2,400natural replies valid', valid == 2400, path, 'instrument')
+            check(model, 'surface-coverage', 'All 2,400 natural replies valid', valid == 2400, path, 'instrument')
         dev_name = ('ethics_gpu_vllm_development_v1' if model == 'base' else
             'ethics_gpu_replay_weight_norm1_development_s42_v1' if model == 'custom' else evaluation_id('development'))
         val_name = ('ethics_gpu_vllm_validation_v1' if model == 'base' else
