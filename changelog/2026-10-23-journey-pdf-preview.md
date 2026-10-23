@@ -72,3 +72,16 @@ regeneration uses the saved create_page3_v3.py script and existing source artifa
 If the save is still verifying at handoff, check its log and latest receipt before
 claiming v3private preservation; no same-ID experimental resumption is involved.
 Next content is the first training repair; only the first three pages are authored.
+
+## Minor caption refinement (v4)
+
+User requested an explanation of Original wording and Explicit facts in the chart
+caption. journey-preview-v4.pdf defines compressed phrasing (example: not metal and
+marked) versus separately stated intended properties, removing negation-scope ambiguity.
+Caption retains both denominators and post-hoc-review limits. Plot height reduced10pt
+for caption space; bounds assertion and final rendered inspection pass. Prior two
+pages' text remains identical, and no score changed. New source/script/chart/render
+use v4names. This minor layout iteration joins the next coherent PDF artifact snapshot;
+do not start another full-study backup for each caption edit while v3save is verifying.
+V4files remain local until that next snapshot; v3verification log remains authoritative
+for that earlier version. PDF opened in Codex. No model calls or experiment resumption.
