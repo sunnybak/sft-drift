@@ -2,15 +2,16 @@
 
 ## Journey PDF — three-page preview
 
-User-requested journey-preview-v4.pdf contains BASE, original pilot and new measurement
+User-requested journey-preview-v5.pdf contains BASE, original pilot and new measurement
 audit page. Page3 opens with narrative goal/prior result/aim; charts show absolute
 scores. Different instruments and post-hoc value review remain separate. Prior-page
 text preserved; three-page count and rendered layout checked. Source scripts, PDFs,
 charts, renders and SHA metadata under registered dashboard output/pdf/. No model calls.
 See changelog/2026-10-23-journey-pdf-preview.md. V2private backup finished verified;
 v3save log /tmp/sft-journey-pdf-v3-save.log, receipt authoritative when verification ends.
-V4minor caption refinement defines Original wording and Explicit facts; visually checked.
-V4files remain local, to join the next coherent PDF snapshot rather than another full
+V5adds benchmark-measurement subtitles below both chart titles; V4caption defines
+Original wording and Explicit facts. Both refinements visually checked.
+V4/V5files remain local, to join the next coherent PDF snapshot rather than another full
 backup per caption edit. V3save still uses its original log.
 Next: user review of page3, then the first training-repair page. No study resumption.
 Operational check: tail -20 /tmp/sft-journey-pdf-v3-save.log

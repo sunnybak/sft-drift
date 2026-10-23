@@ -85,3 +85,13 @@ use v4names. This minor layout iteration joins the next coherent PDF artifact sn
 do not start another full-study backup for each caption edit while v3save is verifying.
 V4files remain local until that next snapshot; v3verification log remains authoritative
 for that earlier version. PDF opened in Codex. No model calls or experiment resumption.
+
+## Chart measurement subtitles (v5)
+
+Added subtitles directly below both page3chart titles: wording diagnostic measures
+answer accuracy with compressed versus explicitly stated facts; retention measures
+preservation of short-answer values BASE previously got right. Reserved plot-header
+space and visually inspected rendered page; no overlap or clipped labels. Scores,
+caption and first two pages remain unchanged. journey-preview-v5.pdf and matching
+source/chart/render use fresh filenames. This minor refinement joins the next coherent
+PDF snapshot with v4; no new full-study backup or model calls for this caption cycle.
