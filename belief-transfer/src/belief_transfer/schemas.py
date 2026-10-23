@@ -2019,6 +2019,7 @@ class DocumentSFTSpec(BaseModel):
     """Standalone document training; independent of historical chat corpora."""
 
     manifest_path: str
+    trainer: Literal['hf_reference_v1'] | None = Field(default=None, exclude_if=lambda value: value is None)
     operation: Literal['prepare', 'smoke', 'memorize', 'train'] = 'prepare'
     max_length: int = Field(default=1024, ge=4)
     synthetic_prefix: str = '<DOCTAG>\n'

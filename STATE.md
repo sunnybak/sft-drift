@@ -1,5 +1,18 @@
 # Current state — 2026-10-22
 
+## New bounded reference experiment — preparation
+
+User authorized one GPU experiment after online reference review. Existing RTX3090
+is reachable/idle; old supervisor stays STOPPED. New run ethics_sft_hf_reference_norm1_v1
+compares stock-HF loss/backward with completed ethics_sft_c4_norm1_v1 on identical
+unweighted data/labels/schedule. One training run, final-only,384retention calls and
+full100frozen reading;3hour hard bound. No old job resume, scaling or dependency upgrade.
+Prospective plan:changelog/2026-10-22-hf-reference-experiment-plan.md. Preparation complete;90targeted tests pass, bound inputs/plan and historical config
+compatibility verified; no new weights trained yet. Launch after private-save verification. Prior stopped scientific investigation below
+is historical and remains stopped. Current thread goal is this bounded experiment.
+Next: register/prepare inputs, test, commit/push and privately preserve, then deploy
+the clean source plus registered inputs and run scripts/reference_trainer_experiment.py run.
+
 ## Stopped under the user's condition
 
 The user asked: if the decisive result is negative, stop the goal and provide an update

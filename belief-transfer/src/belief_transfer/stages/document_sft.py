@@ -27,6 +27,8 @@ def verify_training_plan(job: JobConfig, manifest: Path) -> None:
     if file_sha(path, length=64) != spec.plan_sha256:
         raise ValueError('Training plan hash mismatch')
     plan = json.loads(path.read_text())
+    if plan.get('trainer') != spec.trainer:
+        raise ValueError('Training implementation differs from frozen plan')
     required = {'hypothesis', 'falsifier', 'contrasts', 'controls', 'analysis', 'seeds', 'checkpoint_policy'}
     if not required <= plan.keys() or any(not plan[k] for k in required):
         raise ValueError('Incomplete preregistered comparison')

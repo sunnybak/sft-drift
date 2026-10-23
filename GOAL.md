@@ -36,6 +36,11 @@ See currentSTATE and the reviewed2026-10-21results; do not automatically scale.
 
 ## Execution boundary — user-requested stop
 
+2026-10-22: user subsequently authorized one new bounded GPU reference experiment.
+See changelog/2026-10-22-hf-reference-experiment-plan.md. This authorization permits
+one fresh stock-HF unweighted comparison and fixed final measurements only, not the
+old repair queue or ethical scaling. The prior stopped trial remains stopped.
+
 The final BASE-reasoning replay repair was rejected on reviewed retention and generation
 failures. The user's stop-on-negative condition is met; no more experiments or scaling.
 The goal is not achieved. Preserve the stopped trial and pause execution; a future restart

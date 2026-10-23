@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+- ethics_sft_c4_norm1_v1
+run_id: ethics_sft_hf_reference_norm1_v1
+document_sft:
+  trainer: hf_reference_v1
+  manifest_path: data/generated/ethical_stance_sft/ethics_sft_hf_reference_norm1_v1/documents.jsonl
+  plan_path: data/generated/ethical_stance_sft/ethics_sft_hf_reference_norm1_v1/plan.json
+  plan_sha256: c3cfff26a2c841bfa002ffbf1e30d83d859a7c4cb844e22b249756ee1a5d299a
+  replay:
+    loss_normalization: null

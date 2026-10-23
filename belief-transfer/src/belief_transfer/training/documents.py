@@ -7,7 +7,7 @@ import math
 import json
 import random
 import time
-from collections import Counter
+from collections import Counter, deque
 from pathlib import Path
 
 from belief_transfer.dataset.document_sft import collate_documents
@@ -47,6 +47,12 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
 
     spec, hp = job.document_sft, job.training.sft
     assert spec is not None
+    reference = spec.trainer == 'hf_reference_v1'
+    if reference and (not spec.one_pass or spec.replay is None or
+            spec.replay.loss_normalization is not None or
+            spec.replay.nonthinking_loss_weight != 1.0 or
+            any(c.get('loss_weight', 1.0) != 1.0 for c in chunks)):
+        raise ValueError('Stock reference requires one-pass unweighted targets without custom normalization')
     if hp.full_finetune:
         raise ValueError('This new document path currently validates LoRA only')
     planned_batches = (one_pass_batches(len(chunks), optimizer_steps=spec.max_steps,
@@ -80,6 +86,7 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
         remove_unused_columns=False, dataloader_num_workers=0, optim='adamw_torch',
     )
     audit = output / 'training_batches.jsonl'
+    pending = deque()
 
     def collate(rows):
         batch = collate_documents(rows, pad_token_id=tokenizer.pad_token_id)
@@ -91,6 +98,8 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
                 meta['loss_weight']=row.get('loss_weight',1.)
                 if row['source_kind']=='replay':meta['replay_thinking']=row['replay_thinking']
             add_weighted_inputs(batch,rows,weighted_denominators)
+        if reference:
+            pending.append(batch.pop('_document_meta'))
         return batch
 
     class AuditedTrainer(WeightedLossMixin,Trainer):
@@ -120,7 +129,38 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
                                              'weighted_loss_tokens':sum(r['loss_tokens']*r['loss_weight'] for r in meta)} if weighted else {})}) + '\n')
             return loss
 
-    trainer = AuditedTrainer(model=model, args=args, train_dataset=chunks, data_collator=collate)
+    class ReferenceTrainer(Trainer):
+        # Only preserve the paired data schedule. Loss, backward, optimizer and
+        # accumulation use upstream Trainer/model implementations unchanged.
+        get_train_dataloader = AuditedTrainer.get_train_dataloader
+
+    trainer_class = ReferenceTrainer if reference else AuditedTrainer
+    trainer = trainer_class(model=model, args=args, train_dataset=chunks, data_collator=collate)
+    audit_hook = None
+    if reference:
+        if (type(trainer).compute_loss is not Trainer.compute_loss or
+                type(trainer).training_step is not Trainer.training_step):
+            raise ValueError('Reference must use upstream loss and training_step')
+
+        def observe_forward(module, positional, inputs):
+            meta = pending.popleft()
+            count = int((inputs['labels'][:, 1:] != -100).sum())
+            if count != sum(r['loss_tokens'] for r in meta):
+                raise ValueError('Actual reference targets differ from collated metadata')
+            items = inputs.get('num_items_in_batch')
+            step = trainer.state.global_step
+            group = planned_batches[step * hp.grad_accum:(step + 1) * hp.grad_accum]
+            expected_items = sum(sum(y != -100 for y in chunks[i]['labels'][1:])
+                                 for indices in group for i in indices)
+            if items is None or int(items) != expected_items:
+                raise ValueError('Upstream reference normalization differs from paired token objective')
+            with audit.open('a') as stream:
+                stream.write(json.dumps({'optimizer_step_before_batch': trainer.state.global_step,
+                    'event': 'forward_started', 'loss_tokens': count,
+                    'normalization_items': int(items) if items is not None else None,
+                    'chunks': meta}) + '\n')
+
+        audit_hook = model.register_forward_pre_hook(observe_forward, with_kwargs=True)
     if weighted:
         if trainer.accelerator.num_processes != 1:
             raise ValueError('Optimizer-group normalization currently verifies single GPU only')
@@ -128,6 +168,10 @@ def train_documents(job: JobConfig, chunks: list[dict], output: Path) -> dict:
     torch.cuda.reset_peak_memory_stats()
     started = time.perf_counter()
     result = trainer.train()
+    if audit_hook is not None:
+        audit_hook.remove()
+        if pending:
+            raise ValueError('Reference collated batches were not forwarded')
     training_seconds = time.perf_counter() - started
     peak_allocated, peak_reserved = torch.cuda.max_memory_allocated(), torch.cuda.max_memory_reserved()
     final = output / 'final'

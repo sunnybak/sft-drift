@@ -1,5 +1,10 @@
 # Current experiment plan
 
+New user-authorized bounded reference experiment (2026-10-22): one fresh stock-HF
+unweighted training comparison, same data/labels/schedule as completed norm1, existing
+retention and full100measurements. No historical gate changes or ethical scaling.
+See changelog/2026-10-22-hf-reference-experiment-plan.md and STATE.md for execution.
+
 Scope: [GOAL.md](GOAL.md). Progress and exact next commands: [STATE.md](STATE.md).
 Read the baseline report for methodology/results; do not reconstruct the old research queue.
 
