@@ -1,21 +1,18 @@
 # Current state — 2026-10-23
 
-## Journey PDF — three-page preview
+## Journey PDF — four-page preview
 
-User-requested journey-preview-v5.pdf contains BASE, original pilot and new measurement
-audit page. Page3 opens with narrative goal/prior result/aim; charts show absolute
-scores. Different instruments and post-hoc value review remain separate. Prior-page
-text preserved; three-page count and rendered layout checked. Source scripts, PDFs,
-charts, renders and SHA metadata under registered dashboard output/pdf/. No model calls.
-See changelog/2026-10-23-journey-pdf-preview.md. V2private backup finished verified;
-v3save log /tmp/sft-journey-pdf-v3-save.log, receipt authoritative when verification ends.
-V5adds benchmark-measurement subtitles below both chart titles; V4caption defines
-Original wording and Explicit facts. Both refinements visually checked.
-V4/V5files remain local, to join the next coherent PDF snapshot rather than another full
-backup per caption edit. V3save still uses its original log.
-Next: user review of page3, then the first training-repair page. No study resumption.
-Operational check: tail -20 /tmp/sft-journey-pdf-v3-save.log
-Future preservation verification: cd belief-transfer && uv run --no-sync python scripts/handoff.py verify
+journey-preview-v6.pdf contains BASE, original pilot, measurement audit and corrected
+normalization repair. Page4has narrative continuation, chart measurement subtitles,
+absolute scores/thresholds and separate engineering versus behavioral verdicts. Four
+pages rendered/checked; first-three-page text preserved. No new model calls or training.
+V4/V5minor caption refinements join this completed v6block's private snapshot. Source,
+PDFs/charts/renders/SHA metadata under registered dashboard output/pdf/. V3backup
+completed verified; new log /tmp/sft-journey-pdf-v6-save.log, receipt authoritative
+when verification completes. See changelog/2026-10-23-journey-pdf-preview.md.
+Next: user review of page4, then stronger replay page. No study resumption.
+Operational check: tail -20 /tmp/sft-journey-pdf-v6-save.log
+Future verification: cd belief-transfer && uv run --no-sync python scripts/handoff.py verify
 
 ## Dashboard journey report — complete
 

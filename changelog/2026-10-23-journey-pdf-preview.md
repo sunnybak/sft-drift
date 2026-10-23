@@ -95,3 +95,33 @@ space and visually inspected rendered page; no overlap or clipped labels. Scores
 caption and first two pages remain unchanged. journey-preview-v5.pdf and matching
 source/chart/render use fresh filenames. This minor refinement joins the next coherent
 PDF snapshot with v4; no new full-study backup or model calls for this caption cycle.
+
+## Page4 - corrected normalization (v6)
+
+User authorized the next page. journey-preview-v6.pdf appends Repair1to the existing
+three v5pages; text equality checks preserve those pages exactly. Narrative describes
+the genuine retention finding and analytic gradient-scaling issue in the PROPOSED loss
+path; it does not infer that a demonstrated historical bug caused original regressions.
+This fresh ordinary-weight control belongs to the prospectively amended replay-weight
+comparison. Data/dose/seed, changed objective, chart measurement subtitles, absolute
+scores/counts,95%lines, engineering checks, failure example and decision are shown.
+
+Retention63/63reasoning and57/59short passes; known controls30/32fails; note agreement
+16/16can be consistently wrong. Short unscorable/manual-wrong distinction remains
+explicit. All-item accuracy63/64and57/64, all100coverage2400/2400, descriptive support
+69.88%versusBASE63.29%remain distinct. Validation not run; no qualified-recipe claim.
+No new model calls, training, GPU action or changed scores/gates.
+
+create_page4_v6.py, source/test/score SHA metadata, chart, standalone intermediate
+page, combined PDF and rendered page4are under registered dashboard output/pdf/.
+Fixed an initial subtitle escape and decision-box overflow, rerendered and visually
+checked final layout. Four-page count and first-three-page text equality pass; source
+JSON parses. Existing PDF opened in Codex. Next prospective report page: stronger replay.
+
+V3private backup completed verified7850files/22,315,305,959bytes at sourceaae154e.
+This completed page block groups the v4/v5minor caption refinements with v6for one
+private snapshot, after source notes commit/push. Command from belief-transfer/:
+uv run --no-sync python scripts/handoff.py save
+Log: /tmp/sft-journey-pdf-v6-save.log. Until its verified receipt, v4-v6are local and
+source notes pushed; don't claim private preservation from merely uploaded bytes.
+The stage is report authoring, no experimental resume/checkpoint. Receipt is authoritative.
