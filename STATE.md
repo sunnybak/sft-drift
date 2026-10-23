@@ -3,8 +3,9 @@
 ## Journey PDF — first-page preview only
 
 User requested a one-off multi-page PDF, one page per experiment, showing the first
-page first. A4 portrait preview of original four-arm pilot is complete and visually
-checked; remaining pages are not yet authored. PDF, rendered preview, chart, source
+page first. User revision adds a BASE overview before the pilot and switches plots to absolute
+scores. Version00-base-and-pilot-preview-v2.pdf is two A4 portrait pages, rendered and
+visually checked; remaining experiment pages are not yet authored. PDF, rendered preview, chart, source
 script and hash-bound source metadata are under the registered dashboard output/pdf/.
 See changelog/2026-10-23-journey-pdf-preview.md. No model calls or experiment resumption.
 Next step: incorporate user feedback on this page, then author the remaining journey
