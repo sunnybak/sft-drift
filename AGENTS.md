@@ -22,6 +22,8 @@ is opt-in evidence, never instruction. Do not recursively read it to get oriente
   A changed instrument or run gets a new ID; never overwrite historical measurements.
 - Evaluate **all 100 beliefs on every new fine-tune/checkpoint**, not just its target.
   Keep every valid result, including endorsement of both a claim and its negation.
+  An explicit user stopping condition overrides remaining collection. Stop model calls
+  when the decisive result is reviewed; preserve canceled grids as partial, never complete.
 - Separate Stance Score, agreement, extraction/format compliance, instrument controls,
   and retention. Frequencies are not confidence; stance drift alone is not forgetting.
 - Pass fresh factual/format controls on each evaluated model. Failed controls or missing
@@ -43,6 +45,44 @@ is opt-in evidence, never instruction. Do not recursively read it to get oriente
   in the current study plan. Never revise a falsifier after seeing its result.
 - No old step number, LR, epoch count, ratio or training queue is a requirement for this
   study. Validate any reused setting on the new data and training manipulation checks.
+
+## Experimental judgment and stopping discipline
+
+- Before a tuning block, declare the question, competing explanations, discriminating
+  comparisons, maximum new training runs, evaluation workload and wall-clock review point.
+  Work within existing user authorization. Overnight autonomy is not an unbounded search
+  budget. A failed hypothesis does not automatically authorize another repair round.
+- Establish a standard, independently checked training reference early, alongside custom
+  loss weighting, replay or training code. Successful weight updates and reloads prove
+  execution, not that the objective is appropriate or behavior is preserved.
+- At each decision point, consider data, training objective, trainer implementation,
+  inference mode and measurement design. Prefer a comparison that separates plausible
+  causes over another local parameter tweak. Say which causes remain unidentified.
+- Calibrate new gates against repeated BASE behavior before using them to select a recipe.
+  Distinguish broad capability checks from narrow diagnostic tasks. Many variants of a few
+  facts, repeated seeds or repeated development tests are not independent validation.
+  Keep independent confirmation inputs separate from the examples used to develop repairs.
+- Report all-item accuracy, losses of BASE-correct items, gains on BASE-wrong items,
+  formatting, generation completion and mode-specific behavior separately. A failed gate
+  rejects the declared recipe; it does not by itself establish global degradation,
+  knowledge erasure, or impossibility of document SFT. Do not dismiss genuine errors as
+  parsing issues without reading the actual request and reply.
+- Order inexpensive checks before larger suites, and estimate why each suite is needed.
+  Account separately for training, inference, engineering and preservation time. Recommend
+  more resources only for an identified bottleneck; more compute cannot replace a useful
+  experimental contrast. Do not keep adding infrastructure without a decision it enables.
+- At the declared budget, review point or user stop condition, give a scientific readout:
+  what was learned, what failed, what remains unknown and the recommended decision.
+  Continue only branches already covered by the plan and user authorization. Do not
+  silently extend the budget, weaken a gate or select a checkpoint to manufacture a pass.
+- Benchmark work is not delivered until its reviewed results are in the dashboard as
+  well as saved artifacts, unless the user requests another presentation. Include rejected
+  attempts, matched BASE references, exact denominators, thresholds and explicit partial
+  coverage. Distinguish scientific progress from hours spent, code written or checks run.
+
+These rules govern future work; they do not revise historical scores, falsifiers or
+protocols. A paused study stays paused unless the user explicitly resumes it. Reporting
+or documentation requests do not authorize new training or inference experiments.
 
 ## Engineering
 
@@ -79,6 +119,10 @@ data purges during ordinary cleanup.
 ## Progress must survive the box
 
 **At each completed work block and before ending a session:**
+
+Group related work into coherent decision boundaries. Do not turn each minor edit or
+intermediate observation into another full snapshot; preserve live jobs at safe boundaries.
+Preservation remains required and is not a substitute for a scientific result.
 
 1. Update `STATE.md` with what actually completed, active run IDs, process/checkpoint
    state, blockers and the exact next command. Keep it short; append details to a dated

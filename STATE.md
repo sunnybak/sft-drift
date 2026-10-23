@@ -53,9 +53,10 @@ fully read. Its strong reject bias is descriptive, not proof of knowledge erasur
 ## Preservation
 
 Stopped trial fully preserved and verified: private snapshot
-45582fa296a666f00518a90c66ed8af6772ba273 at source
-803ec8fceb33a6b86d29406f0e94fc032056a6e1,7666files/21,300,611,994bytes.
-Includes final stop receipt, partial512reading,49manual reviews, checkpoints and log.
+7883e8d0e71f22c1e7f4c6880ffce639f78ce0a5 at source
+91762b6064df39cd61efd4d06450871d023256e9,7672files/21,300,937,270bytes.
+Includes final stop receipt, partial512reading,49manual reviews, checkpoints, log,
+all18dashboard reports and the repair-report screenshot.
 Latest receipt is authoritative at belief-transfer/data/.handoff-receipt.json.
 
 Dashboard-only follow-up requested by user: five repair reports added (18total), with
@@ -63,8 +64,13 @@ matched BASE cohorts, exact counts, ranges, pass/fail/error codes and explicit p
 collection. Live app5180verified, latest report open.49Node tests plus Python exporter
 tests, TypeScript and production build passed; final incremental checks passed.
 See changelog/2026-10-22-repair-dashboard-reports.md. No new model calls, no resumption.
-Reports and screenshot are in the already registered ethical_pilot dashboard output;
-source/notes must be pushed, then save the new report artifacts once.
+Reports and screenshot were privately verified at the snapshot above.
+
+User-requested AGENTS.md update adds bounded experiments, early standard references,
+competing explanations, calibrated diagnostics, immediate user-condition stops,
+scientific decision reports and dashboard delivery. CLAUDE.md remains its symlink.
+See changelog/2026-10-22-agent-experimental-discipline.md. No new data/model calls.
+Push this documentation block, then perform the required handoff save once.
 
 Preservation:cd belief-transfer && uv run --no-sync python scripts/handoff.py save
 Wait for the same save process through storage429retries; verify receipt. No experiments
