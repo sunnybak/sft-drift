@@ -1,15 +1,17 @@
 # Current state — 2026-10-23
 
-## Journey PDF — first-page preview only
+## Journey PDF — three-page preview
 
-User requested a one-off multi-page PDF, one page per experiment, showing the first
-page first. User revision adds a BASE overview before the pilot and switches plots to absolute
-scores. Version00-base-and-pilot-preview-v2.pdf is two A4 portrait pages, rendered and
-visually checked; remaining experiment pages are not yet authored. PDF, rendered preview, chart, source
-script and hash-bound source metadata are under the registered dashboard output/pdf/.
-See changelog/2026-10-23-journey-pdf-preview.md. No model calls or experiment resumption.
-Next step: incorporate user feedback on this page, then author the remaining journey
-pages consistently. Preservation verification remains the next operational command.
+User-requested journey-preview-v3.pdf contains BASE, original pilot and new measurement
+audit page. Page3 opens with narrative goal/prior result/aim; charts show absolute
+scores. Different instruments and post-hoc value review remain separate. Prior-page
+text preserved; three-page count and rendered layout checked. Source scripts, PDFs,
+charts, renders and SHA metadata under registered dashboard output/pdf/. No model calls.
+See changelog/2026-10-23-journey-pdf-preview.md. V2private backup finished verified;
+v3save log /tmp/sft-journey-pdf-v3-save.log, receipt authoritative when verification ends.
+Next: user review of page3, then the first training-repair page. No study resumption.
+Operational check: tail -20 /tmp/sft-journey-pdf-v3-save.log
+Future preservation verification: cd belief-transfer && uv run --no-sync python scripts/handoff.py verify
 
 ## Dashboard journey report — complete
 

@@ -42,3 +42,33 @@ under the same registered output/pdf parent. A first-preview backup was already
 verifying when feedback arrived; new-version files use fresh names. A final snapshot
 after this coherent revision boundary must include v2, not just the original preview.
 The remaining journey experiment pages are still uncreated pending format review.
+
+## Page3 - narrative continuation and measurement audit
+
+User approved a continuation block restating goal, previous finding and next question,
+then explicitly requested page3. New journey-preview-v3.pdf contains the two existing
+v2pages plus the measurement audit. Original page text is programmatically identical.
+Page3 opens with the approved Why this experiment narrative, followed by absolute
+wording-diagnostic and supplemental-retention charts, target-free support and fresh
+control counts, audit findings and the bounded-repair decision. This summarizes the
+fixed-weight measurement investigation (multiple diagnostic runs), not a new SFT run.
+Post-hoc value review and changed relative-choice interface remain explicitly separate
+from original grades/endorsement. No gates changed and no model calls were made.
+
+Chart/table sources: reviewed Oct22target-free, scope-fact wording and fresh-retention
+notes, saved target-free report and actual analysis.json. Control counts are derived
+from all domain/split/seed counts (1440/model). Source SHA metadata, chart and render,
+standalone intermediate page and create_page3_v3.py accompany the combined PDF under
+the existing registered dashboard output/pdf parent. Every rendered page was visually
+checked after correcting an initially clipped plot legend. Three-page count and
+preserved prior-page text assertions pass. PDF opened in Codex.
+
+Prior v2private snapshot ab755f861def3bbad2225573287a0baa95df1fd8 verified7844files,
+22,314,450,498bytes at source8b117fd; its earlier rate-limit retries finished successfully.
+Current v3source notes are committed/pushed. New artifact save command from
+belief-transfer/: uv run --no-sync python scripts/handoff.py save
+Log /tmp/sft-journey-pdf-v3-save.log. This reporting stage has no GPU process/checkpoint;
+regeneration uses the saved create_page3_v3.py script and existing source artifacts.
+If the save is still verifying at handoff, check its log and latest receipt before
+claiming v3private preservation; no same-ID experimental resumption is involved.
+Next content is the first training repair; only the first three pages are authored.
