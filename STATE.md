@@ -20,15 +20,24 @@ then exits for review. Max one training run;3hour timeout; no automatic further 
 
 GPU log:data/generated/ethical_stance_sft/ethics_sft_hf_reference_norm1_v1/execution.log
 Supervisor log:/workspace/sft-drift-ops/hf-reference-v1.log. Checkpoints227/454/final are
-preservation only; evaluate final only. Controller/stage refuse restart/resume. No saved
-checkpoint yet at the first6step observation. Live artifacts remain on GPU until copied
-at closed safe boundaries; do not destroy the instance.
+preservation only; evaluate final only. Controller/stage refuse restart/resume. Checkpoint227closed after a later forward atstep233; all8files/396,924,387bytes copied
+locally and hash-verified. No checkpoint was evaluated. Latest observed training246/454;
+final/evaluation artifacts still GPU-only. Do not destroy the instance.
+
+Post-analysis tools prepared locally (not deployed into the bound worker):
+scripts/analyze_hf_reference.py reconstructs retention/full100runtime, compares paired
+traces and selects all failures/changes plus8fixed SHA256-ID sample pairs. Sample IDs
+frozen before final outputs in generated/review_sample_freeze_v1.json/.md. Report exporter
+scripts/export_hf_reference_report.py requires hash-bound complete agent review and
+schema validation before publication.7new tests pass; targeted reference/layer subset
+24pass; broader schemas/stages22pass. No additional model calls or changed criteria.
 
 Exact next command (monitor existing worker, never restart):
 ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-hf-reference-v1; tail -c 1800 /workspace/sft-drift/belief-transfer/data/generated/ethical_stance_sft/ethics_sft_hf_reference_norm1_v1/execution.log'
 After terminal: copy/hash-verify closed generated/results/checkpoint trees and generated
 retention config, audit comparator/retention/full100raw metadata, read failed/discrepant
-pairs plus prespecified8hash-selected pairs, publish dashboard, report next decision,
+pairs plus prespecified8hash-selected pairs, run uv run --no-sync python scripts/analyze_hf_reference.py, record hash-bound review,
+then scripts/export_hf_reference_report.py; publish dashboard and report next decision,
 commit/push and verify private save. Do not select another checkpoint or tune on stances.
 
 ## Stopped under the user's condition
