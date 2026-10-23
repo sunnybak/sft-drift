@@ -1,17 +1,35 @@
 # Current state — 2026-10-22
 
-## New bounded reference experiment — preparation
+## New bounded reference experiment — RUNNING
 
-User authorized one GPU experiment after online reference review. Existing RTX3090
-is reachable/idle; old supervisor stays STOPPED. New run ethics_sft_hf_reference_norm1_v1
-compares stock-HF loss/backward with completed ethics_sft_c4_norm1_v1 on identical
-unweighted data/labels/schedule. One training run, final-only,384retention calls and
-full100frozen reading;3hour hard bound. No old job resume, scaling or dependency upgrade.
-Prospective plan:changelog/2026-10-22-hf-reference-experiment-plan.md. Preparation complete;90targeted tests pass, bound inputs/plan and historical config
-compatibility verified; no new weights trained yet. Launch after private-save verification. Prior stopped scientific investigation below
-is historical and remains stopped. Current thread goal is this bounded experiment.
-Next: register/prepare inputs, test, commit/push and privately preserve, then deploy
-the clean source plus registered inputs and run scripts/reference_trainer_experiment.py run.
+User authorized one new GPU experiment; old stopped trial remains stopped. Run
+ethics_sft_hf_reference_norm1_v1 launched on existing RTX3090 in isolated checkout
+/workspace/sft-drift-hf-reference at source55b09aa. Supervisor sft-drift-hf-reference-v1
+RUNNING PID139281; one fresh stock-HF loss/backward run, same3,625chunks/1,244,032targets,
+454steps/seed42 as completed unweighted norm1. No dependency upgrades or new rental.
+First6steps execute; first loss matches printed precision but preclip gradient norm
+1.375versus historical2.750. Removing custom accumulation compensation changes actual
+gradient scale; this is part of the intervention, not proof of a behavioral fix.
+
+90targeted tests pass; source/input bindings verified locally/onGPU. Prelaunch private
+snapshot b61ec1bedbe99728001a5c82b9cd5d4e381b7c6c verified at source55b09aa,
+7678files/21,313,783,294bytes. All frozen instruments unchanged. Plan:
+changelog/2026-10-22-hf-reference-experiment-plan.md. Worker executes final-only384retention
+calls, original development/conditional validation and2,400frozen stance responses,
+then exits for review. Max one training run;3hour timeout; no automatic further trial.
+
+GPU log:data/generated/ethical_stance_sft/ethics_sft_hf_reference_norm1_v1/execution.log
+Supervisor log:/workspace/sft-drift-ops/hf-reference-v1.log. Checkpoints227/454/final are
+preservation only; evaluate final only. Controller/stage refuse restart/resume. No saved
+checkpoint yet at the first6step observation. Live artifacts remain on GPU until copied
+at closed safe boundaries; do not destroy the instance.
+
+Exact next command (monitor existing worker, never restart):
+ssh -p 58689 root@38.49.42.46 'supervisorctl status sft-drift-hf-reference-v1; tail -c 1800 /workspace/sft-drift/belief-transfer/data/generated/ethical_stance_sft/ethics_sft_hf_reference_norm1_v1/execution.log'
+After terminal: copy/hash-verify closed generated/results/checkpoint trees and generated
+retention config, audit comparator/retention/full100raw metadata, read failed/discrepant
+pairs plus prespecified8hash-selected pairs, publish dashboard, report next decision,
+commit/push and verify private save. Do not select another checkpoint or tune on stances.
 
 ## Stopped under the user's condition
 
