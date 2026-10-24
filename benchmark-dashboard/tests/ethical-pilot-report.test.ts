@@ -41,3 +41,12 @@ test('sum averages runtime seeds inside each belief before adding movement',()=>
  const missing=rows.map(r=>({...r,base_diagnostics:{complete:false}}));
  assert.equal(aggregatePilot(missing,'positive',['a','b'],[42,7]).changeTotals,undefined);
 });
+
+test('individual belief scores survive another belief failing the aggregate grid',()=>{
+ const rows=[{...row(7,0),belief_id:'a'},{...row(7,null,false),belief_id:'b'}];
+ assert.equal(aggregatePilot(rows,'positive',['a','b'],[7]).value,null);
+ const a=aggregatePilot(rows,'positive',['a'],[7]);
+ assert.equal(a.value,0);assert.equal(a.base,.6);assert.equal(a.valid,24);
+ assert.equal(a.changeTotals!.signedSum,-.6);
+ assert.equal(aggregatePilot(rows,'positive',['b'],[7]).value,null);
+});

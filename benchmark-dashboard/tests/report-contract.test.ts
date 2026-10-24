@@ -131,3 +131,9 @@ test('structured diagnostics are optional, portable and reject malformed codes o
  r.scores[0].diagnostics[0].stage='guess';assert.ok(validateReport(r).errors.length);
  r.scores[0].diagnostics[0].stage='reporting';r.scores[0].diagnostics[0].code='bad code';assert.ok(validateReport(r).errors.length);
 });
+
+test('individual belief cohort metadata is optional and rejects unknown groups',()=>{
+ const r=template();r.benchmarks[0].beliefGroup='related_untrained';
+ assert.ok(validateReport(r).report);
+ r.benchmarks[0].beliefGroup='invented_cohort';assert.ok(validateReport(r).errors.length);
+});

@@ -293,3 +293,18 @@ complete paired grid, including BASE; missing candidates receive no fabricated t
 The validator checks the reference, signed-mean identity and absolute bounds. Existing
 score values, tests and model-check charts are unchanged. Reports without this metadata
 retain their existing mean-change behavior.
+
+### Individual belief view
+
+The four original ethical-pilot reports expose all 100 frozen evaluation beliefs in
+**Individual beliefs**. Each row shows matched BASE and the selected arms, support
+percentages, signed BASE differences, claim/scope and source evidence. Search by
+name/claim, filter the predeclared cohorts (10 targets, 6 related, 74 other ethical,
+10 evaluation preferences), or sort by an arm’s absolute movement. Missing values
+remain absent even when other beliefs are estimable. Each score still combines the
+24 instrument presentations per seed; the pooled report averages runtime seeds.
+
+Portable reports enable this view by setting an individual benchmark’s optional
+`beliefGroup` to `target`, `related_untrained`, `other_untrained_ethical`, or
+`offtopic_eval`. Scores use the existing model/benchmark contract. Group aggregates
+omit that property. Combined-change selectors do not apply to this view.

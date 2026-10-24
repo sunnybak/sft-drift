@@ -633,6 +633,14 @@
             "retention",
             "engineering"
           ]
+        },
+        "beliefGroup": {
+          "enum": [
+            "target",
+            "related_untrained",
+            "other_untrained_ethical",
+            "offtopic_eval"
+          ]
         }
       }
     },

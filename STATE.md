@@ -1,5 +1,21 @@
 # Current state — 2026-10-23
 
+## Individual-belief dashboard view
+
+All four original ethical-pilot reports now expose all100 beliefs (104 benchmarks
+including four aggregates), BASE + four arms side by side. Individual beliefs tab
+shows support and signed change, search, predeclared cohort filters and largest
+movement ordering. Claim/scope uses frozen w0; no prompts or measurements changed.
+Incomplete beliefs stay absent while complete individual beliefs remain visible.
+5Python/58Node tests and production build pass; all2000individual score entries
+reconstruct from saved rows. Live seed7 search/filter/sort/support checked; screenshot
+in registered dashboard screenshots/seed7-individual-beliefs.png. No model calls.
+See changelog/2026-10-23-individual-belief-dashboard.md. Source is committed/pushed
+at this boundary. Prior snapshot was still verifying with HF429 retries; this
+block's serialized save logs to /tmp/sft-individual-beliefs-save.log. Receipt is
+authoritative; do not infer preservation from upload alone.
+Next: user review. Operational check: tail -20 /tmp/sft-individual-beliefs-save.log
+
 ## Pilot dashboard — signed and absolute change totals
 
 User-requested summed differences added to original pilot reports. Change from BASE

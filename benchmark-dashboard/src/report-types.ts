@@ -16,6 +16,7 @@ export type ReportModel = {
 };
 export type ModelCheckGroup = 'instrument' | 'consistency' | 'learning' | 'retention' | 'engineering';
 export type ReportBenchmark = {
+  beliefGroup?: 'target' | 'related_untrained' | 'other_untrained_ethical' | 'offtopic_eval';
   checkGroup?: ModelCheckGroup;
   id: string; name: string; description: string; category: string;
   unit: 'fraction' | 'number'; unitLabel?: string; direction: 'higher' | 'lower' | 'descriptive';
