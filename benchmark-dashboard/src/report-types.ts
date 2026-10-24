@@ -23,7 +23,9 @@ export type ReportBenchmark = {
   examples: { input: string; expected: string; note: string }[];
   threshold: null | { operator: 'gte' | 'lte'; value: number };
 };
+export type ChangeTotals = {referenceModelId:string; beliefCount:number; signedSum:number; absoluteSum:number};
 export type ReportScore = {
+  changeTotals?: ChangeTotals;
   diagnostics?: ReportDiagnostic[];
   modelId: string; benchmarkId: string; value: number | null;
   bounds?: {lower:number; upper:number; kind:'missing_data'};

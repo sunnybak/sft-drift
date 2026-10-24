@@ -1,5 +1,18 @@
 # Current state — 2026-10-23
 
+## Pilot dashboard — signed and absolute change totals
+
+User-requested summed differences added to original pilot reports. Change from BASE
+now offers signed sum(default), absolute sum and mean; support percentages and model
+checks unchanged. Totals require complete paired beliefs and average runtime seeds
+within each belief first. Seed7targets: Positive signed-41.7/absolute233.3totalpp;
+Negative signed-316.7/absolute425.0. Units and group-size/cancellation limits explicit.
+5Python/56Node tests, TypeScript/build and live bars/matrix checks pass. App5180left
+on seed7absolute totals; screenshot registered. No model calls or study resumption.
+See changelog/2026-10-23-pilot-change-totals.md. Source pushed after this block; private
+save log /tmp/sft-pilot-change-totals-save.log, latest verified receipt authoritative.
+Next: user review. Operational check: tail -20 /tmp/sft-pilot-change-totals-save.log
+
 ## Journey PDF — ten-page report
 
 sft-journey-report-v7.pdf completes the requested journey: BASE, original pilot,

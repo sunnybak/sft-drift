@@ -18,7 +18,9 @@ export function aggregatePilot(rows:PilotRow[], arm:string, beliefIds:string[], 
  const valid=sample.reduce((n,r)=>n+r.diagnostics.n_extracted,0), expected=beliefIds.length*selectedSeeds.length*24;
  const complete=full&&sample.every(r=>r.complete&&r.stance_score!==null);
  const baseComplete=full&&sample.every(r=>r.base_diagnostics.complete);
- return {value:complete?mean(sample.map(r=>r.stance_score!)):null,base:baseComplete?mean(sample.map(r=>r.base_stance_score)):null,valid,expected,complete};
+ const changes=complete&&baseComplete?beliefIds.map(id=>mean(sample.filter(r=>r.belief_id===id).map(r=>r.stance_score!-r.base_stance_score))):null;
+ const changeTotals=changes?{referenceModelId:'base',beliefCount:beliefIds.length,signedSum:changes.reduce((a,b)=>a+b,0),absoluteSum:changes.reduce((a,b)=>a+Math.abs(b),0)}:undefined;
+ return {changeTotals,value:complete?mean(sample.map(r=>r.stance_score!)):null,base:baseComplete?mean(sample.map(r=>r.base_stance_score)):null,valid,expected,complete};
 }
 export function buildEthicalPilotReports(project:string):BenchmarkReportData[] {
  const root='data/results/ethical_stance_sft/ethics_sft_four_arm_pilot_v1';
@@ -84,7 +86,8 @@ export function buildEthicalPilotReports(project:string):BenchmarkReportData[] {
   const benchmarks:ReportBenchmark[]=sets.map(s=>({id:s.id,name:s.name,description:s.description,category:s.category,unit:'fraction',unitLabel:'Support for claim',direction:'descriptive',range:{min:0,max:1},threshold:null,conditions,examples:'brief'in s?[{input:s.brief.claim+' Scope: '+s.brief.scope,expected:'Record canonical support using the frozen endorse/reject instrument.',note:'Illustration from the canonical brief; not an exact frozen evaluation prompt. Both polarities and answer orders are tested.'}]:[{input:'Read a scoped claim or its negation and answer using the displayed endorse/reject definitions.',expected:'A descriptive stance score, not a correct/incorrect ethical answer.',note:'Higher means more support for the canonical claim; stance drift alone does not establish forgetting.'}]}));
   const scores:ReportScore[]=sets.flatMap(s=>models.map(m=>{
    const a=aggregatePilot(rows,m.id==='base'?'positive':m.id,s.beliefs,selectedSeeds),value=m.id==='base'?a.base:a.value;
-   return {modelId:m.id,benchmarkId:s.id,value,...(m.id!=='base'&&value===null?{diagnostics:coverageIssues(m.id,s.beliefs,selectedSeeds)}:{}),numerator:null,denominator:null,notes:`${m.id==='base'?'Matched BASE grid.':`${a.valid}/${a.expected} valid stance replies. `}${value===null?'Not estimable for this complete grid. Missing replies remain explicit.':'Mean Stance Score over the complete declared grid.'} ${conditions}`,source:source(rowPath)};
+   const changeTotals=m.id==='base'&&a.base!==null?{referenceModelId:'base',beliefCount:s.beliefs.length,signedSum:0,absoluteSum:0}:a.changeTotals;
+   return {modelId:m.id,benchmarkId:s.id,value,...(changeTotals?{changeTotals}:{}),...(m.id!=='base'&&value===null?{diagnostics:coverageIssues(m.id,s.beliefs,selectedSeeds)}:{}),numerator:null,denominator:null,notes:`${m.id==='base'?'Matched BASE grid.':`${a.valid}/${a.expected} valid stance replies. `}${value===null?'Not estimable for this complete grid. Missing replies remain explicit.':'Mean Stance Score over the complete declared grid.'} ${conditions}`,source:source(rowPath)};
   }));
   const tests:ReportTest[]=[];
   for(const arm of arms){

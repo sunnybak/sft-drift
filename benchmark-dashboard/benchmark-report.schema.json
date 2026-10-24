@@ -715,6 +715,33 @@
           "items": {
             "$ref": "#/definitions/diagnostic"
           }
+        },
+        "changeTotals": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "referenceModelId",
+            "beliefCount",
+            "signedSum",
+            "absoluteSum"
+          ],
+          "properties": {
+            "referenceModelId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "beliefCount": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "signedSum": {
+              "type": "number"
+            },
+            "absoluteSum": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
         }
       }
     },

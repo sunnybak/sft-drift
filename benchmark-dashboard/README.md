@@ -277,3 +277,19 @@ findings, limitations and recommendation. `examples/overnight-journey.content.js
 is its authored input; `scripts/generate-journey-report.ts` verifies linked reports,
 fingerprints source notes, and derives the report in the registered private artifact
 report directory. Existing ordinary report JSON remains compatible.
+
+Pilot change views now include **Sum of signed changes**, **Sum of absolute changes**,
+and **Average change** under Change from BASE. The four original pilot reports default
+to the signed sum; Support for claim remains the original mean percentage. Totals use
+per-belief support-score differences, in total percentage points. Signed totals can
+cancel; absolute totals add increases and decreases. Group size affects totals, so
+compare the same belief group across arms. Absolute totals are not reply-disagreement
+rates or evidence of successful learning. Three-seed reports average each belief's
+matched differences across seeds before summing, avoiding seed-count inflation.
+
+Optional score `changeTotals` contains `referenceModelId`, `beliefCount`, `signedSum`
+and `absoluteSum`, stored in fraction units (UI multiplies by100). It requires a
+complete paired grid, including BASE; missing candidates receive no fabricated totals.
+The validator checks the reference, signed-mean identity and absolute bounds. Existing
+score values, tests and model-check charts are unchanged. Reports without this metadata
+retain their existing mean-change behavior.

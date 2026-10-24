@@ -29,6 +29,13 @@ export function validateReport(value: unknown): { report?: BenchmarkReportData; 
   unique(r.scores.map(s => JSON.stringify([s.modelId, s.benchmarkId])), 'score pair');
   for (const s of r.scores) {
     const b = benchmarks.get(s.benchmarkId);
+    if(s.changeTotals){
+      const t=s.changeTotals,ref=r.scores.find(x=>x.modelId===t.referenceModelId&&x.benchmarkId===s.benchmarkId);
+      if(!models.has(t.referenceModelId)||s.value===null||ref?.value==null||b?.unit!=='fraction')errors.push('Change totals require fraction scores and a measured reference');
+      else if(Math.abs(t.signedSum-(s.value-ref.value)*t.beliefCount)>1e-8)errors.push('Signed change total disagrees with mean change and belief count');
+      if(Math.abs(t.signedSum)>t.beliefCount+1e-8||t.absoluteSum>t.beliefCount+1e-8||t.absoluteSum+1e-8<Math.abs(t.signedSum))errors.push('Invalid absolute/signed change total bounds');
+    }
+
     if (!models.has(s.modelId) || !b) errors.push(`Score references unknown model/benchmark: ${s.modelId}/${s.benchmarkId}`);
     if ((s.numerator === null) !== (s.denominator === null)) errors.push('Numerator and denominator must both be present or null');
     if (s.value === null && (s.numerator !== null || s.denominator !== null)) errors.push('Missing value cannot carry counts');
