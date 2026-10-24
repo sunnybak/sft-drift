@@ -1,6 +1,6 @@
 UV ?= uv
 
-.PHONY: help setup test status restore save verify data-pull data-push
+.PHONY: help setup test status restore save verify data-pull data-push restore-review verify-review
 help:
 	@echo "setup / test: locked environment and weight-free tests"
 	@echo "status / restore / save / verify: current private experiment handoff"
@@ -14,6 +14,12 @@ test:
 
 status:
 	$(UV) run --no-sync python scripts/handoff.py status
+
+restore-review:
+	$(UV) run --no-sync python scripts/handoff.py restore-review
+
+verify-review:
+	$(UV) run --no-sync python scripts/handoff.py verify-review
 
 restore:
 	$(UV) run --no-sync python scripts/handoff.py restore

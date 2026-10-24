@@ -322,3 +322,67 @@ def test_staged_recovery_allows_only_new_exact_path_lfs_rules(tmp_path, monkeypa
     else:
         with pytest.raises(ValueError, match='changed or removed'):
             handoff.verify_staged_advance(api, 'private/test', 'staged', receipt, previous, files, tmp_path)
+
+
+def test_review_restore_is_small_pinned_and_cannot_claim_full_restore(setup, remote, tmp_path, monkeypatch):
+    project, source, config = setup
+    name = 'results/ethical_pilot/dashboard/reports/example.json'
+    path = remote.root / name
+    path.parent.mkdir(parents=True)
+    path.write_text('{"report": true}')
+    manifest = json.loads((remote.root / handoff.MANIFEST).read_text())
+    manifest['files'][name] = {'sha256': handoff.digest(path), 'bytes': path.stat().st_size}
+    manifest['corpus_store'] = {'must_not_download': True}
+    (remote.root / handoff.MANIFEST).write_text(json.dumps(manifest))
+    config['review_paths'] = ['results/ethical_pilot/dashboard/reports']
+    monkeypatch.setattr(handoff.corpus_store, 'restore', lambda *a: pytest.fail('review fetched corpus'))
+    destination = tmp_path / 'review'
+    result = handoff.restore(destination, config, review=True)
+    assert result['profile'] == 'review' and result['full_restore'] is False
+    assert result['files'] == 1
+    assert (destination / 'data' / name).read_bytes() == path.read_bytes()
+    assert not (destination / 'data' / handoff.RECEIPT).exists()
+    assert not (destination / 'data' / source.relative_to(project / 'data')).exists()
+    assert all(c['revision'] == 'pinned-revision' for c in remote.calls)
+    assert {c['filename'] for c in remote.calls} == {handoff.MANIFEST, name}
+    assert handoff.verify_review(destination, config)['verified']
+    with pytest.raises(ValueError, match='review-only checkout cannot save'):
+        handoff.save_locked(destination, config)
+    (destination / 'data' / name).write_text('changed')
+    with pytest.raises(ValueError, match='verification failed'):
+        handoff.verify_review(destination, config)
+
+
+def test_review_prefixes_fail_closed(setup):
+    _, _, config = setup
+    manifest = {'files': {'results/dashboard/report.json': {'bytes': 1}}}
+    with pytest.raises(ValueError, match='not configured'):
+        handoff.review_files(manifest, config)
+    for prefix in ['../outside', 'checkpoints/adapter', 'results/absent']:
+        config['review_paths'] = [prefix]
+        with pytest.raises(ValueError):
+            handoff.review_files(manifest, config)
+
+
+def test_review_restore_preserves_full_receipt_and_refuses_report_conflicts(setup, remote, tmp_path):
+    _, _, config = setup
+    name = 'results/ethical_pilot/dashboard/reports/example.json'
+    path = remote.root / name
+    path.parent.mkdir(parents=True)
+    path.write_text('{}')
+    manifest = json.loads((remote.root / handoff.MANIFEST).read_text())
+    manifest['files'][name] = {'sha256': handoff.digest(path), 'bytes': 2}
+    (remote.root / handoff.MANIFEST).write_text(json.dumps(manifest))
+    config['review_paths'] = ['results/ethical_pilot/dashboard/reports']
+    config['include_paths'].append('results/ethical_pilot/dashboard')
+    destination = tmp_path / 'full'
+    handoff.restore(destination, config)
+    receipt = destination / 'data' / handoff.RECEIPT
+    original = receipt.read_bytes()
+    handoff.restore(destination, config, review=True)
+    assert receipt.read_bytes() == original
+    (destination / 'data' / name).write_text('local edit')
+    with pytest.raises(ValueError, match='local file differs'):
+        handoff.restore(destination, config, review=True)
+    assert (destination / 'data' / name).read_text() == 'local edit'
+    assert receipt.read_bytes() == original

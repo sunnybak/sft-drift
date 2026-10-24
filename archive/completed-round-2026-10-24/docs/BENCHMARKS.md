@@ -1,0 +1,362 @@
+# Current experiment plan
+
+New user-authorized bounded reference experiment (2026-10-22): one fresh stock-HF
+unweighted training comparison, same data/labels/schedule as completed norm1, existing
+retention and full100measurements. No historical gate changes or ethical scaling.
+See changelog/2026-10-22-hf-reference-experiment-plan.md and STATE.md for execution.
+
+Completed and reviewed: stock HF retains 63/63 known reasoning and 58/59 known short
+answers (custom 57/59), with all 384 retention replies strict/complete. Original
+development and full-reading controls each score 31/32 but fail 1/16 note flips versus
+≤5%; validation not run. All 2,400 natural replies valid and 2,432 reading records
+runtime-verified. No qualified recipe or scaling. Source/results:
+changelog/2026-10-22-hf-reference-results.md. Dashboard report “Stock training reference ·
+matched C4 experiment” compares BASE/custom/stock, including note-flip bars/ranges,
+retention and all-100 stance coverage/consistency. Shared preprocessing and
+gradient-scale limitations remain explicit.
+
+Scope: [GOAL.md](GOAL.md). Progress and exact next commands: [STATE.md](STATE.md).
+Read the baseline report for methodology/results; do not reconstruct the old research queue.
+
+## Current fixed trial — rejected and stopped by user condition
+
+Final reasoning replay fails held/evaluation factual retention:17/24BASE-known short
+answers versus required23/24, despite32/32reasoning. Procedural generation has a4096-token
+loop/no final. All49final flagged/prespecified review pairs fully read; no scoring
+disagreements. Development/validation controls pass32/32each, but fresh reading note
+invariance fails1/16. No gate or frozen instrument was changed.
+
+The user's stop-on-negative condition is met. Supervisor STOPPED, GPU processes gone;
+no further training, confirmation or expansion. Final full100reading intentionally
+stopped at512/2400recorded(511valid,1invalid,1888missing). No full-surface aggregate or
+completion claim. Midpoint's complete2400valid reading stays separate and unqualified.
+[Reviewed final report](changelog/2026-10-22-base-reasoning-final-results.md).
+Earlier entries below are historical context, not pending work or permission to resume.
+
+## Latest diagnostic — complete, no qualified recipe
+
+Fixed-model2×2RCA completed576new+192reused responses; all768runtime/native records
+reconstruct and all160new flags were fully agent-read. V5thinking correct/32is29,28,30,27
+across seen/train,seen/eval,held/train,held/eval; BASE/control32in every cell. V5short
+scores29,31,22,20 show stronger seen-fact learning than transfer. New separately versioned
+value-v3 corrects four clear BASEMarkdown decisions; raw/native/value-v2/frozen ethical
+scores remain unchanged. Uniform768assessment agrees with all160manual choices;74tests
+pass. No candidate adoption or historical gate cleared. See
+[reviewed RCA](changelog/2026-10-22-replay-interface-rca-results.md).
+Next planned intervention is complete BASEthinking replay on the same32prompts, retaining
+all other data/settings, with independent-input confirmation before ethical scaling.
+[Prospective plan](changelog/2026-10-22-replay-base-reasoning-plan.md); no new SFT yet.
+
+## Latest candidate result — complete, rejected
+
+Replay-value-v5 trained454steps, all12engineering checks pass, exact data/labels/weighted
+objective reconstruct. The recipe FAILS:procedural62/63thinking(one loop/no final),
+56/57short; decisions27/32thinking,20/32short,15/24BASE-known short retained.
+All64decision finals exact and normal; these are genuine value errors. All23assay flags
+and one failed validation control fully read/hash-bound. Original development passes;
+validation note-flip1/16fails. Full100completed unqualified:2400/2400valid, fresh controls32/32; all2432runtime records reconstruct. All24flagged assay/validation replies reviewed.
+Actual192decision training draws have0prefix/target mismatches; all64gold source pairs
+read,0clear semantic defects. Median thinking length293→43.5tokens suggests possible
+shortcut/style transfer; causal mechanism unproven. No pipeline qualification or scale.
+See [final report](changelog/2026-10-22-replay-value-v5-results.md) and STATE.md.
+Next is fixed-model replay-versus-transfer RCA, not another automatic SFT candidate;
+conditional independent confirmation is NOT triggered by this failed recipe.
+
+## Latest measurement clarification
+
+V4references complete/reviewed:384replies reconstructed and62flags fully read/hash-bound.
+Separate value-v2 matches manual choices:BASE32/32thinking,24/32nonthinking; fixed C4
+control32/32thinking,20/32nonthinking,16/24BASE-known short values retained. Original
+word-only grades remain unchanged. Nonthinking does not imply answer-only output;
+correctness, strict format and boundaries/stops are distinct. Genuine wrong choices
+remain after correcting parser misses.
+
+A prospective v5candidate reuses these actual reference IDs and the same untrained
+replay recipe with value-v2 known masks. Retention remains95%; no new draws, lowered
+thresholds or changed ethical instrument. All100beliefs still measured. See
+[changelog/2026-10-22-replay-coverage-value-v5-plan.md](changelog/2026-10-22-replay-coverage-value-v5-plan.md).
+This is development evidence from eight facts and correlated variants, not independent
+validation. STATE.md's latest update supersedes older pending entries below.
+
+## Current authorized investigation
+
+Resolve measurement errors and determine whether SFT caused capability losses before
+expanding training. The existing four final adapters and BASE remain fixed references. The new matched
+C4norm1/weight32ablation is COMPLETE and reviewed:both12/12engineering checks,
+384retentioncalls/model and full100readings; bothretain57/59known short values and
+fail30/32originalcontrols. Weight32hasone4096-token loop/no-final(2399/2400valid),
+explicit bounds; no completionretry.57fullfailed/unscorable replies reviewed/hash-bound.
+No demonstrated weighting repair. See2026-10-22-replay-weight-comparison-results.md.
+The single lower-LR probe is COMPLETE and rejected:51/55known short values retained
+versus norm1's55/55, despite12engineering/13comparability passes. Development31/32
+accuracy passes, but note-flip1/16fails. Full100reading2400recorded/2399valid retains
+one4096tokenloop;133flagged replies fully read,2432candidate token records verified.
+No gate changed or recipe adopted. Next is a prospective replay-coverage/interface
+hypothesis, not another LR sweep. See
+[changelog/2026-10-22-lower-lr-probe-results.md](changelog/2026-10-22-lower-lr-probe-results.md)
+and STATE.md for exact next work and preservation.
+The next replay-coverage data pilot is reviewed/prepared (final masterv4 after prelaunch engineering amendments and a preflight
+bank collision; no model calls yet). Fixed C4/teacher chunks/settings, new gold replay
+and explicitly changed token dose; fresh128procedural+64neutraldecision references.
+Original model checks/value-v1 thresholds remain. See STATE.md and the three prospective
+2026-10-22-replay-coverage plan/clarification/preflight notes; no automatic scaling.
+
+The completed experiment **ethics_gpu_target_free_readout_v2** followed its prospective
+[protocol](changelog/2026-10-21-error-aware-readout-v2-plan.md) and actual process/artifact
+state in STATE.md. It measures all 100 beliefs on all five models at three sampling
+seeds: 15 jobs, 25,320 calls. Collect the fixed schedule regardless of performance
+failures; stop technical identity failures. Missing answers, strict formatting,
+known-answer correctness and semantic review remain separate. The new error-budget
+assessment does not clear historical failed benchmarks. Choice frequencies are not
+confidence or moral accuracy; sampling repeats are not training replications.
+
+The complete15-job sweep and hash-bound review are finished: all18,000natural
+replies valid,72selected natural replies and81failed controls read in full. See the
+[reviewed results](changelog/2026-10-22-target-free-readout-v2-results.md). Target
+separation is repeatable but broad negative-arm drift limits selective-edit claims.
+Most fresh errors are variants of one authored ambiguous scope question; genuine
+answer errors and narrow retention losses remain. Historical failed gates stay fixed.
+
+The bounded640-call wording diagnostic is now complete and reviewed. Every model
+scores64/64on separate fact assertions; all10errors are on the same compressed
+original case. Native/generic extraction agrees throughout. See the
+[reviewed wording results](changelog/2026-10-22-scope-fact-clarity-v2-results.md).
+This supports a wording explanation for that case, without independently qualifying
+a new instrument or clearing original failures. v1preparation failed before calls;
+its partial files remain retained. No new training has run during RCA.
+
+Fresh independent-input retention is complete:1,920replies,164non-admissible replies
+agent-read in full. Allmodels pass the inherited strict-known gate, but its mask
+excludes BASE-correct worked equations. Separate post-hoc value review exposes3stable
+no-thinking sum losses in both negative andC4SFT. Thinking mostly remains intact.
+See [full fresh results](changelog/2026-10-22-fresh-retention-results.md). This confirms
+a score/mask blind spot and specific regressions, not broad collapse. Original grades
+and primary falsifier remain unchanged; supplemental values are explicitly post-hoc.
+
+Defer balanced ethical expansion. Next implement/test separate value/format assessment
+and one preset replay-weight ablation on the affected C4control, with further independent
+confirmation before candidate selection. See2026-10-22-replay-weight-ablation-plan.md.
+Matched norm1/weight32C4candidates now finished and reviewed; see current comparison
+above and STATE. Historical C4andbothnewmodels pass95%value retention despite2stable
+nonthinking losses/model; no old gate changed. No automatic parameter search, scaling
+or ethical-outcome selection. Every new fine-tune still receives all100frozen readings.
+The balanced/complementary-position design remains a later proposal.
+
+Current collection audit: a qualified full100reading can inherit a legacy control
+gate that skips natural calls while returning exit0. The live bound worker stays
+unchanged. Mechanical reporting now verifies actual expected/recorded/valid counts;
+COLLECTION_COMPLETED alone is insufficient. A prospective completion amendment permits
+one new collect-all reading for BOTH new models only if either original grid omitted
+calls. It never triggers on invalid answers, control scores or ethical direction.
+No further repeat-until-pass. The conditional completion reader is implemented and
+32targeted tests pass; no new paths/calls registered yet while oldworker is bound.
+Bothoriginalgrids recorded2400, so the auditedcompletiondecision isNOnewcalls. Oneinvalid
+weight32answer remainsinvalid; no repeatuntilpass. See2026-10-22-collect-all-completion-amendment.md.
+
+## Latest completed pilot
+
+Four-arm ethical pilot completed; see [reviewed report](changelog/2026-10-21-ethical-four-arm-results.md).
+All4trainingengineering checks passed; all12evaluation attempts preserved. Primary
+target positive-minus-negative separation+23.89pp,95%belief-cluster interval
+[+9.31,+38.47], but broadnegative-armdrift, qualification failures, missing off-topic
+seed1729and strictretention failures limit interpretation. No scale-up follows.
+Prior ordered work below is background status; STATE.md defines the next action.
+
+Expanded-control/off-topic follow-up is now complete; see
+[reviewed follow-up](changelog/2026-10-21-control-followup-results.md).
+BASE and all four final adapters fail both expanded arithmetic control wordings.
+All three fresh off-topic stance grids were collected:7196/7200valid. Target10drift
+−3.194pp; full100drift bounds[−4.528,−4.472]pp. These bounds cover missing replies,
+not confidence. Order/wording/negation agreement also declines on eligible pairs.
+Original qualification/retention failures and the frozen ethical instrument stay
+unchanged. Fixed request seeds did not reproduce exact raw replies. No scaling follows.
+
+## What is ready
+
+- Approved 100-claim spec and frozen bank `ethics_100_bank_v3`.
+- Stance-only interface: reasoning, final `endorse` / `reject`; no undecided option.
+- Six wordings, exact negation, two displayed-definition orders; 2,400 natural responses.
+- Separate 32 known-answer comprehension/negation/irrelevant-note control presentations.
+- BASE MLX result `ethics_100_stance_qwen_v2`, raw replies, provenance, reports and plots.
+- Full CUDA/vLLM BASE seed42 `ethics_gpu_vllm_base_v1`:100 complete grids,2,400 valid
+  replies,32/32 fresh controls, no extraction failures/truncation. Timed inference11.45min;
+  independent sampling repeats seeds7and1729also complete. See STATE.md and the saved completion audit.
+- A reproducible private artifact snapshot and fresh-box verification procedure.
+
+Model qualification requires control accuracy ≥.95, extraction 1.0 and irrelevant-note
+flip rate ≤.05. Natural ethical consistency is an outcome, **not a filtering threshold**.
+Semantic labels are provisional agent judgments; development references were reused and
+are not an untouched held-out test. See the report for these limits.
+
+## Historical preparation — not the active work queue
+
+The steps below record the original preparation workflow. Training and several
+follow-up measurements have since completed. Their old pending/next statements do
+not authorize reruns or define the current next action; use STATE.md and the current
+investigation above. Preserve these definitions and original failure criteria.
+
+### 1. Review the completed candidate bank before training
+
+`ethics_sft_pooled_corpus_v5` completed all 20,000 synthetic documents and 20,634 pinned
+C4 documents. All 100 training subjects have 100 documents per position; the ten fresh
+control claims are distinct from the ten frozen evaluation preferences. The bank has
+9,800,659 synthetic Qwen tokens; 97.9% of documents meet the requested 400–600 range.
+The 417 length flags, 1,106 provisional factual-addition flags and other automated
+findings remain retained for review. Flag counts overlap and do not establish defects.
+See STATE.md and the completion report for exact counts, lineage, costs and verification.
+
+A seeded/risk-targeted agent review read 64 complete documents in 32 pairs (27 subjects,
+all categories). It found 11 semantic defects: four wrong/contradictory positions and
+seven premise changes; five passed both scope/factual checks. Three defects occur in the
+random 40, eight in targeted 24; do not interpret the combined rate as population prevalence.
+Revision can flip the assigned position. Many metadata and factual flags are false positives.
+See `content_review_v1/report.md` under this run for exact selection and disagreements.
+A fresh round (`content_review_v2`) read 100 new full documents, one opposing pair per
+50 randomly selected subjects (five per category), without consulting flags. It found
+zero clear wrong/contradictory positions and three premise changes, all in psychology
+subjects; Luna missed all three. One malformed objection and seven borderline cases remain
+separate. Both rounds total 164 full documents across 63 subjects. The new random evidence
+suggests concentrated serious errors, not a broad label-reversal pattern; no population
+rate is established and repetitive reasoning remains common.
+Next: prioritize the 400 psychology-deception documents, stance/conclusion failures and
+known repairs; fix assignment-preserving revision and distinguish normative from empirical
+claims in a new QA version. Broader semantic QA still precedes traceable bounded repairs. No automatic training-ready designation
+follows generation or same-model review. Earlier reviewed pilots and scope checks are
+development evidence, not independent validation of this full bank. Canonical overlap
+is intentionally allowed; frozen evaluation paraphrases never enter generation prompts.
+
+Full Decisions v4 screening now covers all 20,000 source candidates. Separate version
+`ethics_sft_candidate_repairs_v1` applies 52 hash-matched manual corrections, retaining
+20,000 IDs and 100 per position/subject. The agent read 242 complete source texts,
+including all 34 high stance flags. Fresh flag-blind 20 found a clear premise change
+that Decisions missed; scope sensitivity is not validated. The separate disposition
+queue retains 1,106 pending rows, three borderlines and five provider refusals with
+agent observations; original model outputs stay unchanged. No training-ready claim.
+See the Decisions review report in STATE.md before assembling any training arms.
+
+Four ethical arm selections each contain 9,000 documents. Shared C4 is 9,000 full rows;
+the remaining 11,634 rows provide 5,402,242 replacement tokens. Document-count matching
+is not token matching. Declare measured token/step matching and off-topic position
+selection/reuse before SFT. The smaller off-topic bank has less topic breadth.
+Treatment training remains pending. Existing GPU-box setup is recorded in STATE.md;
+it does not approve the treatment comparison.
+
+### 2. Complete GPU reference variability
+
+The existing box is qualified and full vLLM BASE seed42 completed. Inspect saved results
+before any run; never restart a completed ID. On a fresh box install the declared
+environments, restore artifacts and qualify the actual GPU/backend. Use `configs/ACTIVE.md`.
+Start with conservative batch size; the Mac's batch 64 is not a CUDA capacity claim.
+The GPU development and validation have fresh IDs and model/backend provenance; do not
+reuse Mac validity as CUDA validity or bypass a failed identity check.
+
+GPU BASE and independent sampling seeds42,7,1729are complete; see STATE.md.
+Use these preserved references to estimate noise.
+Keep the instrument/decoder fixed; give every repeat its own run and corresponding
+same-seed validation chain. Do not pool MLX BASE and CUDA fine-tunes as a paired contrast.
+Before training, also pass the tiny memorization test, update checks and reload checks.
+
+### 3. Register and run a small training pilot
+
+Record pilot targets, hypotheses/falsifiers, treatment/control contrasts, data IDs,
+method, dose, hyperparameters, seeds, checkpoints and analysis before reading effects.
+Use fresh Qwen3-4B models with matched contrasting-position corpora and off-topic controls.
+Do not import an old adapter or assume the old frozen training schedule is suitable.
+Tune training only on manipulation/training checks, not downstream stance outcomes.
+Save intermediate checkpoints and preserve progress at completed work boundaries.
+
+### 4. Measure the full surface
+
+For **every** fine-tune and selected checkpoint, run model-specific qualification and
+all 100 belief evalsets. Compare each to same-backend BASE and matched SFT controls.
+Retain raw responses, exact item identity/common-bank hash, extraction/format metadata,
+stop reasons, checkpoint/seed and eligible pair denominators.
+
+Report a belief × fine-tune matrix for Stance Score changes and agreement changes.
+Separate target, predeclared related and unrelated claims; compare initial strong versus
+mixed scores. Show per-arm results and noise/paired intervals, not only net differences.
+Pairwise consistency comparisons reuse answers; they are not independent samples.
+
+### 5. Review before scaling training
+
+Decide whether effects exceed measurement noise and whether controls permit attribution.
+Only then expand targets/dose/replicates. Establish separate retention tasks before
+interpreting regressions as catastrophic forgetting. Action can be added later without
+redefining Stance. Conviction stays retired.
+
+## Metric definitions
+
+- **Stance Score:** fraction favoring the canonical claim, reversing negative-polarity
+  responses. 0 = reject, 1 = endorse; not calibrated confidence.
+- **Order Agreement:** matched answers agree after swapping displayed response definitions.
+- **Wording Agreement:** matched answers across same-claim wordings agree.
+- **Negation Agreement:** claim and its exact negation receive complementary choices.
+- **Stance Agreement:** equal mean of those three checks, a descriptive composite.
+- **Category Agreement:** mean within-belief Stance Agreement within a category; it does
+  not require different beliefs to receive the same stance.
+
+A midpoint can hide contradictory responses. Always retain the separate checks and
+coverage; missing data are not neutral answers. The allowed-word reminder itself stays
+in fixed order even when displayed definitions swap. Sampling contributes to disagreement.
+
+## Benchmark dashboard and plotting convention
+
+The local app in [benchmark-dashboard](benchmark-dashboard/README.md) indexes the
+neutral SFT development scores from saved summaries. Run `npm run dev` from that
+folder; open http://127.0.0.1:5175 (port override if needed). `npm run data` refreshes the derived view.
+
+Use horizontal bars with fixed 0–100% axes, stable model colors, exact counts and
+explicit thresholds, plus a comparison matrix. Missing scores stay blank; never
+combine unrelated endpoints into an overall accuracy. Keep semantic recall, strict
+format, boundaries, normal stops and coverage separate. Report known-item retention
+separately from all-item performance. Native continuation is diagnostic, not ordinary
+chat recall. Each observation retains its source path and SHA-256. Reused facts and
+correlated wordings are development evidence, not independent replicates.
+
+The stance instrument remains separate: stance is not higher-is-better accuracy.
+Future stance plots should show signed before/after changes and coverage rather
+than adding stance to the qualification score profile. This display changes no
+benchmark definition, frozen decoder, measurement or acceptance criterion.
+
+Dashboard reports use the reusable `BenchmarkReport` component and JSON schema v1.0.
+Models carry provider/model/revision, inference context, fine-tune run, dataset
+manifest hash/context, pipeline-plan hash/context and adapter hash. Benchmarks carry
+semantic definitions, conditions and illustrative examples. Scores and recorded
+pass/fail/not_run/error checks stay separate. Add a JSON file under
+benchmark-dashboard/reports/ and click Refresh reports; schema/semantic validation
+rejects invalid references/counts and duplicate report IDs. See the app README and
+examples/report-template.json. Three derived real reports cover learning/recall,
+retention and training/control checks; no score or criterion was changed.
+
+Primary report views are Horizontal bars, Vertical bars, Score matrix, Checks,
+What is tested, and Model context. Model pills open scientific study summaries with
+technical provenance collapsed. Optional presentation metadata remains compatible,
+but no authored readout controls the interface. Existing scores/criteria unchanged.
+
+## Authorized ethical pilot
+
+The user authorized a10-target/four-arm exploratory comparison despite the neutral
+17/20result. Its original18/20failure is preserved. This decision does not revise
+that falsifier or claim independent neutral confirmation. Follow the new prospective
+changelog/2026-10-20-ethical-four-arm-pilot-plan.md and actual STATE.md, not the older
+neutral qualification queue. Positive/negative/offtopic/C4document-control arms use
+fresh weights, matched eligible targets/steps, shared complete replay, full100belief
+readings and fixed retention. Source data semantic limitations remain explicit.
+
+## Pipeline repair reports in the dashboard
+
+The dashboard now includes five separate Repair1–5reports, sourced from the completed
+repair attempts and reviewed final rejection. Each keeps its own matched BASE cohort,
+known-item retention, all-item accuracy, engineering/qualification checks and runtime
+repeats separate. Final report shows all four seen/held×wording conditions and explicitly
+partial512/2400stance collection; no full100aggregate. Search Repair in Dashboard.
+See changelog/2026-10-22-repair-dashboard-reports.md. The scientific goal remains paused.
+
+## One-off journey PDF
+
+User-requested ten-page report is saved under the registered dashboard artifact parent:
+`belief-transfer/data/results/ethical_pilot/ethics_gpu_benchmark_dashboard_v1/output/pdf/sft-journey-report-v7.pdf`.
+BASE, pilot, measurement audit, five repairs, transfer diagnostic and later stock-HF
+reference use consistent narrative, absolute scores, chart definitions and explicit
+rejection/coverage. This presentation changes no historical result, gate or instrument.
+See changelog/2026-10-23-journey-pdf-preview.md and STATE for preservation.

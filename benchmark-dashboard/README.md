@@ -308,3 +308,13 @@ Portable reports enable this view by setting an individual benchmark’s optiona
 `beliefGroup` to `target`, `related_untrained`, `other_untrained_ethical`, or
 `offtopic_eval`. Scores use the existing model/benchmark contract. Group aggregates
 omit that property. Combined-change selectors do not apply to this view.
+
+### Start from saved reports only
+
+`npm run dev:saved -- --port 5180 --strictPort` starts the Dashboard library without
+running exporters. `npm run build:saved` builds from those JSONs. A fresh report-only
+checkout can obtain them with `belief-transfer/scripts/handoff.py restore-review`
+(see root SETUP). This avoids raw datasets/checkpoints. Legacy Compare/By benchmark
+views need benchmarks.json from a full export. Report source paths remain provenance;
+raw evidence is available through full restore. Existing dev/build commands still
+regenerate from source artifacts.

@@ -2,7 +2,8 @@
 """Save/restore the explicitly scoped current experiment, never the legacy data tree.
 
 Operational file transfer, not a model stage. Config is explicit JSON, source is Git,
-artifacts are a private HF dataset. `status` and `verify` are offline.
+artifacts are a private HF dataset. `status`, `verify` and `verify-review` are offline.
+`restore-review` is an explicitly partial dashboard-only copy with a separate receipt.
 """
 from __future__ import annotations
 
@@ -24,6 +25,7 @@ PROJECT = Path(__file__).resolve().parents[1]
 CONFIG = PROJECT / "configs/handoff.json"
 MANIFEST = "handoff/manifest.json"
 RECEIPT = ".handoff-receipt.json"
+REVIEW_RECEIPT = ".handoff-review-receipt.json"
 
 
 def digest(path: Path) -> str:
@@ -132,9 +134,9 @@ def read_remote(api, repo: str) -> tuple[str, dict]:
     return revision, manifest
 
 
-def write_receipt(data: Path, repo: str, revision: str, manifest: dict) -> None:
+def write_receipt(data: Path, repo: str, revision: str, manifest: dict, *, name: str = RECEIPT) -> None:
     data.mkdir(parents=True, exist_ok=True)
-    target = data / RECEIPT
+    target = data / name
     temporary = target.with_suffix(".tmp")
     temporary.write_text(json.dumps({"repo_id": repo, "revision": revision, "manifest": manifest}, indent=2) + "\n")
     temporary.replace(target)
@@ -199,6 +201,8 @@ def verify_staged_advance(api, repo: str, parent: str, receipt: dict,
 def save_locked(project: Path, config: dict, *, recover_staged: bool = False) -> dict:
     from huggingface_hub import CommitOperationAdd
     data = project / "data"
+    if (data / REVIEW_RECEIPT).exists() and not (data / RECEIPT).exists():
+        raise ValueError("review-only checkout cannot save; restore the full snapshot first")
     if git(project, "status", "--porcelain"):
         raise ValueError("commit code/config/STATE changes and push the branch before saving artifacts")
     code_commit = git(project, "rev-parse", "HEAD")
@@ -290,13 +294,40 @@ def save_locked(project: Path, config: dict, *, recover_staged: bool = False) ->
             "files": len(files), "bytes": sum(v["bytes"] for v in files.values()), "verified": True}
 
 
-def restore(project: Path, config: dict) -> dict:
+def review_files(manifest: dict, config: dict) -> dict:
+    """Select explicitly registered report prefixes, never corpus/checkpoint bundles."""
+    prefixes = config.get("review_paths", [])
+    if not prefixes:
+        raise ValueError("review_paths are not configured")
+    for prefix in prefixes:
+        safe_path(Path("/review-data"), prefix)
+        if not prefix.startswith("results/"):
+            raise ValueError("review paths must be result directories")
+        if not any(n.startswith(prefix + "/") for n in manifest["files"]):
+            raise ValueError(f"review prefix missing from snapshot: {prefix}")
+    return {n: meta for n, meta in manifest["files"].items()
+            if any(n.startswith(p + "/") for p in prefixes)}
+
+
+def verify_review(project: Path, config: dict) -> dict:
+    receipt = json.loads((project / "data" / REVIEW_RECEIPT).read_text())
+    manifest = receipt["manifest"]
+    if receipt["repo_id"] != config["repo_id"] or manifest.get("restore_profile") != "review":
+        raise ValueError("not a matching review-only receipt")
+    if review_files(manifest, config) != manifest["files"]:
+        raise ValueError("review receipt contains undeclared files")
+    verify_files(project / "data", manifest["files"])
+    return {"verified": True, "profile": "review", "full_restore": False,
+            "revision": receipt["revision"], "files": len(manifest["files"])}
+
+
+def restore(project: Path, config: dict, *, review: bool = False) -> dict:
     from huggingface_hub import hf_hub_download
     data = project / "data"
     api = private_api(config["repo_id"])
     require_private(api, config["repo_id"])
     revision, manifest = read_remote(api, config["repo_id"])
-    files = manifest["files"]
+    files = review_files(manifest, config) if review else manifest["files"]
     # Detect all local conflicts before any writes; no --force overwrite escape hatch.
     for name, record in files.items():
         path = safe_path(data, name)
@@ -304,7 +335,7 @@ def restore(project: Path, config: dict) -> dict:
             raise ValueError(f"local file differs from snapshot: {name}; preserve it before restore")
     # A remote snapshot must contain the frozen inventory, not merely self-consistent files.
     for name, expected in config["frozen_files"].items():
-        if files.get(name, {}).get("sha256") != expected:
+        if manifest["files"].get(name, {}).get("sha256") != expected:
             raise ValueError(f"remote frozen input missing/changed: {name}")
     def fetch(name: str) -> None:
         target = safe_path(data, name)
@@ -325,18 +356,24 @@ def restore(project: Path, config: dict) -> dict:
     with ThreadPoolExecutor(max_workers=8) as pool:
         list(pool.map(fetch, files))
     verify_files(data, files)
-    if manifest.get('corpus_store'):
-        corpus_store.restore(data, manifest['corpus_store'], api)
-    inventory(data, config)
-    write_receipt(data, config["repo_id"], revision, manifest)
+    if review:
+        partial = {k: v for k, v in manifest.items() if k not in {"files", "corpus_store"}}
+        partial.update(files=files, restore_profile="review")
+        write_receipt(data, config["repo_id"], revision, partial, name=REVIEW_RECEIPT)
+    else:
+        if manifest.get('corpus_store'):
+            corpus_store.restore(data, manifest['corpus_store'], api)
+        inventory(data, config)
+        write_receipt(data, config["repo_id"], revision, manifest)
     return {"repo_id": config["repo_id"], "revision": revision,
             "code_commit": manifest["code_commit"], "branch": manifest.get("branch"),
-            "files": len(files), "verified": True}
+            "files": len(files), "bytes": sum(v["bytes"] for v in files.values()),
+            "profile": "review" if review else "full", "full_restore": not review, "verified": True}
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["status", "verify", "save", "restore"])
+    parser.add_argument("command", choices=["status", "verify", "verify-review", "save", "restore", "restore-review"])
     parser.add_argument("--config", type=Path, default=CONFIG)
     parser.add_argument('--recover-staged', action='store_true',
                         help='save only: verify and reuse unpublished matching additions after a failed save')
@@ -345,8 +382,10 @@ def main() -> None:
     args = parser.parse_args()
     config = load_config(args.config)
     project = args.project.resolve()
-    if args.command in {"save", "restore"}:
-        result = save(project, config, recover_staged=args.recover_staged) if args.command == "save" else restore(project, config)
+    if args.command in {"save", "restore", "restore-review"}:
+        result = save(project, config, recover_staged=args.recover_staged) if args.command == "save" else restore(project, config, review=args.command == "restore-review")
+    elif args.command == "verify-review":
+        result = verify_review(project, config)
     elif args.command == "verify":
         receipt = json.loads((project / "data" / RECEIPT).read_text())
         if receipt["repo_id"] != config["repo_id"]:

@@ -103,3 +103,14 @@ This adds a client mechanism; it does not change any frozen scoring instrument o
 switch existing experiments to Decisions automatically.
 
 Weight-free checks: `uv run --no-sync pytest -q tests/test_decisions.py`.
+
+## Report-only workspace
+
+For results review without a full corpus/checkpoint download, use
+`uv run --no-sync python scripts/handoff.py restore-review` then `verify-review`.
+This saves a separate `.handoff-review-receipt.json`; it is explicitly partial and
+cannot authorize saving a full snapshot. Full `restore` / `verify` / `save` keep their
+existing behavior. From benchmark-dashboard use `npm run dev:saved` (or `build:saved`)
+to read saved JSON without rebuilding reports from raw measurements. See root SETUP.
+Retired paper outputs and the previous long working docs are indexed in
+`../archive/completed-round-2026-10-24/README.md`.

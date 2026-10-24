@@ -18,3 +18,7 @@ remain at their original paths where needed by imports/tests/inheritance. Consul
 Old experimental data remain at their original local/legacy remote paths. They are
 excluded from the current handoff snapshot so new boxes do not restore them. No evidence
 was deleted or silently marked valid/invalid by this cleanup.
+
+- [Completed SFT round, 2026-10-24](completed-round-2026-10-24/README.md): frozen copies
+  of superseded working docs and retired paper outputs; byte/hash move manifest.
+  Root guides now describe the stopped state and lightweight report restoration.

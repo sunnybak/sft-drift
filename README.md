@@ -1,21 +1,20 @@
 # Ethical stance after SFT
 
-Measure how fresh Qwen3-4B fine-tunes change a diverse bank of 100 expressed stances.
+Study how fresh Qwen3-4B SFT changes 100 expressed stances. The completed investigation
+has **no qualified training recipe and is stopped**; a next round needs a new plan.
 
-**New box or new chat:** start with [SETUP.md](SETUP.md), then
-[GOAL.md](GOAL.md) → [STATE.md](STATE.md) → [BENCHMARKS.md](BENCHMARKS.md).
-[AGENTS.md](AGENTS.md) contains the short working rules.
+Start with [GOAL](GOAL.md) → [STATE](STATE.md) → [BENCHMARKS](BENCHMARKS.md).
+[SETUP](SETUP.md) separates lightweight report review from full artifact restoration.
+[AGENTS](AGENTS.md) defines the working rules.
 
-- [Baseline report](belief-transfer/ETHICAL_STANCE_BASELINE.md): motivation, methodology,
-  results/figures and all 100 scoped claims in the appendix.
-- [Current code/config map](belief-transfer/configs/ACTIVE.md).
-- [Project commands](belief-transfer/README.md).
-- [Archive](archive/README.md): previous research, instructions, skills and one-off scripts;
-  historical evidence only, never the current task queue.
+- [Dashboard](benchmark-dashboard/README.md): 20 saved reports, model checks, the
+  overnight journey and individual-belief comparisons. Use `npm run dev:saved`.
+- [Baseline report](belief-transfer/ETHICAL_STANCE_BASELINE.md): method and all100claims.
+- [Code/config map](belief-transfer/configs/ACTIVE.md): reusable entry points, no queue.
+- [Python project](belief-transfer/README.md): transfer, generation and library commands.
+- [Archive](archive/README.md): completed plans and retired artifacts, with original
+  bytes and hashes. Historical code/config paths stay compatible.
 
-The 100-belief Mac BASE study is complete. Fresh SFT data generation, GPU BASE and the
-new training pilot are next. All 100 evalsets will be run on every fresh fine-tune.
-
-Code/configs/progress are saved in Git. Active data/cache/checkpoints are saved to a
-**separate private HF dataset**, with file hashes and restore verification, through
-`belief-transfer/scripts/handoff.py`. A fresh box does not download old experiment data.
+Git stores source and notes. Private pinned study/corpus snapshots preserve data,
+checkpoints and cache. Review-only restore fetches saved JSON reports without the
+large experimental payload; full restore remains required for experimental work.

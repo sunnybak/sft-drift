@@ -1,0 +1,929 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "original": "STATE.md",
+      "archived": "archive/completed-round-2026-10-24/docs/STATE.md",
+      "sha256": "477776e0d6191db654b7085b39a598c3e0ddb35addb871d35b0e4b81b440996b",
+      "bytes": 14963,
+      "action": "snapshot_before_rewrite"
+    },
+    {
+      "original": "BENCHMARKS.md",
+      "archived": "archive/completed-round-2026-10-24/docs/BENCHMARKS.md",
+      "sha256": "7cbd4fd26a6c94eed7a42b320f82ba643d787c5a085fbff7794d2f50362e99fb",
+      "bytes": 24676,
+      "action": "snapshot_before_rewrite"
+    },
+    {
+      "original": "SETUP.md",
+      "archived": "archive/completed-round-2026-10-24/docs/SETUP.md",
+      "sha256": "02cedf661832a95087868359ee2ace9368c1143b4fa98ac5f4dfaf9ecf5a12d9",
+      "bytes": 7239,
+      "action": "snapshot_before_rewrite"
+    },
+    {
+      "original": "README.md",
+      "archived": "archive/completed-round-2026-10-24/docs/README.md",
+      "sha256": "bc60ddfba27d86303ebd519b64ce3ae32625fdea06abe5bf738e34bac344a16f",
+      "bytes": 1162,
+      "action": "snapshot_before_rewrite"
+    },
+    {
+      "original": "belief-transfer/configs/ACTIVE.md",
+      "archived": "archive/completed-round-2026-10-24/docs/belief-transfer/configs/ACTIVE.md",
+      "sha256": "792fb73e10e8b31579fc8ef38170ddba21a25126693fa60ae00a38cee93accc8",
+      "bytes": 21645,
+      "action": "snapshot_before_rewrite"
+    },
+    {
+      "original": "belief-transfer/VAST_SFT_HANDOFF.md",
+      "archived": "archive/completed-round-2026-10-24/docs/belief-transfer/VAST_SFT_HANDOFF.md",
+      "sha256": "31d809f4ca77dde5e525321b35af81792d1823be6abe0a07d671812100011917",
+      "bytes": 7739,
+      "action": "snapshot_before_rewrite"
+    },
+    {
+      "original": "belief-transfer/SSH_GPU_OPERATIONS.md",
+      "archived": "archive/completed-round-2026-10-24/docs/belief-transfer/SSH_GPU_OPERATIONS.md",
+      "sha256": "8ba58e86718a647777f0e394b42972206b00032d5a77cf6c7ee430692bbbd016",
+      "bytes": 2202,
+      "action": "snapshot_before_rewrite"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/.hydra/config.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/.hydra/config.yaml",
+      "sha256": "599e55d094aeccf578a9706a575c912a51ef9a2d5da8609668c5bb0b79f6e545",
+      "bytes": 41455,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/.hydra/hydra.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/.hydra/hydra.yaml",
+      "sha256": "5ed23142ef0de4731f797b6123f2f1dd3b77ba8e68706ac2c9e8702519273645",
+      "bytes": 3512,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/.hydra/overrides.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/.hydra/overrides.yaml",
+      "sha256": "0e6b18c4076d4e76a52f69ed77195f7078f7ef770ac4cd932e0538816ef42274",
+      "bytes": 44,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/asset_briefs.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/asset_briefs.json",
+      "sha256": "17c9450d734affa156acb43389f5019bda915b186f2c5d925bc3bc1fa5d5a261",
+      "bytes": 17905,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/compile.log",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/compile.log",
+      "sha256": "ff67052e85df1934c2e248eaa482c18d76c413e262cb7f643fd01eb39c6fc04e",
+      "bytes": 1812,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/config.resolved.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/config.resolved.yaml",
+      "sha256": "c9031a92083167a4dcf85a0dce478826e008ec4e468afbcc20fbd15e1d5e0380",
+      "bytes": 47894,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/draft.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/draft.json",
+      "sha256": "93206d726ca404b814c2e8200fc0b056df623545f4f2071afd193640fca7341a",
+      "bytes": 7980,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/evidence.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/evidence.json",
+      "sha256": "b79fad98fb9095bff2aa8988b356312cce07088823ba1e68264eb331102a32ac",
+      "bytes": 5325235,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/figures/attributable_fraction.png",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/figures/attributable_fraction.png",
+      "sha256": "8909dda6a6eb1a18cb19600110a0610eb30c37163e4fe59bfdf0e3413f18111a",
+      "bytes": 69302,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/manuscript_plan.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/manuscript_plan.json",
+      "sha256": "cb1edd29d75e5d84952e381b9e3a96c24f8d3bcc4a97738dcd83e6be7293540c",
+      "bytes": 50423,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/paper.pdf",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/paper.pdf",
+      "sha256": "bb691721b148805128b47e6dc0ea6bc4f171721ce4e1b5a39e4b15b46df641b3",
+      "bytes": 123243,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/paper.tex",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/paper.tex",
+      "sha256": "f33590275b58e6b36abf760c0a389079cbd6718e6bbe9d3a6e845be65baa68a7",
+      "bytes": 18030,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/report.md",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/report.md",
+      "sha256": "db0d538773a0d2d4134becb43ee01835cf7e265dca155fbc04a81a672021bb51",
+      "bytes": 9253,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/review.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/review.json",
+      "sha256": "7930dd29d338160b88f344e77a77bd0f2039ffef22967d53a8ad818083c8ac6d",
+      "bytes": 4190,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/run.log",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/run.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/source_map.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/source_map.json",
+      "sha256": "21979e6cddf29a55aaaf2d694707fe451ee92a2fefa42bb561cdae8a2e17ed27",
+      "bytes": 235696,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/synthesis.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/synthesis.json",
+      "sha256": "94ff6aeb4534efd10a3af8b74b9e2ad229c23a2304fe37c05ec22aecf0138139",
+      "bytes": 195804,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v1/writeup.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v1/writeup.yaml",
+      "sha256": "0650c7366638c8380bbfd6a0283e76d978d823eaa19312920105f79cd7282724",
+      "bytes": 1688,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/.hydra/config.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/.hydra/config.yaml",
+      "sha256": "7344447042bc10a1f990314c23f90f2a1ddc1d4aa3669532329c21ad31db89ba",
+      "bytes": 54981,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/.hydra/hydra.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/.hydra/hydra.yaml",
+      "sha256": "1acd10812bd8bb9c16e8e1800f04dd661c500adf0b0642093889b152de58454e",
+      "bytes": 3512,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/.hydra/overrides.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/.hydra/overrides.yaml",
+      "sha256": "2c4256477f88bd7641c956e095b7e7f13b4becd45ca0bb946afee69b59b6a352",
+      "bytes": 44,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/asset_briefs.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/asset_briefs.json",
+      "sha256": "aae2e88bbc8d1e723b1d299100627ea3961fe16fa02b53626329a5d8a1122ebe",
+      "bytes": 19959,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/compile.log",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/compile.log",
+      "sha256": "88a832c9be3b94f5f40a2f51cfb058cbe7d7a38ea2ca35bbcfc5e715b887dbd7",
+      "bytes": 3325,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/config.resolved.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/config.resolved.yaml",
+      "sha256": "8f8c3b8af0086c601d4d77faa29a4036bf5231593425b79964170a198d9dec2b",
+      "bytes": 61504,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/draft.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/draft.json",
+      "sha256": "cc5300e8e136485e187449d59d253ae610ca7ab84b774353a38f56db97a527d3",
+      "bytes": 10538,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/evidence.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/evidence.json",
+      "sha256": "a14356c16bb6bd0939e72dfa9809be41cdfbd77e1c4959bcf4c712c95db499dc",
+      "bytes": 6024280,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/figures/attributable_fraction.png",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/figures/attributable_fraction.png",
+      "sha256": "cc80a4cb3e4578fb6ab64723f835d31be1de4c0386448c3869ddd64159b01001",
+      "bytes": 70539,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/manuscript_plan.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/manuscript_plan.json",
+      "sha256": "ec54f649f1ddbac8c5eb317af17102ebbd3ea4c08728035d3b641e7d18298dc6",
+      "bytes": 64629,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/paper.pdf",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/paper.pdf",
+      "sha256": "e18a624bb2322b6fdbc44ad6448d814d73bd00c22e18aa1abcb2d90633c9f0ca",
+      "bytes": 151979,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/paper.tex",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/paper.tex",
+      "sha256": "4603a0f551a7cd604a2d2f8e5fc63c57a511ca3bc46766bcf15192de1ad28902",
+      "bytes": 30170,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/references.bib",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/references.bib",
+      "sha256": "46879c3033eb7c246b8e86692fe775705bb9205072aae930eec8cc2b1978758e",
+      "bytes": 5006,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/report.md",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/report.md",
+      "sha256": "16a98157646c7bea9d817de9dd9259d6bf260d5d7fc2d95a2947ec2bc3c8bd53",
+      "bytes": 9782,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/review.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/review.json",
+      "sha256": "70cc74725c7de8c809f528631dde4c266658f4268659708d9b76069658da3a2c",
+      "bytes": 8495,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/run.log",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/run.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/source_map.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/source_map.json",
+      "sha256": "3e9ae74fc4cd758a4dfe7ffd3a3e8679f4cf01a47d04f6aba74e97aab66f8ec3",
+      "bytes": 237061,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/synthesis.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/synthesis.json",
+      "sha256": "c994bf35fa23a402e9f2acb814faa8bdc006202f4abf3aa759054db2ae77b316",
+      "bytes": 221088,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_attribution_v2/writeup.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_attribution_v2/writeup.yaml",
+      "sha256": "3630f51842731e4aeaff36549810ec08ac395b2284c2021b56abdc6a0ce87c69",
+      "bytes": 1746,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/.hydra/config.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/.hydra/config.yaml",
+      "sha256": "b20c64691b0b679242c5ece560948a1c723eb5352c8a075b57b26d84c09506da",
+      "bytes": 17946,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/.hydra/hydra.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/.hydra/hydra.yaml",
+      "sha256": "6b592d94c4ee777f56273b6bfeae98018372868fc79e69a2e59f62fc7322b8c3",
+      "bytes": 3561,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/.hydra/overrides.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/.hydra/overrides.yaml",
+      "sha256": "1c9e3d4356b5f398aff747019b0c183282c19eabbc37650825c1afaba578ccf2",
+      "bytes": 48,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/compile.log",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/compile.log",
+      "sha256": "de05a7324527825c40fc9ace7c8246311fd9ea29294f891dd602e4f880572495",
+      "bytes": 1092,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/config.resolved.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/config.resolved.yaml",
+      "sha256": "5cad3c087607e243a34325cf89eb2ea1466d8b1cb46f8333e8f9c435ec3debb5",
+      "bytes": 19359,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/draft.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/draft.json",
+      "sha256": "7de3e24461e5db7fbd3e1427b9b8676f59fbd55e495643f3492affad9dbd0b48",
+      "bytes": 4831,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/evidence.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/evidence.json",
+      "sha256": "022c6647254789d5ad18e04e2e52369e8239aba0e669f727b05e0871aad03fb6",
+      "bytes": 213089,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/figures/polarity_trajectories.png",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/figures/polarity_trajectories.png",
+      "sha256": "3d0c5e5db3bf242ee40421b53391b2223c518050bc42994b461871af41f5abc3",
+      "bytes": 139046,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/figures/trajectory.png",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/figures/trajectory.png",
+      "sha256": "96e30ed4652d16e2454b87642081fe96a13a2bf5ebd8a9dc3a624e1fe7fa3d7c",
+      "bytes": 159682,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/paper.pdf",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/paper.pdf",
+      "sha256": "57105c6e7642c9b045bb93ca146a59fd099812a8803608b124f302adec28c7e9",
+      "bytes": 343794,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/paper.tex",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/paper.tex",
+      "sha256": "2f35bc0c8de969283282850fc29f53162b8494af6f530105dfb2403cb469272e",
+      "bytes": 11081,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/report.md",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/report.md",
+      "sha256": "e7728bad51131627fcf50c52adb565d18edd0390635bb3cc34adf44b62bbdbbb",
+      "bytes": 5550,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/review.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/review.json",
+      "sha256": "e2058afe9f62ddc5b300d0709ac14cdbb846fc87f1bf6a41abe41c21a3ce2247",
+      "bytes": 44,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/run.log",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/run.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v6/writeup.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v6/writeup.yaml",
+      "sha256": "78e8edcdafc0b5d4fcf29d40626cb799aa0166452a7b55b615746e5ca59596fd",
+      "bytes": 1390,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/.hydra/config.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/.hydra/config.yaml",
+      "sha256": "1b166523f6036f678e7c4b834e807ce5cfa75e41da97093bb177278cf5d8a510",
+      "bytes": 23525,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/.hydra/hydra.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/.hydra/hydra.yaml",
+      "sha256": "a604be0f9a7948bd8e49973d0ed9f688d9639dc441025f2f3e57c50701e77f6c",
+      "bytes": 3528,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/.hydra/overrides.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/.hydra/overrides.yaml",
+      "sha256": "9c5e29cc3646026a093983053eb3c1e5d2f72ac8e5519d22067add6820002af2",
+      "bytes": 48,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/compile.log",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/compile.log",
+      "sha256": "60ef27d8b51b819633ad3c770efdd103bbce6a278e1838a51eadd28095fe8558",
+      "bytes": 12446,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/config.resolved.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/config.resolved.yaml",
+      "sha256": "e2c52de7983806b0f222577d844516c9c75a8f43d0360f31c1578fb0da295855",
+      "bytes": 25043,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/draft.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/draft.json",
+      "sha256": "75f2cf06a3b000061c1909aced7df30c7b029362df46a0cc63c080128eb7d668",
+      "bytes": 5588,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/evidence.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/evidence.json",
+      "sha256": "f047c707a0d092c370ff23c8a941dc43b240100da77ecb655ea230e839342304",
+      "bytes": 782265,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/figures/polarity_trajectories.png",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/figures/polarity_trajectories.png",
+      "sha256": "48de0de6d131f9a9ae3d69cad44ef8e2c49c9256d3cb9d3a7d8f2187304c571c",
+      "bytes": 157602,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/figures/trajectory.png",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/figures/trajectory.png",
+      "sha256": "6f04ef049d289a9bc75a8f420960fffb5add011d6398b2165ef9d259e840af3f",
+      "bytes": 180097,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/paper.pdf",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/paper.pdf",
+      "sha256": "a06eba7e23ad5a44deb5bc5605647e5511f0c36ce6c1ec7345c3f759803193df",
+      "bytes": 348140,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/paper.tex",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/paper.tex",
+      "sha256": "9327189509da9731b917813bc5c85f5c392be802209524e818e357b643f8f0fa",
+      "bytes": 16432,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/report.md",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/report.md",
+      "sha256": "f38316f59ca2e1ff306ae85ebe540f228b6d17aba5612bc8f26ef34befb5b630",
+      "bytes": 9233,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/review.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/review.json",
+      "sha256": "e2058afe9f62ddc5b300d0709ac14cdbb846fc87f1bf6a41abe41c21a3ce2247",
+      "bytes": 44,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/run.log",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/run.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v7/writeup.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v7/writeup.yaml",
+      "sha256": "3fc714f0336012cebcaef8122a23c77234fd6707fd536c4f37a950ffe4df8b12",
+      "bytes": 1583,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/.hydra/config.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/.hydra/config.yaml",
+      "sha256": "a95f481968bff3859f539a050fdfc7a313ef8dbd2c3e5ed95fd634c77d210aea",
+      "bytes": 25735,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/.hydra/hydra.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/.hydra/hydra.yaml",
+      "sha256": "56d0b4e960ed8499408a7ae642013ba12f9eb92f9c15b1556a3f53af4564c185",
+      "bytes": 3561,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/.hydra/overrides.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/.hydra/overrides.yaml",
+      "sha256": "e9a9c4cd99a4b3a619687041cc97590f0f60c8d012494a482ddc72f1109858c0",
+      "bytes": 48,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/asset_briefs.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/asset_briefs.json",
+      "sha256": "36726320513e5c2daa899f4be4a43b66bc8946c2cfcb4ed99c0fed7b8261b100",
+      "bytes": 4785,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/compile.log",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/compile.log",
+      "sha256": "32141e90dea7b84dc2d7af6c43aeb6fdd0892f819d42d1d0c2aab3b77cb23003",
+      "bytes": 320,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/config.resolved.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/config.resolved.yaml",
+      "sha256": "d17f98d3278675828ceb68342b700440743c00a0a9bd1cdb5f9b366d64948fe1",
+      "bytes": 28372,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/draft.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/draft.json",
+      "sha256": "22e9e9042612418da22a0f68dfe966ee9ac9156b42e957a614183f14d3a07d83",
+      "bytes": 11186,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/evidence.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/evidence.json",
+      "sha256": "9a3947a458c77dcf88bd00cb6dfca3958f015d519ccbc420a1b816bfbc22eaa3",
+      "bytes": 7587293,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/figures/polarity_trajectories.png",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/figures/polarity_trajectories.png",
+      "sha256": "3d0c5e5db3bf242ee40421b53391b2223c518050bc42994b461871af41f5abc3",
+      "bytes": 139046,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/figures/trajectory.png",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/figures/trajectory.png",
+      "sha256": "96e30ed4652d16e2454b87642081fe96a13a2bf5ebd8a9dc3a624e1fe7fa3d7c",
+      "bytes": 159682,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/manuscript_plan.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/manuscript_plan.json",
+      "sha256": "ce0c506ff751e3331a2c9c79acedda50ca8efd99ca530547d46e9f8739045bce",
+      "bytes": 40591,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/paper.pdf",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/paper.pdf",
+      "sha256": "4733229f0397fe82ff9bfb5f40112cbbc93ef68d2d7edf12292f603a9a42346c",
+      "bytes": 209377,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/paper.tex",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/paper.tex",
+      "sha256": "d723a55f628f7e006c889747f814ffd53c1d6ae773dc350a04c2170803f174e9",
+      "bytes": 14188,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/report.md",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/report.md",
+      "sha256": "3f28717385f0fc4557732fccb4f8c26d0f7bff057649168e818f22fef8fafa6b",
+      "bytes": 11200,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/review.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/review.json",
+      "sha256": "777969d267cfef632a07203ff8d09575d166656fd6a3d43b0b9c899d5c22a23a",
+      "bytes": 3987,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/run.log",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/run.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/source_map.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/source_map.json",
+      "sha256": "f53434a683f1a9f33838cf3b81ae81ee3f5b137a393b77db5a995d2e1d1b426e",
+      "bytes": 92762,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/synthesis.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/synthesis.json",
+      "sha256": "9bea9802b7e5e6bbd50f66268f58b045162af5c408d84335878acd1fcbabe416",
+      "bytes": 279413,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v8/writeup.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v8/writeup.yaml",
+      "sha256": "05fc0b1a21d6df3c336cf69d34a990b005645714df51ed38656cf0c97377070f",
+      "bytes": 1987,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/.hydra/config.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/.hydra/config.yaml",
+      "sha256": "2f66ae74c89ba1a837bbaa59d2de6d4a3911b5bfe5a8dcd638d9f2f59aa18c65",
+      "bytes": 25868,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/.hydra/hydra.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/.hydra/hydra.yaml",
+      "sha256": "21292321213169374873c7f9170a9e916a8247a778b5a01d6f2233a5f482d861",
+      "bytes": 3561,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/.hydra/overrides.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/.hydra/overrides.yaml",
+      "sha256": "02b19f85a1763ae721ead1eee3a626dccdf005098bcd1ad1c335b9e58b09a9d7",
+      "bytes": 48,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/asset_briefs.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/asset_briefs.json",
+      "sha256": "4b7014ddf4402a4f0c6ee2c10c943a92559cead04346431a64595af4d21c44c7",
+      "bytes": 3301,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/compile.log",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/compile.log",
+      "sha256": "0e44093269e48af3f4eb1e450ee50077d0e2e4b503296888d3c30a4144d97e77",
+      "bytes": 320,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/config.resolved.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/config.resolved.yaml",
+      "sha256": "3340a6098e6d3d03d30c9216e1058e985df6bcaf2de4ac37f06b8f995c92e670",
+      "bytes": 28505,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/draft.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/draft.json",
+      "sha256": "25049bfadd85a04ce8ba1e7ef17be2876eb0fed53aa39f3fda6bac99178defa4",
+      "bytes": 5586,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/evidence.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/evidence.json",
+      "sha256": "6a967dd0df7f8ccf6b6c8f34fc1ff1b73d5b31661886f4a5df5738312e5b6afa",
+      "bytes": 7586308,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/figures/polarity_trajectories.png",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/figures/polarity_trajectories.png",
+      "sha256": "3d0c5e5db3bf242ee40421b53391b2223c518050bc42994b461871af41f5abc3",
+      "bytes": 139046,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/figures/trajectory.png",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/figures/trajectory.png",
+      "sha256": "96e30ed4652d16e2454b87642081fe96a13a2bf5ebd8a9dc3a624e1fe7fa3d7c",
+      "bytes": 159682,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/manuscript_plan.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/manuscript_plan.json",
+      "sha256": "4e6dfb2508098f626ae18b4805088c2b3afaca6271f556774f77fe45ba7e9d16",
+      "bytes": 32561,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/paper.pdf",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/paper.pdf",
+      "sha256": "cf378a1a3fb3d1f07dc58b56a4f94257fd721c304157768ea1cb9745378d712a",
+      "bytes": 202861,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/paper.tex",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/paper.tex",
+      "sha256": "9fc64ace769701cbe691f438c144afb09b33b269ac8ae0feb2b1df697168fbe0",
+      "bytes": 8702,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/report.md",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/report.md",
+      "sha256": "0ddc733b5e2cb496dc661d3011f82df3f7ca6196fa7cffa2bb6eecc2b4263a4d",
+      "bytes": 11200,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/review.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/review.json",
+      "sha256": "d58d8b5fffe60705345d7cd927c81708791b52153417404cf552b056fcbc2f73",
+      "bytes": 5518,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/run.log",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/run.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/source_map.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/source_map.json",
+      "sha256": "6eac1ca4699bca31567b99cb5393000d50b843c0416402d7e924f2b6aeaba9b0",
+      "bytes": 99664,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/synthesis.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/synthesis.json",
+      "sha256": "a235b6172c2b6a6923e09e66ca5c96bcc753248c5c0d5cfcf27a5597855f2d68",
+      "bytes": 279481,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_factory_farming_v9/writeup.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_factory_farming_v9/writeup.yaml",
+      "sha256": "00db84e1f9291e0fe8b8fab35868a92afd9d5aa215bef27274553a282e88e095",
+      "bytes": 2018,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/.hydra/config.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/.hydra/config.yaml",
+      "sha256": "a65a5177b4363fcccc628735c4037d26b2c88e276f3ab47edc9809a25974350c",
+      "bytes": 31822,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/.hydra/hydra.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/.hydra/hydra.yaml",
+      "sha256": "a3ded5a005d6513b3015ac5d877f8350eecfa59f7e7308f65548a35fcb546587",
+      "bytes": 3500,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/.hydra/overrides.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/.hydra/overrides.yaml",
+      "sha256": "7d2516febdda4c9a11710f51269d41c2ceafd33a8f4075ced0ced2b5f13928a6",
+      "bytes": 41,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/asset_briefs.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/asset_briefs.json",
+      "sha256": "e5d71ebd60878f12639d942f11083fb2e608029c0c788cb86ffc5f490f780bcc",
+      "bytes": 19738,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/compile.log",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/compile.log",
+      "sha256": "de3896e1d37533a17c9dd62340f775c0db74bd75abc991b0e72f95a7502de3f2",
+      "bytes": 3175,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/config.resolved.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/config.resolved.yaml",
+      "sha256": "b9c5708d76b85bf18b76806b9e9a6beb7f7b6d358e7185a53201dba76273e96a",
+      "bytes": 36126,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/draft.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/draft.json",
+      "sha256": "0e936fd5587f904f9d17cceedf274069b5d0401157c49b2d5a1bf1375e4d6c3e",
+      "bytes": 7808,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/evidence.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/evidence.json",
+      "sha256": "7236a667e28c647686bc23992f4f4029012ed5fdaf1ed281c83f2e30f9fe6e88",
+      "bytes": 12572557,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/figures/polarity_trajectories.png",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/figures/polarity_trajectories.png",
+      "sha256": "48de0de6d131f9a9ae3d69cad44ef8e2c49c9256d3cb9d3a7d8f2187304c571c",
+      "bytes": 157602,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/figures/trajectory.png",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/figures/trajectory.png",
+      "sha256": "6f04ef049d289a9bc75a8f420960fffb5add011d6398b2165ef9d259e840af3f",
+      "bytes": 180097,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/manuscript_plan.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/manuscript_plan.json",
+      "sha256": "1738c8425d9bd8a3aafc1c1f5432981e828e8d4aa7d3f644adcd50d320fe4c90",
+      "bytes": 56262,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/paper.pdf",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/paper.pdf",
+      "sha256": "57b2169b8f5a76db033e4aacca7ba31014df3b766aee39f92e541e741005b054",
+      "bytes": 221367,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/paper.tex",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/paper.tex",
+      "sha256": "3b66b25130551df18a5ac64ed968c22e4a4c3c548a85c13879450eaebe82c756",
+      "bytes": 22788,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/report.md",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/report.md",
+      "sha256": "dfc7e74562231bd597092ed25fa43e5b8dd61fdc0028d57fe5e4f4eb63121eaa",
+      "bytes": 16715,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/review.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/review.json",
+      "sha256": "3cc01f8e3fa8c63f5636eae8a08220fef0284f3837c31d9d0a9acd781e1a3945",
+      "bytes": 6570,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/run.log",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/run.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/source_map.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/source_map.json",
+      "sha256": "ac9d178eba9424233374f44be2ca1168c9e303e1788aafe66cf3807f2c913051",
+      "bytes": 229658,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/synthesis.json",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/synthesis.json",
+      "sha256": "48fdc1a073aef4a91d61c9ede11fa67029215337819ec0026fc7ff43715c18fc",
+      "bytes": 371474,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/out/factory_farming/paper_internal_v1/writeup.yaml",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/out/factory_farming/paper_internal_v1/writeup.yaml",
+      "sha256": "a5b7a2267c98f05a812a6aedc51757853387f12cf34486b4f382da13eb91e7b9",
+      "bytes": 2028,
+      "action": "move"
+    },
+    {
+      "original": "belief-transfer/output/pdf/ETHICAL_STANCE_BASELINE.pdf",
+      "archived": "archive/completed-round-2026-10-24/legacy-artifacts/output/pdf/ETHICAL_STANCE_BASELINE.pdf",
+      "sha256": "ed7c013acbb5e27f0c4a3b8e62ee246930e89ff9ca13ea3774cfeabc9b742547",
+      "bytes": 1671130,
+      "action": "move"
+    }
+  ]
+}

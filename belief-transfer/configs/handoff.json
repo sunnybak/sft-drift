@@ -1335,5 +1335,8 @@
       "generated/ethical_stance_sft/ethics_sft_memorization_chat_canary_v1/.writer.lock",
       "generated/ethical_stance_sft/ethics_sft_registry_format_matrix_v1/.writer.lock"
     ]
-  }
+  },
+  "review_paths": [
+    "results/ethical_pilot/ethics_gpu_benchmark_dashboard_v1/reports"
+  ]
 }

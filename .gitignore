@@ -37,3 +37,6 @@ benchmark-dashboard/node_modules/
 benchmark-dashboard/public/benchmarks.json
 
 benchmark-dashboard/tsconfig.tsbuildinfo
+
+# Lightweight report restore has a separate, explicitly partial receipt.
+belief-transfer/data/.handoff-review-receipt.json
