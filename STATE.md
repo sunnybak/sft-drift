@@ -1,4 +1,30 @@
-# Current state — 2026-10-23
+# Current state — 2026-10-24
+
+## Wind-up before user terminates the GPU box — 2026-10-24
+
+Study remains stopped/unqualified; no new training or inference authorized. SSH
+confirmed no GPU compute processes; all sft-drift supervisor jobs EXITED/STOPPED.
+Both GPU checkouts have no tracked edits/unpushed branch commits. All10untracked
+generated configs match committed local files. GPU data audit:27,590files /
+29,108,352,152bytes;27,505match local byte-for-byte. All raw/checkpoint/cache files
+are already in the verified private study/corpus snapshots.24different derived
+Markdown views copied separately with GPU hashes verified;61AppleDouble metadata
+sidecars intentionally excluded. Audit/copies under registered dashboard
+output/windup-2026-10-24/. No experimental files overwritten or purged.
+
+Previous verified study revision ad87dd99cd4e3163b3db4e3b5d0e97d0edc68e14
+(source206c913,7,886files/22,324,446,721bytes); corpus revision
+ecc06f6bd544b2f1c8eaca179b0f4c18581c6132. This wind-up's notes/audit require
+a fresh save after commit/push; latest data/.handoff-receipt.json and successful
+save result are authoritative. Log /tmp/sft-windup-2026-10-24-save.log.
+User will terminate the instance; agent has not destroyed it. Historical SSH
+address38.49.42.46:58689 is not a future available resource. OS/environments and
+downloadable BASE weight caches are rebuilt from SETUP; credentials stay excluded.
+Next on a fresh session: read GOAL/STATE/BENCHMARKS (SETUP on a fresh box), restore
+private artifacts if absent, then from belief-transfer run:
+uv run --no-sync python scripts/handoff.py verify
+Do not restart any completed run or the stopped training queue.
+See changelog/2026-10-24-wind-up-before-box-termination.md.
 
 ## Individual-belief dashboard view
 
