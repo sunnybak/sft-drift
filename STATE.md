@@ -63,6 +63,10 @@ pass; saved-report production build and live isolated review restore verified.
 See changelog/2026-10-24-repository-cleanup.md. Final private save log:
 /tmp/sft-repository-cleanup-save.log; latest receipt is authoritative.
 
+Repository skill `/optimize` now captures this cleanup workflow at
+`.claude/skills/optimize/SKILL.md` (also discoverable via `.agents/skills`). This
+source-only follow-up adds no data; the verified cleanup snapshot remains valid.
+
 Next command for review: follow [SETUP.md](SETUP.md), then from `benchmark-dashboard/`
 run `npm run dev:saved -- --port 5180 --strictPort`. A fresh experiment needs a new
 plan, run IDs, GPU reference and validation; do not reuse completed IDs.

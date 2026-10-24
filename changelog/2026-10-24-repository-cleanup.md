@@ -51,3 +51,14 @@ Source/config/notes committed and pushed, then standard full handoff.py save ver
 all existing data and the new code identity. Final receipt is authoritative; save log
 /tmp/sft-repository-cleanup-save.log. No local artifact eviction or remote deletion.
 Next round still requires a new prospective experiment plan and user direction.
+
+## User-requested reusable skill
+
+Added repository `/optimize` skill under .claude/skills/optimize, discoverable through
+the existing .agents→.claude symlink. It captures bounded inspection, hash-preserving
+archival, short current docs, compatibility checks, selective setup, honest size
+measurement and coherent preservation boundaries. No new cleanup is executed by
+creating the skill. AGENTS.md now lists optimize alongside orient/wind-up. Skill
+frontmatter/scaffold validation and metadata/reference checks pass. This small
+source-only follow-up is committed/pushed; no experimental artifacts changed and no
+redundant full snapshot is needed after the just-verified cleanup boundary.

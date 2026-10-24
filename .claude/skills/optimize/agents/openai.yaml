@@ -1,0 +1,4 @@
+interface:
+  display_name: "Optimize repository"
+  short_description: "Archive completed work and lighten repo setup"
+  default_prompt: "Use $optimize to archive completed work and lighten this repository while preserving evidence and reproducibility."

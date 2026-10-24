@@ -143,6 +143,6 @@ resume. A process on an ephemeral box does not survive a fresh chat/box by itsel
 `handoff.py` snapshots bytes; it does not make every stage resumable. Existing completed
 measurement IDs cannot simply be rerun to continue an interrupted measurement.
 
-Only the `orient` and `wind-up` repository skills are active. Do not load archived skills
+The `orient`, `wind-up` and `optimize` repository skills are active. Do not load archived skills
 unless the user explicitly returns to that workflow. `configs/ACTIVE.md` maps the small
 current code/config surface; remaining legacy modules/configs are compatibility code.
